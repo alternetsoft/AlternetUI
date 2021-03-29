@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 
 namespace Alternet.UI
@@ -7,8 +8,29 @@ namespace Alternet.UI
     {
         public Control()
         {
+            Handler = CreateHandler();
         }
 
-        internal abstract Native.Control NativeControl { get; }
+        public ControlHandler Handler { get; }
+
+        public bool IsDisposed { get; private set; }
+
+        protected abstract ControlHandler CreateHandler();
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (!IsDisposed)
+            {
+                IsDisposed = true;
+            }
+        }
+
+        protected void CheckDisposed()
+        {
+            if (IsDisposed)
+                throw new ObjectDisposedException(null);
+        }
     }
 }

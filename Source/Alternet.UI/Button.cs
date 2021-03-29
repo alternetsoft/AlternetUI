@@ -4,62 +4,60 @@ namespace Alternet.UI
 {
     public class Button : Control
     {
-        private volatile bool isDisposed;
+        private string? text;
 
-        private Native.Button nativeButton;
-
-        public Button()
-        {
-            nativeButton = new Native.Button();
-            nativeButton.Click += (o, e) => OnClick(e);
-        }
-
-        public event EventHandler? Click;
-
-        public bool IsDisposed { get => isDisposed; private set => isDisposed = value; }
-
-        public string Text
+        public string? Text
         {
             get
             {
                 CheckDisposed();
-                return nativeButton.Text;
+                return text;
             }
 
             set
             {
                 CheckDisposed();
-                nativeButton.Text = value;
+                if (text == value)
+                    return;
+
+                text = value;
+                InvokeTextChanged(EventArgs.Empty);
             }
         }
 
-        internal override Native.Control NativeControl => nativeButton;
+        public event EventHandler? Click;
 
-        protected virtual void OnClick(EventArgs e)
+        public void InvokeClick(EventArgs e)
         {
             if (e == null)
                 throw new ArgumentNullException(nameof(e));
 
+            OnClick(e);
             Click?.Invoke(this, e);
         }
 
-        protected override void Dispose(bool disposing)
+        protected virtual void OnClick(EventArgs e)
         {
-            base.Dispose(disposing);
-
-            if (!IsDisposed)
-            {
-                nativeButton.Dispose();
-                nativeButton = null!;
-
-                IsDisposed = true;
-            }
         }
 
-        private void CheckDisposed()
+        public event EventHandler? TextChanged;
+
+        private void InvokeTextChanged(EventArgs e)
         {
-            if (IsDisposed)
-                throw new ObjectDisposedException(null);
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnTextChanged(e);
+            TextChanged?.Invoke(this, e);
+        }
+
+        protected virtual void OnTextChanged(EventArgs e)
+        {
+        }
+
+        protected override ControlHandler CreateHandler()
+        {
+            return new NativeButtonHandler(this);
         }
     }
 }

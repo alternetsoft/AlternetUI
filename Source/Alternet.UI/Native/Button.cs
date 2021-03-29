@@ -71,7 +71,7 @@ namespace Alternet.UI.Native
 
         public event EventHandler? Click;
 
-        public string Text
+        public string? Text
         {
             get
             {
@@ -126,10 +126,10 @@ namespace Alternet.UI.Native
             public static extern void Button_Destroy(IntPtr obj);
 
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Button_SetText(IntPtr obj, string value);
+            public static extern void Button_SetText(IntPtr obj, string? value);
 
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Button_GetText(IntPtr obj);
+            public static extern string? Button_GetText(IntPtr obj);
 
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Button_SetEventCallback(ButtonEventCallbackType callback);
