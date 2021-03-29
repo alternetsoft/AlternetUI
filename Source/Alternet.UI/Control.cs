@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel;
 
 namespace Alternet.UI
@@ -10,6 +9,6 @@ namespace Alternet.UI
         {
         }
 
-        public IntPtr NativePointer { get; protected set; }
+        internal abstract Native.Control NativeControl { get; }
     }
 }

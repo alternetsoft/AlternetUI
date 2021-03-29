@@ -6,7 +6,7 @@ using System.Security;
 
 [module: DefaultCharSet(CharSet.Unicode)]
 
-namespace Alternet.UI
+namespace Alternet.UI.Native
 {
     [SuppressUnmanagedCodeSecurity]
     internal abstract class NativeApiProvider
