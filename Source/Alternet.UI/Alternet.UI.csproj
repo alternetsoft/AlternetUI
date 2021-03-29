@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Platforms>AnyCPU</Platforms>
+    <LangVersion>latest</LangVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\Keys\Key.snk</AssemblyOriginatorKeyFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+    <TargetFrameworks>net40;netcoreapp3.1</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
+    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Alternet.UI</PackageId>
+    <Version>0.0.1</Version>
+    <Authors>Alternet</Authors>
+    <Product>Alternet UI</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\Keys\Key.snk" Link="Key.snk" />
+  </ItemGroup>
+
+  <!-- Uncomment this to debug in release build. -->
+  <!-- <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup> -->
+
+  <ItemGroup>
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    <PackageReference Include="Nullable" Version="1.2.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' != 'net40'">
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(AlternetUIPackagesBuild)' != ''">
+    <PackageReference Include="Alternet.UI.Pal" Version="$(Version)">
+      <PrivateAssets>None</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX')) AND '$(TargetFramework)' != 'net40'">
+    <!-- libgdiplus native binaries. See https://stackoverflow.com/a/47208816/71689 -->
+    <PackageReference Include="runtime.osx.10.10-x64.CoreCompat.System.Drawing" Version="5.8.64" />
+  </ItemGroup>
+
+</Project>

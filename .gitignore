@@ -1,0 +1,9 @@
+bin/
+obj/
+.vs/
+
+External/wxWidgets/
+Source/Build/.nuget
+Source/Build/Alternet.UI.Pal/*.nupkg
+Source/Build/Alternet.UI.Pal/NuGet/runtimes
+Source/Samples/HelloWorldSample/HelloWorldSample.csproj.user

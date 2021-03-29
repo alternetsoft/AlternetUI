@@ -1,0 +1,12 @@
+﻿<Project>
+    <!-- Create an empty directory for the local source specified in the NuGet.config, if it doesnt exits. Otherwise local developer build fails. -->
+    <Target Name="Alternet_UI_CreatePublishLocalPackageSource" BeforeTargets="_GenerateRestoreProjectSpec">
+        <PropertyGroup>
+            <Alternet_UI_PublishLocalPackageSource>$(MSBuildThisFileDirectory)\Build\Alternet.UI.Pal</Alternet_UI_PublishLocalPackageSource>
+        </PropertyGroup>
+        <MakeDir Directories="$(Alternet_UI_PublishLocalPackageSource)" Condition="!Exists('$(Alternet_UI_PublishLocalPackageSource)')"/>
+    </Target>
+    <PropertyGroup>
+        <Nullable>Enable</Nullable>
+    </PropertyGroup>
+</Project>

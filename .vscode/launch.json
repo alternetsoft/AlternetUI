@@ -1,0 +1,28 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "HelloWorld: Native Debug",
+            "type": "lldb",
+            "request": "launch",
+            "initCommands": [
+                "setting set target.max-string-summary-length 10000"
+            ],
+            "internalConsoleOptions": "openOnSessionStart",
+            "program": "dotnet",
+            "args": ["${workspaceFolder}/Source/Samples/HelloWorldSample/bin/Debug/netcoreapp3.1/HelloWorldSample.dll"],
+            "preLaunchTask": "HelloWorld: Build"
+        },
+        {
+            "name": "HelloWorld: CLR Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "HelloWorld: Build",
+            "program": "${workspaceFolder}/Source/Samples/HelloWorldSample/bin/Debug/netcoreapp3.1/HelloWorldSample.dll",
+            "cwd": "${workspaceFolder}/Source/Samples/HelloWorldSample/bin/Debug/netcoreapp3.1/",
+            "args": [],
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+    ]
+}

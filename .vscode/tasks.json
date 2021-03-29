@@ -1,0 +1,49 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "HelloWorld: Build",
+            "type": "shell",
+            "command": "${workspaceFolder}/Source/Samples/HelloWorldSample/build/Build.sh",
+            "options": {
+                "cwd": "${workspaceFolder}/Source/Samples/HelloWorldSample/build/"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "HelloWorld: Run",
+            "type": "shell",
+            "command": "${workspaceFolder}/Source/Samples/HelloWorldSample/build/BuildAndRun.sh",
+            "options": {
+                "cwd": "${workspaceFolder}/Source/Samples/HelloWorldSample/build/"
+            },
+            "presentation": {
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "HelloWorld: Build Release",
+            "type": "shell",
+            "command": "${workspaceFolder}/Source/Samples/HelloWorldSample/build/BuildRelease.sh",
+            "options": {
+                "cwd": "${workspaceFolder}/Source/Samples/HelloWorldSample/build/"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+    ]
+}

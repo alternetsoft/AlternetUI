@@ -1,0 +1,1 @@
+"../.nuget/nuget.exe" pack ./NuGet/Alternet.UI.Pal.nuspec -NoDefaultExcludes -Exclude .nuget\*;*.nupkg -properties version=0.0.1

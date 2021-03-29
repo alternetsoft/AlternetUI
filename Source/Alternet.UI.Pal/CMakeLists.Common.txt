@@ -1,0 +1,27 @@
+if (APPLE)
+    add_compile_options(-x objective-c++)
+endif()
+
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
+
+file(GLOB_RECURSE Sources "*.cpp")
+list(FILTER Sources EXCLUDE REGEX ".*/bin/.*")
+
+add_library(${PROJECT_NAME} SHARED ${Sources})
+
+find_package(wxWidgets REQUIRED COMPONENTS net core base)
+include(${wxWidgets_USE_FILE})
+
+target_link_libraries(${PROJECT_NAME} ${wxWidgets_LIBRARIES})
+
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
+set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
+
+if (APPLE)
+    # Strip binary for release builds
+    if (CMAKE_BUILD_TYPE STREQUAL Release)
+        add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+                COMMAND ${CMAKE_STRIP} -x ${PROJECT_SOURCE_DIR}/bin/x64/Release/${PROJECT_NAME}.dylib)
+    endif ()
+endif ()
