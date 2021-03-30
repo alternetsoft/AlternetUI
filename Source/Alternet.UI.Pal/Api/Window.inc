@@ -5,6 +5,7 @@ string GetTitle();
 void SetTitle(const string& value);
 public:
 Window();
+public:
 virtual ~Window();
 private:
 BYREF_ONLY(Window);

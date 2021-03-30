@@ -17,6 +17,7 @@ namespace ApiGenerator.Native
             var types = new CppTypes();
 
             w.WriteLine(GeneratorUtils.HeaderText);
+            w.WriteLine("public:");
 
             foreach (var property in MemberProvider.GetProperties(type))
                 WriteProperty(w, property, types);
