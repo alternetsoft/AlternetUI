@@ -17,19 +17,10 @@ namespace Alternet::UI
 
     class Window
     {
+#include "Api/Window.inc"
     public:
-        Window();
-        virtual ~Window();
 
-        string GetTitle();
-        void SetTitle(const string& value);
-
-        void Show();
-
-        void AddChildControl(Control* value);
     private:
         Frame* _frame;
-
-        BYREF_ONLY(Window);
     };
 }

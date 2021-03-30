@@ -195,6 +195,7 @@
     <ClInclude Include="ApiUtils.h" />
     <ClInclude Include="Api\Application.Api.h" />
     <ClInclude Include="Api\Button.Api.h" />
+    <ClInclude Include="Api\Control.Api.h" />
     <ClInclude Include="Api\MessageBox_.Api.h" />
     <ClInclude Include="Api\Window.Api.h" />
     <ClInclude Include="Application.h" />
@@ -204,6 +205,12 @@
     <ClInclude Include="MessageBox_.h" />
     <ClInclude Include="WindowsVisualThemeSupport.h" />
     <ClInclude Include="Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Api\Application.inc" />
+    <None Include="Api\Control.inc" />
+    <None Include="Api\MessageBox_.inc" />
+    <None Include="Api\Window.inc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="..\..\External\wxWidgets\wxwidgets.props" />

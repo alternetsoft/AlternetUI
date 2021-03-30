@@ -6,17 +6,14 @@ namespace Alternet::UI
 {
     class Control
     {
+#include "Api/Control.inc"
     public:
-        Control();
-        virtual ~Control();
-
         virtual wxWindowBase* GetControl() = 0;
 
         virtual wxWindow* CreateWxWindow(wxWindow* parent);
 
     private:
 
-        BYREF_ONLY(Control);
     };
 
 }

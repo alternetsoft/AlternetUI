@@ -24,11 +24,8 @@ namespace Alternet::UI
 
     class Application
     {
+#include "Api/Application.inc"
     public:
-        Application();
-
-        virtual ~Application();
-        void Run(Window& window);
 
     private:
 
@@ -37,7 +34,5 @@ namespace Alternet::UI
 #ifdef __WXMSW__
         ULONG_PTR windowsVisualThemeSupportCookie = NULL;
 #endif
-
-        BYREF_ONLY(Application);
     };
 }

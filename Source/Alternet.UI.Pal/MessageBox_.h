@@ -6,12 +6,9 @@ namespace Alternet::UI
 {
     class MessageBox_
     {
+#include "Api/MessageBox_.inc"
     public:
-        static void Show(string text, string caption);
 
     private:
-        MessageBox_() {}
-        virtual ~MessageBox_() {}
-        BYREF_ONLY(MessageBox_);
     };
 }
