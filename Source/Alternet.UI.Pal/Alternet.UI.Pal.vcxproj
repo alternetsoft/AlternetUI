@@ -185,18 +185,25 @@
   <ItemGroup>
     <ClCompile Include="Api.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Control.cpp" />
+    <ClCompile Include="MessageBox_.cpp" />
     <ClCompile Include="WindowsVisualThemeSupport.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApiUtils.h" />
-    <ClInclude Include="Application.Api.h" />
+    <ClInclude Include="Api\Application.Api.h" />
+    <ClInclude Include="Api\Button.Api.h" />
+    <ClInclude Include="Api\MessageBox_.Api.h" />
+    <ClInclude Include="Api\Window.Api.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="Control.h" />
+    <ClInclude Include="MessageBox_.h" />
     <ClInclude Include="WindowsVisualThemeSupport.h" />
-    <ClInclude Include="Window.Api.h" />
     <ClInclude Include="Window.h" />
-    <ClInclude Include="Api.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="..\..\External\wxWidgets\wxwidgets.props" />

@@ -1,37 +1,44 @@
 #include "Window.h"
-#include "Common.h"
-#include "Application.h"
 
 namespace Alternet::UI
 {
-    //Frame::Frame() : wxFrame(NULL, wxID_ANY, "")
-    //{
-    //}
-    //
-    ////----------------
+    Frame::Frame() : wxFrame(NULL, wxID_ANY, "")
+    {
+    }
 
-    //Window::Window(): _frame(new Frame())
-    //{
-    //}
+    // ------------
 
-    //Window::~Window()
-    //{
-    //    //delete _frame;
-    //    _frame = nullptr;
-    //}
+    Window::Window() : _frame(new Frame())
+    {
+        _frame->SetSizer(new wxBoxSizer(wxVERTICAL));
+#ifdef __WXMSW__
+        _frame->SetBackgroundColour(wxColor(0xffffff));
+#endif
+    }
 
-    //string Window::GetTitle() const
-    //{
-    //    return wxStr(_frame->GetTitle());
-    //}
+    Window::~Window()
+    {
+        //delete _frame;
+        _frame = nullptr;
+    }
 
-    //void Window::SetTitle(const string& value)
-    //{
-    //    _frame->SetTitle(wxStr(value));
-    //}
+    string Window::GetTitle()
+    {
+        return wxStr(_frame->GetTitle());
+    }
 
-    //void Window::Show()
-    //{
-    //    _frame->Show();
-    //}
+    void Window::SetTitle(const string& value)
+    {
+        _frame->SetTitle(wxStr(value));
+    }
+
+    void Window::Show()
+    {
+        _frame->Show();
+    }
+
+    void Window::AddChildControl(Control* value)
+    {
+        value->CreateWxWindow(_frame);
+    }
 }
