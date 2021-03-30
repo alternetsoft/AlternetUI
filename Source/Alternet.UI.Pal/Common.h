@@ -13,6 +13,8 @@
 #include <memory>
 #include <map>
 #include <utility>
+#include <locale>
+#include <codecvt>
 
 #ifdef __WXMSW__
 #include <sstream>

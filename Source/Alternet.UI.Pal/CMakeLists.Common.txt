@@ -13,6 +13,8 @@ add_library(${PROJECT_NAME} SHARED ${Sources})
 find_package(wxWidgets REQUIRED COMPONENTS net core base)
 include(${wxWidgets_USE_FILE})
 
+include_directories(".")
+
 target_link_libraries(${PROJECT_NAME} ${wxWidgets_LIBRARIES})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")
