@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace ApiGenerator.Api
 {
+
     internal static class TypeProvider
     {
         public static IEnumerable<Type> GetTypes()

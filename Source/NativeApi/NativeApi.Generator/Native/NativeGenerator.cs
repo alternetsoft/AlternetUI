@@ -19,7 +19,7 @@ namespace ApiGenerator.Native
                 GenerateCApi(paths, type, cApiIndexBuilder);
             }
 
-            File.WriteAllText(Path.Combine(paths.NativeSourcePath, "/..", "Api.cpp"), cApiIndexBuilder.ToString());
+            File.WriteAllText(Path.Combine(paths.NativeSourcePath, "..", "Api.cpp"), cApiIndexBuilder.ToString());
         }
 
         private static void GenerateCppApi(Paths paths, Type type)

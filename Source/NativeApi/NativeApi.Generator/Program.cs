@@ -13,7 +13,7 @@ namespace ApiGenerator
             var paths = new Paths(Path.GetFullPath(@"..\..\..\..\..\..\"));
             var types = TypeProvider.GetTypes();
 
-            ManagedGenerator.Generate(paths, types);
+            //ManagedGenerator.Generate(paths, types);
             NativeGenerator.Generate(paths, types);
             Console.WriteLine("All done.");
         }

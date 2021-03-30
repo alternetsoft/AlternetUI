@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ApiGenerator.Api;
 using Namotion.Reflection;
 
@@ -14,6 +15,12 @@ namespace ApiGenerator.Native
 
     internal abstract class Types
     {
+        HashSet<string> includes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        public string GetIncludes() => string.Join("\r\n", includes.ToArray());
+
+        protected void AddIncludedFile(string fileNameWithoutExtension) => includes.Add($"#include \"{fileNameWithoutExtension}.h\"");
+
         public abstract string GetTypeName(Type type, TypeUsage usage = TypeUsage.Default);
     }
 
@@ -43,6 +50,8 @@ namespace ApiGenerator.Native
             if (TypeProvider.IsStruct(type))
                 return usage.HasFlag(TypeUsage.Argument) ? "const " + type.Name + "&" : type.Name;
 
+            AddIncludedFile(type.Name);
+
             return type.Name + "&";
         }
     }
@@ -69,6 +78,8 @@ namespace ApiGenerator.Native
         {
             if (TypeProvider.IsStruct(type))
                 return type.Name;
+
+            AddIncludedFile(type.Name);
 
             return type.Name + "*";
         }

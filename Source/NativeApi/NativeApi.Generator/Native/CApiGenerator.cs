@@ -20,25 +20,41 @@ namespace ApiGenerator.Native
 
             var types = new CTypes();
 
-            w.WriteLine(GeneratorUtils.HeaderText);
             var typeName = GetTypeName(type);
 
-            w.WriteLine($"#pragma once");
-
-            w.WriteLine("#include \"../ApiUtils.h\"");
-            w.WriteLine($"#include \"../{typeName}.h\"");
+            w.WriteLine("#include \"ApiUtils.h\"");
 
             w.WriteLine();
             w.WriteLine("using namespace Alternet::UI;");
             w.WriteLine();
-                
+
+            if (MemberProvider.GetConstructorVisibility(type) == MemberVisibility.Public)
+                WriteConstructor(w, types, type);
+
+            if (MemberProvider.GetDestructorVisibility(type) == MemberVisibility.Public)
+                WriteDestructor(w, types, type);
+
             foreach (var property in MemberProvider.GetProperties(type))
                 WriteProperty(w, types, property);
 
             foreach (var property in MemberProvider.GetMethods(type))
                 WriteMethod(w, types, property);
 
-            return codeWriter.ToString();
+            return GetFinalCode(codeWriter.ToString(), types);
+        }
+
+        static string GetFinalCode(string code, Types types)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine(GeneratorUtils.HeaderText);
+            sb.AppendLine();
+            sb.AppendLine($"#pragma once");
+            sb.AppendLine();
+            sb.AppendLine(types.GetIncludes());
+
+            sb.Append(code);
+
+            return sb.ToString();
         }
 
         const string ExportMacro = "ALTERNET_UI_API";
@@ -56,6 +72,7 @@ namespace ApiGenerator.Native
         {
             var name = method.Name;
             var returnTypeName = types.GetTypeName(method.ReturnType);
+            var declaringTypeName = TypeProvider.GetNativeName(method.DeclaringType!);
 
             var signatureParameters = new StringBuilder();
             var parameters = method.GetParameters();
@@ -70,7 +87,23 @@ namespace ApiGenerator.Native
                     signatureParameters.Append(", ");
             }
 
-            w.WriteLine($"{ExportMacro} {returnTypeName} {name}({signatureParameters}) {{ throw 0; }}");
+            w.WriteLine($"{ExportMacro} {returnTypeName} {declaringTypeName}_{name}({signatureParameters}) {{ throw 0; }}");
+        }
+
+        private static void WriteConstructor(IndentedTextWriter w, Types types, Type type)
+        {
+            var declaringTypeName = TypeProvider.GetNativeName(type);
+            var instanceTypeName = types.GetTypeName(type);
+
+            w.WriteLine($"{ExportMacro} {instanceTypeName} {declaringTypeName}_Create() {{ throw 0; }}");
+        }
+
+        private static void WriteDestructor(IndentedTextWriter w, Types types, Type type)
+        {
+            var declaringTypeName = TypeProvider.GetNativeName(type);
+            var instanceTypeName = types.GetTypeName(type, TypeUsage.Argument);
+
+            w.WriteLine($"{ExportMacro} {declaringTypeName}_Destroy({instanceTypeName} obj) {{ throw 0; }}");
         }
     }
 }
