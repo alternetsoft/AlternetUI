@@ -14,19 +14,11 @@ namespace Alternet::UI
 
     class Button : public Control
     {
+#include "Api/Button.inc"
     public:
-        Button();
-        virtual ~Button();
 
         wxWindowBase* GetControl() override;
-
-        string GetText() const;
-        void SetText(const string& value);
-
-        static void SetEventCallback(ButtonEventCallbackType value);
-
         wxWindow* CreateWxWindow(wxWindow* parent) override;
-
         void OnLeftUp(wxMouseEvent& event);
 
     private:

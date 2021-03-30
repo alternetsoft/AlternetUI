@@ -25,8 +25,16 @@ namespace ApiGenerator.Native
             foreach (var property in MemberProvider.GetMethods(type))
                 WriteMethod(w, property, types);
 
+            w.WriteLine(GetVisibility(MemberProvider.GetConstructorVisibility(type)));
+            WriteConstructor(w, type);
+
+            w.WriteLine(GetVisibility(MemberProvider.GetDestructorVisibility(type)));
+            WriteDestructor(w, type);
+
             return codeWriter.ToString();
         }
+
+        static string GetVisibility(MemberVisibility visibility) => visibility.ToString().ToLower() + ":";
 
         private static void WriteProperty(IndentedTextWriter w, PropertyInfo property, Types types)
         {
@@ -68,5 +76,28 @@ namespace ApiGenerator.Native
 
             w.WriteLine($"{GetModifiers(method)}{returnTypeName} {name}({signatureParameters});");
         }
+
+        private static void WriteConstructor(IndentedTextWriter w, Type type)
+        {
+            var declaringTypeName = TypeProvider.GetNativeName(type);
+
+            w.Write($"{declaringTypeName}()");
+            if (MemberProvider.GetConstructorVisibility(type) == MemberVisibility.Private)
+                w.WriteLine(" {}");
+            else
+                w.WriteLine(";");
+        }
+
+        private static void WriteDestructor(IndentedTextWriter w, Type type)
+        {
+            var declaringTypeName = TypeProvider.GetNativeName(type);
+
+            w.Write($"virtual ~{declaringTypeName}()");
+            if (MemberProvider.GetDestructorVisibility(type) == MemberVisibility.Private)
+                w.WriteLine(" {}");
+            else
+                w.WriteLine(";");
+        }
+
     }
 }

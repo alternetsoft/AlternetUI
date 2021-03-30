@@ -208,6 +208,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Api\Application.inc" />
+    <None Include="Api\Button.inc" />
     <None Include="Api\Control.inc" />
     <None Include="Api\MessageBox_.inc" />
     <None Include="Api\Window.inc" />
