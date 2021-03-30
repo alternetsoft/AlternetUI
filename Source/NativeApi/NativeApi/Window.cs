@@ -10,6 +10,8 @@ namespace NativeApi.Api
 
         public void Show() => throw new Exception();
 
+        public void AddChildControl(Control control) => throw new Exception();
+
         void IDisposable.Dispose() => throw new Exception();
     }
 }

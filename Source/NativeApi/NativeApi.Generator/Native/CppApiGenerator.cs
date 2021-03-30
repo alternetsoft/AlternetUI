@@ -31,6 +31,9 @@ namespace ApiGenerator.Native
             w.WriteLine(GetVisibility(MemberProvider.GetDestructorVisibility(type)));
             WriteDestructor(w, type);
 
+            w.WriteLine("private:");
+            w.WriteLine($"BYREF_ONLY({TypeProvider.GetNativeName(type)});");
+
             return codeWriter.ToString();
         }
 
