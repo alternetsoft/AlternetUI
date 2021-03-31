@@ -1,0 +1,113 @@
+﻿using ApiGenerator.Api;
+using System;
+using System.CodeDom.Compiler;
+using System.IO;
+using System.Reflection;
+using System.Text;
+
+namespace ApiGenerator.Managed
+{
+    internal class PInvokeClassGenerator
+    {
+        public void Generate(Type type, IndentedTextWriter w)
+        {
+            var types = new PInvokeTypes();
+
+            var typeName = type.Name;
+
+            w.WriteLine("[SuppressUnmanagedCodeSecurity]");
+            w.WriteLine("private class NativeApi : NativeApiProvider");
+            w.WriteLine("{");
+            w.Indent++;
+            w.WriteLine("static NativeApi() => Initialize();");
+            w.WriteLine();
+
+            if (MemberProvider.GetConstructorVisibility(type) == MemberVisibility.Public)
+                WriteConstructor(w, types, type);
+
+            if (MemberProvider.GetDestructorVisibility(type) == MemberVisibility.Public)
+                WriteDestructor(w, types, type);
+
+            foreach (var property in MemberProvider.GetProperties(type))
+                WriteProperty(w, property, types);
+
+            foreach (var property in MemberProvider.GetMethods(type))
+                WriteMethod(w, property, types);
+
+            w.Indent--;
+            w.WriteLine("}");
+        }
+
+        static void WriteDllImport(IndentedTextWriter w) => w.WriteLine("[DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]");
+
+        private static void WriteDestructor(IndentedTextWriter w, Types types, Type type)
+        {
+            var declaringTypeName = TypeProvider.GetNativeName(type);
+
+            WriteDllImport(w);
+            w.WriteLine($"public static extern void {declaringTypeName}_Destroy(IntPtr obj);");
+            w.WriteLine();
+        }
+
+        private static void WriteConstructor(IndentedTextWriter w, Types types, Type type)
+        {
+            var declaringTypeName = TypeProvider.GetNativeName(type);
+
+            WriteDllImport(w);
+            w.WriteLine($"public static extern IntPtr {declaringTypeName}_Create();");
+            w.WriteLine();
+        }
+
+        private static void WriteProperty(IndentedTextWriter w, PropertyInfo property, Types types)
+        {
+            var declaringTypeName = TypeProvider.GetNativeName(property.DeclaringType!);
+            var propertyName = property.Name;
+            var propertyTypeName = types.GetTypeName(property.PropertyType);
+
+            WriteDllImport(w);
+            w.WriteLine($"public static extern {propertyTypeName} {declaringTypeName}_Get{propertyName}(IntPtr obj);");
+            w.WriteLine();
+
+            WriteDllImport(w);
+            w.WriteLine($"public static extern void {declaringTypeName}_Set{propertyName}(IntPtr obj, {propertyTypeName} value);");
+            w.WriteLine();
+        }
+
+        private static void WriteMethod(IndentedTextWriter w, MethodInfo method, Types types)
+        {
+            var declaringTypeName = TypeProvider.GetNativeName(method.DeclaringType!);
+            var methodName = method.Name;
+            var returnTypeName = types.GetTypeName(method.ReturnType);
+
+            var signatureParametersString = new StringBuilder();
+            var parameters = method.GetParameters();
+
+            bool isStatic = MemberProvider.IsStatic(method);
+
+            if (!isStatic)
+            {
+                var parameterType = types.GetTypeName(method.DeclaringType!);
+                signatureParametersString.Append(parameterType + " obj");
+
+                if (parameters.Length > 0)
+                    signatureParametersString.Append(", ");
+            }
+
+            for (var i = 0; i < parameters.Length; i++)
+            {
+                var parameter = parameters[i];
+
+                var parameterType = types.GetTypeName(parameter.ParameterType);
+                signatureParametersString.Append(parameterType + " " + parameter.Name);
+
+                if (i < parameters.Length - 1)
+                    signatureParametersString.Append(", ");
+            }
+
+            WriteDllImport(w);
+            w.WriteLine($"public static extern {returnTypeName} {declaringTypeName}_{methodName}({signatureParametersString});");
+        }
+
+        static string GetModifiers(MemberInfo member) => MemberProvider.IsStatic(member) ? "static " : "";
+    }
+}
