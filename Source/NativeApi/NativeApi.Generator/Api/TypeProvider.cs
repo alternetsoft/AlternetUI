@@ -16,6 +16,8 @@ namespace ApiGenerator.Api
 
         public static bool IsStruct(Type type) => type.IsValueType && !type.IsPrimitive;
 
+        public static bool IsComplexType(Type type) => !type.IsValueType && !type.IsPrimitive && type != typeof(string);
+
         public static bool IsApiType(Type type) =>
             type.GetCustomAttributes(typeof(ApiAttribute), false).Length > 0;
 

@@ -61,33 +61,87 @@ namespace ApiGenerator.Native
 
         private static void WriteProperty(IndentedTextWriter w, Types types, PropertyInfo property)
         {
-            var name = property.Name;
+            var propertyName = property.Name;
             var declaringTypeName = TypeProvider.GetNativeName(property.DeclaringType!);
 
-            w.WriteLine($"{ExportMacro} {types.GetTypeName(property.PropertyType)} {declaringTypeName}_Get{name}() {{ throw 0; }}");
-            w.WriteLine($"{ExportMacro} void {declaringTypeName}_Set{name}({types.GetTypeName(property.PropertyType, TypeUsage.Argument)} value) {{ throw 0; }}");
+            w.WriteLine($"{ExportMacro} {types.GetTypeName(property.PropertyType)} {declaringTypeName}_Get{propertyName}()");
+            w.WriteLine("{");
+            w.Indent++;
+
+            w.Write("return ");
+            w.Write(
+                string.Format(
+                    GetCppToCReturnValueFormatString(property.PropertyType),
+                    $"return obj->Get{propertyName}()"));
+            w.WriteLine(";");
+
+            w.Indent--;
+            w.WriteLine("}");
+            w.WriteLine();
+
+
+            w.WriteLine($"{ExportMacro} void {declaringTypeName}_Set{propertyName}({types.GetTypeName(property.PropertyType, TypeUsage.Argument)} value)");
+            w.WriteLine("{");
+            w.Indent++;
+            w.WriteLine($"obj->Set{propertyName}({GetCToCppArgument(property.PropertyType, "value")});");
+            w.Indent--;
+            w.WriteLine("}");
+            w.WriteLine();
         }
 
         private static void WriteMethod(IndentedTextWriter w, Types types, MethodInfo method)
         {
-            var name = method.Name;
+            var methodName = method.Name;
             var returnTypeName = types.GetTypeName(method.ReturnType);
             var declaringTypeName = TypeProvider.GetNativeName(method.DeclaringType!);
 
-            var signatureParameters = new StringBuilder();
+            var signatureParametersString = new StringBuilder();
+            var callParametersString = new StringBuilder();
             var parameters = method.GetParameters();
+
+            bool isStatic = MemberProvider.IsStatic(method);
+
+            if (!isStatic)
+            {
+                var parameterType = types.GetTypeName(method.DeclaringType!, TypeUsage.Argument);
+                signatureParametersString.Append(parameterType + " obj");
+
+                if (parameters.Length > 0)
+                    signatureParametersString.Append(", ");
+            }
+
             for (var i = 0; i < parameters.Length; i++)
             {
                 var parameter = parameters[i];
 
                 var parameterType = types.GetTypeName(parameter.ParameterType, TypeUsage.Argument);
-                signatureParameters.Append(parameterType + " " + parameter.Name);
+                signatureParametersString.Append(parameterType + " " + parameter.Name);
+                callParametersString.Append(GetCToCppArgument(parameter.ParameterType, parameter.Name!));
 
                 if (i < parameters.Length - 1)
-                    signatureParameters.Append(", ");
+                {
+                    signatureParametersString.Append(", ");
+                    callParametersString.Append(", ");
+                }
             }
 
-            w.WriteLine($"{ExportMacro} {returnTypeName} {declaringTypeName}_{name}({signatureParameters}) {{ throw 0; }}");
+            w.WriteLine($"{ExportMacro} {returnTypeName} {declaringTypeName}_{methodName}({signatureParametersString})");
+            w.WriteLine("{");
+            w.Indent++;
+
+            if (method.ReturnType != typeof(void))
+                w.Write("return ");
+
+            w.Write(
+                string.Format(
+                    GetCppToCReturnValueFormatString(method.ReturnType),
+                    $"{(isStatic ? declaringTypeName + "::" : "obj->")}{methodName}({callParametersString})"));
+
+            w.WriteLine(";");
+
+            w.Indent--;
+            w.WriteLine("}");
+            w.WriteLine();
         }
 
         private static void WriteConstructor(IndentedTextWriter w, Types types, Type type)
@@ -95,7 +149,34 @@ namespace ApiGenerator.Native
             var declaringTypeName = TypeProvider.GetNativeName(type);
             var instanceTypeName = types.GetTypeName(type);
 
-            w.WriteLine($"{ExportMacro} {instanceTypeName} {declaringTypeName}_Create() {{ throw 0; }}");
+            w.WriteLine($"{ExportMacro} {instanceTypeName} {declaringTypeName}_Create()");
+            w.WriteLine("{");
+            w.Indent++;
+
+            w.WriteLine($"return new {declaringTypeName}();");
+
+            w.Indent--;
+            w.WriteLine("}");
+            w.WriteLine();
+        }
+
+        static string GetCToCppArgument(Type type, string name)
+        {
+            if (!TypeProvider.IsComplexType(type))
+                return name;
+
+            return "*" + name;
+        }
+
+        static string GetCppToCReturnValueFormatString(Type type)
+        {
+            if (type == typeof(string))
+                return "AllocPInvokeReturnString({0})";
+
+            if (TypeProvider.IsComplexType(type))
+                return "&{0}";
+
+            return "{0}";
         }
 
         private static void WriteDestructor(IndentedTextWriter w, Types types, Type type)
@@ -103,7 +184,15 @@ namespace ApiGenerator.Native
             var declaringTypeName = TypeProvider.GetNativeName(type);
             var instanceTypeName = types.GetTypeName(type, TypeUsage.Argument);
 
-            w.WriteLine($"{ExportMacro} {declaringTypeName}_Destroy({instanceTypeName} obj) {{ throw 0; }}");
+            w.WriteLine($"{ExportMacro} void {declaringTypeName}_Destroy({instanceTypeName} obj)");
+            w.WriteLine("{");
+            w.Indent++;
+
+            w.WriteLine("delete obj;");
+
+            w.Indent--;
+            w.WriteLine("}");
+            w.WriteLine();
         }
     }
 }
