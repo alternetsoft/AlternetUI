@@ -1,7 +1,9 @@
+// Auto generated code. Copyright AlterNET, 2021.
+
 #pragma once
 
-#include "ApiUtils.h"
 #include "Button.h"
+#include "ApiUtils.h"
 
 using namespace Alternet::UI;
 
@@ -15,17 +17,18 @@ ALTERNET_UI_API void Button_Destroy(Button* obj)
     delete obj;
 }
 
-ALTERNET_UI_API void Button_SetText(Button* obj, const char16_t* value)
-{
-    obj->SetText(value);
-}
-
 ALTERNET_UI_API char16_t* Button_GetText(Button* obj)
 {
     return AllocPInvokeReturnString(obj->GetText());
 }
 
-ALTERNET_UI_API void Button_SetEventCallback(ButtonEventCallbackType callback)
+ALTERNET_UI_API void Button_SetText(Button* obj, const char16_t* value)
+{
+    obj->SetText(value);
+}
+
+ALTERNET_UI_API void Button_SetEventCallback(Button::ButtonEventCallbackType callback)
 {
     Button::SetEventCallback(callback);
 }
+

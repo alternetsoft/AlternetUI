@@ -2,6 +2,7 @@
 using System;
 using System.CodeDom.Compiler;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -25,14 +26,16 @@ namespace ApiGenerator.Native
             foreach (var property in MemberProvider.GetMethods(type))
                 WriteMethod(w, property, types);
 
+            WriteEvents(w, types, MemberProvider.GetEvents(type).ToArray());
+
             w.WriteLine(GetVisibility(MemberProvider.GetConstructorVisibility(type)));
-            WriteConstructor(w, type);
+            WriteConstructor(w, types, type);
 
             w.WriteLine(GetVisibility(MemberProvider.GetDestructorVisibility(type)));
-            WriteDestructor(w, type);
+            WriteDestructor(w, types, type);
 
             w.WriteLine("private:");
-            w.WriteLine($"BYREF_ONLY({TypeProvider.GetNativeName(type)});");
+            w.WriteLine($"BYREF_ONLY({types.GetTypeName(type, TypeUsage.Static)});");
 
             return codeWriter.ToString();
         }
@@ -44,7 +47,7 @@ namespace ApiGenerator.Native
             var name = property.Name;
             var modifiers = GetModifiers(property);
             w.WriteLine();
-            w.WriteLine($"{modifiers}{types.GetTypeName(property.PropertyType)} Get{name}();");
+            w.WriteLine($"{modifiers}{types.GetTypeName(property.PropertyType, TypeUsage.Return)} Get{name}();");
             w.WriteLine($"{modifiers}void Set{name}({types.GetTypeName(property.PropertyType, TypeUsage.Argument)} value);");
             w.WriteLine();
         }
@@ -62,7 +65,7 @@ namespace ApiGenerator.Native
         private static void WriteMethod(IndentedTextWriter w, MethodInfo method, Types types)
         {
             var name = method.Name;
-            var returnTypeName = types.GetTypeName(method.ReturnType);
+            var returnTypeName = types.GetTypeName(method.ReturnType, TypeUsage.Return);
 
             var signatureParameters = new StringBuilder();
             var parameters = method.GetParameters();
@@ -80,9 +83,40 @@ namespace ApiGenerator.Native
             w.WriteLine($"{GetModifiers(method)}{returnTypeName} {name}({signatureParameters});");
         }
 
-        private static void WriteConstructor(IndentedTextWriter w, Type type)
+        private static void WriteEvents(IndentedTextWriter w, Types types, EventInfo[] events)
         {
-            var declaringTypeName = TypeProvider.GetNativeName(type);
+            if (events.Length == 0)
+                return;
+
+            var declaringTypeName = types.GetTypeName(events[0].DeclaringType!, TypeUsage.Static);
+            w.WriteLine("public:");
+            w.WriteLine($"enum class {declaringTypeName}Event");
+
+            w.WriteLine("{");
+            w.Indent++;
+
+            foreach (var e in events)
+                w.WriteLine(e.Name + ",");
+
+            w.Indent--;
+            w.WriteLine("};");
+
+            w.WriteLine($"typedef void(*{declaringTypeName}EventCallbackType)({declaringTypeName}* obj, {declaringTypeName}Event event);");
+
+            w.Write($"static void SetEventCallback({declaringTypeName}EventCallbackType value)");
+            w.WriteLine(" { eventCallback = value; }");
+
+            w.WriteLine("protected:");
+            w.Write($"void RaiseEvent({declaringTypeName}Event event)");
+            w.WriteLine(" { if (eventCallback != nullptr) eventCallback(this, event); }");
+
+            w.WriteLine("private:");
+            w.WriteLine($"inline static {declaringTypeName}EventCallbackType eventCallback = nullptr;");
+        }
+
+        private static void WriteConstructor(IndentedTextWriter w, Types types, Type type)
+        {
+            var declaringTypeName = types.GetTypeName(type, TypeUsage.Static);
 
             w.Write($"{declaringTypeName}()");
             if (MemberProvider.GetConstructorVisibility(type) == MemberVisibility.Private)
@@ -91,9 +125,9 @@ namespace ApiGenerator.Native
                 w.WriteLine(";");
         }
 
-        private static void WriteDestructor(IndentedTextWriter w, Type type)
+        private static void WriteDestructor(IndentedTextWriter w, Types types, Type type)
         {
-            var declaringTypeName = TypeProvider.GetNativeName(type);
+            var declaringTypeName = types.GetTypeName(type, TypeUsage.Static);
 
             w.Write($"virtual ~{declaringTypeName}()");
             if (MemberProvider.GetDestructorVisibility(type) == MemberVisibility.Private)

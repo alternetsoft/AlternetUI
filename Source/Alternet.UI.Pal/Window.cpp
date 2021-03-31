@@ -37,8 +37,8 @@ namespace Alternet::UI
         _frame->Show();
     }
 
-    void Window::AddChildControl(Control* value)
+    void Window::AddChildControl(Control& value)
     {
-        value->CreateWxWindow(_frame);
+        value.CreateWxWindow(_frame);
     }
 }

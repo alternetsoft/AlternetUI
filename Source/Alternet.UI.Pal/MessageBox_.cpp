@@ -2,7 +2,7 @@
 
 namespace Alternet::UI
 {
-    /*static*/ void MessageBox_::Show(string text, string caption)
+    /*static*/ void MessageBox_::Show(const string& text, const string& caption)
     {
         wxMessageBox(wxStr(text), wxStr(caption));
     }

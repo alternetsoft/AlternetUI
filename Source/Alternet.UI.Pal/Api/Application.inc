@@ -1,3 +1,4 @@
+// Auto generated code. Copyright AlterNET, 2021.
 public:
 void Run(Window& window);
 public:

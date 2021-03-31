@@ -1,5 +1,6 @@
+// Auto generated code. Copyright AlterNET, 2021.
 public:
-static void Show(string text, string caption);
+static void Show(const string& text, const string& caption);
 private:
 MessageBox_() {}
 private:

@@ -11,13 +11,16 @@ namespace ApiGenerator.Api
         public static IEnumerable<PropertyInfo> GetProperties(Type type) =>
             type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static).Where(x => x.DeclaringType == type);
 
+        public static IEnumerable<EventInfo> GetEvents(Type type) =>
+            type.GetEvents(BindingFlags.Public | BindingFlags.Instance).Where(x => x.DeclaringType == type);
+
         public static IEnumerable<MethodInfo> GetMethods(Type type) =>
             type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static).Where(x => x.DeclaringType == type && !x.IsSpecialName);
 
 
         public static MemberVisibility GetDestructorVisibility(Type type)
         {
-            return GetInterfaces(type, includeInherited: false).Contains(typeof(IDisposable)) ? MemberVisibility.Public : MemberVisibility.Private;
+            return type.GetInterfaces().Contains(typeof(IDisposable)) ? MemberVisibility.Public : MemberVisibility.Private;
         }
 
         public static MemberVisibility GetConstructorVisibility(Type type)
@@ -41,13 +44,5 @@ namespace ApiGenerator.Api
             EventInfo x => x.GetAddMethod()?.IsStatic ?? false,
             _ => throw new Exception(),
         };
-
-        static IEnumerable<Type> GetInterfaces(Type type, bool includeInherited)
-        {
-            if (includeInherited || type.BaseType == null)
-                return type.GetInterfaces();
-            else
-                return type.GetInterfaces().Except(type.BaseType.GetInterfaces());
-        }
     }
 }

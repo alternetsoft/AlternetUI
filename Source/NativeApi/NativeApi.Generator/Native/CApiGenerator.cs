@@ -11,16 +11,12 @@ namespace ApiGenerator.Native
 {
     internal static class CApiGenerator
     {
-        static string GetTypeName(Type type) => TypeProvider.GetNativeName(type);
-
         public static string Generate(Type type)
         {
             var codeWriter = new StringWriter();
             var w = new IndentedTextWriter(codeWriter);
 
             var types = new CTypes();
-
-            var typeName = GetTypeName(type);
 
             w.WriteLine("#include \"ApiUtils.h\"");
 
@@ -39,6 +35,8 @@ namespace ApiGenerator.Native
 
             foreach (var property in MemberProvider.GetMethods(type))
                 WriteMethod(w, types, property);
+
+            WriteEvents(w, types, MemberProvider.GetEvents(type).ToArray());
 
             return GetFinalCode(codeWriter.ToString(), types);
         }
@@ -62,9 +60,11 @@ namespace ApiGenerator.Native
         private static void WriteProperty(IndentedTextWriter w, Types types, PropertyInfo property)
         {
             var propertyName = property.Name;
-            var declaringTypeName = TypeProvider.GetNativeName(property.DeclaringType!);
+            var declaringTypeName = types.GetTypeName(property.DeclaringType!, TypeUsage.Static);
 
-            w.WriteLine($"{ExportMacro} {types.GetTypeName(property.PropertyType)} {declaringTypeName}_Get{propertyName}()");
+            var instanceParameterSignaturePart = types.GetTypeName(property.DeclaringType!, TypeUsage.Argument) + " obj";
+
+            w.WriteLine($"{ExportMacro} {types.GetTypeName(property.PropertyType, TypeUsage.Return)} {declaringTypeName}_Get{propertyName}({instanceParameterSignaturePart})");
             w.WriteLine("{");
             w.Indent++;
 
@@ -72,7 +72,7 @@ namespace ApiGenerator.Native
             w.Write(
                 string.Format(
                     GetCppToCReturnValueFormatString(property.PropertyType),
-                    $"return obj->Get{propertyName}()"));
+                    $"obj->Get{propertyName}()"));
             w.WriteLine(";");
 
             w.Indent--;
@@ -80,7 +80,7 @@ namespace ApiGenerator.Native
             w.WriteLine();
 
 
-            w.WriteLine($"{ExportMacro} void {declaringTypeName}_Set{propertyName}({types.GetTypeName(property.PropertyType, TypeUsage.Argument)} value)");
+            w.WriteLine($"{ExportMacro} void {declaringTypeName}_Set{propertyName}({instanceParameterSignaturePart}, {types.GetTypeName(property.PropertyType, TypeUsage.Argument)} value)");
             w.WriteLine("{");
             w.Indent++;
             w.WriteLine($"obj->Set{propertyName}({GetCToCppArgument(property.PropertyType, "value")});");
@@ -92,8 +92,8 @@ namespace ApiGenerator.Native
         private static void WriteMethod(IndentedTextWriter w, Types types, MethodInfo method)
         {
             var methodName = method.Name;
-            var returnTypeName = types.GetTypeName(method.ReturnType);
-            var declaringTypeName = TypeProvider.GetNativeName(method.DeclaringType!);
+            var returnTypeName = types.GetTypeName(method.ReturnType, TypeUsage.Return);
+            var declaringTypeName = types.GetTypeName(method.DeclaringType!, TypeUsage.Static);
 
             var signatureParametersString = new StringBuilder();
             var callParametersString = new StringBuilder();
@@ -144,12 +144,30 @@ namespace ApiGenerator.Native
             w.WriteLine();
         }
 
+        private static void WriteEvents(IndentedTextWriter w, Types types, EventInfo[] events)
+        {
+            if (events.Length == 0)
+                return;
+
+            var declaringTypeName = types.GetTypeName(events[0].DeclaringType!, TypeUsage.Static);
+
+            w.WriteLine($"{ExportMacro} void {declaringTypeName}_SetEventCallback({declaringTypeName}::{declaringTypeName}EventCallbackType callback)");
+            w.WriteLine("{");
+            w.Indent++;
+
+            w.WriteLine($"{declaringTypeName}::SetEventCallback(callback);");
+
+            w.Indent--;
+            w.WriteLine("}");
+            w.WriteLine();
+        }
+
         private static void WriteConstructor(IndentedTextWriter w, Types types, Type type)
         {
-            var declaringTypeName = TypeProvider.GetNativeName(type);
-            var instanceTypeName = types.GetTypeName(type);
+            var declaringTypeName = types.GetTypeName(type, TypeUsage.Static);
+            var returnTypeName = types.GetTypeName(type, TypeUsage.Return);
 
-            w.WriteLine($"{ExportMacro} {instanceTypeName} {declaringTypeName}_Create()");
+            w.WriteLine($"{ExportMacro} {returnTypeName} {declaringTypeName}_Create()");
             w.WriteLine("{");
             w.Indent++;
 
@@ -181,7 +199,7 @@ namespace ApiGenerator.Native
 
         private static void WriteDestructor(IndentedTextWriter w, Types types, Type type)
         {
-            var declaringTypeName = TypeProvider.GetNativeName(type);
+            var declaringTypeName = types.GetTypeName(type, TypeUsage.Static);
             var instanceTypeName = types.GetTypeName(type, TypeUsage.Argument);
 
             w.WriteLine($"{ExportMacro} void {declaringTypeName}_Destroy({instanceTypeName} obj)");

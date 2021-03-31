@@ -5,13 +5,6 @@
 
 namespace Alternet::UI
 {
-    enum class ButtonEvent
-    {
-        Click,
-    };
-
-    typedef int(*ButtonEventCallbackType)(void* button, ButtonEvent event, void* param);
-
     class Button : public Control
     {
 #include "Api/Button.inc"
@@ -23,13 +16,7 @@ namespace Alternet::UI
 
     private:
 
-        int RaiseEvent(ButtonEvent event, void* param = nullptr);
-
-        inline static ButtonEventCallbackType eventCallback = nullptr;
-
         wxButton* _button = nullptr;
         string _text;
-
-        BYREF_ONLY(Button);
     };
 }

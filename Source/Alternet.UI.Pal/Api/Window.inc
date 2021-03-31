@@ -1,8 +1,11 @@
+// Auto generated code. Copyright AlterNET, 2021.
 public:
-void Show();
-void AddChildControl(Control* value);
+
 string GetTitle();
 void SetTitle(const string& value);
+
+void Show();
+void AddChildControl(Control& control);
 public:
 Window();
 public:

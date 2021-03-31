@@ -30,15 +30,13 @@ namespace Alternet.UI.Native
         {
             if (!eventCallbackGCHandle.IsAllocated)
             {
-                var sink = new NativeApi.ButtonEventCallbackType((obj, e, param) =>
+                var sink = new NativeApi.ButtonEventCallbackType((obj, e) =>
                 {
                     var w = TryGetFromNativePointer(obj);
                     if (w == null)
-                    {
-                        return 0;
-                    }
+                        return;
 
-                    return w.OnEvent(e, param);
+                    w.OnEvent(e);
                 });
 
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
@@ -46,7 +44,7 @@ namespace Alternet.UI.Native
             }
         }
 
-        int OnEvent(NativeApi.ButtonEvent e, IntPtr param)
+        void OnEvent(NativeApi.ButtonEvent e)
         {
             switch (e)
             {
@@ -57,8 +55,6 @@ namespace Alternet.UI.Native
                 default:
                     throw new Exception("Unexpected NativeApi.ButtonEvent value: " + e);
             }
-
-            return 0;
         }
 
         protected virtual void OnClick(EventArgs e)
@@ -112,7 +108,7 @@ namespace Alternet.UI.Native
             }
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-            public delegate int ButtonEventCallbackType(IntPtr obj, ButtonEvent e, IntPtr param);
+            public delegate void ButtonEventCallbackType(IntPtr obj, ButtonEvent e);
 
             public enum ButtonEvent
             {

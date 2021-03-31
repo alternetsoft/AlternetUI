@@ -9,8 +9,10 @@ namespace ApiGenerator.Native
     [Flags]
     enum TypeUsage
     {
-        Default = 0,
-        Argument = 1 << 0,
+        None,
+        Static = 1 << 0,
+        Argument = 1 << 1,
+        Return = 1 << 2,
     }
 
     internal abstract class Types
@@ -21,12 +23,12 @@ namespace ApiGenerator.Native
 
         protected void AddIncludedFile(string fileNameWithoutExtension) => includes.Add($"#include \"{fileNameWithoutExtension}.h\"");
 
-        public abstract string GetTypeName(Type type, TypeUsage usage = TypeUsage.Default);
+        public abstract string GetTypeName(Type type, TypeUsage usage);
     }
 
     internal class CppTypes : Types
     {
-        public override string GetTypeName(Type type, TypeUsage usage = TypeUsage.Default)
+        public override string GetTypeName(Type type, TypeUsage usage)
         {
             string GetTypeBase()
             {
@@ -47,18 +49,22 @@ namespace ApiGenerator.Native
 
         protected virtual string GetComplexTypeName(Type type, TypeUsage usage)
         {
+            var name = TypeProvider.GetNativeName(type);
             if (TypeProvider.IsStruct(type))
-                return usage.HasFlag(TypeUsage.Argument) ? "const " + type.Name + "&" : type.Name;
+                return usage.HasFlag(TypeUsage.Argument) ? "const " + name + "&" : name;
 
-            AddIncludedFile(type.Name);
+            AddIncludedFile(name);
 
-            return type.Name + "&";
+            if (usage.HasFlag(TypeUsage.Static))
+                return name;
+            
+            return name + "&";
         }
     }
 
     internal class CTypes : Types
     {
-        public override string GetTypeName(Type type, TypeUsage usage = TypeUsage.Default)
+        public override string GetTypeName(Type type, TypeUsage usage)
         {
             string GetTypeBase()
             {
@@ -76,12 +82,16 @@ namespace ApiGenerator.Native
 
         protected virtual string GetComplexTypeName(Type type, TypeUsage usage)
         {
+            var name = TypeProvider.GetNativeName(type);
             if (TypeProvider.IsStruct(type))
-                return type.Name;
+                return name;
 
-            AddIncludedFile(type.Name);
+            AddIncludedFile(name);
 
-            return type.Name + "*";
+            if (usage.HasFlag(TypeUsage.Static))
+                return name;
+
+            return name + "*";
         }
     }
 }
