@@ -38,6 +38,9 @@ namespace ApiGenerator.Managed
     {
         public override string GetTypeName(Type type)
         {
+            if (type == typeof(string))
+                return "string?";
+
             if (aliases.TryGetValue(type, out var aliasName))
                 return aliasName;
 
@@ -52,6 +55,9 @@ namespace ApiGenerator.Managed
     {
         public override string GetTypeName(Type type)
         {
+            if (type == typeof(string))
+                return "string?";
+
             if (aliases.TryGetValue(type, out var aliasName))
                 return aliasName;
 

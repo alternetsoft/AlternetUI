@@ -2,6 +2,7 @@
 using System;
 using System.CodeDom.Compiler;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -35,17 +36,21 @@ using System.Security;");
             w.WriteLine("{");
             w.Indent++;
 
-            if (MemberProvider.GetConstructorVisibility(type) == MemberVisibility.Public)
-                WriteConstructor(w, types, type);
+            var events = MemberProvider.GetEvents(type).ToArray();
 
-            if (MemberProvider.GetDestructorVisibility(type) == MemberVisibility.Public)
-                WriteDestructor(w, types, type);
+            if (MemberProvider.GetConstructorVisibility(type) == MemberVisibility.Public)
+                WriteConstructor(w, types, type, events.Length > 0);
+
+            //if (MemberProvider.GetDestructorVisibility(type) == MemberVisibility.Public)
+            //    WriteDestructor(w, types, type);
 
             foreach (var property in MemberProvider.GetProperties(type))
                 WriteProperty(w, property, types);
 
             foreach (var property in MemberProvider.GetMethods(type))
                 WriteMethod(w, property, types);
+
+            WriteEvents(w, types, events);
 
             w.WriteLine();
             new PInvokeClassGenerator().Generate(type, w);
@@ -88,18 +93,17 @@ using System.Security;");
             w.WriteLine();
         }
 
-        private static void WriteConstructor(IndentedTextWriter w, Types types, Type type)
+        private static void WriteConstructor(IndentedTextWriter w, Types types, Type type, bool hasEvents)
         {
             var declaringTypeName = types.GetTypeName(type);
 
             w.WriteLine($"public {declaringTypeName}()");
-            w.WriteLine("{");
-            w.Indent++;
-
-            w.WriteLine($"NativePointer = NativeApi.{TypeProvider.GetNativeName(type)}_Create();");
-
-            w.Indent--;
-            w.WriteLine("}");
+            using (new BlockIndent(w))
+            {
+                w.WriteLine($"SetNativePointer(NativeApi.{TypeProvider.GetNativeName(type)}_Create());");
+                if (hasEvents)
+                    w.WriteLine("SetEventCallback();");
+            }
             w.WriteLine();
         }
 
@@ -140,6 +144,8 @@ using System.Security;");
                     w.WriteLine($"NativeApi.{nativeDeclaringTypeName}_Set{propertyName}(NativePointer, {GetManagedToNativeArgument(property.PropertyType, "value")});");
                 }
             }
+
+            w.WriteLine();
         }
 
         private static void WriteMethod(IndentedTextWriter w, MethodInfo method, Types types)
@@ -150,6 +156,14 @@ using System.Security;");
             var signatureParametersString = new StringBuilder();
             var callParametersString = new StringBuilder();
             var parameters = method.GetParameters();
+
+            if (!method.IsStatic)
+            {
+                callParametersString.Append("NativePointer");
+                if (parameters.Length > 0)
+                    callParametersString.Append(", ");
+            }
+
             for (var i = 0; i < parameters.Length; i++)
             {
                 var parameter = parameters[i];
@@ -169,15 +183,70 @@ using System.Security;");
             w.WriteLine("{");
             w.Indent++;
 
-            w.WriteLine("CheckDisposed();");
+            if (!method.IsStatic)
+                w.WriteLine("CheckDisposed();");
 
             if (method.ReturnType != typeof(void))
                 w.Write("return ");
 
-            w.WriteLine($"NativeApi.{TypeProvider.GetNativeName(method.DeclaringType!)}_{methodName}(NativePointer, {callParametersString});");
+            w.WriteLine($"NativeApi.{TypeProvider.GetNativeName(method.DeclaringType!)}_{methodName}({callParametersString});");
 
             w.Indent--;
             w.WriteLine("}");
+
+            w.WriteLine();
+        }
+
+        private static void WriteEvents(IndentedTextWriter w, Types types, EventInfo[] events)
+        {
+            if (events.Length == 0)
+                return;
+
+            var declaringTypeName = types.GetTypeName(events[0].DeclaringType!);
+
+            w.WriteLine("static GCHandle eventCallbackGCHandle;");
+
+            w.WriteLine();
+
+            w.WriteLine("static void SetEventCallback()");
+            using (new BlockIndent(w))
+            {
+                w.WriteLine("if (!eventCallbackGCHandle.IsAllocated)");
+                using (new BlockIndent(w))
+                {
+                    w.WriteLine("var sink = new NativeApi.ButtonEventCallbackType((obj, e) =>");
+                    using (new BlockIndent(w))
+                    {
+                        w.WriteLine($"var w = ({declaringTypeName}?)TryGetFromNativePointer(obj);");
+                        w.WriteLine("if (w == null) return;");
+                        w.WriteLine("w.OnEvent(e);");
+                    }
+                    w.WriteLine(");");
+
+                    w.WriteLine("eventCallbackGCHandle = GCHandle.Alloc(sink);");
+                    w.WriteLine($"NativeApi.{declaringTypeName}_SetEventCallback(sink);");
+                }
+            }
+
+            w.WriteLine();
+
+            w.WriteLine($"void OnEvent(NativeApi.{declaringTypeName}Event e)");
+            using (new BlockIndent(w))
+            {
+                w.WriteLine("switch (e)");
+                using (new BlockIndent(w))
+                {
+                    foreach(var e in events)
+                        w.WriteLine($"case NativeApi.{declaringTypeName}Event.{e.Name}: {e.Name}?.Invoke(this, EventArgs.Empty); break;");
+
+                    w.WriteLine($"default: throw new Exception(\"Unexpected {declaringTypeName}Event value: \" + e);");
+                }
+            }
+
+            w.WriteLine();
+
+            foreach (var e in events)
+                w.WriteLine($"public event EventHandler? {e.Name};");
         }
 
         static string GetManagedToNativeArgument(Type type, string name)

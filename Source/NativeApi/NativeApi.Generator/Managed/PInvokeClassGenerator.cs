@@ -2,6 +2,7 @@
 using System;
 using System.CodeDom.Compiler;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -21,6 +22,8 @@ namespace ApiGenerator.Managed
             w.Indent++;
             w.WriteLine("static NativeApi() => Initialize();");
             w.WriteLine();
+
+            WriteEvents(w, types, MemberProvider.GetEvents(type).ToArray());
 
             if (MemberProvider.GetConstructorVisibility(type) == MemberVisibility.Public)
                 WriteConstructor(w, types, type);
@@ -106,8 +109,33 @@ namespace ApiGenerator.Managed
 
             WriteDllImport(w);
             w.WriteLine($"public static extern {returnTypeName} {declaringTypeName}_{methodName}({signatureParametersString});");
+            w.WriteLine();
         }
 
-        static string GetModifiers(MemberInfo member) => MemberProvider.IsStatic(member) ? "static " : "";
+        private static void WriteEvents(IndentedTextWriter w, Types types, EventInfo[] events)
+        {
+            if (events.Length == 0)
+                return;
+
+            var declaringTypeName = TypeProvider.GetNativeName(events[0].DeclaringType!);
+
+            w.WriteLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl)]");
+            w.WriteLine($"public delegate void {declaringTypeName}EventCallbackType(IntPtr obj, {declaringTypeName}Event e);");
+
+            w.WriteLine();
+
+            w.WriteLine($"public enum {declaringTypeName}Event");
+            using (new BlockIndent(w))
+            {
+                foreach (var e in events)
+                    w.WriteLine($"{e.Name},");
+            }
+
+            w.WriteLine();
+
+            WriteDllImport(w);
+            w.WriteLine($"public static extern void {declaringTypeName}_SetEventCallback({declaringTypeName}EventCallbackType callback);");
+            w.WriteLine();
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace Alternet.UI
 
         public bool IsDisposed { get => isDisposed; private set => isDisposed = value; }
 
-        public string Title
+        public string? Title
         {
             get
             {

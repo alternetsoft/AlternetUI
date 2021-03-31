@@ -1,72 +1,18 @@
+// Auto generated code, DO NOT MODIFY MANUALLY. Copyright AlterNET, 2021.
+
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Security;
-
 namespace Alternet.UI.Native
 {
     internal class Button : Control
     {
-        static GCHandle eventCallbackGCHandle;
-
         public Button()
         {
-            NativePointer = NativeApi.Button_Create();
-            instancesByNativePointers[NativePointer] = this;
-
+            SetNativePointer(NativeApi.Button_Create());
             SetEventCallback();
         }
-
-        static readonly Dictionary<IntPtr, Button> instancesByNativePointers = new Dictionary<IntPtr, Button>();
-
-        static Button? TryGetFromNativePointer(IntPtr pointer)
-        {
-            if (!instancesByNativePointers.TryGetValue(pointer, out var w))
-                return null;
-            return w;
-        }
-
-        static void SetEventCallback()
-        {
-            if (!eventCallbackGCHandle.IsAllocated)
-            {
-                var sink = new NativeApi.ButtonEventCallbackType((obj, e) =>
-                {
-                    var w = TryGetFromNativePointer(obj);
-                    if (w == null)
-                        return;
-
-                    w.OnEvent(e);
-                });
-
-                eventCallbackGCHandle = GCHandle.Alloc(sink);
-                NativeApi.Button_SetEventCallback(sink);
-            }
-        }
-
-        void OnEvent(NativeApi.ButtonEvent e)
-        {
-            switch (e)
-            {
-                case NativeApi.ButtonEvent.Click:
-                    OnClick(EventArgs.Empty);
-                    break;
-
-                default:
-                    throw new Exception("Unexpected NativeApi.ButtonEvent value: " + e);
-            }
-        }
-
-        protected virtual void OnClick(EventArgs e)
-        {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
-            Click?.Invoke(this, e);
-        }
-
-        public event EventHandler? Click;
-
+        
         public string? Text
         {
             get
@@ -74,61 +20,71 @@ namespace Alternet.UI.Native
                 CheckDisposed();
                 return NativeApi.Button_GetText(NativePointer);
             }
-
+            
             set
             {
                 CheckDisposed();
                 NativeApi.Button_SetText(NativePointer, value);
             }
         }
-
-        protected override void Dispose(bool disposing)
+        
+        static GCHandle eventCallbackGCHandle;
+        
+        static void SetEventCallback()
         {
-            base.Dispose(disposing);
-
-            if (!IsDisposed)
+            if (!eventCallbackGCHandle.IsAllocated)
             {
-                if (disposing)
+                var sink = new NativeApi.ButtonEventCallbackType((obj, e) =>
                 {
+                    var w = (Button?)TryGetFromNativePointer(obj);
+                    if (w == null) return;
+                    w.OnEvent(e);
                 }
-
-                if (NativePointer != IntPtr.Zero)
-                    NativeApi.Button_Destroy(NativePointer);
-
-                NativePointer = IntPtr.Zero;
+                );
+                eventCallbackGCHandle = GCHandle.Alloc(sink);
+                NativeApi.Button_SetEventCallback(sink);
             }
         }
-
+        
+        void OnEvent(NativeApi.ButtonEvent e)
+        {
+            switch (e)
+            {
+                case NativeApi.ButtonEvent.Click: Click?.Invoke(this, EventArgs.Empty); break;
+                default: throw new Exception("Unexpected ButtonEvent value: " + e);
+            }
+        }
+        
+        public event EventHandler? Click;
+        
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
         {
-            static NativeApi()
-            {
-                Initialize();
-            }
-
+            static NativeApi() => Initialize();
+            
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             public delegate void ButtonEventCallbackType(IntPtr obj, ButtonEvent e);
-
+            
             public enum ButtonEvent
             {
-                Click
+                Click,
             }
-
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Button_Create();
-
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Button_Destroy(IntPtr obj);
-
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Button_SetText(IntPtr obj, string? value);
-
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string? Button_GetText(IntPtr obj);
-
+            
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Button_SetEventCallback(ButtonEventCallbackType callback);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Button_Create();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_Destroy(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string? Button_GetText(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetText(IntPtr obj, string? value);
+            
         }
     }
 }

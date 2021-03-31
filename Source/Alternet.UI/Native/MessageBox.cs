@@ -1,29 +1,26 @@
+// Auto generated code, DO NOT MODIFY MANUALLY. Copyright AlterNET, 2021.
+
 using System;
 using System.Runtime.InteropServices;
 using System.Security;
-
 namespace Alternet.UI.Native
 {
-    internal static class MessageBox
+    internal abstract class MessageBox : NativeObject
     {
-        public static void Show(string text, string? caption = null)
+        public static void Show(string? text, string? caption)
         {
-            if (text is null)
-                throw new ArgumentNullException(nameof(text));
-
-            NativeApi.MessageBox_Show(text, caption);
+            NativeApi.MessageBox__Show(text, caption);
         }
-
+        
+        
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
         {
-            static NativeApi()
-            {
-                Initialize();
-            }
-
+            static NativeApi() => Initialize();
+            
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void MessageBox_Show(string text, string? caption);
+            public static extern void MessageBox__Show(string? text, string? caption);
+            
         }
     }
 }

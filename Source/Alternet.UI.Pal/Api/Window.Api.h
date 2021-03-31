@@ -1,4 +1,4 @@
-// Auto generated code. Copyright AlterNET, 2021.
+// Auto generated code, DO NOT MODIFY MANUALLY. Copyright AlterNET, 2021.
 
 #pragma once
 
@@ -33,8 +33,8 @@ ALTERNET_UI_API void Window_Show(Window* obj)
     obj->Show();
 }
 
-ALTERNET_UI_API void Window_AddChildControl(Window* obj, Control* control)
+ALTERNET_UI_API void Window_AddControl(Window* obj, Control* control)
 {
-    obj->AddChildControl(*control);
+    obj->AddControl(*control);
 }
 
