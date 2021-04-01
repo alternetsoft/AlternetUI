@@ -3,10 +3,4 @@
 
 namespace Alternet::UI
 {
-    enum class StackLayoutOrientation
-    {
-        Vertical,
-        Horizontal,
-    };
-    
 }

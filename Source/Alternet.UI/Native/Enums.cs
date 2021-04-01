@@ -2,10 +2,4 @@
 
 namespace Alternet.UI.Native
 {
-    enum StackLayoutOrientation
-    {
-        Vertical,
-        Horizontal,
-    }
-    
 }
