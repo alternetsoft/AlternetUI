@@ -8,10 +8,8 @@ namespace ApiGenerator.Native
 {
     internal static class NativeGenerator
     {
-        public static void Generate(Paths paths, IEnumerable<Type> types)
+        public static void GenerateClasses(Paths paths, IEnumerable<Type> types)
         {
-            Console.WriteLine("Generating native code...");
-
             var cApiIndexBuilder = new StringBuilder();
             foreach (var type in types)
             {
@@ -21,6 +19,11 @@ namespace ApiGenerator.Native
             }
 
             File.WriteAllText(Path.Combine(paths.NativeSourcePath, "Api.cpp"), cApiIndexBuilder.ToString());
+        }
+
+        public static void GenerateEnums(Paths paths, IEnumerable<Type> types)
+        {
+            File.WriteAllText(Path.Combine(paths.NativeApiSourcePath, "Enums.h"), CppEnumsGenerator.Generate(types));
         }
 
         private static void GenerateCppApi(Paths paths, Type type)

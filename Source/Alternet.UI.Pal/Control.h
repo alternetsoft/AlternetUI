@@ -15,5 +15,4 @@ namespace Alternet::UI
     private:
 
     };
-
 }

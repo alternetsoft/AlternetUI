@@ -3,7 +3,6 @@ using ApiCommon;
 
 namespace NativeApi.Api
 {
-    [Api]
     public class Application : IDisposable
     {
         public Application() => throw new Exception();

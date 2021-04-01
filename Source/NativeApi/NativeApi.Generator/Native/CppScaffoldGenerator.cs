@@ -14,6 +14,7 @@ namespace ApiGenerator.Native
 
             w.WriteLine("#pragma once");
             w.WriteLine("#include \"Common.h\"");
+            w.WriteLine("#include \"ApiTypes.h\"");
 
             w.WriteLine();
             w.WriteLine("namespace Alternet::UI");

@@ -8,7 +8,7 @@ namespace ApiGenerator.Managed
 {
     internal static class ManagedGenerator
     {
-        public static void Generate(Paths paths, IEnumerable<Type> types)
+        public static void GenerateClasses(Paths paths, IEnumerable<Type> types)
         {
             Console.WriteLine("Generating managed code...");
 
@@ -19,5 +19,11 @@ namespace ApiGenerator.Managed
                 File.WriteAllText(Path.Combine(paths.ManagedApiSourcePath, type.Name + ".cs"), apiClass);
             }
         }
+
+        public static void GenerateEnums(Paths paths, IEnumerable<Type> types)
+        {
+            File.WriteAllText(Path.Combine(paths.ManagedApiSourcePath, "Enums.cs"), ManagedEnumsGenerator.Generate(types));
+        }
+
     }
 }

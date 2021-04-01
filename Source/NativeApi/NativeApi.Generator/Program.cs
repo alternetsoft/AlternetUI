@@ -11,10 +11,15 @@ namespace ApiGenerator
         public static void Main(string[] args)
         {
             var paths = new Paths(Path.GetFullPath(@"..\..\..\..\..\..\"));
-            var types = TypeProvider.GetTypes();
 
-            ManagedGenerator.Generate(paths, types);
-            NativeGenerator.Generate(paths, types);
+            var classTypes = TypeProvider.GetClassTypes();
+            ManagedGenerator.GenerateClasses(paths, classTypes);
+            NativeGenerator.GenerateClasses(paths, classTypes);
+
+            var enumTypes = TypeProvider.GetEnumTypes();
+            NativeGenerator.GenerateEnums(paths, enumTypes);
+            ManagedGenerator.GenerateEnums(paths, enumTypes);
+
             Console.WriteLine("All done.");
         }
     }

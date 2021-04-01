@@ -3,7 +3,6 @@ using System;
 
 namespace NativeApi.Api
 {
-    [Api]
     [NativeName("MessageBox_")]
     public static class MessageBox
     {

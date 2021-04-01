@@ -3,7 +3,6 @@ using System;
 
 namespace NativeApi.Api
 {
-    [Api]
     public class Button : Control, IDisposable
     {
         public event EventHandler? Click { add => throw new Exception(); remove => throw new Exception(); }

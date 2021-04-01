@@ -22,6 +22,8 @@ namespace HelloWorldSample
             button2.Click += Button_Click;
             window.AddControl(button2);
 
+            window.AddControl(new StackLayoutPanel());
+
             app.Run(window);
         }
 

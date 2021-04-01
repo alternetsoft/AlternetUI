@@ -50,6 +50,10 @@ namespace ApiGenerator.Native
         protected virtual string GetComplexTypeName(Type type, TypeUsage usage)
         {
             var name = TypeProvider.GetNativeName(type);
+            
+            if (type.IsEnum)
+                return name;
+
             if (TypeProvider.IsStruct(type))
                 return usage.HasFlag(TypeUsage.Argument) ? "const " + name + "&" : name;
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApiGenerator.Api;
+using System;
 using System.Collections.Generic;
 
 namespace ApiGenerator.Managed
@@ -26,45 +27,33 @@ namespace ApiGenerator.Managed
             { typeof(void), "void" }
         };
 
-        public abstract string GetTypeName(Type type);
+        protected abstract string GetApiClassTypeName(Type type);
 
-        protected bool IsApiType(Type type)
+        public string GetTypeName(Type type)
         {
-            return type.FullName!.Replace("NativeApi.Api.", "") == type.Name;
+            if (type == typeof(string))
+                return "string?";
+
+            if (aliases.TryGetValue(type, out var aliasName))
+                return aliasName;
+
+            if (type.IsEnum)
+                return type.Name;
+
+            if (TypeProvider.IsApiType(type))
+                return GetApiClassTypeName(type);
+
+            return type.FullName!;
         }
     }
 
     internal class CSharpTypes : Types
     {
-        public override string GetTypeName(Type type)
-        {
-            if (type == typeof(string))
-                return "string?";
-
-            if (aliases.TryGetValue(type, out var aliasName))
-                return aliasName;
-
-            if (IsApiType(type))
-                return type.Name;
-
-            return type.FullName!;
-        }
+        protected override string GetApiClassTypeName(Type type) => type.Name;
     }
 
     internal class PInvokeTypes : Types
     {
-        public override string GetTypeName(Type type)
-        {
-            if (type == typeof(string))
-                return "string?";
-
-            if (aliases.TryGetValue(type, out var aliasName))
-                return aliasName;
-
-            if (IsApiType(type))
-                return "IntPtr";
-
-            return type.FullName!;
-        }
+        protected override string GetApiClassTypeName(Type type) => "IntPtr";
     }
 }

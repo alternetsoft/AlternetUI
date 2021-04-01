@@ -8,18 +8,26 @@ namespace ApiGenerator.Api
 
     internal static class TypeProvider
     {
-        public static IEnumerable<Type> GetTypes()
+        public static IEnumerable<Type> GetClassTypes()
         {
             var assembly = typeof(NativeApi.Api.Window).Assembly;
             return assembly.GetTypes().Where(x => IsApiType(x) && !IsStruct(x)).ToArray();
+        }
+
+        public static IEnumerable<Type> GetEnumTypes()
+        {
+            var assembly = typeof(NativeApi.Api.Window).Assembly;
+            return assembly.GetTypes().Where(x => IsApiType(x) && x.IsEnum).ToArray();
         }
 
         public static bool IsStruct(Type type) => type.IsValueType && !type.IsPrimitive;
 
         public static bool IsComplexType(Type type) => !type.IsValueType && !type.IsPrimitive && type != typeof(string);
 
-        public static bool IsApiType(Type type) =>
-            type.GetCustomAttributes(typeof(ApiAttribute), false).Length > 0;
+        public static bool IsApiType(Type type)
+        {
+            return type.FullName!.Replace("NativeApi.Api.", "") == type.Name;
+        }
 
         public static string GetNativeName(Type type)
         {

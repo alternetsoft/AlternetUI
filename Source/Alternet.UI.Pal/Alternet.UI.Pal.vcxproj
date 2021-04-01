@@ -188,11 +188,13 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="MessageBox_.cpp" />
+    <ClCompile Include="StackLayoutPanel.cpp" />
     <ClCompile Include="WindowsVisualThemeSupport.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApiUtils.h" />
+    <ClInclude Include="ApiTypes.h" />
     <ClInclude Include="Api\Application.Api.h" />
     <ClInclude Include="Api\Button.Api.h" />
     <ClInclude Include="Api\Control.Api.h" />
@@ -203,6 +205,7 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="MessageBox_.h" />
+    <ClInclude Include="StackLayoutPanel.h" />
     <ClInclude Include="WindowsVisualThemeSupport.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

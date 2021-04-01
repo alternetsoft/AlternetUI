@@ -6,11 +6,12 @@ namespace ApiGenerator
     internal class BlockIndent : IDisposable
     {
         private readonly IndentedTextWriter writer;
+        private readonly bool noNewlineAtEnd;
 
         public BlockIndent(IndentedTextWriter writer, bool noNewlineAtEnd = false)
         {
             this.writer = writer;
-
+            this.noNewlineAtEnd = noNewlineAtEnd;
             writer.WriteLine("{");
             writer.Indent++;
         }
@@ -18,7 +19,9 @@ namespace ApiGenerator
         public void Dispose()
         {
             writer.Indent--;
-            writer.WriteLine("}");
+            writer.Write("}");
+            if (!noNewlineAtEnd)
+                writer.WriteLine();
         }
     }
 }
