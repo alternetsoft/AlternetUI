@@ -15,9 +15,11 @@ namespace Alternet::UI
 //        _frame->SetBackgroundColour(wxColor(0xffffff));
 #endif
 
+        _frame->SetSize(_frame->FromDIP(wxSize(200, 200)));
+
         _panel = new wxPanel(_frame);
-        _button = new wxButton(_panel, wxID_ANY, "HI", wxPoint(10, 10), wxSize(20, 20));
-        _textBox = new wxTextCtrl(_panel, wxID_ANY, "heelo", wxPoint(100, 100), wxSize(50, 20));
+        _button = new wxButton(_panel, wxID_ANY, "HI", _frame->FromDIP(wxPoint(10, 10)), _frame->FromDIP(wxSize(20, 20)));
+        _textBox = new wxTextCtrl(_panel, wxID_ANY, "heelo", _frame->FromDIP(wxPoint(100, 100)), _frame->FromDIP(wxSize(50, 20)));
 
     }
 
