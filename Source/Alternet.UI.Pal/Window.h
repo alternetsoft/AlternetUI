@@ -22,5 +22,9 @@ namespace Alternet::UI
 
     private:
         Frame* _frame;
+
+        wxPanel* _panel;
+        wxButton* _button;
+        wxTextCtrl* _textBox;
     };
 }

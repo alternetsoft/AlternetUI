@@ -10,10 +10,15 @@ namespace Alternet::UI
 
     Window::Window() : _frame(new Frame())
     {
-        _frame->SetSizer(new wxBoxSizer(wxVERTICAL));
+        //_frame->SetSizer(new wxBoxSizer(wxVERTICAL));
 #ifdef __WXMSW__
-        _frame->SetBackgroundColour(wxColor(0xffffff));
+//        _frame->SetBackgroundColour(wxColor(0xffffff));
 #endif
+
+        _panel = new wxPanel(_frame);
+        _button = new wxButton(_panel, wxID_ANY, "HI", wxPoint(10, 10), wxSize(20, 20));
+        _textBox = new wxTextCtrl(_panel, wxID_ANY, "heelo", wxPoint(100, 100), wxSize(50, 20));
+
     }
 
     Window::~Window()
@@ -39,6 +44,6 @@ namespace Alternet::UI
 
     void Window::AddControl(Control& value)
     {
-        value.CreateWxWindow(_frame);
+        //value.CreateWxWindow(_frame);
     }
 }
