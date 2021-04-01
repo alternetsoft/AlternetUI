@@ -1,0 +1,13 @@
+﻿using ApiCommon;
+using System;
+
+namespace NativeApi.Api
+{
+    [Api]
+    public class StackLayoutPanel : Control, IDisposable
+    {
+        void IDisposable.Dispose() => throw new Exception();
+
+        public StackLayoutOrientation Orientation { get; set; }
+    }
+}

@@ -16,7 +16,7 @@ namespace ApiGenerator.Managed
             foreach (var type in types)
             {
                 var apiClass = apiClassGenerator.Generate(type);
-                File.WriteAllText(Path.Combine(paths.ManagedSourcePath, type.Name + ".cs"), apiClass);
+                File.WriteAllText(Path.Combine(paths.ManagedApiSourcePath, type.Name + ".cs"), apiClass);
             }
         }
     }

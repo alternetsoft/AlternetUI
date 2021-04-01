@@ -7,7 +7,7 @@ namespace ApiGenerator
     {
         private readonly IndentedTextWriter writer;
 
-        public BlockIndent(IndentedTextWriter writer)
+        public BlockIndent(IndentedTextWriter writer, bool noNewlineAtEnd = false)
         {
             this.writer = writer;
 
