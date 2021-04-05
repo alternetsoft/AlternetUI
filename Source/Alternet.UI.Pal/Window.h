@@ -21,6 +21,9 @@ namespace Alternet::UI
     public:
 
     private:
+
+        void OnPaint(wxPaintEvent& event);
+
         Frame* _frame;
 
         wxPanel* _panel;
