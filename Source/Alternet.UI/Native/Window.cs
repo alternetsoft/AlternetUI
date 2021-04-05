@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal class Window : NativeObject
+    internal class Window : Control
     {
         public Window()
         {
@@ -27,18 +27,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public void Show()
-        {
-            CheckDisposed();
-            NativeApi.Window_Show(NativePointer);
-        }
-        
-        public void AddControl(Control control)
-        {
-            CheckDisposed();
-            NativeApi.Window_AddControl(NativePointer, control.NativePointer);
-        }
-        
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -56,12 +44,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetTitle(IntPtr obj, string? value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_Show(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_AddControl(IntPtr obj, IntPtr control);
             
         }
     }

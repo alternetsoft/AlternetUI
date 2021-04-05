@@ -9,14 +9,13 @@ namespace Alternet::UI
     {
 #include "Api/Button.inc"
     public:
-
-        wxWindowBase* GetControl() override;
-        wxWindow* CreateWxWindow(wxWindow* parent) override;
+        wxWindow* CreateWxWindowCore() override;
         void OnLeftUp(wxMouseEvent& event);
 
     private:
 
-        wxButton* _button = nullptr;
+        wxButton* GetButton();
+
         string _text;
     };
 }

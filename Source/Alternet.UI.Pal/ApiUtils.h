@@ -15,6 +15,10 @@
 
 #include "Common.h"
 
+#define c_bool int
+#define c_true 1
+#define c_false 0
+
 inline void* AllocPInvokeMemory(size_t size)
 {
 #if defined(__WXMSW__)

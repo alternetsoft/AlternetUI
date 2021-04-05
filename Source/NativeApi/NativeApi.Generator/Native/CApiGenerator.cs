@@ -180,10 +180,7 @@ namespace ApiGenerator.Native
 
         static string GetCToCppArgument(Type type, string name)
         {
-            if (!TypeProvider.IsComplexType(type))
-                return name;
-
-            return "*" + name;
+            return name;
         }
 
         static string GetCppToCReturnValueFormatString(Type type)

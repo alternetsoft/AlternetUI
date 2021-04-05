@@ -15,19 +15,19 @@ namespace Alternet::UI
         BYREF_ONLY(Frame);
     };
 
-    class Window
+    class Window : public Control
     {
 #include "Api/Window.inc"
     public:
+        wxWindow* CreateWxWindowCore() override;
+
+    protected:
+        wxWindow* GetParentingWxWindow() override;
 
     private:
 
-        void OnPaint(wxPaintEvent& event);
+        Frame* _frame = nullptr;
 
-        Frame* _frame;
-
-        wxPanel* _panel;
-        wxButton* _button;
-        wxTextCtrl* _textBox;
+        wxPanel* _panel = nullptr;
     };
 }

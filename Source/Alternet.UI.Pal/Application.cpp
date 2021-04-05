@@ -52,9 +52,11 @@ namespace Alternet::UI
     {
     }
 
-    void Application::Run(Window& window)
+    void Application::Run(Window* window)
     {
-        window.Show();
+        verifyNonNull(window);
+
+        window->SetVisible(true);
 
 #ifdef __WXMSW__
         if (!WindowsVisualThemeSupport::GetInstance().IsEnabled())

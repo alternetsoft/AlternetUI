@@ -54,7 +54,7 @@ namespace Alternet.UI
         public void AddControl(Control control)
         {
             CheckDisposed();
-            NativeWindow.AddControl(((NativeControlHandler)control.Handler).NativeControl);
+            NativeWindow.AddChild(((NativeControlHandler)control.Handler).NativeControl);
         }
     }
 }

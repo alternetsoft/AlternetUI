@@ -197,6 +197,8 @@
     <ClInclude Include="Api\Application.Api.h" />
     <ClInclude Include="Api\Button.Api.h" />
     <ClInclude Include="Api\Control.Api.h" />
+    <ClInclude Include="Api\DrawingTypes.h" />
+    <ClInclude Include="Api\Enums.h" />
     <ClInclude Include="Api\MessageBox_.Api.h" />
     <ClInclude Include="Api\Window.Api.h" />
     <ClInclude Include="Application.h" />
@@ -204,6 +206,7 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="MessageBox_.h" />
+    <ClInclude Include="TypedEnumFlags.h" />
     <ClInclude Include="WindowsVisualThemeSupport.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

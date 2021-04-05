@@ -29,6 +29,8 @@ namespace ApiGenerator.Managed
 
         protected abstract string GetApiClassTypeName(Type type);
 
+        private bool IsDrawingStruct(Type type) => type.IsValueType && type.FullName!.Replace("System.Drawing.", "") == type.Name;
+
         public string GetTypeName(Type type)
         {
             if (type == typeof(string))
@@ -43,8 +45,13 @@ namespace ApiGenerator.Managed
             if (TypeProvider.IsApiType(type))
                 return GetApiClassTypeName(type);
 
+            if (IsDrawingStruct(type))
+                return GetDrawingStructTypeName(type);
+
             return type.FullName!;
         }
+
+        protected virtual string GetDrawingStructTypeName(Type type) => type.FullName!;
     }
 
     internal class CSharpTypes : Types
@@ -55,5 +62,10 @@ namespace ApiGenerator.Managed
     internal class PInvokeTypes : Types
     {
         protected override string GetApiClassTypeName(Type type) => "IntPtr";
+
+        protected override string GetDrawingStructTypeName(Type type)
+        {
+            return "NativeApiTypes." + type.Name;
+        }
     }
 }

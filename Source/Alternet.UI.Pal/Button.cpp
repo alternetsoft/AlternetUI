@@ -10,34 +10,43 @@ namespace Alternet::UI
     {
     }
 
-    wxWindowBase* Button::GetControl()
-    {
-        return _button;
-    }
-
     string Button::GetText()
     {
-        if (_button == nullptr)
+        auto button = GetButton();
+
+        if (button == nullptr)
             return _text;
         else
-            return wxStr(_button->GetLabel());
+            return wxStr(button->GetLabel());
     }
 
     void Button::SetText(const string& value)
     {
-        if (_button == nullptr)
+        auto button = GetButton();
+
+        if (button == nullptr)
             _text = value;
         else
-            _button->SetLabel(wxStr(value));
+            button->SetLabel(wxStr(value));
     }
 
-    wxWindow* Button::CreateWxWindow(wxWindow* parent)
+    wxWindow* Button::CreateWxWindowCore()
     {
-        _button = new wxButton(parent, wxID_ANY, wxStr(_text), wxDefaultPosition, wxSize(100, 20));
-        _button->Bind(wxEVT_LEFT_UP, &Button::OnLeftUp, this);
-        parent->GetSizer()->Add(_button, wxALIGN_TOP);
+        auto parent = GetParent();
+        assert(parent);
+
+        auto parentWxWindow = parent->GetWxWindow();
+        assert(parentWxWindow);
+
+        auto button = new wxButton(parentWxWindow, wxID_ANY, wxStr(_text), wxDefaultPosition, wxSize(100, 20));
+        button->Bind(wxEVT_LEFT_UP, &Button::OnLeftUp, this);
         _text = u"";
-        return _button;
+        return button;
+    }
+
+    wxButton* Button::GetButton()
+    {
+        return dynamic_cast<wxButton*>(GetWxWindow());
     }
 
     void Button::OnLeftUp(wxMouseEvent& event)

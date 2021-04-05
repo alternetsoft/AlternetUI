@@ -4,8 +4,6 @@ public:
 string GetTitle();
 void SetTitle(const string& value);
 
-void Show();
-void AddControl(Control& control);
 public:
 Window();
 public:

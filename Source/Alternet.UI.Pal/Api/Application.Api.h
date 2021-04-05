@@ -20,6 +20,6 @@ ALTERNET_UI_API void Application_Destroy(Application* obj)
 
 ALTERNET_UI_API void Application_Run(Application* obj, Window* window)
 {
-    obj->Run(*window);
+    obj->Run(window);
 }
 

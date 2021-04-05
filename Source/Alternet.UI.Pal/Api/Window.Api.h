@@ -3,7 +3,6 @@
 #pragma once
 
 #include "Window.h"
-#include "Control.h"
 #include "ApiUtils.h"
 
 using namespace Alternet::UI;
@@ -26,15 +25,5 @@ ALTERNET_UI_API char16_t* Window_GetTitle(Window* obj)
 ALTERNET_UI_API void Window_SetTitle(Window* obj, const char16_t* value)
 {
     obj->SetTitle(value);
-}
-
-ALTERNET_UI_API void Window_Show(Window* obj)
-{
-    obj->Show();
-}
-
-ALTERNET_UI_API void Window_AddControl(Window* obj, Control* control)
-{
-    obj->AddControl(*control);
 }
 

@@ -17,6 +17,26 @@ namespace ApiGenerator.Native
 
     internal abstract class Types
     {
+        private static readonly Dictionary<Type, string> primitiveTypes =
+            new Dictionary<Type, string>()
+            {
+                        { typeof(byte), "uint8_t" },
+                        { typeof(sbyte), "int8_t" },
+                        { typeof(short), "int16_t" },
+                        { typeof(ushort), "uint16_t" },
+                        { typeof(int), "int" },
+                        { typeof(uint), "uint32_t" },
+                        { typeof(long), "int64_t" },
+                        { typeof(ulong), "uint64_t" },
+                        { typeof(float), "float" },
+                        { typeof(double), "double" },
+                        { typeof(char), "char16_t" },
+                        { typeof(void), "void" }
+            };
+
+
+        protected virtual string? TryGetPrimitiveType(Type type) => primitiveTypes.TryGetValue(type, out var result) ? result : null;
+
         HashSet<string> includes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         public string GetIncludes() => string.Join("\r\n", includes.ToArray());
@@ -28,14 +48,28 @@ namespace ApiGenerator.Native
 
     internal class CppTypes : Types
     {
+        protected override string? TryGetPrimitiveType(Type type)
+        {
+            var t = base.TryGetPrimitiveType(type);
+            if (t != null)
+                return t;
+
+            if (type == typeof(bool))
+                return "bool";
+
+            return null;
+        }
+
         public override string GetTypeName(Type type, TypeUsage usage)
         {
             string GetTypeBase()
             {
                 if (type == typeof(string))
                     return usage.HasFlag(TypeUsage.Argument) ? "const string&" : "string";
-                if (type == typeof(void))
-                    return "void";
+
+                var primitiveTypeName = TryGetPrimitiveType(type);
+                if (primitiveTypeName != null)
+                    return primitiveTypeName;
 
                 var name = GetComplexTypeName(type, usage);
                 return name;
@@ -62,7 +96,7 @@ namespace ApiGenerator.Native
             if (usage.HasFlag(TypeUsage.Static))
                 return name;
             
-            return name + "&";
+            return name + "*";
         }
     }
 
@@ -74,8 +108,10 @@ namespace ApiGenerator.Native
             {
                 if (type == typeof(string))
                     return usage.HasFlag(TypeUsage.Argument) ? "const char16_t*" : "char16_t*";
-                if (type == typeof(void))
-                    return "void";
+
+                var primitiveTypeName = TryGetPrimitiveType(type);
+                if (primitiveTypeName != null)
+                    return primitiveTypeName;
 
                 var name = GetComplexTypeName(type, usage);
                 return name;
@@ -96,6 +132,18 @@ namespace ApiGenerator.Native
                 return name;
 
             return name + "*";
+        }
+
+        protected override string? TryGetPrimitiveType(Type type)
+        {
+            var t = base.TryGetPrimitiveType(type);
+            if (t != null)
+                return t;
+
+            if (type == typeof(bool))
+                return "c_bool";
+
+            return null;
         }
     }
 }
