@@ -19,6 +19,6 @@ namespace NativeApi.Api
 
         public bool Visible { get; set; }
 
-        public SizeF GetPreferredSize(SizeF availableSize) => throw new Exception();
+        public virtual SizeF GetPreferredSize(SizeF availableSize) => throw new Exception();
     }
 }

@@ -199,6 +199,11 @@ namespace Alternet::UI
 
         }
 
+        void Add(DelayedValueBase* value)
+        {
+            _values.push_back(value);
+        }
+
         void Apply()
         {
             for (auto& value : _values)

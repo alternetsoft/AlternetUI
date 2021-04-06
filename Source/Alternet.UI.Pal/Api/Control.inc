@@ -18,7 +18,7 @@ void SetVisible(bool value);
 
 void AddChild(Control* control);
 void RemoveChild(Control* control);
-SizeF GetPreferredSize(const SizeF& availableSize);
+virtual SizeF GetPreferredSize(const SizeF& availableSize);
 protected:
 Control();
 public:

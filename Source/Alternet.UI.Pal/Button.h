@@ -12,12 +12,15 @@ namespace Alternet::UI
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         void OnLeftUp(wxMouseEvent& event);
 
+        SizeF GetPreferredSize(const SizeF& availableSize) override;
+
+    protected:
+
     private:
 
         wxButton* GetButton();
 
         DelayedValue<Button, string> _text;
-        DelayedValues _delayedValues;
 
         string RetrieveText();
         void ApplyText(const string& value);

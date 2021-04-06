@@ -3,9 +3,9 @@
 namespace Alternet::UI
 {
     Button::Button():
-        _text(*this, u"", &Control::IsWxWindowCreated, &Button::RetrieveText, &Button::ApplyText),
-        _delayedValues({ &_text })
+        _text(*this, u"", &Control::IsWxWindowCreated, &Button::RetrieveText, &Button::ApplyText)
     {
+        GetDelayedValues().Add(&_text);
     }
 
     Button::~Button()
@@ -47,5 +47,13 @@ namespace Alternet::UI
     void Button::OnLeftUp(wxMouseEvent& event)
     {
         RaiseEvent(ButtonEvent::Click);
+    }
+    
+    SizeF Button::GetPreferredSize(const SizeF& availableSize)
+    {
+        if (IsWxWindowCreated())
+            return FromWxSize(GetButton()->GetBestSize());
+        
+        return FromWxSize(wxButton::GetDefaultSize());
     }
 }

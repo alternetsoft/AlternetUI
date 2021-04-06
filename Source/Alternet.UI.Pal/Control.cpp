@@ -45,6 +45,17 @@ namespace Alternet::UI
             if (!child->IsWxWindowCreated())
                 child->CreateWxWindow();
         }
+
+        OnWxWindowCreated();
+    }
+
+    void Control::OnWxWindowCreated()
+    {
+    }
+
+    DelayedValues& Control::GetDelayedValues()
+    {
+        return _delayedValues;
     }
 
     bool Control::IsWxWindowCreated()

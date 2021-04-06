@@ -18,6 +18,9 @@ namespace Alternet::UI
     protected:
         void CreateWxWindow();
 
+        virtual void OnWxWindowCreated();
+        DelayedValues& GetDelayedValues();
+
         virtual wxWindow* GetParentingWxWindow();
 
     private:

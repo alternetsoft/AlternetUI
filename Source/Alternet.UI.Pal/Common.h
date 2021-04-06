@@ -107,4 +107,9 @@ namespace Alternet::UI
     {
         return RectangleF{ (float)value.x, (float)value.y, (float)value.width, (float)value.height };
     }
+
+    inline SizeF FromWxSize(const wxSize& value)
+    {
+        return SizeF{ (float)value.x, (float)value.y };
+    }
 }
