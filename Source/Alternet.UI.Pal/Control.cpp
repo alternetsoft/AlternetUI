@@ -30,7 +30,13 @@ namespace Alternet::UI
 
     void Control::CreateWxWindow()
     {
-        _wxWindow = CreateWxWindowCore();
+        wxWindow* parentWxWindow = nullptr;
+
+        auto parent = GetParent();
+        if (parent != nullptr)
+            parentWxWindow = parent->GetWxWindow();
+
+        _wxWindow = CreateWxWindowCore(parentWxWindow);
     }
 
     bool Control::IsWxWindowCreated()

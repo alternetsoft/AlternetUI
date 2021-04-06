@@ -10,5 +10,15 @@ namespace Alternet.UI
         public Native.Control NativeControl { get; }
 
         protected abstract Native.Control CreateNativeControl();
+
+        protected override void OnControlInserted(int index, Control control)
+        {
+            NativeControl.AddChild(((NativeControlHandler)control.Handler).NativeControl);
+        }
+
+        protected override void OnControlRemoved(int index, Control control)
+        {
+            NativeControl.RemoveChild(((NativeControlHandler)control.Handler).NativeControl);
+        }
     }
 }

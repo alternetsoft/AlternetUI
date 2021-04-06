@@ -19,7 +19,7 @@ namespace Alternet::UI
     {
 #include "Api/Window.inc"
     public:
-        wxWindow* CreateWxWindowCore() override;
+        wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
     protected:
         wxWindow* GetParentingWxWindow() override;

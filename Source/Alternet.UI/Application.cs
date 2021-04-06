@@ -21,7 +21,7 @@ namespace Alternet.UI
         {
             if (window == null) throw new ArgumentNullException(nameof(window));
             CheckDisposed();
-            nativeApplication.Run(window.NativeWindow);
+            nativeApplication.Run(((NativeWindowHandler)window.Handler).NativeControl);
         }
 
         protected override void Dispose(bool disposing)

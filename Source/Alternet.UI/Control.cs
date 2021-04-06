@@ -32,5 +32,7 @@ namespace Alternet.UI
             if (IsDisposed)
                 throw new ObjectDisposedException(null);
         }
+
+        public Collection<Control> Controls { get; } = new Collection<Control>();
     }
 }

@@ -30,15 +30,9 @@ namespace Alternet::UI
             button->SetLabel(wxStr(value));
     }
 
-    wxWindow* Button::CreateWxWindowCore()
+    wxWindow* Button::CreateWxWindowCore(wxWindow* parent)
     {
-        auto parent = GetParent();
-        assert(parent);
-
-        auto parentWxWindow = parent->GetWxWindow();
-        assert(parentWxWindow);
-
-        auto button = new wxButton(parentWxWindow, wxID_ANY, wxStr(_text), wxDefaultPosition, wxSize(100, 20));
+        auto button = new wxButton(parent, wxID_ANY, wxStr(_text));
         button->Bind(wxEVT_LEFT_UP, &Button::OnLeftUp, this);
         _text = u"";
         return button;

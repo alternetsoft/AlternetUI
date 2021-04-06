@@ -12,15 +12,18 @@ namespace HelloWorldSample
             var window = new Window();
             window.Title = "Alternet UI";
 
+            var panel = new StackPanel();
+            window.Controls.Add(panel);
+
             var button1 = new Button();
             button1.Text = "Button 1";
             button1.Click += Button_Click;
-            window.AddControl(button1);
+            panel.Controls.Add(button1);
 
             var button2 = new Button();
             button2.Text = "Button 2";
             button2.Click += Button_Click;
-            window.AddControl(button2);
+            panel.Controls.Add(button2);
 
             app.Run(window);
         }

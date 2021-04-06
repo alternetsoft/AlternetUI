@@ -29,10 +29,9 @@ namespace Alternet::UI
         _frame->SetTitle(wxStr(value));
     }
 
-    wxWindow* Window::CreateWxWindowCore()
+    wxWindow* Window::CreateWxWindowCore(wxWindow* parent)
     {
         _frame = new Frame();
-        _frame->SetSize(_frame->FromDIP(wxSize(200, 200)));
         _panel = new wxPanel(_frame);
 
         return _frame;

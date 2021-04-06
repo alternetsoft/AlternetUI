@@ -1,60 +1,31 @@
 using System;
-using System.ComponentModel;
 
 namespace Alternet.UI
 {
     [System.ComponentModel.DesignerCategory("Code")]
-    public class Window : Component
+    public class Window : Control
     {
-        private volatile bool isDisposed;
+        private string? title = null;
 
-        internal Native.Window NativeWindow { get; private set; }
-
-        public Window()
-        {
-            NativeWindow = new Native.Window();
-        }
-
-        public bool IsDisposed { get => isDisposed; private set => isDisposed = value; }
+        public event EventHandler? TitleChanged;
 
         public string? Title
         {
             get
             {
-                CheckDisposed();
-                return NativeWindow.Title;
+                return title;
             }
 
             set
             {
-                CheckDisposed();
-                NativeWindow.Title = value;
+                title = value;
+                TitleChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
-        protected override void Dispose(bool disposing)
+        protected override ControlHandler CreateHandler()
         {
-            base.Dispose(disposing);
-
-            if (!IsDisposed)
-            {
-                NativeWindow.Dispose();
-                NativeWindow = null!;
-
-                IsDisposed = true;
-            }
-        }
-
-        private void CheckDisposed()
-        {
-            if (IsDisposed)
-                throw new ObjectDisposedException(null);
-        }
-
-        public void AddControl(Control control)
-        {
-            CheckDisposed();
-            NativeWindow.AddChild(((NativeControlHandler)control.Handler).NativeControl);
+            return new NativeWindowHandler(this);
         }
     }
 }

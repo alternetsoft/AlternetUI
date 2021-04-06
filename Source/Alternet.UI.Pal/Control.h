@@ -19,7 +19,7 @@ namespace Alternet::UI
     {
 #include "Api/Control.inc"
     public:
-        virtual wxWindow* CreateWxWindowCore() = 0;
+        virtual wxWindow* CreateWxWindowCore(wxWindow* parent) = 0;
 
         Control* GetParent();
 

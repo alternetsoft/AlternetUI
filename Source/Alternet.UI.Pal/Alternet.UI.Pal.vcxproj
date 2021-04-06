@@ -188,6 +188,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="MessageBox_.cpp" />
+    <ClCompile Include="Panel.cpp" />
     <ClCompile Include="WindowsVisualThemeSupport.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -206,6 +207,7 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="MessageBox_.h" />
+    <ClInclude Include="Panel.h" />
     <ClInclude Include="TypedEnumFlags.h" />
     <ClInclude Include="WindowsVisualThemeSupport.h" />
     <ClInclude Include="Window.h" />
