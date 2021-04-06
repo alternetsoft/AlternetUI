@@ -4,17 +4,6 @@
 
 namespace Alternet::UI
 {
-    enum class ControlFlags
-    {
-        None = 0,
-        Visible = 1 << 0,
-    };
-}
-
-template<> struct enable_bitmask_operators<Alternet::UI::ControlFlags> { static const bool enable = true; };
-
-namespace Alternet::UI
-{
     class Control
     {
 #include "Api/Control.inc"
@@ -24,19 +13,35 @@ namespace Alternet::UI
         Control* GetParent();
 
         wxWindow* GetWxWindow();
+        bool IsWxWindowCreated();
+
     protected:
         void CreateWxWindow();
-        bool IsWxWindowCreated();
 
         virtual wxWindow* GetParentingWxWindow();
 
     private:
+        enum class ControlFlags
+        {
+            None = 0,
+            Visible = 1 << 0,
+        };
+
         wxWindow* _wxWindow = nullptr;
         Control* _parent = nullptr;
-        DelayedFlags<Control, ControlFlags> _flags;
         std::vector<Control*> _children;
+
+        DelayedFlags<Control, ControlFlags> _flags;
+        DelayedValue<Control, RectangleF> _bounds;
+        DelayedValues _delayedValues;
 
         bool RetrieveVisible();
         void ApplyVisible(bool value);
+
+        RectangleF RetrieveBounds();
+        void ApplyBounds(const RectangleF& value);
     };
 }
+
+template<> struct enable_bitmask_operators<Alternet::UI::Control::ControlFlags> { static const bool enable = true; };
+

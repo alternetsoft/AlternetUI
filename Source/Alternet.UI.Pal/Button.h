@@ -16,6 +16,10 @@ namespace Alternet::UI
 
         wxButton* GetButton();
 
-        string _text;
+        DelayedValue<Button, string> _text;
+        DelayedValues _delayedValues;
+
+        string RetrieveText();
+        void ApplyText(const string& value);
     };
 }

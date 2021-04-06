@@ -1,51 +1,9 @@
 #pragma once
 
-#include <vector>
-#include <set>
-#include <algorithm>
-#include <iostream>
-#include <cmath>
-#include <functional>
-#include <assert.h>
-
-#include <string>
-#include <functional>
-#include <memory>
-#include <map>
-#include <utility>
-#include <locale>
-#include <tuple>
-#include <codecvt>
-#include <optional>
-
-#ifdef __WXMSW__
-#include <sstream>
-#endif
-
-#include <wx/wxprec.h>
-#ifndef WX_PRECOMP
-#include <wx/wx.h>
-#endif
-
-#include <wx/filename.h>
-#include <wx/stdpaths.h>
+#include "CommonBase.h"
 
 #include "Api/DrawingTypes.h"
-
-#include "TypedEnumFlags.h"
-
-#define DELELTE_COPY_CONSTRUCTOR(TypeName) \
-  TypeName(const TypeName&) = delete
-
-#define DELETE_ASSIGNMENT_OPERATOR(TypeName) TypeName& operator=(const TypeName&) = delete
-
-#define BYREF_ONLY(TypeName) \
-  DELELTE_COPY_CONSTRUCTOR(TypeName);                 \
-  DELETE_ASSIGNMENT_OPERATOR(TypeName)
-
-#define verify(condition) if (!condition) throw std::exception();
-
-#define verifyNonNull(value) if (value == nullptr) throw std::exception();
+#include "DelayedValue.h"
 
 namespace Alternet::UI
 {
@@ -140,99 +98,13 @@ namespace Alternet::UI
 #endif
     }
 
-    template<typename TOwner, typename TFlags>
-    class DelayedFlags
+    inline wxRect wxRectangle(const RectangleF& value)
     {
-    public:
-        typedef void (TOwner::* TApplicator)(bool value);
-        typedef bool (TOwner::* TRetriever)();
-        typedef bool (TOwner::* TIsNotDelayedGetter)();
+        return wxRect((int)value.X, (int)value.Y, (int)value.Width, (int)value.Height);
+    }
 
-        typedef std::map<TFlags, std::tuple<TRetriever, TApplicator>> TApplicators;
-
-        DelayedFlags(
-            TOwner& owner,
-            TFlags initialValue,
-            TIsNotDelayedGetter isNotDelayedGetter,
-            const TApplicators& applicators):
-            _owner(owner),
-            _flags(initialValue),
-            _isNotDelayedGetter(isNotDelayedGetter),
-            _applicators(applicators)
-        {
-        }
-
-        void Set(TFlags flag, bool value)
-        {
-            if (IsNotDelayed())
-                Apply(flag, value);
-            else
-                SetDelayed(flag, value);
-        }
-
-        bool Get(TFlags flag)
-        {
-            if (IsNotDelayed())
-                return Retreive(flag);
-            else
-                return GetDelayed(flag);
-        }
-
-        bool IsNotDelayed()
-        {
-            return (_owner.*_isNotDelayedGetter)();
-        }
-
-        void ApplyAll()
-        {
-            for (auto it : _applicators)
-                Apply(it.first, GetDelayed(it.first));
-        }
-
-        void RetreiveAll()
-        {
-            for (auto it : _applicators)
-                SetDelayed(it.first, Retreive(it.first));
-        }
-
-    private:
-        BYREF_ONLY(DelayedFlags);
-
-        TFlags _flags;
-        TOwner& _owner;
-
-        TApplicators _applicators;
-        TIsNotDelayedGetter _isNotDelayedGetter;
-
-        void Apply(TFlags flag, bool value)
-        {
-            auto it = _applicators.find(flag);
-            if (it == _applicators.end())
-                throw std::exception();
-            
-            (_owner.*std::get<1>(it->second))(value);
-        }
-
-        bool Retreive(TFlags flag)
-        {
-            auto it = _applicators.find(flag);
-            if (it == _applicators.end())
-                throw std::exception();
-
-            return (_owner.*std::get<0>(it->second))();
-        }
-
-        bool GetDelayed(TFlags flag)
-        {
-            return (_flags & flag) == flag;
-        }
-
-        void SetDelayed(TFlags flag, bool value)
-        {
-            if (value)
-                _flags |= flag;
-            else
-                _flags &= (~flag);
-        }
-    };
+    inline RectangleF wxRectangle(const wxRect& value)
+    {
+        return RectangleF{ (float)value.x, (float)value.y, (float)value.width, (float)value.height };
+    }
 }

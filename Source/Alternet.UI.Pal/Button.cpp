@@ -2,7 +2,9 @@
 
 namespace Alternet::UI
 {
-    Button::Button()
+    Button::Button():
+        _text(*this, u"", &Control::IsWxWindowCreated, &Button::RetrieveText, &Button::ApplyText),
+        _delayedValues({ &_text })
     {
     }
 
@@ -12,35 +14,34 @@ namespace Alternet::UI
 
     string Button::GetText()
     {
-        auto button = GetButton();
-
-        if (button == nullptr)
-            return _text;
-        else
-            return wxStr(button->GetLabel());
+        return _text.Get();
     }
 
     void Button::SetText(const string& value)
     {
-        auto button = GetButton();
-
-        if (button == nullptr)
-            _text = value;
-        else
-            button->SetLabel(wxStr(value));
+        _text.Set(value);
     }
 
     wxWindow* Button::CreateWxWindowCore(wxWindow* parent)
     {
-        auto button = new wxButton(parent, wxID_ANY, wxStr(_text));
+        auto button = new wxButton(parent, wxID_ANY);
         button->Bind(wxEVT_LEFT_UP, &Button::OnLeftUp, this);
-        _text = u"";
         return button;
     }
 
     wxButton* Button::GetButton()
     {
         return dynamic_cast<wxButton*>(GetWxWindow());
+    }
+
+    string Button::RetrieveText()
+    {
+        return wxStr(GetButton()->GetLabel());
+    }
+
+    void Button::ApplyText(const string& value)
+    {
+        GetButton()->SetLabel(wxStr(value));
     }
 
     void Button::OnLeftUp(wxMouseEvent& event)

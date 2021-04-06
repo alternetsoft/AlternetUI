@@ -205,7 +205,9 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="CommonBase.h" />
     <ClInclude Include="Control.h" />
+    <ClInclude Include="DelayedValue.h" />
     <ClInclude Include="MessageBox_.h" />
     <ClInclude Include="Panel.h" />
     <ClInclude Include="TypedEnumFlags.h" />
