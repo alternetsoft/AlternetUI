@@ -11,6 +11,7 @@
 
     <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
         <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+        <RuntimeFrameworkVersion>3.1.0</RuntimeFrameworkVersion>
     </PropertyGroup>
 
     <ItemGroup>
