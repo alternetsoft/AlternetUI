@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Drawing;
 
 namespace Alternet.UI
 {
@@ -50,6 +51,11 @@ namespace Alternet.UI
         public void PerformLayout()
         {
             Handler.PerformLayout();
+        }
+
+        public SizeF GetPreferredSize(SizeF availableSize)
+        {
+            return Handler.GetPreferredSize(availableSize);
         }
     }
 }

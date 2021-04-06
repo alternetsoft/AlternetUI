@@ -103,7 +103,6 @@ namespace Alternet.UI
         private void Controls_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
         {
             OnControlRemoved(e.Index, e.Item);
-            PerformLayout();
         }
     }
 }

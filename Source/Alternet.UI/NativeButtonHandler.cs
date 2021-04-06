@@ -1,3 +1,5 @@
+using System.Drawing;
+
 namespace Alternet.UI
 {
     internal class NativeButtonHandler : NativeControlHandler<Button, Native.Button>
@@ -38,6 +40,11 @@ namespace Alternet.UI
                 throw new System.ArgumentNullException(nameof(e));
 
             NativeControl.Text = Control.Text;
+        }
+
+        public override SizeF GetPreferredSize(SizeF availableSize)
+        {
+            return NativeControl.GetPreferredSize(availableSize);
         }
     }
 }
