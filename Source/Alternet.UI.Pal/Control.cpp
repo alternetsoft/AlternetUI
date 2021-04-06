@@ -32,15 +32,19 @@ namespace Alternet::UI
 
     void Control::CreateWxWindow()
     {
-        wxWindow* parentWxWindow = nullptr;
+        wxWindow* parentingWxWindow = nullptr;
+        if (_parent != nullptr)
+            parentingWxWindow = _parent->GetParentingWxWindow();
+        
+        _wxWindow = CreateWxWindowCore(parentingWxWindow);
 
-        auto parent = GetParent();
-        if (parent != nullptr)
-            parentWxWindow = parent->GetWxWindow();
+        _delayedValues.Apply();
 
-        _wxWindow = CreateWxWindowCore(parentWxWindow);
-
-        //_delayedValues.Apply();
+        for (auto child : _children)
+        {
+            if (!child->IsWxWindowCreated())
+                child->CreateWxWindow();
+        }
     }
 
     bool Control::IsWxWindowCreated()
@@ -133,10 +137,14 @@ namespace Alternet::UI
 
         _children.push_back(control);
         control->_parent = this;
-        if (!control->IsWxWindowCreated())
-            control->CreateWxWindow();
-        else
-            assert(false);
+
+        if (IsWxWindowCreated())
+        {
+            if (!control->IsWxWindowCreated())
+                control->CreateWxWindow();
+            else
+                assert(false);
+        }
     }
 
     void Control::RemoveChild(Control* control)

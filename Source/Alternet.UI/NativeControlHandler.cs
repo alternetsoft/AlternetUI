@@ -26,7 +26,11 @@ namespace Alternet.UI
         public override RectangleF Bounds
         {
             get => NativeControl.Bounds;
-            set => NativeControl.Bounds = value;
+            set
+            {
+                NativeControl.Bounds = value;
+                PerformLayout(); // todo: use event
+            }
         }
     }
 }
