@@ -1,3 +1,5 @@
+using System.Drawing;
+
 namespace Alternet.UI
 {
     internal abstract class NativeControlHandler : ControlHandler
@@ -19,6 +21,12 @@ namespace Alternet.UI
         protected override void OnControlRemoved(int index, Control control)
         {
             NativeControl.RemoveChild(((NativeControlHandler)control.Handler).NativeControl);
+        }
+
+        public override RectangleF Bounds
+        {
+            get => NativeControl.Bounds;
+            set => NativeControl.Bounds = value;
         }
     }
 }

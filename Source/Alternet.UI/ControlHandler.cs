@@ -5,6 +5,8 @@ namespace Alternet.UI
 {
     public abstract class ControlHandler
     {
+        private int layoutSuspendCount;
+
         protected ControlHandler(Control control)
         {
             Control = control;
@@ -13,9 +15,56 @@ namespace Alternet.UI
             Control.Controls.ItemRemoved += Controls_ItemRemoved;
         }
 
-        private void Controls_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e) => OnControlInserted(e.Index, e.Item);
+        ~ControlHandler() => Dispose(disposing: false);
 
-        private void Controls_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e) => OnControlRemoved(e.Index, e.Item);
+        public bool IsDisposed { get; private set; }
+
+        public Control Control { get; }
+
+        public abstract RectangleF Bounds { get; set; }
+
+        private bool IsLayoutSuspended => layoutSuspendCount == 0;
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+        }
+
+        public virtual void OnPaint(DrawingContext drawingContext)
+        {
+        }
+
+        public virtual void OnLayout()
+        {
+        }
+
+        public virtual SizeF GetPreferredSize(SizeF availableSize)
+        {
+            return new SizeF();
+        }
+
+        public void SuspendLayout()
+        {
+            layoutSuspendCount++;
+        }
+
+        public void ResumeLayout(bool performLayout = true)
+        {
+            layoutSuspendCount--;
+            if (layoutSuspendCount < 0)
+                throw new InvalidOperationException();
+
+            if (!IsLayoutSuspended)
+            {
+                if (performLayout)
+                    PerformLayout();
+            }
+        }
+
+        public void PerformLayout()
+        {
+            OnLayout();
+        }
 
         protected virtual void OnControlInserted(int index, Control control)
         {
@@ -23,17 +72,6 @@ namespace Alternet.UI
 
         protected virtual void OnControlRemoved(int index, Control control)
         {
-        }
-
-        ~ControlHandler() => Dispose(disposing: false);
-
-        public bool IsDisposed { get; private set; }
-
-        public Control Control { get; }
-
-        public void Dispose()
-        {
-            Dispose(disposing: true);
         }
 
         protected virtual void Dispose(bool disposing)
@@ -56,19 +94,16 @@ namespace Alternet.UI
                 throw new ObjectDisposedException(null);
         }
 
-        public virtual void OnPaint(DrawingContext drawingContext)
+        private void Controls_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
         {
-
+            OnControlInserted(e.Index, e.Item);
+            PerformLayout();
         }
 
-        public virtual void OnLayout()
+        private void Controls_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
         {
-
-        }
-
-        public virtual SizeF GetPreferredSize(SizeF availableSize)
-        {
-            return new SizeF();
+            OnControlRemoved(e.Index, e.Item);
+            PerformLayout();
         }
     }
 }

@@ -29,5 +29,13 @@ namespace Alternet.UI
 
             NativeControl.Title = Control.Title;
         }
+
+        public override void OnLayout()
+        {
+            foreach (var control in Control.Controls)
+            {
+                control.Handler.Bounds = Control.Handler.Bounds;
+            }
+        }
     }
 }

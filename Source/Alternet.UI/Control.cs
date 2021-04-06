@@ -34,5 +34,22 @@ namespace Alternet.UI
         }
 
         public Collection<Control> Controls { get; } = new Collection<Control>();
+
+        public void SuspendLayout()
+        {
+            Handler.SuspendLayout();
+        }
+
+        public void ResumeLayout(bool performLayout = true)
+        {
+            Handler.ResumeLayout();
+            if (performLayout)
+                PerformLayout();
+        }
+
+        public void PerformLayout()
+        {
+            Handler.PerformLayout();
+        }
     }
 }
