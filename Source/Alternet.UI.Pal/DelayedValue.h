@@ -140,13 +140,13 @@ namespace Alternet::UI
 
         void Apply() override
         {
-            for (auto it : _applicators)
+            for (auto& it : _applicators)
                 ApplyValue(it.first, GetDelayed(it.first));
         }
 
         void Receive() override
         {
-            for (auto it : _applicators)
+            for (auto& it : _applicators)
                 SetDelayed(it.first, RetrieveValue(it.first));
         }
 

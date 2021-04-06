@@ -5,7 +5,7 @@ namespace Alternet::UI
     Control::Control():
         _flags(
             *this,
-            ControlFlags::None,
+            ControlFlags::Visible,
             &Control::IsWxWindowCreated,
             {
                 {ControlFlags::Visible, std::make_tuple(&Control::RetrieveVisible, &Control::ApplyVisible)}

@@ -12,8 +12,6 @@ namespace Alternet::UI
 
     wxWindow* Panel::CreateWxWindowCore(wxWindow* parent)
     {
-        auto pn = new wxPanel(parent, wxID_ANY);
-        pn->SetBackgroundColour(wxColor("red"));
-        return pn;
+        return new wxPanel(parent);
     }
 }

@@ -1,3 +1,5 @@
+using System.Drawing;
+
 namespace Alternet.UI
 {
     internal class NativeWindowHandler : NativeControlHandler<Window, Native.Window>
@@ -34,7 +36,7 @@ namespace Alternet.UI
         {
             foreach (var control in Control.Controls)
             {
-                control.Handler.Bounds = Control.Handler.Bounds;
+                control.Handler.Bounds = new RectangleF(new PointF(), Control.Handler.Bounds.Size);
             }
         }
     }
