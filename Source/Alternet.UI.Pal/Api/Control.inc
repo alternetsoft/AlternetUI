@@ -19,6 +19,18 @@ void SetVisible(bool value);
 void AddChild(Control* control);
 void RemoveChild(Control* control);
 virtual SizeF GetPreferredSize(const SizeF& availableSize);
+DrawingContext* OpenPaintDrawingContext();
+public:
+enum class ControlEvent
+{
+    Paint,
+};
+typedef void(*ControlEventCallbackType)(Control* obj, ControlEvent event);
+static void SetEventCallback(ControlEventCallbackType value) { eventCallback = value; }
+protected:
+void RaiseEvent(ControlEvent event) { if (eventCallback != nullptr) eventCallback(this, event); }
+private:
+inline static ControlEventCallbackType eventCallback = nullptr;
 protected:
 Control();
 public:

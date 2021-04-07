@@ -20,6 +20,11 @@ namespace Alternet::UI
         //delete GetControl();
     }
 
+    DrawingContext* Control::OpenPaintDrawingContext()
+    {
+        return nullptr;
+    }
+
     Control* Control::GetParent()
     {
         return _parent;

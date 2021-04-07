@@ -132,7 +132,13 @@ using System.Security;");
                 using (new BlockIndent(w))
                 {
                     w.WriteLine("CheckDisposed();");
-                    w.WriteLine($"return NativeApi.{nativeDeclaringTypeName}_Get{propertyName}(NativePointer);");
+
+                    w.Write("return ");
+                    w.Write(
+                    string.Format(
+                        GetNativeToManagedReturnValueFormatString(property.PropertyType),
+                        $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}(NativePointer)"));
+                    w.WriteLine(";");
                 }
 
                 w.WriteLine();
@@ -189,7 +195,12 @@ using System.Security;");
             if (method.ReturnType != typeof(void))
                 w.Write("return ");
 
-            w.WriteLine($"NativeApi.{TypeProvider.GetNativeName(method.DeclaringType!)}_{methodName}({callParametersString});");
+            w.Write(
+                string.Format(
+                    GetNativeToManagedReturnValueFormatString(method.ReturnType),
+                    $"NativeApi.{TypeProvider.GetNativeName(method.DeclaringType!)}_{methodName}({callParametersString})"));
+            w.WriteLine(";");
+
 
             w.Indent--;
             w.WriteLine("}");
@@ -214,7 +225,7 @@ using System.Security;");
                 w.WriteLine("if (!eventCallbackGCHandle.IsAllocated)");
                 using (new BlockIndent(w))
                 {
-                    w.WriteLine("var sink = new NativeApi.ButtonEventCallbackType((obj, e) =>");
+                    w.WriteLine($"var sink = new NativeApi.{declaringTypeName}EventCallbackType((obj, e) =>");
                     using (new BlockIndent(w))
                     {
                         w.WriteLine($"var w = ({declaringTypeName}?)TryGetFromNativePointer(obj);");
@@ -256,6 +267,15 @@ using System.Security;");
 
             return name;
         }
+
+        static string GetNativeToManagedReturnValueFormatString(Type type)
+        {
+            if (TypeProvider.IsComplexType(type))
+                return $"({type.Name})NativeObject.GetFromNativePointer({{0}})";
+
+            return "{0}";
+        }
+
 
         static string GetModifiers(MemberInfo member) => MemberProvider.IsStatic(member) ? "static " : "";
 

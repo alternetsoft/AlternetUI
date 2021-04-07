@@ -188,9 +188,6 @@ namespace ApiGenerator.Native
             if (type == typeof(string))
                 return "AllocPInvokeReturnString({0})";
 
-            if (TypeProvider.IsComplexType(type))
-                return "&{0}";
-
             return "{0}";
         }
 

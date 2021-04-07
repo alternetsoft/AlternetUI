@@ -119,9 +119,9 @@ namespace Alternet.UI.Native
                 A = a;
             }
 
-            public System.Drawing.Color ToDrawingColor() => System.Drawing.Color.FromArgb(A, R, G, B);
+            public static implicit operator System.Drawing.Color(Color v) => System.Drawing.Color.FromArgb(v.A, v.R, v.G, v.B);
 
-            public static Color FromDrawingColor(System.Drawing.Color color) => new Color(color.A, color.R, color.G, color.B);
+            public static implicit operator Color(System.Drawing.Color color) => new Color(color.A, color.R, color.G, color.B);
         }
     }
 }

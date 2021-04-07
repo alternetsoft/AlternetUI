@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Common.h"
+#include "DrawingContext.h"
 
 namespace Alternet::UI
 {

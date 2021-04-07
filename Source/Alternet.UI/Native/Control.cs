@@ -85,11 +85,56 @@ namespace Alternet.UI.Native
             return NativeApi.Control_GetPreferredSize(NativePointer, availableSize);
         }
         
+        public DrawingContext OpenPaintDrawingContext()
+        {
+            CheckDisposed();
+            return (DrawingContext)NativeObject.GetFromNativePointer(NativeApi.Control_OpenPaintDrawingContext(NativePointer));
+        }
+        
+        static GCHandle eventCallbackGCHandle;
+        
+        static void SetEventCallback()
+        {
+            if (!eventCallbackGCHandle.IsAllocated)
+            {
+                var sink = new NativeApi.ControlEventCallbackType((obj, e) =>
+                {
+                    var w = (Control?)TryGetFromNativePointer(obj);
+                    if (w == null) return;
+                    w.OnEvent(e);
+                }
+                );
+                eventCallbackGCHandle = GCHandle.Alloc(sink);
+                NativeApi.Control_SetEventCallback(sink);
+            }
+        }
+        
+        void OnEvent(NativeApi.ControlEvent e)
+        {
+            switch (e)
+            {
+                case NativeApi.ControlEvent.Paint: Paint?.Invoke(this, EventArgs.Empty); break;
+                default: throw new Exception("Unexpected ControlEvent value: " + e);
+            }
+        }
+        
+        public event EventHandler? Paint;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate void ControlEventCallbackType(IntPtr obj, ControlEvent e);
+            
+            public enum ControlEvent
+            {
+                Paint,
+            }
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetEventCallback(ControlEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_Destroy(IntPtr obj);
@@ -126,6 +171,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.SizeF Control_GetPreferredSize(IntPtr obj, NativeApiTypes.SizeF availableSize);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Control_OpenPaintDrawingContext(IntPtr obj);
             
         }
     }

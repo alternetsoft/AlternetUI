@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Control.h"
+#include "DrawingContext.h"
 #include "ApiUtils.h"
 
 using namespace Alternet::UI;
@@ -65,5 +66,15 @@ ALTERNET_UI_API void Control_RemoveChild(Control* obj, Control* control)
 ALTERNET_UI_API SizeF_C Control_GetPreferredSize(Control* obj, SizeF availableSize)
 {
     return obj->GetPreferredSize(availableSize);
+}
+
+ALTERNET_UI_API DrawingContext* Control_OpenPaintDrawingContext(Control* obj)
+{
+    return obj->OpenPaintDrawingContext();
+}
+
+ALTERNET_UI_API void Control_SetEventCallback(Control::ControlEventCallbackType callback)
+{
+    Control::SetEventCallback(callback);
 }
 

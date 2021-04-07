@@ -13,11 +13,20 @@ namespace Alternet.UI.Native
 
         public IntPtr NativePointer { get; private set; }
 
-        protected static NativeObject? TryGetFromNativePointer(IntPtr pointer)
+        public static NativeObject GetFromNativePointer(IntPtr pointer)
+        {
+            var result = TryGetFromNativePointer(pointer);
+            if (result == null)
+                throw new InvalidOperationException("Invalid pointer: " + pointer);
+            
+            return result;
+        }
+
+        public static NativeObject? TryGetFromNativePointer(IntPtr pointer)
         {
             if (!instancesByNativePointers.TryGetValue(pointer, out var w))
                 return null;
-            
+
             return w;
         }
 

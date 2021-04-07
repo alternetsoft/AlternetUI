@@ -20,5 +20,9 @@ namespace NativeApi.Api
         public bool Visible { get; set; }
 
         public virtual SizeF GetPreferredSize(SizeF availableSize) => throw new Exception();
+
+        public DrawingContext OpenPaintDrawingContext() => throw new Exception();
+
+        public event EventHandler? Paint { add => throw new Exception(); remove => throw new Exception(); }
     }
 }
