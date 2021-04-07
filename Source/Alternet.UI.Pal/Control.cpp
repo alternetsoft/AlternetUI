@@ -22,7 +22,7 @@ namespace Alternet::UI
 
     DrawingContext* Control::OpenPaintDrawingContext()
     {
-        return nullptr;
+        return new DrawingContext(new wxPaintDC(_wxWindow));
     }
 
     Control* Control::GetParent()
@@ -42,6 +42,8 @@ namespace Alternet::UI
             parentingWxWindow = _parent->GetParentingWxWindow();
         
         _wxWindow = CreateWxWindowCore(parentingWxWindow);
+
+        _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
 
         _delayedValues.Apply();
 
@@ -98,6 +100,11 @@ namespace Alternet::UI
         wxRect rect(fromDip(value, _wxWindow));
         _wxWindow->SetPosition(rect.GetPosition());
         _wxWindow->SetClientSize(rect.GetSize());
+    }
+
+    void Control::OnPaint(wxPaintEvent& event)
+    {
+        RaiseEvent(ControlEvent::Paint);
     }
 
     SizeF Control::GetSize()

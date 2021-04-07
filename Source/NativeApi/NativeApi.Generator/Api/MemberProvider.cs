@@ -27,7 +27,18 @@ namespace ApiGenerator.Api
         {
             if (type.IsAbstract)
                 return type.IsSealed ? MemberVisibility.Private : MemberVisibility.Protected;
-            return MemberVisibility.Public;
+
+            var ctor = type.GetConstructor(new Type[0]);
+            if (ctor == null)
+                return MemberVisibility.Private;
+
+            if (ctor.IsPublic)
+                return MemberVisibility.Public;
+
+            if (ctor.IsFamily)
+                return MemberVisibility.Protected;
+
+            return MemberVisibility.Private;
         }
 
         public static bool IsVirtual(MemberInfo member) => member switch

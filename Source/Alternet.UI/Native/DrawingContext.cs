@@ -7,9 +7,8 @@ namespace Alternet.UI.Native
 {
     internal class DrawingContext : NativeObject
     {
-        public DrawingContext()
+        private DrawingContext()
         {
-            SetNativePointer(NativeApi.DrawingContext_Create());
         }
         
         public DrawingContext(IntPtr nativePointer) : base(nativePointer)
@@ -27,9 +26,6 @@ namespace Alternet.UI.Native
         private class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr DrawingContext_Create();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_Destroy(IntPtr obj);

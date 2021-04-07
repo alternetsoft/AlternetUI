@@ -121,7 +121,7 @@ namespace Alternet.UI.Native
 
             public static implicit operator System.Drawing.Color(Color v) => System.Drawing.Color.FromArgb(v.A, v.R, v.G, v.B);
 
-            public static implicit operator Color(System.Drawing.Color color) => new Color(color.A, color.R, color.G, color.B);
+            public static implicit operator Color(System.Drawing.Color color) => new Color(color.R, color.G, color.B, color.A);
         }
     }
 }

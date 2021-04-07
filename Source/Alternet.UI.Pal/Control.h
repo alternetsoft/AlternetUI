@@ -44,6 +44,8 @@ namespace Alternet::UI
 
         RectangleF RetrieveBounds();
         void ApplyBounds(const RectangleF& value);
+
+        void OnPaint(wxPaintEvent& event);
     };
 }
 

@@ -148,6 +148,8 @@ namespace Alternet::UI
 
         bool operator==(const Color& rhs) { return R == rhs.R && G == rhs.G && B == rhs.B && A == rhs.A; }
         bool operator!=(const struct Color& rhs) { return !(*this == rhs); }
+
+        operator wxColor() const { return wxColor(R, G, B, A); }
     };
 
     inline wxWindow* getParkingWindow()

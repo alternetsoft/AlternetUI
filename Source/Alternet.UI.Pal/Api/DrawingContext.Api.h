@@ -7,11 +7,6 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API DrawingContext* DrawingContext_Create()
-{
-    return new DrawingContext();
-}
-
 ALTERNET_UI_API void DrawingContext_Destroy(DrawingContext* obj)
 {
     delete obj;
