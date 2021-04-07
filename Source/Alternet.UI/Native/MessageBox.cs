@@ -7,6 +7,14 @@ namespace Alternet.UI.Native
 {
     internal abstract class MessageBox : NativeObject
     {
+        private MessageBox()
+        {
+        }
+        
+        public MessageBox(IntPtr nativePointer) : base(nativePointer)
+        {
+        }
+        
         public static void Show(string? text, string? caption)
         {
             NativeApi.MessageBox__Show(text, caption);

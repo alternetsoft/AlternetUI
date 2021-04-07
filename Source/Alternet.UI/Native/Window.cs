@@ -12,6 +12,10 @@ namespace Alternet.UI.Native
             SetNativePointer(NativeApi.Window_Create());
         }
         
+        public Window(IntPtr nativePointer) : base(nativePointer)
+        {
+        }
+        
         public string? Title
         {
             get

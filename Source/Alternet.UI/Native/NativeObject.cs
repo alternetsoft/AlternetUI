@@ -5,6 +5,15 @@ namespace Alternet.UI.Native
 {
     internal class NativeObject : IDisposable
     {
+        protected NativeObject()
+        {
+        }
+
+        protected NativeObject(IntPtr nativePointer)
+        {
+            SetNativePointer(nativePointer);
+        }
+
         private static readonly Dictionary<IntPtr, NativeObject> instancesByNativePointers = new Dictionary<IntPtr, NativeObject>();
 
         ~NativeObject() => Dispose(disposing: false);
@@ -13,21 +22,26 @@ namespace Alternet.UI.Native
 
         public IntPtr NativePointer { get; private set; }
 
-        public static NativeObject GetFromNativePointer(IntPtr pointer)
+        public static T? GetFromNativePointer<T>(IntPtr pointer, Func<IntPtr, T>? fromPointerFactory) where T : NativeObject
         {
-            var result = TryGetFromNativePointer(pointer);
-            if (result == null)
-                throw new InvalidOperationException("Invalid pointer: " + pointer);
-            
-            return result;
-        }
-
-        public static NativeObject? TryGetFromNativePointer(IntPtr pointer)
-        {
-            if (!instancesByNativePointers.TryGetValue(pointer, out var w))
+            if (pointer == IntPtr.Zero)
                 return null;
 
-            return w;
+            if (!instancesByNativePointers.TryGetValue(pointer, out var w))
+            {
+                if (fromPointerFactory != null)
+                    return fromPointerFactory(pointer);
+                else
+                    throw new InvalidOperationException();
+            }
+
+            return (T)w;
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
 
         protected void SetNativePointer(IntPtr value)
@@ -39,12 +53,6 @@ namespace Alternet.UI.Native
 
             if (value != null)
                 instancesByNativePointers.Add(NativePointer, this);
-        }
-
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
         }
 
         protected virtual void Dispose(bool disposing)

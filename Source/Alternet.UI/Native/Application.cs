@@ -12,6 +12,10 @@ namespace Alternet.UI.Native
             SetNativePointer(NativeApi.Application_Create());
         }
         
+        public Application(IntPtr nativePointer) : base(nativePointer)
+        {
+        }
+        
         public void Run(Window window)
         {
             CheckDisposed();

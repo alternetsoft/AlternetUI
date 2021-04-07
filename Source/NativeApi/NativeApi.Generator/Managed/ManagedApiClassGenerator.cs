@@ -38,8 +38,8 @@ using System.Security;");
 
             var events = MemberProvider.GetEvents(type).ToArray();
 
-            if (MemberProvider.GetConstructorVisibility(type) == MemberVisibility.Public)
-                WriteConstructor(w, types, type, events.Length > 0);
+            WriteConstructor(w, types, type, events.Length > 0);
+            WriteFromPointerConstructor(w, types, type);
 
             //if (MemberProvider.GetDestructorVisibility(type) == MemberVisibility.Public)
             //    WriteDestructor(w, types, type);
@@ -96,13 +96,29 @@ using System.Security;");
         private static void WriteConstructor(IndentedTextWriter w, Types types, Type type, bool hasEvents)
         {
             var declaringTypeName = types.GetTypeName(type);
+            var visibility = MemberProvider.GetConstructorVisibility(type);
 
-            w.WriteLine($"public {declaringTypeName}()");
+            w.WriteLine($"{GetVisibilityString(visibility)} {declaringTypeName}()");
             using (new BlockIndent(w))
             {
-                w.WriteLine($"SetNativePointer(NativeApi.{TypeProvider.GetNativeName(type)}_Create());");
+                if (visibility == MemberVisibility.Public)
+                    w.WriteLine($"SetNativePointer(NativeApi.{TypeProvider.GetNativeName(type)}_Create());");
+
                 if (hasEvents)
                     w.WriteLine("SetEventCallback();");
+            }
+            w.WriteLine();
+        }
+
+        static string GetVisibilityString(MemberVisibility value) => value.ToString().ToLower();
+
+        private static void WriteFromPointerConstructor(IndentedTextWriter w, Types types, Type type)
+        {
+            var declaringTypeName = types.GetTypeName(type);
+
+            w.WriteLine($"public {declaringTypeName}(IntPtr nativePointer) : base(nativePointer)");
+            using (new BlockIndent(w))
+            {
             }
             w.WriteLine();
         }
@@ -136,7 +152,7 @@ using System.Security;");
                     w.Write("return ");
                     w.Write(
                     string.Format(
-                        GetNativeToManagedReturnValueFormatString(property.PropertyType),
+                        GetNativeToManagedFormatString(property.PropertyType),
                         $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}(NativePointer)"));
                     w.WriteLine(";");
                 }
@@ -197,7 +213,7 @@ using System.Security;");
 
             w.Write(
                 string.Format(
-                    GetNativeToManagedReturnValueFormatString(method.ReturnType),
+                    GetNativeToManagedFormatString(method.ReturnType),
                     $"NativeApi.{TypeProvider.GetNativeName(method.DeclaringType!)}_{methodName}({callParametersString})"));
             w.WriteLine(";");
 
@@ -213,7 +229,8 @@ using System.Security;");
             if (events.Length == 0)
                 return;
 
-            var declaringTypeName = types.GetTypeName(events[0].DeclaringType!);
+            var declaringType = events[0].DeclaringType!;
+            var declaringTypeName = types.GetTypeName(declaringType);
 
             w.WriteLine("static GCHandle eventCallbackGCHandle;");
 
@@ -228,7 +245,7 @@ using System.Security;");
                     w.WriteLine($"var sink = new NativeApi.{declaringTypeName}EventCallbackType((obj, e) =>");
                     using (new BlockIndent(w))
                     {
-                        w.WriteLine($"var w = ({declaringTypeName}?)TryGetFromNativePointer(obj);");
+                        w.WriteLine($"var w = {string.Format(GetNativeToManagedFormatString(declaringType), "obj")};");
                         w.WriteLine("if (w == null) return;");
                         w.WriteLine("w.OnEvent(e);");
                     }
@@ -268,14 +285,15 @@ using System.Security;");
             return name;
         }
 
-        static string GetNativeToManagedReturnValueFormatString(Type type)
+        static string GetNativeToManagedFormatString(Type type)
         {
+            var factory = type.IsAbstract ? "null" : $"p => new {type.Name}(p)";
+
             if (TypeProvider.IsComplexType(type))
-                return $"({type.Name})NativeObject.GetFromNativePointer({{0}})";
+                return $"NativeObject.GetFromNativePointer<{type.Name}>({{0}}, {factory})!";
 
             return "{0}";
         }
-
 
         static string GetModifiers(MemberInfo member) => MemberProvider.IsStatic(member) ? "static " : "";
 

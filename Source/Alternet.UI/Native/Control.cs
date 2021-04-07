@@ -7,6 +7,15 @@ namespace Alternet.UI.Native
 {
     internal abstract class Control : NativeObject
     {
+        protected Control()
+        {
+            SetEventCallback();
+        }
+        
+        public Control(IntPtr nativePointer) : base(nativePointer)
+        {
+        }
+        
         public System.Drawing.SizeF Size
         {
             get
@@ -88,7 +97,7 @@ namespace Alternet.UI.Native
         public DrawingContext OpenPaintDrawingContext()
         {
             CheckDisposed();
-            return (DrawingContext)NativeObject.GetFromNativePointer(NativeApi.Control_OpenPaintDrawingContext(NativePointer));
+            return NativeObject.GetFromNativePointer<DrawingContext>(NativeApi.Control_OpenPaintDrawingContext(NativePointer), p => new DrawingContext(p))!;
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -99,7 +108,7 @@ namespace Alternet.UI.Native
             {
                 var sink = new NativeApi.ControlEventCallbackType((obj, e) =>
                 {
-                    var w = (Control?)TryGetFromNativePointer(obj);
+                    var w = NativeObject.GetFromNativePointer<Control>(obj, null)!;
                     if (w == null) return;
                     w.OnEvent(e);
                 }

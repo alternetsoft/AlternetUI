@@ -12,6 +12,10 @@ namespace Alternet.UI.Native
             SetNativePointer(NativeApi.DrawingContext_Create());
         }
         
+        public DrawingContext(IntPtr nativePointer) : base(nativePointer)
+        {
+        }
+        
         public void FillRectangle(System.Drawing.RectangleF rectangle, System.Drawing.Color color)
         {
             CheckDisposed();

@@ -12,6 +12,10 @@ namespace Alternet.UI.Native
             SetNativePointer(NativeApi.Panel_Create());
         }
         
+        public Panel(IntPtr nativePointer) : base(nativePointer)
+        {
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
