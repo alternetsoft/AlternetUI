@@ -85,41 +85,34 @@ namespace Alternet::UI
 
     RectangleF Control::RetrieveBounds()
     {
-        // todo: high dpi
-        return wxRectangle(_wxWindow->GetRect());
+        return toDip(_wxWindow->GetClientRect(), _wxWindow);
     }
 
     void Control::ApplyBounds(const RectangleF& value)
     {
-        // todo: high dpi
-        wxRect rect(wxRectangle(value));
+        wxRect rect(fromDip(value, _wxWindow));
         _wxWindow->SetPosition(rect.GetPosition());
-        _wxWindow->SetSize(rect.GetSize());
+        _wxWindow->SetClientSize(rect.GetSize());
     }
 
     SizeF Control::GetSize()
     {
-        // todo: more convenient SizeF/SizeF_C
-        auto bounds = GetBounds();
-        return SizeF{ bounds.Width, bounds.Height };
+        return GetBounds().GetSize();
     }
 
     void Control::SetSize(const SizeF& value)
     {
-        auto location = GetLocation();
-        SetBounds(RectangleF{ location.X, location.Y, value.Width, value.Height });
+        SetBounds(RectangleF(GetLocation(), value));
     }
 
     PointF Control::GetLocation()
     {
-        auto bounds = GetBounds();
-        return PointF{ bounds.X, bounds.Y };
+        return GetBounds().GetLocation();
     }
 
     void Control::SetLocation(const PointF& value)
     {
-        auto size = GetSize();
-        SetBounds(RectangleF{ value.X, value.Y, size.Width, size.Height });
+        SetBounds(RectangleF(value, GetSize()));
     }
 
     RectangleF Control::GetBounds()

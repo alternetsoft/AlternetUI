@@ -29,8 +29,6 @@ namespace ApiGenerator.Managed
 
         protected abstract string GetApiClassTypeName(Type type);
 
-        private bool IsDrawingStruct(Type type) => type.IsValueType && type.FullName!.Replace("System.Drawing.", "") == type.Name;
-
         public string GetTypeName(Type type)
         {
             if (type == typeof(string))
@@ -45,7 +43,7 @@ namespace ApiGenerator.Managed
             if (TypeProvider.IsApiType(type))
                 return GetApiClassTypeName(type);
 
-            if (IsDrawingStruct(type))
+            if (TypeProvider.IsDrawingStruct(type))
                 return GetDrawingStructTypeName(type);
 
             return type.FullName!;

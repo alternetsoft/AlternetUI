@@ -97,19 +97,4 @@ namespace Alternet::UI
         return make_u16string(value.c_str().AsWChar());
 #endif
     }
-
-    inline wxRect wxRectangle(const RectangleF& value)
-    {
-        return wxRect((int)value.X, (int)value.Y, (int)value.Width, (int)value.Height);
-    }
-
-    inline RectangleF wxRectangle(const wxRect& value)
-    {
-        return RectangleF{ (float)value.x, (float)value.y, (float)value.width, (float)value.height };
-    }
-
-    inline SizeF FromWxSize(const wxSize& value)
-    {
-        return SizeF{ (float)value.x, (float)value.y };
-    }
 }

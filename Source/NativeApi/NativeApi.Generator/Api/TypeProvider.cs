@@ -24,6 +24,8 @@ namespace ApiGenerator.Api
 
         public static bool IsComplexType(Type type) => !type.IsValueType && !type.IsPrimitive && type != typeof(string);
 
+        public static bool IsDrawingStruct(Type type) => type.IsValueType && type.FullName!.Replace("System.Drawing.", "") == type.Name;
+
         public static bool IsApiType(Type type)
         {
             return type.FullName!.Replace("NativeApi.Api.", "") == type.Name;

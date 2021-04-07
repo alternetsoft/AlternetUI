@@ -52,8 +52,11 @@ namespace Alternet::UI
     SizeF Button::GetPreferredSize(const SizeF& availableSize)
     {
         if (IsWxWindowCreated())
-            return FromWxSize(GetButton()->GetBestSize());
+        {
+            auto button = GetButton();
+            return toDip(button->GetBestSize(), button);
+        }
         
-        return FromWxSize(wxButton::GetDefaultSize());
+        return toDip(wxButton::GetDefaultSize(), nullptr);
     }
 }

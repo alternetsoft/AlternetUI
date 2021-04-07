@@ -1,13 +1,13 @@
-﻿using System;
+﻿using ApiGenerator.Api;
+using Namotion.Reflection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using ApiGenerator.Api;
-using Namotion.Reflection;
 
 namespace ApiGenerator.Native
 {
     [Flags]
-    enum TypeUsage
+    internal enum TypeUsage
     {
         None,
         Static = 1 << 0,
@@ -34,32 +34,19 @@ namespace ApiGenerator.Native
                         { typeof(void), "void" }
             };
 
-
-        protected virtual string? TryGetPrimitiveType(Type type) => primitiveTypes.TryGetValue(type, out var result) ? result : null;
-
-        HashSet<string> includes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        private HashSet<string> includes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
         public string GetIncludes() => string.Join("\r\n", includes.ToArray());
 
-        protected void AddIncludedFile(string fileNameWithoutExtension) => includes.Add($"#include \"{fileNameWithoutExtension}.h\"");
-
         public abstract string GetTypeName(Type type, TypeUsage usage);
+
+        protected virtual string? TryGetPrimitiveType(Type type) => primitiveTypes.TryGetValue(type, out var result) ? result : null;
+
+        protected void AddIncludedFile(string fileNameWithoutExtension) => includes.Add($"#include \"{fileNameWithoutExtension}.h\"");
     }
 
     internal class CppTypes : Types
     {
-        protected override string? TryGetPrimitiveType(Type type)
-        {
-            var t = base.TryGetPrimitiveType(type);
-            if (t != null)
-                return t;
-
-            if (type == typeof(bool))
-                return "bool";
-
-            return null;
-        }
-
         public override string GetTypeName(Type type, TypeUsage usage)
         {
             string GetTypeBase()
@@ -81,10 +68,22 @@ namespace ApiGenerator.Native
             return GetTypeBase();
         }
 
+        protected override string? TryGetPrimitiveType(Type type)
+        {
+            var t = base.TryGetPrimitiveType(type);
+            if (t != null)
+                return t;
+
+            if (type == typeof(bool))
+                return "bool";
+
+            return null;
+        }
+
         protected virtual string GetComplexTypeName(Type type, TypeUsage usage)
         {
             var name = TypeProvider.GetNativeName(type);
-            
+
             if (type.IsEnum)
                 return name;
 
@@ -95,7 +94,7 @@ namespace ApiGenerator.Native
 
             if (usage.HasFlag(TypeUsage.Static))
                 return name;
-            
+
             return name + "*";
         }
     }
@@ -124,7 +123,12 @@ namespace ApiGenerator.Native
         {
             var name = TypeProvider.GetNativeName(type);
             if (TypeProvider.IsStruct(type))
+            {
+                if (usage.HasFlag(TypeUsage.Return))
+                    return name + "_C";
+
                 return name;
+            }
 
             AddIncludedFile(name);
 
