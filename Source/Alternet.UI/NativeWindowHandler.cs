@@ -36,7 +36,8 @@ namespace Alternet.UI
         {
             foreach (var control in Control.Controls)
             {
-                control.Handler.Bounds = new RectangleF(new PointF(), Control.Handler.Bounds.Size);
+                var margin = control.Margin;
+                control.Handler.Bounds = new RectangleF(new PointF(margin.Left, margin.Top), Control.Handler.Bounds.Size - margin.Size);
             }
         }
     }

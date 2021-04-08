@@ -7,10 +7,13 @@ namespace Alternet.UI
     {
         private int layoutSuspendCount;
 
+        private bool inLayout;
+
         protected ControlHandler(Control control)
         {
             Control = control;
 
+            Control.MarginChanged += Control_MarginChanged;
             Control.Controls.ItemInserted += Controls_ItemInserted;
             Control.Controls.ItemRemoved += Controls_ItemRemoved;
         }
@@ -63,8 +66,6 @@ namespace Alternet.UI
             }
         }
 
-        bool inLayout;
-
         public void PerformLayout()
         {
             if (IsLayoutSuspended)
@@ -72,7 +73,7 @@ namespace Alternet.UI
 
             if (inLayout)
                 return;
-            
+
             inLayout = true;
             try
             {
@@ -81,7 +82,6 @@ namespace Alternet.UI
                     parent.PerformLayout();
 
                 OnLayout();
-
             }
             finally
             {
@@ -103,6 +103,7 @@ namespace Alternet.UI
             {
                 if (disposing)
                 {
+                    Control.MarginChanged -= Control_MarginChanged;
                     Control.Controls.ItemInserted -= Controls_ItemInserted;
                     Control.Controls.ItemRemoved -= Controls_ItemRemoved;
                 }
@@ -117,6 +118,11 @@ namespace Alternet.UI
                 throw new ObjectDisposedException(null);
         }
 
+        private void Control_MarginChanged(object? sender, EventArgs? e)
+        {
+            PerformLayout();
+        }
+
         private void Controls_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
         {
             OnControlInserted(e.Index, e.Item);
@@ -126,6 +132,7 @@ namespace Alternet.UI
         private void Controls_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
         {
             OnControlRemoved(e.Index, e.Item);
+            PerformLayout();
         }
     }
 }

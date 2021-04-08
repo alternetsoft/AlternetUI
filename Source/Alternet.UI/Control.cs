@@ -10,6 +10,7 @@ namespace Alternet.UI
         private float width = float.NaN;
 
         private float height = float.NaN;
+        private Thickness margin;
 
         public Control()
         {
@@ -19,6 +20,10 @@ namespace Alternet.UI
             Handler = CreateHandler();
         }
 
+        public event EventHandler<PaintEventArgs>? Paint;
+
+        public event EventHandler? MarginChanged;
+
         public ControlHandler Handler { get; }
 
         public bool IsDisposed { get; private set; }
@@ -26,8 +31,6 @@ namespace Alternet.UI
         public Collection<Control> Controls { get; } = new Collection<Control>();
 
         public Control? Parent { get; private set; }
-
-        public void Update() => Handler.Update();
 
         public virtual float Width
         {
@@ -53,6 +56,25 @@ namespace Alternet.UI
             }
         }
 
+        public bool UserPaint { get; set; }
+
+        public Thickness Margin
+        {
+            get => margin;
+            set
+            {
+                if (margin == value)
+                    return;
+
+                margin = value;
+
+                OnMarginChanged(EventArgs.Empty);
+                MarginChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public void Update() => Handler.Update();
+
         public void SuspendLayout()
         {
             Handler.SuspendLayout();
@@ -75,6 +97,14 @@ namespace Alternet.UI
             return Handler.GetPreferredSize(availableSize);
         }
 
+        internal void InvokePaint(PaintEventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnPaint(e);
+        }
+
         protected virtual ControlHandler CreateHandler() => new NativeControlHandler(this);
 
         protected override void Dispose(bool disposing)
@@ -93,6 +123,15 @@ namespace Alternet.UI
                 throw new ObjectDisposedException(null);
         }
 
+        protected virtual void OnMarginChanged(EventArgs e)
+        {
+        }
+
+        protected virtual void OnPaint(PaintEventArgs e)
+        {
+            Paint?.Invoke(this, e);
+        }
+
         private void Controls_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
         {
             e.Item.Parent = this;
@@ -101,23 +140,6 @@ namespace Alternet.UI
         private void Controls_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
         {
             e.Item.Parent = null;
-        }
-
-        public event EventHandler<PaintEventArgs>? Paint;
-
-        internal void InvokePaint(PaintEventArgs e)
-        {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
-            OnPaint(e);
-        }
-
-        public bool UserPaint { get; set; }
-
-        protected virtual void OnPaint(PaintEventArgs e)
-        {
-            Paint?.Invoke(this, e);
         }
     }
 }

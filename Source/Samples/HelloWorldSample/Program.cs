@@ -16,7 +16,12 @@ namespace HelloWorldSample
             var window = new Window();
             window.Title = "Alternet UI";
 
-            var mainPanel = new StackPanel { Orientation = StackPanelOrientation.Horizontal };
+            var mainPanel = new StackPanel
+            {
+                Orientation = StackPanelOrientation.Horizontal,
+                Margin = new Thickness(10)
+            };
+
             window.SuspendLayout();
             window.Controls.Add(mainPanel);
 
@@ -30,24 +35,16 @@ namespace HelloWorldSample
 
             leftPanel.SuspendLayout();
 
-            var redButton = new Button();
-            redButton.Text = "Red";
-            redButton.Click += (o, e) => customControl?.SetColor(Color.Pink);
-            leftPanel.Controls.Add(redButton);
-
-            var greenButton = new Button();
-            greenButton.Text = "Green";
-            greenButton.Click += (o, e) => customControl?.SetColor(Color.LightGreen);
-            leftPanel.Controls.Add(greenButton);
-
-            var blueButton = new Button();
-            blueButton.Text = "Blue";
-            blueButton.Click += (o, e) => customControl?.SetColor(Color.LightBlue);
-            leftPanel.Controls.Add(blueButton);
+            CreateButtons(leftPanel);
 
             leftPanel.ResumeLayout();
 
-            var rightPanel = new StackPanel { Orientation = StackPanelOrientation.Vertical };
+            var rightPanel = new StackPanel
+            {
+                Orientation = StackPanelOrientation.Vertical,
+                Margin = new Thickness(10, 0, 0, 0)
+            };
+
             mainPanel.Controls.Add(rightPanel);
 
             rightPanel.SuspendLayout();
@@ -60,6 +57,7 @@ namespace HelloWorldSample
             {
                 Width = 100,
                 Height = 100,
+                Margin = new Thickness(0, 10, 0, 0)
             };
 
             rightPanel.Controls.Add(customControl);
@@ -70,6 +68,33 @@ namespace HelloWorldSample
             textBox.Text = "Hello";
 
             app.Run(window);
+        }
+
+        private static void CreateButtons(Control parent)
+        {
+            var redButton = new Button
+            {
+                Text = "Red",
+                Margin = new Thickness(0, 0, 0, 5)
+            };
+            redButton.Click += (o, e) => customControl?.SetColor(Color.Pink);
+            parent.Controls.Add(redButton);
+
+            var greenButton = new Button
+            {
+                Text = "Green",
+                Margin = new Thickness(0, 0, 0, 5)
+            };
+            greenButton.Click += (o, e) => customControl?.SetColor(Color.LightGreen);
+            parent.Controls.Add(greenButton);
+
+            var blueButton = new Button
+            {
+                Text = "Blue",
+                Margin = new Thickness(0, 0, 0, 5)
+            };
+            blueButton.Click += (o, e) => customControl?.SetColor(Color.LightBlue);
+            parent.Controls.Add(blueButton);
         }
 
         private class MyCustomControl : Control

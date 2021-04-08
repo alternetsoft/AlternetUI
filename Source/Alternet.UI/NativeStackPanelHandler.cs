@@ -33,9 +33,12 @@ namespace Alternet.UI
                 float y = 0;
                 foreach (var control in Control.Controls)
                 {
-                    var preferredSize = control.GetPreferredSize(new SizeF(size.Width, size.Height - y));
-                    control.Handler.Bounds = new RectangleF(0, y, size.Width, preferredSize.Height);
-                    y += preferredSize.Height;
+                    var margin = control.Margin;
+                    var verticalMargin = margin.Vertical;
+
+                    var preferredSize = control.GetPreferredSize(new SizeF(size.Width, size.Height - y - verticalMargin));
+                    control.Handler.Bounds = new RectangleF(0, y + margin.Top, size.Width, preferredSize.Height);
+                    y += preferredSize.Height + verticalMargin;
                 }
             }
             else if (orientation == StackPanelOrientation.Horizontal)
@@ -43,9 +46,12 @@ namespace Alternet.UI
                 float x = 0;
                 foreach (var control in Control.Controls)
                 {
-                    var preferredSize = control.GetPreferredSize(new SizeF(size.Width - x, size.Height));
-                    control.Handler.Bounds = new RectangleF(x, 0, preferredSize.Width, size.Height);
-                    x += preferredSize.Width;
+                    var margin = control.Margin;
+                    var horizontalMargin = margin.Horizontal;
+
+                    var preferredSize = control.GetPreferredSize(new SizeF(size.Width - x - horizontalMargin, size.Height));
+                    control.Handler.Bounds = new RectangleF(x + margin.Left, 0, preferredSize.Width, size.Height);
+                    x += preferredSize.Width + horizontalMargin;
                 }
             }
             else
