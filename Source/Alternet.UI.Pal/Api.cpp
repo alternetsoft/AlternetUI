@@ -4,4 +4,5 @@
 #include "Api/DrawingContext.Api.h"
 #include "Api/MessageBox_.Api.h"
 #include "Api/Panel.Api.h"
+#include "Api/TextBox.Api.h"
 #include "Api/Window.Api.h"

@@ -190,6 +190,7 @@
     <ClCompile Include="DrawingContext.cpp" />
     <ClCompile Include="MessageBox_.cpp" />
     <ClCompile Include="Panel.cpp" />
+    <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="WindowsVisualThemeSupport.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -204,6 +205,7 @@
     <ClInclude Include="Api\Enums.h" />
     <ClInclude Include="Api\MessageBox_.Api.h" />
     <ClInclude Include="Api\Panel.Api.h" />
+    <ClInclude Include="Api\TextBox.Api.h" />
     <ClInclude Include="Api\Window.Api.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Button.h" />
@@ -214,6 +216,7 @@
     <ClInclude Include="DrawingContext.h" />
     <ClInclude Include="MessageBox_.h" />
     <ClInclude Include="Panel.h" />
+    <ClInclude Include="TextBox.h" />
     <ClInclude Include="TypedEnumFlags.h" />
     <ClInclude Include="WindowsVisualThemeSupport.h" />
     <ClInclude Include="Window.h" />
@@ -225,6 +228,7 @@
     <None Include="Api\DrawingContext.inc" />
     <None Include="Api\MessageBox_.inc" />
     <None Include="Api\Panel.inc" />
+    <None Include="Api\TextBox.inc" />
     <None Include="Api\Window.inc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

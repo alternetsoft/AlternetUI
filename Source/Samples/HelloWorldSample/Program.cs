@@ -54,6 +54,9 @@ namespace HelloWorldSample
             var rightPanel = new StackPanel { Orientation = StackPanelOrientation.Vertical };
             mainPanel.Controls.Add(rightPanel);
 
+            var textBox = new TextBox();
+            rightPanel.Controls.Add(textBox);
+
             var customControl = new MyCustomControl
             {
                 Width = 100,
