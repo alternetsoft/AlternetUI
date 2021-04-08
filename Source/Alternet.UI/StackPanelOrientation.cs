@@ -4,7 +4,7 @@ namespace Alternet.UI
 {
     public enum StackPanelOrientation
     {
-        Verical,
+        Vertical,
         Horizontal
     }
 }

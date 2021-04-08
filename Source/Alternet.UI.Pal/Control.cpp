@@ -169,8 +169,14 @@ namespace Alternet::UI
         control->_parent = nullptr;
     }
 
+    SizeF Control::GetDefaultSize()
+    {
+        return SizeF(30, 30);
+    }
+
     SizeF Control::GetPreferredSize(const SizeF& availableSize)
     {
-        return SizeF{ 20, 20 };
+        if (IsWxWindowCreated())
+            return toDip(_wxWindow->GetBestSize(), _wxWindow);
     }
 }

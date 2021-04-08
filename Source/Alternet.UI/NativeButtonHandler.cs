@@ -41,10 +41,5 @@ namespace Alternet.UI
 
             NativeControl.Text = Control.Text;
         }
-
-        public override SizeF GetPreferredSize(SizeF availableSize)
-        {
-            return NativeControl.GetPreferredSize(availableSize);
-        }
     }
 }

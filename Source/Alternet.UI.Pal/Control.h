@@ -24,6 +24,8 @@ namespace Alternet::UI
 
         virtual wxWindow* GetParentingWxWindow();
 
+        virtual SizeF GetDefaultSize();
+
     private:
         enum class ControlFlags
         {

@@ -5,10 +5,17 @@ using System.Drawing;
 namespace Alternet.UI
 {
     [System.ComponentModel.DesignerCategory("Code")]
-    public abstract class Control : Component
+    public class Control : Component
     {
+        private float width = float.NaN;
+
+        private float height = float.NaN;
+
         public Control()
         {
+            Controls.ItemInserted += Controls_ItemInserted;
+            Controls.ItemRemoved += Controls_ItemRemoved;
+
             Handler = CreateHandler();
         }
 
@@ -16,25 +23,33 @@ namespace Alternet.UI
 
         public bool IsDisposed { get; private set; }
 
-        protected abstract ControlHandler CreateHandler();
+        public Collection<Control> Controls { get; } = new Collection<Control>();
 
-        protected override void Dispose(bool disposing)
+        public Control? Parent { get; private set; }
+
+        public virtual float Width
         {
-            base.Dispose(disposing);
-
-            if (!IsDisposed)
+            get => width;
+            set
             {
-                IsDisposed = true;
+                if (width == value)
+                    return;
+
+                width = value;
             }
         }
 
-        protected void CheckDisposed()
+        public virtual float Height
         {
-            if (IsDisposed)
-                throw new ObjectDisposedException(null);
-        }
+            get => height;
+            set
+            {
+                if (height == value)
+                    return;
 
-        public Collection<Control> Controls { get; } = new Collection<Control>();
+                height = value;
+            }
+        }
 
         public void SuspendLayout()
         {
@@ -56,6 +71,34 @@ namespace Alternet.UI
         public SizeF GetPreferredSize(SizeF availableSize)
         {
             return Handler.GetPreferredSize(availableSize);
+        }
+
+        protected virtual ControlHandler CreateHandler() => new NativeControlHandler(this);
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (!IsDisposed)
+            {
+                IsDisposed = true;
+            }
+        }
+
+        protected void CheckDisposed()
+        {
+            if (IsDisposed)
+                throw new ObjectDisposedException(null);
+        }
+
+        private void Controls_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
+        {
+            e.Item.Parent = this;
+        }
+
+        private void Controls_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
+        {
+            e.Item.Parent = null;
         }
     }
 }

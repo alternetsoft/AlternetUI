@@ -6,12 +6,12 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public class Window : Control
     {
+        private string? title = null;
+
         public Window()
         {
             Bounds = new RectangleF(100, 100, 400, 400);
         }
-
-        private string? title = null;
 
         public event EventHandler? TitleChanged;
 
@@ -41,6 +41,10 @@ namespace Alternet.UI
                 Handler.Bounds = new RectangleF(Bounds.Location, value);
             }
         }
+
+        public override float Width { get => Size.Width; set => Size = new SizeF(value, Height); }
+
+        public override float Height { get => Size.Height; set => Size = new SizeF(Width, value); }
 
         public PointF Location
         {

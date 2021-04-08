@@ -12,24 +12,38 @@ namespace HelloWorldSample
             var window = new Window();
             window.Title = "Alternet UI";
 
-            var panel = new StackPanel();
-            panel.Orientation = StackPanelOrientation.Verical;
-            window.Controls.Add(panel);
+            var mainPanel = new StackPanel { Orientation = StackPanelOrientation.Horizontal };
+            window.Controls.Add(mainPanel);
 
-            var button1 = new Button();
-            button1.Text = "Button 1";
-            button1.Click += Button_Click;
-            panel.Controls.Add(button1);
+            var leftPanel = new StackPanel
+            {
+                Orientation = StackPanelOrientation.Vertical,
+                Width = 100
+            };
 
-            var button2 = new Button();
-            button2.Text = "Button 2";
-            button2.Click += Button_Click;
-            panel.Controls.Add(button2);
+            mainPanel.Controls.Add(leftPanel);
+
+            var redButton = new Button();
+            redButton.Text = "Red";
+            leftPanel.Controls.Add(redButton);
+
+            var greenButton = new Button();
+            greenButton.Text = "Green";
+            leftPanel.Controls.Add(greenButton);
+
+            var blueButton = new Button();
+            blueButton.Text = "Blue";
+            leftPanel.Controls.Add(blueButton);
+
+            var rightPanel = new StackPanel { Orientation = StackPanelOrientation.Vertical };
+            mainPanel.Controls.Add(rightPanel);
+
+            var b = new Button();
+            b.Text = "BBB";
+            rightPanel.Controls.Add(b);
+
 
             app.Run(window);
         }
-
-        private static void Button_Click(object sender, EventArgs e) =>
-            MessageBox.Show(((Button)sender).Text + " was pressed", "Alternet UI");
     }
 }

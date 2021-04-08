@@ -61,9 +61,27 @@ namespace Alternet.UI
             }
         }
 
+        bool inLayout;
+
         public void PerformLayout()
         {
-            OnLayout();
+            if (inLayout)
+                return;
+            
+            inLayout = true;
+            try
+            {
+                var parent = Control.Parent;
+                if (parent != null)
+                    parent.PerformLayout();
+
+                OnLayout();
+
+            }
+            finally
+            {
+                inLayout = false;
+            }
         }
 
         protected virtual void OnControlInserted(int index, Control control)

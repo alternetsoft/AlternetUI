@@ -2,16 +2,16 @@ using System.Drawing;
 
 namespace Alternet.UI
 {
-    internal abstract class NativeControlHandler : ControlHandler
+    internal class NativeControlHandler : ControlHandler
     {
-        protected NativeControlHandler(Control control) : base(control)
+        public NativeControlHandler(Control control) : base(control)
         {
             NativeControl = CreateNativeControl();
         }
 
         public Native.Control NativeControl { get; }
 
-        protected abstract Native.Control CreateNativeControl();
+        protected virtual Native.Control CreateNativeControl() => new Native.Panel();
 
         protected override void OnControlInserted(int index, Control control)
         {
@@ -21,6 +21,11 @@ namespace Alternet.UI
         protected override void OnControlRemoved(int index, Control control)
         {
             NativeControl.RemoveChild(((NativeControlHandler)control.Handler).NativeControl);
+        }
+
+        public override SizeF GetPreferredSize(SizeF availableSize)
+        {
+            return NativeControl.GetPreferredSize(availableSize);
         }
 
         public override RectangleF Bounds

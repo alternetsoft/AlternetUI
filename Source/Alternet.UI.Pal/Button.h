@@ -12,9 +12,9 @@ namespace Alternet::UI
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         void OnLeftUp(wxMouseEvent& event);
 
-        SizeF GetPreferredSize(const SizeF& availableSize) override;
-
     protected:
+
+        SizeF GetDefaultSize() override;
 
     private:
 
