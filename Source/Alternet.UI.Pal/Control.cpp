@@ -35,6 +35,15 @@ namespace Alternet::UI
         return _wxWindow;
     }
 
+    void Control::Update()
+    {
+        if (!IsWxWindowCreated())
+            return;
+        
+        _wxWindow->Refresh();
+        _wxWindow->Update();
+    }
+
     void Control::CreateWxWindow()
     {
         wxWindow* parentingWxWindow = nullptr;

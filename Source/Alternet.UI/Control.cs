@@ -27,6 +27,8 @@ namespace Alternet.UI
 
         public Control? Parent { get; private set; }
 
+        public void Update() => Handler.Update();
+
         public virtual float Width
         {
             get => width;

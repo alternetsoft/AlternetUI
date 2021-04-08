@@ -88,6 +88,12 @@ namespace Alternet.UI.Native
             NativeApi.Control_RemoveChild(NativePointer, control.NativePointer);
         }
         
+        public void Update()
+        {
+            CheckDisposed();
+            NativeApi.Control_Update(NativePointer);
+        }
+        
         public System.Drawing.SizeF GetPreferredSize(System.Drawing.SizeF availableSize)
         {
             CheckDisposed();
@@ -177,6 +183,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_RemoveChild(IntPtr obj, IntPtr control);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_Update(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.SizeF Control_GetPreferredSize(IntPtr obj, NativeApiTypes.SizeF availableSize);

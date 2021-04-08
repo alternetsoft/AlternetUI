@@ -11,6 +11,8 @@ namespace NativeApi.Api
 
         public void RemoveChild(Control control) => throw new Exception();
 
+        public void Update() => throw new Exception();
+
         public SizeF Size { get; set; }
 
         public PointF Location { get; set; }

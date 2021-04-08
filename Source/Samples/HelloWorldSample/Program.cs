@@ -6,20 +6,8 @@ namespace HelloWorldSample
 {
     internal class Program
     {
-        class MyCustomControl : Control
-        {
-            public MyCustomControl()
-            {
-                UserPaint = true;
-            }
-
-            protected override void OnPaint(PaintEventArgs e)
-            {
-                e.DrawingContext.FillRectangle(e.Bounds, Color.LightYellow);
-                e.DrawingContext.DrawRectangle(e.Bounds, Color.DarkRed);
-                e.DrawingContext.DrawText("Hello!", new PointF(10, 10), Color.Blue);
-            }
-        }
+        private static MyCustomControl? customControl;
+        private static TextBox? textBox;
 
         [STAThread]
         public static void Main(string[] args)
@@ -54,10 +42,11 @@ namespace HelloWorldSample
             var rightPanel = new StackPanel { Orientation = StackPanelOrientation.Vertical };
             mainPanel.Controls.Add(rightPanel);
 
-            var textBox = new TextBox();
+            textBox = new TextBox();
+            textBox.TextChanged += TextBox_TextChanged;
             rightPanel.Controls.Add(textBox);
 
-            var customControl = new MyCustomControl
+            customControl = new MyCustomControl
             {
                 Width = 100,
                 Height = 100,
@@ -65,7 +54,37 @@ namespace HelloWorldSample
 
             rightPanel.Controls.Add(customControl);
 
+            textBox.Text = "Hello";
+
             app.Run(window);
+        }
+
+        private static void TextBox_TextChanged(object? sender, EventArgs? e)
+        {
+            customControl?.SetText(textBox!.Text);
+        }
+
+        private class MyCustomControl : Control
+        {
+            private string text = "";
+
+            public MyCustomControl()
+            {
+                UserPaint = true;
+            }
+
+            public void SetText(string value)
+            {
+                text = value;
+                Update();
+            }
+
+            protected override void OnPaint(PaintEventArgs e)
+            {
+                e.DrawingContext.FillRectangle(e.Bounds, Color.LightYellow);
+                e.DrawingContext.DrawRectangle(e.Bounds, Color.DarkRed);
+                e.DrawingContext.DrawText(text, new PointF(10, 10), Color.Blue);
+            }
         }
     }
 }

@@ -30,6 +30,8 @@ namespace Alternet.UI
             Dispose(disposing: true);
         }
 
+        public abstract void Update();
+
         public virtual void OnPaint(DrawingContext drawingContext)
         {
         }

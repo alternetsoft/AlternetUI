@@ -18,6 +18,7 @@ void SetVisible(bool value);
 
 void AddChild(Control* control);
 void RemoveChild(Control* control);
+void Update();
 virtual SizeF GetPreferredSize(const SizeF& availableSize);
 DrawingContext* OpenPaintDrawingContext();
 public:

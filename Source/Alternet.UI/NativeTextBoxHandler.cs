@@ -24,12 +24,22 @@ namespace Alternet.UI
             base.Dispose(disposing);
         }
 
+        bool handlingNativeControlTextChanged;
+
         private void NativeControl_TextChanged(object? sender, System.EventArgs? e)
         {
             if (e is null)
                 throw new System.ArgumentNullException(nameof(e));
 
-            Control.InvokeTextChanged(e);
+            handlingNativeControlTextChanged = true;
+            try
+            {
+                Control.Text = NativeControl.Text!;
+            }
+            finally
+            {
+                handlingNativeControlTextChanged = false;
+            }
         }
 
         private void Control_TextChanged(object? sender, System.EventArgs? e)
@@ -37,8 +47,11 @@ namespace Alternet.UI
             if (e is null)
                 throw new System.ArgumentNullException(nameof(e));
 
-            if (NativeControl.Text != Control.Text)
-                NativeControl.Text = Control.Text;
+            if (!handlingNativeControlTextChanged)
+            {
+                if (NativeControl.Text != Control.Text)
+                    NativeControl.Text = Control.Text;
+            }
         }
     }
 }

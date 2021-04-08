@@ -63,6 +63,11 @@ ALTERNET_UI_API void Control_RemoveChild(Control* obj, Control* control)
     obj->RemoveChild(control);
 }
 
+ALTERNET_UI_API void Control_Update(Control* obj)
+{
+    obj->Update();
+}
+
 ALTERNET_UI_API SizeF_C Control_GetPreferredSize(Control* obj, SizeF availableSize)
 {
     return obj->GetPreferredSize(availableSize);

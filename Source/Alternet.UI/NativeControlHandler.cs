@@ -51,6 +51,11 @@ namespace Alternet.UI
                 float.IsNaN(Control.Height) ? s.Height : Control.Height);
         }
 
+        public override void Update()
+        {
+            NativeControl.Update();
+        }
+
         public override RectangleF Bounds
         {
             get => NativeControl.Bounds;
