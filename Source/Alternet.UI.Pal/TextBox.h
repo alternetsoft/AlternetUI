@@ -14,6 +14,8 @@ namespace Alternet::UI
 
     protected:
 
+        bool DoNotBindPaintEvent() override;
+
     private:
         DelayedValue<TextBox, string> _text;
 

@@ -44,6 +44,11 @@ namespace Alternet::UI
         _wxWindow->Update();
     }
 
+    bool Control::DoNotBindPaintEvent()
+    {
+        return false;
+    }
+
     void Control::CreateWxWindow()
     {
         wxWindow* parentingWxWindow = nullptr;
@@ -52,7 +57,8 @@ namespace Alternet::UI
         
         _wxWindow = CreateWxWindowCore(parentingWxWindow);
 
-        _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
+        if (!DoNotBindPaintEvent())
+            _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
 
         _delayedValues.Apply();
 
