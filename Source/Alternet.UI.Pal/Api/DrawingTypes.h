@@ -165,12 +165,21 @@ namespace Alternet::UI
         return value;
     }
 
+    inline double GetDPIScaleFactor(wxWindow* window)
+    {
+#if defined(__WXMSW__)
+        return window->GetDPIScaleFactor();
+#else
+        return 1;
+#endif
+    }
+
     inline int fromDip(float value, wxWindow* window)
     {
         if (window == nullptr)
             window = getParkingWindow();
 
-        return wxRound(value * window->GetDPIScaleFactor());
+        return wxRound(value * GetDPIScaleFactor(window));
     }
 
     inline float toDip(int value, wxWindow* window)
@@ -178,7 +187,7 @@ namespace Alternet::UI
         if (window == nullptr)
             window = getParkingWindow();
 
-        return value / window->GetDPIScaleFactor();
+        return value / GetDPIScaleFactor(window);
     }
 
     inline wxRect fromDip(const RectangleF& value, wxWindow* window)
