@@ -10,7 +10,7 @@ namespace Alternet::UI
 #include "Api/Button.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
-        void OnLeftUp(wxMouseEvent& event);
+        void OnButtonClick(wxCommandEvent& event);
 
     protected:
 

@@ -25,7 +25,7 @@ namespace Alternet::UI
     wxWindow* Button::CreateWxWindowCore(wxWindow* parent)
     {
         auto button = new wxButton(parent, wxID_ANY);
-        button->Bind(wxEVT_LEFT_UP, &Button::OnLeftUp, this);
+        button->Bind(wxEVT_BUTTON, &Button::OnButtonClick, this);
         return button;
     }
 
@@ -44,7 +44,7 @@ namespace Alternet::UI
         GetButton()->SetLabel(wxStr(value));
     }
 
-    void Button::OnLeftUp(wxMouseEvent& event)
+    void Button::OnButtonClick(wxCommandEvent& event)
     {
         RaiseEvent(ButtonEvent::Click);
     }
