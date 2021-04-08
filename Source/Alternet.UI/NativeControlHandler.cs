@@ -7,6 +7,26 @@ namespace Alternet.UI
         public NativeControlHandler(Control control) : base(control)
         {
             NativeControl = CreateNativeControl();
+            NativeControl.Paint += NativeControl_Paint;
+        }
+
+        private void NativeControl_Paint(object? sender, System.EventArgs? e)
+        {
+            if (Control.UserPaint)
+            {
+                using (var dc = NativeControl.OpenPaintDrawingContext())
+                    Control.InvokePaint(new PaintEventArgs(new DrawingContext(dc), Bounds));
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                NativeControl.Paint -= NativeControl_Paint;
+            }
+
+            base.Dispose(disposing);
         }
 
         public Native.Control NativeControl { get; }
@@ -25,7 +45,10 @@ namespace Alternet.UI
 
         public override SizeF GetPreferredSize(SizeF availableSize)
         {
-            return NativeControl.GetPreferredSize(availableSize);
+            var s = NativeControl.GetPreferredSize(availableSize);
+            return new SizeF(
+                float.IsNaN(Control.Width) ? s.Width : Control.Width,
+                float.IsNaN(Control.Height) ? s.Height : Control.Height);
         }
 
         public override RectangleF Bounds

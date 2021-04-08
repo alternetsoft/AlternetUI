@@ -100,5 +100,22 @@ namespace Alternet.UI
         {
             e.Item.Parent = null;
         }
+
+        public event EventHandler<PaintEventArgs>? Paint;
+
+        internal void InvokePaint(PaintEventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnPaint(e);
+        }
+
+        public bool UserPaint { get; set; }
+
+        protected virtual void OnPaint(PaintEventArgs e)
+        {
+            Paint?.Invoke(this, e);
+        }
     }
 }

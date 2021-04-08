@@ -17,3 +17,13 @@ ALTERNET_UI_API void DrawingContext_FillRectangle(DrawingContext* obj, Rectangle
     obj->FillRectangle(rectangle, color);
 }
 
+ALTERNET_UI_API void DrawingContext_DrawRectangle(DrawingContext* obj, RectangleF rectangle, Color color)
+{
+    obj->DrawRectangle(rectangle, color);
+}
+
+ALTERNET_UI_API void DrawingContext_DrawText(DrawingContext* obj, const char16_t* text, PointF origin, Color color)
+{
+    obj->DrawText(text, origin, color);
+}
+

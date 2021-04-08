@@ -21,6 +21,18 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_FillRectangle(NativePointer, rectangle, color);
         }
         
+        public void DrawRectangle(System.Drawing.RectangleF rectangle, System.Drawing.Color color)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_DrawRectangle(NativePointer, rectangle, color);
+        }
+        
+        public void DrawText(string? text, System.Drawing.PointF origin, System.Drawing.Color color)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_DrawText(NativePointer, text, origin, color);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -32,6 +44,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_FillRectangle(IntPtr obj, NativeApiTypes.RectangleF rectangle, NativeApiTypes.Color color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DrawRectangle(IntPtr obj, NativeApiTypes.RectangleF rectangle, NativeApiTypes.Color color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DrawText(IntPtr obj, string? text, NativeApiTypes.PointF origin, NativeApiTypes.Color color);
             
         }
     }

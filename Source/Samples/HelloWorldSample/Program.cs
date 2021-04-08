@@ -1,10 +1,26 @@
 ﻿using Alternet.UI;
 using System;
+using System.Drawing;
 
 namespace HelloWorldSample
 {
     internal class Program
     {
+        class MyCustomControl : Control
+        {
+            public MyCustomControl()
+            {
+                UserPaint = true;
+            }
+
+            protected override void OnPaint(PaintEventArgs e)
+            {
+                e.DrawingContext.FillRectangle(e.Bounds, Color.LightYellow);
+                e.DrawingContext.DrawRectangle(e.Bounds, Color.DarkRed);
+                e.DrawingContext.DrawText("Hello!", new PointF(10, 10), Color.Blue);
+            }
+        }
+
         [STAThread]
         public static void Main(string[] args)
         {
@@ -38,10 +54,13 @@ namespace HelloWorldSample
             var rightPanel = new StackPanel { Orientation = StackPanelOrientation.Vertical };
             mainPanel.Controls.Add(rightPanel);
 
-            var b = new Button();
-            b.Text = "BBB";
-            rightPanel.Controls.Add(b);
+            var customControl = new MyCustomControl
+            {
+                Width = 100,
+                Height = 100,
+            };
 
+            rightPanel.Controls.Add(customControl);
 
             app.Run(window);
         }

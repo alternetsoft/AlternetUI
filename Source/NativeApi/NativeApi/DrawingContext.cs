@@ -10,5 +10,9 @@ namespace NativeApi.Api
         void IDisposable.Dispose() => throw new NotImplementedException();
 
         public void FillRectangle(RectangleF rectangle, Color color) => throw new Exception();
+
+        public void DrawRectangle(RectangleF rectangle, Color color) => throw new Exception();
+
+        public void DrawText(string text, PointF origin, Color color) => throw new Exception();
     }
 }

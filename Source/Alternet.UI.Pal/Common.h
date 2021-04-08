@@ -9,20 +9,6 @@ namespace Alternet::UI
 {
     typedef std::u16string string;
 
-    inline wxString wxStr(const string& value)
-    {
-#if defined(__WXMSW__)
-        return (wchar_t*)value.c_str();
-#else
-        // https://stackoverflow.com/a/8540710
-        std::wstring_convert<std::codecvt_utf16<wchar_t, 0x10ffff, std::little_endian>, wchar_t> conv;
-        auto s = conv.from_bytes(
-            reinterpret_cast<const char*> (&value[0]),
-            reinterpret_cast<const char*> (&value[0] + value.size()));
-        return s.c_str();
-#endif
-    }
-
 #if !defined(__WXMSW__)
 
     // https://stackoverflow.com/a/42899668
@@ -88,6 +74,20 @@ namespace Alternet::UI
     }
 
 #endif
+
+    inline wxString wxStr(const string& value)
+    {
+#if defined(__WXMSW__)
+        return (wchar_t*)value.c_str();
+#else
+        // https://stackoverflow.com/a/8540710
+        std::wstring_convert<std::codecvt_utf16<wchar_t, 0x10ffff, std::little_endian>, wchar_t> conv;
+        auto s = conv.from_bytes(
+            reinterpret_cast<const char*> (&value[0]),
+            reinterpret_cast<const char*> (&value[0] + value.size()));
+        return s.c_str();
+#endif
+    }
 
     inline string wxStr(const wxString& value)
     {

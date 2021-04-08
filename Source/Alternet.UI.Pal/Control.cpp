@@ -178,5 +178,7 @@ namespace Alternet::UI
     {
         if (IsWxWindowCreated())
             return toDip(_wxWindow->GetBestSize(), _wxWindow);
+        
+        return GetDefaultSize();
     }
 }
