@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 
 namespace Alternet.UI
@@ -25,13 +26,30 @@ namespace Alternet.UI
         public override void OnLayout()
         {
             var size = Bounds.Size;
-            float y = 0;
-            foreach (var control in Control.Controls)
+            var orientation = Control.Orientation;
+
+            if (orientation == StackPanelOrientation.Verical)
             {
-                var preferredSize = control.GetPreferredSize(size);
-                control.Handler.Bounds = new RectangleF(0, y, size.Width, preferredSize.Height);
-                y += preferredSize.Height;
+                float y = 0;
+                foreach (var control in Control.Controls)
+                {
+                    var preferredSize = control.GetPreferredSize(size);
+                    control.Handler.Bounds = new RectangleF(0, y, size.Width, preferredSize.Height);
+                    y += preferredSize.Height;
+                }
             }
+            else if (orientation == StackPanelOrientation.Horizontal)
+            {
+                float x = 0;
+                foreach (var control in Control.Controls)
+                {
+                    var preferredSize = control.GetPreferredSize(size);
+                    control.Handler.Bounds = new RectangleF(x, 0, preferredSize.Width, size.Height);
+                    x += preferredSize.Width;
+                }
+            }
+            else
+                throw new InvalidOperationException();
         }
     }
 }

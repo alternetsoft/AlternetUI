@@ -13,6 +13,7 @@ namespace HelloWorldSample
             window.Title = "Alternet UI";
 
             var panel = new StackPanel();
+            panel.Orientation = StackPanelOrientation.Verical;
             window.Controls.Add(panel);
 
             var button1 = new Button();
