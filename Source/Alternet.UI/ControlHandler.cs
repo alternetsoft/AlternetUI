@@ -23,7 +23,7 @@ namespace Alternet.UI
 
         public abstract RectangleF Bounds { get; set; }
 
-        private bool IsLayoutSuspended => layoutSuspendCount == 0;
+        private bool IsLayoutSuspended => layoutSuspendCount != 0;
 
         public void Dispose()
         {
@@ -67,6 +67,9 @@ namespace Alternet.UI
 
         public void PerformLayout()
         {
+            if (IsLayoutSuspended)
+                return;
+
             if (inLayout)
                 return;
             
