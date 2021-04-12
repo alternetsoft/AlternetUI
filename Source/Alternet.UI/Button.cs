@@ -54,10 +54,5 @@ namespace Alternet.UI
         protected virtual void OnTextChanged(EventArgs e)
         {
         }
-
-        protected override ControlHandler CreateHandler()
-        {
-            return new NativeButtonHandler(this);
-        }
     }
 }

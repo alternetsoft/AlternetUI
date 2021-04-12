@@ -105,7 +105,11 @@ namespace Alternet.UI
             OnPaint(e);
         }
 
-        protected virtual ControlHandler CreateHandler() => new NativeControlHandler(this);
+        IControlHandlerFactory? ControlHandlerFactory { get; set; }
+
+        protected IControlHandlerFactory GetEffectiveControlHandlerHactory() => ControlHandlerFactory ?? Application.Current.VisualTheme.ControlHandlerFactory;
+
+        protected virtual ControlHandler CreateHandler() => GetEffectiveControlHandlerHactory().CreateControlHandler(this);
 
         protected override void Dispose(bool disposing)
         {

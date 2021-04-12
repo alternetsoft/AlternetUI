@@ -24,11 +24,6 @@ namespace Alternet.UI
             }
         }
 
-        protected override ControlHandler CreateHandler()
-        {
-            return new NativeStackPanelHandler(this);
-        }
-
         protected virtual void OnOrientationChanged(EventArgs e) => OrientationChanged?.Invoke(this, e);
     }
 }

@@ -71,10 +71,5 @@ namespace Alternet.UI
                 Handler.Bounds = value;
             }
         }
-
-        protected override ControlHandler CreateHandler()
-        {
-            return new NativeWindowHandler(this);
-        }
     }
 }

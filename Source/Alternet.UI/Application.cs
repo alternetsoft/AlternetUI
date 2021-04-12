@@ -13,9 +13,24 @@ namespace Alternet.UI
         public Application()
         {
             nativeApplication = new Native.Application();
+            current = this;
         }
 
         public bool IsDisposed { get => isDisposed; private set => isDisposed = value; }
+
+        public VisualTheme VisualTheme { get; set; } = StockVisualThemes.Native;
+
+        static Application? current;
+
+        public static Application Current
+        {
+            get
+            {
+                // todo: maybe make it thread static?
+                // todo: maybe move this to native?
+                return current ?? throw new InvalidOperationException(ErrorMessages.CurrentApplicationIsNotSet);
+            }
+        }
 
         public void Run(Window window)
         {
@@ -32,6 +47,8 @@ namespace Alternet.UI
             {
                 nativeApplication.Dispose();
                 nativeApplication = null!;
+
+                current = null;
 
                 IsDisposed = true;
             }
