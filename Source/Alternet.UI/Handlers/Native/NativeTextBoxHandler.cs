@@ -2,29 +2,26 @@ namespace Alternet.UI
 {
     internal class NativeTextBoxHandler : NativeControlHandler<TextBox, Native.TextBox>
     {
-        public NativeTextBoxHandler(TextBox textBox) : base(textBox)
-        {
-            Control.TextChanged += Control_TextChanged;
-            NativeControl.TextChanged += NativeControl_TextChanged;
-        }
+        private bool handlingNativeControlTextChanged;
 
         internal override Native.Control CreateNativeControl()
         {
             return new Native.TextBox();
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void OnAttach()
         {
-            if (disposing)
-            {
-                Control.TextChanged -= Control_TextChanged;
-                NativeControl.TextChanged -= NativeControl_TextChanged;
-            }
-
-            base.Dispose(disposing);
+            base.OnAttach();
+            Control.TextChanged += Control_TextChanged;
+            NativeControl.TextChanged += NativeControl_TextChanged;
         }
 
-        bool handlingNativeControlTextChanged;
+        protected override void OnDetach()
+        {
+            base.OnDetach();
+            Control.TextChanged -= Control_TextChanged;
+            NativeControl.TextChanged -= NativeControl_TextChanged;
+        }
 
         private void NativeControl_TextChanged(object? sender, System.EventArgs? e)
         {

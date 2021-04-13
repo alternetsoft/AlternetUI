@@ -4,6 +4,6 @@ namespace Alternet.UI
     {
         public static IControlHandlerFactory Native { get; } = new NativeControlHandlerFactory();
 
-        //public static IControlHandlerFactory Generic { get; }
+        public static IControlHandlerFactory Generic { get; } = new GenericControlHandlerFactory();
     }
 }

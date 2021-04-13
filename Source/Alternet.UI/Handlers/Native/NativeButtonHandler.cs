@@ -4,26 +4,24 @@ namespace Alternet.UI
 {
     internal class NativeButtonHandler : NativeControlHandler<Button, Native.Button>
     {
-        public NativeButtonHandler(Button button) : base(button)
-        {
-            Control.TextChanged += Control_TextChanged;
-            NativeControl.Click += NativeControl_Click;
-        }
-
         internal override Native.Control CreateNativeControl()
         {
             return new Native.Button();
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void OnAttach()
         {
-            if (disposing)
-            {
-                Control.TextChanged -= Control_TextChanged;
-                NativeControl.Click -= NativeControl_Click;
-            }
+            base.OnAttach();
+            Control.TextChanged += Control_TextChanged;
+            NativeControl.Click += NativeControl_Click;
+        }
 
-            base.Dispose(disposing);
+        protected override void OnDetach()
+        {
+            base.OnDetach();
+
+            Control.TextChanged -= Control_TextChanged;
+            NativeControl.Click -= NativeControl_Click;
         }
 
         private void NativeControl_Click(object? sender, System.EventArgs? e)

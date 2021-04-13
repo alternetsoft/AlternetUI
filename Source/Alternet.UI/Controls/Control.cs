@@ -11,28 +11,36 @@ namespace Alternet.UI
 
         private float height = float.NaN;
         private Thickness margin;
+        private ControlHandler? handler;
 
         public Control()
         {
             Controls.ItemInserted += Controls_ItemInserted;
             Controls.ItemRemoved += Controls_ItemRemoved;
 
-            Handler = CreateHandler();
+            CreateAndAttachHandler();
+        }
+
+        private void CreateAndAttachHandler()
+        {
+            handler = CreateHandler();
+            handler.Attach(this);
         }
 
         public event EventHandler<PaintEventArgs>? Paint;
 
         public event EventHandler? MarginChanged;
 
-        public ControlHandler Handler { get; }
+        public ControlHandler Handler
+        { 
+            get => handler ?? throw new InvalidOperationException();
+        }
 
         public bool IsDisposed { get; private set; }
 
         public Collection<Control> Controls { get; } = new Collection<Control>();
 
         public Control? Parent { get; private set; }
-
-        internal virtual bool IsTopLevel => false;
 
         public virtual float Width
         {
@@ -119,6 +127,14 @@ namespace Alternet.UI
 
             if (!IsDisposed)
             {
+                if (disposing)
+                {
+                    if (handler == null)
+                        throw new InvalidOperationException();
+                    handler.Detach();
+                    handler = null;
+                }
+
                 IsDisposed = true;
             }
         }

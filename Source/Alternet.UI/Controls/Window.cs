@@ -29,8 +29,6 @@ namespace Alternet.UI
             }
         }
 
-        internal override bool IsTopLevel => true;
-
         public SizeF Size
         {
             get
@@ -73,5 +71,7 @@ namespace Alternet.UI
                 Handler.Bounds = value;
             }
         }
+
+        protected override ControlHandler CreateHandler() => new NativeWindowHandler();
     }
 }

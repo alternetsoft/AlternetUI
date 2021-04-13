@@ -4,6 +4,6 @@ namespace Alternet.UI
     {
         public static VisualTheme Native { get; } = new VisualTheme(StockControlHandlerFactories.Native);
 
-        //public static VisualTheme GenericLight { get; }
+        public static VisualTheme GenericLight { get; } = new VisualTheme(StockControlHandlerFactories.Generic);
     }
 }

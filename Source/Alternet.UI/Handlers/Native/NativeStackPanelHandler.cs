@@ -5,19 +5,6 @@ namespace Alternet.UI
 {
     internal class NativeStackPanelHandler : NativeControlHandler<StackPanel, Native.Panel>
     {
-        public NativeStackPanelHandler(StackPanel control) : base(control)
-        {
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-            }
-
-            base.Dispose(disposing);
-        }
-
         public override void OnLayout()
         {
             var size = Bounds.Size;

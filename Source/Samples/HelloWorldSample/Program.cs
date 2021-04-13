@@ -12,7 +12,11 @@ namespace HelloWorldSample
         [STAThread]
         public static void Main(string[] args)
         {
-            var app = new Application();
+            var app = new Application
+            {
+                VisualTheme = StockVisualThemes.GenericLight
+            };
+
             var window = new Window();
             window.Title = "Alternet UI";
 

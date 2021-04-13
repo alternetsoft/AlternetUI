@@ -31,7 +31,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
         {

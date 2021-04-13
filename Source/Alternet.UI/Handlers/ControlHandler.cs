@@ -9,22 +9,12 @@ namespace Alternet.UI
 
         private bool inLayout;
 
-        protected ControlHandler(Control control)
+        private Control? control;
+
+        public Control Control
         {
-            Control = control;
-
-            Control.MarginChanged += Control_MarginChanged;
-            Control.Controls.ItemInserted += Controls_ItemInserted;
-            Control.Controls.ItemRemoved += Controls_ItemRemoved;
-
-            TryCreateNativeControl();
+            get => control ?? throw new InvalidOperationException();
         }
-
-        ~ControlHandler() => Dispose(disposing: false);
-
-        public bool IsDisposed { get; private set; }
-
-        public Control Control { get; }
 
         public abstract RectangleF Bounds { get; set; }
 
@@ -32,9 +22,17 @@ namespace Alternet.UI
 
         private bool IsLayoutSuspended => layoutSuspendCount != 0;
 
-        public void Dispose()
+        public void Attach(Control control)
         {
-            Dispose(disposing: true);
+            this.control = control;
+            TryCreateNativeControl();
+            OnAttach();
+        }
+
+        public void Detach()
+        {
+            OnDetach();
+            control = null;
         }
 
         public void Update()
@@ -48,6 +46,11 @@ namespace Alternet.UI
 
         public virtual void OnLayout()
         {
+            foreach (var control in Control.Controls)
+            {
+                var margin = control.Margin;
+                control.Handler.Bounds = new RectangleF(new PointF(margin.Left, margin.Top), Bounds.Size - margin.Size);
+            }
         }
 
         public virtual SizeF GetPreferredSize(SizeF availableSize)
@@ -101,6 +104,25 @@ namespace Alternet.UI
 
         internal virtual Native.Control CreateNativeControl() => new Native.Panel();
 
+        internal abstract bool NeedToCreateNativeControl();
+
+        protected virtual void OnAttach()
+        {
+            Control.MarginChanged += Control_MarginChanged;
+            Control.Controls.ItemInserted += Controls_ItemInserted;
+            Control.Controls.ItemRemoved += Controls_ItemRemoved;
+        }
+
+        protected virtual void OnDetach()
+        {
+            Control.MarginChanged -= Control_MarginChanged;
+            Control.Controls.ItemInserted -= Controls_ItemInserted;
+            Control.Controls.ItemRemoved -= Controls_ItemRemoved;
+
+            if (NativeControl != null)
+                NativeControl.Paint -= NativeControl_Paint;
+        }
+
         private protected virtual void OnNativeControlCreated()
         {
             if (NativeControl == null)
@@ -108,8 +130,6 @@ namespace Alternet.UI
 
             NativeControl.Paint += NativeControl_Paint;
         }
-
-        private protected abstract bool NeedToCreateNativeControl();
 
         protected virtual void OnControlInserted(int index, Control control)
         {
@@ -121,30 +141,6 @@ namespace Alternet.UI
         {
             if (NativeControl != null && control.Handler.NativeControl != null)
                 NativeControl?.RemoveChild(control.Handler.NativeControl);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!IsDisposed)
-            {
-                if (disposing)
-                {
-                    Control.MarginChanged -= Control_MarginChanged;
-                    Control.Controls.ItemInserted -= Controls_ItemInserted;
-                    Control.Controls.ItemRemoved -= Controls_ItemRemoved;
-
-                    if (NativeControl != null)
-                        NativeControl.Paint -= NativeControl_Paint;
-                }
-
-                IsDisposed = true;
-            }
-        }
-
-        protected void CheckDisposed()
-        {
-            if (IsDisposed)
-                throw new ObjectDisposedException(null);
         }
 
         private void TryCreateNativeControl()

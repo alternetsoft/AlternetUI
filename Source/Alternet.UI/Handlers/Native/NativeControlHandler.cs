@@ -4,10 +4,6 @@ namespace Alternet.UI
 {
     internal class NativeControlHandler : ControlHandler
     {
-        public NativeControlHandler(Control control) : base(control)
-        {
-        }
-
         public override RectangleF Bounds
         {
             get => NativeControl!.Bounds;
@@ -18,6 +14,9 @@ namespace Alternet.UI
             }
         }
 
-        private protected override bool NeedToCreateNativeControl() => NativeControl == null;
+        internal override bool NeedToCreateNativeControl()
+        {
+            return NativeControl == null;
+        }
     }
 }
