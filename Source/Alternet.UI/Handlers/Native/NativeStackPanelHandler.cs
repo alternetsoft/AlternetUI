@@ -9,11 +9,6 @@ namespace Alternet.UI
         {
         }
 
-        protected override Native.Control CreateNativeControl()
-        {
-            return new Native.Panel();
-        }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

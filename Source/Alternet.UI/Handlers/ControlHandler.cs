@@ -16,6 +16,8 @@ namespace Alternet.UI
             Control.MarginChanged += Control_MarginChanged;
             Control.Controls.ItemInserted += Controls_ItemInserted;
             Control.Controls.ItemRemoved += Controls_ItemRemoved;
+
+            TryCreateNativeControl();
         }
 
         ~ControlHandler() => Dispose(disposing: false);
@@ -26,6 +28,8 @@ namespace Alternet.UI
 
         public abstract RectangleF Bounds { get; set; }
 
+        internal Native.Control? NativeControl { get; private set; }
+
         private bool IsLayoutSuspended => layoutSuspendCount != 0;
 
         public void Dispose()
@@ -33,7 +37,10 @@ namespace Alternet.UI
             Dispose(disposing: true);
         }
 
-        public abstract void Update();
+        public void Update()
+        {
+            NativeControl?.Update();
+        }
 
         public virtual void OnPaint(DrawingContext drawingContext)
         {
@@ -45,7 +52,10 @@ namespace Alternet.UI
 
         public virtual SizeF GetPreferredSize(SizeF availableSize)
         {
-            return new SizeF();
+            var s = NativeControl?.GetPreferredSize(availableSize) ?? new SizeF();
+            return new SizeF(
+                float.IsNaN(Control.Width) ? s.Width : Control.Width,
+                float.IsNaN(Control.Height) ? s.Height : Control.Height);
         }
 
         public void SuspendLayout()
@@ -89,12 +99,28 @@ namespace Alternet.UI
             }
         }
 
+        internal virtual Native.Control CreateNativeControl() => new Native.Panel();
+
+        private protected virtual void OnNativeControlCreated()
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            NativeControl.Paint += NativeControl_Paint;
+        }
+
+        private protected abstract bool NeedToCreateNativeControl();
+
         protected virtual void OnControlInserted(int index, Control control)
         {
+            if (NativeControl != null && control.Handler.NativeControl != null)
+                NativeControl?.AddChild(control.Handler.NativeControl);
         }
 
         protected virtual void OnControlRemoved(int index, Control control)
         {
+            if (NativeControl != null && control.Handler.NativeControl != null)
+                NativeControl?.RemoveChild(control.Handler.NativeControl);
         }
 
         protected virtual void Dispose(bool disposing)
@@ -106,6 +132,9 @@ namespace Alternet.UI
                     Control.MarginChanged -= Control_MarginChanged;
                     Control.Controls.ItemInserted -= Controls_ItemInserted;
                     Control.Controls.ItemRemoved -= Controls_ItemRemoved;
+
+                    if (NativeControl != null)
+                        NativeControl.Paint -= NativeControl_Paint;
                 }
 
                 IsDisposed = true;
@@ -116,6 +145,15 @@ namespace Alternet.UI
         {
             if (IsDisposed)
                 throw new ObjectDisposedException(null);
+        }
+
+        private void TryCreateNativeControl()
+        {
+            if (NeedToCreateNativeControl())
+            {
+                NativeControl = CreateNativeControl();
+                OnNativeControlCreated();
+            }
         }
 
         private void Control_MarginChanged(object? sender, EventArgs? e)
@@ -133,6 +171,18 @@ namespace Alternet.UI
         {
             OnControlRemoved(e.Index, e.Item);
             PerformLayout();
+        }
+
+        private void NativeControl_Paint(object? sender, System.EventArgs? e)
+        {
+            if (Control.UserPaint)
+            {
+                if (NativeControl == null)
+                    throw new InvalidOperationException();
+
+                using (var dc = NativeControl.OpenPaintDrawingContext())
+                    Control.InvokePaint(new PaintEventArgs(new DrawingContext(dc), Bounds));
+            }
         }
     }
 }

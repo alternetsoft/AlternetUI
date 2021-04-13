@@ -32,6 +32,8 @@ namespace Alternet.UI
 
         public Control? Parent { get; private set; }
 
+        internal virtual bool IsTopLevel => false;
+
         public virtual float Width
         {
             get => width;

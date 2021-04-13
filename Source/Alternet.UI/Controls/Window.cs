@@ -29,6 +29,8 @@ namespace Alternet.UI
             }
         }
 
+        internal override bool IsTopLevel => true;
+
         public SizeF Size
         {
             get

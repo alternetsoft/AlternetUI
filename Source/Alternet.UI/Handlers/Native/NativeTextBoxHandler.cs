@@ -8,7 +8,7 @@ namespace Alternet.UI
             NativeControl.TextChanged += NativeControl_TextChanged;
         }
 
-        protected override Native.Control CreateNativeControl()
+        internal override Native.Control CreateNativeControl()
         {
             return new Native.TextBox();
         }

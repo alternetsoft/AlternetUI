@@ -9,6 +9,7 @@ namespace Alternet.UI
         }
 
         public new TControl Control => (TControl)base.Control;
-        public new TNativeControl NativeControl => (TNativeControl)base.NativeControl;
+
+        public new TNativeControl NativeControl => (TNativeControl)base.NativeControl!;
     }
 }

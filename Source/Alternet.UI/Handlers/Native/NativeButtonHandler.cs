@@ -10,7 +10,7 @@ namespace Alternet.UI
             NativeControl.Click += NativeControl_Click;
         }
 
-        protected override Native.Control CreateNativeControl()
+        internal override Native.Control CreateNativeControl()
         {
             return new Native.Button();
         }

@@ -9,7 +9,7 @@ namespace Alternet.UI
             Control.TitleChanged += Control_TitleChanged;
         }
 
-        protected override Native.Control CreateNativeControl()
+        internal override Native.Control CreateNativeControl()
         {
             return new Native.Window();
         }
