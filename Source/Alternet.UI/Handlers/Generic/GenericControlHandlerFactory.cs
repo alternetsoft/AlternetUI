@@ -6,6 +6,7 @@ namespace Alternet.UI
         {
             Button => new GenericButtonHandler(),
             Border => new GenericBorderHandler(),
+            TextBlock => new GenericTextBlockHandler(),
             _ => StockControlHandlerFactories.Native.CreateControlHandler(control)
         };
     }

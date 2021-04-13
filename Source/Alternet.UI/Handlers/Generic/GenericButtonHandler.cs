@@ -1,23 +1,42 @@
+using System;
 using System.Drawing;
 
 namespace Alternet.UI
 {
     internal class GenericButtonHandler : GenericControlHandler<Button>
     {
+        private Border? border;
+
+        private TextBlock? textBlock;
+
+        public override SizeF GetPreferredSize(SizeF availableSize)
+        {
+            return new SizeF(50, 30);
+        }
+
         protected override void OnAttach()
         {
             base.OnAttach();
 
             Control.TextChanged += Control_TextChanged;
 
-            var border = new Border();
+            border = new Border();
             Control.VisualChildren.Add(border);
+
+            textBlock = new TextBlock();
+            border.VisualChildren.Add(textBlock);
+
+            UpdateText();
         }
 
         protected override void OnDetach()
         {
             base.OnDetach();
 
+            if (border == null)
+                throw new InvalidOperationException();
+
+            Control.VisualChildren.Remove(border);
             Control.TextChanged -= Control_TextChanged;
         }
 
@@ -26,12 +45,16 @@ namespace Alternet.UI
             if (e is null)
                 throw new System.ArgumentNullException(nameof(e));
 
-            Update();
+            UpdateText();
         }
 
-        public override SizeF GetPreferredSize(SizeF availableSize)
+        private void UpdateText()
         {
-            return new SizeF(50, 30);
+            if (textBlock == null)
+                throw new InvalidOperationException();
+
+            textBlock.Text = Control.Text;
+            Update();
         }
     }
 }
