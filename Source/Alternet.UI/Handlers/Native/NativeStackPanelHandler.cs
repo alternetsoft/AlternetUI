@@ -7,32 +7,33 @@ namespace Alternet.UI
     {
         public override void OnLayout()
         {
-            var size = Bounds.Size;
+            var displayRectangle = DisplayRectangle;
+
             var orientation = Control.Orientation;
 
             if (orientation == StackPanelOrientation.Vertical)
             {
-                float y = 0;
-                foreach (var control in Control.Controls)
+                float y = displayRectangle.Top;
+                foreach (var control in Control.AllChildren)
                 {
                     var margin = control.Margin;
                     var verticalMargin = margin.Vertical;
 
-                    var preferredSize = control.GetPreferredSize(new SizeF(size.Width, size.Height - y - verticalMargin));
-                    control.Handler.Bounds = new RectangleF(0, y + margin.Top, size.Width, preferredSize.Height);
+                    var preferredSize = control.GetPreferredSize(new SizeF(displayRectangle.Width, displayRectangle.Height - y - verticalMargin));
+                    control.Handler.Bounds = new RectangleF(displayRectangle.Left, y + margin.Top, displayRectangle.Width, preferredSize.Height);
                     y += preferredSize.Height + verticalMargin;
                 }
             }
             else if (orientation == StackPanelOrientation.Horizontal)
             {
                 float x = 0;
-                foreach (var control in Control.Controls)
+                foreach (var control in Control.AllChildren)
                 {
                     var margin = control.Margin;
                     var horizontalMargin = margin.Horizontal;
 
-                    var preferredSize = control.GetPreferredSize(new SizeF(size.Width - x - horizontalMargin, size.Height));
-                    control.Handler.Bounds = new RectangleF(x + margin.Left, 0, preferredSize.Width, size.Height);
+                    var preferredSize = control.GetPreferredSize(new SizeF(displayRectangle.Width - x - horizontalMargin, displayRectangle.Height));
+                    control.Handler.Bounds = new RectangleF(displayRectangle.Left + x + margin.Left, displayRectangle.Top, preferredSize.Width, displayRectangle.Height);
                     x += preferredSize.Width + horizontalMargin;
                 }
             }
@@ -47,7 +48,7 @@ namespace Alternet.UI
             {
                 float maxWidth = 0;
                 float height = 0;
-                foreach (var control in Control.Controls)
+                foreach (var control in Control.AllChildren)
                 {
                     var preferredSize = control.GetPreferredSize(new SizeF(availableSize.Width, availableSize.Height - height));
                     maxWidth = Math.Max(maxWidth, preferredSize.Width);
@@ -60,7 +61,7 @@ namespace Alternet.UI
             {
                 float width = 0;
                 float maxHeight = 0;
-                foreach (var control in Control.Controls)
+                foreach (var control in Control.AllChildren)
                 {
                     var preferredSize = control.GetPreferredSize(new SizeF(availableSize.Width - width, availableSize.Height));
                     width += preferredSize.Width;

@@ -18,6 +18,8 @@ namespace Alternet.UI
 
         public abstract RectangleF Bounds { get; set; }
 
+        public virtual RectangleF DisplayRectangle => new RectangleF(new PointF(), Bounds.Size);
+
         internal Native.Control? NativeControl { get; private set; }
 
         private bool IsLayoutSuspended => layoutSuspendCount != 0;
@@ -46,10 +48,11 @@ namespace Alternet.UI
 
         public virtual void OnLayout()
         {
-            foreach (var control in Control.Controls)
+            var displayRectangle = DisplayRectangle;
+            foreach (var control in Control.AllChildren)
             {
                 var margin = control.Margin;
-                control.Handler.Bounds = new RectangleF(new PointF(margin.Left, margin.Top), Bounds.Size - margin.Size);
+                control.Handler.Bounds = new RectangleF(displayRectangle.Location + new SizeF(margin.Left, margin.Top), displayRectangle.Size - margin.Size);
             }
         }
 
@@ -109,15 +112,23 @@ namespace Alternet.UI
         protected virtual void OnAttach()
         {
             Control.MarginChanged += Control_MarginChanged;
-            Control.Controls.ItemInserted += Controls_ItemInserted;
-            Control.Controls.ItemRemoved += Controls_ItemRemoved;
+
+            Control.Children.ItemInserted += Children_ItemInserted;
+            Control.VisualChildren.ItemInserted += Children_ItemInserted;
+
+            Control.Children.ItemRemoved += Children_ItemRemoved;
+            Control.VisualChildren.ItemRemoved += Children_ItemRemoved;
         }
 
         protected virtual void OnDetach()
         {
             Control.MarginChanged -= Control_MarginChanged;
-            Control.Controls.ItemInserted -= Controls_ItemInserted;
-            Control.Controls.ItemRemoved -= Controls_ItemRemoved;
+            
+            Control.Children.ItemInserted -= Children_ItemInserted;
+            Control.VisualChildren.ItemInserted -= Children_ItemInserted;
+
+            Control.Children.ItemRemoved -= Children_ItemRemoved;
+            Control.VisualChildren.ItemRemoved -= Children_ItemRemoved;
 
             if (NativeControl != null)
                 NativeControl.Paint -= NativeControl_Paint;
@@ -131,13 +142,13 @@ namespace Alternet.UI
             NativeControl.Paint += NativeControl_Paint;
         }
 
-        protected virtual void OnControlInserted(int index, Control control)
+        protected virtual void OnChildInserted(int index, Control control)
         {
             if (NativeControl != null && control.Handler.NativeControl != null)
                 NativeControl?.AddChild(control.Handler.NativeControl);
         }
 
-        protected virtual void OnControlRemoved(int index, Control control)
+        protected virtual void OnChildRemoved(int index, Control control)
         {
             if (NativeControl != null && control.Handler.NativeControl != null)
                 NativeControl?.RemoveChild(control.Handler.NativeControl);
@@ -157,27 +168,34 @@ namespace Alternet.UI
             PerformLayout();
         }
 
-        private void Controls_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
+        private void Children_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
         {
-            OnControlInserted(e.Index, e.Item);
+            OnChildInserted(e.Index, e.Item);
             PerformLayout();
         }
 
-        private void Controls_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
+        private void Children_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
         {
-            OnControlRemoved(e.Index, e.Item);
+            OnChildRemoved(e.Index, e.Item);
             PerformLayout();
         }
+
+        protected virtual bool NeedsPaint => false;
 
         private void NativeControl_Paint(object? sender, System.EventArgs? e)
         {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
             if (Control.UserPaint)
             {
-                if (NativeControl == null)
-                    throw new InvalidOperationException();
-
                 using (var dc = NativeControl.OpenPaintDrawingContext())
                     Control.InvokePaint(new PaintEventArgs(new DrawingContext(dc), Bounds));
+            }
+            else if (NeedsPaint)
+            {
+                using (var dc = NativeControl.OpenPaintDrawingContext())
+                    OnPaint(new DrawingContext(dc));
             }
         }
     }

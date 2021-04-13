@@ -15,13 +15,15 @@ namespace Alternet.UI
                     NativeControl.Bounds = value;
                 else
                     bounds = value;
+
+                PerformLayout(); // todo: use event
             }
         }
 
         internal override bool NeedToCreateNativeControl()
         {
-            // todo: if parent already has handle, we dont needed it.
-            return NativeControl != null;
+            // todo: visual children should not require a handler.
+            return NativeControl == null;
         }
     }
 }

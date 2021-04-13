@@ -4,7 +4,8 @@ namespace Alternet.UI
     {
         public ControlHandler CreateControlHandler(Control control) => control switch
         {
-            Button x => new GenericButtonHandler(),
+            Button => new GenericButtonHandler(),
+            Border => new GenericBorderHandler(),
             _ => StockControlHandlerFactories.Native.CreateControlHandler(control)
         };
     }

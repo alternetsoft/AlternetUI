@@ -27,7 +27,7 @@ namespace HelloWorldSample
             };
 
             window.SuspendLayout();
-            window.Controls.Add(mainPanel);
+            window.Children.Add(mainPanel);
 
             var leftPanel = new StackPanel
             {
@@ -35,7 +35,7 @@ namespace HelloWorldSample
                 Width = 100
             };
 
-            mainPanel.Controls.Add(leftPanel);
+            mainPanel.Children.Add(leftPanel);
 
             leftPanel.SuspendLayout();
 
@@ -49,13 +49,13 @@ namespace HelloWorldSample
                 Margin = new Thickness(10, 0, 0, 0)
             };
 
-            mainPanel.Controls.Add(rightPanel);
+            mainPanel.Children.Add(rightPanel);
 
             rightPanel.SuspendLayout();
 
             textBox = new TextBox();
             textBox.TextChanged += (o, e) => customControl?.SetText(textBox!.Text);
-            rightPanel.Controls.Add(textBox);
+            rightPanel.Children.Add(textBox);
 
             customControl = new MyCustomControl
             {
@@ -64,7 +64,7 @@ namespace HelloWorldSample
                 Margin = new Thickness(0, 10, 0, 0)
             };
 
-            rightPanel.Controls.Add(customControl);
+            rightPanel.Children.Add(customControl);
             rightPanel.ResumeLayout();
 
             window.ResumeLayout();
@@ -82,7 +82,7 @@ namespace HelloWorldSample
                 Margin = new Thickness(0, 0, 0, 5)
             };
             redButton.Click += (o, e) => customControl?.SetColor(Color.Pink);
-            parent.Controls.Add(redButton);
+            parent.Children.Add(redButton);
 
             var greenButton = new Button
             {
@@ -90,7 +90,7 @@ namespace HelloWorldSample
                 Margin = new Thickness(0, 0, 0, 5)
             };
             greenButton.Click += (o, e) => customControl?.SetColor(Color.LightGreen);
-            parent.Controls.Add(greenButton);
+            parent.Children.Add(greenButton);
 
             var blueButton = new Button
             {
@@ -98,7 +98,7 @@ namespace HelloWorldSample
                 Margin = new Thickness(0, 0, 0, 5)
             };
             blueButton.Click += (o, e) => customControl?.SetColor(Color.LightBlue);
-            parent.Controls.Add(blueButton);
+            parent.Children.Add(blueButton);
         }
 
         private class MyCustomControl : Control

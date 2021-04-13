@@ -1,3 +1,5 @@
+using System.Drawing;
+
 namespace Alternet.UI
 {
     internal class GenericButtonHandler : GenericControlHandler<Button>
@@ -9,7 +11,7 @@ namespace Alternet.UI
             Control.TextChanged += Control_TextChanged;
 
             var border = new Border();
-            Control.Controls.Add(border);
+            Control.VisualChildren.Add(border);
         }
 
         protected override void OnDetach()
@@ -25,6 +27,11 @@ namespace Alternet.UI
                 throw new System.ArgumentNullException(nameof(e));
 
             Update();
+        }
+
+        public override SizeF GetPreferredSize(SizeF availableSize)
+        {
+            return new SizeF(50, 30);
         }
     }
 }

@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 
 namespace Alternet.UI
 {
@@ -15,8 +17,11 @@ namespace Alternet.UI
 
         public Control()
         {
-            Controls.ItemInserted += Controls_ItemInserted;
-            Controls.ItemRemoved += Controls_ItemRemoved;
+            Children.ItemInserted += Children_ItemInserted;
+            VisualChildren.ItemInserted += Children_ItemInserted;
+
+            Children.ItemRemoved += Children_ItemRemoved;
+            VisualChildren.ItemRemoved += Children_ItemRemoved;
 
             CreateAndAttachHandler();
         }
@@ -38,7 +43,11 @@ namespace Alternet.UI
 
         public bool IsDisposed { get; private set; }
 
-        public Collection<Control> Controls { get; } = new Collection<Control>();
+        public Collection<Control> Children { get; } = new Collection<Control>();
+
+        public Collection<Control> VisualChildren { get; } = new Collection<Control>();
+
+        public IEnumerable<Control> AllChildren => VisualChildren.Concat(Children);
 
         public Control? Parent { get; private set; }
 
@@ -154,12 +163,12 @@ namespace Alternet.UI
             Paint?.Invoke(this, e);
         }
 
-        private void Controls_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
+        private void Children_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
         {
             e.Item.Parent = this;
         }
 
-        private void Controls_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
+        private void Children_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
         {
             e.Item.Parent = null;
         }
