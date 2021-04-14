@@ -55,7 +55,7 @@ namespace Alternet.UI
             if (border == null)
                 throw new InvalidOperationException();
 
-            border.BorderColor = IsMouseDirectlyOver ? Color.Blue : Color.Gray;
+            border.BorderColor = IsMouseOver ? Color.Blue : Color.Gray;
         }
 
         protected override void OnMouseLeave()

@@ -21,7 +21,7 @@ namespace NativeApi.Api
 
         public bool Visible { get; set; }
 
-        public bool IsMouseDirectlyOver { get; }
+        public bool IsMouseOver { get; }
 
         void IDisposable.Dispose() => throw new NotImplementedException();
 

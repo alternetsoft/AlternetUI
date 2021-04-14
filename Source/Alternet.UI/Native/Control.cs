@@ -76,12 +76,12 @@ namespace Alternet.UI.Native
             }
         }
         
-        public bool IsMouseDirectlyOver
+        public bool IsMouseOver
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.Control_GetIsMouseDirectlyOver(NativePointer);
+                return NativeApi.Control_GetIsMouseOver(NativePointer);
             }
             
         }
@@ -198,7 +198,7 @@ namespace Alternet.UI.Native
             public static extern void Control_SetVisible(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Control_GetIsMouseDirectlyOver(IntPtr obj);
+            public static extern bool Control_GetIsMouseOver(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_AddChild(IntPtr obj, IntPtr control);

@@ -89,13 +89,21 @@ namespace Alternet::UI
         return _wxWindow != nullptr;
     }
 
-    bool Control::GetIsMouseDirectlyOver()
+    bool Control::GetIsMouseOver()
     {
         if (_wxWindow == nullptr)
             return false;
 
         wxPoint pt;
-        return wxFindWindowAtPointer(pt) == _wxWindow;
+        auto window = wxFindWindowAtPointer(pt);
+        while (window != nullptr)
+        {
+            if (window == _wxWindow)
+                return true;
+            window = window->GetParent();
+        }
+
+        return false;
     }
 
     wxWindow* Control::GetParentingWxWindow()

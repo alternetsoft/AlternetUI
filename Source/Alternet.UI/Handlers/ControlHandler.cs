@@ -36,14 +36,14 @@ namespace Alternet.UI
 
         private bool IsLayoutSuspended => layoutSuspendCount != 0;
 
-        public bool IsMouseDirectlyOver
+        public bool IsMouseOver
         {
             get
             {
                 if (NativeControl == null)
                     return false;
 
-                return NativeControl.IsMouseDirectlyOver;
+                return NativeControl.IsMouseOver;
             }
         }
 
@@ -199,7 +199,15 @@ namespace Alternet.UI
 
         private void NativeControl_MouseMove(object? sender, EventArgs? e)
         {
-            OnMouseMove();
+            var handler = this;
+            while (true)
+            {
+                handler.OnMouseMove();
+                var parent = handler.Control.Parent;
+                if (parent == null)
+                    break;
+                handler = parent.Handler;
+            }
         }
 
         protected virtual void OnChildInserted(int index, Control control)

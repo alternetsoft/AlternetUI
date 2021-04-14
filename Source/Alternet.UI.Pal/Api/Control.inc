@@ -17,7 +17,7 @@ bool GetVisible();
 void SetVisible(bool value);
 
 
-bool GetIsMouseDirectlyOver();
+bool GetIsMouseOver();
 
 void AddChild(Control* control);
 void RemoveChild(Control* control);
