@@ -201,11 +201,13 @@ namespace Alternet::UI
 
     void Control::OnMouseLeftButtonDown(wxMouseEvent& event)
     {
+        event.Skip();
         RaiseEvent(ControlEvent::MouseLeftButtonDown);
     }
 
     void Control::OnMouseLeftButtonUp(wxMouseEvent& event)
     {
+        event.Skip();
         RaiseEvent(ControlEvent::MouseLeftButtonUp);
     }
 
