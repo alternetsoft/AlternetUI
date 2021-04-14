@@ -1,4 +1,5 @@
 ﻿using ApiGenerator.Api;
+using Namotion.Reflection;
 using System;
 using System.CodeDom.Compiler;
 using System.IO;
@@ -65,22 +66,28 @@ namespace ApiGenerator.Managed
         {
             var declaringTypeName = TypeProvider.GetNativeName(property.DeclaringType!);
             var propertyName = property.Name;
-            var propertyTypeName = types.GetTypeName(property.PropertyType);
+            var propertyTypeName = types.GetTypeName(property.ToContextualProperty());
 
-            WriteDllImport(w);
-            w.WriteLine($"public static extern {propertyTypeName} {declaringTypeName}_Get{propertyName}(IntPtr obj);");
-            w.WriteLine();
+            if (property.GetMethod != null)
+            {
+                WriteDllImport(w);
+                w.WriteLine($"public static extern {propertyTypeName} {declaringTypeName}_Get{propertyName}(IntPtr obj);");
+                w.WriteLine();
+            }
 
-            WriteDllImport(w);
-            w.WriteLine($"public static extern void {declaringTypeName}_Set{propertyName}(IntPtr obj, {propertyTypeName} value);");
-            w.WriteLine();
+            if (property.SetMethod != null)
+            {
+                WriteDllImport(w);
+                w.WriteLine($"public static extern void {declaringTypeName}_Set{propertyName}(IntPtr obj, {propertyTypeName} value);");
+                w.WriteLine();
+            }
         }
 
         private static void WriteMethod(IndentedTextWriter w, MethodInfo method, Types types)
         {
             var declaringTypeName = TypeProvider.GetNativeName(method.DeclaringType!);
             var methodName = method.Name;
-            var returnTypeName = types.GetTypeName(method.ReturnType);
+            var returnTypeName = types.GetTypeName(method.ReturnParameter.ToContextualParameter());
 
             var signatureParametersString = new StringBuilder();
             var parameters = method.GetParameters();
@@ -89,7 +96,7 @@ namespace ApiGenerator.Managed
 
             if (!isStatic)
             {
-                var parameterType = types.GetTypeName(method.DeclaringType!);
+                var parameterType = types.GetTypeName(method.DeclaringType!.ToContextualType());
                 signatureParametersString.Append(parameterType + " obj");
 
                 if (parameters.Length > 0)
@@ -100,7 +107,7 @@ namespace ApiGenerator.Managed
             {
                 var parameter = parameters[i];
 
-                var parameterType = types.GetTypeName(parameter.ParameterType);
+                var parameterType = types.GetTypeName(parameter.ToContextualParameter());
                 signatureParametersString.Append(parameterType + " " + parameter.Name);
 
                 if (i < parameters.Length - 1)

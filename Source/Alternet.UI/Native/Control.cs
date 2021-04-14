@@ -76,6 +76,21 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool IsMouseDirectlyOver
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetIsMouseDirectlyOver(NativePointer);
+            }
+            
+        }
+        
+        public static Control? FromScreenPoint(System.Drawing.PointF point)
+        {
+            return NativeObject.GetFromNativePointer<Control>(NativeApi.Control_FromScreenPoint(point), null);
+        }
+        
         public void AddChild(Control control)
         {
             CheckDisposed();
@@ -114,7 +129,7 @@ namespace Alternet.UI.Native
             {
                 var sink = new NativeApi.ControlEventCallbackType((obj, e) =>
                 {
-                    var w = NativeObject.GetFromNativePointer<Control>(obj, null)!;
+                    var w = NativeObject.GetFromNativePointer<Control>(obj, null);
                     if (w == null) return;
                     w.OnEvent(e);
                 }
@@ -177,6 +192,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetVisible(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetIsMouseDirectlyOver(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Control_FromScreenPoint(NativeApiTypes.PointF point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_AddChild(IntPtr obj, IntPtr control);

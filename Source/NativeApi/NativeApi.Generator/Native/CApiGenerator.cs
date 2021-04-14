@@ -64,29 +64,34 @@ namespace ApiGenerator.Native
 
             var instanceParameterSignaturePart = types.GetTypeName(property.DeclaringType!, TypeUsage.Argument) + " obj";
 
-            w.WriteLine($"{ExportMacro} {types.GetTypeName(property.PropertyType, TypeUsage.Return)} {declaringTypeName}_Get{propertyName}({instanceParameterSignaturePart})");
-            w.WriteLine("{");
-            w.Indent++;
+            if (property.GetMethod != null)
+            {
+                w.WriteLine($"{ExportMacro} {types.GetTypeName(property.PropertyType, TypeUsage.Return)} {declaringTypeName}_Get{propertyName}({instanceParameterSignaturePart})");
+                w.WriteLine("{");
+                w.Indent++;
 
-            w.Write("return ");
-            w.Write(
-                string.Format(
-                    GetCppToCReturnValueFormatString(property.PropertyType),
-                    $"obj->Get{propertyName}()"));
-            w.WriteLine(";");
+                w.Write("return ");
+                w.Write(
+                    string.Format(
+                        GetCppToCReturnValueFormatString(property.PropertyType),
+                        $"obj->Get{propertyName}()"));
+                w.WriteLine(";");
 
-            w.Indent--;
-            w.WriteLine("}");
-            w.WriteLine();
+                w.Indent--;
+                w.WriteLine("}");
+                w.WriteLine();
+            }
 
-
-            w.WriteLine($"{ExportMacro} void {declaringTypeName}_Set{propertyName}({instanceParameterSignaturePart}, {types.GetTypeName(property.PropertyType, TypeUsage.Argument)} value)");
-            w.WriteLine("{");
-            w.Indent++;
-            w.WriteLine($"obj->Set{propertyName}({GetCToCppArgument(property.PropertyType, "value")});");
-            w.Indent--;
-            w.WriteLine("}");
-            w.WriteLine();
+            if (property.SetMethod != null)
+            {
+                w.WriteLine($"{ExportMacro} void {declaringTypeName}_Set{propertyName}({instanceParameterSignaturePart}, {types.GetTypeName(property.PropertyType, TypeUsage.Argument)} value)");
+                w.WriteLine("{");
+                w.Indent++;
+                w.WriteLine($"obj->Set{propertyName}({GetCToCppArgument(property.PropertyType, "value")});");
+                w.Indent--;
+                w.WriteLine("}");
+                w.WriteLine();
+            }
         }
 
         private static void WriteMethod(IndentedTextWriter w, Types types, MethodInfo method)

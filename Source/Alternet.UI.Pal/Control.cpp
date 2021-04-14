@@ -85,6 +85,16 @@ namespace Alternet::UI
         return _wxWindow != nullptr;
     }
 
+    bool Control::GetIsMouseDirectlyOver()
+    {
+        return false;
+    }
+
+    /*static*/ Control* Control::FromScreenPoint(const PointF& point)
+    {
+        return nullptr;
+    }
+
     wxWindow* Control::GetParentingWxWindow()
     {
         return GetWxWindow();

@@ -16,6 +16,10 @@ void SetBounds(const RectangleF& value);
 bool GetVisible();
 void SetVisible(bool value);
 
+
+bool GetIsMouseDirectlyOver();
+
+static Control* FromScreenPoint(const PointF& point);
 void AddChild(Control* control);
 void RemoveChild(Control* control);
 void Update();

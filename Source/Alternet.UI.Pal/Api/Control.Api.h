@@ -53,6 +53,16 @@ ALTERNET_UI_API void Control_SetVisible(Control* obj, c_bool value)
     obj->SetVisible(value);
 }
 
+ALTERNET_UI_API c_bool Control_GetIsMouseDirectlyOver(Control* obj)
+{
+    return obj->GetIsMouseDirectlyOver();
+}
+
+ALTERNET_UI_API Control* Control_FromScreenPoint(PointF point)
+{
+    return Control::FromScreenPoint(point);
+}
+
 ALTERNET_UI_API void Control_AddChild(Control* obj, Control* control)
 {
     obj->AddChild(control);

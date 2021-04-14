@@ -47,8 +47,12 @@ namespace ApiGenerator.Native
             var name = property.Name;
             var modifiers = GetModifiers(property);
             w.WriteLine();
-            w.WriteLine($"{modifiers}{types.GetTypeName(property.PropertyType, TypeUsage.Return)} Get{name}();");
-            w.WriteLine($"{modifiers}void Set{name}({types.GetTypeName(property.PropertyType, TypeUsage.Argument)} value);");
+            
+            if (property.GetMethod != null)
+                w.WriteLine($"{modifiers}{types.GetTypeName(property.PropertyType, TypeUsage.Return)} Get{name}();");
+            
+            if (property.SetMethod != null)
+                w.WriteLine($"{modifiers}void Set{name}({types.GetTypeName(property.PropertyType, TypeUsage.Argument)} value);");
             w.WriteLine();
         }
 

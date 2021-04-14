@@ -1,4 +1,5 @@
 ﻿using ApiGenerator.Api;
+using Namotion.Reflection;
 using System;
 using System.CodeDom.Compiler;
 using System.IO;
@@ -95,7 +96,7 @@ using System.Security;");
 
         private static void WriteConstructor(IndentedTextWriter w, Types types, Type type, bool hasEvents)
         {
-            var declaringTypeName = types.GetTypeName(type);
+            var declaringTypeName = types.GetTypeName(type.ToContextualType());
             var visibility = MemberProvider.GetConstructorVisibility(type);
 
             w.WriteLine($"{GetVisibilityString(visibility)} {declaringTypeName}()");
@@ -114,7 +115,7 @@ using System.Security;");
 
         private static void WriteFromPointerConstructor(IndentedTextWriter w, Types types, Type type)
         {
-            var declaringTypeName = types.GetTypeName(type);
+            var declaringTypeName = types.GetTypeName(type.ToContextualType());
 
             w.WriteLine($"public {declaringTypeName}(IntPtr nativePointer) : base(nativePointer)");
             using (new BlockIndent(w))
@@ -132,38 +133,44 @@ using System.Security;");
             if (!TypeProvider.IsApiType(baseType))
                 return null;
 
-            return types.GetTypeName(baseType);
+            return types.GetTypeName(baseType.ToContextualType());
         }
 
         private static void WriteProperty(IndentedTextWriter w, PropertyInfo property, Types types)
         {
             var propertyName = property.Name;
-            var propertyTypeName = types.GetTypeName(property.PropertyType);
+            var propertyTypeName = types.GetTypeName(property.ToContextualProperty());
             var nativeDeclaringTypeName = TypeProvider.GetNativeName(property.DeclaringType!);
 
             w.WriteLine($"public {GetModifiers(property)}{propertyTypeName} {propertyName}");
             using (new BlockIndent(w))
             {
-                w.WriteLine("get");
-                using (new BlockIndent(w))
+                if (property.GetMethod != null)
                 {
-                    w.WriteLine("CheckDisposed();");
+                    w.WriteLine("get");
+                    using (new BlockIndent(w))
+                    {
+                        w.WriteLine("CheckDisposed();");
 
-                    w.Write("return ");
-                    w.Write(
-                    string.Format(
-                        GetNativeToManagedFormatString(property.PropertyType),
-                        $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}(NativePointer)"));
-                    w.WriteLine(";");
+                        w.Write("return ");
+                        w.Write(
+                        string.Format(
+                            GetNativeToManagedFormatString(property.ToContextualProperty()),
+                            $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}(NativePointer)"));
+                        w.WriteLine(";");
+                    }
+
+                    w.WriteLine();
                 }
 
-                w.WriteLine();
-
-                w.WriteLine("set");
-                using (new BlockIndent(w))
+                if (property.SetMethod != null)
                 {
-                    w.WriteLine("CheckDisposed();");
-                    w.WriteLine($"NativeApi.{nativeDeclaringTypeName}_Set{propertyName}(NativePointer, {GetManagedToNativeArgument(property.PropertyType, "value")});");
+                    w.WriteLine("set");
+                    using (new BlockIndent(w))
+                    {
+                        w.WriteLine("CheckDisposed();");
+                        w.WriteLine($"NativeApi.{nativeDeclaringTypeName}_Set{propertyName}(NativePointer, {GetManagedToNativeArgument(property.PropertyType, "value")});");
+                    }
                 }
             }
 
@@ -173,7 +180,13 @@ using System.Security;");
         private static void WriteMethod(IndentedTextWriter w, MethodInfo method, Types types)
         {
             var methodName = method.Name;
-            var returnTypeName = types.GetTypeName(method.ReturnType);
+
+            if (methodName == "FromScreenPoint")
+            {
+                int sddf = 0;
+            }
+
+            var returnTypeName = types.GetTypeName(method.ReturnParameter.ToContextualParameter());
 
             var signatureParametersString = new StringBuilder();
             var callParametersString = new StringBuilder();
@@ -190,7 +203,7 @@ using System.Security;");
             {
                 var parameter = parameters[i];
 
-                var parameterType = types.GetTypeName(parameter.ParameterType);
+                var parameterType = types.GetTypeName(parameter.ToContextualParameter());
                 signatureParametersString.Append(parameterType + " " + parameter.Name);
                 callParametersString.Append(GetManagedToNativeArgument(parameter.ParameterType, parameter.Name!));
 
@@ -213,7 +226,7 @@ using System.Security;");
 
             w.Write(
                 string.Format(
-                    GetNativeToManagedFormatString(method.ReturnType),
+                    GetNativeToManagedFormatString(method.ReturnParameter.ToContextualParameter()),
                     $"NativeApi.{TypeProvider.GetNativeName(method.DeclaringType!)}_{methodName}({callParametersString})"));
             w.WriteLine(";");
 
@@ -230,7 +243,7 @@ using System.Security;");
                 return;
 
             var declaringType = events[0].DeclaringType!;
-            var declaringTypeName = types.GetTypeName(declaringType);
+            var declaringTypeName = types.GetTypeName(declaringType.ToContextualType());
 
             w.WriteLine("static GCHandle eventCallbackGCHandle;");
 
@@ -245,7 +258,7 @@ using System.Security;");
                     w.WriteLine($"var sink = new NativeApi.{declaringTypeName}EventCallbackType((obj, e) =>");
                     using (new BlockIndent(w))
                     {
-                        w.WriteLine($"var w = {string.Format(GetNativeToManagedFormatString(declaringType), "obj")};");
+                        w.WriteLine($"var w = {string.Format(GetNativeToManagedFormatString(declaringType.ToContextualType()), "obj")};");
                         w.WriteLine("if (w == null) return;");
                         w.WriteLine("w.OnEvent(e);");
                     }
@@ -285,12 +298,13 @@ using System.Security;");
             return name;
         }
 
-        static string GetNativeToManagedFormatString(Type type)
+        static string GetNativeToManagedFormatString(ContextualType type)
         {
-            var factory = type.IsAbstract ? "null" : $"p => new {type.Name}(p)";
+
+            var factory = type.OriginalType.IsAbstract ? "null" : $"p => new {type.OriginalType.Name}(p)";
 
             if (TypeProvider.IsComplexType(type))
-                return $"NativeObject.GetFromNativePointer<{type.Name}>({{0}}, {factory})!";
+                return $"NativeObject.GetFromNativePointer<{type.OriginalType.Name}>({{0}}, {factory})" + (type.Nullability == Nullability.NotNullable ? "!" : "");
 
             return "{0}";
         }

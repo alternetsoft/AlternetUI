@@ -40,7 +40,7 @@ namespace Alternet.UI.Native
             {
                 var sink = new NativeApi.TextBoxEventCallbackType((obj, e) =>
                 {
-                    var w = NativeObject.GetFromNativePointer<TextBox>(obj, p => new TextBox(p))!;
+                    var w = NativeObject.GetFromNativePointer<TextBox>(obj, p => new TextBox(p));
                     if (w == null) return;
                     w.OnEvent(e);
                 }

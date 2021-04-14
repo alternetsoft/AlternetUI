@@ -40,7 +40,7 @@ namespace Alternet.UI.Native
             {
                 var sink = new NativeApi.ButtonEventCallbackType((obj, e) =>
                 {
-                    var w = NativeObject.GetFromNativePointer<Button>(obj, p => new Button(p))!;
+                    var w = NativeObject.GetFromNativePointer<Button>(obj, p => new Button(p));
                     if (w == null) return;
                     w.OnEvent(e);
                 }

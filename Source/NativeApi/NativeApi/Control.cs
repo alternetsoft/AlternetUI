@@ -5,13 +5,7 @@ namespace NativeApi.Api
 {
     public abstract class Control : IDisposable
     {
-        void IDisposable.Dispose() => throw new NotImplementedException();
-
-        public void AddChild(Control control) => throw new Exception();
-
-        public void RemoveChild(Control control) => throw new Exception();
-
-        public void Update() => throw new Exception();
+        public event EventHandler? Paint { add => throw new Exception(); remove => throw new Exception(); }
 
         public SizeF Size { get; set; }
 
@@ -21,10 +15,20 @@ namespace NativeApi.Api
 
         public bool Visible { get; set; }
 
+        public bool IsMouseDirectlyOver { get; }
+
+        public static Control? FromScreenPoint(PointF point) => throw new Exception();
+
+        void IDisposable.Dispose() => throw new NotImplementedException();
+
+        public void AddChild(Control control) => throw new Exception();
+
+        public void RemoveChild(Control control) => throw new Exception();
+
+        public void Update() => throw new Exception();
+
         public virtual SizeF GetPreferredSize(SizeF availableSize) => throw new Exception();
 
         public DrawingContext OpenPaintDrawingContext() => throw new Exception();
-
-        public event EventHandler? Paint { add => throw new Exception(); remove => throw new Exception(); }
     }
 }
