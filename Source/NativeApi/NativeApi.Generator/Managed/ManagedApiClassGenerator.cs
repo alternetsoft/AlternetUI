@@ -180,12 +180,6 @@ using System.Security;");
         private static void WriteMethod(IndentedTextWriter w, MethodInfo method, Types types)
         {
             var methodName = method.Name;
-
-            if (methodName == "FromScreenPoint")
-            {
-                int sddf = 0;
-            }
-
             var returnTypeName = types.GetTypeName(method.ReturnParameter.ToContextualParameter());
 
             var signatureParametersString = new StringBuilder();

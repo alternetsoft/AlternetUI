@@ -51,9 +51,13 @@ namespace Alternet::UI
 
         void OnPaint(wxPaintEvent& event);
 
+        void OnMouseCaptureLost(wxEvent& event);
+
         void OnMouseMove(wxMouseEvent& event);
         void OnMouseEnter(wxMouseEvent& event);
         void OnMouseLeave(wxMouseEvent& event);
+        void OnMouseLeftButtonDown(wxMouseEvent& event);
+        void OnMouseLeftButtonUp(wxMouseEvent& event);
     };
 }
 

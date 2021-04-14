@@ -19,6 +19,7 @@ void SetVisible(bool value);
 
 bool GetIsMouseOver();
 
+void SetMouseCapture(bool value);
 void AddChild(Control* control);
 void RemoveChild(Control* control);
 void Update();
@@ -31,6 +32,8 @@ enum class ControlEvent
     MouseEnter,
     MouseLeave,
     MouseMove,
+    MouseLeftButtonDown,
+    MouseLeftButtonUp,
 };
 typedef void(*ControlEventCallbackType)(Control* obj, ControlEvent event);
 static void SetEventCallback(ControlEventCallbackType value) { eventCallback = value; }

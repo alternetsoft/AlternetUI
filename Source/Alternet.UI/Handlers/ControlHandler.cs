@@ -32,10 +32,6 @@ namespace Alternet.UI
 
         public virtual RectangleF ChildrenBounds => new RectangleF(new PointF(), Bounds.Size);
 
-        internal Native.Control? NativeControl { get; private set; }
-
-        private bool IsLayoutSuspended => layoutSuspendCount != 0;
-
         public bool IsMouseOver
         {
             get
@@ -46,6 +42,12 @@ namespace Alternet.UI
                 return NativeControl.IsMouseOver;
             }
         }
+
+        internal Native.Control? NativeControl { get; private set; }
+
+        protected virtual bool NeedsPaint => false;
+
+        private bool IsLayoutSuspended => layoutSuspendCount != 0;
 
         public void Attach(Control control)
         {
@@ -128,6 +130,22 @@ namespace Alternet.UI
             }
         }
 
+        public void CaptureMouse()
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            NativeControl.SetMouseCapture(true);
+        }
+
+        public void ReleaseMouseCapture()
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            NativeControl.SetMouseCapture(false);
+        }
+
         internal virtual Native.Control CreateNativeControl() => new Native.Panel();
 
         internal abstract bool NeedToCreateNativeControl();
@@ -161,6 +179,8 @@ namespace Alternet.UI
                 NativeControl.MouseEnter -= NativeControl_MouseEnter;
                 NativeControl.MouseLeave -= NativeControl_MouseLeave;
                 NativeControl.MouseMove -= NativeControl_MouseMove;
+                NativeControl.MouseLeftButtonDown -= NativeControl_MouseLeftButtonDown;
+                NativeControl.MouseLeftButtonUp -= NativeControl_MouseLeftButtonUp;
             }
         }
 
@@ -173,6 +193,8 @@ namespace Alternet.UI
             NativeControl.MouseEnter += NativeControl_MouseEnter;
             NativeControl.MouseLeave += NativeControl_MouseLeave;
             NativeControl.MouseMove += NativeControl_MouseMove;
+            NativeControl.MouseLeftButtonDown += NativeControl_MouseLeftButtonDown;
+            NativeControl.MouseLeftButtonUp += NativeControl_MouseLeftButtonUp;
         }
 
         protected virtual void OnMouseMove()
@@ -185,6 +207,26 @@ namespace Alternet.UI
 
         protected virtual void OnMouseLeave()
         {
+        }
+
+        protected virtual void OnMouseLeftButtonUp()
+        {
+        }
+
+        protected virtual void OnMouseLeftButtonDown()
+        {
+        }
+
+        protected virtual void OnChildInserted(int index, Control control)
+        {
+            if (NativeControl != null && control.Handler.NativeControl != null)
+                NativeControl?.AddChild(control.Handler.NativeControl);
+        }
+
+        protected virtual void OnChildRemoved(int index, Control control)
+        {
+            if (NativeControl != null && control.Handler.NativeControl != null)
+                NativeControl?.RemoveChild(control.Handler.NativeControl);
         }
 
         private void NativeControl_MouseEnter(object? sender, EventArgs? e)
@@ -210,16 +252,30 @@ namespace Alternet.UI
             }
         }
 
-        protected virtual void OnChildInserted(int index, Control control)
+        private void NativeControl_MouseLeftButtonDown(object? sender, EventArgs? e)
         {
-            if (NativeControl != null && control.Handler.NativeControl != null)
-                NativeControl?.AddChild(control.Handler.NativeControl);
+            var handler = this;
+            while (true)
+            {
+                handler.OnMouseLeftButtonDown();
+                var parent = handler.Control.Parent;
+                if (parent == null)
+                    break;
+                handler = parent.Handler;
+            }
         }
 
-        protected virtual void OnChildRemoved(int index, Control control)
+        private void NativeControl_MouseLeftButtonUp(object? sender, EventArgs? e)
         {
-            if (NativeControl != null && control.Handler.NativeControl != null)
-                NativeControl?.RemoveChild(control.Handler.NativeControl);
+            var handler = this;
+            while (true)
+            {
+                handler.OnMouseLeftButtonUp();
+                var parent = handler.Control.Parent;
+                if (parent == null)
+                    break;
+                handler = parent.Handler;
+            }
         }
 
         private void TryCreateNativeControl()
@@ -252,8 +308,6 @@ namespace Alternet.UI
             OnChildRemoved(e.Index, e.Item);
             PerformLayout();
         }
-
-        protected virtual bool NeedsPaint => false;
 
         private void NativeControl_Paint(object? sender, System.EventArgs? e)
         {

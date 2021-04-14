@@ -86,6 +86,12 @@ namespace Alternet.UI.Native
             
         }
         
+        public void SetMouseCapture(bool value)
+        {
+            CheckDisposed();
+            NativeApi.Control_SetMouseCapture(NativePointer, value);
+        }
+        
         public void AddChild(Control control)
         {
             CheckDisposed();
@@ -142,6 +148,8 @@ namespace Alternet.UI.Native
                 case NativeApi.ControlEvent.MouseEnter: MouseEnter?.Invoke(this, EventArgs.Empty); break;
                 case NativeApi.ControlEvent.MouseLeave: MouseLeave?.Invoke(this, EventArgs.Empty); break;
                 case NativeApi.ControlEvent.MouseMove: MouseMove?.Invoke(this, EventArgs.Empty); break;
+                case NativeApi.ControlEvent.MouseLeftButtonDown: MouseLeftButtonDown?.Invoke(this, EventArgs.Empty); break;
+                case NativeApi.ControlEvent.MouseLeftButtonUp: MouseLeftButtonUp?.Invoke(this, EventArgs.Empty); break;
                 default: throw new Exception("Unexpected ControlEvent value: " + e);
             }
         }
@@ -150,6 +158,8 @@ namespace Alternet.UI.Native
         public event EventHandler? MouseEnter;
         public event EventHandler? MouseLeave;
         public event EventHandler? MouseMove;
+        public event EventHandler? MouseLeftButtonDown;
+        public event EventHandler? MouseLeftButtonUp;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -165,6 +175,8 @@ namespace Alternet.UI.Native
                 MouseEnter,
                 MouseLeave,
                 MouseMove,
+                MouseLeftButtonDown,
+                MouseLeftButtonUp,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -199,6 +211,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_GetIsMouseOver(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetMouseCapture(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_AddChild(IntPtr obj, IntPtr control);

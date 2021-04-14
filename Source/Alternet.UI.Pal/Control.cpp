@@ -61,9 +61,12 @@ namespace Alternet::UI
             _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
 
         _wxWindow->Bind(wxEVT_MOTION, &Control::OnMouseMove, this);
+        _wxWindow->Bind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
         _wxWindow->Bind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
         _wxWindow->Bind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
-
+        _wxWindow->Bind(wxEVT_LEFT_DOWN, &Control::OnMouseLeftButtonDown, this);
+        _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftButtonUp, this);
+        
         _delayedValues.Apply();
 
         for (auto child : _children)
@@ -87,6 +90,22 @@ namespace Alternet::UI
     bool Control::IsWxWindowCreated()
     {
         return _wxWindow != nullptr;
+    }
+
+    void Control::SetMouseCapture(bool value)
+    {
+        wxASSERT(_wxWindow);
+
+        if (value)
+        {
+            if (!(_wxWindow->HasCapture()))
+                _wxWindow->CaptureMouse();
+        }
+        else
+        {
+            if (_wxWindow->HasCapture())
+                _wxWindow->ReleaseMouse();
+        }
     }
 
     bool Control::GetIsMouseOver()
@@ -143,6 +162,10 @@ namespace Alternet::UI
         RaiseEvent(ControlEvent::Paint);
     }
 
+    void Control::OnMouseCaptureLost(wxEvent& event)
+    {
+    }
+
     void Control::OnMouseMove(wxMouseEvent& event)
     {
         RaiseEvent(ControlEvent::MouseMove);
@@ -151,11 +174,39 @@ namespace Alternet::UI
     void Control::OnMouseEnter(wxMouseEvent& event)
     {
         RaiseEvent(ControlEvent::MouseEnter);
+
+        auto window = GetParent();
+        while (window != nullptr)
+        {
+            if (window->GetIsMouseOver())
+                window->RaiseEvent(ControlEvent::MouseEnter);
+
+            window = window->GetParent();
+        }
     }
 
     void Control::OnMouseLeave(wxMouseEvent& event)
     {
         RaiseEvent(ControlEvent::MouseLeave);
+
+        auto window = GetParent();
+        while (window != nullptr)
+        {
+            if(!window->GetIsMouseOver())
+                window->RaiseEvent(ControlEvent::MouseLeave);
+
+            window = window->GetParent();
+        }
+    }
+
+    void Control::OnMouseLeftButtonDown(wxMouseEvent& event)
+    {
+        RaiseEvent(ControlEvent::MouseLeftButtonDown);
+    }
+
+    void Control::OnMouseLeftButtonUp(wxMouseEvent& event)
+    {
+        RaiseEvent(ControlEvent::MouseLeftButtonUp);
     }
 
     SizeF Control::GetSize()

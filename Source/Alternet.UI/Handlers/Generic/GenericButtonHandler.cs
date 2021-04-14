@@ -9,6 +9,21 @@ namespace Alternet.UI
 
         private TextBlock? textBlock;
 
+        private bool isPressed;
+
+        private bool IsPressed
+        {
+            get => isPressed;
+            set
+            {
+                if (isPressed == value)
+                    return;
+
+                isPressed = value;
+                UpdateVisual();
+            }
+        }
+
         public override SizeF GetPreferredSize(SizeF availableSize)
         {
             return new SizeF(50, 30);
@@ -47,27 +62,50 @@ namespace Alternet.UI
         protected override void OnMouseEnter()
         {
             base.OnMouseEnter();
-            UpdateHover();
-        }
-
-        private void UpdateHover()
-        {
-            if (border == null)
-                throw new InvalidOperationException();
-
-            border.BorderColor = IsMouseOver ? Color.Blue : Color.Gray;
+            UpdateVisual();
         }
 
         protected override void OnMouseLeave()
         {
             base.OnMouseLeave();
-            UpdateHover();
+            UpdateVisual();
         }
 
         protected override void OnMouseMove()
         {
             base.OnMouseMove();
-            UpdateHover();
+            UpdateVisual();
+        }
+
+        protected override void OnMouseLeftButtonDown()
+        {
+            base.OnMouseLeftButtonDown();
+            CaptureMouse();
+            IsPressed = true;
+        }
+
+        protected override void OnMouseLeftButtonUp()
+        {
+            ReleaseMouseCapture();
+            base.OnMouseLeftButtonUp();
+            IsPressed = false;
+            Control.InvokeClick(EventArgs.Empty);
+        }
+
+        private void UpdateVisual()
+        {
+            if (border == null)
+                throw new InvalidOperationException();
+
+            var color = Color.Gray;
+            if (IsMouseOver)
+            {
+                color = Color.LightBlue;
+                if (IsPressed)
+                    color = Color.Blue;
+            }
+
+            border.BorderColor = color;
         }
 
         private void Control_TextChanged(object? sender, System.EventArgs? e)
