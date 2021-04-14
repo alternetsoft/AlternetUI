@@ -19,7 +19,6 @@ void SetVisible(bool value);
 
 bool GetIsMouseDirectlyOver();
 
-static Control* FromScreenPoint(const PointF& point);
 void AddChild(Control* control);
 void RemoveChild(Control* control);
 void Update();
@@ -29,6 +28,9 @@ public:
 enum class ControlEvent
 {
     Paint,
+    MouseEnter,
+    MouseLeave,
+    MouseMove,
 };
 typedef void(*ControlEventCallbackType)(Control* obj, ControlEvent event);
 static void SetEventCallback(ControlEventCallbackType value) { eventCallback = value; }

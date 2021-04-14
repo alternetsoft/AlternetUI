@@ -44,6 +44,32 @@ namespace Alternet.UI
             Control.TextChanged -= Control_TextChanged;
         }
 
+        protected override void OnMouseEnter()
+        {
+            base.OnMouseEnter();
+            UpdateHover();
+        }
+
+        private void UpdateHover()
+        {
+            if (border == null)
+                throw new InvalidOperationException();
+
+            border.BorderColor = IsMouseDirectlyOver ? Color.Blue : Color.Gray;
+        }
+
+        protected override void OnMouseLeave()
+        {
+            base.OnMouseLeave();
+            UpdateHover();
+        }
+
+        protected override void OnMouseMove()
+        {
+            base.OnMouseMove();
+            UpdateHover();
+        }
+
         private void Control_TextChanged(object? sender, System.EventArgs? e)
         {
             if (e is null)

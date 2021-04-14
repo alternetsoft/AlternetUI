@@ -36,6 +36,17 @@ namespace Alternet.UI
 
         private bool IsLayoutSuspended => layoutSuspendCount != 0;
 
+        public bool IsMouseDirectlyOver
+        {
+            get
+            {
+                if (NativeControl == null)
+                    return false;
+
+                return NativeControl.IsMouseDirectlyOver;
+            }
+        }
+
         public void Attach(Control control)
         {
             this.control = control;
@@ -124,6 +135,7 @@ namespace Alternet.UI
         protected virtual void OnAttach()
         {
             Control.MarginChanged += Control_MarginChanged;
+            Control.PaddingChanged += Control_PaddingChanged;
 
             Control.Children.ItemInserted += Children_ItemInserted;
             Control.VisualChildren.ItemInserted += Children_ItemInserted;
@@ -135,7 +147,8 @@ namespace Alternet.UI
         protected virtual void OnDetach()
         {
             Control.MarginChanged -= Control_MarginChanged;
-            
+            Control.PaddingChanged -= Control_PaddingChanged;
+
             Control.Children.ItemInserted -= Children_ItemInserted;
             Control.VisualChildren.ItemInserted -= Children_ItemInserted;
 
@@ -143,7 +156,12 @@ namespace Alternet.UI
             Control.VisualChildren.ItemRemoved -= Children_ItemRemoved;
 
             if (NativeControl != null)
+            {
                 NativeControl.Paint -= NativeControl_Paint;
+                NativeControl.MouseEnter -= NativeControl_MouseEnter;
+                NativeControl.MouseLeave -= NativeControl_MouseLeave;
+                NativeControl.MouseMove -= NativeControl_MouseMove;
+            }
         }
 
         private protected virtual void OnNativeControlCreated()
@@ -152,6 +170,36 @@ namespace Alternet.UI
                 throw new InvalidOperationException();
 
             NativeControl.Paint += NativeControl_Paint;
+            NativeControl.MouseEnter += NativeControl_MouseEnter;
+            NativeControl.MouseLeave += NativeControl_MouseLeave;
+            NativeControl.MouseMove += NativeControl_MouseMove;
+        }
+
+        protected virtual void OnMouseMove()
+        {
+        }
+
+        protected virtual void OnMouseEnter()
+        {
+        }
+
+        protected virtual void OnMouseLeave()
+        {
+        }
+
+        private void NativeControl_MouseEnter(object? sender, EventArgs? e)
+        {
+            OnMouseEnter();
+        }
+
+        private void NativeControl_MouseLeave(object? sender, EventArgs? e)
+        {
+            OnMouseLeave();
+        }
+
+        private void NativeControl_MouseMove(object? sender, EventArgs? e)
+        {
+            OnMouseMove();
         }
 
         protected virtual void OnChildInserted(int index, Control control)
@@ -176,6 +224,11 @@ namespace Alternet.UI
         }
 
         private void Control_MarginChanged(object? sender, EventArgs? e)
+        {
+            PerformLayout();
+        }
+
+        private void Control_PaddingChanged(object? sender, EventArgs? e)
         {
             PerformLayout();
         }

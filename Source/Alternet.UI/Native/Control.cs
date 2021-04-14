@@ -86,11 +86,6 @@ namespace Alternet.UI.Native
             
         }
         
-        public static Control? FromScreenPoint(System.Drawing.PointF point)
-        {
-            return NativeObject.GetFromNativePointer<Control>(NativeApi.Control_FromScreenPoint(point), null);
-        }
-        
         public void AddChild(Control control)
         {
             CheckDisposed();
@@ -144,11 +139,17 @@ namespace Alternet.UI.Native
             switch (e)
             {
                 case NativeApi.ControlEvent.Paint: Paint?.Invoke(this, EventArgs.Empty); break;
+                case NativeApi.ControlEvent.MouseEnter: MouseEnter?.Invoke(this, EventArgs.Empty); break;
+                case NativeApi.ControlEvent.MouseLeave: MouseLeave?.Invoke(this, EventArgs.Empty); break;
+                case NativeApi.ControlEvent.MouseMove: MouseMove?.Invoke(this, EventArgs.Empty); break;
                 default: throw new Exception("Unexpected ControlEvent value: " + e);
             }
         }
         
         public event EventHandler? Paint;
+        public event EventHandler? MouseEnter;
+        public event EventHandler? MouseLeave;
+        public event EventHandler? MouseMove;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -161,6 +162,9 @@ namespace Alternet.UI.Native
             public enum ControlEvent
             {
                 Paint,
+                MouseEnter,
+                MouseLeave,
+                MouseMove,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -195,9 +199,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_GetIsMouseDirectlyOver(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Control_FromScreenPoint(NativeApiTypes.PointF point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_AddChild(IntPtr obj, IntPtr control);

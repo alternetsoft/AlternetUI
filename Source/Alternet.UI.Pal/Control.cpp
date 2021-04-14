@@ -60,6 +60,10 @@ namespace Alternet::UI
         if (!DoNotBindPaintEvent())
             _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
 
+        _wxWindow->Bind(wxEVT_MOTION, &Control::OnMouseMove, this);
+        _wxWindow->Bind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
+        _wxWindow->Bind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
+
         _delayedValues.Apply();
 
         for (auto child : _children)
@@ -87,12 +91,11 @@ namespace Alternet::UI
 
     bool Control::GetIsMouseDirectlyOver()
     {
-        return false;
-    }
+        if (_wxWindow == nullptr)
+            return false;
 
-    /*static*/ Control* Control::FromScreenPoint(const PointF& point)
-    {
-        return nullptr;
+        wxPoint pt;
+        return wxFindWindowAtPointer(pt) == _wxWindow;
     }
 
     wxWindow* Control::GetParentingWxWindow()
@@ -130,6 +133,21 @@ namespace Alternet::UI
     void Control::OnPaint(wxPaintEvent& event)
     {
         RaiseEvent(ControlEvent::Paint);
+    }
+
+    void Control::OnMouseMove(wxMouseEvent& event)
+    {
+        RaiseEvent(ControlEvent::MouseMove);
+    }
+
+    void Control::OnMouseEnter(wxMouseEvent& event)
+    {
+        RaiseEvent(ControlEvent::MouseEnter);
+    }
+
+    void Control::OnMouseLeave(wxMouseEvent& event)
+    {
+        RaiseEvent(ControlEvent::MouseLeave);
     }
 
     SizeF Control::GetSize()

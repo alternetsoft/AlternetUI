@@ -7,6 +7,12 @@ namespace NativeApi.Api
     {
         public event EventHandler? Paint { add => throw new Exception(); remove => throw new Exception(); }
 
+        public event EventHandler? MouseEnter { add => throw new Exception(); remove => throw new Exception(); }
+
+        public event EventHandler? MouseLeave { add => throw new Exception(); remove => throw new Exception(); }
+
+        public event EventHandler? MouseMove { add => throw new Exception(); remove => throw new Exception(); }
+
         public SizeF Size { get; set; }
 
         public PointF Location { get; set; }
@@ -16,8 +22,6 @@ namespace NativeApi.Api
         public bool Visible { get; set; }
 
         public bool IsMouseDirectlyOver { get; }
-
-        public static Control? FromScreenPoint(PointF point) => throw new Exception();
 
         void IDisposable.Dispose() => throw new NotImplementedException();
 

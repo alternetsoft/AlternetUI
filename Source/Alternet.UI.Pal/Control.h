@@ -50,6 +50,10 @@ namespace Alternet::UI
         void ApplyBounds(const RectangleF& value);
 
         void OnPaint(wxPaintEvent& event);
+
+        void OnMouseMove(wxMouseEvent& event);
+        void OnMouseEnter(wxMouseEvent& event);
+        void OnMouseLeave(wxMouseEvent& event);
     };
 }
 
