@@ -32,8 +32,14 @@ namespace Alternet.UI.Native
             CheckDisposed();
             NativeApi.DrawingContext_DrawText(NativePointer, text, origin, color);
         }
-        
-        
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            NativeApi.DrawingContext_Destroy(NativePointer);
+            SetNativePointer(IntPtr.Zero);
+        }
+
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
         {

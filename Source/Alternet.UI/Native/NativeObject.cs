@@ -46,12 +46,12 @@ namespace Alternet.UI.Native
 
         protected void SetNativePointer(IntPtr value)
         {
-            if (value == null)
+            if (value == IntPtr.Zero)
                 instancesByNativePointers.Remove(NativePointer);
 
             NativePointer = value;
 
-            if (value != null)
+            if (value != IntPtr.Zero)
                 instancesByNativePointers.Add(NativePointer, this);
         }
 
