@@ -20,7 +20,11 @@ namespace Alternet.UI
 
             Control.TextChanged += Control_TextChanged;
 
-            border = new Border();
+            border = new Border
+            {
+                Padding = new Thickness(5)
+            };
+
             Control.VisualChildren.Add(border);
 
             textBlock = new TextBlock();

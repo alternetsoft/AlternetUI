@@ -13,6 +13,7 @@ namespace Alternet.UI
 
         private float height = float.NaN;
         private Thickness margin;
+        private Thickness padding;
         private ControlHandler? handler;
 
         public Control()
@@ -35,6 +36,8 @@ namespace Alternet.UI
         public event EventHandler<PaintEventArgs>? Paint;
 
         public event EventHandler? MarginChanged;
+
+        public event EventHandler? PaddingChanged;
 
         public ControlHandler Handler
         { 
@@ -89,6 +92,21 @@ namespace Alternet.UI
 
                 OnMarginChanged(EventArgs.Empty);
                 MarginChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public Thickness Padding
+        {
+            get => padding;
+            set
+            {
+                if (padding == value)
+                    return;
+
+                padding = value;
+
+                OnPaddingChanged(EventArgs.Empty);
+                PaddingChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -155,6 +173,10 @@ namespace Alternet.UI
         }
 
         protected virtual void OnMarginChanged(EventArgs e)
+        {
+        }
+
+        protected virtual void OnPaddingChanged(EventArgs e)
         {
         }
 

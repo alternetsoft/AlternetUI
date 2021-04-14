@@ -18,7 +18,19 @@ namespace Alternet.UI
 
         public abstract RectangleF Bounds { get; set; }
 
-        public virtual RectangleF DisplayRectangle => new RectangleF(new PointF(), Bounds.Size);
+        public virtual RectangleF ChildrenLayoutBounds
+        {
+            get
+            {
+                if (Bounds.IsEmpty)
+                    return RectangleF.Empty;
+
+                var padding = Control.Padding;
+                return new RectangleF(new PointF(padding.Left, padding.Top), Bounds.Size - padding.Size);
+            }
+        }
+
+        public virtual RectangleF ChildrenBounds => new RectangleF(new PointF(), Bounds.Size);
 
         internal Native.Control? NativeControl { get; private set; }
 
@@ -48,11 +60,11 @@ namespace Alternet.UI
 
         public virtual void OnLayout()
         {
-            var displayRectangle = DisplayRectangle;
+            var childrenLayoutBounds = ChildrenLayoutBounds;
             foreach (var control in Control.AllChildren)
             {
                 var margin = control.Margin;
-                control.Handler.Bounds = new RectangleF(displayRectangle.Location + new SizeF(margin.Left, margin.Top), displayRectangle.Size - margin.Size);
+                control.Handler.Bounds = new RectangleF(childrenLayoutBounds.Location + new SizeF(margin.Left, margin.Top), childrenLayoutBounds.Size - margin.Size);
             }
         }
 

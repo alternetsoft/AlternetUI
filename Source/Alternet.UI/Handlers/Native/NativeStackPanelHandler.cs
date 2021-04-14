@@ -7,20 +7,20 @@ namespace Alternet.UI
     {
         public override void OnLayout()
         {
-            var displayRectangle = DisplayRectangle;
+            var childrenLayoutBounds = ChildrenLayoutBounds;
 
             var orientation = Control.Orientation;
 
             if (orientation == StackPanelOrientation.Vertical)
             {
-                float y = displayRectangle.Top;
+                float y = childrenLayoutBounds.Top;
                 foreach (var control in Control.AllChildren)
                 {
                     var margin = control.Margin;
                     var verticalMargin = margin.Vertical;
 
-                    var preferredSize = control.GetPreferredSize(new SizeF(displayRectangle.Width, displayRectangle.Height - y - verticalMargin));
-                    control.Handler.Bounds = new RectangleF(displayRectangle.Left, y + margin.Top, displayRectangle.Width, preferredSize.Height);
+                    var preferredSize = control.GetPreferredSize(new SizeF(childrenLayoutBounds.Width, childrenLayoutBounds.Height - y - verticalMargin));
+                    control.Handler.Bounds = new RectangleF(childrenLayoutBounds.Left, y + margin.Top, childrenLayoutBounds.Width, preferredSize.Height);
                     y += preferredSize.Height + verticalMargin;
                 }
             }
@@ -32,8 +32,8 @@ namespace Alternet.UI
                     var margin = control.Margin;
                     var horizontalMargin = margin.Horizontal;
 
-                    var preferredSize = control.GetPreferredSize(new SizeF(displayRectangle.Width - x - horizontalMargin, displayRectangle.Height));
-                    control.Handler.Bounds = new RectangleF(displayRectangle.Left + x + margin.Left, displayRectangle.Top, preferredSize.Width, displayRectangle.Height);
+                    var preferredSize = control.GetPreferredSize(new SizeF(childrenLayoutBounds.Width - x - horizontalMargin, childrenLayoutBounds.Height));
+                    control.Handler.Bounds = new RectangleF(childrenLayoutBounds.Left + x + margin.Left, childrenLayoutBounds.Top, preferredSize.Width, childrenLayoutBounds.Height);
                     x += preferredSize.Width + horizontalMargin;
                 }
             }

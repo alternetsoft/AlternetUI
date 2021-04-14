@@ -9,7 +9,7 @@ namespace Alternet.UI
         public override void OnPaint(DrawingContext drawingContext)
         {
             if (Control.Text != null)
-                drawingContext.DrawText(Control.Text, DisplayRectangle.Location, Color.Black);
+                drawingContext.DrawText(Control.Text, ChildrenLayoutBounds.Location, Color.Black);
         }
 
         protected override void OnAttach()
@@ -24,7 +24,7 @@ namespace Alternet.UI
             base.OnDetach();
         }
 
-        private void Control_TextChanged(object sender, System.EventArgs e)
+        private void Control_TextChanged(object? sender, System.EventArgs? e)
         {
             Update();
         }
