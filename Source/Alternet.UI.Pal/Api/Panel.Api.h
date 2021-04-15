@@ -12,8 +12,3 @@ ALTERNET_UI_API Panel* Panel_Create()
     return new Panel();
 }
 
-ALTERNET_UI_API void Panel_Destroy(Panel* obj)
-{
-    delete obj;
-}
-

@@ -3,8 +3,7 @@ using System;
 
 namespace NativeApi.Api
 {
-    public class Panel : Control, IDisposable
+    public class Panel : Control
     {
-        void IDisposable.Dispose() => throw new Exception();
     }
 }

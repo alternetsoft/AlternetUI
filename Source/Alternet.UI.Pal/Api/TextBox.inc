@@ -17,7 +17,7 @@ private:
 inline static TextBoxEventCallbackType eventCallback = nullptr;
 public:
 TextBox();
-public:
+protected:
 virtual ~TextBox();
 private:
 BYREF_ONLY(TextBox);

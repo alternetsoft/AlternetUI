@@ -25,9 +25,6 @@ namespace Alternet.UI.Native
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Panel_Create();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Panel_Destroy(IntPtr obj);
-            
         }
     }
 }

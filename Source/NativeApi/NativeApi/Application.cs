@@ -3,11 +3,9 @@ using ApiCommon;
 
 namespace NativeApi.Api
 {
-    public class Application : IDisposable
+    public class Application
     {
         public Application() => throw new Exception();
-
-        void IDisposable.Dispose() => throw new Exception();
 
         public void Run(Window window) => throw new Exception();
     }

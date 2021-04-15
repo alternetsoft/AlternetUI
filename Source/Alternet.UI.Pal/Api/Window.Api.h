@@ -12,11 +12,6 @@ ALTERNET_UI_API Window* Window_Create()
     return new Window();
 }
 
-ALTERNET_UI_API void Window_Destroy(Window* obj)
-{
-    delete obj;
-}
-
 ALTERNET_UI_API char16_t* Window_GetTitle(Window* obj)
 {
     return AllocPInvokeReturnString(obj->GetTitle());

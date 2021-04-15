@@ -12,11 +12,6 @@ ALTERNET_UI_API TextBox* TextBox_Create()
     return new TextBox();
 }
 
-ALTERNET_UI_API void TextBox_Destroy(TextBox* obj)
-{
-    delete obj;
-}
-
 ALTERNET_UI_API char16_t* TextBox_GetText(TextBox* obj)
 {
     return AllocPInvokeReturnString(obj->GetText());

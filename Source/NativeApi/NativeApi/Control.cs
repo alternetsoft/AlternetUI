@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace NativeApi.Api
 {
-    public abstract class Control : IDisposable
+    public abstract class Control
     {
         public event EventHandler? Paint { add => throw new Exception(); remove => throw new Exception(); }
 
@@ -28,8 +28,6 @@ namespace NativeApi.Api
         public bool Visible { get; set; }
 
         public bool IsMouseOver { get; }
-
-        void IDisposable.Dispose() => throw new NotImplementedException();
 
         public void AddChild(Control control) => throw new Exception();
 

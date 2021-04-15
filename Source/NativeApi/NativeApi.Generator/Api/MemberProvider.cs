@@ -20,7 +20,7 @@ namespace ApiGenerator.Api
 
         public static MemberVisibility GetDestructorVisibility(Type type)
         {
-            return type.GetInterfaces().Contains(typeof(IDisposable)) ? MemberVisibility.Public : MemberVisibility.Private;
+            return type.GetInterfaces().Contains(typeof(IDisposable)) ? MemberVisibility.Public : MemberVisibility.Protected;
         }
 
         public static MemberVisibility GetConstructorVisibility(Type type)

@@ -3,7 +3,7 @@ public:
 void Run(Window* window);
 public:
 Application();
-public:
+protected:
 virtual ~Application();
 private:
 BYREF_ONLY(Application);

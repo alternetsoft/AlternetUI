@@ -6,7 +6,7 @@ void SetTitle(const string& value);
 
 public:
 Window();
-public:
+protected:
 virtual ~Window();
 private:
 BYREF_ONLY(Window);

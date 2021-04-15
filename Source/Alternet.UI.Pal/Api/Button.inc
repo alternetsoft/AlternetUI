@@ -17,7 +17,7 @@ private:
 inline static ButtonEventCallbackType eventCallback = nullptr;
 public:
 Button();
-public:
+protected:
 virtual ~Button();
 private:
 BYREF_ONLY(Button);

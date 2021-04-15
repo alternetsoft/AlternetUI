@@ -42,8 +42,8 @@ using System.Security;");
             WriteConstructor(w, types, type, events.Length > 0);
             WriteFromPointerConstructor(w, types, type);
 
-            //if (MemberProvider.GetDestructorVisibility(type) == MemberVisibility.Public)
-            //    WriteDestructor(w, types, type);
+            if (MemberProvider.GetDestructorVisibility(type) == MemberVisibility.Public)
+                WriteDestructor(w, types, type);
 
             foreach (var property in MemberProvider.GetProperties(type))
                 WriteProperty(w, property, types);
@@ -81,7 +81,7 @@ using System.Security;");
             w.Indent++;
 
             w.WriteLine($"NativeApi.{TypeProvider.GetNativeName(type)}_Destroy(NativePointer);");
-            w.WriteLine("NativePointer = IntPtr.Zero;");
+            w.WriteLine("SetNativePointer(IntPtr.Zero);");
 
             w.Indent--;
             w.WriteLine("}");

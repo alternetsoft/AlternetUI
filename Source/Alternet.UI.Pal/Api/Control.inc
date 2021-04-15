@@ -44,7 +44,7 @@ private:
 inline static ControlEventCallbackType eventCallback = nullptr;
 protected:
 Control();
-public:
+protected:
 virtual ~Control();
 private:
 BYREF_ONLY(Control);

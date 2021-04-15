@@ -8,11 +8,6 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API void Control_Destroy(Control* obj)
-{
-    delete obj;
-}
-
 ALTERNET_UI_API SizeF_C Control_GetSize(Control* obj)
 {
     return obj->GetSize();

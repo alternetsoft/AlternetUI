@@ -32,9 +32,6 @@ namespace Alternet.UI.Native
             public static extern IntPtr Application_Create();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_Destroy(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_Run(IntPtr obj, IntPtr window);
             
         }
