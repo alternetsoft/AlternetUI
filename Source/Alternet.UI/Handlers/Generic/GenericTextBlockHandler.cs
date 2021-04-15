@@ -12,6 +12,16 @@ namespace Alternet.UI
                 drawingContext.DrawText(Control.Text, ChildrenLayoutBounds.Location, Color.Black);
         }
 
+        public override SizeF GetPreferredSize(SizeF availableSize)
+        {
+            var text = Control.Text;
+            if (text == null)
+                return new SizeF();
+
+            using (var dc = Control.CreateDrawingContext())
+                return dc.MeasureText(text) + Control.Padding.Size;
+        }
+
         protected override void OnAttach()
         {
             base.OnAttach();

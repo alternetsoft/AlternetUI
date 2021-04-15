@@ -88,6 +88,11 @@ ALTERNET_UI_API DrawingContext* Control_OpenPaintDrawingContext(Control* obj)
     return obj->OpenPaintDrawingContext();
 }
 
+ALTERNET_UI_API DrawingContext* Control_OpenClientDrawingContext(Control* obj)
+{
+    return obj->OpenClientDrawingContext();
+}
+
 ALTERNET_UI_API void Control_SetEventCallback(Control::ControlEventCallbackType callback)
 {
     Control::SetEventCallback(callback);

@@ -27,3 +27,8 @@ ALTERNET_UI_API void DrawingContext_DrawText(DrawingContext* obj, const char16_t
     obj->DrawText(text, origin, color);
 }
 
+ALTERNET_UI_API SizeF_C DrawingContext_MeasureText(DrawingContext* obj, const char16_t* text)
+{
+    return obj->MeasureText(text);
+}
+

@@ -43,7 +43,7 @@ namespace Alternet.UI
             }
         }
 
-        internal Native.Control? NativeControl { get; private set; }
+        internal Native.Control? NativeControl { get; private set; } // todo: for non-visual child, if native control is not created, create it on demand.
 
         protected virtual bool NeedsPaint => false;
 
@@ -83,10 +83,32 @@ namespace Alternet.UI
 
         public virtual SizeF GetPreferredSize(SizeF availableSize)
         {
-            var s = NativeControl?.GetPreferredSize(availableSize) ?? new SizeF();
-            return new SizeF(
-                float.IsNaN(Control.Width) ? s.Width : Control.Width,
-                float.IsNaN(Control.Height) ? s.Height : Control.Height);
+            if (Control.Children.Count == 0 && Control.VisualChildren.Count == 0)
+            {
+                var s = NativeControl?.GetPreferredSize(availableSize) ?? new SizeF();
+                return new SizeF(
+                    float.IsNaN(Control.Width) ? s.Width : Control.Width,
+                    float.IsNaN(Control.Height) ? s.Height : Control.Height);
+            }
+            else
+            {
+                return GexChildrenMaxPreferredSize(availableSize);
+            }
+        }
+
+        protected SizeF GexChildrenMaxPreferredSize(SizeF availableSize)
+        {
+            float maxWidth = 0;
+            float maxHeight = 0;
+
+            foreach (var control in Control.AllChildren)
+            {
+                var preferredSize = control.GetPreferredSize(availableSize) + control.Margin.Size;
+                maxWidth = Math.Max(preferredSize.Width, maxWidth);
+                maxHeight = Math.Max(preferredSize.Height, maxHeight);
+            }
+
+            return new SizeF(maxWidth, maxHeight) + Control.Padding.Size;
         }
 
         public void SuspendLayout()

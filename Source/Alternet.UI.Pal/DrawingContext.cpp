@@ -31,10 +31,20 @@ namespace Alternet::UI
         auto oldPen = _dc->GetPen();
         auto oldBrush = _dc->GetBrush();
 
-        _dc->SetPen(wxPen(color, 1));
+        float penThickness = 1;
+        _dc->SetPen(wxPen(color, fromDip(penThickness, _dc->GetWindow())));
         _dc->SetBrush(*wxTRANSPARENT_BRUSH);
 
-        _dc->DrawRectangle(fromDip(rectangle, _dc->GetWindow()));
+        // todo: different OSes and DPI levels may require adjustment to the rectangle.
+        // maybe we will need to make platform-specific DC implementations?
+        _dc->DrawRectangle(
+            fromDip(
+                RectangleF(
+                    rectangle.X/* + penThickness / 2*/,
+                    rectangle.Y/* + penThickness / 2*/,
+                    rectangle.Width/* - penThickness / 2*/,
+                    rectangle.Height/* - penThickness / 2*/),
+                _dc->GetWindow()));
 
         _dc->SetPen(oldPen);
         _dc->SetBrush(oldBrush);
@@ -46,5 +56,10 @@ namespace Alternet::UI
         _dc->SetTextForeground(color);
         _dc->DrawText(wxStr(text), fromDip(origin, _dc->GetWindow()));
         _dc->SetTextForeground(oldTextForeground);
+    }
+
+    SizeF DrawingContext::MeasureText(const string& text)
+    {
+        return toDip(_dc->GetTextExtent(wxStr(text)), _dc->GetWindow());
     }
 }

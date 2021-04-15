@@ -23,9 +23,14 @@ namespace Alternet.UI
             dc.DrawRectangle(rectangle, color);
         }
 
-        public void DrawText(string text, System.Drawing.PointF origin, System.Drawing.Color color)
+        public void DrawText(string text, PointF origin, Color color)
         {
             dc.DrawText(text, origin, color);
+        }
+
+        public SizeF MeasureText(string text)
+        {
+            return dc.MeasureText(text);
         }
 
         public void Dispose()

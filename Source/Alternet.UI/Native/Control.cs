@@ -122,6 +122,12 @@ namespace Alternet.UI.Native
             return NativeObject.GetFromNativePointer<DrawingContext>(NativeApi.Control_OpenPaintDrawingContext(NativePointer), p => new DrawingContext(p))!;
         }
         
+        public DrawingContext OpenClientDrawingContext()
+        {
+            CheckDisposed();
+            return NativeObject.GetFromNativePointer<DrawingContext>(NativeApi.Control_OpenClientDrawingContext(NativePointer), p => new DrawingContext(p))!;
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -229,6 +235,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_OpenPaintDrawingContext(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Control_OpenClientDrawingContext(IntPtr obj);
             
         }
     }

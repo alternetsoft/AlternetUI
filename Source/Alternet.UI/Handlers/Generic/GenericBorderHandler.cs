@@ -1,3 +1,5 @@
+using System.Drawing;
+
 namespace Alternet.UI
 {
     internal class GenericBorderHandler : GenericControlHandler<Border>
@@ -7,6 +9,12 @@ namespace Alternet.UI
         public override void OnPaint(DrawingContext drawingContext)
         {
             drawingContext.DrawRectangle(ChildrenBounds, Control.BorderColor);
+        }
+
+        public override SizeF GetPreferredSize(SizeF availableSize)
+        {
+            var size = GexChildrenMaxPreferredSize(availableSize);
+            return size + new SizeF(2, 2); // todo: BorderThickness
         }
 
         protected override void OnAttach()

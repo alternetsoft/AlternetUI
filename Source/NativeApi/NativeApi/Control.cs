@@ -40,5 +40,6 @@ namespace NativeApi.Api
         public virtual SizeF GetPreferredSize(SizeF availableSize) => throw new Exception();
 
         public DrawingContext OpenPaintDrawingContext() => throw new Exception();
+        public DrawingContext OpenClientDrawingContext() => throw new Exception();
     }
 }

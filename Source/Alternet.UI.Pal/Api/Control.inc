@@ -25,6 +25,7 @@ void RemoveChild(Control* control);
 void Update();
 virtual SizeF GetPreferredSize(const SizeF& availableSize);
 DrawingContext* OpenPaintDrawingContext();
+DrawingContext* OpenClientDrawingContext();
 public:
 enum class ControlEvent
 {

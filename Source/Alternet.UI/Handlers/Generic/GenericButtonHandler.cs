@@ -26,7 +26,7 @@ namespace Alternet.UI
 
         public override SizeF GetPreferredSize(SizeF availableSize)
         {
-            return new SizeF(50, 30);
+            return base.GetPreferredSize(availableSize);
         }
 
         protected override void OnAttach()
@@ -89,7 +89,8 @@ namespace Alternet.UI
             ReleaseMouseCapture();
             base.OnMouseLeftButtonUp();
             IsPressed = false;
-            Control.InvokeClick(EventArgs.Empty);
+            if (IsMouseOver)
+                Control.InvokeClick(EventArgs.Empty);
         }
 
         private void UpdateVisual()

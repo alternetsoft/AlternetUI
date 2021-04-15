@@ -27,6 +27,19 @@ namespace Alternet.UI
             CreateAndAttachHandler();
         }
 
+        public DrawingContext CreateDrawingContext()
+        {
+            var nativeControl = Handler.NativeControl;
+            if (nativeControl == null)
+            {
+                // todo: get closest parent native control for a visual child
+                // todo: if native control is not created, create it on demand.
+                throw new Exception();
+            }
+
+            return new DrawingContext(nativeControl.OpenClientDrawingContext());
+        }
+
         private void CreateAndAttachHandler()
         {
             handler = CreateHandler();

@@ -9,6 +9,7 @@ namespace Alternet::UI
 #include "Api/DrawingContext.inc"
     public:
         DrawingContext(wxDC* dc);
+
     private:
         wxDC* _dc;
     };

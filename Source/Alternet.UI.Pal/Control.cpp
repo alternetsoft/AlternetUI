@@ -25,6 +25,11 @@ namespace Alternet::UI
         return new DrawingContext(new wxPaintDC(_wxWindow));
     }
 
+    DrawingContext* Control::OpenClientDrawingContext()
+    {
+        return new DrawingContext(new wxClientDC(_wxWindow));
+    }
+
     Control* Control::GetParent()
     {
         return _parent;
