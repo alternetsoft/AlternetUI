@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Security;
 
 namespace Alternet.UI.Native
 {
@@ -63,6 +65,12 @@ namespace Alternet.UI.Native
                 {
                 }
 
+                if (NativePointer != IntPtr.Zero)
+                {
+                    NativeApi.Object_Release(NativePointer);
+                    SetNativePointer(IntPtr.Zero);
+                }
+
                 IsDisposed = true;
             }
         }
@@ -71,6 +79,15 @@ namespace Alternet.UI.Native
         {
             if (IsDisposed)
                 throw new ObjectDisposedException(null);
+        }
+
+        [SuppressUnmanagedCodeSecurity]
+        private class NativeApi : NativeApiProvider
+        {
+            static NativeApi() => Initialize();
+
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Object_Release(IntPtr obj);
         }
     }
 }

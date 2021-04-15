@@ -7,11 +7,6 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API void DrawingContext_Destroy(DrawingContext* obj)
-{
-    delete obj;
-}
-
 ALTERNET_UI_API void DrawingContext_FillRectangle(DrawingContext* obj, RectangleF rectangle, Color color)
 {
     obj->FillRectangle(rectangle, color);

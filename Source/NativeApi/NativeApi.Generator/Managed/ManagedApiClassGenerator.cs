@@ -42,8 +42,8 @@ using System.Security;");
             WriteConstructor(w, types, type, events.Length > 0);
             WriteFromPointerConstructor(w, types, type);
 
-            if (MemberProvider.GetDestructorVisibility(type) == MemberVisibility.Public)
-                WriteDestructor(w, types, type);
+            //if (MemberProvider.GetDestructorVisibility(type) == MemberVisibility.Public)
+            //    WriteDestructor(w, types, type);
 
             foreach (var property in MemberProvider.GetProperties(type))
                 WriteProperty(w, property, types);
@@ -65,26 +65,26 @@ using System.Security;");
             return GetFinalCode(codeWriter.ToString(), types);
         }
 
-        private static void WriteDestructor(IndentedTextWriter w, Types types, Type type)
-        {
-            w.WriteLine("protected override void Dispose(bool disposing)");
-            using (new BlockIndent(w))
-            {
-                w.WriteLine("if (!IsDisposed)");
-                using (new BlockIndent(w))
-                {
-                    w.WriteLine("if (NativePointer != IntPtr.Zero)");
-                    using (new BlockIndent(w))
-                    {
-                        w.WriteLine($"NativeApi.{TypeProvider.GetNativeName(type)}_Destroy(NativePointer);");
-                        w.WriteLine("SetNativePointer(IntPtr.Zero);");
-                    }
-                }
-                w.WriteLine("base.Dispose(disposing);");
-            }
+        //private static void WriteDestructor(IndentedTextWriter w, Types types, Type type)
+        //{
+        //    w.WriteLine("protected override void Dispose(bool disposing)");
+        //    using (new BlockIndent(w))
+        //    {
+        //        w.WriteLine("if (!IsDisposed)");
+        //        using (new BlockIndent(w))
+        //        {
+        //            w.WriteLine("if (NativePointer != IntPtr.Zero)");
+        //            using (new BlockIndent(w))
+        //            {
+        //                w.WriteLine($"NativeApi.{TypeProvider.GetNativeName(type)}_Destroy(NativePointer);");
+        //                w.WriteLine("SetNativePointer(IntPtr.Zero);");
+        //            }
+        //        }
+        //        w.WriteLine("base.Dispose(disposing);");
+        //    }
 
-            w.WriteLine();
-        }
+        //    w.WriteLine();
+        //}
 
         private static void WriteConstructor(IndentedTextWriter w, Types types, Type type, bool hasEvents)
         {

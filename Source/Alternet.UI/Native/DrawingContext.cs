@@ -15,19 +15,6 @@ namespace Alternet.UI.Native
         {
         }
         
-        protected override void Dispose(bool disposing)
-        {
-            if (!IsDisposed)
-            {
-                if (NativePointer != IntPtr.Zero)
-                {
-                    NativeApi.DrawingContext_Destroy(NativePointer);
-                    SetNativePointer(IntPtr.Zero);
-                }
-            }
-            base.Dispose(disposing);
-        }
-        
         public void FillRectangle(System.Drawing.RectangleF rectangle, System.Drawing.Color color)
         {
             CheckDisposed();
@@ -57,9 +44,6 @@ namespace Alternet.UI.Native
         private class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_Destroy(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_FillRectangle(IntPtr obj, NativeApiTypes.RectangleF rectangle, NativeApiTypes.Color color);

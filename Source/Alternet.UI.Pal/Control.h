@@ -2,10 +2,11 @@
 
 #include "Common.h"
 #include "DrawingContext.h"
+#include "Object.h"
 
 namespace Alternet::UI
 {
-    class Control
+    class Control : public Object
     {
 #include "Api/Control.inc"
     public:

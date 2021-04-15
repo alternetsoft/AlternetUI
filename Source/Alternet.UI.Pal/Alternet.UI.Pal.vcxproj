@@ -189,6 +189,7 @@
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="DrawingContext.cpp" />
     <ClCompile Include="MessageBox_.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="WindowsVisualThemeSupport.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Api\DrawingTypes.h" />
     <ClInclude Include="Api\Enums.h" />
     <ClInclude Include="Api\MessageBox_.Api.h" />
+    <ClInclude Include="Api\Object.Api.h" />
     <ClInclude Include="Api\Panel.Api.h" />
     <ClInclude Include="Api\TextBox.Api.h" />
     <ClInclude Include="Api\Window.Api.h" />
@@ -215,6 +217,7 @@
     <ClInclude Include="DelayedValue.h" />
     <ClInclude Include="DrawingContext.h" />
     <ClInclude Include="MessageBox_.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="Panel.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="TypedEnumFlags.h" />

@@ -6,7 +6,7 @@ void DrawText(const string& text, const PointF& origin, const Color& color);
 SizeF MeasureText(const string& text);
 private:
 DrawingContext() {}
-public:
+protected:
 virtual ~DrawingContext();
 private:
 BYREF_ONLY(DrawingContext);

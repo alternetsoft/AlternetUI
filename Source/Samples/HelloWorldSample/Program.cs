@@ -72,6 +72,9 @@ namespace HelloWorldSample
             textBox.Text = "Hello";
 
             app.Run(window);
+
+            window.Dispose();
+            app.Dispose();
         }
 
         private static void CreateButtons(Control parent)

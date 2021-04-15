@@ -2,6 +2,7 @@
 
 #include "Common.h"
 #include "Window.h"
+#include "Object.h"
 #include "WindowsVisualThemeSupport.h"
 
 namespace Alternet::UI
@@ -22,7 +23,7 @@ namespace Alternet::UI
         BYREF_ONLY(App);
     };
 
-    class Application
+    class Application : public Object
     {
 #include "Api/Application.inc"
     public:
