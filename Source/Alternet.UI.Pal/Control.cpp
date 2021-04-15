@@ -49,11 +49,6 @@ namespace Alternet::UI
         _wxWindow->Update();
     }
 
-    bool Control::DoNotBindPaintEvent()
-    {
-        return false;
-    }
-
     void Control::CreateWxWindow()
     {
         wxWindow* parentingWxWindow = nullptr;
@@ -62,8 +57,7 @@ namespace Alternet::UI
         
         _wxWindow = CreateWxWindowCore(parentingWxWindow);
 
-        if (!DoNotBindPaintEvent())
-            _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
+        _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
 
         _wxWindow->Bind(wxEVT_MOTION, &Control::OnMouseMove, this);
         _wxWindow->Bind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
@@ -164,6 +158,7 @@ namespace Alternet::UI
 
     void Control::OnPaint(wxPaintEvent& event)
     {
+        event.Skip();
         RaiseEvent(ControlEvent::Paint);
     }
 

@@ -22,17 +22,6 @@ namespace Alternet::UI
         _text.Set(value);
     }
 
-    bool TextBox::DoNotBindPaintEvent()
-    {
-#if defined(__WXOSX_COCOA__)
-        // Binding the paint event of TextCtrl on macOS leads to a blank control.
-        return true;
-#else
-        return false;
-#endif
-    }
-
-
     wxWindow* TextBox::CreateWxWindowCore(wxWindow* parent)
     {
         auto textCtrl = new wxTextCtrl(parent, wxID_ANY);

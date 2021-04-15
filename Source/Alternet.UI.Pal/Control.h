@@ -27,8 +27,6 @@ namespace Alternet::UI
 
         virtual SizeF GetDefaultSize();
 
-        virtual bool DoNotBindPaintEvent();
-
     private:
         enum class ControlFlags
         {
