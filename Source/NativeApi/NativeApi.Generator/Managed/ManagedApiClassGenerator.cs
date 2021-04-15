@@ -68,29 +68,21 @@ using System.Security;");
         private static void WriteDestructor(IndentedTextWriter w, Types types, Type type)
         {
             w.WriteLine("protected override void Dispose(bool disposing)");
-            w.WriteLine("{");
-            w.Indent++;
+            using (new BlockIndent(w))
+            {
+                w.WriteLine("if (!IsDisposed)");
+                using (new BlockIndent(w))
+                {
+                    w.WriteLine("if (NativePointer != IntPtr.Zero)");
+                    using (new BlockIndent(w))
+                    {
+                        w.WriteLine($"NativeApi.{TypeProvider.GetNativeName(type)}_Destroy(NativePointer);");
+                        w.WriteLine("SetNativePointer(IntPtr.Zero);");
+                    }
+                }
+                w.WriteLine("base.Dispose(disposing);");
+            }
 
-            w.WriteLine("base.Dispose(disposing);");
-            w.WriteLine("if (!IsDisposed)");
-            w.WriteLine("{");
-            w.Indent++;
-
-            w.WriteLine("if (NativePointer != IntPtr.Zero)");
-            w.WriteLine("{");
-            w.Indent++;
-
-            w.WriteLine($"NativeApi.{TypeProvider.GetNativeName(type)}_Destroy(NativePointer);");
-            w.WriteLine("SetNativePointer(IntPtr.Zero);");
-
-            w.Indent--;
-            w.WriteLine("}");
-
-            w.Indent--;
-            w.WriteLine("}");
-
-            w.Indent--;
-            w.WriteLine("}");
             w.WriteLine();
         }
 

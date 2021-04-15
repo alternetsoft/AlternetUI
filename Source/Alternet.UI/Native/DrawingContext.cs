@@ -17,7 +17,6 @@ namespace Alternet.UI.Native
         
         protected override void Dispose(bool disposing)
         {
-            base.Dispose(disposing);
             if (!IsDisposed)
             {
                 if (NativePointer != IntPtr.Zero)
@@ -26,6 +25,7 @@ namespace Alternet.UI.Native
                     SetNativePointer(IntPtr.Zero);
                 }
             }
+            base.Dispose(disposing);
         }
         
         public void FillRectangle(System.Drawing.RectangleF rectangle, System.Drawing.Color color)
