@@ -169,9 +169,16 @@ namespace Alternet.UI
             {
                 if (disposing)
                 {
+                    foreach (var child in AllChildren)
+                        child.Dispose();
+                    Children.Clear();
+                    VisualChildren.Clear();
+
                     if (handler == null)
                         throw new InvalidOperationException();
+                    var nativeControl = handler.NativeControl; // todo
                     handler.Detach();
+                    nativeControl?.Dispose();
                     handler = null;
                 }
 

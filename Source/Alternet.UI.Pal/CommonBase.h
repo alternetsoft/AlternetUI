@@ -22,6 +22,8 @@
 #include <sstream>
 #endif
 
+#include "TypedEnumFlags.h"
+
 #include <wx/wxprec.h>
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
@@ -29,8 +31,6 @@
 
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
-
-#include "TypedEnumFlags.h"
 
 #define DELELTE_COPY_CONSTRUCTOR(TypeName) \
   TypeName(const TypeName&) = delete

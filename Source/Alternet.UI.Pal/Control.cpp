@@ -17,7 +17,8 @@ namespace Alternet::UI
 
     Control::~Control()
     {
-        //delete GetControl();
+        //if (_wxWindow != nullptr)
+        //    _wxWindow->Destroy();
     }
 
     DrawingContext* Control::OpenPaintDrawingContext()
