@@ -34,9 +34,9 @@ namespace Alternet.UI
             return dc.MeasureText(text);
         }
 
-        public void PushTransform(Matrix value)
+        public void PushTransform(Transform value)
         {
-            dc.PushTransform(new SizeF(value.OffsetX, value.OffsetY));
+            dc.PushTransform(value.Translation);
         }
 
         public void Pop()

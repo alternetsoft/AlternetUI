@@ -419,13 +419,8 @@ namespace Alternet.UI
 
             foreach (var visualChild in Control.VisualChildren)
             {
-                var t = new Matrix();
-                var bounds = visualChild.Handler.Bounds;
-                t.Translate(bounds.X, bounds.Y);
-                dc.PushTransform(t);
-
+                dc.PushTransform(Transform.FromTranslation(visualChild.Handler.Bounds.Location));
                 visualChild.Handler.PaintSelfAndVisualChildren(dc);
-
                 dc.Pop();
             }
         }
