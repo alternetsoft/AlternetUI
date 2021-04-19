@@ -24,7 +24,12 @@ namespace Alternet::UI
 
     wxWindow* TextBox::CreateWxWindowCore(wxWindow* parent)
     {
-        auto textCtrl = new wxTextCtrl(parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, _editControlOnly ? wxNO_BORDER : 0);
+        auto textCtrl = new wxTextCtrl(
+            parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, _editControlOnly ? wxNO_BORDER : 0);
+
+        if (_editControlOnly)
+            textCtrl->EnableVisibleFocus(false);
+            
         textCtrl->Bind(wxEVT_TEXT, &TextBox::OnTextChanged, this);
         return textCtrl;
     }
