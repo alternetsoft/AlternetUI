@@ -27,8 +27,10 @@ namespace Alternet::UI
         auto textCtrl = new wxTextCtrl(
             parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, _editControlOnly ? wxNO_BORDER : 0);
 
+#ifdef __WXOSX__
         if (_editControlOnly)
             textCtrl->EnableVisibleFocus(false);
+#endif
             
         textCtrl->Bind(wxEVT_TEXT, &TextBox::OnTextChanged, this);
         return textCtrl;
