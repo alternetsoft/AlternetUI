@@ -27,6 +27,29 @@ namespace Alternet.UI
 
         public event EventHandler? TextChanged;
 
+        private bool editControlOnly = false;
+
+        public bool EditControlOnly
+        {
+            get
+            {
+                CheckDisposed();
+                return editControlOnly;
+            }
+
+            set
+            {
+                CheckDisposed();
+                if (editControlOnly == value)
+                    return;
+
+                editControlOnly = value;
+                EditControlOnlyChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public event EventHandler? EditControlOnlyChanged;
+
         public void InvokeTextChanged(EventArgs e)
         {
             if (e == null)

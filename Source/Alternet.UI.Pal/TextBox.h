@@ -15,6 +15,8 @@ namespace Alternet::UI
     protected:
 
     private:
+        bool _editControlOnly = false;
+
         DelayedValue<TextBox, string> _text;
 
         wxTextCtrl* GetTextCtrl();

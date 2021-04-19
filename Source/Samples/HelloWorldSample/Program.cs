@@ -55,6 +55,7 @@ namespace HelloWorldSample
 
             textBox = new TextBox();
             textBox.TextChanged += (o, e) => customControl?.SetText(textBox!.Text);
+            textBox.EditControlOnly = true;
             rightPanel.Children.Add(textBox);
 
             customControl = new MyCustomControl

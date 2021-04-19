@@ -6,14 +6,20 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            return new Native.TextBox();
+            return new Native.TextBox() { Text = Control.Text, EditControlOnly = Control.EditControlOnly };
         }
 
         protected override void OnAttach()
         {
             base.OnAttach();
             Control.TextChanged += Control_TextChanged;
+            Control.EditControlOnlyChanged += Control_EditControlOnlyChanged;
             NativeControl.TextChanged += NativeControl_TextChanged;
+        }
+
+        private void Control_EditControlOnlyChanged(object? sender, System.EventArgs? e)
+        {
+            NativeControl.EditControlOnly = Control.EditControlOnly;
         }
 
         protected override void OnDetach()
@@ -21,6 +27,7 @@ namespace Alternet.UI
             base.OnDetach();
             Control.TextChanged -= Control_TextChanged;
             NativeControl.TextChanged -= NativeControl_TextChanged;
+            Control.EditControlOnlyChanged -= Control_EditControlOnlyChanged;
         }
 
         private void NativeControl_TextChanged(object? sender, System.EventArgs? e)

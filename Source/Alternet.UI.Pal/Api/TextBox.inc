@@ -4,6 +4,10 @@ public:
 string GetText();
 void SetText(const string& value);
 
+
+bool GetEditControlOnly();
+void SetEditControlOnly(bool value);
+
 public:
 enum class TextBoxEvent
 {

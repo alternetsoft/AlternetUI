@@ -32,6 +32,21 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool EditControlOnly
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.TextBox_GetEditControlOnly(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TextBox_SetEditControlOnly(NativePointer, value);
+            }
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -85,6 +100,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBox_SetText(IntPtr obj, string? value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_GetEditControlOnly(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetEditControlOnly(IntPtr obj, bool value);
             
         }
     }

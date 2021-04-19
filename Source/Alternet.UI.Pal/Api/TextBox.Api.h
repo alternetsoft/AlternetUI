@@ -22,6 +22,16 @@ ALTERNET_UI_API void TextBox_SetText(TextBox* obj, const char16_t* value)
     obj->SetText(value);
 }
 
+ALTERNET_UI_API c_bool TextBox_GetEditControlOnly(TextBox* obj)
+{
+    return obj->GetEditControlOnly();
+}
+
+ALTERNET_UI_API void TextBox_SetEditControlOnly(TextBox* obj, c_bool value)
+{
+    obj->SetEditControlOnly(value);
+}
+
 ALTERNET_UI_API void TextBox_SetEventCallback(TextBox::TextBoxEventCallbackType callback)
 {
     TextBox::SetEventCallback(callback);

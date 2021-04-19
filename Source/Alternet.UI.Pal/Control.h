@@ -31,7 +31,7 @@ namespace Alternet::UI
         enum class ControlFlags
         {
             None = 0,
-            Visible = 1 << 0,
+            Visible = 1 << 0
         };
 
         wxWindow* _wxWindow = nullptr;

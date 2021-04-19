@@ -24,7 +24,7 @@ namespace Alternet::UI
 
     wxWindow* TextBox::CreateWxWindowCore(wxWindow* parent)
     {
-        auto textCtrl = new wxTextCtrl(parent, wxID_ANY);
+        auto textCtrl = new wxTextCtrl(parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, _editControlOnly ? wxNO_BORDER : 0);
         textCtrl->Bind(wxEVT_TEXT, &TextBox::OnTextChanged, this);
         return textCtrl;
     }
@@ -32,6 +32,17 @@ namespace Alternet::UI
     void TextBox::OnTextChanged(wxCommandEvent& event)
     {
         RaiseEvent(TextBoxEvent::TextChanged);
+    }
+
+    bool TextBox::GetEditControlOnly()
+    {
+        return _editControlOnly;
+    }
+
+    void TextBox::SetEditControlOnly(bool value)
+    {
+        _editControlOnly = value;
+        assert(!IsWxWindowCreated()); // todo: recreate window
     }
 
     wxTextCtrl* TextBox::GetTextCtrl()
