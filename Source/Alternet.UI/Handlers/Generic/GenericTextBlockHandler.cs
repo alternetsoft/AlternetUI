@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace Alternet.UI
 {
-    internal class GenericTextBlockHandler : GenericControlHandler<TextBlock>
+    internal class GenericTextBlockHandler : ControlHandler<TextBlock>
     {
         protected override bool NeedsPaint => true;
 

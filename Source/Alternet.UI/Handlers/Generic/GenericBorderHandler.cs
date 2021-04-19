@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace Alternet.UI
 {
-    internal class GenericBorderHandler : GenericControlHandler<Border>
+    internal class GenericBorderHandler : ControlHandler<Border>
     {
         protected override bool NeedsPaint => true;
 

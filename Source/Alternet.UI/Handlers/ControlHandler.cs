@@ -11,12 +11,26 @@ namespace Alternet.UI
 
         private Control? control;
 
+        private RectangleF bounds;
+
         public Control Control
         {
             get => control ?? throw new InvalidOperationException();
         }
 
-        public abstract RectangleF Bounds { get; set; }
+        public virtual RectangleF Bounds
+        {
+            get => NativeControl != null ? NativeControl.Bounds : bounds;
+            set
+            {
+                if (NativeControl != null)
+                    NativeControl.Bounds = value;
+                else
+                    bounds = value;
+
+                PerformLayout(); // todo: use event
+            }
+        }
 
         public virtual RectangleF ChildrenLayoutBounds
         {
@@ -43,10 +57,11 @@ namespace Alternet.UI
             }
         }
 
-        internal Native.Control? NativeControl { get; private set; } // todo: for non-visual child, if native control is not created, create it on demand.
+        internal Native.Control? NativeControl { get; private set; }
 
         protected virtual bool NeedsPaint => false;
 
+        // todo: for non-visual child, if native control is not created, create it on demand.
         private bool IsLayoutSuspended => layoutSuspendCount != 0;
 
         public void Attach(Control control)
@@ -94,21 +109,6 @@ namespace Alternet.UI
             {
                 return GexChildrenMaxPreferredSize(availableSize);
             }
-        }
-
-        protected SizeF GexChildrenMaxPreferredSize(SizeF availableSize)
-        {
-            float maxWidth = 0;
-            float maxHeight = 0;
-
-            foreach (var control in Control.AllChildren)
-            {
-                var preferredSize = control.GetPreferredSize(availableSize) + control.Margin.Size;
-                maxWidth = Math.Max(preferredSize.Width, maxWidth);
-                maxHeight = Math.Max(preferredSize.Height, maxHeight);
-            }
-
-            return new SizeF(maxWidth, maxHeight) + Control.Padding.Size;
         }
 
         public void SuspendLayout()
@@ -170,7 +170,25 @@ namespace Alternet.UI
 
         internal virtual Native.Control CreateNativeControl() => new Native.Panel();
 
-        internal abstract bool NeedToCreateNativeControl();
+        protected virtual bool NeedToCreateNativeControl()
+        {
+            return NativeControl == null;
+        }
+
+        protected SizeF GexChildrenMaxPreferredSize(SizeF availableSize)
+        {
+            float maxWidth = 0;
+            float maxHeight = 0;
+
+            foreach (var control in Control.AllChildren)
+            {
+                var preferredSize = control.GetPreferredSize(availableSize) + control.Margin.Size;
+                maxWidth = Math.Max(preferredSize.Width, maxWidth);
+                maxHeight = Math.Max(preferredSize.Height, maxHeight);
+            }
+
+            return new SizeF(maxWidth, maxHeight) + Control.Padding.Size;
+        }
 
         protected virtual void OnAttach()
         {

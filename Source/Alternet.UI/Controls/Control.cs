@@ -19,10 +19,10 @@ namespace Alternet.UI
         public Control()
         {
             Children.ItemInserted += Children_ItemInserted;
-            VisualChildren.ItemInserted += Children_ItemInserted;
+            VisualChildren.ItemInserted += VisualChildren_ItemInserted;
 
             Children.ItemRemoved += Children_ItemRemoved;
-            VisualChildren.ItemRemoved += Children_ItemRemoved;
+            VisualChildren.ItemRemoved += VisualChildren_ItemRemoved;
 
             CreateAndAttachHandler();
         }
@@ -186,6 +186,8 @@ namespace Alternet.UI
             }
         }
 
+        public bool IsVisualChild { get; private set; }
+
         protected void CheckDisposed()
         {
             if (IsDisposed)
@@ -213,6 +215,18 @@ namespace Alternet.UI
         private void Children_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
         {
             e.Item.Parent = null;
+        }
+
+        private void VisualChildren_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
+        {
+            e.Item.Parent = this;
+            e.Item.IsVisualChild = true;
+        }
+
+        private void VisualChildren_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
+        {
+            e.Item.Parent = null;
+            e.Item.IsVisualChild = false;
         }
     }
 }

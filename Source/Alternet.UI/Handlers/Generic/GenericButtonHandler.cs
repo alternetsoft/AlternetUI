@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Alternet.UI
 {
-    internal class GenericButtonHandler : GenericControlHandler<Button>
+    internal class GenericButtonHandler : ControlHandler<Button>
     {
         private Border? border;
 
