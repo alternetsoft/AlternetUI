@@ -8,6 +8,7 @@ namespace Alternet.UI
 
         public override void OnPaint(DrawingContext drawingContext)
         {
+            drawingContext.FillRectangle(ChildrenBounds, Color.LightGray);
             drawingContext.DrawRectangle(ChildrenBounds, Control.BorderColor);
         }
 
