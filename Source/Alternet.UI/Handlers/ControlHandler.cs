@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace Alternet.UI
 {
@@ -12,6 +13,8 @@ namespace Alternet.UI
         private Control? control;
 
         private RectangleF bounds;
+
+        private Native.Control? nativeControl;
 
         public Control Control
         {
@@ -57,9 +60,26 @@ namespace Alternet.UI
             }
         }
 
-        internal Native.Control? NativeControl { get; private set; }
+        internal Native.Control? NativeControl
+        {
+            get
+            {
+                if (nativeControl == null)
+                {
+                    if (NeedsNativeControl())
+                    {
+                        nativeControl = CreateNativeControl();
+                        OnNativeControlCreated();
+                    }
+                }
+
+                return nativeControl;
+            }
+        }
 
         protected virtual bool NeedsPaint => false;
+
+        protected virtual bool VisualChildNeedsNativeControl => false;
 
         // todo: for non-visual child, if native control is not created, create it on demand.
         private bool IsLayoutSuspended => layoutSuspendCount != 0;
@@ -67,7 +87,6 @@ namespace Alternet.UI
         public void Attach(Control control)
         {
             this.control = control;
-            TryCreateNativeControl();
             OnAttach();
         }
 
@@ -168,11 +187,28 @@ namespace Alternet.UI
             NativeControl.SetMouseCapture(false);
         }
 
+        internal DrawingContext CreateDrawingContext()
+        {
+            var nativeControl = NativeControl;
+            if (nativeControl == null)
+            {
+                nativeControl = FindClosestParentWithNativeControl()?.Handler.NativeControl;
+                // todo: visual offset for handleless controls
+                if (nativeControl == null)
+                    throw new Exception(); // todo: maybe use parking window here?
+            }
+
+            return new DrawingContext(nativeControl.OpenClientDrawingContext());
+        }
+
         internal virtual Native.Control CreateNativeControl() => new Native.Panel();
 
-        protected virtual bool NeedToCreateNativeControl()
+        protected virtual bool NeedsNativeControl()
         {
-            return NativeControl == null;
+            if (Control.IsVisualChild)
+                return VisualChildNeedsNativeControl;
+
+            return true;
         }
 
         protected SizeF GexChildrenMaxPreferredSize(SizeF availableSize)
@@ -269,6 +305,23 @@ namespace Alternet.UI
                 NativeControl?.RemoveChild(control.Handler.NativeControl);
         }
 
+        private Control? FindClosestParentWithNativeControl()
+        {
+            var control = Control;
+            if (control.Handler.NativeControl != null)
+                return control;
+
+            while (true)
+            {
+                control = control.Parent;
+                if (control == null)
+                    return null;
+
+                if (control.Handler.NativeControl != null)
+                    return control;
+            }
+        }
+
         private void NativeControl_MouseEnter(object? sender, EventArgs? e)
         {
             OnMouseEnter();
@@ -318,15 +371,6 @@ namespace Alternet.UI
             }
         }
 
-        private void TryCreateNativeControl()
-        {
-            if (NeedToCreateNativeControl())
-            {
-                NativeControl = CreateNativeControl();
-                OnNativeControlCreated();
-            }
-        }
-
         private void Control_MarginChanged(object? sender, EventArgs? e)
         {
             PerformLayout();
@@ -354,15 +398,35 @@ namespace Alternet.UI
             if (NativeControl == null)
                 throw new InvalidOperationException();
 
+            bool hasVisualChildren = Control.VisualChildren.Count > 0;
+
             if (Control.UserPaint)
             {
-                using (var dc = NativeControl.OpenPaintDrawingContext())
-                    Control.InvokePaint(new PaintEventArgs(new DrawingContext(dc), Bounds));
+                using (var dc = new DrawingContext(NativeControl.OpenPaintDrawingContext()))
+                    Control.InvokePaint(new PaintEventArgs(dc, Bounds));
             }
-            else if (NeedsPaint)
+            else if (NeedsPaint || hasVisualChildren)
             {
-                using (var dc = NativeControl.OpenPaintDrawingContext())
-                    OnPaint(new DrawingContext(dc));
+                using (var dc = new DrawingContext(NativeControl.OpenPaintDrawingContext()))
+                    PaintSelfAndVisualChildren(dc);
+            }
+        }
+
+        private void PaintSelfAndVisualChildren(DrawingContext dc)
+        {
+            if (NeedsPaint)
+                OnPaint(dc);
+
+            foreach (var visualChild in Control.VisualChildren)
+            {
+                var t = new Matrix();
+                var bounds = visualChild.Handler.Bounds;
+                t.Translate(bounds.X, bounds.Y);
+                dc.PushTransform(t);
+
+                visualChild.Handler.PaintSelfAndVisualChildren(dc);
+
+                dc.Pop();
             }
         }
     }

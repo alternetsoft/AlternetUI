@@ -12,6 +12,7 @@
 #include <functional>
 #include <memory>
 #include <map>
+#include <stack>
 #include <utility>
 #include <locale>
 #include <tuple>

@@ -12,6 +12,18 @@ namespace Alternet::UI
         wxDELETE(_dc);
     }
 
+    void DrawingContext::PushTransform(const SizeF& translation)
+    {
+        _translationStack.push(_translation);
+        _translation += translation;
+    }
+
+    void DrawingContext::Pop()
+    {
+        _translation = _translationStack.top();
+        _translationStack.pop();
+    }
+
     void DrawingContext::FillRectangle(const RectangleF& rectangle, const Color& color)
     {
         auto oldPen = _dc->GetPen();
@@ -20,7 +32,7 @@ namespace Alternet::UI
         _dc->SetPen(*wxTRANSPARENT_PEN);
         _dc->SetBrush(wxBrush(color));
 
-        _dc->DrawRectangle(fromDip(rectangle, _dc->GetWindow()));
+        _dc->DrawRectangle(fromDip(rectangle.Offset(_translation), _dc->GetWindow()));
 
         _dc->SetPen(oldPen);
         _dc->SetBrush(oldBrush);
@@ -43,7 +55,7 @@ namespace Alternet::UI
                     rectangle.X/* + penThickness / 2*/,
                     rectangle.Y/* + penThickness / 2*/,
                     rectangle.Width/* - penThickness / 2*/,
-                    rectangle.Height/* - penThickness / 2*/),
+                    rectangle.Height/* - penThickness / 2*/).Offset(_translation),
                 _dc->GetWindow()));
 
         _dc->SetPen(oldPen);
@@ -54,7 +66,7 @@ namespace Alternet::UI
     {
         auto oldTextForeground = _dc->GetTextForeground();
         _dc->SetTextForeground(color);
-        _dc->DrawText(wxStr(text), fromDip(origin, _dc->GetWindow()));
+        _dc->DrawText(wxStr(text), fromDip(origin + _translation, _dc->GetWindow()));
         _dc->SetTextForeground(oldTextForeground);
     }
 

@@ -68,6 +68,14 @@ namespace Alternet::UI
 
         SizeF(float width, float height) : Width(width), Height(height) {}
 
+        inline SizeF operator+(const SizeF& rhs) const { return SizeF(Width + rhs.Width, Height + rhs.Height); }
+        inline SizeF& operator+=(const SizeF& rhs) 
+        {
+            Width += rhs.Width;
+            Height += rhs.Height;
+            return *this;
+        }
+
         operator SizeF_C() { return SizeF_C{ Width, Height }; }
 
         bool operator==(const SizeF& rhs) { return Width == rhs.Width && Height == rhs.Height; }
@@ -97,6 +105,8 @@ namespace Alternet::UI
         PointF(float x, float y) : X(x), Y(y) {}
 
         operator PointF_C() const { return PointF_C{ X, Y }; }
+
+        inline PointF operator+(const SizeF& value) const { return PointF(X + value.Width, Y + value.Height); }
 
         bool operator==(const PointF& rhs) { return X == rhs.X && Y == rhs.Y; }
         bool operator!=(const PointF& rhs) { return !(*this == rhs); }
@@ -133,6 +143,8 @@ namespace Alternet::UI
 
         inline PointF GetLocation() const { return PointF(X, Y); };
         inline SizeF GetSize() const { return SizeF(Width, Height); };
+
+        inline RectangleF Offset(const SizeF& value) const { return RectangleF(X + value.Width, Y + value.Height, Width, Height); }
 
         operator RectangleF_C() { return RectangleF_C{ X, Y, Width, Height }; }
 

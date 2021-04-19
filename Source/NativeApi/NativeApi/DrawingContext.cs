@@ -14,5 +14,9 @@ namespace NativeApi.Api
         public void DrawText(string text, PointF origin, Color color) => throw new Exception();
 
         public SizeF MeasureText(string text) => throw new Exception();
+
+        public void PushTransform(SizeF translation) => throw new Exception();
+
+        public void Pop() => throw new Exception();
     }
 }

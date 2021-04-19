@@ -27,3 +27,13 @@ ALTERNET_UI_API SizeF_C DrawingContext_MeasureText(DrawingContext* obj, const ch
     return obj->MeasureText(text);
 }
 
+ALTERNET_UI_API void DrawingContext_PushTransform(DrawingContext* obj, SizeF translation)
+{
+    obj->PushTransform(translation);
+}
+
+ALTERNET_UI_API void DrawingContext_Pop(DrawingContext* obj)
+{
+    obj->Pop();
+}
+

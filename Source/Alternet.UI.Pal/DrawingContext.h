@@ -13,5 +13,8 @@ namespace Alternet::UI
 
     private:
         wxDC* _dc;
+
+        SizeF _translation;
+        std::stack<SizeF> _translationStack;
     };
 }

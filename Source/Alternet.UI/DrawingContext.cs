@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace Alternet.UI
 {
@@ -31,6 +32,16 @@ namespace Alternet.UI
         public SizeF MeasureText(string text)
         {
             return dc.MeasureText(text);
+        }
+
+        public void PushTransform(Matrix value)
+        {
+            dc.PushTransform(new SizeF(value.OffsetX, value.OffsetY));
+        }
+
+        public void Pop()
+        {
+            dc.Pop();
         }
 
         public void Dispose()

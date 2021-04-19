@@ -4,6 +4,8 @@ void FillRectangle(const RectangleF& rectangle, const Color& color);
 void DrawRectangle(const RectangleF& rectangle, const Color& color);
 void DrawText(const string& text, const PointF& origin, const Color& color);
 SizeF MeasureText(const string& text);
+void PushTransform(const SizeF& translation);
+void Pop();
 private:
 DrawingContext() {}
 protected:
