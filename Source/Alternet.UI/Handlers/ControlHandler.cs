@@ -316,16 +316,14 @@ namespace Alternet.UI
 
         private void Control_BackgroundColorChanged(object? sender, EventArgs? e)
         {
-            if (NativeControl != null)
-                ApplyBackgroundColor();
-            else
-                Update();
+            ApplyBackgroundColor();
         }
 
         private void ApplyBackgroundColor()
         {
             if (NativeControl != null)
                 NativeControl.BackgroundColor = Control.BackgroundColor ?? Color.Empty;
+            Update();
         }
 
         private void TryInsertNativeControl(int childIndex, Control childControl)

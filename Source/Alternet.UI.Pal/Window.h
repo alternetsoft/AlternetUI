@@ -24,6 +24,9 @@ namespace Alternet::UI
     protected:
         wxWindow* GetParentingWxWindow() override;
 
+        Color RetrieveBackgroundColor() override;
+        void ApplyBackgroundColor(const Color& value) override;
+
     private:
 
         Frame* _frame = nullptr;

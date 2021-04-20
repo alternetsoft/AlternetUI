@@ -27,6 +27,9 @@ namespace Alternet::UI
 
         virtual SizeF GetDefaultSize();
 
+        virtual Color RetrieveBackgroundColor();
+        virtual void ApplyBackgroundColor(const Color& value);
+
     private:
         enum class ControlFlags
         {
@@ -45,9 +48,6 @@ namespace Alternet::UI
 
         bool RetrieveVisible();
         void ApplyVisible(bool value);
-
-        Color RetrieveBackgroundColor();
-        void ApplyBackgroundColor(const Color& value);
 
         RectangleF RetrieveBounds();
         void ApplyBounds(const RectangleF& value);

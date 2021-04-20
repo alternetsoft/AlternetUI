@@ -41,4 +41,14 @@ namespace Alternet::UI
     {
         return _panel;
     }
+
+    Color Window::RetrieveBackgroundColor()
+    {
+        return _panel->GetBackgroundColour();
+    }
+
+    void Window::ApplyBackgroundColor(const Color& value)
+    {
+        _panel->SetBackgroundColour(value);
+    }
 }
