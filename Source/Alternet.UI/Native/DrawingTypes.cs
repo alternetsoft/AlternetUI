@@ -4,7 +4,7 @@ using System.Security;
 namespace Alternet.UI.Native
 {
     [SuppressUnmanagedCodeSecurity]
-    static class NativeApiTypes
+    internal static class NativeApiTypes
     {
         [StructLayout(LayoutKind.Sequential)]
         public struct Size
@@ -111,17 +111,24 @@ namespace Alternet.UI.Native
         {
             public byte R, G, B, A;
 
+            private readonly byte state;
+
+            public bool IsEmpty => state == 0;
+
+            public static readonly Color Empty = new Color();
+
             public Color(byte r, byte g, byte b, byte a)
             {
                 R = r;
                 G = g;
                 B = b;
                 A = a;
+                state = 1;
             }
 
-            public static implicit operator System.Drawing.Color(Color v) => System.Drawing.Color.FromArgb(v.A, v.R, v.G, v.B);
+            public static implicit operator System.Drawing.Color(Color v) => v.IsEmpty ? System.Drawing.Color.Empty : System.Drawing.Color.FromArgb(v.A, v.R, v.G, v.B);
 
-            public static implicit operator Color(System.Drawing.Color color) => new Color(color.R, color.G, color.B, color.A);
+            public static implicit operator Color(System.Drawing.Color color) => color.IsEmpty ? Color.Empty : new Color(color.R, color.G, color.B, color.A);
         }
     }
 }

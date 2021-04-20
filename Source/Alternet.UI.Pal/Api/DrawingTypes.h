@@ -40,7 +40,7 @@ namespace Alternet::UI
 
         struct Color_C
         {
-            uint8_t R, G, B, A;
+            uint8_t R, G, B, A, state;
         };
     }
 
@@ -154,14 +154,27 @@ namespace Alternet::UI
 
     struct Color
     {
-        uint8_t R = 0, G = 0, B = 0, A = 0;
+    public:
+        uint8_t R, G, B, A;
+    private:
+        uint8_t state = 0;
+    public:
+        bool IsEmpty() const { return state == 0; }
 
-        operator Color_C() { return Color_C{ R, G, B, A }; }
+        Color() : R(0), G(0), B(0), A(0), state(0)
+        {
+        }
 
-        bool operator==(const Color& rhs) { return R == rhs.R && G == rhs.G && B == rhs.B && A == rhs.A; }
+        Color(const wxColor& c) : R(c.Red()), G(c.Green()), B(c.Blue()), A(c.Alpha()), state(1)
+        {
+        }
+
+        operator Color_C() { return Color_C{ R, G, B, A, state }; }
+
+        bool operator==(const Color& rhs) { return R == rhs.R && G == rhs.G && B == rhs.B && A == rhs.A && state == rhs.state; }
         bool operator!=(const struct Color& rhs) { return !(*this == rhs); }
 
-        operator wxColor() const { return wxColor(R, G, B, A); }
+        operator wxColor() const { return IsEmpty()? wxColor() : wxColor(R, G, B, A); }
     };
 
     inline wxWindow* getParkingWindow()

@@ -19,6 +19,10 @@ void SetVisible(bool value);
 
 bool GetIsMouseOver();
 
+
+Color GetBackgroundColor();
+void SetBackgroundColor(const Color& value);
+
 void SetMouseCapture(bool value);
 void AddChild(Control* control);
 void RemoveChild(Control* control);

@@ -1,6 +1,5 @@
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 
 namespace Alternet.UI
 {
@@ -98,7 +97,15 @@ namespace Alternet.UI
 
         public void Update()
         {
-            NativeControl?.Update();
+            var nativeControl = NativeControl;
+            if (nativeControl != null)
+                nativeControl.Update();
+            else
+            {
+                var parent = TryFindClosestParentWithNativeControl();
+                if (parent != null)
+                    parent.Update();
+            }
         }
 
         public virtual void OnPaint(DrawingContext drawingContext)
@@ -192,7 +199,7 @@ namespace Alternet.UI
             var nativeControl = NativeControl;
             if (nativeControl == null)
             {
-                nativeControl = FindClosestParentWithNativeControl()?.Handler.NativeControl;
+                nativeControl = TryFindClosestParentWithNativeControl()?.Handler.NativeControl;
                 // todo: visual offset for handleless controls
                 if (nativeControl == null)
                     throw new Exception(); // todo: maybe use parking window here?
@@ -228,8 +235,11 @@ namespace Alternet.UI
 
         protected virtual void OnAttach()
         {
+            ApplyBackgroundColor();
+
             Control.MarginChanged += Control_MarginChanged;
             Control.PaddingChanged += Control_PaddingChanged;
+            Control.BackgroundColorChanged += Control_BackgroundColorChanged;
 
             Control.Children.ItemInserted += Children_ItemInserted;
             Control.VisualChildren.ItemInserted += Children_ItemInserted;
@@ -242,6 +252,7 @@ namespace Alternet.UI
         {
             Control.MarginChanged -= Control_MarginChanged;
             Control.PaddingChanged -= Control_PaddingChanged;
+            Control.BackgroundColorChanged -= Control_BackgroundColorChanged;
 
             Control.Children.ItemInserted -= Children_ItemInserted;
             Control.VisualChildren.ItemInserted -= Children_ItemInserted;
@@ -293,19 +304,53 @@ namespace Alternet.UI
         {
         }
 
-        protected virtual void OnChildInserted(int index, Control control)
+        protected virtual void OnChildInserted(int childIndex, Control childControl)
         {
-            if (NativeControl != null && control.Handler.NativeControl != null)
-                NativeControl?.AddChild(control.Handler.NativeControl);
+            TryInsertNativeControl(childIndex, childControl);
         }
 
-        protected virtual void OnChildRemoved(int index, Control control)
+        protected virtual void OnChildRemoved(int childIndex, Control childControl)
         {
-            if (NativeControl != null && control.Handler.NativeControl != null)
-                NativeControl?.RemoveChild(control.Handler.NativeControl);
+            TryRemoveNativeControl(childIndex, childControl);
         }
 
-        private Control? FindClosestParentWithNativeControl()
+        private void Control_BackgroundColorChanged(object? sender, EventArgs? e)
+        {
+            if (NativeControl != null)
+                ApplyBackgroundColor();
+            else
+                Update();
+        }
+
+        private void ApplyBackgroundColor()
+        {
+            if (NativeControl != null)
+                NativeControl.BackgroundColor = Control.BackgroundColor ?? Color.Empty;
+        }
+
+        private void TryInsertNativeControl(int childIndex, Control childControl)
+        {
+            // todo: use index
+
+            var childNativeControl = childControl.Handler.NativeControl;
+            if (childNativeControl == null)
+                return;
+
+            var parentNativeControl = NativeControl;
+            if (parentNativeControl == null)
+                parentNativeControl = TryFindClosestParentWithNativeControl()?.Handler.NativeControl;
+
+            if (parentNativeControl != null)
+                parentNativeControl.AddChild(childNativeControl);
+        }
+
+        private void TryRemoveNativeControl(int childIndex, Control childControl)
+        {
+            if (NativeControl != null && childControl.Handler.NativeControl != null)
+                NativeControl?.RemoveChild(childControl.Handler.NativeControl);
+        }
+
+        private Control? TryFindClosestParentWithNativeControl()
         {
             var control = Control;
             if (control.Handler.NativeControl != null)

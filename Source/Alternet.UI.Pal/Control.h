@@ -31,7 +31,7 @@ namespace Alternet::UI
         enum class ControlFlags
         {
             None = 0,
-            Visible = 1 << 0
+            Visible = 1 << 0,
         };
 
         wxWindow* _wxWindow = nullptr;
@@ -40,10 +40,14 @@ namespace Alternet::UI
 
         DelayedFlags<Control, ControlFlags> _flags;
         DelayedValue<Control, RectangleF> _bounds;
+        DelayedValue<Control, Color> _backgroundColor;
         DelayedValues _delayedValues;
 
         bool RetrieveVisible();
         void ApplyVisible(bool value);
+
+        Color RetrieveBackgroundColor();
+        void ApplyBackgroundColor(const Color& value);
 
         RectangleF RetrieveBounds();
         void ApplyBounds(const RectangleF& value);

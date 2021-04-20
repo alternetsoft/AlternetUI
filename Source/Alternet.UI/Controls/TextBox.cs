@@ -62,5 +62,13 @@ namespace Alternet.UI
         protected virtual void OnTextChanged(EventArgs e)
         {
         }
+
+        protected override ControlHandler CreateHandler()
+        {
+            if (EditControlOnly)
+                return new NativeTextBoxHandler();
+
+            return base.CreateHandler();
+        }
     }
 }

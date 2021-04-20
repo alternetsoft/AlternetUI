@@ -38,16 +38,16 @@ namespace ApiGenerator.Native
 
         public string GetIncludes() => string.Join("\r\n", includes.ToArray());
 
-        public abstract string GetTypeName(Type type, TypeUsage usage);
+        public abstract string GetTypeName(ContextualType type, TypeUsage usage);
 
-        protected virtual string? TryGetPrimitiveType(Type type) => primitiveTypes.TryGetValue(type, out var result) ? result : null;
+        protected virtual string? TryGetPrimitiveType(ContextualType type) => primitiveTypes.TryGetValue(type, out var result) ? result : null;
 
         protected void AddIncludedFile(string fileNameWithoutExtension) => includes.Add($"#include \"{fileNameWithoutExtension}.h\"");
     }
 
     internal class CppTypes : Types
     {
-        public override string GetTypeName(Type type, TypeUsage usage)
+        public override string GetTypeName(ContextualType type, TypeUsage usage)
         {
             string GetTypeBase()
             {
@@ -62,13 +62,13 @@ namespace ApiGenerator.Native
                 return name;
             }
 
-            if (type.ToContextualType().Nullability == Nullability.Nullable)
-                throw new NotImplementedException("std::optional");
+            //if (type.Nullability == Nullability.Nullable)
+            //    throw new NotImplementedException("std::optional");
 
             return GetTypeBase();
         }
 
-        protected override string? TryGetPrimitiveType(Type type)
+        protected override string? TryGetPrimitiveType(ContextualType type)
         {
             var t = base.TryGetPrimitiveType(type);
             if (t != null)
@@ -101,7 +101,7 @@ namespace ApiGenerator.Native
 
     internal class CTypes : Types
     {
-        public override string GetTypeName(Type type, TypeUsage usage)
+        public override string GetTypeName(ContextualType type, TypeUsage usage)
         {
             string GetTypeBase()
             {
@@ -119,7 +119,7 @@ namespace ApiGenerator.Native
             return GetTypeBase();
         }
 
-        protected virtual string GetComplexTypeName(Type type, TypeUsage usage)
+        protected virtual string GetComplexTypeName(ContextualType type, TypeUsage usage)
         {
             var name = TypeProvider.GetNativeName(type);
             if (TypeProvider.IsStruct(type))
@@ -138,7 +138,7 @@ namespace ApiGenerator.Native
             return name + "*";
         }
 
-        protected override string? TryGetPrimitiveType(Type type)
+        protected override string? TryGetPrimitiveType(ContextualType type)
         {
             var t = base.TryGetPrimitiveType(type);
             if (t != null)

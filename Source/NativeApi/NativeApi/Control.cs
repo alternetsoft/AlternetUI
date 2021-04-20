@@ -35,6 +35,8 @@ namespace NativeApi.Api
 
         public void Update() => throw new Exception();
 
+        public Color BackgroundColor { get; set; }
+
         public virtual SizeF GetPreferredSize(SizeF availableSize) => throw new Exception();
 
         public DrawingContext OpenPaintDrawingContext() => throw new Exception();

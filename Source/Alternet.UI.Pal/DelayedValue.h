@@ -35,10 +35,9 @@ namespace Alternet::UI
 
         void Set(const TValue& value)
         {
+            SetDelayed(value);
             if (IsNotDelayed())
                 ApplyValue(value);
-            else
-                SetDelayed(value);
         }
 
         TValue Get()

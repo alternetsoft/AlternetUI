@@ -15,6 +15,7 @@ namespace Alternet.UI
         private Thickness margin;
         private Thickness padding;
         private ControlHandler? handler;
+        private Color? backgroundColor;
 
         public Control()
         {
@@ -23,8 +24,6 @@ namespace Alternet.UI
 
             Children.ItemRemoved += Children_ItemRemoved;
             VisualChildren.ItemRemoved += VisualChildren_ItemRemoved;
-
-            CreateAndAttachHandler();
         }
 
         public DrawingContext CreateDrawingContext() => Handler.CreateDrawingContext();
@@ -42,8 +41,16 @@ namespace Alternet.UI
         public event EventHandler? PaddingChanged;
 
         public ControlHandler Handler
-        { 
-            get => handler ?? throw new InvalidOperationException();
+        {
+            get
+            {
+                if (handler == null)
+                {
+                    CreateAndAttachHandler();
+                }
+
+                return handler ?? throw new InvalidOperationException();
+            }
         }
 
         public bool IsDisposed { get; private set; }
@@ -111,6 +118,22 @@ namespace Alternet.UI
                 PaddingChanged?.Invoke(this, EventArgs.Empty);
             }
         }
+
+        public Color? BackgroundColor
+        {
+            // todo: change to brush?
+            get => backgroundColor;
+            set
+            {
+                if (backgroundColor == value)
+                    return;
+
+                backgroundColor = value;
+                BackgroundColorChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public event EventHandler? BackgroundColorChanged;
 
         public void Update() => Handler.Update();
 

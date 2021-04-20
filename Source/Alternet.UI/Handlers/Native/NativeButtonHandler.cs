@@ -12,6 +12,9 @@ namespace Alternet.UI
         protected override void OnAttach()
         {
             base.OnAttach();
+
+            NativeControl.Text = Control.Text;
+
             Control.TextChanged += Control_TextChanged;
             NativeControl.Click += NativeControl_Click;
         }

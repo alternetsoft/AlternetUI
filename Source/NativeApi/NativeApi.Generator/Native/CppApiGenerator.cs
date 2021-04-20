@@ -1,4 +1,5 @@
 ﻿using ApiGenerator.Api;
+using Namotion.Reflection;
 using System;
 using System.CodeDom.Compiler;
 using System.IO;
@@ -35,7 +36,7 @@ namespace ApiGenerator.Native
             WriteDestructor(w, types, type);
 
             w.WriteLine("private:");
-            w.WriteLine($"BYREF_ONLY({types.GetTypeName(type, TypeUsage.Static)});");
+            w.WriteLine($"BYREF_ONLY({types.GetTypeName(type.ToContextualType(), TypeUsage.Static)});");
 
             return codeWriter.ToString();
         }
@@ -49,10 +50,10 @@ namespace ApiGenerator.Native
             w.WriteLine();
             
             if (property.GetMethod != null)
-                w.WriteLine($"{modifiers}{types.GetTypeName(property.PropertyType, TypeUsage.Return)} Get{name}();");
+                w.WriteLine($"{modifiers}{types.GetTypeName(property.ToContextualProperty(), TypeUsage.Return)} Get{name}();");
             
             if (property.SetMethod != null)
-                w.WriteLine($"{modifiers}void Set{name}({types.GetTypeName(property.PropertyType, TypeUsage.Argument)} value);");
+                w.WriteLine($"{modifiers}void Set{name}({types.GetTypeName(property.ToContextualProperty(), TypeUsage.Argument)} value);");
             w.WriteLine();
         }
 
@@ -69,7 +70,7 @@ namespace ApiGenerator.Native
         private static void WriteMethod(IndentedTextWriter w, MethodInfo method, Types types)
         {
             var name = method.Name;
-            var returnTypeName = types.GetTypeName(method.ReturnType, TypeUsage.Return);
+            var returnTypeName = types.GetTypeName(method.ReturnParameter.ToContextualParameter(), TypeUsage.Return);
 
             var signatureParameters = new StringBuilder();
             var parameters = method.GetParameters();
@@ -77,7 +78,7 @@ namespace ApiGenerator.Native
             {
                 var parameter = parameters[i];
 
-                var parameterType = types.GetTypeName(parameter.ParameterType, TypeUsage.Argument);
+                var parameterType = types.GetTypeName(parameter.ToContextualParameter(), TypeUsage.Argument);
                 signatureParameters.Append(parameterType + " " + parameter.Name);
 
                 if (i < parameters.Length - 1)
@@ -92,7 +93,7 @@ namespace ApiGenerator.Native
             if (events.Length == 0)
                 return;
 
-            var declaringTypeName = types.GetTypeName(events[0].DeclaringType!, TypeUsage.Static);
+            var declaringTypeName = types.GetTypeName(events[0].DeclaringType!.ToContextualType(), TypeUsage.Static);
             w.WriteLine("public:");
             w.WriteLine($"enum class {declaringTypeName}Event");
 
@@ -120,7 +121,7 @@ namespace ApiGenerator.Native
 
         private static void WriteConstructor(IndentedTextWriter w, Types types, Type type)
         {
-            var declaringTypeName = types.GetTypeName(type, TypeUsage.Static);
+            var declaringTypeName = types.GetTypeName(type.ToContextualType(), TypeUsage.Static);
 
             w.Write($"{declaringTypeName}()");
             if (MemberProvider.GetConstructorVisibility(type) == MemberVisibility.Private)
@@ -131,7 +132,7 @@ namespace ApiGenerator.Native
 
         private static void WriteDestructor(IndentedTextWriter w, Types types, Type type)
         {
-            var declaringTypeName = types.GetTypeName(type, TypeUsage.Static);
+            var declaringTypeName = types.GetTypeName(type.ToContextualType(), TypeUsage.Static);
 
             w.Write($"virtual ~{declaringTypeName}()");
             if (MemberProvider.GetDestructorVisibility(type) == MemberVisibility.Private)

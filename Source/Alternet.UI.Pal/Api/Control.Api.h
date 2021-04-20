@@ -53,6 +53,16 @@ ALTERNET_UI_API c_bool Control_GetIsMouseOver(Control* obj)
     return obj->GetIsMouseOver();
 }
 
+ALTERNET_UI_API Color_C Control_GetBackgroundColor(Control* obj)
+{
+    return obj->GetBackgroundColor();
+}
+
+ALTERNET_UI_API void Control_SetBackgroundColor(Control* obj, Color value)
+{
+    obj->SetBackgroundColor(value);
+}
+
 ALTERNET_UI_API void Control_SetMouseCapture(Control* obj, c_bool value)
 {
     obj->SetMouseCapture(value);
