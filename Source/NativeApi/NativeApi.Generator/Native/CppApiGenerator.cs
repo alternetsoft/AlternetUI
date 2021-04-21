@@ -106,14 +106,14 @@ namespace ApiGenerator.Native
             w.Indent--;
             w.WriteLine("};");
 
-            w.WriteLine($"typedef void(*{declaringTypeName}EventCallbackType)({declaringTypeName}* obj, {declaringTypeName}Event event);");
+            w.WriteLine($"typedef void* (*{declaringTypeName}EventCallbackType)({declaringTypeName}* obj, {declaringTypeName}Event event, void* param);");
 
             w.Write($"static void SetEventCallback({declaringTypeName}EventCallbackType value)");
             w.WriteLine(" { eventCallback = value; }");
 
             w.WriteLine("protected:");
-            w.Write($"void RaiseEvent({declaringTypeName}Event event)");
-            w.WriteLine(" { if (eventCallback != nullptr) eventCallback(this, event); }");
+            w.Write($"bool RaiseEvent({declaringTypeName}Event event)");
+            w.WriteLine(" { if (eventCallback != nullptr) return eventCallback(this, event, nullptr) != nullptr; else return false; }");
 
             w.WriteLine("private:");
             w.WriteLine($"inline static {declaringTypeName}EventCallbackType eventCallback = nullptr;");

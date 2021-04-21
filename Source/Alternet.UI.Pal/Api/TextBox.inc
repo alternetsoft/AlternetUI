@@ -13,10 +13,10 @@ enum class TextBoxEvent
 {
     TextChanged,
 };
-typedef void(*TextBoxEventCallbackType)(TextBox* obj, TextBoxEvent event);
+typedef void* (*TextBoxEventCallbackType)(TextBox* obj, TextBoxEvent event, void* param);
 static void SetEventCallback(TextBoxEventCallbackType value) { eventCallback = value; }
 protected:
-void RaiseEvent(TextBoxEvent event) { if (eventCallback != nullptr) eventCallback(this, event); }
+bool RaiseEvent(TextBoxEvent event) { if (eventCallback != nullptr) return eventCallback(this, event, nullptr) != nullptr; else return false; }
 private:
 inline static TextBoxEventCallbackType eventCallback = nullptr;
 public:

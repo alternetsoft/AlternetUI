@@ -22,3 +22,8 @@ ALTERNET_UI_API void Window_SetTitle(Window* obj, const char16_t* value)
     obj->SetTitle(value);
 }
 
+ALTERNET_UI_API void Window_SetEventCallback(Window::WindowEventCallbackType callback)
+{
+    Window::SetEventCallback(callback);
+}
+

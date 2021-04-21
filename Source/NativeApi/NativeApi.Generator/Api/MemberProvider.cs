@@ -55,5 +55,8 @@ namespace ApiGenerator.Api
             EventInfo x => x.GetAddMethod()?.IsStatic ?? false,
             _ => throw new Exception(),
         };
+
+        public static NativeEventAttribute GetEventAttribute(EventInfo e) =>
+            e.GetCustomAttribute<NativeEventAttribute>() ?? new NativeEventAttribute();
     }
 }

@@ -9,10 +9,10 @@ enum class ButtonEvent
 {
     Click,
 };
-typedef void(*ButtonEventCallbackType)(Button* obj, ButtonEvent event);
+typedef void* (*ButtonEventCallbackType)(Button* obj, ButtonEvent event, void* param);
 static void SetEventCallback(ButtonEventCallbackType value) { eventCallback = value; }
 protected:
-void RaiseEvent(ButtonEvent event) { if (eventCallback != nullptr) eventCallback(this, event); }
+bool RaiseEvent(ButtonEvent event) { if (eventCallback != nullptr) return eventCallback(this, event, nullptr) != nullptr; else return false; }
 private:
 inline static ButtonEventCallbackType eventCallback = nullptr;
 public:

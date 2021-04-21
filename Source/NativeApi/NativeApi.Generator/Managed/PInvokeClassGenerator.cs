@@ -127,7 +127,7 @@ namespace ApiGenerator.Managed
             var declaringTypeName = TypeProvider.GetNativeName(events[0].DeclaringType!);
 
             w.WriteLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl)]");
-            w.WriteLine($"public delegate void {declaringTypeName}EventCallbackType(IntPtr obj, {declaringTypeName}Event e);");
+            w.WriteLine($"public delegate IntPtr {declaringTypeName}EventCallbackType(IntPtr obj, {declaringTypeName}Event e, IntPtr param);");
 
             w.WriteLine();
 

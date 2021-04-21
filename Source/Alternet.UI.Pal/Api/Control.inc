@@ -44,10 +44,10 @@ enum class ControlEvent
     MouseLeftButtonUp,
     MouseClick,
 };
-typedef void(*ControlEventCallbackType)(Control* obj, ControlEvent event);
+typedef void* (*ControlEventCallbackType)(Control* obj, ControlEvent event, void* param);
 static void SetEventCallback(ControlEventCallbackType value) { eventCallback = value; }
 protected:
-void RaiseEvent(ControlEvent event) { if (eventCallback != nullptr) eventCallback(this, event); }
+bool RaiseEvent(ControlEvent event) { if (eventCallback != nullptr) return eventCallback(this, event, nullptr) != nullptr; else return false; }
 private:
 inline static ControlEventCallbackType eventCallback = nullptr;
 protected:

@@ -23,6 +23,7 @@ namespace ApiGenerator.Managed
             w.WriteLine(@"
 using System;
 using System.Runtime.InteropServices;
+using System.ComponentModel;
 using System.Security;");
 
             w.WriteLine("namespace Alternet.UI.Native");
@@ -241,12 +242,12 @@ using System.Security;");
                 w.WriteLine("if (!eventCallbackGCHandle.IsAllocated)");
                 using (new BlockIndent(w))
                 {
-                    w.WriteLine($"var sink = new NativeApi.{declaringTypeName}EventCallbackType((obj, e) =>");
+                    w.WriteLine($"var sink = new NativeApi.{declaringTypeName}EventCallbackType((obj, e, param) =>");
                     using (new BlockIndent(w))
                     {
                         w.WriteLine($"var w = {string.Format(GetNativeToManagedFormatString(declaringType.ToContextualType()), "obj")};");
-                        w.WriteLine("if (w == null) return;");
-                        w.WriteLine("w.OnEvent(e);");
+                        w.WriteLine("if (w == null) return IntPtr.Zero;");
+                        w.WriteLine("return w.OnEvent(e);");
                     }
                     w.WriteLine(");");
 
@@ -257,14 +258,29 @@ using System.Security;");
 
             w.WriteLine();
 
-            w.WriteLine($"void OnEvent(NativeApi.{declaringTypeName}Event e)");
+            w.WriteLine($"IntPtr OnEvent(NativeApi.{declaringTypeName}Event e)");
             using (new BlockIndent(w))
             {
                 w.WriteLine("switch (e)");
                 using (new BlockIndent(w))
                 {
                     foreach(var e in events)
-                        w.WriteLine($"case NativeApi.{declaringTypeName}Event.{e.Name}: {e.Name}?.Invoke(this, EventArgs.Empty); break;");
+                    {
+                        w.WriteLine($"case NativeApi.{declaringTypeName}Event.{e.Name}:");
+
+                        var attribute = MemberProvider.GetEventAttribute(e);
+                        if (attribute.Cancellable)
+                        {
+                            using (new BlockIndent(w))
+                            {
+                                w.WriteLine($"var cea = new CancelEventArgs();");
+                                w.WriteLine($"{e.Name}?.Invoke(this, cea);");
+                                w.WriteLine($"return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;");
+                            }
+                        }
+                        else
+                            w.WriteLine($"{e.Name}?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;");
+                    }
 
                     w.WriteLine($"default: throw new Exception(\"Unexpected {declaringTypeName}Event value: \" + e);");
                 }
@@ -273,7 +289,11 @@ using System.Security;");
             w.WriteLine();
 
             foreach (var e in events)
-                w.WriteLine($"public event EventHandler? {e.Name};");
+            {
+                var attribute = MemberProvider.GetEventAttribute(e);
+                var argsType = attribute.Cancellable ? "EventHandler<CancelEventArgs>" : "EventHandler";
+                w.WriteLine($"public event {argsType}? {e.Name};");
+            }
         }
 
         static string GetManagedToNativeArgument(Type type, string name)
