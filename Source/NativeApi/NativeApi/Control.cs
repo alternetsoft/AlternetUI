@@ -21,6 +21,8 @@ namespace NativeApi.Api
 
         public void SetMouseCapture(bool value) => throw new Exception();
 
+        public Control? Parent { get; }
+
         public SizeF Size { get; set; }
 
         public PointF Location { get; set; }

@@ -1,6 +1,9 @@
 // Auto generated code, DO NOT MODIFY MANUALLY. Copyright AlterNET, 2021.
 public:
 
+Control* GetParent();
+
+
 SizeF GetSize();
 void SetSize(const SizeF& value);
 

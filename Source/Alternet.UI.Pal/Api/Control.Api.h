@@ -8,6 +8,11 @@
 
 using namespace Alternet::UI;
 
+ALTERNET_UI_API Control* Control_GetParent(Control* obj)
+{
+    return obj->GetParent();
+}
+
 ALTERNET_UI_API SizeF_C Control_GetSize(Control* obj)
 {
     return obj->GetSize();

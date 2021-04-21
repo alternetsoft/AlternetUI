@@ -296,8 +296,6 @@ namespace Alternet::UI
         {
             if (!control->IsWxWindowCreated())
                 control->CreateWxWindow();
-            else
-                assert(false);
         }
     }
 

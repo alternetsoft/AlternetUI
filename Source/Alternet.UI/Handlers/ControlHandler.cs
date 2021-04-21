@@ -288,6 +288,13 @@ namespace Alternet.UI
             if (NativeControl == null)
                 throw new InvalidOperationException();
 
+            var parent = Control.Parent;
+            if (parent != null)
+            {
+                parent.Handler.TryInsertNativeControl(parent.Children.IndexOf(Control), Control); // todo: sort out indexof in case of visual children.
+                parent.PerformLayout();
+            }
+
             NativeControl.Paint += NativeControl_Paint;
             NativeControl.MouseEnter += NativeControl_MouseEnter;
             NativeControl.MouseLeave += NativeControl_MouseLeave;
@@ -356,6 +363,9 @@ namespace Alternet.UI
 
             var childNativeControl = childControl.Handler.NativeControl;
             if (childNativeControl == null)
+                return;
+
+            if (childNativeControl.Parent != null)
                 return;
 
             var parentNativeControl = NativeControl;

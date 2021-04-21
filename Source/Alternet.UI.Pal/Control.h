@@ -12,8 +12,6 @@ namespace Alternet::UI
     public:
         virtual wxWindow* CreateWxWindowCore(wxWindow* parent) = 0;
 
-        Control* GetParent();
-
         wxWindow* GetWxWindow();
         bool IsWxWindowCreated();
 

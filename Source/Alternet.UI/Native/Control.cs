@@ -16,6 +16,16 @@ namespace Alternet.UI.Native
         {
         }
         
+        public Control? Parent
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeObject.GetFromNativePointer<Control>(NativeApi.Control_GetParent(NativePointer), null);
+            }
+            
+        }
+        
         public System.Drawing.SizeF Size
         {
             get
@@ -205,6 +215,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetEventCallback(ControlEventCallbackType callback);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Control_GetParent(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.SizeF Control_GetSize(IntPtr obj);

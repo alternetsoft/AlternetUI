@@ -11,6 +11,30 @@ namespace HelloWorldSample
 
         static Application? application;
 
+        public static void Main1(string[] args)
+        {
+            application = new Application
+            {
+                VisualTheme = StockVisualThemes.GenericLight
+            };
+
+            var window = new Window();
+            window.Title = "Alternet UI";
+
+            var systemNativeButton = new Button
+            {
+                Text = "System Native",
+                Margin = new Thickness(0, 0, 0, 5)
+            };
+            systemNativeButton.Click += (o, e) => SetVisualTheme(StockVisualThemes.Native);
+            window.Children.Add(systemNativeButton);
+
+            application.Run(window);
+
+            window.Dispose();
+            application.Dispose();
+        }
+
         [STAThread]
         public static void Main(string[] args)
         {
