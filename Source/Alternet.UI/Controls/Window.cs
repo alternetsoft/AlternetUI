@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace Alternet.UI
 {
@@ -10,8 +12,11 @@ namespace Alternet.UI
 
         public Window()
         {
+            Application.Current.RegisterWindow(this);
             Bounds = new RectangleF(100, 100, 400, 400);
         }
+
+        // todo: unregister window on close.
 
         public event EventHandler? TitleChanged;
 
@@ -70,6 +75,27 @@ namespace Alternet.UI
             {
                 Handler.Bounds = value;
             }
+        }
+
+        internal void RecreateAllHandlers()
+        {
+            void GetAllChildren(Control control, List<Control> result)
+            {
+                foreach (var child in control.Children)
+                    GetAllChildren(child, result);
+
+                if (control != this)
+                    result.Add(control);
+            }
+
+            var children = new List<Control>();
+            GetAllChildren(this, children);
+
+            foreach (var child in children)
+                child.DetachHandler();
+
+            foreach (var child in children.AsEnumerable().Reverse())
+                child.EnsureHandlerCreated();
         }
 
         protected override ControlHandler CreateHandler() => new NativeWindowHandler();

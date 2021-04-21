@@ -35,6 +35,11 @@ namespace Alternet.UI
 
             Control.TextChanged += Control_TextChanged;
 
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            NativeControl.MouseClick += NativeControl_MouseClick;
+
             border = new Border
             {
                 Padding = new Thickness(5)
@@ -49,9 +54,20 @@ namespace Alternet.UI
             UpdateVisual();
         }
 
+        private void NativeControl_MouseClick(object? sender, EventArgs? e)
+        {
+            if (IsMouseOver)
+                Control.InvokeClick(EventArgs.Empty);
+        }
+
         protected override void OnDetach()
         {
             base.OnDetach();
+
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            NativeControl.MouseClick -= NativeControl_MouseClick;
 
             if (border == null)
                 throw new InvalidOperationException();
@@ -90,8 +106,6 @@ namespace Alternet.UI
             ReleaseMouseCapture();
             base.OnMouseLeftButtonUp();
             IsPressed = false;
-            if (IsMouseOver)
-                Control.InvokeClick(EventArgs.Empty);
         }
 
         private void UpdateVisual()

@@ -20,6 +20,8 @@ namespace Alternet.UI
             get => control ?? throw new InvalidOperationException();
         }
 
+        public bool IsAttached => control != null;
+
         public virtual RectangleF Bounds
         {
             get => NativeControl != null ? NativeControl.Bounds : bounds;
@@ -92,6 +94,13 @@ namespace Alternet.UI
         public void Detach()
         {
             OnDetach();
+
+            if (nativeControl != null)
+            {
+                nativeControl.Dispose();
+                nativeControl = null;
+            }
+
             control = null;
         }
 
@@ -409,6 +418,8 @@ namespace Alternet.UI
             while (true)
             {
                 handler.OnMouseLeftButtonDown();
+                if (!handler.IsAttached)
+                    break;
                 var parent = handler.Control.Parent;
                 if (parent == null)
                     break;
@@ -422,6 +433,8 @@ namespace Alternet.UI
             while (true)
             {
                 handler.OnMouseLeftButtonUp();
+                if (!handler.IsAttached)
+                    break;
                 var parent = handler.Control.Parent;
                 if (parent == null)
                     break;

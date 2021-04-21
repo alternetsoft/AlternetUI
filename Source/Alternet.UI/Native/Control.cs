@@ -171,6 +171,7 @@ namespace Alternet.UI.Native
                 case NativeApi.ControlEvent.MouseMove: MouseMove?.Invoke(this, EventArgs.Empty); break;
                 case NativeApi.ControlEvent.MouseLeftButtonDown: MouseLeftButtonDown?.Invoke(this, EventArgs.Empty); break;
                 case NativeApi.ControlEvent.MouseLeftButtonUp: MouseLeftButtonUp?.Invoke(this, EventArgs.Empty); break;
+                case NativeApi.ControlEvent.MouseClick: MouseClick?.Invoke(this, EventArgs.Empty); break;
                 default: throw new Exception("Unexpected ControlEvent value: " + e);
             }
         }
@@ -181,6 +182,7 @@ namespace Alternet.UI.Native
         public event EventHandler? MouseMove;
         public event EventHandler? MouseLeftButtonDown;
         public event EventHandler? MouseLeftButtonUp;
+        public event EventHandler? MouseClick;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -198,6 +200,7 @@ namespace Alternet.UI.Native
                 MouseMove,
                 MouseLeftButtonDown,
                 MouseLeftButtonUp,
+                MouseClick,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]

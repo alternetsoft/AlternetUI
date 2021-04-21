@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-    <TargetFrameworks>net40;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net45;netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
@@ -42,7 +42,7 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'net40'">
+  <ItemGroup Condition="$(DefineConstants.Contains(';NETCOREAPP'))">
     <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
   </ItemGroup>
 
@@ -52,9 +52,19 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX')) AND '$(TargetFramework)' != 'net40'">
+  <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX')) AND $(DefineConstants.Contains(';NETCOREAPP'))">
     <!-- libgdiplus native binaries. See https://stackoverflow.com/a/47208816/71689 -->
     <PackageReference Include="runtime.osx.10.10-x64.CoreCompat.System.Drawing" Version="5.8.64" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(DefineConstants.Contains(';NETCOREAPP'))">
+    <PackageReference Include="System.Runtime">
+      <Version>4.3.1</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="$(DefineConstants.Contains(';NETFRAMEWORK'))">
+    <Reference Include="System.Runtime"/>
   </ItemGroup>
 
 </Project>

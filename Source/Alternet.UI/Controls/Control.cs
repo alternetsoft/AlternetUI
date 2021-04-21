@@ -54,12 +54,16 @@ namespace Alternet.UI
         {
             get
             {
-                if (handler == null)
-                {
-                    CreateAndAttachHandler();
-                }
-
+                EnsureHandlerCreated();
                 return handler ?? throw new InvalidOperationException();
+            }
+        }
+
+        protected internal void EnsureHandlerCreated()
+        {
+            if (handler == null)
+            {
+                CreateAndAttachHandler();
             }
         }
 
@@ -181,6 +185,14 @@ namespace Alternet.UI
             OnPaint(e);
         }
 
+        protected void RecreateHandler()
+        {
+            if (handler != null)
+                DetachHandler();
+
+            Update();
+        }
+
         protected IControlHandlerFactory GetEffectiveControlHandlerHactory() => ControlHandlerFactory ?? Application.Current.VisualTheme.ControlHandlerFactory;
 
         protected virtual ControlHandler CreateHandler() => GetEffectiveControlHandlerHactory().CreateControlHandler(this);
@@ -197,13 +209,7 @@ namespace Alternet.UI
                         child.Dispose();
                     Children.Clear();
                     VisualChildren.Clear();
-
-                    if (handler == null)
-                        throw new InvalidOperationException();
-                    var nativeControl = handler.NativeControl; // todo
-                    handler.Detach();
-                    nativeControl?.Dispose();
-                    handler = null;
+                    DetachHandler();
                 }
 
                 IsDisposed = true;
@@ -227,6 +233,14 @@ namespace Alternet.UI
         protected virtual void OnPaint(PaintEventArgs e)
         {
             Paint?.Invoke(this, e);
+        }
+
+        protected internal void DetachHandler()
+        {
+            if (handler == null)
+                throw new InvalidOperationException();
+            handler.Detach();
+            handler = null;
         }
 
         private void CreateAndAttachHandler()

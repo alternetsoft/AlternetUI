@@ -17,6 +17,8 @@ namespace NativeApi.Api
 
         public event EventHandler? MouseLeftButtonUp { add => throw new Exception(); remove => throw new Exception(); }
 
+        public event EventHandler? MouseClick { add => throw new Exception(); remove => throw new Exception(); }
+
         public void SetMouseCapture(bool value) => throw new Exception();
 
         public SizeF Size { get; set; }

@@ -18,8 +18,19 @@ namespace Alternet::UI
 
     Control::~Control()
     {
-        //if (_wxWindow != nullptr)
-        //    _wxWindow->Destroy();
+        if (_wxWindow != nullptr)
+        {
+            _wxWindow->Unbind(wxEVT_PAINT, &Control::OnPaint, this);
+            _wxWindow->Unbind(wxEVT_MOTION, &Control::OnMouseMove, this);
+            _wxWindow->Unbind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
+            _wxWindow->Unbind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
+            _wxWindow->Unbind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
+            _wxWindow->Unbind(wxEVT_LEFT_DOWN, &Control::OnMouseLeftButtonDown, this);
+            _wxWindow->Unbind(wxEVT_LEFT_UP, &Control::OnMouseLeftButtonUp, this);
+
+            _wxWindow->Destroy();
+            _wxWindow = nullptr;
+        }
     }
 
     DrawingContext* Control::OpenPaintDrawingContext()
@@ -60,7 +71,6 @@ namespace Alternet::UI
         _wxWindow = CreateWxWindowCore(parentingWxWindow);
 
         _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
-
         _wxWindow->Bind(wxEVT_MOTION, &Control::OnMouseMove, this);
         _wxWindow->Bind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
         _wxWindow->Bind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
@@ -232,6 +242,7 @@ namespace Alternet::UI
     {
         event.Skip();
         RaiseEvent(ControlEvent::MouseLeftButtonUp);
+        _wxWindow->CallAfter([=]() {RaiseEvent(ControlEvent::MouseClick); });
     }
 
     SizeF Control::GetSize()

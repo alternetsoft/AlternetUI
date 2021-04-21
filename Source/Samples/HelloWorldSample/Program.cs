@@ -9,10 +9,12 @@ namespace HelloWorldSample
         private static MyCustomControl? customControl;
         private static TextBox? textBox;
 
+        static Application? application;
+
         [STAThread]
         public static void Main(string[] args)
         {
-            var app = new Application
+            application = new Application
             {
                 VisualTheme = StockVisualThemes.GenericLight
             };
@@ -39,7 +41,7 @@ namespace HelloWorldSample
 
             leftPanel.SuspendLayout();
 
-            CreateButtons(leftPanel);
+            CreateColorButtons(leftPanel);
 
             leftPanel.ResumeLayout();
 
@@ -61,23 +63,26 @@ namespace HelloWorldSample
             {
                 Width = 100,
                 Height = 100,
-                Margin = new Thickness(0, 10, 0, 0)
+                Margin = new Thickness(0, 10, 0, 10)
             };
 
             rightPanel.Children.Add(customControl);
+
+            CreateThemeButtons(rightPanel);
+
             rightPanel.ResumeLayout();
 
             window.ResumeLayout();
 
             textBox.Text = "Hello";
 
-            app.Run(window);
+            application.Run(window);
 
             window.Dispose();
-            app.Dispose();
+            application.Dispose();
         }
 
-        private static void CreateButtons(Control parent)
+        private static void CreateColorButtons(Control parent)
         {
             var redButton = new Button
             {
@@ -102,6 +107,32 @@ namespace HelloWorldSample
             };
             blueButton.Click += (o, e) => customControl?.SetColor(Color.LightBlue);
             parent.Children.Add(blueButton);
+        }
+
+        private static void CreateThemeButtons(Control parent)
+        {
+            var systemNativeButton = new Button
+            {
+                Text = "System Native",
+                Margin = new Thickness(0, 0, 0, 5)
+            };
+            systemNativeButton.Click += (o, e) => SetVisualTheme(StockVisualThemes.Native);
+            parent.Children.Add(systemNativeButton);
+
+            var genericLightButton = new Button
+            {
+                Text = "Generic Light",
+                Margin = new Thickness(0, 0, 0, 5)
+            };
+            genericLightButton.Click += (o, e) => SetVisualTheme(StockVisualThemes.GenericLight);
+            parent.Children.Add(genericLightButton);
+        }
+
+        private static void SetVisualTheme(VisualTheme theme)
+        {
+            if (application == null)
+                throw new Exception();
+            application.VisualTheme = theme;
         }
 
         private class MyCustomControl : Control
