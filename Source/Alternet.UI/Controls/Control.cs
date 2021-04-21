@@ -16,6 +16,7 @@ namespace Alternet.UI
         private Thickness padding;
         private ControlHandler? handler;
         private Color? backgroundColor;
+        private Color? borderColor;
 
         public Control()
         {
@@ -26,19 +27,28 @@ namespace Alternet.UI
             VisualChildren.ItemRemoved += VisualChildren_ItemRemoved;
         }
 
-        public DrawingContext CreateDrawingContext() => Handler.CreateDrawingContext();
-
-        private void CreateAndAttachHandler()
-        {
-            handler = CreateHandler();
-            handler.Attach(this);
-        }
+        public event EventHandler? BorderColorChanged;
 
         public event EventHandler<PaintEventArgs>? Paint;
 
         public event EventHandler? MarginChanged;
 
         public event EventHandler? PaddingChanged;
+
+        public event EventHandler? BackgroundColorChanged;
+
+        public Color? BorderColor
+        {
+            get => borderColor;
+            set
+            {
+                if (borderColor == value)
+                    return;
+
+                borderColor = value;
+                BorderColorChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         public ControlHandler Handler
         {
@@ -133,7 +143,11 @@ namespace Alternet.UI
             }
         }
 
-        public event EventHandler? BackgroundColorChanged;
+        public bool IsVisualChild { get; private set; }
+
+        private IControlHandlerFactory? ControlHandlerFactory { get; set; }
+
+        public DrawingContext CreateDrawingContext() => Handler.CreateDrawingContext();
 
         public void Update() => Handler.Update();
 
@@ -167,8 +181,6 @@ namespace Alternet.UI
             OnPaint(e);
         }
 
-        IControlHandlerFactory? ControlHandlerFactory { get; set; }
-
         protected IControlHandlerFactory GetEffectiveControlHandlerHactory() => ControlHandlerFactory ?? Application.Current.VisualTheme.ControlHandlerFactory;
 
         protected virtual ControlHandler CreateHandler() => GetEffectiveControlHandlerHactory().CreateControlHandler(this);
@@ -198,8 +210,6 @@ namespace Alternet.UI
             }
         }
 
-        public bool IsVisualChild { get; private set; }
-
         protected void CheckDisposed()
         {
             if (IsDisposed)
@@ -217,6 +227,12 @@ namespace Alternet.UI
         protected virtual void OnPaint(PaintEventArgs e)
         {
             Paint?.Invoke(this, e);
+        }
+
+        private void CreateAndAttachHandler()
+        {
+            handler = CreateHandler();
+            handler.Attach(this);
         }
 
         private void Children_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)

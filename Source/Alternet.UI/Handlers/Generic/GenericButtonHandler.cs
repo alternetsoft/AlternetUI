@@ -46,6 +46,7 @@ namespace Alternet.UI
             border.VisualChildren.Add(textBlock);
 
             UpdateText();
+            UpdateVisual();
         }
 
         protected override void OnDetach()

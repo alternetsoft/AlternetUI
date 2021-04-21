@@ -8,31 +8,17 @@ namespace Alternet.UI
 
         public override void OnPaint(DrawingContext drawingContext)
         {
-            drawingContext.FillRectangle(ChildrenBounds, Color.LightGray);
-            drawingContext.DrawRectangle(ChildrenBounds, Control.BorderColor);
+            if (Control.BackgroundColor != null)
+                drawingContext.FillRectangle(ChildrenBounds, Control.BackgroundColor.Value);
+            
+            if (Control.BorderColor != null)
+                drawingContext.DrawRectangle(ChildrenBounds, Control.BorderColor.Value);
         }
 
         public override SizeF GetPreferredSize(SizeF availableSize)
         {
             var size = GexChildrenMaxPreferredSize(availableSize);
             return size + new SizeF(2, 2); // todo: BorderThickness
-        }
-
-        protected override void OnAttach()
-        {
-            base.OnAttach();
-            Control.BorderColorChanged += Control_BorderColorChanged;
-        }
-
-        protected override void OnDetach()
-        {
-            Control.BorderColorChanged -= Control_BorderColorChanged;
-            base.OnDetach();
-        }
-
-        private void Control_BorderColorChanged(object? sender, System.EventArgs? e)
-        {
-            Update();
         }
     }
 }

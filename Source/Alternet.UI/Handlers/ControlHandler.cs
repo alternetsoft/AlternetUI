@@ -235,11 +235,13 @@ namespace Alternet.UI
 
         protected virtual void OnAttach()
         {
+            ApplyBorderColor();
             ApplyBackgroundColor();
 
             Control.MarginChanged += Control_MarginChanged;
             Control.PaddingChanged += Control_PaddingChanged;
             Control.BackgroundColorChanged += Control_BackgroundColorChanged;
+            Control.BorderColorChanged += Control_BorderColorChanged;
 
             Control.Children.ItemInserted += Children_ItemInserted;
             Control.VisualChildren.ItemInserted += Children_ItemInserted;
@@ -253,6 +255,7 @@ namespace Alternet.UI
             Control.MarginChanged -= Control_MarginChanged;
             Control.PaddingChanged -= Control_PaddingChanged;
             Control.BackgroundColorChanged -= Control_BackgroundColorChanged;
+            Control.BorderColorChanged -= Control_BorderColorChanged;
 
             Control.Children.ItemInserted -= Children_ItemInserted;
             Control.VisualChildren.ItemInserted -= Children_ItemInserted;
@@ -314,6 +317,11 @@ namespace Alternet.UI
             TryRemoveNativeControl(childIndex, childControl);
         }
 
+        private void Control_BorderColorChanged(object? sender, EventArgs? e)
+        {
+            ApplyBorderColor();
+        }
+
         private void Control_BackgroundColorChanged(object? sender, EventArgs? e)
         {
             ApplyBackgroundColor();
@@ -323,6 +331,13 @@ namespace Alternet.UI
         {
             if (NativeControl != null)
                 NativeControl.BackgroundColor = Control.BackgroundColor ?? Color.Empty;
+            Update();
+        }
+
+        private void ApplyBorderColor()
+        {
+            //if (NativeControl != null)
+            //    NativeControl.BackgroundColor = Control.BackgroundColor ?? Color.Empty;
             Update();
         }
 

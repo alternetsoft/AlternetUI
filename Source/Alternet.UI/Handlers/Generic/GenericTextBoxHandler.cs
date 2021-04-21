@@ -17,16 +17,19 @@ namespace Alternet.UI
 
             border = new Border
             {
-                Padding = new Thickness(5)
+                Padding = new Thickness(5),
+                BackgroundColor = Color.White
             };
 
             Control.VisualChildren.Add(border);
 
-            editTextBox = new TextBox { EditControlOnly = true, BackgroundColor = Color.LightGray };
+            editTextBox = new TextBox { EditControlOnly = true, BackgroundColor = Color.White };
             border.VisualChildren.Add(editTextBox);
 
             editTextBox.Text = Control.Text;
             editTextBox.TextChanged += EditTextBox_TextChanged;
+
+            UpdateVisual();
         }
 
         private void EditTextBox_TextChanged(object? sender, EventArgs? e)
