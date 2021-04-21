@@ -30,7 +30,8 @@ namespace Alternet::UI
     private:
 
         Frame* _frame = nullptr;
-
         wxPanel* _panel = nullptr;
+
+        void OnClose(wxCloseEvent& event);
     };
 }

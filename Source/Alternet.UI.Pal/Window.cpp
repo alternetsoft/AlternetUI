@@ -15,7 +15,11 @@ namespace Alternet::UI
 
     Window::~Window()
     {
-        //delete _frame;
+        _panel->Destroy();
+        _panel = nullptr;
+
+        _frame->Unbind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
+        _frame->Destroy();
         _frame = nullptr;
     }
 
@@ -32,6 +36,9 @@ namespace Alternet::UI
     wxWindow* Window::CreateWxWindowCore(wxWindow* parent)
     {
         _frame = new Frame();
+
+        _frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
+
         _panel = new wxPanel(_frame);
 
         return _frame;
@@ -50,5 +57,11 @@ namespace Alternet::UI
     void Window::ApplyBackgroundColor(const Color& value)
     {
         _panel->SetBackgroundColour(value);
+    }
+    
+    void Window::OnClose(wxCloseEvent& event)
+    {
+        if (RaiseEvent(WindowEvent::Closing))
+            event.Veto();
     }
 }

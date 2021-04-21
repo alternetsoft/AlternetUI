@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 
@@ -16,9 +17,25 @@ namespace Alternet.UI
             Bounds = new RectangleF(100, 100, 400, 400);
         }
 
-        // todo: unregister window on close.
-
         public event EventHandler? TitleChanged;
+
+        public event CancelEventHandler? Closing;
+
+        public event EventHandler? Closed;
+
+        protected virtual void OnClosing(CancelEventArgs e) => Closing?.Invoke(this, e);
+        protected virtual void OnClosed(EventArgs e) => Closed?.Invoke(this, e);
+
+        internal void InvokeClosing(CancelEventArgs e) => OnClosing(e);
+        internal void InvokeClosed(EventArgs e) => OnClosed(e);
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+                Application.Current.UnregisterWindow(this);
+        }
 
         public string? Title
         {
