@@ -172,7 +172,7 @@ namespace Alternet.UI
             Handler.PerformLayout();
         }
 
-        public SizeF GetPreferredSize(SizeF availableSize)
+        public virtual SizeF GetPreferredSize(SizeF availableSize)
         {
             return Handler.GetPreferredSize(availableSize);
         }

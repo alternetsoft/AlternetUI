@@ -105,8 +105,6 @@ namespace HelloWorldSample
 
             customDrawnControl = new CustomDrawnControl
             {
-                Width = 140,
-                Height = 100,
                 Margin = new Thickness(0, 10, 0, 10)
             };
 
@@ -131,8 +129,6 @@ namespace HelloWorldSample
 
             customCompositeControl = new CustomCompositeControl
             {
-                Width = 140,
-                Height = 100,
                 Margin = new Thickness(0, 10, 0, 10)
             };
 
