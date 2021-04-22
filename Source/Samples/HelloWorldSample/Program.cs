@@ -1,5 +1,6 @@
 ﻿using Alternet.UI;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 
 namespace HelloWorldSample
@@ -12,29 +13,7 @@ namespace HelloWorldSample
 
         private static Application? application;
 
-        public static void Main1(string[] args)
-        {
-            application = new Application
-            {
-                VisualTheme = StockVisualThemes.GenericLight
-            };
-
-            var window = new Window();
-            window.Title = "Alternet UI";
-
-            var systemNativeButton = new Button
-            {
-                Text = "System Native",
-                Margin = new Thickness(0, 0, 0, 5)
-            };
-            systemNativeButton.Click += (o, e) => SetVisualTheme(StockVisualThemes.Native);
-            window.Children.Add(systemNativeButton);
-
-            application.Run(window);
-
-            window.Dispose();
-            application.Dispose();
-        }
+        private static CheckBox? allowCloseWindowCheckBox;
 
         [STAThread]
         public static void Main(string[] args)
@@ -44,8 +23,13 @@ namespace HelloWorldSample
                 VisualTheme = StockVisualThemes.GenericLight
             };
 
-            var window = new Window();
-            window.Title = "Alternet UI";
+            var window = new Window
+            {
+                Size = new SizeF(600, 400),
+                Title = "Alternet UI"
+            };
+
+            window.Closing += Window_Closing;
 
             var mainPanel = new StackPanel
             {
@@ -70,21 +54,16 @@ namespace HelloWorldSample
             application.Dispose();
         }
 
-        private static void CreateLeftPanel(StackPanel parent)
+        private static void Window_Closing(object? sender, CancelEventArgs? e)
         {
-            var leftPanel = new StackPanel
+            if (e is null)
+                throw new ArgumentNullException(nameof(e));
+
+            if (!allowCloseWindowCheckBox!.IsChecked)
             {
-                Orientation = StackPanelOrientation.Vertical,
-                Width = 100
-            };
-
-            parent.Children.Add(leftPanel);
-
-            leftPanel.SuspendLayout();
-
-            CreateColorButtons(leftPanel);
-
-            leftPanel.ResumeLayout();
+                MessageBox.Show("Closing the window is not allowed. Clear the check box to allow.", "Closing Not Allowed");
+                e.Cancel = true;
+            }
         }
 
         private static void CreateCenterPanel(StackPanel parent)
@@ -190,6 +169,25 @@ namespace HelloWorldSample
             if (application == null)
                 throw new Exception();
             application.VisualTheme = theme;
+        }
+
+        private static void CreateLeftPanel(StackPanel parent)
+        {
+            var leftPanel = new StackPanel
+            {
+                Orientation = StackPanelOrientation.Vertical,
+            };
+
+            parent.Children.Add(leftPanel);
+
+            leftPanel.SuspendLayout();
+
+            CreateColorButtons(leftPanel);
+
+            allowCloseWindowCheckBox = new CheckBox { Text = "Allow closing the window", IsChecked = true };
+            leftPanel.Children.Add(allowCloseWindowCheckBox);
+
+            leftPanel.ResumeLayout();
         }
     }
 }

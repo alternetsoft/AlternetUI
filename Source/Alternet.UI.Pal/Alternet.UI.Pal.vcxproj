@@ -186,6 +186,7 @@
     <ClCompile Include="Api.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="CheckBox.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="DrawingContext.cpp" />
     <ClCompile Include="MessageBox_.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="ApiTypes.h" />
     <ClInclude Include="Api\Application.Api.h" />
     <ClInclude Include="Api\Button.Api.h" />
+    <ClInclude Include="Api\CheckBox.Api.h" />
     <ClInclude Include="Api\Control.Api.h" />
     <ClInclude Include="Api\DrawingContext.Api.h" />
     <ClInclude Include="Api\DrawingTypes.h" />
@@ -211,6 +213,7 @@
     <ClInclude Include="Api\Window.Api.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="CheckBox.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="CommonBase.h" />
     <ClInclude Include="Control.h" />
@@ -227,6 +230,7 @@
   <ItemGroup>
     <None Include="Api\Application.inc" />
     <None Include="Api\Button.inc" />
+    <None Include="Api\CheckBox.inc" />
     <None Include="Api\Control.inc" />
     <None Include="Api\DrawingContext.inc" />
     <None Include="Api\MessageBox_.inc" />

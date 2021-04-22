@@ -11,6 +11,7 @@ namespace Alternet.UI
             Border => new GenericBorderHandler(),
             TextBlock => new GenericTextBlockHandler(),
             TextBox x => new NativeTextBoxHandler(),
+            CheckBox x => new NativeCheckBoxHandler(),
             _ => new GenericControlHandler()
         };
     }

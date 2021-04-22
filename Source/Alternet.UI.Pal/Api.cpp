@@ -1,5 +1,6 @@
 #include "Api/Application.Api.h"
 #include "Api/Button.Api.h"
+#include "Api/CheckBox.Api.h"
 #include "Api/Control.Api.h"
 #include "Api/DrawingContext.Api.h"
 #include "Api/MessageBox_.Api.h"
