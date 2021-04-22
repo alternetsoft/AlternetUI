@@ -16,6 +16,7 @@ namespace Alternet.UI
         private Thickness padding;
         private ControlHandler? handler;
         private Color? backgroundColor;
+        private Color? foregroundColor;
         private Color? borderColor;
 
         public Control()
@@ -37,6 +38,8 @@ namespace Alternet.UI
 
         public event EventHandler? BackgroundColorChanged;
 
+        public event EventHandler? ForegroundColorChanged;
+
         public Color? BorderColor
         {
             get => borderColor;
@@ -56,14 +59,6 @@ namespace Alternet.UI
             {
                 EnsureHandlerCreated();
                 return handler ?? throw new InvalidOperationException();
-            }
-        }
-
-        protected internal void EnsureHandlerCreated()
-        {
-            if (handler == null)
-            {
-                CreateAndAttachHandler();
             }
         }
 
@@ -147,6 +142,20 @@ namespace Alternet.UI
             }
         }
 
+        public Color? ForegroundColor
+        {
+            // todo: change to brush?
+            get => foregroundColor;
+            set
+            {
+                if (foregroundColor == value)
+                    return;
+
+                foregroundColor = value;
+                ForegroundColorChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
         public bool IsVisualChild { get; private set; }
 
         private IControlHandlerFactory? ControlHandlerFactory { get; set; }
@@ -185,12 +194,33 @@ namespace Alternet.UI
             OnPaint(e);
         }
 
+        protected internal void EnsureHandlerCreated()
+        {
+            if (handler == null)
+            {
+                CreateAndAttachHandler();
+            }
+        }
+
+        protected internal void DetachHandler()
+        {
+            if (handler == null)
+                throw new InvalidOperationException();
+            handler.Detach();
+            handler = null;
+        }
+
         protected void RecreateHandler()
         {
             if (handler != null)
-                DetachHandler();
+                OnDetachHandler();
 
             Update();
+        }
+
+        protected virtual void OnDetachHandler()
+        {
+            DetachHandler();
         }
 
         protected IControlHandlerFactory GetEffectiveControlHandlerHactory() => ControlHandlerFactory ?? Application.Current.VisualTheme.ControlHandlerFactory;
@@ -235,18 +265,18 @@ namespace Alternet.UI
             Paint?.Invoke(this, e);
         }
 
-        protected internal void DetachHandler()
+        protected virtual void OnAttachHandler()
         {
             if (handler == null)
                 throw new InvalidOperationException();
-            handler.Detach();
-            handler = null;
+
+            handler.Attach(this);
         }
 
         private void CreateAndAttachHandler()
         {
             handler = CreateHandler();
-            handler.Attach(this);
+            OnAttachHandler();
         }
 
         private void Children_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)

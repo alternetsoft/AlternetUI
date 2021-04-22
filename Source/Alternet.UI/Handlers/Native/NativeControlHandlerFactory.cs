@@ -7,7 +7,7 @@ namespace Alternet.UI
         public ControlHandler CreateControlHandler(Control control) => control switch
         {
             Button x => new NativeButtonHandler(),
-            StackPanel x => new NativeStackPanelHandler(),
+            StackPanel x => new StackPanelHandler(),
             TextBox x => new NativeTextBoxHandler(),
             _ => new GenericControlHandler()
         };

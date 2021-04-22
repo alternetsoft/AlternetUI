@@ -26,6 +26,10 @@ bool GetIsMouseOver();
 Color GetBackgroundColor();
 void SetBackgroundColor(const Color& value);
 
+
+Color GetForegroundColor();
+void SetForegroundColor(const Color& value);
+
 void SetMouseCapture(bool value);
 void AddChild(Control* control);
 void RemoveChild(Control* control);

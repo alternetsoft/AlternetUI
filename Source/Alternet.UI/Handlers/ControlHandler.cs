@@ -246,10 +246,12 @@ namespace Alternet.UI
         {
             ApplyBorderColor();
             ApplyBackgroundColor();
+            ApplyForegroundColor();
 
             Control.MarginChanged += Control_MarginChanged;
             Control.PaddingChanged += Control_PaddingChanged;
             Control.BackgroundColorChanged += Control_BackgroundColorChanged;
+            Control.ForegroundColorChanged += Control_ForegroundColorChanged;
             Control.BorderColorChanged += Control_BorderColorChanged;
 
             Control.Children.ItemInserted += Children_ItemInserted;
@@ -264,6 +266,7 @@ namespace Alternet.UI
             Control.MarginChanged -= Control_MarginChanged;
             Control.PaddingChanged -= Control_PaddingChanged;
             Control.BackgroundColorChanged -= Control_BackgroundColorChanged;
+            Control.ForegroundColorChanged -= Control_ForegroundColorChanged;
             Control.BorderColorChanged -= Control_BorderColorChanged;
 
             Control.Children.ItemInserted -= Children_ItemInserted;
@@ -343,10 +346,22 @@ namespace Alternet.UI
             ApplyBackgroundColor();
         }
 
+        private void Control_ForegroundColorChanged(object? sender, EventArgs? e)
+        {
+            ApplyForegroundColor();
+        }
+
         private void ApplyBackgroundColor()
         {
             if (NativeControl != null)
                 NativeControl.BackgroundColor = Control.BackgroundColor ?? Color.Empty;
+            Update();
+        }
+
+        private void ApplyForegroundColor()
+        {
+            if (NativeControl != null)
+                NativeControl.ForegroundColor = Control.ForegroundColor ?? Color.Empty;
             Update();
         }
 

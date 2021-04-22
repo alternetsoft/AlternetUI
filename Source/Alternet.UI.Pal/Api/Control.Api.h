@@ -68,6 +68,16 @@ ALTERNET_UI_API void Control_SetBackgroundColor(Control* obj, Color value)
     obj->SetBackgroundColor(value);
 }
 
+ALTERNET_UI_API Color_C Control_GetForegroundColor(Control* obj)
+{
+    return obj->GetForegroundColor();
+}
+
+ALTERNET_UI_API void Control_SetForegroundColor(Control* obj, Color value)
+{
+    obj->SetForegroundColor(value);
+}
+
 ALTERNET_UI_API void Control_SetMouseCapture(Control* obj, c_bool value)
 {
     obj->SetMouseCapture(value);

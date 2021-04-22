@@ -6,9 +6,13 @@ namespace HelloWorldSample
 {
     internal class CustomCompositeControl : Control
     {
-        protected override ControlHandler CreateHandler() => new CustomHandler();
-
         private string text = "";
+
+        private Border? border;
+
+        private TextBlock[]? lines;
+
+        private Color color = Color.LightGreen;
 
         public string Text
         {
@@ -16,59 +20,73 @@ namespace HelloWorldSample
             set
             {
                 text = value;
+                UpdateVisual();
                 Parent?.PerformLayout();
-                Update();
             }
         }
 
-        private class CustomHandler : ControlHandler<CustomCompositeControl>
+        public Color Color
         {
-            private Border? border;
-            private TextBlock[]? lines;
+            get => color;
 
-            protected override void OnAttach()
+            set
             {
-                base.OnAttach();
-
-                border = new Border
-                {
-                    BackgroundColor = Color.FromArgb(unchecked((int)0xFFACAAFF)),
-                    BorderColor = Color.FromArgb(unchecked((int)0xFF4A47FF))
-                };
-
-                Control.VisualChildren.Add(border);
-
-                var panel = new StackPanel
-                {
-                    Orientation = StackPanelOrientation.Vertical,
-                    Margin = new Thickness(5)
-                };
-                border.VisualChildren.Add(panel);
-
-                panel.VisualChildren.Add(new TextBlock { Text = "Composite Control" });
-                
-                lines = new TextBlock[3];
-                for (int i = 0; i < lines.Length; i++)
-                    panel.VisualChildren.Add(lines[i] = new TextBlock());
-                
+                color = value;
                 UpdateVisual();
             }
+        }
 
-            void UpdateVisual()
+        protected override void OnAttachHandler()
+        {
+            base.OnAttachHandler();
+
+            border = new Border
             {
-                for (int i = 0; i < lines!.Length; i++)
-                    lines[i].Text = $"{Control.Text} {i}";
-            }
+                BackgroundColor = Color.FromArgb(unchecked((int)0xFF333333)),
+                BorderColor = Color.FromArgb(unchecked((int)0xFF4A47FF))
+            };
 
-            protected override void OnDetach()
+            VisualChildren.Add(border);
+
+            var panel = new StackPanel
             {
-                base.OnDetach();
+                Orientation = StackPanelOrientation.Vertical,
+                Margin = new Thickness(10)
+            };
+            border.VisualChildren.Add(panel);
 
-                if (border == null)
-                    throw new InvalidOperationException();
+            panel.VisualChildren.Add(new TextBlock { Text = "Composite Control", ForegroundColor = Color.White });
 
-                Control.VisualChildren.Remove(border);
-                border.Dispose();
+            lines = new TextBlock[10];
+            for (int i = 0; i < lines.Length; i++)
+                panel.VisualChildren.Add(lines[i] = new TextBlock());
+
+            UpdateVisual();
+        }
+
+        protected override void OnDetachHandler()
+        {
+            base.OnDetachHandler();
+
+            if (border == null)
+                throw new InvalidOperationException();
+
+            VisualChildren.Remove(border);
+            border.Dispose();
+        }
+
+        private void UpdateVisual()
+        {
+            var cl = new Skybrud.Colors.RgbColor(color.R, color.G, color.B);
+            float darken = 50;
+            for (int i = 0; i < lines!.Length; i++)
+            {
+                var textBlock = lines[i];
+                textBlock.Text = $"{Text} {i}";
+                
+                var c = cl.Darken(darken).ToRgb();
+                textBlock.ForegroundColor = Color.FromArgb(c.R, c.G, c.B);
+                darken -= 5f;
             }
         }
     }

@@ -9,7 +9,7 @@ namespace Alternet.UI
         public override void OnPaint(DrawingContext drawingContext)
         {
             if (Control.Text != null)
-                drawingContext.DrawText(Control.Text, ChildrenLayoutBounds.Location, Color.Black);
+                drawingContext.DrawText(Control.Text, ChildrenLayoutBounds.Location, Control.ForegroundColor ?? Color.Black);
         }
 
         public override SizeF GetPreferredSize(SizeF availableSize)
@@ -26,12 +26,19 @@ namespace Alternet.UI
         {
             base.OnAttach();
             Control.TextChanged += Control_TextChanged;
+            Control.ForegroundColorChanged += Control_ForegroundColorChanged;
         }
 
         protected override void OnDetach()
         {
             Control.TextChanged -= Control_TextChanged;
+            Control.ForegroundColorChanged -= Control_ForegroundColorChanged;
             base.OnDetach();
+        }
+
+        private void Control_ForegroundColorChanged(object? sender, System.EventArgs? e)
+        {
+            Update();
         }
 
         private void Control_TextChanged(object? sender, System.EventArgs? e)

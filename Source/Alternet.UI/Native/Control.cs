@@ -112,6 +112,21 @@ namespace Alternet.UI.Native
             }
         }
         
+        public System.Drawing.Color ForegroundColor
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetForegroundColor(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetForegroundColor(NativePointer, value);
+            }
+        }
+        
         public void SetMouseCapture(bool value)
         {
             CheckDisposed();
@@ -259,6 +274,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetBackgroundColor(IntPtr obj, NativeApiTypes.Color value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color Control_GetForegroundColor(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetForegroundColor(IntPtr obj, NativeApiTypes.Color value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetMouseCapture(IntPtr obj, bool value);

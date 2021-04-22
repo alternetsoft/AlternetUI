@@ -11,8 +11,9 @@ namespace Alternet::UI
                 {ControlFlags::Visible, std::make_tuple(&Control::RetrieveVisible, &Control::ApplyVisible)},
             }),
             _bounds(*this, RectangleF(), &Control::IsWxWindowCreated, &Control::RetrieveBounds, &Control::ApplyBounds),
-            _backgroundColor(*this, Color(), &Control::IsWxWindowCreated, &Control::RetrieveBackgroundColor, & Control::ApplyBackgroundColor),
-            _delayedValues({&_flags, &_bounds, &_backgroundColor})
+            _backgroundColor(*this, Color(), &Control::IsWxWindowCreated, &Control::RetrieveBackgroundColor, &Control::ApplyBackgroundColor),
+            _foregroundColor(*this, Color(), &Control::IsWxWindowCreated, &Control::RetrieveForegroundColor, &Control::ApplyForegroundColor),
+            _delayedValues({&_flags, &_bounds, &_backgroundColor, &_foregroundColor})
     {
     }
 
@@ -113,6 +114,16 @@ namespace Alternet::UI
         return _backgroundColor.Get();
     }
 
+    void Control::SetForegroundColor(const Color& value)
+    {
+        _foregroundColor.Set(value);
+    }
+
+    Color Control::GetForegroundColor()
+    {
+        return _foregroundColor.Get();
+    }
+
     void Control::SetMouseCapture(bool value)
     {
         wxASSERT(_wxWindow);
@@ -174,6 +185,16 @@ namespace Alternet::UI
     void Control::ApplyBackgroundColor(const Color& value)
     {
         _wxWindow->SetBackgroundColour(value);
+    }
+
+    Color Control::RetrieveForegroundColor()
+    {
+        return _wxWindow->GetForegroundColour();
+    }
+
+    void Control::ApplyForegroundColor(const Color& value)
+    {
+        _wxWindow->SetForegroundColour(value);
     }
 
     RectangleF Control::RetrieveBounds()

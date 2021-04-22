@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Alternet.UI
 {
-    internal class NativeStackPanelHandler : NativeControlHandler<StackPanel, Native.Panel>
+    internal class StackPanelHandler: ControlHandler<StackPanel>
     {
         public override void OnLayout()
         {

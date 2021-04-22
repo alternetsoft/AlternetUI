@@ -25,10 +25,15 @@ namespace HelloWorldSample
             }
         }
 
-        public void SetColor(Color value)
+        public Color Color
         {
-            color = value;
-            Update();
+            get => color;
+
+            set
+            {
+                color = value;
+                Update();
+            }
         }
 
         public override SizeF GetPreferredSize(SizeF availableSize)

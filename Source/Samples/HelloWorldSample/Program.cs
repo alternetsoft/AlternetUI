@@ -139,12 +139,14 @@ namespace HelloWorldSample
 
         private static void CreateColorButtons(Control parent)
         {
+            void SetColor(Color c) => customDrawnControl!.Color = customCompositeControl!.Color = c;
+
             var redButton = new Button
             {
                 Text = "Red",
                 Margin = new Thickness(0, 0, 0, 5)
             };
-            redButton.Click += (o, e) => customDrawnControl?.SetColor(Color.Pink);
+            redButton.Click += (o, e) => SetColor(Color.Pink);
             parent.Children.Add(redButton);
 
             var greenButton = new Button
@@ -152,7 +154,7 @@ namespace HelloWorldSample
                 Text = "Green",
                 Margin = new Thickness(0, 0, 0, 5)
             };
-            greenButton.Click += (o, e) => customDrawnControl?.SetColor(Color.LightGreen);
+            greenButton.Click += (o, e) => SetColor(Color.LightGreen);
             parent.Children.Add(greenButton);
 
             var blueButton = new Button
@@ -160,7 +162,7 @@ namespace HelloWorldSample
                 Text = "Blue",
                 Margin = new Thickness(0, 0, 0, 5)
             };
-            blueButton.Click += (o, e) => customDrawnControl?.SetColor(Color.LightBlue);
+            blueButton.Click += (o, e) => SetColor(Color.LightBlue);
             parent.Children.Add(blueButton);
         }
 
