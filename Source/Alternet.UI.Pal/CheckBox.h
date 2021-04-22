@@ -18,8 +18,12 @@ namespace Alternet::UI
         wxCheckBox* GetCheckBox();
 
         DelayedValue<CheckBox, string> _text;
+        DelayedValue<CheckBox, wxCheckBoxState> _state;
 
         string RetrieveText();
         void ApplyText(const string& value);
+
+        wxCheckBoxState RetrieveState();
+        void ApplyState(const wxCheckBoxState& value);
     };
 }

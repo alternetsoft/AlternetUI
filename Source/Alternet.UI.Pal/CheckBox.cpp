@@ -3,9 +3,11 @@
 namespace Alternet::UI
 {
     CheckBox::CheckBox() :
-        _text(*this, u"", &Control::IsWxWindowCreated, &CheckBox::RetrieveText, &CheckBox::ApplyText)
+        _text(*this, u"", &Control::IsWxWindowCreated, &CheckBox::RetrieveText, &CheckBox::ApplyText),
+        _state(*this, wxCheckBoxState::wxCHK_UNCHECKED, &Control::IsWxWindowCreated, &CheckBox::RetrieveState, &CheckBox::ApplyState)
     {
         GetDelayedValues().Add(&_text);
+        GetDelayedValues().Add(&_state);
     }
 
     CheckBox::~CheckBox()
@@ -44,6 +46,16 @@ namespace Alternet::UI
         GetCheckBox()->SetLabel(wxStr(value));
     }
 
+    wxCheckBoxState CheckBox::RetrieveState()
+    {
+        return GetCheckBox()->Get3StateValue();
+    }
+
+    void CheckBox::ApplyState(const wxCheckBoxState& value)
+    {
+        GetCheckBox()->Set3StateValue(value);
+    }
+
     void CheckBox::OnCheckedChanged(wxCommandEvent& event)
     {
         RaiseEvent(CheckBoxEvent::CheckedChanged);
@@ -51,11 +63,11 @@ namespace Alternet::UI
     
     bool CheckBox::GetIsChecked()
     {
-        return GetCheckBox()->GetValue();
+        return _state.Get() == wxCheckBoxState::wxCHK_CHECKED;
     }
     
     void CheckBox::SetIsChecked(bool value)
     {
-        GetCheckBox()->SetValue(value);
+        _state.Set(value ? wxCheckBoxState::wxCHK_CHECKED : wxCheckBoxState::wxCHK_UNCHECKED);
     }
 }
