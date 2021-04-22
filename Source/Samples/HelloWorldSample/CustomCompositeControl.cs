@@ -18,8 +18,8 @@ namespace HelloWorldSample
 
                 border = new Border
                 {
-                    BackgroundColor = Color.FromArgb(0xACAAFF),
-                    BorderColor = Color.FromArgb(0x4A47FF)
+                    BackgroundColor = Color.FromArgb(unchecked((int)0xFFACAAFF)),
+                    BorderColor = Color.FromArgb(unchecked((int)0xFF4A47FF))
                 };
 
                 Control.VisualChildren.Add(border);

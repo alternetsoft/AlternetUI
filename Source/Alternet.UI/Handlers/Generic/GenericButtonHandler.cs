@@ -113,14 +113,14 @@ namespace Alternet.UI
             if (border == null)
                 throw new InvalidOperationException();
 
-            var borderColor = Color.FromArgb(0x92A0B5);
-            var backgroundColor = Color.FromArgb(0xB5C7E2);
+            var borderColor = Color.FromArgb(unchecked((int)0xFF92A0B5));
+            var backgroundColor = Color.FromArgb(unchecked((int)0xFFB5C7E2));
             if (IsMouseOver)
             {
-                borderColor = Color.FromArgb(0x5C7FB2);
-                backgroundColor = Color.FromArgb(0x80AFF2);
+                borderColor = Color.FromArgb(unchecked((int)0xFF5C7FB2));
+                backgroundColor = Color.FromArgb(unchecked((int)0xFF80AFF2));
                 if (IsPressed)
-                    borderColor = Color.FromArgb(0x729DD8);
+                    borderColor = Color.FromArgb(unchecked((int)0xFF729DD8));
             }
 
             border.BorderColor = borderColor;
