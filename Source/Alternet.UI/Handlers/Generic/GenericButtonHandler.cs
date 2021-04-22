@@ -113,15 +113,18 @@ namespace Alternet.UI
             if (border == null)
                 throw new InvalidOperationException();
 
-            var color = Color.Gray;
+            var borderColor = Color.FromArgb(0x92A0B5);
+            var backgroundColor = Color.FromArgb(0xB5C7E2);
             if (IsMouseOver)
             {
-                color = Color.LightBlue;
+                borderColor = Color.FromArgb(0x5C7FB2);
+                backgroundColor = Color.FromArgb(0x80AFF2);
                 if (IsPressed)
-                    color = Color.Blue;
+                    borderColor = Color.FromArgb(0x729DD8);
             }
 
-            border.BorderColor = color;
+            border.BorderColor = borderColor;
+            border.BackgroundColor = backgroundColor;
         }
 
         private void Control_TextChanged(object? sender, System.EventArgs? e)
