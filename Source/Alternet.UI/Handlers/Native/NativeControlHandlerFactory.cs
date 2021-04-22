@@ -8,6 +8,8 @@ namespace Alternet.UI
         {
             Button x => new NativeButtonHandler(),
             StackPanel x => new StackPanelHandler(),
+            Border => new GenericBorderHandler(),
+            TextBlock => new GenericTextBlockHandler(),
             TextBox x => new NativeTextBoxHandler(),
             _ => new GenericControlHandler()
         };
