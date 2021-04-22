@@ -79,10 +79,10 @@ namespace Alternet.UI
             if (border == null)
                 throw new InvalidOperationException();
 
-            var color = Color.FromArgb(0x92A0B5);
+            var color = Color.FromArgb(unchecked((int)0xFF92A0B5));
             if (IsMouseOver)
             {
-                color = Color.FromArgb(0x5C7FB2);
+                color = Color.FromArgb(unchecked((int)0xFF5C7FB2));
             }
 
             border.BorderColor = color;
