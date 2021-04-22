@@ -100,7 +100,7 @@ namespace HelloWorldSample
             centerPanel.SuspendLayout();
 
             textBox = new TextBox();
-            textBox.TextChanged += (o, e) => customDrawnControl?.SetText(textBox!.Text);
+            textBox.TextChanged += (o, e) => customDrawnControl!.Text = customCompositeControl!.Text = textBox!.Text;
             centerPanel.Children.Add(textBox);
 
             customDrawnControl = new CustomDrawnControl

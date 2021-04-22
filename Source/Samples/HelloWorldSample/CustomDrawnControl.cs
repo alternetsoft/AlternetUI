@@ -5,7 +5,6 @@ namespace HelloWorldSample
 {
     internal class CustomDrawnControl : Control
     {
-        private string text = "";
         private Color color = Color.LightGreen;
 
         public CustomDrawnControl()
@@ -13,11 +12,17 @@ namespace HelloWorldSample
             UserPaint = true;
         }
 
-        public void SetText(string value)
+        private string text = "";
+
+        public string Text
         {
-            text = value;
-            Parent?.PerformLayout();
-            Update();
+            get => text;
+            set
+            {
+                text = value;
+                Parent?.PerformLayout();
+                Update();
+            }
         }
 
         public void SetColor(Color value)
