@@ -61,7 +61,7 @@ namespace HelloWorldSample
 
             if (!allowCloseWindowCheckBox!.IsChecked)
             {
-                MessageBox.Show("Closing the window is not allowed. Clear the check box to allow.", "Closing Not Allowed");
+                MessageBox.Show("Closing the window is not allowed. Set the check box to allow.", "Closing Not Allowed");
                 e.Cancel = true;
             }
         }
