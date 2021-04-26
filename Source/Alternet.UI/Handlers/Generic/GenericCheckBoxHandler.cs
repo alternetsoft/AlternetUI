@@ -11,21 +11,6 @@ namespace Alternet.UI
         private Border? outerBorder;
         private Border? innerBorder;
 
-        private bool isPressed;
-
-        private bool IsPressed
-        {
-            get => isPressed;
-            set
-            {
-                if (isPressed == value)
-                    return;
-
-                isPressed = value;
-                UpdateVisual();
-            }
-        }
-
         public override SizeF GetPreferredSize(SizeF availableSize)
         {
             return base.GetPreferredSize(availableSize);
@@ -36,6 +21,7 @@ namespace Alternet.UI
             base.OnAttach();
 
             Control.TextChanged += Control_TextChanged;
+            Control.CheckedChanged += Control_CheckedChanged;
 
             if (NativeControl == null)
                 throw new InvalidOperationException();
@@ -47,25 +33,19 @@ namespace Alternet.UI
                 Orientation = StackPanelOrientation.Horizontal
             };
 
-            Control.VisualChildren.Add(panel);
+            VisualChildren.Add(panel);
 
-            outerBorder = new Border { Width = 10, Height = 10, BorderColor = Color.Blue, BackgroundColor = Color.Red };
-            panel.VisualChildren.Add(outerBorder);
+            outerBorder = new Border { Width = 13, Height = 10, Margin = new Thickness(0, 0, 5, 0) };
+            panel.Handler.VisualChildren.Add(outerBorder);
 
-            innerBorder = new Border { Width = 4, Height = 4 };
-            outerBorder.VisualChildren.Add(innerBorder);
+            innerBorder = new Border { Width = 6, Height = 6, Margin = new Thickness(4, 4, 0, 0) };
+            outerBorder.Handler.VisualChildren.Add(innerBorder);
 
             textBlock = new TextBlock();
-            panel.VisualChildren.Add(textBlock);
+            panel.Handler.VisualChildren.Add(textBlock);
 
             UpdateText();
             UpdateVisual();
-        }
-
-        private void NativeControl_MouseClick(object? sender, EventArgs? e)
-        {
-            //if (IsMouseOver)
-            //    Control.InvokeClick(EventArgs.Empty);
         }
 
         protected override void OnDetach()
@@ -76,11 +56,12 @@ namespace Alternet.UI
                 throw new InvalidOperationException();
 
             NativeControl.MouseClick -= NativeControl_MouseClick;
+            Control.CheckedChanged -= Control_CheckedChanged;
 
             if (panel == null)
                 throw new InvalidOperationException();
 
-            Control.VisualChildren.Remove(panel);
+            VisualChildren.Remove(panel);
             Control.TextChanged -= Control_TextChanged;
         }
 
@@ -102,37 +83,34 @@ namespace Alternet.UI
             UpdateVisual();
         }
 
-        protected override void OnMouseLeftButtonDown()
+        private void Control_CheckedChanged(object? sender, EventArgs? e)
         {
-            base.OnMouseLeftButtonDown();
-            CaptureMouse();
-            IsPressed = true;
+            UpdateVisual();
         }
 
-        protected override void OnMouseLeftButtonUp()
+        private void NativeControl_MouseClick(object? sender, EventArgs? e)
         {
-            ReleaseMouseCapture();
-            base.OnMouseLeftButtonUp();
-            IsPressed = false;
+            if (IsMouseOver)
+                Control.IsChecked = !Control.IsChecked;
         }
 
         private void UpdateVisual()
         {
-            //if (border == null)
-            //    throw new InvalidOperationException();
+            if (innerBorder == null || outerBorder == null)
+                throw new InvalidOperationException();
 
-            //var borderColor = Color.FromArgb(unchecked((int)0xFF92A0B5));
-            //var backgroundColor = Color.FromArgb(unchecked((int)0xFFB5C7E2));
-            //if (IsMouseOver)
-            //{
-            //    borderColor = Color.FromArgb(unchecked((int)0xFF5C7FB2));
-            //    backgroundColor = Color.FromArgb(unchecked((int)0xFF80AFF2));
-            //    if (IsPressed)
-            //        borderColor = Color.FromArgb(unchecked((int)0xFF729DD8));
-            //}
+            var borderColor = Color.FromArgb(unchecked((int)0xFF92A0B5));
+            var backgroundColor = Color.FromArgb(unchecked((int)0xFFB5C7E2));
+            if (IsMouseOver)
+            {
+                borderColor = Color.FromArgb(unchecked((int)0xFF5C7FB2));
+                backgroundColor = Color.FromArgb(unchecked((int)0xFF80AFF2));
+            }
 
-            //border.BorderColor = borderColor;
-            //border.BackgroundColor = backgroundColor;
+            outerBorder.BorderColor = borderColor;
+            outerBorder.BackgroundColor = backgroundColor;
+
+            innerBorder.BackgroundColor = Control.IsChecked ? Color.FromArgb(unchecked((int)0xFF4A5C77)) : Color.Transparent;
         }
 
         private void Control_TextChanged(object? sender, System.EventArgs? e)

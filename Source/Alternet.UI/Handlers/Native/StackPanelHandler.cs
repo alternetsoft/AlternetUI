@@ -14,7 +14,7 @@ namespace Alternet.UI
             if (orientation == StackPanelOrientation.Vertical)
             {
                 float y = childrenLayoutBounds.Top;
-                foreach (var control in Control.AllChildren)
+                foreach (var control in AllChildren)
                 {
                     var margin = control.Margin;
                     var verticalMargin = margin.Vertical;
@@ -27,7 +27,7 @@ namespace Alternet.UI
             else if (orientation == StackPanelOrientation.Horizontal)
             {
                 float x = 0;
-                foreach (var control in Control.AllChildren)
+                foreach (var control in AllChildren)
                 {
                     var margin = control.Margin;
                     var horizontalMargin = margin.Horizontal;
@@ -48,11 +48,12 @@ namespace Alternet.UI
             {
                 float maxWidth = 0;
                 float height = 0;
-                foreach (var control in Control.AllChildren)
+                foreach (var control in AllChildren)
                 {
+                    var margin = control.Margin;
                     var preferredSize = control.GetPreferredSize(new SizeF(availableSize.Width, availableSize.Height - height));
-                    maxWidth = Math.Max(maxWidth, preferredSize.Width);
-                    height += preferredSize.Height;
+                    maxWidth = Math.Max(maxWidth, preferredSize.Width + margin.Horizontal);
+                    height += preferredSize.Height + margin.Vertical;
                 }
 
                 return new SizeF(float.IsNaN(Control.Width) ? maxWidth : Control.Width, height);
@@ -61,11 +62,12 @@ namespace Alternet.UI
             {
                 float width = 0;
                 float maxHeight = 0;
-                foreach (var control in Control.AllChildren)
+                foreach (var control in AllChildren)
                 {
+                    var margin = control.Margin;
                     var preferredSize = control.GetPreferredSize(new SizeF(availableSize.Width - width, availableSize.Height));
-                    width += preferredSize.Width;
-                    maxHeight = Math.Max(maxHeight, preferredSize.Height);
+                    width += preferredSize.Width + margin.Horizontal;
+                    maxHeight = Math.Max(maxHeight, preferredSize.Height + margin.Vertical);
                 }
 
                 return new SizeF(width, float.IsNaN(Control.Height) ? maxHeight : Control.Height);

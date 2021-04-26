@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace Alternet.UI
 {
@@ -14,6 +16,13 @@ namespace Alternet.UI
         private RectangleF bounds;
 
         private Native.Control? nativeControl;
+        private bool isVisualChild;
+
+        public ControlHandler()
+        {
+            VisualChildren.ItemInserted += VisualChildren_ItemInserted;
+            VisualChildren.ItemRemoved += VisualChildren_ItemRemoved;
+        }
 
         public Control Control
         {
@@ -61,6 +70,29 @@ namespace Alternet.UI
             }
         }
 
+        public bool IsVisualChild
+        {
+            get => isVisualChild;
+            private set
+            {
+                if (isVisualChild == value)
+                    return;
+
+                isVisualChild = value;
+                OnIsVisualChildChanged();
+            }
+        }
+
+        protected virtual void OnIsVisualChildChanged()
+        {
+            if (!NeedsNativeControl())
+                DisposeNativeControl();
+        }
+
+        public Collection<Control> VisualChildren { get; } = new Collection<Control>();
+
+        public IEnumerable<Control> AllChildren => VisualChildren.Concat(Control.Children);
+
         internal Native.Control? NativeControl
         {
             get
@@ -95,12 +127,7 @@ namespace Alternet.UI
         {
             OnDetach();
 
-            if (nativeControl != null)
-            {
-                nativeControl.Dispose();
-                nativeControl = null;
-            }
-
+            DisposeNativeControl();
             control = null;
         }
 
@@ -124,16 +151,24 @@ namespace Alternet.UI
         public virtual void OnLayout()
         {
             var childrenLayoutBounds = ChildrenLayoutBounds;
-            foreach (var control in Control.AllChildren)
+            foreach (var control in AllChildren)
             {
                 var margin = control.Margin;
-                control.Handler.Bounds = new RectangleF(childrenLayoutBounds.Location + new SizeF(margin.Left, margin.Top), childrenLayoutBounds.Size - margin.Size);
+
+                var specifiedWidth = control.Width;
+                var specifiedHeight = control.Height;
+
+                control.Handler.Bounds = new RectangleF(
+                    childrenLayoutBounds.Location + new SizeF(margin.Left, margin.Top),
+                    new SizeF(
+                        float.IsNaN(specifiedWidth) ? childrenLayoutBounds.Width - margin.Horizontal : specifiedWidth,
+                        float.IsNaN(specifiedHeight) ? childrenLayoutBounds.Height - margin.Vertical : specifiedHeight));
             }
         }
 
         public virtual SizeF GetPreferredSize(SizeF availableSize)
         {
-            if (Control.Children.Count == 0 && Control.VisualChildren.Count == 0)
+            if (Control.Children.Count == 0 && VisualChildren.Count == 0)
             {
                 var s = NativeControl?.GetPreferredSize(availableSize) ?? new SizeF();
                 return new SizeF(
@@ -142,7 +177,7 @@ namespace Alternet.UI
             }
             else
             {
-                return GexChildrenMaxPreferredSize(availableSize);
+                return GetChildrenMaxPreferredSize(availableSize);
             }
         }
 
@@ -221,25 +256,33 @@ namespace Alternet.UI
 
         protected virtual bool NeedsNativeControl()
         {
-            if (Control.IsVisualChild)
+            if (IsVisualChild)
                 return VisualChildNeedsNativeControl;
 
             return true;
         }
 
-        protected SizeF GexChildrenMaxPreferredSize(SizeF availableSize)
+        protected SizeF GetChildrenMaxPreferredSize(SizeF availableSize)
         {
+            var specifiedWidth = Control.Width;
+            var specifiedHeight = Control.Height;
+            if (!float.IsNaN(specifiedWidth) && !float.IsNaN(specifiedHeight))
+                return new SizeF(specifiedWidth, specifiedHeight);
+
             float maxWidth = 0;
             float maxHeight = 0;
 
-            foreach (var control in Control.AllChildren)
+            foreach (var control in AllChildren)
             {
                 var preferredSize = control.GetPreferredSize(availableSize) + control.Margin.Size;
                 maxWidth = Math.Max(preferredSize.Width, maxWidth);
                 maxHeight = Math.Max(preferredSize.Height, maxHeight);
             }
 
-            return new SizeF(maxWidth, maxHeight) + Control.Padding.Size;
+            var width = float.IsNaN(specifiedWidth) ? maxWidth + Control.Padding.Horizontal : specifiedWidth;
+            var height = float.IsNaN(specifiedHeight) ? maxHeight + Control.Padding.Vertical : specifiedHeight;
+
+            return new SizeF(width, height);
         }
 
         protected virtual void OnAttach()
@@ -255,10 +298,10 @@ namespace Alternet.UI
             Control.BorderColorChanged += Control_BorderColorChanged;
 
             Control.Children.ItemInserted += Children_ItemInserted;
-            Control.VisualChildren.ItemInserted += Children_ItemInserted;
+            VisualChildren.ItemInserted += Children_ItemInserted;
 
             Control.Children.ItemRemoved += Children_ItemRemoved;
-            Control.VisualChildren.ItemRemoved += Children_ItemRemoved;
+            VisualChildren.ItemRemoved += Children_ItemRemoved;
         }
 
         protected virtual void OnDetach()
@@ -270,10 +313,9 @@ namespace Alternet.UI
             Control.BorderColorChanged -= Control_BorderColorChanged;
 
             Control.Children.ItemInserted -= Children_ItemInserted;
-            Control.VisualChildren.ItemInserted -= Children_ItemInserted;
-
             Control.Children.ItemRemoved -= Children_ItemRemoved;
-            Control.VisualChildren.ItemRemoved -= Children_ItemRemoved;
+
+            VisualChildren.Clear();
 
             if (NativeControl != null)
             {
@@ -334,6 +376,33 @@ namespace Alternet.UI
         protected virtual void OnChildRemoved(int childIndex, Control childControl)
         {
             TryRemoveNativeControl(childIndex, childControl);
+        }
+
+        private void VisualChildren_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
+        {
+            e.Item.Parent = Control;
+            e.Item.Handler.IsVisualChild = true;
+
+            OnChildInserted(e.Index, e.Item);
+            PerformLayout();
+        }
+
+        private void VisualChildren_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
+        {
+            e.Item.Parent = null;
+            e.Item.Handler.IsVisualChild = false;
+
+            OnChildRemoved(e.Index, e.Item);
+            PerformLayout();
+        }
+
+        private void DisposeNativeControl()
+        {
+            if (nativeControl != null)
+            {
+                nativeControl.Dispose();
+                nativeControl = null;
+            }
         }
 
         private void Control_BorderColorChanged(object? sender, EventArgs? e)
@@ -494,7 +563,7 @@ namespace Alternet.UI
             if (NativeControl == null)
                 throw new InvalidOperationException();
 
-            bool hasVisualChildren = Control.VisualChildren.Count > 0;
+            bool hasVisualChildren = VisualChildren.Count > 0;
 
             if (Control.UserPaint)
             {
@@ -513,7 +582,7 @@ namespace Alternet.UI
             if (NeedsPaint)
                 OnPaint(dc);
 
-            foreach (var visualChild in Control.VisualChildren)
+            foreach (var visualChild in VisualChildren)
             {
                 dc.PushTransform(Transform.FromTranslation(visualChild.Handler.Bounds.Location));
                 visualChild.Handler.PaintSelfAndVisualChildren(dc);

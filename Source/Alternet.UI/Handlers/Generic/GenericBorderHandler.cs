@@ -17,7 +17,7 @@ namespace Alternet.UI
 
         public override SizeF GetPreferredSize(SizeF availableSize)
         {
-            var size = GexChildrenMaxPreferredSize(availableSize);
+            var size = GetChildrenMaxPreferredSize(availableSize);
             return size + new SizeF(2, 2); // todo: BorderThickness
         }
     }

@@ -46,33 +46,33 @@ namespace HelloWorldSample
                 BorderColor = Color.FromArgb(unchecked((int)0xFF4A47FF))
             };
 
-            VisualChildren.Add(border);
+            Handler.VisualChildren.Add(border);
 
             var panel = new StackPanel
             {
                 Orientation = StackPanelOrientation.Vertical,
                 Margin = new Thickness(10)
             };
-            border.VisualChildren.Add(panel);
+            border.Handler.VisualChildren.Add(panel);
 
-            panel.VisualChildren.Add(new TextBlock { Text = "Composite Control", ForegroundColor = Color.White });
+            panel.Handler.VisualChildren.Add(new TextBlock { Text = "Composite Control", ForegroundColor = Color.White });
 
             lines = new TextBlock[10];
             for (int i = 0; i < lines.Length; i++)
-                panel.VisualChildren.Add(lines[i] = new TextBlock());
+                panel.Handler.VisualChildren.Add(lines[i] = new TextBlock());
 
             UpdateVisual();
         }
 
         protected override void OnDetachHandler()
         {
-            base.OnDetachHandler();
-
             if (border == null)
                 throw new InvalidOperationException();
 
-            VisualChildren.Remove(border);
+            Handler.VisualChildren.Remove(border);
             border.Dispose();
+
+            base.OnDetachHandler();
         }
 
         private void UpdateVisual()

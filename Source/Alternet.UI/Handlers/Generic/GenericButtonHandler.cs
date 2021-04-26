@@ -45,10 +45,10 @@ namespace Alternet.UI
                 Padding = new Thickness(5)
             };
 
-            Control.VisualChildren.Add(border);
+            Control.Handler.VisualChildren.Add(border);
 
             textBlock = new TextBlock();
-            border.VisualChildren.Add(textBlock);
+            border.Handler.VisualChildren.Add(textBlock);
 
             UpdateText();
             UpdateVisual();
@@ -72,7 +72,7 @@ namespace Alternet.UI
             if (border == null)
                 throw new InvalidOperationException();
 
-            Control.VisualChildren.Remove(border);
+            Control.Handler.VisualChildren.Remove(border);
             Control.TextChanged -= Control_TextChanged;
         }
 

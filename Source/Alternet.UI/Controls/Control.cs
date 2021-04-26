@@ -22,10 +22,7 @@ namespace Alternet.UI
         public Control()
         {
             Children.ItemInserted += Children_ItemInserted;
-            VisualChildren.ItemInserted += VisualChildren_ItemInserted;
-
             Children.ItemRemoved += Children_ItemRemoved;
-            VisualChildren.ItemRemoved += VisualChildren_ItemRemoved;
         }
 
         public event EventHandler? BorderColorChanged;
@@ -66,11 +63,7 @@ namespace Alternet.UI
 
         public Collection<Control> Children { get; } = new Collection<Control>();
 
-        public Collection<Control> VisualChildren { get; } = new Collection<Control>();
-
-        public IEnumerable<Control> AllChildren => VisualChildren.Concat(Children);
-
-        public Control? Parent { get; private set; }
+        public Control? Parent { get; internal set; }
 
         public virtual float Width
         {
@@ -156,8 +149,6 @@ namespace Alternet.UI
             }
         }
 
-        public bool IsVisualChild { get; private set; }
-
         private IControlHandlerFactory? ControlHandlerFactory { get; set; }
 
         public DrawingContext CreateDrawingContext() => Handler.CreateDrawingContext();
@@ -235,10 +226,12 @@ namespace Alternet.UI
             {
                 if (disposing)
                 {
-                    foreach (var child in AllChildren)
+                    foreach (var child in Handler.AllChildren)
                         child.Dispose();
+                    
                     Children.Clear();
-                    VisualChildren.Clear();
+                    Handler.VisualChildren.Clear();
+
                     DetachHandler();
                 }
 
@@ -287,18 +280,6 @@ namespace Alternet.UI
         private void Children_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
         {
             e.Item.Parent = null;
-        }
-
-        private void VisualChildren_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
-        {
-            e.Item.Parent = this;
-            e.Item.IsVisualChild = true;
-        }
-
-        private void VisualChildren_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
-        {
-            e.Item.Parent = null;
-            e.Item.IsVisualChild = false;
         }
     }
 }

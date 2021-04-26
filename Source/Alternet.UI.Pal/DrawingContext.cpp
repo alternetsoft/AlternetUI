@@ -26,6 +26,9 @@ namespace Alternet::UI
 
     void DrawingContext::FillRectangle(const RectangleF& rectangle, const Color& color)
     {
+        if (color.A == 0)
+            return;
+
         auto oldPen = _dc->GetPen();
         auto oldBrush = _dc->GetBrush();
 
@@ -40,6 +43,9 @@ namespace Alternet::UI
 
     void DrawingContext::DrawRectangle(const RectangleF& rectangle, const Color& color)
     {
+        if (color.A == 0)
+            return;
+
         auto oldPen = _dc->GetPen();
         auto oldBrush = _dc->GetBrush();
 

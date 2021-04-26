@@ -21,10 +21,10 @@ namespace Alternet.UI
                 BackgroundColor = Color.White
             };
 
-            Control.VisualChildren.Add(border);
+            VisualChildren.Add(border);
 
             editTextBox = new TextBox { EditControlOnly = true, BackgroundColor = Color.White };
-            border.VisualChildren.Add(editTextBox);
+            border.Handler.VisualChildren.Add(editTextBox);
 
             editTextBox.Text = Control.Text;
             editTextBox.TextChanged += EditTextBox_TextChanged;
@@ -52,7 +52,7 @@ namespace Alternet.UI
 
             editTextBox.TextChanged -= EditTextBox_TextChanged;
 
-            Control.VisualChildren.Remove(border);
+            Control.Handler.VisualChildren.Remove(border);
             Control.TextChanged -= Control_TextChanged;
         }
 
