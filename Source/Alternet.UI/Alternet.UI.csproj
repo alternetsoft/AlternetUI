@@ -44,6 +44,7 @@
 
   <ItemGroup Condition="$(DefineConstants.Contains(';NETCOREAPP'))">
     <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(AlternetUIPackagesBuild)' != ''">
@@ -64,7 +65,11 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(';NETFRAMEWORK'))">
-    <Reference Include="System.Runtime"/>
+    <Reference Include="System.Runtime" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\External\XamlX\XamlX.csproj" />
   </ItemGroup>
 
 </Project>
