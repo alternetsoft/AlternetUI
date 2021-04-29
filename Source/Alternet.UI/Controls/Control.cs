@@ -25,6 +25,34 @@ namespace Alternet.UI
             Children.ItemRemoved += Children_ItemRemoved;
         }
 
+        public string? Name { get; set; }
+
+        public Control? TryFindControl(string name)
+        {
+            if (name is null)
+                throw new ArgumentNullException(nameof(name));
+
+            if (Name == name)
+                return this;
+
+            foreach (var child in Children)
+            {
+                var result = child.TryFindControl(name);
+                if (result != null)
+                    return result;
+            }
+
+            return null;
+        }
+
+        public Control FindControl(string name)
+        {
+            if (name is null)
+                throw new ArgumentNullException(nameof(name));
+
+            return TryFindControl(name) ?? throw new InvalidOperationException();
+        }
+
         public event EventHandler? BorderColorChanged;
 
         public event EventHandler<PaintEventArgs>? Paint;
@@ -61,6 +89,7 @@ namespace Alternet.UI
 
         public bool IsDisposed { get; private set; }
 
+        [Content]
         public Collection<Control> Children { get; } = new Collection<Control>();
 
         public Control? Parent { get; internal set; }

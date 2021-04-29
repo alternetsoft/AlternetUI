@@ -27,6 +27,14 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="MainWindow.xaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="MainWindow.xaml" />
+    </ItemGroup>
+
+    <ItemGroup>
       <PackageReference Include="Skybrud.Colors" Version="1.0.2" />
     </ItemGroup>
   

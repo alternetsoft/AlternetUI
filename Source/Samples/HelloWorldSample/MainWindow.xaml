@@ -1,0 +1,10 @@
+﻿<Window xmlns="http://schemas.alternetsoft.com/ui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:HelloWorldSample;assembly=HelloWorldSample"
+        Title="Hello">
+    <StackPanel Orientation="Vertical">
+        <Button Text="Say Hello" Name="sayHelloButton" />
+        <Button Text="Say Bye" />
+        <local:CustomCompositeControl />
+    </StackPanel>
+</Window>

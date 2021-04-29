@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace HelloWorldSample
 {
-    internal class CustomCompositeControl : Control
+    public class CustomCompositeControl : Control
     {
         private string text = "";
 

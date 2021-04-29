@@ -8,8 +8,17 @@
     <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>C:\Work\UI\Source\Keys\Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
   <ItemGroup Condition="$(DefineConstants.Contains(';NETCOREAPP'))">
       <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\Source\Keys\Key.snk" Link="Key.snk" />
   </ItemGroup>
 
   <ItemGroup>
