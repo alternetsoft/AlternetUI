@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace HelloWorldSample
 {
-    internal class CustomDrawnControl : Control
+    public class CustomDrawnControl : Control
     {
         private Color color = Color.LightGreen;
 

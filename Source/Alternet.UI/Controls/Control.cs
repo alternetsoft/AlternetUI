@@ -7,7 +7,7 @@ using System.Linq;
 namespace Alternet.UI
 {
     [System.ComponentModel.DesignerCategory("Code")]
-    public class Control : Component
+    public class Control : Component, ISupportInitialize
     {
         private float width = float.NaN;
 
@@ -309,6 +309,16 @@ namespace Alternet.UI
         private void Children_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
         {
             e.Item.Parent = null;
+        }
+
+        public void BeginInit()
+        {
+            SuspendLayout();
+        }
+
+        public void EndInit()
+        {
+            ResumeLayout();
         }
     }
 }

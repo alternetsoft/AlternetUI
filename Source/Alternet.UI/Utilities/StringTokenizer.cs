@@ -21,19 +21,19 @@ namespace Alternet.UI
         private readonly string _s;
         private readonly int _length;
         private readonly char _separator;
-        private readonly string _exceptionMessage;
+        private readonly string? _exceptionMessage;
         private readonly IFormatProvider _formatProvider;
         private int _index;
         private int _tokenIndex;
         private int _tokenLength;
 
-        public StringTokenizer(string s, IFormatProvider formatProvider, string exceptionMessage = null)
+        public StringTokenizer(string s, IFormatProvider formatProvider, string? exceptionMessage = null)
             : this(s, GetSeparatorFromFormatProvider(formatProvider), exceptionMessage)
         {
             _formatProvider = formatProvider;
         }
 
-        public StringTokenizer(string s, char separator = DefaultSeparatorChar, string exceptionMessage = null)
+        public StringTokenizer(string s, char separator = DefaultSeparatorChar, string? exceptionMessage = null)
         {
             _s = s ?? throw new ArgumentNullException(nameof(s));
             _length = s?.Length ?? 0;
@@ -50,7 +50,7 @@ namespace Alternet.UI
             }
         }
 
-        public string CurrentToken => _tokenIndex < 0 ? null : _s.Substring(_tokenIndex, _tokenLength);
+        public string? CurrentToken => _tokenIndex < 0 ? null : _s.Substring(_tokenIndex, _tokenLength);
 
         public void Dispose()
         {
@@ -132,7 +132,7 @@ namespace Alternet.UI
             return result;
         }
 
-        public bool TryReadString(out string result, char? separator = null)
+        public bool TryReadString(out string? result, char? separator = null)
         {
             var success = TryReadToken(separator ?? _separator);
             result = CurrentToken;
@@ -145,6 +145,9 @@ namespace Alternet.UI
             {
                 throw GetFormatException();
             }
+
+            if (result == null)
+                throw new InvalidOperationException();
 
             return result;
         }

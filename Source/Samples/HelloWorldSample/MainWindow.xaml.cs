@@ -1,13 +1,12 @@
 ﻿using Alternet.UI;
 using System;
 using System.ComponentModel;
-using System.Drawing;
 
 namespace HelloWorldSample
 {
-    class MainWindow : Window
+    internal class MainWindow : Window
     {
-        Button sayHelloButton;
+        private CheckBox allowCloseWindowCheckBox;
 
         public MainWindow()
         {
@@ -16,13 +15,18 @@ namespace HelloWorldSample
                 throw new InvalidOperationException();
             new XamlLoader().LoadExisting(xamlStream, this);
 
-            sayHelloButton = (Button)FindControl("sayHelloButton");
-            sayHelloButton.Click += SayHelloButton_Click;
+            allowCloseWindowCheckBox = (CheckBox)FindControl("allowCloseWindowCheckBox");
         }
 
-        private void SayHelloButton_Click(object? sender, EventArgs e)
+        protected override void OnClosing(CancelEventArgs e)
         {
-            MessageBox.Show("Hello", "Hello");
+            if (!allowCloseWindowCheckBox.IsChecked)
+            {
+                MessageBox.Show("Closing the window is not allowed. Set the check box to allow.", "Closing Not Allowed");
+                e.Cancel = true;
+            }
+
+            base.OnClosing(e);
         }
     }
 }
