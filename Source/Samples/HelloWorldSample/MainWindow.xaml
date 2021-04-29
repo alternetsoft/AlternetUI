@@ -3,7 +3,7 @@
         xmlns:local="clr-namespace:HelloWorldSample;assembly=HelloWorldSample"
         Title="Hello">
     <StackPanel Orientation="Vertical">
-        <Button Text="Say Hello" Name="sayHelloButton" />
+        <Button Text="Say Hello" Name="sayHelloButton" Margin="10"/>
         <Button Text="Say Bye" />
         <local:CustomCompositeControl />
     </StackPanel>

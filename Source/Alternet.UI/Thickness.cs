@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Globalization;
 
 namespace Alternet.UI
 {
@@ -39,6 +40,17 @@ namespace Alternet.UI
             this.top = top;
             this.right = right;
             this.bottom = bottom;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Thickness"/> structure.
+        /// </summary>
+        /// <param name="horizontal">The thickness on the left and right.</param>
+        /// <param name="vertical">The thickness on the top and bottom.</param>
+        public Thickness(float horizontal, float vertical)
+        {
+            left = right = horizontal;
+            top = bottom = vertical;
         }
 
         public SizeF Size => new SizeF(Horizontal, Vertical);
@@ -89,6 +101,36 @@ namespace Alternet.UI
                     && (t1.right == t2.right || (float.IsNaN(t1.right) && float.IsNaN(t2.right)))
                     && (t1.bottom == t2.bottom || (float.IsNaN(t1.bottom) && float.IsNaN(t2.bottom)))
                     );
+        }
+
+        /// <summary>
+        /// Parses a <see cref="Thickness"/> string.
+        /// </summary>
+        /// <param name="s">The string.</param>
+        /// <returns>The <see cref="Thickness"/>.</returns>
+        public static Thickness Parse(string s)
+        {
+            const string exceptionMessage = "Invalid Thickness.";
+
+            using (var tokenizer = new StringTokenizer(s, CultureInfo.InvariantCulture, exceptionMessage))
+            {
+                if (tokenizer.TryReadSingle(out var a))
+                {
+                    if (tokenizer.TryReadSingle(out var b))
+                    {
+                        if (tokenizer.TryReadSingle(out var c))
+                        {
+                            return new Thickness(a, b, c, tokenizer.ReadSingle());
+                        }
+
+                        return new Thickness(a, b);
+                    }
+
+                    return new Thickness(a);
+                }
+
+                throw new FormatException(exceptionMessage);
+            }
         }
 
         /// <summary>
