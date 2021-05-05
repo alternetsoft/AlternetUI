@@ -14,8 +14,6 @@ namespace Alternet::UI
 
     protected:
 
-        SizeF GetDefaultSize() override;
-
     private:
 
         wxButton* GetButton();

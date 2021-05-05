@@ -36,12 +36,12 @@ namespace Alternet::UI
 
     DrawingContext* Control::OpenPaintDrawingContext()
     {
-        return new DrawingContext(new wxPaintDC(_wxWindow));
+        return new DrawingContext(new wxPaintDC(GetWxWindow()));
     }
 
     DrawingContext* Control::OpenClientDrawingContext()
     {
-        return new DrawingContext(new wxClientDC(_wxWindow));
+        return new DrawingContext(new wxClientDC(GetWxWindow()));
     }
 
     Control* Control::GetParent()
@@ -51,6 +51,10 @@ namespace Alternet::UI
 
     wxWindow* Control::GetWxWindow()
     {
+        if (_wxWindow == nullptr)
+            CreateWxWindow();
+
+        wxASSERT(_wxWindow);
         return _wxWindow;
     }
 
@@ -59,8 +63,9 @@ namespace Alternet::UI
         if (!IsWxWindowCreated())
             return;
         
-        _wxWindow->Refresh();
-        _wxWindow->Update();
+        auto wxWindow = GetWxWindow();
+        wxWindow->Refresh();
+        wxWindow->Update();
     }
 
     void Control::CreateWxWindow()
@@ -68,6 +73,8 @@ namespace Alternet::UI
         wxWindow* parentingWxWindow = nullptr;
         if (_parent != nullptr)
             parentingWxWindow = _parent->GetParentingWxWindow();
+        else
+            parentingWxWindow = GetParkingWindow();
         
         _wxWindow = CreateWxWindowCore(parentingWxWindow);
 
@@ -80,14 +87,10 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftButtonUp, this);
         
         _delayedValues.Apply();
+        OnWxWindowCreated();
 
         for (auto child : _children)
-        {
-            if (!child->IsWxWindowCreated())
-                child->CreateWxWindow();
-        }
-
-        OnWxWindowCreated();
+            child->UpdateWxWindowParent();
     }
 
     void Control::OnWxWindowCreated()
@@ -126,30 +129,28 @@ namespace Alternet::UI
 
     void Control::SetMouseCapture(bool value)
     {
-        wxASSERT(_wxWindow);
-
+        auto wxWindow = GetWxWindow();
         if (value)
         {
-            if (!(_wxWindow->HasCapture()))
-                _wxWindow->CaptureMouse();
+            if (!(wxWindow->HasCapture()))
+                wxWindow->CaptureMouse();
         }
         else
         {
-            if (_wxWindow->HasCapture())
-                _wxWindow->ReleaseMouse();
+            if (wxWindow->HasCapture())
+                wxWindow->ReleaseMouse();
         }
     }
 
     bool Control::GetIsMouseOver()
     {
-        if (_wxWindow == nullptr)
-            return false;
+        auto wxWindow = GetWxWindow();
 
         wxPoint pt;
         auto window = wxFindWindowAtPointer(pt);
         while (window != nullptr)
         {
-            if (window == _wxWindow)
+            if (window == wxWindow)
                 return true;
             window = window->GetParent();
         }
@@ -164,49 +165,76 @@ namespace Alternet::UI
 
     bool Control::RetrieveVisible()
     {
-        assert(_wxWindow);
-        return _wxWindow->IsShown();
+        return GetWxWindow()->IsShown();
     }
 
     void Control::ApplyVisible(bool value)
     {
-        assert(_wxWindow);
+        auto wxWindow = GetWxWindow();
         if (value)
-            _wxWindow->Show();
+            wxWindow->Show();
         else
-            _wxWindow->Hide();
+            wxWindow->Hide();
     }
 
     Color Control::RetrieveBackgroundColor()
     {
-        return _wxWindow->GetBackgroundColour();
+        return GetWxWindow()->GetBackgroundColour();
     }
 
     void Control::ApplyBackgroundColor(const Color& value)
     {
-        _wxWindow->SetBackgroundColour(value);
+        GetWxWindow()->SetBackgroundColour(value);
     }
 
     Color Control::RetrieveForegroundColor()
     {
-        return _wxWindow->GetForegroundColour();
+        return GetWxWindow()->GetForegroundColour();
     }
 
     void Control::ApplyForegroundColor(const Color& value)
     {
-        _wxWindow->SetForegroundColour(value);
+        GetWxWindow()->SetForegroundColour(value);
+    }
+
+    /*static*/ wxFrame* Control::GetParkingWindow()
+    {
+        if (s_parkingWindow == nullptr)
+        {
+            s_parkingWindow = new wxFrame();
+            s_parkingWindow->Hide();
+            s_parkingWindow->Create(0, wxID_ANY, _T("AlterNET UI Parking Window"));
+        }
+
+        return s_parkingWindow;
+    }
+
+    /*static*/ void Control::DestroyParkingWindow()
+    {
+        if (s_parkingWindow != nullptr)
+        {
+            s_parkingWindow->Destroy();
+            s_parkingWindow = nullptr;
+        }
+    }
+
+    /*static*/ bool Control::IsParkingWindowCreated()
+    {
+        return s_parkingWindow != nullptr;
     }
 
     RectangleF Control::RetrieveBounds()
     {
-        return toDip(_wxWindow->GetClientRect(), _wxWindow);
+        auto wxWindow = GetWxWindow();
+        return toDip(wxWindow->GetClientRect(), wxWindow);
     }
 
     void Control::ApplyBounds(const RectangleF& value)
     {
-        wxRect rect(fromDip(value, _wxWindow));
-        _wxWindow->SetPosition(rect.GetPosition());
-        _wxWindow->SetSize(rect.GetSize());
+        auto wxWindow = GetWxWindow();
+        wxRect rect(fromDip(value, wxWindow));
+        wxWindow->SetPosition(rect.GetPosition());
+        wxWindow->SetSize(rect.GetSize());
     }
 
     void Control::OnPaint(wxPaintEvent& event)
@@ -263,7 +291,26 @@ namespace Alternet::UI
     {
         event.Skip();
         RaiseEvent(ControlEvent::MouseLeftButtonUp);
-        _wxWindow->CallAfter([=]() {RaiseEvent(ControlEvent::MouseClick); });
+        GetWxWindow()->CallAfter([=]() {RaiseEvent(ControlEvent::MouseClick); });
+    }
+
+    void Control::UpdateWxWindowParent()
+    {
+        auto wxWindow = GetWxWindow();
+        auto parkingWindow = GetParkingWindow();
+
+        auto parent = GetParent();
+        if (parent == nullptr)
+        {
+            if (wxWindow->GetParent() != parkingWindow)
+                wxWindow->Reparent(parkingWindow);
+        }
+        else
+        {
+            auto parentWxWindow = parent->GetWxWindow();
+            if (wxWindow->GetParent() != parentWxWindow)
+                wxWindow->Reparent(parentWxWindow);
+        }
     }
 
     SizeF Control::GetSize()
@@ -312,30 +359,19 @@ namespace Alternet::UI
 
         _children.push_back(control);
         control->_parent = this;
-
-        if (IsWxWindowCreated())
-        {
-            if (!control->IsWxWindowCreated())
-                control->CreateWxWindow();
-        }
+        control->UpdateWxWindowParent();
     }
 
     void Control::RemoveChild(Control* control)
     {
         _children.erase(std::find(_children.begin(), _children.end(), control));
         control->_parent = nullptr;
-    }
-
-    SizeF Control::GetDefaultSize()
-    {
-        return SizeF(30, 30);
+        control->UpdateWxWindowParent();
     }
 
     SizeF Control::GetPreferredSize(const SizeF& availableSize)
     {
-        if (IsWxWindowCreated())
-            return toDip(_wxWindow->GetBestSize(), _wxWindow);
-        
-        return GetDefaultSize();
+        auto wxWindow = GetWxWindow();
+        return toDip(wxWindow->GetBestSize(), wxWindow);
     }
 }

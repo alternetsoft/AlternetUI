@@ -19,6 +19,7 @@ namespace Alternet::UI
         _panel = nullptr;
 
         _frame->Unbind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
+
         _frame->Destroy();
         _frame = nullptr;
     }
@@ -38,6 +39,7 @@ namespace Alternet::UI
         _frame = new Frame();
 
         _frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
+        _frame->Bind(wxEVT_DESTROY, &Window::OnDestroy, this);
 
         _panel = new wxPanel(_frame);
 
@@ -63,5 +65,17 @@ namespace Alternet::UI
     {
         if (RaiseEvent(WindowEvent::Closing))
             event.Veto();
+    }
+
+    void Window::OnDestroy(wxWindowDestroyEvent& event)
+    {
+        if (dynamic_cast<wxFrameBase*>(event.GetWindow()) == nullptr)
+            return;
+        
+        if (!IsParkingWindowCreated())
+            return;
+
+        if (wxTheApp->GetTopWindow() == GetParkingWindow())
+            DestroyParkingWindow();
     }
 }

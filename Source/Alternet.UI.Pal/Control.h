@@ -15,15 +15,18 @@ namespace Alternet::UI
         wxWindow* GetWxWindow();
         bool IsWxWindowCreated();
 
+        static wxFrame* GetParkingWindow();
+
     protected:
         void CreateWxWindow();
+
+        static void DestroyParkingWindow();
+        static bool IsParkingWindowCreated();
 
         virtual void OnWxWindowCreated();
         DelayedValues& GetDelayedValues();
 
         virtual wxWindow* GetParentingWxWindow();
-
-        virtual SizeF GetDefaultSize();
 
         virtual Color RetrieveBackgroundColor();
         virtual void ApplyBackgroundColor(const Color& value);
@@ -37,6 +40,8 @@ namespace Alternet::UI
             None = 0,
             Visible = 1 << 0,
         };
+
+        inline static wxFrame* s_parkingWindow = nullptr;
 
         wxWindow* _wxWindow = nullptr;
         Control* _parent = nullptr;
@@ -63,6 +68,8 @@ namespace Alternet::UI
         void OnMouseLeave(wxMouseEvent& event);
         void OnMouseLeftButtonDown(wxMouseEvent& event);
         void OnMouseLeftButtonUp(wxMouseEvent& event);
+
+        void UpdateWxWindowParent();
     };
 }
 

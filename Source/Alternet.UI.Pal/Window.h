@@ -11,7 +11,6 @@ namespace Alternet::UI
         Frame();
 
     private:
-
         BYREF_ONLY(Frame);
     };
 
@@ -33,5 +32,6 @@ namespace Alternet::UI
         wxPanel* _panel = nullptr;
 
         void OnClose(wxCloseEvent& event);
+        void OnDestroy(wxWindowDestroyEvent& event);
     };
 }

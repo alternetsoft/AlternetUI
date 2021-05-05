@@ -48,9 +48,4 @@ namespace Alternet::UI
     {
         RaiseEvent(ButtonEvent::Click);
     }
-    
-    SizeF Button::GetDefaultSize()
-    {
-        return toDip(wxButton::GetDefaultSize(), nullptr);
-    }
 }
