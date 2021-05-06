@@ -22,7 +22,7 @@ namespace Alternet::UI
         if (_wxWindow != nullptr)
         {
             _wxWindow->Unbind(wxEVT_PAINT, &Control::OnPaint, this);
-            _wxWindow->Unbind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
+            //_wxWindow->Unbind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
             _wxWindow->Unbind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
             _wxWindow->Unbind(wxEVT_MOTION, &Control::OnMouseMove, this);
             _wxWindow->Unbind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
@@ -38,13 +38,14 @@ namespace Alternet::UI
 
     DrawingContext* Control::OpenPaintDrawingContext()
     {
-        auto dc = new wxAutoBufferedPaintDC(GetWxWindow());
+        //auto dc = new wxAutoBufferedPaintDC(GetWxWindow());
+        auto dc = new wxPaintDC(GetWxWindow());
         
-        // todo: work out a proper background brush solution (including transparency, patterns, etc)
-        auto oldBackground = dc->GetBackground();
-        dc->SetBackground(wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_BTNFACE));
-        dc->Clear();
-        dc->SetBackground(oldBackground);
+        // // todo: work out a proper background brush solution (including transparency, patterns, etc)
+        // auto oldBackground = dc->GetBackground();
+        // dc->SetBackground(wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_BTNFACE));
+        // dc->Clear();
+        // dc->SetBackground(oldBackground);
 
         return new DrawingContext(dc);
     }
@@ -88,10 +89,10 @@ namespace Alternet::UI
         
         _wxWindow = CreateWxWindowCore(parentingWxWindow);
         _wxWindow->SetDoubleBuffered(true); // todo: this removes flicker on TextBoxes, but causes it on custom composite controls
-        _wxWindow->SetBackgroundStyle(wxBG_STYLE_PAINT);
+        //_wxWindow->SetBackgroundStyle(wxBG_STYLE_PAINT);
 
         _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
-        _wxWindow->Bind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
+        //_wxWindow->Bind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
         _wxWindow->Bind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
         _wxWindow->Bind(wxEVT_MOTION, &Control::OnMouseMove, this);
         _wxWindow->Bind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
