@@ -34,7 +34,7 @@ namespace Alternet.UI.Native
                 if (fromPointerFactory != null)
                     return fromPointerFactory(pointer);
                 else
-                    throw new InvalidOperationException();
+                    return null;
             }
 
             return (T)w;

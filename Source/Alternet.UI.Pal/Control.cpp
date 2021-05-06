@@ -202,7 +202,9 @@ namespace Alternet::UI
         if (s_parkingWindow == nullptr)
         {
             s_parkingWindow = new wxFrame();
-            s_parkingWindow->Hide();
+#ifndef __WXGTK__
+            s_parkingWindow->Hide(); // This asserts on linux, but is needed on other platforms.
+#endif            
             s_parkingWindow->Create(0, wxID_ANY, _T("AlterNET UI Parking Window"));
         }
 

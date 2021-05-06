@@ -80,6 +80,7 @@
         "stack": "cpp",
         "unordered_set": "cpp",
         "__functional_03": "cpp",
-        "memory_resource": "cpp"
+        "memory_resource": "cpp",
+        "*.inc": "cpp"
     }
 }
