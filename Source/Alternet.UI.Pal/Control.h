@@ -60,6 +60,7 @@ namespace Alternet::UI
         void ApplyBounds(const RectangleF& value);
 
         void OnPaint(wxPaintEvent& event);
+        void OnEraseBackground(wxEraseEvent& event);
 
         void OnMouseCaptureLost(wxEvent& event);
 

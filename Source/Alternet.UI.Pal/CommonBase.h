@@ -30,6 +30,7 @@
 #include <wx/wx.h>
 #endif
 
+#include <wx/dcbuffer.h>
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
 
