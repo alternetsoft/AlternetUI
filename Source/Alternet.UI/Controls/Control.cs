@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
 
 namespace Alternet.UI
 {
@@ -19,38 +17,12 @@ namespace Alternet.UI
         private Color? foregroundColor;
         private Color? borderColor;
 
+        private bool visible = true;
+
         public Control()
         {
             Children.ItemInserted += Children_ItemInserted;
             Children.ItemRemoved += Children_ItemRemoved;
-        }
-
-        public string? Name { get; set; }
-
-        public Control? TryFindControl(string name)
-        {
-            if (name is null)
-                throw new ArgumentNullException(nameof(name));
-
-            if (Name == name)
-                return this;
-
-            foreach (var child in Children)
-            {
-                var result = child.TryFindControl(name);
-                if (result != null)
-                    return result;
-            }
-
-            return null;
-        }
-
-        public Control FindControl(string name)
-        {
-            if (name is null)
-                throw new ArgumentNullException(nameof(name));
-
-            return TryFindControl(name) ?? throw new InvalidOperationException();
         }
 
         public event EventHandler? BorderColorChanged;
@@ -61,9 +33,28 @@ namespace Alternet.UI
 
         public event EventHandler? PaddingChanged;
 
+        public event EventHandler? VisibleChanged;
+
         public event EventHandler? BackgroundColorChanged;
 
         public event EventHandler? ForegroundColorChanged;
+
+        public string? Name { get; set; }
+
+        public bool Visible
+        {
+            get => visible;
+
+            set
+            {
+                if (visible == value)
+                    return;
+
+                visible = value;
+                OnVisibleChanged();
+                VisibleChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         public Color? BorderColor
         {
@@ -180,6 +171,36 @@ namespace Alternet.UI
 
         private IControlHandlerFactory? ControlHandlerFactory { get; set; }
 
+        public Control? TryFindControl(string name)
+        {
+            if (name is null)
+                throw new ArgumentNullException(nameof(name));
+
+            if (Name == name)
+                return this;
+
+            foreach (var child in Children)
+            {
+                var result = child.TryFindControl(name);
+                if (result != null)
+                    return result;
+            }
+
+            return null;
+        }
+
+        public void Show() => Visible = true;
+
+        public void Hide() => Visible = false;
+
+        public Control FindControl(string name)
+        {
+            if (name is null)
+                throw new ArgumentNullException(nameof(name));
+
+            return TryFindControl(name) ?? throw new InvalidOperationException();
+        }
+
         public DrawingContext CreateDrawingContext() => Handler.CreateDrawingContext();
 
         public void Update() => Handler.Update();
@@ -206,6 +227,16 @@ namespace Alternet.UI
             return Handler.GetPreferredSize(availableSize);
         }
 
+        public void BeginInit()
+        {
+            SuspendLayout();
+        }
+
+        public void EndInit()
+        {
+            ResumeLayout();
+        }
+
         internal void InvokePaint(PaintEventArgs e)
         {
             if (e == null)
@@ -228,6 +259,12 @@ namespace Alternet.UI
                 throw new InvalidOperationException();
             handler.Detach();
             handler = null;
+        }
+
+        private protected void SetVisibleValue(bool value) => visible = value;
+
+        protected virtual void OnVisibleChanged()
+        {
         }
 
         protected void RecreateHandler()
@@ -257,7 +294,7 @@ namespace Alternet.UI
                 {
                     foreach (var child in Handler.AllChildren)
                         child.Dispose();
-                    
+
                     Children.Clear();
                     Handler.VisualChildren.Clear();
 
@@ -309,16 +346,6 @@ namespace Alternet.UI
         private void Children_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
         {
             e.Item.Parent = null;
-        }
-
-        public void BeginInit()
-        {
-            SuspendLayout();
-        }
-
-        public void EndInit()
-        {
-            ResumeLayout();
         }
     }
 }

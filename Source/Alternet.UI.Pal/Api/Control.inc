@@ -47,6 +47,7 @@ enum class ControlEvent
     MouseLeftButtonDown,
     MouseLeftButtonUp,
     MouseClick,
+    VisibleChanged,
 };
 typedef void* (*ControlEventCallbackType)(Control* obj, ControlEvent event, void* param);
 static void SetEventCallback(ControlEventCallbackType value) { eventCallback = value; }

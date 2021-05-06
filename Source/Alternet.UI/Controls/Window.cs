@@ -14,6 +14,7 @@ namespace Alternet.UI
         public Window()
         {
             Application.Current.RegisterWindow(this);
+            SetVisibleValue(false);
             Bounds = new RectangleF(100, 100, 400, 400);
         }
 

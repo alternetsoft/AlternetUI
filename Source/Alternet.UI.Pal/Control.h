@@ -68,6 +68,7 @@ namespace Alternet::UI
         void OnMouseLeave(wxMouseEvent& event);
         void OnMouseLeftButtonDown(wxMouseEvent& event);
         void OnMouseLeftButtonUp(wxMouseEvent& event);
+        void OnVisibleChanged(wxShowEvent& event);
 
         void UpdateWxWindowParent();
     };

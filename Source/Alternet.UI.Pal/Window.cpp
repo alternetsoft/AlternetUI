@@ -10,6 +10,7 @@ namespace Alternet::UI
 
     Window::Window()
     {
+        SetVisible(false);
         CreateWxWindow();
     }
 
@@ -69,6 +70,8 @@ namespace Alternet::UI
 
     void Window::OnDestroy(wxWindowDestroyEvent& event)
     {
+        // Ensure the parking window is closed after all regular windows have been closed.
+
         if (dynamic_cast<wxFrameBase*>(event.GetWindow()) == nullptr)
             return;
         

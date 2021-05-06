@@ -19,6 +19,8 @@ namespace NativeApi.Api
 
         public event EventHandler? MouseClick { add => throw new Exception(); remove => throw new Exception(); }
 
+        public event EventHandler? VisibleChanged { add => throw new Exception(); remove => throw new Exception(); }
+
         public void SetMouseCapture(bool value) => throw new Exception();
 
         public Control? Parent { get; }

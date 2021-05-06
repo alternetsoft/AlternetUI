@@ -22,6 +22,7 @@ namespace Alternet::UI
         if (_wxWindow != nullptr)
         {
             _wxWindow->Unbind(wxEVT_PAINT, &Control::OnPaint, this);
+            _wxWindow->Unbind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
             _wxWindow->Unbind(wxEVT_MOTION, &Control::OnMouseMove, this);
             _wxWindow->Unbind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
             _wxWindow->Unbind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
@@ -79,6 +80,7 @@ namespace Alternet::UI
         _wxWindow = CreateWxWindowCore(parentingWxWindow);
 
         _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
+        _wxWindow->Bind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
         _wxWindow->Bind(wxEVT_MOTION, &Control::OnMouseMove, this);
         _wxWindow->Bind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
         _wxWindow->Bind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
@@ -202,9 +204,6 @@ namespace Alternet::UI
         if (s_parkingWindow == nullptr)
         {
             s_parkingWindow = new wxFrame();
-#ifndef __WXGTK__
-            s_parkingWindow->Hide(); // This asserts on linux, but is needed on other platforms.
-#endif            
             s_parkingWindow->Create(0, wxID_ANY, _T("AlterNET UI Parking Window"));
         }
 
@@ -294,6 +293,12 @@ namespace Alternet::UI
         event.Skip();
         RaiseEvent(ControlEvent::MouseLeftButtonUp);
         GetWxWindow()->CallAfter([=]() {RaiseEvent(ControlEvent::MouseClick); });
+    }
+
+    void Control::OnVisibleChanged(wxShowEvent& event)
+    {
+        event.Skip();
+        RaiseEvent(ControlEvent::VisibleChanged);
     }
 
     void Control::UpdateWxWindowParent()

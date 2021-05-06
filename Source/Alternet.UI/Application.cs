@@ -62,6 +62,7 @@ namespace Alternet.UI
         {
             if (window == null) throw new ArgumentNullException(nameof(window));
             CheckDisposed();
+            window.Show();
             nativeApplication.Run(((NativeWindowHandler)window.Handler).NativeControl);
         }
 

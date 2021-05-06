@@ -83,12 +83,6 @@ namespace Alternet.UI
             }
         }
 
-        protected virtual void OnIsVisualChildChanged()
-        {
-            if (!NeedsNativeControl())
-                DisposeNativeControl();
-        }
-
         public Collection<Control> VisualChildren { get; } = new Collection<Control>();
 
         public IEnumerable<Control> AllChildren => VisualChildren.Concat(Control.Children);
@@ -254,6 +248,12 @@ namespace Alternet.UI
 
         internal virtual Native.Control CreateNativeControl() => new Native.Panel();
 
+        protected virtual void OnIsVisualChildChanged()
+        {
+            if (!NeedsNativeControl())
+                DisposeNativeControl();
+        }
+
         protected virtual bool NeedsNativeControl()
         {
             if (IsVisualChild)
@@ -287,6 +287,7 @@ namespace Alternet.UI
 
         protected virtual void OnAttach()
         {
+            ApplyVisible();
             ApplyBorderColor();
             ApplyBackgroundColor();
             ApplyForegroundColor();
@@ -296,6 +297,7 @@ namespace Alternet.UI
             Control.BackgroundColorChanged += Control_BackgroundColorChanged;
             Control.ForegroundColorChanged += Control_ForegroundColorChanged;
             Control.BorderColorChanged += Control_BorderColorChanged;
+            Control.VisibleChanged += Control_VisibleChanged;
 
             Control.Children.ItemInserted += Children_ItemInserted;
             VisualChildren.ItemInserted += Children_ItemInserted;
@@ -311,6 +313,7 @@ namespace Alternet.UI
             Control.BackgroundColorChanged -= Control_BackgroundColorChanged;
             Control.ForegroundColorChanged -= Control_ForegroundColorChanged;
             Control.BorderColorChanged -= Control_BorderColorChanged;
+            Control.VisibleChanged -= Control_VisibleChanged;
 
             Control.Children.ItemInserted -= Children_ItemInserted;
             Control.Children.ItemRemoved -= Children_ItemRemoved;
@@ -320,6 +323,7 @@ namespace Alternet.UI
             if (NativeControl != null)
             {
                 NativeControl.Paint -= NativeControl_Paint;
+                NativeControl.VisibleChanged -= NativeControl_VisibleChanged;
                 NativeControl.MouseEnter -= NativeControl_MouseEnter;
                 NativeControl.MouseLeave -= NativeControl_MouseLeave;
                 NativeControl.MouseMove -= NativeControl_MouseMove;
@@ -341,6 +345,7 @@ namespace Alternet.UI
             }
 
             NativeControl.Paint += NativeControl_Paint;
+            NativeControl.VisibleChanged += NativeControl_VisibleChanged;
             NativeControl.MouseEnter += NativeControl_MouseEnter;
             NativeControl.MouseLeave += NativeControl_MouseLeave;
             NativeControl.MouseMove += NativeControl_MouseMove;
@@ -420,11 +425,22 @@ namespace Alternet.UI
             ApplyForegroundColor();
         }
 
+        private void Control_VisibleChanged(object? sender, EventArgs e)
+        {
+            ApplyVisible();
+        }
+
         private void ApplyBackgroundColor()
         {
             if (NativeControl != null)
                 NativeControl.BackgroundColor = Control.BackgroundColor ?? Color.Empty;
             Update();
+        }
+
+        private void ApplyVisible()
+        {
+            if (NativeControl != null)
+                NativeControl.Visible = Control.Visible;
         }
 
         private void ApplyForegroundColor()
@@ -481,6 +497,12 @@ namespace Alternet.UI
                 if (control.Handler.NativeControl != null)
                     return control;
             }
+        }
+
+        private void NativeControl_VisibleChanged(object? sender, EventArgs e)
+        {
+            if (NativeControl != null)
+                Control.Visible = NativeControl.Visible;
         }
 
         private void NativeControl_MouseEnter(object? sender, EventArgs? e)

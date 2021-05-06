@@ -56,8 +56,6 @@ namespace Alternet::UI
     {
         verifyNonNull(window);
 
-        window->SetVisible(true);
-
 #ifdef __WXMSW__
         if (!WindowsVisualThemeSupport::GetInstance().IsEnabled())
             windowsVisualThemeSupportCookie = WindowsVisualThemeSupport::GetInstance().Enable();
