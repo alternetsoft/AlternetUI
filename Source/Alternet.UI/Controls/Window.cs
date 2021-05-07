@@ -52,6 +52,8 @@ namespace Alternet.UI
             }
         }
 
+        public WindowStartPosition StartPosition { get; set;} = WindowStartPosition.SystemDefaultLocation;
+
         public SizeF Size
         {
             get
