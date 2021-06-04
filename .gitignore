@@ -2,6 +2,7 @@ bin/
 obj/
 .vs/
 
+Publish/Artifacts/
 External/wxWidgets/
 Source/Build/.nuget
 Source/Build/Alternet.UI.Pal/*.nupkg
