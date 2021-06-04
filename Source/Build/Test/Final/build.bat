@@ -1,2 +1,2 @@
 if not exist out md out
-echo "Finalresult" > out/Result.final.txt
+type ..\Artifacts\Windows\Result.win.txt ..\Artifacts\Linux\Result.linux.txt > out/Result.final.txt
