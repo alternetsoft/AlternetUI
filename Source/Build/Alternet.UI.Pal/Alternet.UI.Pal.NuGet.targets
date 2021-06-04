@@ -45,6 +45,11 @@
         <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS)\native"/>
         <Copy SourceFiles="@(NugetPayload_Native_MacOS)" DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS)\native" />
 
+        <!-- Linux -->
+
+        <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux)\native"/>
+        <Copy SourceFiles="@(NugetPayload_Native_Linux)" DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux)\native" />
+
     </Target>
 
     <Target Name="NuGet_Pack" >
@@ -67,8 +72,8 @@
     </Target>
 
     <Target Name="NuGet" DependsOnTargets="NuGet_Clean">
-        <Error Text="To build the NuGet package, the build result files for all the platforms (Windows, MacOS) must be present in Bin directory."  
-            Condition="@(NugetPayload_Native_Windows_X86->Count()) == 0 or @(NugetPayload_Native_Windows_X64->Count()) == 0 or @(NugetPayload_Native_MacOS->Count()) == 0" />
+        <Error Text="To build the NuGet package, the build result files for all the platforms (Windows, MacOS, Linux) must be present in Bin directory."  
+            Condition="@(NugetPayload_Native_Windows_X86->Count()) == 0 or @(NugetPayload_Native_Windows_X64->Count()) == 0 or @(NugetPayload_Native_MacOS->Count()) == 0 or @(NugetPayload_Native_Linux->Count()) == 0" />
 
         <CallTarget Targets="NuGet_PrepareSource;NuGet_Pack;NuGet_CopyBuildResults" />
     </Target>

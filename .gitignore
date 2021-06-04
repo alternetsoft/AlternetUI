@@ -3,9 +3,10 @@ obj/
 .vs/
 
 Publish/Artifacts/
+Publish/Packages/
 External/wxWidgets/
-Source/Build/.nuget
-Source/Build/Alternet.UI.Pal/*.nupkg
+Source/Build/Alternet.UI.Common/.nuget
+Source/Build/Alternet.UI.Pal/NuGet/*.nupkg
 Source/Build/Alternet.UI.Pal/NuGet/runtimes
 Source/Build/Alternet.UI.Pal-old/*.nupkg
 Source/Build/Alternet.UI.Pal-old/NuGet/runtimes
