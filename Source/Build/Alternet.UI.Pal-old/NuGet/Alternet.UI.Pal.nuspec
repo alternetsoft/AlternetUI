@@ -9,7 +9,6 @@
     <description>Alternet UI</description>
     <projectUrl>https://alternetsoft.com</projectUrl>
     <license type="file">license.txt</license>
-    <icon>icon.png</icon>
-    <copyright>Copyright © 2021 AlterNET Software</copyright>
+    <copyright>Copyright © 2020 Alternet</copyright>
   </metadata>
 </package>

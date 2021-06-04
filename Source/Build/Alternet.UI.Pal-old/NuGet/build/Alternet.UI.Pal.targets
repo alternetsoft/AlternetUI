@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <!-- These targets run only on .NET 4.0 projects. -->
+
+    <Target Name="Alternet_UI_RemoveAutoCopiedAnyCpuNativeModules"
+          Condition="'$(TargetFrameworkIdentifier)'=='.NETFramework' And '$(PlatformTarget)'=='AnyCPU'"
+          BeforeTargets="GenerateBuildDependencyFile;CopyFilesToOutputDirectory;_CopyFilesMarkedCopyLocal">
+        <ItemGroup>
+            <AutoCopiedNativeFiles Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\runtimes\win-x86\native'))\*.*"/>
+        </ItemGroup>
+        <ItemGroup>
+            <ReferenceCopyLocalPaths Remove="@(AutoCopiedNativeFiles)" />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="Alternet_UI_CopyDotNetFrameworkNativeModules_AnyCPU" BeforeTargets="AfterBuild"
+      Condition="'$(TargetFrameworkIdentifier)'=='.NETFramework' And '$(PlatformTarget)'=='AnyCPU'">
+        <ItemGroup>
+            <NativeFilesX86 Include="$(MSBuildThisFileDirectory)..\runtimes\win-x86\native\*.*"/>
+            <NativeFilesX64 Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\*.*"/>
+        </ItemGroup>
+        <Copy SkipUnchangedFiles="true" SourceFiles="@(NativeFilesX86)" DestinationFolder="$(OutputPath)\x86" />
+        <Copy SkipUnchangedFiles="true" SourceFiles="@(NativeFilesX64)" DestinationFolder="$(OutputPath)\x64" />
+    </Target>
+
+    <Target Name="Alternet_UI_CopyDotNetFrameworkNativeModules_x64" BeforeTargets="AfterBuild"
+      Condition="'$(TargetFrameworkIdentifier)'=='.NETFramework' And '$(PlatformTarget)'=='x64'">
+        <ItemGroup>
+            <NativeFilesX64 Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\*.*"/>
+        </ItemGroup>
+        <Copy SkipUnchangedFiles="true" SourceFiles="@(NativeFilesX64)" DestinationFolder="$(OutputPath)" />
+    </Target>
+
+    <Target Name="Alternet_UI_CopyDotNetFrameworkNativeModules_x86" BeforeTargets="AfterBuild"
+      Condition="'$(TargetFrameworkIdentifier)'=='.NETFramework' And '$(PlatformTarget)'=='x86'">
+        <ItemGroup>
+            <NativeFilesX86 Include="$(MSBuildThisFileDirectory)..\runtimes\win-x86\native\*.*"/>
+        </ItemGroup>
+        <Copy SkipUnchangedFiles="true" SourceFiles="@(NativeFilesX86)" DestinationFolder="$(OutputPath)" />
+    </Target>
+
+</Project>

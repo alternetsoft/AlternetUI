@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="..\..\Mastering\Version\Version.props"/>
+
+    <PropertyGroup>
+        <NuGetExeDownloadUrl>https://dist.nuget.org/win-x86-commandline/latest/nuget.exe</NuGetExeDownloadUrl>
+        <NuGetRuntimeId_Windows_X64>win-x64</NuGetRuntimeId_Windows_X64>
+        <NuGetRuntimeId_Windows_X86>win-x86</NuGetRuntimeId_Windows_X86>
+        <NuGetRuntimeId_MacOS>osx-x64</NuGetRuntimeId_MacOS>
+        <NuGetRuntimeId_Linux>linux-x64</NuGetRuntimeId_Linux>
+    </PropertyGroup>
+
+</Project>

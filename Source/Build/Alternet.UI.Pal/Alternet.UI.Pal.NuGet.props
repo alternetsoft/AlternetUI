@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="../Alternet.UI.Common/Alternet.UI.Common.NuGet.props"/>
+
+    <PropertyGroup>
+        <NuGetDirectoryPath>$(MSBuildProjectDirectory)/NuGet</NuGetDirectoryPath>
+        <NuGetExeDirectoryPath>$(MSBuildProjectDirectory)/../Alternet.UI.Common/.nuget/</NuGetExeDirectoryPath>
+        <NuGetExeFilePath>$(NuGetExeDirectoryPath)/nuget.exe</NuGetExeFilePath>
+        <NuGetPackageName>Alternet.UI.Pal</NuGetPackageName>
+        <NuGetNuspecFileName>$(NuGetDirectoryPath)/$(NuGetPackageName).nuspec</NuGetNuspecFileName>
+        <NuGetOutputDirectoryPath>$(BinDirectoryPath)\NuGet</NuGetOutputDirectoryPath>
+        <NuGetBuildResultFiles>$(NuGetDirectoryPath)/$(NuGetPackageName)*.nupkg</NuGetBuildResultFiles>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <NugetNativeDllFileName>Alternet.UI.Pal.*</NugetNativeDllFileName>
+
+        <NugetPayloadDirectoryPath_Windows_X86>$(BinDirectoryPath)\$(PlatformName_Windows)\$(ManagedBuildConfiguration)\x86\</NugetPayloadDirectoryPath_Windows_X86>
+        <NugetPayloadDirectoryPath_Windows_X64>$(BinDirectoryPath)\$(PlatformName_Windows)\$(ManagedBuildConfiguration)\x64\</NugetPayloadDirectoryPath_Windows_X64>
+        <NugetPayloadDirectoryPath_MacOS>$(BinDirectoryPath)\$(PlatformName_MacOS)\$(ManagedBuildConfiguration)\x64\</NugetPayloadDirectoryPath_MacOS>
+        <NugetPayloadDirectoryPath_Linux>$(BinDirectoryPath)\$(PlatformName_Linux)\$(ManagedBuildConfiguration)\x64\</NugetPayloadDirectoryPath_Linux>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <NuGetDotNetLegacyLibDirectoryPath>$(NuGetDirectoryPath)\lib</NuGetDotNetLegacyLibDirectoryPath>
+        <NuGetSourceRefDirectoryPath>$(NuGetDirectoryPath)\ref</NuGetSourceRefDirectoryPath>
+        <NuGetSourceRuntimesDirectoryPath>$(NuGetDirectoryPath)\runtimes</NuGetSourceRuntimesDirectoryPath>
+    </PropertyGroup>
+
+</Project>

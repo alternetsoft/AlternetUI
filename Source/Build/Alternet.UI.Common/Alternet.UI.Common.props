@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <PropertyGroup>
+        <PlatformName_Windows>Windows</PlatformName_Windows>
+        <PlatformName_MacOS>MacOS</PlatformName_MacOS>
+        <PlatformName_Linux>Linux</PlatformName_Linux>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <BuildPlatform Condition="$([MSBuild]::IsOsPlatform('Windows'))">$(PlatformName_Windows)</BuildPlatform>
+        <BuildPlatform Condition="$([MSBuild]::IsOsPlatform('OSX'))">$(PlatformName_MacOS)</BuildPlatform>
+        <BuildPlatform Condition="$([MSBuild]::IsOsPlatform('Linux'))">$(PlatformName_Linux)</BuildPlatform>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <DotNetPlatformMoniker>net40</DotNetPlatformMoniker>
+        <DotNetCorePlatformMoniker>netcoreapp3.1</DotNetCorePlatformMoniker>
+    </PropertyGroup>
+
+</Project>

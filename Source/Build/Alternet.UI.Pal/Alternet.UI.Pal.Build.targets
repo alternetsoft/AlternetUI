@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="Alternet.UI.Pal.Clean.targets"/>
+
+    <Target Name="BuildManaged">
+        <!--<MSBuild Projects="$(Bindings_ManagedProjectFilePath)" Targets="restore" />
+        <MSBuild Projects="$(Bindings_ManagedProjectFilePath)"
+            Targets="Rebuild"
+            Properties="Configuration=$(ManagedBuildConfiguration);OutputPath=$(OutputDirectoryPath)/%(SupportedTargetFrameworkMoniker.Identity);TargetFramework=%(SupportedTargetFrameworkMoniker.Identity)" />
+
+        <ItemGroup>
+            <FilesToDelete Include="$(OutputDirectoryPath)\%(SupportedTargetFrameworkMoniker.Identity)\*.deps.json"/>
+            <FilesToDelete Include="$(OutputDirectoryPath)\%(SupportedTargetFrameworkMoniker.Identity)\*.pdb"/>
+        </ItemGroup> 
+        <Delete Files="@(FilesToDelete)"/>-->
+    </Target>
+
+    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
+        <NativeBuildResultFiles Include="$(Bindings_NativeUnixProjectOutputDirectoryPath)/Alternet.UI.Pal.dylib"/>
+    </ItemGroup>
+    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
+        <NativeBuildResultFiles Include="$(Bindings_NativeUnixProjectOutputDirectoryPath)/Alternet.UI.Pal.so"/>
+    </ItemGroup>
+
+    <Target Name="BuildNative_Windows_X86" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+        <Exec Command="&quot;$(CppMsBuildPath)&quot; $(Bindings_NativeVcProjectFilePath) /t:Rebuild /p:Configuration=$(NativeBuildConfiguration);OutDir=$(OutputDirectoryPath_X86);Platform=x86" />
+    </Target>
+    
+    <Target Name="BuildNative_Windows_X64" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+        <Exec Command="&quot;$(CppMsBuildPath)&quot; $(Bindings_NativeVcProjectFilePath) /t:Rebuild /p:Configuration=$(NativeBuildConfiguration);OutDir=$(OutputDirectoryPath_X64);Platform=x64" />
+    </Target>
+    
+    <Target Name="BuildNative_Windows_CleanupAfterBuild" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+        <ItemGroup>
+            <FilesToDelete Include="$(OutputDirectoryPath_X86)\*.exp"/>
+            <FilesToDelete Include="$(OutputDirectoryPath_X86)\*.pdb"/>
+            <FilesToDelete Include="$(OutputDirectoryPath_X86)\*.iobj"/>
+            <FilesToDelete Include="$(OutputDirectoryPath_X86)\*.ipdb"/>
+            <FilesToDelete Include="$(OutputDirectoryPath_X86)\*.lib"/>
+
+            <FilesToDelete Include="$(OutputDirectoryPath_X64)\*.exp"/>
+            <FilesToDelete Include="$(OutputDirectoryPath_X64)\*.pdb"/>
+            <FilesToDelete Include="$(OutputDirectoryPath_X64)\*.iobj"/>
+            <FilesToDelete Include="$(OutputDirectoryPath_X64)\*.ipdb"/>
+            <FilesToDelete Include="$(OutputDirectoryPath_X64)\*.lib"/>
+        </ItemGroup>
+        <Delete Files="@(FilesToDelete)"/>
+    </Target>
+
+    <Target Name="BuildNative_Windows" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+        <CallTarget Targets="BuildNative_Windows_X86;BuildNative_Windows_X64;BuildNative_Windows_CleanupAfterBuild" />
+    </Target>
+
+    <Target Name="BuildNative_MacOs" Condition="$([MSBuild]::IsOsPlatform('OSX'))">
+        <MakeDir Directories="$(Bindings_NativeUnixProjectOutputDirectoryPath)"/>
+
+        <Exec Command="chmod +x $(Bindings_NativeUnixProjectBuildPath)/release.sh"
+              WorkingDirectory="$(Bindings_NativeUnixProjectBuildPath)"/>
+        
+        <Exec Command="$(Bindings_NativeUnixProjectBuildPath)/release.sh"
+              WorkingDirectory="$(Bindings_NativeUnixProjectBuildPath)"/>
+        
+        <Copy SourceFiles="@(NativeBuildResultFiles)" DestinationFolder="$(OutputDirectoryPath_X64)" />
+    </Target>
+
+    <Target Name="BuildNative_Linux" Condition="$([MSBuild]::IsOsPlatform('Linux'))">
+        <MakeDir Directories="$(Bindings_NativeUnixProjectOutputDirectoryPath)"/>
+
+        <Exec Command="$(Bindings_NativeProjectDirectoryPath)/build_linux.sh"
+              WorkingDirectory="$(Bindings_NativeProjectDirectoryPath)"/>
+        
+        <Copy SourceFiles="@(NativeBuildResultFiles)" DestinationFolder="$(OutputDirectoryPath_X64)" />
+    </Target>
+
+    <Target Name="BuildNative" DependsOnTargets="BuildNative_Windows;BuildNative_MacOs;BuildNative_Linux">
+    </Target>
+
+    <Target Name="Build" DependsOnTargets="Clean">
+        <CallTarget Targets="BuildManaged;BuildNative" />
+    </Target>
+</Project>

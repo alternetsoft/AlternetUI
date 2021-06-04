@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <Import Project="../Alternet.UI.Common/Alternet.UI.Common.props"/>
+
+    <PropertyGroup>
+        <ManagedBuildConfiguration>Release</ManagedBuildConfiguration>
+        <NativeBuildConfiguration>Release</NativeBuildConfiguration>
+        <RootDirectoryPath>$(MSBuildProjectDirectory)\..\..\..\</RootDirectoryPath>
+        <BinDirectoryPath>$(MSBuildProjectDirectory)\bin\</BinDirectoryPath>
+        <OutputDirectoryPath_X86>$(BinDirectoryPath)\$(BuildPlatform)\$(ManagedBuildConfiguration)\x86\</OutputDirectoryPath_X86>
+        <OutputDirectoryPath_X64>$(BinDirectoryPath)\$(BuildPlatform)\$(ManagedBuildConfiguration)\x64\</OutputDirectoryPath_X64>
+        <BuildContentFilesDirectoryPath>$(MSBuildProjectDirectory)\Content</BuildContentFilesDirectoryPath>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Bindings_RootDirectoryPath>$(RootDirectoryPath)\Source\</Bindings_RootDirectoryPath>
+        
+        <!--<Bindings_ManagedProjectDirectoryPath>$(Bindings_RootDirectoryPath)\Alternet.UI\</Bindings_ManagedProjectDirectoryPath>
+        <Bindings_ManagedProjectFilePath>$(Bindings_ManagedProjectDirectoryPath)\Alternet.UI.csproj</Bindings_ManagedProjectFilePath>-->
+        
+        <Bindings_NativeProjectDirectoryPath>$(Bindings_RootDirectoryPath)\Alternet.UI.Pal\</Bindings_NativeProjectDirectoryPath>
+        <Bindings_NativeVcProjectFilePath>$(Bindings_NativeProjectDirectoryPath)\Alternet.UI.Pal.vcxproj</Bindings_NativeVcProjectFilePath>
+        <Bindings_NativeUnixProjectOutputDirectoryPath>$(Bindings_NativeProjectDirectoryPath)\bin\x64\$(NativeBuildConfiguration)</Bindings_NativeUnixProjectOutputDirectoryPath>
+        <Bindings_NativeUnixProjectBuildPath>$(Bindings_NativeProjectDirectoryPath)\build</Bindings_NativeUnixProjectBuildPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <SupportedTargetFrameworkMoniker Condition="$([MSBuild]::IsOsPlatform('Windows'))" Include="$(DotNetPlatformMoniker)" />
+        <SupportedTargetFrameworkMoniker Include="$(DotNetCorePlatformMoniker)" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <Import Project="Alternet.UI.Pal.props"/>
+    <Import Project="Alternet.UI.Pal.Build.targets"/>
+    <Import Project="Alternet.UI.Pal.NuGet.targets"/>
+
+</Project>

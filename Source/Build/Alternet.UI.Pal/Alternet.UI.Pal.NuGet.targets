@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="Alternet.UI.Pal.NuGet.props"/>
+
+    <ItemGroup>
+        <!-- Windows -->
+
+        <NugetPayload_Native_Windows_X64
+            Include="$(NugetPayloadDirectoryPath_Windows_X64)\$(NugetNativeDllFileName)" />
+        <NugetPayload_Native_Windows_X86
+            Include="$(NugetPayloadDirectoryPath_Windows_X86)\$(NugetNativeDllFileName)" />
+
+        <!-- MacOS -->
+
+        <NugetPayload_Native_MacOS
+            Include="$(NugetPayloadDirectoryPath_MacOS)\$(NugetNativeDllFileName)" />
+
+        <!-- Linux -->
+
+        <NugetPayload_Native_Linux
+            Include="$(NugetPayloadDirectoryPath_Linux)\$(NugetNativeDllFileName)" />
+    </ItemGroup>
+
+    <Target Name="NuGet_Clean">
+        <RemoveDir Directories="$(NuGetOutputDirectoryPath)" Condition="Exists($(NuGetOutputDirectoryPath))"/>
+        <RemoveDir Directories="$(NuGetSourceRefDirectoryPath)" Condition="Exists($(NuGetSourceRefDirectoryPath))"/>
+        <RemoveDir Directories="$(NuGetDotNetLegacyLibDirectoryPath)" Condition="Exists($(NuGetDotNetLegacyLibDirectoryPath))"/>
+        <RemoveDir Directories="$(NuGetSourceRuntimesDirectoryPath)" Condition="Exists($(NuGetSourceRuntimesDirectoryPath))"/>
+
+        <ItemGroup><NugetBuildResults Include="$(NuGetBuildResultFiles)" /></ItemGroup>
+        <Delete Files="@(NugetBuildResults)" />
+    </Target>
+
+    <Target Name="NuGet_PrepareSource" >
+        <!-- Windows -->
+        
+        <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_X86)\native"/>
+        <Copy SourceFiles="@(NugetPayload_Native_Windows_X86)" DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_X86)\native" />
+
+        <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_X64)\native"/>
+        <Copy SourceFiles="@(NugetPayload_Native_Windows_X64)" DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_X64)\native" />
+
+        <!-- MacOS -->
+
+        <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS)\native"/>
+        <Copy SourceFiles="@(NugetPayload_Native_MacOS)" DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS)\native" />
+
+    </Target>
+
+    <Target Name="NuGet_Pack" >
+        <DownloadFile Condition="!Exists($(NuGetExeFilePath))"
+            SourceUrl="$(NuGetExeDownloadUrl)" DestinationFolder="$(NuGetExeDirectoryPath)" />
+        
+        <Exec Condition="$([MSBuild]::IsOsPlatform('Windows'))"
+              Command="$(NuGetExeFilePath) pack $(NuGetNuspecFileName) -NoDefaultExcludes -Exclude .nuget\*;*.nupkg -properties version=$(Version)"
+              WorkingDirectory="$(NuGetDirectoryPath)" />
+        
+        <Exec Condition="!$([MSBuild]::IsOsPlatform('Windows'))"
+              Command="mono $(NuGetExeFilePath) pack $(NuGetNuspecFileName) -NoDefaultExcludes -Exclude .nuget/*\;*.nupkg -properties version=$(Version)"
+              WorkingDirectory="$(NuGetDirectoryPath)" />
+    </Target>
+
+    <Target Name="NuGet_CopyBuildResults" >
+        <ItemGroup><NugetBuildResults Include="$(NuGetBuildResultFiles)" /></ItemGroup>
+        <MakeDir Directories="$(NuGetOutputDirectoryPath)"/>
+        <Copy SourceFiles="@(NugetBuildResults)" DestinationFolder="$(NuGetOutputDirectoryPath)" />
+    </Target>
+
+    <Target Name="NuGet" DependsOnTargets="NuGet_Clean">
+        <Error Text="To build the NuGet package, the build result files for all the platforms (Windows, MacOS) must be present in Bin directory."  
+            Condition="@(NugetPayload_Native_Windows_X86->Count()) == 0 or @(NugetPayload_Native_Windows_X64->Count()) == 0 or @(NugetPayload_Native_MacOS->Count()) == 0" />
+
+        <CallTarget Targets="NuGet_PrepareSource;NuGet_Pack;NuGet_CopyBuildResults" />
+    </Target>
+</Project>
