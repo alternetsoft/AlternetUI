@@ -239,7 +239,7 @@
     <None Include="Api\Window.inc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Import Project="..\..\External\wxWidgets\wxwidgets.props" />
+  <Import Project="wxWidgets.props" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
 </Project>
