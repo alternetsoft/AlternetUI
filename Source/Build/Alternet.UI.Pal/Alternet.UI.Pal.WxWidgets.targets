@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <Target Name="CleanWxWidgets">
+        <RemoveDir Directories="$(WxWidgetsDirectory)" Condition="Exists($(WxWidgetsDirectory))"/>
+    </Target>
+
+    <Target Name="DownloadAndExtractWxWidgets">
+        <DownloadFile Condition="!Exists($(WxWidgetsDownloadTargetPath))"
+            SourceUrl="$(WxWidgetsDownloadUrl)"
+            DestinationFolder="$(WxWidgetsDownloadDirectory)" DestinationFileName="$(WxWidgetsDownloadFileName)" />
+        <Unzip SourceFiles="$(WxWidgetsDownloadTargetPath)" DestinationFolder="$(WxWidgetsDirectory)" />
+        <!-- <Delete Files="$(WxWidgetsDownloadTargetPath)"/> -->
+    </Target>
+
+    <Target Name="BuildWxWidgets" DependsOnTargets="CleanWxWidgets">
+        <CallTarget Targets="DownloadAndExtractWxWidgets" />
+    </Target>
+</Project>

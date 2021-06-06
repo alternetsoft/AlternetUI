@@ -5,6 +5,7 @@ obj/
 Publish/Artifacts/
 Publish/Packages/
 External/wxWidgets/
+External/WxWidgets.zip
 Source/Build/Alternet.UI.Common/.nuget
 Source/Build/Alternet.UI.Pal/NuGet/*.nupkg
 Source/Build/Alternet.UI.Pal/NuGet/runtimes
