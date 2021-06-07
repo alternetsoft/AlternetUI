@@ -10,7 +10,7 @@
             SourceUrl="$(WxWidgetsDownloadUrl)"
             DestinationFolder="$(WxWidgetsDownloadDirectory)" DestinationFileName="$(WxWidgetsDownloadFileName)" />
         <Unzip SourceFiles="$(WxWidgetsDownloadTargetPath)" DestinationFolder="$(WxWidgetsDirectory)" />
-        <!-- <Delete Files="$(WxWidgetsDownloadTargetPath)"/> -->
+        <Delete Files="$(WxWidgetsDownloadTargetPath)"/>
     </Target>
 
     <Target Name="BuildWxWidgets_Windows" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
@@ -36,8 +36,8 @@
     </Target>
 
     <Target Name="BuildWxWidgets">
-        <!-- <CallTarget Targets="CleanWxWidgets" /> -->
-        <!-- <CallTarget Targets="DownloadAndExtractWxWidgets" /> -->
+        <CallTarget Targets="CleanWxWidgets" />
+        <CallTarget Targets="DownloadAndExtractWxWidgets" />
         <CallTarget Targets="BuildWxWidgets_Windows" />
     </Target>
 </Project>
