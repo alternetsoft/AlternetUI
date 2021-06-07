@@ -13,7 +13,31 @@
         <!-- <Delete Files="$(WxWidgetsDownloadTargetPath)"/> -->
     </Target>
 
-    <Target Name="BuildWxWidgets" DependsOnTargets="CleanWxWidgets">
-        <CallTarget Targets="DownloadAndExtractWxWidgets" />
+    <Target Name="BuildWxWidgets_Windows" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+        <!-- 32 Bit Release -->
+        <Exec
+            WorkingDirectory="$(WxWidgetsWindowsBuildDirectory)"
+            Command="cmd.exe /s /c &quot; &quot;$(VCVarsAllPath)&quot; x86 &amp;&amp; nmake /f makefile.vc BUILD=release TARGET_CPU=X86 RUNTIME_LIBS=static &quot;" />
+
+        <!-- 32 Bit Debug -->
+        <Exec Condition="'$(ReleaseOnlyWxWidgetsBuild)' != 'true'"
+            WorkingDirectory="$(WxWidgetsWindowsBuildDirectory)"
+            Command="cmd.exe /s /c &quot; &quot;$(VCVarsAllPath)&quot; x86 &amp;&amp; nmake /f makefile.vc BUILD=debug TARGET_CPU=X86 RUNTIME_LIBS=static &quot;" />
+
+        <!-- 64 Bit Release -->
+        <Exec
+            WorkingDirectory="$(WxWidgetsWindowsBuildDirectory)"
+            Command="cmd.exe /s /c &quot; &quot;$(VCVarsAllPath)&quot; x64 &amp;&amp; nmake /f makefile.vc BUILD=release TARGET_CPU=X64 RUNTIME_LIBS=static &quot;" />
+
+        <!-- 64 Bit Debug -->
+        <Exec Condition="'$(ReleaseOnlyWxWidgetsBuild)' != 'true'"
+            WorkingDirectory="$(WxWidgetsWindowsBuildDirectory)"
+            Command="cmd.exe /s /c &quot; &quot;$(VCVarsAllPath)&quot; x64 &amp;&amp; nmake /f makefile.vc BUILD=debug TARGET_CPU=X64 RUNTIME_LIBS=static &quot;" />
+    </Target>
+
+    <Target Name="BuildWxWidgets">
+        <!-- <CallTarget Targets="CleanWxWidgets" /> -->
+        <!-- <CallTarget Targets="DownloadAndExtractWxWidgets" /> -->
+        <CallTarget Targets="BuildWxWidgets_Windows" />
     </Target>
 </Project>
