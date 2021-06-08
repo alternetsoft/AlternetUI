@@ -41,11 +41,18 @@
         <Exec WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" Command="../configure --disable-shared" />
         <Exec WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" Command="make -j8" />
     </Target>
+    <Target Name="BuildWxWidgets_MacOS" Condition="$([MSBuild]::IsOsPlatform('OSX'))">
+        <Exec WorkingDirectory="$(WxWidgetsDirectory)" Command="chmod +x configure" />
+        <Exec WorkingDirectory="$(WxWidgetsDirectory)" Command="mkdir $(WxWidgetsMacOSBuildDirectoryName)" />
+        <Exec WorkingDirectory="$(WxWidgetsMacOSBuildDirectory)" Command="../configure --disable-shared --disable-sys-libs" />
+        <Exec WorkingDirectory="$(WxWidgetsMacOSBuildDirectory)" Command="make -j8" />
+    </Target>
 
     <Target Name="BuildWxWidgets">
         <CallTarget Targets="CleanWxWidgets" />
         <CallTarget Targets="DownloadAndExtractWxWidgets" />
         <CallTarget Targets="BuildWxWidgets_Windows" />
         <CallTarget Targets="BuildWxWidgets_Linux" />
+        <CallTarget Targets="BuildWxWidgets_MacOS" />
     </Target>
 </Project>

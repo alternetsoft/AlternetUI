@@ -41,6 +41,8 @@
         <WxWidgetsWindowsBuildDirectory>$(WxWidgetsDirectory)\build\msw</WxWidgetsWindowsBuildDirectory>
         <WxWidgetsGtkBuildDirectoryName>gtk-build</WxWidgetsGtkBuildDirectoryName>
         <WxWidgetsGtkBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsGtkBuildDirectoryName)</WxWidgetsGtkBuildDirectory>
+        <WxWidgetsMacOSBuildDirectoryName>macos-build</WxWidgetsMacOSBuildDirectoryName>
+        <WxWidgetsMacOSBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsMacOSBuildDirectoryName)</WxWidgetsMacOSBuildDirectory>
     </PropertyGroup>
 
 </Project>

@@ -10,7 +10,11 @@ list(FILTER Sources EXCLUDE REGEX ".*/bin/.*")
 
 add_library(${PROJECT_NAME} SHARED ${Sources})
 
-set(wxWidgets_CONFIG_EXECUTABLE ${PROJECT_SOURCE_DIR}/../../External/WxWidgets/gtk-build/wx-config)
+if (APPLE)
+    set(wxWidgets_CONFIG_EXECUTABLE ${PROJECT_SOURCE_DIR}/../../External/WxWidgets/macos-build/wx-config)
+else()
+    set(wxWidgets_CONFIG_EXECUTABLE ${PROJECT_SOURCE_DIR}/../../External/WxWidgets/gtk-build/wx-config)
+endif()
 
 find_package(wxWidgets REQUIRED COMPONENTS net core base)
 include(${wxWidgets_USE_FILE})
