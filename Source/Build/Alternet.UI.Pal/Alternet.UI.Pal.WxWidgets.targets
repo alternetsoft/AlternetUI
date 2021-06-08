@@ -35,9 +35,17 @@
             Command="cmd.exe /s /c &quot; &quot;$(VCVarsAllPath)&quot; x64 &amp;&amp; nmake /f makefile.vc BUILD=debug TARGET_CPU=X64 RUNTIME_LIBS=static &quot;" />
     </Target>
 
+    <Target Name="BuildWxWidgets_Linux" Condition="$([MSBuild]::IsOsPlatform('Linux'))">
+        <Exec WorkingDirectory="$(WxWidgetsDirectory)" Command="chmod +x configure" />
+        <Exec WorkingDirectory="$(WxWidgetsDirectory)" Command="mkdir $(WxWidgetsGtkBuildDirectoryName)" />
+        <Exec WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" Command="../configure --disable-shared" />
+        <Exec WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" Command="make -j8" />
+    </Target>
+
     <Target Name="BuildWxWidgets">
         <CallTarget Targets="CleanWxWidgets" />
         <CallTarget Targets="DownloadAndExtractWxWidgets" />
         <CallTarget Targets="BuildWxWidgets_Windows" />
+        <CallTarget Targets="BuildWxWidgets_Linux" />
     </Target>
 </Project>

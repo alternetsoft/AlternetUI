@@ -39,6 +39,8 @@
         <WxWidgetsDownloadTargetPath>$(WxWidgetsDownloadDirectory)\$(WxWidgetsDownloadFileName)</WxWidgetsDownloadTargetPath>
         <VCVarsAllPath>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat</VCVarsAllPath>
         <WxWidgetsWindowsBuildDirectory>$(WxWidgetsDirectory)\build\msw</WxWidgetsWindowsBuildDirectory>
+        <WxWidgetsGtkBuildDirectoryName>gtk-build</WxWidgetsGtkBuildDirectoryName>
+        <WxWidgetsGtkBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsGtkBuildDirectoryName)</WxWidgetsGtkBuildDirectory>
     </PropertyGroup>
 
 </Project>
