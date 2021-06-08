@@ -6,6 +6,7 @@
     <AssemblyOriginatorKeyFile>..\Keys\Key.snk</AssemblyOriginatorKeyFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
+    <DefineConstants>$(DefineConstants);XAMLX_INTERNAL</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
@@ -67,9 +68,4 @@
   <ItemGroup Condition="$(DefineConstants.Contains(';NETFRAMEWORK'))">
     <Reference Include="System.Runtime" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\External\XamlX\XamlX.csproj" />
-  </ItemGroup>
-
 </Project>
