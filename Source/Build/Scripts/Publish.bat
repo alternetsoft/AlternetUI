@@ -30,6 +30,10 @@ if not !ERRORLEVEL! EQU 0 (
 
 :: Publish managed packages.
 
+del "%PackagesPublishDirectory%\*.nupkg"
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
 copy "%SCRIPT_HOME%\..\..\Alternet.UI\bin\Release\*.nupkg" "%PackagesPublishDirectory%"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
