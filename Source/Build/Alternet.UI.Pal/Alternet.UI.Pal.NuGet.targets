@@ -27,8 +27,8 @@
         <RemoveDir Directories="$(NuGetDotNetLegacyLibDirectoryPath)" Condition="Exists($(NuGetDotNetLegacyLibDirectoryPath))"/>
         <RemoveDir Directories="$(NuGetSourceRuntimesDirectoryPath)" Condition="Exists($(NuGetSourceRuntimesDirectoryPath))"/>
 
-        <ItemGroup><NugetBuildResults Include="$(NuGetBuildResultFiles)" /></ItemGroup>
-        <Delete Files="@(NugetBuildResults)" />
+        <ItemGroup><PreviousNugetBuildResults Include="$(NuGetBuildResultFiles)" /></ItemGroup>
+        <Delete Files="@(PreviousNugetBuildResults)" />
     </Target>
 
     <Target Name="NuGet_PrepareSource" >
