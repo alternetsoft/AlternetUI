@@ -4,7 +4,7 @@
   <!-- Product Information -->
   <PropertyGroup>
     <Company>AlterNET Software</Company>
-    <Product>Alternet.UI</Product>
+    <Product>AlterNET UI</Product>
     <Description>AlterNET UI: a cross-platform graphical user interface framework.</Description>
     <Copyright>Copyright © 2021 AlterNET Software</Copyright>
   </PropertyGroup>
@@ -13,7 +13,7 @@
   <PropertyGroup>
     <AssemblyVersion>0.0.1</AssemblyVersion>
     <FileVersion>0.0.1</FileVersion>
-    <InformationalVersion>0.0.1 (Alpha Release build 0.0.1)</InformationalVersion>
+    <InformationalVersion>0.0.1 (Release build 0.0.1)</InformationalVersion>
   </PropertyGroup>
 
   <!-- NuGet Specification -->
