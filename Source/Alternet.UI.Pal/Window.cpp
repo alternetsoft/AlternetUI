@@ -38,7 +38,6 @@ namespace Alternet::UI
     wxWindow* Window::CreateWxWindowCore(wxWindow* parent)
     {
         _frame = new Frame();
-        _frame->EnableMinimizeButton(false);
 
         _frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
         _frame->Bind(wxEVT_DESTROY, &Window::OnDestroy, this);
