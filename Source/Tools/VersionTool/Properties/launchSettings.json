@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PrereleaseVersionTool": {
+        "commandName": "Project",
+        "commandLineArgs": "increase-build"
+    }
+  }
+}
