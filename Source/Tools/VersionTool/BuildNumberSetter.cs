@@ -5,9 +5,9 @@ using System.Xml.Linq;
 
 namespace VersionTool
 {
-    internal class BuildNumberIncreaser
+    internal class BuildNumberSetter
     {
-        public static void IncreaseBuildNumber(string versionFilePath)
+        public static void SetBuildNumber(string versionFilePath, int buildNumber)
         {
             Console.WriteLine($"Increasing build number...");
 
@@ -15,15 +15,15 @@ namespace VersionTool
 
             XNamespace ns = "http://schemas.microsoft.com/developer/msbuild/2003";
             var informationalVersion = doc.Descendants(ns + "Project").Descendants(ns + "PropertyGroup").Descendants(ns + "InformationalVersion").Single();
-            TryIncreaseBuildNumber(informationalVersion, TryIncreaseBuildNumberInInformationalVersion);
+            TrySetBuildNumber(informationalVersion, x => TrySetBuildNumberInInformationalVersion(x, buildNumber));
 
             var packageVersion = doc.Descendants(ns + "Project").Descendants(ns + "PropertyGroup").Descendants(ns + "Version").Single();
-            TryIncreaseBuildNumber(packageVersion, TryIncreaseBuildNumberInPackageVersion);
+            TrySetBuildNumber(packageVersion, x => TrySetBuildNumberInPackageVersion(x, buildNumber));
 
             doc.Save(versionFilePath);
         }
 
-        private static string TryIncreaseBuildNumber(Regex regex, string value)
+        private static string TrySetBuildNumber(Regex regex, string value, int buildNumber)
         {
             var match = regex.Match(value);
             if (!match.Success)
@@ -31,18 +31,17 @@ namespace VersionTool
 
             if (!match.Groups.TryGetValue("build", out var group))
                 return value;
-            if (!int.TryParse(group.Value, out var buildNumber))
+            if (!int.TryParse(group.Value, out var _))
                 return value;
 
-            var nextBuildNumber = buildNumber + 1;
-            return ReplaceNamedGroup("build", nextBuildNumber.ToString(), match);
+            return ReplaceNamedGroup("build", buildNumber.ToString(), match);
         }
 
-        private static string TryIncreaseBuildNumberInInformationalVersion(string value) =>
-            TryIncreaseBuildNumber(new Regex(@"^\d+\.\d+\.\d+ \(\d+\.\d+\.\d+ \w+ build (?<build>\d+)\)$"), value);
+        private static string TrySetBuildNumberInInformationalVersion(string value, int buildNumber) =>
+            TrySetBuildNumber(new Regex(@"^\d+\.\d+\.\d+ \(\d+\.\d+\.\d+ \w+ build (?<build>\d+)\)$"), value, buildNumber);
 
-        private static string TryIncreaseBuildNumberInPackageVersion(string value) =>
-            TryIncreaseBuildNumber(new Regex(@"^\d+\.\d+\.\d+-\w+\.(?<build>\d+)$"), value);
+        private static string TrySetBuildNumberInPackageVersion(string value, int buildNumber) =>
+            TrySetBuildNumber(new Regex(@"^\d+\.\d+\.\d+-\w+\.(?<build>\d+)$"), value, buildNumber);
 
         private static string ReplaceNamedGroup(string groupName, string replacement, Match m)
         {
@@ -52,7 +51,7 @@ namespace VersionTool
             return capture;
         }
 
-        private static void TryIncreaseBuildNumber(XElement informationalVersion, Func<string, string> increaser)
+        private static void TrySetBuildNumber(XElement informationalVersion, Func<string, string> increaser)
         {
             var oldInformationalVersionValue = informationalVersion.Value;
             informationalVersion.Value = increaser(informationalVersion.Value);

@@ -9,8 +9,8 @@ namespace VersionTool
         {
             try
             {
-                CheckArguments(args);
-                BuildNumberIncreaser.IncreaseBuildNumber(LocateVersionFile());
+                CheckArguments(args, out var buildNumber);
+                BuildNumberSetter.SetBuildNumber(LocateVersionFile(), buildNumber);
             }
             catch (Exception e)
             {
@@ -21,10 +21,11 @@ namespace VersionTool
             return 0;
         }
 
-        private static void CheckArguments(string[] args)
+        private static void CheckArguments(string[] args, out int buildNumber)
         {
-            if (args.Length != 1 || !args[0].Equals("increase-build", StringComparison.OrdinalIgnoreCase))
-                throw new Exception("Usage: VersionTool.exe increase-build");
+            if (args.Length != 2 || !args[0].Equals("set-build-number", StringComparison.OrdinalIgnoreCase))
+                throw new Exception("Usage: VersionTool.exe set-build-number <build-number>");
+            buildNumber = int.Parse(args[1]);
         }
 
         private static string LocateVersionFile()
