@@ -39,7 +39,7 @@ namespace Alternet.UI
 
         public event EventHandler? ForegroundColorChanged;
 
-        public string? Name { get; set; }
+        public string? Name { get; set; } // todo: maybe use Site.Name?
 
         public bool Visible
         {
