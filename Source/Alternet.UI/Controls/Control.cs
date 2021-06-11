@@ -19,6 +19,7 @@ namespace Alternet.UI
 
         private bool visible = true;
 
+        //
         public Control()
         {
             Children.ItemInserted += Children_ItemInserted;
