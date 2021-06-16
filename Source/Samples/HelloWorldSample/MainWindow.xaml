@@ -9,6 +9,8 @@
             <Button Text="Green" Margin="0,0,0,5" Name="greenButton" />
             <Button Text="Blue" Margin="0,0,0,5" Name="blueButton" />
             <CheckBox Text="Allow closing the window" Name="allowCloseWindowCheckBox" Margin="10" IsChecked="true"/>
+            <RadioButton Text="Option 1" Name="option1RadioButton" Margin="10" />
+            <RadioButton Text="Option 2" Name="option2RadioButton" Margin="10" IsChecked="true"/>
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Margin="10,0,0,0">

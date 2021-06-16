@@ -2,11 +2,11 @@ using System.Drawing;
 
 namespace Alternet.UI
 {
-    internal class NativeCheckBoxHandler : NativeControlHandler<CheckBox, Native.CheckBox>
+    internal class NativeRadioButtonHandler : NativeControlHandler<RadioButton, Native.RadioButton>
     {
         internal override Native.Control CreateNativeControl()
         {
-            return new Native.CheckBox();
+            return new Native.RadioButton();
         }
 
         protected override void OnAttach()

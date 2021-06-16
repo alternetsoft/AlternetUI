@@ -13,7 +13,7 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            NativeControl.Text = Control.Text ?? ""; // todo: remove when nullable API strings are supported in C++
+            NativeControl.Text = Control.Text;
 
             Control.TextChanged += Control_TextChanged;
             NativeControl.Click += NativeControl_Click;

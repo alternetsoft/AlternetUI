@@ -12,6 +12,7 @@ namespace Alternet.UI
             TextBlock => new GenericTextBlockHandler(),
             TextBox x => new NativeTextBoxHandler(),
             CheckBox x => new NativeCheckBoxHandler(),
+            RadioButton x => new NativeRadioButtonHandler(),
             _ => new GenericControlHandler()
         };
     }

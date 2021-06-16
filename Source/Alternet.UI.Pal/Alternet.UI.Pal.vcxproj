@@ -192,6 +192,7 @@
     <ClCompile Include="MessageBox_.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Panel.cpp" />
+    <ClCompile Include="RadioButton.cpp" />
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="WindowsVisualThemeSupport.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="Api\MessageBox_.Api.h" />
     <ClInclude Include="Api\Object.Api.h" />
     <ClInclude Include="Api\Panel.Api.h" />
+    <ClInclude Include="Api\RadioButton.Api.h" />
     <ClInclude Include="Api\TextBox.Api.h" />
     <ClInclude Include="Api\Window.Api.h" />
     <ClInclude Include="Application.h" />
@@ -222,6 +224,7 @@
     <ClInclude Include="MessageBox_.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Panel.h" />
+    <ClInclude Include="RadioButton.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="TypedEnumFlags.h" />
     <ClInclude Include="WindowsVisualThemeSupport.h" />
@@ -235,6 +238,7 @@
     <None Include="Api\DrawingContext.inc" />
     <None Include="Api\MessageBox_.inc" />
     <None Include="Api\Panel.inc" />
+    <None Include="Api\RadioButton.inc" />
     <None Include="Api\TextBox.inc" />
     <None Include="Api\Window.inc" />
   </ItemGroup>

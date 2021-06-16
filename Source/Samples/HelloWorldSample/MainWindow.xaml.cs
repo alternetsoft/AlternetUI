@@ -8,6 +8,7 @@ namespace HelloWorldSample
     internal class MainWindow : Window
     {
         private CheckBox allowCloseWindowCheckBox;
+        private RadioButton option1RadioButton;
         private TextBox textBox;
         private CustomDrawnControl customDrawnControl;
         private CustomCompositeControl customCompositeControl;
@@ -25,6 +26,7 @@ namespace HelloWorldSample
             new XamlLoader().LoadExisting(xamlStream, this);
 
             allowCloseWindowCheckBox = (CheckBox)FindControl("allowCloseWindowCheckBox");
+            option1RadioButton = (RadioButton)FindControl("option1RadioButton");
             textBox = (TextBox)FindControl("textBox");
             customDrawnControl = (CustomDrawnControl)FindControl("customDrawnControl");
             customCompositeControl = (CustomCompositeControl)FindControl("customCompositeControl");
@@ -40,8 +42,14 @@ namespace HelloWorldSample
             blueButton.Click += BlueButton_Click;
             systemNativeButton.Click += SystemNativeButton_Click;
             genericLightButton.Click += GenericLightButton_Click;
+            option1RadioButton.CheckedChanged += Option1RadioButton_CheckedChanged;
 
             UpdateText();
+        }
+
+        private void Option1RadioButton_CheckedChanged(object? sender, EventArgs e)
+        {
+            MessageBox.Show(option1RadioButton.IsChecked.ToString(), "Option 1");
         }
 
         protected override void OnClosing(CancelEventArgs e)
