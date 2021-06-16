@@ -52,7 +52,12 @@ namespace ApiGenerator.Native
             string GetTypeBase()
             {
                 if (type == typeof(string))
+                {
+                    if (type.Nullability == Nullability.Nullable && usage != TypeUsage.Static)
+                        return "optional<string>";
+
                     return usage.HasFlag(TypeUsage.Argument) ? "const string&" : "string";
+                }
 
                 var primitiveTypeName = TryGetPrimitiveType(type);
                 if (primitiveTypeName != null)
@@ -61,9 +66,6 @@ namespace ApiGenerator.Native
                 var name = GetComplexTypeName(type, usage);
                 return name;
             }
-
-            //if (type.Nullability == Nullability.Nullable)
-            //    throw new NotImplementedException("std::optional");
 
             return GetTypeBase();
         }
@@ -80,11 +82,11 @@ namespace ApiGenerator.Native
             return null;
         }
 
-        protected virtual string GetComplexTypeName(Type type, TypeUsage usage)
+        protected virtual string GetComplexTypeName(ContextualType type, TypeUsage usage)
         {
             var name = TypeProvider.GetNativeName(type);
 
-            if (type.IsEnum)
+            if (type.Type.IsEnum)
                 return name;
 
             if (TypeProvider.IsStruct(type))
@@ -122,6 +124,7 @@ namespace ApiGenerator.Native
         protected virtual string GetComplexTypeName(ContextualType type, TypeUsage usage)
         {
             var name = TypeProvider.GetNativeName(type);
+
             if (TypeProvider.IsStruct(type))
             {
                 if (usage.HasFlag(TypeUsage.Return))
@@ -129,6 +132,9 @@ namespace ApiGenerator.Native
 
                 return name;
             }
+
+            if (type.Type.IsEnum)
+                return name;
 
             AddIncludedFile(name);
 

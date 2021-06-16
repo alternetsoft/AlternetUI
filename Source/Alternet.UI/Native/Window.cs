@@ -33,6 +33,21 @@ namespace Alternet.UI.Native
             }
         }
         
+        public WindowStartPosition WindowStartPosition
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Window_GetWindowStartPosition(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetWindowStartPosition(NativePointer, value);
+            }
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -91,6 +106,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetTitle(IntPtr obj, string? value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern WindowStartPosition Window_GetWindowStartPosition(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetWindowStartPosition(IntPtr obj, WindowStartPosition value);
             
         }
     }

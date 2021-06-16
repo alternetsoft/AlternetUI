@@ -11,7 +11,7 @@ namespace ApiGenerator.Api
         public static IEnumerable<Type> GetClassTypes()
         {
             var assembly = typeof(NativeApi.Api.Window).Assembly;
-            return assembly.GetTypes().Where(x => IsApiType(x) && !IsStruct(x)).ToArray();
+            return assembly.GetTypes().Where(x => IsApiType(x) && !IsStruct(x) && !x.IsEnum).ToArray();
         }
 
         public static IEnumerable<Type> GetEnumTypes()
@@ -20,7 +20,7 @@ namespace ApiGenerator.Api
             return assembly.GetTypes().Where(x => IsApiType(x) && x.IsEnum).ToArray();
         }
 
-        public static bool IsStruct(Type type) => type.IsValueType && !type.IsPrimitive;
+        public static bool IsStruct(Type type) => type.IsValueType && !type.IsPrimitive && !type.IsEnum;
 
         public static bool IsComplexType(Type type) => !type.IsValueType && !type.IsPrimitive && type != typeof(string);
 

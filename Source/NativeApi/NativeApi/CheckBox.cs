@@ -5,7 +5,7 @@ namespace NativeApi.Api
 {
     public class CheckBox : Control
     {
-        public string? Text { get => throw new Exception(); set => throw new Exception(); }
+        public string Text { get => throw new Exception(); set => throw new Exception(); }
 
         public bool IsChecked { get; set; }
 

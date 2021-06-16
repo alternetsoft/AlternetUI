@@ -22,6 +22,16 @@ ALTERNET_UI_API void Window_SetTitle(Window* obj, const char16_t* value)
     obj->SetTitle(value);
 }
 
+ALTERNET_UI_API WindowStartPosition Window_GetWindowStartPosition(Window* obj)
+{
+    return obj->GetWindowStartPosition();
+}
+
+ALTERNET_UI_API void Window_SetWindowStartPosition(Window* obj, WindowStartPosition value)
+{
+    obj->SetWindowStartPosition(value);
+}
+
 ALTERNET_UI_API void Window_SetEventCallback(Window::WindowEventCallbackType callback)
 {
     Window::SetEventCallback(callback);

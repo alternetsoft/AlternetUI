@@ -3,4 +3,13 @@
 
 namespace Alternet::UI
 {
+    enum class WindowStartPosition
+    {
+        SystemDefaultLocation,
+        SystemDefaultBounds,
+        Manual,
+        CenterScreen,
+        CenterOwner,
+    };
+    
 }

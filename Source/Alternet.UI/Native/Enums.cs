@@ -2,4 +2,13 @@
 
 namespace Alternet.UI.Native
 {
+    enum WindowStartPosition
+    {
+        SystemDefaultLocation,
+        SystemDefaultBounds,
+        Manual,
+        CenterScreen,
+        CenterOwner,
+    }
+    
 }

@@ -35,6 +35,15 @@ namespace Alternet::UI
         _frame->SetTitle(wxStr(value));
     }
 
+    WindowStartPosition Window::GetWindowStartPosition()
+    {
+        return WindowStartPosition();
+    }
+
+    void Window::SetWindowStartPosition(WindowStartPosition value)
+    {
+    }
+
     wxWindow* Window::CreateWxWindowCore(wxWindow* parent)
     {
         _frame = new Frame();

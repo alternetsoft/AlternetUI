@@ -4,6 +4,10 @@ public:
 string GetTitle();
 void SetTitle(const string& value);
 
+
+WindowStartPosition GetWindowStartPosition();
+void SetWindowStartPosition(WindowStartPosition value);
+
 public:
 enum class WindowEvent
 {
