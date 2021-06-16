@@ -25,6 +25,21 @@ namespace Alternet.UI
             Children.ItemRemoved += Children_ItemRemoved;
         }
 
+        public event EventHandler? Click;
+
+        public void InvokeClick(EventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnClick(e);
+            Click?.Invoke(this, e);
+        }
+
+        protected virtual void OnClick(EventArgs e)
+        {
+        }
+
         public event EventHandler? BorderColorChanged;
 
         public event EventHandler<PaintEventArgs>? Paint;
