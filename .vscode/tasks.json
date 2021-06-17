@@ -45,5 +45,49 @@
             },
             "problemMatcher": []
         },
+        {
+            "label": "Controls: Build",
+            "type": "shell",
+            "command": "${workspaceFolder}/Source/Samples/ControlsSample/build/Build.sh",
+            "options": {
+                "cwd": "${workspaceFolder}/Source/Samples/ControlsSample/build/"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Controls: Run",
+            "type": "shell",
+            "command": "${workspaceFolder}/Source/Samples/ControlsSample/build/BuildAndRun.sh",
+            "options": {
+                "cwd": "${workspaceFolder}/Source/Samples/ControlsSample/build/"
+            },
+            "presentation": {
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Controls: Build Release",
+            "type": "shell",
+            "command": "${workspaceFolder}/Source/Samples/ControlsSample/build/BuildRelease.sh",
+            "options": {
+                "cwd": "${workspaceFolder}/Source/Samples/ControlsSample/build/"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "clear": true
+            },
+            "problemMatcher": []
+        },
     ]
 }
