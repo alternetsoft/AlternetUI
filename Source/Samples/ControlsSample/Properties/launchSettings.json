@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ControlsSample": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

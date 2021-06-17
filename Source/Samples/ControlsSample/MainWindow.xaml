@@ -1,0 +1,10 @@
+﻿<Window xmlns="http://schemas.alternetsoft.com/ui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample"
+        Title="Alternet UI Controls Sample"
+        Width="600" Height="400">
+    <StackPanel Orientation="Vertical" Margin="10">
+        <RadioButton Text="Option 1" Name="option1RadioButton" Margin="0,0,0,5" />
+        <RadioButton Text="Option 2" Name="option2RadioButton" IsChecked="true"/>
+    </StackPanel>
+</Window>
