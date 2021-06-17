@@ -105,9 +105,10 @@ namespace XamlX.Transform
             {
                 if (GetCustomAttribute(p, TypeMappings.ContentAttributes).Any())
                 {
-                    if (found != null && !p.Equals(found))
-                        throw new XamlTypeSystemException(
-                            "Content (or substitute) attribute is declared on multiple properties of " + type.GetFqn());
+                    // yezo: this is done to allow overriding [Content] attributes from Control.Children to TabControl.Pages.
+                    //if (found != null && !p.Equals(found))
+                    //    throw new XamlTypeSystemException(
+                    //        "Content (or substitute) attribute is declared on multiple properties of " + type.GetFqn());
                     found = p;
                 }
             }

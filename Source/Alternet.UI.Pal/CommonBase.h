@@ -33,6 +33,7 @@
 #include <wx/dcbuffer.h>
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
+#include <wx/notebook.h>
 
 #define DELELTE_COPY_CONSTRUCTOR(TypeName) \
   TypeName(const TypeName&) = delete

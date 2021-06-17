@@ -13,6 +13,7 @@ namespace Alternet.UI
             TextBox x => new NativeTextBoxHandler(),
             CheckBox x => new NativeCheckBoxHandler(),
             RadioButton x => new NativeRadioButtonHandler(),
+            TabControl x => new NativeTabControlHandler(),
             _ => new GenericControlHandler()
         };
     }

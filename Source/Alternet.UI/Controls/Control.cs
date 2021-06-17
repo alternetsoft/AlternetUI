@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 
@@ -194,7 +195,7 @@ namespace Alternet.UI
             if (Name == name)
                 return this;
 
-            foreach (var child in Children)
+            foreach (var child in LogicalChildren)
             {
                 var result = child.TryFindControl(name);
                 if (result != null)
@@ -203,6 +204,9 @@ namespace Alternet.UI
 
             return null;
         }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected virtual IEnumerable<Control> LogicalChildren => Children;
 
         public void Show() => Visible = true;
 
@@ -213,7 +217,7 @@ namespace Alternet.UI
             if (name is null)
                 throw new ArgumentNullException(nameof(name));
 
-            return TryFindControl(name) ?? throw new InvalidOperationException();
+            return TryFindControl(name) ?? throw new InvalidOperationException($"Control with name '{name}' was not found.");
         }
 
         public DrawingContext CreateDrawingContext() => Handler.CreateDrawingContext();

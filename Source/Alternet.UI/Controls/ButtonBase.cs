@@ -6,7 +6,7 @@ namespace Alternet.UI
     {
         private string text = "";
 
-        public string Text
+        public string Text // todo: maybe rename to Title? like in cocoa.
         {
             get
             {

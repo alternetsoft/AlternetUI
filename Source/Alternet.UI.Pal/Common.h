@@ -99,4 +99,16 @@ namespace Alternet::UI
         return make_u16string(value.c_str().AsWChar());
 #endif
     }
+
+    namespace Collections
+    {
+        template <typename T> size_t IndexOf(const std::vector<T>& vector, const T& value)
+        {
+            auto it = std::find(vector.begin(), vector.end(), value);
+            if (it == vector.end())
+                return -1;
+
+            return distance(vector.begin(), it);
+        }
+    }
 }
