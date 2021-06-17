@@ -28,7 +28,7 @@ namespace Alternet::UI
         string RetrieveText();
         void ApplyText(const string& value);
 
-        void GetRadioButtonsInGroup(std::vector<RadioButton*>& result);
+        std::vector<RadioButton*> GetRadioButtonsInGroup();
 
         bool RetrieveChecked();
         void ApplyChecked(bool value);

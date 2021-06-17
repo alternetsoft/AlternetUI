@@ -52,14 +52,23 @@ namespace Alternet::UI
         GetRadioButton()->SetLabel(wxStr(value));
     }
 
-    void RadioButton::GetRadioButtonsInGroup(std::vector<RadioButton*>& result)
+    std::vector<RadioButton*> RadioButton::GetRadioButtonsInGroup()
     {
-        result.clear();
+        std::vector<RadioButton*> result;
+
         auto parent = GetParent();
         if (parent == nullptr)
-            return;
+            return result;
 
-        //for (auto child : parent->AddChild)
+        // todo: check with wxRB_GROUP
+        for (auto child : parent->GetChildren())
+        {
+            auto radioButton = dynamic_cast<RadioButton*>(child);
+            if (radioButton != nullptr)
+                result.push_back(radioButton);
+        }
+
+        return result;
     }
 
     bool RadioButton::RetrieveChecked()

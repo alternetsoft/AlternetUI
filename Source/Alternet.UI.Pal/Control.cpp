@@ -223,6 +223,11 @@ namespace Alternet::UI
         return s_parkingWindow;
     }
 
+    std::vector<Control*> Control::GetChildren()
+    {
+        return _children;
+    }
+
     /*static*/ void Control::DestroyParkingWindow()
     {
         if (s_parkingWindow != nullptr)

@@ -17,6 +17,8 @@ namespace Alternet::UI
 
         static wxFrame* GetParkingWindow();
 
+        std::vector<Control*> GetChildren();
+
     protected:
         void CreateWxWindow();
 
