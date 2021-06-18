@@ -4,7 +4,7 @@ public:
 int GetPageCount();
 
 void InsertPage(int index, Control* page, const string& title);
-void RemovePage(int index);
+void RemovePage(int index, Control* page);
 public:
 TabControl();
 protected:

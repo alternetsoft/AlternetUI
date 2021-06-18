@@ -33,10 +33,10 @@ namespace Alternet.UI.Native
             NativeApi.TabControl_InsertPage(NativePointer, index, page.NativePointer, title);
         }
         
-        public void RemovePage(int index)
+        public void RemovePage(int index, Control page)
         {
             CheckDisposed();
-            NativeApi.TabControl_RemovePage(NativePointer, index);
+            NativeApi.TabControl_RemovePage(NativePointer, index, page.NativePointer);
         }
         
         
@@ -55,7 +55,7 @@ namespace Alternet.UI.Native
             public static extern void TabControl_InsertPage(IntPtr obj, int index, IntPtr page, string? title);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TabControl_RemovePage(IntPtr obj, int index);
+            public static extern void TabControl_RemovePage(IntPtr obj, int index, IntPtr page);
             
         }
     }

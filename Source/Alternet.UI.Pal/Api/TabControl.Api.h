@@ -23,8 +23,8 @@ ALTERNET_UI_API void TabControl_InsertPage(TabControl* obj, int index, Control* 
     obj->InsertPage(index, page, title);
 }
 
-ALTERNET_UI_API void TabControl_RemovePage(TabControl* obj, int index)
+ALTERNET_UI_API void TabControl_RemovePage(TabControl* obj, int index, Control* page)
 {
-    obj->RemovePage(index);
+    obj->RemovePage(index, page);
 }
 

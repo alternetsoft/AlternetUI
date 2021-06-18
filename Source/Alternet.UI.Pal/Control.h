@@ -19,6 +19,9 @@ namespace Alternet::UI
 
         std::vector<Control*> GetChildren();
 
+        bool GetDoNotDestroyWxWindow();
+        void SetDoNotDestroyWxWindow(bool value);
+
     protected:
         void CreateWxWindow();
 
@@ -37,10 +40,16 @@ namespace Alternet::UI
         virtual void ApplyForegroundColor(const Color& value);
 
     private:
-        enum class ControlFlags
+        enum class DelayedControlFlags
         {
             None = 0,
             Visible = 1 << 0,
+        };
+
+        enum class ControlFlags
+        {
+            None = 0,
+            DoNotDestroyWxWindow = 1 << 0,
         };
 
         inline static wxFrame* s_parkingWindow = nullptr;
@@ -48,8 +57,9 @@ namespace Alternet::UI
         wxWindow* _wxWindow = nullptr;
         Control* _parent = nullptr;
         std::vector<Control*> _children;
+        ControlFlags _flags = ControlFlags::None;
 
-        DelayedFlags<Control, ControlFlags> _flags;
+        DelayedFlags<Control, DelayedControlFlags> _delayedFlags;
         DelayedValue<Control, RectangleF> _bounds;
         DelayedValue<Control, Color> _backgroundColor;
         DelayedValue<Control, Color> _foregroundColor;
@@ -60,6 +70,9 @@ namespace Alternet::UI
 
         RectangleF RetrieveBounds();
         void ApplyBounds(const RectangleF& value);
+
+        bool GetFlag(ControlFlags flag);
+        void SetFlag(ControlFlags flag, bool value);
 
         void OnPaint(wxPaintEvent& event);
         void OnEraseBackground(wxEraseEvent& event);
@@ -77,5 +90,6 @@ namespace Alternet::UI
     };
 }
 
+template<> struct enable_bitmask_operators<Alternet::UI::Control::DelayedControlFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::Control::ControlFlags> { static const bool enable = true; };
 

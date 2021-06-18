@@ -3,17 +3,17 @@
 namespace Alternet::UI
 {
     Control::Control() :
-        _flags(
+        _delayedFlags(
             *this,
-            ControlFlags::Visible,
+            DelayedControlFlags::Visible,
             &Control::IsWxWindowCreated,
             {
-                {ControlFlags::Visible, std::make_tuple(&Control::RetrieveVisible, &Control::ApplyVisible)},
+                {DelayedControlFlags::Visible, std::make_tuple(&Control::RetrieveVisible, &Control::ApplyVisible)},
             }),
             _bounds(*this, RectangleF(), &Control::IsWxWindowCreated, &Control::RetrieveBounds, &Control::ApplyBounds),
             _backgroundColor(*this, Color(), &Control::IsWxWindowCreated, &Control::RetrieveBackgroundColor, &Control::ApplyBackgroundColor),
             _foregroundColor(*this, Color(), &Control::IsWxWindowCreated, &Control::RetrieveForegroundColor, &Control::ApplyForegroundColor),
-            _delayedValues({&_flags, &_bounds, &_backgroundColor, &_foregroundColor})
+            _delayedValues({&_delayedFlags, &_bounds, &_backgroundColor, &_foregroundColor})
     {
     }
 
@@ -31,7 +31,8 @@ namespace Alternet::UI
             _wxWindow->Unbind(wxEVT_LEFT_DOWN, &Control::OnMouseLeftButtonDown, this);
             _wxWindow->Unbind(wxEVT_LEFT_UP, &Control::OnMouseLeftButtonUp, this);
 
-            _wxWindow->Destroy();
+            if (!GetDoNotDestroyWxWindow())
+                _wxWindow->Destroy();
             _wxWindow = nullptr;
         }
     }
@@ -230,6 +231,29 @@ namespace Alternet::UI
         return _children;
     }
 
+    bool Control::GetDoNotDestroyWxWindow()
+    {
+        return GetFlag(ControlFlags::DoNotDestroyWxWindow);
+    }
+
+    void Control::SetDoNotDestroyWxWindow(bool value)
+    {
+        SetFlag(ControlFlags::DoNotDestroyWxWindow, value);
+    }
+
+    bool Control::GetFlag(ControlFlags flag)
+    {
+        return (_flags & flag) != ControlFlags::None;
+    }
+
+    void Control::SetFlag(ControlFlags flag, bool value)
+    {
+        if (value)
+            _flags |= flag;
+        else
+            _flags &= ~flag;
+    }
+
     /*static*/ void Control::DestroyParkingWindow()
     {
         if (s_parkingWindow != nullptr)
@@ -376,12 +400,12 @@ namespace Alternet::UI
 
     bool Control::GetVisible()
     {
-        return _flags.Get(ControlFlags::Visible);
+        return _delayedFlags.Get(DelayedControlFlags::Visible);
     }
 
     void Control::SetVisible(bool value)
     {
-        _flags.Set(ControlFlags::Visible, value);
+        _delayedFlags.Set(DelayedControlFlags::Visible, value);
     }
 
     void Control::AddChild(Control* control)

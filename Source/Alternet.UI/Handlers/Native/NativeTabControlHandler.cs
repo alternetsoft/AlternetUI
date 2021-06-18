@@ -38,7 +38,11 @@ namespace Alternet.UI
 
         private void RemovePage(int index, TabPage page)
         {
-            NativeControl.RemovePage(index);
+            var pageNativeControl = page.Handler.NativeControl;
+            if (pageNativeControl == null)
+                throw new InvalidOperationException();
+
+            NativeControl.RemovePage(index, pageNativeControl);
             Control.Children.RemoveAt(index);
         }
 

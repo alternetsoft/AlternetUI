@@ -22,12 +22,17 @@ namespace Alternet::UI
 
     void TabControl::InsertPage(int index, Control* page, const string& title)
     {
+        // Do not explicitly delete the window for a page that is currently managed by wxNotebook..
+        // See https://docs.wxwidgets.org/3.0/classwx_notebook.html.
+        page->SetDoNotDestroyWxWindow(true);
+
         GetNotebook()->InsertPage(index, page->GetWxWindow(), wxStr(title));
     }
 
-    void TabControl::RemovePage(int index)
+    void TabControl::RemovePage(int index, Control* page)
     {
         GetNotebook()->RemovePage(index);
+        page->SetDoNotDestroyWxWindow(false); // See the corresponding SetDoNotDestroyWxWindow(true) call.
     }
 
     wxNotebook* TabControl::GetNotebook()

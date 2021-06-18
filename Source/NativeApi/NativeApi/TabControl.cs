@@ -7,7 +7,7 @@ namespace NativeApi.Api
     {
         public void InsertPage(int index, Control page, string title) => throw new Exception();
 
-        public void RemovePage(int index) => throw new Exception();
+        public void RemovePage(int index, Control page) => throw new Exception();
 
         public int PageCount { get; }
     }
