@@ -106,6 +106,7 @@ namespace XamlX.Transform
                 if (GetCustomAttribute(p, TypeMappings.ContentAttributes).Any())
                 {
                     // yezo: this is done to allow overriding [Content] attributes from Control.Children to TabControl.Pages.
+                    // See https://github.com/kekekeks/XamlX/issues/45
                     //if (found != null && !p.Equals(found))
                     //    throw new XamlTypeSystemException(
                     //        "Content (or substitute) attribute is declared on multiple properties of " + type.GetFqn());
