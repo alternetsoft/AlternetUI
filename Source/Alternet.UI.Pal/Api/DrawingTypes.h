@@ -278,6 +278,18 @@ namespace Alternet::UI
             toDip(value.y, window));
     };
 
+    inline Thickness toDip(const Thickness& value, wxWindow* window)
+    {
+        if (window == nullptr)
+            window = getParkingWindow();
+
+        return Thickness(
+            toDip(value.Left, window),
+            toDip(value.Top, window),
+            toDip(value.Right, window),
+            toDip(value.Bottom, window));
+    };
+
     inline wxPoint fromDip(const PointF& value, wxWindow* window)
     {
         if (window == nullptr)

@@ -53,8 +53,21 @@ namespace Alternet.UI
                     return RectangleF.Empty;
 
                 var padding = Control.Padding;
-                return new RectangleF(new PointF(padding.Left, padding.Top), Bounds.Size - padding.Size);
+                var intrinsicPadding = GetIntrinsicPadding();
+
+                return new RectangleF(
+                    new PointF(padding.Left + intrinsicPadding.Left, padding.Top + intrinsicPadding.Top),
+                    Bounds.Size - padding.Size - intrinsicPadding.Size);
             }
+        }
+
+        private Thickness GetIntrinsicPadding()
+        {
+            var intrinsicPadding = new Thickness();
+            var nativeControl = NativeControl;
+            if (nativeControl != null)
+                intrinsicPadding = nativeControl.IntrinsicPadding;
+            return intrinsicPadding;
         }
 
         public virtual RectangleF ChildrenBounds => new RectangleF(new PointF(), Bounds.Size);
@@ -279,8 +292,11 @@ namespace Alternet.UI
                 maxHeight = Math.Max(preferredSize.Height, maxHeight);
             }
 
-            var width = float.IsNaN(specifiedWidth) ? maxWidth + Control.Padding.Horizontal : specifiedWidth;
-            var height = float.IsNaN(specifiedHeight) ? maxHeight + Control.Padding.Vertical : specifiedHeight;
+            var padding = Control.Padding;
+            var intrinsicPadding = GetIntrinsicPadding();
+
+            var width = float.IsNaN(specifiedWidth) ? maxWidth + padding.Horizontal + intrinsicPadding.Horizontal : specifiedWidth;
+            var height = float.IsNaN(specifiedHeight) ? maxHeight + padding.Vertical + intrinsicPadding.Vertical : specifiedHeight;
 
             return new SizeF(width, height);
         }
