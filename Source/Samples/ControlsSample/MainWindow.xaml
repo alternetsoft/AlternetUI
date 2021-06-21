@@ -16,5 +16,27 @@
                 <CheckBox Text="Option 2" IsChecked="true"/>
             </StackPanel>
         </TabPage>
+        <TabPage Title="Group Box">
+            <StackPanel Orientation="Vertical" Margin="10">
+                <GroupBox Title="Group 1" Margin="0,0,0,10">
+                    <StackPanel Orientation="Vertical" Margin="10,20,10,10">
+                        <CheckBox Text="Option 1" Margin="0,0,0,5" />
+                        <CheckBox Text="Option 2" IsChecked="true"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Title="Group 2">
+                    <StackPanel Orientation="Vertical" Margin="10,20,10,10">
+                        <CheckBox Text="Option 1" Margin="0,0,0,5" />
+                        <CheckBox Text="Option 2" IsChecked="true"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox>
+                    <StackPanel Orientation="Vertical" Margin="10,20,10,10">
+                        <CheckBox Text="Option 1" Margin="0,0,0,5" />
+                        <CheckBox Text="Option 2" IsChecked="true"/>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </TabPage>
     </TabControl>
 </Window>

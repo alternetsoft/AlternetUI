@@ -88,7 +88,7 @@ namespace ApiGenerator.Native
                 w.WriteLine($"{ExportMacro} void {declaringTypeName}_Set{propertyName}({instanceParameterSignaturePart}, {types.GetTypeName(property.ToContextualProperty(), TypeUsage.Argument)} value)");
                 w.WriteLine("{");
                 w.Indent++;
-                w.WriteLine($"obj->Set{propertyName}({GetCToCppArgument(property.PropertyType, "value")});");
+                w.WriteLine($"obj->Set{propertyName}({GetCToCppArgument(property.ToContextualProperty(), "value")});");
                 w.Indent--;
                 w.WriteLine("}");
                 w.WriteLine();
@@ -122,7 +122,7 @@ namespace ApiGenerator.Native
 
                 var parameterType = types.GetTypeName(parameter.ToContextualParameter(), TypeUsage.Argument);
                 signatureParametersString.Append(parameterType + " " + parameter.Name);
-                callParametersString.Append(GetCToCppArgument(parameter.ParameterType, parameter.Name!));
+                callParametersString.Append(GetCToCppArgument(parameter.ToContextualParameter(), parameter.Name!));
 
                 if (i < parameters.Length - 1)
                 {
@@ -184,8 +184,11 @@ namespace ApiGenerator.Native
             w.WriteLine();
         }
 
-        static string GetCToCppArgument(Type type, string name)
+        static string GetCToCppArgument(ContextualType type, string name)
         {
+            if (type.Nullability == Nullability.Nullable)
+                return $"ToOptional({name})";
+            
             return name;
         }
 

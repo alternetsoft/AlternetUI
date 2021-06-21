@@ -3,6 +3,7 @@
 #include "Api/CheckBox.Api.h"
 #include "Api/Control.Api.h"
 #include "Api/DrawingContext.Api.h"
+#include "Api/GroupBox.Api.h"
 #include "Api/MessageBox_.Api.h"
 #include "Api/Panel.Api.h"
 #include "Api/RadioButton.Api.h"

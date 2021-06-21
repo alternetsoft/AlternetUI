@@ -189,6 +189,7 @@
     <ClCompile Include="CheckBox.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="DrawingContext.cpp" />
+    <ClCompile Include="GroupBox.cpp" />
     <ClCompile Include="MessageBox_.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Panel.cpp" />
@@ -208,10 +209,13 @@
     <ClInclude Include="Api\DrawingContext.Api.h" />
     <ClInclude Include="Api\DrawingTypes.h" />
     <ClInclude Include="Api\Enums.h" />
+    <ClInclude Include="Api\GroupBox.Api.h" />
     <ClInclude Include="Api\MessageBox_.Api.h" />
     <ClInclude Include="Api\Object.Api.h" />
     <ClInclude Include="Api\Panel.Api.h" />
     <ClInclude Include="Api\RadioButton.Api.h" />
+    <ClInclude Include="Api\TabControl.Api.h" />
+    <ClInclude Include="Api\TabPage.Api.h" />
     <ClInclude Include="Api\TextBox.Api.h" />
     <ClInclude Include="Api\Window.Api.h" />
     <ClInclude Include="Application.h" />
@@ -222,6 +226,7 @@
     <ClInclude Include="Control.h" />
     <ClInclude Include="DelayedValue.h" />
     <ClInclude Include="DrawingContext.h" />
+    <ClInclude Include="GroupBox.h" />
     <ClInclude Include="MessageBox_.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Panel.h" />
@@ -238,9 +243,12 @@
     <None Include="Api\CheckBox.inc" />
     <None Include="Api\Control.inc" />
     <None Include="Api\DrawingContext.inc" />
+    <None Include="Api\GroupBox.inc" />
     <None Include="Api\MessageBox_.inc" />
     <None Include="Api\Panel.inc" />
     <None Include="Api\RadioButton.inc" />
+    <None Include="Api\TabControl.inc" />
+    <None Include="Api\TabPage.inc" />
     <None Include="Api\TextBox.inc" />
     <None Include="Api\Window.inc" />
   </ItemGroup>

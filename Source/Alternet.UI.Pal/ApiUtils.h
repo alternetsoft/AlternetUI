@@ -44,3 +44,19 @@ inline char16_t* AllocPInvokeReturnString(const Alternet::UI::string& value)
     memcpy(buffer, (void*)&value[0], bufferSize);
     return (char16_t*)buffer;
 }
+
+inline char16_t* AllocPInvokeReturnString(const Alternet::UI::optional<Alternet::UI::string>& value)
+{
+    if (value.has_value())
+        return AllocPInvokeReturnString(value.value());
+
+    return nullptr;
+}
+
+inline const Alternet::UI::optional<Alternet::UI::string> ToOptional(const char16_t* value)
+{
+    if (value == nullptr)
+        return Alternet::UI::nullopt;
+
+    return value;
+}
