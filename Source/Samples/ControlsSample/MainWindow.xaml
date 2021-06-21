@@ -18,19 +18,19 @@
         </TabPage>
         <TabPage Title="Group Box">
             <StackPanel Orientation="Vertical" Margin="10">
-                <GroupBox Title="Group 1" Margin="0,0,0,10">
+                <GroupBox Title="Group 1" Margin="0,0,0,10" Padding="5">
                     <StackPanel Orientation="Vertical">
                         <CheckBox Text="Option 1" Margin="0,0,0,5" />
                         <CheckBox Text="Option 2" IsChecked="true"/>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Title="Group 2">
+                <GroupBox Title="Group 2" Padding="5">
                     <StackPanel Orientation="Vertical">
                         <CheckBox Text="Option 1" Margin="0,0,0,5" />
                         <CheckBox Text="Option 2" IsChecked="true"/>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox>
+                <GroupBox Padding="5">
                     <StackPanel Orientation="Vertical">
                         <CheckBox Text="Option 1" Margin="0,0,0,5" />
                         <CheckBox Text="Option 2" IsChecked="true"/>

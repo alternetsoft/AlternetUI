@@ -49,7 +49,8 @@ namespace Alternet::UI
 #if defined( __WXGTK20__ )
         return Thickness();
 #elif defined(__WXOSX__) && wxOSX_USE_COCOA
-        return Thickness(otherBorder, otherBorder + (preferredSize ? topBorder : 0), otherBorder, otherBorder);
+        float border = 3;
+        return Thickness(border, border + (preferredSize ? topBorder : 0), border, border);
 #else
         return toDip(Thickness(otherBorder, topBorder, otherBorder, otherBorder), staticBox);
 #endif
