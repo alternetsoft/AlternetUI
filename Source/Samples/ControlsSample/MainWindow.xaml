@@ -4,7 +4,7 @@
         Title="Alternet UI Controls Sample"
         Width="600" Height="400">
     <TabControl>
-        <TabPage Title="Radio Button">
+        <!-- <TabPage Title="Radio Button">
             <StackPanel Orientation="Vertical" Margin="10">
                 <RadioButton Text="Option 1" Name="option1RadioButton" Margin="0,0,0,5" />
                 <RadioButton Text="Option 2" Name="option2RadioButton" IsChecked="true"/>
@@ -37,6 +37,6 @@
                     </StackPanel>
                 </GroupBox>
             </StackPanel>
-        </TabPage>
+        </TabPage> -->
     </TabControl>
 </Window>
