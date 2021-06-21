@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Alternet.UI;
+using System;
 using System.Drawing;
 
 namespace NativeApi.Api
@@ -30,6 +31,8 @@ namespace NativeApi.Api
         public PointF Location { get; set; }
 
         public RectangleF Bounds { get; set; }
+
+        public virtual Thickness IntrinsicPadding { get; }
 
         public bool Visible { get; set; }
 

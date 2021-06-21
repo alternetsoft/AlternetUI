@@ -38,6 +38,11 @@ namespace Alternet::UI
             float X, Y, Width, Height;
         };
 
+        struct Thickness_C
+        {
+            float Left, Top, Right, Bottom;
+        };
+
         struct Color_C
         {
             uint8_t R, G, B, A, state;
@@ -150,6 +155,20 @@ namespace Alternet::UI
 
         bool operator==(const RectangleF& rhs) { return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height; }
         bool operator!=(const RectangleF& rhs) { return !(*this == rhs); }
+    };
+
+    struct Thickness
+    {
+        float Left = 0, Top = 0, Right = 0, Bottom = 0;
+
+        Thickness() {}
+
+        Thickness(float left, float top, float right, float bottom) : Left(left), Top(top), Right(right), Bottom(bottom) {}
+
+        operator Thickness_C() { return Thickness_C{ Left, Top, Right, Bottom }; }
+
+        bool operator==(const Thickness& rhs) { return Left == rhs.Left && Top == rhs.Top && Right == rhs.Right && Bottom == rhs.Bottom; }
+        bool operator!=(const Thickness& rhs) { return !(*this == rhs); }
     };
 
     struct Color

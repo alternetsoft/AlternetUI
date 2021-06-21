@@ -107,6 +107,24 @@ namespace Alternet.UI.Native
         }
 
         [StructLayout(LayoutKind.Sequential)]
+        public struct Thickness
+        {
+            public float Left, Top, Right, Bottom;
+
+            public Thickness(float left, float top, float right, float bottom)
+            {
+                Left = left;
+                Top = top;
+                Right = right;
+                Bottom = bottom;
+            }
+
+            public static implicit operator UI.Thickness(Thickness v) => new UI.Thickness(v.Left, v.Top, v.Right, v.Bottom);
+
+            public static implicit operator Thickness(UI.Thickness v) => new Thickness(v.Left, v.Top, v.Right, v.Bottom);
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
         public struct Color
         {
             public byte R, G, B, A;

@@ -16,6 +16,9 @@ RectangleF GetBounds();
 void SetBounds(const RectangleF& value);
 
 
+virtual Thickness GetIntrinsicPadding();
+
+
 bool GetVisible();
 void SetVisible(bool value);
 

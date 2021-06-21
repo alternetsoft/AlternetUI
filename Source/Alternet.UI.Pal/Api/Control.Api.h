@@ -43,6 +43,11 @@ ALTERNET_UI_API void Control_SetBounds(Control* obj, RectangleF value)
     obj->SetBounds(value);
 }
 
+ALTERNET_UI_API Thickness_C Control_GetIntrinsicPadding(Control* obj)
+{
+    return obj->GetIntrinsicPadding();
+}
+
 ALTERNET_UI_API c_bool Control_GetVisible(Control* obj)
 {
     return obj->GetVisible();

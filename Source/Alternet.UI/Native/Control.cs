@@ -72,6 +72,16 @@ namespace Alternet.UI.Native
             }
         }
         
+        public Alternet.UI.Thickness IntrinsicPadding
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetIntrinsicPadding(NativePointer);
+            }
+            
+        }
+        
         public bool Visible
         {
             get
@@ -263,6 +273,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetBounds(IntPtr obj, NativeApiTypes.RectangleF value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Thickness Control_GetIntrinsicPadding(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_GetVisible(IntPtr obj);

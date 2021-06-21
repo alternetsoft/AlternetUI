@@ -47,13 +47,13 @@ namespace ApiGenerator.Managed
             if (TypeProvider.IsApiType(type))
                 return GetApiClassTypeName(type);
 
-            if (TypeProvider.IsDrawingStruct(type))
-                return GetDrawingStructTypeName(type);
+            if (TypeProvider.IsMarshaledStruct(type))
+                return GetMarshaledStructTypeName(type);
 
             return GetNullableDecoratedName(type, type.OriginalType.FullName!);
         }
 
-        protected virtual string GetDrawingStructTypeName(ContextualType type) => GetNullableDecoratedName(type, type.OriginalType.FullName!);
+        protected virtual string GetMarshaledStructTypeName(ContextualType type) => GetNullableDecoratedName(type, type.OriginalType.FullName!);
     }
 
     internal class CSharpTypes : Types
@@ -65,7 +65,7 @@ namespace ApiGenerator.Managed
     {
         protected override string GetApiClassTypeName(ContextualType type) => "IntPtr";
 
-        protected override string GetDrawingStructTypeName(ContextualType type)
+        protected override string GetMarshaledStructTypeName(ContextualType type)
         {
             return GetNullableDecoratedName(type, "NativeApiTypes." + type.OriginalType.Name);
         }
