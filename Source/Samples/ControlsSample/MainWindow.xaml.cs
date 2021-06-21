@@ -29,7 +29,7 @@ namespace ControlsSample
             groupBox1.Children.Add(panel2);
 
             panel2.Children.Add(new Button() { Text = "Button 1", Margin = new Thickness(0, 0, 0, 5)});
-            panel2.Children.Add(new Button() { Text = "Button 2", Margin = new Thickness(0, 0, 0, 5)});
+            panel2.Children.Add(new Button() { Text = "Button 2" });
 
             panel.Children.Add(groupBox1);
 
