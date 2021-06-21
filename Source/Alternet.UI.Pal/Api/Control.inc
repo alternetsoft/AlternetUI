@@ -16,7 +16,10 @@ RectangleF GetBounds();
 void SetBounds(const RectangleF& value);
 
 
-virtual Thickness GetIntrinsicPadding();
+virtual Thickness GetIntrinsicLayoutPadding();
+
+
+virtual Thickness GetIntrinsicPreferredSizePadding();
 
 
 bool GetVisible();

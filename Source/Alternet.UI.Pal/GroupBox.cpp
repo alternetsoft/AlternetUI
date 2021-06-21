@@ -28,10 +28,20 @@ namespace Alternet::UI
         return staticBox;
     }
 
-    Thickness GroupBox::GetIntrinsicPadding()
+    Thickness GroupBox::GetIntrinsicLayoutPadding()
+    {
+        return GetIntrinsicPadding(/*preferredSize:*/ false);
+    }
+
+    Thickness GroupBox::GetIntrinsicPreferredSizePadding()
+    {
+        return GetIntrinsicPadding(/*preferredSize:*/ true);
+    }
+
+    Thickness GroupBox::GetIntrinsicPadding(bool preferredSize)
     {
         auto staticBox = GetStaticBox();
-        
+
         // See wxWidgets source, sizer.cpp:2647, void wxStaticBoxSizer::RepositionChildren(const wxSize& minSize).
         int topBorder = 0, otherBorder = 0;
         staticBox->GetBordersForSizer(&topBorder, &otherBorder);
@@ -39,7 +49,7 @@ namespace Alternet::UI
 #if defined( __WXGTK20__ )
         return Thickness();
 #elif defined(__WXOSX__) && wxOSX_USE_COCOA
-        return Thickness(otherBorder, otherBorder, otherBorder, otherBorder);
+        return Thickness(otherBorder + (GetTitle().has_value() ? topBorder : 0), otherBorder, otherBorder, otherBorder);
 #else
         return toDip(Thickness(otherBorder, topBorder, otherBorder, otherBorder), staticBox);
 #endif

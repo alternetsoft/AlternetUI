@@ -10,7 +10,8 @@ namespace Alternet::UI
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
-        Thickness GetIntrinsicPadding() override;
+        Thickness GetIntrinsicLayoutPadding() override;
+        Thickness GetIntrinsicPreferredSizePadding() override;
 
     private:
         wxStaticBox* GetStaticBox();
@@ -19,5 +20,7 @@ namespace Alternet::UI
 
         optional<string> RetrieveTitle();
         void ApplyTitle(const optional<string>& value);
+
+        Thickness GetIntrinsicPadding(bool preferredSize);
     };
 }

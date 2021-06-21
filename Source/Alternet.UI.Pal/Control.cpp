@@ -241,7 +241,12 @@ namespace Alternet::UI
         SetFlag(ControlFlags::DoNotDestroyWxWindow, value);
     }
 
-    Thickness Control::GetIntrinsicPadding()
+    Thickness Control::GetIntrinsicLayoutPadding()
+    {
+        return Thickness();
+    }
+
+    Thickness Control::GetIntrinsicPreferredSizePadding()
     {
         return Thickness();
     }

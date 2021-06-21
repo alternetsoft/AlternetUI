@@ -32,7 +32,9 @@ namespace NativeApi.Api
 
         public RectangleF Bounds { get; set; }
 
-        public virtual Thickness IntrinsicPadding { get; }
+        public virtual Thickness IntrinsicLayoutPadding { get; }
+        
+        public virtual Thickness IntrinsicPreferredSizePadding { get; }
 
         public bool Visible { get; set; }
 
