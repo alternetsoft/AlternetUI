@@ -25,11 +25,11 @@ namespace ControlsSample
             var panel = new StackPanel { Orientation = StackPanelOrientation.Vertical };
 
             var groupBox1 = new GroupBox { Title = "Group 1"};
-            var panel2 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(5) };
+            var panel2 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
             groupBox1.Children.Add(panel2);
 
-            panel2.Children.Add(new Button() { Text = "Button 1", Margin = new Thickness(0, 0, 0, 5)});
-            panel2.Children.Add(new Button() { Text = "Button 2" });
+            panel2.Children.Add(new CheckBox() { Text = "Button 1", Margin = new Thickness(0, 0, 0, 5)});
+            panel2.Children.Add(new CheckBox() { Text = "Button 2" });
 
             panel.Children.Add(groupBox1);
 
