@@ -56,6 +56,17 @@ namespace ControlsSample
             panel2.Children.Add(new TextBlock() { Text = "Custom height, 50 [0..100]", Margin = new Thickness(0, 10, 0, 5) });
             panel2.Children.Add(new ProgressBar() { Value = 50, Margin = new Thickness(0, 0, 0, 5), Height = 25 });
 
+            var increaseAllButton = new Button() { Text = "Increase All", Margin = new Thickness(0, 10, 0, 5) };
+            panel2.Children.Add(increaseAllButton);
+            increaseAllButton.Click += (o, e) =>
+            {
+                foreach (var progressBar in panel2.Children.OfType<ProgressBar>())
+                {
+                    if (progressBar.Value < progressBar.Maximum)
+                        progressBar.Value++;
+                }
+            };
+
             panel.Children.Add(groupBox1);
 
             page.Children.Add(panel);
@@ -63,9 +74,16 @@ namespace ControlsSample
 
         private static void InitSliderPage(TabPage page)
         {
+            var enableMessageHandlingCheckBox = new CheckBox { Text = "Enable Message Handling", IsChecked = true };
             Slider AddMessageBoxHandler(Slider slider)
             {
-                slider.ValueChanged += (o, e) => MessageBox.Show("New value is: " + ((Slider)o!).Value, "Slider Value Changed");
+                slider.ValueChanged += (o, e) =>
+                {
+                    if (!enableMessageHandlingCheckBox.IsChecked)
+                        return;
+
+                    MessageBox.Show("New value is: " + ((Slider)o!).Value, "Slider Value Changed");
+                };
                 return slider;
             }
 
@@ -95,7 +113,24 @@ namespace ControlsSample
                 }
             };
 
+            panel2.Children.Add(enableMessageHandlingCheckBox);
+
             panel.Children.Add(groupBox1);
+
+            var groupBox2 = new GroupBox { Title = "Linked Progress Bar", Margin = new Thickness(0, 10, 0, 0) };
+            var panel3 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
+            groupBox2.Children.Add(panel3);
+
+            var progressBarControlSlider = new Slider() {  Margin = new Thickness(0, 0, 0, 5) };
+            var progressBar = new ProgressBar() { Maximum = 10, Margin = new Thickness(0, 0, 0, 5) };
+
+            progressBarControlSlider.ValueChanged += (o, e) => progressBar.Value = progressBarControlSlider.Value;
+            progressBarControlSlider.Value = 1;
+
+            panel3.Children.Add(progressBarControlSlider);
+            panel3.Children.Add(progressBar);
+
+            panel.Children.Add(groupBox2);
 
             page.Children.Add(panel);
         }
