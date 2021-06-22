@@ -203,6 +203,12 @@ namespace Alternet::UI
             _values.push_back(value);
         }
 
+        void Add(const std::vector<DelayedValueBase*> values)
+        {
+            for (auto value : values)
+                Add(value);
+        }
+
         void Apply()
         {
             for (auto& value : _values)

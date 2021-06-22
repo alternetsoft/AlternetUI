@@ -16,6 +16,7 @@ namespace Alternet.UI
             TabControl x => new NativeTabControlHandler(),
             GroupBox x => new NativeGroupBoxHandler(),
             ProgressBar x => new NativeProgressBarHandler(),
+            Slider x => new NativeSliderHandler(),
             _ => new GenericControlHandler()
         };
     }

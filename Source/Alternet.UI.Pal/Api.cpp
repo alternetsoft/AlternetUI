@@ -8,6 +8,7 @@
 #include "Api/Panel.Api.h"
 #include "Api/ProgressBar.Api.h"
 #include "Api/RadioButton.Api.h"
+#include "Api/Slider.Api.h"
 #include "Api/TabControl.Api.h"
 #include "Api/TextBox.Api.h"
 #include "Api/Window.Api.h"

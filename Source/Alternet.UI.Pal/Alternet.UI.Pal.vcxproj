@@ -195,6 +195,7 @@
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="RadioButton.cpp" />
+    <ClCompile Include="Slider.cpp" />
     <ClCompile Include="TabControl.cpp" />
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="WindowsVisualThemeSupport.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="Api\Panel.Api.h" />
     <ClInclude Include="Api\ProgressBar.Api.h" />
     <ClInclude Include="Api\RadioButton.Api.h" />
+    <ClInclude Include="Api\Slider.Api.h" />
     <ClInclude Include="Api\TabControl.Api.h" />
     <ClInclude Include="Api\TabPage.Api.h" />
     <ClInclude Include="Api\TextBox.Api.h" />
@@ -234,6 +236,7 @@
     <ClInclude Include="Panel.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="RadioButton.h" />
+    <ClInclude Include="Slider.h" />
     <ClInclude Include="TabControl.h" />
     <ClInclude Include="TabPage.h" />
     <ClInclude Include="TextBox.h" />
@@ -252,6 +255,7 @@
     <None Include="Api\Panel.inc" />
     <None Include="Api\ProgressBar.inc" />
     <None Include="Api\RadioButton.inc" />
+    <None Include="Api\Slider.inc" />
     <None Include="Api\TabControl.inc" />
     <None Include="Api\TabPage.inc" />
     <None Include="Api\TextBox.inc" />
