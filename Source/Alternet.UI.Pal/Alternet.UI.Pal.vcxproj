@@ -193,6 +193,7 @@
     <ClCompile Include="MessageBox_.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Panel.cpp" />
+    <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="RadioButton.cpp" />
     <ClCompile Include="TabControl.cpp" />
     <ClCompile Include="TextBox.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="Api\MessageBox_.Api.h" />
     <ClInclude Include="Api\Object.Api.h" />
     <ClInclude Include="Api\Panel.Api.h" />
+    <ClInclude Include="Api\ProgressBar.Api.h" />
     <ClInclude Include="Api\RadioButton.Api.h" />
     <ClInclude Include="Api\TabControl.Api.h" />
     <ClInclude Include="Api\TabPage.Api.h" />
@@ -230,8 +232,10 @@
     <ClInclude Include="MessageBox_.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Panel.h" />
+    <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="RadioButton.h" />
     <ClInclude Include="TabControl.h" />
+    <ClInclude Include="TabPage.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="TypedEnumFlags.h" />
     <ClInclude Include="WindowsVisualThemeSupport.h" />
@@ -246,6 +250,7 @@
     <None Include="Api\GroupBox.inc" />
     <None Include="Api\MessageBox_.inc" />
     <None Include="Api\Panel.inc" />
+    <None Include="Api\ProgressBar.inc" />
     <None Include="Api\RadioButton.inc" />
     <None Include="Api\TabControl.inc" />
     <None Include="Api\TabPage.inc" />

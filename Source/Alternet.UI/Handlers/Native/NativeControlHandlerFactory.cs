@@ -15,6 +15,7 @@ namespace Alternet.UI
             RadioButton x => new NativeRadioButtonHandler(),
             TabControl x => new NativeTabControlHandler(),
             GroupBox x => new NativeGroupBoxHandler(),
+            ProgressBar x => new NativeProgressBarHandler(),
             _ => new GenericControlHandler()
         };
     }

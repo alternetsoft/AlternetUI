@@ -28,8 +28,20 @@ namespace ControlsSample
             var panel2 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
             groupBox1.Children.Add(panel2);
 
-            panel2.Children.Add(new CheckBox() { Text = "Button 1", Margin = new Thickness(0, 0, 0, 5)});
-            panel2.Children.Add(new CheckBox() { Text = "Button 2" });
+            //panel2.Children.Add(new CheckBox() { Text = "Button 1", Margin = new Thickness(0, 0, 0, 5) });
+            //panel2.Children.Add(new CheckBox() { Text = "Button 2" });
+
+            panel2.Children.Add(new TextBlock() { Text = "0 [0..100]", Margin = new Thickness(0, 0, 0, 5) });
+            panel2.Children.Add(new ProgressBar() { Value = 0, Margin = new Thickness(0, 0, 0, 5) });
+
+            panel2.Children.Add(new TextBlock() { Text = "50 [0..100]", Margin = new Thickness(0, 0, 0, 5) });
+            panel2.Children.Add(new ProgressBar() { Value = 50, Margin = new Thickness(0, 0, 0, 5) });
+
+            panel2.Children.Add(new TextBlock() { Text = "100 [0..100]", Margin = new Thickness(0, 0, 0, 5) });
+            panel2.Children.Add(new ProgressBar() { Value = 100, Margin = new Thickness(0, 0, 0, 5) });
+
+            panel2.Children.Add(new TextBlock() { Text = "125 [50..200]", Margin = new Thickness(0, 10, 0, 5) });
+            panel2.Children.Add(new ProgressBar() { Minimum = 50, Maximum = 200, Value = 125, Margin = new Thickness(0, 0, 0, 5) });
 
             panel.Children.Add(groupBox1);
 
