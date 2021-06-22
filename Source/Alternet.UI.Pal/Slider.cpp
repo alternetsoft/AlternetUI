@@ -15,6 +15,11 @@ namespace Alternet::UI
 
     Slider::~Slider()
     {
+        auto window = GetWxWindow();
+        if (window != nullptr)
+        {
+            window->Unbind(wxEVT_SLIDER, &Slider::OnSliderValueChanged, this);
+        }
     }
 
     int Slider::GetMinimum()
@@ -79,7 +84,15 @@ namespace Alternet::UI
 
     wxWindow* Slider::CreateWxWindowCore(wxWindow* parent)
     {
-        return new wxSlider(parent, wxID_ANY, _value.Get(), _minimum.Get(), _maximum.Get());
+        auto value = new wxSlider(parent, wxID_ANY, _value.Get(), _minimum.Get(), _maximum.Get());
+        value->Bind(wxEVT_SLIDER, &Slider::OnSliderValueChanged, this);
+
+        return value;
+    }
+
+    void Slider::OnSliderValueChanged(wxCommandEvent& event)
+    {
+        RaiseEvent(SliderEvent::ValueChanged);
     }
 
     wxSlider* Slider::GetSlider()

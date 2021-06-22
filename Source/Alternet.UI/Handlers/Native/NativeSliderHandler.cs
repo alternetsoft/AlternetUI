@@ -1,3 +1,5 @@
+using System;
+
 namespace Alternet.UI
 {
     internal class NativeSliderHandler : NativeControlHandler<Slider, Native.Slider>
@@ -24,6 +26,13 @@ namespace Alternet.UI
             Control.SmallChangeChanged += Control_SmallChangeChanged;
             Control.LargeChangeChanged += Control_LargeChangeChanged;
             Control.TickFrequencyChanged += Control_TickFrequencyChanged;
+
+            NativeControl.ValueChanged += NativeControl_ValueChanged;
+        }
+
+        private void NativeControl_ValueChanged(object? sender, EventArgs e)
+        {
+            Control.Value = NativeControl.Value;
         }
 
         protected override void OnDetach()
@@ -36,6 +45,8 @@ namespace Alternet.UI
             Control.SmallChangeChanged -= Control_SmallChangeChanged;
             Control.LargeChangeChanged -= Control_LargeChangeChanged;
             Control.TickFrequencyChanged -= Control_TickFrequencyChanged;
+
+            NativeControl.ValueChanged -= NativeControl_ValueChanged;
         }
 
         private void Control_ValueChanged(object? sender, System.EventArgs e)

@@ -21,8 +21,21 @@ namespace Alternet.UI
                     return;
 
                 this.value = value;
-                ValueChanged?.Invoke(this, EventArgs.Empty);
+                InvokeValueChanged(EventArgs.Empty);
             }
+        }
+
+        public void InvokeValueChanged(EventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnValueChanged(e);
+            ValueChanged?.Invoke(this, e);
+        }
+
+        protected virtual void OnValueChanged(EventArgs e)
+        {
         }
 
         public event EventHandler? ValueChanged;

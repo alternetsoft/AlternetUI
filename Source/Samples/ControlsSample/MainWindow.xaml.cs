@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 
 namespace ControlsSample
 {
@@ -62,6 +63,12 @@ namespace ControlsSample
 
         private static void InitSliderPage(TabPage page)
         {
+            Slider AddMessageBoxHandler(Slider slider)
+            {
+                slider.ValueChanged += (o, e) => MessageBox.Show("New value is: " + ((Slider)o!).Value, "Slider Value Changed");
+                return slider;
+            }
+
             var panel = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(10) };
 
             var groupBox1 = new GroupBox { Title = "Horizontal Sliders" };
@@ -69,16 +76,24 @@ namespace ControlsSample
             groupBox1.Children.Add(panel2);
 
             panel2.Children.Add(new TextBlock() { Text = "0 [0..10]", Margin = new Thickness(0, 0, 0, 5) });
-            panel2.Children.Add(new Slider() { Margin = new Thickness(0, 0, 0, 5) });
+            panel2.Children.Add(AddMessageBoxHandler(new Slider() { Margin = new Thickness(0, 0, 0, 5) }));
 
             panel2.Children.Add(new TextBlock() { Text = "5 [0..20]", Margin = new Thickness(0, 0, 0, 5) });
-            panel2.Children.Add(new Slider() { Value = 5, Maximum = 20, Margin = new Thickness(0, 0, 0, 5) });
+            panel2.Children.Add(AddMessageBoxHandler(new Slider() { Value = 5, Maximum = 20, Margin = new Thickness(0, 0, 0, 5) }));
 
             panel2.Children.Add(new TextBlock() { Text = "125 [50..200]", Margin = new Thickness(0, 10, 0, 5) });
-            panel2.Children.Add(new Slider() { Minimum = 50, Maximum = 200, Value = 125, Margin = new Thickness(0, 0, 0, 5) });
+            panel2.Children.Add(AddMessageBoxHandler(new Slider() { Minimum = 50, Maximum = 200, Value = 125, Margin = new Thickness(0, 0, 0, 5) }));
 
-            panel2.Children.Add(new TextBlock() { Text = "Custom height, 50 [0..100]", Margin = new Thickness(0, 10, 0, 5) });
-            panel2.Children.Add(new Slider() { Value = 50, Maximum = 100, Margin = new Thickness(0, 0, 0, 5), Height = 25 });
+            var increaseAllButton = new Button() { Text = "Increase All", Margin = new Thickness(0, 10, 0, 5) };
+            panel2.Children.Add(increaseAllButton);
+            increaseAllButton.Click += (o, e) =>
+            {
+                foreach (var slider in panel2.Children.OfType<Slider>())
+                {
+                    if (slider.Value < slider.Maximum)
+                        slider.Value++;
+                }
+            };
 
             panel.Children.Add(groupBox1);
 

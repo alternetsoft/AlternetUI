@@ -72,3 +72,8 @@ ALTERNET_UI_API void Slider_SetTickFrequency(Slider* obj, int value)
     obj->SetTickFrequency(value);
 }
 
+ALTERNET_UI_API void Slider_SetEventCallback(Slider::SliderEventCallbackType callback)
+{
+    Slider::SetEventCallback(callback);
+}
+

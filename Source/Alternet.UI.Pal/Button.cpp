@@ -10,6 +10,11 @@ namespace Alternet::UI
 
     Button::~Button()
     {
+        auto window = GetWxWindow();
+        if (window != nullptr)
+        {
+            window->Unbind(wxEVT_BUTTON, &Button::OnButtonClick, this);
+        }
     }
 
     string Button::GetText()
