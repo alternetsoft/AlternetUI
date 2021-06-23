@@ -28,6 +28,10 @@ namespace ControlsSample
             tc.Pages.Add(sliderPage);
             InitSliderPage(sliderPage);
 
+            var numericInputPage = new TabPage { Title = "Numeric Input" };
+            tc.Pages.Add(numericInputPage);
+            InitNumericInputPage(numericInputPage);
+
             // option1RadioButton = (RadioButton)FindControl("option1RadioButton");
 
             // option1RadioButton.CheckedChanged += Option1RadioButton_CheckedChanged;
@@ -121,13 +125,76 @@ namespace ControlsSample
             var panel3 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
             groupBox2.Children.Add(panel3);
 
-            var progressBarControlSlider = new Slider() {  Margin = new Thickness(0, 0, 0, 5) };
+            var progressBarControlSlider = new Slider() { Margin = new Thickness(0, 0, 0, 5) };
             var progressBar = new ProgressBar() { Maximum = 10, Margin = new Thickness(0, 0, 0, 5) };
 
             progressBarControlSlider.ValueChanged += (o, e) => progressBar.Value = progressBarControlSlider.Value;
             progressBarControlSlider.Value = 1;
 
             panel3.Children.Add(progressBarControlSlider);
+            panel3.Children.Add(progressBar);
+
+            panel.Children.Add(groupBox2);
+
+            page.Children.Add(panel);
+        }
+
+        private static void InitNumericInputPage(TabPage page)
+        {
+            var enableMessageHandlingCheckBox = new CheckBox { Text = "Enable Message Handling", IsChecked = true };
+            NumericUpDown AddMessageBoxHandler(NumericUpDown control)
+            {
+                control.ValueChanged += (o, e) =>
+                {
+                    if (!enableMessageHandlingCheckBox.IsChecked)
+                        return;
+
+                    MessageBox.Show("New value is: " + ((NumericUpDown)o!).Value, "NumericUpDown Value Changed");
+                };
+                return control;
+            }
+
+            var panel = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(10) };
+
+            var groupBox1 = new GroupBox { Title = "Integer Numeric Input" };
+            var panel2 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
+            groupBox1.Children.Add(panel2);
+
+            panel2.Children.Add(new TextBlock() { Text = "0 [0..10]", Margin = new Thickness(0, 0, 0, 5) });
+            panel2.Children.Add(AddMessageBoxHandler(new NumericUpDown() { Margin = new Thickness(0, 0, 0, 5) }));
+
+            panel2.Children.Add(new TextBlock() { Text = "5 [-20..20]", Margin = new Thickness(0, 0, 0, 5) });
+            panel2.Children.Add(AddMessageBoxHandler(new NumericUpDown() { Value = 5, Minimum = -20, Maximum = 20, Margin = new Thickness(0, 0, 0, 5) }));
+
+            panel2.Children.Add(new TextBlock() { Text = "125 [50..200]", Margin = new Thickness(0, 10, 0, 5) });
+            panel2.Children.Add(AddMessageBoxHandler(new NumericUpDown() { Minimum = 50, Maximum = 200, Value = 125, Margin = new Thickness(0, 0, 0, 5) }));
+
+            var increaseAllButton = new Button() { Text = "Increase All", Margin = new Thickness(0, 10, 0, 5) };
+            panel2.Children.Add(increaseAllButton);
+            increaseAllButton.Click += (o, e) =>
+            {
+                foreach (var control in panel2.Children.OfType<NumericUpDown>())
+                {
+                    if (control.Value < control.Maximum)
+                        control.Value++;
+                }
+            };
+
+            panel2.Children.Add(enableMessageHandlingCheckBox);
+
+            panel.Children.Add(groupBox1);
+
+            var groupBox2 = new GroupBox { Title = "Linked Progress Bar", Margin = new Thickness(0, 10, 0, 0) };
+            var panel3 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
+            groupBox2.Children.Add(panel3);
+
+            var progressBarControlNumericUpDown = new NumericUpDown() { Maximum = 10, Margin = new Thickness(0, 0, 0, 5) };
+            var progressBar = new ProgressBar() { Maximum = 10, Margin = new Thickness(0, 0, 0, 5) };
+
+            progressBarControlNumericUpDown.ValueChanged += (o, e) => progressBar.Value = (int)progressBarControlNumericUpDown.Value;
+            progressBarControlNumericUpDown.Value = 1;
+
+            panel3.Children.Add(progressBarControlNumericUpDown);
             panel3.Children.Add(progressBar);
 
             panel.Children.Add(groupBox2);

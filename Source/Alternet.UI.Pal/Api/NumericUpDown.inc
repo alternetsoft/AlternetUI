@@ -1,0 +1,31 @@
+// Auto generated code, DO NOT MODIFY MANUALLY. Copyright AlterNET, 2021.
+public:
+
+int GetMinimum();
+void SetMinimum(int value);
+
+
+int GetMaximum();
+void SetMaximum(int value);
+
+
+int GetValue();
+void SetValue(int value);
+
+public:
+enum class NumericUpDownEvent
+{
+    ValueChanged,
+};
+typedef void* (*NumericUpDownEventCallbackType)(NumericUpDown* obj, NumericUpDownEvent event, void* param);
+static void SetEventCallback(NumericUpDownEventCallbackType value) { eventCallback = value; }
+protected:
+bool RaiseEvent(NumericUpDownEvent event) { if (eventCallback != nullptr) return eventCallback(this, event, nullptr) != nullptr; else return false; }
+private:
+inline static NumericUpDownEventCallbackType eventCallback = nullptr;
+public:
+NumericUpDown();
+protected:
+virtual ~NumericUpDown();
+private:
+BYREF_ONLY(NumericUpDown);
