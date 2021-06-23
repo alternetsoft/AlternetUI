@@ -161,7 +161,7 @@ namespace ControlsSample
             groupBox1.Children.Add(panel2);
 
             panel2.Children.Add(new TextBlock() { Text = "0 [0..10]", Margin = new Thickness(0, 0, 0, 5) });
-            panel2.Children.Add(AddMessageBoxHandler(new NumericUpDown() { Margin = new Thickness(0, 0, 0, 5) }));
+            panel2.Children.Add(AddMessageBoxHandler(new NumericUpDown() { Maximum = 10, Margin = new Thickness(0, 0, 0, 5) }));
 
             panel2.Children.Add(new TextBlock() { Text = "5 [-20..20]", Margin = new Thickness(0, 0, 0, 5) });
             panel2.Children.Add(AddMessageBoxHandler(new NumericUpDown() { Value = 5, Minimum = -20, Maximum = 20, Margin = new Thickness(0, 0, 0, 5) }));
