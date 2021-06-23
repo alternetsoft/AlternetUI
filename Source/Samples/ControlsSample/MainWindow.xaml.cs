@@ -22,7 +22,7 @@ namespace ControlsSample
 
 #if NETCOREAPP
             if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
-                Width = 800;
+                Width = 750;
 #endif
 
             var tc = new TabControl();
