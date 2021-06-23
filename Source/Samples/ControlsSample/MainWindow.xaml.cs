@@ -32,6 +32,18 @@ namespace ControlsSample
             tc.Pages.Add(numericInputPage);
             InitNumericInputPage(numericInputPage);
 
+            var radioButtonsPage = new TabPage { Title = "Radio Buttons" };
+            tc.Pages.Add(radioButtonsPage);
+            InitRadioButtonsPage(radioButtonsPage);
+
+            var checkBoxesPage = new TabPage { Title = "Check Boxes" };
+            tc.Pages.Add(checkBoxesPage);
+            InitCheckBoxesPage(checkBoxesPage);
+
+            var textBoxesPage = new TabPage { Title = "Text Boxes" };
+            tc.Pages.Add(textBoxesPage);
+            InitTextBoxesPage(textBoxesPage);
+
             // option1RadioButton = (RadioButton)FindControl("option1RadioButton");
 
             // option1RadioButton.CheckedChanged += Option1RadioButton_CheckedChanged;
@@ -78,7 +90,7 @@ namespace ControlsSample
 
         private static void InitSliderPage(TabPage page)
         {
-            var enableMessageHandlingCheckBox = new CheckBox { Text = "Enable Message Handling", IsChecked = true };
+            var enableMessageHandlingCheckBox = new CheckBox { Text = "Enable value change event handling", IsChecked = true };
             Slider AddMessageBoxHandler(Slider slider)
             {
                 slider.ValueChanged += (o, e) =>
@@ -141,7 +153,7 @@ namespace ControlsSample
 
         private static void InitNumericInputPage(TabPage page)
         {
-            var enableMessageHandlingCheckBox = new CheckBox { Text = "Enable Message Handling", IsChecked = true };
+            var enableMessageHandlingCheckBox = new CheckBox { Text = "Enable value change event handling", IsChecked = true };
             NumericUpDown AddMessageBoxHandler(NumericUpDown control)
             {
                 control.ValueChanged += (o, e) =>
@@ -196,6 +208,100 @@ namespace ControlsSample
 
             panel3.Children.Add(progressBarControlNumericUpDown);
             panel3.Children.Add(progressBar);
+
+            panel.Children.Add(groupBox2);
+
+            page.Children.Add(panel);
+        }
+
+        private static void InitTextBoxesPage(TabPage page)
+        {
+            var enableMessageHandlingCheckBox = new CheckBox { Text = "Enable text change event handling", IsChecked = true };
+            TextBox AddMessageBoxHandler(TextBox control)
+            {
+                control.TextChanged += (o, e) =>
+                {
+                    if (!enableMessageHandlingCheckBox.IsChecked)
+                        return;
+
+                    MessageBox.Show("New value is: " + ((TextBox)o!).Text, "TextBox Text Changed");
+                };
+                return control;
+            }
+
+            var panel = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(10) };
+
+            var groupBox1 = new GroupBox { Title = "Text Input" };
+            var panel2 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
+            groupBox1.Children.Add(panel2);
+
+            panel2.Children.Add(AddMessageBoxHandler(new TextBox() { Text = "Text 1.1", Margin = new Thickness(0, 0, 0, 5) }));
+            panel2.Children.Add(AddMessageBoxHandler(new TextBox() { Text = "Text 1.2", Margin = new Thickness(0, 0, 0, 5) }));
+            panel2.Children.Add(AddMessageBoxHandler(new TextBox() { Text = "Text 1.3", Margin = new Thickness(0, 0, 0, 5) }));
+
+            var addLetterAButton = new Button() { Text = "Add Letter \"A\"", Margin = new Thickness(0, 10, 0, 5) };
+            panel2.Children.Add(addLetterAButton);
+            addLetterAButton.Click += (o, e) =>
+            {
+                foreach (var control in panel2.Children.OfType<TextBox>())
+                    control.Text += "A";
+            };
+
+            panel2.Children.Add(enableMessageHandlingCheckBox);
+
+            panel.Children.Add(groupBox1);
+
+            page.Children.Add(panel);
+        }
+
+        private static void InitRadioButtonsPage(TabPage page)
+        {
+            var panel = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(10) };
+
+            var groupBox1 = new GroupBox { Title = "Radio Group 1" };
+            var panel2 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
+            groupBox1.Children.Add(panel2);
+
+            panel2.Children.Add(new RadioButton() { Text = "Option 1.1", Margin = new Thickness(0, 0, 0, 5) });
+            panel2.Children.Add(new RadioButton() { Text = "Option 1.2", Margin = new Thickness(0, 0, 0, 5) });
+            panel2.Children.Add(new RadioButton() { Text = "Option 1.3", Margin = new Thickness(0, 0, 0, 5) });
+
+            panel.Children.Add(groupBox1);
+
+            var groupBox2 = new GroupBox { Title = "Radio Group 2", Margin = new Thickness(0, 10, 0, 0) };
+            var panel3 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
+            groupBox2.Children.Add(panel3);
+
+            panel3.Children.Add(new RadioButton() { Text = "Option 2.1", Margin = new Thickness(0, 0, 0, 5) });
+            panel3.Children.Add(new RadioButton() { Text = "Option 2.2", Margin = new Thickness(0, 0, 0, 5) });
+            panel3.Children.Add(new RadioButton() { Text = "Option 2.3", Margin = new Thickness(0, 0, 0, 5) });
+
+            panel.Children.Add(groupBox2);
+
+            page.Children.Add(panel);
+        }
+
+        private static void InitCheckBoxesPage(TabPage page)
+        {
+            var panel = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(10) };
+
+            var groupBox1 = new GroupBox { Title = "Option Group 1" };
+            var panel2 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
+            groupBox1.Children.Add(panel2);
+
+            panel2.Children.Add(new CheckBox() { Text = "Option 1.1", Margin = new Thickness(0, 0, 0, 5) });
+            panel2.Children.Add(new CheckBox() { Text = "Option 1.2", Margin = new Thickness(0, 0, 0, 5) });
+            panel2.Children.Add(new CheckBox() { Text = "Option 1.3", Margin = new Thickness(0, 0, 0, 5) });
+
+            panel.Children.Add(groupBox1);
+
+            var groupBox2 = new GroupBox { Title = "Option Group 2", Margin = new Thickness(0, 10, 0, 0) };
+            var panel3 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
+            groupBox2.Children.Add(panel3);
+
+            panel3.Children.Add(new CheckBox() { Text = "Option 2.1", Margin = new Thickness(0, 0, 0, 5) });
+            panel3.Children.Add(new CheckBox() { Text = "Option 2.2", Margin = new Thickness(0, 0, 0, 5) });
+            panel3.Children.Add(new CheckBox() { Text = "Option 2.3", Margin = new Thickness(0, 0, 0, 5) });
 
             panel.Children.Add(groupBox2);
 
