@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample"
         Title="Alternet UI Controls Sample"
-        Width="600" Height="600">
+        Width="800" Height="600">
     <TabControl>
         <!-- <TabPage Title="Radio Button">
             <StackPanel Orientation="Vertical" Margin="10">
