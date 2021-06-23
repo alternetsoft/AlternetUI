@@ -17,6 +17,14 @@ namespace ControlsSample
                 throw new InvalidOperationException();
             new XamlLoader().LoadExisting(xamlStream, this);
 
+            Width = 600;
+            Height = 600;
+
+#if NETCOREAPP
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
+                Width = 800;
+#endif
+
             var tc = new TabControl();
             Children.Add(tc);
 
