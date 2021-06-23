@@ -83,15 +83,16 @@ namespace Alternet::UI
 
     void NumericUpDown::ApplyMaximum(const int& value)
     {
-        GetSpinCtrl()->SetMax(value);
+        GetSpinCtrl()->SetRange(GetMinimum(), value);
     }
 
     int NumericUpDown::RetrieveMinimum()
     {
         return GetSpinCtrl()->GetMin();
     }
+
     void NumericUpDown::ApplyMinimum(const int& value)
     {
-        GetSpinCtrl()->SetMin(value);
+        GetSpinCtrl()->SetRange(value, GetMaximum());
     }
 }
