@@ -28,6 +28,10 @@ namespace ControlsSample
             var tc = new TabControl();
             Children.Add(tc);
 
+            var listBoxesPage = new TabPage { Title = "List Box" };
+            tc.Pages.Add(listBoxesPage);
+            InitListBoxesPage(listBoxesPage);
+
             var progressBarPage = new TabPage { Title = "Progress Bar" };
             tc.Pages.Add(progressBarPage);
             InitProgressBarPage(progressBarPage);
@@ -55,6 +59,26 @@ namespace ControlsSample
             // option1RadioButton = (RadioButton)FindControl("option1RadioButton");
 
             // option1RadioButton.CheckedChanged += Option1RadioButton_CheckedChanged;
+        }
+
+        private static void InitListBoxesPage(TabPage page)
+        {
+            var panel = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(10) };
+
+            var groupBox1 = new GroupBox { Title = "List Boxes" };
+            var panel2 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
+            groupBox1.Children.Add(panel2);
+
+            var listBox = new ListBox() { Margin = new Thickness(0, 0, 0, 5) };
+            listBox.Height = 100;
+            listBox.Items.Add("One");
+            listBox.Items.Add("Two");
+            listBox.Items.Add("Three");
+            panel2.Children.Add(listBox);
+
+            panel.Children.Add(groupBox1);
+
+            page.Children.Add(panel);
         }
 
         private static void InitProgressBarPage(TabPage page)
