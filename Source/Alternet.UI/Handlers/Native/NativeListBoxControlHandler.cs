@@ -29,7 +29,7 @@ namespace Alternet.UI
             var items = control.Items;
 
             for (var i = 0; i < items.Count; i++)
-                NativeControl.InsertItem(i, GetItemText(control.Items[i]));
+                NativeControl.InsertItem(i, Control.GetItemText(control.Items[i]));
         }
 
         protected override void OnDetach()
@@ -42,12 +42,7 @@ namespace Alternet.UI
 
         private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<object> e)
         {
-            NativeControl.InsertItem(e.Index, GetItemText(e.Item));
-        }
-
-        private static string GetItemText(object value)
-        {
-            return value.ToString() ?? throw new Exception(); // todo
+            NativeControl.InsertItem(e.Index, Control.GetItemText(e.Item));
         }
 
         private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<object> e)

@@ -2,9 +2,7 @@ using System;
 
 namespace Alternet.UI
 {
-    public class ListBox : Control
+    public class ListBox : ListControl
     {
-        [Content]
-        public Collection<object> Items { get; } = new Collection<object>();
     }
 }

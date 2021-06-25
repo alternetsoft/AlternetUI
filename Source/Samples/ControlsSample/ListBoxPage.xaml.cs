@@ -19,6 +19,20 @@ namespace ControlsSample
             listBox.Items.Add("One");
             listBox.Items.Add("Two");
             listBox.Items.Add("Three");
+
+            ((Button)FindControl("addItemButton")).Click += AddItemButton_Click;
+            ((Button)FindControl("removeItemButton")).Click += RemoveItemButton_Click;
+        }
+
+        private void RemoveItemButton_Click(object? sender, EventArgs e)
+        {
+            if (listBox.Items.Count > 0)
+                listBox.Items.RemoveAt(listBox.Items.Count - 1);
+        }
+
+        private void AddItemButton_Click(object? sender, EventArgs e)
+        {
+            listBox.Items.Add("Item " + (listBox.Items.Count + 1));
         }
     }
 }
