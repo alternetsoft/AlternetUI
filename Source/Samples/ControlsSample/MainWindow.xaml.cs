@@ -28,7 +28,6 @@ namespace ControlsSample
             var tc = new TabControl();
             Children.Add(tc);
             tc.Pages.Add(new TabPage { Title = "List Box", Children = { new ListBoxPage() } });
-            return;
 
             var progressBarPage = new TabPage { Title = "Progress Bar" };
             tc.Pages.Add(progressBarPage);
