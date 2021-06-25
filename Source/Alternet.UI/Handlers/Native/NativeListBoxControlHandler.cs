@@ -47,7 +47,7 @@ namespace Alternet.UI
 
         private static string GetItemText(object value)
         {
-            return value.ToString(); // todo
+            return value.ToString() ?? throw new Exception(); // todo
         }
 
         private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<object> e)

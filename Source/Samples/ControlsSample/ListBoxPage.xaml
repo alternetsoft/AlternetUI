@@ -1,0 +1,12 @@
+﻿<Control xmlns="http://schemas.alternetsoft.com/ui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample"
+         >
+    <StackPanel Orientation="Vertical" Padding="10">
+        <GroupBox Title="List Box">
+            <StackPanel Orientation="Vertical" Margin="5">
+                <ListBox Height="100" Name="listBox"/>
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
+</Control>

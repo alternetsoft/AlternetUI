@@ -27,10 +27,12 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="ListBoxPage.xaml" />
       <None Remove="MainWindow.xaml" />
     </ItemGroup>
 
     <ItemGroup>
+      <EmbeddedResource Include="ListBoxPage.xaml" />
       <EmbeddedResource Include="MainWindow.xaml" />
     </ItemGroup>
 

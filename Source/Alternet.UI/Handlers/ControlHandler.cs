@@ -306,6 +306,7 @@ namespace Alternet.UI
             ApplyBorderColor();
             ApplyBackgroundColor();
             ApplyForegroundColor();
+            ApplyChildren();
 
             Control.MarginChanged += Control_MarginChanged;
             Control.PaddingChanged += Control_PaddingChanged;
@@ -321,8 +322,15 @@ namespace Alternet.UI
             VisualChildren.ItemRemoved += Children_ItemRemoved;
         }
 
+        private void ApplyChildren()
+        {
+            for (var i = 0; i < Control.Children.Count; i++)
+                OnChildInserted(i, Control.Children[i]);
+        }
+
         protected virtual void OnDetach()
         {
+            // todo: consider clearing the native control's children.
             Control.MarginChanged -= Control_MarginChanged;
             Control.PaddingChanged -= Control_PaddingChanged;
             Control.BackgroundColorChanged -= Control_BackgroundColorChanged;

@@ -109,8 +109,6 @@ namespace Alternet::UI
             child->UpdateWxWindowParent();
     }
 
-
-
     void Control::OnWxWindowCreated()
     {
     }
@@ -372,8 +370,9 @@ namespace Alternet::UI
         }
         else
         {
-            auto parentWxWindow = parent->GetWxWindow();
-            if (wxWindow->GetParent() != parentWxWindow)
+            auto parentWxWindow = parent->GetParentingWxWindow();
+            auto oldParent = wxWindow->GetParent();
+            if (oldParent != parentWxWindow)
                 wxWindow->Reparent(parentWxWindow);
         }
     }

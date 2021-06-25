@@ -27,10 +27,8 @@ namespace ControlsSample
 
             var tc = new TabControl();
             Children.Add(tc);
-
-            var listBoxesPage = new TabPage { Title = "List Box" };
-            tc.Pages.Add(listBoxesPage);
-            InitListBoxesPage(listBoxesPage);
+            tc.Pages.Add(new TabPage { Title = "List Box", Children = { new ListBoxPage() } });
+            return;
 
             var progressBarPage = new TabPage { Title = "Progress Bar" };
             tc.Pages.Add(progressBarPage);
@@ -63,10 +61,10 @@ namespace ControlsSample
 
         private static void InitListBoxesPage(TabPage page)
         {
-            var panel = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(10) };
+            var verticalPanel = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(10) };
 
             var groupBox1 = new GroupBox { Title = "List Boxes" };
-            var panel2 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
+            var panel2 = new StackPanel { Orientation = StackPanelOrientation.Horizontal, Margin = new Thickness(5) };
             groupBox1.Children.Add(panel2);
 
             var listBox = new ListBox() { Margin = new Thickness(0, 0, 0, 5) };
@@ -76,9 +74,9 @@ namespace ControlsSample
             listBox.Items.Add("Three");
             panel2.Children.Add(listBox);
 
-            panel.Children.Add(groupBox1);
+            verticalPanel.Children.Add(groupBox1);
 
-            page.Children.Add(panel);
+            page.Children.Add(verticalPanel);
         }
 
         private static void InitProgressBarPage(TabPage page)
