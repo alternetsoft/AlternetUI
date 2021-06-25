@@ -5,10 +5,10 @@ namespace Alternet.UI
 {
     public abstract class ListControl : Control
     {
+        // todo: copy DataSource, DisplayMember, ValueMember etc implementation from WinForms
+
         [Content]
         public Collection<object> Items { get; } = new Collection<object> { ThrowOnNullItemAddition = true };
-
-        // todo: copy DataSource, DisplayMember, ValueMember etc implementation from WinForms
 
         public string GetItemText(object item)
         {
