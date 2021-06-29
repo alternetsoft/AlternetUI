@@ -2,6 +2,12 @@
 
 namespace Alternet.UI.Native
 {
+    enum ListBoxSelectionMode
+    {
+        Single,
+        Multiple,
+    }
+    
     enum WindowStartPosition
     {
         SystemDefaultLocation,

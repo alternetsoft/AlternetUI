@@ -15,9 +15,21 @@ namespace Alternet.UI
             base.OnAttach();
 
             ApplyItems();
+            ApplySelectionMode();
 
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
+            Control.SelectionModeChanged += Control_SelectionModeChanged;
+        }
+
+        private void Control_SelectionModeChanged(object? sender, EventArgs e)
+        {
+            ApplySelectionMode();
+        }
+
+        private void ApplySelectionMode()
+        {
+            NativeControl.SelectionMode = (Native.ListBoxSelectionMode)Control.SelectionMode;
         }
 
         private void ApplyItems()
@@ -36,6 +48,7 @@ namespace Alternet.UI
         {
             Control.Items.ItemInserted -= Items_ItemInserted;
             Control.Items.ItemRemoved -= Items_ItemRemoved;
+            Control.SelectionModeChanged -= Control_SelectionModeChanged;
 
             base.OnDetach();
         }

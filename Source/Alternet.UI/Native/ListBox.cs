@@ -27,6 +27,21 @@ namespace Alternet.UI.Native
             
         }
         
+        public ListBoxSelectionMode SelectionMode
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ListBox_GetSelectionMode(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ListBox_SetSelectionMode(NativePointer, value);
+            }
+        }
+        
         public void InsertItem(int index, string? value)
         {
             CheckDisposed();
@@ -56,6 +71,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ListBox_GetItemsCount(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern ListBoxSelectionMode ListBox_GetSelectionMode(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListBox_SetSelectionMode(IntPtr obj, ListBoxSelectionMode value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListBox_InsertItem(IntPtr obj, int index, string? value);

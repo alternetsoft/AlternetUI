@@ -3,6 +3,10 @@ public:
 
 int GetItemsCount();
 
+
+ListBoxSelectionMode GetSelectionMode();
+void SetSelectionMode(ListBoxSelectionMode value);
+
 void InsertItem(int index, const string& value);
 void RemoveItemAt(int index);
 void ClearItems();

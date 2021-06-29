@@ -3,6 +3,12 @@
 
 namespace Alternet::UI
 {
+    enum class ListBoxSelectionMode
+    {
+        Single,
+        Multiple,
+    };
+    
     enum class WindowStartPosition
     {
         SystemDefaultLocation,

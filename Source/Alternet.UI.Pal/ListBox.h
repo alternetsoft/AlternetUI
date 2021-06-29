@@ -15,11 +15,15 @@ namespace Alternet::UI
 
     private:
 
-        void ApplyItems();
-
-        wxListBox* GetListBox();
-
         std::vector<string> _items;
 
+        DelayedValue<ListBox, ListBoxSelectionMode> _selectionMode;
+
+        void ApplyItems();
+
+        ListBoxSelectionMode RetrieveSelectionMode();
+        void ApplySelectionMode(const ListBoxSelectionMode& value);
+
+        wxListBox* GetListBox();
     };
 }

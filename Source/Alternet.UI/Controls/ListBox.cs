@@ -94,6 +94,29 @@ namespace Alternet.UI
 
         public event EventHandler? SelectionChanged;
 
+        public event EventHandler? SelectionModeChanged;
         ListBoxSelectionMode selectionMode = ListBoxSelectionMode.Single;
+
+        public ListBoxSelectionMode SelectionMode
+        {
+            get
+            {
+                CheckDisposed();
+
+                return selectionMode;
+            }
+
+            set
+            {
+                CheckDisposed();
+
+                if (selectionMode == value)
+                    return;
+
+                selectionMode = value;
+
+                SelectionModeChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
     }
 }

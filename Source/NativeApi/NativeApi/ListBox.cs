@@ -9,5 +9,7 @@ namespace NativeApi.Api
         public void RemoveItemAt(int index) => throw new Exception();
         public void ClearItems() => throw new Exception();
         public int ItemsCount { get; }
+
+        public ListBoxSelectionMode SelectionMode { get; set; }
     }
 }
