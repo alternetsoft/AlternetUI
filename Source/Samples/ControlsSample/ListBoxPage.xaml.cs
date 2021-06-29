@@ -7,8 +7,9 @@ namespace ControlsSample
     {
         private ListBox listBox;
         private CheckBox allowMultipleSelectionCheckBox;
+        private readonly IPageSite site;
 
-        public ListBoxPage()
+        public ListBoxPage(IPageSite site)
         {
             var xamlStream = typeof(MainWindow).Assembly.GetManifestResourceStream("ControlsSample.ListBoxPage.xaml");
             if (xamlStream == null)
@@ -16,6 +17,7 @@ namespace ControlsSample
             new XamlLoader().LoadExisting(xamlStream, this);
 
             listBox = (ListBox)FindControl("listBox");
+            listBox.SelectionChanged += ListBox_SelectionChanged;
 
             listBox.Items.Add("One");
             listBox.Items.Add("Two");
@@ -26,6 +28,12 @@ namespace ControlsSample
             
             allowMultipleSelectionCheckBox = (CheckBox)FindControl("allowMultipleSelectionCheckBox");
             allowMultipleSelectionCheckBox.CheckedChanged += ListBoxPage_CheckedChanged;
+            this.site = site;
+        }
+
+        private void ListBox_SelectionChanged(object? sender, EventArgs e)
+        {
+            site.LogEvent("ListBox: SelectionChanged");
         }
 
         private void ListBoxPage_CheckedChanged(object? sender, EventArgs e)

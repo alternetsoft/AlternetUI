@@ -6,9 +6,10 @@ using System.Linq;
 
 namespace ControlsSample
 {
-    internal class MainWindow : Window
+    internal class MainWindow : Window, IPageSite
     {
         private RadioButton option1RadioButton;
+        private ListBox eventsListBox;
 
         public MainWindow()
         {
@@ -26,8 +27,12 @@ namespace ControlsSample
 #endif
 
             var tc = new TabControl();
-            Children.Add(tc);
-            tc.Pages.Add(new TabPage { Title = "List Box", Children = { new ListBoxPage() } });
+            var rootPanel = new StackPanel { Orientation = StackPanelOrientation.Vertical };
+            Children.Add(rootPanel);
+
+            rootPanel.Children.Add(tc);
+
+            tc.Pages.Add(new TabPage { Title = "List Box", Children = { new ListBoxPage(this) } });
 
             var progressBarPage = new TabPage { Title = "Progress Bar" };
             tc.Pages.Add(progressBarPage);
@@ -52,6 +57,11 @@ namespace ControlsSample
             var textBoxesPage = new TabPage { Title = "Text Boxes" };
             tc.Pages.Add(textBoxesPage);
             InitTextBoxesPage(textBoxesPage);
+
+
+            eventsListBox = new ListBox();
+            eventsListBox.Height = 100;
+            rootPanel.Children.Add(eventsListBox);
 
             // option1RadioButton = (RadioButton)FindControl("option1RadioButton");
 
@@ -340,6 +350,14 @@ namespace ControlsSample
         private void Option1RadioButton_CheckedChanged(object? sender, EventArgs e)
         {
             // MessageBox.Show(option1RadioButton.IsChecked.ToString(), "Option 1");
+        }
+
+        int lastEventNumber = 1;
+
+        void IPageSite.LogEvent(string message)
+        {
+            eventsListBox.Items.Add($"{lastEventNumber++}. {message}");
+            eventsListBox.SelectedIndex = eventsListBox.Items.Count - 1;
         }
     }
 }

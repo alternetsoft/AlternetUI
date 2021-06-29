@@ -92,7 +92,7 @@ namespace Alternet.UI
                 var indices = control.SelectedIndices;
 
                 for (var i = 0; i < indices.Count; i++)
-                    NativeControl.SetSelected(i, true);
+                    NativeControl.SetSelected(indices[i], true);
             }
             finally
             {
