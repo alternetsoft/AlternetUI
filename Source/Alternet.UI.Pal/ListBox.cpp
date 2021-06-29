@@ -67,6 +67,7 @@ namespace Alternet::UI
 
         _selectionMode = value;
         RecreateWxWindowIfNeeded();
+        // todo: restore selection
     }
 
     void ListBox::OnWxWindowCreated()

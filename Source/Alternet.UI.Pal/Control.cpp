@@ -308,7 +308,7 @@ namespace Alternet::UI
     RectangleF Control::RetrieveBounds()
     {
         auto wxWindow = GetWxWindow();
-        return toDip(wxWindow->GetClientRect(), wxWindow);
+        return toDip(wxWindow->GetRect(), wxWindow);
     }
 
     void Control::ApplyBounds(const RectangleF& value)
