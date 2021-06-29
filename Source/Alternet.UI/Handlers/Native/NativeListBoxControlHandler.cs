@@ -1,10 +1,13 @@
 using System;
-using System.Drawing;
 
 namespace Alternet.UI
 {
     internal class NativeListBoxHandler : NativeControlHandler<ListBox, Native.ListBox>
     {
+        private bool receivingSelection;
+
+        private bool applyingSelection;
+
         internal override Native.Control CreateNativeControl()
         {
             return new Native.ListBox();
@@ -16,10 +19,42 @@ namespace Alternet.UI
 
             ApplyItems();
             ApplySelectionMode();
+            ApplySelection();
 
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
             Control.SelectionModeChanged += Control_SelectionModeChanged;
+
+            Control.SelectionChanged += Control_SelectionChanged;
+            NativeControl.SelectionChanged += NativeControl_SelectionChanged;
+        }
+
+        protected override void OnDetach()
+        {
+            Control.Items.ItemInserted -= Items_ItemInserted;
+            Control.Items.ItemRemoved -= Items_ItemRemoved;
+            Control.SelectionModeChanged -= Control_SelectionModeChanged;
+
+            Control.SelectionChanged -= Control_SelectionChanged;
+            NativeControl.SelectionChanged -= NativeControl_SelectionChanged;
+
+            base.OnDetach();
+        }
+
+        private void NativeControl_SelectionChanged(object? sender, EventArgs e)
+        {
+            if (applyingSelection)
+                return;
+
+            ReceiveSelection();
+        }
+
+        private void Control_SelectionChanged(object? sender, EventArgs e)
+        {
+            if (receivingSelection)
+                return;
+
+            ApplySelection();
         }
 
         private void Control_SelectionModeChanged(object? sender, EventArgs e)
@@ -44,13 +79,45 @@ namespace Alternet.UI
                 NativeControl.InsertItem(i, Control.GetItemText(control.Items[i]));
         }
 
-        protected override void OnDetach()
+        private void ApplySelection()
         {
-            Control.Items.ItemInserted -= Items_ItemInserted;
-            Control.Items.ItemRemoved -= Items_ItemRemoved;
-            Control.SelectionModeChanged -= Control_SelectionModeChanged;
+            applyingSelection = true;
 
-            base.OnDetach();
+            try
+            {
+                var nativeControl = NativeControl;
+                nativeControl.ClearSelected();
+
+                var control = Control;
+                var indices = control.SelectedIndices;
+
+                for (var i = 0; i < indices.Count; i++)
+                    NativeControl.SetSelected(i, true);
+            }
+            finally
+            {
+                applyingSelection = false;
+            }
+        }
+
+        private void ReceiveSelection()
+        {
+            receivingSelection = true;
+
+            try
+            {
+                var control = Control;
+                control.ClearSelected();
+
+                var nativeControl = NativeControl;
+
+                for (var i = 0; i < nativeControl.SelectedIndicesCount; i++)
+                    Control.SetSelected(nativeControl.GetSelectedIndexAt(i), true);
+            }
+            finally
+            {
+                receivingSelection = false;
+            }
         }
 
         private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<object> e)

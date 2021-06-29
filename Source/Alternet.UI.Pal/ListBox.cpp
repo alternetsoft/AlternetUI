@@ -11,7 +11,7 @@ namespace Alternet::UI
         auto window = GetWxWindow();
         if (window != nullptr)
         {
-            //window->Unbind(wxEVT_SLIDER, &Slider::OnSliderValueChanged, this);
+            window->Unbind(wxEVT_LISTBOX, &ListBox::OnSelectionChanged, this);
         }
     }
 
@@ -50,9 +50,14 @@ namespace Alternet::UI
             NULL,
             GetSelectionStyle());
 
-        //value->Bind(wxEVT_SLIDER, &Slider::OnSliderValueChanged, this);
+        value->Bind(wxEVT_LISTBOX, &ListBox::OnSelectionChanged, this);
 
         return value;
+    }
+
+    void ListBox::OnSelectionChanged(wxCommandEvent& event)
+    {
+        RaiseEvent(ListBoxEvent::SelectionChanged);
     }
 
     int ListBox::GetSelectedIndicesCount()
@@ -78,7 +83,7 @@ namespace Alternet::UI
             return _selectedIndices[index];
     }
 
-    void ListBox::ClearSelection()
+    void ListBox::ClearSelected()
     {
         if (IsWxWindowCreated())
         {
@@ -238,7 +243,7 @@ namespace Alternet::UI
 
     void ListBox::SetSelectedIndices(const std::vector<int>& value)
     {
-        ClearSelection();
+        ClearSelected();
         for (auto index : value)
             SetSelected(index, true);
     }

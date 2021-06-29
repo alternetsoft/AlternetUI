@@ -52,9 +52,9 @@ ALTERNET_UI_API int ListBox_GetSelectedIndexAt(ListBox* obj, int index)
     return obj->GetSelectedIndexAt(index);
 }
 
-ALTERNET_UI_API void ListBox_ClearSelection(ListBox* obj)
+ALTERNET_UI_API void ListBox_ClearSelected(ListBox* obj)
 {
-    obj->ClearSelection();
+    obj->ClearSelected();
 }
 
 ALTERNET_UI_API void ListBox_SetSelected(ListBox* obj, int index, c_bool value)

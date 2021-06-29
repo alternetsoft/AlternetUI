@@ -20,7 +20,7 @@ namespace NativeApi.Api
 
         public int GetSelectedIndexAt(int index) => throw new Exception();
 
-        public void ClearSelection() => throw new Exception();
+        public void ClearSelected() => throw new Exception();
 
         public void SetSelected(int index, bool value) => throw new Exception();
     }

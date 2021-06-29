@@ -77,10 +77,10 @@ namespace Alternet.UI.Native
             return NativeApi.ListBox_GetSelectedIndexAt(NativePointer, index);
         }
         
-        public void ClearSelection()
+        public void ClearSelected()
         {
             CheckDisposed();
-            NativeApi.ListBox_ClearSelection(NativePointer);
+            NativeApi.ListBox_ClearSelected(NativePointer);
         }
         
         public void SetSelected(int index, bool value)
@@ -163,7 +163,7 @@ namespace Alternet.UI.Native
             public static extern int ListBox_GetSelectedIndexAt(IntPtr obj, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_ClearSelection(IntPtr obj);
+            public static extern void ListBox_ClearSelected(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListBox_SetSelected(IntPtr obj, int index, bool value);

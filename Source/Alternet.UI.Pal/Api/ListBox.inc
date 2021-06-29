@@ -14,7 +14,7 @@ void InsertItem(int index, const string& value);
 void RemoveItemAt(int index);
 void ClearItems();
 int GetSelectedIndexAt(int index);
-void ClearSelection();
+void ClearSelected();
 void SetSelected(int index, bool value);
 public:
 enum class ListBoxEvent

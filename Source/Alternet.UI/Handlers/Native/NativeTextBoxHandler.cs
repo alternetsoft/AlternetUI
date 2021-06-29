@@ -15,8 +15,8 @@ namespace Alternet.UI
 
             NativeControl.Text = Control.Text;
 
-            Control.TextChanged += Control_TextChanged;
             Control.EditControlOnlyChanged += Control_EditControlOnlyChanged;
+            Control.TextChanged += Control_TextChanged;
             NativeControl.TextChanged += NativeControl_TextChanged;
         }
 
