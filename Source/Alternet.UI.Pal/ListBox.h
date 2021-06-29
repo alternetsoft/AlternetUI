@@ -12,17 +12,18 @@ namespace Alternet::UI
 
     protected:
         void OnWxWindowCreated() override;
+        void OnWxWindowDestroying() override;
 
     private:
 
         std::vector<string> _items;
 
-        DelayedValue<ListBox, ListBoxSelectionMode> _selectionMode;
+        ListBoxSelectionMode _selectionMode = ListBoxSelectionMode::Single;
+
+        long GetSelectionStyle();
 
         void ApplyItems();
-
-        ListBoxSelectionMode RetrieveSelectionMode();
-        void ApplySelectionMode(const ListBoxSelectionMode& value);
+        void ReceiveItems();
 
         wxListBox* GetListBox();
     };

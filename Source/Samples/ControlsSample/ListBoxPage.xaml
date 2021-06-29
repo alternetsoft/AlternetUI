@@ -9,6 +9,7 @@
                 <StackPanel Orientation="Vertical" Margin="5,0,0,0">
                     <Button Text="Add Item" Name="addItemButton" />
                     <Button Text="Remove Item" Name="removeItemButton" />
+                    <CheckBox Text="Allow Multiple Selection" Name="allowMultipleSelectionCheckBox" />
                 </StackPanel>
             </StackPanel>
         </GroupBox>

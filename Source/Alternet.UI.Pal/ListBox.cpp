@@ -2,10 +2,8 @@
 
 namespace Alternet::UI
 {
-    ListBox::ListBox():
-        _selectionMode(*this, ListBoxSelectionMode::Single, &Control::IsWxWindowCreated, &ListBox::RetrieveSelectionMode, &ListBox::ApplySelectionMode)
+    ListBox::ListBox()
     {
-        GetDelayedValues().Add(&_selectionMode);
     }
 
     ListBox::~ListBox()
@@ -43,7 +41,15 @@ namespace Alternet::UI
 
     wxWindow* ListBox::CreateWxWindowCore(wxWindow* parent)
     {
-        auto value = new wxListBox(parent, wxID_ANY);
+        auto value = new wxListBox(
+            parent,
+            wxID_ANY,
+            wxDefaultPosition,
+            wxDefaultSize,
+            0,
+            NULL,
+            GetSelectionStyle());
+
         //value->Bind(wxEVT_SLIDER, &Slider::OnSliderValueChanged, this);
 
         return value;
@@ -51,11 +57,16 @@ namespace Alternet::UI
 
     ListBoxSelectionMode ListBox::GetSelectionMode()
     {
-        return ListBoxSelectionMode();
+        return _selectionMode;
     }
 
     void ListBox::SetSelectionMode(ListBoxSelectionMode value)
     {
+        if (_selectionMode == value)
+            return;
+
+        _selectionMode = value;
+        RecreateWxWindowIfNeeded();
     }
 
     void ListBox::OnWxWindowCreated()
@@ -64,12 +75,32 @@ namespace Alternet::UI
         ApplyItems();
     }
 
+    void ListBox::OnWxWindowDestroying()
+    {
+        Control::OnWxWindowDestroying();
+        ReceiveItems();
+    }
+
     int ListBox::GetItemsCount()
     {
         if (IsWxWindowCreated())
             return GetListBox()->GetCount();
         else
             return _items.size();
+    }
+
+    long ListBox::GetSelectionStyle()
+    {
+        switch (_selectionMode)
+        {
+        case ListBoxSelectionMode::Single:
+            return wxLB_SINGLE;
+        case ListBoxSelectionMode::Multiple:
+            return wxLB_EXTENDED;
+        default:
+            wxASSERT(false);
+            throw 0;
+        }
     }
 
     void ListBox::ApplyItems()
@@ -86,31 +117,16 @@ namespace Alternet::UI
         _items.clear();
     }
 
-    ListBoxSelectionMode ListBox::RetrieveSelectionMode()
+    void ListBox::ReceiveItems()
     {
-        auto isSingle = (GetListBox()->GetWindowStyle() & wxLB_SINGLE) != 0;
-        return isSingle ? ListBoxSelectionMode::Single : ListBoxSelectionMode::Multiple;
-    }
+        auto listBox = GetListBox();
+        _items.clear();
 
-    void ListBox::ApplySelectionMode(const ListBoxSelectionMode& value)
-    {
-        auto style = GetListBox()->GetWindowStyle();
+        if (listBox->IsEmpty())
+            return;
 
-        switch (value)
-        {
-        case ListBoxSelectionMode::Single:
-            style |= wxLB_SINGLE;
-            style &= ~(wxLB_EXTENDED | wxLB_MULTIPLE);
-            break;
-        case ListBoxSelectionMode::Multiple:
-            style |= wxLB_EXTENDED;
-            style &= ~wxLB_SINGLE;
-            break;
-        default:
-            wxASSERT(false);
-        }
-
-        GetListBox()->SetWindowStyle(style);
+        for (int i = 0; i < (int)listBox->GetCount(); i++)
+            _items.push_back(wxStr(listBox->GetString(i)));
     }
 
     wxListBox* ListBox::GetListBox()

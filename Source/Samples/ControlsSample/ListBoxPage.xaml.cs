@@ -6,6 +6,7 @@ namespace ControlsSample
     internal class ListBoxPage : Control
     {
         private ListBox listBox;
+        private CheckBox allowMultipleSelectionCheckBox;
 
         public ListBoxPage()
         {
@@ -22,6 +23,14 @@ namespace ControlsSample
 
             ((Button)FindControl("addItemButton")).Click += AddItemButton_Click;
             ((Button)FindControl("removeItemButton")).Click += RemoveItemButton_Click;
+            
+            allowMultipleSelectionCheckBox = (CheckBox)FindControl("allowMultipleSelectionCheckBox");
+            allowMultipleSelectionCheckBox.CheckedChanged += ListBoxPage_CheckedChanged;
+        }
+
+        private void ListBoxPage_CheckedChanged(object? sender, EventArgs e)
+        {
+            listBox.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ? ListBoxSelectionMode.Multiple : ListBoxSelectionMode.Single;
         }
 
         private void RemoveItemButton_Click(object? sender, EventArgs e)

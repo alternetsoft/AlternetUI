@@ -25,10 +25,15 @@ namespace Alternet::UI
     protected:
         void CreateWxWindow();
 
+        void RecreateWxWindowIfNeeded();
+
         static void DestroyParkingWindow();
         static bool IsParkingWindowCreated();
 
         virtual void OnWxWindowCreated();
+        virtual void OnWxWindowDestroying();
+        virtual void OnWxWindowDestroyed();
+
         DelayedValues& GetDelayedValues();
 
         virtual wxWindow* GetParentingWxWindow();
@@ -87,6 +92,7 @@ namespace Alternet::UI
         void OnVisibleChanged(wxShowEvent& event);
 
         void UpdateWxWindowParent();
+        void DestroyWxWindow(bool finalDestroy = false);
     };
 }
 
