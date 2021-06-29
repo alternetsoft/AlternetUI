@@ -55,6 +55,66 @@ namespace Alternet::UI
         return value;
     }
 
+    int ListBox::GetSelectedIndicesCount()
+    {
+        if (IsWxWindowCreated())
+        {
+            wxArrayInt _;
+            return GetListBox()->GetSelections(_);
+        }
+        else
+            return _selectedIndices.size();
+    }
+
+    int ListBox::GetSelectedIndexAt(int index)
+    {
+        if (IsWxWindowCreated())
+        {
+            wxArrayInt selections;
+            GetListBox()->GetSelections(selections);
+            return selections[index];
+        }
+        else
+            return _selectedIndices[index];
+    }
+
+    void ListBox::ClearSelection()
+    {
+        if (IsWxWindowCreated())
+        {
+            GetListBox()->DeselectAll();
+        }
+        else
+            _selectedIndices.clear();
+    }
+
+    void ListBox::SetSelected(int index, bool value)
+    {
+        if (IsWxWindowCreated())
+        {
+            auto listBox = GetListBox();
+            if (value)
+                listBox->Select(index);
+            else
+                listBox->Deselect(index);
+        }
+        else
+        {
+            auto existingIndex = std::find(_selectedIndices.begin(), _selectedIndices.end(), index);
+            
+            if (value)
+            {
+                if (existingIndex == _selectedIndices.end())
+                    _selectedIndices.push_back(index);
+            }
+            else
+            {
+                if (existingIndex != _selectedIndices.end())
+                    _selectedIndices.erase(existingIndex);
+            }
+        }
+    }
+
     ListBoxSelectionMode ListBox::GetSelectionMode()
     {
         return _selectionMode;
@@ -65,9 +125,12 @@ namespace Alternet::UI
         if (_selectionMode == value)
             return;
 
+        auto oldSelection = GetSelectedIndices();
+        
         _selectionMode = value;
         RecreateWxWindowIfNeeded();
-        // todo: restore selection
+
+        SetSelectedIndices(oldSelection);
     }
 
     void ListBox::OnWxWindowCreated()
@@ -130,8 +193,53 @@ namespace Alternet::UI
             _items.push_back(wxStr(listBox->GetString(i)));
     }
 
+    void ListBox::ApplySelectedIndices()
+    {
+        auto listBox = GetListBox();
+        listBox->DeselectAll();
+
+        if (_selectedIndices.empty())
+            return;
+
+        for (auto index : _selectedIndices)
+            listBox->Select(index);
+
+        _selectedIndices.clear();
+    }
+
+    void ListBox::ReceiveSelectedIndices()
+    {
+        auto listBox = GetListBox();
+        _selectedIndices.clear();
+
+        wxArrayInt selections;
+        if (listBox->GetSelections(selections) == 0)
+            return;
+
+        for (int i = 0; i < (int)selections.GetCount(); i++)
+            _selectedIndices.push_back(selections[i]);
+    }
+
     wxListBox* ListBox::GetListBox()
     {
         return dynamic_cast<wxListBox*>(GetWxWindow());
+    }
+
+    std::vector<int> ListBox::GetSelectedIndices()
+    {
+        int count = GetSelectedIndicesCount();
+        
+        std::vector<int> indices(count);
+        for (int i = 0; i < count; i++)
+            indices[i] = GetSelectedIndexAt(i);
+        
+        return indices;
+    }
+
+    void ListBox::SetSelectedIndices(const std::vector<int>& value)
+    {
+        ClearSelection();
+        for (auto index : value)
+            SetSelected(index, true);
     }
 }

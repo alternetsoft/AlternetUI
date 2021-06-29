@@ -17,6 +17,7 @@ namespace Alternet::UI
     private:
 
         std::vector<string> _items;
+        std::vector<int> _selectedIndices;
 
         ListBoxSelectionMode _selectionMode = ListBoxSelectionMode::Single;
 
@@ -25,6 +26,12 @@ namespace Alternet::UI
         void ApplyItems();
         void ReceiveItems();
 
+        void ApplySelectedIndices();
+        void ReceiveSelectedIndices();
+
         wxListBox* GetListBox();
+
+        std::vector<int> GetSelectedIndices();
+        void SetSelectedIndices(const std::vector<int>& value);
     };
 }

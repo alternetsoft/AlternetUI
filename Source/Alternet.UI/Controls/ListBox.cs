@@ -25,12 +25,14 @@ namespace Alternet.UI
 
         public void SetSelected(int index, bool value)
         {
+            bool changed;
             if (value)
-                selectedIndices.Add(index);
+                changed = selectedIndices.Add(index);
             else
-                selectedIndices.Remove(index);
+                changed = selectedIndices.Remove(index);
 
-            InvokeSelectionChanged(EventArgs.Empty);
+            if (changed)
+                InvokeSelectionChanged(EventArgs.Empty);
         }
 
         public int? SelectedIndex

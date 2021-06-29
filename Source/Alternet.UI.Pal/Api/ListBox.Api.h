@@ -27,6 +27,11 @@ ALTERNET_UI_API void ListBox_SetSelectionMode(ListBox* obj, ListBoxSelectionMode
     obj->SetSelectionMode(value);
 }
 
+ALTERNET_UI_API int ListBox_GetSelectedIndicesCount(ListBox* obj)
+{
+    return obj->GetSelectedIndicesCount();
+}
+
 ALTERNET_UI_API void ListBox_InsertItem(ListBox* obj, int index, const char16_t* value)
 {
     obj->InsertItem(index, value);
@@ -40,5 +45,25 @@ ALTERNET_UI_API void ListBox_RemoveItemAt(ListBox* obj, int index)
 ALTERNET_UI_API void ListBox_ClearItems(ListBox* obj)
 {
     obj->ClearItems();
+}
+
+ALTERNET_UI_API int ListBox_GetSelectedIndexAt(ListBox* obj, int index)
+{
+    return obj->GetSelectedIndexAt(index);
+}
+
+ALTERNET_UI_API void ListBox_ClearSelection(ListBox* obj)
+{
+    obj->ClearSelection();
+}
+
+ALTERNET_UI_API void ListBox_SetSelected(ListBox* obj, int index, c_bool value)
+{
+    obj->SetSelected(index, value);
+}
+
+ALTERNET_UI_API void ListBox_SetEventCallback(ListBox::ListBoxEventCallbackType callback)
+{
+    ListBox::SetEventCallback(callback);
 }
 
