@@ -30,9 +30,15 @@
             "internalConsoleOptions": "openOnSessionStart",
             "preLaunchTask": "Controls: Build",
             "type": "cppdbg",
-            "MIMode": "gdb",
-            "program": "${workspaceFolder}/Source/Samples/ControlsSample/bin/Debug/netcoreapp3.1/ControlsSample",
             "cwd": "${workspaceFolder}/Source/Samples/ControlsSample/bin/Debug/netcoreapp3.1",
+            "osx": {
+                "program": "/usr/local/share/dotnet/dotnet"
+                "MIMode": "lldb",
+            },
+            "linux": {
+                "MIMode": "gdb",
+            },
+            "args": ["${workspaceFolder}/Source/Samples/ControlsSample/bin/Debug/netcoreapp3.1/ControlsSample.dll"],
         },
         // {
         //     "name": "Controls: Native Debug",
