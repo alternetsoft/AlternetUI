@@ -82,5 +82,7 @@
         "__functional_03": "cpp",
         "memory_resource": "cpp",
         "*.inc": "cpp"
-    }
+    },
+    // "lldb.library": "/usr/lib/llvm-12/lib/liblldb.so.1",
+    // "lldb.adapterEnv": {"LLDB_DEBUGSERVER_PATH": "/usr/lib/llvm-12/bin/lldb-server"}
 }
