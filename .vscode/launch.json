@@ -26,21 +26,32 @@
         },
         {
             "name": "Controls: Native Debug",
-            "type": "lldb",
             "request": "launch",
-            "initCommands": [
-                "setting set target.max-string-summary-length 10000"
-            ],
             "internalConsoleOptions": "openOnSessionStart",
-            "program": "dotnet",
-            "args": ["${workspaceFolder}/Source/Samples/ControlsSample/bin/Debug/netcoreapp3.1/ControlsSample.dll"],
-            "preLaunchTask": "Controls: Build"
+            "preLaunchTask": "Controls: Build",
+            "type": "cppdbg",
+            "MIMode": "gdb",
+            "program": "${workspaceFolder}/Source/Samples/ControlsSample/bin/Debug/netcoreapp3.1/ControlsSample",
+            "cwd": "${workspaceFolder}/Source/Samples/ControlsSample/bin/Debug/netcoreapp3.1",
         },
+        // {
+        //     "name": "Controls: Native Debug",
+        //     "type": "lldb",
+        //     "request": "launch",
+        //     "initCommands": [
+        //         "setting set target.max-string-summary-length 10000"
+        //     ],
+        //     "internalConsoleOptions": "openOnSessionStart",
+        //     "program": "dotnet",
+        //     "args": ["${workspaceFolder}/Source/Samples/ControlsSample/bin/Debug/netcoreapp3.1/ControlsSample.dll"],
+        //     "preLaunchTask": "Controls: Build"
+        // },
         {
             "name": "Controls: CLR Debug",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "Controls: Build",
+            // "logging": {"engineLogging": true},
             "program": "${workspaceFolder}/Source/Samples/ControlsSample/bin/Debug/netcoreapp3.1/ControlsSample.dll",
             "cwd": "${workspaceFolder}/Source/Samples/ControlsSample/bin/Debug/netcoreapp3.1/",
             "args": [],
