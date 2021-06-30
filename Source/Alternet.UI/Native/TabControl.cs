@@ -39,6 +39,12 @@ namespace Alternet.UI.Native
             NativeApi.TabControl_RemovePage(NativePointer, index, page.NativePointer);
         }
         
+        public System.Drawing.SizeF GetTotalPreferredSizeFromPageSize(System.Drawing.SizeF pageSize)
+        {
+            CheckDisposed();
+            return NativeApi.TabControl_GetTotalPreferredSizeFromPageSize(NativePointer, pageSize);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -56,6 +62,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TabControl_RemovePage(IntPtr obj, int index, IntPtr page);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.SizeF TabControl_GetTotalPreferredSizeFromPageSize(IntPtr obj, NativeApiTypes.SizeF pageSize);
             
         }
     }

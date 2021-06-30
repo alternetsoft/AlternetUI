@@ -1,5 +1,6 @@
 ﻿using ApiCommon;
 using System;
+using System.Drawing;
 
 namespace NativeApi.Api
 {
@@ -10,5 +11,7 @@ namespace NativeApi.Api
         public void RemovePage(int index, Control page) => throw new Exception();
 
         public int PageCount { get; }
+
+        public SizeF GetTotalPreferredSizeFromPageSize(SizeF pageSize) => throw new Exception();
     }
 }

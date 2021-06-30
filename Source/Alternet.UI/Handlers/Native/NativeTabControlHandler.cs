@@ -65,5 +65,10 @@ namespace Alternet.UI
         {
             OnPageRemoved(e.Index, e.Item);
         }
+
+        public override SizeF GetPreferredSize(SizeF availableSize)
+        {
+            return NativeControl.GetTotalPreferredSizeFromPageSize(GetChildrenMaxPreferredSize(availableSize));
+        }
     }
 }

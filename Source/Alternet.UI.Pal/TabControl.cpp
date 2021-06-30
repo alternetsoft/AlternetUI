@@ -15,6 +15,12 @@ namespace Alternet::UI
         return new wxNotebook(parent, -1, wxDefaultPosition, wxDefaultSize);
     }
 
+    SizeF TabControl::GetTotalPreferredSizeFromPageSize(const SizeF& pageSize)
+    {
+        auto notebook = GetNotebook();
+        return toDip(notebook->CalcSizeFromPage(fromDip(pageSize, notebook)), notebook);
+    }
+
     int TabControl::GetPageCount()
     {
         return GetNotebook()->GetPageCount();

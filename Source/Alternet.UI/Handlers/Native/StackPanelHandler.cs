@@ -43,6 +43,8 @@ namespace Alternet.UI
 
         public override SizeF GetPreferredSize(SizeF availableSize)
         {
+            var stackPanelPadding = Control.Padding;
+
             var orientation = Control.Orientation;
             if (orientation == StackPanelOrientation.Vertical)
             {
@@ -56,7 +58,7 @@ namespace Alternet.UI
                     height += preferredSize.Height + margin.Vertical;
                 }
 
-                return new SizeF(float.IsNaN(Control.Width) ? maxWidth : Control.Width, height);
+                return new SizeF(float.IsNaN(Control.Width) ? maxWidth + stackPanelPadding.Horizontal : Control.Width, height + stackPanelPadding.Vertical);
             }
             else if (orientation == StackPanelOrientation.Horizontal)
             {
@@ -70,7 +72,7 @@ namespace Alternet.UI
                     maxHeight = Math.Max(maxHeight, preferredSize.Height + margin.Vertical);
                 }
 
-                return new SizeF(width, float.IsNaN(Control.Height) ? maxHeight : Control.Height);
+                return new SizeF(width + stackPanelPadding.Horizontal, float.IsNaN(Control.Height) ? maxHeight + stackPanelPadding.Vertical : Control.Height);
             }
             else
                 throw new InvalidOperationException();

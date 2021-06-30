@@ -32,31 +32,31 @@ namespace ControlsSample
 
             rootPanel.Children.Add(tc);
 
-            tc.Pages.Add(new TabPage { Title = "List Box", Children = { new ListBoxPage(this) } });
+            //tc.Pages.Add(new TabPage { Title = "List Box", Children = { new ListBoxPage(this) } });
 
-            var progressBarPage = new TabPage { Title = "Progress Bar" };
-            tc.Pages.Add(progressBarPage);
-            InitProgressBarPage(progressBarPage);
+            //var progressBarPage = new TabPage { Title = "Progress Bar" };
+            //tc.Pages.Add(progressBarPage);
+            //InitProgressBarPage(progressBarPage);
 
             var sliderPage = new TabPage { Title = "Slider" };
             tc.Pages.Add(sliderPage);
             InitSliderPage(sliderPage);
 
-            var numericInputPage = new TabPage { Title = "Numeric Input" };
-            tc.Pages.Add(numericInputPage);
-            InitNumericInputPage(numericInputPage);
+            //var numericInputPage = new TabPage { Title = "Numeric Input" };
+            //tc.Pages.Add(numericInputPage);
+            //InitNumericInputPage(numericInputPage);
 
-            var radioButtonsPage = new TabPage { Title = "Radio Buttons" };
-            tc.Pages.Add(radioButtonsPage);
-            InitRadioButtonsPage(radioButtonsPage);
+            //var radioButtonsPage = new TabPage { Title = "Radio Buttons" };
+            //tc.Pages.Add(radioButtonsPage);
+            //InitRadioButtonsPage(radioButtonsPage);
 
-            var checkBoxesPage = new TabPage { Title = "Check Boxes" };
-            tc.Pages.Add(checkBoxesPage);
-            InitCheckBoxesPage(checkBoxesPage);
+            //var checkBoxesPage = new TabPage { Title = "Check Boxes" };
+            //tc.Pages.Add(checkBoxesPage);
+            //InitCheckBoxesPage(checkBoxesPage);
 
-            var textBoxesPage = new TabPage { Title = "Text Boxes" };
-            tc.Pages.Add(textBoxesPage);
-            InitTextBoxesPage(textBoxesPage);
+            //var textBoxesPage = new TabPage { Title = "Text Boxes" };
+            //tc.Pages.Add(textBoxesPage);
+            //InitTextBoxesPage(textBoxesPage);
 
 
             eventsListBox = new ListBox();

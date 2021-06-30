@@ -5,6 +5,7 @@ int GetPageCount();
 
 void InsertPage(int index, Control* page, const string& title);
 void RemovePage(int index, Control* page);
+SizeF GetTotalPreferredSizeFromPageSize(const SizeF& pageSize);
 public:
 TabControl();
 protected:
