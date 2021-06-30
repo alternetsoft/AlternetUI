@@ -15,24 +15,53 @@ namespace Alternet.UI
                 CheckDisposed();
                 return selectedIndices.ToArray();
             }
+
+            set
+            {
+                CheckDisposed();
+                
+                ClearSelectedCore();
+
+                bool changed = false;
+                foreach (var index in value)
+                {
+                    if (SetSelectedCore(index, true))
+                        changed = true;
+                }
+
+                if (changed)
+                    InvokeSelectionChanged(EventArgs.Empty);
+            }
         }
 
         public void ClearSelected()
         {
-            selectedIndices.Clear();
+            ClearSelectedCore();
             InvokeSelectionChanged(EventArgs.Empty);
         }
 
+        private void ClearSelectedCore()
+        {
+            selectedIndices.Clear();
+        }
+
         public void SetSelected(int index, bool value)
+        {
+            var changed = SetSelectedCore(index, value);
+
+            if (changed)
+                InvokeSelectionChanged(EventArgs.Empty);
+        }
+
+        private bool SetSelectedCore(int index, bool value)
         {
             bool changed;
             if (value)
                 changed = selectedIndices.Add(index);
             else
                 changed = selectedIndices.Remove(index);
-
-            if (changed)
-                InvokeSelectionChanged(EventArgs.Empty);
+            
+            return changed;
         }
 
         public int? SelectedIndex

@@ -33,7 +33,7 @@ namespace ControlsSample
 
         private void ListBox_SelectionChanged(object? sender, EventArgs e)
         {
-            site.LogEvent("ListBox: SelectionChanged");
+            site.LogEvent($"ListBox: SelectionChanged. SelectedIndices: ({string.Join(",", listBox.SelectedIndices)})");
         }
 
         private void ListBoxPage_CheckedChanged(object? sender, EventArgs e)

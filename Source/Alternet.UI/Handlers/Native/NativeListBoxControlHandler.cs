@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Alternet.UI
 {
@@ -106,13 +107,14 @@ namespace Alternet.UI
 
             try
             {
-                var control = Control;
-                control.ClearSelected();
-
                 var nativeControl = NativeControl;
+                var selectedIndicesCount = nativeControl.SelectedIndicesCount;
+                var selectedIndices = new List<int>(selectedIndicesCount);
 
-                for (var i = 0; i < nativeControl.SelectedIndicesCount; i++)
-                    Control.SetSelected(nativeControl.GetSelectedIndexAt(i), true);
+                for (var i = 0; i < selectedIndicesCount; i++)
+                    selectedIndices.Add(nativeControl.GetSelectedIndexAt(i));
+
+                Control.SelectedIndices = selectedIndices;
             }
             finally
             {
