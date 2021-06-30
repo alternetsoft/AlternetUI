@@ -27,7 +27,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public void InsertPage(int index, Control page, string? title)
+        public void InsertPage(int index, Control page, string title)
         {
             CheckDisposed();
             NativeApi.TabControl_InsertPage(NativePointer, index, page.NativePointer, title);
@@ -52,7 +52,7 @@ namespace Alternet.UI.Native
             public static extern int TabControl_GetPageCount(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TabControl_InsertPage(IntPtr obj, int index, IntPtr page, string? title);
+            public static extern void TabControl_InsertPage(IntPtr obj, int index, IntPtr page, string title);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TabControl_RemovePage(IntPtr obj, int index, IntPtr page);

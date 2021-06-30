@@ -28,13 +28,13 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DrawRectangle(NativePointer, rectangle, color);
         }
         
-        public void DrawText(string? text, System.Drawing.PointF origin, System.Drawing.Color color)
+        public void DrawText(string text, System.Drawing.PointF origin, System.Drawing.Color color)
         {
             CheckDisposed();
             NativeApi.DrawingContext_DrawText(NativePointer, text, origin, color);
         }
         
-        public System.Drawing.SizeF MeasureText(string? text)
+        public System.Drawing.SizeF MeasureText(string text)
         {
             CheckDisposed();
             return NativeApi.DrawingContext_MeasureText(NativePointer, text);
@@ -65,10 +65,10 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_DrawRectangle(IntPtr obj, NativeApiTypes.RectangleF rectangle, NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawText(IntPtr obj, string? text, NativeApiTypes.PointF origin, NativeApiTypes.Color color);
+            public static extern void DrawingContext_DrawText(IntPtr obj, string text, NativeApiTypes.PointF origin, NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.SizeF DrawingContext_MeasureText(IntPtr obj, string? text);
+            public static extern NativeApiTypes.SizeF DrawingContext_MeasureText(IntPtr obj, string text);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_PushTransform(IntPtr obj, NativeApiTypes.SizeF translation);

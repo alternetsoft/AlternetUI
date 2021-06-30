@@ -9,7 +9,7 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public class Window : Control
     {
-        private string? title = null;
+        private string title = "";
 
         public Window()
         {
@@ -38,7 +38,7 @@ namespace Alternet.UI
                 Application.Current.UnregisterWindow(this);
         }
 
-        public string? Title
+        public string Title
         {
             get
             {

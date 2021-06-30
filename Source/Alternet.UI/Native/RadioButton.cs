@@ -18,7 +18,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public string? Text
+        public string Text
         {
             get
             {
@@ -98,10 +98,10 @@ namespace Alternet.UI.Native
             public static extern IntPtr RadioButton_Create();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string? RadioButton_GetText(IntPtr obj);
+            public static extern string RadioButton_GetText(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RadioButton_SetText(IntPtr obj, string? value);
+            public static extern void RadioButton_SetText(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RadioButton_GetIsChecked(IntPtr obj);

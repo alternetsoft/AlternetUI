@@ -18,7 +18,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public string? Title
+        public string Title
         {
             get
             {
@@ -102,10 +102,10 @@ namespace Alternet.UI.Native
             public static extern IntPtr Window_Create();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string? Window_GetTitle(IntPtr obj);
+            public static extern string Window_GetTitle(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetTitle(IntPtr obj, string? value);
+            public static extern void Window_SetTitle(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern WindowStartPosition Window_GetWindowStartPosition(IntPtr obj);

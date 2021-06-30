@@ -16,7 +16,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public static void Show(string? text, string? caption)
+        public static void Show(string text, string? caption)
         {
             NativeApi.MessageBox__Show(text, caption);
         }
@@ -28,7 +28,7 @@ namespace Alternet.UI.Native
             static NativeApi() => Initialize();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void MessageBox__Show(string? text, string? caption);
+            public static extern void MessageBox__Show(string text, string? caption);
             
         }
     }

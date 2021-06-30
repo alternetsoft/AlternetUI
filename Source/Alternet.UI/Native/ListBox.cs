@@ -53,7 +53,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public void InsertItem(int index, string? value)
+        public void InsertItem(int index, string value)
         {
             CheckDisposed();
             NativeApi.ListBox_InsertItem(NativePointer, index, value);
@@ -151,7 +151,7 @@ namespace Alternet.UI.Native
             public static extern int ListBox_GetSelectedIndicesCount(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_InsertItem(IntPtr obj, int index, string? value);
+            public static extern void ListBox_InsertItem(IntPtr obj, int index, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListBox_RemoveItemAt(IntPtr obj, int index);

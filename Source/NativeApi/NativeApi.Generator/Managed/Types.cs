@@ -35,11 +35,8 @@ namespace ApiGenerator.Managed
 
         public string GetTypeName(ContextualType type)
         {
-            if (type == typeof(string))
-                return "string?";
-
             if (aliases.TryGetValue(type, out var aliasName))
-                return aliasName;
+                return GetNullableDecoratedName(type, aliasName);
 
             if (type.OriginalType.IsEnum)
                 return type.OriginalType.Name;
