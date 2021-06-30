@@ -16,6 +16,14 @@ RectangleF GetBounds();
 void SetBounds(const RectangleF& value);
 
 
+RectangleF GetClientBounds();
+void SetClientBounds(const RectangleF& value);
+
+
+SizeF GetClientSize();
+void SetClientSize(const SizeF& value);
+
+
 virtual Thickness GetIntrinsicLayoutPadding();
 
 

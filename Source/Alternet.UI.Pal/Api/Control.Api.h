@@ -43,6 +43,26 @@ ALTERNET_UI_API void Control_SetBounds(Control* obj, RectangleF value)
     obj->SetBounds(value);
 }
 
+ALTERNET_UI_API RectangleF_C Control_GetClientBounds(Control* obj)
+{
+    return obj->GetClientBounds();
+}
+
+ALTERNET_UI_API void Control_SetClientBounds(Control* obj, RectangleF value)
+{
+    obj->SetClientBounds(value);
+}
+
+ALTERNET_UI_API SizeF_C Control_GetClientSize(Control* obj)
+{
+    return obj->GetClientSize();
+}
+
+ALTERNET_UI_API void Control_SetClientSize(Control* obj, SizeF value)
+{
+    obj->SetClientSize(value);
+}
+
 ALTERNET_UI_API Thickness_C Control_GetIntrinsicLayoutPadding(Control* obj)
 {
     return obj->GetIntrinsicLayoutPadding();

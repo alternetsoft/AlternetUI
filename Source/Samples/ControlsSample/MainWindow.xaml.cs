@@ -26,11 +26,13 @@ namespace ControlsSample
                 Width = 750;
 #endif
 
-            var tc = new TabControl();
-            var rootPanel = new StackPanel { Orientation = StackPanelOrientation.Vertical };
-            Children.Add(rootPanel);
+            Children.Add(new GroupBox { Title = "Hello"});
 
-            rootPanel.Children.Add(tc);
+            //var tc = new TabControl();
+            //var rootPanel = new StackPanel { Orientation = StackPanelOrientation.Vertical };
+            //Children.Add(rootPanel);
+
+            //rootPanel.Children.Add(tc);
 
             //tc.Pages.Add(new TabPage { Title = "List Box", Children = { new ListBoxPage(this) } });
 
@@ -38,9 +40,9 @@ namespace ControlsSample
             //tc.Pages.Add(progressBarPage);
             //InitProgressBarPage(progressBarPage);
 
-            var sliderPage = new TabPage { Title = "Slider" };
-            tc.Pages.Add(sliderPage);
-            InitSliderPage(sliderPage);
+            //var sliderPage = new TabPage { Title = "Slider" };
+            //tc.Pages.Add(sliderPage);
+            //InitSliderPage(sliderPage);
 
             //var numericInputPage = new TabPage { Title = "Numeric Input" };
             //tc.Pages.Add(numericInputPage);
@@ -59,9 +61,9 @@ namespace ControlsSample
             //InitTextBoxesPage(textBoxesPage);
 
 
-            eventsListBox = new ListBox();
-            eventsListBox.Height = 100;
-            rootPanel.Children.Add(eventsListBox);
+            //eventsListBox = new ListBox();
+            //eventsListBox.Height = 100;
+            //rootPanel.Children.Add(eventsListBox);
 
             // option1RadioButton = (RadioButton)FindControl("option1RadioButton");
 

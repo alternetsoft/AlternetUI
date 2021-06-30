@@ -77,6 +77,9 @@ namespace Alternet::UI
         bool RetrieveVisible();
         void ApplyVisible(bool value);
 
+        virtual RectangleF ClientBoundsToBounds(const RectangleF& clientBounds);
+        virtual RectangleF BoundsToClientBounds(const RectangleF& bounds);
+
         RectangleF RetrieveBounds();
         void ApplyBounds(const RectangleF& value);
 

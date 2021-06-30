@@ -222,6 +222,16 @@ namespace Alternet::UI
             wxWindow->Hide();
     }
 
+    RectangleF Control::ClientBoundsToBounds(const RectangleF& clientBounds)
+    {
+        return clientBounds;
+    }
+
+    RectangleF Control::BoundsToClientBounds(const RectangleF& bounds)
+    {
+        return bounds;
+    }
+
     Color Control::RetrieveBackgroundColor()
     {
         return GetWxWindow()->GetBackgroundColour();
@@ -278,6 +288,26 @@ namespace Alternet::UI
     void Control::SetDoNotDestroyWxWindow(bool value)
     {
         SetFlag(ControlFlags::DoNotDestroyWxWindow, value);
+    }
+
+    RectangleF Control::GetClientBounds()
+    {
+        return BoundsToClientBounds(GetBounds());
+    }
+
+    void Control::SetClientBounds(const RectangleF& value)
+    {
+        return SetBounds(ClientBoundsToBounds(value));
+    }
+
+    SizeF Control::GetClientSize()
+    {
+        return BoundsToClientBounds(GetBounds()).GetSize();
+    }
+
+    void Control::SetClientSize(const SizeF& value)
+    {
+        SetClientBounds(RectangleF(GetClientBounds().GetLocation(), value));
     }
 
     Thickness Control::GetIntrinsicLayoutPadding()

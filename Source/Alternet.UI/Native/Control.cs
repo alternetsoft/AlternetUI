@@ -72,6 +72,36 @@ namespace Alternet.UI.Native
             }
         }
         
+        public System.Drawing.RectangleF ClientBounds
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetClientBounds(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetClientBounds(NativePointer, value);
+            }
+        }
+        
+        public System.Drawing.SizeF ClientSize
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetClientSize(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetClientSize(NativePointer, value);
+            }
+        }
+        
         public Alternet.UI.Thickness IntrinsicLayoutPadding
         {
             get
@@ -283,6 +313,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetBounds(IntPtr obj, NativeApiTypes.RectangleF value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.RectangleF Control_GetClientBounds(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetClientBounds(IntPtr obj, NativeApiTypes.RectangleF value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.SizeF Control_GetClientSize(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetClientSize(IntPtr obj, NativeApiTypes.SizeF value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Thickness Control_GetIntrinsicLayoutPadding(IntPtr obj);
