@@ -16,6 +16,9 @@ namespace Alternet::UI
         void OnWxWindowCreated() override;
         void OnWxWindowDestroying() override;
 
+        Color RetrieveBackgroundColor() override;
+        Color RetrieveForegroundColor() override;
+
     private:
 
         std::vector<string> _items;

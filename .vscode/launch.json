@@ -37,6 +37,7 @@
             },
             "linux": {
                 "MIMode": "gdb",
+                "program": "/usr/bin/dotnet"
             },
             "args": ["${workspaceFolder}/Source/Samples/ControlsSample/bin/Debug/netcoreapp3.1/ControlsSample.dll"],
         },

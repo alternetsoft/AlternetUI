@@ -44,6 +44,9 @@ namespace Alternet::UI
         virtual Color RetrieveForegroundColor();
         virtual void ApplyForegroundColor(const Color& value);
 
+        DelayedValue<Control, Color>& GetBackgroundColorDelayedValue();
+        DelayedValue<Control, Color>& GetForegroundColorDelayedValue();
+
     private:
         enum class DelayedControlFlags
         {
@@ -68,6 +71,7 @@ namespace Alternet::UI
         DelayedValue<Control, RectangleF> _bounds;
         DelayedValue<Control, Color> _backgroundColor;
         DelayedValue<Control, Color> _foregroundColor;
+
         DelayedValues _delayedValues;
 
         bool RetrieveVisible();

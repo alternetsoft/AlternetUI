@@ -227,9 +227,20 @@ namespace Alternet::UI
         return GetWxWindow()->GetBackgroundColour();
     }
 
+    DelayedValue<Control, Color>& Control::GetBackgroundColorDelayedValue()
+    {
+        return _backgroundColor;
+    }
+
+    DelayedValue<Control, Color>& Control::GetForegroundColorDelayedValue()
+    {
+        return _foregroundColor;
+    }
+
     void Control::ApplyBackgroundColor(const Color& value)
     {
-        GetWxWindow()->SetBackgroundColour(value);
+        if (!value.IsEmpty())
+            GetWxWindow()->SetBackgroundColour(value);
     }
 
     Color Control::RetrieveForegroundColor()
@@ -239,7 +250,8 @@ namespace Alternet::UI
 
     void Control::ApplyForegroundColor(const Color& value)
     {
-        GetWxWindow()->SetForegroundColour(value);
+        if (!value.IsEmpty())
+            GetWxWindow()->SetForegroundColour(value);
     }
 
     /*static*/ wxFrame* Control::GetParkingWindow()

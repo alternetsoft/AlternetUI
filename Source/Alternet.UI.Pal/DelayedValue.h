@@ -63,6 +63,11 @@ namespace Alternet::UI
             SetDelayed(RetrieveValue());
         }
 
+        TValue GetDelayed()
+        {
+            return _value;
+        }
+
     private:
         BYREF_ONLY(DelayedValue);
 
@@ -81,11 +86,6 @@ namespace Alternet::UI
         TValue RetrieveValue()
         {
             return (_owner.*_retriever)();
-        }
-
-        TValue GetDelayed()
-        {
-            return _value;
         }
 
         void SetDelayed(TValue value)

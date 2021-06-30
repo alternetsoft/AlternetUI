@@ -35,6 +35,7 @@
             "name": "Linux",
             "intelliSenseMode": "clang-x64",
             "includePath": [
+                "${workspaceFolder}/External/WxWidgets/include"
             ],
             "defines": [
                 "PLATFORM_LINUX=1",
