@@ -292,6 +292,11 @@ namespace Alternet::UI
 
     SizeF Control::ClientSizeToSize(const SizeF& clientSize)
     {
+        // todo: On Linux ClientSize is not reported correctly until the window is shown
+        // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
+        // So on Linux ClientSizeToSize and SizeToClientSize will return the input value
+        // until the window is shown.
+
         auto window = GetWxWindow();
         return toDip(GetWxWindow()->ClientToWindowSize(fromDip(clientSize, window)), window);
     }
