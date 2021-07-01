@@ -222,16 +222,6 @@ namespace Alternet::UI
             wxWindow->Hide();
     }
 
-    RectangleF Control::ClientBoundsToBounds(const RectangleF& clientBounds)
-    {
-        return clientBounds;
-    }
-
-    RectangleF Control::BoundsToClientBounds(const RectangleF& bounds)
-    {
-        return bounds;
-    }
-
     Color Control::RetrieveBackgroundColor()
     {
         return GetWxWindow()->GetBackgroundColour();
@@ -290,24 +280,26 @@ namespace Alternet::UI
         SetFlag(ControlFlags::DoNotDestroyWxWindow, value);
     }
 
-    RectangleF Control::GetClientBounds()
-    {
-        return BoundsToClientBounds(GetBounds());
-    }
-
-    void Control::SetClientBounds(const RectangleF& value)
-    {
-        return SetBounds(ClientBoundsToBounds(value));
-    }
-
     SizeF Control::GetClientSize()
     {
-        return BoundsToClientBounds(GetBounds()).GetSize();
+        return SizeToClientSize(GetBounds().GetSize()); // todo: cache client size.
     }
 
     void Control::SetClientSize(const SizeF& value)
     {
-        SetClientBounds(RectangleF(GetClientBounds().GetLocation(), value));
+        SetBounds(RectangleF(GetBounds().GetLocation(), ClientSizeToSize(value)));
+    }
+
+    SizeF Control::ClientSizeToSize(const SizeF& clientSize)
+    {
+        auto window = GetWxWindow();
+        return toDip(GetWxWindow()->ClientToWindowSize(fromDip(clientSize, window)), window);
+    }
+
+    SizeF Control::SizeToClientSize(const SizeF& size)
+    {
+        auto window = GetWxWindow();
+        return toDip(GetWxWindow()->WindowToClientSize(fromDip(size, window)), window);
     }
 
     Thickness Control::GetIntrinsicLayoutPadding()

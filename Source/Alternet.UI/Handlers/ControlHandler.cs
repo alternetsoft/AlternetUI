@@ -45,11 +45,26 @@ namespace Alternet.UI
             }
         }
 
+        public SizeF ClientSize
+        {
+            get => NativeControl != null ? NativeControl.ClientSize : bounds.Size;
+            set
+            {
+                if (NativeControl != null)
+                    NativeControl.ClientSize = value;
+                else
+                    bounds = new RectangleF(bounds.Location, value);
+
+                PerformLayout(); // todo: use event
+            }
+        }
+
         public virtual RectangleF ChildrenLayoutBounds
         {
             get
             {
-                if (Bounds.IsEmpty)
+                var childrenBounds = ChildrenBounds;
+                if (childrenBounds.IsEmpty)
                     return RectangleF.Empty;
 
                 var padding = Control.Padding;
@@ -61,11 +76,11 @@ namespace Alternet.UI
 
                 return new RectangleF(
                     new PointF(padding.Left + intrinsicPadding.Left, padding.Top + intrinsicPadding.Top),
-                    Bounds.Size - padding.Size - intrinsicPadding.Size);
+                    childrenBounds.Size - padding.Size - intrinsicPadding.Size);
             }
         }
 
-        public virtual RectangleF ChildrenBounds => new RectangleF(new PointF(), Bounds.Size);
+        public virtual RectangleF ChildrenBounds => new RectangleF(new PointF(), ClientSize);
 
         public bool IsMouseOver
         {

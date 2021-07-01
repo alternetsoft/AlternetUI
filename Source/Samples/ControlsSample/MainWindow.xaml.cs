@@ -8,7 +8,6 @@ namespace ControlsSample
 {
     internal class MainWindow : Window, IPageSite
     {
-        private RadioButton option1RadioButton;
         private ListBox eventsListBox;
 
         public MainWindow()
@@ -26,68 +25,44 @@ namespace ControlsSample
                 Width = 750;
 #endif
 
-            Children.Add(new GroupBox { Title = "Hello"});
+            //Children.Add(new GroupBox { Title = "Hello"});
 
-            //var tc = new TabControl();
-            //var rootPanel = new StackPanel { Orientation = StackPanelOrientation.Vertical };
-            //Children.Add(rootPanel);
+            var tc = new TabControl();
+            var rootPanel = new StackPanel { Orientation = StackPanelOrientation.Vertical };
+            Children.Add(rootPanel);
 
-            //rootPanel.Children.Add(tc);
+            rootPanel.Children.Add(tc);
 
-            //tc.Pages.Add(new TabPage { Title = "List Box", Children = { new ListBoxPage(this) } });
+            tc.Pages.Add(new TabPage { Title = "List Box", Children = { new ListBoxPage(this) } });
 
-            //var progressBarPage = new TabPage { Title = "Progress Bar" };
-            //tc.Pages.Add(progressBarPage);
-            //InitProgressBarPage(progressBarPage);
+            var progressBarPage = new TabPage { Title = "Progress Bar" };
+            tc.Pages.Add(progressBarPage);
+            InitProgressBarPage(progressBarPage);
 
-            //var sliderPage = new TabPage { Title = "Slider" };
-            //tc.Pages.Add(sliderPage);
-            //InitSliderPage(sliderPage);
+            var sliderPage = new TabPage { Title = "Slider" };
+            tc.Pages.Add(sliderPage);
+            InitSliderPage(sliderPage);
 
-            //var numericInputPage = new TabPage { Title = "Numeric Input" };
-            //tc.Pages.Add(numericInputPage);
-            //InitNumericInputPage(numericInputPage);
+            var numericInputPage = new TabPage { Title = "Numeric Input" };
+            tc.Pages.Add(numericInputPage);
+            InitNumericInputPage(numericInputPage);
 
-            //var radioButtonsPage = new TabPage { Title = "Radio Buttons" };
-            //tc.Pages.Add(radioButtonsPage);
-            //InitRadioButtonsPage(radioButtonsPage);
+            var radioButtonsPage = new TabPage { Title = "Radio Buttons" };
+            tc.Pages.Add(radioButtonsPage);
+            InitRadioButtonsPage(radioButtonsPage);
 
-            //var checkBoxesPage = new TabPage { Title = "Check Boxes" };
-            //tc.Pages.Add(checkBoxesPage);
-            //InitCheckBoxesPage(checkBoxesPage);
+            var checkBoxesPage = new TabPage { Title = "Check Boxes" };
+            tc.Pages.Add(checkBoxesPage);
+            InitCheckBoxesPage(checkBoxesPage);
 
-            //var textBoxesPage = new TabPage { Title = "Text Boxes" };
-            //tc.Pages.Add(textBoxesPage);
-            //InitTextBoxesPage(textBoxesPage);
+            var textBoxesPage = new TabPage { Title = "Text Boxes" };
+            tc.Pages.Add(textBoxesPage);
+            InitTextBoxesPage(textBoxesPage);
 
 
-            //eventsListBox = new ListBox();
-            //eventsListBox.Height = 100;
-            //rootPanel.Children.Add(eventsListBox);
-
-            // option1RadioButton = (RadioButton)FindControl("option1RadioButton");
-
-            // option1RadioButton.CheckedChanged += Option1RadioButton_CheckedChanged;
-        }
-
-        private static void InitListBoxesPage(TabPage page)
-        {
-            var verticalPanel = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(10) };
-
-            var groupBox1 = new GroupBox { Title = "List Boxes" };
-            var panel2 = new StackPanel { Orientation = StackPanelOrientation.Horizontal, Margin = new Thickness(5) };
-            groupBox1.Children.Add(panel2);
-
-            var listBox = new ListBox() { Margin = new Thickness(0, 0, 0, 5) };
-            listBox.Height = 100;
-            listBox.Items.Add("One");
-            listBox.Items.Add("Two");
-            listBox.Items.Add("Three");
-            panel2.Children.Add(listBox);
-
-            verticalPanel.Children.Add(groupBox1);
-
-            page.Children.Add(verticalPanel);
+            eventsListBox = new ListBox();
+            eventsListBox.Height = 100;
+            rootPanel.Children.Add(eventsListBox);
         }
 
         private static void InitProgressBarPage(TabPage page)
@@ -347,11 +322,6 @@ namespace ControlsSample
             panel.Children.Add(groupBox2);
 
             page.Children.Add(panel);
-        }
-
-        private void Option1RadioButton_CheckedChanged(object? sender, EventArgs e)
-        {
-            // MessageBox.Show(option1RadioButton.IsChecked.ToString(), "Option 1");
         }
 
         int lastEventNumber = 1;

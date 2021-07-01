@@ -32,8 +32,6 @@ namespace NativeApi.Api
 
         public RectangleF Bounds { get; set; }
 
-        public RectangleF ClientBounds { get; set; }
-
         public SizeF ClientSize { get; set; }
 
         public virtual Thickness IntrinsicLayoutPadding { get; }
