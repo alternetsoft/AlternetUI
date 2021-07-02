@@ -227,9 +227,10 @@ namespace Alternet.UI
             inLayout = true;
             try
             {
-                var parent = Control.Parent;
-                if (parent != null)
-                    parent.PerformLayout(); // todo: optimize
+                // todo: we need a system to detect when parent relayout is needed?
+                //var parent = Control.Parent;
+                //if (parent != null)
+                //    parent.PerformLayout();
 
                 OnLayout();
             }
