@@ -17,6 +17,8 @@ namespace Alternet.UI
         private Color? backgroundColor;
         private Color? foregroundColor;
         private Color? borderColor;
+        private VerticalAlignment verticalAlignment = VerticalAlignment.Stretch;
+        private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Stretch;
 
         private bool visible = true;
 
@@ -54,6 +56,10 @@ namespace Alternet.UI
         public event EventHandler? BackgroundColorChanged;
 
         public event EventHandler? ForegroundColorChanged;
+
+        public event EventHandler? VerticalAlignmentChanged;
+
+        public event EventHandler? HorizontalAlignmentChanged;
 
         public string? Name { get; set; } // todo: maybe use Site.Name?
 
@@ -182,6 +188,32 @@ namespace Alternet.UI
 
                 foregroundColor = value;
                 ForegroundColorChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public VerticalAlignment VerticalAlignment
+        {
+            get => verticalAlignment;
+            set
+            {
+                if (verticalAlignment == value)
+                    return;
+
+                verticalAlignment = value;
+                VerticalAlignmentChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public HorizontalAlignment HorizontalAlignment
+        {
+            get => horizontalAlignment;
+            set
+            {
+                if (horizontalAlignment == value)
+                    return;
+
+                horizontalAlignment = value;
+                HorizontalAlignmentChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 

@@ -17,6 +17,7 @@ namespace Alternet.UI
             Slider => new NativeSliderHandler(),
             NumericUpDown => new NativeNumericUpDownHandler(),
             ListBox => new NativeListBoxHandler(),
+            ComboBox => new NativeComboBoxHandler(),
             _ => new GenericControlHandler()
         };
     }

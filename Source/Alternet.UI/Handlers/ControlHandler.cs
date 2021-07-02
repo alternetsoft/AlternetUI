@@ -229,7 +229,7 @@ namespace Alternet.UI
             {
                 var parent = Control.Parent;
                 if (parent != null)
-                    parent.PerformLayout();
+                    parent.PerformLayout(); // todo: optimize
 
                 OnLayout();
             }
@@ -329,12 +329,24 @@ namespace Alternet.UI
             Control.ForegroundColorChanged += Control_ForegroundColorChanged;
             Control.BorderColorChanged += Control_BorderColorChanged;
             Control.VisibleChanged += Control_VisibleChanged;
+            Control.VerticalAlignmentChanged += Control_VerticalAlignmentChanged;
+            Control.HorizontalAlignmentChanged += Control_HorizontalAlignmentChanged;
 
             Control.Children.ItemInserted += Children_ItemInserted;
             VisualChildren.ItemInserted += Children_ItemInserted;
 
             Control.Children.ItemRemoved += Children_ItemRemoved;
             VisualChildren.ItemRemoved += Children_ItemRemoved;
+        }
+
+        private void Control_VerticalAlignmentChanged(object? sender, EventArgs e)
+        {
+            PerformLayout();
+        }
+
+        private void Control_HorizontalAlignmentChanged(object? sender, EventArgs e)
+        {
+            PerformLayout();
         }
 
         private void ApplyChildren()
@@ -352,6 +364,8 @@ namespace Alternet.UI
             Control.ForegroundColorChanged -= Control_ForegroundColorChanged;
             Control.BorderColorChanged -= Control_BorderColorChanged;
             Control.VisibleChanged -= Control_VisibleChanged;
+            Control.VerticalAlignmentChanged -= Control_VerticalAlignmentChanged;
+            Control.HorizontalAlignmentChanged -= Control_HorizontalAlignmentChanged;
 
             Control.Children.ItemInserted -= Children_ItemInserted;
             Control.Children.ItemRemoved -= Children_ItemRemoved;

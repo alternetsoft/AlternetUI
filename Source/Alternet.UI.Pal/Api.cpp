@@ -1,6 +1,7 @@
 #include "Api/Application.Api.h"
 #include "Api/Button.Api.h"
 #include "Api/CheckBox.Api.h"
+#include "Api/ComboBox.Api.h"
 #include "Api/Control.Api.h"
 #include "Api/DrawingContext.Api.h"
 #include "Api/GroupBox.Api.h"

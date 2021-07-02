@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\Mastering\Version\Version.props"/>
+  <Import Project="..\Mastering\Version\Version.props" />
 
   <PropertyGroup>
     <Platforms>AnyCPU</Platforms>

@@ -34,6 +34,7 @@ namespace ControlsSample
             rootPanel.Children.Add(tc);
 
             tc.Pages.Add(new TabPage { Title = "List Box", Children = { new ListBoxPage(this) } });
+            tc.Pages.Add(new TabPage { Title = "Combo Box", Children = { new ComboBoxPage(this) } });
 
             var progressBarPage = new TabPage { Title = "Progress Bar" };
             tc.Pages.Add(progressBarPage);

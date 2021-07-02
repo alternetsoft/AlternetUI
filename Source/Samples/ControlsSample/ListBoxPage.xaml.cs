@@ -27,7 +27,7 @@ namespace ControlsSample
             ((Button)FindControl("removeItemButton")).Click += RemoveItemButton_Click;
             
             allowMultipleSelectionCheckBox = (CheckBox)FindControl("allowMultipleSelectionCheckBox");
-            allowMultipleSelectionCheckBox.CheckedChanged += ListBoxPage_CheckedChanged;
+            allowMultipleSelectionCheckBox.CheckedChanged += AllowMultipleSelectionCheckBox_CheckedChanged;
             this.site = site;
         }
 
@@ -36,7 +36,7 @@ namespace ControlsSample
             site.LogEvent($"ListBox: SelectionChanged. SelectedIndices: ({string.Join(",", listBox.SelectedIndices)})");
         }
 
-        private void ListBoxPage_CheckedChanged(object? sender, EventArgs e)
+        private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
             listBox.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ? ListBoxSelectionMode.Multiple : ListBoxSelectionMode.Single;
         }

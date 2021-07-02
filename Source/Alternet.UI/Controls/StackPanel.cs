@@ -6,7 +6,7 @@ namespace Alternet.UI
     {
         private StackPanelOrientation orientation;
 
-        private event EventHandler? OrientationChanged;
+        public event EventHandler? OrientationChanged;
 
         public StackPanelOrientation Orientation
         {

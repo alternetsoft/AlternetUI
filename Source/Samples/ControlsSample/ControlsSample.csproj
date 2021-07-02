@@ -27,11 +27,15 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="ComboBoxPage.xaml" />
       <None Remove="ListBoxPage.xaml" />
       <None Remove="MainWindow.xaml" />
     </ItemGroup>
 
     <ItemGroup>
+      <EmbeddedResource Include="ComboBoxPage.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </EmbeddedResource>
       <EmbeddedResource Include="ListBoxPage.xaml" />
       <EmbeddedResource Include="MainWindow.xaml" />
     </ItemGroup>

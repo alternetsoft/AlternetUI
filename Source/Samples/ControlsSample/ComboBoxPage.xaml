@@ -1,0 +1,17 @@
+﻿<Control xmlns="http://schemas.alternetsoft.com/ui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample"
+         >
+    <StackPanel Orientation="Vertical" Padding="10">
+        <GroupBox Title="List Box">
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <ComboBox Width="200" Name="comboBox"/>
+                <StackPanel Orientation="Vertical" Margin="5,0,0,0">
+                    <Button Text="Add Item" Name="addItemButton" />
+                    <Button Text="Remove Item" Name="removeItemButton" />
+                    <CheckBox Text="Allow Text Editing" Name="allowTextEditingCheckBox" />
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
+</Control>
