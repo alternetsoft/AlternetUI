@@ -29,6 +29,7 @@ namespace Alternet.UI
         private void Control_IsEditableChanged(object? sender, EventArgs e)
         {
             ApplyIsEditable();
+            PerformLayout(); // preferred size may change, so relayout parent.
         }
 
         protected override void OnDetach()

@@ -134,7 +134,7 @@ namespace Alternet::UI
                 return GetDelayed(flag);
         }
 
-        bool IsNotDelayed()
+        bool IsNotDelayed() override
         {
             return (_owner.*_isNotDelayedGetter)();
         }
