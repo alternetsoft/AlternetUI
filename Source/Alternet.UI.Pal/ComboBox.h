@@ -37,5 +37,7 @@ namespace Alternet::UI
         void ApplyText(const string& value);
 
         wxComboBox* GetComboBox();
+        wxChoice* GetChoice();
+        wxItemContainer* GetItemContainer();
     };
 }
