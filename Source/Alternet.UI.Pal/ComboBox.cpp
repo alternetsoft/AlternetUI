@@ -74,8 +74,12 @@ namespace Alternet::UI
         if (_isEditable == value)
             return;
 
+        auto oldSelectedIndex = GetSelectedIndex();
+        
         _isEditable = value;
         RecreateWxWindowIfNeeded();
+
+        SetSelectedIndex(oldSelectedIndex);
     }
 
     int ComboBox::GetSelectedIndex()
