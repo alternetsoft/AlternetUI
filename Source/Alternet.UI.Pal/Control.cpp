@@ -27,7 +27,7 @@ namespace Alternet::UI
         if (_wxWindow != nullptr)
         {
             if (!finalDestroy)
-                _delayedValues.Receive();
+                _delayedValues.ReceiveIfPossible();
 
             OnWxWindowDestroying();
 
@@ -115,7 +115,7 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftButtonUp, this);
         
         OnWxWindowCreated();
-        _delayedValues.Apply();
+        _delayedValues.ApplyIfPossible();
 
         for (auto child : _children)
             child->UpdateWxWindowParent();

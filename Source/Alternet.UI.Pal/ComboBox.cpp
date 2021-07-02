@@ -2,9 +2,16 @@
 
 namespace Alternet::UI
 {
+    constexpr bool UseChoiceControlForReadOnlyComboBox = true;
+//#ifdef __WXMSW__
+//    constexpr bool UseChoiceControlForReadOnlyComboBox = false;
+//#else
+//    constexpr bool UseChoiceControlForReadOnlyComboBox = true;
+//#endif
+
     ComboBox::ComboBox() :
         _selectedIndex(*this, -1, &Control::IsWxWindowCreated, &ComboBox::RetrieveSelectedIndex, &ComboBox::ApplySelectedIndex),
-        _text(*this, u"", &Control::IsWxWindowCreated, &ComboBox::RetrieveText, &ComboBox::ApplyText)
+        _text(*this, u"", &ComboBox::IsUsingComboBoxControl, &ComboBox::RetrieveText, &ComboBox::ApplyText)
     {
         GetDelayedValues().Add({ &_selectedIndex, &_text });
     }
@@ -21,7 +28,7 @@ namespace Alternet::UI
     void ComboBox::InsertItem(int index, const string& value)
     {
         if (IsWxWindowCreated())
-            GetComboBox()->Insert(wxStr(value), index);
+            GetItemContainer()->Insert(wxStr(value), index);
         else
             _items.emplace(_items.begin() + index, value);
     }
@@ -44,19 +51,29 @@ namespace Alternet::UI
 
     wxWindow* ComboBox::CreateWxWindowCore(wxWindow* parent)
     {
-        auto value = new wxComboBox(
-            parent,
-            wxID_ANY,
-            "",
-            wxDefaultPosition,
-            wxDefaultSize,
-            0,
-            NULL,
-            GetComboBoxStyle());
+        if (!_isEditable && UseChoiceControlForReadOnlyComboBox)
+        {
+            // On non-Windows systems wxChoice looks different than read-only wxComboBox.
+            auto value = new wxChoice(parent, wxID_ANY);
+            value->Bind(wxEVT_CHOICE, &ComboBox::OnSelectionChanged, this);
+            return value;
+        }
+        else
+        {
+            auto value = new wxComboBox(
+                parent,
+                wxID_ANY,
+                "",
+                wxDefaultPosition,
+                wxDefaultSize,
+                0,
+                NULL,
+                _isEditable ? wxCB_DROPDOWN : wxCB_READONLY);
 
-        value->Bind(wxEVT_COMBOBOX, &ComboBox::OnSelectionChanged, this);
+            value->Bind(wxEVT_COMBOBOX, &ComboBox::OnSelectionChanged, this);
+            return value;
+        }
 
-        return value;
     }
 
     void ComboBox::OnSelectionChanged(wxCommandEvent& event)
@@ -117,50 +134,51 @@ namespace Alternet::UI
     int ComboBox::GetItemsCount()
     {
         if (IsWxWindowCreated())
-            return GetComboBox()->GetCount();
+            return GetItemContainer()->GetCount();
         else
             return _items.size();
     }
 
-    long ComboBox::GetComboBoxStyle()
-    {
-        return _isEditable ? wxCB_DROPDOWN : wxCB_READONLY;
-    }
-
     void ComboBox::ApplyItems()
     {
-        auto comboBox = GetComboBox();
-        comboBox->Clear();
+        auto itemContainer = GetItemContainer();
+        itemContainer->Clear();
 
         if (_items.empty())
             return;
 
         for (auto item : _items)
-            comboBox->Append(wxStr(item));
+            itemContainer->Append(wxStr(item));
 
         _items.clear();
     }
 
     void ComboBox::ReceiveItems()
     {
-        auto comboBox = GetComboBox();
+        auto itemContainer = GetItemContainer();
         _items.clear();
 
-        if (comboBox->GetCount() == 0)
+        if (itemContainer->GetCount() == 0)
             return;
 
-        for (int i = 0; i < (int)comboBox->GetCount(); i++)
-            _items.push_back(wxStr(comboBox->GetString(i)));
+        for (int i = 0; i < (int)itemContainer->GetCount(); i++)
+            _items.push_back(wxStr(itemContainer->GetString(i)));
     }
 
     int ComboBox::RetrieveSelectedIndex()
     {
-        return GetComboBox()->GetSelection();
+        if (IsUsingChoiceControl())
+            return GetChoice()->GetSelection();
+        else
+            return GetComboBox()->GetSelection();
     }
 
     void ComboBox::ApplySelectedIndex(const int& value)
     {
-        GetComboBox()->SetSelection(value);
+        if (IsUsingChoiceControl())
+            GetChoice()->SetSelection(value);
+        else
+            GetComboBox()->SetSelection(value);
     }
 
     string ComboBox::RetrieveText()
@@ -175,6 +193,32 @@ namespace Alternet::UI
 
     wxComboBox* ComboBox::GetComboBox()
     {
-        return dynamic_cast<wxComboBox*>(GetWxWindow());
+        auto value = dynamic_cast<wxComboBox*>(GetWxWindow());
+        wxASSERT(value);
+        return value;
+    }
+
+    wxChoice* ComboBox::GetChoice()
+    {
+        auto value = dynamic_cast<wxChoice*>(GetWxWindow());
+        wxASSERT(value);
+        return value;
+    }
+
+    wxItemContainer* ComboBox::GetItemContainer()
+    {
+        auto value = dynamic_cast<wxItemContainer*>(GetWxWindow());
+        wxASSERT(value);
+        return value;
+    }
+
+    bool ComboBox::IsUsingChoiceControl()
+    {
+        return dynamic_cast<wxChoice*>(GetWxWindow()) != nullptr;
+    }
+
+    bool ComboBox::IsUsingComboBoxControl()
+    {
+        return dynamic_cast<wxComboBox*>(GetWxWindow()) != nullptr;
     }
 }

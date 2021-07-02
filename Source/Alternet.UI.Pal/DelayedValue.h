@@ -9,6 +9,7 @@ namespace Alternet::UI
     public:
         virtual void Apply() = 0;
         virtual void Receive() = 0;
+        virtual bool IsNotDelayed() = 0;
     };
 
     template<typename TOwner, typename TValue>
@@ -48,13 +49,14 @@ namespace Alternet::UI
                 return GetDelayed();
         }
 
-        bool IsNotDelayed()
+        bool IsNotDelayed() override
         {
             return (_owner.*_isNotDelayedGetter)();
         }
 
         void Apply() override
         {
+            wxASSERT(IsNotDelayed());
             ApplyValue(GetDelayed());
         }
 
@@ -139,6 +141,7 @@ namespace Alternet::UI
 
         void Apply() override
         {
+            wxASSERT(IsNotDelayed());
             for (auto& it : _applicators)
                 ApplyValue(it.first, GetDelayed(it.first));
         }
@@ -209,16 +212,18 @@ namespace Alternet::UI
                 Add(value);
         }
 
-        void Apply()
+        void ApplyIfPossible()
         {
             for (auto& value : _values)
-                value->Apply();
+                if (value->IsNotDelayed())
+                    value->Apply();
         }
 
-        void Receive()
+        void ReceiveIfPossible()
         {
             for (auto& value : _values)
-                value->Receive();
+                if (value->IsNotDelayed())
+                    value->Receive();
         }
 
     private:

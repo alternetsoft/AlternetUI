@@ -17,6 +17,8 @@ namespace Alternet::UI
         void OnWxWindowDestroying() override;
 
     private:
+        bool IsUsingComboBoxControl();
+        bool IsUsingChoiceControl();
 
         std::vector<string> _items;
 
@@ -24,8 +26,6 @@ namespace Alternet::UI
         DelayedValue<ComboBox, string> _text;
 
         bool _isEditable = true;
-
-        long GetComboBoxStyle();
 
         void ApplyItems();
         void ReceiveItems();
