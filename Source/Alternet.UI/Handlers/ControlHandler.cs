@@ -556,16 +556,24 @@ namespace Alternet.UI
             if (NativeControl != null)
             {
                 Control.Visible = NativeControl.Visible;
-                if (NativeControl.Visible)
+
+#if NETCOREAPP
+                if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
                 {
-                    // todo: this is a workaround for a problem on Linux when
-                    // ClientSize is not reported correctly until the window is shown
-                    // So we need to relayout all after the proper client size is available
-                    // This should be changed later in respect to RedrawOnResize functionality.
-                    // Also we may need to do this only on Linux and/or for top-level windows.
-                    // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
-                    PerformLayout();
+                    if (NativeControl.Visible)
+                    {
+                        // todo: this is a workaround for a problem on Linux when
+                        // ClientSize is not reported correctly until the window is shown
+                        // So we need to relayout all after the proper client size is available
+                        // This should be changed later in respect to RedrawOnResize functionality.
+                        // Also we may need to do this for top-level windows.
+                        // Doing this on Windows results in strange glitches like disappearing tab controls' tab.
+                        // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
+                        PerformLayout();
+                    }
                 }
+#endif
+
             }
         }
 
