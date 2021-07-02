@@ -224,17 +224,14 @@ namespace Alternet::UI
 
     Color Control::RetrieveBackgroundColor()
     {
+#ifdef __WXGTK__
+        // This is a workaround for GTK returning wrong background color when recreating a wxWindow.
+        // For example, see ListBox on SelectionMode change.
+        // Later this wrong color is reapplied to the recreated control. See also RetrieveForegroundColor().
+        return _backgroundColor.GetDelayed();
+#else
         return GetWxWindow()->GetBackgroundColour();
-    }
-
-    DelayedValue<Control, Color>& Control::GetBackgroundColorDelayedValue()
-    {
-        return _backgroundColor;
-    }
-
-    DelayedValue<Control, Color>& Control::GetForegroundColorDelayedValue()
-    {
-        return _foregroundColor;
+#endif
     }
 
     void Control::ApplyBackgroundColor(const Color& value)
@@ -245,7 +242,11 @@ namespace Alternet::UI
 
     Color Control::RetrieveForegroundColor()
     {
+#ifdef __WXGTK__
+        return _foregroundColor.GetDelayed();
+#else
         return GetWxWindow()->GetForegroundColour();
+#endif
     }
 
     void Control::ApplyForegroundColor(const Color& value)

@@ -138,27 +138,6 @@ namespace Alternet::UI
         SetSelectedIndices(oldSelection);
     }
 
-    Color ListBox::RetrieveBackgroundColor()
-    {
-#ifdef __WXGTK__
-        // This is a workaround for GTK returning wrong background color when recreating list box on SelectionMode change.
-        // Later this wrong color is reapplied to the recreated control. See also RetrieveForegroundColor().
-        // Maybe later this workaround will need to be applied to all controls on GTK.
-        return GetBackgroundColorDelayedValue().GetDelayed();
-#else
-        return Control::RetrieveBackgroundColor();
-#endif
-    }
-
-    Color ListBox::RetrieveForegroundColor()
-    {
-#ifdef __WXGTK__
-        return GetForegroundColorDelayedValue().GetDelayed();
-#else
-        return Control::RetrieveForegroundColor();
-#endif
-    }
-
     void ListBox::OnWxWindowCreated()
     {
         Control::OnWxWindowCreated();
