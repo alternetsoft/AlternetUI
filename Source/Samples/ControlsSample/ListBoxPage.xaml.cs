@@ -25,10 +25,18 @@ namespace ControlsSample
 
             ((Button)FindControl("addItemButton")).Click += AddItemButton_Click;
             ((Button)FindControl("removeItemButton")).Click += RemoveItemButton_Click;
-            
+            ((Button)FindControl("addManyItemsButton")).Click += AddManyItemsButton_Click;
+
             allowMultipleSelectionCheckBox = (CheckBox)FindControl("allowMultipleSelectionCheckBox");
             allowMultipleSelectionCheckBox.CheckedChanged += AllowMultipleSelectionCheckBox_CheckedChanged;
             this.site = site;
+        }
+
+        private void AddManyItemsButton_Click(object? sender, EventArgs e)
+        {
+            int start = listBox.Items.Count + 1;
+            for (int i = start; i < start + 5000; i++)
+                listBox.Items.Add("Item " + i);
         }
 
         private void ListBox_SelectionChanged(object? sender, EventArgs e)
