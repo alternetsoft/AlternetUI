@@ -6,6 +6,27 @@ namespace Alternet.UI
 {
     public class ComboBox : ListControl
     {
+        private string text = "";
+
+        public string Text
+        {
+            get
+            {
+                CheckDisposed();
+                return text;
+            }
+
+            set
+            {
+                CheckDisposed();
+                if (text == value)
+                    return;
+
+                text = value;
+                InvokeTextChanged(EventArgs.Empty);
+            }
+        }
+
         int? selectedIndex;
 
         public int? SelectedIndex
@@ -25,7 +46,7 @@ namespace Alternet.UI
 
                 selectedIndex = value;
 
-                InvokeSelectionChanged(EventArgs.Empty);
+                InvokeSelectedItemChanged(EventArgs.Empty);
             }
         }
 
@@ -57,20 +78,35 @@ namespace Alternet.UI
             }
         }
 
-        public void InvokeSelectionChanged(EventArgs e)
+        public void InvokeSelectedItemChanged(EventArgs e)
         {
             if (e == null)
                 throw new ArgumentNullException(nameof(e));
 
-            OnSelectionChanged(e);
-            SelectionChanged?.Invoke(this, e);
+            OnSelectedItemChanged(e);
+            SelectedItemChanged?.Invoke(this, e);
         }
 
-        protected virtual void OnSelectionChanged(EventArgs e)
+        protected virtual void OnSelectedItemChanged(EventArgs e)
         {
         }
 
-        public event EventHandler? SelectionChanged;
+        public event EventHandler? SelectedItemChanged;
+
+        public void InvokeTextChanged(EventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnTextChanged(e);
+            TextChanged?.Invoke(this, e);
+        }
+
+        protected virtual void OnTextChanged(EventArgs e)
+        {
+        }
+
+        public event EventHandler? TextChanged;
 
         public event EventHandler? IsEditableChanged;
 

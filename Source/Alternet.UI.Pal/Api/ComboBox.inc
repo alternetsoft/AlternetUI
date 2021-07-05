@@ -21,7 +21,8 @@ void ClearItems();
 public:
 enum class ComboBoxEvent
 {
-    SelectionChanged,
+    SelectedItemChanged,
+    TextChanged,
 };
 typedef void* (*ComboBoxEventCallbackType)(ComboBox* obj, ComboBoxEvent event, void* param);
 static void SetEventCallback(ComboBoxEventCallbackType value) { eventCallback = value; }

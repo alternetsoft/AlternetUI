@@ -18,10 +18,19 @@ namespace Alternet::UI
 
     ComboBox::~ComboBox()
     {
-        auto window = GetWxWindow();
-        if (window != nullptr)
+        if (GetWxWindow() != nullptr)
         {
-            window->Unbind(wxEVT_COMBOBOX, &ComboBox::OnSelectionChanged, this);
+            if (IsUsingChoiceControl())
+            {
+                auto window = GetChoice();
+                window->Unbind(wxEVT_CHOICE, &ComboBox::OnSelectedItemChanged, this);
+            }
+            else if (IsUsingComboBoxControl())
+            {
+                auto window = GetComboBox();
+                window->Unbind(wxEVT_COMBOBOX, &ComboBox::OnSelectedItemChanged, this);
+                window->Unbind(wxEVT_TEXT, &ComboBox::OnTextChanged, this);
+            }
         }
     }
 
@@ -55,7 +64,7 @@ namespace Alternet::UI
         {
             // On non-Windows systems wxChoice looks different than read-only wxComboBox.
             auto value = new wxChoice(parent, wxID_ANY);
-            value->Bind(wxEVT_CHOICE, &ComboBox::OnSelectionChanged, this);
+            value->Bind(wxEVT_CHOICE, &ComboBox::OnSelectedItemChanged, this);
             return value;
         }
         else
@@ -70,15 +79,21 @@ namespace Alternet::UI
                 NULL,
                 _isEditable ? wxCB_DROPDOWN : wxCB_READONLY);
 
-            value->Bind(wxEVT_COMBOBOX, &ComboBox::OnSelectionChanged, this);
+            value->Bind(wxEVT_COMBOBOX, &ComboBox::OnSelectedItemChanged, this);
+            value->Bind(wxEVT_TEXT, &ComboBox::OnTextChanged, this);
             return value;
         }
 
     }
 
-    void ComboBox::OnSelectionChanged(wxCommandEvent& event)
+    void ComboBox::OnSelectedItemChanged(wxCommandEvent& event)
     {
-        RaiseEvent(ComboBoxEvent::SelectionChanged);
+        RaiseEvent(ComboBoxEvent::SelectedItemChanged);
+    }
+
+    void ComboBox::OnTextChanged(wxCommandEvent& event)
+    {
+        RaiseEvent(ComboBoxEvent::TextChanged);
     }
 
     bool ComboBox::GetIsEditable()

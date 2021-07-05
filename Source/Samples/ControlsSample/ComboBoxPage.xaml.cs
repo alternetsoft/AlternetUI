@@ -17,7 +17,8 @@ namespace ControlsSample
             new XamlLoader().LoadExisting(xamlStream, this);
 
             comboBox = (ComboBox)FindControl("comboBox");
-            comboBox.SelectionChanged += ComboBox_SelectionChanged;
+            comboBox.SelectedItemChanged += ComboBox_SelectionChanged;
+            comboBox.TextChanged += ComboBox_TextChanged;
 
             comboBox.Items.Add("One");
             comboBox.Items.Add("Two");
@@ -29,6 +30,11 @@ namespace ControlsSample
             allowTextEditingCheckBox = (CheckBox)FindControl("allowTextEditingCheckBox");
             allowTextEditingCheckBox.CheckedChanged += AllowTextEditingCheckBox_CheckedChanged;
             this.site = site;
+        }
+
+        private void ComboBox_TextChanged(object? sender, EventArgs e)
+        {
+            site.LogEvent($"ComboBox: TextChanged. Text: {comboBox.Text}");
         }
 
         private void ComboBox_SelectionChanged(object? sender, EventArgs e)

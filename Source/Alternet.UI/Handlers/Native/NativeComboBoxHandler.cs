@@ -16,14 +16,17 @@ namespace Alternet.UI
 
             ApplyItems();
             ApplyIsEditable();
-            ApplySelection();
+            ApplySelectedItem();
+            ApplyText();
 
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
             Control.IsEditableChanged += Control_IsEditableChanged;
+            Control.TextChanged += Control_TextChanged;
+            Control.SelectedItemChanged += Control_SelectedItemChanged;
 
-            Control.SelectionChanged += Control_SelectionChanged;
-            NativeControl.SelectionChanged += NativeControl_SelectionChanged;
+            NativeControl.SelectedItemChanged += NativeControl_SelectedItemChanged;
+            NativeControl.TextChanged += NativeControl_TextChanged;
         }
 
         private void Control_IsEditableChanged(object? sender, EventArgs e)
@@ -40,20 +43,30 @@ namespace Alternet.UI
             Control.Items.ItemRemoved -= Items_ItemRemoved;
             Control.IsEditableChanged -= Control_IsEditableChanged;
 
-            Control.SelectionChanged -= Control_SelectionChanged;
-            NativeControl.SelectionChanged -= NativeControl_SelectionChanged;
+            Control.SelectedItemChanged -= Control_SelectedItemChanged;
+            NativeControl.SelectedItemChanged -= NativeControl_SelectedItemChanged;
 
             base.OnDetach();
         }
 
-        private void NativeControl_SelectionChanged(object? sender, EventArgs e)
+        private void NativeControl_SelectedItemChanged(object? sender, EventArgs e)
         {
-            ReceiveSelection();
+            ReceiveSelectedItem();
         }
 
-        private void Control_SelectionChanged(object? sender, EventArgs e)
+        private void Control_SelectedItemChanged(object? sender, EventArgs e)
         {
-            ApplySelection();
+            ApplySelectedItem();
+        }
+
+        private void NativeControl_TextChanged(object sender, EventArgs e)
+        {
+            ReceiveText();
+        }
+
+        private void Control_TextChanged(object sender, EventArgs e)
+        {
+            ApplyText();
         }
 
         private void Control_SelectionModeChanged(object? sender, EventArgs e)
@@ -78,15 +91,25 @@ namespace Alternet.UI
                 NativeControl.InsertItem(i, Control.GetItemText(control.Items[i]));
         }
 
-        private void ApplySelection()
+        private void ApplySelectedItem()
         {
             NativeControl.SelectedIndex = Control.SelectedIndex ?? -1;
         }
 
-        private void ReceiveSelection()
+        private void ApplyText()
+        {
+            NativeControl.Text = Control.Text;
+        }
+
+        private void ReceiveSelectedItem()
         {
             var selectedIndex = NativeControl.SelectedIndex;
             Control.SelectedIndex = selectedIndex == -1 ? null : selectedIndex;
+        }
+
+        private void ReceiveText()
+        {
+            Control.Text = NativeControl.Text;
         }
 
         private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<object> e)
