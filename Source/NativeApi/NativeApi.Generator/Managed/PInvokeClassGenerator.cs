@@ -11,10 +11,11 @@ namespace ApiGenerator.Managed
 {
     internal class PInvokeClassGenerator
     {
-        public void Generate(Type type, IndentedTextWriter w)
+        public void Generate(ApiType apiType, IndentedTextWriter w)
         {
             var types = new PInvokeTypes();
 
+            var type = apiType.Type;
             var typeName = type.Name;
 
             w.WriteLine("[SuppressUnmanagedCodeSecurity]");
@@ -32,10 +33,10 @@ namespace ApiGenerator.Managed
             if (MemberProvider.GetDestructorVisibility(type) == MemberVisibility.Public)
                 WriteDestructor(w, types, type);
 
-            foreach (var property in MemberProvider.GetProperties(type))
+            foreach (var property in apiType.Properties)
                 WriteProperty(w, property, types);
 
-            foreach (var property in MemberProvider.GetMethods(type))
+            foreach (var property in apiType.Methods)
                 WriteMethod(w, property, types);
 
             w.Indent--;
@@ -62,8 +63,9 @@ namespace ApiGenerator.Managed
             w.WriteLine();
         }
 
-        private static void WriteProperty(IndentedTextWriter w, PropertyInfo property, Types types)
+        private static void WriteProperty(IndentedTextWriter w, ApiProperty apiProperty, Types types)
         {
+            var property = apiProperty.Property;
             var declaringTypeName = TypeProvider.GetNativeName(property.DeclaringType!);
             var propertyName = property.Name;
             var propertyTypeName = types.GetTypeName(property.ToContextualProperty());
@@ -83,8 +85,9 @@ namespace ApiGenerator.Managed
             }
         }
 
-        private static void WriteMethod(IndentedTextWriter w, MethodInfo method, Types types)
+        private static void WriteMethod(IndentedTextWriter w, ApiMethod apiMethod, Types types)
         {
+            var method = apiMethod.Method;
             var declaringTypeName = TypeProvider.GetNativeName(method.DeclaringType!);
             var methodName = method.Name;
             var returnTypeName = types.GetTypeName(method.ReturnParameter.ToContextualParameter());

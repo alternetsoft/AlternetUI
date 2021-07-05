@@ -11,8 +11,9 @@ namespace ApiGenerator.Native
 {
     internal static class CppApiGenerator
     {
-        public static string Generate(Type type)
+        public static string Generate(ApiType apiType)
         {
+            var type = apiType.Type;
             var codeWriter = new StringWriter();
             var w = new IndentedTextWriter(codeWriter);
 
@@ -21,10 +22,10 @@ namespace ApiGenerator.Native
             w.WriteLine(GeneratorUtils.HeaderText);
             w.WriteLine("public:");
 
-            foreach (var property in MemberProvider.GetProperties(type))
+            foreach (var property in apiType.Properties)
                 WriteProperty(w, property, types);
 
-            foreach (var property in MemberProvider.GetMethods(type))
+            foreach (var property in apiType.Methods)
                 WriteMethod(w, property, types);
 
             WriteEvents(w, types, MemberProvider.GetEvents(type).ToArray());
@@ -43,8 +44,9 @@ namespace ApiGenerator.Native
 
         static string GetVisibility(MemberVisibility visibility) => visibility.ToString().ToLower() + ":";
 
-        private static void WriteProperty(IndentedTextWriter w, PropertyInfo property, Types types)
+        private static void WriteProperty(IndentedTextWriter w, ApiProperty apiProperty, Types types)
         {
+            var property = apiProperty.Property;
             var name = property.Name;
             var modifiers = GetModifiers(property);
             w.WriteLine();
@@ -67,8 +69,9 @@ namespace ApiGenerator.Native
             return result.ToString();
         }
 
-        private static void WriteMethod(IndentedTextWriter w, MethodInfo method, Types types)
+        private static void WriteMethod(IndentedTextWriter w, ApiMethod apiMethod, Types types)
         {
+            var method = apiMethod.Method;
             var name = method.Name;
             var returnTypeName = types.GetTypeName(method.ReturnParameter.ToContextualParameter(), TypeUsage.Return);
 

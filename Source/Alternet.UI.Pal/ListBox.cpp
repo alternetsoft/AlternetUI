@@ -60,7 +60,7 @@ namespace Alternet::UI
         RaiseEvent(ListBoxEvent::SelectionChanged);
     }
 
-    int ListBox::GetSelectedIndicesCount()
+    int ListBox::GetSelectedIndicesItemCount()
     {
         if (IsWxWindowCreated())
         {
@@ -71,7 +71,7 @@ namespace Alternet::UI
             return _selectedIndices.size();
     }
 
-    int ListBox::GetSelectedIndexAt(int index)
+    int ListBox::GetSelectedIndicesItemAt(int index)
     {
         if (IsWxWindowCreated())
         {
@@ -232,11 +232,11 @@ namespace Alternet::UI
 
     std::vector<int> ListBox::GetSelectedIndices()
     {
-        int count = GetSelectedIndicesCount();
+        int count = GetSelectedIndicesItemCount();
         
         std::vector<int> indices(count);
         for (int i = 0; i < count; i++)
-            indices[i] = GetSelectedIndexAt(i);
+            indices[i] = GetSelectedIndicesItemAt(i);
         
         return indices;
     }

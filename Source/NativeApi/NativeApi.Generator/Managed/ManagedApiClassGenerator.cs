@@ -11,8 +11,9 @@ namespace ApiGenerator.Managed
 {
     internal class ManagedApiClassGenerator
     {
-        public string Generate(Type type)
+        public string Generate(ApiType managedApiType, ApiType pInvokeApiType)
         {
+            var type = managedApiType.Type;
             var codeWriter = new StringWriter();
             var w = new IndentedTextWriter(codeWriter);
 
@@ -46,16 +47,16 @@ using System.Security;");
             //if (MemberProvider.GetDestructorVisibility(type) == MemberVisibility.Public)
             //    WriteDestructor(w, types, type);
 
-            foreach (var property in MemberProvider.GetProperties(type))
+            foreach (var property in managedApiType.Properties)
                 WriteProperty(w, property, types);
 
-            foreach (var property in MemberProvider.GetMethods(type))
-                WriteMethod(w, property, types);
+            foreach (var method in managedApiType.Methods)
+                WriteMethod(w, method, types);
 
             WriteEvents(w, types, events);
 
             w.WriteLine();
-            new PInvokeClassGenerator().Generate(type, w);
+            new PInvokeClassGenerator().Generate(pInvokeApiType, w);
 
             w.Indent--;
             w.WriteLine("}");
@@ -129,8 +130,9 @@ using System.Security;");
             return types.GetTypeName(baseType.ToContextualType());
         }
 
-        private static void WriteProperty(IndentedTextWriter w, PropertyInfo property, Types types)
+        private static void WriteProperty(IndentedTextWriter w, ApiProperty apiProperty, Types types)
         {
+            var property = apiProperty.Property;
             var propertyName = property.Name;
             var propertyTypeName = types.GetTypeName(property.ToContextualProperty());
             var nativeDeclaringTypeName = TypeProvider.GetNativeName(property.DeclaringType!);
@@ -145,12 +147,18 @@ using System.Security;");
                     {
                         w.WriteLine("CheckDisposed();");
 
-                        w.Write("return ");
-                        w.Write(
-                        string.Format(
-                            GetNativeToManagedFormatString(property.ToContextualProperty()),
-                            $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}(NativePointer)"));
-                        w.WriteLine(";");
+                        if (apiProperty.Flags.HasFlag(ApiPropertyFlags.ManagedArrayAccessor))
+                            WriteArrayAccessorPropertyGetterBody(w, apiProperty, types);
+                        else
+                        {
+                            w.Write("return ");
+                            w.Write(
+                            string.Format(
+                                GetNativeToManagedFormatString(property.ToContextualProperty()),
+                                $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}(NativePointer)"));
+                            w.WriteLine(";");
+                        }
+
                     }
 
                     w.WriteLine();
@@ -170,8 +178,35 @@ using System.Security;");
             w.WriteLine();
         }
 
-        private static void WriteMethod(IndentedTextWriter w, MethodInfo method, Types types)
+        private static void WriteArrayAccessorPropertyGetterBody(IndentedTextWriter w, ApiProperty apiProperty, Types types)
         {
+            var propertyTypeName = types.GetTypeName(apiProperty.Property.ToContextualProperty());
+            var nativeDeclaringTypeName = TypeProvider.GetNativeName(apiProperty.Property.DeclaringType!);
+            var propertyName = apiProperty.Property.Name;
+            var arrayElementType = apiProperty.Property.PropertyType.GetElementType().ToContextualType();
+            var arrayElementTypeName = types.GetTypeName(arrayElementType);
+
+            w.WriteLine($"var count = NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemCount(NativePointer);");
+            w.WriteLine($"var result = new System.Collections.Generic.List<{arrayElementTypeName}>(count);");
+            w.WriteLine($"for (int i = 0; i < count; i++)");
+            using (new BlockIndent(w))
+            {
+                w.Write("var item = ");
+                w.Write(
+                string.Format(
+                    GetNativeToManagedFormatString(arrayElementType),
+                    $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemAt(NativePointer, i)"));
+                w.WriteLine(";");
+
+                w.WriteLine($"result.Add(item);");
+            }
+
+            w.WriteLine("return result.ToArray();");
+        }
+
+        private static void WriteMethod(IndentedTextWriter w, ApiMethod apiMethod, Types types)
+        {
+            var method = apiMethod.Method;
             var methodName = method.Name;
             var returnTypeName = types.GetTypeName(method.ReturnParameter.ToContextualParameter());
 

@@ -12,8 +12,9 @@ namespace ApiGenerator.Native
 {
     internal static class CApiGenerator
     {
-        public static string Generate(Type type)
+        public static string Generate(ApiType apiType)
         {
+            var type = apiType.Type;
             var codeWriter = new StringWriter();
             var w = new IndentedTextWriter(codeWriter);
 
@@ -31,11 +32,11 @@ namespace ApiGenerator.Native
             if (MemberProvider.GetDestructorVisibility(type) == MemberVisibility.Public)
                 WriteDestructor(w, types, type);
 
-            foreach (var property in MemberProvider.GetProperties(type))
+            foreach (var property in apiType.Properties)
                 WriteProperty(w, types, property);
 
-            foreach (var property in MemberProvider.GetMethods(type))
-                WriteMethod(w, types, property);
+            foreach (var method in apiType.Methods)
+                WriteMethod(w, types, method);
 
             WriteEvents(w, types, MemberProvider.GetEvents(type).ToArray());
 
@@ -58,8 +59,9 @@ namespace ApiGenerator.Native
 
         const string ExportMacro = "ALTERNET_UI_API";
 
-        private static void WriteProperty(IndentedTextWriter w, Types types, PropertyInfo property)
+        private static void WriteProperty(IndentedTextWriter w, Types types, ApiProperty apiProperty)
         {
+            var property = apiProperty.Property;
             var propertyName = property.Name;
             var declaringTypeName = types.GetTypeName(property.DeclaringType!.ToContextualType(), TypeUsage.Static);
 
@@ -95,8 +97,9 @@ namespace ApiGenerator.Native
             }
         }
 
-        private static void WriteMethod(IndentedTextWriter w, Types types, MethodInfo method)
+        private static void WriteMethod(IndentedTextWriter w, Types types, ApiMethod apiMethod)
         {
+            var method = apiMethod.Method;
             var methodName = method.Name;
             var returnTypeName = types.GetTypeName(method.ReturnParameter.ToContextualParameter(), TypeUsage.Return);
             var declaringTypeName = types.GetTypeName(method.DeclaringType!.ToContextualType(), TypeUsage.Static);

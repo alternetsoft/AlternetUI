@@ -7,13 +7,11 @@ int GetItemsCount();
 ListBoxSelectionMode GetSelectionMode();
 void SetSelectionMode(ListBoxSelectionMode value);
 
-
-int GetSelectedIndicesCount();
-
+int GetSelectedIndicesItemCount();
+int GetSelectedIndicesItemAt(int index);
 void InsertItem(int index, const string& value);
 void RemoveItemAt(int index);
 void ClearItems();
-int GetSelectedIndexAt(int index);
 void ClearSelected();
 void SetSelected(int index, bool value);
 public:

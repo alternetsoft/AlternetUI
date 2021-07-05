@@ -28,7 +28,7 @@ namespace ApiGenerator.Native
 
         private static void GenerateCppApi(Paths paths, Type type)
         {
-            var code = CppApiGenerator.Generate(type);
+            var code = CppApiGenerator.Generate(ApiTypeFactory.Create(type, ApiTypeCreationMode.NativeCppApi));
             var fileName = TypeProvider.GetNativeName(type) + ".inc";
             File.WriteAllText(Path.Combine(paths.NativeApiSourcePath, fileName), code);
         }
@@ -47,7 +47,7 @@ namespace ApiGenerator.Native
 
         private static void GenerateCApi(Paths paths, Type type, StringBuilder indexBuilder)
         {
-            var code = CApiGenerator.Generate(type);
+            var code = CApiGenerator.Generate(ApiTypeFactory.Create(type, ApiTypeCreationMode.NativeCApi));
             var fileName = TypeProvider.GetNativeName(type) + ".Api.h";
             File.WriteAllText(Path.Combine(paths.NativeApiSourcePath, fileName), code);
             indexBuilder.AppendLine($"#include \"Api/{fileName}\"");

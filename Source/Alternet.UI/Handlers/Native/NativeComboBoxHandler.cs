@@ -59,12 +59,12 @@ namespace Alternet.UI
             ApplySelectedItem();
         }
 
-        private void NativeControl_TextChanged(object sender, EventArgs e)
+        private void NativeControl_TextChanged(object? sender, EventArgs e)
         {
             ReceiveText();
         }
 
-        private void Control_TextChanged(object sender, EventArgs e)
+        private void Control_TextChanged(object? sender, EventArgs e)
         {
             ApplyText();
         }

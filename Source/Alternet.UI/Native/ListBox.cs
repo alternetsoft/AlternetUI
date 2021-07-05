@@ -43,12 +43,19 @@ namespace Alternet.UI.Native
             }
         }
         
-        public int SelectedIndicesCount
+        public System.Int32[] SelectedIndices
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.ListBox_GetSelectedIndicesCount(NativePointer);
+                var count = NativeApi.ListBox_GetSelectedIndicesItemCount(NativePointer);
+                var result = new System.Collections.Generic.List<int>(count);
+                for (int i = 0; i < count; i++)
+                {
+                    var item = NativeApi.ListBox_GetSelectedIndicesItemAt(NativePointer, i);
+                    result.Add(item);
+                }
+                return result.ToArray();
             }
             
         }
@@ -69,12 +76,6 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.ListBox_ClearItems(NativePointer);
-        }
-        
-        public int GetSelectedIndexAt(int index)
-        {
-            CheckDisposed();
-            return NativeApi.ListBox_GetSelectedIndexAt(NativePointer, index);
         }
         
         public void ClearSelected()
@@ -148,7 +149,10 @@ namespace Alternet.UI.Native
             public static extern void ListBox_SetSelectionMode(IntPtr obj, ListBoxSelectionMode value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_GetSelectedIndicesCount(IntPtr obj);
+            public static extern int ListBox_GetSelectedIndicesItemCount(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ListBox_GetSelectedIndicesItemAt(IntPtr obj, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListBox_InsertItem(IntPtr obj, int index, string value);
@@ -158,9 +162,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListBox_ClearItems(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_GetSelectedIndexAt(IntPtr obj, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListBox_ClearSelected(IntPtr obj);

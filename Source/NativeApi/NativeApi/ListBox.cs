@@ -10,15 +10,13 @@ namespace NativeApi.Api
 
         public ListBoxSelectionMode SelectionMode { get; set; }
 
-        public int SelectedIndicesCount { get; }
+        public int[] SelectedIndices { get => throw new Exception(); }
 
         public void InsertItem(int index, string value) => throw new Exception();
 
         public void RemoveItemAt(int index) => throw new Exception();
 
         public void ClearItems() => throw new Exception();
-
-        public int GetSelectedIndexAt(int index) => throw new Exception();
 
         public void ClearSelected() => throw new Exception();
 

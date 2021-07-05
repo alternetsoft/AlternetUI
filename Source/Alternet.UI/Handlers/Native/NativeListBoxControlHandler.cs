@@ -107,14 +107,7 @@ namespace Alternet.UI
 
             try
             {
-                var nativeControl = NativeControl;
-                var selectedIndicesCount = nativeControl.SelectedIndicesCount;
-                var selectedIndices = new List<int>(selectedIndicesCount);
-
-                for (var i = 0; i < selectedIndicesCount; i++)
-                    selectedIndices.Add(nativeControl.GetSelectedIndexAt(i));
-
-                Control.SelectedIndices = selectedIndices;
+                Control.SelectedIndices = NativeControl.SelectedIndices;
             }
             finally
             {

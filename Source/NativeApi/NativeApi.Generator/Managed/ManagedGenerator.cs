@@ -1,8 +1,7 @@
-﻿using System;
+﻿using ApiGenerator.Api;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace ApiGenerator.Managed
 {
@@ -15,7 +14,9 @@ namespace ApiGenerator.Managed
             var apiClassGenerator = new ManagedApiClassGenerator();
             foreach (var type in types)
             {
-                var apiClass = apiClassGenerator.Generate(type);
+                var apiClass = apiClassGenerator.Generate(
+                    ApiTypeFactory.Create(type, ApiTypeCreationMode.ManagedApiClass),
+                    ApiTypeFactory.Create(type, ApiTypeCreationMode.ManagedPInvokeClass));
                 File.WriteAllText(Path.Combine(paths.ManagedApiSourcePath, type.Name + ".cs"), apiClass);
             }
         }
@@ -24,6 +25,5 @@ namespace ApiGenerator.Managed
         {
             File.WriteAllText(Path.Combine(paths.ManagedApiSourcePath, "Enums.cs"), ManagedEnumsGenerator.Generate(types));
         }
-
     }
 }
