@@ -2,6 +2,9 @@
 
 namespace Alternet::UI
 {
+    // Linux performance note: combo box with many items is really slow on Linux.
+    // This seems to be a known problem, see https://gitlab.gnome.org/GNOME/gtk/-/issues/1910
+
     constexpr bool UseChoiceControlForReadOnlyComboBox = true;
 //#ifdef __WXMSW__
 //    constexpr bool UseChoiceControlForReadOnlyComboBox = false;
