@@ -45,7 +45,7 @@ namespace Alternet::UI
     void ComboBox::RemoveItemAt(int index)
     {
         if (IsWxWindowCreated())
-            GetComboBox()->Delete(index);
+            GetItemContainer()->Delete(index);
         else
             _items.erase(_items.begin() + index);
     }
@@ -53,7 +53,7 @@ namespace Alternet::UI
     void ComboBox::ClearItems()
     {
         if (IsWxWindowCreated())
-            GetComboBox()->Clear();
+            GetItemContainer()->Clear();
         else
             _items.clear();
     }
