@@ -11,6 +11,8 @@ namespace ControlsSample
 
         public ComboBoxPage(IPageSite site)
         {
+            this.site = site;
+
             var xamlStream = typeof(MainWindow).Assembly.GetManifestResourceStream("ControlsSample.ComboBoxPage.xaml");
             if (xamlStream == null)
                 throw new InvalidOperationException();
@@ -23,13 +25,29 @@ namespace ControlsSample
             comboBox.Items.Add("One");
             comboBox.Items.Add("Two");
             comboBox.Items.Add("Three");
+            comboBox.SelectedIndex = 1;
 
             ((Button)FindControl("addItemButton")).Click += AddItemButton_Click;
             ((Button)FindControl("removeItemButton")).Click += RemoveItemButton_Click;
-            
+            ((Button)FindControl("addManyItemsButton")).Click += AddManyItemsButton_Click;
+
             allowTextEditingCheckBox = (CheckBox)FindControl("allowTextEditingCheckBox");
             allowTextEditingCheckBox.CheckedChanged += AllowTextEditingCheckBox_CheckedChanged;
-            this.site = site;
+        }
+
+        private void AddManyItemsButton_Click(object? sender, EventArgs e)
+        {
+            int start = comboBox.Items.Count + 1;
+            comboBox.BeginUpdate();
+            try
+            {
+                for (int i = start; i < start + 5000; i++)
+                    comboBox.Items.Add("Item " + i);
+            }
+            finally
+            {
+                comboBox.EndUpdate();
+            }
         }
 
         private void ComboBox_TextChanged(object? sender, EventArgs e)

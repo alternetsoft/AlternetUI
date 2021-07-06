@@ -17,6 +17,8 @@ namespace ControlsSample
                 throw new InvalidOperationException();
             new XamlLoader().LoadExisting(xamlStream, this);
 
+            eventsListBox = new ListBox();
+
             Width = 600;
             Height = 600;
 
@@ -61,7 +63,6 @@ namespace ControlsSample
             InitTextBoxesPage(textBoxesPage);
 
 
-            eventsListBox = new ListBox();
             eventsListBox.Height = 100;
             rootPanel.Children.Add(eventsListBox);
         }

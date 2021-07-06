@@ -49,6 +49,7 @@ namespace Alternet::UI
         {
             None = 0,
             Visible = 1 << 0,
+            Frozen = 1 << 1
         };
 
         enum class ControlFlags
@@ -63,6 +64,7 @@ namespace Alternet::UI
         Control* _parent = nullptr;
         std::vector<Control*> _children;
         ControlFlags _flags = ControlFlags::None;
+        int _beginUpdateCount = 0;
 
         DelayedFlags<Control, DelayedControlFlags> _delayedFlags;
         DelayedValue<Control, RectangleF> _bounds;
@@ -73,6 +75,9 @@ namespace Alternet::UI
 
         bool RetrieveVisible();
         void ApplyVisible(bool value);
+
+        bool RetrieveFrozen();
+        void ApplyFrozen(bool value);
 
         virtual SizeF ClientSizeToSize(const SizeF& clientSize);
         virtual SizeF SizeToClientSize(const SizeF& size);

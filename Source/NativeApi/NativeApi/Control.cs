@@ -56,5 +56,8 @@ namespace NativeApi.Api
 
         public DrawingContext OpenPaintDrawingContext() => throw new Exception();
         public DrawingContext OpenClientDrawingContext() => throw new Exception();
+
+        public void BeginUpdate() => throw new Exception();
+        public void EndUpdate() => throw new Exception();
     }
 }

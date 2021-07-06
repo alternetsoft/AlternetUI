@@ -47,6 +47,8 @@ void Update();
 virtual SizeF GetPreferredSize(const SizeF& availableSize);
 DrawingContext* OpenPaintDrawingContext();
 DrawingContext* OpenClientDrawingContext();
+void BeginUpdate();
+void EndUpdate();
 public:
 enum class ControlEvent
 {

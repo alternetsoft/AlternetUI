@@ -9,6 +9,7 @@ namespace Alternet::UI
             &Control::IsWxWindowCreated,
             {
                 {DelayedControlFlags::Visible, std::make_tuple(&Control::RetrieveVisible, &Control::ApplyVisible)},
+                {DelayedControlFlags::Frozen, std::make_tuple(&Control::RetrieveFrozen, &Control::ApplyFrozen)},
             }),
             _bounds(*this, RectangleF(), &Control::IsWxWindowCreated, &Control::RetrieveBounds, &Control::ApplyBounds),
             _backgroundColor(*this, Color(), &Control::IsWxWindowCreated, &Control::RetrieveBackgroundColor, &Control::ApplyBackgroundColor),
@@ -222,6 +223,26 @@ namespace Alternet::UI
             wxWindow->Hide();
     }
 
+    bool Control::RetrieveFrozen()
+    {
+        return GetWxWindow()->IsFrozen();
+    }
+
+    void Control::ApplyFrozen(bool value)
+    {
+        auto window = GetWxWindow();
+        if (value)
+        {
+            if (!window->IsFrozen())
+                window->Freeze();
+        }
+        else
+        {
+            if (window->IsFrozen())
+                window->Thaw();
+        }
+    }
+
     Color Control::RetrieveBackgroundColor()
     {
 #ifndef __WXMSW__
@@ -279,6 +300,25 @@ namespace Alternet::UI
     void Control::SetDoNotDestroyWxWindow(bool value)
     {
         SetFlag(ControlFlags::DoNotDestroyWxWindow, value);
+    }
+
+    void Control::BeginUpdate()
+    {
+        _beginUpdateCount++;
+        if (_beginUpdateCount == 1)
+        {
+            _delayedFlags.Set(DelayedControlFlags::Frozen, true);
+        }
+    }
+
+    void Control::EndUpdate()
+    {
+        wxASSERT_MSG(_beginUpdateCount > 0, "EndUpdate() without matching BeginUpdate()");
+        _beginUpdateCount--;
+        if (_beginUpdateCount == 0)
+        {
+            _delayedFlags.Set(DelayedControlFlags::Frozen, false);
+        }
     }
 
     SizeF Control::GetClientSize()

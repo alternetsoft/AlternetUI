@@ -216,6 +216,18 @@ namespace Alternet.UI
             }
         }
 
+        public void BeginUpdate()
+        {
+            if (NativeControl != null)
+                NativeControl.BeginUpdate();
+        }
+
+        public void EndUpdate()
+        {
+            if (NativeControl != null)
+                NativeControl.EndUpdate();
+        }
+
         public void PerformLayout()
         {
             if (IsLayoutSuspended)

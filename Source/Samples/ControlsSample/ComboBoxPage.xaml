@@ -7,9 +7,10 @@
             <StackPanel Orientation="Horizontal" Margin="5">
                 <ComboBox Width="200" Name="comboBox" IsEditable="false"  VerticalAlignment="Top"/>
                 <StackPanel Orientation="Vertical" Margin="5,0,0,0">
-                    <Button Text="Add Item" Name="addItemButton" />
-                    <Button Text="Remove Item" Name="removeItemButton" />
-                    <CheckBox Text="Allow Text Editing" Name="allowTextEditingCheckBox" />
+                    <Button Text="Add Item" Name="addItemButton" Margin="0,3,0,0" />
+                    <Button Text="Remove Item" Name="removeItemButton" Margin="0,3,0,0" />
+                    <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0" />
+                    <CheckBox Text="Allow Text Editing" Name="allowTextEditingCheckBox" Margin="0,10,0,0"/>
                 </StackPanel>
             </StackPanel>
         </GroupBox>

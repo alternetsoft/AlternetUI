@@ -156,16 +156,17 @@ namespace Alternet::UI
 
     void ComboBox::ApplyItems()
     {
+        BeginUpdate();
+
         auto itemContainer = GetItemContainer();
         itemContainer->Clear();
-
-        if (_items.empty())
-            return;
 
         for (auto item : _items)
             itemContainer->Append(wxStr(item));
 
         _items.clear();
+        
+        EndUpdate();
     }
 
     void ComboBox::ReceiveItems()

@@ -268,6 +268,16 @@ namespace Alternet.UI
                 PerformLayout();
         }
 
+        public void BeginUpdate()
+        {
+            Handler.BeginUpdate();
+        }
+
+        public void EndUpdate()
+        {
+            Handler.EndUpdate();
+        }
+
         public void PerformLayout()
         {
             Handler.PerformLayout();

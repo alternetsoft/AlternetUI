@@ -35,8 +35,17 @@ namespace ControlsSample
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
         {
             int start = listBox.Items.Count + 1;
-            for (int i = start; i < start + 5000; i++)
-                listBox.Items.Add("Item " + i);
+
+            listBox.BeginUpdate();
+            try
+            {
+                for (int i = start; i < start + 5000; i++)
+                    listBox.Items.Add("Item " + i);
+            }
+            finally
+            {
+                listBox.EndUpdate();
+            }
         }
 
         private void ListBox_SelectionChanged(object? sender, EventArgs e)

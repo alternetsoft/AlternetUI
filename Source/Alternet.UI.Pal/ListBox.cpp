@@ -182,14 +182,15 @@ namespace Alternet::UI
 
     void ListBox::ApplyItems()
     {
+        BeginUpdate();
+
         auto listBox = GetListBox();
         listBox->Clear();
 
-        if (_items.empty())
-            return;
-
         for (auto item : _items)
             listBox->Append(wxStr(item));
+
+        EndUpdate();
 
         _items.clear();
     }
