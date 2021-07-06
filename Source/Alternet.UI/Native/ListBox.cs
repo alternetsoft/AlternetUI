@@ -48,14 +48,22 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                var count = NativeApi.ListBox_GetSelectedIndicesItemCount(NativePointer);
-                var result = new System.Collections.Generic.List<int>(count);
-                for (int i = 0; i < count; i++)
+                var array = NativeApi.ListBox_OpenSelectedIndicesArray(NativePointer);
+                try
                 {
-                    var item = NativeApi.ListBox_GetSelectedIndicesItemAt(NativePointer, i);
-                    result.Add(item);
+                    var count = NativeApi.ListBox_GetSelectedIndicesItemCount(NativePointer, array);
+                    var result = new System.Collections.Generic.List<int>(count);
+                    for (int i = 0; i < count; i++)
+                    {
+                        var item = NativeApi.ListBox_GetSelectedIndicesItemAt(NativePointer, array, i);
+                        result.Add(item);
+                    }
+                    return result.ToArray();
                 }
-                return result.ToArray();
+                finally
+                {
+                    NativeApi.ListBox_CloseSelectedIndicesArray(NativePointer, array);
+                }
             }
             
         }
@@ -149,10 +157,16 @@ namespace Alternet.UI.Native
             public static extern void ListBox_SetSelectionMode(IntPtr obj, ListBoxSelectionMode value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_GetSelectedIndicesItemCount(IntPtr obj);
+            public static extern System.IntPtr ListBox_OpenSelectedIndicesArray(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_GetSelectedIndicesItemAt(IntPtr obj, int index);
+            public static extern int ListBox_GetSelectedIndicesItemCount(IntPtr obj, System.IntPtr array);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ListBox_GetSelectedIndicesItemAt(IntPtr obj, System.IntPtr array, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListBox_CloseSelectedIndicesArray(IntPtr obj, System.IntPtr array);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListBox_InsertItem(IntPtr obj, int index, string value);

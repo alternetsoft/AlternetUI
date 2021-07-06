@@ -41,7 +41,8 @@ namespace ControlsSample
 
         private void ListBox_SelectionChanged(object? sender, EventArgs e)
         {
-            site.LogEvent($"ListBox: SelectionChanged. SelectedIndices: ({string.Join(",", listBox.SelectedIndices)})");
+            string selectedIndicesString = listBox.SelectedIndices.Count > 100 ? "too many indices to display" : string.Join(",", listBox.SelectedIndices);
+            site.LogEvent($"ListBox: SelectionChanged. SelectedIndices: ({selectedIndicesString})");
         }
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)

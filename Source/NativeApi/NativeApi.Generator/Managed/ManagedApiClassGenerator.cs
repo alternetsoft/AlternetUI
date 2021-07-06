@@ -172,6 +172,7 @@ using System.Security;");
                         w.WriteLine("CheckDisposed();");
                         w.WriteLine($"NativeApi.{nativeDeclaringTypeName}_Set{propertyName}(NativePointer, {GetManagedToNativeArgument(property.PropertyType, "value")});");
                     }
+            
                 }
             }
 
@@ -180,28 +181,37 @@ using System.Security;");
 
         private static void WriteArrayAccessorPropertyGetterBody(IndentedTextWriter w, ApiProperty apiProperty, Types types)
         {
-            var propertyTypeName = types.GetTypeName(apiProperty.Property.ToContextualProperty());
             var nativeDeclaringTypeName = TypeProvider.GetNativeName(apiProperty.Property.DeclaringType!);
             var propertyName = apiProperty.Property.Name;
             var arrayElementType = apiProperty.Property.PropertyType.GetElementType().ToContextualType();
             var arrayElementTypeName = types.GetTypeName(arrayElementType);
 
-            w.WriteLine($"var count = NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemCount(NativePointer);");
-            w.WriteLine($"var result = new System.Collections.Generic.List<{arrayElementTypeName}>(count);");
-            w.WriteLine($"for (int i = 0; i < count; i++)");
+            w.WriteLine($"var array = NativeApi.{nativeDeclaringTypeName}_Open{propertyName}Array(NativePointer);");
+            w.WriteLine("try");
             using (new BlockIndent(w))
             {
-                w.Write("var item = ");
-                w.Write(
-                string.Format(
-                    GetNativeToManagedFormatString(arrayElementType),
-                    $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemAt(NativePointer, i)"));
-                w.WriteLine(";");
+                w.WriteLine($"var count = NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemCount(NativePointer, array);");
+                w.WriteLine($"var result = new System.Collections.Generic.List<{arrayElementTypeName}>(count);");
+                w.WriteLine($"for (int i = 0; i < count; i++)");
+                using (new BlockIndent(w))
+                {
+                    w.Write("var item = ");
+                    w.Write(
+                    string.Format(
+                        GetNativeToManagedFormatString(arrayElementType),
+                        $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemAt(NativePointer, array, i)"));
+                    w.WriteLine(";");
 
-                w.WriteLine($"result.Add(item);");
+                    w.WriteLine($"result.Add(item);");
+                }
+
+                w.WriteLine("return result.ToArray();");
             }
-
-            w.WriteLine("return result.ToArray();");
+            w.WriteLine("finally");
+            using (new BlockIndent(w))
+            {
+                w.WriteLine($"NativeApi.{nativeDeclaringTypeName}_Close{propertyName}Array(NativePointer, array);");
+            }
         }
 
         private static void WriteMethod(IndentedTextWriter w, ApiMethod apiMethod, Types types)

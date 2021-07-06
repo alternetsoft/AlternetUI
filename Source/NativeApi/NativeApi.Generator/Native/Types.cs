@@ -31,7 +31,8 @@ namespace ApiGenerator.Native
                         { typeof(float), "float" },
                         { typeof(double), "double" },
                         { typeof(char), "char16_t" },
-                        { typeof(void), "void" }
+                        { typeof(void), "void" },
+                        { typeof(IntPtr), "void*" }
             };
 
         private HashSet<string> includes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);

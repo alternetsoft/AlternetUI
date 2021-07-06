@@ -7,8 +7,10 @@ int GetItemsCount();
 ListBoxSelectionMode GetSelectionMode();
 void SetSelectionMode(ListBoxSelectionMode value);
 
-int GetSelectedIndicesItemCount();
-int GetSelectedIndicesItemAt(int index);
+void* OpenSelectedIndicesArray();
+int GetSelectedIndicesItemCount(void* array);
+int GetSelectedIndicesItemAt(void* array, int index);
+void CloseSelectedIndicesArray(void* array);
 void InsertItem(int index, const string& value);
 void RemoveItemAt(int index);
 void ClearItems();

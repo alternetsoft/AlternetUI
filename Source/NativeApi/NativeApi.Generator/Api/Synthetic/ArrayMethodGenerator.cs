@@ -20,15 +20,27 @@ namespace ApiGenerator.Api
 
             yield return new SyntheticMethodInfo(
                 property.DeclaringType,
-                $"Get{property.Name}ItemCount",
+                $"Open{property.Name}Array",
                 new SyntheticParameterInfo[0],
+                typeof(IntPtr));
+
+            yield return new SyntheticMethodInfo(
+                property.DeclaringType,
+                $"Get{property.Name}ItemCount",
+                new SyntheticParameterInfo[] { new SyntheticParameterInfo(typeof(IntPtr), "array") },
                 typeof(int));
 
             yield return new SyntheticMethodInfo(
                 property.DeclaringType,
                 $"Get{property.Name}ItemAt",
-                new[] { new SyntheticParameterInfo(typeof(int), "index") },
+                new[] { new SyntheticParameterInfo(typeof(IntPtr), "array"), new SyntheticParameterInfo(typeof(int), "index") },
                 property.PropertyType.GetElementType() ?? throw new Exception());
+
+            yield return new SyntheticMethodInfo(
+                property.DeclaringType,
+                $"Close{property.Name}Array",
+                new SyntheticParameterInfo[] { new SyntheticParameterInfo(typeof(IntPtr), "array") },
+                typeof(void));
         }
     }
 }

@@ -27,14 +27,24 @@ ALTERNET_UI_API void ListBox_SetSelectionMode(ListBox* obj, ListBoxSelectionMode
     obj->SetSelectionMode(value);
 }
 
-ALTERNET_UI_API int ListBox_GetSelectedIndicesItemCount(ListBox* obj)
+ALTERNET_UI_API void* ListBox_OpenSelectedIndicesArray(ListBox* obj)
 {
-    return obj->GetSelectedIndicesItemCount();
+    return obj->OpenSelectedIndicesArray();
 }
 
-ALTERNET_UI_API int ListBox_GetSelectedIndicesItemAt(ListBox* obj, int index)
+ALTERNET_UI_API int ListBox_GetSelectedIndicesItemCount(ListBox* obj, void* array)
 {
-    return obj->GetSelectedIndicesItemAt(index);
+    return obj->GetSelectedIndicesItemCount(array);
+}
+
+ALTERNET_UI_API int ListBox_GetSelectedIndicesItemAt(ListBox* obj, void* array, int index)
+{
+    return obj->GetSelectedIndicesItemAt(array, index);
+}
+
+ALTERNET_UI_API void ListBox_CloseSelectedIndicesArray(ListBox* obj, void* array)
+{
+    obj->CloseSelectedIndicesArray(array);
 }
 
 ALTERNET_UI_API void ListBox_InsertItem(ListBox* obj, int index, const char16_t* value)

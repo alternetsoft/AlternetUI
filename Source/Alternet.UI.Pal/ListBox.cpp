@@ -60,27 +60,35 @@ namespace Alternet::UI
         RaiseEvent(ListBoxEvent::SelectionChanged);
     }
 
-    int ListBox::GetSelectedIndicesItemCount()
+    void* ListBox::OpenSelectedIndicesArray()
     {
+        auto array = new wxArrayInt();
         if (IsWxWindowCreated())
         {
-            wxArrayInt _;
-            return GetListBox()->GetSelections(_);
+            GetListBox()->GetSelections(*array);
         }
         else
-            return _selectedIndices.size();
+        {
+            for (int i = 0; i < _selectedIndices.size(); i++)
+                array->Add(_selectedIndices[i]);
+        }
+
+        return array;
     }
 
-    int ListBox::GetSelectedIndicesItemAt(int index)
+    void ListBox::CloseSelectedIndicesArray(void* array)
     {
-        if (IsWxWindowCreated())
-        {
-            wxArrayInt selections;
-            GetListBox()->GetSelections(selections);
-            return selections[index];
-        }
-        else
-            return _selectedIndices[index];
+        delete ((wxArrayInt*)array);
+    }
+
+    int ListBox::GetSelectedIndicesItemCount(void* array)
+    {
+        return ((wxArrayInt*)array)->GetCount();
+    }
+
+    int ListBox::GetSelectedIndicesItemAt(void* array, int index)
+    {
+        return (*((wxArrayInt*)array))[index];
     }
 
     void ListBox::ClearSelected()
@@ -232,12 +240,15 @@ namespace Alternet::UI
 
     std::vector<int> ListBox::GetSelectedIndices()
     {
-        int count = GetSelectedIndicesItemCount();
+        auto array = OpenSelectedIndicesArray();
+        int count = GetSelectedIndicesItemCount(array);
         
         std::vector<int> indices(count);
         for (int i = 0; i < count; i++)
-            indices[i] = GetSelectedIndicesItemAt(i);
+            indices[i] = GetSelectedIndicesItemAt(array, i);
         
+        CloseSelectedIndicesArray(array);
+
         return indices;
     }
 
