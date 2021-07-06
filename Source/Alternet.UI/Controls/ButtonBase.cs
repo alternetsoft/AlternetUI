@@ -2,11 +2,22 @@ using System;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Implements the basic functionality common to button controls.
+    /// </summary>
     public abstract class ButtonBase : Control
     {
         private string text = "";
 
-        public string Text // todo: maybe rename to Title? like in cocoa.
+        /// <summary>
+        /// Occurs when the value of the <see cref="Text"/> property changes.
+        /// </summary>
+        public event EventHandler? TextChanged;
+
+        /// <summary>
+        /// Gets or sets the text displayed on this button.
+        /// </summary>
+        public string Text
         {
             get
             {
@@ -25,7 +36,13 @@ namespace Alternet.UI
             }
         }
 
-        public event EventHandler? TextChanged;
+        /// <summary>
+        /// Raises the <see cref="TextChanged"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnTextChanged(EventArgs e)
+        {
+        }
 
         private void InvokeTextChanged(EventArgs e)
         {
@@ -34,10 +51,6 @@ namespace Alternet.UI
 
             OnTextChanged(e);
             TextChanged?.Invoke(this, e);
-        }
-
-        protected virtual void OnTextChanged(EventArgs e)
-        {
         }
     }
 }

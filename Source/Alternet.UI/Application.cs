@@ -4,6 +4,10 @@ using System.ComponentModel;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Provides methods and properties to manage an application, such as methods to start and stop an application,
+    /// and properties to get information about an application.
+    /// </summary>
     [System.ComponentModel.DesignerCategory("Code")]
     public partial class Application : Component
     {
@@ -15,14 +19,23 @@ namespace Alternet.UI
 
         private VisualTheme visualTheme = StockVisualThemes.Native;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Application"/> class.
+        /// </summary>
         public Application()
         {
             nativeApplication = new Native.Application();
             current = this;
         }
 
+        /// <summary>
+        /// Occurs when the <see cref="VisualTheme"/> property changes.
+        /// </summary>
         public event EventHandler? VisualThemeChanged;
 
+        /// <summary>
+        /// Gets the <see cref="Application"/> object for the currently runnning application.
+        /// </summary>
         public static Application Current
         {
             get
@@ -33,10 +46,19 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets the instantiated windows in an application.
+        /// </summary>
         public IReadOnlyList<Window> Windows => windows;
 
+        /// <summary>
+        /// Gets whether <see cref="Dispose(bool)"/> has been called.
+        /// </summary>
         public bool IsDisposed { get => isDisposed; private set => isDisposed = value; }
 
+        /// <summary>
+        /// Gets or sets a <see cref="UI.VisualTheme"/> that is used by UI controls in the application.
+        /// </summary>
         public VisualTheme VisualTheme
         {
             get => visualTheme;
@@ -52,12 +74,11 @@ namespace Alternet.UI
             }
         }
 
-        private void OnVisualThemeChanged()
-        {
-            foreach (var window in Windows)
-                window.RecreateAllHandlers();
-        }
-
+        /// <summary>
+        /// Starts an application and opens the specified window.
+        /// Begins running a UI event processing loop on the current thread.
+        /// </summary>
+        /// <param name="window">A <see cref="Window"/> that opens automatically when an application starts.</param>
         public void Run(Window window)
         {
             if (window == null) throw new ArgumentNullException(nameof(window));
@@ -76,6 +97,9 @@ namespace Alternet.UI
             windows.Remove(window);
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -89,6 +113,12 @@ namespace Alternet.UI
 
                 IsDisposed = true;
             }
+        }
+
+        private void OnVisualThemeChanged()
+        {
+            foreach (var window in Windows)
+                window.RecreateAllHandlers();
         }
 
         private void CheckDisposed()
