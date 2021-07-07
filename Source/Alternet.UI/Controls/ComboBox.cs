@@ -15,10 +15,25 @@ namespace Alternet.UI
 
         private bool isEditable = true;
 
+        /// <summary>
+        /// Occurs when the <see cref="SelectedItem"/> property value changes.
+        /// </summary>
+        /// <remarks>
+        /// This event is raised if the <see cref="SelectedItem"/> property is changed by either a programmatic modification or user interaction.
+        /// </remarks>
         public event EventHandler? SelectedItemChanged;
 
+        /// <summary>
+        /// Occurs when the <see cref="Text"/> property value changes.
+        /// </summary>
+        /// <remarks>
+        /// This event is raised if the <see cref="Text"/> property is changed by either a programmatic modification or user interaction.
+        /// </remarks>
         public event EventHandler? TextChanged;
 
+        /// <summary>
+        /// Occurs when the <see cref="IsEditable"/> property value changes.
+        /// </summary>
         public event EventHandler? IsEditableChanged;
 
         /// <summary>
@@ -90,6 +105,15 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets currently selected item in the combo box.
+        /// </summary>
+        /// <value>The object that is the currently selected item or <c>null</c> if there is no currently selected item.</value>
+        /// <remarks>
+        /// When you set the <see cref="SelectedItem"/> property to an object, the <see cref="ComboBox"/> attempts to make that object the currently selected one in the list.
+        /// If the object is found in the list, it is displayed in the edit portion of the ComboBox and the SelectedIndex property is set to the corresponding index.
+        /// If the object does not exist in the list, the SelectedIndex property is left at its current value.
+        /// </remarks>
         public object? SelectedItem
         {
             get
@@ -113,11 +137,15 @@ namespace Alternet.UI
                 }
 
                 var index = Items.IndexOf(value);
-                if (index != null)
+                if (index != -1)
                     SelectedIndex = index;
             }
         }
 
+        /// <summary>
+        /// Gets or a value that enables or disables editing of the text in text box area of the <see cref="ComboBox"/>.
+        /// </summary>
+        /// <value><c>true</c> if the <see cref="ComboBox"/> can be edited; otherwise <c>false</c>. The default is <c>false</c>.</value>
         public bool IsEditable
         {
             get
