@@ -57,7 +57,7 @@ namespace Alternet.UI
         private void NativeControl_MouseClick(object? sender, EventArgs? e)
         {
             if (IsMouseOver)
-                Control.InvokeClick(EventArgs.Empty);
+                Control.RaiseClick(EventArgs.Empty);
         }
 
         protected override void OnDetach()

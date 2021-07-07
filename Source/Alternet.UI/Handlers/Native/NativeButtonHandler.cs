@@ -32,7 +32,7 @@ namespace Alternet.UI
             if (e is null)
                 throw new System.ArgumentNullException(nameof(e));
 
-            Control.InvokeClick(e);
+            Control.RaiseClick(e);
         }
 
         private void Control_TextChanged(object? sender, System.EventArgs? e)

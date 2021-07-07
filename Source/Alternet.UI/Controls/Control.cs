@@ -5,6 +5,9 @@ using System.Drawing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Defines the base class for controls, which are components with visual representation.
+    /// </summary>
     [System.ComponentModel.DesignerCategory("Code")]
     public class Control : Component, ISupportInitialize
     {
@@ -22,47 +25,80 @@ namespace Alternet.UI
 
         private bool visible = true;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Control"/> class.
+        /// </summary>
         public Control()
         {
             Children.ItemInserted += Children_ItemInserted;
             Children.ItemRemoved += Children_ItemRemoved;
         }
 
+        /// <summary>
+        /// Occurs when the control is clicked.
+        /// </summary>
         public event EventHandler? Click;
 
-        public void InvokeClick(EventArgs e)
-        {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
-            OnClick(e);
-            Click?.Invoke(this, e);
-        }
-
-        protected virtual void OnClick(EventArgs e)
-        {
-        }
-
+        /// <summary>
+        /// Occurs when the value of the <see cref="BorderColor"/> property changes.
+        /// </summary>
         public event EventHandler? BorderColorChanged;
 
+        /// <summary>
+        /// Occurs when the control is redrawn.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="Paint"/> event is raised when the control is redrawn. It passes an instance of <see cref="PaintEventArgs"/> to the method(s) that handles the <see cref="Paint"/> event.
+        /// </remarks>
         public event EventHandler<PaintEventArgs>? Paint;
 
+        /// <summary>
+        /// Occurs when the value of the <see cref="Margin"/> property changes.
+        /// </summary>
         public event EventHandler? MarginChanged;
 
+        /// <summary>
+        /// Occurs when the value of the <see cref="Padding"/> property changes.
+        /// </summary>
         public event EventHandler? PaddingChanged;
 
+        /// <summary>
+        /// Occurs when the value of the <see cref="Visible"/> property changes.
+        /// </summary>
         public event EventHandler? VisibleChanged;
 
+        /// <summary>
+        /// Occurs when the value of the <see cref="BackgroundColor"/> property changes.
+        /// </summary>
         public event EventHandler? BackgroundColorChanged;
 
+        /// <summary>
+        /// Occurs when the value of the <see cref="ForegroundColor"/> property changes.
+        /// </summary>
         public event EventHandler? ForegroundColorChanged;
 
+        /// <summary>
+        /// Occurs when the value of the <see cref="VerticalAlignment"/> property changes.
+        /// </summary>
         public event EventHandler? VerticalAlignmentChanged;
 
+        /// <summary>
+        /// Occurs when the value of the <see cref="HorizontalAlignment"/> property changes.
+        /// </summary>
         public event EventHandler? HorizontalAlignmentChanged;
 
+        /// <summary>
+        /// Gets or sets the identifying name of the control.
+        /// The name provides a reference so that code-behind, such as event handler code,
+        /// can refer to a markup element after it is constructed during processing by a XAML processor.
+        /// </summary>
+        /// <value>The name of the element. The default is <c>null</c>.</value>
         public string? Name { get; set; } // todo: maybe use Site.Name?
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the control and all its child controls are displayed.
+        /// </summary>
+        /// <value><c>true</c> if the control and all its child controls are displayed; otherwise, <c>false</c>. The default is <c>true</c>.</value>
         public bool Visible
         {
             get => visible;
@@ -78,7 +114,10 @@ namespace Alternet.UI
             }
         }
 
-        public Color? BorderColor
+        /// <summary>
+        /// Gets or sets the border color of the control.
+        /// </summary>
+        public Color? BorderColor // todo: change to brush?. Do we need border property for all the controls at all?
         {
             get => borderColor;
             set
@@ -91,6 +130,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets a <see cref="ControlHandler"/> associated with this class.
+        /// </summary>
         public ControlHandler Handler
         {
             get
@@ -100,13 +142,43 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets whether <see cref="Dispose(bool)"/> has been called.
+        /// </summary>
         public bool IsDisposed { get; private set; }
 
+        /// <summary>
+        /// Gets the collection of child controls contained within the control.
+        /// </summary>
+        /// <value>A <see cref="Collection{T}"/> representing the collection of controls contained within the control.</value>
+        /// <remarks>
+        /// A Control can act as a parent to a collection of controls.
+        /// For example, when several controls are added to a <see cref="Window"/>, each of the controls is a member
+        /// of the <see cref="Collection{T}"/> assigned to the <see cref="Children"/> property of the window, which is derived from the <see cref="Control"/> class.
+        /// <para>You can manipulate the controls in the <see cref="Collection{T}"/> assigned to the <see cref="Children"/>
+        /// property by using the methods available in the <see cref="Collection{T}"/> class.</para>
+        /// <para>When adding several controls to a parent control, it is recommended that you call the <see cref="SuspendLayout"/> method before initializing the controls to be added.
+        /// After adding the controls to the parent control, call the <see cref="ResumeLayout"/> method. Doing so will increase the performance of applications with many controls.</para>
+        /// </remarks>
         [Content]
         public Collection<Control> Children { get; } = new Collection<Control>();
 
-        public Control? Parent { get; internal set; }
+        /// <summary>
+        /// Gets the parent container of the control.
+        /// </summary>
+        public Control? Parent { get; internal set; } // todo: allow users to set the Parent property?
 
+        /// <summary>
+        /// Gets or sets the suggested width of the element.
+        /// </summary>
+        /// <value>The suggested width of the element, in device-independent units (1/96th inch per unit).
+        /// The default value is <see cref="float.NaN"/>.
+        /// </value>
+        /// <remarks>
+        /// This property specifies the suggested width of the element. An actual width is calculated by the layout system.
+        /// Set this property to <see cref="float.NaN"/> to specify auto sizing behavior.
+        /// The value of this property is always the same as the value that was set to it and is not changed by the layout system.
+        /// </remarks>
         public virtual float Width
         {
             get => width;
@@ -119,6 +191,17 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the suggested height of the element.
+        /// </summary>
+        /// <value>The suggested height of the element, in device-independent units (1/96th inch per unit).
+        /// The default value is <see cref="float.NaN"/>.
+        /// </value>
+        /// <remarks>
+        /// This property specifies the suggested height of the element. An actual height is calculated by the layout system.
+        /// Set this property to <see cref="float.NaN"/> to specify auto sizing behavior.
+        /// The value of this property is always the same as the value that was set to it and is not changed by the layout system.
+        /// </remarks>
         public virtual float Height
         {
             get => height;
@@ -131,8 +214,22 @@ namespace Alternet.UI
             }
         }
 
-        public bool UserPaint { get; set; }
+        /// <summary>
+        /// Gets or set a value indicating whether the control paints itself rather than the operating system doing so.
+        /// </summary>
+        /// <value>If <c>true</c>, the control paints itself rather than the operating system doing so.
+        /// If <c>false</c>, the <see cref="Paint"/> event is not raised.</value>
+        public bool UserPaint { get; set; } // todo: rethink design of this
 
+        /// <summary>
+        /// Gets or sets the outer margin of an control.
+        /// </summary>
+        /// <value>Provides margin values for the control. The default value is a <see cref="Thickness"/> with all properties equal to 0 (zero).</value>
+        /// <remarks>
+        /// The margin is the space between this control and the adjacent control.
+        /// Margin is set as a <see cref="Thickness"/> structure rather than as a number so that the margin can be set asymmetrically.
+        /// The <see cref="Thickness"/> structure itself supports string type conversion so that you can specify an asymmetric <see cref="Margin"/> in XAML attribute syntax also.
+        /// </remarks>
         public Thickness Margin
         {
             get => margin;
@@ -148,6 +245,15 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the padding inside a control.
+        /// </summary>
+        /// <value>Provides padding values for the control. The default value is a <see cref="Thickness"/> with all properties equal to 0 (zero).</value>
+        /// <remarks>
+        /// The padding is the amount of space between the content of a <see cref="Control"/> and its border.
+        /// Padding is set as a <see cref="Thickness"/> structure rather than as a number so that the padding can be set asymmetrically.
+        /// The <see cref="Thickness"/> structure itself supports string type conversion so that you can specify an asymmetric <see cref="Padding"/> in XAML attribute syntax also.
+        /// </remarks>
         public Thickness Padding
         {
             get => padding;
@@ -163,6 +269,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the background color for the control.
+        /// </summary>
         public Color? BackgroundColor
         {
             // todo: change to brush?
@@ -177,6 +286,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the foreground color for the control.
+        /// </summary>
         public Color? ForegroundColor
         {
             // todo: change to brush?
@@ -191,6 +303,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the vertical alignment applied to this control when it is positioned within a parent control.
+        /// </summary>
+        /// <value>A vertical alignment setting. The default is <see cref="VerticalAlignment.Stretch"/>.</value>
         public VerticalAlignment VerticalAlignment
         {
             get => verticalAlignment;
@@ -204,6 +320,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the horizontal alignment applied to this control when it is positioned within a parent control.
+        /// </summary>
+        /// <value>A horizontal alignment setting. The default is <see cref="HorizontalAlignment.Stretch"/>.</value>
         public HorizontalAlignment HorizontalAlignment
         {
             get => horizontalAlignment;
@@ -217,8 +337,32 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Returns a collection of controls which can be treated as "logical children" of this control.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected virtual IEnumerable<Control> LogicalChildren => Children; // todo: consider changing this to Site.GetService()
+
         private IControlHandlerFactory? ControlHandlerFactory { get; set; }
 
+        /// <summary>
+        /// Raises the <see cref="Click"/> event and calls <see cref="OnClick(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        public void RaiseClick(EventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnClick(e);
+            Click?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Recursively searches all <see cref="LogicalChildren"/> for a control with the specified name, and returns that control if found.
+        /// </summary>
+        /// <param name="name">The name of the control to be found.</param>
+        /// <returns>The found control, or <c>null</c> if no control with the provided name is found.</returns>
         public Control? TryFindControl(string name)
         {
             if (name is null)
@@ -237,13 +381,30 @@ namespace Alternet.UI
             return null;
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        protected virtual IEnumerable<Control> LogicalChildren => Children;
-
+        /// <summary>
+        /// Displays the control to the user.
+        /// </summary>
+        /// <remarks>Showing the control is equivalent to setting the <see cref="Visible"/> property to <c>true</c>.
+        /// After the <see cref="Show"/> method is called, the <see cref="Visible"/> property
+        /// returns a value of <c>true</c> until the <see cref="Hide"/> method is called.</remarks>
         public void Show() => Visible = true;
 
+        /// <summary>
+        /// Conceals the control from the user.
+        /// </summary>
+        /// <remarks>
+        /// Hiding the control is equivalent to setting the <see cref="Visible"/> property to <c>false</c>.
+        /// After the <see cref="Hide"/> method is called, the <see cref="Visible"/> property
+        /// returns a value of <c>false</c> until the <see cref="Show"/> method is called.
+        /// </remarks>
         public void Hide() => Visible = false;
 
+        /// <summary>
+        /// Recursively searches all <see cref="LogicalChildren"/> for a control with the specified name, and throws an exception if the requested control is not found.
+        /// </summary>
+        /// <param name="name">The name of the control to be found.</param>
+        /// <returns>The requested resource. If no control with the provided name was found, an exception is thrown.</returns>
+        /// <exception cref="InvalidOperationException">A control with the provided name was found.</exception>
         public Control FindControl(string name)
         {
             if (name is null)
@@ -320,6 +481,10 @@ namespace Alternet.UI
                 throw new InvalidOperationException();
             handler.Detach();
             handler = null;
+        }
+
+        protected virtual void OnClick(EventArgs e)
+        {
         }
 
         private protected void SetVisibleValue(bool value) => visible = value;
