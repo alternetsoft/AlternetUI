@@ -73,7 +73,7 @@ namespace Alternet.UI
                 if (foundIndex != null)
                     SelectedIndex = foundIndex.Value;
 
-                InvokeTextChanged(EventArgs.Empty);
+                RaiseTextChanged(EventArgs.Empty);
             }
         }
 
@@ -101,7 +101,7 @@ namespace Alternet.UI
                 var selectedItem = SelectedItem;
                 Text = selectedItem == null ? string.Empty : GetItemText(selectedItem);
 
-                InvokeSelectedItemChanged(EventArgs.Empty);
+                RaiseSelectedItemChanged(EventArgs.Empty);
             }
         }
 
@@ -178,7 +178,11 @@ namespace Alternet.UI
             return FindStringInternal(s, Items, startIndex: null, exact: true, ignoreCase: true);
         }
 
-        public void InvokeSelectedItemChanged(EventArgs e)
+        /// <summary>
+        /// Raises the <see cref="SelectedItemChanged"/> event and calls <see cref="OnSelectedItemChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        public void RaiseSelectedItemChanged(EventArgs e)
         {
             if (e == null)
                 throw new ArgumentNullException(nameof(e));
@@ -187,7 +191,11 @@ namespace Alternet.UI
             SelectedItemChanged?.Invoke(this, e);
         }
 
-        public void InvokeTextChanged(EventArgs e)
+        /// <summary>
+        /// Raises the <see cref="TextChanged"/> event and calls <see cref="OnTextChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        public void RaiseTextChanged(EventArgs e)
         {
             if (e == null)
                 throw new ArgumentNullException(nameof(e));
@@ -196,10 +204,18 @@ namespace Alternet.UI
             TextChanged?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Called when the value of the <see cref="SelectedItem"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnSelectedItemChanged(EventArgs e)
         {
         }
 
+        /// <summary>
+        /// Called when the value of the <see cref="Text"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnTextChanged(EventArgs e)
         {
         }

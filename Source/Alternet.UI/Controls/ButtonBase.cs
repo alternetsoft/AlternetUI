@@ -32,7 +32,7 @@ namespace Alternet.UI
                     return;
 
                 text = value;
-                InvokeTextChanged(EventArgs.Empty);
+                RaiseTextChanged(EventArgs.Empty);
             }
         }
 
@@ -44,7 +44,7 @@ namespace Alternet.UI
         {
         }
 
-        private void InvokeTextChanged(EventArgs e)
+        private void RaiseTextChanged(EventArgs e)
         {
             if (e == null)
                 throw new ArgumentNullException(nameof(e));

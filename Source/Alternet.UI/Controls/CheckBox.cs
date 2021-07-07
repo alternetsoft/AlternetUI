@@ -26,19 +26,23 @@ namespace Alternet.UI
                     return;
 
                 isChecked = value;
-                InvokeCheckedChanged(EventArgs.Empty);
+                RaiseCheckedChanged(EventArgs.Empty);
             }
         }
 
         /// <summary>
-        /// Raises the <see cref="CheckedChanged"/> event.
+        /// Called when the value of the <see cref="IsChecked"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnCheckedChanged(EventArgs e)
         {
         }
 
-        private void InvokeCheckedChanged(EventArgs e)
+        /// <summary>
+        /// Raises the <see cref="CheckedChanged"/> event and calls <see cref="OnCheckedChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        private void RaiseCheckedChanged(EventArgs e)
         {
             if (e == null)
                 throw new ArgumentNullException(nameof(e));
