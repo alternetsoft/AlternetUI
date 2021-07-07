@@ -1,27 +1,30 @@
 namespace Alternet.UI
 {
     /// <summary>
-    /// Used to describe how element is positioned or stretched vertically within a parent's layout slot.
+    /// Used to describe how a control is positioned or stretched vertically within a parent's layout slot.
     /// </summary>
+    /// <remarks>
+    /// See <see cref="Control.VerticalAlignment"/> for more details.
+    /// </remarks>
     public enum VerticalAlignment
     {
         /// <summary>
-        /// Top - Align element towards the top of a parent's layout slot.
+        /// Align control towards the top of a parent's layout slot.
         /// </summary>
         Top = 0,
 
         /// <summary>
-        /// Center - Center element vertically.
+        /// Center control vertically.
         /// </summary>
         Center = 1,
 
         /// <summary>
-        /// Bottom - Align element towards the bottom of a parent's layout slot.
+        /// Align control towards the bottom of a parent's layout slot.
         /// </summary>
         Bottom = 2,
 
         /// <summary>
-        /// Stretch - Stretch element vertically within a parent's layout slot.
+        /// Stretch control vertically within a parent's layout slot.
         /// </summary>
         Stretch = 3,
     }
