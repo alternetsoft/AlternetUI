@@ -198,6 +198,9 @@ namespace Alternet::UI
             GetChoice()->SetSelection(value);
         else
             GetComboBox()->SetSelection(value);
+
+        // wxEVT_CHOICE / wxEVT_COMBOBOX are not raised on programmatic selection change.
+        RaiseEvent(ComboBoxEvent::SelectedItemChanged);
     }
 
     string ComboBox::RetrieveText()

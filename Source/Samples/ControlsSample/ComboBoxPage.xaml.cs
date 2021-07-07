@@ -30,9 +30,27 @@ namespace ControlsSample
             ((Button)FindControl("addItemButton")).Click += AddItemButton_Click;
             ((Button)FindControl("removeItemButton")).Click += RemoveItemButton_Click;
             ((Button)FindControl("addManyItemsButton")).Click += AddManyItemsButton_Click;
+            ((Button)FindControl("setTextToEmptyStringButton")).Click += SetTextToEmptyStringButton_Click;
+            ((Button)FindControl("setSelectedIndexTo2Button")).Click += SetSelectedIndexTo2_Click;
+            ((Button)FindControl("setSelectedItemToNullButton")).Click += SetSelectedItemToNullButton_Click;
 
             allowTextEditingCheckBox = (CheckBox)FindControl("allowTextEditingCheckBox");
             allowTextEditingCheckBox.CheckedChanged += AllowTextEditingCheckBox_CheckedChanged;
+        }
+
+        private void SetSelectedItemToNullButton_Click(object? sender, EventArgs e)
+        {
+            comboBox.SelectedItem = null;
+        }
+
+        private void SetSelectedIndexTo2_Click(object? sender, EventArgs e)
+        {
+            comboBox.SelectedIndex = 2;
+        }
+
+        private void SetTextToEmptyStringButton_Click(object? sender, EventArgs e)
+        {
+            comboBox.Text = "";
         }
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
@@ -52,12 +70,13 @@ namespace ControlsSample
 
         private void ComboBox_TextChanged(object? sender, EventArgs e)
         {
-            site.LogEvent($"ComboBox: TextChanged. Text: {comboBox.Text}");
+            var text = comboBox.Text == "" ? "\"\"" : comboBox.Text;
+            site.LogEvent($"ComboBox: TextChanged. Text: {text}");
         }
 
         private void ComboBox_SelectionChanged(object? sender, EventArgs e)
         {
-            site.LogEvent($"ComboBox: SelectionChanged. SelectedIndex: {(comboBox.SelectedIndex == null ? "<none>" : comboBox.SelectedIndex.ToString() )}");
+            site.LogEvent($"ComboBox: SelectionChanged. SelectedIndex: {(comboBox.SelectedIndex == null ? "<null>" : comboBox.SelectedIndex.ToString() )}");
         }
 
         private void AllowTextEditingCheckBox_CheckedChanged(object? sender, EventArgs e)
