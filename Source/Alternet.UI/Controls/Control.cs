@@ -400,7 +400,8 @@ namespace Alternet.UI
         public void Hide() => Visible = false;
 
         /// <summary>
-        /// Recursively searches all <see cref="LogicalChildren"/> for a control with the specified name, and throws an exception if the requested control is not found.
+        /// Recursively searches all <see cref="LogicalChildren"/> for a control with the specified name,
+        /// and throws an exception if the requested control is not found.
         /// </summary>
         /// <param name="name">The name of the control to be found.</param>
         /// <returns>The requested resource. If no control with the provided name was found, an exception is thrown.</returns>
@@ -413,15 +414,58 @@ namespace Alternet.UI
             return TryFindControl(name) ?? throw new InvalidOperationException($"Control with name '{name}' was not found.");
         }
 
+        /// <summary>
+        /// Creates the <see cref="DrawingContext"/> for the control.
+        /// </summary>
+        /// <returns>The <see cref="DrawingContext"/> for the control.</returns>
+        /// <remarks>
+        /// The <see cref="DrawingContext"/> object that you retrieve through the <see cref="CreateDrawingContext"/> method should not normally
+        /// be retained after the current UI event has been processed, because anything painted
+        /// with that object will be erased with the next paint event. Therefore you cannot cache
+        /// the <see cref="DrawingContext"/> object for reuse, except to use non-visual methods like <see cref="DrawingContext.MeasureText"/>.
+        /// Instead, you must call <see cref="CreateDrawingContext"/> every time that you want to use the <see cref="DrawingContext"/> object,
+        /// and then call <see cref="Dispose"/> when you are finished using it.
+        /// </remarks>
         public DrawingContext CreateDrawingContext() => Handler.CreateDrawingContext();
 
-        public void Update() => Handler.Update();
+        /// <summary>
+        /// Causes the control to redraw.
+        /// </summary>
+        public void Update() => Handler.Update(); // todo: consider Invalidate()
 
+        /// <summary>
+        /// Temporarily suspends the layout logic for the control.
+        /// </summary>
+        /// <remarks>
+        /// The layout logic of the control is suspended until the <see cref="ResumeLayout"/> method is called.
+        /// <para>
+        /// The <see cref="SuspendLayout"/> and <see cref="ResumeLayout"/> methods are used in tandem to suppress
+        /// multiple layouts while you adjust multiple attributes of the control.
+        /// For example, you would typically call the <see cref="SuspendLayout"/> method, then set some
+        /// properties of the control, or add child controls to it, and then call the <see cref="ResumeLayout"/>
+        /// method to enable the changes to take effect.
+        /// </para>
+        /// </remarks>
         public void SuspendLayout()
         {
             Handler.SuspendLayout();
         }
 
+        /// <summary>
+        /// Resumes the usual layout logic.
+        /// </summary>
+        /// <param name="performLayout"><c>true</c> to execute pending layout requests; otherwise, <c>false</c>.</param>
+        /// <remarks>
+        /// Resumes the usual layout logic after <see cref="SuspendLayout"/> has been called.
+        /// When the <c>performLayout</c> parameter is set to <c>true</c>, an immediate layout occurs.
+        /// <para>
+        /// The <see cref="SuspendLayout"/> and <see cref="ResumeLayout"/> methods are used in tandem to suppress
+        /// multiple layouts while you adjust multiple attributes of the control.
+        /// For example, you would typically call the <see cref="SuspendLayout"/> method, then set some
+        /// properties of the control, or add child controls to it, and then call the <see cref="ResumeLayout"/>
+        /// method to enable the changes to take effect.
+        /// </para>
+        /// </remarks>
         public void ResumeLayout(bool performLayout = true)
         {
             Handler.ResumeLayout();
