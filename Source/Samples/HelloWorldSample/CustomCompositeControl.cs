@@ -36,16 +36,15 @@ namespace HelloWorldSample
             }
         }
 
-        protected override void OnAttachHandler()
+        protected override void OnHandlerAttached(EventArgs e)
         {
-            base.OnAttachHandler();
+            base.OnHandlerAttached(e);
 
             border = new Border
             {
                 BackgroundColor = Color.FromArgb(unchecked((int)0xFF333333)),
                 BorderColor = Color.FromArgb(unchecked((int)0xFF4A47FF))
             };
-
             Handler.VisualChildren.Add(border);
 
             var panel = new StackPanel
@@ -64,7 +63,7 @@ namespace HelloWorldSample
             UpdateVisual();
         }
 
-        protected override void OnDetachHandler()
+        protected override void OnHandlerDetaching(EventArgs e)
         {
             if (border == null)
                 throw new InvalidOperationException();
@@ -72,7 +71,7 @@ namespace HelloWorldSample
             Handler.VisualChildren.Remove(border);
             border.Dispose();
 
-            base.OnDetachHandler();
+            base.OnHandlerDetaching(e);
         }
 
         private void UpdateVisual()

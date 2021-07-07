@@ -109,7 +109,7 @@ namespace Alternet.UI
                     return;
 
                 visible = value;
-                OnVisibleChanged();
+                OnVisibleChanged(EventArgs.Empty);
                 VisibleChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -538,14 +538,18 @@ namespace Alternet.UI
             ResumeLayout();
         }
 
-        internal void InvokePaint(PaintEventArgs e)
+        internal void RaisePaint(PaintEventArgs e)
         {
             if (e == null)
                 throw new ArgumentNullException(nameof(e));
 
             OnPaint(e);
+            Paint?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Ensures that the control <see cref="Handler"/> is created, creating and attaching it if necessary.
+        /// </summary>
         protected internal void EnsureHandlerCreated()
         {
             if (handler == null)
@@ -554,41 +558,78 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Disconnects the current control <see cref="Handler"/> from the control.
+        /// This method calls <see cref="ControlHandler.Detach"/>.
+        /// </summary>
         protected internal void DetachHandler()
         {
             if (handler == null)
                 throw new InvalidOperationException();
+            OnHandlerDetaching(EventArgs.Empty);
             handler.Detach();
             handler = null;
         }
 
+        /// <summary>
+        /// Called when the control is clicked.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnClick(EventArgs e)
         {
         }
 
         private protected void SetVisibleValue(bool value) => visible = value;
 
-        protected virtual void OnVisibleChanged()
+        /// <summary>
+        /// Called when the value of the <see cref="Visible"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnVisibleChanged(EventArgs e)
         {
         }
 
+        /// <summary>
+        /// Forces the re-creation of the handler for the control.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="RecreateHandler"/> method is called whenever re-execution of handler creation logic is needed.
+        /// For example, this may happen when visual theme changes.
+        /// </remarks>
         protected void RecreateHandler()
         {
             if (handler != null)
-                OnDetachHandler();
+                DetachHandler();
 
             Update();
         }
 
-        protected virtual void OnDetachHandler()
+        /// <summary>
+        /// Called before the current control handler is detached.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnHandlerDetaching(EventArgs e)
         {
-            DetachHandler();
         }
 
-        protected IControlHandlerFactory GetEffectiveControlHandlerHactory() => ControlHandlerFactory ?? Application.Current.VisualTheme.ControlHandlerFactory;
+        /// <summary>
+        /// Gets an <see cref="IControlHandlerFactory"/> to use when creating new control handlers for this control.
+        /// </summary>
+        protected IControlHandlerFactory GetEffectiveControlHandlerHactory() =>
+            ControlHandlerFactory ?? Application.Current.VisualTheme.ControlHandlerFactory; // todo: maybe reconsider naming?
 
+        /// <summary>
+        /// Creates a handler for the control.
+        /// </summary>
+        /// <remarks>
+        /// You typically should not call the <see cref="CreateHandler"/> method directly.
+        /// The preferred method is to call the <see cref="EnsureHandlerCreated"/> method, which forces a handler to be created for the control.
+        /// </remarks>
         protected virtual ControlHandler CreateHandler() => GetEffectiveControlHandlerHactory().CreateControlHandler(this);
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -610,37 +651,52 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Throws <see cref="ObjectDisposedException"/> if <see cref="IsDisposed"/> is <c>true</c>.
+        /// </summary>
         protected void CheckDisposed()
         {
             if (IsDisposed)
                 throw new ObjectDisposedException(null);
         }
 
+        /// <summary>
+        /// Called when the value of the <see cref="Margin"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnMarginChanged(EventArgs e)
         {
         }
 
+        /// <summary>
+        /// Called when the value of the <see cref="Padding"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnPaddingChanged(EventArgs e)
         {
         }
 
+        /// <summary>
+        /// Called when the control is redrawn. See <see cref="Paint"/> for details.
+        /// </summary>
+        /// <param name="e">An <see cref="PaintEventArgs"/> that contains the event data.</param>
         protected virtual void OnPaint(PaintEventArgs e)
         {
-            Paint?.Invoke(this, e);
         }
 
-        protected virtual void OnAttachHandler()
+        /// <summary>
+        /// Called after a new control handler is attached.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnHandlerAttached(EventArgs e)
         {
-            if (handler == null)
-                throw new InvalidOperationException();
-
-            handler.Attach(this);
         }
 
         private void CreateAndAttachHandler()
         {
             handler = CreateHandler();
-            OnAttachHandler();
+            handler.Attach(this);
+            OnHandlerAttached(EventArgs.Empty);
         }
 
         private void Children_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)

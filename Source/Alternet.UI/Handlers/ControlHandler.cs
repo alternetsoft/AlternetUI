@@ -675,7 +675,7 @@ namespace Alternet.UI
             if (Control.UserPaint)
             {
                 using (var dc = new DrawingContext(NativeControl.OpenPaintDrawingContext()))
-                    Control.InvokePaint(new PaintEventArgs(dc, Bounds));
+                    Control.RaisePaint(new PaintEventArgs(dc, Bounds));
             }
             else if (NeedsPaint || hasVisualChildren)
             {
