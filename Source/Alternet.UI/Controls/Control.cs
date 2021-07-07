@@ -473,31 +473,66 @@ namespace Alternet.UI
                 PerformLayout();
         }
 
+        /// <summary>
+        /// Maintains performance while performing slow operations on a control by preventing the control from
+        /// drawing until the <see cref="EndUpdate"/> method is called.
+        /// </summary>
         public void BeginUpdate()
         {
             Handler.BeginUpdate();
         }
 
+        /// <summary>
+        /// Resumes painting the control after painting is suspended by the <see cref="BeginUpdate"/> method.
+        /// </summary>
         public void EndUpdate()
         {
             Handler.EndUpdate();
         }
 
+        /// <summary>
+        /// Forces the control to apply layout logic to child controls.
+        /// </summary>
+        /// <remarks>
+        /// If the <see cref="SuspendLayout"/> method was called before calling the <see cref="PerformLayout"/> method,
+        /// the layout is suppressed.
+        /// </remarks>
         public void PerformLayout()
         {
             Handler.PerformLayout();
         }
 
+        /// <summary>
+        /// Retrieves the size of a rectangular area into which a control can be fitted.
+        /// </summary>
+        /// <param name="availableSize">The available space that a parent element can allocate a child control.</param>
+        /// <returns>A <see cref="Size"/> representing the width and height of a rectangle.</returns>
         public virtual SizeF GetPreferredSize(SizeF availableSize)
         {
             return Handler.GetPreferredSize(availableSize);
         }
 
+        /// <summary>
+        /// Starts the initialization process for this control.
+        /// </summary>
+        /// <remarks>
+        /// Runtime environments and design tools can use this method to start the initialization of a control.
+        /// The <see cref="EndInit"/> method ends the initialization. Using the <see cref="BeginInit"/> and <see cref="EndInit"/> methods
+        /// prevents the control from being used before it is fully initialized.
+        /// </remarks>
         public void BeginInit()
         {
             SuspendLayout();
         }
 
+        /// <summary>
+        /// Ends the initialization process for this control.
+        /// </summary>
+        /// <remarks>
+        /// Runtime environments and design tools can use this method to end the initialization of a control.
+        /// The <see cref="BeginInit"/> method starts the initialization. Using the <see cref="BeginInit"/> and <see cref="EndInit"/> methods
+        /// prevents the control from being used before it is fully initialized.
+        /// </remarks>
         public void EndInit()
         {
             ResumeLayout();
