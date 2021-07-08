@@ -181,7 +181,10 @@ namespace SourceGenerated
 
             INamedTypeSymbol? flagsAttributeType = compilation.GetTypeByMetadataName("System.FlagsAttribute");
 
+#pragma warning disable RS1024 // Compare symbols correctly
+            // RS1024 warning here is a false positive, see https://github.com/dotnet/roslyn-analyzers/issues/4568
             var foundTypes = new HashSet<ITypeSymbol>(SymbolEqualityComparer.Default);
+#pragma warning restore RS1024 // Compare symbols correctly
 
             foreach (SyntaxNode argument in argumentsToValidate)
             {
