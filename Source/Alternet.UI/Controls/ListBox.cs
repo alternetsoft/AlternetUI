@@ -82,7 +82,7 @@ namespace Alternet.UI
                 }
 
                 if (changed)
-                    InvokeSelectionChanged(EventArgs.Empty);
+                    RaiseSelectionChanged(EventArgs.Empty);
             }
         }
 
@@ -236,26 +236,47 @@ namespace Alternet.UI
         public void ClearSelected()
         {
             ClearSelectedCore();
-            InvokeSelectionChanged(EventArgs.Empty);
+            RaiseSelectionChanged(EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Selects or clears the selection for the specified item in a <see cref="ListBox"/>.
+        /// </summary>
+        /// <param name="index">The zero-based index of the item in a <see cref="ListBox"/> to select or clear the selection for.</param>
+        /// <param name="value"><c>true</c> to select the specified item; otherwise, false.</param>
+        /// <remarks>
+        /// You can use this property to set the selection of items in a multiple-selection <see cref="ListBox"/>.
+        /// To select an item in a single-selection <see cref="ListBox"/>, use the <see cref="SelectedIndex"/> property.
+        /// </remarks>
+        /// <exception cref="ArgumentOutOfRangeException">The specified index was outside the range of valid values.</exception>
         public void SetSelected(int index, bool value)
         {
+            if (index < 0 || index >= Items.Count)
+                throw new ArgumentOutOfRangeException(nameof(value));
+
+            CheckDisposed();
+
             var changed = SetSelectedCore(index, value);
 
             if (changed)
-                InvokeSelectionChanged(EventArgs.Empty);
+                RaiseSelectionChanged(EventArgs.Empty);
         }
 
-        public void InvokeSelectionChanged(EventArgs e)
+        /// <summary>
+        /// Raises the <see cref="SelectionChanged"/> event and calls <see cref="OnSelectionChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        public void RaiseSelectionChanged(EventArgs e)
         {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
             OnSelectionChanged(e);
             SelectionChanged?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Called when the <see cref="SelectedIndex"/> property or the <see cref="SelectedIndices"/> collection has changed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <remarks>See <see cref="SelectionChanged"/> for details.</remarks>
         protected virtual void OnSelectionChanged(EventArgs e)
         {
         }
