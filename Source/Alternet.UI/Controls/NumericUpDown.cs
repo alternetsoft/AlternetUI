@@ -73,10 +73,10 @@ namespace Alternet.UI
         /// <value>The minimum allowed value for the numeric up-down control. The default value is 0.</value>
         /// <remarks>
         /// The minimum and maximum values of the Value property are specified by the <see cref="Minimum"/> and <see cref="Maximum"/> properties.
-        ///  If the new <see cref="Minimum"/> property value is greater than the <see cref="Maximum"/> property value,
-        ///  the <see cref="Maximum"/> value is set equal to the <see cref="Minimum"/> value.
-        ///  If the <see cref="Value"/> is less than the new <see cref="Minimum"/> value, the <see cref="Value"/> property
-        ///  is also set equal to the <see cref="Minimum"/> value.
+        /// If the new <see cref="Minimum"/> property value is greater than the <see cref="Maximum"/> property value,
+        /// the <see cref="Maximum"/> value is set equal to the <see cref="Minimum"/> value.
+        /// If the <see cref="Value"/> is less than the new <see cref="Minimum"/> value, the <see cref="Value"/> property
+        /// is also set equal to the <see cref="Minimum"/> value.
         /// </remarks>
         public decimal Minimum
         {
