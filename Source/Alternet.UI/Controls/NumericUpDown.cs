@@ -2,10 +2,45 @@ using System;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Represents an up-down control (also known as spin box) that displays numeric values.
+    /// </summary>
+    /// <remarks>
+    /// A <see cref="NumericUpDown"/> control contains a single numeric value that can be incremented or decremented
+    /// by clicking the up or down buttons of the control.
+    /// To specify the allowable range of values for the control, set the <see cref="Minimum"/> and <see cref="Maximum"/> properties.
+    /// </remarks>
     public class NumericUpDown : Control
     {
         private decimal value;
 
+        private decimal minimum;
+
+        private decimal maximum = 100;
+
+        /// <summary>
+        /// Occurs when the <see cref="Value"/> property has been changed in some way.
+        /// </summary>
+        /// <remarks>For the <see cref="ValueChanged"/> event to occur, the <see cref="Value"/> property can be changed in code,
+        /// by clicking the up or down button, or by the user entering a new value that is read by the control.</remarks>
+        public event EventHandler? ValueChanged;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="Minimum"/> property changes.
+        /// </summary>
+        public event EventHandler? MinimumChanged;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="Maximum"/> property changes.
+        /// </summary>
+        public event EventHandler? MaximumChanged;
+
+        /// <summary>
+        /// Gets or sets the value assigned to the spin box (also known as an up-down control).
+        /// </summary>
+        /// <value>The numeric value of the <see cref="NumericUpDown"/> control.</value>
+        /// <remarks>When the <see cref="Value"/> property is set, the new value is validated
+        /// to be between the <see cref="Minimum"/> and <see cref="Maximum"/> values.</remarks>
         public decimal Value
         {
             get
@@ -17,31 +52,28 @@ namespace Alternet.UI
             set
             {
                 CheckDisposed();
+
+                if (value < Minimum || value > Maximum)
+                    throw new ArgumentOutOfRangeException(nameof(value));
+
                 if (this.value == value)
                     return;
 
                 this.value = value;
-                InvokeValueChanged(EventArgs.Empty);
+                RaiseValueChanged(EventArgs.Empty);
             }
         }
 
-        public void InvokeValueChanged(EventArgs e)
-        {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
-            OnValueChanged(e);
-            ValueChanged?.Invoke(this, e);
-        }
-
-        protected virtual void OnValueChanged(EventArgs e)
-        {
-        }
-
-        public event EventHandler? ValueChanged;
-
-        private decimal minimum;
-
+        /// <summary>
+        /// Gets or sets the minimum allowed value for the numeric up-down control.
+        /// </summary>
+        /// <value>The minimum allowed value for the numeric up-down control. The default value is 0.</value>
+        /// <remarks>
+        ///  If the new <see cref="Minimum"/> property value is greater than the <see cref="Maximum"/> property value,
+        ///  the <see cref="Maximum"/> value is set equal to the <see cref="Minimum"/> value.
+        ///  If the <see cref="Value"/> is less than the new <see cref="Minimum"/> value, the <see cref="Value"/> property
+        ///  is also set equal to the <see cref="Minimum"/> value.
+        /// </remarks>
         public decimal Minimum
         {
             get
@@ -57,14 +89,26 @@ namespace Alternet.UI
                     return;
 
                 minimum = value;
+
+                if (value > Maximum)
+                    Maximum = value;
+                if (Value < value)
+                    Value = value;
+
                 MinimumChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
-        public event EventHandler? MinimumChanged;
-
-        private decimal maximum = 100;
-
+        /// <summary>
+        /// Gets or sets the maximum allowed value for the numeric up-down control.
+        /// </summary>
+        /// <value>The maximum allowed value for the numeric up-down control. The default value is 100.</value>
+        /// <remarks>
+        ///  If the <see cref="Minimum"/> property is greater than the new <see cref="Maximum"/> property, the <see cref="Minimum"/>
+        ///  property value is set equal to the <see cref="Maximum"/> value.
+        ///  If the current <see cref="Value"/> is greater than the new <see cref="Maximum"/> value, the <see cref="Value"/> property
+        ///  value is set equal to the <see cref="Maximum"/> value.
+        /// </remarks>
         public decimal Maximum
         {
             get
@@ -80,10 +124,35 @@ namespace Alternet.UI
                     return;
 
                 maximum = value;
+
+                if (value < Minimum)
+                    Minimum = value;
+                if (Value > value)
+                    Value = value;
+
                 MaximumChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
-        public event EventHandler? MaximumChanged;
+        /// <summary>
+        /// Raises the <see cref="ValueChanged"/> event and calls <see cref="OnValueChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        public void RaiseValueChanged(EventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnValueChanged(e);
+            ValueChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="Value"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnValueChanged(EventArgs e)
+        {
+        }
     }
 }
