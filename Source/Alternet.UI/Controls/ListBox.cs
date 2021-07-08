@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Alternet.UI
@@ -85,6 +86,23 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the zero-based index of the currently selected item in a <see cref="ListBox"/>.
+        /// </summary>
+        /// <value>A zero-based index of the currently selected item. A value of <c>null</c> is returned if no item is selected.</value>
+        /// <remarks>
+        /// For a standard <see cref="ListBox"/>, you can use this property to determine the index of the item that is selected
+        /// in the <see cref="ListBox"/>. If the <see cref="SelectionMode"/> property of the <see cref="ListBox"/> is set to either
+        /// <see cref="ListBoxSelectionMode.Multiple"/> (which indicates a multiple-selection <see cref="ListBox"/>) and multiple items
+        /// are selected in the list, this property can return the index to any selected item.
+        /// <para>
+        /// To retrieve a collection containing the indexes of all selected items in a multiple-selection <see cref="ListBox"/>,
+        /// use the <see cref="SelectedIndices"/> property. If you want to obtain the item that is currently selected in the <see cref="ListBox"/>,
+        /// use the <see cref="SelectedItem"/> property. In addition, you can use the <see cref="SelectedItems"/> property to obtain
+        /// all the selected items in a multiple-selection <see cref="ListBox"/>.
+        /// </para>
+        /// </remarks>
+        /// <exception cref="ArgumentOutOfRangeException">The assigned value is less than 0 or greater than or equal to the item count.</exception>
         public int? SelectedIndex
         {
             get
@@ -97,12 +115,30 @@ namespace Alternet.UI
             {
                 CheckDisposed();
 
+                if (value < 0 || value >= Items.Count)
+                    throw new ArgumentOutOfRangeException(nameof(value));
+
                 ClearSelected();
                 if (value != null)
                     SetSelected(value.Value, true);
             }
         }
 
+        /// <summary>
+        /// Gets or sets the currently selected item in the ListBox.
+        /// </summary>
+        /// <value>An object that represents the current selection in the control, or <c>null</c> if no item is selected.</value>
+        /// <remarks>
+        /// For a standard <see cref="ListBox"/>, you can use this property to determine the index of the item that is selected
+        /// in the <see cref="ListBox"/>. If the <see cref="SelectionMode"/> property of the <see cref="ListBox"/> is set to either
+        /// <see cref="ListBoxSelectionMode.Multiple"/> (which indicates a multiple-selection <see cref="ListBox"/>) and multiple items
+        /// are selected in the list, this property can return the index to any selected item.
+        /// <para>
+        /// To retrieve a collection containing all selected items in a multiple-selection <see cref="ListBox"/>, use the <see cref="SelectedItems"/> property.
+        /// If you want to obtain the index position of the currently selected item in the <see cref="ListBox"/>, use the <see cref="SelectedIndex"/> property.
+        /// In addition, you can use the <see cref="SelectedIndices"/> property to obtain all the selected indexes in a multiple-selection <see cref="ListBox"/>.
+        /// </para>
+        /// </remarks>
         public object? SelectedItem
         {
             get
@@ -131,6 +167,21 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets a collection containing the currently selected items in the <see cref="ListBox"/>.
+        /// </summary>
+        /// <value>A <see cref="IReadOnlyList{T}"/> containing the currently selected items in the control.</value>
+        /// <remarks>
+        /// For a multiple-selection <see cref="ListBox"/>, this property returns a collection containing the indexes to all items that are selected
+        /// in the <see cref="ListBox"/>. For a single-selection <see cref="ListBox"/>, this property returns a collection containing a
+        /// single element containing the index of the only selected item in the <see cref="ListBox"/>.
+        /// <para>
+        /// The <see cref="ListBox"/> class provides a number of ways to reference selected items. Instead of using the <see cref="SelectedIndices"/>
+        /// property to obtain the index position of the currently selected item in a single-selection <see cref="ListBox"/>, you
+        /// can use the <see cref="SelectedIndex"/> property. If you want to obtain the item that is currently selected in the <see cref="ListBox"/>,
+        /// instead of the index position of the item, use the <see cref="SelectedItem"/> property.
+        /// In addition, you can use the <see cref="SelectedIndices"/> property to obtain all the selected indexes in a multiple-selection <see cref="ListBox"/>.
+        /// </para>
         public IReadOnlyList<object> SelectedItems
         {
             get
@@ -141,6 +192,15 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the method in which items are selected in the <see cref="ListBox"/>.
+        /// </summary>
+        /// <value>One of the <see cref="ListBoxSelectionMode"/> values. The default is <see cref="ListBoxSelectionMode.Single"/>.</value>
+        /// <remarks>
+        /// The <see cref="SelectionMode"/> property enables you to determine how many items in the <see cref="ListBox"/>
+        /// a user can select at one time.
+        /// </remarks>
+        /// <exception cref="InvalidEnumArgumentException">The assigned value is not one of the <see cref="ListBoxSelectionMode"/> values.</exception>
         public ListBoxSelectionMode SelectionMode
         {
             get
