@@ -182,6 +182,7 @@ namespace Alternet.UI
         /// instead of the index position of the item, use the <see cref="SelectedItem"/> property.
         /// In addition, you can use the <see cref="SelectedIndices"/> property to obtain all the selected indexes in a multiple-selection <see cref="ListBox"/>.
         /// </para>
+        /// </remarks>
         public IReadOnlyList<object> SelectedItems
         {
             get
@@ -212,6 +213,8 @@ namespace Alternet.UI
 
             set
             {
+                SourceGenerated.EnumValidator.Validate(value);
+
                 CheckDisposed();
 
                 if (selectionMode == value)
