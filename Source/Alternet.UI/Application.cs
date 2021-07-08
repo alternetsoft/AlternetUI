@@ -49,6 +49,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the instantiated windows in an application.
         /// </summary>
+        /// <value>A <see cref="IReadOnlyList{Window}"/> that contains references to all window objects in the current application.</value>
         public IReadOnlyList<Window> Windows => windows;
 
         /// <summary>
@@ -75,10 +76,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Starts an application and opens the specified window.
+        /// Starts an application UI event loop and makes the specified window visible.
         /// Begins running a UI event processing loop on the current thread.
         /// </summary>
         /// <param name="window">A <see cref="Window"/> that opens automatically when an application starts.</param>
+        /// <remarks>Typically, the main function of an application calls this method and passes to it the main window of the application.</remarks>
         public void Run(Window window)
         {
             if (window == null) throw new ArgumentNullException(nameof(window));

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 
 namespace Alternet.UI
@@ -7,6 +8,30 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a combo box control.
     /// </summary>
+    /// <remarks>
+    /// <para>
+    /// A <see cref="ComboBox"/> displays a text box combined with a <see cref="ListBox"/>, which enables the user
+    /// to select items from the list or enter a new value.
+    /// The <see cref="IsEditable"/> property specifies whether the text portion can be edited.
+    /// </para>
+    /// <para>
+    /// To add or remove objects in the list at run time, use methods of the <see cref="Collection{Object}" /> class
+    /// (through the <see cref="ListControl.Items"/> property of the <see cref="ComboBox" />).
+    /// The list then displays the default string value for each object. You can add individual objects with the <see cref="ICollection{Object}.Add"/> method.
+    /// You can delete items with the <see cref="ICollection{Object}.Remove"/> method or clear the entire list with the <see cref="ICollection{Object}.Clear"/> method.
+    /// </para>
+    /// <para>
+    /// In addition to display and selection functionality, the <see cref="ComboBox" /> also provides features that enable you to
+    /// efficiently add items to the <see cref="ComboBox" /> and to find text within the items of the list. With the <see cref="Control.BeginUpdate"/>
+    /// and <see cref="Control.EndUpdate"/> methods, you can add a large number of items to the <see cref="ComboBox" /> without the control
+    /// being repainted each time an item is added to the list.
+    /// </para>
+    /// <para>
+    /// You can use the <see cref="Text"/> property to specify the string displayed in the editing field,
+    /// the <see cref="SelectedIndex"/> property to get or set the current item,
+    /// and the <see cref="SelectedItem"/> property to get or set a reference to the selected object.
+    /// </para>
+    /// </remarks>
     public class ComboBox : ListControl
     {
         private string text = "";
@@ -20,6 +45,9 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// This event is raised if the <see cref="SelectedItem"/> property is changed by either a programmatic modification or user interaction.
+        /// You can create an event handler for this event to determine when the selected index in the <see cref="ComboBox"/> has been changed.
+        /// This can be useful when you need to display information in other controls based on the current selection in the <see cref="ComboBox"/>.
+        /// You can use the event handler for this event to load the information in the other controls.
         /// </remarks>
         public event EventHandler? SelectedItemChanged;
 
@@ -46,6 +74,7 @@ namespace Alternet.UI
         /// Setting the <see cref="Text"/> property to a value that is not in the collection leaves the <see cref="SelectedIndex"/> unchanged.
         /// Reading the <see cref="Text"/> property returns the text of <see cref="SelectedItem"/>, if it is not <c>null</c>.
         /// </remarks>
+        /// <exception cref="ArgumentNullException">The <c>value</c> is <c>null</c>.</exception>
         public string Text
         {
             get
@@ -81,6 +110,9 @@ namespace Alternet.UI
         /// Gets or sets the index specifying the currently selected item.
         /// </summary>
         /// <value>A zero-based index of the currently selected item. A value of <c>null</c> is returned if no item is selected.</value>
+        /// <remarks>This property indicates the zero-based index of the currently selected item in the combo box list.
+        /// Setting a new index raises the <see cref="SelectedItemChanged"/> event.</remarks>
+        /// <exception cref="ArgumentOutOfRangeException">The assigned value is less than 0 or greater than or equal to the item count.</exception>
         public int? SelectedIndex
         {
             get
@@ -92,6 +124,9 @@ namespace Alternet.UI
             set
             {
                 CheckDisposed();
+
+                if (value != null && (value < 0 || value >= Items.Count))
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 if (selectedIndex == value)
                     return;
@@ -110,9 +145,11 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The object that is the currently selected item or <c>null</c> if there is no currently selected item.</value>
         /// <remarks>
-        /// When you set the <see cref="SelectedItem"/> property to an object, the <see cref="ComboBox"/> attempts to make that object the currently selected one in the list.
-        /// If the object is found in the list, it is displayed in the edit portion of the ComboBox and the SelectedIndex property is set to the corresponding index.
-        /// If the object does not exist in the list, the SelectedIndex property is left at its current value.
+        /// When you set the <see cref="SelectedItem"/> property to an object, the <see cref="ComboBox"/> attempts to
+        /// make that object the currently selected one in the list.
+        /// If the object is found in the list, it is displayed in the edit portion of the <see cref="ComboBox"/> and
+        /// the <see cref="SelectedIndex"/> property is set to the corresponding index.
+        /// If the object does not exist in the list, the <see cref="SelectedIndex"/> property is left at its current value.
         /// </remarks>
         public object? SelectedItem
         {

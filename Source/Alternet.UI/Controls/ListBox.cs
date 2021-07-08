@@ -115,7 +115,7 @@ namespace Alternet.UI
             {
                 CheckDisposed();
 
-                if (value < 0 || value >= Items.Count)
+                if (value != null && (value < 0 || value >= Items.Count))
                     throw new ArgumentOutOfRangeException(nameof(value));
 
                 ClearSelected();
