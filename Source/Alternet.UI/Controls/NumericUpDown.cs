@@ -41,6 +41,9 @@ namespace Alternet.UI
         /// <value>The numeric value of the <see cref="NumericUpDown"/> control.</value>
         /// <remarks>When the <see cref="Value"/> property is set, the new value is validated
         /// to be between the <see cref="Minimum"/> and <see cref="Maximum"/> values.</remarks>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// The value specified is greater than the value of the <see cref="Maximum"/> property or the value specified is less than the value of the <see cref="Minimum"/> property.
+        /// </exception>
         public decimal Value
         {
             get
@@ -69,6 +72,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The minimum allowed value for the numeric up-down control. The default value is 0.</value>
         /// <remarks>
+        /// The minimum and maximum values of the Value property are specified by the <see cref="Minimum"/> and <see cref="Maximum"/> properties.
         ///  If the new <see cref="Minimum"/> property value is greater than the <see cref="Maximum"/> property value,
         ///  the <see cref="Maximum"/> value is set equal to the <see cref="Minimum"/> value.
         ///  If the <see cref="Value"/> is less than the new <see cref="Minimum"/> value, the <see cref="Value"/> property
