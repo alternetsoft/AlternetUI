@@ -181,7 +181,7 @@ namespace SourceGenerated
 
             INamedTypeSymbol? flagsAttributeType = compilation.GetTypeByMetadataName("System.FlagsAttribute");
 
-            var foundTypes = new HashSet<ITypeSymbol>();
+            var foundTypes = new HashSet<ITypeSymbol>(SymbolEqualityComparer.Default);
 
             foreach (SyntaxNode argument in argumentsToValidate)
             {
