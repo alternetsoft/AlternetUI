@@ -53,10 +53,26 @@ namespace Alternet.UI
             top = bottom = vertical;
         }
 
+        /// <summary>
+        /// Gets the combined padding information in the form of a <see cref="SizeF"/>.
+        /// </summary>
+        /// <value>A <see cref="SizeF"/> containing the padding information.</value>
+        /// <remarks>
+        /// The <see cref="Horizontal"/> property corresponds to the <see cref="SizeF.Width"/> property,
+        /// and the <see cref="Vertical"/> property corresponds to the <see cref="SizeF.Height"/> property.
+        /// </remarks>
         public SizeF Size => new SizeF(Horizontal, Vertical);
 
+        /// <summary>
+        /// Gets the combined padding for the right and left edges.
+        /// </summary>
+        /// <value>Gets the sum, of the <see cref="Left"/> and <see cref="Right"/> padding values.</value>
         public float Horizontal => left + right;
 
+        /// <summary>
+        /// Gets the combined padding for the top and bottom edges.
+        /// </summary>
+        /// <value>Gets the sum, of the <see cref="Top"/> and <see cref="Bottom"/> padding values.</value>
         public float Vertical => top + bottom;
 
         /// <summary>This property is the Length on the thickness' left side</summary>

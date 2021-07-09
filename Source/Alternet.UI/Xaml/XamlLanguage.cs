@@ -2,6 +2,8 @@ using Alternet.UI;
 using System;
 using System.Collections.Generic;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+
 [assembly: XmlnsDefinition("http://schemas.alternetsoft.com/ui", "Alternet.UI")]
 
 namespace Alternet.UI
@@ -65,3 +67,4 @@ namespace XamlX.Runtime
         public string? ClrAssemblyName { get; set; }
     }
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

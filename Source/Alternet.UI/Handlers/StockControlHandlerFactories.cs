@@ -1,7 +1,7 @@
 namespace Alternet.UI
 {
     /// <summary>
-    /// Control handler factories for all the visual themes.
+    /// Control handler factories for all the stock visual themes.
     /// </summary>
     public static class StockControlHandlerFactories
     {
