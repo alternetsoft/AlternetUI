@@ -7,7 +7,7 @@ namespace Alternet.UI
     {
         private StackPanel? panel;
 
-        private TextBlock? textBlock;
+        private Label? label;
         private Border? outerBorder;
         private Border? innerBorder;
 
@@ -41,8 +41,8 @@ namespace Alternet.UI
             innerBorder = new Border { Width = 6, Height = 6, Margin = new Thickness(4, 4, 0, 0) };
             outerBorder.Handler.VisualChildren.Add(innerBorder);
 
-            textBlock = new TextBlock();
-            panel.Handler.VisualChildren.Add(textBlock);
+            label = new Label();
+            panel.Handler.VisualChildren.Add(label);
 
             UpdateText();
             UpdateVisual();
@@ -123,10 +123,10 @@ namespace Alternet.UI
 
         private void UpdateText()
         {
-            if (textBlock == null)
+            if (label == null)
                 throw new InvalidOperationException();
 
-            textBlock.Text = Control.Text;
+            label.Text = Control.Text;
             Update();
         }
     }

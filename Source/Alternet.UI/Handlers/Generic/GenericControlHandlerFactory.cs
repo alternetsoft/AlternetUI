@@ -6,7 +6,7 @@ namespace Alternet.UI
         {
             Button => new GenericButtonHandler(),
             Border => new GenericBorderHandler(),
-            TextBlock => new GenericTextBlockHandler(),
+            Label => new GenericLabelHandler(),
             TextBox => new GenericTextBoxHandler(),
             CheckBox => new GenericCheckBoxHandler(),
             _ => StockControlHandlerFactories.Native.CreateControlHandler(control)

@@ -7,7 +7,7 @@ namespace Alternet.UI
             Button => new NativeButtonHandler(),
             StackPanel => new StackPanelHandler(),
             Border => new GenericBorderHandler(),
-            TextBlock => new GenericTextBlockHandler(),
+            Label => new GenericLabelHandler(),
             TextBox => new NativeTextBoxHandler(),
             CheckBox => new NativeCheckBoxHandler(),
             RadioButton => new NativeRadioButtonHandler(),

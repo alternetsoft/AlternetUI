@@ -10,7 +10,7 @@ namespace HelloWorldSample
 
         private Border? border;
 
-        private TextBlock[]? lines;
+        private Label[]? lines;
 
         private Color color = Color.LightGreen;
 
@@ -54,11 +54,11 @@ namespace HelloWorldSample
             };
             border.Handler.VisualChildren.Add(panel);
 
-            panel.Handler.VisualChildren.Add(new TextBlock { Text = "Composite Control", ForegroundColor = Color.White });
+            panel.Handler.VisualChildren.Add(new Label { Text = "Composite Control", ForegroundColor = Color.White });
 
-            lines = new TextBlock[10];
+            lines = new Label[10];
             for (int i = 0; i < lines.Length; i++)
-                panel.Handler.VisualChildren.Add(lines[i] = new TextBlock());
+                panel.Handler.VisualChildren.Add(lines[i] = new Label());
 
             UpdateVisual();
         }

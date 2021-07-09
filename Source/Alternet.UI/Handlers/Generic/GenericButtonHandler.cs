@@ -7,7 +7,7 @@ namespace Alternet.UI
     {
         private Border? border;
 
-        private TextBlock? textBlock;
+        private Label? label;
 
         private bool isPressed;
 
@@ -47,8 +47,8 @@ namespace Alternet.UI
 
             Control.Handler.VisualChildren.Add(border);
 
-            textBlock = new TextBlock();
-            border.Handler.VisualChildren.Add(textBlock);
+            label = new Label();
+            border.Handler.VisualChildren.Add(label);
 
             UpdateText();
             UpdateVisual();
@@ -137,10 +137,10 @@ namespace Alternet.UI
 
         private void UpdateText()
         {
-            if (textBlock == null)
+            if (label == null)
                 throw new InvalidOperationException();
 
-            textBlock.Text = Control.Text;
+            label.Text = Control.Text;
             Update();
         }
     }

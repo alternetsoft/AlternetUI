@@ -2,7 +2,7 @@ using System;
 
 namespace Alternet.UI
 {
-    public class TextBlock : Control
+    public class Label : Control
     {
         private string? text;
 
