@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Provides base functionality for implementing a specific <see cref="Control"/> behavior and appearance.
+    /// </summary>
     public abstract class ControlHandler
     {
         private int layoutSuspendCount;
@@ -18,19 +21,31 @@ namespace Alternet.UI
         private Native.Control? nativeControl;
         private bool isVisualChild;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Control"/> class.
+        /// </summary>
         public ControlHandler()
         {
             VisualChildren.ItemInserted += VisualChildren_ItemInserted;
             VisualChildren.ItemRemoved += VisualChildren_ItemRemoved;
         }
 
+        /// <summary>
+        /// Gets a <see cref="Control"/> this handler provides the implementation for.
+        /// </summary>
         public Control Control
         {
             get => control ?? throw new InvalidOperationException();
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="ControlHandler"/> is attached to a <see cref="Control"/>.
+        /// </summary>
         public bool IsAttached => control != null;
 
+        /// <summary>
+        /// Gets or sets the <see cref="Control"/> bounds relative to the parent, in device-independent units (1/96th inch per unit).
+        /// </summary>
         public virtual RectangleF Bounds
         {
             get => NativeControl != null ? NativeControl.Bounds : bounds;
@@ -45,6 +60,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets size of the <see cref="Control"/>'s client area, in device-independent units (1/96th inch per unit).
+        /// </summary>
         public SizeF ClientSize
         {
             get => NativeControl != null ? NativeControl.ClientSize : bounds.Size;
@@ -59,11 +77,15 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets a rectangle which describes an area inside of the <see cref="Control"/> available
+        /// for positioning (layout) of its child controls, in device-independent units (1/96th inch per unit).
+        /// </summary>
         public virtual RectangleF ChildrenLayoutBounds
         {
             get
             {
-                var childrenBounds = ChildrenBounds;
+                var childrenBounds = ClientRectangle;
                 if (childrenBounds.IsEmpty)
                     return RectangleF.Empty;
 
@@ -80,8 +102,15 @@ namespace Alternet.UI
             }
         }
 
-        public virtual RectangleF ChildrenBounds => new RectangleF(new PointF(), ClientSize);
+        /// <summary>
+        /// Gets a rectangle which describes the client area inside of the <see cref="Control"/>,
+        /// in device-independent units (1/96th inch per unit).
+        /// </summary>
+        public virtual RectangleF ClientRectangle => new RectangleF(new PointF(), ClientSize);
 
+        /// <summary>
+        /// Gets a value indicating whether the mouse pointer is over the <see cref="Control"/>.
+        /// </summary>
         public bool IsMouseOver
         {
             get
@@ -93,6 +122,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the <see cref="Control"/> is contained in a <see cref="VisualChildren"/> collection.
+        /// </summary>
         public bool IsVisualChild
         {
             get => isVisualChild;
@@ -106,8 +138,14 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets the collection of visual child controls contained within the control.
+        /// </summary>
         public Collection<Control> VisualChildren { get; } = new Collection<Control>();
 
+        /// <summary>
+        /// Gets the collection of all elements of <see cref="Control.Children"/> and <see cref="VisualChildren"/> collections.
+        /// </summary>
         public IEnumerable<Control> AllChildren => VisualChildren.Concat(Control.Children);
 
         internal Native.Control? NativeControl
@@ -127,19 +165,33 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// This property may be overridden by control handlers to indicate that the handler needs
+        /// <see cref="OnPaint(DrawingContext)"/> to be called. Default value is <c>false</c>.
+        /// </summary>
         protected virtual bool NeedsPaint => false;
 
+        /// <summary>
+        /// This property may be overridden by control handlers to indicate that the native control creation is required
+        /// even if the control is a visual child. Default value is <c>false</c>.
+        /// </summary>
         protected virtual bool VisualChildNeedsNativeControl => false;
 
-        // todo: for non-visual child, if native control is not created, create it on demand.
         private bool IsLayoutSuspended => layoutSuspendCount != 0;
 
+        /// <summary>
+        /// Attaches this handler to the specified <see cref="Control"/>.
+        /// </summary>
+        /// <param name="control">The <see cref="Control"/> to attach this handler to.</param>
         public void Attach(Control control)
         {
             this.control = control;
             OnAttach();
         }
 
+        /// <summary>
+        /// Attaches this handler from the <see cref="Control"/> it is attached to.
+        /// </summary>
         public void Detach()
         {
             OnDetach();
@@ -148,6 +200,9 @@ namespace Alternet.UI
             control = null;
         }
 
+        /// <summary>
+        /// Causes the control to redraw.
+        /// </summary>
         public void Update()
         {
             var nativeControl = NativeControl;
@@ -161,10 +216,21 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// This property may be overridden by control handlers to paint the control visual representation.
+        /// </summary>
+        /// <remarks>
+        /// <see cref="NeedsPaint"/> for this handler should return <c>true</c> in order for <see cref="OnPaint(DrawingContext)"/>
+        /// to be called.
+        /// </remarks>
+        /// <param name="drawingContext">The <see cref="DrawingContext"/> to paint on.</param>
         public virtual void OnPaint(DrawingContext drawingContext)
         {
         }
 
+        /// <summary>
+        /// Called when the handler should reposition the child controls of the control it is attached to.
+        /// </summary>
         public virtual void OnLayout()
         {
             var childrenLayoutBounds = ChildrenLayoutBounds;
@@ -183,6 +249,11 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Retrieves the size of a rectangular area into which the control can be fitted, in device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <param name="availableSize">The available space that a parent element can allocate a child control.</param>
+        /// <returns>A <see cref="Size"/> representing the width and height of a rectangle, in device-independent units (1/96th inch per unit).</returns>
         public virtual SizeF GetPreferredSize(SizeF availableSize)
         {
             if (Control.Children.Count == 0 && VisualChildren.Count == 0)
@@ -198,11 +269,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Temporarily suspends the layout logic for the control.
+        /// </summary>
         public void SuspendLayout()
         {
             layoutSuspendCount++;
         }
 
+        /// <summary>
+        /// Resumes the usual layout logic.
+        /// </summary>
+        /// <param name="performLayout"><c>true</c> to execute pending layout requests; otherwise, <c>false</c>.</param>
         public void ResumeLayout(bool performLayout = true)
         {
             layoutSuspendCount--;
@@ -216,18 +294,28 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Maintains performance while performing slow operations on a control by preventing the control from
+        /// drawing until the <see cref="EndUpdate"/> method is called.
+        /// </summary>
         public void BeginUpdate()
         {
             if (NativeControl != null)
                 NativeControl.BeginUpdate();
         }
 
+        /// <summary>
+        /// Resumes painting the control after painting is suspended by the <see cref="BeginUpdate"/> method.
+        /// </summary>
         public void EndUpdate()
         {
             if (NativeControl != null)
                 NativeControl.EndUpdate();
         }
 
+        /// <summary>
+        /// Forces the control to apply layout logic to child controls.
+        /// </summary>
         public void PerformLayout()
         {
             if (IsLayoutSuspended)
@@ -252,6 +340,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Captures the mouse to the control.
+        /// </summary>
         public void CaptureMouse()
         {
             if (NativeControl == null)
@@ -260,6 +351,9 @@ namespace Alternet.UI
             NativeControl.SetMouseCapture(true);
         }
 
+        /// <summary>
+        /// Releases the mouse capture, if the control held the capture.
+        /// </summary>
         public void ReleaseMouseCapture()
         {
             if (NativeControl == null)
@@ -284,12 +378,18 @@ namespace Alternet.UI
 
         internal virtual Native.Control CreateNativeControl() => new Native.Panel();
 
+        /// <summary>
+        /// Called when the value of the <see cref="IsVisualChild"/> property changes.
+        /// </summary>
         protected virtual void OnIsVisualChildChanged()
         {
             if (!NeedsNativeControl())
                 DisposeNativeControl();
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the control needs a native control to be created.
+        /// </summary>
         protected virtual bool NeedsNativeControl()
         {
             if (IsVisualChild)
@@ -298,6 +398,9 @@ namespace Alternet.UI
             return true;
         }
 
+        /// <summary>
+        /// Gets the size of the area which can fit all the children of this control.
+        /// </summary>
         protected SizeF GetChildrenMaxPreferredSize(SizeF availableSize)
         {
             var specifiedWidth = Control.Width;
@@ -328,6 +431,9 @@ namespace Alternet.UI
             return new SizeF(width, height);
         }
 
+        /// <summary>
+        /// Called after this handler has been attached to a <see cref="Control"/>.
+        /// </summary>
         protected virtual void OnAttach()
         {
             ApplyVisible();
@@ -352,22 +458,9 @@ namespace Alternet.UI
             VisualChildren.ItemRemoved += Children_ItemRemoved;
         }
 
-        private void Control_VerticalAlignmentChanged(object? sender, EventArgs e)
-        {
-            PerformLayout();
-        }
-
-        private void Control_HorizontalAlignmentChanged(object? sender, EventArgs e)
-        {
-            PerformLayout();
-        }
-
-        private void ApplyChildren()
-        {
-            for (var i = 0; i < Control.Children.Count; i++)
-                OnChildInserted(i, Control.Children[i]);
-        }
-
+        /// <summary>
+        /// Called after this handler has been detached from the <see cref="Control"/>.
+        /// </summary>
         protected virtual void OnDetach()
         {
             // todo: consider clearing the native control's children.
@@ -418,34 +511,75 @@ namespace Alternet.UI
             NativeControl.MouseLeftButtonUp += NativeControl_MouseLeftButtonUp;
         }
 
+        /// <summary>
+        /// Called when the mouse cursor changes position.
+        /// </summary>
         protected virtual void OnMouseMove()
         {
         }
 
+        /// <summary>
+        /// Called when the mouse cursor enters the boundary of the control.
+        /// </summary>
         protected virtual void OnMouseEnter()
         {
         }
 
+        /// <summary>
+        /// Called when the mouse cursor leaves the boundary of the control.
+        /// </summary>
         protected virtual void OnMouseLeave()
         {
         }
 
+        /// <summary>
+        /// Called when the mouse left button is released while the mouse pointer is over
+        /// the control or when the control has captured the mouse.
+        /// </summary>
         protected virtual void OnMouseLeftButtonUp()
         {
         }
 
+        /// <summary>
+        /// Called when the mouse left button is pressed while the mouse pointer is over
+        /// the control or when the control has captured the mouse.
+        /// </summary>
         protected virtual void OnMouseLeftButtonDown()
         {
         }
 
+        /// <summary>
+        /// Called when a <see cref="Control"/> is inserted into the <see cref="Control.Children"/> or <see cref="VisualChildren"/> collection.
+        /// </summary>
         protected virtual void OnChildInserted(int childIndex, Control childControl)
         {
+            // todo: the childIndex passed to this method is wrong as should take VisualChildren into account.
             TryInsertNativeControl(childIndex, childControl);
         }
 
+        /// <summary>
+        /// Called when a <see cref="Control"/> is removed from the <see cref="Control.Children"/> or <see cref="VisualChildren"/> collections.
+        /// </summary>
         protected virtual void OnChildRemoved(int childIndex, Control childControl)
         {
+            // todo: the childIndex passed to this method is wrong as should take VisualChildren into account.
             TryRemoveNativeControl(childIndex, childControl);
+        }
+
+        private void Control_VerticalAlignmentChanged(object? sender, EventArgs e)
+        {
+            PerformLayout();
+        }
+
+        private void Control_HorizontalAlignmentChanged(object? sender, EventArgs e)
+        {
+            PerformLayout();
+        }
+
+        private void ApplyChildren()
+        {
+            for (var i = 0; i < Control.Children.Count; i++)
+                OnChildInserted(i, Control.Children[i]);
         }
 
         private void VisualChildren_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
@@ -586,7 +720,6 @@ namespace Alternet.UI
                     }
                 }
 #endif
-
             }
         }
 
