@@ -1,7 +1,13 @@
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Implements an <see cref="IControlHandlerFactory"/> for the Native visual theme.
+    /// </summary>
     public class NativeControlHandlerFactory : IControlHandlerFactory
     {
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
         public ControlHandler CreateControlHandler(Control control) => control switch
         {
             Button => new NativeButtonHandler(),

@@ -1,7 +1,13 @@
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Implements an <see cref="IControlHandlerFactory"/> for the Generic visual theme.
+    /// </summary>
     public class GenericControlHandlerFactory : IControlHandlerFactory
     {
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
         public ControlHandler CreateControlHandler(Control control) => control switch
         {
             Button => new GenericButtonHandler(),
