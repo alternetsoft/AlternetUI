@@ -23,11 +23,12 @@ namespace Alternet.UI
                 throw new System.ArgumentNullException(nameof(e));
 
             // todo: add close reason/force parameter (see wxCloseEvent.CanVeto()).
-            Control.InvokeClosing(e);
-            if (e.Cancel)
+            var closingEventArgs = new WindowClosingEventArgs(e.Cancel);
+            Control.RaiseClosing(closingEventArgs);
+            if (closingEventArgs.Cancel)
                 return;
 
-            Control.InvokeClosed(EventArgs.Empty);
+            Control.RaiseClosed(new WindowClosedEventArgs());
             Control.Dispose();
         }
 

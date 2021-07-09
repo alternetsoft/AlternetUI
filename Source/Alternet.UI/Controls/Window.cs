@@ -6,11 +6,18 @@ using System.Linq;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Represents a window that makes up an application's user interface.
+    /// </summary>
+    /// <remarks>A <see cref="Window"/> is a representation of any window displayed in your application.</remarks>
     [System.ComponentModel.DesignerCategory("Code")]
     public class Window : Control
     {
         private string title = "";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Window"/> class.
+        /// </summary>
         public Window()
         {
             Application.Current.RegisterWindow(this);
@@ -18,25 +25,37 @@ namespace Alternet.UI
             Bounds = new RectangleF(100, 100, 400, 400);
         }
 
+        /// <summary>
+        /// Occurs when the value of the <see cref="Title"/> property changes.
+        /// </summary>
         public event EventHandler? TitleChanged;
 
-        public event CancelEventHandler? Closing;
+        /// <summary>
+        /// Occurs before the window is closed.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="Closing"/> event occurs as the window is being closed. When a window is closed, it is disposed,
+        /// releasing all resources associated with the form. If you cancel this event, the window remains opened.
+        /// To cancel the closure of a window, set the <see cref="CancelEventArgs.Cancel"/> property of the
+        /// <see cref="WindowClosingEventArgs"/> passed to your event handler to <c>true</c>.
+        /// </remarks>
+        public event EventHandler<WindowClosingEventArgs>? Closing;
 
-        public event EventHandler? Closed;
-
-        protected virtual void OnClosing(CancelEventArgs e) => Closing?.Invoke(this, e);
-        protected virtual void OnClosed(EventArgs e) => Closed?.Invoke(this, e);
-
-        internal void InvokeClosing(CancelEventArgs e) => OnClosing(e);
-        internal void InvokeClosed(EventArgs e) => OnClosed(e);
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            if (disposing)
-                Application.Current.UnregisterWindow(this);
-        }
+        /// <summary>
+        /// Occurs when the window is closed.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The <see cref="Closed"/> event occurs after the window has been closed by the user or programmatically.
+        /// To prevent a window from closing, handle the <see cref="Closing"/> event and set the <see cref="CancelEventArgs.Cancel"/> property
+        /// of the <see cref="WindowClosingEventArgs"/> passed to your event handler to true.
+        /// </para>
+        /// <para>
+        /// You can use this event to perform tasks such as freeing resources used by the window
+        /// and to save information entered in the form or to update its parent window.
+        /// </para>
+        /// </remarks>
+        public event EventHandler<WindowClosedEventArgs>? Closed;
 
         public string Title
         {
@@ -52,7 +71,7 @@ namespace Alternet.UI
             }
         }
 
-        public WindowStartPosition StartPosition { get; set;} = WindowStartPosition.SystemDefaultLocation;
+        public WindowStartPosition StartPosition { get; set; } = WindowStartPosition.SystemDefaultLocation;
 
         public SizeF Size
         {
@@ -97,6 +116,10 @@ namespace Alternet.UI
             }
         }
 
+        internal void RaiseClosing(WindowClosingEventArgs e) => OnClosing(e);
+
+        internal void RaiseClosed(WindowClosedEventArgs e) => OnClosed(e);
+
         internal void RecreateAllHandlers()
         {
             void GetAllChildren(Control control, List<Control> result)
@@ -116,6 +139,18 @@ namespace Alternet.UI
 
             foreach (var child in children.AsEnumerable().Reverse())
                 child.EnsureHandlerCreated();
+        }
+
+        protected virtual void OnClosing(WindowClosingEventArgs e) => Closing?.Invoke(this, e);
+
+        protected virtual void OnClosed(WindowClosedEventArgs e) => Closed?.Invoke(this, e);
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            if (disposing)
+                Application.Current.UnregisterWindow(this);
         }
 
         protected override ControlHandler CreateHandler() => new NativeWindowHandler();
