@@ -14,6 +14,7 @@ namespace Alternet.UI
     public class Window : Control
     {
         private string title = "";
+        private WindowStartPosition startPosition = WindowStartPosition.SystemDefaultLocation;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
@@ -57,6 +58,10 @@ namespace Alternet.UI
         /// </remarks>
         public event EventHandler<WindowClosedEventArgs>? Closed;
 
+        /// <summary>
+        /// Gets or sets a title of this window.
+        /// </summary>
+        /// <remarks>A string that contains a title of this window. Default value is empty string ("").</remarks>
         public string Title
         {
             get
@@ -71,7 +76,24 @@ namespace Alternet.UI
             }
         }
 
-        public WindowStartPosition StartPosition { get; set; } = WindowStartPosition.SystemDefaultLocation;
+        /// <summary>
+        /// Gets or sets the position of the window when first shown.
+        /// </summary>
+        /// <value>A <see cref="WindowStartPosition"/> that represents the starting position of the window.</value>
+        /// <remarks>
+        /// This property enables you to set the starting position of the window when it is first shown.
+        /// This property should be set before the window is shown.
+        /// </remarks>
+        /// <exception cref="InvalidEnumArgumentException">The value specified is outside the range of valid values.</exception>
+        public WindowStartPosition StartPosition
+        {
+            get => startPosition;
+            set
+            {
+                SourceGenerated.EnumValidator.Validate(value);
+                startPosition = value;
+            }
+        }
 
         public SizeF Size
         {
