@@ -3,19 +3,14 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies the initial position of a window.
+    /// Specifies the initial location of a window.
     /// </summary>
     public enum WindowStartPosition
     {
         /// <summary>
         /// The window is positioned at the operating system default location.
         /// </summary>
-        SystemDefaultLocation,
-
-        /// <summary>
-        /// The window is positioned at the operating system default location and has the bounds determined by OS default.
-        /// </summary>
-        SystemDefaultBounds,
+        SystemDefault,
 
         /// <summary>
         /// The position of the window is determined by the <see cref="Window.Location"/> property.
@@ -28,8 +23,8 @@ namespace Alternet.UI
         CenterScreen,
 
         /// <summary>
-        /// The startup location of a <see cref="Window"/> is the center of the <see cref="Window"/> that owns it, as specified by the <see cref="Window.Owner"/> property.
+        /// The startup location of a <see cref="Window"/> is the center of the <see cref="Window"/> that owns it.
         /// </summary>
-        CenterOwner // todo: add window.owner
+        CenterOwner // todo: add window.owner, add xmldoc: "as specified by the <see cref="Window.Owner"/> property."
     }
 }

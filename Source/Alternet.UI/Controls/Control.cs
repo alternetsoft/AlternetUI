@@ -11,9 +11,8 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public class Control : Component, ISupportInitialize
     {
-        private float width = float.NaN;
-
-        private float height = float.NaN;
+        private static readonly SizeF DefaultSize = new SizeF(float.NaN, float.NaN);
+        private SizeF size = DefaultSize;
         private Thickness margin;
         private Thickness padding;
         private ControlHandler? handler;
@@ -169,7 +168,34 @@ namespace Alternet.UI
         public Control? Parent { get; internal set; } // todo: allow users to set the Parent property?
 
         /// <summary>
-        /// Gets or sets the suggested width of the element.
+        /// Gets or sets the suggested size of the control.
+        /// </summary>
+        /// <value>The suggested size of the control, in device-independent units (1/96th inch per unit).
+        /// The default value is <see cref="SizeF"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>)/>.
+        /// </value>
+        /// <remarks>
+        /// This property specifies the suggested size of the control. An actual size is calculated by the layout system.
+        /// Set this property to <see cref="SizeF"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>) to specify auto sizing behavior.
+        /// The value of this property is always the same as the value that was set to it and is not changed by the layout system.
+        /// </remarks>
+        public virtual SizeF Size
+        {
+            get
+            {
+                return size;
+            }
+
+            set
+            {
+                if (size == value)
+                    return;
+
+                size = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the suggested width of the control.
         /// </summary>
         /// <value>The suggested width of the element, in device-independent units (1/96th inch per unit).
         /// The default value is <see cref="float.NaN"/>.
@@ -181,36 +207,32 @@ namespace Alternet.UI
         /// </remarks>
         public virtual float Width
         {
-            get => width;
+            get => size.Width;
+            
             set
             {
-                if (width == value)
-                    return;
-
-                width = value;
+                Size = new SizeF(value, Size.Height);
             }
         }
 
         /// <summary>
-        /// Gets or sets the suggested height of the element.
+        /// Gets or sets the suggested height of the control.
         /// </summary>
-        /// <value>The suggested height of the element, in device-independent units (1/96th inch per unit).
+        /// <value>The suggested height of the control, in device-independent units (1/96th inch per unit).
         /// The default value is <see cref="float.NaN"/>.
         /// </value>
         /// <remarks>
-        /// This property specifies the suggested height of the element. An actual height is calculated by the layout system.
+        /// This property specifies the suggested height of the control. An actual height is calculated by the layout system.
         /// Set this property to <see cref="float.NaN"/> to specify auto sizing behavior.
         /// The value of this property is always the same as the value that was set to it and is not changed by the layout system.
         /// </remarks>
         public virtual float Height
         {
-            get => height;
+            get => size.Height;
+
             set
             {
-                if (height == value)
-                    return;
-
-                height = value;
+                Size = new SizeF(Size.Width, value);
             }
         }
 

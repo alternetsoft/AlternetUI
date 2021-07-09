@@ -14,7 +14,7 @@ namespace Alternet.UI
     public class Window : Control
     {
         private string title = "";
-        private WindowStartPosition startPosition = WindowStartPosition.SystemDefaultLocation;
+        private WindowStartPosition startPosition = WindowStartPosition.SystemDefault;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
@@ -84,18 +84,27 @@ namespace Alternet.UI
         /// This property enables you to set the starting position of the window when it is first shown.
         /// This property should be set before the window is shown.
         /// </remarks>
-        /// <exception cref="InvalidEnumArgumentException">The value specified is outside the range of valid values.</exception>
         public WindowStartPosition StartPosition
         {
             get => startPosition;
             set
             {
-                SourceGenerated.EnumValidator.Validate(value);
                 startPosition = value;
             }
         }
 
-        public SizeF Size
+        /// <summary>
+        /// Gets or sets the size of the window.
+        /// </summary>
+        /// <value>The size of the window, in device-independent units (1/96th inch per unit).
+        /// The default value is <see cref="SizeF"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>)/>.
+        /// </value>
+        /// <remarks>
+        /// This property specifies the suggested size of the control. An actual size is calculated by the layout system.
+        /// Set this property to <see cref="SizeF"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>) to specify auto sizing behavior.
+        /// The value of this property is always the same as the value that was set to it and is not changed by the layout system.
+        /// </remarks>
+        public override SizeF Size
         {
             get
             {

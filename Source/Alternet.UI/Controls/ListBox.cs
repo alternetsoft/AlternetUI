@@ -201,7 +201,6 @@ namespace Alternet.UI
         /// The <see cref="SelectionMode"/> property enables you to determine how many items in the <see cref="ListBox"/>
         /// a user can select at one time.
         /// </remarks>
-        /// <exception cref="InvalidEnumArgumentException">The assigned value is not one of the <see cref="ListBoxSelectionMode"/> values.</exception>
         public ListBoxSelectionMode SelectionMode
         {
             get
@@ -213,8 +212,6 @@ namespace Alternet.UI
 
             set
             {
-                SourceGenerated.EnumValidator.Validate(value);
-
                 CheckDisposed();
 
                 if (selectionMode == value)

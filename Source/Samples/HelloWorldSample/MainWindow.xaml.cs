@@ -52,7 +52,7 @@ namespace HelloWorldSample
             MessageBox.Show(option1RadioButton.IsChecked.ToString(), "Option 1");
         }
 
-        protected override void OnClosing(CancelEventArgs e)
+        protected override void OnClosing(WindowClosingEventArgs e)
         {
             if (!allowCloseWindowCheckBox.IsChecked)
             {
