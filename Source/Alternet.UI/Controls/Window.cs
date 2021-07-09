@@ -14,7 +14,7 @@ namespace Alternet.UI
     public class Window : Control
     {
         private string title = "";
-        private WindowStartPosition startPosition = WindowStartPosition.SystemDefault;
+        private WindowStartLocation startLocation = WindowStartLocation.SystemDefault;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
@@ -79,17 +79,17 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the position of the window when first shown.
         /// </summary>
-        /// <value>A <see cref="WindowStartPosition"/> that represents the starting position of the window.</value>
+        /// <value>A <see cref="WindowStartLocation"/> that represents the starting position of the window.</value>
         /// <remarks>
         /// This property enables you to set the starting position of the window when it is first shown.
         /// This property should be set before the window is shown.
         /// </remarks>
-        public WindowStartPosition StartPosition
+        public WindowStartLocation StartLocation
         {
-            get => startPosition;
+            get => startLocation;
             set
             {
-                startPosition = value;
+                startLocation = value;
             }
         }
 
@@ -100,9 +100,9 @@ namespace Alternet.UI
         /// The default value is <see cref="SizeF"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>)/>.
         /// </value>
         /// <remarks>
-        /// This property specifies the suggested size of the control. An actual size is calculated by the layout system.
-        /// Set this property to <see cref="SizeF"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>) to specify auto sizing behavior.
-        /// The value of this property is always the same as the value that was set to it and is not changed by the layout system.
+        /// This property specifies the size of the window.
+        /// Set this property to <see cref="SizeF"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>) to specify system-default sizing
+        /// behavior when the window is first shown.
         /// </remarks>
         public override SizeF Size
         {
@@ -117,10 +117,40 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the width of the window.
+        /// </summary>
+        /// <value>The width of the window, in device-independent units (1/96th inch per unit).
+        /// The default value is <see cref="float.NaN"/>.
+        /// </value>
+        /// <remarks>
+        /// This property specifies the width of the window.
+        /// Set this property to <see cref="float.NaN"/> to specify system-default sizing
+        /// behavior before the window is first shown.
+        /// </remarks>
         public override float Width { get => Size.Width; set => Size = new SizeF(value, Height); }
 
+        /// <summary>
+        /// Gets or sets the height of the window.
+        /// </summary>
+        /// <value>The height of the window, in device-independent units (1/96th inch per unit).
+        /// The default value is <see cref="float.NaN"/>.
+        /// </value>
+        /// <remarks>
+        /// This property specifies the height of the window.
+        /// Set this property to <see cref="float.NaN"/> to specify system-default sizing
+        /// behavior before the window is first shown.
+        /// </remarks>
         public override float Height { get => Size.Height; set => Size = new SizeF(Width, value); }
 
+        /// <summary>
+        /// Gets or sets the location of upper-left corner of the window, in device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <value>The position of the window's upper-left corner, in logical units (1/96th of an inch).</value>
+        /// <remarks>
+        /// To specify the window positioning behavior when it is being shown for the first time,
+        /// use <see cref="StartLocation"/> property.
+        /// </remarks>
         public PointF Location
         {
             get
@@ -134,6 +164,11 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the size and location of the window.
+        /// </summary>
+        /// <value>A <see cref="RectangleF"/> that represents the bounds of the form on
+        /// the desktop, in logical units (1/96th of an inch).</value>
         public RectangleF Bounds
         {
             get
@@ -172,10 +207,23 @@ namespace Alternet.UI
                 child.EnsureHandlerCreated();
         }
 
+        /// <summary>
+        /// Raises the <see cref="Closing"/> event and calls <see cref="OnClosing(WindowClosingEventArgs)"/>.
+        /// See <see cref="Closing"/> event description for more details.
+        /// </summary>
+        /// <param name="e">An <see cref="WindowClosingEventArgs"/> that contains the event data.</param>
         protected virtual void OnClosing(WindowClosingEventArgs e) => Closing?.Invoke(this, e);
 
+        /// <summary>
+        /// Raises the <see cref="Closed"/> event and calls <see cref="OnClosed(WindowClosedEventArgs)"/>.
+        /// See <see cref="Closed"/> event description for more details.
+        /// </summary>
+        /// <param name="e">An <see cref="WindowClosedEventArgs"/> that contains the event data.</param>
         protected virtual void OnClosed(WindowClosedEventArgs e) => Closed?.Invoke(this, e);
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -184,6 +232,9 @@ namespace Alternet.UI
                 Application.Current.UnregisterWindow(this);
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         protected override ControlHandler CreateHandler() => new NativeWindowHandler();
     }
 }

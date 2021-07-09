@@ -5,7 +5,7 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies the initial location of a window.
     /// </summary>
-    public enum WindowStartPosition
+    public enum WindowStartLocation
     {
         /// <summary>
         /// The window is positioned at the operating system default location.

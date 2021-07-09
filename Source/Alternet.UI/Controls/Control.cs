@@ -369,6 +369,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Raises the <see cref="Click"/> event and calls <see cref="OnClick(EventArgs)"/>.
+        /// See <see cref="Click"/> event description for more details.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         public void RaiseClick(EventArgs e)
