@@ -1,17 +1,32 @@
 using System;
+using System.IO;
 
 namespace Alternet.UI.Native.ManagedServers
 {
     internal partial class InputStream
     {
-        public long Length => throw new Exception();
+        Stream stream;
 
-        public bool IsOK => throw new Exception();
+        public InputStream(Stream stream)
+        {
+            this.stream = stream;
+        }
 
-        public bool IsSeekable => throw new Exception();
+        public long Length => stream.Length;
 
-        public long Position { get; set; }
+        public bool IsOK => true; // todo
 
-        public IntPtr Read(byte[] buffer, IntPtr length) => throw new Exception();
+        public bool IsSeekable => stream.CanSeek;
+
+        public long Position
+        {
+            get => stream.Position;
+            set => stream.Position = value;
+        }
+
+        public IntPtr Read(byte[] buffer, IntPtr length)
+        {
+            return new IntPtr(stream.Read(buffer, 0, length.ToInt32()));
+        }
     }
 }
