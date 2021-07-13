@@ -66,7 +66,10 @@ using System.Security;");
             var declaringTypeName = TypeProvider.GetNativeName(members[0].DeclaringType!);
 
             w.WriteLine("static GCHandle trampolineLocatorCallbackGCHandle;");
-            w.WriteLine($"static Dictionary<NativeApi.{declaringTypeName}Trampoline, GCHandle> trampolineHandles;");
+
+            var dictionaryType = $"Dictionary<NativeApi.{declaringTypeName}Trampoline, GCHandle>";
+
+            w.WriteLine($"static readonly {dictionaryType} trampolineHandles = new {dictionaryType}();");
 
             w.WriteLine();
 

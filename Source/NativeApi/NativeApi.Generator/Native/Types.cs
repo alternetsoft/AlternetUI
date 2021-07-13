@@ -60,6 +60,11 @@ namespace ApiGenerator.Native
                     return usage.HasFlag(TypeUsage.Argument) ? "const string&" : "string";
                 }
 
+                if (type == typeof(byte[]))
+                {
+                    return "void*";
+                }
+
                 var primitiveTypeName = TryGetPrimitiveType(type);
                 if (primitiveTypeName != null)
                     return primitiveTypeName;

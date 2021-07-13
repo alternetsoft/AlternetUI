@@ -21,6 +21,21 @@ namespace ApiGenerator.Native
             File.WriteAllText(Path.Combine(paths.NativeSourcePath, "Api.cpp"), cApiIndexBuilder.ToString());
         }
 
+        public static void GenerateManagedServerClasses(Paths paths, IEnumerable<Type> types)
+        {
+            var cApiIndexBuilder = new StringBuilder();
+            var cppApiIndexBuilder = new StringBuilder();
+            foreach (var type in types)
+            {
+                GenerateManagedServerCppApi(paths, type, cppApiIndexBuilder);
+                GenerateManagedServerCApi(paths, type, cApiIndexBuilder);
+            }
+
+            File.WriteAllText(
+                Path.Combine(paths.NativeSourcePath, "ManagedServerApi.cpp"),
+                cApiIndexBuilder.ToString() + cppApiIndexBuilder.ToString());
+        }
+
         public static void GenerateEnums(Paths paths, IEnumerable<Type> types)
         {
             File.WriteAllText(Path.Combine(paths.NativeApiSourcePath, "Enums.h"), CppEnumsGenerator.Generate(types));
@@ -31,6 +46,14 @@ namespace ApiGenerator.Native
             var code = CppApiGenerator.Generate(ApiTypeFactory.Create(type, ApiTypeCreationMode.NativeCppApi));
             var fileName = TypeProvider.GetNativeName(type) + ".inc";
             File.WriteAllText(Path.Combine(paths.NativeApiSourcePath, fileName), code);
+        }
+
+        private static void GenerateManagedServerCppApi(Paths paths, Type type, StringBuilder indexBuilder)
+        {
+            var code = CppManagedServerApiGenerator.Generate(ApiTypeFactory.Create(type, ApiTypeCreationMode.NativeCppApi));
+            var fileName = TypeProvider.GetNativeName(type) + ".h";
+            File.WriteAllText(Path.Combine(paths.NativeApiSourcePath, fileName), code);
+            indexBuilder.AppendLine($"#include \"Api/{fileName}\"");
         }
 
         private static void GenerateCppScaffoldsIfNeeded(Paths paths, Type type)
@@ -48,6 +71,14 @@ namespace ApiGenerator.Native
         private static void GenerateCApi(Paths paths, Type type, StringBuilder indexBuilder)
         {
             var code = CApiGenerator.Generate(ApiTypeFactory.Create(type, ApiTypeCreationMode.NativeCApi));
+            var fileName = TypeProvider.GetNativeName(type) + ".Api.h";
+            File.WriteAllText(Path.Combine(paths.NativeApiSourcePath, fileName), code);
+            indexBuilder.AppendLine($"#include \"Api/{fileName}\"");
+        }
+
+        private static void GenerateManagedServerCApi(Paths paths, Type type, StringBuilder indexBuilder)
+        {
+            var code = CManagedServerApiGenerator.Generate(ApiTypeFactory.Create(type, ApiTypeCreationMode.NativeCApi));
             var fileName = TypeProvider.GetNativeName(type) + ".Api.h";
             File.WriteAllText(Path.Combine(paths.NativeApiSourcePath, fileName), code);
             indexBuilder.AppendLine($"#include \"Api/{fileName}\"");

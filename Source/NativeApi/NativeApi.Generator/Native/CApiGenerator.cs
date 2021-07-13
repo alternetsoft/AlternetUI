@@ -57,7 +57,7 @@ namespace ApiGenerator.Native
             return sb.ToString();
         }
 
-        const string ExportMacro = "ALTERNET_UI_API";
+        public const string ExportMacro = "ALTERNET_UI_API";
 
         private static void WriteProperty(IndentedTextWriter w, Types types, ApiProperty apiProperty)
         {

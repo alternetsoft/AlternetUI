@@ -40,7 +40,7 @@ namespace Alternet.UI.Native.ManagedServers
         }
         
         static GCHandle trampolineLocatorCallbackGCHandle;
-        static Dictionary<NativeApi.InputStreamTrampoline, GCHandle> trampolineHandles;
+        static readonly Dictionary<NativeApi.InputStreamTrampoline, GCHandle> trampolineHandles = new Dictionary<NativeApi.InputStreamTrampoline, GCHandle>();
         
         static InputStream() { SetTrampolineLocatorCallback(); }
         static void SetTrampolineLocatorCallback()

@@ -22,7 +22,7 @@ namespace ApiGenerator
 
             var managedServerClassTypes = TypeProvider.GetManagedServerClassTypes();
             ManagedGenerator.GenerateManagedServerClasses(paths, managedServerClassTypes);
-            //NativeGenerator.GenerateManagedServerClasses(paths, managedServerClassTypes);
+            NativeGenerator.GenerateManagedServerClasses(paths, managedServerClassTypes);
 
             Console.WriteLine("All done.");
         }

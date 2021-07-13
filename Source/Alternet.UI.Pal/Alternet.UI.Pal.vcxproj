@@ -216,6 +216,8 @@
     <ClInclude Include="Api\DrawingTypes.h" />
     <ClInclude Include="Api\Enums.h" />
     <ClInclude Include="Api\GroupBox.Api.h" />
+    <ClInclude Include="Api\InputStream.Api.h" />
+    <ClInclude Include="Api\InputStream.h" />
     <ClInclude Include="Api\ListBox.Api.h" />
     <ClInclude Include="Api\MessageBox_.Api.h" />
     <ClInclude Include="Api\NumericUpDown.Api.h" />
