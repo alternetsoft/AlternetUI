@@ -41,7 +41,7 @@ namespace ApiGenerator.Managed
             if (type.OriginalType.IsEnum)
                 return type.OriginalType.Name;
 
-            if (TypeProvider.IsApiType(type))
+            if (TypeProvider.IsApiType(type) || TypeProvider.IsManagedServerApiType(type))
                 return GetApiClassTypeName(type);
 
             if (TypeProvider.IsMarshaledStruct(type))

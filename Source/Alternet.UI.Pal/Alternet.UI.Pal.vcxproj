@@ -191,6 +191,7 @@
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="DrawingContext.cpp" />
     <ClCompile Include="GroupBox.cpp" />
+    <ClCompile Include="Image.cpp" />
     <ClCompile Include="ListBox.cpp" />
     <ClCompile Include="MessageBox_.cpp" />
     <ClCompile Include="NumericUpDown.cpp" />
@@ -240,6 +241,7 @@
     <ClInclude Include="DelayedValue.h" />
     <ClInclude Include="DrawingContext.h" />
     <ClInclude Include="GroupBox.h" />
+    <ClInclude Include="Image.h" />
     <ClInclude Include="ListBox.h" />
     <ClInclude Include="MessageBox_.h" />
     <ClInclude Include="NumericUpDown.h" />

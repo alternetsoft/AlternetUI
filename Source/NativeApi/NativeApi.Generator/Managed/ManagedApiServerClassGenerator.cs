@@ -28,7 +28,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Security;");
 
-            w.WriteLine("namespace Alternet.UI.Native.ManagedServers");
+            w.WriteLine("namespace Alternet.UI.Native");
             w.WriteLine("{");
             w.Indent++;
 
