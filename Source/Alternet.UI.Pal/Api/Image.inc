@@ -3,7 +3,7 @@ public:
 
 int GetWidth();
 
-void LoadFromStream(InputStream* stream);
+void LoadFromStream(void* stream);
 public:
 Image();
 protected:

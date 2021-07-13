@@ -18,7 +18,7 @@ ALTERNET_UI_API int Image_GetWidth(Image* obj)
     return obj->GetWidth();
 }
 
-ALTERNET_UI_API void Image_LoadFromStream(Image* obj, InputStream* stream)
+ALTERNET_UI_API void Image_LoadFromStream(Image* obj, void* stream)
 {
     obj->LoadFromStream(stream);
 }

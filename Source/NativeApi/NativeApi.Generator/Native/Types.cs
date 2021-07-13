@@ -103,6 +103,9 @@ namespace ApiGenerator.Native
             if (usage.HasFlag(TypeUsage.Static))
                 return name;
 
+            if (TypeProvider.IsManagedServerApiType(type))
+                return "void*";
+
             return name + "*";
         }
     }
@@ -146,6 +149,9 @@ namespace ApiGenerator.Native
 
             if (usage.HasFlag(TypeUsage.Static))
                 return name;
+
+            if (TypeProvider.IsManagedServerApiType(type))
+                return "void*";
 
             return name + "*";
         }
