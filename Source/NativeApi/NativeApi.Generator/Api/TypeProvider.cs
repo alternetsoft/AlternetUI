@@ -17,7 +17,7 @@ namespace ApiGenerator.Api
         public static IEnumerable<Type> GetManagedServerClassTypes()
         {
             var assembly = typeof(NativeApi.Api.Window).Assembly;
-            return assembly.GetTypes().Where(x => IsApiType(x) && !IsStruct(x) && !x.IsEnum).ToArray();
+            return assembly.GetTypes().Where(x => IsManagedServerApiType(x) && !IsStruct(x) && !x.IsEnum).ToArray();
         }
 
         public static IEnumerable<Type> GetEnumTypes()

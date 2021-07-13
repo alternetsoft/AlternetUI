@@ -25,6 +25,7 @@ namespace ApiGenerator.Managed
 using System;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
+using System.Collections.Generic;
 using System.Security;");
 
             w.WriteLine("namespace Alternet.UI.Native.ManagedServers");
@@ -35,7 +36,7 @@ using System.Security;");
             var extendsClause = baseTypeName == null ? "" : " : " + baseTypeName;
             var abstractModifier = type.IsAbstract ? " abstract" : "";
 
-            w.WriteLine($"internal{abstractModifier} class {typeName}{extendsClause}");
+            w.WriteLine($"internal{abstractModifier} partial class {typeName}{extendsClause}");
             w.WriteLine("{");
             w.Indent++;
 
@@ -62,14 +63,14 @@ using System.Security;");
         private static void WriteTrampolineLocator(IndentedTextWriter w, Types types, MemberInfo[] members)
         {
             var declaringType = members[0].DeclaringType!;
-            var declaringTypeName = types.GetTypeName(declaringType.ToContextualType());
+            var declaringTypeName = TypeProvider.GetNativeName(members[0].DeclaringType!);
 
             w.WriteLine("static GCHandle trampolineLocatorCallbackGCHandle;");
-            w.WriteLine($"static Dictionary<{declaringTypeName}Trampoline, GCHandle> trampolineHandles;");
+            w.WriteLine($"static Dictionary<NativeApi.{declaringTypeName}Trampoline, GCHandle> trampolineHandles;");
 
             w.WriteLine();
 
-            w.WriteLine($"static {declaringType}() {{ SetTrampolineLocatorCallback(); }}");
+            w.WriteLine($"static {declaringTypeName}() {{ SetTrampolineLocatorCallback(); }}");
 
             w.WriteLine("static void SetTrampolineLocatorCallback()");
             using (new BlockIndent(w))
@@ -94,11 +95,11 @@ using System.Security;");
                                     w.WriteLine($"if (!trampolineHandles.TryGetValue({enumMemberName}, out var handle))");
                                     using (new BlockIndent(w))
                                     {
-                                        w.WriteLine($"handle = (IntPtr)GCHandle.Alloc({name});");
-                                        w.WriteLine($"trampolineHandles.Add(handle);");
+                                        w.WriteLine($"handle = (IntPtr)GCHandle.Alloc({name}_Trampoline);");
+                                        w.WriteLine($"trampolineHandles.Add(trampoline, handle);");
                                     }
 
-                                    w.WriteLine($"return handle;");
+                                    w.WriteLine($"return (IntPtr)handle;");
                                 }
                             }
 
@@ -125,7 +126,7 @@ using System.Security;");
 
             if (property.GetMethod != null)
             {
-                w.Write($"private static {propertyTypeName} Get{propertyName}_Trampoline(");
+                w.Write($"private static {propertyTypeName} {ManagedServerMemberProvider.GetGetterTrampolineName(property)}(");
                 if (!isStatic)
                     w.Write("IntPtr obj");
                 w.WriteLine(")");
@@ -137,15 +138,13 @@ using System.Security;");
                         w.Write($"(({managedDeclaringTypeName})GCHandle.FromIntPtr(obj).Target).");
                     w.WriteLine($"{propertyName};");
                 }
-
-                w.WriteLine();
             }
 
             if (property.SetMethod != null)
             {
-                w.Write($"private static {propertyTypeName} Set{propertyName}_Trampoline(");
+                w.Write($"private static void {ManagedServerMemberProvider.GetSetterTrampolineName(property)}(");
                 if (!isStatic)
-                    w.Write("IntPtr obj,");
+                    w.Write("IntPtr obj, ");
                 w.WriteLine($"{propertyTypeName} value)");
 
                 using (new BlockIndent(w))
@@ -195,7 +194,7 @@ using System.Security;");
                 }
             }
 
-            w.Write($"private static {returnTypeName} {methodName}_Trampoline({signatureParametersString})");
+            w.WriteLine($"private static {returnTypeName} {ManagedServerMemberProvider.GetMethodTrampolineName(method)}({signatureParametersString})");
 
             using (new BlockIndent(w))
             {

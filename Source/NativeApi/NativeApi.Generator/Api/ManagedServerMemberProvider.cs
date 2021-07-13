@@ -1,5 +1,4 @@
-﻿using ApiCommon;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -8,19 +7,21 @@ namespace ApiGenerator.Api
 {
     internal static class ManagedServerMemberProvider
     {
+        private const string Suffix = "_Trampoline";
+
         public static string GetGetterTrampolineName(PropertyInfo property)
         {
-            return $"{TypeProvider.GetNativeName(property.DeclaringType!)}_Get{property.Name}";
+            return $"Get{property.Name}{Suffix}";
         }
 
         public static string GetSetterTrampolineName(PropertyInfo property)
         {
-            return $"{TypeProvider.GetNativeName(property.DeclaringType!)}_Set{property.Name}";
+            return $"Set{property.Name}{Suffix}";
         }
 
         public static string GetMethodTrampolineName(MethodInfo method)
         {
-            return $"{TypeProvider.GetNativeName(method.DeclaringType!)}_{method.Name}";
+            return $"{method.Name}{Suffix}";
         }
 
         public static IEnumerable<string> GetTrampolineNames(MemberInfo member)
@@ -28,12 +29,12 @@ namespace ApiGenerator.Api
             if (member is PropertyInfo property)
             {
                 if (property.GetMethod != null)
-                    yield return GetGetterTrampolineName(property);
+                    yield return "Get" + property.Name;
                 if (property.SetMethod != null)
-                    yield return GetSetterTrampolineName(property);
+                    yield return "Set" + property.Name;
             }
             else if (member is MethodInfo method)
-                yield return GetMethodTrampolineName(method);
+                yield return method.Name;
             else
                 throw new Exception();
         }

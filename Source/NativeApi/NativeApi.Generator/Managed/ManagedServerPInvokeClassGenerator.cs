@@ -19,7 +19,7 @@ namespace ApiGenerator.Managed
             var type = apiType.Type;
 
             w.WriteLine("[SuppressUnmanagedCodeSecurity]");
-            w.WriteLine("private class NativeApi : NativeApiProvider");
+            w.WriteLine("class NativeApi : NativeApiProvider");
             w.WriteLine("{");
             w.Indent++;
             w.WriteLine("static NativeApi() => Initialize();");
@@ -74,8 +74,7 @@ namespace ApiGenerator.Managed
 
             if (!isStatic)
             {
-                var parameterType = types.GetTypeName(method.DeclaringType!.ToContextualType());
-                signatureParametersString.Append(parameterType + " obj");
+                signatureParametersString.Append("IntPtr obj");
 
                 if (parameters.Length > 0)
                     signatureParametersString.Append(", ");
