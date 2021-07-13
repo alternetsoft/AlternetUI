@@ -95,7 +95,7 @@ using System.Security;");
                                     w.WriteLine($"if (!trampolineHandles.TryGetValue({enumMemberName}, out var handle))");
                                     using (new BlockIndent(w))
                                     {
-                                        w.WriteLine($"handle = (IntPtr)GCHandle.Alloc({name}_Trampoline);");
+                                        w.WriteLine($"handle = GCHandle.Alloc((NativeApi.T{name}){name}_Trampoline);");
                                         w.WriteLine($"trampolineHandles.Add(trampoline, handle);");
                                     }
 
@@ -103,7 +103,7 @@ using System.Security;");
                                 }
                             }
 
-                            w.WriteLine($"default: throw new Exception(\"Unexpected {declaringTypeName}Trampoline value: \" + e);");
+                            w.WriteLine($"default: throw new Exception(\"Unexpected {declaringTypeName}Trampoline value: \" + trampoline);");
                         }
                     }
                     w.WriteLine(");");

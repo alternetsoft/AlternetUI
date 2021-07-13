@@ -41,6 +41,7 @@ namespace ApiGenerator.Managed
         }
 
         static void WriteDllImport(IndentedTextWriter w) => w.WriteLine("[DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]");
+        static void WriteDelegateAttributes(IndentedTextWriter w) => w.WriteLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]");
 
         private static void WriteProperty(IndentedTextWriter w, ApiProperty apiProperty, Types types)
         {
@@ -49,15 +50,15 @@ namespace ApiGenerator.Managed
 
             if (property.GetMethod != null)
             {
-                WriteDllImport(w);
-                w.WriteLine($"public static extern {propertyTypeName} {ManagedServerMemberProvider.GetGetterTrampolineName(property)}(IntPtr obj);");
+                WriteDelegateAttributes(w);
+                w.WriteLine($"public delegate {propertyTypeName} TGet{property.Name}(IntPtr obj);");
                 w.WriteLine();
             }
 
             if (property.SetMethod != null)
             {
-                WriteDllImport(w);
-                w.WriteLine($"public static extern void {ManagedServerMemberProvider.GetSetterTrampolineName(property)}(IntPtr obj, {propertyTypeName} value);");
+                WriteDelegateAttributes(w);
+                w.WriteLine($"public delegate void TSet{property.Name}(IntPtr obj, {propertyTypeName} value);");
                 w.WriteLine();
             }
         }
@@ -91,8 +92,8 @@ namespace ApiGenerator.Managed
                     signatureParametersString.Append(", ");
             }
 
-            WriteDllImport(w);
-            w.WriteLine($"public static extern {returnTypeName} {ManagedServerMemberProvider.GetMethodTrampolineName(method)}({signatureParametersString});");
+            WriteDelegateAttributes(w);
+            w.WriteLine($"public delegate {returnTypeName} T{method.Name}({signatureParametersString});");
             w.WriteLine();
         }
 
