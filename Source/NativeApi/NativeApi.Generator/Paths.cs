@@ -11,6 +11,7 @@ namespace ApiGenerator
             NativeSourcePath = Path.Combine(RepoRootPath, @"Source\Alternet.UI.Pal");
             NativeApiSourcePath = Path.Combine(NativeSourcePath, "Api");
             ManagedApiSourcePath = Path.Combine(RepoRootPath, @"Source\Alternet.UI\Native");
+            ManagedServerApiSourcePath = Path.Combine(ManagedApiSourcePath, @"ManagedServers");
         }
 
         public string RepoRootPath { get; }
@@ -20,5 +21,7 @@ namespace ApiGenerator
         public string NativeApiSourcePath { get; }
 
         public string ManagedApiSourcePath { get; }
+
+        public string ManagedServerApiSourcePath { get; }
     }
 }

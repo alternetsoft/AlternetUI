@@ -9,7 +9,7 @@ namespace ApiGenerator.Managed
     {
         public static void GenerateClasses(Paths paths, IEnumerable<Type> types)
         {
-            Console.WriteLine("Generating managed code...");
+            Console.WriteLine("Generating managed client code...");
 
             var apiClassGenerator = new ManagedApiClassGenerator();
             foreach (var type in types)
@@ -18,6 +18,20 @@ namespace ApiGenerator.Managed
                     ApiTypeFactory.Create(type, ApiTypeCreationMode.ManagedApiClass),
                     ApiTypeFactory.Create(type, ApiTypeCreationMode.ManagedPInvokeClass));
                 File.WriteAllText(Path.Combine(paths.ManagedApiSourcePath, type.Name + ".cs"), apiClass);
+            }
+        }
+
+        public static void GenerateManagedServerClasses(Paths paths, IEnumerable<Type> types)
+        {
+            Console.WriteLine("Generating managed server code...");
+
+            var apiClassGenerator = new ManagedApiServerClassGenerator();
+            foreach (var type in types)
+            {
+                var apiClass = apiClassGenerator.Generate(
+                    ApiTypeFactory.Create(type, ApiTypeCreationMode.ManagedApiClass),
+                    ApiTypeFactory.Create(type, ApiTypeCreationMode.ManagedPInvokeClass));
+                File.WriteAllText(Path.Combine(paths.ManagedServerApiSourcePath, type.Name + ".Generated.cs"), apiClass);
             }
         }
 
