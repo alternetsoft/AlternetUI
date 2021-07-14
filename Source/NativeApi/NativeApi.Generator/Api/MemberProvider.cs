@@ -58,5 +58,8 @@ namespace ApiGenerator.Api
 
         public static NativeEventAttribute GetEventAttribute(EventInfo e) =>
             e.GetCustomAttribute<NativeEventAttribute>() ?? new NativeEventAttribute();
+
+        public static string GetPInvokeAttributes(ParameterInfo p) =>
+            (p.GetCustomAttribute<PInvokeAttributesAttribute>() ?? new PInvokeAttributesAttribute("")).AttributesString;
     }
 }
