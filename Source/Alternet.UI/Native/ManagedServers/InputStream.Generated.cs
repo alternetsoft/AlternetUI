@@ -40,9 +40,8 @@ namespace Alternet.UI.Native
         }
         
         static GCHandle trampolineLocatorCallbackGCHandle;
-        static readonly Dictionary<NativeApi.InputStreamTrampoline, (GCHandle GCHandle, IntPtr Pointer)> trampolineHandles =
-            new Dictionary<NativeApi.InputStreamTrampoline, (GCHandle, IntPtr)>();
-
+        static readonly Dictionary<NativeApi.InputStreamTrampoline, (GCHandle GCHandle, IntPtr Pointer)> trampolineHandles = new Dictionary<NativeApi.InputStreamTrampoline, (GCHandle GCHandle, IntPtr Pointer)>();
+        
         static InputStream() { SetTrampolineLocatorCallback(); }
         static void SetTrampolineLocatorCallback()
         {
@@ -52,70 +51,66 @@ namespace Alternet.UI.Native
                 {
                     switch (trampoline)
                     {
-                        //case NativeApi.InputStreamTrampoline.Read:
-                        //{
-                        //    if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.Read, out var handle))
-                        //    {
-                        //        handle = GCHandle.Alloc((NativeApi.TRead)Read_Trampoline);
-                        //        trampolineHandles.Add(trampoline, handle);
-                        //    }
-                        //    return (IntPtr)handle;
-                        //}
-                        //case NativeApi.InputStreamTrampoline.GetLength:
-                        //{
-                        //    if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetLength, out var handle))
-                        //    {
-                        //        handle = GCHandle.Alloc((NativeApi.TGetLength)GetLength_Trampoline);
-                        //        trampolineHandles.Add(trampoline, handle);
-                        //    }
-                        //    return (IntPtr)handle;
-                        //}
-                        //case NativeApi.InputStreamTrampoline.GetIsOK:
-                        //{
-                        //    if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetIsOK, out var handle))
-                        //    {
-                        //        handle = GCHandle.Alloc((NativeApi.TGetIsOK)GetIsOK_Trampoline);
-                        //        trampolineHandles.Add(trampoline, handle);
-                        //    }
-                        //    return (IntPtr)handle;
-                        //}
-                        case NativeApi.InputStreamTrampoline.GetIsSeekable:
+                        case NativeApi.InputStreamTrampoline.Read:
+                        {
+                            if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.Read, out var handle))
                             {
-                                if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetIsSeekable, out var handle))
-                                {
-                                    var @delegate = (NativeApi.TGetIsSeekable)GetIsSeekable_Trampoline;
-                                    handle = (GCHandle.Alloc(@delegate), Marshal.GetFunctionPointerForDelegate(@delegate));
-                                    trampolineHandles.Add(trampoline, handle);
-                                }
-                                return handle.Pointer;
+                                var @delegate = (NativeApi.TRead)Read_Trampoline;
+                                handle = (GCHandle.Alloc(@delegate), Marshal.GetFunctionPointerForDelegate(@delegate));
+                                trampolineHandles.Add(trampoline, handle);
                             }
-                        //case NativeApi.InputStreamTrampoline.GetIsSeekable:
-                        //    {
-                        //        if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetIsSeekable, out var handle))
-                        //        {
-                        //            handle = GCHandle.Alloc((NativeApi.TGetIsSeekable)GetIsSeekable_Trampoline);
-                        //            trampolineHandles.Add(trampoline, handle);
-                        //        }
-                        //        return Marshal.GetFunctionPointerForDelegate((IntPtr)handle;
-                        //    }
-                        //case NativeApi.InputStreamTrampoline.GetPosition:
-                        //{
-                        //    if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetPosition, out var handle))
-                        //    {
-                        //        handle = GCHandle.Alloc((NativeApi.TGetPosition)GetPosition_Trampoline);
-                        //        trampolineHandles.Add(trampoline, handle);
-                        //    }
-                        //    return (IntPtr)handle;
-                        //}
-                        //case NativeApi.InputStreamTrampoline.SetPosition:
-                        //{
-                        //    if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.SetPosition, out var handle))
-                        //    {
-                        //        handle = GCHandle.Alloc((NativeApi.TSetPosition)SetPosition_Trampoline);
-                        //        trampolineHandles.Add(trampoline, handle);
-                        //    }
-                        //    return (IntPtr)handle;
-                        //}
+                            return handle.Pointer;
+                        }
+                        case NativeApi.InputStreamTrampoline.GetLength:
+                        {
+                            if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetLength, out var handle))
+                            {
+                                var @delegate = (NativeApi.TGetLength)GetLength_Trampoline;
+                                handle = (GCHandle.Alloc(@delegate), Marshal.GetFunctionPointerForDelegate(@delegate));
+                                trampolineHandles.Add(trampoline, handle);
+                            }
+                            return handle.Pointer;
+                        }
+                        case NativeApi.InputStreamTrampoline.GetIsOK:
+                        {
+                            if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetIsOK, out var handle))
+                            {
+                                var @delegate = (NativeApi.TGetIsOK)GetIsOK_Trampoline;
+                                handle = (GCHandle.Alloc(@delegate), Marshal.GetFunctionPointerForDelegate(@delegate));
+                                trampolineHandles.Add(trampoline, handle);
+                            }
+                            return handle.Pointer;
+                        }
+                        case NativeApi.InputStreamTrampoline.GetIsSeekable:
+                        {
+                            if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetIsSeekable, out var handle))
+                            {
+                                var @delegate = (NativeApi.TGetIsSeekable)GetIsSeekable_Trampoline;
+                                handle = (GCHandle.Alloc(@delegate), Marshal.GetFunctionPointerForDelegate(@delegate));
+                                trampolineHandles.Add(trampoline, handle);
+                            }
+                            return handle.Pointer;
+                        }
+                        case NativeApi.InputStreamTrampoline.GetPosition:
+                        {
+                            if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetPosition, out var handle))
+                            {
+                                var @delegate = (NativeApi.TGetPosition)GetPosition_Trampoline;
+                                handle = (GCHandle.Alloc(@delegate), Marshal.GetFunctionPointerForDelegate(@delegate));
+                                trampolineHandles.Add(trampoline, handle);
+                            }
+                            return handle.Pointer;
+                        }
+                        case NativeApi.InputStreamTrampoline.SetPosition:
+                        {
+                            if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.SetPosition, out var handle))
+                            {
+                                var @delegate = (NativeApi.TSetPosition)SetPosition_Trampoline;
+                                handle = (GCHandle.Alloc(@delegate), Marshal.GetFunctionPointerForDelegate(@delegate));
+                                trampolineHandles.Add(trampoline, handle);
+                            }
+                            return handle.Pointer;
+                        }
                         default: throw new Exception("Unexpected InputStreamTrampoline value: " + trampoline);
                     }
                 }
@@ -163,7 +158,7 @@ namespace Alternet.UI.Native
             public delegate void TSetPosition(IntPtr obj, long value);
             
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
-            public delegate System.IntPtr TRead(IntPtr obj, System.Byte[] buffer, System.IntPtr length);
+            public delegate System.IntPtr TRead(IntPtr obj, [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]System.Byte[] buffer, System.IntPtr length);
             
         }
     }

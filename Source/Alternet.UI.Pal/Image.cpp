@@ -21,6 +21,7 @@ namespace Alternet::UI
         wxASSERT(_image == nullptr);
         InputStream inputStream(stream);
         ManagedInputStream managedInputStream(&inputStream);
+        wxImage::AddHandler(new wxPNGHandler); // or wxInitAllImageHandlers()
         _image = new wxImage(managedInputStream);
     }
 }

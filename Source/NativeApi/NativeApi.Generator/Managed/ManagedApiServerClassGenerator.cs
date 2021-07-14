@@ -67,7 +67,7 @@ using System.Security;");
 
             w.WriteLine("static GCHandle trampolineLocatorCallbackGCHandle;");
 
-            var dictionaryType = $"Dictionary<NativeApi.{declaringTypeName}Trampoline, GCHandle>";
+            var dictionaryType = $"Dictionary<NativeApi.{declaringTypeName}Trampoline, (GCHandle GCHandle, IntPtr Pointer)>";
 
             w.WriteLine($"static readonly {dictionaryType} trampolineHandles = new {dictionaryType}();");
 
@@ -98,11 +98,12 @@ using System.Security;");
                                     w.WriteLine($"if (!trampolineHandles.TryGetValue({enumMemberName}, out var handle))");
                                     using (new BlockIndent(w))
                                     {
-                                        w.WriteLine($"handle = GCHandle.Alloc((NativeApi.T{name}){name}_Trampoline);");
+                                        w.WriteLine($"var @delegate = (NativeApi.T{name}){name}_Trampoline;");
+                                        w.WriteLine($"handle = (GCHandle.Alloc(@delegate), Marshal.GetFunctionPointerForDelegate(@delegate));");
                                         w.WriteLine($"trampolineHandles.Add(trampoline, handle);");
                                     }
 
-                                    w.WriteLine($"return (IntPtr)handle;");
+                                    w.WriteLine($"return handle.Pointer;");
                                 }
                             }
 
