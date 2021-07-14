@@ -40,8 +40,9 @@ namespace Alternet.UI.Native
         }
         
         static GCHandle trampolineLocatorCallbackGCHandle;
-        static readonly Dictionary<NativeApi.InputStreamTrampoline, GCHandle> trampolineHandles = new Dictionary<NativeApi.InputStreamTrampoline, GCHandle>();
-        
+        static readonly Dictionary<NativeApi.InputStreamTrampoline, (GCHandle GCHandle, IntPtr Pointer)> trampolineHandles =
+            new Dictionary<NativeApi.InputStreamTrampoline, (GCHandle, IntPtr)>();
+
         static InputStream() { SetTrampolineLocatorCallback(); }
         static void SetTrampolineLocatorCallback()
         {
@@ -51,60 +52,70 @@ namespace Alternet.UI.Native
                 {
                     switch (trampoline)
                     {
-                        case NativeApi.InputStreamTrampoline.Read:
-                        {
-                            if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.Read, out var handle))
-                            {
-                                handle = GCHandle.Alloc((NativeApi.TRead)Read_Trampoline);
-                                trampolineHandles.Add(trampoline, handle);
-                            }
-                            return (IntPtr)handle;
-                        }
-                        case NativeApi.InputStreamTrampoline.GetLength:
-                        {
-                            if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetLength, out var handle))
-                            {
-                                handle = GCHandle.Alloc((NativeApi.TGetLength)GetLength_Trampoline);
-                                trampolineHandles.Add(trampoline, handle);
-                            }
-                            return (IntPtr)handle;
-                        }
-                        case NativeApi.InputStreamTrampoline.GetIsOK:
-                        {
-                            if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetIsOK, out var handle))
-                            {
-                                handle = GCHandle.Alloc((NativeApi.TGetIsOK)GetIsOK_Trampoline);
-                                trampolineHandles.Add(trampoline, handle);
-                            }
-                            return (IntPtr)handle;
-                        }
+                        //case NativeApi.InputStreamTrampoline.Read:
+                        //{
+                        //    if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.Read, out var handle))
+                        //    {
+                        //        handle = GCHandle.Alloc((NativeApi.TRead)Read_Trampoline);
+                        //        trampolineHandles.Add(trampoline, handle);
+                        //    }
+                        //    return (IntPtr)handle;
+                        //}
+                        //case NativeApi.InputStreamTrampoline.GetLength:
+                        //{
+                        //    if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetLength, out var handle))
+                        //    {
+                        //        handle = GCHandle.Alloc((NativeApi.TGetLength)GetLength_Trampoline);
+                        //        trampolineHandles.Add(trampoline, handle);
+                        //    }
+                        //    return (IntPtr)handle;
+                        //}
+                        //case NativeApi.InputStreamTrampoline.GetIsOK:
+                        //{
+                        //    if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetIsOK, out var handle))
+                        //    {
+                        //        handle = GCHandle.Alloc((NativeApi.TGetIsOK)GetIsOK_Trampoline);
+                        //        trampolineHandles.Add(trampoline, handle);
+                        //    }
+                        //    return (IntPtr)handle;
+                        //}
                         case NativeApi.InputStreamTrampoline.GetIsSeekable:
-                        {
-                            if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetIsSeekable, out var handle))
                             {
-                                handle = GCHandle.Alloc((NativeApi.TGetIsSeekable)GetIsSeekable_Trampoline);
-                                trampolineHandles.Add(trampoline, handle);
+                                if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetIsSeekable, out var handle))
+                                {
+                                    var @delegate = (NativeApi.TGetIsSeekable)GetIsSeekable_Trampoline;
+                                    handle = (GCHandle.Alloc(@delegate), Marshal.GetFunctionPointerForDelegate(@delegate));
+                                    trampolineHandles.Add(trampoline, handle);
+                                }
+                                return handle.Pointer;
                             }
-                            return (IntPtr)handle;
-                        }
-                        case NativeApi.InputStreamTrampoline.GetPosition:
-                        {
-                            if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetPosition, out var handle))
-                            {
-                                handle = GCHandle.Alloc((NativeApi.TGetPosition)GetPosition_Trampoline);
-                                trampolineHandles.Add(trampoline, handle);
-                            }
-                            return (IntPtr)handle;
-                        }
-                        case NativeApi.InputStreamTrampoline.SetPosition:
-                        {
-                            if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.SetPosition, out var handle))
-                            {
-                                handle = GCHandle.Alloc((NativeApi.TSetPosition)SetPosition_Trampoline);
-                                trampolineHandles.Add(trampoline, handle);
-                            }
-                            return (IntPtr)handle;
-                        }
+                        //case NativeApi.InputStreamTrampoline.GetIsSeekable:
+                        //    {
+                        //        if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetIsSeekable, out var handle))
+                        //        {
+                        //            handle = GCHandle.Alloc((NativeApi.TGetIsSeekable)GetIsSeekable_Trampoline);
+                        //            trampolineHandles.Add(trampoline, handle);
+                        //        }
+                        //        return Marshal.GetFunctionPointerForDelegate((IntPtr)handle;
+                        //    }
+                        //case NativeApi.InputStreamTrampoline.GetPosition:
+                        //{
+                        //    if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.GetPosition, out var handle))
+                        //    {
+                        //        handle = GCHandle.Alloc((NativeApi.TGetPosition)GetPosition_Trampoline);
+                        //        trampolineHandles.Add(trampoline, handle);
+                        //    }
+                        //    return (IntPtr)handle;
+                        //}
+                        //case NativeApi.InputStreamTrampoline.SetPosition:
+                        //{
+                        //    if (!trampolineHandles.TryGetValue(NativeApi.InputStreamTrampoline.SetPosition, out var handle))
+                        //    {
+                        //        handle = GCHandle.Alloc((NativeApi.TSetPosition)SetPosition_Trampoline);
+                        //        trampolineHandles.Add(trampoline, handle);
+                        //    }
+                        //    return (IntPtr)handle;
+                        //}
                         default: throw new Exception("Unexpected InputStreamTrampoline value: " + trampoline);
                     }
                 }

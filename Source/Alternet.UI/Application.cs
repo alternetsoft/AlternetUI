@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 
 namespace Alternet.UI
 {
@@ -24,6 +25,10 @@ namespace Alternet.UI
         /// </summary>
         public Application()
         {
+            var image = new Native.Image();
+            image.LoadFromStream(new Native.InputStream(new FileStream(@"C:\Users\yezo\Desktop\TotemPole.png", FileMode.Open)));
+            var width = image.Width;
+
             nativeApplication = new Native.Application();
             current = this;
         }
