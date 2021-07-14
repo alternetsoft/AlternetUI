@@ -8,6 +8,8 @@ namespace Alternet::UI
     class Image
     {
 #include "Api/Image.inc"
+    public:
+        wxImage* GetImage();
 
     private:
         wxImage* _image = nullptr;

@@ -3,6 +3,7 @@ public:
 void FillRectangle(const RectangleF& rectangle, const Color& color);
 void DrawRectangle(const RectangleF& rectangle, const Color& color);
 void DrawText(const string& text, const PointF& origin, const Color& color);
+void DrawImage(Image* image, const PointF& origin);
 SizeF MeasureText(const string& text);
 void PushTransform(const SizeF& translation);
 void Pop();

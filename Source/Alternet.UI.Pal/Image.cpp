@@ -10,12 +10,6 @@ namespace Alternet::UI
     {
     }
 
-    int Image::GetWidth()
-    {
-        wxASSERT(_image);
-        return _image->GetWidth();
-    }
-
     void Image::LoadFromStream(void* stream)
     {
         wxASSERT(_image == nullptr);
@@ -23,5 +17,23 @@ namespace Alternet::UI
         ManagedInputStream managedInputStream(&inputStream);
         wxImage::AddHandler(new wxPNGHandler); // or wxInitAllImageHandlers()
         _image = new wxImage(managedInputStream);
+    }
+
+    wxImage* Image::GetImage()
+    {
+        wxASSERT(_image);
+        return _image;
+    }
+    
+    SizeF Image::GetSize()
+    {
+        wxASSERT(_image);
+        return toDip(_image->GetSize(), nullptr);
+    }
+    
+    Size Image::GetPixelSize()
+    {
+        wxASSERT(_image);
+        return _image->GetSize();
     }
 }

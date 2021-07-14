@@ -1,5 +1,6 @@
 ﻿using NativeApi.Api.ManagedServers;
 using System;
+using System.Drawing;
 
 namespace NativeApi.Api
 {
@@ -7,6 +8,7 @@ namespace NativeApi.Api
     {
         public void LoadFromStream(InputStream stream) => throw new Exception();
 
-        public int Width { get; }
+        public SizeF Size { get; }
+        public Size PixelSize { get; }
     }
 }

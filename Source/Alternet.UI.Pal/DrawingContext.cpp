@@ -12,6 +12,12 @@ namespace Alternet::UI
         wxDELETE(_dc);
     }
 
+    void DrawingContext::DrawImage(Image* image, const PointF& origin)
+    {
+        wxBitmap bitmap(*(image->GetImage()));
+        _dc->DrawBitmap(bitmap, fromDip(origin, _dc->GetWindow()));
+    }
+
     void DrawingContext::PushTransform(const SizeF& translation)
     {
         _translationStack.push(_translation);

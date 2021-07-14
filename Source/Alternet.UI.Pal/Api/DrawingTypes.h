@@ -55,7 +55,9 @@ namespace Alternet::UI
     {
         int Width = 0, Height = 0;
 
-        Size() {}
+        Size(const wxSize& s) : Width(s.x), Height(s.y)
+        {
+        }
 
         Size(int width, int height) : Width(width), Height(height) {}
 

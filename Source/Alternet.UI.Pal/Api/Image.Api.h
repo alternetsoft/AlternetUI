@@ -13,9 +13,14 @@ ALTERNET_UI_API Image* Image_Create()
     return new Image();
 }
 
-ALTERNET_UI_API int Image_GetWidth(Image* obj)
+ALTERNET_UI_API SizeF_C Image_GetSize(Image* obj)
 {
-    return obj->GetWidth();
+    return obj->GetSize();
+}
+
+ALTERNET_UI_API Size_C Image_GetPixelSize(Image* obj)
+{
+    return obj->GetPixelSize();
 }
 
 ALTERNET_UI_API void Image_LoadFromStream(Image* obj, void* stream)

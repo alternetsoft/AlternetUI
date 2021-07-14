@@ -1,7 +1,10 @@
 // Auto generated code, DO NOT MODIFY MANUALLY. Copyright AlterNET, 2021.
 public:
 
-int GetWidth();
+SizeF GetSize();
+
+
+Size GetPixelSize();
 
 void LoadFromStream(void* stream);
 public:

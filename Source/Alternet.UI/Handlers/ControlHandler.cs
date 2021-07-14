@@ -808,7 +808,7 @@ namespace Alternet.UI
             if (Control.UserPaint)
             {
                 using (var dc = new DrawingContext(NativeControl.OpenPaintDrawingContext()))
-                    Control.RaisePaint(new PaintEventArgs(dc, Bounds));
+                    Control.RaisePaint(new PaintEventArgs(dc, Bounds)); // todo: Bounds or ClientRectangle?
             }
             else if (NeedsPaint || hasVisualChildren)
             {

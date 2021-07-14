@@ -34,6 +34,12 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DrawText(NativePointer, text, origin, color);
         }
         
+        public void DrawImage(Image image, System.Drawing.PointF origin)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_DrawImage(NativePointer, image.NativePointer, origin);
+        }
+        
         public System.Drawing.SizeF MeasureText(string text)
         {
             CheckDisposed();
@@ -66,6 +72,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawText(IntPtr obj, string text, NativeApiTypes.PointF origin, NativeApiTypes.Color color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DrawImage(IntPtr obj, IntPtr image, NativeApiTypes.PointF origin);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.SizeF DrawingContext_MeasureText(IntPtr obj, string text);

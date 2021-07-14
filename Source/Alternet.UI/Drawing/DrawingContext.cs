@@ -33,6 +33,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Draws an image at the specified location.
+        /// </summary>
+        public void DrawImage(Image image, PointF origin)
+        {
+            dc.DrawImage(image.NativeImage, origin);
+        }
+
+        /// <summary>
         /// Draws the specified text string at the specified location.
         /// </summary>
         public void DrawText(string text, PointF origin, Color color)

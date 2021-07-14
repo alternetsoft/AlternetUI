@@ -17,12 +17,22 @@ namespace Alternet.UI.Native
         {
         }
         
-        public int Width
+        public System.Drawing.SizeF Size
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.Image_GetWidth(NativePointer);
+                return NativeApi.Image_GetSize(NativePointer);
+            }
+            
+        }
+        
+        public System.Drawing.Size PixelSize
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Image_GetPixelSize(NativePointer);
             }
             
         }
@@ -43,7 +53,10 @@ namespace Alternet.UI.Native
             public static extern IntPtr Image_Create();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Image_GetWidth(IntPtr obj);
+            public static extern NativeApiTypes.SizeF Image_GetSize(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Size Image_GetPixelSize(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Image_LoadFromStream(IntPtr obj, IntPtr stream);

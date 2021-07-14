@@ -25,11 +25,6 @@ namespace Alternet.UI
         /// </summary>
         public Application()
         {
-            var image = new Native.Image();
-            using (var stream = new Native.InputStream(new FileStream(@"C:\Users\yezo\Desktop\TotemPole.png", FileMode.Open)))
-                image.LoadFromStream(stream);
-            var width = image.Width;
-
             nativeApplication = new Native.Application();
             current = this;
         }

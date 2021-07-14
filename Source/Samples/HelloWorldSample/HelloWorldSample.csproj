@@ -28,10 +28,12 @@
 
     <ItemGroup>
       <None Remove="MainWindow.xaml" />
+      <None Remove="Resources\Car.png" />
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Include="MainWindow.xaml" />
+      <EmbeddedResource Include="Resources\Car.png" />
     </ItemGroup>
 
     <ItemGroup>
