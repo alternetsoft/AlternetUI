@@ -53,10 +53,10 @@ namespace Alternet.UI
                         return new AlignedPosition(layoutBounds.Top + childControl.Margin.Top, childPreferredSize.Height);
                     case VerticalAlignment.Center:
                         return new AlignedPosition(
-                            layoutBounds.Top + (layoutBounds.Height - (childPreferredSize.Height + childControl.Margin.Vertical)) + childControl.Margin.Top,
+                            layoutBounds.Top + (layoutBounds.Height - (childPreferredSize.Height + childControl.Margin.Vertical)) / 2 + childControl.Margin.Top,
                             childPreferredSize.Height);
                     case VerticalAlignment.Bottom:
-                        return new AlignedPosition(layoutBounds.Bottom - childControl.Margin.Vertical, childPreferredSize.Height);
+                        return new AlignedPosition(layoutBounds.Bottom - childControl.Margin.Vertical - childPreferredSize.Height, childPreferredSize.Height);
                     case VerticalAlignment.Stretch:
                         return new AlignedPosition(layoutBounds.Top + childControl.Margin.Top, layoutBounds.Height - childControl.Margin.Vertical);
                     default:
