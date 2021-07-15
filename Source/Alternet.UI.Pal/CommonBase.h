@@ -35,6 +35,7 @@
 #include <wx/stdpaths.h>
 #include <wx/notebook.h>
 #include <wx/spinctrl.h>
+#include <wx/listctrl.h>
 
 #define DELELTE_COPY_CONSTRUCTOR(TypeName) \
   TypeName(const TypeName&) = delete

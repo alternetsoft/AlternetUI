@@ -7,6 +7,7 @@
 #include "Api/GroupBox.Api.h"
 #include "Api/Image.Api.h"
 #include "Api/ListBox.Api.h"
+#include "Api/ListView.Api.h"
 #include "Api/MessageBox_.Api.h"
 #include "Api/NumericUpDown.Api.h"
 #include "Api/Panel.Api.h"

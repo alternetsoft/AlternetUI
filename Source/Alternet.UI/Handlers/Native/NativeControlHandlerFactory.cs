@@ -24,6 +24,7 @@ namespace Alternet.UI
             NumericUpDown => new NativeNumericUpDownHandler(),
             ListBox => new NativeListBoxHandler(),
             ComboBox => new NativeComboBoxHandler(),
+            ListView => new NativeListViewHandler(),
             _ => new GenericControlHandler()
         };
     }

@@ -5,5 +5,8 @@
     <EmbeddedResource Update="ComboBoxPage.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Update="ListViewPage.xaml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
