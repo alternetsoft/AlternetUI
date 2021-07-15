@@ -102,7 +102,7 @@ namespace Alternet::UI
             parentingWxWindow = GetParkingWindow();
         
         _wxWindow = CreateWxWindowCore(parentingWxWindow);
-        _wxWindow->SetDoubleBuffered(true); // todo: this removes flicker on TextBoxes, but causes it on custom composite controls
+        //_wxWindow->SetDoubleBuffered(true); // todo: this removes flicker on TextBoxes, but causes it on custom composite controls
         //_wxWindow->SetBackgroundStyle(wxBG_STYLE_PAINT);
 
         _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
