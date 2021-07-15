@@ -8,6 +8,14 @@ namespace Alternet.UI.Native
         Multiple,
     }
     
+    enum ListViewView
+    {
+        List,
+        Details,
+        SmallIcon,
+        LargeIcon,
+    }
+    
     enum WindowStartPosition
     {
         SystemDefaultLocation,

@@ -27,6 +27,21 @@ namespace Alternet.UI.Native
             
         }
         
+        public ListViewView CurrentView
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ListView_GetCurrentView(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ListView_SetCurrentView(NativePointer, value);
+            }
+        }
+        
         public void InsertItemAt(int index, string value)
         {
             CheckDisposed();
@@ -56,6 +71,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ListView_GetItemsCount(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern ListViewView ListView_GetCurrentView(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_SetCurrentView(IntPtr obj, ListViewView value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListView_InsertItemAt(IntPtr obj, int index, string value);

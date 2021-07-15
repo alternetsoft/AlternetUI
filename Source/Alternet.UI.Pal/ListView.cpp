@@ -43,6 +43,24 @@ namespace Alternet::UI
             _items.clear();
     }
 
+    ListViewView ListView::GetCurrentView()
+    {
+        return _view;
+    }
+
+    void ListView::SetCurrentView(ListViewView value)
+    {
+        if (_view == value)
+            return;
+
+        //auto oldSelectedIndex = GetSelectedIndex(); // todo
+
+        _view = value;
+        RecreateWxWindowIfNeeded();
+
+        //SetSelectedIndex(oldSelectedIndex);
+    }
+
     wxWindow* ListView::CreateWxWindowCore(wxWindow* parent)
     {
         auto value = new wxListView(
@@ -50,7 +68,7 @@ namespace Alternet::UI
             wxID_ANY,
             wxDefaultPosition,
             wxDefaultSize,
-            wxLC_LIST);
+            GetStyle());
 
 #ifdef __WXMSW__
         SetWindowTheme((HWND)value->GetHWND(), L"", NULL); // turn off "explorer style" item hover effects.
@@ -112,5 +130,28 @@ namespace Alternet::UI
     wxListCtrl* ListView::GetListCtrl()
     {
         return dynamic_cast<wxListCtrl*>(GetWxWindow());
+    }
+    
+    long ListView::GetStyle()
+    {
+        auto getViewStyle = [&]()
+        {
+            switch (_view)
+            {
+            case ListViewView::List:
+                return wxLC_LIST;
+            case ListViewView::Details:
+                return wxLC_REPORT;
+            case ListViewView::SmallIcon:
+                return wxLC_SMALL_ICON;
+            case ListViewView::LargeIcon:
+                return wxLC_ICON;
+            default:
+                wxASSERT(false);
+                throw 0;
+            }
+        };
+
+        return getViewStyle();
     }
 }

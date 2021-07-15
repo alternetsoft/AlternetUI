@@ -1,3 +1,5 @@
+using System;
+
 namespace Alternet.UI
 {
     internal class NativeListViewHandler : NativeControlHandler<ListView, Native.ListView>
@@ -12,17 +14,31 @@ namespace Alternet.UI
             base.OnAttach();
 
             ApplyItems();
+            ApplyView();
 
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
+            Control.ViewChanged += Control_ViewChanged;
+        }
+
+
+        private void Control_ViewChanged(object? sender, EventArgs e)
+        {
+            ApplyView();
         }
 
         protected override void OnDetach()
         {
             Control.Items.ItemInserted -= Items_ItemInserted;
             Control.Items.ItemRemoved -= Items_ItemRemoved;
+            Control.ViewChanged -= Control_ViewChanged;
 
             base.OnDetach();
+        }
+
+        private void ApplyView()
+        {
+            NativeControl.CurrentView = (Native.ListViewView)Control.View;
         }
 
         private void ApplyItems()

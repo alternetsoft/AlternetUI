@@ -17,6 +17,16 @@ ALTERNET_UI_API int ListView_GetItemsCount(ListView* obj)
     return obj->GetItemsCount();
 }
 
+ALTERNET_UI_API ListViewView ListView_GetCurrentView(ListView* obj)
+{
+    return obj->GetCurrentView();
+}
+
+ALTERNET_UI_API void ListView_SetCurrentView(ListView* obj, ListViewView value)
+{
+    obj->SetCurrentView(value);
+}
+
 ALTERNET_UI_API void ListView_InsertItemAt(ListView* obj, int index, const char16_t* value)
 {
     obj->InsertItemAt(index, value);

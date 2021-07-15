@@ -11,5 +11,7 @@ namespace NativeApi.Api
         public void RemoveItemAt(int index) => throw new Exception();
 
         public void ClearItems() => throw new Exception();
+
+        public ListViewView CurrentView { get; set; }
     }
 }

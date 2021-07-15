@@ -9,6 +9,14 @@ namespace Alternet::UI
         Multiple,
     };
     
+    enum class ListViewView
+    {
+        List,
+        Details,
+        SmallIcon,
+        LargeIcon,
+    };
+    
     enum class WindowStartPosition
     {
         SystemDefaultLocation,

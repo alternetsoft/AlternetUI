@@ -17,10 +17,13 @@ namespace Alternet::UI
 
     private:
         std::vector<string> _items;
+        ListViewView _view = ListViewView::List;
 
         void ApplyItems();
         void ReceiveItems();
 
         wxListCtrl* GetListCtrl();
+
+        long GetStyle();
     };
 }

@@ -1,11 +1,13 @@
 ﻿using Alternet.UI;
 using System;
+using System.Linq;
 
 namespace ControlsSample
 {
     internal class ListViewPage : Control
     {
         private ListView listView;
+        private ComboBox viewComboBox;
         private CheckBox allowMultipleSelectionCheckBox;
         private readonly IPageSite site;
 
@@ -29,7 +31,19 @@ namespace ControlsSample
 
             allowMultipleSelectionCheckBox = (CheckBox)FindControl("allowMultipleSelectionCheckBox");
             allowMultipleSelectionCheckBox.CheckedChanged += AllowMultipleSelectionCheckBox_CheckedChanged;
+
+            viewComboBox = (ComboBox)FindControl("viewComboBox");
+            viewComboBox.SelectedItemChanged += ViewComboBox_SelectedItemChanged;
+            foreach(var item in Enum.GetValues(typeof(ListViewView)))
+                viewComboBox.Items.Add(item ?? throw new Exception());
+            viewComboBox.SelectedIndex = 0;
+
             this.site = site;
+        }
+
+        private void ViewComboBox_SelectedItemChanged(object? sender, EventArgs e)
+        {
+            listView.View = (ListViewView)(viewComboBox.SelectedItem ?? throw new InvalidOperationException());
         }
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
