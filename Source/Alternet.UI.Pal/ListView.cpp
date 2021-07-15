@@ -1,5 +1,9 @@
 #include "ListView.h"
 
+#ifdef __WXMSW__
+#include <uxtheme.h>
+#endif
+
 namespace Alternet::UI
 {
     ListView::ListView()
@@ -48,11 +52,14 @@ namespace Alternet::UI
             wxDefaultSize,
             wxLC_LIST);
 
+#ifdef __WXMSW__
+        SetWindowTheme((HWND)value->GetHWND(), L"", NULL); // turn off "explorer style" item hover effects.
+#endif
+
         //value->Bind(wxEVT_ListView, &ListView::OnSelectionChanged, this);
 
         return value;
     }
-
 
     void ListView::OnWxWindowCreated()
     {
