@@ -19,10 +19,26 @@ namespace Alternet::UI
         }
     }
 
+    void ListView::InsertColumnAt(int index, const string& header)
+    {
+        _columns.emplace(_columns.begin() + index, header);
+
+        if (IsWxWindowCreated())
+            InsertColumn(GetListCtrl(), header, index);
+    }
+
+    void ListView::RemoveColumnAt(int index)
+    {
+        _columns.erase(_columns.begin() + index);
+
+        if (IsWxWindowCreated())
+            GetListCtrl()->DeleteColumn(index);
+    }
+
     void ListView::InsertItemAt(int index, const string& value)
     {
         if (IsWxWindowCreated())
-            GetListCtrl()->InsertItem(index, wxStr(value));
+            InsertItem(GetListCtrl(), value, index++);
         else
             _items.emplace(_items.begin() + index, value);
     }
@@ -82,6 +98,7 @@ namespace Alternet::UI
     void ListView::OnWxWindowCreated()
     {
         Control::OnWxWindowCreated();
+        ApplyColumns();
         ApplyItems();
     }
 
@@ -108,7 +125,7 @@ namespace Alternet::UI
 
         int index = 0;
         for (auto item : _items)
-            listCtrl->InsertItem(index++, wxStr(item));
+            InsertItem(listCtrl, item, index++);
 
         EndUpdate();
 
@@ -127,11 +144,38 @@ namespace Alternet::UI
             _items.push_back(wxStr(listCtrl->GetItemText(i)));
     }
 
+    void ListView::ApplyColumns()
+    {
+        BeginUpdate();
+
+        auto listCtrl = GetListCtrl();
+        listCtrl->DeleteAllColumns();
+
+        int index = 0;
+        for (auto item : _columns)
+            InsertColumn(listCtrl, item, index++);
+
+        EndUpdate();
+    }
+
     wxListCtrl* ListView::GetListCtrl()
     {
         return dynamic_cast<wxListCtrl*>(GetWxWindow());
     }
-    
+
+    void ListView::InsertItem(wxListCtrl* listCtrl, const string& item, int index)
+    {
+        //if (_view == ListViewView::Details)
+        //    return;
+
+        listCtrl->InsertItem(index, wxStr(item));
+    }
+
+    void ListView::InsertColumn(wxListCtrl* listCtrl, const string& title, int index)
+    {
+        listCtrl->InsertColumn(index, wxStr(title));
+    }
+
     long ListView::GetStyle()
     {
         auto getViewStyle = [&]()

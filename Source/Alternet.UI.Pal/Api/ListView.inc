@@ -10,6 +10,8 @@ void SetCurrentView(ListViewView value);
 void InsertItemAt(int index, const string& value);
 void RemoveItemAt(int index);
 void ClearItems();
+void InsertColumnAt(int index, const string& header);
+void RemoveColumnAt(int index);
 public:
 ListView();
 protected:

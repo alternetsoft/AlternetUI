@@ -12,6 +12,10 @@ namespace NativeApi.Api
 
         public void ClearItems() => throw new Exception();
 
+        public void InsertColumnAt(int index, string header) => throw new Exception();
+        
+        public void RemoveColumnAt(int index) => throw new Exception();
+
         public ListViewView CurrentView { get; set; }
     }
 }

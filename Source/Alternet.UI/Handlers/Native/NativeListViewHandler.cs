@@ -18,9 +18,10 @@ namespace Alternet.UI
 
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
+            Control.Columns.ItemInserted += Columns_ItemInserted;
+            Control.Columns.ItemRemoved += Columns_ItemRemoved;
             Control.ViewChanged += Control_ViewChanged;
         }
-
 
         private void Control_ViewChanged(object? sender, EventArgs e)
         {
@@ -32,6 +33,8 @@ namespace Alternet.UI
             Control.Items.ItemInserted -= Items_ItemInserted;
             Control.Items.ItemRemoved -= Items_ItemRemoved;
             Control.ViewChanged -= Control_ViewChanged;
+            Control.Columns.ItemInserted -= Columns_ItemInserted;
+            Control.Columns.ItemRemoved -= Columns_ItemRemoved;
 
             base.OnDetach();
         }
@@ -61,6 +64,16 @@ namespace Alternet.UI
         private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<ListViewItem> e)
         {
             NativeControl.RemoveItemAt(e.Index);
+        }
+
+        private void Columns_ItemInserted(object? sender, CollectionChangeEventArgs<ListViewColumn> e)
+        {
+            NativeControl.InsertColumnAt(e.Item.Index ?? throw new Exception(), e.Item.Title);
+        }
+
+        private void Columns_ItemRemoved(object? sender, CollectionChangeEventArgs<ListViewColumn> e)
+        {
+            NativeControl.RemoveColumnAt(e.Item.Index ?? throw new Exception());
         }
     }
 }

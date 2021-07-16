@@ -60,6 +60,18 @@ namespace Alternet.UI.Native
             NativeApi.ListView_ClearItems(NativePointer);
         }
         
+        public void InsertColumnAt(int index, string header)
+        {
+            CheckDisposed();
+            NativeApi.ListView_InsertColumnAt(NativePointer, index, header);
+        }
+        
+        public void RemoveColumnAt(int index)
+        {
+            CheckDisposed();
+            NativeApi.ListView_RemoveColumnAt(NativePointer, index);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -86,6 +98,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListView_ClearItems(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_InsertColumnAt(IntPtr obj, int index, string header);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_RemoveColumnAt(IntPtr obj, int index);
             
         }
     }

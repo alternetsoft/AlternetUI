@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// <summary>
         /// The index where the change occurred.
         /// </summary>
-        public int Index { get; }
+        public int Index { get; } // todo: make nullable
 
         /// <summary>
         /// The item affected by the change.

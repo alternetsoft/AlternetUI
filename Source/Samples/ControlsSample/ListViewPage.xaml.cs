@@ -21,6 +21,8 @@ namespace ControlsSample
             listView = (ListView)FindControl("listView");
             //listView.SelectionChanged += ListView_SelectionChanged;
 
+            listView.Columns.Add(new ListViewColumn("Column 1"));
+
             listView.Items.Add(new ListViewItem("One"));
             listView.Items.Add(new ListViewItem("Two"));
             listView.Items.Add(new ListViewItem("Three"));

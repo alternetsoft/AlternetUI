@@ -42,3 +42,13 @@ ALTERNET_UI_API void ListView_ClearItems(ListView* obj)
     obj->ClearItems();
 }
 
+ALTERNET_UI_API void ListView_InsertColumnAt(ListView* obj, int index, const char16_t* header)
+{
+    obj->InsertColumnAt(index, header);
+}
+
+ALTERNET_UI_API void ListView_RemoveColumnAt(ListView* obj, int index)
+{
+    obj->RemoveColumnAt(index);
+}
+
