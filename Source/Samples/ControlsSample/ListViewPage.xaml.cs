@@ -22,10 +22,11 @@ namespace ControlsSample
             //listView.SelectionChanged += ListView_SelectionChanged;
 
             listView.Columns.Add(new ListViewColumn("Column 1"));
+            listView.Columns.Add(new ListViewColumn("Column 2"));
 
             listView.Items.Add(new ListViewItem("One"));
             listView.Items.Add(new ListViewItem("Two"));
-            listView.Items.Add(new ListViewItem("Three"));
+            listView.Items.Add(new ListViewItem(new[] { "Three", "MyInfo" }));
 
             ((Button)FindControl("addItemButton")).Click += AddItemButton_Click;
             ((Button)FindControl("removeItemButton")).Click += RemoveItemButton_Click;

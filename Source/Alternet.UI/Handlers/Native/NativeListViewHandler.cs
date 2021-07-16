@@ -52,13 +52,22 @@ namespace Alternet.UI
             var control = Control;
             var items = control.Items;
 
-            for (var i = 0; i < items.Count; i++)
-                NativeControl.InsertItemAt(i, control.Items[i].Text);
+            for (var itemIndex = 0; itemIndex < items.Count; itemIndex++)
+            {
+                var item = control.Items[itemIndex];
+                InsertItem(itemIndex, item);
+            }
+        }
+
+        private void InsertItem(int itemIndex, ListViewItem item)
+        {
+            for (var columnIndex = 0; columnIndex < item.Cells.Count; columnIndex++)
+                NativeControl.InsertItemAt(itemIndex, item.Cells[columnIndex].Text, columnIndex);
         }
 
         private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<ListViewItem> e)
         {
-            NativeControl.InsertItemAt(e.Index, e.Item.Text);
+            InsertItem(e.Index, e.Item);
         }
 
         private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<ListViewItem> e)

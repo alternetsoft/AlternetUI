@@ -42,10 +42,10 @@ namespace Alternet.UI.Native
             }
         }
         
-        public void InsertItemAt(int index, string value)
+        public void InsertItemAt(int index, string text, int columnIndex)
         {
             CheckDisposed();
-            NativeApi.ListView_InsertItemAt(NativePointer, index, value);
+            NativeApi.ListView_InsertItemAt(NativePointer, index, text, columnIndex);
         }
         
         public void RemoveItemAt(int index)
@@ -91,7 +91,7 @@ namespace Alternet.UI.Native
             public static extern void ListView_SetCurrentView(IntPtr obj, ListViewView value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListView_InsertItemAt(IntPtr obj, int index, string value);
+            public static extern void ListView_InsertItemAt(IntPtr obj, int index, string text, int columnIndex);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListView_RemoveItemAt(IntPtr obj, int index);

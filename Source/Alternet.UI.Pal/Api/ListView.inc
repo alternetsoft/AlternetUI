@@ -7,7 +7,7 @@ int GetItemsCount();
 ListViewView GetCurrentView();
 void SetCurrentView(ListViewView value);
 
-void InsertItemAt(int index, const string& value);
+void InsertItemAt(int index, const string& text, int columnIndex);
 void RemoveItemAt(int index);
 void ClearItems();
 void InsertColumnAt(int index, const string& header);

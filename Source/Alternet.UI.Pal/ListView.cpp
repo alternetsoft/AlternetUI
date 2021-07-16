@@ -35,28 +35,57 @@ namespace Alternet::UI
             GetListCtrl()->DeleteColumn(index);
     }
 
-    void ListView::InsertItemAt(int index, const string& value)
+    void ListView::InsertItemAt(int index, const string& value, int columnIndex)
     {
+        wxListItem item;
+        item.SetText(wxStr(value));
+        item.SetColumn(columnIndex);
+        item.SetId(index);
+
+
+        Row& row = GetRow(index);
+        row.SetCell(columnIndex, item);
+
         if (IsWxWindowCreated())
-            InsertItem(GetListCtrl(), value, index++);
-        else
-            _items.emplace(_items.begin() + index, value);
+            InsertItem(GetListCtrl(), item);
+    }
+
+    ListView::Row& ListView::GetRow(int index)
+    {
+        for (int i = _rows.size(); i <= index; i++)
+            _rows.push_back(Row(index));
+
+        return _rows[index];
+    }
+
+    void ListView::InsertItem(wxListCtrl* listCtrl, const wxListItem& item)
+    {
+        if (_view == ListViewView::Details || item.GetColumn() == 0)
+        {
+            if (item.GetColumn() > 0)
+            {
+                wxListItem i(item);
+                GetListCtrl()->SetItem(i);
+            }
+            else
+                GetListCtrl()->InsertItem(item);
+        }
     }
 
     void ListView::RemoveItemAt(int index)
     {
+        _rows.erase(_rows.begin() + index);
+
         if (IsWxWindowCreated())
             GetListCtrl()->DeleteItem(index);
-        else
-            _items.erase(_items.begin() + index);
     }
 
     void ListView::ClearItems()
     {
+        _rows.clear();
+
         if (IsWxWindowCreated())
             GetListCtrl()->DeleteAllItems();
-        else
-            _items.clear();
     }
 
     ListViewView ListView::GetCurrentView()
@@ -102,18 +131,9 @@ namespace Alternet::UI
         ApplyItems();
     }
 
-    void ListView::OnWxWindowDestroying()
-    {
-        Control::OnWxWindowDestroying();
-        ReceiveItems();
-    }
-
     int ListView::GetItemsCount()
     {
-        if (IsWxWindowCreated())
-            return GetListCtrl()->GetItemCount();
-        else
-            return _items.size();
+        return _rows.size();
     }
 
     void ListView::ApplyItems()
@@ -124,24 +144,17 @@ namespace Alternet::UI
         listCtrl->DeleteAllItems();
 
         int index = 0;
-        for (auto item : _items)
-            InsertItem(listCtrl, item, index++);
+        for (auto row : _rows)
+        {
+            for (int columnIndex = 0; columnIndex < row.GetCellCount(); columnIndex++)
+            {
+                wxListItem cell;
+                row.GetCell(columnIndex, cell);
+                InsertItem(listCtrl, cell);
+            }
+        }
 
         EndUpdate();
-
-        _items.clear();
-    }
-
-    void ListView::ReceiveItems()
-    {
-        auto listCtrl = GetListCtrl();
-        _items.clear();
-
-        if (listCtrl->IsEmpty())
-            return;
-
-        for (int i = 0; i < (int)listCtrl->GetItemCount(); i++)
-            _items.push_back(wxStr(listCtrl->GetItemText(i)));
     }
 
     void ListView::ApplyColumns()
@@ -161,14 +174,6 @@ namespace Alternet::UI
     wxListCtrl* ListView::GetListCtrl()
     {
         return dynamic_cast<wxListCtrl*>(GetWxWindow());
-    }
-
-    void ListView::InsertItem(wxListCtrl* listCtrl, const string& item, int index)
-    {
-        //if (_view == ListViewView::Details)
-        //    return;
-
-        listCtrl->InsertItem(index, wxStr(item));
     }
 
     void ListView::InsertColumn(wxListCtrl* listCtrl, const string& title, int index)

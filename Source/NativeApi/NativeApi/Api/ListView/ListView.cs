@@ -6,7 +6,7 @@ namespace NativeApi.Api
     {
         public int ItemsCount { get; }
 
-        public void InsertItemAt(int index, string value) => throw new Exception();
+        public void InsertItemAt(int index, string text, int columnIndex) => throw new Exception();
 
         public void RemoveItemAt(int index) => throw new Exception();
 

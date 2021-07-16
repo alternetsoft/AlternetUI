@@ -27,9 +27,9 @@ ALTERNET_UI_API void ListView_SetCurrentView(ListView* obj, ListViewView value)
     obj->SetCurrentView(value);
 }
 
-ALTERNET_UI_API void ListView_InsertItemAt(ListView* obj, int index, const char16_t* value)
+ALTERNET_UI_API void ListView_InsertItemAt(ListView* obj, int index, const char16_t* text, int columnIndex)
 {
-    obj->InsertItemAt(index, value);
+    obj->InsertItemAt(index, text, columnIndex);
 }
 
 ALTERNET_UI_API void ListView_RemoveItemAt(ListView* obj, int index)
