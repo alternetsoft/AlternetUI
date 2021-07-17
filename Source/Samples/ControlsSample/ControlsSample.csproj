@@ -31,6 +31,14 @@
       <None Remove="ListBoxPage.xaml" />
       <None Remove="ListViewPage.xaml" />
       <None Remove="MainWindow.xaml" />
+      <None Remove="Resources\ImageListIcons\Large\Calendar32.png" />
+      <None Remove="Resources\ImageListIcons\Large\LineGraph32.png" />
+      <None Remove="Resources\ImageListIcons\Large\Pencil32.png" />
+      <None Remove="Resources\ImageListIcons\Large\Photo32.png" />
+      <None Remove="Resources\ImageListIcons\Small\Calendar16.png" />
+      <None Remove="Resources\ImageListIcons\Small\LineGraph16.png" />
+      <None Remove="Resources\ImageListIcons\Small\Pencil16.png" />
+      <None Remove="Resources\ImageListIcons\Small\Photo16.png" />
     </ItemGroup>
 
     <ItemGroup>
@@ -42,6 +50,14 @@
       </EmbeddedResource>
       <EmbeddedResource Include="ListBoxPage.xaml" />
       <EmbeddedResource Include="MainWindow.xaml" />
+      <EmbeddedResource Include="Resources\ImageListIcons\Large\Calendar32.png" />
+      <EmbeddedResource Include="Resources\ImageListIcons\Large\LineGraph32.png" />
+      <EmbeddedResource Include="Resources\ImageListIcons\Large\Pencil32.png" />
+      <EmbeddedResource Include="Resources\ImageListIcons\Large\Photo32.png" />
+      <EmbeddedResource Include="Resources\ImageListIcons\Small\Calendar16.png" />
+      <EmbeddedResource Include="Resources\ImageListIcons\Small\LineGraph16.png" />
+      <EmbeddedResource Include="Resources\ImageListIcons\Small\Pencil16.png" />
+      <EmbeddedResource Include="Resources\ImageListIcons\Small\Photo16.png" />
     </ItemGroup>
 
     <ItemGroup>

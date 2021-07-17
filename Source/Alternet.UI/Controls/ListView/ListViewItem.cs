@@ -30,6 +30,7 @@ namespace Alternet.UI
         public ListViewItem(string text, int imageIndex)
         {
             Text = text;
+            ImageIndex = imageIndex;
         }
 
         /// <summary>

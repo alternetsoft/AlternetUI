@@ -1,6 +1,8 @@
 ﻿using Alternet.UI;
 using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace ControlsSample
 {
@@ -21,23 +23,16 @@ namespace ControlsSample
             listView = (ListView)FindControl("listView");
             //listView.SelectionChanged += ListView_SelectionChanged;
 
-            //var smallImageList = new ImageList();
-            //smallImageList.Images.Add(new Bitmap(@"C:\Users\yezo\Desktop\Four.png"));
-            //smallImageList.ImageSize = new Size(16, 16);
-            //listView.SmallImageList = smallImageList;
-
-            //var largeImageList = new ImageList();
-            //largeImageList.ImageSize = new Size(32, 32);
-            //largeImageList.Images.Add(new Bitmap(@"C:\Users\yezo\Desktop\FourLarge.png"));
-            //listView.LargeImageList = largeImageList;
-
+            var imageLists = LoadImageLists();
+            listView.SmallImageList = imageLists.Small;
+            listView.LargeImageList = imageLists.Large;
 
             listView.Columns.Add(new ListViewColumn("Column 1"));
             listView.Columns.Add(new ListViewColumn("Column 2"));
 
-            listView.Items.Add(new ListViewItem("One"));
-            listView.Items.Add(new ListViewItem("Two"));
-            listView.Items.Add(new ListViewItem(new[] { "Three", "MyInfo" }));
+            listView.Items.Add(new ListViewItem("One", 0));
+            listView.Items.Add(new ListViewItem("Two", 1));
+            listView.Items.Add(new ListViewItem(new[] { "Three", "MyInfo" }, 2));
 
             ((Button)FindControl("addItemButton")).Click += AddItemButton_Click;
             ((Button)FindControl("removeItemButton")).Click += RemoveItemButton_Click;
@@ -53,6 +48,30 @@ namespace ControlsSample
             viewComboBox.SelectedIndex = 0;
 
             this.site = site;
+        }
+
+        (ImageList Small, ImageList Large) LoadImageLists()
+        {
+            var smallImageList = new ImageList();
+            var largeImageList = new ImageList();
+
+            var assembly = Assembly.GetExecutingAssembly();
+            var allResourceNames = assembly.GetManifestResourceNames();
+            var allImageResourceNames = allResourceNames.Where(x => x.StartsWith("ControlsSample.Resources.ImageListIcons."));
+            var smallImageResourceNames = allImageResourceNames.Where(x => x.Contains(".Small.")).ToArray();
+            var largeImageResourceNames = allImageResourceNames.Where(x => x.Contains(".Large.")).ToArray();
+            if (smallImageResourceNames.Length != largeImageResourceNames.Length)
+                throw new Exception();
+
+            Image LoadImage(string name) => new Image(assembly.GetManifestResourceStream(name) ?? throw new Exception());
+
+            for (int i = 0; i < smallImageResourceNames.Length; i++)
+            {
+                smallImageList.Images.Add(LoadImage(smallImageResourceNames[i]));
+                largeImageList.Images.Add(LoadImage(largeImageResourceNames[i]));
+            }
+
+            return (smallImageList, largeImageList);
         }
 
         private void ViewComboBox_SelectedItemChanged(object? sender, EventArgs e)

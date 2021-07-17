@@ -21,7 +21,27 @@ namespace Alternet.UI
         public ImageList() // todo: lifetime
         {
             NativeImageList = new Native.ImageList();
+
+            Images.ItemInserted += Images_ItemInserted;
+            Images.ItemRemoved += Images_ItemRemoved;
         }
+
+        private void Images_ItemInserted(object? sender, CollectionChangeEventArgs<Image> e)
+        {
+            NativeImageList.AddImage(e.Item.NativeImage);
+        }
+
+        private void Images_ItemRemoved(object? sender, CollectionChangeEventArgs<Image> e)
+        {
+            // todo
+            throw new Exception();
+        }
+
+        /// <summary>
+        /// Gets the <see cref="Image"/> collection for this image list.
+        /// </summary>
+        /// <value>The collection of images.</value>
+        public Collection<Image> Images { get; } = new Collection<Image>();
 
         /// <summary>
         /// Gets or sets the size of the images in the image list.
