@@ -7,7 +7,7 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API Button* Button_Create()
+ALTERNET_UI_API Button* Button_Create_()
 {
     return new Button();
 }

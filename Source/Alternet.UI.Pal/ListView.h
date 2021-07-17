@@ -1,5 +1,6 @@
 #pragma once
 #include "Control.h"
+#include "ImageList.h"
 #include "ApiTypes.h"
 
 namespace Alternet::UI
@@ -8,13 +9,15 @@ namespace Alternet::UI
     {
 #include "Api/ListView.inc"
     public:
-
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
     protected:
         void OnWxWindowCreated() override;
 
     private:
+        void ApplyLargeImageList(wxListView* value);
+        void ApplySmallImageList(wxListView* value);
+
 
         class Row
         {
@@ -58,6 +61,9 @@ namespace Alternet::UI
             int _index;
         };
 
+        ImageList* _smallImageList = nullptr;
+        ImageList* _largeImageList = nullptr;
+
         std::vector<Row> _rows;
         std::vector<string> _columns;
         ListViewView _view = ListViewView::List;
@@ -65,10 +71,10 @@ namespace Alternet::UI
         void ApplyItems();
         void ApplyColumns();
 
-        wxListCtrl* GetListCtrl();
+        wxListView* GetListView();
 
-        void InsertColumn(wxListCtrl* listCtrl, const string& title, int index);
-        void InsertItem(wxListCtrl* listCtrl, const wxListItem& item);
+        void InsertColumn(wxListView* listView, const string& title, int index);
+        void InsertItem(wxListView* listView, const wxListItem& item);
 
         Row& GetRow(int index);
 

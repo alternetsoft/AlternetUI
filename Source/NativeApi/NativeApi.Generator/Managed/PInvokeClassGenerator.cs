@@ -59,7 +59,7 @@ namespace ApiGenerator.Managed
             var declaringTypeName = TypeProvider.GetNativeName(type);
 
             WriteDllImport(w);
-            w.WriteLine($"public static extern IntPtr {declaringTypeName}_Create();");
+            w.WriteLine($"public static extern IntPtr {declaringTypeName}_Create_();");
             w.WriteLine();
         }
 

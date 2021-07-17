@@ -10,7 +10,7 @@ namespace Alternet.UI.Native
     {
         public CheckBox()
         {
-            SetNativePointer(NativeApi.CheckBox_Create());
+            SetNativePointer(NativeApi.CheckBox_Create_());
             SetEventCallback();
         }
         
@@ -95,7 +95,7 @@ namespace Alternet.UI.Native
             public static extern void CheckBox_SetEventCallback(CheckBoxEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr CheckBox_Create();
+            public static extern IntPtr CheckBox_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string CheckBox_GetText(IntPtr obj);

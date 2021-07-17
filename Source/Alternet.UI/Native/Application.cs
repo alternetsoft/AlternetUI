@@ -10,7 +10,7 @@ namespace Alternet.UI.Native
     {
         public Application()
         {
-            SetNativePointer(NativeApi.Application_Create());
+            SetNativePointer(NativeApi.Application_Create_());
         }
         
         public Application(IntPtr nativePointer) : base(nativePointer)
@@ -30,7 +30,7 @@ namespace Alternet.UI.Native
             static NativeApi() => Initialize();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Application_Create();
+            public static extern IntPtr Application_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_Run(IntPtr obj, IntPtr window);

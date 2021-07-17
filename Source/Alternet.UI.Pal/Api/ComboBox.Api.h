@@ -7,7 +7,7 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API ComboBox* ComboBox_Create()
+ALTERNET_UI_API ComboBox* ComboBox_Create_()
 {
     return new ComboBox();
 }

@@ -176,7 +176,7 @@ namespace ApiGenerator.Native
             var declaringTypeName = types.GetTypeName(type.ToContextualType(), TypeUsage.Static);
             var returnTypeName = types.GetTypeName(type.ToContextualType(), TypeUsage.Return);
 
-            w.WriteLine($"{ExportMacro} {returnTypeName} {declaringTypeName}_Create()");
+            w.WriteLine($"{ExportMacro} {returnTypeName} {declaringTypeName}_Create_()");
             w.WriteLine("{");
             w.Indent++;
 
@@ -189,7 +189,7 @@ namespace ApiGenerator.Native
 
         static string GetCToCppArgument(ContextualType type, string name)
         {
-            if (type.Nullability == Nullability.Nullable)
+            if (type.Nullability == Nullability.Nullable && !TypeProvider.IsComplexType(type))
                 return $"ToOptional({name})";
             
             return name;

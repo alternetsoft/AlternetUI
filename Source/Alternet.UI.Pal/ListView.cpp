@@ -24,7 +24,7 @@ namespace Alternet::UI
         _columns.emplace(_columns.begin() + index, header);
 
         if (IsWxWindowCreated())
-            InsertColumn(GetListCtrl(), header, index);
+            InsertColumn(GetListView(), header, index);
     }
 
     void ListView::RemoveColumnAt(int index)
@@ -32,22 +32,22 @@ namespace Alternet::UI
         _columns.erase(_columns.begin() + index);
 
         if (IsWxWindowCreated())
-            GetListCtrl()->DeleteColumn(index);
+            GetListView()->DeleteColumn(index);
     }
 
-    void ListView::InsertItemAt(int index, const string& value, int columnIndex)
+    void ListView::InsertItemAt(int index, const string& value, int columnIndex, int imageIndex)
     {
         wxListItem item;
         item.SetText(wxStr(value));
         item.SetColumn(columnIndex);
         item.SetId(index);
-
+        item.SetImage(imageIndex);
 
         Row& row = GetRow(index);
         row.SetCell(columnIndex, item);
 
         if (IsWxWindowCreated())
-            InsertItem(GetListCtrl(), item);
+            InsertItem(GetListView(), item);
     }
 
     ListView::Row& ListView::GetRow(int index)
@@ -58,17 +58,17 @@ namespace Alternet::UI
         return _rows[index];
     }
 
-    void ListView::InsertItem(wxListCtrl* listCtrl, const wxListItem& item)
+    void ListView::InsertItem(wxListView* listView, const wxListItem& item)
     {
         if (_view == ListViewView::Details || item.GetColumn() == 0)
         {
             if (item.GetColumn() > 0)
             {
                 wxListItem i(item);
-                GetListCtrl()->SetItem(i);
+                GetListView()->SetItem(i);
             }
             else
-                GetListCtrl()->InsertItem(item);
+                GetListView()->InsertItem(item);
         }
     }
 
@@ -77,7 +77,7 @@ namespace Alternet::UI
         _rows.erase(_rows.begin() + index);
 
         if (IsWxWindowCreated())
-            GetListCtrl()->DeleteItem(index);
+            GetListView()->DeleteItem(index);
     }
 
     void ListView::ClearItems()
@@ -85,7 +85,7 @@ namespace Alternet::UI
         _rows.clear();
 
         if (IsWxWindowCreated())
-            GetListCtrl()->DeleteAllItems();
+            GetListView()->DeleteAllItems();
     }
 
     ListViewView ListView::GetCurrentView()
@@ -106,6 +106,34 @@ namespace Alternet::UI
         //SetSelectedIndex(oldSelectedIndex);
     }
 
+    ImageList* ListView::GetSmallImageList()
+    {
+        return _smallImageList;
+    }
+
+    void ListView::SetSmallImageList(ImageList* value)
+    {
+        // todo: memory management.
+        _smallImageList = value;
+        if (IsWxWindowCreated())
+            ApplySmallImageList(GetListView());
+    }
+
+    ImageList* ListView::GetLargeImageList()
+    {
+        return _largeImageList;
+        if (IsWxWindowCreated())
+            ApplyLargeImageList(GetListView());
+    }
+
+    void ListView::SetLargeImageList(ImageList* value)
+    {
+        // todo: memory management.
+        _largeImageList = value;
+        if (IsWxWindowCreated())
+            ApplyLargeImageList(GetListView());
+    }
+
     wxWindow* ListView::CreateWxWindowCore(wxWindow* parent)
     {
         auto value = new wxListView(
@@ -119,9 +147,22 @@ namespace Alternet::UI
         SetWindowTheme((HWND)value->GetHWND(), L"", NULL); // turn off "explorer style" item hover effects.
 #endif
 
+        ApplySmallImageList(value);
+        ApplyLargeImageList(value);
+
         //value->Bind(wxEVT_ListView, &ListView::OnSelectionChanged, this);
 
         return value;
+    }
+
+    void ListView::ApplyLargeImageList(wxListView* value)
+    {
+        value->SetImageList(_largeImageList == nullptr ? nullptr : _largeImageList->GetImageList(), wxIMAGE_LIST_NORMAL);
+    }
+
+    void ListView::ApplySmallImageList(wxListView* value)
+    {
+        value->SetImageList(_smallImageList == nullptr ? nullptr : _smallImageList->GetImageList(), wxIMAGE_LIST_SMALL);
     }
 
     void ListView::OnWxWindowCreated()
@@ -140,8 +181,8 @@ namespace Alternet::UI
     {
         BeginUpdate();
 
-        auto listCtrl = GetListCtrl();
-        listCtrl->DeleteAllItems();
+        auto listView = GetListView();
+        listView->DeleteAllItems();
 
         int index = 0;
         for (auto row : _rows)
@@ -150,7 +191,7 @@ namespace Alternet::UI
             {
                 wxListItem cell;
                 row.GetCell(columnIndex, cell);
-                InsertItem(listCtrl, cell);
+                InsertItem(listView, cell);
             }
         }
 
@@ -161,24 +202,24 @@ namespace Alternet::UI
     {
         BeginUpdate();
 
-        auto listCtrl = GetListCtrl();
-        listCtrl->DeleteAllColumns();
+        auto listView = GetListView();
+        listView->DeleteAllColumns();
 
         int index = 0;
         for (auto item : _columns)
-            InsertColumn(listCtrl, item, index++);
+            InsertColumn(listView, item, index++);
 
         EndUpdate();
     }
 
-    wxListCtrl* ListView::GetListCtrl()
+    wxListView* ListView::GetListView()
     {
-        return dynamic_cast<wxListCtrl*>(GetWxWindow());
+        return dynamic_cast<wxListView*>(GetWxWindow());
     }
 
-    void ListView::InsertColumn(wxListCtrl* listCtrl, const string& title, int index)
+    void ListView::InsertColumn(wxListView* listView, const string& title, int index)
     {
-        listCtrl->InsertColumn(index, wxStr(title));
+        listView->InsertColumn(index, wxStr(title));
     }
 
     long ListView::GetStyle()

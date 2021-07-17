@@ -8,7 +8,7 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API TabControl* TabControl_Create()
+ALTERNET_UI_API TabControl* TabControl_Create_()
 {
     return new TabControl();
 }

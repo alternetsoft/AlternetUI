@@ -8,7 +8,7 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API Image* Image_Create()
+ALTERNET_UI_API Image* Image_Create_()
 {
     return new Image();
 }

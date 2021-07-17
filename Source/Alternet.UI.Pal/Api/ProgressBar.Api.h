@@ -7,7 +7,7 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API ProgressBar* ProgressBar_Create()
+ALTERNET_UI_API ProgressBar* ProgressBar_Create_()
 {
     return new ProgressBar();
 }

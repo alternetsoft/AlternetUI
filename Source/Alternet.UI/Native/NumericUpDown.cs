@@ -10,7 +10,7 @@ namespace Alternet.UI.Native
     {
         public NumericUpDown()
         {
-            SetNativePointer(NativeApi.NumericUpDown_Create());
+            SetNativePointer(NativeApi.NumericUpDown_Create_());
             SetEventCallback();
         }
         
@@ -110,7 +110,7 @@ namespace Alternet.UI.Native
             public static extern void NumericUpDown_SetEventCallback(NumericUpDownEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr NumericUpDown_Create();
+            public static extern IntPtr NumericUpDown_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int NumericUpDown_GetMinimum(IntPtr obj);

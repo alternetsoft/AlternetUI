@@ -7,7 +7,7 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API NumericUpDown* NumericUpDown_Create()
+ALTERNET_UI_API NumericUpDown* NumericUpDown_Create_()
 {
     return new NumericUpDown();
 }

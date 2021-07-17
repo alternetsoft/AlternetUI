@@ -10,7 +10,7 @@ namespace Alternet.UI.Native
     {
         public ProgressBar()
         {
-            SetNativePointer(NativeApi.ProgressBar_Create());
+            SetNativePointer(NativeApi.ProgressBar_Create_());
         }
         
         public ProgressBar(IntPtr nativePointer) : base(nativePointer)
@@ -84,7 +84,7 @@ namespace Alternet.UI.Native
             static NativeApi() => Initialize();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr ProgressBar_Create();
+            public static extern IntPtr ProgressBar_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ProgressBar_GetMinimum(IntPtr obj);

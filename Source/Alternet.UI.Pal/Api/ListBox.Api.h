@@ -7,7 +7,7 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API ListBox* ListBox_Create()
+ALTERNET_UI_API ListBox* ListBox_Create_()
 {
     return new ListBox();
 }

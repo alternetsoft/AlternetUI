@@ -7,7 +7,7 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API Panel* Panel_Create()
+ALTERNET_UI_API Panel* Panel_Create_()
 {
     return new Panel();
 }

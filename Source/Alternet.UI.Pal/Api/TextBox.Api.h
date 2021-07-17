@@ -7,7 +7,7 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API TextBox* TextBox_Create()
+ALTERNET_UI_API TextBox* TextBox_Create_()
 {
     return new TextBox();
 }

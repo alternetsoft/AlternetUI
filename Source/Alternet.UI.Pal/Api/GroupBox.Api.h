@@ -7,7 +7,7 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API GroupBox* GroupBox_Create()
+ALTERNET_UI_API GroupBox* GroupBox_Create_()
 {
     return new GroupBox();
 }

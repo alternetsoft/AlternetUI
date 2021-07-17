@@ -10,7 +10,7 @@ namespace Alternet.UI.Native
     {
         public Button()
         {
-            SetNativePointer(NativeApi.Button_Create());
+            SetNativePointer(NativeApi.Button_Create_());
             SetEventCallback();
         }
         
@@ -80,7 +80,7 @@ namespace Alternet.UI.Native
             public static extern void Button_SetEventCallback(ButtonEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Button_Create();
+            public static extern IntPtr Button_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string Button_GetText(IntPtr obj);

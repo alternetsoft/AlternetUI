@@ -10,7 +10,7 @@ namespace Alternet.UI.Native
     {
         public Panel()
         {
-            SetNativePointer(NativeApi.Panel_Create());
+            SetNativePointer(NativeApi.Panel_Create_());
         }
         
         public Panel(IntPtr nativePointer) : base(nativePointer)
@@ -24,7 +24,7 @@ namespace Alternet.UI.Native
             static NativeApi() => Initialize();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Panel_Create();
+            public static extern IntPtr Panel_Create_();
             
         }
     }

@@ -6,7 +6,11 @@ namespace NativeApi.Api
     {
         public int ItemsCount { get; }
 
-        public void InsertItemAt(int index, string text, int columnIndex) => throw new Exception();
+        public ImageList? SmallImageList { get; set; }
+        
+        public ImageList? LargeImageList { get; set; }
+
+        public void InsertItemAt(int index, string text, int columnIndex, int imageIndex) => throw new Exception();
 
         public void RemoveItemAt(int index) => throw new Exception();
 

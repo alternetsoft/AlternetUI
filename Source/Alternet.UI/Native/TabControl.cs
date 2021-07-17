@@ -10,7 +10,7 @@ namespace Alternet.UI.Native
     {
         public TabControl()
         {
-            SetNativePointer(NativeApi.TabControl_Create());
+            SetNativePointer(NativeApi.TabControl_Create_());
         }
         
         public TabControl(IntPtr nativePointer) : base(nativePointer)
@@ -52,7 +52,7 @@ namespace Alternet.UI.Native
             static NativeApi() => Initialize();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr TabControl_Create();
+            public static extern IntPtr TabControl_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int TabControl_GetPageCount(IntPtr obj);

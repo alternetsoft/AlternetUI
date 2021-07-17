@@ -7,7 +7,7 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API CheckBox* CheckBox_Create()
+ALTERNET_UI_API CheckBox* CheckBox_Create_()
 {
     return new CheckBox();
 }

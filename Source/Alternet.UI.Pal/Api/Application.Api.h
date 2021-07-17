@@ -8,7 +8,7 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API Application* Application_Create()
+ALTERNET_UI_API Application* Application_Create_()
 {
     return new Application();
 }

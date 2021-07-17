@@ -10,7 +10,7 @@ namespace Alternet.UI.Native
     {
         public RadioButton()
         {
-            SetNativePointer(NativeApi.RadioButton_Create());
+            SetNativePointer(NativeApi.RadioButton_Create_());
             SetEventCallback();
         }
         
@@ -95,7 +95,7 @@ namespace Alternet.UI.Native
             public static extern void RadioButton_SetEventCallback(RadioButtonEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr RadioButton_Create();
+            public static extern IntPtr RadioButton_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string RadioButton_GetText(IntPtr obj);

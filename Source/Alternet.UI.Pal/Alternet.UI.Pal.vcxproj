@@ -192,6 +192,7 @@
     <ClCompile Include="DrawingContext.cpp" />
     <ClCompile Include="GroupBox.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="ImageList.cpp" />
     <ClCompile Include="ListBox.cpp" />
     <ClCompile Include="ListView.cpp" />
     <ClCompile Include="ManagedServerApi.cpp" />
@@ -220,6 +221,7 @@
     <ClInclude Include="Api\Enums.h" />
     <ClInclude Include="Api\GroupBox.Api.h" />
     <ClInclude Include="Api\Image.Api.h" />
+    <ClInclude Include="Api\ImageList.Api.h" />
     <ClInclude Include="Api\InputStream.Api.h" />
     <ClInclude Include="Api\InputStream.h" />
     <ClInclude Include="Api\ListBox.Api.h" />
@@ -246,6 +248,7 @@
     <ClInclude Include="DrawingContext.h" />
     <ClInclude Include="GroupBox.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="ImageList.h" />
     <ClInclude Include="ListBox.h" />
     <ClInclude Include="ListView.h" />
     <ClInclude Include="MessageBox_.h" />
@@ -270,6 +273,7 @@
     <None Include="Api\DrawingContext.inc" />
     <None Include="Api\GroupBox.inc" />
     <None Include="Api\Image.inc" />
+    <None Include="Api\ImageList.inc" />
     <None Include="Api\ListBox.inc" />
     <None Include="Api\ListView.inc" />
     <None Include="Api\MessageBox_.inc" />

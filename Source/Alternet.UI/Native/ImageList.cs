@@ -6,41 +6,36 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal class Image : NativeObject
+    internal class ImageList : NativeObject
     {
-        public Image()
+        public ImageList()
         {
-            SetNativePointer(NativeApi.Image_Create_());
+            SetNativePointer(NativeApi.ImageList_Create_());
         }
         
-        public Image(IntPtr nativePointer) : base(nativePointer)
+        public ImageList(IntPtr nativePointer) : base(nativePointer)
         {
         }
         
-        public System.Drawing.SizeF Size
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Image_GetSize(NativePointer);
-            }
-            
-        }
-        
-        public System.Drawing.Size PixelSize
+        public System.Drawing.Size PixelImageSize
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.Image_GetPixelSize(NativePointer);
+                return NativeApi.ImageList_GetPixelImageSize(NativePointer);
             }
             
+            set
+            {
+                CheckDisposed();
+                NativeApi.ImageList_SetPixelImageSize(NativePointer, value);
+            }
         }
         
-        public void LoadFromStream(InputStream stream)
+        public void AddImage(Image image)
         {
             CheckDisposed();
-            NativeApi.Image_LoadFromStream(NativePointer, stream.NativePointer);
+            NativeApi.ImageList_AddImage(NativePointer, image.NativePointer);
         }
         
         
@@ -50,16 +45,16 @@ namespace Alternet.UI.Native
             static NativeApi() => Initialize();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Image_Create_();
+            public static extern IntPtr ImageList_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.SizeF Image_GetSize(IntPtr obj);
+            public static extern NativeApiTypes.Size ImageList_GetPixelImageSize(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Size Image_GetPixelSize(IntPtr obj);
+            public static extern void ImageList_SetPixelImageSize(IntPtr obj, NativeApiTypes.Size value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_LoadFromStream(IntPtr obj, IntPtr stream);
+            public static extern void ImageList_AddImage(IntPtr obj, IntPtr image);
             
         }
     }

@@ -10,7 +10,7 @@ namespace Alternet.UI.Native
     {
         public Slider()
         {
-            SetNativePointer(NativeApi.Slider_Create());
+            SetNativePointer(NativeApi.Slider_Create_());
             SetEventCallback();
         }
         
@@ -155,7 +155,7 @@ namespace Alternet.UI.Native
             public static extern void Slider_SetEventCallback(SliderEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Slider_Create();
+            public static extern IntPtr Slider_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Slider_GetMinimum(IntPtr obj);

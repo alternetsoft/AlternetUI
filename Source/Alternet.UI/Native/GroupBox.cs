@@ -10,7 +10,7 @@ namespace Alternet.UI.Native
     {
         public GroupBox()
         {
-            SetNativePointer(NativeApi.GroupBox_Create());
+            SetNativePointer(NativeApi.GroupBox_Create_());
         }
         
         public GroupBox(IntPtr nativePointer) : base(nativePointer)
@@ -39,7 +39,7 @@ namespace Alternet.UI.Native
             static NativeApi() => Initialize();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr GroupBox_Create();
+            public static extern IntPtr GroupBox_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string? GroupBox_GetTitle(IntPtr obj);

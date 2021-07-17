@@ -10,7 +10,7 @@ namespace Alternet.UI.Native
     {
         public Window()
         {
-            SetNativePointer(NativeApi.Window_Create());
+            SetNativePointer(NativeApi.Window_Create_());
             SetEventCallback();
         }
         
@@ -99,7 +99,7 @@ namespace Alternet.UI.Native
             public static extern void Window_SetEventCallback(WindowEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Window_Create();
+            public static extern IntPtr Window_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string Window_GetTitle(IntPtr obj);

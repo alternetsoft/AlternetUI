@@ -10,7 +10,7 @@ namespace Alternet.UI.Native
     {
         public TextBox()
         {
-            SetNativePointer(NativeApi.TextBox_Create());
+            SetNativePointer(NativeApi.TextBox_Create_());
             SetEventCallback();
         }
         
@@ -95,7 +95,7 @@ namespace Alternet.UI.Native
             public static extern void TextBox_SetEventCallback(TextBoxEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr TextBox_Create();
+            public static extern IntPtr TextBox_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string TextBox_GetText(IntPtr obj);

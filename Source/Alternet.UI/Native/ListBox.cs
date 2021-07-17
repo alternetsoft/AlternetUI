@@ -10,7 +10,7 @@ namespace Alternet.UI.Native
     {
         public ListBox()
         {
-            SetNativePointer(NativeApi.ListBox_Create());
+            SetNativePointer(NativeApi.ListBox_Create_());
             SetEventCallback();
         }
         
@@ -145,7 +145,7 @@ namespace Alternet.UI.Native
             public static extern void ListBox_SetEventCallback(ListBoxEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr ListBox_Create();
+            public static extern IntPtr ListBox_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ListBox_GetItemsCount(IntPtr obj);

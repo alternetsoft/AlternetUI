@@ -97,7 +97,7 @@ using System.Security;");
             using (new BlockIndent(w))
             {
                 if (visibility == MemberVisibility.Public)
-                    w.WriteLine($"SetNativePointer(NativeApi.{TypeProvider.GetNativeName(type)}_Create());");
+                    w.WriteLine($"SetNativePointer(NativeApi.{TypeProvider.GetNativeName(type)}_Create_());");
 
                 if (hasEvents)
                     w.WriteLine("SetEventCallback();");
@@ -134,7 +134,8 @@ using System.Security;");
         {
             var property = apiProperty.Property;
             var propertyName = property.Name;
-            var propertyTypeName = types.GetTypeName(property.ToContextualProperty());
+            var contextualProperty = property.ToContextualProperty();
+            var propertyTypeName = types.GetTypeName(contextualProperty);
             var nativeDeclaringTypeName = TypeProvider.GetNativeName(property.DeclaringType!);
 
             w.WriteLine($"public {GetModifiers(property)}{propertyTypeName} {propertyName}");
@@ -154,7 +155,7 @@ using System.Security;");
                             w.Write("return ");
                             w.Write(
                             string.Format(
-                                GetNativeToManagedFormatString(property.ToContextualProperty()),
+                                GetNativeToManagedFormatString(contextualProperty),
                                 $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}(NativePointer)"));
                             w.WriteLine(";");
                         }
@@ -170,7 +171,8 @@ using System.Security;");
                     using (new BlockIndent(w))
                     {
                         w.WriteLine("CheckDisposed();");
-                        w.WriteLine($"NativeApi.{nativeDeclaringTypeName}_Set{propertyName}(NativePointer, {GetManagedToNativeArgument(property.PropertyType, "value")});");
+                        w.WriteLine(
+                            $"NativeApi.{nativeDeclaringTypeName}_Set{propertyName}(NativePointer, {GetManagedToNativeArgument(contextualProperty, "value")});");
                     }
             
                 }
@@ -235,9 +237,10 @@ using System.Security;");
             {
                 var parameter = parameters[i];
 
-                var parameterType = types.GetTypeName(parameter.ToContextualParameter());
+                var contextualParameter = parameter.ToContextualParameter();
+                var parameterType = types.GetTypeName(contextualParameter);
                 signatureParametersString.Append(parameterType + " " + parameter.Name);
-                callParametersString.Append(GetManagedToNativeArgument(parameter.ParameterType, parameter.Name!));
+                callParametersString.Append(GetManagedToNativeArgument(contextualParameter, parameter.Name!));
 
                 if (i < parameters.Length - 1)
                 {
@@ -341,10 +344,15 @@ using System.Security;");
             }
         }
 
-        static string GetManagedToNativeArgument(Type type, string name)
+        static string GetManagedToNativeArgument(ContextualType type, string name)
         {
             if (TypeProvider.IsComplexType(type))
+            {
+                if (type.Nullability == Nullability.Nullable)
+                    return name + "?.NativePointer ?? IntPtr.Zero";
+
                 return name + ".NativePointer";
+            }
 
             return name;
         }

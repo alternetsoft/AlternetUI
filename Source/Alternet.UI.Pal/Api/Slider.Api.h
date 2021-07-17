@@ -7,7 +7,7 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API Slider* Slider_Create()
+ALTERNET_UI_API Slider* Slider_Create_()
 {
     return new Slider();
 }

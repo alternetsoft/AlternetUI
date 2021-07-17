@@ -7,7 +7,7 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API Window* Window_Create()
+ALTERNET_UI_API Window* Window_Create_()
 {
     return new Window();
 }

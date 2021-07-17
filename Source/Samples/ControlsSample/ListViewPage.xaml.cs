@@ -21,6 +21,17 @@ namespace ControlsSample
             listView = (ListView)FindControl("listView");
             //listView.SelectionChanged += ListView_SelectionChanged;
 
+            //var smallImageList = new ImageList();
+            //smallImageList.Images.Add(new Bitmap(@"C:\Users\yezo\Desktop\Four.png"));
+            //smallImageList.ImageSize = new Size(16, 16);
+            //listView.SmallImageList = smallImageList;
+
+            //var largeImageList = new ImageList();
+            //largeImageList.ImageSize = new Size(32, 32);
+            //largeImageList.Images.Add(new Bitmap(@"C:\Users\yezo\Desktop\FourLarge.png"));
+            //listView.LargeImageList = largeImageList;
+
+
             listView.Columns.Add(new ListViewColumn("Column 1"));
             listView.Columns.Add(new ListViewColumn("Column 2"));
 

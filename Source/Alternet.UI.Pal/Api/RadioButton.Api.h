@@ -7,7 +7,7 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API RadioButton* RadioButton_Create()
+ALTERNET_UI_API RadioButton* RadioButton_Create_()
 {
     return new RadioButton();
 }

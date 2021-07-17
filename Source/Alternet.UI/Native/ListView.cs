@@ -10,7 +10,7 @@ namespace Alternet.UI.Native
     {
         public ListView()
         {
-            SetNativePointer(NativeApi.ListView_Create());
+            SetNativePointer(NativeApi.ListView_Create_());
         }
         
         public ListView(IntPtr nativePointer) : base(nativePointer)
@@ -25,6 +25,36 @@ namespace Alternet.UI.Native
                 return NativeApi.ListView_GetItemsCount(NativePointer);
             }
             
+        }
+        
+        public ImageList? SmallImageList
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeObject.GetFromNativePointer<ImageList>(NativeApi.ListView_GetSmallImageList(NativePointer), p => new ImageList(p));
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ListView_SetSmallImageList(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+            }
+        }
+        
+        public ImageList? LargeImageList
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeObject.GetFromNativePointer<ImageList>(NativeApi.ListView_GetLargeImageList(NativePointer), p => new ImageList(p));
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ListView_SetLargeImageList(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+            }
         }
         
         public ListViewView CurrentView
@@ -42,10 +72,10 @@ namespace Alternet.UI.Native
             }
         }
         
-        public void InsertItemAt(int index, string text, int columnIndex)
+        public void InsertItemAt(int index, string text, int columnIndex, int imageIndex)
         {
             CheckDisposed();
-            NativeApi.ListView_InsertItemAt(NativePointer, index, text, columnIndex);
+            NativeApi.ListView_InsertItemAt(NativePointer, index, text, columnIndex, imageIndex);
         }
         
         public void RemoveItemAt(int index)
@@ -79,10 +109,22 @@ namespace Alternet.UI.Native
             static NativeApi() => Initialize();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr ListView_Create();
+            public static extern IntPtr ListView_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ListView_GetItemsCount(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr ListView_GetSmallImageList(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_SetSmallImageList(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr ListView_GetLargeImageList(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_SetLargeImageList(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern ListViewView ListView_GetCurrentView(IntPtr obj);
@@ -91,7 +133,7 @@ namespace Alternet.UI.Native
             public static extern void ListView_SetCurrentView(IntPtr obj, ListViewView value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListView_InsertItemAt(IntPtr obj, int index, string text, int columnIndex);
+            public static extern void ListView_InsertItemAt(IntPtr obj, int index, string text, int columnIndex, int imageIndex);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListView_RemoveItemAt(IntPtr obj, int index);
