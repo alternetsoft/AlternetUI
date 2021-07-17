@@ -33,6 +33,7 @@ namespace ControlsSample
             listView.Items.Add(new ListViewItem("One", 0));
             listView.Items.Add(new ListViewItem("Two", 1));
             listView.Items.Add(new ListViewItem(new[] { "Three", "MyInfo" }, 2));
+            listView.Items.Add(new ListViewItem(new[] { "Four", "MyInfo 2" }, 3));
 
             ((Button)FindControl("addItemButton")).Click += AddItemButton_Click;
             ((Button)FindControl("removeItemButton")).Click += RemoveItemButton_Click;

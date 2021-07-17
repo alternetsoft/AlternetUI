@@ -15,17 +15,31 @@ namespace Alternet.UI
 
             ApplyItems();
             ApplyView();
+            ApplySmallImageList();
+            ApplyLargeImageList();
 
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
             Control.Columns.ItemInserted += Columns_ItemInserted;
             Control.Columns.ItemRemoved += Columns_ItemRemoved;
             Control.ViewChanged += Control_ViewChanged;
+            Control.SmallImageListChanged += Control_SmallImageListChanged;
+            Control.LargeImageListChanged += Control_LargeImageListChanged;
         }
 
         private void Control_ViewChanged(object? sender, EventArgs e)
         {
             ApplyView();
+        }
+
+        private void Control_SmallImageListChanged(object? sender, EventArgs e)
+        {
+            ApplySmallImageList();
+        }
+
+        private void Control_LargeImageListChanged(object? sender, EventArgs e)
+        {
+            ApplyLargeImageList();
         }
 
         protected override void OnDetach()
@@ -35,6 +49,8 @@ namespace Alternet.UI
             Control.ViewChanged -= Control_ViewChanged;
             Control.Columns.ItemInserted -= Columns_ItemInserted;
             Control.Columns.ItemRemoved -= Columns_ItemRemoved;
+            Control.SmallImageListChanged -= Control_SmallImageListChanged;
+            Control.LargeImageListChanged -= Control_LargeImageListChanged;
 
             base.OnDetach();
         }
@@ -42,6 +58,16 @@ namespace Alternet.UI
         private void ApplyView()
         {
             NativeControl.CurrentView = (Native.ListViewView)Control.View;
+        }
+
+        private void ApplySmallImageList()
+        {
+            NativeControl.SmallImageList = Control.SmallImageList?.NativeImageList;
+        }
+
+        private void ApplyLargeImageList()
+        {
+            NativeControl.LargeImageList = Control.LargeImageList?.NativeImageList;
         }
 
         private void ApplyItems()
