@@ -21,17 +21,20 @@ namespace Alternet::UI
 
     void ListView::InsertColumnAt(int index, const string& header)
     {
-        _columns.emplace(_columns.begin() + index, header);
+        wxListItem column;
+        column.SetText(wxStr(header));
+        column.SetColumn(index);
+        _columns.emplace(_columns.begin() + index, column);
 
-        if (IsWxWindowCreated())
-            InsertColumn(GetListView(), header, index);
+        if (IsWxWindowCreated() && _view == ListViewView::Details)
+            InsertColumn(GetListView(),column);
     }
 
     void ListView::RemoveColumnAt(int index)
     {
         _columns.erase(_columns.begin() + index);
 
-        if (IsWxWindowCreated())
+        if (IsWxWindowCreated() && _view == ListViewView::Details)
             GetListView()->DeleteColumn(index);
     }
 
@@ -206,8 +209,8 @@ namespace Alternet::UI
         listView->DeleteAllColumns();
 
         int index = 0;
-        for (auto item : _columns)
-            InsertColumn(listView, item, index++);
+        for (auto column : _columns)
+            InsertColumn(listView, column);
 
         EndUpdate();
     }
@@ -217,9 +220,9 @@ namespace Alternet::UI
         return dynamic_cast<wxListView*>(GetWxWindow());
     }
 
-    void ListView::InsertColumn(wxListView* listView, const string& title, int index)
+    void ListView::InsertColumn(wxListView* listView, const wxListItem& column)
     {
-        listView->InsertColumn(index, wxStr(title));
+        listView->InsertColumn(column.GetColumn(), column);
     }
 
     long ListView::GetStyle()

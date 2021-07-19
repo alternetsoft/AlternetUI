@@ -65,7 +65,7 @@ namespace Alternet::UI
         ImageList* _largeImageList = nullptr;
 
         std::vector<Row> _rows;
-        std::vector<string> _columns;
+        std::vector<wxListItem> _columns;
         ListViewView _view = ListViewView::List;
 
         void ApplyItems();
@@ -73,7 +73,7 @@ namespace Alternet::UI
 
         wxListView* GetListView();
 
-        void InsertColumn(wxListView* listView, const string& title, int index);
+        void InsertColumn(wxListView* listView, const wxListItem& column);
         void InsertItem(wxListView* listView, const wxListItem& item);
 
         Row& GetRow(int index);
