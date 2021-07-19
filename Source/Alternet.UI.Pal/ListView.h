@@ -74,7 +74,7 @@ namespace Alternet::UI
         wxListView* GetListView();
 
         void InsertColumn(wxListView* listView, const wxListItem& column);
-        void InsertItem(wxListView* listView, const wxListItem& item);
+        void InsertItem(wxListView* listView, wxListItem& item);
 
         Row& GetRow(int index);
 

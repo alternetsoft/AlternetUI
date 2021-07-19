@@ -63,7 +63,7 @@ namespace Alternet::UI
         return _rows[index];
     }
 
-    void ListView::InsertItem(wxListView* listView, const wxListItem& item)
+    void ListView::InsertItem(wxListView* listView, wxListItem& item)
     {
         if (_view == ListViewView::Details || item.GetColumn() == 0)
         {
