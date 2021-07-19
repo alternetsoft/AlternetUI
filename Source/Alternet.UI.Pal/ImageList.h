@@ -12,6 +12,14 @@ namespace Alternet::UI
         wxImageList* GetImageList();
 
     private:
-        wxImageList* _imageList;
+
+        void CreateImageList();
+        void DestroyImageList();
+        void RecreateImageList();
+
+        void AddImageCore(const wxImage& image);
+
+        Size _pixelImageSize;
+        wxImageList* _imageList = nullptr;
     };
 }

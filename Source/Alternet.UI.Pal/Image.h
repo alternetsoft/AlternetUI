@@ -9,10 +9,10 @@ namespace Alternet::UI
     {
 #include "Api/Image.inc"
     public:
-        wxImage* GetImage();
+        wxImage GetImage();
 
     private:
-        wxImage* _image = nullptr;
+        wxImage _image; // wxImage is reference-counted, so use copy-by-value.
 
         class ManagedInputStream : public wxInputStream
         {

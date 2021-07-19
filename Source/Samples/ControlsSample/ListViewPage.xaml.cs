@@ -30,10 +30,7 @@ namespace ControlsSample
             listView.Columns.Add(new ListViewColumn("Column 1"));
             listView.Columns.Add(new ListViewColumn("Column 2"));
 
-            listView.Items.Add(new ListViewItem("One", 0));
-            listView.Items.Add(new ListViewItem("Two", 1));
-            listView.Items.Add(new ListViewItem(new[] { "Three", "MyInfo" }, 2));
-            listView.Items.Add(new ListViewItem(new[] { "Four", "MyInfo 2" }, 3));
+            AddItems(10);
 
             ((Button)FindControl("addItemButton")).Click += AddItemButton_Click;
             ((Button)FindControl("removeItemButton")).Click += RemoveItemButton_Click;
@@ -54,7 +51,7 @@ namespace ControlsSample
         (ImageList Small, ImageList Large) LoadImageLists()
         {
             var smallImageList = new ImageList();
-            var largeImageList = new ImageList();
+            var largeImageList = new ImageList() { PixelImageSize = new System.Drawing.Size(32, 32) };
 
             var assembly = Assembly.GetExecutingAssembly();
             var allResourceNames = assembly.GetManifestResourceNames();
@@ -82,13 +79,18 @@ namespace ControlsSample
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
         {
+            AddItems(5000);
+        }
+
+        private void AddItems(int count)
+        {
             int start = listView.Items.Count + 1;
 
             listView.BeginUpdate();
             try
             {
-                for (int i = start; i < start + 5000; i++)
-                    listView.Items.Add(new ListViewItem("Item " + i));
+                for (int i = start; i < start + count; i++)
+                    listView.Items.Add(new ListViewItem(new[] { "Item " + i, "Some Info " + i }, i % 4));
             }
             finally
             {

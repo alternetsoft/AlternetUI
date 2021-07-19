@@ -163,7 +163,7 @@ namespace Alternet.UI
                 if (largeImageList == value)
                     return;
 
-                smallImageList = value;
+                largeImageList = value;
 
                 LargeImageListChanged?.Invoke(this, EventArgs.Empty);
             }

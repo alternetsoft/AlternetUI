@@ -41,7 +41,9 @@ namespace Alternet::UI
         item.SetText(wxStr(value));
         item.SetColumn(columnIndex);
         item.SetId(index);
-        item.SetImage(imageIndex);
+        
+        if (columnIndex == 0)
+            item.SetImage(imageIndex); // for now, allow images only for the first column, same as in WinForms.
 
         Row& row = GetRow(index);
         row.SetCell(columnIndex, item);
@@ -122,8 +124,6 @@ namespace Alternet::UI
     ImageList* ListView::GetLargeImageList()
     {
         return _largeImageList;
-        if (IsWxWindowCreated())
-            ApplyLargeImageList(GetListView());
     }
 
     void ListView::SetLargeImageList(ImageList* value)
@@ -235,7 +235,7 @@ namespace Alternet::UI
             case ListViewView::SmallIcon:
                 return wxLC_SMALL_ICON;
             case ListViewView::LargeIcon:
-                return wxLC_ICON;
+                return wxLC_ICON | wxLC_AUTOARRANGE;
             default:
                 wxASSERT(false);
                 throw 0;
