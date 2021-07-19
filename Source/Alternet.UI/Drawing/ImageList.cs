@@ -48,10 +48,8 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The <see cref="Size"/> that defines the height and width, in pixels, of the images in the list. The default size is 16 by 16.</value>
         /// <remarks>
-        /// <para>
-        /// Setting the <see cref="PixelImageSize"/> property prior to adding images to the image
-        /// collection causes the images to be resized to the image size specified.
-        /// </para>
+        /// Setting the <see cref="PixelImageSize"/> to a different value than the actual pixel size of the images in
+        /// the <see cref="Images"/>collection causes the images to be resized to the size specified.
         /// </remarks>
         public Size PixelImageSize { get => NativeImageList.PixelImageSize; set => NativeImageList.PixelImageSize = value; }
 
