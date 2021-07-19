@@ -99,7 +99,7 @@ namespace Alternet::UI
         if (_parent != nullptr)
             parentingWxWindow = _parent->GetParentingWxWindow();
         else
-            parentingWxWindow = getParkingWindow();
+            parentingWxWindow = ParkingWindow::GetWindow();
         
         _wxWindow = CreateWxWindowCore(parentingWxWindow);
         //_wxWindow->SetDoubleBuffered(true); // todo: this removes flicker on TextBoxes, but causes it on custom composite controls
@@ -444,7 +444,7 @@ namespace Alternet::UI
     void Control::UpdateWxWindowParent()
     {
         auto wxWindow = GetWxWindow();
-        auto parkingWindow = getParkingWindow();
+        auto parkingWindow = ParkingWindow::GetWindow();
 
         auto parent = GetParent();
         if (parent == nullptr)

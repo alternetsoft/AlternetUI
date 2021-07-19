@@ -198,32 +198,37 @@ namespace Alternet::UI
         operator wxColor() const { return IsEmpty()? wxColor() : wxColor(R, G, B, A); }
     };
 
-    inline static wxFrame* s_parkingWindow = nullptr;
-
-    inline bool isParkingWindowCreated()
+    class ParkingWindow
     {
-        return s_parkingWindow != nullptr;
-    }
-
-    inline void destroyParkingWindow()
-    {
-        if (s_parkingWindow != nullptr)
+    public:
+        inline static bool IsCreated()
         {
-            s_parkingWindow->Destroy();
-            s_parkingWindow = nullptr;
-        }
-    }
-
-    inline wxWindow* getParkingWindow()
-    {
-        if (s_parkingWindow == nullptr)
-        {
-            s_parkingWindow = new wxFrame();
-            s_parkingWindow->Create(0, wxID_ANY, _T("AlterNET UI Parking Window"));
+            return s_parkingWindow != nullptr;
         }
 
-        return s_parkingWindow;
-    }
+        inline static void Destroy()
+        {
+            if (s_parkingWindow != nullptr)
+            {
+                s_parkingWindow->Destroy();
+                s_parkingWindow = nullptr;
+            }
+        }
+
+        inline static wxWindow* GetWindow()
+        {
+            if (s_parkingWindow == nullptr)
+            {
+                s_parkingWindow = new wxFrame();
+                s_parkingWindow->Create(0, wxID_ANY, _T("AlterNET UI Parking Window"));
+            }
+
+            return s_parkingWindow;
+        }
+
+    private:
+        inline static wxFrame* s_parkingWindow = nullptr;
+    };
 
     inline double GetDPIScaleFactor(wxWindow* window)
     {
@@ -237,7 +242,7 @@ namespace Alternet::UI
     inline int fromDip(float value, wxWindow* window)
     {
         if (window == nullptr)
-            window = getParkingWindow();
+            window = ParkingWindow::GetWindow();
 
         return wxRound(value * GetDPIScaleFactor(window));
     }
@@ -245,7 +250,7 @@ namespace Alternet::UI
     inline float toDip(int value, wxWindow* window)
     {
         if (window == nullptr)
-            window = getParkingWindow();
+            window = ParkingWindow::GetWindow();
 
         return value / GetDPIScaleFactor(window);
     }
@@ -253,7 +258,7 @@ namespace Alternet::UI
     inline wxRect fromDip(const RectangleF& value, wxWindow* window)
     {
         if (window == nullptr)
-            window = getParkingWindow();
+            window = ParkingWindow::GetWindow();
 
         return wxRect(
             fromDip(value.X, window),
@@ -265,7 +270,7 @@ namespace Alternet::UI
     inline RectangleF toDip(const wxRect& value, wxWindow* window)
     {
         if (window == nullptr)
-            window = getParkingWindow();
+            window = ParkingWindow::GetWindow();
 
         return RectangleF(
             toDip(value.x, window),
@@ -277,7 +282,7 @@ namespace Alternet::UI
     inline wxSize fromDip(const SizeF& value, wxWindow* window)
     {
         if (window == nullptr)
-            window = getParkingWindow();
+            window = ParkingWindow::GetWindow();
 
         return wxSize(
             fromDip(value.Width, window),
@@ -287,7 +292,7 @@ namespace Alternet::UI
     inline SizeF toDip(const wxSize& value, wxWindow* window)
     {
         if (window == nullptr)
-            window = getParkingWindow();
+            window = ParkingWindow::GetWindow();
 
         return SizeF(
             toDip(value.x, window),
@@ -297,7 +302,7 @@ namespace Alternet::UI
     inline Thickness toDip(const Thickness& value, wxWindow* window)
     {
         if (window == nullptr)
-            window = getParkingWindow();
+            window = ParkingWindow::GetWindow();
 
         return Thickness(
             toDip(value.Left, window),
@@ -309,7 +314,7 @@ namespace Alternet::UI
     inline wxPoint fromDip(const PointF& value, wxWindow* window)
     {
         if (window == nullptr)
-            window = getParkingWindow();
+            window = ParkingWindow::GetWindow();
 
         return wxPoint(
             fromDip(value.X, window),
@@ -319,7 +324,7 @@ namespace Alternet::UI
     inline PointF toDip(const wxPoint& value, wxWindow* window)
     {
         if (window == nullptr)
-            window = getParkingWindow();
+            window = ParkingWindow::GetWindow();
 
         return PointF(
             toDip(value.x, window),
