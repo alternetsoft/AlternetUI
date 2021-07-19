@@ -198,17 +198,31 @@ namespace Alternet::UI
         operator wxColor() const { return IsEmpty()? wxColor() : wxColor(R, G, B, A); }
     };
 
+    inline static wxFrame* s_parkingWindow = nullptr;
+
+    inline bool isParkingWindowCreated()
+    {
+        return s_parkingWindow != nullptr;
+    }
+
+    inline void destroyParkingWindow()
+    {
+        if (s_parkingWindow != nullptr)
+        {
+            s_parkingWindow->Destroy();
+            s_parkingWindow = nullptr;
+        }
+    }
+
     inline wxWindow* getParkingWindow()
     {
-        static wxWindow* value = nullptr;
-
-        if (value == nullptr)
+        if (s_parkingWindow == nullptr)
         {
-            value = new wxFrame();
-            value->Hide();
+            s_parkingWindow = new wxFrame();
+            s_parkingWindow->Create(0, wxID_ANY, _T("AlterNET UI Parking Window"));
         }
 
-        return value;
+        return s_parkingWindow;
     }
 
     inline double GetDPIScaleFactor(wxWindow* window)

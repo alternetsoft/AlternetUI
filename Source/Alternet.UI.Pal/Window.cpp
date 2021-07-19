@@ -84,10 +84,10 @@ namespace Alternet::UI
         if (dynamic_cast<wxFrameBase*>(event.GetWindow()) == nullptr)
             return;
         
-        if (!IsParkingWindowCreated())
+        if (!isParkingWindowCreated())
             return;
 
-        if (wxTheApp->GetTopWindow() == GetParkingWindow())
-            DestroyParkingWindow();
+        if (wxTheApp->GetTopWindow() == getParkingWindow())
+            destroyParkingWindow();
     }
 }

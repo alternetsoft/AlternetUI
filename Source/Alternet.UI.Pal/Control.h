@@ -15,8 +15,6 @@ namespace Alternet::UI
         wxWindow* GetWxWindow();
         bool IsWxWindowCreated();
 
-        static wxFrame* GetParkingWindow();
-
         std::vector<Control*> GetChildren();
 
         bool GetDoNotDestroyWxWindow();
@@ -26,9 +24,6 @@ namespace Alternet::UI
         void CreateWxWindow();
 
         void RecreateWxWindowIfNeeded();
-
-        static void DestroyParkingWindow();
-        static bool IsParkingWindowCreated();
 
         virtual void OnWxWindowCreated();
         virtual void OnWxWindowDestroying();
@@ -57,8 +52,6 @@ namespace Alternet::UI
             None = 0,
             DoNotDestroyWxWindow = 1 << 0,
         };
-
-        inline static wxFrame* s_parkingWindow = nullptr;
 
         wxWindow* _wxWindow = nullptr;
         Control* _parent = nullptr;

@@ -99,7 +99,7 @@ namespace Alternet::UI
         if (_parent != nullptr)
             parentingWxWindow = _parent->GetParentingWxWindow();
         else
-            parentingWxWindow = GetParkingWindow();
+            parentingWxWindow = getParkingWindow();
         
         _wxWindow = CreateWxWindowCore(parentingWxWindow);
         //_wxWindow->SetDoubleBuffered(true); // todo: this removes flicker on TextBoxes, but causes it on custom composite controls
@@ -276,17 +276,6 @@ namespace Alternet::UI
             GetWxWindow()->SetForegroundColour(value);
     }
 
-    /*static*/ wxFrame* Control::GetParkingWindow()
-    {
-        if (s_parkingWindow == nullptr)
-        {
-            s_parkingWindow = new wxFrame();
-            s_parkingWindow->Create(0, wxID_ANY, _T("AlterNET UI Parking Window"));
-        }
-
-        return s_parkingWindow;
-    }
-
     std::vector<Control*> Control::GetChildren()
     {
         return _children;
@@ -369,20 +358,6 @@ namespace Alternet::UI
             _flags |= flag;
         else
             _flags &= ~flag;
-    }
-
-    /*static*/ void Control::DestroyParkingWindow()
-    {
-        if (s_parkingWindow != nullptr)
-        {
-            s_parkingWindow->Destroy();
-            s_parkingWindow = nullptr;
-        }
-    }
-
-    /*static*/ bool Control::IsParkingWindowCreated()
-    {
-        return s_parkingWindow != nullptr;
     }
 
     RectangleF Control::RetrieveBounds()
@@ -469,7 +444,7 @@ namespace Alternet::UI
     void Control::UpdateWxWindowParent()
     {
         auto wxWindow = GetWxWindow();
-        auto parkingWindow = GetParkingWindow();
+        auto parkingWindow = getParkingWindow();
 
         auto parent = GetParent();
         if (parent == nullptr)
