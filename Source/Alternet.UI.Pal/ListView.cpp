@@ -225,7 +225,7 @@ namespace Alternet::UI
 
     void ListView::InsertColumn(wxListView* listView, const wxListItem& column)
     {
-        listView->InsertColumn(column.GetColumn(), column);
+        listView->InsertColumn(column.GetColumn(), column.GetText());
     }
 
     long ListView::GetStyle()
