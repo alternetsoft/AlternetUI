@@ -51,7 +51,7 @@ namespace ControlsSample
         (ImageList Small, ImageList Large) LoadImageLists()
         {
             var smallImageList = new ImageList();
-            var largeImageList = new ImageList() { PixelImageSize = new System.Drawing.Size(32, 32) };
+            var largeImageList = new ImageList() { ImageSize = new System.Drawing.SizeF(32, 32) };
 
             var assembly = Assembly.GetExecutingAssembly();
             var allResourceNames = assembly.GetManifestResourceNames();

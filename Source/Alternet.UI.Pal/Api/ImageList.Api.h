@@ -23,6 +23,16 @@ ALTERNET_UI_API void ImageList_SetPixelImageSize(ImageList* obj, Size value)
     obj->SetPixelImageSize(value);
 }
 
+ALTERNET_UI_API SizeF_C ImageList_GetImageSize(ImageList* obj)
+{
+    return obj->GetImageSize();
+}
+
+ALTERNET_UI_API void ImageList_SetImageSize(ImageList* obj, SizeF value)
+{
+    obj->SetImageSize(value);
+}
+
 ALTERNET_UI_API void ImageList_AddImage(ImageList* obj, Image* image)
 {
     obj->AddImage(image);

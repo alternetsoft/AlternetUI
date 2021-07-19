@@ -2,7 +2,8 @@
 
 namespace Alternet::UI
 {
-    ImageList::ImageList() : _pixelImageSize(16, 16)
+    ImageList::ImageList() :
+        _pixelImageSize(fromDip(16, nullptr), fromDip(16, nullptr))
     {
         CreateImageList();
     }
@@ -16,7 +17,7 @@ namespace Alternet::UI
     {
         return _imageList->GetSize();
     }
-    
+
     void ImageList::SetPixelImageSize(const Size& value)
     {
         if (_pixelImageSize == value)
@@ -25,7 +26,17 @@ namespace Alternet::UI
         _pixelImageSize = value;
         RecreateImageList();
     }
-    
+
+    SizeF ImageList::GetImageSize()
+    {
+        return toDip(_imageList->GetSize(), nullptr);
+    }
+
+    void ImageList::SetImageSize(const SizeF& value)
+    {
+        SetPixelImageSize(fromDip(value, nullptr));
+    }
+
     void ImageList::AddImage(Image* image)
     {
         AddImageCore(image->GetImage());
@@ -41,7 +52,7 @@ namespace Alternet::UI
         auto targetSize = _imageList->GetSize();
 
         if (finalImage.GetSize() != targetSize)
-            finalImage = finalImage.Scale(targetSize.x, targetSize.y);
+            finalImage = finalImage.Scale(targetSize.x, targetSize.y, wxIMAGE_QUALITY_BILINEAR);
 
         wxBitmap bitmap(finalImage);
         _imageList->Add(bitmap);

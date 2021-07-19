@@ -9,5 +9,7 @@ namespace NativeApi.Api
         public void AddImage(Image image) => throw new Exception();
 
         public Size PixelImageSize { get; set; }
+
+        public SizeF ImageSize { get; set; }
     }
 }
