@@ -203,6 +203,9 @@ namespace Alternet::UI
 
     void ListView::ApplyColumns()
     {
+        if (_view != ListViewView::Details)
+            return;
+
         BeginUpdate();
 
         auto listView = GetListView();
