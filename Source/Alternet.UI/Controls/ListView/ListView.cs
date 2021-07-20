@@ -46,6 +46,10 @@ namespace Alternet.UI
         /// is set to <see cref="ListViewSelectionMode.Multiple"/>, any change to the <see cref="SelectedIndices"/> collection,
         /// including removing an item from the selection, will raise this event.
         /// </para>
+        /// <para>
+        /// The <see cref="SelectedIndices"/> collection changes whenever an individual <see cref="ListViewItem"/> selection changes.
+        /// The property change can occur programmatically or when the user selects an item or clears the selection of an item.
+        /// </para>
         /// </remarks>
         public event EventHandler? SelectionChanged;
 

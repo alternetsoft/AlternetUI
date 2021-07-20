@@ -104,12 +104,12 @@ namespace Alternet::UI
         if (_view == value)
             return;
 
-        //auto oldSelectedIndex = GetSelectedIndex(); // todo
+        auto oldSelection = GetSelectedIndices();
 
         _view = value;
         RecreateWxWindowIfNeeded();
 
-        //SetSelectedIndex(oldSelectedIndex);
+        SetSelectedIndices(oldSelection);
     }
 
     ImageList* ListView::GetSmallImageList()
