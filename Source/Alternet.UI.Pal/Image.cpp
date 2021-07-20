@@ -14,7 +14,14 @@ namespace Alternet::UI
     {
         InputStream inputStream(stream);
         ManagedInputStream managedInputStream(&inputStream);
-        wxInitAllImageHandlers(); // or wxImage::AddHandler(new wxPNGHandler);
+
+        static bool imageHandlersInitialized = false;
+        if (!imageHandlersInitialized)
+        {
+            wxInitAllImageHandlers();
+            imageHandlersInitialized = true;
+        }
+
         _image = wxImage(managedInputStream);
     }
 
