@@ -48,6 +48,36 @@ ALTERNET_UI_API void ListView_SetCurrentView(ListView* obj, ListViewView value)
     obj->SetCurrentView(value);
 }
 
+ALTERNET_UI_API ListViewSelectionMode ListView_GetSelectionMode(ListView* obj)
+{
+    return obj->GetSelectionMode();
+}
+
+ALTERNET_UI_API void ListView_SetSelectionMode(ListView* obj, ListViewSelectionMode value)
+{
+    obj->SetSelectionMode(value);
+}
+
+ALTERNET_UI_API void* ListView_OpenSelectedIndicesArray(ListView* obj)
+{
+    return obj->OpenSelectedIndicesArray();
+}
+
+ALTERNET_UI_API int ListView_GetSelectedIndicesItemCount(ListView* obj, void* array)
+{
+    return obj->GetSelectedIndicesItemCount(array);
+}
+
+ALTERNET_UI_API int ListView_GetSelectedIndicesItemAt(ListView* obj, void* array, int index)
+{
+    return obj->GetSelectedIndicesItemAt(array, index);
+}
+
+ALTERNET_UI_API void ListView_CloseSelectedIndicesArray(ListView* obj, void* array)
+{
+    obj->CloseSelectedIndicesArray(array);
+}
+
 ALTERNET_UI_API void ListView_InsertItemAt(ListView* obj, int index, const char16_t* text, int columnIndex, int imageIndex)
 {
     obj->InsertItemAt(index, text, columnIndex, imageIndex);
@@ -71,5 +101,20 @@ ALTERNET_UI_API void ListView_InsertColumnAt(ListView* obj, int index, const cha
 ALTERNET_UI_API void ListView_RemoveColumnAt(ListView* obj, int index)
 {
     obj->RemoveColumnAt(index);
+}
+
+ALTERNET_UI_API void ListView_ClearSelected(ListView* obj)
+{
+    obj->ClearSelected();
+}
+
+ALTERNET_UI_API void ListView_SetSelected(ListView* obj, int index, c_bool value)
+{
+    obj->SetSelected(index, value);
+}
+
+ALTERNET_UI_API void ListView_SetEventCallback(ListView::ListViewEventCallbackType callback)
+{
+    ListView::SetEventCallback(callback);
 }
 

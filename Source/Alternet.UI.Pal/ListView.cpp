@@ -15,7 +15,8 @@ namespace Alternet::UI
         auto window = GetWxWindow();
         if (window != nullptr)
         {
-            //window->Unbind(wxEVT_LISt, &ListView::OnSelectionChanged, this);
+            window->Unbind(wxEVT_LIST_ITEM_SELECTED, &ListView::OnItemSelected, this);
+            window->Unbind(wxEVT_LIST_ITEM_DESELECTED, &ListView::OnItemDeselected, this);
         }
     }
 
@@ -153,9 +154,142 @@ namespace Alternet::UI
         ApplySmallImageList(value);
         ApplyLargeImageList(value);
 
-        //value->Bind(wxEVT_ListView, &ListView::OnSelectionChanged, this);
+        value->Bind(wxEVT_LIST_ITEM_SELECTED, &ListView::OnItemSelected, this);
+        value->Bind(wxEVT_LIST_ITEM_DESELECTED, &ListView::OnItemDeselected, this);
 
         return value;
+    }
+
+    void ListView::OnItemSelected(wxCommandEvent& event)
+    {
+        RaiseSelectionChanged();
+    }
+
+    void ListView::OnItemDeselected(wxCommandEvent& event)
+    {
+        RaiseSelectionChanged();
+    }
+
+    void* ListView::OpenSelectedIndicesArray()
+    {
+        auto array = new wxArrayInt();
+        if (IsWxWindowCreated())
+        {
+            auto listView = GetListView();
+            array->resize(listView->GetSelectedItemCount());
+            int index = listView->GetFirstSelected();
+            int i = 0;
+            while (index != -1)
+            {
+                (*array)[i++] = index;
+                index = listView->GetNextSelected(index);
+            }
+        }
+        else
+        {
+            array->resize(_selectedIndices.size());
+            for (int i = 0; i < _selectedIndices.size(); i++)
+                (*array)[i] = _selectedIndices[i];
+        }
+
+        return array;
+    }
+
+    void ListView::CloseSelectedIndicesArray(void* array)
+    {
+        delete ((wxArrayInt*)array);
+    }
+
+    int ListView::GetSelectedIndicesItemCount(void* array)
+    {
+        return ((wxArrayInt*)array)->GetCount();
+    }
+
+    int ListView::GetSelectedIndicesItemAt(void* array, int index)
+    {
+        return (*((wxArrayInt*)array))[index];
+    }
+
+    void ListView::ClearSelected()
+    {
+        if (IsWxWindowCreated())
+            DeselectAll(GetListView());
+        else
+            _selectedIndices.clear();
+    }
+
+    void ListView::DeselectAll(wxListView* listView)
+    {
+        auto selectedIndices = (wxArrayInt*)OpenSelectedIndicesArray();
+        for (auto index : *selectedIndices)
+            listView->Select(index, false);
+        delete selectedIndices;
+    }
+
+    void ListView::SetSelected(int index, bool value)
+    {
+        if (IsWxWindowCreated())
+        {
+            GetListView()->Select(index, value);
+        }
+        else
+        {
+            auto existingIndex = std::find(_selectedIndices.begin(), _selectedIndices.end(), index);
+
+            if (value)
+            {
+                if (existingIndex == _selectedIndices.end())
+                    _selectedIndices.push_back(index);
+            }
+            else
+            {
+                if (existingIndex != _selectedIndices.end())
+                    _selectedIndices.erase(existingIndex);
+            }
+        }
+    }
+
+    ListViewSelectionMode ListView::GetSelectionMode()
+    {
+        return _selectionMode;
+    }
+
+    void ListView::SetSelectionMode(ListViewSelectionMode value)
+    {
+        if (_selectionMode == value)
+            return;
+
+        auto oldSelection = GetSelectedIndices();
+
+        _selectionMode = value;
+        RecreateWxWindowIfNeeded();
+
+        SetSelectedIndices(oldSelection);
+    }
+
+    void ListView::ApplySelectedIndices()
+    {
+        auto listView = GetListView();
+        DeselectAll(listView);
+
+        if (_selectedIndices.empty())
+            return;
+
+        for (auto index : _selectedIndices)
+            listView->Select(index, true);
+
+        _selectedIndices.clear();
+    }
+
+    void ListView::ReceiveSelectedIndices()
+    {
+        auto listView = GetListView();
+        _selectedIndices.clear();
+
+        auto selectedIndices = (wxArrayInt*)OpenSelectedIndicesArray();
+        for (auto index : *selectedIndices)
+            _selectedIndices.push_back(index);
+        delete selectedIndices;
     }
 
     void ListView::ApplyLargeImageList(wxListView* value)
@@ -248,6 +382,46 @@ namespace Alternet::UI
             }
         };
 
-        return getViewStyle();
+        auto getSelectionStyle = [&]()
+        {
+            switch (_selectionMode)
+            {
+            case ListViewSelectionMode::Single:
+                return wxLC_SINGLE_SEL;
+            case ListViewSelectionMode::Multiple:
+                return 0;
+            default:
+                wxASSERT(false);
+                throw 0;
+            }
+        };
+
+        return getViewStyle() | getSelectionStyle();
+    }
+
+    std::vector<int> ListView::GetSelectedIndices()
+    {
+        auto array = OpenSelectedIndicesArray();
+        int count = GetSelectedIndicesItemCount(array);
+
+        std::vector<int> indices(count);
+        for (int i = 0; i < count; i++)
+            indices[i] = GetSelectedIndicesItemAt(array, i);
+
+        CloseSelectedIndicesArray(array);
+
+        return indices;
+    }
+
+    void ListView::SetSelectedIndices(const std::vector<int>& value)
+    {
+        ClearSelected();
+        for (auto index : value)
+            SetSelected(index, true);
+    }
+
+    void ListView::RaiseSelectionChanged()
+    {
+        RaiseEvent(ListViewEvent::SelectionChanged);
     }
 }

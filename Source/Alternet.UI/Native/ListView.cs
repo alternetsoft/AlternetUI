@@ -11,6 +11,7 @@ namespace Alternet.UI.Native
         public ListView()
         {
             SetNativePointer(NativeApi.ListView_Create_());
+            SetEventCallback();
         }
         
         public ListView(IntPtr nativePointer) : base(nativePointer)
@@ -72,6 +73,46 @@ namespace Alternet.UI.Native
             }
         }
         
+        public ListViewSelectionMode SelectionMode
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ListView_GetSelectionMode(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ListView_SetSelectionMode(NativePointer, value);
+            }
+        }
+        
+        public System.Int32[] SelectedIndices
+        {
+            get
+            {
+                CheckDisposed();
+                var array = NativeApi.ListView_OpenSelectedIndicesArray(NativePointer);
+                try
+                {
+                    var count = NativeApi.ListView_GetSelectedIndicesItemCount(NativePointer, array);
+                    var result = new System.Collections.Generic.List<int>(count);
+                    for (int i = 0; i < count; i++)
+                    {
+                        var item = NativeApi.ListView_GetSelectedIndicesItemAt(NativePointer, array, i);
+                        result.Add(item);
+                    }
+                    return result.ToArray();
+                }
+                finally
+                {
+                    NativeApi.ListView_CloseSelectedIndicesArray(NativePointer, array);
+                }
+            }
+            
+        }
+        
         public void InsertItemAt(int index, string text, int columnIndex, int imageIndex)
         {
             CheckDisposed();
@@ -102,11 +143,63 @@ namespace Alternet.UI.Native
             NativeApi.ListView_RemoveColumnAt(NativePointer, index);
         }
         
+        public void ClearSelected()
+        {
+            CheckDisposed();
+            NativeApi.ListView_ClearSelected(NativePointer);
+        }
+        
+        public void SetSelected(int index, bool value)
+        {
+            CheckDisposed();
+            NativeApi.ListView_SetSelected(NativePointer, index, value);
+        }
+        
+        static GCHandle eventCallbackGCHandle;
+        
+        static void SetEventCallback()
+        {
+            if (!eventCallbackGCHandle.IsAllocated)
+            {
+                var sink = new NativeApi.ListViewEventCallbackType((obj, e, param) =>
+                {
+                    var w = NativeObject.GetFromNativePointer<ListView>(obj, p => new ListView(p));
+                    if (w == null) return IntPtr.Zero;
+                    return w.OnEvent(e);
+                }
+                );
+                eventCallbackGCHandle = GCHandle.Alloc(sink);
+                NativeApi.ListView_SetEventCallback(sink);
+            }
+        }
+        
+        IntPtr OnEvent(NativeApi.ListViewEvent e)
+        {
+            switch (e)
+            {
+                case NativeApi.ListViewEvent.SelectionChanged:
+                SelectionChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                default: throw new Exception("Unexpected ListViewEvent value: " + e);
+            }
+        }
+        
+        public event EventHandler? SelectionChanged;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate IntPtr ListViewEventCallbackType(IntPtr obj, ListViewEvent e, IntPtr param);
+            
+            public enum ListViewEvent
+            {
+                SelectionChanged,
+            }
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_SetEventCallback(ListViewEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr ListView_Create_();
@@ -133,6 +226,24 @@ namespace Alternet.UI.Native
             public static extern void ListView_SetCurrentView(IntPtr obj, ListViewView value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern ListViewSelectionMode ListView_GetSelectionMode(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_SetSelectionMode(IntPtr obj, ListViewSelectionMode value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr ListView_OpenSelectedIndicesArray(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ListView_GetSelectedIndicesItemCount(IntPtr obj, System.IntPtr array);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ListView_GetSelectedIndicesItemAt(IntPtr obj, System.IntPtr array, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_CloseSelectedIndicesArray(IntPtr obj, System.IntPtr array);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListView_InsertItemAt(IntPtr obj, int index, string text, int columnIndex, int imageIndex);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -146,6 +257,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListView_RemoveColumnAt(IntPtr obj, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_ClearSelected(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_SetSelected(IntPtr obj, int index, bool value);
             
         }
     }

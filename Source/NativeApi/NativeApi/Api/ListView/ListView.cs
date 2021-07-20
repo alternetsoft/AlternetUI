@@ -21,5 +21,15 @@ namespace NativeApi.Api
         public void RemoveColumnAt(int index) => throw new Exception();
 
         public ListViewView CurrentView { get; set; }
+
+        public event EventHandler? SelectionChanged { add => throw new Exception(); remove => throw new Exception(); }
+
+        public ListViewSelectionMode SelectionMode { get; set; }
+
+        public int[] SelectedIndices { get => throw new Exception(); }
+
+        public void ClearSelected() => throw new Exception();
+
+        public void SetSelected(int index, bool value) => throw new Exception();
     }
 }

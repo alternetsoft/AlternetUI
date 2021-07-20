@@ -21,7 +21,7 @@ namespace ControlsSample
             new XamlLoader().LoadExisting(xamlStream, this);
 
             listView = (ListView)FindControl("listView");
-            //listView.SelectionChanged += ListView_SelectionChanged;
+            listView.SelectionChanged += ListView_SelectionChanged;
 
             var imageLists = LoadImageLists();
             listView.SmallImageList = imageLists.Small;
@@ -100,13 +100,13 @@ namespace ControlsSample
 
         private void ListView_SelectionChanged(object? sender, EventArgs e)
         {
-            //string selectedIndicesString = listView.SelectedIndices.Count > 100 ? "too many indices to display" : string.Join(",", listView.SelectedIndices);
-            //site.LogEvent($"ListView: SelectionChanged. SelectedIndices: ({selectedIndicesString})");
+            string selectedIndicesString = listView.SelectedIndices.Count > 100 ? "too many indices to display" : string.Join(",", listView.SelectedIndices);
+            site.LogEvent($"ListView: SelectionChanged. SelectedIndices: ({selectedIndicesString})");
         }
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            //listView.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ? ListViewSelectionMode.Multiple : ListViewSelectionMode.Single;
+            listView.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ? ListViewSelectionMode.Multiple : ListViewSelectionMode.Single;
         }
 
         private void RemoveItemButton_Click(object? sender, EventArgs e)

@@ -9,6 +9,12 @@ namespace Alternet::UI
         Multiple,
     };
     
+    enum class ListViewSelectionMode
+    {
+        Single,
+        Multiple,
+    };
+    
     enum class ListViewView
     {
         List,

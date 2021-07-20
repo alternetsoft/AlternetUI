@@ -4,6 +4,10 @@ namespace Alternet.UI
 {
     internal class NativeListViewHandler : NativeControlHandler<ListView, Native.ListView>
     {
+        private bool receivingSelection;
+
+        private bool applyingSelection;
+
         internal override Native.Control CreateNativeControl()
         {
             return new Native.ListView();
@@ -17,6 +21,8 @@ namespace Alternet.UI
             ApplyView();
             ApplySmallImageList();
             ApplyLargeImageList();
+            ApplySelectionMode();
+            ApplySelection();
 
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
@@ -25,6 +31,10 @@ namespace Alternet.UI
             Control.ViewChanged += Control_ViewChanged;
             Control.SmallImageListChanged += Control_SmallImageListChanged;
             Control.LargeImageListChanged += Control_LargeImageListChanged;
+            Control.SelectionModeChanged += Control_SelectionModeChanged;
+
+            Control.SelectionChanged += Control_SelectionChanged;
+            NativeControl.SelectionChanged += NativeControl_SelectionChanged;
         }
 
         private void Control_ViewChanged(object? sender, EventArgs e)
@@ -51,8 +61,73 @@ namespace Alternet.UI
             Control.Columns.ItemRemoved -= Columns_ItemRemoved;
             Control.SmallImageListChanged -= Control_SmallImageListChanged;
             Control.LargeImageListChanged -= Control_LargeImageListChanged;
+            Control.SelectionModeChanged -= Control_SelectionModeChanged;
+
+            Control.SelectionChanged -= Control_SelectionChanged;
+            NativeControl.SelectionChanged -= NativeControl_SelectionChanged;
 
             base.OnDetach();
+        }
+
+        private void NativeControl_SelectionChanged(object? sender, EventArgs e)
+        {
+            if (applyingSelection)
+                return;
+
+            ReceiveSelection();
+        }
+
+        private void Control_SelectionChanged(object? sender, EventArgs e)
+        {
+            if (receivingSelection)
+                return;
+
+            ApplySelection();
+        }
+
+        private void Control_SelectionModeChanged(object? sender, EventArgs e)
+        {
+            ApplySelectionMode();
+        }
+
+        private void ApplySelectionMode()
+        {
+            NativeControl.SelectionMode = (Native.ListViewSelectionMode)Control.SelectionMode;
+        }
+
+        private void ApplySelection()
+        {
+            applyingSelection = true;
+
+            try
+            {
+                var nativeControl = NativeControl;
+                nativeControl.ClearSelected();
+
+                var control = Control;
+                var indices = control.SelectedIndices;
+
+                for (var i = 0; i < indices.Count; i++)
+                    NativeControl.SetSelected(indices[i], true);
+            }
+            finally
+            {
+                applyingSelection = false;
+            }
+        }
+
+        private void ReceiveSelection()
+        {
+            receivingSelection = true;
+
+            try
+            {
+                Control.SelectedIndices = NativeControl.SelectedIndices;
+            }
+            finally
+            {
+                receivingSelection = false;
+            }
         }
 
         private void ApplyView()

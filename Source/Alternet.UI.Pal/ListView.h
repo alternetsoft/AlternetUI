@@ -11,6 +11,9 @@ namespace Alternet::UI
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
+        void OnItemSelected(wxCommandEvent& event);
+        void OnItemDeselected(wxCommandEvent& event);
+
     protected:
         void OnWxWindowCreated() override;
 
@@ -64,9 +67,20 @@ namespace Alternet::UI
         ImageList* _smallImageList = nullptr;
         ImageList* _largeImageList = nullptr;
 
+        std::vector<int> _selectedIndices;
+        ListViewSelectionMode _selectionMode = ListViewSelectionMode::Single;
+
         std::vector<Row> _rows;
         std::vector<wxListItem> _columns;
         ListViewView _view = ListViewView::List;
+
+        void ApplySelectedIndices();
+        void ReceiveSelectedIndices();
+
+        std::vector<int> GetSelectedIndices();
+        void SetSelectedIndices(const std::vector<int>& value);
+
+        void DeselectAll(wxListView* listView);
 
         void ApplyItems();
         void ApplyColumns();
@@ -79,5 +93,7 @@ namespace Alternet::UI
         Row& GetRow(int index);
 
         long GetStyle();
+
+        void RaiseSelectionChanged();
     };
 }

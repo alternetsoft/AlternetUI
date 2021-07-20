@@ -8,6 +8,12 @@ namespace Alternet.UI.Native
         Multiple,
     }
     
+    enum ListViewSelectionMode
+    {
+        Single,
+        Multiple,
+    }
+    
     enum ListViewView
     {
         List,
