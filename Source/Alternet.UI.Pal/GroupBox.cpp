@@ -50,7 +50,7 @@ namespace Alternet::UI
         float border = 3;
         if (preferredSize)
             return Thickness(otherBorder, topBorder, otherBorder + border, otherBorder + border);
-        return Thickness(border, border, border, border);
+        return Thickness(border, border, border, topBorder + border);
 #elif defined(__WXOSX__) && wxOSX_USE_COCOA
         float border = 3;
         return Thickness(border, border + (preferredSize ? topBorder : 0), border, border);
