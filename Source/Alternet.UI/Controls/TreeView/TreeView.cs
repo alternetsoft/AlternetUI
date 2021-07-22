@@ -42,6 +42,8 @@ namespace Alternet.UI
         /// </summary>
         public TreeView()
         {
+            Items.ItemInserted += Items_ItemInserted;
+            Items.ItemRemoved += Items_ItemRemoved;
         }
 
         /// <summary>
@@ -270,6 +272,16 @@ namespace Alternet.UI
         /// <remarks>See <see cref="SelectionChanged"/> for details.</remarks>
         protected virtual void OnSelectionChanged(EventArgs e)
         {
+        }
+
+        private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<TreeViewItem> e)
+        {
+            e.Item.TreeView = null;
+        }
+
+        private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<TreeViewItem> e)
+        {
+            e.Item.TreeView = this;
         }
 
         private void ClearSelectedCore()

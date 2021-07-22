@@ -39,10 +39,15 @@
       <None Remove="Resources\ImageListIcons\Small\LineGraph16.png" />
       <None Remove="Resources\ImageListIcons\Small\Pencil16.png" />
       <None Remove="Resources\ImageListIcons\Small\Photo16.png" />
+      <None Remove="TreeViewPage.xaml" />
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Include="ComboBoxPage.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </EmbeddedResource>
+      <EmbeddedResource Include="TreeViewPage.xaml">
+        <SubType>Designer</SubType>
         <Generator>MSBuild:Compile</Generator>
       </EmbeddedResource>
       <EmbeddedResource Include="ListViewPage.xaml">

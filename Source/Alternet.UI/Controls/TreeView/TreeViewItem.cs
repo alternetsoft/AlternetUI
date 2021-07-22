@@ -40,13 +40,15 @@ namespace Alternet.UI
         /// </summary>
         public TreeViewItem()
         {
+            Items.ItemInserted += Items_ItemInserted;
+            Items.ItemRemoved += Items_ItemRemoved;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeViewItem"/> class with the specified item text.
         /// </summary>
         /// <param name="text">The text to display for the item.</param>
-        public TreeViewItem(string text)
+        public TreeViewItem(string text) : this()
         {
             Text = text;
         }
@@ -60,9 +62,8 @@ namespace Alternet.UI
         /// The zero-based index of the image within the <see cref="TreeView.ImageList"/>
         /// associated with the <see cref="TreeView"/> that contains the item.
         /// </param>
-        public TreeViewItem(string text, int imageIndex)
+        public TreeViewItem(string text, int imageIndex) : this(text)
         {
-            Text = text;
             ImageIndex = imageIndex;
         }
 
@@ -76,6 +77,40 @@ namespace Alternet.UI
         /// about the item, such as a unique identifier or the index position of the item's data in a database.
         /// </remarks>
         public object? Tag { get; set; }
+
+        /// <summary>
+        /// Gets the parent tree item of the current item.
+        /// </summary>
+        /// <value>A <see cref="TreeViewItem"/> that represents the parent of the current tree item, or <c>null</c> if the item is a root.</value>
+        /// <remarks>If the tree item is at the root level, the <see cref="Parent"/> property returns <c>null</c>.</remarks>
+        public TreeViewItem? Parent { get; private set; }
+
+        /// <summary>
+        /// Gets the owner <see cref="TreeView"/> that the tree item is assigned to.
+        /// </summary>
+        /// <value>
+        /// A <see cref="TreeView"/> that represents the parent tree view that the tree item is assigned to,
+        /// or <c>null</c> if the node has not been assigned to a tree view.
+        /// </value>
+        public TreeView? TreeView { get; internal set; }
+
+        /// <summary>
+        /// Removes the current tree item from the tree view control.
+        /// </summary>
+        /// <remarks>
+        /// When the <see cref="Remove"/> method is called, the tree item, and any child tree items that are
+        /// assigned to the <see cref="TreeViewItem"/>, are removed from the <see cref="TreeView"/>.
+        /// </remarks>
+        public void Remove()
+        {
+            if (Parent == null)
+            {
+                if (TreeView != null)
+                    TreeView.Items.Remove(this);
+            }
+            else
+                Parent.Items.Remove(this);
+        }
 
         /// <summary>
         /// Gets or sets the text of the item.
@@ -116,7 +151,7 @@ namespace Alternet.UI
         /// Gets a value indicating whether the tree item is in the expanded state.
         /// </summary>
         /// <value><c>true</c> if the tree item is in the expanded state; otherwise, <c>false</c>.</value>
-        public bool IsExpanded { get; set; } // todo
+        public bool IsExpanded { get; set; }
 
         /// <summary>
         /// Gets the collection of child <see cref="TreeViewItem"/> of the current tree item.
@@ -127,6 +162,7 @@ namespace Alternet.UI
         /// </remarks>
         public Collection<TreeViewItem> Items { get; } = new Collection<TreeViewItem> { ThrowOnNullItemAddition = true };
 
+        // todo
         /// <summary>
         /// Expands the tree item.
         /// </summary>
@@ -180,6 +216,18 @@ namespace Alternet.UI
         public void Toggle()
         {
             IsExpanded = !IsExpanded;
+        }
+
+        private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<TreeViewItem> e)
+        {
+            e.Item.Parent = this;
+            e.Item.TreeView = TreeView;
+        }
+
+        private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<TreeViewItem> e)
+        {
+            e.Item.Parent = null;
+            e.Item.TreeView = null;
         }
     }
 }

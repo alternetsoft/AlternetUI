@@ -23,7 +23,7 @@ namespace ControlsSample
             listView = (ListView)FindControl("listView");
             listView.SelectionChanged += ListView_SelectionChanged;
 
-            var imageLists = LoadImageLists();
+            var imageLists = ResourceLoader.LoadImageLists();
             listView.SmallImageList = imageLists.Small;
             listView.LargeImageList = imageLists.Large;
 
@@ -46,30 +46,6 @@ namespace ControlsSample
             viewComboBox.SelectedIndex = 0;
 
             this.site = site;
-        }
-
-        (ImageList Small, ImageList Large) LoadImageLists()
-        {
-            var smallImageList = new ImageList();
-            var largeImageList = new ImageList() { ImageSize = new System.Drawing.SizeF(32, 32) };
-
-            var assembly = Assembly.GetExecutingAssembly();
-            var allResourceNames = assembly.GetManifestResourceNames();
-            var allImageResourceNames = allResourceNames.Where(x => x.StartsWith("ControlsSample.Resources.ImageListIcons."));
-            var smallImageResourceNames = allImageResourceNames.Where(x => x.Contains(".Small.")).ToArray();
-            var largeImageResourceNames = allImageResourceNames.Where(x => x.Contains(".Large.")).ToArray();
-            if (smallImageResourceNames.Length != largeImageResourceNames.Length)
-                throw new Exception();
-
-            Image LoadImage(string name) => new Image(assembly.GetManifestResourceStream(name) ?? throw new Exception());
-
-            for (int i = 0; i < smallImageResourceNames.Length; i++)
-            {
-                smallImageList.Images.Add(LoadImage(smallImageResourceNames[i]));
-                largeImageList.Images.Add(LoadImage(largeImageResourceNames[i]));
-            }
-
-            return (smallImageList, largeImageList);
         }
 
         private void ViewComboBox_SelectedItemChanged(object? sender, EventArgs e)
