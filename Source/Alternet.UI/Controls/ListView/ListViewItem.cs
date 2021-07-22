@@ -118,7 +118,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The zero-based index of the image in the <see cref="ImageList"/> that is displayed for the item. The default is <c>null</c>.</value>
         /// <remarks>
-        /// The value of this property depends on the value of the <see cref="ListView.SmallImageList"/> and <see cref="ListView.LargeImageList"/> properties.
+        /// The effect of setting this property depends on the value of the <see cref="ListView.SmallImageList"/> and <see cref="ListView.LargeImageList"/> properties.
         /// Depending on the current value of the View property of the <see cref="ListView"/> control associated
         /// with the item, the <see cref="ImageList"/> used by the item could be one specified in the <see cref="ListView.LargeImageList"/>
         /// property or the <see cref="ListView.SmallImageList"/> property of the <see cref="ListView"/> control. If the <see cref="ListView.View"/> property is set

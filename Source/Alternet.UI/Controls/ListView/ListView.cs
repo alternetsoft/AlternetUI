@@ -161,10 +161,11 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A <see cref="ListViewItem"/> object that represents the current selection in the control, or <c>null</c> if no item is selected.</value>
         /// <remarks>
-        /// For a standard <see cref="ListView"/>, you can use this property to determine the index of the item that is selected
-        /// in the <see cref="ListView"/>. If the <see cref="SelectionMode"/> property of the <see cref="ListView"/> is set to either
-        /// <see cref="ListViewSelectionMode.Multiple"/> (which indicates a multiple-selection <see cref="ListView"/>) and multiple items
-        /// are selected in the list, this property can return the index to any selected item.
+        /// <para>
+        /// You can use this property to determine the item that is selected in the <see cref="ListView"/>.
+        /// If the <see cref="SelectionMode"/> property of the <see cref="ListView"/> is set to
+        /// <see cref="ListViewSelectionMode.Multiple"/> and multiple items are selected in the list, this property can return any selected item.
+        /// </para>
         /// <para>
         /// To retrieve a collection containing all selected items in a multiple-selection <see cref="ListView"/>, use the <see cref="SelectedItems"/> property.
         /// If you want to obtain the index position of the currently selected item in the <see cref="ListView"/>, use the <see cref="SelectedIndex"/> property.
@@ -204,7 +205,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A <see cref="IReadOnlyList{ListViewItem}"/> containing the currently selected items in the control.</value>
         /// <remarks>
-        /// For a multiple-selection <see cref="ListView"/>, this property returns a collection containing the indexes to all items that are selected
+        /// For a multiple-selection <see cref="ListView"/>, this property returns a collection containing all the items that are selected
         /// in the <see cref="ListView"/>. For a single-selection <see cref="ListView"/>, this property returns a collection containing a
         /// single element containing the index of the only selected item in the <see cref="ListView"/>.
         /// <para>
@@ -409,7 +410,7 @@ namespace Alternet.UI
         /// <param name="index">The zero-based index of the item in a <see cref="ListView"/> to select or clear the selection for.</param>
         /// <param name="value"><c>true</c> to select the specified item; otherwise, false.</param>
         /// <remarks>
-        /// You can use this property to set the selection of items in a multiple-selection <see cref="ListView"/>.
+        /// You can use this method to set the selection of items in a multiple-selection <see cref="ListView"/>.
         /// To select an item in a single-selection <see cref="ListView"/>, use the <see cref="SelectedIndex"/> property.
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">The specified index was outside the range of valid values.</exception>
