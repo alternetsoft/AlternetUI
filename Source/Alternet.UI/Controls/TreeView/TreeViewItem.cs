@@ -100,7 +100,10 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the index of the image that is displayed for the item.
         /// </summary>
-        /// <value>The zero-based index of the image in the <see cref="TreeView.ImageList"/> that is displayed for the item. The default is <c>null</c>.</value>
+        /// <value>
+        /// The zero-based index of the image in the <see cref="TreeView.ImageList"/> that is displayed for the item. The default is <c>null</c>.
+        /// The <c>null</c> value means the default image specified by <see cref="TreeView.ImageIndex"/> property is used.
+        /// </value>
         /// <remarks>
         /// The effect of setting this property depends on the value of the <see cref="TreeView.ImageList"/> property.
         /// You can specify which images from the list are displayed for items by default by setting the <see cref="TreeView.ImageIndex"/> property.
@@ -108,5 +111,75 @@ namespace Alternet.UI
         /// These individual <see cref="TreeViewItem"/> settings will override the settings in the corresponding <see cref="TreeView"/> properties.
         /// </remarks>
         public int? ImageIndex { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the tree item is in the expanded state.
+        /// </summary>
+        /// <value><c>true</c> if the tree item is in the expanded state; otherwise, <c>false</c>.</value>
+        public bool IsExpanded { get; set; } // todo
+
+        /// <summary>
+        /// Gets the collection of child <see cref="TreeViewItem"/> of the current tree item.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="Items"/> property can hold a collection of other <see cref="TreeViewItem"/> objects.
+        /// Each of the tree items in the collection has an <see cref="Items"/> property that can contain its own item collection.
+        /// </remarks>
+        public Collection<TreeViewItem> Items { get; } = new Collection<TreeViewItem> { ThrowOnNullItemAddition = true };
+
+        /// <summary>
+        /// Expands the tree item.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="Expand"/> method expands the <see cref="TreeViewItem"/>, while leaving the child items expanded state unchanged.
+        /// </remarks>
+        public void Expand()
+        {
+            IsExpanded = true;
+        }
+
+        /// <summary>
+        /// Expands this <see cref="TreeViewItem"/> and all the child tree items.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="ExpandAll"/> method expands this <see cref="TreeViewItem"/> and all the child tree items assigned to the <see cref="Items"/> collection.
+        /// </remarks>
+        public void ExpandAll()
+        {
+            // todo
+        }
+
+        /// <summary>
+        /// Collapses the tree item.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="Collapse"/> method collapses the <see cref="TreeViewItem"/>, while leaving the child items expanded state unchanged.
+        /// </remarks>
+        public void Collapse()
+        {
+            IsExpanded = false;
+        }
+
+        /// <summary>
+        /// Collapses this <see cref="TreeViewItem"/> and all the child tree items.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="CollapseAll"/> method collapses this <see cref="TreeViewItem"/> and all the child tree items assigned to the <see cref="Items"/> collection.
+        /// </remarks>
+        public void CollapseAll()
+        {
+            // todo
+        }
+
+        /// <summary>
+        /// Toggles the tree item to either the expanded or collapsed state.
+        /// </summary>
+        /// <remarks>
+        /// The tree item is toggled to the state opposite its current state, either expanded or collapsed.
+        /// </remarks>
+        public void Toggle()
+        {
+            IsExpanded = !IsExpanded;
+        }
     }
 }

@@ -206,6 +206,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the index of the image that is displayed for the items in this <see cref="TreeView"/> by default.
+        /// </summary>
+        /// <value>
+        /// The zero-based index of the image in the <see cref="ImageList"/> that
+        /// is displayed for the items in this <see cref="TreeView"/> by default. The default is <c>null</c>.
+        /// The <c>null</c> value means no image is displayed for the items by default.
+        /// </value>
+        /// <remarks>
+        /// The effect of setting this property depends on the value of the <see cref="ImageList"/> property.
+        /// You can specify which images from the list are displayed for items by default by setting the <see cref="ImageIndex"/> property.
+        /// Individual <see cref="TreeViewItem"/> objects can specify which image is displayed by setting the <see cref="TreeViewItem.ImageIndex"/> property.
+        /// These individual <see cref="TreeViewItem"/> settings will override the settings in the corresponding <see cref="TreeView"/> properties.
+        /// </remarks>
+        public int? ImageIndex { get; set; }
+
+        /// <summary>
         /// Unselects all items in the <see cref="TreeView"/>.
         /// </summary>
         /// <remarks>
