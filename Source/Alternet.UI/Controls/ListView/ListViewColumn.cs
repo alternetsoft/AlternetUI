@@ -1,8 +1,18 @@
+using System.Collections.Generic;
+
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a column in a ListView control to be used in the <see cref="ListViewView.Details"/> <see cref="ListView.View"/>.
+    /// Represents a column in a <see cref="ListView"/> control to be used in
+    /// the <see cref="ListViewView.Details"/> <see cref="ListView.View"/>.
     /// </summary>
+    /// <remarks>
+    /// A column is an item in a <see cref="ListView"/> control that contains column title text in the
+    /// <see cref="ListViewView.Details"/> <see cref="ListView.View"/>.
+    /// <see cref="ListViewColumn"/> objects can be added to a <see cref="ListView"/> using the
+    /// <see cref="ICollection{ListViewColumn}.Add"/> method of the collection returned
+    /// by <see cref="ListView.Columns"/> property.
+    /// </remarks>
     public class ListViewColumn
     {
         /// <summary>

@@ -258,6 +258,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a collection containing all items in the control.
         /// </summary>
+        /// <value>A <see cref="Collection{ListViewItem}"/> that contains all the items in the <see cref="ListView"/> control.</value>
+        /// <remarks>Using the <see cref="Collection{ListViewItem}"/> returned by this property, you can add items, remove items, and obtain a count of items.</remarks>
         public Collection<ListViewItem> Items { get; } = new Collection<ListViewItem> { ThrowOnNullItemAddition = true };
 
         /// <summary>

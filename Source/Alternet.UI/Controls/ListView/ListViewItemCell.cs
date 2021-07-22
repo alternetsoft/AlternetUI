@@ -3,6 +3,11 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a column cell of a <see cref="ListViewItem"/>.
     /// </summary>
+    /// <remarks>
+    /// A <see cref="ListView"/> control displays a list of items that are defined by the <see cref="ListViewItem"/> class.
+    /// Each <see cref="ListViewItem"/> can store cell objects that are defined by the <see cref="ListViewItemCell"/> class.
+    /// Cells are displayed when the <see cref="ListView.View"/> property of the <see cref="ListView"/> control is set to <see cref="ListViewView.Details"/>.
+    /// </remarks>
     public class ListViewItemCell
     {
         /// <summary>
@@ -24,6 +29,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the text of the cell.
         /// </summary>
+        /// <value>The text to display for the cell.</value>
         public string Text { get; set; } = "";
     }
 }

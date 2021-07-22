@@ -3,6 +3,27 @@ namespace Alternet.UI
     /// <summary>
     /// Represents an item in a <see cref="ListView"/> control.
     /// </summary>
+    /// <remarks>
+    /// <para>
+    /// The <see cref="ListViewItem"/> class defines the appearance, behavior, and data associated with an item
+    /// that is displayed in the <see cref="ListView"/> control. <see cref="ListViewItem"/> objects can be displayed in the
+    /// <see cref="ListView"/> control in one of several different views defined by <see cref="ListViewView"/> enumeration.
+    /// </para>
+    /// <para>
+    /// Most of the properties of the <see cref="ListViewItem"/> class provide ways to change the display of the item
+    /// in the <see cref="ListView"/> control it is associated with. The <see cref="Text"/> property allows you to specify the text displayed in the item.
+    /// </para>
+    /// <para>
+    /// The <see cref="ImageIndex"/> property allows you to specify the image to load from the <see cref="ImageList"/> that is assigned
+    /// to the <see cref="ListView"/> control (by setting the <see cref="ListView.LargeImageList"/> or
+    /// <see cref="ListView.SmallImageList"/> properties of the <see cref="ListView"/>).
+    /// </para>
+    /// <para>
+    /// Items can display any number of cells when the <see cref="ListView.View"/> property of the associated <see cref="ListView"/> control
+    /// is set to <see cref="ListViewView.Details"/> and columns are defined by the <see cref="ListView.Columns"/> property
+    /// of the <see cref="ListView"/> control. You can add cells to an item by using <see cref="Cells"/> property of the <see cref="ListViewItem"/>.
+    /// </para>
+    /// </remarks>
     public class ListViewItem
     {
         /// <summary>
@@ -57,6 +78,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the text of the item.
         /// </summary>
+        /// <value>The text to display for the item.</value>
+        /// <remarks>
+        /// When the <see cref="ListView.View"/> property of the associated <see cref="ListView"/> control
+        /// is set to <see cref="ListViewView.Details"/>, this property refers to the first cell text in the <see cref="Cells"/> collection.
+        /// In other views, the property specifies the text displayed together with an optional image to form a visual representation of the item.
+        /// </remarks>
         public string Text
         {
             get
