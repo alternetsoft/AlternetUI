@@ -7,7 +7,7 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API void MessageBox__Show(const char16_t* text, const char16_t* caption)
+ALTERNET_UI_API void MessageBox__Show_(const char16_t* text, const char16_t* caption)
 {
     MessageBox_::Show(text, ToOptional(caption));
 }

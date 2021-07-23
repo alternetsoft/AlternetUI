@@ -22,7 +22,7 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeObject.GetFromNativePointer<Control>(NativeApi.Control_GetParent(NativePointer), null);
+                return NativeObject.GetFromNativePointer<Control>(NativeApi.Control_GetParent_(NativePointer), null);
             }
             
         }
@@ -32,13 +32,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Control_GetSize(NativePointer);
+                return NativeApi.Control_GetSize_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.Control_SetSize(NativePointer, value);
+                NativeApi.Control_SetSize_(NativePointer, value);
             }
         }
         
@@ -47,13 +47,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Control_GetLocation(NativePointer);
+                return NativeApi.Control_GetLocation_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.Control_SetLocation(NativePointer, value);
+                NativeApi.Control_SetLocation_(NativePointer, value);
             }
         }
         
@@ -62,13 +62,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Control_GetBounds(NativePointer);
+                return NativeApi.Control_GetBounds_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.Control_SetBounds(NativePointer, value);
+                NativeApi.Control_SetBounds_(NativePointer, value);
             }
         }
         
@@ -77,13 +77,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Control_GetClientSize(NativePointer);
+                return NativeApi.Control_GetClientSize_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.Control_SetClientSize(NativePointer, value);
+                NativeApi.Control_SetClientSize_(NativePointer, value);
             }
         }
         
@@ -92,7 +92,7 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Control_GetIntrinsicLayoutPadding(NativePointer);
+                return NativeApi.Control_GetIntrinsicLayoutPadding_(NativePointer);
             }
             
         }
@@ -102,7 +102,7 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Control_GetIntrinsicPreferredSizePadding(NativePointer);
+                return NativeApi.Control_GetIntrinsicPreferredSizePadding_(NativePointer);
             }
             
         }
@@ -112,13 +112,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Control_GetVisible(NativePointer);
+                return NativeApi.Control_GetVisible_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.Control_SetVisible(NativePointer, value);
+                NativeApi.Control_SetVisible_(NativePointer, value);
             }
         }
         
@@ -127,7 +127,7 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Control_GetIsMouseOver(NativePointer);
+                return NativeApi.Control_GetIsMouseOver_(NativePointer);
             }
             
         }
@@ -137,13 +137,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Control_GetBackgroundColor(NativePointer);
+                return NativeApi.Control_GetBackgroundColor_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.Control_SetBackgroundColor(NativePointer, value);
+                NativeApi.Control_SetBackgroundColor_(NativePointer, value);
             }
         }
         
@@ -152,68 +152,68 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Control_GetForegroundColor(NativePointer);
+                return NativeApi.Control_GetForegroundColor_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.Control_SetForegroundColor(NativePointer, value);
+                NativeApi.Control_SetForegroundColor_(NativePointer, value);
             }
         }
         
         public void SetMouseCapture(bool value)
         {
             CheckDisposed();
-            NativeApi.Control_SetMouseCapture(NativePointer, value);
+            NativeApi.Control_SetMouseCapture_(NativePointer, value);
         }
         
         public void AddChild(Control control)
         {
             CheckDisposed();
-            NativeApi.Control_AddChild(NativePointer, control.NativePointer);
+            NativeApi.Control_AddChild_(NativePointer, control.NativePointer);
         }
         
         public void RemoveChild(Control control)
         {
             CheckDisposed();
-            NativeApi.Control_RemoveChild(NativePointer, control.NativePointer);
+            NativeApi.Control_RemoveChild_(NativePointer, control.NativePointer);
         }
         
         public void Update()
         {
             CheckDisposed();
-            NativeApi.Control_Update(NativePointer);
+            NativeApi.Control_Update_(NativePointer);
         }
         
         public System.Drawing.SizeF GetPreferredSize(System.Drawing.SizeF availableSize)
         {
             CheckDisposed();
-            return NativeApi.Control_GetPreferredSize(NativePointer, availableSize);
+            return NativeApi.Control_GetPreferredSize_(NativePointer, availableSize);
         }
         
         public DrawingContext OpenPaintDrawingContext()
         {
             CheckDisposed();
-            return NativeObject.GetFromNativePointer<DrawingContext>(NativeApi.Control_OpenPaintDrawingContext(NativePointer), p => new DrawingContext(p))!;
+            return NativeObject.GetFromNativePointer<DrawingContext>(NativeApi.Control_OpenPaintDrawingContext_(NativePointer), p => new DrawingContext(p))!;
         }
         
         public DrawingContext OpenClientDrawingContext()
         {
             CheckDisposed();
-            return NativeObject.GetFromNativePointer<DrawingContext>(NativeApi.Control_OpenClientDrawingContext(NativePointer), p => new DrawingContext(p))!;
+            return NativeObject.GetFromNativePointer<DrawingContext>(NativeApi.Control_OpenClientDrawingContext_(NativePointer), p => new DrawingContext(p))!;
         }
         
         public void BeginUpdate()
         {
             CheckDisposed();
-            NativeApi.Control_BeginUpdate(NativePointer);
+            NativeApi.Control_BeginUpdate_(NativePointer);
         }
         
         public void EndUpdate()
         {
             CheckDisposed();
-            NativeApi.Control_EndUpdate(NativePointer);
+            NativeApi.Control_EndUpdate_(NativePointer);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -230,7 +230,7 @@ namespace Alternet.UI.Native
                 }
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
-                NativeApi.Control_SetEventCallback(sink);
+                NativeApi.Control_SetEventCallback_(sink);
             }
         }
         
@@ -288,88 +288,88 @@ namespace Alternet.UI.Native
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetEventCallback(ControlEventCallbackType callback);
+            public static extern void Control_SetEventCallback_(ControlEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Control_GetParent(IntPtr obj);
+            public static extern IntPtr Control_GetParent_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.SizeF Control_GetSize(IntPtr obj);
+            public static extern NativeApiTypes.SizeF Control_GetSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetSize(IntPtr obj, NativeApiTypes.SizeF value);
+            public static extern void Control_SetSize_(IntPtr obj, NativeApiTypes.SizeF value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.PointF Control_GetLocation(IntPtr obj);
+            public static extern NativeApiTypes.PointF Control_GetLocation_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetLocation(IntPtr obj, NativeApiTypes.PointF value);
+            public static extern void Control_SetLocation_(IntPtr obj, NativeApiTypes.PointF value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.RectangleF Control_GetBounds(IntPtr obj);
+            public static extern NativeApiTypes.RectangleF Control_GetBounds_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetBounds(IntPtr obj, NativeApiTypes.RectangleF value);
+            public static extern void Control_SetBounds_(IntPtr obj, NativeApiTypes.RectangleF value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.SizeF Control_GetClientSize(IntPtr obj);
+            public static extern NativeApiTypes.SizeF Control_GetClientSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetClientSize(IntPtr obj, NativeApiTypes.SizeF value);
+            public static extern void Control_SetClientSize_(IntPtr obj, NativeApiTypes.SizeF value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Thickness Control_GetIntrinsicLayoutPadding(IntPtr obj);
+            public static extern NativeApiTypes.Thickness Control_GetIntrinsicLayoutPadding_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Thickness Control_GetIntrinsicPreferredSizePadding(IntPtr obj);
+            public static extern NativeApiTypes.Thickness Control_GetIntrinsicPreferredSizePadding_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Control_GetVisible(IntPtr obj);
+            public static extern bool Control_GetVisible_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetVisible(IntPtr obj, bool value);
+            public static extern void Control_SetVisible_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Control_GetIsMouseOver(IntPtr obj);
+            public static extern bool Control_GetIsMouseOver_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color Control_GetBackgroundColor(IntPtr obj);
+            public static extern NativeApiTypes.Color Control_GetBackgroundColor_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetBackgroundColor(IntPtr obj, NativeApiTypes.Color value);
+            public static extern void Control_SetBackgroundColor_(IntPtr obj, NativeApiTypes.Color value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color Control_GetForegroundColor(IntPtr obj);
+            public static extern NativeApiTypes.Color Control_GetForegroundColor_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetForegroundColor(IntPtr obj, NativeApiTypes.Color value);
+            public static extern void Control_SetForegroundColor_(IntPtr obj, NativeApiTypes.Color value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetMouseCapture(IntPtr obj, bool value);
+            public static extern void Control_SetMouseCapture_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_AddChild(IntPtr obj, IntPtr control);
+            public static extern void Control_AddChild_(IntPtr obj, IntPtr control);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_RemoveChild(IntPtr obj, IntPtr control);
+            public static extern void Control_RemoveChild_(IntPtr obj, IntPtr control);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_Update(IntPtr obj);
+            public static extern void Control_Update_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.SizeF Control_GetPreferredSize(IntPtr obj, NativeApiTypes.SizeF availableSize);
+            public static extern NativeApiTypes.SizeF Control_GetPreferredSize_(IntPtr obj, NativeApiTypes.SizeF availableSize);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Control_OpenPaintDrawingContext(IntPtr obj);
+            public static extern IntPtr Control_OpenPaintDrawingContext_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Control_OpenClientDrawingContext(IntPtr obj);
+            public static extern IntPtr Control_OpenClientDrawingContext_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_BeginUpdate(IntPtr obj);
+            public static extern void Control_BeginUpdate_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_EndUpdate(IntPtr obj);
+            public static extern void Control_EndUpdate_(IntPtr obj);
             
         }
     }

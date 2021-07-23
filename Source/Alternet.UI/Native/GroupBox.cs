@@ -22,13 +22,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.GroupBox_GetTitle(NativePointer);
+                return NativeApi.GroupBox_GetTitle_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.GroupBox_SetTitle(NativePointer, value);
+                NativeApi.GroupBox_SetTitle_(NativePointer, value);
             }
         }
         
@@ -42,10 +42,10 @@ namespace Alternet.UI.Native
             public static extern IntPtr GroupBox_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string? GroupBox_GetTitle(IntPtr obj);
+            public static extern string? GroupBox_GetTitle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GroupBox_SetTitle(IntPtr obj, string? value);
+            public static extern void GroupBox_SetTitle_(IntPtr obj, string? value);
             
         }
     }

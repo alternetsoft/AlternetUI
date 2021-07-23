@@ -22,13 +22,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ProgressBar_GetMinimum(NativePointer);
+                return NativeApi.ProgressBar_GetMinimum_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.ProgressBar_SetMinimum(NativePointer, value);
+                NativeApi.ProgressBar_SetMinimum_(NativePointer, value);
             }
         }
         
@@ -37,13 +37,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ProgressBar_GetMaximum(NativePointer);
+                return NativeApi.ProgressBar_GetMaximum_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.ProgressBar_SetMaximum(NativePointer, value);
+                NativeApi.ProgressBar_SetMaximum_(NativePointer, value);
             }
         }
         
@@ -52,13 +52,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ProgressBar_GetValue(NativePointer);
+                return NativeApi.ProgressBar_GetValue_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.ProgressBar_SetValue(NativePointer, value);
+                NativeApi.ProgressBar_SetValue_(NativePointer, value);
             }
         }
         
@@ -67,13 +67,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ProgressBar_GetIsIndeterminate(NativePointer);
+                return NativeApi.ProgressBar_GetIsIndeterminate_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.ProgressBar_SetIsIndeterminate(NativePointer, value);
+                NativeApi.ProgressBar_SetIsIndeterminate_(NativePointer, value);
             }
         }
         
@@ -87,28 +87,28 @@ namespace Alternet.UI.Native
             public static extern IntPtr ProgressBar_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ProgressBar_GetMinimum(IntPtr obj);
+            public static extern int ProgressBar_GetMinimum_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ProgressBar_SetMinimum(IntPtr obj, int value);
+            public static extern void ProgressBar_SetMinimum_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ProgressBar_GetMaximum(IntPtr obj);
+            public static extern int ProgressBar_GetMaximum_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ProgressBar_SetMaximum(IntPtr obj, int value);
+            public static extern void ProgressBar_SetMaximum_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ProgressBar_GetValue(IntPtr obj);
+            public static extern int ProgressBar_GetValue_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ProgressBar_SetValue(IntPtr obj, int value);
+            public static extern void ProgressBar_SetValue_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool ProgressBar_GetIsIndeterminate(IntPtr obj);
+            public static extern bool ProgressBar_GetIsIndeterminate_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ProgressBar_SetIsIndeterminate(IntPtr obj, bool value);
+            public static extern void ProgressBar_SetIsIndeterminate_(IntPtr obj, bool value);
             
         }
     }

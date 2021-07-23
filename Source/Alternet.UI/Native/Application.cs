@@ -20,7 +20,7 @@ namespace Alternet.UI.Native
         public void Run(Window window)
         {
             CheckDisposed();
-            NativeApi.Application_Run(NativePointer, window.NativePointer);
+            NativeApi.Application_Run_(NativePointer, window.NativePointer);
         }
         
         
@@ -33,7 +33,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr Application_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_Run(IntPtr obj, IntPtr window);
+            public static extern void Application_Run_(IntPtr obj, IntPtr window);
             
         }
     }

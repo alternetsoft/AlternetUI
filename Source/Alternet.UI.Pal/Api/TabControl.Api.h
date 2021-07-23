@@ -13,22 +13,22 @@ ALTERNET_UI_API TabControl* TabControl_Create_()
     return new TabControl();
 }
 
-ALTERNET_UI_API int TabControl_GetPageCount(TabControl* obj)
+ALTERNET_UI_API int TabControl_GetPageCount_(TabControl* obj)
 {
     return obj->GetPageCount();
 }
 
-ALTERNET_UI_API void TabControl_InsertPage(TabControl* obj, int index, Control* page, const char16_t* title)
+ALTERNET_UI_API void TabControl_InsertPage_(TabControl* obj, int index, Control* page, const char16_t* title)
 {
     obj->InsertPage(index, page, title);
 }
 
-ALTERNET_UI_API void TabControl_RemovePage(TabControl* obj, int index, Control* page)
+ALTERNET_UI_API void TabControl_RemovePage_(TabControl* obj, int index, Control* page)
 {
     obj->RemovePage(index, page);
 }
 
-ALTERNET_UI_API SizeF_C TabControl_GetTotalPreferredSizeFromPageSize(TabControl* obj, SizeF pageSize)
+ALTERNET_UI_API SizeF_C TabControl_GetTotalPreferredSizeFromPageSize_(TabControl* obj, SizeF pageSize)
 {
     return obj->GetTotalPreferredSizeFromPageSize(pageSize);
 }

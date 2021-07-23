@@ -23,13 +23,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.RadioButton_GetText(NativePointer);
+                return NativeApi.RadioButton_GetText_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.RadioButton_SetText(NativePointer, value);
+                NativeApi.RadioButton_SetText_(NativePointer, value);
             }
         }
         
@@ -38,13 +38,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.RadioButton_GetIsChecked(NativePointer);
+                return NativeApi.RadioButton_GetIsChecked_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.RadioButton_SetIsChecked(NativePointer, value);
+                NativeApi.RadioButton_SetIsChecked_(NativePointer, value);
             }
         }
         
@@ -62,7 +62,7 @@ namespace Alternet.UI.Native
                 }
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
-                NativeApi.RadioButton_SetEventCallback(sink);
+                NativeApi.RadioButton_SetEventCallback_(sink);
             }
         }
         
@@ -92,22 +92,22 @@ namespace Alternet.UI.Native
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RadioButton_SetEventCallback(RadioButtonEventCallbackType callback);
+            public static extern void RadioButton_SetEventCallback_(RadioButtonEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr RadioButton_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string RadioButton_GetText(IntPtr obj);
+            public static extern string RadioButton_GetText_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RadioButton_SetText(IntPtr obj, string value);
+            public static extern void RadioButton_SetText_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RadioButton_GetIsChecked(IntPtr obj);
+            public static extern bool RadioButton_GetIsChecked_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RadioButton_SetIsChecked(IntPtr obj, bool value);
+            public static extern void RadioButton_SetIsChecked_(IntPtr obj, bool value);
             
         }
     }

@@ -23,13 +23,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.TextBox_GetText(NativePointer);
+                return NativeApi.TextBox_GetText_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.TextBox_SetText(NativePointer, value);
+                NativeApi.TextBox_SetText_(NativePointer, value);
             }
         }
         
@@ -38,13 +38,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.TextBox_GetEditControlOnly(NativePointer);
+                return NativeApi.TextBox_GetEditControlOnly_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.TextBox_SetEditControlOnly(NativePointer, value);
+                NativeApi.TextBox_SetEditControlOnly_(NativePointer, value);
             }
         }
         
@@ -62,7 +62,7 @@ namespace Alternet.UI.Native
                 }
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
-                NativeApi.TextBox_SetEventCallback(sink);
+                NativeApi.TextBox_SetEventCallback_(sink);
             }
         }
         
@@ -92,22 +92,22 @@ namespace Alternet.UI.Native
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetEventCallback(TextBoxEventCallbackType callback);
+            public static extern void TextBox_SetEventCallback_(TextBoxEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr TextBox_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string TextBox_GetText(IntPtr obj);
+            public static extern string TextBox_GetText_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetText(IntPtr obj, string value);
+            public static extern void TextBox_SetText_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetEditControlOnly(IntPtr obj);
+            public static extern bool TextBox_GetEditControlOnly_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetEditControlOnly(IntPtr obj, bool value);
+            public static extern void TextBox_SetEditControlOnly_(IntPtr obj, bool value);
             
         }
     }

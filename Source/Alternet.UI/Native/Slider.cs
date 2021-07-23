@@ -23,13 +23,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Slider_GetMinimum(NativePointer);
+                return NativeApi.Slider_GetMinimum_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.Slider_SetMinimum(NativePointer, value);
+                NativeApi.Slider_SetMinimum_(NativePointer, value);
             }
         }
         
@@ -38,13 +38,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Slider_GetMaximum(NativePointer);
+                return NativeApi.Slider_GetMaximum_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.Slider_SetMaximum(NativePointer, value);
+                NativeApi.Slider_SetMaximum_(NativePointer, value);
             }
         }
         
@@ -53,13 +53,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Slider_GetValue(NativePointer);
+                return NativeApi.Slider_GetValue_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.Slider_SetValue(NativePointer, value);
+                NativeApi.Slider_SetValue_(NativePointer, value);
             }
         }
         
@@ -68,13 +68,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Slider_GetSmallChange(NativePointer);
+                return NativeApi.Slider_GetSmallChange_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.Slider_SetSmallChange(NativePointer, value);
+                NativeApi.Slider_SetSmallChange_(NativePointer, value);
             }
         }
         
@@ -83,13 +83,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Slider_GetLargeChange(NativePointer);
+                return NativeApi.Slider_GetLargeChange_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.Slider_SetLargeChange(NativePointer, value);
+                NativeApi.Slider_SetLargeChange_(NativePointer, value);
             }
         }
         
@@ -98,13 +98,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Slider_GetTickFrequency(NativePointer);
+                return NativeApi.Slider_GetTickFrequency_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.Slider_SetTickFrequency(NativePointer, value);
+                NativeApi.Slider_SetTickFrequency_(NativePointer, value);
             }
         }
         
@@ -122,7 +122,7 @@ namespace Alternet.UI.Native
                 }
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
-                NativeApi.Slider_SetEventCallback(sink);
+                NativeApi.Slider_SetEventCallback_(sink);
             }
         }
         
@@ -152,46 +152,46 @@ namespace Alternet.UI.Native
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Slider_SetEventCallback(SliderEventCallbackType callback);
+            public static extern void Slider_SetEventCallback_(SliderEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Slider_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Slider_GetMinimum(IntPtr obj);
+            public static extern int Slider_GetMinimum_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Slider_SetMinimum(IntPtr obj, int value);
+            public static extern void Slider_SetMinimum_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Slider_GetMaximum(IntPtr obj);
+            public static extern int Slider_GetMaximum_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Slider_SetMaximum(IntPtr obj, int value);
+            public static extern void Slider_SetMaximum_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Slider_GetValue(IntPtr obj);
+            public static extern int Slider_GetValue_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Slider_SetValue(IntPtr obj, int value);
+            public static extern void Slider_SetValue_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Slider_GetSmallChange(IntPtr obj);
+            public static extern int Slider_GetSmallChange_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Slider_SetSmallChange(IntPtr obj, int value);
+            public static extern void Slider_SetSmallChange_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Slider_GetLargeChange(IntPtr obj);
+            public static extern int Slider_GetLargeChange_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Slider_SetLargeChange(IntPtr obj, int value);
+            public static extern void Slider_SetLargeChange_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Slider_GetTickFrequency(IntPtr obj);
+            public static extern int Slider_GetTickFrequency_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Slider_SetTickFrequency(IntPtr obj, int value);
+            public static extern void Slider_SetTickFrequency_(IntPtr obj, int value);
             
         }
     }

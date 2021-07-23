@@ -23,13 +23,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeObject.GetFromNativePointer<ImageList>(NativeApi.TreeView_GetImageList(NativePointer), p => new ImageList(p));
+                return NativeObject.GetFromNativePointer<ImageList>(NativeApi.TreeView_GetImageList_(NativePointer), p => new ImageList(p));
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.TreeView_SetImageList(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+                NativeApi.TreeView_SetImageList_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
             }
         }
         
@@ -38,7 +38,7 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.TreeView_GetRootItem(NativePointer);
+                return NativeApi.TreeView_GetRootItem_(NativePointer);
             }
             
         }
@@ -48,13 +48,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.TreeView_GetSelectionMode(NativePointer);
+                return NativeApi.TreeView_GetSelectionMode_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.TreeView_SetSelectionMode(NativePointer, value);
+                NativeApi.TreeView_SetSelectionMode_(NativePointer, value);
             }
         }
         
@@ -63,21 +63,21 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                var array = NativeApi.TreeView_OpenSelectedItemsArray(NativePointer);
+                var array = NativeApi.TreeView_OpenSelectedItemsArray_(NativePointer);
                 try
                 {
-                    var count = NativeApi.TreeView_GetSelectedItemsItemCount(NativePointer, array);
+                    var count = NativeApi.TreeView_GetSelectedItemsItemCount_(NativePointer, array);
                     var result = new System.Collections.Generic.List<System.IntPtr>(count);
                     for (int i = 0; i < count; i++)
                     {
-                        var item = NativeApi.TreeView_GetSelectedItemsItemAt(NativePointer, array, i);
+                        var item = NativeApi.TreeView_GetSelectedItemsItemAt_(NativePointer, array, i);
                         result.Add(item);
                     }
                     return result.ToArray();
                 }
                 finally
                 {
-                    NativeApi.TreeView_CloseSelectedItemsArray(NativePointer, array);
+                    NativeApi.TreeView_CloseSelectedItemsArray_(NativePointer, array);
                 }
             }
             
@@ -86,37 +86,37 @@ namespace Alternet.UI.Native
         public int GetItemCount(System.IntPtr parentItem)
         {
             CheckDisposed();
-            return NativeApi.TreeView_GetItemCount(NativePointer, parentItem);
+            return NativeApi.TreeView_GetItemCount_(NativePointer, parentItem);
         }
         
         public void InsertItemAt(System.IntPtr parentItem, int index, string text, int imageIndex)
         {
             CheckDisposed();
-            NativeApi.TreeView_InsertItemAt(NativePointer, parentItem, index, text, imageIndex);
+            NativeApi.TreeView_InsertItemAt_(NativePointer, parentItem, index, text, imageIndex);
         }
         
         public void RemoveItem(System.IntPtr item)
         {
             CheckDisposed();
-            NativeApi.TreeView_RemoveItem(NativePointer, item);
+            NativeApi.TreeView_RemoveItem_(NativePointer, item);
         }
         
         public void ClearItems(System.IntPtr parentItem)
         {
             CheckDisposed();
-            NativeApi.TreeView_ClearItems(NativePointer, parentItem);
+            NativeApi.TreeView_ClearItems_(NativePointer, parentItem);
         }
         
         public void ClearSelected()
         {
             CheckDisposed();
-            NativeApi.TreeView_ClearSelected(NativePointer);
+            NativeApi.TreeView_ClearSelected_(NativePointer);
         }
         
         public void SetSelected(System.IntPtr item, bool value)
         {
             CheckDisposed();
-            NativeApi.TreeView_SetSelected(NativePointer, item, value);
+            NativeApi.TreeView_SetSelected_(NativePointer, item, value);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -133,7 +133,7 @@ namespace Alternet.UI.Native
                 }
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
-                NativeApi.TreeView_SetEventCallback(sink);
+                NativeApi.TreeView_SetEventCallback_(sink);
             }
         }
         
@@ -163,55 +163,55 @@ namespace Alternet.UI.Native
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TreeView_SetEventCallback(TreeViewEventCallbackType callback);
+            public static extern void TreeView_SetEventCallback_(TreeViewEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr TreeView_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr TreeView_GetImageList(IntPtr obj);
+            public static extern IntPtr TreeView_GetImageList_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TreeView_SetImageList(IntPtr obj, IntPtr value);
+            public static extern void TreeView_SetImageList_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr TreeView_GetRootItem(IntPtr obj);
+            public static extern System.IntPtr TreeView_GetRootItem_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern TreeViewSelectionMode TreeView_GetSelectionMode(IntPtr obj);
+            public static extern TreeViewSelectionMode TreeView_GetSelectionMode_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TreeView_SetSelectionMode(IntPtr obj, TreeViewSelectionMode value);
+            public static extern void TreeView_SetSelectionMode_(IntPtr obj, TreeViewSelectionMode value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr TreeView_OpenSelectedItemsArray(IntPtr obj);
+            public static extern System.IntPtr TreeView_OpenSelectedItemsArray_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TreeView_GetSelectedItemsItemCount(IntPtr obj, System.IntPtr array);
+            public static extern int TreeView_GetSelectedItemsItemCount_(IntPtr obj, System.IntPtr array);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr TreeView_GetSelectedItemsItemAt(IntPtr obj, System.IntPtr array, int index);
+            public static extern System.IntPtr TreeView_GetSelectedItemsItemAt_(IntPtr obj, System.IntPtr array, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TreeView_CloseSelectedItemsArray(IntPtr obj, System.IntPtr array);
+            public static extern void TreeView_CloseSelectedItemsArray_(IntPtr obj, System.IntPtr array);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TreeView_GetItemCount(IntPtr obj, System.IntPtr parentItem);
+            public static extern int TreeView_GetItemCount_(IntPtr obj, System.IntPtr parentItem);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TreeView_InsertItemAt(IntPtr obj, System.IntPtr parentItem, int index, string text, int imageIndex);
+            public static extern void TreeView_InsertItemAt_(IntPtr obj, System.IntPtr parentItem, int index, string text, int imageIndex);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TreeView_RemoveItem(IntPtr obj, System.IntPtr item);
+            public static extern void TreeView_RemoveItem_(IntPtr obj, System.IntPtr item);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TreeView_ClearItems(IntPtr obj, System.IntPtr parentItem);
+            public static extern void TreeView_ClearItems_(IntPtr obj, System.IntPtr parentItem);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TreeView_ClearSelected(IntPtr obj);
+            public static extern void TreeView_ClearSelected_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TreeView_SetSelected(IntPtr obj, System.IntPtr item, bool value);
+            public static extern void TreeView_SetSelected_(IntPtr obj, System.IntPtr item, bool value);
             
         }
     }

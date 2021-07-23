@@ -23,7 +23,7 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ComboBox_GetItemsCount(NativePointer);
+                return NativeApi.ComboBox_GetItemsCount_(NativePointer);
             }
             
         }
@@ -33,13 +33,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ComboBox_GetIsEditable(NativePointer);
+                return NativeApi.ComboBox_GetIsEditable_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.ComboBox_SetIsEditable(NativePointer, value);
+                NativeApi.ComboBox_SetIsEditable_(NativePointer, value);
             }
         }
         
@@ -48,13 +48,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ComboBox_GetSelectedIndex(NativePointer);
+                return NativeApi.ComboBox_GetSelectedIndex_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.ComboBox_SetSelectedIndex(NativePointer, value);
+                NativeApi.ComboBox_SetSelectedIndex_(NativePointer, value);
             }
         }
         
@@ -63,32 +63,32 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ComboBox_GetText(NativePointer);
+                return NativeApi.ComboBox_GetText_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.ComboBox_SetText(NativePointer, value);
+                NativeApi.ComboBox_SetText_(NativePointer, value);
             }
         }
         
         public void InsertItem(int index, string value)
         {
             CheckDisposed();
-            NativeApi.ComboBox_InsertItem(NativePointer, index, value);
+            NativeApi.ComboBox_InsertItem_(NativePointer, index, value);
         }
         
         public void RemoveItemAt(int index)
         {
             CheckDisposed();
-            NativeApi.ComboBox_RemoveItemAt(NativePointer, index);
+            NativeApi.ComboBox_RemoveItemAt_(NativePointer, index);
         }
         
         public void ClearItems()
         {
             CheckDisposed();
-            NativeApi.ComboBox_ClearItems(NativePointer);
+            NativeApi.ComboBox_ClearItems_(NativePointer);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -105,7 +105,7 @@ namespace Alternet.UI.Native
                 }
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
-                NativeApi.ComboBox_SetEventCallback(sink);
+                NativeApi.ComboBox_SetEventCallback_(sink);
             }
         }
         
@@ -139,40 +139,40 @@ namespace Alternet.UI.Native
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ComboBox_SetEventCallback(ComboBoxEventCallbackType callback);
+            public static extern void ComboBox_SetEventCallback_(ComboBoxEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr ComboBox_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ComboBox_GetItemsCount(IntPtr obj);
+            public static extern int ComboBox_GetItemsCount_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool ComboBox_GetIsEditable(IntPtr obj);
+            public static extern bool ComboBox_GetIsEditable_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ComboBox_SetIsEditable(IntPtr obj, bool value);
+            public static extern void ComboBox_SetIsEditable_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ComboBox_GetSelectedIndex(IntPtr obj);
+            public static extern int ComboBox_GetSelectedIndex_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ComboBox_SetSelectedIndex(IntPtr obj, int value);
+            public static extern void ComboBox_SetSelectedIndex_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string ComboBox_GetText(IntPtr obj);
+            public static extern string ComboBox_GetText_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ComboBox_SetText(IntPtr obj, string value);
+            public static extern void ComboBox_SetText_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ComboBox_InsertItem(IntPtr obj, int index, string value);
+            public static extern void ComboBox_InsertItem_(IntPtr obj, int index, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ComboBox_RemoveItemAt(IntPtr obj, int index);
+            public static extern void ComboBox_RemoveItemAt_(IntPtr obj, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ComboBox_ClearItems(IntPtr obj);
+            public static extern void ComboBox_ClearItems_(IntPtr obj);
             
         }
     }

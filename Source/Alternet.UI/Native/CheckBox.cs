@@ -23,13 +23,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.CheckBox_GetText(NativePointer);
+                return NativeApi.CheckBox_GetText_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.CheckBox_SetText(NativePointer, value);
+                NativeApi.CheckBox_SetText_(NativePointer, value);
             }
         }
         
@@ -38,13 +38,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.CheckBox_GetIsChecked(NativePointer);
+                return NativeApi.CheckBox_GetIsChecked_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.CheckBox_SetIsChecked(NativePointer, value);
+                NativeApi.CheckBox_SetIsChecked_(NativePointer, value);
             }
         }
         
@@ -62,7 +62,7 @@ namespace Alternet.UI.Native
                 }
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
-                NativeApi.CheckBox_SetEventCallback(sink);
+                NativeApi.CheckBox_SetEventCallback_(sink);
             }
         }
         
@@ -92,22 +92,22 @@ namespace Alternet.UI.Native
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void CheckBox_SetEventCallback(CheckBoxEventCallbackType callback);
+            public static extern void CheckBox_SetEventCallback_(CheckBoxEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr CheckBox_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string CheckBox_GetText(IntPtr obj);
+            public static extern string CheckBox_GetText_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void CheckBox_SetText(IntPtr obj, string value);
+            public static extern void CheckBox_SetText_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool CheckBox_GetIsChecked(IntPtr obj);
+            public static extern bool CheckBox_GetIsChecked_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void CheckBox_SetIsChecked(IntPtr obj, bool value);
+            public static extern void CheckBox_SetIsChecked_(IntPtr obj, bool value);
             
         }
     }

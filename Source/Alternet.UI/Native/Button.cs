@@ -23,13 +23,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Button_GetText(NativePointer);
+                return NativeApi.Button_GetText_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.Button_SetText(NativePointer, value);
+                NativeApi.Button_SetText_(NativePointer, value);
             }
         }
         
@@ -47,7 +47,7 @@ namespace Alternet.UI.Native
                 }
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
-                NativeApi.Button_SetEventCallback(sink);
+                NativeApi.Button_SetEventCallback_(sink);
             }
         }
         
@@ -77,16 +77,16 @@ namespace Alternet.UI.Native
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Button_SetEventCallback(ButtonEventCallbackType callback);
+            public static extern void Button_SetEventCallback_(ButtonEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Button_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Button_GetText(IntPtr obj);
+            public static extern string Button_GetText_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Button_SetText(IntPtr obj, string value);
+            public static extern void Button_SetText_(IntPtr obj, string value);
             
         }
     }

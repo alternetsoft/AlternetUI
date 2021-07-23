@@ -23,13 +23,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.NumericUpDown_GetMinimum(NativePointer);
+                return NativeApi.NumericUpDown_GetMinimum_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.NumericUpDown_SetMinimum(NativePointer, value);
+                NativeApi.NumericUpDown_SetMinimum_(NativePointer, value);
             }
         }
         
@@ -38,13 +38,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.NumericUpDown_GetMaximum(NativePointer);
+                return NativeApi.NumericUpDown_GetMaximum_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.NumericUpDown_SetMaximum(NativePointer, value);
+                NativeApi.NumericUpDown_SetMaximum_(NativePointer, value);
             }
         }
         
@@ -53,13 +53,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.NumericUpDown_GetValue(NativePointer);
+                return NativeApi.NumericUpDown_GetValue_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.NumericUpDown_SetValue(NativePointer, value);
+                NativeApi.NumericUpDown_SetValue_(NativePointer, value);
             }
         }
         
@@ -77,7 +77,7 @@ namespace Alternet.UI.Native
                 }
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
-                NativeApi.NumericUpDown_SetEventCallback(sink);
+                NativeApi.NumericUpDown_SetEventCallback_(sink);
             }
         }
         
@@ -107,28 +107,28 @@ namespace Alternet.UI.Native
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void NumericUpDown_SetEventCallback(NumericUpDownEventCallbackType callback);
+            public static extern void NumericUpDown_SetEventCallback_(NumericUpDownEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr NumericUpDown_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int NumericUpDown_GetMinimum(IntPtr obj);
+            public static extern int NumericUpDown_GetMinimum_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void NumericUpDown_SetMinimum(IntPtr obj, int value);
+            public static extern void NumericUpDown_SetMinimum_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int NumericUpDown_GetMaximum(IntPtr obj);
+            public static extern int NumericUpDown_GetMaximum_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void NumericUpDown_SetMaximum(IntPtr obj, int value);
+            public static extern void NumericUpDown_SetMaximum_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int NumericUpDown_GetValue(IntPtr obj);
+            public static extern int NumericUpDown_GetValue_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void NumericUpDown_SetValue(IntPtr obj, int value);
+            public static extern void NumericUpDown_SetValue_(IntPtr obj, int value);
             
         }
     }

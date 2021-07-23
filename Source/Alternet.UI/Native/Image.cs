@@ -22,7 +22,7 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Image_GetSize(NativePointer);
+                return NativeApi.Image_GetSize_(NativePointer);
             }
             
         }
@@ -32,7 +32,7 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Image_GetPixelSize(NativePointer);
+                return NativeApi.Image_GetPixelSize_(NativePointer);
             }
             
         }
@@ -40,7 +40,7 @@ namespace Alternet.UI.Native
         public void LoadFromStream(InputStream stream)
         {
             CheckDisposed();
-            NativeApi.Image_LoadFromStream(NativePointer, stream.NativePointer);
+            NativeApi.Image_LoadFromStream_(NativePointer, stream.NativePointer);
         }
         
         
@@ -53,13 +53,13 @@ namespace Alternet.UI.Native
             public static extern IntPtr Image_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.SizeF Image_GetSize(IntPtr obj);
+            public static extern NativeApiTypes.SizeF Image_GetSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Size Image_GetPixelSize(IntPtr obj);
+            public static extern NativeApiTypes.Size Image_GetPixelSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_LoadFromStream(IntPtr obj, IntPtr stream);
+            public static extern void Image_LoadFromStream_(IntPtr obj, IntPtr stream);
             
         }
     }

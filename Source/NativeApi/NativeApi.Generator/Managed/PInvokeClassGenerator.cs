@@ -50,7 +50,7 @@ namespace ApiGenerator.Managed
             var declaringTypeName = TypeProvider.GetNativeName(type);
 
             WriteDllImport(w);
-            w.WriteLine($"public static extern void {declaringTypeName}_Destroy(IntPtr obj);");
+            w.WriteLine($"public static extern void {declaringTypeName}_Destroy_(IntPtr obj);");
             w.WriteLine();
         }
 
@@ -73,14 +73,14 @@ namespace ApiGenerator.Managed
             if (property.GetMethod != null)
             {
                 WriteDllImport(w);
-                w.WriteLine($"public static extern {propertyTypeName} {declaringTypeName}_Get{propertyName}(IntPtr obj);");
+                w.WriteLine($"public static extern {propertyTypeName} {declaringTypeName}_Get{propertyName}_(IntPtr obj);");
                 w.WriteLine();
             }
 
             if (property.SetMethod != null)
             {
                 WriteDllImport(w);
-                w.WriteLine($"public static extern void {declaringTypeName}_Set{propertyName}(IntPtr obj, {propertyTypeName} value);");
+                w.WriteLine($"public static extern void {declaringTypeName}_Set{propertyName}_(IntPtr obj, {propertyTypeName} value);");
                 w.WriteLine();
             }
         }
@@ -118,7 +118,7 @@ namespace ApiGenerator.Managed
             }
 
             WriteDllImport(w);
-            w.WriteLine($"public static extern {returnTypeName} {declaringTypeName}_{methodName}({signatureParametersString});");
+            w.WriteLine($"public static extern {returnTypeName} {declaringTypeName}_{methodName}_({signatureParametersString});");
             w.WriteLine();
         }
 
@@ -144,7 +144,7 @@ namespace ApiGenerator.Managed
             w.WriteLine();
 
             WriteDllImport(w);
-            w.WriteLine($"public static extern void {declaringTypeName}_SetEventCallback({declaringTypeName}EventCallbackType callback);");
+            w.WriteLine($"public static extern void {declaringTypeName}_SetEventCallback_({declaringTypeName}EventCallbackType callback);");
             w.WriteLine();
         }
     }

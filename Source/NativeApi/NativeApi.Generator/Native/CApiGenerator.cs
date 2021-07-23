@@ -69,7 +69,7 @@ namespace ApiGenerator.Native
 
             if (property.GetMethod != null)
             {
-                w.WriteLine($"{ExportMacro} {types.GetTypeName(property.ToContextualProperty(), TypeUsage.Return)} {declaringTypeName}_Get{propertyName}({instanceParameterSignaturePart})");
+                w.WriteLine($"{ExportMacro} {types.GetTypeName(property.ToContextualProperty(), TypeUsage.Return)} {declaringTypeName}_Get{propertyName}_({instanceParameterSignaturePart})");
                 w.WriteLine("{");
                 w.Indent++;
 
@@ -87,7 +87,7 @@ namespace ApiGenerator.Native
 
             if (property.SetMethod != null)
             {
-                w.WriteLine($"{ExportMacro} void {declaringTypeName}_Set{propertyName}({instanceParameterSignaturePart}, {types.GetTypeName(property.ToContextualProperty(), TypeUsage.Argument)} value)");
+                w.WriteLine($"{ExportMacro} void {declaringTypeName}_Set{propertyName}_({instanceParameterSignaturePart}, {types.GetTypeName(property.ToContextualProperty(), TypeUsage.Argument)} value)");
                 w.WriteLine("{");
                 w.Indent++;
                 w.WriteLine($"obj->Set{propertyName}({GetCToCppArgument(property.ToContextualProperty(), "value")});");
@@ -134,7 +134,7 @@ namespace ApiGenerator.Native
                 }
             }
 
-            w.WriteLine($"{ExportMacro} {returnTypeName} {declaringTypeName}_{methodName}({signatureParametersString})");
+            w.WriteLine($"{ExportMacro} {returnTypeName} {declaringTypeName}_{methodName}_({signatureParametersString})");
             w.WriteLine("{");
             w.Indent++;
 
@@ -160,7 +160,7 @@ namespace ApiGenerator.Native
 
             var declaringTypeName = types.GetTypeName(events[0].DeclaringType!.ToContextualType(), TypeUsage.Static);
 
-            w.WriteLine($"{ExportMacro} void {declaringTypeName}_SetEventCallback({declaringTypeName}::{declaringTypeName}EventCallbackType callback)");
+            w.WriteLine($"{ExportMacro} void {declaringTypeName}_SetEventCallback_({declaringTypeName}::{declaringTypeName}EventCallbackType callback)");
             w.WriteLine("{");
             w.Indent++;
 
@@ -208,7 +208,7 @@ namespace ApiGenerator.Native
             var declaringTypeName = types.GetTypeName(type.ToContextualType(), TypeUsage.Static);
             var instanceTypeName = types.GetTypeName(type.ToContextualType(), TypeUsage.Argument);
 
-            w.WriteLine($"{ExportMacro} void {declaringTypeName}_Destroy({instanceTypeName} obj)");
+            w.WriteLine($"{ExportMacro} void {declaringTypeName}_Destroy_({instanceTypeName} obj)");
             w.WriteLine("{");
             w.Indent++;
 

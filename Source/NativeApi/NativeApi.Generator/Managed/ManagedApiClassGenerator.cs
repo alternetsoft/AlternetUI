@@ -78,7 +78,7 @@ using System.Security;");
         //            w.WriteLine("if (NativePointer != IntPtr.Zero)");
         //            using (new BlockIndent(w))
         //            {
-        //                w.WriteLine($"NativeApi.{TypeProvider.GetNativeName(type)}_Destroy(NativePointer);");
+        //                w.WriteLine($"NativeApi.{TypeProvider.GetNativeName(type)}_Destroy_(NativePointer);");
         //                w.WriteLine("SetNativePointer(IntPtr.Zero);");
         //            }
         //        }
@@ -156,7 +156,7 @@ using System.Security;");
                             w.Write(
                             string.Format(
                                 GetNativeToManagedFormatString(contextualProperty),
-                                $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}(NativePointer)"));
+                                $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}_(NativePointer)"));
                             w.WriteLine(";");
                         }
 
@@ -172,7 +172,7 @@ using System.Security;");
                     {
                         w.WriteLine("CheckDisposed();");
                         w.WriteLine(
-                            $"NativeApi.{nativeDeclaringTypeName}_Set{propertyName}(NativePointer, {GetManagedToNativeArgument(contextualProperty, "value")});");
+                            $"NativeApi.{nativeDeclaringTypeName}_Set{propertyName}_(NativePointer, {GetManagedToNativeArgument(contextualProperty, "value")});");
                     }
             
                 }
@@ -188,11 +188,11 @@ using System.Security;");
             var arrayElementType = apiProperty.Property.PropertyType.GetElementType().ToContextualType();
             var arrayElementTypeName = types.GetTypeName(arrayElementType);
 
-            w.WriteLine($"var array = NativeApi.{nativeDeclaringTypeName}_Open{propertyName}Array(NativePointer);");
+            w.WriteLine($"var array = NativeApi.{nativeDeclaringTypeName}_Open{propertyName}Array_(NativePointer);");
             w.WriteLine("try");
             using (new BlockIndent(w))
             {
-                w.WriteLine($"var count = NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemCount(NativePointer, array);");
+                w.WriteLine($"var count = NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemCount_(NativePointer, array);");
                 w.WriteLine($"var result = new System.Collections.Generic.List<{arrayElementTypeName}>(count);");
                 w.WriteLine($"for (int i = 0; i < count; i++)");
                 using (new BlockIndent(w))
@@ -201,7 +201,7 @@ using System.Security;");
                     w.Write(
                     string.Format(
                         GetNativeToManagedFormatString(arrayElementType),
-                        $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemAt(NativePointer, array, i)"));
+                        $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemAt_(NativePointer, array, i)"));
                     w.WriteLine(";");
 
                     w.WriteLine($"result.Add(item);");
@@ -212,7 +212,7 @@ using System.Security;");
             w.WriteLine("finally");
             using (new BlockIndent(w))
             {
-                w.WriteLine($"NativeApi.{nativeDeclaringTypeName}_Close{propertyName}Array(NativePointer, array);");
+                w.WriteLine($"NativeApi.{nativeDeclaringTypeName}_Close{propertyName}Array_(NativePointer, array);");
             }
         }
 
@@ -262,7 +262,7 @@ using System.Security;");
             w.Write(
                 string.Format(
                     GetNativeToManagedFormatString(method.ReturnParameter.ToContextualParameter()),
-                    $"NativeApi.{TypeProvider.GetNativeName(method.DeclaringType!)}_{methodName}({callParametersString})"));
+                    $"NativeApi.{TypeProvider.GetNativeName(method.DeclaringType!)}_{methodName}_({callParametersString})"));
             w.WriteLine(";");
 
 
@@ -300,7 +300,7 @@ using System.Security;");
                     w.WriteLine(");");
 
                     w.WriteLine("eventCallbackGCHandle = GCHandle.Alloc(sink);");
-                    w.WriteLine($"NativeApi.{declaringTypeName}_SetEventCallback(sink);");
+                    w.WriteLine($"NativeApi.{declaringTypeName}_SetEventCallback_(sink);");
                 }
             }
 

@@ -12,57 +12,57 @@ ALTERNET_UI_API ComboBox* ComboBox_Create_()
     return new ComboBox();
 }
 
-ALTERNET_UI_API int ComboBox_GetItemsCount(ComboBox* obj)
+ALTERNET_UI_API int ComboBox_GetItemsCount_(ComboBox* obj)
 {
     return obj->GetItemsCount();
 }
 
-ALTERNET_UI_API c_bool ComboBox_GetIsEditable(ComboBox* obj)
+ALTERNET_UI_API c_bool ComboBox_GetIsEditable_(ComboBox* obj)
 {
     return obj->GetIsEditable();
 }
 
-ALTERNET_UI_API void ComboBox_SetIsEditable(ComboBox* obj, c_bool value)
+ALTERNET_UI_API void ComboBox_SetIsEditable_(ComboBox* obj, c_bool value)
 {
     obj->SetIsEditable(value);
 }
 
-ALTERNET_UI_API int ComboBox_GetSelectedIndex(ComboBox* obj)
+ALTERNET_UI_API int ComboBox_GetSelectedIndex_(ComboBox* obj)
 {
     return obj->GetSelectedIndex();
 }
 
-ALTERNET_UI_API void ComboBox_SetSelectedIndex(ComboBox* obj, int value)
+ALTERNET_UI_API void ComboBox_SetSelectedIndex_(ComboBox* obj, int value)
 {
     obj->SetSelectedIndex(value);
 }
 
-ALTERNET_UI_API char16_t* ComboBox_GetText(ComboBox* obj)
+ALTERNET_UI_API char16_t* ComboBox_GetText_(ComboBox* obj)
 {
     return AllocPInvokeReturnString(obj->GetText());
 }
 
-ALTERNET_UI_API void ComboBox_SetText(ComboBox* obj, const char16_t* value)
+ALTERNET_UI_API void ComboBox_SetText_(ComboBox* obj, const char16_t* value)
 {
     obj->SetText(value);
 }
 
-ALTERNET_UI_API void ComboBox_InsertItem(ComboBox* obj, int index, const char16_t* value)
+ALTERNET_UI_API void ComboBox_InsertItem_(ComboBox* obj, int index, const char16_t* value)
 {
     obj->InsertItem(index, value);
 }
 
-ALTERNET_UI_API void ComboBox_RemoveItemAt(ComboBox* obj, int index)
+ALTERNET_UI_API void ComboBox_RemoveItemAt_(ComboBox* obj, int index)
 {
     obj->RemoveItemAt(index);
 }
 
-ALTERNET_UI_API void ComboBox_ClearItems(ComboBox* obj)
+ALTERNET_UI_API void ComboBox_ClearItems_(ComboBox* obj)
 {
     obj->ClearItems();
 }
 
-ALTERNET_UI_API void ComboBox_SetEventCallback(ComboBox::ComboBoxEventCallbackType callback)
+ALTERNET_UI_API void ComboBox_SetEventCallback_(ComboBox::ComboBoxEventCallbackType callback)
 {
     ComboBox::SetEventCallback(callback);
 }

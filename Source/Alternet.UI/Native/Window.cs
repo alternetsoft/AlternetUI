@@ -23,13 +23,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Window_GetTitle(NativePointer);
+                return NativeApi.Window_GetTitle_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.Window_SetTitle(NativePointer, value);
+                NativeApi.Window_SetTitle_(NativePointer, value);
             }
         }
         
@@ -38,13 +38,13 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Window_GetWindowStartPosition(NativePointer);
+                return NativeApi.Window_GetWindowStartPosition_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.Window_SetWindowStartPosition(NativePointer, value);
+                NativeApi.Window_SetWindowStartPosition_(NativePointer, value);
             }
         }
         
@@ -62,7 +62,7 @@ namespace Alternet.UI.Native
                 }
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
-                NativeApi.Window_SetEventCallback(sink);
+                NativeApi.Window_SetEventCallback_(sink);
             }
         }
         
@@ -96,22 +96,22 @@ namespace Alternet.UI.Native
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetEventCallback(WindowEventCallbackType callback);
+            public static extern void Window_SetEventCallback_(WindowEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Window_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Window_GetTitle(IntPtr obj);
+            public static extern string Window_GetTitle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetTitle(IntPtr obj, string value);
+            public static extern void Window_SetTitle_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern WindowStartPosition Window_GetWindowStartPosition(IntPtr obj);
+            public static extern WindowStartPosition Window_GetWindowStartPosition_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetWindowStartPosition(IntPtr obj, WindowStartPosition value);
+            public static extern void Window_SetWindowStartPosition_(IntPtr obj, WindowStartPosition value);
             
         }
     }

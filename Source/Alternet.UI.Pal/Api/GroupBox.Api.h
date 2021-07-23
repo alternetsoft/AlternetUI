@@ -12,12 +12,12 @@ ALTERNET_UI_API GroupBox* GroupBox_Create_()
     return new GroupBox();
 }
 
-ALTERNET_UI_API char16_t* GroupBox_GetTitle(GroupBox* obj)
+ALTERNET_UI_API char16_t* GroupBox_GetTitle_(GroupBox* obj)
 {
     return AllocPInvokeReturnString(obj->GetTitle());
 }
 
-ALTERNET_UI_API void GroupBox_SetTitle(GroupBox* obj, const char16_t* value)
+ALTERNET_UI_API void GroupBox_SetTitle_(GroupBox* obj, const char16_t* value)
 {
     obj->SetTitle(ToOptional(value));
 }

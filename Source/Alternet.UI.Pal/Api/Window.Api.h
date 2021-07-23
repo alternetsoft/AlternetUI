@@ -12,27 +12,27 @@ ALTERNET_UI_API Window* Window_Create_()
     return new Window();
 }
 
-ALTERNET_UI_API char16_t* Window_GetTitle(Window* obj)
+ALTERNET_UI_API char16_t* Window_GetTitle_(Window* obj)
 {
     return AllocPInvokeReturnString(obj->GetTitle());
 }
 
-ALTERNET_UI_API void Window_SetTitle(Window* obj, const char16_t* value)
+ALTERNET_UI_API void Window_SetTitle_(Window* obj, const char16_t* value)
 {
     obj->SetTitle(value);
 }
 
-ALTERNET_UI_API WindowStartPosition Window_GetWindowStartPosition(Window* obj)
+ALTERNET_UI_API WindowStartPosition Window_GetWindowStartPosition_(Window* obj)
 {
     return obj->GetWindowStartPosition();
 }
 
-ALTERNET_UI_API void Window_SetWindowStartPosition(Window* obj, WindowStartPosition value)
+ALTERNET_UI_API void Window_SetWindowStartPosition_(Window* obj, WindowStartPosition value)
 {
     obj->SetWindowStartPosition(value);
 }
 
-ALTERNET_UI_API void Window_SetEventCallback(Window::WindowEventCallbackType callback)
+ALTERNET_UI_API void Window_SetEventCallback_(Window::WindowEventCallbackType callback)
 {
     Window::SetEventCallback(callback);
 }

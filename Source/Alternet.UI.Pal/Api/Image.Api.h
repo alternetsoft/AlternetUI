@@ -13,17 +13,17 @@ ALTERNET_UI_API Image* Image_Create_()
     return new Image();
 }
 
-ALTERNET_UI_API SizeF_C Image_GetSize(Image* obj)
+ALTERNET_UI_API SizeF_C Image_GetSize_(Image* obj)
 {
     return obj->GetSize();
 }
 
-ALTERNET_UI_API Size_C Image_GetPixelSize(Image* obj)
+ALTERNET_UI_API Size_C Image_GetPixelSize_(Image* obj)
 {
     return obj->GetPixelSize();
 }
 
-ALTERNET_UI_API void Image_LoadFromStream(Image* obj, void* stream)
+ALTERNET_UI_API void Image_LoadFromStream_(Image* obj, void* stream)
 {
     obj->LoadFromStream(stream);
 }
