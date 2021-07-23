@@ -47,7 +47,12 @@ namespace ControlsSample
             try
             {
                 for (int i = start; i < start + count; i++)
-                    treeView.Items.Add(new TreeViewItem("Item " + i, i % 4));
+                {
+                    var item = new TreeViewItem("Item " + i, i % 4);
+                    for (int j = start; j < 3; j++)
+                        item.Items.Add(new TreeViewItem("Item " + i + "." + j));
+                    treeView.Items.Add(item);
+                }
             }
             finally
             {

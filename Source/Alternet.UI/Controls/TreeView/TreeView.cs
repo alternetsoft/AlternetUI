@@ -320,12 +320,12 @@ namespace Alternet.UI
 
         private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<TreeViewItem> e)
         {
-            e.Item.TreeView = null;
+            TreeViewItem.OnChildItemRemoved(e.Item);
         }
 
         private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<TreeViewItem> e)
         {
-            e.Item.TreeView = this;
+            TreeViewItem.OnChildItemAdded(e.Item, null, this, e.Index);
         }
 
         private void ClearSelectedCore()

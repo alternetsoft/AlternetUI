@@ -16,7 +16,7 @@ int GetSelectedItemsItemCount(void* array);
 void* GetSelectedItemsItemAt(void* array, int index);
 void CloseSelectedItemsArray(void* array);
 int GetItemCount(void* parentItem);
-void InsertItemAt(void* parentItem, int index, const string& text, int imageIndex);
+void* InsertItem(void* parentItem, int index, const string& text, int imageIndex);
 void RemoveItem(void* item);
 void ClearItems(void* parentItem);
 void ClearSelected();

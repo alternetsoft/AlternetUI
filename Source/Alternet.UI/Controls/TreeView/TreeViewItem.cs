@@ -95,24 +95,6 @@ namespace Alternet.UI
         public TreeView? TreeView { get; internal set; }
 
         /// <summary>
-        /// Removes the current tree item from the tree view control.
-        /// </summary>
-        /// <remarks>
-        /// When the <see cref="Remove"/> method is called, the tree item, and any child tree items that are
-        /// assigned to the <see cref="TreeViewItem"/>, are removed from the <see cref="TreeView"/>.
-        /// </remarks>
-        public void Remove()
-        {
-            if (Parent == null)
-            {
-                if (TreeView != null)
-                    TreeView.Items.Remove(this);
-            }
-            else
-                Parent.Items.Remove(this);
-        }
-
-        /// <summary>
         /// Gets or sets the text of the item.
         /// </summary>
         /// <value>The text to display for the item.</value>
@@ -172,6 +154,24 @@ namespace Alternet.UI
         /// </remarks>
         public Collection<TreeViewItem> Items { get; } = new Collection<TreeViewItem> { ThrowOnNullItemAddition = true };
 
+        /// <summary>
+        /// Removes the current tree item from the tree view control.
+        /// </summary>
+        /// <remarks>
+        /// When the <see cref="Remove"/> method is called, the tree item, and any child tree items that are
+        /// assigned to the <see cref="TreeViewItem"/>, are removed from the <see cref="TreeView"/>.
+        /// </remarks>
+        public void Remove()
+        {
+            if (Parent == null)
+            {
+                if (TreeView != null)
+                    TreeView.Items.Remove(this);
+            }
+            else
+                Parent.Items.Remove(this);
+        }
+
         // todo
         /// <summary>
         /// Expands the tree item.
@@ -228,26 +228,36 @@ namespace Alternet.UI
             IsExpanded = !IsExpanded;
         }
 
+        internal static void OnChildItemAdded(TreeViewItem item, TreeViewItem? parent, TreeView? treeView, int index)
+        {
+            item.Parent = parent;
+            item.TreeView = treeView;
+            item.Index = index;
+
+            if (treeView != null)
+                treeView.RaiseItemAdded(new TreeViewItemEventArgs(item));
+        }
+
+        internal static void OnChildItemRemoved(TreeViewItem item)
+        {
+            item.Parent = null;
+
+            var oldTreeView = item.TreeView;
+            item.TreeView = null;
+            item.Index = null;
+
+            if (oldTreeView != null)
+                oldTreeView.RaiseItemRemoved(new TreeViewItemEventArgs(item));
+        }
+
         private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<TreeViewItem> e)
         {
-            e.Item.Parent = this;
-            e.Item.TreeView = TreeView;
-            e.Item.Index = e.Index;
-
-            if (TreeView != null)
-                TreeView.RaiseItemAdded(new TreeViewItemEventArgs(e.Item));
+            OnChildItemAdded(e.Item, this, TreeView, e.Index);
         }
 
         private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<TreeViewItem> e)
         {
-            e.Item.Parent = null;
-
-            var oldTreeView = e.Item.TreeView;
-            e.Item.TreeView = null;
-            e.Item.Index = null;
-
-            if (oldTreeView != null)
-                oldTreeView.RaiseItemRemoved(new TreeViewItemEventArgs(e.Item));
+            OnChildItemRemoved(e.Item);
         }
     }
 }

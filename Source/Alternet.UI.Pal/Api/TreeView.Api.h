@@ -63,9 +63,9 @@ ALTERNET_UI_API int TreeView_GetItemCount_(TreeView* obj, void* parentItem)
     return obj->GetItemCount(parentItem);
 }
 
-ALTERNET_UI_API void TreeView_InsertItemAt_(TreeView* obj, void* parentItem, int index, const char16_t* text, int imageIndex)
+ALTERNET_UI_API void* TreeView_InsertItem_(TreeView* obj, void* parentItem, int index, const char16_t* text, int imageIndex)
 {
-    obj->InsertItemAt(parentItem, index, text, imageIndex);
+    return obj->InsertItem(parentItem, index, text, imageIndex);
 }
 
 ALTERNET_UI_API void TreeView_RemoveItem_(TreeView* obj, void* item)

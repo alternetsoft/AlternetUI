@@ -6,11 +6,11 @@ namespace Alternet.UI
 {
     internal class NativeTreeViewHandler : NativeControlHandler<TreeView, Native.TreeView>
     {
+        private readonly Dictionary<TreeViewItem, IntPtr> handlesByItems = new Dictionary<TreeViewItem, IntPtr>();
+        private readonly Dictionary<IntPtr, TreeViewItem> itemsByHandles = new Dictionary<IntPtr, TreeViewItem>();
         private bool receivingSelection;
 
         private bool applyingSelection;
-
-
 
         internal override Native.Control CreateNativeControl()
         {
@@ -35,11 +35,6 @@ namespace Alternet.UI
             NativeControl.SelectionChanged += NativeControl_SelectionChanged;
         }
 
-        private void Control_ImageListChanged(object? sender, EventArgs e)
-        {
-            ApplyImageList();
-        }
-
         protected override void OnDetach()
         {
             Control.ItemAdded -= Control_ItemAdded;
@@ -51,6 +46,11 @@ namespace Alternet.UI
             NativeControl.SelectionChanged -= NativeControl_SelectionChanged;
 
             base.OnDetach();
+        }
+
+        private void Control_ImageListChanged(object? sender, EventArgs e)
+        {
+            ApplyImageList();
         }
 
         private void NativeControl_SelectionChanged(object? sender, EventArgs e)
@@ -79,14 +79,14 @@ namespace Alternet.UI
             NativeControl.SelectionMode = (Native.TreeViewSelectionMode)Control.SelectionMode;
         }
 
-        IntPtr GetHandleFromItem(TreeViewItem item)
+        private IntPtr GetHandleFromItem(TreeViewItem item)
         {
-            throw new Exception();
+            return handlesByItems[item];
         }
 
-        TreeViewItem GetItemFromHandle(IntPtr handle)
+        private TreeViewItem GetItemFromHandle(IntPtr handle)
         {
-            throw new Exception();
+            return itemsByHandles[handle];
         }
 
         private void ApplySelection()
@@ -134,35 +134,50 @@ namespace Alternet.UI
             var nativeControl = NativeControl;
             nativeControl.ClearItems(nativeControl.RootItem);
 
-            void Apply(TreeViewItem? parent, IEnumerable<TreeViewItem> items)
+            foreach (var item in Control.Items)
+                InsertItemAndChildren(item);
+        }
+
+        private void InsertItem(TreeViewItem item)
+        {
+            var handle = NativeControl.InsertItem(
+                            item.Parent == null ? NativeControl.RootItem : GetHandleFromItem(item.Parent),
+                            item.Index ?? throw new InvalidOperationException(),
+                            item.Text,
+                            item.ImageIndex ?? Control.ImageIndex ?? -1);
+
+            itemsByHandles.Add(handle, item);
+            handlesByItems.Add(item, handle);
+        }
+
+        private void InsertItemAndChildren(TreeViewItem item)
+        {
+            InsertItem(item);
+            void Apply(IEnumerable<TreeViewItem> items)
             {
                 foreach (var item in items)
                 {
-                    InsertItem(parent, item);
-                    Apply(item, item.Items);
+                    InsertItem(item);
+                    Apply(item.Items);
                 }
             }
-
-            Apply(null, Control.Items);
-        }
-
-        private void InsertItem(TreeViewItem? parent, TreeViewItem item)
-        {
-            NativeControl.InsertItemAt(
-                parent == null ? NativeControl.RootItem : GetHandleFromItem(parent),
-                item.Index ?? throw new InvalidOperationException(),
-                item.Text,
-                item.ImageIndex ?? Control.ImageIndex ?? -1);
+            Apply(item.Items);
         }
 
         private void Control_ItemAdded(object? sender, TreeViewItemEventArgs e)
         {
-            InsertItem(e.Item.Parent, e.Item);
+            InsertItemAndChildren(e.Item);
         }
 
         private void Control_ItemRemoved(object? sender, TreeViewItemEventArgs e)
         {
-            NativeControl.RemoveItem(GetHandleFromItem(e.Item));
+            var item = e.Item;
+            var handle = handlesByItems[item];
+
+            NativeControl.RemoveItem(GetHandleFromItem(item));
+
+            handlesByItems.Remove(item);
+            itemsByHandles.Remove(handle);
         }
     }
 }

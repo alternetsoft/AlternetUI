@@ -112,4 +112,11 @@ namespace Alternet::UI
             return distance(vector.begin(), it);
         }
     }
+
+    inline int ConvertToIntChecked(size_t value)
+    {
+        if (value > INT_MAX)
+            throw std::overflow_error("size_t to int conversion overflow.");
+        return static_cast<int>(value);
+    }
 }
