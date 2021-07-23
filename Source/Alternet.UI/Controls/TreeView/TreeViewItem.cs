@@ -133,6 +133,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the position of the tree item in the tree item collection.
+        /// </summary>
+        /// <value>
+        /// A zero-based index value that represents the position of the tree item in
+        /// a <see cref="Collection{TreeViewItem}"/>, or <c>null</c> if the item is not contained in any collection.
+        /// An item can be contained in either <see cref="Items"/> or <see cref="TreeView.Items"/> collection.
+        /// </value>
+        public int? Index { get; private set; }
+
+        /// <summary>
         /// Gets or sets the index of the image that is displayed for the item.
         /// </summary>
         /// <value>
@@ -222,6 +232,7 @@ namespace Alternet.UI
         {
             e.Item.Parent = this;
             e.Item.TreeView = TreeView;
+            e.Item.Index = e.Index;
 
             if (TreeView != null)
                 TreeView.RaiseItemAdded(new TreeViewItemEventArgs(e.Item));
@@ -233,6 +244,8 @@ namespace Alternet.UI
 
             var oldTreeView = e.Item.TreeView;
             e.Item.TreeView = null;
+            e.Item.Index = null;
+
             if (oldTreeView != null)
                 oldTreeView.RaiseItemRemoved(new TreeViewItemEventArgs(e.Item));
         }

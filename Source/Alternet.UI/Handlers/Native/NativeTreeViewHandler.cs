@@ -150,7 +150,7 @@ namespace Alternet.UI
         {
             NativeControl.InsertItemAt(
                 parent == null ? NativeControl.RootItem : GetHandleFromItem(parent),
-                item.Index,
+                item.Index ?? throw new InvalidOperationException(),
                 item.Text,
                 item.ImageIndex ?? Control.ImageIndex ?? -1);
         }
