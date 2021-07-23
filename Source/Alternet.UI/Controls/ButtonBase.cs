@@ -37,7 +37,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="TextChanged"/> event.
+        /// Called when the value of the <see cref="Text"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnTextChanged(EventArgs e)

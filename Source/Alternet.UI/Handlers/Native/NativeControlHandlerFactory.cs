@@ -25,6 +25,7 @@ namespace Alternet.UI
             ListBox => new NativeListBoxHandler(),
             ComboBox => new NativeComboBoxHandler(),
             ListView => new NativeListViewHandler(),
+            TreeView => new NativeTreeViewHandler(),
             _ => new GenericControlHandler()
         };
     }

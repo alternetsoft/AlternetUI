@@ -22,6 +22,12 @@ namespace Alternet.UI.Native
         LargeIcon,
     }
     
+    enum TreeViewSelectionMode
+    {
+        Single,
+        Multiple,
+    }
+    
     enum WindowStartPosition
     {
         SystemDefaultLocation,

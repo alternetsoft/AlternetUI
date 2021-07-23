@@ -70,6 +70,16 @@ namespace Alternet.UI
         public event EventHandler? SelectionModeChanged;
 
         /// <summary>
+        /// Occurs when an item is added to this <see cref="TreeView"/> control, at any nesting level.
+        /// </summary>
+        public event EventHandler<TreeViewItemEventArgs>? ItemAdded;
+
+        /// <summary>
+        /// Occurs when an item is removed from this <see cref="TreeView"/> control, at any nesting level.
+        /// </summary>
+        public event EventHandler<TreeViewItemEventArgs>? ItemRemoved;
+
+        /// <summary>
         /// Occurs when the <see cref="ImageList"/> property value changes.
         /// </summary>
         public event EventHandler? ImageListChanged;
@@ -263,6 +273,40 @@ namespace Alternet.UI
         {
             OnSelectionChanged(e);
             SelectionChanged?.Invoke(this, e);
+        }
+
+        internal void RaiseItemAdded(TreeViewItemEventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnItemAdded(e);
+            ItemAdded?.Invoke(this, e);
+        }
+
+        internal void RaiseItemRemoved(TreeViewItemEventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnItemRemoved(e);
+            ItemRemoved?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Called when an item is added to this <see cref="TreeView"/> control, at any nesting level.
+        /// </summary>
+        /// <param name="e">An <see cref="TreeViewItemEventArgs"/> that contains the event data.</param>
+        protected virtual void OnItemAdded(TreeViewItemEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when an item is removed from this <see cref="TreeView"/> control, at any nesting level.
+        /// </summary>
+        /// <param name="e">An <see cref="TreeViewItemEventArgs"/> that contains the event data.</param>
+        protected virtual void OnItemRemoved(TreeViewItemEventArgs e)
+        {
         }
 
         /// <summary>

@@ -222,12 +222,19 @@ namespace Alternet.UI
         {
             e.Item.Parent = this;
             e.Item.TreeView = TreeView;
+
+            if (TreeView != null)
+                TreeView.RaiseItemAdded(new TreeViewItemEventArgs(e.Item));
         }
 
         private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<TreeViewItem> e)
         {
             e.Item.Parent = null;
+
+            var oldTreeView = e.Item.TreeView;
             e.Item.TreeView = null;
+            if (oldTreeView != null)
+                oldTreeView.RaiseItemRemoved(new TreeViewItemEventArgs(e.Item));
         }
     }
 }

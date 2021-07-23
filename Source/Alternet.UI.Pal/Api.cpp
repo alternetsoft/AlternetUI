@@ -17,4 +17,5 @@
 #include "Api/Slider.Api.h"
 #include "Api/TabControl.Api.h"
 #include "Api/TextBox.Api.h"
+#include "Api/TreeView.Api.h"
 #include "Api/Window.Api.h"

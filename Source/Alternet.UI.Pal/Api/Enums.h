@@ -23,6 +23,12 @@ namespace Alternet::UI
         LargeIcon,
     };
     
+    enum class TreeViewSelectionMode
+    {
+        Single,
+        Multiple,
+    };
+    
     enum class WindowStartPosition
     {
         SystemDefaultLocation,
