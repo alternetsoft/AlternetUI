@@ -42,7 +42,7 @@ namespace ApiGenerator.Api
 
         public static bool IsApiType(Type type)
         {
-            return type.FullName!.Replace("NativeApi.Api.", "") == type.Name && !IsManagedServerApiType(type);
+            return type.FullName!.Replace("NativeApi.Api.", "") == type.Name && !IsManagedServerApiType(type) && !IsNativeEventDataType(type);
         }
 
         public static bool IsManagedServerApiType(Type type)

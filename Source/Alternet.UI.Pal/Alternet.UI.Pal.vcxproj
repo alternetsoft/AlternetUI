@@ -228,6 +228,7 @@
     <ClInclude Include="Api\ListBox.Api.h" />
     <ClInclude Include="Api\ListView.Api.h" />
     <ClInclude Include="Api\MessageBox_.Api.h" />
+    <ClInclude Include="Api\NativeEventDataTypes.h" />
     <ClInclude Include="Api\NumericUpDown.Api.h" />
     <ClInclude Include="Api\Object.Api.h" />
     <ClInclude Include="Api\Panel.Api.h" />
