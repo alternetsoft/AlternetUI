@@ -72,12 +72,27 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when an item is added to this <see cref="TreeView"/> control, at any nesting level.
         /// </summary>
-        public event EventHandler<TreeViewItemEventArgs>? ItemAdded;
+        public event EventHandler<TreeViewItemContainmentEventArgs>? ItemAdded;
 
         /// <summary>
         /// Occurs when an item is removed from this <see cref="TreeView"/> control, at any nesting level.
         /// </summary>
-        public event EventHandler<TreeViewItemEventArgs>? ItemRemoved;
+        public event EventHandler<TreeViewItemContainmentEventArgs>? ItemRemoved;
+
+        /// <summary>
+        /// Occurs after the tree item is expanded.
+        /// </summary>
+        public event EventHandler<TreeViewItemExpandedChangedEventArgs>? AfterExpand;
+
+        /// <summary>
+        /// Occurs after the tree item is collapsed.
+        /// </summary>
+        public event EventHandler<TreeViewItemExpandedChangedEventArgs>? AfterCollapse;
+
+        /// <summary>
+        /// Occurs after <see cref="TreeViewItem.IsExpanded"/> property value of a tree item belonging to this <see cref="TreeView"/> changes.
+        /// </summary>
+        public event EventHandler<TreeViewItemExpandedChangedEventArgs>? ExpandedChanged;
 
         /// <summary>
         /// Occurs when the <see cref="ImageList"/> property value changes.
@@ -275,7 +290,39 @@ namespace Alternet.UI
             SelectionChanged?.Invoke(this, e);
         }
 
-        internal void RaiseItemAdded(TreeViewItemEventArgs e)
+        /// <summary>
+        /// Raises the <see cref="AfterCollapse"/> event and calls <see cref="OnAfterCollapse"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="TreeViewItemExpandedChangedEventArgs"/> that contains the event data.</param>
+        public void RaiseAfterCollapse(TreeViewItemExpandedChangedEventArgs e)
+        {
+            e.Item.IsExpanded = false;
+            OnAfterCollapse(e);
+            AfterCollapse?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="AfterExpand"/> event and calls <see cref="OnAfterExpand"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="TreeViewItemExpandedChangedEventArgs"/> that contains the event data.</param>
+        public void RaiseAfterExpand(TreeViewItemExpandedChangedEventArgs e)
+        {
+            e.Item.IsExpanded = true;
+            OnAfterExpand(e);
+            AfterExpand?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="ExpandedChanged"/> event and calls <see cref="OnExpandedChanged"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="TreeViewItemExpandedChangedEventArgs"/> that contains the event data.</param>
+        public void RaiseExpandedChanged(TreeViewItemExpandedChangedEventArgs e)
+        {
+            OnExpandedChanged(e);
+            ExpandedChanged?.Invoke(this, e);
+        }
+
+        internal void RaiseItemAdded(TreeViewItemContainmentEventArgs e)
         {
             if (e == null)
                 throw new ArgumentNullException(nameof(e));
@@ -284,7 +331,7 @@ namespace Alternet.UI
             ItemAdded?.Invoke(this, e);
         }
 
-        internal void RaiseItemRemoved(TreeViewItemEventArgs e)
+        internal void RaiseItemRemoved(TreeViewItemContainmentEventArgs e)
         {
             if (e == null)
                 throw new ArgumentNullException(nameof(e));
@@ -294,18 +341,42 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called after a tree item is expanded.
+        /// </summary>
+        /// <param name="e">An <see cref="TreeViewItemExpandedChangedEventArgs"/> that contains the event data.</param>
+        protected virtual void OnAfterExpand(TreeViewItemExpandedChangedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called after a tree item is collapsed.
+        /// </summary>
+        /// <param name="e">An <see cref="TreeViewItemExpandedChangedEventArgs"/> that contains the event data.</param>
+        protected virtual void OnAfterCollapse(TreeViewItemExpandedChangedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called after <see cref="TreeViewItem.IsExpanded"/> property value of a tree item belonging to this <see cref="TreeView"/> changes.
+        /// </summary>
+        /// <param name="e">An <see cref="TreeViewItemExpandedChangedEventArgs"/> that contains the event data.</param>
+        protected virtual void OnExpandedChanged(TreeViewItemExpandedChangedEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called when an item is added to this <see cref="TreeView"/> control, at any nesting level.
         /// </summary>
-        /// <param name="e">An <see cref="TreeViewItemEventArgs"/> that contains the event data.</param>
-        protected virtual void OnItemAdded(TreeViewItemEventArgs e)
+        /// <param name="e">An <see cref="TreeViewItemContainmentEventArgs"/> that contains the event data.</param>
+        protected virtual void OnItemAdded(TreeViewItemContainmentEventArgs e)
         {
         }
 
         /// <summary>
         /// Called when an item is removed from this <see cref="TreeView"/> control, at any nesting level.
         /// </summary>
-        /// <param name="e">An <see cref="TreeViewItemEventArgs"/> that contains the event data.</param>
-        protected virtual void OnItemRemoved(TreeViewItemEventArgs e)
+        /// <param name="e">An <see cref="TreeViewItemContainmentEventArgs"/> that contains the event data.</param>
+        protected virtual void OnItemRemoved(TreeViewItemContainmentEventArgs e)
         {
         }
 

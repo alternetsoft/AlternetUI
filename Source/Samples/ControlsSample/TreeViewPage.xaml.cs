@@ -19,6 +19,7 @@ namespace ControlsSample
 
             treeView = (TreeView)FindControl("treeView");
             treeView.SelectionChanged += TreeView_SelectionChanged;
+            treeView.ExpandedChanged += TreeView_ExpandedChanged;
 
             treeView.ImageList = ResourceLoader.LoadImageLists().Small;
 
@@ -66,6 +67,11 @@ namespace ControlsSample
             var selectedItems = treeView.SelectedItems;
             string selectedItemsString = selectedItems.Count > 100 ? "too many indices to display" : string.Join(",", selectedItems.Select(x => x.Text));
             site.LogEvent($"TreeView: SelectionChanged. SelectedItems: ({selectedItemsString})");
+        }
+
+        private void TreeView_ExpandedChanged(object? sender, TreeViewItemExpandedChangedEventArgs e)
+        {
+            site.LogEvent($"TreeView: ExpandedChanged. Item: '{e.Item.Text}', IsExpanded: {e.Item.IsExpanded}");
         }
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)

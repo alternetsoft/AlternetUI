@@ -34,8 +34,23 @@ namespace Alternet.UI
             Control.SelectionChanged += Control_SelectionChanged;
             NativeControl.SelectionChanged += NativeControl_SelectionChanged;
             NativeControl.ControlRecreated += NativeControl_ControlRecreated;
+            NativeControl.ItemExpanded += NativeControl_ItemExpanded;
+            NativeControl.ItemCollapsed += NativeControl_ItemCollapsed;
         }
 
+        private void NativeControl_ItemCollapsed(object? sender, Native.NativeEventArgs<Native.TreeViewItemEventData> e)
+        {
+            var item = GetItemFromHandle(e.Data.item);
+            Control.RaiseAfterCollapse(new TreeViewItemExpandedChangedEventArgs(item));
+            Control.RaiseExpandedChanged(new TreeViewItemExpandedChangedEventArgs(item));
+        }
+
+        private void NativeControl_ItemExpanded(object? sender, Native.NativeEventArgs<Native.TreeViewItemEventData> e)
+        {
+            var item = GetItemFromHandle(e.Data.item);
+            Control.RaiseAfterExpand(new TreeViewItemExpandedChangedEventArgs(item));
+            Control.RaiseExpandedChanged(new TreeViewItemExpandedChangedEventArgs(item));
+        }
 
         private void NativeControl_ControlRecreated(object? sender, EventArgs e)
         {
@@ -55,6 +70,8 @@ namespace Alternet.UI
             Control.SelectionChanged -= Control_SelectionChanged;
             NativeControl.SelectionChanged -= NativeControl_SelectionChanged;
             NativeControl.ControlRecreated -= NativeControl_ControlRecreated;
+            NativeControl.ItemExpanded -= NativeControl_ItemExpanded;
+            NativeControl.ItemCollapsed -= NativeControl_ItemCollapsed;
 
             base.OnDetach();
         }
@@ -181,12 +198,12 @@ namespace Alternet.UI
             Apply(item.Items);
         }
 
-        private void Control_ItemAdded(object? sender, TreeViewItemEventArgs e)
+        private void Control_ItemAdded(object? sender, TreeViewItemContainmentEventArgs e)
         {
             InsertItemAndChildren(e.Item);
         }
 
-        private void Control_ItemRemoved(object? sender, TreeViewItemEventArgs e)
+        private void Control_ItemRemoved(object? sender, TreeViewItemContainmentEventArgs e)
         {
             var item = e.Item;
             var handle = handlesByItems[item];

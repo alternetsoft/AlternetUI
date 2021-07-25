@@ -247,7 +247,7 @@ namespace Alternet.UI
             item.Index = index;
 
             if (treeView != null)
-                treeView.RaiseItemAdded(new TreeViewItemEventArgs(item));
+                treeView.RaiseItemAdded(new TreeViewItemContainmentEventArgs(item));
         }
 
         internal static void OnChildItemRemoved(TreeViewItem item)
@@ -259,7 +259,7 @@ namespace Alternet.UI
             item.Index = null;
 
             if (oldTreeView != null)
-                oldTreeView.RaiseItemRemoved(new TreeViewItemEventArgs(item));
+                oldTreeView.RaiseItemRemoved(new TreeViewItemContainmentEventArgs(item));
         }
 
         private void ApplyTreeViewToAllChildren()
