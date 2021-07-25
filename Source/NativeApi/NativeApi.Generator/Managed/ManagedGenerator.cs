@@ -35,6 +35,11 @@ namespace ApiGenerator.Managed
             }
         }
 
+        public static void GenerateNativeEventDataTypes(Paths paths, IEnumerable<Type> types)
+        {
+            File.WriteAllText(Path.Combine(paths.ManagedApiSourcePath, "NativeEventDataTypes.cs"), ManagedNativeEventDataTypesGenerator.Generate(types));
+        }
+
         public static void GenerateEnums(Paths paths, IEnumerable<Type> types)
         {
             File.WriteAllText(Path.Combine(paths.ManagedApiSourcePath, "Enums.cs"), ManagedEnumsGenerator.Generate(types));

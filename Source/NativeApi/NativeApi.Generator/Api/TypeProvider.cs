@@ -20,6 +20,12 @@ namespace ApiGenerator.Api
             return assembly.GetTypes().Where(x => IsManagedServerApiType(x) && !IsStruct(x) && !x.IsEnum).ToArray();
         }
 
+        public static IEnumerable<Type> GetNativeEventDataTypes()
+        {
+            var assembly = typeof(NativeApi.Api.Window).Assembly;
+            return assembly.GetTypes().Where(x => IsNativeEventDataType(x) && !IsStruct(x) && !x.IsEnum).ToArray();
+        }
+
         public static IEnumerable<Type> GetEnumTypes()
         {
             var assembly = typeof(NativeApi.Api.Window).Assembly;
@@ -36,12 +42,17 @@ namespace ApiGenerator.Api
 
         public static bool IsApiType(Type type)
         {
-            return type.FullName!.Replace("NativeApi.Api.", "") == type.Name;
+            return type.FullName!.Replace("NativeApi.Api.", "") == type.Name && !IsManagedServerApiType(type);
         }
 
         public static bool IsManagedServerApiType(Type type)
         {
             return type.FullName!.Replace("NativeApi.Api.ManagedServers.", "") == type.Name;
+        }
+
+        public static bool IsNativeEventDataType(Type type)
+        {
+            return type.IsSubclassOf(typeof(NativeEventData));
         }
 
         public static string GetNativeName(Type type)

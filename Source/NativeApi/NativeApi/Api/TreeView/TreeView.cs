@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApiCommon;
+using System;
 
 namespace NativeApi.Api
 {
@@ -27,5 +28,7 @@ namespace NativeApi.Api
         public void ClearSelected() => throw new Exception();
 
         public void SetSelected(IntPtr item, bool value) => throw new Exception();
+
+        public event NativeEventHandler<TreeViewItemEventData>? ItemExpanded { add => throw new Exception(); remove => throw new Exception(); }
     }
 }

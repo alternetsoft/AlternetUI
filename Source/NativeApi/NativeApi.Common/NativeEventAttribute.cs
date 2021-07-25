@@ -9,18 +9,10 @@ namespace ApiCommon
         {
         }
 
-        public NativeEventAttribute(string paramsStructName)
-        {
-            ParamsStructName = paramsStructName;
-        }
-
-        public NativeEventAttribute(bool cancellable, string? paramsStructName = null)
+        public NativeEventAttribute(bool cancellable)
         {
             Cancellable = cancellable;
-            ParamsStructName = paramsStructName;
         }
-
-        public string? ParamsStructName { get; }
 
         public bool Cancellable { get; }
     }

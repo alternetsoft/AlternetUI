@@ -41,6 +41,11 @@ namespace ApiGenerator.Native
             File.WriteAllText(Path.Combine(paths.NativeApiSourcePath, "Enums.h"), CppEnumsGenerator.Generate(types));
         }
 
+        public static void GenerateNativeEventDataTypes(Paths paths, IEnumerable<Type> types)
+        {
+            File.WriteAllText(Path.Combine(paths.NativeApiSourcePath, "NativeEventDataTypes.h"), CppNativeEventDataTypesGenerator.Generate(types));
+        }
+
         private static void GenerateCppApi(Paths paths, Type type)
         {
             var code = CppApiGenerator.Generate(ApiTypeFactory.Create(type, ApiTypeCreationMode.NativeCppApi));
