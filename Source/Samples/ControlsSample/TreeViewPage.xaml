@@ -5,7 +5,7 @@
     <StackPanel Orientation="Vertical" Padding="10">
         <GroupBox Title="Tree View">
             <StackPanel Orientation="Horizontal" Margin="5">
-                <TreeView Width="300" Name="treeView"/>
+                <TreeView Width="300" Height="300" Name="treeView"/>
                 <StackPanel Orientation="Vertical" Margin="5,0,0,0">
                     <Button Text="Add Item" Name="addItemButton" />
                     <Button Text="Remove Item" Name="removeItemButton" Margin="0,3,0,0" />
