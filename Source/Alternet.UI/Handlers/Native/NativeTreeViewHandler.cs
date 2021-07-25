@@ -178,7 +178,7 @@ namespace Alternet.UI
                             insertAfter,
                             item.Text,
                             item.ImageIndex ?? Control.ImageIndex ?? -1,
-                            item.IsExpanded);
+                            item.Parent?.IsExpanded ?? false);
 
             itemsByHandles.Add(handle, item);
             handlesByItems.Add(item, handle);

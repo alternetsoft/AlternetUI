@@ -26,5 +26,6 @@ namespace Alternet::UI
         ImageList* _imageList = nullptr;
 
         bool _skipSelectionChangedEvent = false;
+        bool _skipExpandedEvent = false;
     };
 }

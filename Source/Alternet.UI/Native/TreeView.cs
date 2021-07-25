@@ -89,10 +89,10 @@ namespace Alternet.UI.Native
             return NativeApi.TreeView_GetItemCount_(NativePointer, parentItem);
         }
         
-        public System.IntPtr InsertItem(System.IntPtr parentItem, System.IntPtr insertAfter, string text, int imageIndex, bool expanded)
+        public System.IntPtr InsertItem(System.IntPtr parentItem, System.IntPtr insertAfter, string text, int imageIndex, bool parentIsExpanded)
         {
             CheckDisposed();
-            return NativeApi.TreeView_InsertItem_(NativePointer, parentItem, insertAfter, text, imageIndex, expanded);
+            return NativeApi.TreeView_InsertItem_(NativePointer, parentItem, insertAfter, text, imageIndex, parentIsExpanded);
         }
         
         public void RemoveItem(System.IntPtr item)
@@ -211,7 +211,7 @@ namespace Alternet.UI.Native
             public static extern int TreeView_GetItemCount_(IntPtr obj, System.IntPtr parentItem);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr TreeView_InsertItem_(IntPtr obj, System.IntPtr parentItem, System.IntPtr insertAfter, string text, int imageIndex, bool expanded);
+            public static extern System.IntPtr TreeView_InsertItem_(IntPtr obj, System.IntPtr parentItem, System.IntPtr insertAfter, string text, int imageIndex, bool parentIsExpanded);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_RemoveItem_(IntPtr obj, System.IntPtr item);

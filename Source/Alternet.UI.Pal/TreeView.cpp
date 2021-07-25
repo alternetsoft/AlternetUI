@@ -54,10 +54,13 @@ namespace Alternet::UI
 
         _selectionMode = value;
         _skipSelectionChangedEvent = true;
+        _skipExpandedEvent = true;
         RecreateWxWindowIfNeeded();
-        _skipSelectionChangedEvent = false;
-
+        
         RaiseEvent(TreeViewEvent::ControlRecreated);
+
+        _skipSelectionChangedEvent = false;
+        _skipExpandedEvent = false;
     }
 
     void* TreeView::OpenSelectedItemsArray()
@@ -89,14 +92,20 @@ namespace Alternet::UI
         return ConvertToIntChecked(GetTreeCtrl()->GetChildrenCount(parentItemId, /*recursively:*/ false));
     }
 
-    void* TreeView::InsertItem(void* parentItem, void* insertAfter, const string& text, int imageIndex, bool expanded)
+    void* TreeView::InsertItem(void* parentItem, void* insertAfter, const string& text, int imageIndex, bool parentIsExpanded)
     {
         wxTreeItemId parentItemId(parentItem);
         wxTreeItemId insertAfterId(insertAfter);
         auto control = GetTreeCtrl();
         auto item = control->InsertItem(parentItem, insertAfterId, wxStr(text), imageIndex);
-        if (expanded)
-            control->Expand(item);
+
+        if (parentItemId != control->GetRootItem())
+        {
+            if (parentIsExpanded)
+                control->Expand(parentItemId);
+            else
+                control->Collapse(parentItemId);
+        }
 
         return item;
     }
@@ -104,6 +113,7 @@ namespace Alternet::UI
     void TreeView::RemoveItem(void* item)
     {
         wxTreeItemId itemId(item);
+        auto control = GetTreeCtrl();
         GetTreeCtrl()->Delete(itemId);
     }
 
@@ -163,6 +173,9 @@ namespace Alternet::UI
 
     void TreeView::OnItemExpanded(wxTreeEvent& event)
     {
+        if (_skipExpandedEvent)
+            return;
+
         TreeViewItemEventData data{ event.GetItem() };
         RaiseEvent(TreeViewEvent::ItemExpanded, &data);
     }

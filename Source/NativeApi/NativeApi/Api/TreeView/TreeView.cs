@@ -11,7 +11,7 @@ namespace NativeApi.Api
 
         public int GetItemCount(IntPtr parentItem) => throw new Exception();
 
-        public IntPtr InsertItem(IntPtr parentItem, IntPtr insertAfter, string text, int imageIndex, bool expanded) => throw new Exception();
+        public IntPtr InsertItem(IntPtr parentItem, IntPtr insertAfter, string text, int imageIndex, bool parentIsExpanded) => throw new Exception();
 
         public void RemoveItem(IntPtr item) => throw new Exception();
 
