@@ -54,11 +54,11 @@ namespace Alternet.UI.Native
         {
             if (!eventCallbackGCHandle.IsAllocated)
             {
-                var sink = new NativeApi.WindowEventCallbackType((obj, e, param) =>
+                var sink = new NativeApi.WindowEventCallbackType((obj, e, parameter) =>
                 {
                     var w = NativeObject.GetFromNativePointer<Window>(obj, p => new Window(p));
                     if (w == null) return IntPtr.Zero;
-                    return w.OnEvent(e);
+                    return w.OnEvent(e, parameter);
                 }
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
@@ -66,7 +66,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        IntPtr OnEvent(NativeApi.WindowEvent e)
+        IntPtr OnEvent(NativeApi.WindowEvent e, IntPtr parameter)
         {
             switch (e)
             {

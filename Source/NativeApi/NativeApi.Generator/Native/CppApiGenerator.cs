@@ -115,8 +115,8 @@ namespace ApiGenerator.Native
             w.WriteLine(" { eventCallback = value; }");
 
             w.WriteLine("protected:");
-            w.Write($"bool RaiseEvent({declaringTypeName}Event event)");
-            w.WriteLine(" { if (eventCallback != nullptr) return eventCallback(this, event, nullptr) != nullptr; else return false; }");
+            w.Write($"bool RaiseEvent({declaringTypeName}Event event, void* parameter = nullptr)");
+            w.WriteLine(" { if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }");
 
             w.WriteLine("private:");
             w.WriteLine($"inline static {declaringTypeName}EventCallbackType eventCallback = nullptr;");

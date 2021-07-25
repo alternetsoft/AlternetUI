@@ -20,7 +20,7 @@ enum class NumericUpDownEvent
 typedef void* (*NumericUpDownEventCallbackType)(NumericUpDown* obj, NumericUpDownEvent event, void* param);
 static void SetEventCallback(NumericUpDownEventCallbackType value) { eventCallback = value; }
 protected:
-bool RaiseEvent(NumericUpDownEvent event) { if (eventCallback != nullptr) return eventCallback(this, event, nullptr) != nullptr; else return false; }
+bool RaiseEvent(NumericUpDownEvent event, void* parameter = nullptr) { if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
 private:
 inline static NumericUpDownEventCallbackType eventCallback = nullptr;
 public:

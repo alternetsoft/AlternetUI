@@ -64,7 +64,7 @@ enum class ControlEvent
 typedef void* (*ControlEventCallbackType)(Control* obj, ControlEvent event, void* param);
 static void SetEventCallback(ControlEventCallbackType value) { eventCallback = value; }
 protected:
-bool RaiseEvent(ControlEvent event) { if (eventCallback != nullptr) return eventCallback(this, event, nullptr) != nullptr; else return false; }
+bool RaiseEvent(ControlEvent event, void* parameter = nullptr) { if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
 private:
 inline static ControlEventCallbackType eventCallback = nullptr;
 protected:

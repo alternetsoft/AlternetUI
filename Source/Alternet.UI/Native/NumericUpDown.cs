@@ -69,11 +69,11 @@ namespace Alternet.UI.Native
         {
             if (!eventCallbackGCHandle.IsAllocated)
             {
-                var sink = new NativeApi.NumericUpDownEventCallbackType((obj, e, param) =>
+                var sink = new NativeApi.NumericUpDownEventCallbackType((obj, e, parameter) =>
                 {
                     var w = NativeObject.GetFromNativePointer<NumericUpDown>(obj, p => new NumericUpDown(p));
                     if (w == null) return IntPtr.Zero;
-                    return w.OnEvent(e);
+                    return w.OnEvent(e, parameter);
                 }
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
@@ -81,7 +81,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        IntPtr OnEvent(NativeApi.NumericUpDownEvent e)
+        IntPtr OnEvent(NativeApi.NumericUpDownEvent e, IntPtr parameter)
         {
             switch (e)
             {

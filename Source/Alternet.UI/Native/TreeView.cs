@@ -125,11 +125,11 @@ namespace Alternet.UI.Native
         {
             if (!eventCallbackGCHandle.IsAllocated)
             {
-                var sink = new NativeApi.TreeViewEventCallbackType((obj, e, param) =>
+                var sink = new NativeApi.TreeViewEventCallbackType((obj, e, parameter) =>
                 {
                     var w = NativeObject.GetFromNativePointer<TreeView>(obj, p => new TreeView(p));
                     if (w == null) return IntPtr.Zero;
-                    return w.OnEvent(e);
+                    return w.OnEvent(e, parameter);
                 }
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
@@ -137,7 +137,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        IntPtr OnEvent(NativeApi.TreeViewEvent e)
+        IntPtr OnEvent(NativeApi.TreeViewEvent e, IntPtr parameter)
         {
             switch (e)
             {
@@ -146,14 +146,14 @@ namespace Alternet.UI.Native
                 case NativeApi.TreeViewEvent.ControlRecreated:
                 ControlRecreated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 case NativeApi.TreeViewEvent.ItemExpanded:
-                ItemExpanded?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                ItemExpanded?.Invoke(this, new NativeEventArgs<TreeViewItemEventData>(MarshalEx.PtrToStructure<TreeViewItemEventData>(parameter))); return IntPtr.Zero;
                 default: throw new Exception("Unexpected TreeViewEvent value: " + e);
             }
         }
         
         public event EventHandler? SelectionChanged;
         public event EventHandler? ControlRecreated;
-        public event EventHandler? ItemExpanded;
+        public event NativeEventHandler<TreeViewItemEventData>? ItemExpanded;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider

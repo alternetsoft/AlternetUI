@@ -104,11 +104,11 @@ namespace Alternet.UI.Native
         {
             if (!eventCallbackGCHandle.IsAllocated)
             {
-                var sink = new NativeApi.ListBoxEventCallbackType((obj, e, param) =>
+                var sink = new NativeApi.ListBoxEventCallbackType((obj, e, parameter) =>
                 {
                     var w = NativeObject.GetFromNativePointer<ListBox>(obj, p => new ListBox(p));
                     if (w == null) return IntPtr.Zero;
-                    return w.OnEvent(e);
+                    return w.OnEvent(e, parameter);
                 }
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
@@ -116,7 +116,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        IntPtr OnEvent(NativeApi.ListBoxEvent e)
+        IntPtr OnEvent(NativeApi.ListBoxEvent e, IntPtr parameter)
         {
             switch (e)
             {

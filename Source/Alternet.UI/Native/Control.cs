@@ -222,11 +222,11 @@ namespace Alternet.UI.Native
         {
             if (!eventCallbackGCHandle.IsAllocated)
             {
-                var sink = new NativeApi.ControlEventCallbackType((obj, e, param) =>
+                var sink = new NativeApi.ControlEventCallbackType((obj, e, parameter) =>
                 {
                     var w = NativeObject.GetFromNativePointer<Control>(obj, null);
                     if (w == null) return IntPtr.Zero;
-                    return w.OnEvent(e);
+                    return w.OnEvent(e, parameter);
                 }
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
@@ -234,7 +234,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        IntPtr OnEvent(NativeApi.ControlEvent e)
+        IntPtr OnEvent(NativeApi.ControlEvent e, IntPtr parameter)
         {
             switch (e)
             {

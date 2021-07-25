@@ -54,11 +54,11 @@ namespace Alternet.UI.Native
         {
             if (!eventCallbackGCHandle.IsAllocated)
             {
-                var sink = new NativeApi.RadioButtonEventCallbackType((obj, e, param) =>
+                var sink = new NativeApi.RadioButtonEventCallbackType((obj, e, parameter) =>
                 {
                     var w = NativeObject.GetFromNativePointer<RadioButton>(obj, p => new RadioButton(p));
                     if (w == null) return IntPtr.Zero;
-                    return w.OnEvent(e);
+                    return w.OnEvent(e, parameter);
                 }
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
@@ -66,7 +66,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        IntPtr OnEvent(NativeApi.RadioButtonEvent e)
+        IntPtr OnEvent(NativeApi.RadioButtonEvent e, IntPtr parameter)
         {
             switch (e)
             {

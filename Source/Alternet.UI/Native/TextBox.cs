@@ -54,11 +54,11 @@ namespace Alternet.UI.Native
         {
             if (!eventCallbackGCHandle.IsAllocated)
             {
-                var sink = new NativeApi.TextBoxEventCallbackType((obj, e, param) =>
+                var sink = new NativeApi.TextBoxEventCallbackType((obj, e, parameter) =>
                 {
                     var w = NativeObject.GetFromNativePointer<TextBox>(obj, p => new TextBox(p));
                     if (w == null) return IntPtr.Zero;
-                    return w.OnEvent(e);
+                    return w.OnEvent(e, parameter);
                 }
                 );
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
@@ -66,7 +66,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        IntPtr OnEvent(NativeApi.TextBoxEvent e)
+        IntPtr OnEvent(NativeApi.TextBoxEvent e, IntPtr parameter)
         {
             switch (e)
             {

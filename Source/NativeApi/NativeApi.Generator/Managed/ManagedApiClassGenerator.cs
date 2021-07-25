@@ -290,12 +290,12 @@ using System.Security;");
                 w.WriteLine("if (!eventCallbackGCHandle.IsAllocated)");
                 using (new BlockIndent(w))
                 {
-                    w.WriteLine($"var sink = new NativeApi.{declaringTypeName}EventCallbackType((obj, e, param) =>");
+                    w.WriteLine($"var sink = new NativeApi.{declaringTypeName}EventCallbackType((obj, e, parameter) =>");
                     using (new BlockIndent(w))
                     {
                         w.WriteLine($"var w = {string.Format(GetNativeToManagedFormatString(declaringType.ToContextualType()), "obj")};");
                         w.WriteLine("if (w == null) return IntPtr.Zero;");
-                        w.WriteLine("return w.OnEvent(e);");
+                        w.WriteLine("return w.OnEvent(e, parameter);");
                     }
                     w.WriteLine(");");
 
@@ -306,7 +306,7 @@ using System.Security;");
 
             w.WriteLine();
 
-            w.WriteLine($"IntPtr OnEvent(NativeApi.{declaringTypeName}Event e)");
+            w.WriteLine($"IntPtr OnEvent(NativeApi.{declaringTypeName}Event e, IntPtr parameter)");
             using (new BlockIndent(w))
             {
                 w.WriteLine("switch (e)");
@@ -316,18 +316,26 @@ using System.Security;");
                     {
                         w.WriteLine($"case NativeApi.{declaringTypeName}Event.{e.Name}:");
 
-                        var attribute = MemberProvider.GetEventAttribute(e);
-                        if (attribute.Cancellable)
+                        var dataType = MemberProvider.TryGetNativEventDataType(e);
+                        if (dataType != null)
                         {
-                            using (new BlockIndent(w))
-                            {
-                                w.WriteLine($"var cea = new CancelEventArgs();");
-                                w.WriteLine($"{e.Name}?.Invoke(this, cea);");
-                                w.WriteLine($"return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;");
-                            }
+                            w.WriteLine($"{e.Name}?.Invoke(this, new NativeEventArgs<{dataType.Name}>(MarshalEx.PtrToStructure<{dataType.Name}>(parameter))); return IntPtr.Zero;");
                         }
                         else
-                            w.WriteLine($"{e.Name}?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;");
+                        {
+                            var attribute = MemberProvider.GetEventAttribute(e);
+                            if (attribute.Cancellable)
+                            {
+                                using (new BlockIndent(w))
+                                {
+                                    w.WriteLine($"var cea = new CancelEventArgs();");
+                                    w.WriteLine($"{e.Name}?.Invoke(this, cea);");
+                                    w.WriteLine($"return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;");
+                                }
+                            }
+                            else
+                                w.WriteLine($"{e.Name}?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;");
+                        }
                     }
 
                     w.WriteLine($"default: throw new Exception(\"Unexpected {declaringTypeName}Event value: \" + e);");
@@ -338,8 +346,15 @@ using System.Security;");
 
             foreach (var e in events)
             {
-                var attribute = MemberProvider.GetEventAttribute(e);
-                var argsType = attribute.Cancellable ? "EventHandler<CancelEventArgs>" : "EventHandler";
+                string? argsType;
+                var dataType = MemberProvider.TryGetNativEventDataType(e);
+                if (dataType != null)
+                    argsType = "NativeEventHandler<" + dataType.Name + ">";
+                else
+                {
+                    var attribute = MemberProvider.GetEventAttribute(e);
+                    argsType = attribute.Cancellable ? "EventHandler<CancelEventArgs>" : "EventHandler";
+                }
                 w.WriteLine($"public event {argsType}? {e.Name};");
             }
         }

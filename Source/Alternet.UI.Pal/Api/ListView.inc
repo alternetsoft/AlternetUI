@@ -38,7 +38,7 @@ enum class ListViewEvent
 typedef void* (*ListViewEventCallbackType)(ListView* obj, ListViewEvent event, void* param);
 static void SetEventCallback(ListViewEventCallbackType value) { eventCallback = value; }
 protected:
-bool RaiseEvent(ListViewEvent event) { if (eventCallback != nullptr) return eventCallback(this, event, nullptr) != nullptr; else return false; }
+bool RaiseEvent(ListViewEvent event, void* parameter = nullptr) { if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
 private:
 inline static ListViewEventCallbackType eventCallback = nullptr;
 public:

@@ -16,7 +16,7 @@ enum class RadioButtonEvent
 typedef void* (*RadioButtonEventCallbackType)(RadioButton* obj, RadioButtonEvent event, void* param);
 static void SetEventCallback(RadioButtonEventCallbackType value) { eventCallback = value; }
 protected:
-bool RaiseEvent(RadioButtonEvent event) { if (eventCallback != nullptr) return eventCallback(this, event, nullptr) != nullptr; else return false; }
+bool RaiseEvent(RadioButtonEvent event, void* parameter = nullptr) { if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
 private:
 inline static RadioButtonEventCallbackType eventCallback = nullptr;
 public:

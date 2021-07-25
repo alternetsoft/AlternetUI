@@ -12,5 +12,5 @@ namespace ApiCommon
         public T Data { get; }
     }
 
-    public delegate void NativeEventHandler<T>(object? sender, NativeEventArgs<T> e) where T: NativeEventData;
+    public delegate void NativeEventHandler<T>(object? sender, NativeEventArgs<T> e) where T : NativeEventData;
 }

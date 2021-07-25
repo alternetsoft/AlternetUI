@@ -16,7 +16,7 @@ enum class WindowEvent
 typedef void* (*WindowEventCallbackType)(Window* obj, WindowEvent event, void* param);
 static void SetEventCallback(WindowEventCallbackType value) { eventCallback = value; }
 protected:
-bool RaiseEvent(WindowEvent event) { if (eventCallback != nullptr) return eventCallback(this, event, nullptr) != nullptr; else return false; }
+bool RaiseEvent(WindowEvent event, void* parameter = nullptr) { if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
 private:
 inline static WindowEventCallbackType eventCallback = nullptr;
 public:
