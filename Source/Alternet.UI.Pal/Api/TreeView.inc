@@ -27,6 +27,7 @@ enum class TreeViewEvent
     SelectionChanged,
     ControlRecreated,
     ItemExpanded,
+    ItemCollapsed,
 };
 typedef void* (*TreeViewEventCallbackType)(TreeView* obj, TreeViewEvent event, void* param);
 static void SetEventCallback(TreeViewEventCallbackType value) { eventCallback = value; }

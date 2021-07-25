@@ -12,6 +12,8 @@ namespace Alternet::UI
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
         void OnSelectionChanged(wxCommandEvent& event);
+        void OnItemCollapsed(wxTreeEvent& event);
+        void OnItemExpanded(wxTreeEvent& event);
 
     private:
         void ApplyImageList(wxTreeCtrl* value);

@@ -147,6 +147,8 @@ namespace Alternet.UI.Native
                 ControlRecreated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 case NativeApi.TreeViewEvent.ItemExpanded:
                 ItemExpanded?.Invoke(this, new NativeEventArgs<TreeViewItemEventData>(MarshalEx.PtrToStructure<TreeViewItemEventData>(parameter))); return IntPtr.Zero;
+                case NativeApi.TreeViewEvent.ItemCollapsed:
+                ItemCollapsed?.Invoke(this, new NativeEventArgs<TreeViewItemEventData>(MarshalEx.PtrToStructure<TreeViewItemEventData>(parameter))); return IntPtr.Zero;
                 default: throw new Exception("Unexpected TreeViewEvent value: " + e);
             }
         }
@@ -154,6 +156,7 @@ namespace Alternet.UI.Native
         public event EventHandler? SelectionChanged;
         public event EventHandler? ControlRecreated;
         public event NativeEventHandler<TreeViewItemEventData>? ItemExpanded;
+        public event NativeEventHandler<TreeViewItemEventData>? ItemCollapsed;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -168,6 +171,7 @@ namespace Alternet.UI.Native
                 SelectionChanged,
                 ControlRecreated,
                 ItemExpanded,
+                ItemCollapsed,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]

@@ -30,5 +30,6 @@ namespace NativeApi.Api
         public void SetSelected(IntPtr item, bool value) => throw new Exception();
 
         public event NativeEventHandler<TreeViewItemEventData>? ItemExpanded { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<TreeViewItemEventData>? ItemCollapsed { add => throw new Exception(); remove => throw new Exception(); }
     }
 }

@@ -13,6 +13,8 @@ namespace Alternet::UI
         if (window != nullptr)
         {
             window->Unbind(wxEVT_TREE_SEL_CHANGED, &TreeView::OnSelectionChanged, this);
+            window->Unbind(wxEVT_TREE_ITEM_EXPANDED, &TreeView::OnItemExpanded, this);
+            window->Unbind(wxEVT_TREE_ITEM_COLLAPSED, &TreeView::OnItemCollapsed, this);
         }
     }
 
@@ -141,6 +143,8 @@ namespace Alternet::UI
         ApplyImageList(value);
 
         value->Bind(wxEVT_TREE_SEL_CHANGED, &TreeView::OnSelectionChanged, this);
+        value->Bind(wxEVT_TREE_ITEM_EXPANDED, &TreeView::OnItemExpanded, this);
+        value->Bind(wxEVT_TREE_ITEM_COLLAPSED, &TreeView::OnItemCollapsed, this);
 
         return value;
     }
@@ -149,6 +153,18 @@ namespace Alternet::UI
     {
         if (!_skipSelectionChangedEvent)
             RaiseEvent(TreeViewEvent::SelectionChanged);
+    }
+
+    void TreeView::OnItemCollapsed(wxTreeEvent& event)
+    {
+        TreeViewItemEventData data { event.GetItem() };
+        RaiseEvent(TreeViewEvent::ItemCollapsed, &data);
+    }
+
+    void TreeView::OnItemExpanded(wxTreeEvent& event)
+    {
+        TreeViewItemEventData data{ event.GetItem() };
+        RaiseEvent(TreeViewEvent::ItemExpanded, &data);
     }
 
     long TreeView::GetStyle()
