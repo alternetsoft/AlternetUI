@@ -16,7 +16,7 @@ int GetSelectedItemsItemCount(void* array);
 void* GetSelectedItemsItemAt(void* array, int index);
 void CloseSelectedItemsArray(void* array);
 int GetItemCount(void* parentItem);
-void* InsertItem(void* parentItem, void* insertAfter, const string& text, int imageIndex);
+void* InsertItem(void* parentItem, void* insertAfter, const string& text, int imageIndex, bool expanded);
 void RemoveItem(void* item);
 void ClearItems(void* parentItem);
 void ClearSelected();
@@ -25,6 +25,7 @@ public:
 enum class TreeViewEvent
 {
     SelectionChanged,
+    ControlRecreated,
 };
 typedef void* (*TreeViewEventCallbackType)(TreeView* obj, TreeViewEvent event, void* param);
 static void SetEventCallback(TreeViewEventCallbackType value) { eventCallback = value; }

@@ -34,6 +34,7 @@ namespace Alternet.UI
     public class TreeViewItem
     {
         private string text = "";
+        private TreeView? treeView;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeViewItem"/> class with default values.
@@ -92,7 +93,18 @@ namespace Alternet.UI
         /// A <see cref="TreeView"/> that represents the parent tree view that the tree item is assigned to,
         /// or <c>null</c> if the node has not been assigned to a tree view.
         /// </value>
-        public TreeView? TreeView { get; internal set; }
+        public TreeView? TreeView
+        {
+            get => treeView;
+            internal set
+            {
+                if (treeView == value)
+                    return;
+
+                treeView = value;
+                ApplyTreeViewToAllChildren();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the text of the item.
@@ -248,6 +260,15 @@ namespace Alternet.UI
 
             if (oldTreeView != null)
                 oldTreeView.RaiseItemRemoved(new TreeViewItemEventArgs(item));
+        }
+
+        private void ApplyTreeViewToAllChildren()
+        {
+            foreach (var item in Items)
+            {
+                item.TreeView = treeView;
+                item.ApplyTreeViewToAllChildren();
+            }
         }
 
         private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<TreeViewItem> e)

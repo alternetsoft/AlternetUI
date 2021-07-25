@@ -89,10 +89,10 @@ namespace Alternet.UI.Native
             return NativeApi.TreeView_GetItemCount_(NativePointer, parentItem);
         }
         
-        public System.IntPtr InsertItem(System.IntPtr parentItem, System.IntPtr insertAfter, string text, int imageIndex)
+        public System.IntPtr InsertItem(System.IntPtr parentItem, System.IntPtr insertAfter, string text, int imageIndex, bool expanded)
         {
             CheckDisposed();
-            return NativeApi.TreeView_InsertItem_(NativePointer, parentItem, insertAfter, text, imageIndex);
+            return NativeApi.TreeView_InsertItem_(NativePointer, parentItem, insertAfter, text, imageIndex, expanded);
         }
         
         public void RemoveItem(System.IntPtr item)
@@ -143,11 +143,14 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.TreeViewEvent.SelectionChanged:
                 SelectionChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                case NativeApi.TreeViewEvent.ControlRecreated:
+                ControlRecreated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 default: throw new Exception("Unexpected TreeViewEvent value: " + e);
             }
         }
         
         public event EventHandler? SelectionChanged;
+        public event EventHandler? ControlRecreated;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -160,6 +163,7 @@ namespace Alternet.UI.Native
             public enum TreeViewEvent
             {
                 SelectionChanged,
+                ControlRecreated,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -199,7 +203,7 @@ namespace Alternet.UI.Native
             public static extern int TreeView_GetItemCount_(IntPtr obj, System.IntPtr parentItem);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr TreeView_InsertItem_(IntPtr obj, System.IntPtr parentItem, System.IntPtr insertAfter, string text, int imageIndex);
+            public static extern System.IntPtr TreeView_InsertItem_(IntPtr obj, System.IntPtr parentItem, System.IntPtr insertAfter, string text, int imageIndex, bool expanded);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_RemoveItem_(IntPtr obj, System.IntPtr item);

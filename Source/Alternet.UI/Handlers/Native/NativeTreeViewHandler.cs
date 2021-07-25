@@ -33,6 +33,16 @@ namespace Alternet.UI
 
             Control.SelectionChanged += Control_SelectionChanged;
             NativeControl.SelectionChanged += NativeControl_SelectionChanged;
+            NativeControl.ControlRecreated += NativeControl_ControlRecreated;
+        }
+
+
+        private void NativeControl_ControlRecreated(object? sender, EventArgs e)
+        {
+            handlesByItems.Clear();
+            itemsByHandles.Clear();
+            ApplyItems();
+            ApplySelection();
         }
 
         protected override void OnDetach()
@@ -44,6 +54,7 @@ namespace Alternet.UI
 
             Control.SelectionChanged -= Control_SelectionChanged;
             NativeControl.SelectionChanged -= NativeControl_SelectionChanged;
+            NativeControl.ControlRecreated -= NativeControl_ControlRecreated;
 
             base.OnDetach();
         }
@@ -149,7 +160,8 @@ namespace Alternet.UI
                             item.Parent == null ? NativeControl.RootItem : GetHandleFromItem(item.Parent),
                             insertAfter,
                             item.Text,
-                            item.ImageIndex ?? Control.ImageIndex ?? -1);
+                            item.ImageIndex ?? Control.ImageIndex ?? -1,
+                            item.IsExpanded);
 
             itemsByHandles.Add(handle, item);
             handlesByItems.Add(item, handle);
