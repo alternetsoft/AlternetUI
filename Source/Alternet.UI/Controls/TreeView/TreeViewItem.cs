@@ -154,7 +154,10 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a value indicating whether the tree item is in the expanded state.
         /// </summary>
-        /// <value><c>true</c> if the tree item is in the expanded state; otherwise, <c>false</c>.</value>
+        /// <value><c>true</c> if the tree item is in the expanded state; otherwise, <c>false</c>. Default is <c>false</c>.</value>
+        /// <remarks>
+        /// To track changing of this state, see <see cref="TreeView.ExpandedChanged"/>, <see cref="TreeView.AfterExpand"/>, <see cref="TreeView.AfterCollapse"/> events.
+        /// </remarks>
         public bool IsExpanded { get; set; }
 
         /// <summary>
