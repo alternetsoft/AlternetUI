@@ -29,6 +29,10 @@
     <ItemGroup>
       <EmbeddedResource Include="MainWindow.xaml" />
       <EmbeddedResource Include="ProgressWindow.xaml" />
+      <EmbeddedResource Include="Resources\Document_16x.png" />
+      <EmbeddedResource Include="Resources\FolderClosed_16x.png" />
+      <EmbeddedResource Include="Resources\Report_16x.png" />
+      <EmbeddedResource Include="Resources\ReportImage_16x.png" />
     </ItemGroup>
   
     <ItemGroup>
