@@ -1,0 +1,8 @@
+﻿<Window xmlns="http://schemas.alternetsoft.com/ui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:ExplorerUISample;assembly=ExplorerUISample"
+        Title="Alternet UI"
+        Width="600" Height="400">
+    <StackPanel Orientation="Horizontal" Margin="10">
+    </StackPanel>
+</Window>
