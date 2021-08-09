@@ -27,11 +27,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="MainWindow.xaml" />
-    </ItemGroup>
-
-    <ItemGroup>
       <EmbeddedResource Include="MainWindow.xaml" />
+      <EmbeddedResource Include="ProgressWindow.xaml" />
     </ItemGroup>
   
     <ItemGroup>

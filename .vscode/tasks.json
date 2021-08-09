@@ -62,6 +62,22 @@
             "problemMatcher": []
         },
         {
+            "label": "ExplorerUI: Build",
+            "type": "shell",
+            "command": "${workspaceFolder}/Source/Samples/ExplorerUISample/build/Build.sh",
+            "options": {
+                "cwd": "${workspaceFolder}/Source/Samples/ExplorerUISample/build/"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Controls: Run",
             "type": "shell",
             "command": "${workspaceFolder}/Source/Samples/ControlsSample/build/BuildAndRun.sh",

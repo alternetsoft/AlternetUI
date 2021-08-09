@@ -4,5 +4,13 @@
         Title="Alternet UI"
         Width="600" Height="400">
     <StackPanel Orientation="Horizontal" Margin="10">
+        <TreeView Name="treeView" Width="200" />
+        <ListView Name="listView" View="Details" Width="380">
+            <ListView.Columns>
+                <ListViewColumn Title="Name" />
+                <ListViewColumn Title="Size" />
+                <ListViewColumn Title="Last Modified" />
+            </ListView.Columns>
+        </ListView>
     </StackPanel>
 </Window>

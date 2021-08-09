@@ -65,5 +65,17 @@
             "stopAtEntry": false,
             "console": "internalConsole"
         },
+        {
+            "name": "ExplorerUI: CLR Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "ExplorerUI: Build",
+            // "logging": {"engineLogging": true},
+            "program": "${workspaceFolder}/Source/Samples/ExplorerUISample/bin/Debug/netcoreapp3.1/ExplorerUISample.dll",
+            "cwd": "${workspaceFolder}/Source/Samples/ExplorerUISample/bin/Debug/netcoreapp3.1/",
+            "args": [],
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
     ]
 }
