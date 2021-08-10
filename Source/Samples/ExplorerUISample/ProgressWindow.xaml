@@ -4,7 +4,7 @@
         Title="Operation in Progress"
         Width="400" Height="100">
     <StackPanel Orientation="Vertical" Margin="10">
-        <Label Text="Processing files..." />
+        <Label Text="Processing files..." Margin="0,0,0,7"/>
         <ProgressBar Value="70"/>
     </StackPanel>
 </Window>
