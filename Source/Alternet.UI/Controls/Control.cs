@@ -87,6 +87,16 @@ namespace Alternet.UI
         public event EventHandler? HorizontalAlignmentChanged;
 
         /// <summary>
+        /// Gets or sets the object that contains data about the control.
+        /// </summary>
+        /// <value>An <see cref="object"/> that contains data about the control. The default is <c>null</c>.</value>
+        /// <remarks>
+        /// Any type derived from the <see cref="object"/> class can be assigned to this property.
+        /// A common use for the <see cref="Tag"/> property is to store data that is closely associated with the control.
+        /// </remarks>
+        public object? Tag { get; set; }
+
+        /// <summary>
         /// Gets or sets the identifying name of the control.
         /// The name provides a reference so that code-behind, such as event handler code,
         /// can refer to a markup element after it is constructed during processing by a XAML processor.
@@ -208,7 +218,7 @@ namespace Alternet.UI
         public virtual float Width
         {
             get => size.Width;
-            
+
             set
             {
                 Size = new SizeF(value, Size.Height);

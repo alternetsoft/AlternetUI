@@ -36,9 +36,9 @@ namespace ControlsSample
             rootPanel.Children.Add(tc);
 
             tc.Pages.Add(new TabPage { Title = "Tree View", Children = { new TreeViewPage(this) } });
-            //tc.Pages.Add(new TabPage { Title = "List View", Children = { new ListViewPage(this) } });
-            //tc.Pages.Add(new TabPage { Title = "List Box", Children = { new ListBoxPage(this) } });
-            //tc.Pages.Add(new TabPage { Title = "Combo Box", Children = { new ComboBoxPage(this) } });
+            tc.Pages.Add(new TabPage { Title = "List View", Children = { new ListViewPage(this) } });
+            tc.Pages.Add(new TabPage { Title = "List Box", Children = { new ListBoxPage(this) } });
+            tc.Pages.Add(new TabPage { Title = "Combo Box", Children = { new ComboBoxPage(this) } });
 
             var progressBarPage = new TabPage { Title = "Progress Bar" };
             tc.Pages.Add(progressBarPage);
@@ -52,17 +52,17 @@ namespace ControlsSample
             tc.Pages.Add(numericInputPage);
             InitNumericInputPage(numericInputPage);
 
-            //var radioButtonsPage = new TabPage { Title = "Radio Buttons" };
-            //tc.Pages.Add(radioButtonsPage);
-            //InitRadioButtonsPage(radioButtonsPage);
+            var radioButtonsPage = new TabPage { Title = "Radio Buttons" };
+            tc.Pages.Add(radioButtonsPage);
+            InitRadioButtonsPage(radioButtonsPage);
 
-            //var checkBoxesPage = new TabPage { Title = "Check Boxes" };
-            //tc.Pages.Add(checkBoxesPage);
-            //InitCheckBoxesPage(checkBoxesPage);
+            var checkBoxesPage = new TabPage { Title = "Check Boxes" };
+            tc.Pages.Add(checkBoxesPage);
+            InitCheckBoxesPage(checkBoxesPage);
 
-            //var textBoxesPage = new TabPage { Title = "Text Boxes" };
-            //tc.Pages.Add(textBoxesPage);
-            //InitTextBoxesPage(textBoxesPage);
+            var textBoxesPage = new TabPage { Title = "Text Boxes" };
+            tc.Pages.Add(textBoxesPage);
+            InitTextBoxesPage(textBoxesPage);
 
 
             eventsListBox.Height = 100;

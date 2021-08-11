@@ -328,9 +328,9 @@ namespace Alternet.UI
             try
             {
                 // todo: we need a system to detect when parent relayout is needed?
-                //var parent = Control.Parent;
-                //if (parent != null)
-                //    parent.PerformLayout();
+                var parent = Control.Parent;
+                if (parent != null)
+                    parent.PerformLayout();
 
                 OnLayout();
             }

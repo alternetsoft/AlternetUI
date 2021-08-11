@@ -1,0 +1,14 @@
+﻿<Window xmlns="http://schemas.alternetsoft.com/ui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample"
+        Title="Alternet UI Drawing Sample"
+        Width="1000" Height="800">
+    <StackPanel Orientation="Horizontal" Margin="10">
+        <local:CanvasControl Name="canvasControl" Width="800" />
+        <StackPanel Orientation="Vertical">
+            <Button Text="Clear" Name="clearButton" />
+            <StackPanel Orientation="Vertical" Name="checkBoxesPanel">
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</Window>
