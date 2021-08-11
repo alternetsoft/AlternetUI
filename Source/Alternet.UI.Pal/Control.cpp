@@ -291,6 +291,15 @@ namespace Alternet::UI
         SetFlag(ControlFlags::DoNotDestroyWxWindow, value);
     }
 
+    Font* Control::GetFont()
+    {
+        return nullptr;
+    }
+
+    void Control::SetFont(Font* value)
+    {
+    }
+
     void Control::BeginUpdate()
     {
         _beginUpdateCount++;

@@ -162,6 +162,21 @@ namespace Alternet.UI.Native
             }
         }
         
+        public Font? Font
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeObject.GetFromNativePointer<Font>(NativeApi.Control_GetFont_(NativePointer), p => new Font(p));
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetFont_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+            }
+        }
+        
         public void SetMouseCapture(bool value)
         {
             CheckDisposed();
@@ -343,6 +358,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetForegroundColor_(IntPtr obj, NativeApiTypes.Color value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Control_GetFont_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetFont_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetMouseCapture_(IntPtr obj, bool value);

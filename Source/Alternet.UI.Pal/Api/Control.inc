@@ -40,6 +40,10 @@ void SetBackgroundColor(const Color& value);
 Color GetForegroundColor();
 void SetForegroundColor(const Color& value);
 
+
+Font* GetFont();
+void SetFont(Font* value);
+
 void SetMouseCapture(bool value);
 void AddChild(Control* control);
 void RemoveChild(Control* control);

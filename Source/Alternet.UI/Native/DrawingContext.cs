@@ -28,10 +28,10 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DrawRectangle_(NativePointer, rectangle, color);
         }
         
-        public void DrawText(string text, System.Drawing.PointF origin, System.Drawing.Color color)
+        public void DrawText(string text, System.Drawing.PointF origin, Font font, System.Drawing.Color color)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_DrawText_(NativePointer, text, origin, color);
+            NativeApi.DrawingContext_DrawText_(NativePointer, text, origin, font.NativePointer, color);
         }
         
         public void DrawImage(Image image, System.Drawing.PointF origin)
@@ -40,10 +40,10 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DrawImage_(NativePointer, image.NativePointer, origin);
         }
         
-        public System.Drawing.SizeF MeasureText(string text)
+        public System.Drawing.SizeF MeasureText(string text, Font font)
         {
             CheckDisposed();
-            return NativeApi.DrawingContext_MeasureText_(NativePointer, text);
+            return NativeApi.DrawingContext_MeasureText_(NativePointer, text, font.NativePointer);
         }
         
         public void PushTransform(System.Drawing.SizeF translation)
@@ -71,13 +71,13 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_DrawRectangle_(IntPtr obj, NativeApiTypes.RectangleF rectangle, NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawText_(IntPtr obj, string text, NativeApiTypes.PointF origin, NativeApiTypes.Color color);
+            public static extern void DrawingContext_DrawText_(IntPtr obj, string text, NativeApiTypes.PointF origin, IntPtr font, NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawImage_(IntPtr obj, IntPtr image, NativeApiTypes.PointF origin);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.SizeF DrawingContext_MeasureText_(IntPtr obj, string text);
+            public static extern NativeApiTypes.SizeF DrawingContext_MeasureText_(IntPtr obj, string text, IntPtr font);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_PushTransform_(IntPtr obj, NativeApiTypes.SizeF translation);

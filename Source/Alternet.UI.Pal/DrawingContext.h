@@ -3,6 +3,7 @@
 #include "ApiTypes.h"
 #include "Object.h"
 #include "Image.h"
+#include "Font.h"
 
 namespace Alternet::UI
 {

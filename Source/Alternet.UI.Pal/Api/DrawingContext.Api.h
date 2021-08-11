@@ -3,6 +3,7 @@
 #pragma once
 
 #include "DrawingContext.h"
+#include "Font.h"
 #include "Image.h"
 #include "ApiUtils.h"
 
@@ -18,9 +19,9 @@ ALTERNET_UI_API void DrawingContext_DrawRectangle_(DrawingContext* obj, Rectangl
     obj->DrawRectangle(rectangle, color);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_t* text, PointF origin, Color color)
+ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_t* text, PointF origin, Font* font, Color color)
 {
-    obj->DrawText(text, origin, color);
+    obj->DrawText(text, origin, font, color);
 }
 
 ALTERNET_UI_API void DrawingContext_DrawImage_(DrawingContext* obj, Image* image, PointF origin)
@@ -28,9 +29,9 @@ ALTERNET_UI_API void DrawingContext_DrawImage_(DrawingContext* obj, Image* image
     obj->DrawImage(image, origin);
 }
 
-ALTERNET_UI_API SizeF_C DrawingContext_MeasureText_(DrawingContext* obj, const char16_t* text)
+ALTERNET_UI_API SizeF_C DrawingContext_MeasureText_(DrawingContext* obj, const char16_t* text, Font* font)
 {
-    return obj->MeasureText(text);
+    return obj->MeasureText(text, font);
 }
 
 ALTERNET_UI_API void DrawingContext_PushTransform_(DrawingContext* obj, SizeF translation)

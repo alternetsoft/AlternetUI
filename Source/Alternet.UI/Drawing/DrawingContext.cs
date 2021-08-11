@@ -43,17 +43,17 @@ namespace Alternet.UI
         /// <summary>
         /// Draws the specified text string at the specified location.
         /// </summary>
-        public void DrawText(string text, PointF origin, Color color)
+        public void DrawText(string text, PointF origin, Font font, Color color)
         {
-            dc.DrawText(text, origin, color);
+            dc.DrawText(text, origin, font.NativeFont, color);
         }
 
         /// <summary>
         /// Measures the specified string.
         /// </summary>
-        public SizeF MeasureText(string text)
+        public SizeF MeasureText(string text, Font font)
         {
-            return dc.MeasureText(text);
+            return dc.MeasureText(text, font.NativeFont);
         }
 
         /// <summary>

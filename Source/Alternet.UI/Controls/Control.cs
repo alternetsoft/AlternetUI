@@ -12,12 +12,14 @@ namespace Alternet.UI
     public class Control : Component, ISupportInitialize
     {
         private static readonly SizeF DefaultSize = new SizeF(float.NaN, float.NaN);
+        private static Font? defaultFont;
         private SizeF size = DefaultSize;
         private Thickness margin;
         private Thickness padding;
         private ControlHandler? handler;
         private Color? backgroundColor;
         private Color? foregroundColor;
+        private Font? font;
         private Color? borderColor;
         private VerticalAlignment verticalAlignment = VerticalAlignment.Stretch;
         private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Stretch;
@@ -77,6 +79,11 @@ namespace Alternet.UI
         public event EventHandler? ForegroundColorChanged;
 
         /// <summary>
+        /// Occurs when the value of the <see cref="Font"/> property changes.
+        /// </summary>
+        public event EventHandler? FontChanged;
+
+        /// <summary>
         /// Occurs when the value of the <see cref="VerticalAlignment"/> property changes.
         /// </summary>
         public event EventHandler? VerticalAlignmentChanged;
@@ -85,6 +92,15 @@ namespace Alternet.UI
         /// Occurs when the value of the <see cref="HorizontalAlignment"/> property changes.
         /// </summary>
         public event EventHandler? HorizontalAlignmentChanged;
+
+        /// <summary>
+        /// Gets the default font used for controls.
+        /// </summary>
+        /// <value>
+        /// The default <see cref="Font"/> for UI controls. The value returned will
+        /// vary depending on the user's operating system and the local settings of their system.
+        /// </value>
+        public static Font DefaultFont => defaultFont == null ? defaultFont = Font.CreateDefaultFont() : defaultFont;
 
         /// <summary>
         /// Gets or sets the object that contains data about the control.
@@ -332,6 +348,24 @@ namespace Alternet.UI
 
                 foregroundColor = value;
                 ForegroundColorChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+
+        /// <summary>
+        /// Gets or sets the font of the text displayed by the control.
+        /// </summary>
+        /// <value>The <see cref="Font"/> to apply to the text displayed by the control. The default is the value of <c>null</c>.</value>
+        public Font? Font
+        {
+            get => font;
+            set
+            {
+                if (font == value)
+                    return;
+
+                font = value;
+                FontChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 

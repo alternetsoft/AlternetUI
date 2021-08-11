@@ -74,16 +74,22 @@ namespace Alternet::UI
         _dc->SetBrush(oldBrush);
     }
 
-    void DrawingContext::DrawText(const string& text, const PointF& origin, const Color& color)
+    void DrawingContext::DrawText(const string& text, const PointF& origin, Font* font, const Color& color)
     {
         auto oldTextForeground = _dc->GetTextForeground();
+        auto oldFont = _dc->GetFont();
         _dc->SetTextForeground(color);
+        _dc->SetFont(font->GetWxFont());
         _dc->DrawText(wxStr(text), fromDip(origin + _translation, _dc->GetWindow()));
         _dc->SetTextForeground(oldTextForeground);
+        _dc->SetFont(oldFont);
     }
 
-    SizeF DrawingContext::MeasureText(const string& text)
+    SizeF DrawingContext::MeasureText(const string& text, Font* font)
     {
-        return toDip(_dc->GetTextExtent(wxStr(text)), _dc->GetWindow());
+        wxCoord x = 0, y = 0;
+        auto wxFont = font->GetWxFont();
+        _dc->GetTextExtent(wxStr(text), &x, &y, nullptr, nullptr, &wxFont);
+        return toDip(wxSize(x, y), _dc->GetWindow());
     }
 }

@@ -440,12 +440,14 @@ namespace Alternet.UI
             ApplyBorderColor();
             ApplyBackgroundColor();
             ApplyForegroundColor();
+            ApplyFont();
             ApplyChildren();
 
             Control.MarginChanged += Control_MarginChanged;
             Control.PaddingChanged += Control_PaddingChanged;
             Control.BackgroundColorChanged += Control_BackgroundColorChanged;
             Control.ForegroundColorChanged += Control_ForegroundColorChanged;
+            Control.FontChanged += Control_FontChanged;
             Control.BorderColorChanged += Control_BorderColorChanged;
             Control.VisibleChanged += Control_VisibleChanged;
             Control.VerticalAlignmentChanged += Control_VerticalAlignmentChanged;
@@ -458,6 +460,11 @@ namespace Alternet.UI
             VisualChildren.ItemRemoved += Children_ItemRemoved;
         }
 
+        private void Control_FontChanged(object? sender, EventArgs e)
+        {
+            ApplyFont();
+        }
+
         /// <summary>
         /// Called after this handler has been detached from the <see cref="Control"/>.
         /// </summary>
@@ -468,6 +475,7 @@ namespace Alternet.UI
             Control.PaddingChanged -= Control_PaddingChanged;
             Control.BackgroundColorChanged -= Control_BackgroundColorChanged;
             Control.ForegroundColorChanged -= Control_ForegroundColorChanged;
+            Control.FontChanged -= Control_FontChanged;
             Control.BorderColorChanged -= Control_BorderColorChanged;
             Control.VisibleChanged -= Control_VisibleChanged;
             Control.VerticalAlignmentChanged -= Control_VerticalAlignmentChanged;
@@ -646,6 +654,14 @@ namespace Alternet.UI
         {
             if (NativeControl != null)
                 NativeControl.ForegroundColor = Control.ForegroundColor ?? Color.Empty;
+            Update();
+        }
+
+        private void ApplyFont()
+        {
+            if (NativeControl != null)
+                NativeControl.Font = Control.Font?.NativeFont;
+
             Update();
         }
 

@@ -46,7 +46,7 @@ namespace HelloWorldSample
         {
             using (var dc = CreateDrawingContext())
             {
-                var textSize = dc.MeasureText(text);
+                var textSize = dc.MeasureText(text, DefaultFont);
                 var imageSize = image.Size;
                 return new SizeF(Math.Max(textSize.Width, imageSize.Width), textSize.Height + imageSize.Height) + new SizeF(20, 20);
             }
@@ -56,8 +56,8 @@ namespace HelloWorldSample
         {
             e.DrawingContext.FillRectangle(Handler.ClientRectangle, color);
             e.DrawingContext.DrawRectangle(Handler.ClientRectangle, Color.Gray);
-            e.DrawingContext.DrawText(text, new PointF(10, 10), Color.Black);
-            e.DrawingContext.DrawImage(image, new PointF(0, 10 + e.DrawingContext.MeasureText(text).Height));
+            e.DrawingContext.DrawText(text, new PointF(10, 10), DefaultFont, Color.Black);
+            e.DrawingContext.DrawImage(image, new PointF(0, 10 + e.DrawingContext.MeasureText(text, DefaultFont).Height));
         }
     }
 }

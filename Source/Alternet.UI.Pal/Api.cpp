@@ -4,6 +4,7 @@
 #include "Api/ComboBox.Api.h"
 #include "Api/Control.Api.h"
 #include "Api/DrawingContext.Api.h"
+#include "Api/Font.Api.h"
 #include "Api/GroupBox.Api.h"
 #include "Api/Image.Api.h"
 #include "Api/ImageList.Api.h"

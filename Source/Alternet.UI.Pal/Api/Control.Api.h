@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Control.h"
+#include "Font.h"
 #include "DrawingContext.h"
 #include "ApiUtils.h"
 
@@ -96,6 +97,16 @@ ALTERNET_UI_API Color_C Control_GetForegroundColor_(Control* obj)
 ALTERNET_UI_API void Control_SetForegroundColor_(Control* obj, Color value)
 {
     obj->SetForegroundColor(value);
+}
+
+ALTERNET_UI_API Font* Control_GetFont_(Control* obj)
+{
+    return obj->GetFont();
+}
+
+ALTERNET_UI_API void Control_SetFont_(Control* obj, Font* value)
+{
+    obj->SetFont(value);
 }
 
 ALTERNET_UI_API void Control_SetMouseCapture_(Control* obj, c_bool value)

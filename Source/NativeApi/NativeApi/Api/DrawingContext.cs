@@ -11,11 +11,11 @@ namespace NativeApi.Api
 
         public void DrawRectangle(RectangleF rectangle, Color color) => throw new Exception();
 
-        public void DrawText(string text, PointF origin, Color color) => throw new Exception();
+        public void DrawText(string text, PointF origin, Font font, Color color) => throw new Exception();
 
         public void DrawImage(Image image, PointF origin) => throw new Exception();
 
-        public SizeF MeasureText(string text) => throw new Exception();
+        public SizeF MeasureText(string text, Font font) => throw new Exception();
 
         public void PushTransform(SizeF translation) => throw new Exception();
 

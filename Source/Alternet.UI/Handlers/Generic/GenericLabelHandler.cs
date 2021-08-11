@@ -9,7 +9,7 @@ namespace Alternet.UI
         public override void OnPaint(DrawingContext drawingContext)
         {
             if (Control.Text != null)
-                drawingContext.DrawText(Control.Text, ChildrenLayoutBounds.Location, Control.ForegroundColor ?? Color.Black);
+                drawingContext.DrawText(Control.Text, ChildrenLayoutBounds.Location, Control.Font ?? UI.Control.DefaultFont, Control.ForegroundColor ?? Color.Black);
         }
 
         public override SizeF GetPreferredSize(SizeF availableSize)
@@ -19,7 +19,7 @@ namespace Alternet.UI
                 return new SizeF();
 
             using (var dc = Control.CreateDrawingContext())
-                return dc.MeasureText(text) + Control.Padding.Size;
+                return dc.MeasureText(text, Control.Font ?? UI.Control.DefaultFont) + Control.Padding.Size;
         }
 
         protected override void OnAttach()

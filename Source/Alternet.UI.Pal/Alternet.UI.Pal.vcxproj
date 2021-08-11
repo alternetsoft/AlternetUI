@@ -190,6 +190,7 @@
     <ClCompile Include="ComboBox.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="DrawingContext.cpp" />
+    <ClCompile Include="Font.cpp" />
     <ClCompile Include="GroupBox.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageList.cpp" />
@@ -220,6 +221,7 @@
     <ClInclude Include="Api\DrawingContext.Api.h" />
     <ClInclude Include="Api\DrawingTypes.h" />
     <ClInclude Include="Api\Enums.h" />
+    <ClInclude Include="Api\Font.Api.h" />
     <ClInclude Include="Api\GroupBox.Api.h" />
     <ClInclude Include="Api\Image.Api.h" />
     <ClInclude Include="Api\ImageList.Api.h" />
@@ -249,6 +251,7 @@
     <ClInclude Include="Control.h" />
     <ClInclude Include="DelayedValue.h" />
     <ClInclude Include="DrawingContext.h" />
+    <ClInclude Include="Font.h" />
     <ClInclude Include="GroupBox.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageList.h" />
@@ -275,6 +278,7 @@
     <None Include="Api\ComboBox.inc" />
     <None Include="Api\Control.inc" />
     <None Include="Api\DrawingContext.inc" />
+    <None Include="Api\Font.inc" />
     <None Include="Api\GroupBox.inc" />
     <None Include="Api\Image.inc" />
     <None Include="Api\ImageList.inc" />
