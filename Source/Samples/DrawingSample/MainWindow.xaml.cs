@@ -1,15 +1,15 @@
 ﻿using Alternet.UI;
 using System;
-using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
-using System.Reflection;
-using Image = Alternet.UI.Image;
 
 namespace DrawingSample
 {
     internal class MainWindow : Window
     {
+        private CanvasControl canvasControl;
+
+        private StackPanel checkBoxesPanel;
+
         public MainWindow()
         {
             var xamlStream = typeof(MainWindow).Assembly.GetManifestResourceStream("DrawingSample.MainWindow.xaml");
@@ -18,31 +18,43 @@ namespace DrawingSample
             new XamlLoader().LoadExisting(xamlStream, this);
 
             canvasControl = (CanvasControl)FindControl("canvasControl");
-            
-            FindControl("clearButton").Click += ClearButton_Click;
+            checkBoxesPanel = (StackPanel)FindControl("checkBoxesPanel");
 
-            InitializeCheckBoxes((StackPanel)FindControl("checkBoxesPanel"));
+            FindControl("clearButton").Click += ClearButton_Click;
+            InitializeCheckBoxes();
         }
 
-        private void InitializeCheckBoxes(StackPanel panel)
+        private void InitializeCheckBoxes()
         {
-            foreach (var layer in Enum.GetValues(typeof(CanvasControl.Layer)).Cast<CanvasControl.Layer>())
+            foreach (var layer in CanvasControl.Layers)
             {
-                var checkBox = new CheckBox { Text = layer.ToString(), Tag = layer, Margin = new Thickness(0, 0, 0, 7) };
+                var checkBox = new CheckBox
+                {
+                    Text = layer.Name,
+                    Tag = layer,
+                    Margin = new Thickness(0, 0, 0, 7)
+                };
+
                 checkBox.CheckedChanged += LayerCheckBox_CheckedChanged;
-                panel.Children.Add(checkBox);
+                checkBoxesPanel.Children.Add(checkBox);
             }
         }
 
         private void LayerCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
+            var checkBox = sender as CheckBox ?? throw new Exception();
+            var layer = (Layer)(checkBox.Tag ?? throw new Exception());
 
+            if (checkBox.IsChecked)
+                canvasControl.ShowLayer(layer);
+            else
+                canvasControl.HideLayer(layer);
         }
-
-        CanvasControl canvasControl;
 
         private void ClearButton_Click(object? sender, EventArgs e)
         {
+            foreach (CheckBox checkBox in checkBoxesPanel.Children)
+                checkBox.IsChecked = false;
         }
     }
 }

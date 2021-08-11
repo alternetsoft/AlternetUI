@@ -5,9 +5,9 @@
         Width="1000" Height="800">
     <StackPanel Orientation="Horizontal" Margin="10">
         <local:CanvasControl Name="canvasControl" Width="800" />
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" Margin="10,0,0,0">
             <Button Text="Clear" Name="clearButton" />
-            <StackPanel Orientation="Vertical" Name="checkBoxesPanel">
+            <StackPanel Orientation="Vertical" Name="checkBoxesPanel" Margin="0,10,0,0">
             </StackPanel>
         </StackPanel>
     </StackPanel>
