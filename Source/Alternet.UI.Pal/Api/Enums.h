@@ -3,6 +3,14 @@
 
 namespace Alternet::UI
 {
+    enum class GenericFontFamily
+    {
+        None,
+        SansSerif,
+        Serif,
+        Monospace,
+    };
+    
     enum class ListBoxSelectionMode
     {
         Single,

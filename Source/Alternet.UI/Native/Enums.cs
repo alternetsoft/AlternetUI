@@ -2,6 +2,14 @@
 
 namespace Alternet.UI.Native
 {
+    enum GenericFontFamily
+    {
+        None,
+        SansSerif,
+        Serif,
+        Monospace,
+    }
+    
     enum ListBoxSelectionMode
     {
         Single,

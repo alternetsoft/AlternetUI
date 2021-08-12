@@ -10,18 +10,31 @@ namespace Alternet.UI
         private bool isDisposed;
 
         /// <summary>
-        /// Initializes a new <see cref="Font"/> using a specified size in points.
+        /// Initializes a new <see cref="Font"/> using a specified font familty name and size in points.
         /// </summary>
         /// <param name="familyName">A string representation of the font family for the new Font.</param>
         /// <param name="emSize">The em-size, in points, of the new font.</param>
         /// <exception cref="ArgumentException"><c>emSize</c> is less than or equal to 0, evaluates to infinity or is not a valid number.</exception>
-        public Font(string familyName, float emSize)
+        public Font(string familyName, float emSize) : this(new FontFamily(familyName), emSize)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="Font"/> using a specified font family and size in points.
+        /// </summary>
+        /// <param name="family">The <see cref="FontFamily"/> of the new <see cref="Font"/>.</param>
+        /// <param name="emSize">The em-size, in points, of the new font.</param>
+        /// <exception cref="ArgumentException"><c>emSize</c> is less than or equal to 0, evaluates to infinity or is not a valid number.</exception>
+        public Font(FontFamily family, float emSize)
         {
             if (emSize <= 0 || float.IsInfinity(emSize) || float.IsNaN(emSize))
                 throw new ArgumentException(nameof(emSize));
 
             NativeFont = new Native.Font();
-            NativeFont.Initialize(familyName, emSize);
+            NativeFont.Initialize(
+                family.GenericFamily == null ? Native.GenericFontFamily.None : (Native.GenericFontFamily)family.GenericFamily,
+                family.Name,
+                emSize);
         }
 
         internal Font(Native.Font nativeFont)

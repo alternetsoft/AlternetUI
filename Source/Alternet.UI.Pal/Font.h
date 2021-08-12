@@ -12,5 +12,7 @@ namespace Alternet::UI
 
     private:
         wxFont _font;
+
+        static wxFontFamily GetWxFontFamily(GenericFontFamily genericFamily);
     };
 }
