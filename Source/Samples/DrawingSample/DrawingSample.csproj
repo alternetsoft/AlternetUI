@@ -27,7 +27,19 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="Pages\Rectangles\RectanglesPageSettings.xaml" />
+      <None Remove="Pages\Text\TextPageSettings.xaml" />
+    </ItemGroup>
+
+    <ItemGroup>
       <EmbeddedResource Include="MainWindow.xaml" />
+      <EmbeddedResource Include="Pages\Rectangles\RectanglesPageSettings.xaml">
+        <SubType>Designer</SubType>
+        <Generator>MSBuild:Compile</Generator>
+      </EmbeddedResource>
+      <EmbeddedResource Include="Pages\Text\TextPageSettings.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </EmbeddedResource>
     </ItemGroup>
 
   <ItemGroup>

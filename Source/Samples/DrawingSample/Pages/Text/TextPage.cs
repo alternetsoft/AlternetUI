@@ -6,13 +6,13 @@ using FontFamily = Alternet.UI.FontFamily;
 
 namespace DrawingSample
 {
-    public sealed class TextLinesLayer : Layer
+    sealed class TextPage : DrawingPage
     {
         private const string LoremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nSuspendisse tincidunt orci vitae arcu congue commodo.\nProin fermentum rhoncus dictum.";
 
         private static readonly Alternet.UI.Font[] fonts;
 
-        static TextLinesLayer()
+        static TextPage()
         {
             fonts = CreateFonts().ToArray();
         }
@@ -41,5 +41,7 @@ namespace DrawingSample
             yield return new Alternet.UI.Font(FontFamily.GenericSansSerif, 10);
             yield return new Alternet.UI.Font(FontFamily.GenericMonospace, 10);
         }
+
+        protected override Control CreateSettingsControl() => new TextPageSettings(this);
     }
 }

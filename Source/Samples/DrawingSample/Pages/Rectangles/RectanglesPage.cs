@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace DrawingSample
 {
-    public sealed class RectanglesLayer : Layer
+    internal sealed class RectanglesPage : DrawingPage
     {
         public override string Name => "Rectangles";
 
@@ -11,5 +11,7 @@ namespace DrawingSample
         {
             dc.DrawRectangle(new RectangleF(10, 10, 100, 100), Color.Blue);
         }
+
+        protected override Control CreateSettingsControl() => new RectanglesPageSettings(this);
     }
 }
