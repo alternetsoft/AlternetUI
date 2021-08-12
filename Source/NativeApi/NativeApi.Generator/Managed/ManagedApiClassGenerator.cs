@@ -137,6 +137,7 @@ using System.Security;");
             var contextualProperty = property.ToContextualProperty();
             var propertyTypeName = types.GetTypeName(contextualProperty);
             var nativeDeclaringTypeName = TypeProvider.GetNativeName(property.DeclaringType!);
+            bool isStatic = MemberProvider.IsStatic(property);
 
             w.WriteLine($"public {GetModifiers(property)}{propertyTypeName} {propertyName}");
             using (new BlockIndent(w))
@@ -146,7 +147,8 @@ using System.Security;");
                     w.WriteLine("get");
                     using (new BlockIndent(w))
                     {
-                        w.WriteLine("CheckDisposed();");
+                        if (!isStatic)
+                            w.WriteLine("CheckDisposed();");
 
                         if (apiProperty.Flags.HasFlag(ApiPropertyFlags.ManagedArrayAccessor))
                             WriteArrayAccessorPropertyGetterBody(w, apiProperty, types);
@@ -156,7 +158,7 @@ using System.Security;");
                             w.Write(
                             string.Format(
                                 GetNativeToManagedFormatString(contextualProperty),
-                                $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}_(NativePointer)"));
+                                $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}_({(isStatic ? "" : "NativePointer")})"));
                             w.WriteLine(";");
                         }
 
@@ -172,7 +174,7 @@ using System.Security;");
                     {
                         w.WriteLine("CheckDisposed();");
                         w.WriteLine(
-                            $"NativeApi.{nativeDeclaringTypeName}_Set{propertyName}_(NativePointer, {GetManagedToNativeArgument(contextualProperty, "value")});");
+                            $"NativeApi.{nativeDeclaringTypeName}_Set{propertyName}_({(isStatic ? "" : "NativePointer, ")}{GetManagedToNativeArgument(contextualProperty, "value")});");
                     }
             
                 }
@@ -188,11 +190,13 @@ using System.Security;");
             var arrayElementType = apiProperty.Property.PropertyType.GetElementType().ToContextualType();
             var arrayElementTypeName = types.GetTypeName(arrayElementType);
 
-            w.WriteLine($"var array = NativeApi.{nativeDeclaringTypeName}_Open{propertyName}Array_(NativePointer);");
+            bool isStatic = MemberProvider.IsStatic(apiProperty.Property);
+
+            w.WriteLine($"var array = NativeApi.{nativeDeclaringTypeName}_Open{propertyName}Array_({(isStatic ? "" : "NativePointer")});");
             w.WriteLine("try");
             using (new BlockIndent(w))
             {
-                w.WriteLine($"var count = NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemCount_(NativePointer, array);");
+                w.WriteLine($"var count = NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemCount_({(isStatic ? "" : "NativePointer, ")}array);");
                 w.WriteLine($"var result = new System.Collections.Generic.List<{arrayElementTypeName}>(count);");
                 w.WriteLine($"for (int i = 0; i < count; i++)");
                 using (new BlockIndent(w))
@@ -201,7 +205,7 @@ using System.Security;");
                     w.Write(
                     string.Format(
                         GetNativeToManagedFormatString(arrayElementType),
-                        $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemAt_(NativePointer, array, i)"));
+                        $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemAt_({(isStatic ? "" : "NativePointer, ")}array, i)"));
                     w.WriteLine(";");
 
                     w.WriteLine($"result.Add(item);");
@@ -212,7 +216,7 @@ using System.Security;");
             w.WriteLine("finally");
             using (new BlockIndent(w))
             {
-                w.WriteLine($"NativeApi.{nativeDeclaringTypeName}_Close{propertyName}Array_(NativePointer, array);");
+                w.WriteLine($"NativeApi.{nativeDeclaringTypeName}_Close{propertyName}Array_({(isStatic ? "" : "NativePointer, ")}array);");
             }
         }
 

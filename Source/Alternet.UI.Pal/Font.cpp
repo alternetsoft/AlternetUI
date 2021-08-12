@@ -33,7 +33,32 @@ namespace Alternet::UI
         return _font;
     }
 
-    wxFontFamily Font::GetWxFontFamily(GenericFontFamily genericFamily)
+    string Font::GetName()
+    {
+        return string();
+    }
+
+    float Font::GetSize()
+    {
+        return 0.0f;
+    }
+
+    string Font::ToString_()
+    {
+        return string();
+    }
+
+    bool Font::IsEqualTo(Font* other)
+    {
+        return false;
+    }
+
+    int Font::GetHashCode_()
+    {
+        return 0;
+    }
+
+    /*static*/ wxFontFamily Font::GetWxFontFamily(GenericFontFamily genericFamily)
     {
         switch (genericFamily)
         {
@@ -49,33 +74,33 @@ namespace Alternet::UI
         }
     }
 
-    void* Font::OpenFamiliesArray()
+    /*static*/ void* Font::OpenFamiliesArray()
     {
         auto facenames = wxFontEnumerator::GetFacenames();
         return new wxArrayString(facenames.begin(), facenames.end());
     }
 
-    int Font::GetFamiliesItemCount(void* array)
+    /*static*/ int Font::GetFamiliesItemCount(void* array)
     {
         return ((wxArrayString*)array)->GetCount();
     }
 
-    string Font::GetFamiliesItemAt(void* array, int index)
+    /*static*/ string Font::GetFamiliesItemAt(void* array, int index)
     {
         return wxStr(((wxArrayString*)array)->Item(index));
     }
 
-    void Font::CloseFamiliesArray(void* array)
+    /*static*/ void Font::CloseFamiliesArray(void* array)
     {
         delete (wxArrayString*)array;
     }
 
-    bool Font::IsFamilyValid(const string& fontFamily)
+    /*static*/ bool Font::IsFamilyValid(const string& fontFamily)
     {
         return wxFontEnumerator::IsValidFacename(wxStr(fontFamily));
     }
 
-    string Font::GetGenericFamilyName(GenericFontFamily genericFamily)
+    /*static*/ string Font::GetGenericFamilyName(GenericFontFamily genericFamily)
     {
         wxASSERT(genericFamily != GenericFontFamily::None);
 

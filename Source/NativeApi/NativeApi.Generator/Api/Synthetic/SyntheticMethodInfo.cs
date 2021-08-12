@@ -8,13 +8,15 @@ namespace ApiGenerator.Api
     {
         private Type? declaringType;
         private string name;
+        private readonly bool isStatic;
         private SyntheticParameterInfo[] parameters;
         private Type returnType;
 
-        public SyntheticMethodInfo(Type? declaringType, string name, SyntheticParameterInfo[] parameters, Type returnType)
+        public SyntheticMethodInfo(Type? declaringType, string name, bool isStatic, SyntheticParameterInfo[] parameters, Type returnType)
         {
             this.declaringType = declaringType;
             this.name = name;
+            this.isStatic = isStatic;
             this.parameters = parameters;
             this.returnType = returnType;
 
@@ -36,7 +38,7 @@ namespace ApiGenerator.Api
 
         public override RuntimeMethodHandle MethodHandle => throw new NotImplementedException();
 
-        public override MethodAttributes Attributes => MethodAttributes.Public;
+        public override MethodAttributes Attributes => MethodAttributes.Public | (isStatic ? MethodAttributes.Static : 0);
 
         public override Type ReflectedType => throw new NotImplementedException();
 

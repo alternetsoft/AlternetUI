@@ -12,24 +12,34 @@ ALTERNET_UI_API Font* Font_Create_()
     return new Font();
 }
 
-ALTERNET_UI_API void* Font_OpenFamiliesArray_(Font* obj)
+ALTERNET_UI_API char16_t* Font_GetName_(Font* obj)
 {
-    return obj->OpenFamiliesArray();
+    return AllocPInvokeReturnString(obj->GetName());
 }
 
-ALTERNET_UI_API int Font_GetFamiliesItemCount_(Font* obj, void* array)
+ALTERNET_UI_API float Font_GetSize_(Font* obj)
 {
-    return obj->GetFamiliesItemCount(array);
+    return obj->GetSize();
 }
 
-ALTERNET_UI_API char16_t* Font_GetFamiliesItemAt_(Font* obj, void* array, int index)
+ALTERNET_UI_API void* Font_OpenFamiliesArray_()
 {
-    return AllocPInvokeReturnString(obj->GetFamiliesItemAt(array, index));
+    return Font::OpenFamiliesArray();
 }
 
-ALTERNET_UI_API void Font_CloseFamiliesArray_(Font* obj, void* array)
+ALTERNET_UI_API int Font_GetFamiliesItemCount_(void* array)
 {
-    obj->CloseFamiliesArray(array);
+    return Font::GetFamiliesItemCount(array);
+}
+
+ALTERNET_UI_API char16_t* Font_GetFamiliesItemAt_(void* array, int index)
+{
+    return AllocPInvokeReturnString(Font::GetFamiliesItemAt(array, index));
+}
+
+ALTERNET_UI_API void Font_CloseFamiliesArray_(void* array)
+{
+    Font::CloseFamiliesArray(array);
 }
 
 ALTERNET_UI_API void Font_Initialize_(Font* obj, GenericFontFamily genericFamily, const char16_t* familyName, float emSize)
@@ -50,5 +60,20 @@ ALTERNET_UI_API c_bool Font_IsFamilyValid_(const char16_t* fontFamily)
 ALTERNET_UI_API char16_t* Font_GetGenericFamilyName_(GenericFontFamily genericFamily)
 {
     return AllocPInvokeReturnString(Font::GetGenericFamilyName(genericFamily));
+}
+
+ALTERNET_UI_API char16_t* Font_ToString__(Font* obj)
+{
+    return AllocPInvokeReturnString(obj->ToString_());
+}
+
+ALTERNET_UI_API c_bool Font_IsEqualTo_(Font* obj, Font* other)
+{
+    return obj->IsEqualTo(other);
+}
+
+ALTERNET_UI_API int Font_GetHashCode__(Font* obj)
+{
+    return obj->GetHashCode_();
 }
 
