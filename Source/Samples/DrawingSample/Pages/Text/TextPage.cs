@@ -10,17 +10,26 @@ namespace DrawingSample
     {
         private const string LoremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nSuspendisse tincidunt orci vitae arcu congue commodo.\nProin fermentum rhoncus dictum.";
 
-        private static readonly Alternet.UI.Font[] fonts;
-
-        static TextPage()
-        {
-            fonts = CreateFonts().ToArray();
-        }
+        private Alternet.UI.Font[]? fonts;
+        private float fontSize = 10;
 
         public override string Name => "Text Lines";
 
+        public float FontSize
+        {
+            get => fontSize;
+            set
+            {
+                fontSize = value;
+                InvalidateFonts();
+            }
+        }
+
         public override void Draw(DrawingContext dc, RectangleF bounds)
         {
+            if (fonts == null)
+                fonts = CreateFonts().ToArray();
+
             var color = Color.MidnightBlue;
             float lighten = 10;
 
@@ -34,12 +43,24 @@ namespace DrawingSample
             }
         }
 
-        private static IEnumerable<Alternet.UI.Font> CreateFonts()
+        private void InvalidateFonts()
         {
-            yield return Control.DefaultFont;
-            yield return new Alternet.UI.Font(FontFamily.GenericSerif, 10);
-            yield return new Alternet.UI.Font(FontFamily.GenericSansSerif, 10);
-            yield return new Alternet.UI.Font(FontFamily.GenericMonospace, 10);
+            if (fonts != null)
+            {
+                foreach (var font in fonts)
+                    font.Dispose();
+                fonts = null;
+            }
+
+            Canvas?.Update();
+        }
+
+        private IEnumerable<Alternet.UI.Font> CreateFonts()
+        {
+            //yield return Control.DefaultFont;
+            yield return new Alternet.UI.Font(FontFamily.GenericSerif, FontSize);
+            yield return new Alternet.UI.Font(FontFamily.GenericSansSerif, FontSize);
+            yield return new Alternet.UI.Font(FontFamily.GenericMonospace, FontSize);
         }
 
         protected override Control CreateSettingsControl() => new TextPageSettings(this);

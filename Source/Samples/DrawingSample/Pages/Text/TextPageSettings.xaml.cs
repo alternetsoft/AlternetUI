@@ -14,6 +14,13 @@ namespace DrawingSample
                 throw new InvalidOperationException();
             new XamlLoader().LoadExisting(xamlStream, this);
             this.page = page;
+
+            ((Slider)FindControl("fontSizeSlider")).ValueChanged += FontSizeSlider_ValueChanged;
+        }
+
+        private void FontSizeSlider_ValueChanged(object? sender, EventArgs e)
+        {
+            page.FontSize = ((Slider)sender!).Value;
         }
     }
 }

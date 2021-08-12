@@ -1,4 +1,8 @@
 ﻿<Control xmlns="http://schemas.alternetsoft.com/ui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
+    <StackPanel Orientation="Vertical">
+        <Label Text="Font Size" />
+        <Slider Name="fontSizeSlider" Minimum="5" Maximum="25" Value="10"/>
+    </StackPanel>
 </Control>
