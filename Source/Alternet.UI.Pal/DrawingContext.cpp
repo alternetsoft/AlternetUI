@@ -89,7 +89,7 @@ namespace Alternet::UI
     {
         wxCoord x = 0, y = 0;
         auto wxFont = font->GetWxFont();
-        _dc->GetTextExtent(wxStr(text), &x, &y, nullptr, nullptr, &wxFont);
+        _dc->GetMultiLineTextExtent(wxStr(text), &x, &y, nullptr, &wxFont); // or GetTextExtent for single-line?
         return toDip(wxSize(x, y), _dc->GetWindow());
     }
 }

@@ -29,8 +29,12 @@
     <ItemGroup>
       <EmbeddedResource Include="MainWindow.xaml" />
     </ItemGroup>
-  
-    <ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Skybrud.Colors" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
         <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
     </ItemGroup>
 </Project>
