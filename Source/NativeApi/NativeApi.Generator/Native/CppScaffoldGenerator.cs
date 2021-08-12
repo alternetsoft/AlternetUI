@@ -15,13 +15,14 @@ namespace ApiGenerator.Native
             w.WriteLine("#pragma once");
             w.WriteLine("#include \"Common.h\"");
             w.WriteLine("#include \"ApiTypes.h\"");
+            w.WriteLine("#include \"Object.h\"");
 
             w.WriteLine();
             w.WriteLine("namespace Alternet::UI");
             using (new BlockIndent(w))
             {
                 var typeName = TypeProvider.GetNativeName(type);
-                w.WriteLine($"class {typeName}");
+                w.WriteLine($"class {typeName} : public Object");
                 w.WriteLine("{");
                 w.Indent--;
                 w.WriteLine($"#include \"Api/{typeName}.inc\"");
