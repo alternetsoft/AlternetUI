@@ -24,8 +24,12 @@ namespace Alternet.UI
             if (name == string.Empty)
                 throw new ArgumentException($"'{nameof(name)}' cannot be empty.", nameof(name));
 
-            if (!Native.Font.IsFamilyValid(name))
-                throw new ArgumentException($"'{name}' font family is not installed on this computer.", nameof(name));
+            // todo: uncomment when the problem with .AppleSystemUIFont is resolved.
+            // see https://github.com/wxWidgets/wxWidgets/pull/2034
+            // https://trac.wxwidgets.org/ticket/18878
+
+            // if (!Native.Font.IsFamilyValid(name))
+            //     throw new ArgumentException($"'{name}' font family is not installed on this computer.", nameof(name));
 
             this.name = name;
         }
