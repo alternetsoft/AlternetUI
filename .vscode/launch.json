@@ -77,5 +77,17 @@
             "stopAtEntry": false,
             "console": "internalConsole"
         },
+        {
+            "name": "Drawing: CLR Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "Drawing: Build",
+            // "logging": {"engineLogging": true},
+            "program": "${workspaceFolder}/Source/Samples/DrawingSample/bin/Debug/netcoreapp3.1/DrawingSample.dll",
+            "cwd": "${workspaceFolder}/Source/Samples/DrawingSample/bin/Debug/netcoreapp3.1/",
+            "args": [],
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
     ]
 }
