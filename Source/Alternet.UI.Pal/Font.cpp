@@ -10,7 +10,7 @@ namespace Alternet::UI
     {
     }
 
-    void Font::Initialize(GenericFontFamily genericFamily, optional<string> familyName, float emSize)
+    void Font::Initialize(GenericFontFamily genericFamily, optional<string> familyName, float emSize, FontStyle style)
     {
         wxFontInfo fontInfo(emSize);
 
@@ -19,6 +19,18 @@ namespace Alternet::UI
 
         if (familyName.has_value())
             fontInfo.FaceName(wxStr(familyName.value()));
+
+        if ((style & FontStyle::Bold) != (FontStyle)0)
+            fontInfo.Bold();
+
+        if ((style & FontStyle::Italic) != (FontStyle)0)
+            fontInfo.Italic();
+
+        if ((style & FontStyle::Strikethrough) != (FontStyle)0)
+            fontInfo.Strikethrough();
+
+        if ((style & FontStyle::Underlined) != (FontStyle)0)
+            fontInfo.Underlined();
 
         _font = wxFont(fontInfo);
     }
@@ -36,6 +48,26 @@ namespace Alternet::UI
     string Font::GetName()
     {
         return wxStr(_font.GetFaceName());
+    }
+
+    FontStyle Font::GetStyle()
+    {
+        auto style = FontStyle::Regular;
+        auto wxStyle = _font.GetStyle();
+        if (wxStyle & wxFontStyle::wxFONTSTYLE_ITALIC)
+            style |= FontStyle::Italic;
+
+        auto weight = _font.GetWeight();
+        if (weight & wxFontWeight::wxFONTWEIGHT_BOLD)
+            style |= FontStyle::Bold;
+
+        if (_font.GetStrikethrough())
+            style |= FontStyle::Strikethrough;
+
+        if (_font.GetUnderlined())
+            style |= FontStyle::Underlined;
+
+        return style;
     }
 
     float Font::GetSizeInPoints()

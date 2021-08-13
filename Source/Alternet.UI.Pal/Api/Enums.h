@@ -3,6 +3,15 @@
 
 namespace Alternet::UI
 {
+    enum class FontStyle
+    {
+        Regular,
+        Bold,
+        Italic,
+        Underlined,
+        Strikethrough,
+    };
+    
     enum class GenericFontFamily
     {
         None,
@@ -47,3 +56,4 @@ namespace Alternet::UI
     };
     
 }
+template<> struct enable_bitmask_operators<Alternet::UI::FontStyle> { static const bool enable = true; };

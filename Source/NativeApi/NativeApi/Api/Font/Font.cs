@@ -4,7 +4,7 @@ namespace NativeApi.Api
 {
     public class Font
     {
-        public void Initialize(GenericFontFamily genericFamily, string? familyName, float emSizeInPoints) => throw new Exception();
+        public void Initialize(GenericFontFamily genericFamily, string? familyName, float emSizeInPoints, FontStyle style) => throw new Exception();
         public void InitializeWithDefaultFont() => throw new Exception();
 
         public static bool IsFamilyValid(string fontFamily) => throw new Exception();
@@ -14,6 +14,7 @@ namespace NativeApi.Api
 
         public string Name { get => throw new Exception(); }
         public float SizeInPoints { get => throw new Exception(); }
+        public FontStyle Style { get => throw new Exception(); }
 
         public string Description { get => throw new Exception(); }
         public bool IsEqualTo(Font other) => throw new Exception();

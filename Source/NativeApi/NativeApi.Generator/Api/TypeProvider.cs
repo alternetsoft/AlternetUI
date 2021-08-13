@@ -63,5 +63,13 @@ namespace ApiGenerator.Api
 
             return nativeNameAttributes.Cast<NativeNameAttribute>().Single().Name;
         }
+
+        public static bool IsFlagsEnum(Type type)
+        {
+            if (!type.IsEnum)
+                return false;
+            
+            return type.GetCustomAttributes(typeof(FlagsAttribute), false).Length > 0;
+        }
     }
 }

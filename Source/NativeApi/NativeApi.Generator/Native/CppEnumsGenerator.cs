@@ -34,6 +34,16 @@ namespace ApiGenerator.Native
                 }
             }
 
+            w.WriteLine();
+
+            foreach (var type in types)
+            {
+                if (!TypeProvider.IsFlagsEnum(type))
+                    continue;
+                var typeName = TypeProvider.GetNativeName(type);
+                w.WriteLine($"template<> struct enable_bitmask_operators<Alternet::UI::{typeName}> {{ static const bool enable = true; }};");
+            }
+
             return codeWriter.ToString();
         }
     }

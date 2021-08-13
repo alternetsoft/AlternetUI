@@ -61,6 +61,16 @@ namespace Alternet.UI.Native
             
         }
         
+        public FontStyle Style
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Font_GetStyle_(NativePointer);
+            }
+            
+        }
+        
         public string Description
         {
             get
@@ -71,10 +81,10 @@ namespace Alternet.UI.Native
             
         }
         
-        public void Initialize(GenericFontFamily genericFamily, string? familyName, float emSizeInPoints)
+        public void Initialize(GenericFontFamily genericFamily, string? familyName, float emSizeInPoints, FontStyle style)
         {
             CheckDisposed();
-            NativeApi.Font_Initialize_(NativePointer, genericFamily, familyName, emSizeInPoints);
+            NativeApi.Font_Initialize_(NativePointer, genericFamily, familyName, emSizeInPoints, style);
         }
         
         public void InitializeWithDefaultFont()
@@ -121,6 +131,9 @@ namespace Alternet.UI.Native
             public static extern float Font_GetSizeInPoints_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern FontStyle Font_GetStyle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string Font_GetDescription_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -136,7 +149,7 @@ namespace Alternet.UI.Native
             public static extern void Font_CloseFamiliesArray_(System.IntPtr array);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Font_Initialize_(IntPtr obj, GenericFontFamily genericFamily, string? familyName, float emSizeInPoints);
+            public static extern void Font_Initialize_(IntPtr obj, GenericFontFamily genericFamily, string? familyName, float emSizeInPoints, FontStyle style);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Font_InitializeWithDefaultFont_(IntPtr obj);

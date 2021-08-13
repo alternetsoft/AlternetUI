@@ -2,6 +2,15 @@
 
 namespace Alternet.UI.Native
 {
+    enum FontStyle
+    {
+        Regular,
+        Bold,
+        Italic,
+        Underlined,
+        Strikethrough,
+    }
+    
     enum GenericFontFamily
     {
         None,
