@@ -21,6 +21,18 @@ namespace DrawingSample
             ((CheckBox)FindControl("italicCheckBox")).CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Italic, ((CheckBox)o!).IsChecked);
             ((CheckBox)FindControl("underlinedCheckBox")).CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Underlined, ((CheckBox)o!).IsChecked);
             ((CheckBox)FindControl("strikethroughCheckBox")).CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Strikethrough, ((CheckBox)o!).IsChecked);
+
+            var customFontFamilyComboBox = (ComboBox)FindControl("customFontFamilyComboBox");
+            foreach (var family in FontFamily.Families)
+                customFontFamilyComboBox.Items.Add(family.Name);
+
+            customFontFamilyComboBox.SelectedItem = page.CustomFontFamilyName;
+            customFontFamilyComboBox.SelectedItemChanged += CustomFontFamilyComboBox_SelectedItemChanged;
+        }
+
+        private void CustomFontFamilyComboBox_SelectedItemChanged(object? sender, EventArgs e)
+        {
+            page.CustomFontFamilyName = ((ComboBox)sender!).SelectedItem?.ToString() ?? throw new Exception();
         }
 
         private void FontSizeSlider_ValueChanged(object? sender, EventArgs e)

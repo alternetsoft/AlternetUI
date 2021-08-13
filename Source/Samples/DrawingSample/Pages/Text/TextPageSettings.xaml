@@ -1,13 +1,16 @@
 ﻿<Control xmlns="http://schemas.alternetsoft.com/ui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
-    <StackPanel Orientation="Vertical">
+    <StackPanel Orientation="Vertical" Margin="5">
         <Label Text="Font Size" />
-        <Slider Name="fontSizeSlider" Minimum="5" Maximum="25" Value="10" Margin="0,0,0,5"/>
+        <Slider Name="fontSizeSlider" Minimum="5" Maximum="25" Value="10" Margin="0,0,0,10"/>
 
         <CheckBox Name="boldCheckBox" Text="Bold" Margin="0,0,0,5"/>
         <CheckBox Name="italicCheckBox" Text="Italic" Margin="0,0,0,5"/>
         <CheckBox Name="underlinedCheckBox" Text="Underlined" Margin="0,0,0,5"/>
         <CheckBox Name="strikethroughCheckBox" Text="Strikethrough" Margin="0,0,0,5"/>
+
+        <Label Text="Custom Font Family:" Margin="0,5,0,0"/>
+        <ComboBox Name="customFontFamilyComboBox" IsEditable="false"/>
     </StackPanel>
 </Control>

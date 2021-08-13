@@ -17,6 +17,7 @@ namespace DrawingSample
         private Paragraph[]? paragraphs;
         private float fontSize = 10;
         private Alternet.UI.FontStyle fontStyle;
+        private string customFontFamilyName = Control.DefaultFont.FontFamily.Name;
 
         public override string Name => "Text Lines";
 
@@ -36,6 +37,16 @@ namespace DrawingSample
             set
             {
                 fontStyle = value;
+                InvalidateParagraphs();
+            }
+        }
+
+        public string CustomFontFamilyName
+        {
+            get => customFontFamilyName;
+            set
+            {
+                customFontFamilyName = value;
                 InvalidateParagraphs();
             }
         }
@@ -79,14 +90,20 @@ namespace DrawingSample
 
         private IEnumerable<Paragraph> CreateParagraphs()
         {
-            Paragraph CreateParagraph(GenericFontFamily genericFamily) =>
+            Paragraph CreateGenericFontParagraph(GenericFontFamily genericFamily) =>
                 new Paragraph(
                     new Font(new FontFamily(genericFamily), FontSize, FontStyle),
-                    genericFamily.ToString());
+                    "Generic " + genericFamily.ToString());
 
-            yield return CreateParagraph(GenericFontFamily.Serif);
-            yield return CreateParagraph(GenericFontFamily.SansSerif);
-            yield return CreateParagraph(GenericFontFamily.Monospace);
+            Paragraph CreateCustomFontParagraph(FontFamily family) =>
+                new Paragraph(
+                    new Font(family, FontSize, FontStyle),
+                    "Custom");
+
+            yield return CreateCustomFontParagraph(new FontFamily(CustomFontFamilyName));
+            yield return CreateGenericFontParagraph(GenericFontFamily.Serif);
+            yield return CreateGenericFontParagraph(GenericFontFamily.SansSerif);
+            yield return CreateGenericFontParagraph(GenericFontFamily.Monospace);
         }
 
         private class Paragraph : IDisposable
@@ -95,7 +112,7 @@ namespace DrawingSample
             {
                 Font = font;
                 GenericFamilyName = genericFamilyName;
-                FontInfo = $"Generic {GenericFamilyName}: {Font.Name}, {Font.SizeInPoints}pt";
+                FontInfo = $"{GenericFamilyName}: {Font.Name}, {Font.SizeInPoints}pt";
             }
 
             public Font Font { get; }
