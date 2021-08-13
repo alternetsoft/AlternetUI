@@ -8,15 +8,13 @@ using FontFamily = Alternet.UI.FontFamily;
 
 namespace DrawingSample
 {
-    sealed class TextPage : DrawingPage
+    internal sealed class TextPage : DrawingPage
     {
         private const string LoremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nSuspendisse tincidunt orci vitae arcu congue commodo.\nProin fermentum rhoncus dictum.";
 
-        private Paragraph[]? paragraphs;
-
         private static Font fontInfoFont = new Alternet.UI.Font(FontFamily.GenericMonospace, 8);
         private static Color fontInfoColor = Color.Black;
-
+        private Paragraph[]? paragraphs;
         private float fontSize = 10;
 
         public override string Name => "Text Lines";
@@ -28,25 +26,6 @@ namespace DrawingSample
             {
                 fontSize = value;
                 InvalidatParagraphs();
-            }
-        }
-
-        class Paragraph : IDisposable
-        {
-            public Paragraph(Font font, string genericFamilyName)
-            {
-                Font = font;
-                GenericFamilyName = genericFamilyName;
-                FontInfo = $"Generic {GenericFamilyName}: {Font.Name}, {Font.SizeInPoints}pt";
-            }
-
-            public Font Font { get; }
-            public string GenericFamilyName { get; }
-            public string FontInfo { get; }
-
-            public void Dispose()
-            {
-                Font.Dispose();
             }
         }
 
@@ -73,6 +52,8 @@ namespace DrawingSample
             }
         }
 
+        protected override Control CreateSettingsControl() => new TextPageSettings(this);
+
         private void InvalidatParagraphs()
         {
             if (paragraphs != null)
@@ -97,6 +78,25 @@ namespace DrawingSample
             yield return CreateParagraph(GenericFontFamily.Monospace);
         }
 
-        protected override Control CreateSettingsControl() => new TextPageSettings(this);
+        private class Paragraph : IDisposable
+        {
+            public Paragraph(Font font, string genericFamilyName)
+            {
+                Font = font;
+                GenericFamilyName = genericFamilyName;
+                FontInfo = $"Generic {GenericFamilyName}: {Font.Name}, {Font.SizeInPoints}pt";
+            }
+
+            public Font Font { get; }
+
+            public string GenericFamilyName { get; }
+
+            public string FontInfo { get; }
+
+            public void Dispose()
+            {
+                Font.Dispose();
+            }
+        }
     }
 }
