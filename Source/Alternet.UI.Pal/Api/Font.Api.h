@@ -17,9 +17,14 @@ ALTERNET_UI_API char16_t* Font_GetName_(Font* obj)
     return AllocPInvokeReturnString(obj->GetName());
 }
 
-ALTERNET_UI_API float Font_GetSize_(Font* obj)
+ALTERNET_UI_API float Font_GetSizeInPoints_(Font* obj)
 {
-    return obj->GetSize();
+    return obj->GetSizeInPoints();
+}
+
+ALTERNET_UI_API char16_t* Font_GetDescription_(Font* obj)
+{
+    return AllocPInvokeReturnString(obj->GetDescription());
 }
 
 ALTERNET_UI_API void* Font_OpenFamiliesArray_()
@@ -42,9 +47,9 @@ ALTERNET_UI_API void Font_CloseFamiliesArray_(void* array)
     Font::CloseFamiliesArray(array);
 }
 
-ALTERNET_UI_API void Font_Initialize_(Font* obj, GenericFontFamily genericFamily, const char16_t* familyName, float emSize)
+ALTERNET_UI_API void Font_Initialize_(Font* obj, GenericFontFamily genericFamily, const char16_t* familyName, float emSizeInPoints)
 {
-    obj->Initialize(genericFamily, ToOptional(familyName), emSize);
+    obj->Initialize(genericFamily, ToOptional(familyName), emSizeInPoints);
 }
 
 ALTERNET_UI_API void Font_InitializeWithDefaultFont_(Font* obj)
@@ -62,18 +67,13 @@ ALTERNET_UI_API char16_t* Font_GetGenericFamilyName_(GenericFontFamily genericFa
     return AllocPInvokeReturnString(Font::GetGenericFamilyName(genericFamily));
 }
 
-ALTERNET_UI_API char16_t* Font_ToString__(Font* obj)
-{
-    return AllocPInvokeReturnString(obj->ToString_());
-}
-
 ALTERNET_UI_API c_bool Font_IsEqualTo_(Font* obj, Font* other)
 {
     return obj->IsEqualTo(other);
 }
 
-ALTERNET_UI_API int Font_GetHashCode__(Font* obj)
+ALTERNET_UI_API char16_t* Font_Serialize_(Font* obj)
 {
-    return obj->GetHashCode_();
+    return AllocPInvokeReturnString(obj->Serialize());
 }
 

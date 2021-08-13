@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace Alternet.UI
 {
@@ -55,6 +56,14 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A <see cref="FontFamily"/> that represents a generic monospace font.</value>
         public static FontFamily GenericMonospace { get; } = new FontFamily(GenericFontFamily.Monospace);
+
+        /// <summary>
+        /// Returns an array that contains all the <see cref="FontFamily"/> objects currently available in the system.
+        /// </summary>
+        /// <value>
+        /// An array of <see cref="FontFamily"/> objects currently available in the system.
+        /// </value>
+        public static FontFamily[] Families => Native.Font.Families.Select(x => new FontFamily(x)).ToArray();
 
         /// <summary>
         /// Gets the name of this <see cref="FontFamily"/>.

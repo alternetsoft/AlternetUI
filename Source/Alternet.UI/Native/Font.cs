@@ -51,20 +51,30 @@ namespace Alternet.UI.Native
             
         }
         
-        public float Size
+        public float SizeInPoints
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.Font_GetSize_(NativePointer);
+                return NativeApi.Font_GetSizeInPoints_(NativePointer);
             }
             
         }
         
-        public void Initialize(GenericFontFamily genericFamily, string? familyName, float emSize)
+        public string Description
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Font_GetDescription_(NativePointer);
+            }
+            
+        }
+        
+        public void Initialize(GenericFontFamily genericFamily, string? familyName, float emSizeInPoints)
         {
             CheckDisposed();
-            NativeApi.Font_Initialize_(NativePointer, genericFamily, familyName, emSize);
+            NativeApi.Font_Initialize_(NativePointer, genericFamily, familyName, emSizeInPoints);
         }
         
         public void InitializeWithDefaultFont()
@@ -83,22 +93,16 @@ namespace Alternet.UI.Native
             return NativeApi.Font_GetGenericFamilyName_(genericFamily);
         }
         
-        public string ToString_()
-        {
-            CheckDisposed();
-            return NativeApi.Font_ToString__(NativePointer);
-        }
-        
         public bool IsEqualTo(Font other)
         {
             CheckDisposed();
             return NativeApi.Font_IsEqualTo_(NativePointer, other.NativePointer);
         }
         
-        public int GetHashCode_()
+        public string Serialize()
         {
             CheckDisposed();
-            return NativeApi.Font_GetHashCode__(NativePointer);
+            return NativeApi.Font_Serialize_(NativePointer);
         }
         
         
@@ -114,7 +118,10 @@ namespace Alternet.UI.Native
             public static extern string Font_GetName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern float Font_GetSize_(IntPtr obj);
+            public static extern float Font_GetSizeInPoints_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string Font_GetDescription_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Font_OpenFamiliesArray_();
@@ -129,7 +136,7 @@ namespace Alternet.UI.Native
             public static extern void Font_CloseFamiliesArray_(System.IntPtr array);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Font_Initialize_(IntPtr obj, GenericFontFamily genericFamily, string? familyName, float emSize);
+            public static extern void Font_Initialize_(IntPtr obj, GenericFontFamily genericFamily, string? familyName, float emSizeInPoints);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Font_InitializeWithDefaultFont_(IntPtr obj);
@@ -141,13 +148,10 @@ namespace Alternet.UI.Native
             public static extern string Font_GetGenericFamilyName_(GenericFontFamily genericFamily);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Font_ToString__(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Font_IsEqualTo_(IntPtr obj, IntPtr other);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Font_GetHashCode__(IntPtr obj);
+            public static extern string Font_Serialize_(IntPtr obj);
             
         }
     }

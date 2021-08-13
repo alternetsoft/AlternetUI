@@ -35,27 +35,30 @@ namespace Alternet::UI
 
     string Font::GetName()
     {
-        return string();
+        return wxStr(_font.GetFaceName());
     }
 
-    float Font::GetSize()
+    float Font::GetSizeInPoints()
     {
-        return 0.0f;
+        return _font.GetFractionalPointSize();
     }
 
-    string Font::ToString_()
+    string Font::GetDescription()
     {
-        return string();
+        return wxStr(_font.GetNativeFontInfoUserDesc());
     }
 
     bool Font::IsEqualTo(Font* other)
     {
-        return false;
+        if (other == nullptr)
+            return false;
+        
+        return _font == other->_font;
     }
 
-    int Font::GetHashCode_()
+    string Font::Serialize()
     {
-        return 0;
+        return wxStr(_font.GetNativeFontInfoDesc());
     }
 
     /*static*/ wxFontFamily Font::GetWxFontFamily(GenericFontFamily genericFamily)
