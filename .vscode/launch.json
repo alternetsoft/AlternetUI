@@ -89,5 +89,22 @@
             "stopAtEntry": false,
             "console": "internalConsole"
         },
+        {
+            "name": "Drawing: Native Debug",
+            "request": "launch",
+            "internalConsoleOptions": "openOnSessionStart",
+            "preLaunchTask": "Drawing: Build",
+            "type": "cppdbg",
+            "cwd": "${workspaceFolder}/Source/Samples/DrawingSample/bin/Debug/netcoreapp3.1",
+            "osx": {
+                "program": "/usr/local/share/dotnet/dotnet"
+                "MIMode": "lldb",
+            },
+            "linux": {
+                "MIMode": "gdb",
+                "program": "/usr/bin/dotnet"
+            },
+            "args": ["${workspaceFolder}/Source/Samples/DrawingSample/bin/Debug/netcoreapp3.1/DrawingSample.dll"],
+        },
     ]
 }

@@ -89,7 +89,11 @@ namespace Alternet::UI
     {
         wxCoord x = 0, y = 0;
         auto wxFont = font->GetWxFont();
-        _dc->GetMultiLineTextExtent(wxStr(text), &x, &y, nullptr, &wxFont); // or GetTextExtent for single-line?
+        auto size = wxFont.GetFractionalPointSize();
+        auto oldFont = _dc->GetFont();
+        _dc->SetFont(wxFont); // just passing font as a GetMultiLineTextExtent argument doesn't work on macOS/Linux
+        _dc->GetMultiLineTextExtent(wxStr(text), &x, &y, nullptr, &wxFont);
+        _dc->SetFont(oldFont);
         return toDip(wxSize(x, y), _dc->GetWindow());
     }
 }
