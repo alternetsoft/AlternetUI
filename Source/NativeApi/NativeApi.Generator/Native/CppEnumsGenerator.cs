@@ -3,6 +3,7 @@ using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace ApiGenerator.Native
 {
@@ -26,8 +27,14 @@ namespace ApiGenerator.Native
                     w.WriteLine($"enum class {typeName}");
                     using (new BlockIndent(w, noNewlineAtEnd: true))
                     {
-                        foreach (var name in Enum.GetNames(type))
-                            w.WriteLine(name + ",");
+                        var names = Enum.GetNames(type);
+                        var values = (Enum.GetValues(type) ?? throw new Exception()).Cast<object>().ToArray();
+                        for (int i = 0; i < names.Length; i++)
+                        {
+                            string? name = names[i];
+                            object underlyingValue = Convert.ChangeType(values[i], Enum.GetUnderlyingType(values[i].GetType()));
+                            w.WriteLine(name + " = " + underlyingValue + ",");
+                        }
                     }
                     w.WriteLine(";");
                     w.WriteLine();

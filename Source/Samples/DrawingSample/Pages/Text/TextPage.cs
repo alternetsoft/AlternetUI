@@ -16,6 +16,7 @@ namespace DrawingSample
         private static Color fontInfoColor = Color.Black;
         private Paragraph[]? paragraphs;
         private float fontSize = 10;
+        private Alternet.UI.FontStyle fontStyle;
 
         public override string Name => "Text Lines";
 
@@ -25,7 +26,17 @@ namespace DrawingSample
             set
             {
                 fontSize = value;
-                InvalidatParagraphs();
+                InvalidateParagraphs();
+            }
+        }
+
+        public Alternet.UI.FontStyle FontStyle
+        {
+            get => fontStyle;
+            set
+            {
+                fontStyle = value;
+                InvalidateParagraphs();
             }
         }
 
@@ -54,7 +65,7 @@ namespace DrawingSample
 
         protected override Control CreateSettingsControl() => new TextPageSettings(this);
 
-        private void InvalidatParagraphs()
+        private void InvalidateParagraphs()
         {
             if (paragraphs != null)
             {
@@ -70,7 +81,7 @@ namespace DrawingSample
         {
             Paragraph CreateParagraph(GenericFontFamily genericFamily) =>
                 new Paragraph(
-                    new Font(new FontFamily(genericFamily), FontSize),
+                    new Font(new FontFamily(genericFamily), FontSize, FontStyle),
                     genericFamily.ToString());
 
             yield return CreateParagraph(GenericFontFamily.Serif);

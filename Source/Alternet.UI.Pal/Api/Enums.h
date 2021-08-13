@@ -5,54 +5,54 @@ namespace Alternet::UI
 {
     enum class FontStyle
     {
-        Regular,
-        Bold,
-        Italic,
-        Underlined,
-        Strikethrough,
+        Regular = 0,
+        Bold = 1,
+        Italic = 2,
+        Underlined = 4,
+        Strikethrough = 8,
     };
     
     enum class GenericFontFamily
     {
-        None,
-        SansSerif,
-        Serif,
-        Monospace,
+        None = 0,
+        SansSerif = 1,
+        Serif = 2,
+        Monospace = 3,
     };
     
     enum class ListBoxSelectionMode
     {
-        Single,
-        Multiple,
+        Single = 0,
+        Multiple = 1,
     };
     
     enum class ListViewSelectionMode
     {
-        Single,
-        Multiple,
+        Single = 0,
+        Multiple = 1,
     };
     
     enum class ListViewView
     {
-        List,
-        Details,
-        SmallIcon,
-        LargeIcon,
+        List = 0,
+        Details = 1,
+        SmallIcon = 2,
+        LargeIcon = 3,
     };
     
     enum class TreeViewSelectionMode
     {
-        Single,
-        Multiple,
+        Single = 0,
+        Multiple = 1,
     };
     
     enum class WindowStartPosition
     {
-        SystemDefaultLocation,
-        SystemDefaultBounds,
-        Manual,
-        CenterScreen,
-        CenterOwner,
+        SystemDefaultLocation = 0,
+        SystemDefaultBounds = 1,
+        Manual = 2,
+        CenterScreen = 3,
+        CenterOwner = 4,
     };
     
 }

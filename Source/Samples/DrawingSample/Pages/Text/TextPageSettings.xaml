@@ -3,6 +3,11 @@
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
     <StackPanel Orientation="Vertical">
         <Label Text="Font Size" />
-        <Slider Name="fontSizeSlider" Minimum="5" Maximum="25" Value="10"/>
+        <Slider Name="fontSizeSlider" Minimum="5" Maximum="25" Value="10" Margin="0,0,0,5"/>
+
+        <CheckBox Name="boldCheckBox" Text="Bold" Margin="0,0,0,5"/>
+        <CheckBox Name="italicCheckBox" Text="Italic" Margin="0,0,0,5"/>
+        <CheckBox Name="underlinedCheckBox" Text="Underlined" Margin="0,0,0,5"/>
+        <CheckBox Name="strikethroughCheckBox" Text="Strikethrough" Margin="0,0,0,5"/>
     </StackPanel>
 </Control>

@@ -16,11 +16,24 @@ namespace DrawingSample
             this.page = page;
 
             ((Slider)FindControl("fontSizeSlider")).ValueChanged += FontSizeSlider_ValueChanged;
+
+            ((CheckBox)FindControl("boldCheckBox")).CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Bold, ((CheckBox)o!).IsChecked);
+            ((CheckBox)FindControl("italicCheckBox")).CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Italic, ((CheckBox)o!).IsChecked);
+            ((CheckBox)FindControl("underlinedCheckBox")).CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Underlined, ((CheckBox)o!).IsChecked);
+            ((CheckBox)FindControl("strikethroughCheckBox")).CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Strikethrough, ((CheckBox)o!).IsChecked);
         }
 
         private void FontSizeSlider_ValueChanged(object? sender, EventArgs e)
         {
             page.FontSize = ((Slider)sender!).Value;
+        }
+
+        private void ApplyFontStyle(FontStyle style, bool value)
+        {
+            if (value)
+                page.FontStyle |= style;
+            else
+                page.FontStyle &= ~style;
         }
     }
 }
