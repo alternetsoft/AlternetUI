@@ -10,7 +10,7 @@
         <CheckBox Name="underlinedCheckBox" Text="Underlined" Margin="0,0,0,5"/>
         <CheckBox Name="strikethroughCheckBox" Text="Strikethrough" Margin="0,0,0,5"/>
 
-        <Label Text="Custom Font Family:" Margin="0,5,0,0"/>
+        <Label Text="Custom Font Family:" Margin="0,5,0,5"/>
         <ComboBox Name="customFontFamilyComboBox" IsEditable="false"/>
     </StackPanel>
 </Control>
