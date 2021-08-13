@@ -39,6 +39,9 @@ namespace Alternet::UI
         virtual Color RetrieveForegroundColor();
         virtual void ApplyForegroundColor(const Color& value);
 
+        virtual RectangleF RetrieveBounds();
+        virtual void ApplyBounds(const RectangleF& value);
+
     private:
         enum class DelayedControlFlags
         {
@@ -74,9 +77,6 @@ namespace Alternet::UI
 
         virtual SizeF ClientSizeToSize(const SizeF& clientSize);
         virtual SizeF SizeToClientSize(const SizeF& size);
-
-        RectangleF RetrieveBounds();
-        void ApplyBounds(const RectangleF& value);
 
         bool GetFlag(ControlFlags flag);
         void SetFlag(ControlFlags flag, bool value);

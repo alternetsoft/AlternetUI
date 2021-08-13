@@ -31,9 +31,9 @@ namespace DrawingSample
         {
             var tabPage = new TabPage { Title = page.Name };
             var panel = new StackPanel { Orientation = StackPanelOrientation.Horizontal };
-            page.SettingsControl.Width = 200;
+            page.SettingsControl.Width = 270;
             panel.Children.Add(page.SettingsControl);
-            var canvas = new CanvasControl { Width = 775 };
+            var canvas = new CanvasControl { Width = 705 };
             panel.Children.Add(canvas);
             page.Canvas = canvas;
             tabPage.Children.Add(panel);
