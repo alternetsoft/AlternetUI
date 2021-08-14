@@ -132,6 +132,11 @@ namespace Alternet::UI
 
     /*static*/ bool Font::IsFamilyValid(const string& fontFamily)
     {
+#ifdef __WXOSX_COCOA__
+        if (fontFamily == u".AppleSystemUIFont")
+            return true; // the wx function will return false for this. This is a family name of the macOS system font.
+#endif
+
         return wxFontEnumerator::IsValidFacename(wxStr(fontFamily));
     }
 
