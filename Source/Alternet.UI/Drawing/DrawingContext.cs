@@ -41,18 +41,41 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Draws the specified text string at the specified location.
+        /// Draws the specified text string at the specified location with the specified <see cref="Brush"/> and <see cref="Font"/> objects.
         /// </summary>
-        public void DrawText(string text, PointF origin, Font font, Color color)
+        /// <param name="text">String to draw.</param>
+        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
+        /// <param name="brush"><see cref="Brush"/> that determines the color and texture of the drawn text.</param>
+        /// <param name="origin"><see cref="PointF"/> structure that specifies the upper-left corner of the drawn text.</param>
+        public void DrawText(string text, Font font, Color brush, PointF origin)
         {
-            dc.DrawText(text, origin, font.NativeFont, color);
+            if (text is null)
+                throw new ArgumentNullException(nameof(text));
+
+            if (font is null)
+                throw new ArgumentNullException(nameof(font));
+
+            dc.DrawText(text, origin, font.NativeFont, brush);
         }
 
         /// <summary>
-        /// Measures the specified string.
+        /// Measures the specified string when drawn with the specified <see cref="Font"/>.
         /// </summary>
+        /// <param name="text">String to measure.</param>
+        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
+        /// <returns>
+        /// This method returns a <see cref="SizeF"/> structure that represents the size,
+        /// in device-independent units (1/96th inch per unit), of the
+        /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
+        /// </returns>
         public SizeF MeasureText(string text, Font font)
         {
+            if (text is null)
+                throw new ArgumentNullException(nameof(text));
+
+            if (font is null)
+                throw new ArgumentNullException(nameof(font));
+
             return dc.MeasureText(text, font.NativeFont);
         }
 
