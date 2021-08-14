@@ -56,7 +56,7 @@ namespace HelloWorldSample
         {
             e.DrawingContext.FillRectangle(Handler.ClientRectangle, color);
             e.DrawingContext.DrawRectangle(Handler.ClientRectangle, Color.Gray);
-            e.DrawingContext.DrawText(text, new PointF(10, 10), DefaultFont, Color.Black);
+            e.DrawingContext.DrawText(text, DefaultFont, Color.Black, new PointF(10, 10));
             e.DrawingContext.DrawImage(image, new PointF(0, 10 + e.DrawingContext.MeasureText(text, DefaultFont).Height));
         }
     }

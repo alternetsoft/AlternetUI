@@ -63,10 +63,10 @@ namespace DrawingSample
             float y = 20;
             foreach (var paragraph in paragraphs)
             {
-                dc.DrawText(paragraph.FontInfo, new PointF(x, y), fontInfoFont, fontInfoColor);
+                dc.DrawText(paragraph.FontInfo, fontInfoFont, fontInfoColor, new PointF(x, y));
                 y += dc.MeasureText(paragraph.FontInfo, fontInfoFont).Height + 3;
 
-                dc.DrawText(LoremIpsum, new PointF(20, y), paragraph.Font, color);
+                dc.DrawText(LoremIpsum, paragraph.Font, color, new PointF(20, y));
                 y += dc.MeasureText(LoremIpsum, paragraph.Font).Height + 20;
 
                 var c = new Skybrud.Colors.RgbColor(color.R, color.G, color.B).Lighten(lighten).ToRgb();
