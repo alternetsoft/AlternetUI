@@ -3,15 +3,16 @@
 #pragma once
 
 #include "DrawingContext.h"
+#include "Brush.h"
 #include "Font.h"
 #include "Image.h"
 #include "ApiUtils.h"
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API void DrawingContext_FillRectangle_(DrawingContext* obj, RectangleF rectangle, Color color)
+ALTERNET_UI_API void DrawingContext_FillRectangle_(DrawingContext* obj, RectangleF rectangle, Brush* brush)
 {
-    obj->FillRectangle(rectangle, color);
+    obj->FillRectangle(rectangle, brush);
 }
 
 ALTERNET_UI_API void DrawingContext_DrawRectangle_(DrawingContext* obj, RectangleF rectangle, Color color)
@@ -19,9 +20,9 @@ ALTERNET_UI_API void DrawingContext_DrawRectangle_(DrawingContext* obj, Rectangl
     obj->DrawRectangle(rectangle, color);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_t* text, PointF origin, Font* font, Color color)
+ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_t* text, PointF origin, Font* font, Brush* brush)
 {
-    obj->DrawText(text, origin, font, color);
+    obj->DrawText(text, origin, font, brush);
 }
 
 ALTERNET_UI_API void DrawingContext_DrawImage_(DrawingContext* obj, Image* image, PointF origin)

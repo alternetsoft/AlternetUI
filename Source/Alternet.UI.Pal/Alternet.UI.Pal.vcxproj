@@ -185,6 +185,7 @@
   <ItemGroup>
     <ClCompile Include="Api.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Brush.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CheckBox.cpp" />
     <ClCompile Include="ComboBox.cpp" />
@@ -204,6 +205,7 @@
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="RadioButton.cpp" />
     <ClCompile Include="Slider.cpp" />
+    <ClCompile Include="SolidBrush.cpp" />
     <ClCompile Include="TabControl.cpp" />
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="TreeView.cpp" />
@@ -214,6 +216,7 @@
     <ClInclude Include="ApiUtils.h" />
     <ClInclude Include="ApiTypes.h" />
     <ClInclude Include="Api\Application.Api.h" />
+    <ClInclude Include="Api\Brush.Api.h" />
     <ClInclude Include="Api\Button.Api.h" />
     <ClInclude Include="Api\CheckBox.Api.h" />
     <ClInclude Include="Api\ComboBox.Api.h" />
@@ -237,12 +240,14 @@
     <ClInclude Include="Api\ProgressBar.Api.h" />
     <ClInclude Include="Api\RadioButton.Api.h" />
     <ClInclude Include="Api\Slider.Api.h" />
+    <ClInclude Include="Api\SolidBrush.Api.h" />
     <ClInclude Include="Api\TabControl.Api.h" />
     <ClInclude Include="Api\TabPage.Api.h" />
     <ClInclude Include="Api\TextBox.Api.h" />
     <ClInclude Include="Api\TreeView.Api.h" />
     <ClInclude Include="Api\Window.Api.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Brush.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CheckBox.h" />
     <ClInclude Include="ComboBox.h" />
@@ -264,6 +269,7 @@
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="RadioButton.h" />
     <ClInclude Include="Slider.h" />
+    <ClInclude Include="SolidBrush.h" />
     <ClInclude Include="TabControl.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="TreeView.h" />
@@ -273,6 +279,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Api\Application.inc" />
+    <None Include="Api\Brush.inc" />
     <None Include="Api\Button.inc" />
     <None Include="Api\CheckBox.inc" />
     <None Include="Api\ComboBox.inc" />
@@ -290,6 +297,7 @@
     <None Include="Api\ProgressBar.inc" />
     <None Include="Api\RadioButton.inc" />
     <None Include="Api\Slider.inc" />
+    <None Include="Api\SolidBrush.inc" />
     <None Include="Api\TabControl.inc" />
     <None Include="Api\TabPage.inc" />
     <None Include="Api\TextBox.inc" />

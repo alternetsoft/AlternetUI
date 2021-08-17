@@ -7,14 +7,11 @@ namespace Alternet.UI
     /// </summary>
     /// <remarks>
     /// This is an abstract base class and cannot be instantiated. To create a brush object,
-    /// use classes derived from <see cref="Brush" />, such as <see cref="SolidBrush" />,
-    /// <see cref="TextureBrush" />, and <see cref="LinearGradientBrush" />.
+    /// use classes derived from <see cref="Brush" />, such as <see cref="SolidBrush" /> or <see cref="HatchBrush" />.
     /// </remarks>
     public abstract class Brush : IDisposable, IEquatable<Brush>
     {
         private bool isDisposed;
-
-        private int? hashCode;
 
         internal Brush(Native.Brush nativeBrush)
         {
@@ -60,9 +57,7 @@ namespace Alternet.UI
         public override int GetHashCode()
         {
             CheckDisposed();
-            if (hashCode == null)
-                hashCode = NativeBrush.Serialize().GetHashCode();
-            return hashCode.Value;
+            return GetHashCodeCore();
         }
 
         /// <summary>
@@ -74,7 +69,7 @@ namespace Alternet.UI
                 return false;
 
             CheckDisposed();
-            return NativeBrush.IsEqualTo(other.NativeBrush);
+            return EqualsCore(other);
         }
 
         /// <summary>
@@ -83,7 +78,7 @@ namespace Alternet.UI
         public override string ToString()
         {
             CheckDisposed();
-            return NativeBrush.Description;
+            return ToStringCore();
         }
 
         /// <summary>
@@ -101,6 +96,12 @@ namespace Alternet.UI
 
             return Equals(brush);
         }
+
+        private protected abstract int GetHashCodeCore();
+
+        private protected abstract bool EqualsCore(Brush other);
+
+        private protected abstract string ToStringCore();
 
         /// <summary>
         /// Throws <see cref="ObjectDisposedException"/> if the object has been disposed.

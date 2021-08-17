@@ -1,8 +1,8 @@
 // Auto generated code, DO NOT MODIFY MANUALLY. Copyright AlterNET, 2021.
 public:
-void FillRectangle(const RectangleF& rectangle, const Color& color);
+void FillRectangle(const RectangleF& rectangle, Brush* brush);
 void DrawRectangle(const RectangleF& rectangle, const Color& color);
-void DrawText(const string& text, const PointF& origin, Font* font, const Color& color);
+void DrawText(const string& text, const PointF& origin, Font* font, Brush* brush);
 void DrawImage(Image* image, const PointF& origin);
 SizeF MeasureText(const string& text, Font* font);
 void PushTransform(const SizeF& translation);

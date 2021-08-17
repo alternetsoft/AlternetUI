@@ -4,6 +4,7 @@
 #include "Object.h"
 #include "Image.h"
 #include "Font.h"
+#include "Brush.h"
 
 namespace Alternet::UI
 {
@@ -15,8 +16,16 @@ namespace Alternet::UI
 
     private:
         wxDC* _dc;
+        wxGraphicsContext* _graphicsContext = nullptr;
+
+        wxGraphicsRenderer* _dcRenderer = nullptr;
+        wxGraphicsContext* _dcGraphicsContext = nullptr;
 
         SizeF _translation;
         std::stack<SizeF> _translationStack;
+
+        wxGraphicsBrush GetGraphicsBrush(Brush* brush);
+
+        bool _useDCForText = true;
     };
 }

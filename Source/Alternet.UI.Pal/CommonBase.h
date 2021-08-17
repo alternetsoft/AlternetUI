@@ -38,6 +38,7 @@
 #include <wx/listctrl.h>
 #include <wx/treectrl.h>
 #include <wx/fontenum.h>
+#include <wx/graphics.h>
 
 #define DELELTE_COPY_CONSTRUCTOR(TypeName) \
   TypeName(const TypeName&) = delete

@@ -123,8 +123,8 @@ namespace Alternet.UI
                     borderColor = Color.FromArgb(unchecked((int)0xFF729DD8));
             }
 
-            border.BorderColor = borderColor;
-            border.BackgroundColor = backgroundColor;
+            border.BorderBrush = new SolidBrush(borderColor);
+            border.Background = new SolidBrush(backgroundColor);
         }
 
         private void Control_TextChanged(object? sender, System.EventArgs? e)

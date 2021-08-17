@@ -1,4 +1,6 @@
 #include "Api/Application.Api.h"
+#include "Api/Brush.Api.h"
+#include "Api/SolidBrush.Api.h"
 #include "Api/Button.Api.h"
 #include "Api/CheckBox.Api.h"
 #include "Api/ComboBox.Api.h"

@@ -1,14 +1,17 @@
 #include "DrawingContext.h"
+#include "SolidBrush.h"
 
 namespace Alternet::UI
 {
     DrawingContext::DrawingContext(wxDC* dc) : _dc(dc)
     {
         assert(_dc);
+        _graphicsContext = wxGraphicsContext::CreateFromUnknownDC(*_dc);
     }
 
     DrawingContext::~DrawingContext()
     {
+        wxDELETE(_graphicsContext);
         wxDELETE(_dc);
     }
 
@@ -30,21 +33,13 @@ namespace Alternet::UI
         _translationStack.pop();
     }
 
-    void DrawingContext::FillRectangle(const RectangleF& rectangle, const Color& color)
+    void DrawingContext::FillRectangle(const RectangleF& rectangle, Brush* brush)
     {
-        if (color.A == 0)
-            return;
+        _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
+        _graphicsContext->SetBrush(GetGraphicsBrush(brush));
 
-        auto oldPen = _dc->GetPen();
-        auto oldBrush = _dc->GetBrush();
-
-        _dc->SetPen(*wxTRANSPARENT_PEN);
-        _dc->SetBrush(wxBrush(color));
-
-        _dc->DrawRectangle(fromDip(rectangle.Offset(_translation), _dc->GetWindow()));
-
-        _dc->SetPen(oldPen);
-        _dc->SetBrush(oldBrush);
+        auto rect = fromDip(rectangle.Offset(_translation), _dc->GetWindow());
+        _graphicsContext->DrawRectangle(rect.x, rect.y, rect.width, rect.height);
     }
 
     void DrawingContext::DrawRectangle(const RectangleF& rectangle, const Color& color)
@@ -74,26 +69,56 @@ namespace Alternet::UI
         _dc->SetBrush(oldBrush);
     }
 
-    void DrawingContext::DrawText(const string& text, const PointF& origin, Font* font, const Color& color)
+    void DrawingContext::DrawText(const string& text, const PointF& origin, Font* font, Brush* brush)
     {
-        auto oldTextForeground = _dc->GetTextForeground();
-        auto oldFont = _dc->GetFont();
-        _dc->SetTextForeground(color);
-        _dc->SetFont(font->GetWxFont());
-        _dc->DrawText(wxStr(text), fromDip(origin + _translation, _dc->GetWindow()));
-        _dc->SetTextForeground(oldTextForeground);
-        _dc->SetFont(oldFont);
+        if (_useDCForText)
+        {
+            auto solidBrush = dynamic_cast<SolidBrush*>(brush);
+            if (solidBrush == nullptr)
+            {
+                wxASSERT(false);
+                throw 0;
+            }
+
+            auto oldTextForeground = _dc->GetTextForeground();
+            auto oldFont = _dc->GetFont();
+            _dc->SetTextForeground(solidBrush->GetWxBrush().GetColour());
+            _dc->SetFont(font->GetWxFont());
+            _dc->DrawText(wxStr(text), fromDip(origin + _translation, _dc->GetWindow()));
+            _dc->SetTextForeground(oldTextForeground);
+            _dc->SetFont(oldFont);
+        }
+        else
+        {
+            auto o = fromDipF(origin + _translation, _dc->GetWindow());
+            _graphicsContext->SetFont(_graphicsContext->CreateFont(font->GetWxFont()));
+            _graphicsContext->SetBrush(GetGraphicsBrush(brush));
+            _graphicsContext->DrawText(wxStr(text), o.X, o.Y);
+        }
+    }
+
+    wxGraphicsBrush DrawingContext::GetGraphicsBrush(Brush* brush)
+    {
+        return brush->GetGraphicsBrush(_graphicsContext->GetRenderer());
     }
 
     SizeF DrawingContext::MeasureText(const string& text, Font* font)
     {
-        wxCoord x = 0, y = 0;
-        auto wxFont = font->GetWxFont();
-        auto size = wxFont.GetFractionalPointSize();
-        auto oldFont = _dc->GetFont();
-        _dc->SetFont(wxFont); // just passing font as a GetMultiLineTextExtent argument doesn't work on macOS/Linux
-        _dc->GetMultiLineTextExtent(wxStr(text), &x, &y, nullptr, &wxFont);
-        _dc->SetFont(oldFont);
-        return toDip(wxSize(x, y), _dc->GetWindow());
+        if (_useDCForText)
+        {
+            wxCoord x = 0, y = 0;
+            auto wxFont = font->GetWxFont();
+            auto oldFont = _dc->GetFont();
+            _dc->SetFont(wxFont); // just passing font as a GetMultiLineTextExtent argument doesn't work on macOS/Linux
+            _dc->GetMultiLineTextExtent(wxStr(text), &x, &y, nullptr, &wxFont);
+            _dc->SetFont(oldFont);
+            return toDip(wxSize(x, y), _dc->GetWindow());
+        }
+        else
+        {
+            // todo
+            wxASSERT(false);
+            throw 0;
+        }
     }
 }

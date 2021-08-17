@@ -19,9 +19,9 @@ namespace Alternet.UI
         /// <summary>
         /// Fills the interior of a rectangle specified by a <see cref="RectangleF"/> structure.
         /// </summary>
-        public void FillRectangle(RectangleF rectangle, Color color)
+        public void FillRectangle(RectangleF rectangle, Brush brush)
         {
-            dc.FillRectangle(rectangle, color);
+            dc.FillRectangle(rectangle, brush.NativeBrush);
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Alternet.UI
         /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
         /// <param name="brush"><see cref="Brush"/> that determines the color and texture of the drawn text.</param>
         /// <param name="origin"><see cref="PointF"/> structure that specifies the upper-left corner of the drawn text.</param>
-        public void DrawText(string text, Font font, Color brush, PointF origin)
+        public void DrawText(string text, Font font, Brush brush, PointF origin)
         {
             if (text is null)
                 throw new ArgumentNullException(nameof(text));
@@ -55,7 +55,7 @@ namespace Alternet.UI
             if (font is null)
                 throw new ArgumentNullException(nameof(font));
 
-            dc.DrawText(text, origin, font.NativeFont, brush);
+            dc.DrawText(text, origin, font.NativeFont, brush.NativeBrush);
         }
 
         /// <summary>

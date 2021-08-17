@@ -16,10 +16,10 @@ namespace Alternet.UI.Native
         {
         }
         
-        public void FillRectangle(System.Drawing.RectangleF rectangle, System.Drawing.Color color)
+        public void FillRectangle(System.Drawing.RectangleF rectangle, Brush brush)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_FillRectangle_(NativePointer, rectangle, color);
+            NativeApi.DrawingContext_FillRectangle_(NativePointer, rectangle, brush.NativePointer);
         }
         
         public void DrawRectangle(System.Drawing.RectangleF rectangle, System.Drawing.Color color)
@@ -28,10 +28,10 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DrawRectangle_(NativePointer, rectangle, color);
         }
         
-        public void DrawText(string text, System.Drawing.PointF origin, Font font, System.Drawing.Color color)
+        public void DrawText(string text, System.Drawing.PointF origin, Font font, Brush brush)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_DrawText_(NativePointer, text, origin, font.NativePointer, color);
+            NativeApi.DrawingContext_DrawText_(NativePointer, text, origin, font.NativePointer, brush.NativePointer);
         }
         
         public void DrawImage(Image image, System.Drawing.PointF origin)
@@ -65,13 +65,13 @@ namespace Alternet.UI.Native
             static NativeApi() => Initialize();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_FillRectangle_(IntPtr obj, NativeApiTypes.RectangleF rectangle, NativeApiTypes.Color color);
+            public static extern void DrawingContext_FillRectangle_(IntPtr obj, NativeApiTypes.RectangleF rectangle, IntPtr brush);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawRectangle_(IntPtr obj, NativeApiTypes.RectangleF rectangle, NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawText_(IntPtr obj, string text, NativeApiTypes.PointF origin, IntPtr font, NativeApiTypes.Color color);
+            public static extern void DrawingContext_DrawText_(IntPtr obj, string text, NativeApiTypes.PointF origin, IntPtr font, IntPtr brush);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawImage_(IntPtr obj, IntPtr image, NativeApiTypes.PointF origin);

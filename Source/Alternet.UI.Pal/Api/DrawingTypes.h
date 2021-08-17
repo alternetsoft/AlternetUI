@@ -247,6 +247,14 @@ namespace Alternet::UI
         return wxRound(value * GetDPIScaleFactor(window));
     }
 
+    inline double fromDipF(float value, wxWindow* window)
+    {
+        if (window == nullptr)
+            window = ParkingWindow::GetWindow();
+
+        return value * GetDPIScaleFactor(window);
+    }
+
     inline float toDip(int value, wxWindow* window)
     {
         if (window == nullptr)
@@ -265,6 +273,18 @@ namespace Alternet::UI
             fromDip(value.Y, window),
             fromDip(value.Width, window),
             fromDip(value.Height, window));
+    };
+
+    inline RectangleF fromDipF(const RectangleF& value, wxWindow* window)
+    {
+        if (window == nullptr)
+            window = ParkingWindow::GetWindow();
+
+        return RectangleF(
+            fromDipF(value.X, window),
+            fromDipF(value.Y, window),
+            fromDipF(value.Width, window),
+            fromDipF(value.Height, window));
     };
 
     inline RectangleF toDip(const wxRect& value, wxWindow* window)
@@ -287,6 +307,16 @@ namespace Alternet::UI
         return wxSize(
             fromDip(value.Width, window),
             fromDip(value.Height, window));
+    };
+
+    inline SizeF fromDipF(const SizeF& value, wxWindow* window)
+    {
+        if (window == nullptr)
+            window = ParkingWindow::GetWindow();
+
+        return SizeF(
+            fromDipF(value.Width, window),
+            fromDipF(value.Height, window));
     };
 
     inline SizeF toDip(const wxSize& value, wxWindow* window)
@@ -319,6 +349,16 @@ namespace Alternet::UI
         return wxPoint(
             fromDip(value.X, window),
             fromDip(value.Y, window));
+    };
+
+    inline PointF fromDipF(const PointF& value, wxWindow* window)
+    {
+        if (window == nullptr)
+            window = ParkingWindow::GetWindow();
+
+        return PointF(
+            fromDipF(value.X, window),
+            fromDipF(value.Y, window));
     };
 
     inline PointF toDip(const wxPoint& value, wxWindow* window)

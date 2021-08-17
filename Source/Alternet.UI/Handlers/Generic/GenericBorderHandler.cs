@@ -8,11 +8,11 @@ namespace Alternet.UI
 
         public override void OnPaint(DrawingContext drawingContext)
         {
-            if (Control.BackgroundColor != null)
-                drawingContext.FillRectangle(ClientRectangle, Control.BackgroundColor.Value);
+            if (Control.Background != null)
+                drawingContext.FillRectangle(ClientRectangle, Control.Background);
             
-            if (Control.BorderColor != null)
-                drawingContext.DrawRectangle(ClientRectangle, Control.BorderColor.Value);
+            if (Control.BorderBrush != null)
+                drawingContext.DrawRectangle(ClientRectangle, ((SolidBrush)Control.BorderBrush).Color);
         }
 
         public override SizeF GetPreferredSize(SizeF availableSize)

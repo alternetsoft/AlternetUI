@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Brush = Alternet.UI.Brush;
+using Brushes = Alternet.UI.Brushes;
 using Font = Alternet.UI.Font;
 using FontFamily = Alternet.UI.FontFamily;
+using SolidBrush = Alternet.UI.SolidBrush;
 
 namespace DrawingSample
 {
@@ -13,7 +16,7 @@ namespace DrawingSample
         private const string LoremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nSuspendisse tincidunt orci vitae arcu congue commodo.\nProin fermentum rhoncus dictum.";
 
         private static Font fontInfoFont = new Alternet.UI.Font(FontFamily.GenericMonospace, 8);
-        private static Color fontInfoColor = Color.Black;
+        private static Brush fontInfoBrush = Brushes.Black;
         private Paragraph[]? paragraphs;
         private float fontSize = 10;
         private Alternet.UI.FontStyle fontStyle;
@@ -63,10 +66,10 @@ namespace DrawingSample
             float y = 20;
             foreach (var paragraph in paragraphs)
             {
-                dc.DrawText(paragraph.FontInfo, fontInfoFont, fontInfoColor, new PointF(x, y));
+                dc.DrawText(paragraph.FontInfo, fontInfoFont, fontInfoBrush, new PointF(x, y));
                 y += dc.MeasureText(paragraph.FontInfo, fontInfoFont).Height + 3;
 
-                dc.DrawText(LoremIpsum, paragraph.Font, color, new PointF(20, y));
+                dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new PointF(20, y));
                 y += dc.MeasureText(LoremIpsum, paragraph.Font).Height + 20;
 
                 var c = new Skybrud.Colors.RgbColor(color.R, color.G, color.B).Lighten(lighten).ToRgb();

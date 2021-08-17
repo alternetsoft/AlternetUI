@@ -1,6 +1,9 @@
 ﻿using Alternet.UI;
 using System;
 using System.Drawing;
+using Brush = Alternet.UI.Brush;
+using Brushes = Alternet.UI.Brushes;
+using SolidBrush = Alternet.UI.SolidBrush;
 
 namespace HelloWorldSample
 {
@@ -12,7 +15,7 @@ namespace HelloWorldSample
 
         private Label[]? lines;
 
-        private Color color = Color.LightGreen;
+        private Brush brush = Brushes.LightGreen;
 
         public string Text
         {
@@ -25,13 +28,13 @@ namespace HelloWorldSample
             }
         }
 
-        public Color Color
+        public Brush Brush
         {
-            get => color;
+            get => brush;
 
             set
             {
-                color = value;
+                brush = value;
                 UpdateVisual();
             }
         }
@@ -42,8 +45,8 @@ namespace HelloWorldSample
 
             border = new Border
             {
-                BackgroundColor = Color.FromArgb(unchecked((int)0xFF333333)),
-                BorderColor = Color.FromArgb(unchecked((int)0xFF4A47FF))
+                Background = new SolidBrush(Color.FromArgb(unchecked((int)0xFF333333))),
+                BorderBrush = new SolidBrush(Color.FromArgb(unchecked((int)0xFF4A47FF)))
             };
             Handler.VisualChildren.Add(border);
 
@@ -54,7 +57,7 @@ namespace HelloWorldSample
             };
             border.Handler.VisualChildren.Add(panel);
 
-            panel.Handler.VisualChildren.Add(new Label { Text = "Composite Control", ForegroundColor = Color.White });
+            panel.Handler.VisualChildren.Add(new Label { Text = "Composite Control", Foreground = Brushes.White });
 
             lines = new Label[10];
             for (int i = 0; i < lines.Length; i++)
@@ -76,6 +79,7 @@ namespace HelloWorldSample
 
         private void UpdateVisual()
         {
+            var color = ((SolidBrush)brush).Color;
             var cl = new Skybrud.Colors.RgbColor(color.R, color.G, color.B);
             float darken = 50;
             for (int i = 0; i < lines!.Length; i++)
@@ -84,7 +88,7 @@ namespace HelloWorldSample
                 textBlock.Text = $"{Text} {i}";
                 
                 var c = cl.Darken(darken).ToRgb();
-                textBlock.ForegroundColor = Color.FromArgb(c.R, c.G, c.B);
+                textBlock.Foreground = new SolidBrush(Color.FromArgb(c.R, c.G, c.B));
                 darken -= 5f;
             }
         }

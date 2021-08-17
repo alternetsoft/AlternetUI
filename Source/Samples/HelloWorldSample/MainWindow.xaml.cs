@@ -2,6 +2,8 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using Brush = Alternet.UI.Brush;
+using Brushes = Alternet.UI.Brushes;
 
 namespace HelloWorldSample
 {
@@ -75,20 +77,20 @@ namespace HelloWorldSample
 
         private void BlueButton_Click(object? sender, EventArgs e)
         {
-            SetColor(Color.Pink);
+            SetBrush(Brushes.Pink);
         }
 
         private void GreenButton_Click(object? sender, EventArgs e)
         {
-            SetColor(Color.LightGreen);
+            SetBrush(Brushes.LightGreen);
         }
 
         private void RedButton_Click(object? sender, EventArgs e)
         {
-            SetColor(Color.LightBlue);
+            SetBrush(Brushes.LightBlue);
         }
 
-        private void SetColor(Color c) => customDrawnControl!.Color = customCompositeControl!.Color = c;
+        private void SetBrush(Brush b) => customDrawnControl!.Brush = customCompositeControl!.Brush = b;
 
         private void TextBox_TextChanged(object? sender, EventArgs e)
         {

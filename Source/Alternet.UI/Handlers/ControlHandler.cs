@@ -445,10 +445,10 @@ namespace Alternet.UI
 
             Control.MarginChanged += Control_MarginChanged;
             Control.PaddingChanged += Control_PaddingChanged;
-            Control.BackgroundColorChanged += Control_BackgroundColorChanged;
-            Control.ForegroundColorChanged += Control_ForegroundColorChanged;
+            Control.BackgroundChanged += Control_BackgroundChanged;
+            Control.ForegroundChanged += Control_ForegroundChanged;
             Control.FontChanged += Control_FontChanged;
-            Control.BorderColorChanged += Control_BorderColorChanged;
+            Control.BorderBrushChanged += Control_BorderBrushChanged;
             Control.VisibleChanged += Control_VisibleChanged;
             Control.VerticalAlignmentChanged += Control_VerticalAlignmentChanged;
             Control.HorizontalAlignmentChanged += Control_HorizontalAlignmentChanged;
@@ -473,10 +473,10 @@ namespace Alternet.UI
             // todo: consider clearing the native control's children.
             Control.MarginChanged -= Control_MarginChanged;
             Control.PaddingChanged -= Control_PaddingChanged;
-            Control.BackgroundColorChanged -= Control_BackgroundColorChanged;
-            Control.ForegroundColorChanged -= Control_ForegroundColorChanged;
+            Control.BackgroundChanged -= Control_BackgroundChanged;
+            Control.ForegroundChanged -= Control_ForegroundChanged;
             Control.FontChanged -= Control_FontChanged;
-            Control.BorderColorChanged -= Control_BorderColorChanged;
+            Control.BorderBrushChanged -= Control_BorderBrushChanged;
             Control.VisibleChanged -= Control_VisibleChanged;
             Control.VerticalAlignmentChanged -= Control_VerticalAlignmentChanged;
             Control.HorizontalAlignmentChanged -= Control_HorizontalAlignmentChanged;
@@ -617,17 +617,17 @@ namespace Alternet.UI
             }
         }
 
-        private void Control_BorderColorChanged(object? sender, EventArgs? e)
+        private void Control_BorderBrushChanged(object? sender, EventArgs? e)
         {
             ApplyBorderColor();
         }
 
-        private void Control_BackgroundColorChanged(object? sender, EventArgs? e)
+        private void Control_BackgroundChanged(object? sender, EventArgs? e)
         {
             ApplyBackgroundColor();
         }
 
-        private void Control_ForegroundColorChanged(object? sender, EventArgs? e)
+        private void Control_ForegroundChanged(object? sender, EventArgs? e)
         {
             ApplyForegroundColor();
         }
@@ -637,10 +637,19 @@ namespace Alternet.UI
             ApplyVisible();
         }
 
+        private Color GetBrushColor(Brush? brush)
+        {
+            var solidBrush = brush as SolidBrush;
+            if (solidBrush == null)
+                return Color.Empty;
+
+            return solidBrush.Color;
+        }
+
         private void ApplyBackgroundColor()
         {
             if (NativeControl != null)
-                NativeControl.BackgroundColor = Control.BackgroundColor ?? Color.Empty;
+                NativeControl.BackgroundColor = GetBrushColor(Control.Background);
             Update();
         }
 
@@ -653,7 +662,7 @@ namespace Alternet.UI
         private void ApplyForegroundColor()
         {
             if (NativeControl != null)
-                NativeControl.ForegroundColor = Control.ForegroundColor ?? Color.Empty;
+                NativeControl.ForegroundColor = GetBrushColor(Control.Foreground);
             Update();
         }
 
@@ -668,7 +677,7 @@ namespace Alternet.UI
         private void ApplyBorderColor()
         {
             //if (NativeControl != null)
-            //    NativeControl.BackgroundColor = Control.BackgroundColor ?? Color.Empty;
+            //    NativeControl.BorderColor = GetBrushColor(Control.BorderBrush);
             Update();
         }
 

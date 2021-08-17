@@ -18,12 +18,12 @@ namespace Alternet.UI
             border = new Border
             {
                 Padding = new Thickness(5),
-                BackgroundColor = Color.White
+                Background = Brushes.White
             };
 
             VisualChildren.Add(border);
 
-            editTextBox = new TextBox { EditControlOnly = true, BackgroundColor = Color.White };
+            editTextBox = new TextBox { EditControlOnly = true, Background = Brushes.White };
             border.Handler.VisualChildren.Add(editTextBox);
 
             editTextBox.Text = Control.Text;
@@ -85,7 +85,7 @@ namespace Alternet.UI
                 color = Color.FromArgb(unchecked((int)0xFF5C7FB2));
             }
 
-            border.BorderColor = color;
+            border.BorderBrush = new SolidBrush(color);
         }
 
         private void Control_TextChanged(object? sender, System.EventArgs? e)

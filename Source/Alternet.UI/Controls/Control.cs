@@ -17,10 +17,10 @@ namespace Alternet.UI
         private Thickness margin;
         private Thickness padding;
         private ControlHandler? handler;
-        private Color? backgroundColor;
-        private Color? foregroundColor;
+        private Brush? background;
+        private Brush? foreground;
         private Font? font;
-        private Color? borderColor;
+        private Brush? borderBrush;
         private VerticalAlignment verticalAlignment = VerticalAlignment.Stretch;
         private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Stretch;
 
@@ -41,9 +41,9 @@ namespace Alternet.UI
         public event EventHandler? Click;
 
         /// <summary>
-        /// Occurs when the value of the <see cref="BorderColor"/> property changes.
+        /// Occurs when the value of the <see cref="BorderBrush"/> property changes.
         /// </summary>
-        public event EventHandler? BorderColorChanged;
+        public event EventHandler? BorderBrushChanged;
 
         /// <summary>
         /// Occurs when the control is redrawn.
@@ -69,14 +69,14 @@ namespace Alternet.UI
         public event EventHandler? VisibleChanged;
 
         /// <summary>
-        /// Occurs when the value of the <see cref="BackgroundColor"/> property changes.
+        /// Occurs when the value of the <see cref="Background"/> property changes.
         /// </summary>
-        public event EventHandler? BackgroundColorChanged;
+        public event EventHandler? BackgroundChanged;
 
         /// <summary>
-        /// Occurs when the value of the <see cref="ForegroundColor"/> property changes.
+        /// Occurs when the value of the <see cref="Foreground"/> property changes.
         /// </summary>
-        public event EventHandler? ForegroundColorChanged;
+        public event EventHandler? ForegroundChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Font"/> property changes.
@@ -140,18 +140,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the border color of the control.
+        /// Gets or sets the border brush of the control.
         /// </summary>
-        public Color? BorderColor // todo: change to brush?. Do we need border property for all the controls at all?
+        public Brush? BorderBrush // todo: Do we need border property for all the controls at all?
         {
-            get => borderColor;
+            get => borderBrush;
             set
             {
-                if (borderColor == value)
+                if (borderBrush == value)
                     return;
 
-                borderColor = value;
-                BorderColorChanged?.Invoke(this, EventArgs.Empty);
+                borderBrush = value;
+                BorderBrushChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -318,36 +318,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the background color for the control.
+        /// Gets or sets the background brush for the control.
         /// </summary>
-        public Color? BackgroundColor
+        public Brush? Background
         {
-            // todo: change to brush?
-            get => backgroundColor;
+            get => background;
             set
             {
-                if (backgroundColor == value)
+                if (background == value)
                     return;
 
-                backgroundColor = value;
-                BackgroundColorChanged?.Invoke(this, EventArgs.Empty);
+                background = value;
+                BackgroundChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
         /// <summary>
-        /// Gets or sets the foreground color for the control.
+        /// Gets or sets the foreground brush for the control.
         /// </summary>
-        public Color? ForegroundColor
+        public Brush? Foreground
         {
-            // todo: change to brush?
-            get => foregroundColor;
+            get => foreground;
             set
             {
-                if (foregroundColor == value)
+                if (foreground == value)
                     return;
 
-                foregroundColor = value;
-                ForegroundColorChanged?.Invoke(this, EventArgs.Empty);
+                foreground = value;
+                ForegroundChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
