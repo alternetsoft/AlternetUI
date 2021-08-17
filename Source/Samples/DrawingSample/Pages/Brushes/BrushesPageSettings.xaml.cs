@@ -27,7 +27,7 @@ namespace DrawingSample
 
         private void BrushColorHueSlider_ValueChanged(object? sender, EventArgs e)
         {
-            page.BrushColorHue = ((Slider)sender!).Value / 255.0;
+            page.BrushColorHue = ((Slider)sender!).Value / 10.0;
         }
 
         private void ShapeCountSlider_ValueChanged(object? sender, EventArgs e)
