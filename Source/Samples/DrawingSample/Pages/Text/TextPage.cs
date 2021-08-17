@@ -22,7 +22,7 @@ namespace DrawingSample
         private Alternet.UI.FontStyle fontStyle;
         private string customFontFamilyName = Control.DefaultFont.FontFamily.Name;
 
-        public override string Name => "Text Lines";
+        public override string Name => "Text";
 
         public float FontSize
         {

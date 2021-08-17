@@ -1,0 +1,16 @@
+﻿<Control xmlns="http://schemas.alternetsoft.com/ui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
+    <StackPanel Orientation="Vertical" Margin="5">
+        <Label Text="Shape Count:" />
+        <Slider Name="shapeCountSlider" Minimum="5" Maximum="100" Value="10" Margin="0,0,0,10"/>
+
+        <CheckBox Name="rectanglesCheckBox" Text="Rectangles" Margin="0,0,0,5"/>
+
+        <Label Text="Brush:" Margin="0,5,0,5"/>
+        <ComboBox Name="brushComboBox" IsEditable="false"/>
+
+        <Label Text="Brush Color:" Margin="0,5,0,5"/>
+        <Slider Name="brushColorHueSlider" Minimum="0" Maximum="255" Value="0" Margin="0,0,0,10"/>
+    </StackPanel>
+</Control>
