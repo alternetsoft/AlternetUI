@@ -6,6 +6,7 @@ namespace DrawingSample
     internal class BrushesPageSettings : Control
     {
         private readonly BrushesPage page;
+        private ComboBox brushComboBox;
 
         public BrushesPageSettings(BrushesPage page)
         {
@@ -20,9 +21,17 @@ namespace DrawingSample
 
             ((CheckBox)FindControl("rectanglesCheckBox")).CheckedChanged += (o, e) => ApplyIncludedShape(BrushesPage.Shapes.Rectangles, ((CheckBox)o!).IsChecked);
 
-            var brushComboBox = (ComboBox)FindControl("brushComboBox");
+            brushComboBox = (ComboBox)FindControl("brushComboBox");
             foreach (var brushType in Enum.GetValues(typeof(BrushesPage.BrushType)))
                 brushComboBox.Items.Add(brushType!);
+            brushComboBox.SelectedIndex = 0;
+
+            brushComboBox.SelectedItemChanged += BrushComboBox_SelectedItemChanged;
+        }
+
+        private void BrushComboBox_SelectedItemChanged(object? sender, EventArgs e)
+        {
+            page.Brush = (BrushesPage.BrushType)brushComboBox.SelectedItem!;
         }
 
         private void BrushColorHueSlider_ValueChanged(object? sender, EventArgs e)

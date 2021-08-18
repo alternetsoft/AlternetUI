@@ -17,7 +17,8 @@ namespace DrawingSample
 
         public enum BrushType
         {
-            Solid
+            Solid,
+            Hatch
         }
 
         BrushType brush;
@@ -87,8 +88,19 @@ namespace DrawingSample
 
             if (fillBrush == null)
             {
-                var c = new Skybrud.Colors.HslColor(brushColorHue, 1, 0.9).ToRgb();
-                fillBrush = new SolidBrush(Color.FromArgb(c.R, c.G, c.B));
+                var c = new Skybrud.Colors.HslColor(brushColorHue, 1, 0.3).ToRgb();
+
+                switch (brush)
+                {
+                    case BrushType.Solid:
+                        fillBrush = new SolidBrush(Color.FromArgb(c.R, c.G, c.B));
+                        break;
+                    case BrushType.Hatch:
+                        fillBrush = new HatchBrush(BrushHatchStyle.DiagonalCross, Color.FromArgb(c.R, c.G, c.B));
+                        break;
+                    default:
+                        throw new Exception();
+                }
             }
 
             var b = Canvas.Handler.ClientRectangle;

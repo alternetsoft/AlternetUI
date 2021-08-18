@@ -3,6 +3,16 @@
 
 namespace Alternet::UI
 {
+    enum class BrushHatchStyle
+    {
+        BackwardDiagonal = 0,
+        ForwardDiagonal = 1,
+        DiagonalCross = 2,
+        Cross = 3,
+        Horizontal = 4,
+        Vertical = 5,
+    };
+    
     enum class FontStyle
     {
         Regular = 0,

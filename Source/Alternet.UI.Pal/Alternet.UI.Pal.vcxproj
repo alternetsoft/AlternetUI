@@ -193,6 +193,7 @@
     <ClCompile Include="DrawingContext.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="GroupBox.cpp" />
+    <ClCompile Include="HatchBrush.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageList.cpp" />
     <ClCompile Include="ListBox.cpp" />
@@ -258,6 +259,7 @@
     <ClInclude Include="DrawingContext.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GroupBox.h" />
+    <ClInclude Include="HatchBrush.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageList.h" />
     <ClInclude Include="ListBox.h" />

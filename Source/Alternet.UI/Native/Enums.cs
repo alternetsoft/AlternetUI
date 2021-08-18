@@ -2,6 +2,16 @@
 
 namespace Alternet.UI.Native
 {
+    enum BrushHatchStyle
+    {
+        BackwardDiagonal,
+        ForwardDiagonal,
+        DiagonalCross,
+        Cross,
+        Horizontal,
+        Vertical,
+    }
+    
     enum FontStyle
     {
         Regular,

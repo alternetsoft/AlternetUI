@@ -19,6 +19,7 @@ namespace Alternet::UI
     {
         return renderer->CreateBrush(_brush);
     }
+
     wxBrush SolidBrush::GetWxBrush()
     {
         return _brush;
