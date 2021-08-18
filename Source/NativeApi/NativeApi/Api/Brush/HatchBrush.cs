@@ -5,6 +5,6 @@ namespace NativeApi.Api
 {
     public class HatchBrush : Brush
     {
-        public void Initialize(BrushHatchStyle style, Color foregroundColor, Color backgroundColor) => throw new Exception();
+        public void Initialize(BrushHatchStyle style, Color color) => throw new Exception();
     }
 }

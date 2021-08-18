@@ -17,10 +17,10 @@ namespace Alternet.UI.Native
         {
         }
         
-        public void Initialize(BrushHatchStyle style, System.Drawing.Color foregroundColor, System.Drawing.Color backgroundColor)
+        public void Initialize(BrushHatchStyle style, System.Drawing.Color color)
         {
             CheckDisposed();
-            NativeApi.HatchBrush_Initialize_(NativePointer, style, foregroundColor, backgroundColor);
+            NativeApi.HatchBrush_Initialize_(NativePointer, style, color);
         }
         
         
@@ -33,7 +33,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr HatchBrush_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void HatchBrush_Initialize_(IntPtr obj, BrushHatchStyle style, NativeApiTypes.Color foregroundColor, NativeApiTypes.Color backgroundColor);
+            public static extern void HatchBrush_Initialize_(IntPtr obj, BrushHatchStyle style, NativeApiTypes.Color color);
             
         }
     }

@@ -4,53 +4,33 @@ using System.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines a rectangular brush with a hatch style, a foreground color, and a background color.
+    /// Defines a brush with a hatch style and a color.
     /// </summary>
     /// <remarks>
-    /// A hatch pattern is made from two colors: one defined by the <see cref="BackgroundColor"/>, which fills the background and
-    /// one for the lines that form the pattern over the background defined by the <see cref="ForegroundColor"/> property.
+    /// A hatch pattern is made from the lines of a color defined by the <see cref="Color"/> property.
     /// The <see cref="HatchStyle"/> property defines what type of pattern the brush has and can be any value from the <see cref="BrushHatchStyle"/> enumeration.
     /// </remarks>
     public sealed class HatchBrush : Brush
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HatchBrush"/> class with the specified
-        /// <see cref="BrushHatchStyle"/> enumeration, foreground color, and background color.
+        /// <see cref="BrushHatchStyle"/> enumeration, and the color.
         /// </summary>
         /// <param name="hatchStyle">One of the <see cref="BrushHatchStyle"/> values that represents the pattern drawn by this <see cref="HatchBrush"/>.</param>
-        /// <param name="foregroundColor">The <see cref="Color"/> structure that represents the color of lines drawn by this <see cref="HatchBrush"/>.</param>
-        /// <param name="backgroundColor">The <see cref="Color"/> structure that represents the color of spaces between the lines drawn by this <see cref="HatchBrush"/>.</param>
-        public HatchBrush(BrushHatchStyle hatchStyle, Color foregroundColor, Color backgroundColor) : base(new Native.HatchBrush())
+        /// <param name="color">The <see cref="System.Drawing.Color"/> structure that represents the color of lines drawn by this <see cref="HatchBrush"/>.</param>
+        public HatchBrush(BrushHatchStyle hatchStyle, Color color) : base(new Native.HatchBrush())
         {
             HatchStyle = hatchStyle;
-            ForegroundColor = foregroundColor;
-            BackgroundColor = backgroundColor;
+            Color = color;
 
-            ((Native.HatchBrush)NativeBrush).Initialize((Native.BrushHatchStyle)hatchStyle, foregroundColor, backgroundColor);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HatchBrush"/> class with the specified
-        /// <see cref="BrushHatchStyle"/> enumeration and foreground color.
-        /// </summary>
-        /// <param name="hatchStyle">One of the <see cref="BrushHatchStyle"/> values that represents the pattern drawn by this <see cref="HatchBrush"/>.</param>
-        /// <param name="foregroundColor">The <see cref="Color"/> structure that represents the color of lines drawn by this <see cref="HatchBrush"/>.</param>
-        /// <remarks>The background color is initialized to transparent.</remarks>
-        public HatchBrush(BrushHatchStyle hatchStyle, Color foregroundColor) : this(hatchStyle, foregroundColor, Color.Transparent)
-        {
+            ((Native.HatchBrush)NativeBrush).Initialize((Native.BrushHatchStyle)hatchStyle, color);
         }
 
         /// <summary>
         /// Gets the color of hatch lines drawn by this <see cref="HatchBrush"/> object.
         /// </summary>
-        /// <value>A <see cref="Color"/> structure that represents the foreground color for this <see cref="HatchBrush"/>.</value>
-        public Color ForegroundColor { get; }
-
-        /// <summary>
-        /// Gets the color of spaces between the hatch lines drawn by this <see cref="HatchBrush"/> object.
-        /// </summary>
-        /// <value>A <see cref="Color"/> structure that represents the background color for this <see cref="HatchBrush"/>.</value>
-        public Color BackgroundColor { get; }
+        /// <value>A <see cref="System.Drawing.Color"/> structure that represents the color for this <see cref="HatchBrush"/>.</value>
+        public Color Color { get; }
 
         /// <summary>
         /// Gets the hatch style of this <see cref="HatchBrush"/> object.
@@ -64,11 +44,11 @@ namespace Alternet.UI
             if (o == null)
                 return false;
             
-            return ForegroundColor == o.ForegroundColor && BackgroundColor == o.BackgroundColor && HatchStyle == o.HatchStyle;
+            return Color == o.Color && HatchStyle == o.HatchStyle;
         }
 
-        private protected override int GetHashCodeCore() => HashCode.Combine(HatchStyle, ForegroundColor, BackgroundColor);
+        private protected override int GetHashCodeCore() => HashCode.Combine(HatchStyle, Color);
 
-        private protected override string ToStringCore() => $"HatchBrush ({HatchStyle}, {ForegroundColor}, {BackgroundColor})";
+        private protected override string ToStringCore() => $"HatchBrush ({HatchStyle}, {Color})";
     }
 }

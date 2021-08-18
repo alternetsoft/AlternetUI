@@ -1,6 +1,6 @@
 // Auto generated code, DO NOT MODIFY MANUALLY. Copyright AlterNET, 2021.
 public:
-void Initialize(BrushHatchStyle style, const Color& foregroundColor, const Color& backgroundColor);
+void Initialize(BrushHatchStyle style, const Color& color);
 public:
 HatchBrush();
 protected:

@@ -15,9 +15,7 @@ namespace Alternet::UI
 
     private:
         wxBrushStyle GetWxStyle(BrushHatchStyle style);
-        wxColor GetBackgroundColor(BrushHatchStyle style);
 
-        wxColor _backgroundColor;
         wxBrush _brush;
     };
 }

@@ -10,10 +10,9 @@ namespace Alternet::UI
     {
     }
 
-    void HatchBrush::Initialize(BrushHatchStyle style, const Color& foregroundColor, const Color& backgroundColor)
+    void HatchBrush::Initialize(BrushHatchStyle style, const Color& color)
     {
-        _backgroundColor = backgroundColor;
-        _brush = wxBrush(foregroundColor, GetWxStyle(style));
+        _brush = wxBrush(color, GetWxStyle(style));
     }
 
     wxGraphicsBrush HatchBrush::GetGraphicsBrush(wxGraphicsRenderer* renderer)
@@ -46,10 +45,5 @@ namespace Alternet::UI
             wxASSERT(false);
             throw 0;
         }
-    }
-
-    wxColor HatchBrush::GetBackgroundColor(BrushHatchStyle style)
-    {
-        return _backgroundColor;
     }
 }

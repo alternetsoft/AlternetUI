@@ -12,8 +12,8 @@ ALTERNET_UI_API HatchBrush* HatchBrush_Create_()
     return new HatchBrush();
 }
 
-ALTERNET_UI_API void HatchBrush_Initialize_(HatchBrush* obj, BrushHatchStyle style, Color foregroundColor, Color backgroundColor)
+ALTERNET_UI_API void HatchBrush_Initialize_(HatchBrush* obj, BrushHatchStyle style, Color color)
 {
-    obj->Initialize(style, foregroundColor, backgroundColor);
+    obj->Initialize(style, color);
 }
 
