@@ -8,7 +8,7 @@ namespace DrawingSample
         private DrawingPage[] drawingPages = new DrawingPage[]
         {
             new TextPage(),
-            new BrushesPage()
+            new BrushesAndPensPage()
         };
 
         public MainWindow()

@@ -27,13 +27,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Pages\Brushes\BrushesPageSettings.xaml" />
+      <None Remove="Pages\BrushesAndPens\BrushesAndPensPageSettings.xaml" />
       <None Remove="Pages\Text\TextPageSettings.xaml" />
     </ItemGroup>
 
     <ItemGroup>
       <EmbeddedResource Include="MainWindow.xaml" />
-      <EmbeddedResource Include="Pages\Brushes\BrushesPageSettings.xaml">
+      <EmbeddedResource Include="Pages\BrushesAndPens\BrushesAndPensPageSettings.xaml">
         <SubType>Designer</SubType>
         <Generator>MSBuild:Compile</Generator>
       </EmbeddedResource>

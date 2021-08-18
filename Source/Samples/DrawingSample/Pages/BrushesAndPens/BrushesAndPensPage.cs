@@ -2,12 +2,13 @@
 using System;
 using System.Drawing;
 using Brush = Alternet.UI.Brush;
+using Pen = Alternet.UI.Pen;
 using Pens = Alternet.UI.Pens;
 using SolidBrush = Alternet.UI.SolidBrush;
 
 namespace DrawingSample
 {
-    internal sealed class BrushesPage : DrawingPage
+    internal sealed class BrushesAndPensPage : DrawingPage
     {
         [Flags]
         public enum Shapes
@@ -46,7 +47,7 @@ namespace DrawingSample
             }
         }
 
-        int shapeCount = 10;
+        int shapeCount = 5;
 
         public int ShapeCount
         {
@@ -58,7 +59,7 @@ namespace DrawingSample
             }
         }
 
-        double brushColorHue;
+        double brushColorHue = 0.1;
 
         public double BrushColorHue
         {
@@ -66,6 +67,30 @@ namespace DrawingSample
             set
             {
                 brushColorHue = value;
+                Update();
+            }
+        }
+
+        double penColorHue = 0.25;
+
+        public double PenColorHue
+        {
+            get => penColorHue;
+            set
+            {
+                penColorHue = value;
+                Update();
+            }
+        }
+
+        float penWidth = 4;
+
+        public float PenWidth
+        {
+            get => penWidth;
+            set
+            {
+                penWidth = value;
                 Update();
             }
         }
@@ -82,15 +107,30 @@ namespace DrawingSample
             }
         }
 
+        PenDashStyle penDashStyle = PenDashStyle.ShortDash;
+
+        public PenDashStyle PenDashStyle
+        {
+            get => penDashStyle;
+            set
+            {
+                penDashStyle = value;
+                Update();
+            }
+        }
+
         private void Update()
         {
             fillBrush = null;
+            strokePen = null;
             Canvas?.Update();
         }
 
-        public override string Name => "Brushes";
+        public override string Name => "Brushes and Pens";
 
         Brush? fillBrush;
+        Pen? strokePen;
+
         public override void Draw(DrawingContext dc, RectangleF bounds)
         {
             if (Canvas == null)
@@ -100,7 +140,7 @@ namespace DrawingSample
 
             if (fillBrush == null)
             {
-                var c = new Skybrud.Colors.HslColor(brushColorHue, 1, 0.3).ToRgb();
+                var c = new Skybrud.Colors.HslColor(brushColorHue, 1, 0.7).ToRgb();
 
                 switch (brush)
                 {
@@ -115,15 +155,26 @@ namespace DrawingSample
                 }
             }
 
+            if (strokePen == null)
+            {
+                var c = new Skybrud.Colors.HslColor(penColorHue, 1, 0.3).ToRgb();
+                strokePen = new Pen(Color.FromArgb(c.R, c.G, c.B), penWidth, penDashStyle);
+            }
+
             var b = Canvas.Handler.ClientRectangle;
             for (int i = 0; i < shapeCount; i++)
             {
-                var rect = new RectangleF(random.Next(0, (int)b.Width), random.Next(0, (int)b.Height), random.Next(0, (int)b.Width), random.Next(0, (int)b.Height));
+                var rect = new RectangleF(
+                    random.Next(0, (int)b.Width / 2),
+                    random.Next(0, (int)b.Height / 2),
+                    random.Next((int)b.Width / 5, (int)b.Width / 3),
+                    random.Next((int)b.Height / 5, (int)b.Height / 3));
+
                 dc.FillRectangle(rect, fillBrush);
-                dc.DrawRectangle(rect, Pens.Blue);
+                dc.DrawRectangle(rect, strokePen);
             }
         }
 
-        protected override Control CreateSettingsControl() => new BrushesPageSettings(this);
+        protected override Control CreateSettingsControl() => new BrushesAndPensPageSettings(this);
     }
 }

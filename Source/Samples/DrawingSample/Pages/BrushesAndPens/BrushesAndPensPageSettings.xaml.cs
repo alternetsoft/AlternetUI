@@ -3,16 +3,17 @@ using System;
 
 namespace DrawingSample
 {
-    internal class BrushesPageSettings : Control
+    internal class BrushesAndPensPageSettings : Control
     {
-        private readonly BrushesPage page;
+        private readonly BrushesAndPensPage page;
         private ComboBox brushComboBox;
         private Control hatchStylePanel;
         private ComboBox hatchStyleComboBox;
+        private ComboBox dashStyleComboBox;
 
-        public BrushesPageSettings(BrushesPage page)
+        public BrushesAndPensPageSettings(BrushesAndPensPage page)
         {
-            var xamlStream = typeof(MainWindow).Assembly.GetManifestResourceStream("DrawingSample.Pages.Brushes.BrushesPageSettings.xaml");
+            var xamlStream = typeof(MainWindow).Assembly.GetManifestResourceStream("DrawingSample.Pages.BrushesAndPens.BrushesAndPensPageSettings.xaml");
             if (xamlStream == null)
                 throw new InvalidOperationException();
             new XamlLoader().LoadExisting(xamlStream, this);
@@ -20,11 +21,13 @@ namespace DrawingSample
 
             ((Slider)FindControl("shapeCountSlider")).ValueChanged += ShapeCountSlider_ValueChanged;
             ((Slider)FindControl("brushColorHueSlider")).ValueChanged += BrushColorHueSlider_ValueChanged;
+            ((Slider)FindControl("penColorHueSlider")).ValueChanged += PenColorHueSlider_ValueChanged;
+            ((Slider)FindControl("penWidthSlider")).ValueChanged += PenWidthSlider_ValueChanged;
 
-            ((CheckBox)FindControl("rectanglesCheckBox")).CheckedChanged += (o, e) => ApplyIncludedShape(BrushesPage.Shapes.Rectangles, ((CheckBox)o!).IsChecked);
+            ((CheckBox)FindControl("rectanglesCheckBox")).CheckedChanged += (o, e) => ApplyIncludedShape(BrushesAndPensPage.Shapes.Rectangles, ((CheckBox)o!).IsChecked);
 
             brushComboBox = (ComboBox)FindControl("brushComboBox");
-            foreach (var brushType in Enum.GetValues(typeof(BrushesPage.BrushType)))
+            foreach (var brushType in Enum.GetValues(typeof(BrushesAndPensPage.BrushType)))
                 brushComboBox.Items.Add(brushType!);
             brushComboBox.SelectedItem = page.Brush;
 
@@ -38,13 +41,31 @@ namespace DrawingSample
             hatchStyleComboBox.SelectedItem = page.HatchStyle;
 
             hatchStyleComboBox.SelectedItemChanged += HatchStyleComboBox_SelectedItemChanged;
+
+            dashStyleComboBox = (ComboBox)FindControl("dashStyleComboBox");
+            foreach (var style in Enum.GetValues(typeof(PenDashStyle)))
+                dashStyleComboBox.Items.Add(style!);
+            dashStyleComboBox.SelectedItem = page.PenDashStyle;
+
+            dashStyleComboBox.SelectedItemChanged += DashStyleComboBox_SelectedItemChanged;
+
+        }
+
+        private void PenWidthSlider_ValueChanged(object? sender, EventArgs e)
+        {
+            page.PenWidth = ((Slider)sender!).Value;
+        }
+
+        private void DashStyleComboBox_SelectedItemChanged(object? sender, EventArgs e)
+        {
+            page.PenDashStyle = (PenDashStyle)dashStyleComboBox.SelectedItem!;
         }
 
         private void BrushComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            page.Brush = (BrushesPage.BrushType)brushComboBox.SelectedItem!;
+            page.Brush = (BrushesAndPensPage.BrushType)brushComboBox.SelectedItem!;
 
-            hatchStylePanel.Visible = page.Brush == BrushesPage.BrushType.Hatch;
+            hatchStylePanel.Visible = page.Brush == BrushesAndPensPage.BrushType.Hatch;
         }
 
         private void HatchStyleComboBox_SelectedItemChanged(object? sender, EventArgs e)
@@ -57,12 +78,17 @@ namespace DrawingSample
             page.BrushColorHue = ((Slider)sender!).Value / 10.0;
         }
 
+        private void PenColorHueSlider_ValueChanged(object? sender, EventArgs e)
+        {
+            page.PenColorHue = ((Slider)sender!).Value / 10.0;
+        }
+
         private void ShapeCountSlider_ValueChanged(object? sender, EventArgs e)
         {
             page.ShapeCount = ((Slider)sender!).Value;
         }
 
-        private void ApplyIncludedShape(BrushesPage.Shapes shapes, bool value)
+        private void ApplyIncludedShape(BrushesAndPensPage.Shapes shapes, bool value)
         {
             if (value)
                 page.IncludedShapes |= shapes;
