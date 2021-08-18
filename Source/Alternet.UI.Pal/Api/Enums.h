@@ -50,6 +50,16 @@ namespace Alternet::UI
         LargeIcon = 3,
     };
     
+    enum class PenDashStyle
+    {
+        Solid = 0,
+        Dot = 1,
+        LongDash = 2,
+        ShortDash = 3,
+        DashDot = 4,
+        Custom = 5,
+    };
+    
     enum class TreeViewSelectionMode
     {
         Single = 0,

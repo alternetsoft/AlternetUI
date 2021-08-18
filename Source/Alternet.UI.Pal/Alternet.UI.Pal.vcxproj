@@ -203,6 +203,7 @@
     <ClCompile Include="NumericUpDown.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Panel.cpp" />
+    <ClCompile Include="Pen.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="RadioButton.cpp" />
     <ClCompile Include="Slider.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="Api\Enums.h" />
     <ClInclude Include="Api\Font.Api.h" />
     <ClInclude Include="Api\GroupBox.Api.h" />
+    <ClInclude Include="Api\HatchBrush.Api.h" />
     <ClInclude Include="Api\Image.Api.h" />
     <ClInclude Include="Api\ImageList.Api.h" />
     <ClInclude Include="Api\InputStream.Api.h" />
@@ -238,6 +240,7 @@
     <ClInclude Include="Api\NumericUpDown.Api.h" />
     <ClInclude Include="Api\Object.Api.h" />
     <ClInclude Include="Api\Panel.Api.h" />
+    <ClInclude Include="Api\Pen.Api.h" />
     <ClInclude Include="Api\ProgressBar.Api.h" />
     <ClInclude Include="Api\RadioButton.Api.h" />
     <ClInclude Include="Api\Slider.Api.h" />
@@ -268,6 +271,7 @@
     <ClInclude Include="NumericUpDown.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Panel.h" />
+    <ClInclude Include="Pen.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="RadioButton.h" />
     <ClInclude Include="Slider.h" />
@@ -289,6 +293,7 @@
     <None Include="Api\DrawingContext.inc" />
     <None Include="Api\Font.inc" />
     <None Include="Api\GroupBox.inc" />
+    <None Include="Api\HatchBrush.inc" />
     <None Include="Api\Image.inc" />
     <None Include="Api\ImageList.inc" />
     <None Include="Api\ListBox.inc" />
@@ -296,6 +301,7 @@
     <None Include="Api\MessageBox_.inc" />
     <None Include="Api\NumericUpDown.inc" />
     <None Include="Api\Panel.inc" />
+    <None Include="Api\Pen.inc" />
     <None Include="Api\ProgressBar.inc" />
     <None Include="Api\RadioButton.inc" />
     <None Include="Api\Slider.inc" />

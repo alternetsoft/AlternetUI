@@ -16,6 +16,7 @@
 #include "Api/MessageBox_.Api.h"
 #include "Api/NumericUpDown.Api.h"
 #include "Api/Panel.Api.h"
+#include "Api/Pen.Api.h"
 #include "Api/ProgressBar.Api.h"
 #include "Api/RadioButton.Api.h"
 #include "Api/Slider.Api.h"

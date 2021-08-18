@@ -49,6 +49,16 @@ namespace Alternet.UI.Native
         LargeIcon,
     }
     
+    enum PenDashStyle
+    {
+        Solid,
+        Dot,
+        LongDash,
+        ShortDash,
+        DashDot,
+        Custom,
+    }
+    
     enum TreeViewSelectionMode
     {
         Single,
