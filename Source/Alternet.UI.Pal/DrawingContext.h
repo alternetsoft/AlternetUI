@@ -5,6 +5,7 @@
 #include "Image.h"
 #include "Font.h"
 #include "Brush.h"
+#include "Pen.h"
 
 namespace Alternet::UI
 {
@@ -25,6 +26,7 @@ namespace Alternet::UI
         std::stack<SizeF> _translationStack;
 
         wxGraphicsBrush GetGraphicsBrush(Brush* brush);
+        wxGraphicsPen GetGraphicsPen(Pen* pen);
 
         bool _useDCForText = true;
     };

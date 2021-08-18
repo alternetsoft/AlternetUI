@@ -22,10 +22,10 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_FillRectangle_(NativePointer, rectangle, brush.NativePointer);
         }
         
-        public void DrawRectangle(System.Drawing.RectangleF rectangle, System.Drawing.Color color)
+        public void DrawRectangle(System.Drawing.RectangleF rectangle, Pen pen)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_DrawRectangle_(NativePointer, rectangle, color);
+            NativeApi.DrawingContext_DrawRectangle_(NativePointer, rectangle, pen.NativePointer);
         }
         
         public void DrawText(string text, System.Drawing.PointF origin, Font font, Brush brush)
@@ -68,7 +68,7 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_FillRectangle_(IntPtr obj, NativeApiTypes.RectangleF rectangle, IntPtr brush);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawRectangle_(IntPtr obj, NativeApiTypes.RectangleF rectangle, NativeApiTypes.Color color);
+            public static extern void DrawingContext_DrawRectangle_(IntPtr obj, NativeApiTypes.RectangleF rectangle, IntPtr pen);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawText_(IntPtr obj, string text, NativeApiTypes.PointF origin, IntPtr font, IntPtr brush);

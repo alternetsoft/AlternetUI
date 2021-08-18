@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using Brush = Alternet.UI.Brush;
 using Brushes = Alternet.UI.Brushes;
+using Pens = Alternet.UI.Pens;
 
 namespace HelloWorldSample
 {
@@ -57,7 +58,7 @@ namespace HelloWorldSample
         protected override void OnPaint(PaintEventArgs e)
         {
             e.DrawingContext.FillRectangle(Handler.ClientRectangle, brush);
-            e.DrawingContext.DrawRectangle(Handler.ClientRectangle, Color.Gray);
+            e.DrawingContext.DrawRectangle(Handler.ClientRectangle, Pens.Gray);
             e.DrawingContext.DrawText(text, DefaultFont, Brushes.Black, new PointF(10, 10));
             e.DrawingContext.DrawImage(image, new PointF(0, 10 + e.DrawingContext.MeasureText(text, DefaultFont).Height));
         }

@@ -1,5 +1,6 @@
 ﻿using Alternet.UI;
 using System.Drawing;
+using Pens = Alternet.UI.Pens;
 
 namespace DrawingSample
 {
@@ -42,7 +43,7 @@ namespace DrawingSample
             var b = e.Bounds;
 //            b.Width -= 1;
             b.Height -= 30;
-            e.DrawingContext.DrawRectangle(b, Color.Gray);
+            e.DrawingContext.DrawRectangle(b, Pens.Gray);
             Draw(e.DrawingContext, e.Bounds);
         }
     }

@@ -42,16 +42,12 @@ namespace Alternet::UI
         _graphicsContext->DrawRectangle(rect.x, rect.y, rect.width, rect.height);
     }
 
-    void DrawingContext::DrawRectangle(const RectangleF& rectangle, const Color& color)
+    void DrawingContext::DrawRectangle(const RectangleF& rectangle, Pen* pen)
     {
-        if (color.A == 0)
-            return;
-
         auto oldPen = _dc->GetPen();
         auto oldBrush = _dc->GetBrush();
 
-        float penThickness = 1;
-        _dc->SetPen(wxPen(color, fromDip(penThickness, _dc->GetWindow())));
+        _dc->SetPen(pen->GetWxPen());
         _dc->SetBrush(*wxTRANSPARENT_BRUSH);
 
         // todo: different OSes and DPI levels may require adjustment to the rectangle.
@@ -100,6 +96,11 @@ namespace Alternet::UI
     wxGraphicsBrush DrawingContext::GetGraphicsBrush(Brush* brush)
     {
         return brush->GetGraphicsBrush(_graphicsContext->GetRenderer());
+    }
+
+    wxGraphicsPen DrawingContext::GetGraphicsPen(Pen* pen)
+    {
+        return pen->GetGraphicsPen(_graphicsContext->GetRenderer());
     }
 
     SizeF DrawingContext::MeasureText(const string& text, Font* font)

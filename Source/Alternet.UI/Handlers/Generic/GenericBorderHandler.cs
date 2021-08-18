@@ -12,7 +12,7 @@ namespace Alternet.UI
                 drawingContext.FillRectangle(ClientRectangle, Control.Background);
             
             if (Control.BorderBrush != null)
-                drawingContext.DrawRectangle(ClientRectangle, ((SolidBrush)Control.BorderBrush).Color);
+                drawingContext.DrawRectangle(ClientRectangle, new Pen(Control.BorderBrush));
         }
 
         public override SizeF GetPreferredSize(SizeF availableSize)

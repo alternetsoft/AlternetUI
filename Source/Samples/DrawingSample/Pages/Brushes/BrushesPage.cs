@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using Brush = Alternet.UI.Brush;
+using Pens = Alternet.UI.Pens;
 using SolidBrush = Alternet.UI.SolidBrush;
 
 namespace DrawingSample
@@ -119,7 +120,7 @@ namespace DrawingSample
             {
                 var rect = new RectangleF(random.Next(0, (int)b.Width), random.Next(0, (int)b.Height), random.Next(0, (int)b.Width), random.Next(0, (int)b.Height));
                 dc.FillRectangle(rect, fillBrush);
-                dc.DrawRectangle(rect, Color.Blue);
+                dc.DrawRectangle(rect, Pens.Blue);
             }
         }
 

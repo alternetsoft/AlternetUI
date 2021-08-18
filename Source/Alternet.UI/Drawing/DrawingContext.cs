@@ -27,9 +27,9 @@ namespace Alternet.UI
         /// <summary>
         /// Draws a rectangle specified by a <see cref="RectangleF"/> structure.
         /// </summary>
-        public void DrawRectangle(RectangleF rectangle, Color color)
+        public void DrawRectangle(RectangleF rectangle, Pen pen)
         {
-            dc.DrawRectangle(rectangle, color);
+            dc.DrawRectangle(rectangle, pen.NativePen);
         }
 
         /// <summary>

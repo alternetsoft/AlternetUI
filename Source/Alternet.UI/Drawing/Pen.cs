@@ -33,9 +33,34 @@ namespace Alternet.UI
             ReinitializeNativePen();
         }
 
-        private void ReinitializeNativePen()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Pen"/> class with the specified
+        /// <see cref="Color"/> and <see cref="Width"/>.
+        /// </summary>
+        /// <param name="color">A <see cref="Color"/> structure that indicates the color of this <see cref="Pen"/>.</param>
+        /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in device-independent units (1/96th inch per unit).</param>
+        public Pen(Color color, float width) : this(color, width, PenDashStyle.Solid)
         {
-            NativePen.Initialize((Native.PenDashStyle)DashStyle, Color, Width);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Pen"/> class with the specified <see cref="Color"/>.
+        /// </summary>
+        /// <param name="color">A <see cref="Color"/> structure that indicates the color of this <see cref="Pen"/>.</param>
+        public Pen(Color color) : this(color, 1)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Pen"/> class with the specified <see cref="Brush"/>.
+        /// </summary>
+        /// <param name="brush">A <see cref="Brush"/> that indicates the color of this <see cref="Pen"/>.</param>
+        public Pen(Brush brush) :
+            this(
+                brush as SolidBrush != null ?
+                    ((SolidBrush)brush).Color :
+                    throw new ArgumentException("Only SolidBrush instances are supported for Pen initialization."))
+        {
         }
 
         internal Pen(Native.Pen nativePen)
@@ -176,10 +201,15 @@ namespace Alternet.UI
             return Equals(pen);
         }
 
+        private void ReinitializeNativePen()
+        {
+            NativePen.Initialize((Native.PenDashStyle)DashStyle, Color, Width);
+        }
+
         /// <summary>
         /// Throws <see cref="ObjectDisposedException"/> if the object has been disposed.
         /// </summary>
-        protected void CheckDisposed()
+        private void CheckDisposed()
         {
             if (isDisposed)
                 throw new ObjectDisposedException(null);

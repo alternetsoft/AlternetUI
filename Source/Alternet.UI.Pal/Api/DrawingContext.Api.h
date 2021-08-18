@@ -4,6 +4,7 @@
 
 #include "DrawingContext.h"
 #include "Brush.h"
+#include "Pen.h"
 #include "Font.h"
 #include "Image.h"
 #include "ApiUtils.h"
@@ -15,9 +16,9 @@ ALTERNET_UI_API void DrawingContext_FillRectangle_(DrawingContext* obj, Rectangl
     obj->FillRectangle(rectangle, brush);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawRectangle_(DrawingContext* obj, RectangleF rectangle, Color color)
+ALTERNET_UI_API void DrawingContext_DrawRectangle_(DrawingContext* obj, RectangleF rectangle, Pen* pen)
 {
-    obj->DrawRectangle(rectangle, color);
+    obj->DrawRectangle(rectangle, pen);
 }
 
 ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_t* text, PointF origin, Font* font, Brush* brush)

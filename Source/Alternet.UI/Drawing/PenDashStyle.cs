@@ -32,7 +32,7 @@ namespace Alternet.UI
         DashDot,
 
         /// <summary>
-        /// Specifies a user-defined custom dash style. Set <see cref="Pen.CustomDashPattern"/> to specify the pattern.
+        /// Specifies a user-defined custom dash style.
         /// </summary>
         Custom
     }
