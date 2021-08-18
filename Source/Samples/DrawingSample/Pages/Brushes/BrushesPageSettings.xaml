@@ -10,7 +10,7 @@
         <Label Text="Brush:" Margin="0,5,0,5"/>
         <ComboBox Name="brushComboBox" IsEditable="false"/>
 
-        <StackPanel Name="hatchStylePanel">
+        <StackPanel Name="hatchStylePanel" Visible="false">
             <Label Text="Hatch Style:" Margin="0,5,0,5" />
             <ComboBox Name="hatchStyleComboBox" IsEditable="false"/>
         </StackPanel>

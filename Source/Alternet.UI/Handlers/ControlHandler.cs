@@ -148,6 +148,11 @@ namespace Alternet.UI
         /// </summary>
         public IEnumerable<Control> AllChildren => VisualChildren.Concat(Control.Children);
 
+        /// <summary>
+        /// Gets the collection of all elements of <see cref="AllChildren"/> collection included in layout (i.e. visible).
+        /// </summary>
+        public IEnumerable<Control> AllChildrenIncludedInLayout => AllChildren.Where(x => x.Visible);
+
         internal Native.Control? NativeControl
         {
             get
@@ -234,7 +239,7 @@ namespace Alternet.UI
         public virtual void OnLayout()
         {
             var childrenLayoutBounds = ChildrenLayoutBounds;
-            foreach (var control in AllChildren)
+            foreach (var control in AllChildrenIncludedInLayout)
             {
                 var margin = control.Margin;
 
@@ -411,7 +416,7 @@ namespace Alternet.UI
             float maxWidth = 0;
             float maxHeight = 0;
 
-            foreach (var control in AllChildren)
+            foreach (var control in AllChildrenIncludedInLayout)
             {
                 var preferredSize = control.GetPreferredSize(availableSize) + control.Margin.Size;
                 maxWidth = Math.Max(preferredSize.Width, maxWidth);
@@ -635,6 +640,7 @@ namespace Alternet.UI
         private void Control_VisibleChanged(object? sender, EventArgs e)
         {
             ApplyVisible();
+            Control.Parent?.PerformLayout();
         }
 
         private Color GetBrushColor(Brush? brush)

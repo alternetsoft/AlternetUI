@@ -7,6 +7,7 @@ namespace DrawingSample
     {
         private readonly BrushesPage page;
         private ComboBox brushComboBox;
+        private Control hatchStylePanel;
         private ComboBox hatchStyleComboBox;
 
         public BrushesPageSettings(BrushesPage page)
@@ -29,6 +30,8 @@ namespace DrawingSample
 
             brushComboBox.SelectedItemChanged += BrushComboBox_SelectedItemChanged;
 
+            hatchStylePanel = FindControl("hatchStylePanel");
+
             hatchStyleComboBox = (ComboBox)FindControl("hatchStyleComboBox");
             foreach (var style in Enum.GetValues(typeof(BrushHatchStyle)))
                 hatchStyleComboBox.Items.Add(style!);
@@ -40,6 +43,8 @@ namespace DrawingSample
         private void BrushComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
             page.Brush = (BrushesPage.BrushType)brushComboBox.SelectedItem!;
+
+            hatchStylePanel.Visible = page.Brush == BrushesPage.BrushType.Hatch;
         }
 
         private void HatchStyleComboBox_SelectedItemChanged(object? sender, EventArgs e)

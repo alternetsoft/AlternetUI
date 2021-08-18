@@ -17,7 +17,7 @@ namespace Alternet.UI
 
                 float width = 0;
                 float maxHeight = 0;
-                foreach (var control in Handler.AllChildren)
+                foreach (var control in Handler.AllChildrenIncludedInLayout)
                 {
                     var margin = control.Margin;
                     var preferredSize = control.GetPreferredSize(new SizeF(availableSize.Width - width, availableSize.Height));
@@ -33,7 +33,7 @@ namespace Alternet.UI
                 var childrenLayoutBounds = Handler.ChildrenLayoutBounds;
 
                 float x = 0;
-                foreach (var control in Handler.AllChildren)
+                foreach (var control in Handler.AllChildrenIncludedInLayout)
                 {
                     var margin = control.Margin;
                     var horizontalMargin = margin.Horizontal;
