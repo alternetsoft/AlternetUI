@@ -10,6 +10,11 @@
         <Label Text="Brush:" Margin="0,5,0,5"/>
         <ComboBox Name="brushComboBox" IsEditable="false"/>
 
+        <StackPanel Name="hatchStylePanel">
+            <Label Text="Hatch Style:" Margin="0,5,0,5" />
+            <ComboBox Name="hatchStyleComboBox" IsEditable="false"/>
+        </StackPanel>
+
         <Label Text="Brush Color:" Margin="0,5,0,5"/>
         <Slider Name="brushColorHueSlider" Minimum="0" Maximum="10" Value="0" Margin="0,0,0,10"/>
     </StackPanel>

@@ -69,6 +69,18 @@ namespace DrawingSample
             }
         }
 
+        BrushHatchStyle hatchStyle = BrushHatchStyle.DiagonalCross;
+
+        public BrushHatchStyle HatchStyle
+        {
+            get => hatchStyle;
+            set
+            {
+                hatchStyle = value;
+                Update();
+            }
+        }
+
         private void Update()
         {
             fillBrush = null;
@@ -78,7 +90,6 @@ namespace DrawingSample
         public override string Name => "Brushes";
 
         Brush? fillBrush;
-
         public override void Draw(DrawingContext dc, RectangleF bounds)
         {
             if (Canvas == null)
@@ -96,7 +107,7 @@ namespace DrawingSample
                         fillBrush = new SolidBrush(Color.FromArgb(c.R, c.G, c.B));
                         break;
                     case BrushType.Hatch:
-                        fillBrush = new HatchBrush(BrushHatchStyle.DiagonalCross, Color.FromArgb(c.R, c.G, c.B));
+                        fillBrush = new HatchBrush(hatchStyle, Color.FromArgb(c.R, c.G, c.B));
                         break;
                     default:
                         throw new Exception();
