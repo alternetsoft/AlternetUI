@@ -17,14 +17,9 @@ namespace Alternet.UI
         Dot,
 
         /// <summary>
-        /// Specifies a line consisting of long dashes.
+        /// Specifies a line consisting of dashes.
         /// </summary>
-        LongDash,
-
-        /// <summary>
-        /// Specifies a line consisting of short dashes.
-        /// </summary>
-        ShortDash,
+        Dash,
 
         /// <summary>
         /// Specifies a line consisting of a repeating pattern of dash-dot.

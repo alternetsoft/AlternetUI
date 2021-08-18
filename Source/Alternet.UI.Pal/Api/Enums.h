@@ -54,10 +54,9 @@ namespace Alternet::UI
     {
         Solid = 0,
         Dot = 1,
-        LongDash = 2,
-        ShortDash = 3,
-        DashDot = 4,
-        Custom = 5,
+        Dash = 2,
+        DashDot = 3,
+        Custom = 4,
     };
     
     enum class TreeViewSelectionMode

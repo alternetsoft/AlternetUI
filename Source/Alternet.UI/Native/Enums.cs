@@ -53,8 +53,7 @@ namespace Alternet.UI.Native
     {
         Solid,
         Dot,
-        LongDash,
-        ShortDash,
+        Dash,
         DashDot,
         Custom,
     }

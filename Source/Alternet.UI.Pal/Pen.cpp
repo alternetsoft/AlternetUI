@@ -33,9 +33,7 @@ namespace Alternet::UI
             return wxPenStyle::wxPENSTYLE_SOLID;
         case PenDashStyle::Dot:
             return wxPenStyle::wxPENSTYLE_DOT;
-        case PenDashStyle::LongDash:
-            return wxPenStyle::wxPENSTYLE_LONG_DASH;
-        case PenDashStyle::ShortDash:
+        case PenDashStyle::Dash:
             return wxPenStyle::wxPENSTYLE_SHORT_DASH;
         case PenDashStyle::DashDot:
             return wxPenStyle::wxPENSTYLE_DOT_DASH;

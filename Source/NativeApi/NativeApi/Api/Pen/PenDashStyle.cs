@@ -5,8 +5,7 @@ namespace NativeApi.Api
     {
         Solid,
         Dot,
-        LongDash,
-        ShortDash,
+        Dash,
         DashDot,
         Custom
     }

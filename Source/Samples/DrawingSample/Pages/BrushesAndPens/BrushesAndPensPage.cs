@@ -107,7 +107,7 @@ namespace DrawingSample
             }
         }
 
-        PenDashStyle penDashStyle = PenDashStyle.ShortDash;
+        PenDashStyle penDashStyle = PenDashStyle.Dash;
 
         public PenDashStyle PenDashStyle
         {
