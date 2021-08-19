@@ -19,15 +19,26 @@ namespace Alternet.UI
         /// <summary>
         /// Fills the interior of a rectangle specified by a <see cref="RectangleF"/> structure.
         /// </summary>
-        public void FillRectangle(RectangleF rectangle, Brush brush)
+        /// <param name="brush"><see cref="Brush"/> that determines the characteristics of the fill.</param>
+        /// <param name="rectangle"><see cref="RectangleF"/> structure that represents the rectangle to fill.</param>
+        /// <remarks>
+        /// This method fills the interior of the rectangle defined by the <c>rect</c> parameter,
+        /// including the specified upper-left corner and up to the calculated lower and bottom edges.
+        /// </remarks>
+        public void FillRectangle(Brush brush, RectangleF rectangle)
         {
+            if (brush is null)
+                throw new ArgumentNullException(nameof(brush));
+
             dc.FillRectangle(rectangle, brush.NativeBrush);
         }
 
         /// <summary>
         /// Draws a rectangle specified by a <see cref="RectangleF"/> structure.
         /// </summary>
-        public void DrawRectangle(RectangleF rectangle, Pen pen)
+        /// <param name="pen">A <see cref="Pen"/> that determines the color, width, and style of the rectangle.</param>
+        /// <param name="rectangle">A <see cref="RectangleF"/> structure that represents the rectangle to draw.</param>
+        public void DrawRectangle(Pen pen, RectangleF rectangle)
         {
             dc.DrawRectangle(rectangle, pen.NativePen);
         }

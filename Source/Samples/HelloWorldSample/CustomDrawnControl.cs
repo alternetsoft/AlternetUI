@@ -57,8 +57,8 @@ namespace HelloWorldSample
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.DrawingContext.FillRectangle(Handler.ClientRectangle, brush);
-            e.DrawingContext.DrawRectangle(Handler.ClientRectangle, Pens.Gray);
+            e.DrawingContext.FillRectangle(brush, Handler.ClientRectangle);
+            e.DrawingContext.DrawRectangle(Pens.Gray, Handler.ClientRectangle);
             e.DrawingContext.DrawText(text, DefaultFont, Brushes.Black, new PointF(10, 10));
             e.DrawingContext.DrawImage(image, new PointF(0, 10 + e.DrawingContext.MeasureText(text, DefaultFont).Height));
         }

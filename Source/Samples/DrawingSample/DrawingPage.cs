@@ -43,7 +43,7 @@ namespace DrawingSample
             var b = e.Bounds;
 //            b.Width -= 1;
             b.Height -= 30;
-            e.DrawingContext.DrawRectangle(b, Pens.Gray);
+            e.DrawingContext.DrawRectangle(Pens.Gray, b);
             Draw(e.DrawingContext, e.Bounds);
         }
     }

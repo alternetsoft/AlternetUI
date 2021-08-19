@@ -170,8 +170,8 @@ namespace DrawingSample
                     random.Next((int)b.Width / 5, (int)b.Width / 3),
                     random.Next((int)b.Height / 5, (int)b.Height / 3));
 
-                dc.FillRectangle(rect, fillBrush);
-                dc.DrawRectangle(rect, strokePen);
+                dc.FillRectangle(fillBrush, rect);
+                dc.DrawRectangle(strokePen, rect);
             }
         }
 

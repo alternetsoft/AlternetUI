@@ -9,10 +9,10 @@ namespace Alternet.UI
         public override void OnPaint(DrawingContext drawingContext)
         {
             if (Control.Background != null)
-                drawingContext.FillRectangle(ClientRectangle, Control.Background);
+                drawingContext.FillRectangle(Control.Background, ClientRectangle);
             
             if (Control.BorderBrush != null)
-                drawingContext.DrawRectangle(ClientRectangle, new Pen(Control.BorderBrush));
+                drawingContext.DrawRectangle(new Pen(Control.BorderBrush), ClientRectangle);
         }
 
         public override SizeF GetPreferredSize(SizeF availableSize)
