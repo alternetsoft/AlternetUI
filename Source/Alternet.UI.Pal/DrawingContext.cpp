@@ -48,7 +48,7 @@ namespace Alternet::UI
         _graphicsContext->SetBrush(GetGraphicsBrush(brush));
 
         auto rect = fromDipF(bounds.Offset(_translation), _dc->GetWindow());
-        _graphicsContext->DrawEllipse(bounds.X, bounds.Y, bounds.Width, bounds.Height);
+        _graphicsContext->DrawEllipse(rect.X, rect.Y, rect.Width, rect.Height);
     }
 
     void DrawingContext::DrawRectangle(const RectangleF& rectangle, Pen* pen)
