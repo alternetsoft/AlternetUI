@@ -1,5 +1,6 @@
 ﻿using Alternet.UI;
 using System;
+using System.Linq;
 
 namespace DrawingSample
 {
@@ -24,7 +25,8 @@ namespace DrawingSample
             ((Slider)FindControl("penColorHueSlider")).ValueChanged += PenColorHueSlider_ValueChanged;
             ((Slider)FindControl("penWidthSlider")).ValueChanged += PenWidthSlider_ValueChanged;
 
-            ((CheckBox)FindControl("rectanglesCheckBox")).CheckedChanged += (o, e) => ApplyIncludedShape(BrushesAndPensPage.Shapes.Rectangles, ((CheckBox)o!).IsChecked);
+            ((CheckBox)FindControl("rectanglesCheckBox")).CheckedChanged += (o, e) => ApplyIncludedShape(BrushesAndPensPage.AllShapeTypes.Rectangle, ((CheckBox)o!).IsChecked);
+            ((CheckBox)FindControl("ellipsesCheckBox")).CheckedChanged += (o, e) => ApplyIncludedShape(BrushesAndPensPage.AllShapeTypes.Ellipse, ((CheckBox)o!).IsChecked);
 
             brushComboBox = (ComboBox)FindControl("brushComboBox");
             foreach (var brushType in Enum.GetValues(typeof(BrushesAndPensPage.BrushType)))
@@ -88,12 +90,16 @@ namespace DrawingSample
             page.ShapeCount = ((Slider)sender!).Value;
         }
 
-        private void ApplyIncludedShape(BrushesAndPensPage.Shapes shapes, bool value)
+        private void ApplyIncludedShape(BrushesAndPensPage.ShapeType shape, bool value)
         {
+            var shapes = page.IncludedShapes.ToList();
+
             if (value)
-                page.IncludedShapes |= shapes;
+                shapes.Add(shape);
             else
-                page.IncludedShapes &= ~shapes;
+                shapes.Remove(shape);
+
+            page.IncludedShapes = shapes.ToArray();
         }
     }
 }

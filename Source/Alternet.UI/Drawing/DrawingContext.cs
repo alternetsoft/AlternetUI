@@ -34,13 +34,46 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Fills the interior of an ellipse defined by a bounding rectangle specified by a <see cref="RectangleF"/> structure.
+        /// </summary>
+        /// <param name="brush"><see cref="Brush"/> that determines the characteristics of the fill.</param>
+        /// <param name="bounds"><see cref="RectangleF"/> structure that represents the bounding rectangle that defines the ellipse.</param>
+        /// <remarks>
+        /// This method fills the interior of an ellipse with a <see cref="Brush"/>.
+        /// The ellipse is defined by the bounding rectangle represented by the <c>bounds</c> parameter.
+        /// </remarks>
+        public void FillEllipse(Brush brush, RectangleF bounds)
+        {
+            if (brush is null)
+                throw new ArgumentNullException(nameof(brush));
+
+            dc.FillEllipse(bounds, brush.NativeBrush);
+        }
+
+        /// <summary>
         /// Draws a rectangle specified by a <see cref="RectangleF"/> structure.
         /// </summary>
         /// <param name="pen">A <see cref="Pen"/> that determines the color, width, and style of the rectangle.</param>
         /// <param name="rectangle">A <see cref="RectangleF"/> structure that represents the rectangle to draw.</param>
         public void DrawRectangle(Pen pen, RectangleF rectangle)
         {
+            if (pen is null)
+                throw new ArgumentNullException(nameof(pen));
+
             dc.DrawRectangle(rectangle, pen.NativePen);
+        }
+
+        /// <summary>
+        /// Draws an ellipse defined by a bounding <see cref="RectangleF"/>.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the ellipse.</param>
+        /// <param name="bounds"><see cref="RectangleF"/> structure that defines the boundaries of the ellipse.</param>
+        public void DrawEllipse(Pen pen, RectangleF bounds)
+        {
+            if (pen is null)
+                throw new ArgumentNullException(nameof(pen));
+
+            dc.DrawEllipse(bounds, pen.NativePen);
         }
 
         /// <summary>

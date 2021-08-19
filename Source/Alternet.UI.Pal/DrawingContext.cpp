@@ -38,8 +38,17 @@ namespace Alternet::UI
         _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
         _graphicsContext->SetBrush(GetGraphicsBrush(brush));
 
-        auto rect = fromDip(rectangle.Offset(_translation), _dc->GetWindow());
-        _graphicsContext->DrawRectangle(rect.x, rect.y, rect.width, rect.height);
+        auto rect = fromDipF(rectangle.Offset(_translation), _dc->GetWindow());
+        _graphicsContext->DrawRectangle(rect.X, rect.Y, rect.Width, rect.Height);
+    }
+
+    void DrawingContext::FillEllipse(const RectangleF& bounds, Brush* brush)
+    {
+        _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
+        _graphicsContext->SetBrush(GetGraphicsBrush(brush));
+
+        auto rect = fromDipF(bounds.Offset(_translation), _dc->GetWindow());
+        _graphicsContext->DrawEllipse(bounds.X, bounds.Y, bounds.Width, bounds.Height);
     }
 
     void DrawingContext::DrawRectangle(const RectangleF& rectangle, Pen* pen)
@@ -59,6 +68,27 @@ namespace Alternet::UI
                     rectangle.Y/* + penThickness / 2*/,
                     rectangle.Width/* - penThickness / 2*/,
                     rectangle.Height/* - penThickness / 2*/).Offset(_translation),
+                _dc->GetWindow()));
+
+        _dc->SetPen(oldPen);
+        _dc->SetBrush(oldBrush);
+    }
+
+    void DrawingContext::DrawEllipse(const RectangleF& bounds, Pen* pen)
+    {
+        auto oldPen = _dc->GetPen();
+        auto oldBrush = _dc->GetBrush();
+
+        _dc->SetPen(pen->GetWxPen());
+        _dc->SetBrush(*wxTRANSPARENT_BRUSH);
+
+        _dc->DrawEllipse(
+            fromDip(
+                RectangleF(
+                    bounds.X,
+                    bounds.Y,
+                    bounds.Width,
+                    bounds.Height).Offset(_translation),
                 _dc->GetWindow()));
 
         _dc->SetPen(oldPen);

@@ -21,6 +21,16 @@ ALTERNET_UI_API void DrawingContext_DrawRectangle_(DrawingContext* obj, Rectangl
     obj->DrawRectangle(rectangle, pen);
 }
 
+ALTERNET_UI_API void DrawingContext_FillEllipse_(DrawingContext* obj, RectangleF bounds, Brush* brush)
+{
+    obj->FillEllipse(bounds, brush);
+}
+
+ALTERNET_UI_API void DrawingContext_DrawEllipse_(DrawingContext* obj, RectangleF bounds, Pen* pen)
+{
+    obj->DrawEllipse(bounds, pen);
+}
+
 ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_t* text, PointF origin, Font* font, Brush* brush)
 {
     obj->DrawText(text, origin, font, brush);

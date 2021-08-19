@@ -28,6 +28,18 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DrawRectangle_(NativePointer, rectangle, pen.NativePointer);
         }
         
+        public void FillEllipse(System.Drawing.RectangleF bounds, Brush brush)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_FillEllipse_(NativePointer, bounds, brush.NativePointer);
+        }
+        
+        public void DrawEllipse(System.Drawing.RectangleF bounds, Pen pen)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_DrawEllipse_(NativePointer, bounds, pen.NativePointer);
+        }
+        
         public void DrawText(string text, System.Drawing.PointF origin, Font font, Brush brush)
         {
             CheckDisposed();
@@ -69,6 +81,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawRectangle_(IntPtr obj, NativeApiTypes.RectangleF rectangle, IntPtr pen);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_FillEllipse_(IntPtr obj, NativeApiTypes.RectangleF bounds, IntPtr brush);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DrawEllipse_(IntPtr obj, NativeApiTypes.RectangleF bounds, IntPtr pen);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawText_(IntPtr obj, string text, NativeApiTypes.PointF origin, IntPtr font, IntPtr brush);

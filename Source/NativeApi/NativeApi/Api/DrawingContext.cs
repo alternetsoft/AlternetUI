@@ -11,6 +11,10 @@ namespace NativeApi.Api
 
         public void DrawRectangle(RectangleF rectangle, Pen pen) => throw new Exception();
 
+        public void FillEllipse(RectangleF bounds, Brush brush) => throw new Exception();
+
+        public void DrawEllipse(RectangleF bounds, Pen pen) => throw new Exception();
+
         public void DrawText(string text, PointF origin, Font font, Brush brush) => throw new Exception();
 
         public void DrawImage(Image image, PointF origin) => throw new Exception();
