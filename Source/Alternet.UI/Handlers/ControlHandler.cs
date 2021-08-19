@@ -640,8 +640,11 @@ namespace Alternet.UI
         private void Control_VisibleChanged(object? sender, EventArgs e)
         {
             ApplyVisible();
-            Control.Parent?.PerformLayout();
+            if (NeedRelayoutParentOnVisibleChanged)
+                Control.Parent?.PerformLayout();
         }
+
+        private protected virtual bool NeedRelayoutParentOnVisibleChanged => !(Control.Parent is TabControl); // todo
 
         private Color GetBrushColor(Brush? brush)
         {
