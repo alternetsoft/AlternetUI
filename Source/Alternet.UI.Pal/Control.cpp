@@ -381,6 +381,7 @@ namespace Alternet::UI
         wxRect rect(fromDip(value, wxWindow));
         wxWindow->SetPosition(rect.GetPosition());
         wxWindow->SetSize(rect.GetSize());
+        wxWindow->Refresh();
     }
 
     void Control::OnPaint(wxPaintEvent& event)
