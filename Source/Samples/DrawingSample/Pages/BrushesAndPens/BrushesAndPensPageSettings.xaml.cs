@@ -20,13 +20,29 @@ namespace DrawingSample
             new XamlLoader().LoadExisting(xamlStream, this);
             this.page = page;
 
-            ((Slider)FindControl("shapeCountSlider")).ValueChanged += ShapeCountSlider_ValueChanged;
-            ((Slider)FindControl("brushColorHueSlider")).ValueChanged += BrushColorHueSlider_ValueChanged;
-            ((Slider)FindControl("penColorHueSlider")).ValueChanged += PenColorHueSlider_ValueChanged;
-            ((Slider)FindControl("penWidthSlider")).ValueChanged += PenWidthSlider_ValueChanged;
+            var shapeCountSlider = (Slider)FindControl("shapeCountSlider");
+            shapeCountSlider.Value = page.ShapeCount;
+            shapeCountSlider.ValueChanged += ShapeCountSlider_ValueChanged;
 
-            ((CheckBox)FindControl("rectanglesCheckBox")).CheckedChanged += (o, e) => ApplyIncludedShape(BrushesAndPensPage.AllShapeTypes.Rectangle, ((CheckBox)o!).IsChecked);
-            ((CheckBox)FindControl("ellipsesCheckBox")).CheckedChanged += (o, e) => ApplyIncludedShape(BrushesAndPensPage.AllShapeTypes.Ellipse, ((CheckBox)o!).IsChecked);
+            var brushColorHueSlider = (Slider)FindControl("brushColorHueSlider");
+            brushColorHueSlider.Value = (int)MapRanges(page.BrushColorHue, 0, 1, brushColorHueSlider.Minimum, brushColorHueSlider.Maximum);
+            brushColorHueSlider.ValueChanged += BrushColorHueSlider_ValueChanged;
+
+            var penColorHueSlider = (Slider)FindControl("penColorHueSlider");
+            penColorHueSlider.Value = (int)MapRanges(page.PenColorHue, 0, 1, brushColorHueSlider.Minimum, brushColorHueSlider.Maximum);
+            penColorHueSlider.ValueChanged += PenColorHueSlider_ValueChanged;
+
+            var penWidthSlider = (Slider)FindControl("penWidthSlider");
+            penWidthSlider.Value = (int)page.PenWidth;
+            penWidthSlider.ValueChanged += PenWidthSlider_ValueChanged;
+
+            var rectanglesCheckBox = (CheckBox)FindControl("rectanglesCheckBox");
+            rectanglesCheckBox.IsChecked = IsShapeIncluded(BrushesAndPensPage.AllShapeTypes.Rectangle);
+            rectanglesCheckBox.CheckedChanged += (o, e) => ApplyIncludedShape(BrushesAndPensPage.AllShapeTypes.Rectangle, ((CheckBox)o!).IsChecked);
+
+            var ellipsesCheckBox = (CheckBox)FindControl("ellipsesCheckBox");
+            ellipsesCheckBox.IsChecked = IsShapeIncluded(BrushesAndPensPage.AllShapeTypes.Ellipse);
+            ellipsesCheckBox.CheckedChanged += (o, e) => ApplyIncludedShape(BrushesAndPensPage.AllShapeTypes.Ellipse, ((CheckBox)o!).IsChecked);
 
             brushComboBox = (ComboBox)FindControl("brushComboBox");
             foreach (var brushType in Enum.GetValues(typeof(BrushesAndPensPage.BrushType)))
@@ -50,8 +66,10 @@ namespace DrawingSample
             dashStyleComboBox.SelectedItem = page.PenDashStyle;
 
             dashStyleComboBox.SelectedItemChanged += DashStyleComboBox_SelectedItemChanged;
-
         }
+
+        private static double MapRanges(double value, double fromLow, double fromHigh, double toLow, double toHigh) =>
+                    ((value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow)) + toLow;
 
         private void PenWidthSlider_ValueChanged(object? sender, EventArgs e)
         {
@@ -77,12 +95,14 @@ namespace DrawingSample
 
         private void BrushColorHueSlider_ValueChanged(object? sender, EventArgs e)
         {
-            page.BrushColorHue = ((Slider)sender!).Value / 10.0;
+            var slider = (Slider)sender!;
+            page.BrushColorHue = MapRanges(slider.Value, slider.Minimum, slider.Maximum, 0, 1);
         }
 
         private void PenColorHueSlider_ValueChanged(object? sender, EventArgs e)
         {
-            page.PenColorHue = ((Slider)sender!).Value / 10.0;
+            var slider = (Slider)sender!;
+            page.PenColorHue = MapRanges(slider.Value, slider.Minimum, slider.Maximum, 0, 1);
         }
 
         private void ShapeCountSlider_ValueChanged(object? sender, EventArgs e)
@@ -101,5 +121,7 @@ namespace DrawingSample
 
             page.IncludedShapes = shapes.ToArray();
         }
+
+        private bool IsShapeIncluded(BrushesAndPensPage.ShapeType shape) => page.IncludedShapes.Contains(shape);
     }
 }

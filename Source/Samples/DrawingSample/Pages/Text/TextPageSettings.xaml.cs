@@ -15,7 +15,9 @@ namespace DrawingSample
             new XamlLoader().LoadExisting(xamlStream, this);
             this.page = page;
 
-            ((Slider)FindControl("fontSizeSlider")).ValueChanged += FontSizeSlider_ValueChanged;
+            var fontSizeSlider = (Slider)FindControl("fontSizeSlider");
+            fontSizeSlider.Value = (int)page.FontSize;
+            fontSizeSlider.ValueChanged += FontSizeSlider_ValueChanged;
 
             ((CheckBox)FindControl("boldCheckBox")).CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Bold, ((CheckBox)o!).IsChecked);
             ((CheckBox)FindControl("italicCheckBox")).CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Italic, ((CheckBox)o!).IsChecked);

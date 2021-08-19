@@ -3,10 +3,10 @@
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
     <StackPanel Orientation="Vertical" Margin="5">
         <Label Text="Shape Count:" />
-        <Slider Name="shapeCountSlider" Minimum="1" Maximum="100" Value="5" Margin="0,0,0,10"/>
+        <Slider Name="shapeCountSlider" Minimum="1" Maximum="100" Margin="0,0,0,10"/>
 
-        <CheckBox Name="rectanglesCheckBox" Text="Rectangles" Margin="0,0,0,5" IsChecked="true"/>
-        <CheckBox Name="ellipsesCheckBox" Text="Ellipses" Margin="0,0,0,5" IsChecked="true"/>
+        <CheckBox Name="rectanglesCheckBox" Text="Rectangles" Margin="0,0,0,5" />
+        <CheckBox Name="ellipsesCheckBox" Text="Ellipses" Margin="0,0,0,5" />
 
         <Label Text="Brush:" Margin="0,5,0,5"/>
         <ComboBox Name="brushComboBox" IsEditable="false"/>
@@ -17,13 +17,13 @@
         </StackPanel>
 
         <Label Text="Brush Color:" Margin="0,5,0,5"/>
-        <Slider Name="brushColorHueSlider" Minimum="0" Maximum="10" Value="1" Margin="0,0,0,10"/>
+        <Slider Name="brushColorHueSlider" Minimum="0" Maximum="10" Margin="0,0,0,10"/>
 
         <Label Text="Pen Color:" Margin="0,5,0,5"/>
-        <Slider Name="penColorHueSlider" Minimum="0" Maximum="10" Value="4" Margin="0,0,0,10"/>
+        <Slider Name="penColorHueSlider" Minimum="0" Maximum="10" Margin="0,0,0,10"/>
 
         <Label Text="Pen Width:" Margin="0,5,0,5"/>
-        <Slider Name="penWidthSlider" Minimum="0" Maximum="6" Value="4" Margin="0,0,0,10"/>
+        <Slider Name="penWidthSlider" Minimum="0" Maximum="6" Margin="0,0,0,10"/>
 
         <Label Text="Pen Dash Style:" Margin="0,5,0,5" />
         <ComboBox Name="dashStyleComboBox" IsEditable="false"/>
