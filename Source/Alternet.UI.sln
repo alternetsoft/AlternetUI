@@ -11,6 +11,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Alternet.UI.Pal", "Alternet.UI.Pal\Alternet.UI.Pal.vcxproj", "{79F2529C-C711-457A-9087-325C333CDE60}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorldSample", "Samples\HelloWorldSample\HelloWorldSample.csproj", "{78ED0762-9046-468F-B010-870A6CC90834}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2} = {D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01. Components", "01. Components", "{E79FDEAE-7AAF-4EE7-ACD6-A356BB789603}"
 EndProject
@@ -29,6 +32,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExplorerUISample", "Samples\ExplorerUISample\ExplorerUISample.csproj", "{71C6B17A-19A7-4B51-914A-07E14774889D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawingSample", "Samples\DrawingSample\DrawingSample.csproj", "{9ED9FA1D-2AA3-4813-A100-DE02D541B759}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alternet.UI.Build.Tasks", "Alternet.UI.Build.Tasks\Alternet.UI.Build.Tasks.csproj", "{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -148,6 +153,18 @@ Global
 		{9ED9FA1D-2AA3-4813-A100-DE02D541B759}.Release|x64.Build.0 = Release|x64
 		{9ED9FA1D-2AA3-4813-A100-DE02D541B759}.Release|x86.ActiveCfg = Release|x86
 		{9ED9FA1D-2AA3-4813-A100-DE02D541B759}.Release|x86.Build.0 = Release|x86
+		{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}.Debug|x64.Build.0 = Debug|Any CPU
+		{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}.Debug|x86.Build.0 = Debug|Any CPU
+		{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}.Release|x64.ActiveCfg = Release|Any CPU
+		{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}.Release|x64.Build.0 = Release|Any CPU
+		{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}.Release|x86.ActiveCfg = Release|Any CPU
+		{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -162,6 +179,7 @@ Global
 		{CF2BC7A2-9997-4613-9300-32889D89B8B9} = {B3B7BFD7-CEFB-46C2-BAF5-710D858DE73B}
 		{71C6B17A-19A7-4B51-914A-07E14774889D} = {B3B7BFD7-CEFB-46C2-BAF5-710D858DE73B}
 		{9ED9FA1D-2AA3-4813-A100-DE02D541B759} = {B3B7BFD7-CEFB-46C2-BAF5-710D858DE73B}
+		{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2} = {E79FDEAE-7AAF-4EE7-ACD6-A356BB789603}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BD17D7DB-AEF9-418B-81F8-8E0920FC6FF7}

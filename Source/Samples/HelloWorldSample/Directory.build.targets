@@ -1,0 +1,46 @@
+<Project>
+
+  <PropertyGroup Condition="'$(AlternetUIBuildTaskPath)' == ''">
+    <AlternetUIBuildTaskPath Condition="'$(MSBuildRuntimeType)' != 'Core'">$(MSBuildThisFileDirectory)..\..\Alternet.UI.Build.Tasks\bin\Debug\net46</AlternetUIBuildTaskPath>
+    <AlternetUIBuildTaskPath Condition="'$(MSBuildRuntimeType)' == 'Core'">$(MSBuildThisFileDirectory)..\..\Alternet.UI.Build.Tasks\bin\Debug\netcoreapp3.1</AlternetUIBuildTaskPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="**\*.uixml" />
+  </ItemGroup>
+
+  <UsingTask TaskName="Alternet.UI.Build.Tasks.GenerateUIXmlCodeTask" AssemblyFile="$(AlternetUIBuildTaskPath)\Alternet.UI.Build.Tasks.dll" />
+
+  <Target Name="PrepareUIXml">
+    <ItemGroup>
+      <UIXml Update="@(UIXml)" DefaultCustomToolNamespace="$([MSBuild]::ValueOrDefault('$(RootNamespace).%(RelativeDir)', '').Replace('\', '.').Replace('/', '.').Trim('.'))" />
+      <UIXml Update="@(UIXml)" CustomToolNamespace="$([MSBuild]::ValueOrDefault('%(UIXml.CustomToolNamespace)', '%(DefaultCustomToolNamespace)'))" />
+      <UIXml Update="@(UIXml)" GeneratorTargetPath="$([MSBuild]::ValueOrDefault('$(IntermediateOutputPath)UIXml/%(RelativeDir)%(FileName).g.cs', '').Replace('\', '/'))" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="GenerateUIXml"
+          BeforeTargets="CoreCompile"
+          DependsOnTargets="PrepareUIXml"
+          Condition="'@(UIXml)' != '' and '$(UIXmlEnabled)' == 'true'"
+          Inputs="@(UIXml)"
+          Outputs="@(UIXml->'%(GeneratorTargetPath)')">
+
+    <Error Condition="'$(Language)' != 'C#'" Text="AlterNET UI XML generator only supports C# projects" />
+
+    <GenerateUIXmlCodeTask InputFiles="@(UIXml)" />
+
+    <ItemGroup>
+      <Compile Include="@(UIXml->'%(GeneratorTargetPath)')" Visible="false" />
+      <FileWrites Include="@(UIXml->'%(GeneratorTargetPath)')" />
+    </ItemGroup>
+
+  </Target>
+
+  <Target Name="CleanUIXml"
+          BeforeTargets="CoreClean"
+          Condition="Exists('$(IntermediateOutputPath)UIXml')">
+    <RemoveDir Directories="$(IntermediateOutputPath)UIXml" />
+  </Target>
+
+</Project>

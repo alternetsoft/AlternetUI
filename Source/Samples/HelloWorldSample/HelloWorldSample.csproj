@@ -27,12 +27,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="MainWindow.xaml" />
+      <None Remove="Directory.build.props" />
+      <None Remove="Directory.build.targets" />
       <None Remove="Resources\Car.png" />
+      <None Remove="UIXml.xml" />
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Include="MainWindow.xaml" />
       <EmbeddedResource Include="Resources\Car.png" />
     </ItemGroup>
 

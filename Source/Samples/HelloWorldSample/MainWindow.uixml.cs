@@ -7,7 +7,7 @@ using Brushes = Alternet.UI.Brushes;
 
 namespace HelloWorldSample
 {
-    internal class MainWindow : Window
+    internal partial class MainWindow : Window
     {
         private CheckBox allowCloseWindowCheckBox;
         private RadioButton option1RadioButton;
@@ -22,6 +22,8 @@ namespace HelloWorldSample
 
         public MainWindow()
         {
+            InitializeComponent();
+
             var xamlStream = typeof(MainWindow).Assembly.GetManifestResourceStream("HelloWorldSample.MainWindow.xaml");
             if (xamlStream == null)
                 throw new InvalidOperationException();

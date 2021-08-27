@@ -1,0 +1,17 @@
+<Project>
+  <PropertyGroup>
+    <UIXmlEnabled Condition="'$(UIXmlEnabled)' == ''">true</UIXmlEnabled>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <UIXml>
+      <Generator>MSBuild:Compile</Generator>
+    </UIXml>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <AvailableItemName Include="UIXml" />
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)UIXml.xml" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(EnableDefaultItems)' == 'true'">
+    <UIXml Include="**\*.uixml" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder)" />
+  </ItemGroup>
+</Project>
