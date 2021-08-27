@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Alternet.UI.Build.Tasks
 {
-    public class GenerateUIXmlCodeTask : Task
+    public class GenerateUIXmlLoaderAssemblyTask : Task
     {
         private const string LogSubcategory = "Alternet.UI.UIXml";
 
@@ -31,7 +31,7 @@ namespace Alternet.UI.Build.Tasks
 
         private static string GetValidTargetFilePath(ITaskItem inputFile)
         {
-            var targetPath = inputFile.GetMetadata("CodeGeneratorTargetPath") ?? throw new InvalidOperationException("No target path specified");
+            var targetPath = inputFile.GetMetadata("LoaderAssemblyGeneratorTargetPath") ?? throw new InvalidOperationException("No target path specified");
             Directory.CreateDirectory(Path.GetDirectoryName(targetPath) ?? throw new InvalidOperationException("Invalid target directory"));
             return targetPath;
         }
@@ -41,17 +41,16 @@ namespace Alternet.UI.Build.Tasks
             var fileContents = File.ReadAllText(inputFile.ItemSpec);
             //var defaultNamespace = inputFile.GetMetadata("CustomToolNamespace")?.Trim() ?? string.Empty;
 
-            GenerateCSharpOutput(inputFile, fileContents);
+            GenerateAssemblyOutput(inputFile, fileContents);
         }
 
-        private void GenerateCSharpOutput(ITaskItem inputFile, string fileContents)
+        private void GenerateAssemblyOutput(ITaskItem inputFile, string fileContents)
         {
             var targetPath = GetValidTargetFilePath(inputFile);
 
-            var output = CSharpUIXmlCodeGenerator.Generate(inputFile.ItemSpec, fileContents);
-            File.WriteAllText(targetPath, output);
+            File.WriteAllBytes(targetPath, new byte[] { 0x1, 0x2, 0x3 });
 
-            LogDebug($"{inputFile.ItemSpec}: Generated code.");
+            LogDebug($"{inputFile.ItemSpec}: Generated loader assembly.");
         }
 
         private void LogDebug(string message) =>

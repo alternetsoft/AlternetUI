@@ -71,15 +71,14 @@ namespace Alternet.UI
                 "http://example.com/", null);
             return parsed;
         }
-        static object s_asmLock = new object();
+        //static object s_asmLock = new object();
 
-#if !CECIL
         public XamlCompiler() : this(new SreTypeSystem())
         {
 
         }
 
-        public (Func<IServiceProvider?, object> create, Action<IServiceProvider?, object> populate) Compile(string xaml)
+        public (Func<IServiceProvider?, object> create, Action<IServiceProvider?, object> populate, Assembly) Compile(string xaml, string? targetDllFileName = null)
         {
 #if !NETCOREAPP && !NETSTANDARD
             var da = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName(Guid.NewGuid().ToString("N")),
@@ -89,7 +88,7 @@ namespace Alternet.UI
             var da = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName(Guid.NewGuid().ToString("N")), AssemblyBuilderAccess.Run);
 #endif
 
-            var dm = da.DefineDynamicModule("testasm.dll");
+            var dm = da.DefineDynamicModule(targetDllFileName == null ? "testasm.dll" : Path.GetFileName(targetDllFileName));
             var t = dm.DefineType(Guid.NewGuid().ToString("N"), TypeAttributes.Public);
             var ct = dm.DefineType(t.Name + "Context");
             var ctb = ((SreTypeSystem)_typeSystem).CreateTypeBuilder(ct);
@@ -109,19 +108,12 @@ namespace Alternet.UI
             if (created == null)
                 throw new Exception();
 
-#if !NETCOREAPP && !NETSTANDARD
             dm.CreateGlobalFunctions();
-            // Useful for debugging the actual MSIL, don't remove
-            lock (s_asmLock)
-                da.Save("testasm.dll");
-#endif
 
-            return GetCallbacks(created);
+            return GetCallbacks(created, da);
         }
-#endif
 
-        (Func<IServiceProvider?, object> create, Action<IServiceProvider?, object> populate)
-            GetCallbacks(Type created)
+        (Func<IServiceProvider?, object> create, Action<IServiceProvider?, object> populate, Assembly assembly) GetCallbacks(Type created, Assembly assembly)
         {
             var isp = Expression.Parameter(typeof(IServiceProvider));
             var createCb = Expression.Lambda<Func<IServiceProvider?, object>>(
@@ -138,7 +130,7 @@ namespace Alternet.UI
                 Expression.Call(populate, isp, Expression.Convert(epar, populate.GetParameters()[1].ParameterType)),
                 isp, epar).Compile();
 
-            return (createCb, populateCb);
+            return (createCb, populateCb, assembly);
         }
     }
 }

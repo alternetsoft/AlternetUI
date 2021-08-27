@@ -10,29 +10,50 @@
   </ItemGroup>
 
   <UsingTask TaskName="Alternet.UI.Build.Tasks.GenerateUIXmlCodeTask" AssemblyFile="$(AlternetUIBuildTaskPath)\Alternet.UI.Build.Tasks.dll" />
+  <UsingTask TaskName="Alternet.UI.Build.Tasks.GenerateUIXmlLoaderAssemblyTask" AssemblyFile="$(AlternetUIBuildTaskPath)\Alternet.UI.Build.Tasks.dll" />
 
   <Target Name="PrepareUIXml">
     <ItemGroup>
       <UIXml Update="@(UIXml)" DefaultCustomToolNamespace="$([MSBuild]::ValueOrDefault('$(RootNamespace).%(RelativeDir)', '').Replace('\', '.').Replace('/', '.').Trim('.'))" />
       <UIXml Update="@(UIXml)" CustomToolNamespace="$([MSBuild]::ValueOrDefault('%(UIXml.CustomToolNamespace)', '%(DefaultCustomToolNamespace)'))" />
-      <UIXml Update="@(UIXml)" GeneratorTargetPath="$([MSBuild]::ValueOrDefault('$(IntermediateOutputPath)UIXml/%(RelativeDir)%(FileName).g.cs', '').Replace('\', '/'))" />
+      <UIXml Update="@(UIXml)" CodeGeneratorTargetPath="$([MSBuild]::ValueOrDefault('$(IntermediateOutputPath)UIXml/%(RelativeDir)%(FileName).g.cs', '').Replace('\', '/'))" />
+      <UIXml Update="@(UIXml)" LoaderAssemblyGeneratorTargetPath="$([MSBuild]::ValueOrDefault('$(IntermediateOutputPath)UIXml/%(RelativeDir)%(FileName)-loader.dll', '').Replace('\', '/'))" />
+      <UIXml Update="@(UIXml)" LoaderAssemblyResourceName="$([MSBuild]::ValueOrDefault('UIXmlLoader.%(FileName)-loader.dll', ''))" />
     </ItemGroup>
   </Target>
 
-  <Target Name="GenerateUIXml"
+  <Target Name="GenerateUIXmlCode"
           BeforeTargets="CoreCompile"
           DependsOnTargets="PrepareUIXml"
           Condition="'@(UIXml)' != '' and '$(UIXmlEnabled)' == 'true'"
           Inputs="@(UIXml)"
-          Outputs="@(UIXml->'%(GeneratorTargetPath)')">
+          Outputs="@(UIXml->'%(CodeGeneratorTargetPath)')">
 
     <Error Condition="'$(Language)' != 'C#'" Text="AlterNET UI XML generator only supports C# projects" />
 
     <GenerateUIXmlCodeTask InputFiles="@(UIXml)" />
 
     <ItemGroup>
-      <Compile Include="@(UIXml->'%(GeneratorTargetPath)')" Visible="false" />
-      <FileWrites Include="@(UIXml->'%(GeneratorTargetPath)')" />
+      <Compile Include="@(UIXml->'%(CodeGeneratorTargetPath)')" Visible="false" />
+      <FileWrites Include="@(UIXml->'%(CodeGeneratorTargetPath)')" />
+    </ItemGroup>
+
+  </Target>
+
+          <!-- BeforeTargets="CoreCompile" -->
+  
+  <Target Name="GenerateUIXmlLoaderAssembly"
+          BeforeTargets="PrepareForBuild"
+          DependsOnTargets="PrepareUIXml"
+          Condition="'@(UIXml)' != '' and '$(UIXmlEnabled)' == 'true'"
+          Inputs="@(UIXml)"
+          Outputs="@(UIXml->'%(LoaderAssemblyGeneratorTargetPath)')">
+
+    <GenerateUIXmlLoaderAssemblyTask InputFiles="@(UIXml)" />
+
+    <ItemGroup>
+      <EmbeddedResource Include="@(UIXml->'%(LoaderAssemblyGeneratorTargetPath)')"><LogicalName>@(UIXml->'%(LoaderAssemblyResourceName)')</LogicalName></EmbeddedResource>
+      <FileWrites Include="@(UIXml->'%(LoaderAssemblyGeneratorTargetPath)')" />
     </ItemGroup>
 
   </Target>
