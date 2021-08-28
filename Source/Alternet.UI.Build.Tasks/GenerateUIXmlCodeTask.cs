@@ -38,17 +38,16 @@ namespace Alternet.UI.Build.Tasks
 
         private void TranslateFile(ITaskItem inputFile)
         {
-            var fileContents = File.ReadAllText(inputFile.ItemSpec);
-            //var defaultNamespace = inputFile.GetMetadata("CustomToolNamespace")?.Trim() ?? string.Empty;
-
-            GenerateCSharpOutput(inputFile, fileContents);
+            GenerateCSharpOutput(inputFile);
         }
 
-        private void GenerateCSharpOutput(ITaskItem inputFile, string fileContents)
+        private void GenerateCSharpOutput(ITaskItem inputFile)
         {
+            using var stream = File.OpenRead(inputFile.ItemSpec);
+            
             var document = new UIXmlDocument(
-                Path.GetFileNameWithoutExtension(inputFile.ItemSpec),
-                inputFile.GetMetadata("ResourceName") ?? throw new InvalidOperationException("No resource name specified"));
+                inputFile.GetMetadata("ResourceName") ?? throw new InvalidOperationException("No resource name specified"),
+                stream);
 
             var output = CSharpUIXmlCodeGenerator.Generate(document);
             

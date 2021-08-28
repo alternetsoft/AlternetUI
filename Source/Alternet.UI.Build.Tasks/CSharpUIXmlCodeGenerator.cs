@@ -15,11 +15,11 @@ namespace Alternet.UI.Build.Tasks
             w.WriteLine(@"
 using System;
 ");
-            w.WriteLine("namespace HelloWorldSample");
+            w.WriteLine($"namespace {document.ClassNamespaceName}");
 
             using (new BlockIndent(w))
             {
-                w.WriteLine($"partial class {document.ClassName} : Alternet.UI.Window");
+                w.WriteLine($"partial class {document.ClassName} : {document.BaseClassFullName}");
                 using (new BlockIndent(w))
                 {
                     w.WriteLine("private bool contentLoaded;");
