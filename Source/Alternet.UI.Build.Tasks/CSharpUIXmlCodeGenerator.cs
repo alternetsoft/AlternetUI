@@ -5,7 +5,7 @@ namespace Alternet.UI.Build.Tasks
 {
     static class CSharpUIXmlCodeGenerator
     {
-        public static string Generate(string uiXmlFileName, string uiXmlFileContents)
+        public static string Generate(UIXmlDocument document)
         {
             var codeWriter = new StringWriter();
             var w = new IndentedTextWriter(codeWriter);
@@ -19,7 +19,7 @@ using System;
 
             using (new BlockIndent(w))
             {
-                w.WriteLine($"partial class {Path.GetFileNameWithoutExtension(uiXmlFileName)} : Alternet.UI.Window");
+                w.WriteLine($"partial class {document.ClassName} : Alternet.UI.Window");
                 using (new BlockIndent(w))
                 {
                     w.WriteLine("private bool contentLoaded;");
@@ -28,8 +28,16 @@ using System;
                     w.WriteLine("public void InitializeComponent()");
                     using (new BlockIndent(w))
                     {
-                        w.WriteLine("if (contentLoaded) return;");
+                        w.WriteLine("if (contentLoaded)");
+                        using (new LineIndent(w))
+                            w.WriteLine("return;");
                         w.WriteLine("contentLoaded = true;");
+
+                        w.WriteLine($"var uixmlStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(\"{document.ResourceName}\");");
+                        w.WriteLine("if (uixmlStream == null)");
+                        using (new LineIndent(w))
+                            w.WriteLine("throw new InvalidOperationException();");
+                        w.WriteLine("new Alternet.UI.XamlLoader().LoadExisting(uixmlStream, this);");
                     }
                 }
             }

@@ -51,7 +51,6 @@
     <GenerateUIXmlResourceTask InputFiles="@(UIXml)" />
 
     <ItemGroup>
-      <!-- <EmbeddedResource Include="@(UIXml->'%(ResourceGeneratorTargetPath)')"><LogicalName>@(UIXml->'%(ResourceName)')</LogicalName></EmbeddedResource> -->
       <EmbeddedResource Include="@(UIXml->'%(ResourceGeneratorTargetPath)')"><LogicalName>$([MSBuild]::ValueOrDefault('%(RelativeDir)%(FileName)%(Extension)', '').Replace('\', '/').Replace('/', '.'))</LogicalName></EmbeddedResource>
       <FileWrites Include="@(UIXml->'%(ResourceGeneratorTargetPath)')" />
     </ItemGroup>

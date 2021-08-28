@@ -46,10 +46,13 @@ namespace Alternet.UI.Build.Tasks
 
         private void GenerateCSharpOutput(ITaskItem inputFile, string fileContents)
         {
-            var targetPath = GetValidTargetFilePath(inputFile);
+            var document = new UIXmlDocument(
+                Path.GetFileNameWithoutExtension(inputFile.ItemSpec),
+                inputFile.GetMetadata("ResourceName") ?? throw new InvalidOperationException("No resource name specified"));
 
-            var output = CSharpUIXmlCodeGenerator.Generate(inputFile.ItemSpec, fileContents);
-            File.WriteAllText(targetPath, output);
+            var output = CSharpUIXmlCodeGenerator.Generate(document);
+            
+            File.WriteAllText(GetValidTargetFilePath(inputFile), output);
 
             LogDebug($"{inputFile.ItemSpec}: Generated code.");
         }

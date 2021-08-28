@@ -24,11 +24,6 @@ namespace HelloWorldSample
         {
             InitializeComponent();
 
-            var xamlStream = typeof(MainWindow).Assembly.GetManifestResourceStream("MainWindow.uixml");
-            if (xamlStream == null)
-                throw new InvalidOperationException();
-            new XamlLoader().LoadExisting(xamlStream, this);
-
             allowCloseWindowCheckBox = (CheckBox)FindControl("allowCloseWindowCheckBox");
             option1RadioButton = (RadioButton)FindControl("option1RadioButton");
             textBox = (TextBox)FindControl("textBox");
