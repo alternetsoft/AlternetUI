@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace Alternet.UI.Build.Tasks
@@ -8,7 +10,12 @@ namespace Alternet.UI.Build.Tasks
     {
         private const string UINamespace = "http://schemas.alternetsoft.com/ui";
         private const string UIXmlNamespace = "http://schemas.alternetsoft.com/uixml";
+        private const string ClassAttributeNotFound = "x:Class attribute on root node was not found.";
+        private static readonly XName classAttributeName = (XNamespace)UIXmlNamespace + "Class";
+        private readonly Stream xmlContent;
         private XDocument document;
+
+        private XDocument? sanitizedDocument;
 
         private string? baseClassFullName;
 
@@ -16,11 +23,18 @@ namespace Alternet.UI.Build.Tasks
 
         private string? classNamespaceName;
 
+        private IReadOnlyList<NamedObject>? namedObjects;
+
         public UIXmlDocument(string resourceName, Stream xmlContent)
         {
             ResourceName = resourceName;
+            this.xmlContent = xmlContent;
             document = XDocument.Load(xmlContent);
+
+            xmlContent.Position = 0;
         }
+
+        public XDocument SanitizedDocument => sanitizedDocument ??= Sanitize(XDocument.Load(xmlContent));
 
         public string BaseClassFullName => baseClassFullName ??= GetBaseClassFullName();
 
@@ -29,6 +43,8 @@ namespace Alternet.UI.Build.Tasks
         public string ClassNamespaceName => classNamespaceName ??= GetClassNamespaceName();
 
         public string ResourceName { get; }
+
+        public IReadOnlyList<NamedObject> NamedObjects => namedObjects ??= GetNamedObjects().ToArray();
 
         public bool IsValidIdentifier(string text)
         {
@@ -40,6 +56,23 @@ namespace Alternet.UI.Build.Tasks
                 if (!char.IsLetterOrDigit(text[ix]) && text[ix] != '_')
                     return false;
             return true;
+        }
+
+        private XDocument Sanitize(XDocument document)
+        {
+            var attribute = document.Root.Attribute(classAttributeName);
+            if (attribute == null)
+                throw new Exception(ClassAttributeNotFound);
+            attribute.Remove();
+            return document;
+        }
+
+        private IEnumerable<NamedObject> GetNamedObjects()
+        {
+            const string NameAttributeName = "Name";
+            var namedElements = document.Root.DescendantsAndSelf().Where(e => e.Attributes().Any(a => a.Name == NameAttributeName));
+            return namedElements.Select(
+                x => new NamedObject(GetTypeFullName(x.Name), x.Attribute(NameAttributeName).Value));
         }
 
         private string GetBaseClassFullName()
@@ -54,9 +87,9 @@ namespace Alternet.UI.Build.Tasks
 
         private string GetClassFullName()
         {
-            var attribute = document.Root.Attribute((XNamespace)UIXmlNamespace + "Class");
+            var attribute = document.Root.Attribute(classAttributeName);
             if (attribute == null)
-                throw new Exception("x:Class attribute on root node was not found.");
+                throw new Exception(ClassAttributeNotFound);
             return attribute.Value;
         }
 
@@ -122,6 +155,19 @@ namespace Alternet.UI.Build.Tasks
                 throw new Exception($"'{value}' is not a valid CLR namespace name.");
 
             return value;
+        }
+
+        public class NamedObject
+        {
+            public NamedObject(string typeFullName, string name)
+            {
+                TypeFullName = typeFullName;
+                Name = name;
+            }
+
+            public string TypeFullName { get; }
+
+            public string Name { get; }
         }
     }
 }

@@ -22,6 +22,11 @@ using System;
                 w.WriteLine($"partial class {document.ClassName} : {document.BaseClassFullName}");
                 using (new BlockIndent(w))
                 {
+                    var namedObjects = document.NamedObjects;
+                    foreach (var namedObject in namedObjects)
+                        w.WriteLine($"private {namedObject.TypeFullName} {namedObject.Name};");
+
+                    w.WriteLine();
                     w.WriteLine("private bool contentLoaded;");
                     w.WriteLine();
                     w.WriteLine("[System.Diagnostics.DebuggerNonUserCodeAttribute()]");
@@ -38,6 +43,10 @@ using System;
                         using (new LineIndent(w))
                             w.WriteLine("throw new InvalidOperationException();");
                         w.WriteLine("new Alternet.UI.XamlLoader().LoadExisting(uixmlStream, this);");
+
+                        w.WriteLine();
+                        foreach (var namedObject in namedObjects)
+                            w.WriteLine($"{namedObject.Name} = ({namedObject.TypeFullName})FindControl(\"{namedObject.Name}\");");
                     }
                 }
             }

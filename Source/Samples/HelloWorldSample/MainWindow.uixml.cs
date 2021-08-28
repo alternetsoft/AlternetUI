@@ -9,31 +9,9 @@ namespace HelloWorldSample
 {
     internal partial class MainWindow : Window
     {
-        private CheckBox allowCloseWindowCheckBox;
-        private RadioButton option1RadioButton;
-        private TextBox textBox;
-        private CustomDrawnControl customDrawnControl;
-        private CustomCompositeControl customCompositeControl;
-        private Button redButton;
-        private Button greenButton;
-        private Button blueButton;
-        private Button systemNativeButton;
-        private Button genericLightButton;
-
         public MainWindow()
         {
             InitializeComponent();
-
-            allowCloseWindowCheckBox = (CheckBox)FindControl("allowCloseWindowCheckBox");
-            option1RadioButton = (RadioButton)FindControl("option1RadioButton");
-            textBox = (TextBox)FindControl("textBox");
-            customDrawnControl = (CustomDrawnControl)FindControl("customDrawnControl");
-            customCompositeControl = (CustomCompositeControl)FindControl("customCompositeControl");
-            redButton = (Button)FindControl("redButton");
-            greenButton = (Button)FindControl("greenButton");
-            blueButton = (Button)FindControl("blueButton");
-            systemNativeButton = (Button)FindControl("systemNativeButton");
-            genericLightButton = (Button)FindControl("genericLightButton");
 
             textBox.TextChanged += TextBox_TextChanged;
             redButton.Click += RedButton_Click;

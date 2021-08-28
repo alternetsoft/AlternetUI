@@ -46,7 +46,13 @@ namespace Alternet.UI.Build.Tasks
         private void GenerateAssemblyOutput(ITaskItem inputFile)
         {
             var targetPath = GetValidTargetFilePath(inputFile);
-            File.Copy(inputFile.ItemSpec, targetPath, overwrite: true);
+
+            using var stream = File.OpenRead(inputFile.ItemSpec);
+            var document = new UIXmlDocument(
+                inputFile.GetMetadata("ResourceName") ?? throw new InvalidOperationException("No resource name specified"),
+                stream);
+
+            document.SanitizedDocument.Save(targetPath);
 
             LogDebug($"{inputFile.ItemSpec}: Generated resource.");
         }
