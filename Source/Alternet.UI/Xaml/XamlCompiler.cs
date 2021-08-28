@@ -78,7 +78,7 @@ namespace Alternet.UI
 
         }
 
-        public (Func<IServiceProvider?, object> create, Action<IServiceProvider?, object> populate, Assembly) Compile(string xaml, string? targetDllFileName = null)
+        public (Func<IServiceProvider?, object> create, Action<IServiceProvider?, object> populate, Assembly assembly) Compile(string xaml, string? targetDllFileName = null)
         {
 #if !NETCOREAPP && !NETSTANDARD
             var da = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName(Guid.NewGuid().ToString("N")),

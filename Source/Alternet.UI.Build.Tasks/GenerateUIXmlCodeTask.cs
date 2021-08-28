@@ -7,7 +7,7 @@ namespace Alternet.UI.Build.Tasks
 {
     public class GenerateUIXmlCodeTask : Task
     {
-        private const string LogSubcategory = "Alternet.UI.UIXml";
+        private const string LogSubcategory = "Alternet.UI.UIXml.CodeGeneration";
 
         [Required]
         public ITaskItem[] InputFiles { get; set; } = default!;

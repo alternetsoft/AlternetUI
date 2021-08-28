@@ -1,4 +1,5 @@
 <Project>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 
   <PropertyGroup Condition="'$(AlternetUIBuildTaskPath)' == ''">
     <AlternetUIBuildTaskPath Condition="'$(MSBuildRuntimeType)' != 'Core'">$(MSBuildThisFileDirectory)..\..\Alternet.UI.Build.Tasks\bin\Debug\net46</AlternetUIBuildTaskPath>
@@ -10,15 +11,15 @@
   </ItemGroup>
 
   <UsingTask TaskName="Alternet.UI.Build.Tasks.GenerateUIXmlCodeTask" AssemblyFile="$(AlternetUIBuildTaskPath)\Alternet.UI.Build.Tasks.dll" />
-  <UsingTask TaskName="Alternet.UI.Build.Tasks.GenerateUIXmlLoaderAssemblyTask" AssemblyFile="$(AlternetUIBuildTaskPath)\Alternet.UI.Build.Tasks.dll" />
+  <UsingTask TaskName="Alternet.UI.Build.Tasks.GenerateUIXmlResourceTask" AssemblyFile="$(AlternetUIBuildTaskPath)\Alternet.UI.Build.Tasks.dll" />
 
   <Target Name="PrepareUIXml">
     <ItemGroup>
       <UIXml Update="@(UIXml)" DefaultCustomToolNamespace="$([MSBuild]::ValueOrDefault('$(RootNamespace).%(RelativeDir)', '').Replace('\', '.').Replace('/', '.').Trim('.'))" />
       <UIXml Update="@(UIXml)" CustomToolNamespace="$([MSBuild]::ValueOrDefault('%(UIXml.CustomToolNamespace)', '%(DefaultCustomToolNamespace)'))" />
       <UIXml Update="@(UIXml)" CodeGeneratorTargetPath="$([MSBuild]::ValueOrDefault('$(IntermediateOutputPath)UIXml/%(RelativeDir)%(FileName).g.cs', '').Replace('\', '/'))" />
-      <UIXml Update="@(UIXml)" LoaderAssemblyGeneratorTargetPath="$([MSBuild]::ValueOrDefault('$(IntermediateOutputPath)UIXml/%(RelativeDir)%(FileName)-loader.dll', '').Replace('\', '/'))" />
-      <UIXml Update="@(UIXml)" LoaderAssemblyResourceName="$([MSBuild]::ValueOrDefault('UIXmlLoader.%(FileName)-loader.dll', ''))" />
+      <UIXml Update="@(UIXml)" ResourceGeneratorTargetPath="$([MSBuild]::ValueOrDefault('$(IntermediateOutputPath)UIXml/%(RelativeDir)%(FileName)%(Extension)', '').Replace('\', '/'))" />
+      <UIXml Update="@(UIXml)" ResourceName="$([MSBuild]::ValueOrDefault('%(RelativeDir)%(FileName)%(Extension)', '').Replace('\', '/').Replace('/', '.'))" />
     </ItemGroup>
   </Target>
 
@@ -39,21 +40,20 @@
     </ItemGroup>
 
   </Target>
-
-          <!-- BeforeTargets="CoreCompile" -->
   
-  <Target Name="GenerateUIXmlLoaderAssembly"
+  <Target Name="GenerateUIXmlResource"
           BeforeTargets="PrepareForBuild"
           DependsOnTargets="PrepareUIXml"
           Condition="'@(UIXml)' != '' and '$(UIXmlEnabled)' == 'true'"
           Inputs="@(UIXml)"
-          Outputs="@(UIXml->'%(LoaderAssemblyGeneratorTargetPath)')">
+          Outputs="@(UIXml->'%(ResourceGeneratorTargetPath)')">
 
-    <GenerateUIXmlLoaderAssemblyTask InputFiles="@(UIXml)" />
+    <GenerateUIXmlResourceTask InputFiles="@(UIXml)" />
 
     <ItemGroup>
-      <EmbeddedResource Include="@(UIXml->'%(LoaderAssemblyGeneratorTargetPath)')"><LogicalName>@(UIXml->'%(LoaderAssemblyResourceName)')</LogicalName></EmbeddedResource>
-      <FileWrites Include="@(UIXml->'%(LoaderAssemblyGeneratorTargetPath)')" />
+      <!-- <EmbeddedResource Include="@(UIXml->'%(ResourceGeneratorTargetPath)')"><LogicalName>@(UIXml->'%(ResourceName)')</LogicalName></EmbeddedResource> -->
+      <EmbeddedResource Include="@(UIXml->'%(ResourceGeneratorTargetPath)')"><LogicalName>$([MSBuild]::ValueOrDefault('%(RelativeDir)%(FileName)%(Extension)', '').Replace('\', '/').Replace('/', '.'))</LogicalName></EmbeddedResource>
+      <FileWrites Include="@(UIXml->'%(ResourceGeneratorTargetPath)')" />
     </ItemGroup>
 
   </Target>
