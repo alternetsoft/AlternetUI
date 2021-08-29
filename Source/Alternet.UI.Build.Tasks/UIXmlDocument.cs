@@ -23,6 +23,8 @@ namespace Alternet.UI.Build.Tasks
 
         private string? classNamespaceName;
 
+        private IReadOnlyList<EventBinding>? eventBindings;
+
         private IReadOnlyList<NamedObject>? namedObjects;
 
         public UIXmlDocument(string resourceName, Stream xmlContent)
@@ -46,6 +48,8 @@ namespace Alternet.UI.Build.Tasks
 
         public IReadOnlyList<NamedObject> NamedObjects => namedObjects ??= GetNamedObjects().ToArray();
 
+        public IReadOnlyList<EventBinding> EventBindings => eventBindings ??= GetEventBindings().ToArray();
+
         public bool IsValidIdentifier(string text)
         {
             if (string.IsNullOrEmpty(text))
@@ -58,12 +62,20 @@ namespace Alternet.UI.Build.Tasks
             return true;
         }
 
+        private IEnumerable<EventBinding> GetEventBindings() => throw new NotImplementedException();
+
         private XDocument Sanitize(XDocument document)
         {
-            var attribute = document.Root.Attribute(classAttributeName);
-            if (attribute == null)
-                throw new Exception(ClassAttributeNotFound);
-            attribute.Remove();
+            static void RemoveClassAttribute(XDocument document)
+            {
+                var attribute = document.Root.Attribute(classAttributeName);
+                if (attribute == null)
+                    throw new Exception(ClassAttributeNotFound);
+                attribute.Remove();
+            }
+
+            RemoveClassAttribute(document);
+
             return document;
         }
 
@@ -157,7 +169,7 @@ namespace Alternet.UI.Build.Tasks
             return value;
         }
 
-        public class NamedObject
+        public sealed class NamedObject
         {
             public NamedObject(string typeFullName, string name)
             {
@@ -168,6 +180,36 @@ namespace Alternet.UI.Build.Tasks
             public string TypeFullName { get; }
 
             public string Name { get; }
+        }
+
+        public abstract class EventBinding
+        {
+            protected EventBinding(string eventName)
+            {
+                EventName = eventName;
+            }
+
+            public string EventName { get; }
+        }
+
+        public sealed class NamedObjectEventBinding : EventBinding
+        {
+            public NamedObjectEventBinding(string eventName, string objectName) : base(eventName)
+            {
+                ObjectName = objectName;
+            }
+
+            public string ObjectName { get; }
+        }
+
+        public sealed class IndexedObjectEventBinding : EventBinding
+        {
+            public IndexedObjectEventBinding(string eventName, IReadOnlyList<int> objectIndices) : base(eventName)
+            {
+                ObjectIndices = objectIndices;
+            }
+
+            public IReadOnlyList<int> ObjectIndices { get; }
         }
     }
 }
