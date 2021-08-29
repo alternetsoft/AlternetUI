@@ -2,11 +2,11 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <EmbeddedResource Update="Pages\BrushesAndPens\BrushesAndPensPageSettings.xaml">
+    <UIXml Update="Pages\BrushesAndPens\BrushesAndPensPageSettings.uixml">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Pages\Text\TextPageSettings.xaml">
+    </UIXml>
+    <UIXml Update="Pages\Text\TextPageSettings.uixml">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
+    </UIXml>
   </ItemGroup>
 </Project>

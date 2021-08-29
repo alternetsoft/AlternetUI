@@ -6,16 +6,13 @@ using System.Linq;
 
 namespace ControlsSample
 {
-    internal class MainWindow : Window, IPageSite
+    partial class MainWindow : Window, IPageSite
     {
-        private ListBox eventsListBox;
+        ListBox eventsListBox;
 
         public MainWindow()
         {
-            var xamlStream = typeof(MainWindow).Assembly.GetManifestResourceStream("ControlsSample.MainWindow.xaml");
-            if (xamlStream == null)
-                throw new InvalidOperationException();
-            new XamlLoader().LoadExisting(xamlStream, this);
+            InitializeComponent();
 
             eventsListBox = new ListBox();
 

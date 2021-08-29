@@ -27,8 +27,14 @@
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Include="MainWindow.xaml" />
-      <EmbeddedResource Include="ProgressWindow.xaml" />
+      <Compile Remove="MainWindow.xaml.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="MainWindow.uixml" />
+    </ItemGroup>
+
+    <ItemGroup>
       <EmbeddedResource Include="Resources\Document_16x.png" />
       <EmbeddedResource Include="Resources\FolderClosed_16x.png" />
       <EmbeddedResource Include="Resources\Report_16x.png" />

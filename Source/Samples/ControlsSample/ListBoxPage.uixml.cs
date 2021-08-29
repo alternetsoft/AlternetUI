@@ -3,31 +3,24 @@ using System;
 
 namespace ControlsSample
 {
-    internal class ListBoxPage : Control
+    partial class ListBoxPage : Control
     {
-        private ListBox listBox;
-        private CheckBox allowMultipleSelectionCheckBox;
         private readonly IPageSite site;
 
         public ListBoxPage(IPageSite site)
         {
-            var xamlStream = typeof(MainWindow).Assembly.GetManifestResourceStream("ControlsSample.ListBoxPage.xaml");
-            if (xamlStream == null)
-                throw new InvalidOperationException();
-            new XamlLoader().LoadExisting(xamlStream, this);
+            InitializeComponent();
 
-            listBox = (ListBox)FindControl("listBox");
             listBox.SelectionChanged += ListBox_SelectionChanged;
 
             listBox.Items.Add("One");
             listBox.Items.Add("Two");
             listBox.Items.Add("Three");
 
-            ((Button)FindControl("addItemButton")).Click += AddItemButton_Click;
-            ((Button)FindControl("removeItemButton")).Click += RemoveItemButton_Click;
-            ((Button)FindControl("addManyItemsButton")).Click += AddManyItemsButton_Click;
+            addItemButton.Click += AddItemButton_Click;
+            removeItemButton.Click += RemoveItemButton_Click;
+            addManyItemsButton.Click += AddManyItemsButton_Click;
 
-            allowMultipleSelectionCheckBox = (CheckBox)FindControl("allowMultipleSelectionCheckBox");
             allowMultipleSelectionCheckBox.CheckedChanged += AllowMultipleSelectionCheckBox_CheckedChanged;
             this.site = site;
         }

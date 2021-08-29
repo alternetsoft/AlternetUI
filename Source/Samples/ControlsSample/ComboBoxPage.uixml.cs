@@ -3,22 +3,16 @@ using System;
 
 namespace ControlsSample
 {
-    internal class ComboBoxPage : Control
+    partial class ComboBoxPage : Control
     {
-        private ComboBox comboBox;
-        private CheckBox allowTextEditingCheckBox;
         private readonly IPageSite site;
 
         public ComboBoxPage(IPageSite site)
         {
+            InitializeComponent();
+
             this.site = site;
 
-            var xamlStream = typeof(MainWindow).Assembly.GetManifestResourceStream("ControlsSample.ComboBoxPage.xaml");
-            if (xamlStream == null)
-                throw new InvalidOperationException();
-            new XamlLoader().LoadExisting(xamlStream, this);
-
-            comboBox = (ComboBox)FindControl("comboBox");
             comboBox.SelectedItemChanged += ComboBox_SelectionChanged;
             comboBox.TextChanged += ComboBox_TextChanged;
 
@@ -27,14 +21,13 @@ namespace ControlsSample
             comboBox.Items.Add("Three");
             comboBox.SelectedIndex = 1;
 
-            ((Button)FindControl("addItemButton")).Click += AddItemButton_Click;
-            ((Button)FindControl("removeItemButton")).Click += RemoveItemButton_Click;
-            ((Button)FindControl("addManyItemsButton")).Click += AddManyItemsButton_Click;
-            ((Button)FindControl("setTextToEmptyStringButton")).Click += SetTextToEmptyStringButton_Click;
-            ((Button)FindControl("setSelectedIndexTo2Button")).Click += SetSelectedIndexTo2_Click;
-            ((Button)FindControl("setSelectedItemToNullButton")).Click += SetSelectedItemToNullButton_Click;
+            addItemButton.Click += AddItemButton_Click;
+            removeItemButton.Click += RemoveItemButton_Click;
+            addManyItemsButton.Click += AddManyItemsButton_Click;
+            setTextToEmptyStringButton.Click += SetTextToEmptyStringButton_Click;
+            setSelectedIndexTo2Button.Click += SetSelectedIndexTo2_Click;
+            setSelectedItemToNullButton.Click += SetSelectedItemToNullButton_Click;
 
-            allowTextEditingCheckBox = (CheckBox)FindControl("allowTextEditingCheckBox");
             allowTextEditingCheckBox.CheckedChanged += AllowTextEditingCheckBox_CheckedChanged;
         }
 

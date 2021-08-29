@@ -4,20 +4,14 @@ using System.Linq;
 
 namespace ControlsSample
 {
-    internal class TreeViewPage : Control
+    partial class TreeViewPage : Control
     {
         private readonly IPageSite site;
-        private TreeView treeView;
-        private CheckBox allowMultipleSelectionCheckBox;
 
         public TreeViewPage(IPageSite site)
         {
-            var xamlStream = typeof(MainWindow).Assembly.GetManifestResourceStream("ControlsSample.TreeViewPage.xaml");
-            if (xamlStream == null)
-                throw new InvalidOperationException();
-            new XamlLoader().LoadExisting(xamlStream, this);
+            InitializeComponent();
 
-            treeView = (TreeView)FindControl("treeView");
             treeView.SelectionChanged += TreeView_SelectionChanged;
             treeView.ExpandedChanged += TreeView_ExpandedChanged;
 
@@ -25,9 +19,9 @@ namespace ControlsSample
 
             AddItems(10);
 
-            ((Button)FindControl("addItemButton")).Click += AddItemButton_Click;
-            ((Button)FindControl("removeItemButton")).Click += RemoveItemButton_Click;
-            ((Button)FindControl("addManyItemsButton")).Click += AddManyItemsButton_Click;
+            addItemButton.Click += AddItemButton_Click;
+            removeItemButton.Click += RemoveItemButton_Click;
+            addManyItemsButton.Click += AddManyItemsButton_Click;
 
             allowMultipleSelectionCheckBox = (CheckBox)FindControl("allowMultipleSelectionCheckBox");
             allowMultipleSelectionCheckBox.CheckedChanged += AllowMultipleSelectionCheckBox_CheckedChanged;

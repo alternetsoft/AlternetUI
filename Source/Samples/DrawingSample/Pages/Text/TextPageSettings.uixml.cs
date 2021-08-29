@@ -3,28 +3,24 @@ using System;
 
 namespace DrawingSample
 {
-    internal class TextPageSettings : Control
+    partial class TextPageSettings : Control
     {
         private readonly TextPage page;
 
         public TextPageSettings(TextPage page)
         {
-            var xamlStream = typeof(MainWindow).Assembly.GetManifestResourceStream("DrawingSample.Pages.Text.TextPageSettings.xaml");
-            if (xamlStream == null)
-                throw new InvalidOperationException();
-            new XamlLoader().LoadExisting(xamlStream, this);
+            InitializeComponent();
+
             this.page = page;
 
-            var fontSizeSlider = (Slider)FindControl("fontSizeSlider");
             fontSizeSlider.Value = (int)page.FontSize;
             fontSizeSlider.ValueChanged += FontSizeSlider_ValueChanged;
 
-            ((CheckBox)FindControl("boldCheckBox")).CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Bold, ((CheckBox)o!).IsChecked);
-            ((CheckBox)FindControl("italicCheckBox")).CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Italic, ((CheckBox)o!).IsChecked);
-            ((CheckBox)FindControl("underlinedCheckBox")).CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Underlined, ((CheckBox)o!).IsChecked);
-            ((CheckBox)FindControl("strikethroughCheckBox")).CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Strikethrough, ((CheckBox)o!).IsChecked);
+            boldCheckBox.CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Bold, ((CheckBox)o!).IsChecked);
+            italicCheckBox.CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Italic, ((CheckBox)o!).IsChecked);
+            underlinedCheckBox.CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Underlined, ((CheckBox)o!).IsChecked);
+            strikethroughCheckBox.CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Strikethrough, ((CheckBox)o!).IsChecked);
 
-            var customFontFamilyComboBox = (ComboBox)FindControl("customFontFamilyComboBox");
             foreach (var family in FontFamily.Families)
                 customFontFamilyComboBox.Items.Add(family.Name);
 

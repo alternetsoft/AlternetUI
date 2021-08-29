@@ -1,5 +1,6 @@
-﻿<Control xmlns="http://schemas.alternetsoft.com/ui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+﻿<Control x:Class="DrawingSample.TextPageSettings"
+        xmlns="http://schemas.alternetsoft.com/ui"
+        xmlns:x="http://schemas.alternetsoft.com/uixml"
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
     <StackPanel Orientation="Vertical" Margin="5">
         <Label Text="Font Size" />

@@ -27,13 +27,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Directory.build.props" />
-      <None Remove="Directory.build.targets" />
-      <None Remove="Resources\Car.png" />
-      <None Remove="UIXml.xml" />
-    </ItemGroup>
-
-    <ItemGroup>
       <EmbeddedResource Include="Resources\Car.png" />
     </ItemGroup>
 

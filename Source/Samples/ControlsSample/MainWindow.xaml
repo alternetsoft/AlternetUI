@@ -1,6 +1,0 @@
-﻿<Window xmlns="http://schemas.alternetsoft.com/ui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample"
-        Title="Alternet UI Controls Sample"
-        >
-</Window>

@@ -27,19 +27,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Pages\BrushesAndPens\BrushesAndPensPageSettings.xaml" />
-      <None Remove="Pages\Text\TextPageSettings.xaml" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Include="MainWindow.xaml" />
-      <EmbeddedResource Include="Pages\BrushesAndPens\BrushesAndPensPageSettings.xaml">
-        <SubType>Designer</SubType>
-        <Generator>MSBuild:Compile</Generator>
-      </EmbeddedResource>
-      <EmbeddedResource Include="Pages\Text\TextPageSettings.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </EmbeddedResource>
+      <None Remove="Pages\BrushesAndPens\BrushesAndPensPageSettings.uixml" />
+      <None Remove="Pages\Text\TextPageSettings.uixml" />
     </ItemGroup>
 
   <ItemGroup>
@@ -49,4 +38,14 @@
   <ItemGroup>
         <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
     </ItemGroup>
+
+  <ItemGroup>
+    <UIXml Update="Pages\BrushesAndPens\BrushesAndPensPageSettings.uixml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </UIXml>
+    <UIXml Update="Pages\Text\TextPageSettings.uixml">
+      <Generator>MSBuild:Compile</Generator>
+    </UIXml>
+  </ItemGroup>
 </Project>

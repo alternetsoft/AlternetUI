@@ -6,21 +6,14 @@ using System.Reflection;
 
 namespace ControlsSample
 {
-    internal class ListViewPage : Control
+    partial class ListViewPage : Control
     {
-        private ListView listView;
-        private ComboBox viewComboBox;
-        private CheckBox allowMultipleSelectionCheckBox;
         private readonly IPageSite site;
 
         public ListViewPage(IPageSite site)
         {
-            var xamlStream = typeof(MainWindow).Assembly.GetManifestResourceStream("ControlsSample.ListViewPage.xaml");
-            if (xamlStream == null)
-                throw new InvalidOperationException();
-            new XamlLoader().LoadExisting(xamlStream, this);
+            InitializeComponent();
 
-            listView = (ListView)FindControl("listView");
             listView.SelectionChanged += ListView_SelectionChanged;
 
             var imageLists = ResourceLoader.LoadImageLists();
@@ -32,14 +25,12 @@ namespace ControlsSample
 
             AddItems(10);
 
-            ((Button)FindControl("addItemButton")).Click += AddItemButton_Click;
-            ((Button)FindControl("removeItemButton")).Click += RemoveItemButton_Click;
-            ((Button)FindControl("addManyItemsButton")).Click += AddManyItemsButton_Click;
+            addItemButton.Click += AddItemButton_Click;
+            removeItemButton.Click += RemoveItemButton_Click;
+            addManyItemsButton.Click += AddManyItemsButton_Click;
 
-            allowMultipleSelectionCheckBox = (CheckBox)FindControl("allowMultipleSelectionCheckBox");
             allowMultipleSelectionCheckBox.CheckedChanged += AllowMultipleSelectionCheckBox_CheckedChanged;
 
-            viewComboBox = (ComboBox)FindControl("viewComboBox");
             viewComboBox.SelectedItemChanged += ViewComboBox_SelectedItemChanged;
             foreach(var item in Enum.GetValues(typeof(ListViewView)))
                 viewComboBox.Items.Add(item ?? throw new Exception());

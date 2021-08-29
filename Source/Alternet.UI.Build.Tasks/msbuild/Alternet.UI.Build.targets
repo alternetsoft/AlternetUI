@@ -1,14 +1,12 @@
 <Project>
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
-
   <PropertyGroup Condition="'$(AlternetUIBuildTaskPath)' == ''">
-    <AlternetUIBuildTaskPath Condition="'$(MSBuildRuntimeType)' != 'Core'">$(MSBuildThisFileDirectory)..\..\Alternet.UI.Build.Tasks\bin\Debug\net46</AlternetUIBuildTaskPath>
-    <AlternetUIBuildTaskPath Condition="'$(MSBuildRuntimeType)' == 'Core'">$(MSBuildThisFileDirectory)..\..\Alternet.UI.Build.Tasks\bin\Debug\netcoreapp3.1</AlternetUIBuildTaskPath>
+    <AlternetUIBuildTaskPath Condition="'$(MSBuildRuntimeType)' != 'Core'">$(AlternetUIBuildTaskAllPlatformsPath)\net46</AlternetUIBuildTaskPath>
+    <AlternetUIBuildTaskPath Condition="'$(MSBuildRuntimeType)' == 'Core'">$(AlternetUIBuildTaskAllPlatformsPath)\netcoreapp3.1</AlternetUIBuildTaskPath>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="**\*.uixml" />
-  </ItemGroup>
+  <!-- <ItemGroup> -->
+    <!-- <None Remove="**\*.uixml" /> -->
+  <!-- </ItemGroup> -->
 
   <UsingTask TaskName="Alternet.UI.Build.Tasks.GenerateUIXmlCodeTask" AssemblyFile="$(AlternetUIBuildTaskPath)\Alternet.UI.Build.Tasks.dll" />
   <UsingTask TaskName="Alternet.UI.Build.Tasks.GenerateUIXmlResourceTask" AssemblyFile="$(AlternetUIBuildTaskPath)\Alternet.UI.Build.Tasks.dll" />

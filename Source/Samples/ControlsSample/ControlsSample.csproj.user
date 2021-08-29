@@ -2,11 +2,11 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <EmbeddedResource Update="ComboBoxPage.xaml">
+    <UIXml Update="ComboBoxPage.uixml">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Update="ListViewPage.xaml">
+    </UIXml>
+    <UIXml Update="ListViewPage.uixml">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
+    </UIXml>
   </ItemGroup>
 </Project>

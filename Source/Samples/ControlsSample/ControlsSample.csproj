@@ -27,10 +27,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="ComboBoxPage.xaml" />
-      <None Remove="ListBoxPage.xaml" />
-      <None Remove="ListViewPage.xaml" />
-      <None Remove="MainWindow.xaml" />
+      <None Remove="ComboBoxPage.uixml" />
+      <None Remove="ListBoxPage.uixml" />
+      <None Remove="ListViewPage.uixml" />
+      <None Remove="MainWindow.uixml" />
       <None Remove="Resources\ImageListIcons\Large\Calendar32.png" />
       <None Remove="Resources\ImageListIcons\Large\LineGraph32.png" />
       <None Remove="Resources\ImageListIcons\Large\Pencil32.png" />
@@ -39,22 +39,10 @@
       <None Remove="Resources\ImageListIcons\Small\LineGraph16.png" />
       <None Remove="Resources\ImageListIcons\Small\Pencil16.png" />
       <None Remove="Resources\ImageListIcons\Small\Photo16.png" />
-      <None Remove="TreeViewPage.xaml" />
+      <None Remove="TreeViewPage.uixml" />
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Include="ComboBoxPage.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </EmbeddedResource>
-      <EmbeddedResource Include="TreeViewPage.xaml">
-        <SubType>Designer</SubType>
-        <Generator>MSBuild:Compile</Generator>
-      </EmbeddedResource>
-      <EmbeddedResource Include="ListViewPage.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </EmbeddedResource>
-      <EmbeddedResource Include="ListBoxPage.xaml" />
-      <EmbeddedResource Include="MainWindow.xaml" />
       <EmbeddedResource Include="Resources\ImageListIcons\Large\Calendar32.png" />
       <EmbeddedResource Include="Resources\ImageListIcons\Large\LineGraph32.png" />
       <EmbeddedResource Include="Resources\ImageListIcons\Large\Pencil32.png" />
@@ -67,5 +55,18 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UIXml Update="ComboBoxPage.uixml">
+        <Generator>MSBuild:Compile</Generator>
+      </UIXml>
+      <UIXml Update="ListViewPage.uixml">
+        <Generator>MSBuild:Compile</Generator>
+      </UIXml>
+      <UIXml Update="TreeViewPage.uixml">
+        <SubType>Designer</SubType>
+        <Generator>MSBuild:Compile</Generator>
+      </UIXml>
     </ItemGroup>
 </Project>

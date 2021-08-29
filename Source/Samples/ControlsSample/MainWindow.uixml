@@ -1,0 +1,7 @@
+﻿<Window x:Class="ControlsSample.MainWindow"
+        xmlns="http://schemas.alternetsoft.com/ui"
+        xmlns:x="http://schemas.alternetsoft.com/uixml"
+        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample"
+        Title="Alternet UI Controls Sample"
+        >
+</Window>

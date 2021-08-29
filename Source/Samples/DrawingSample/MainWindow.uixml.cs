@@ -3,7 +3,7 @@ using System;
 
 namespace DrawingSample
 {
-    internal class MainWindow : Window
+    partial class MainWindow : Window
     {
         private DrawingPage[] drawingPages = new DrawingPage[]
         {
@@ -13,15 +13,11 @@ namespace DrawingSample
 
         public MainWindow()
         {
-            var xamlStream = typeof(MainWindow).Assembly.GetManifestResourceStream("DrawingSample.MainWindow.xaml");
-            if (xamlStream == null)
-                throw new InvalidOperationException();
-            new XamlLoader().LoadExisting(xamlStream, this);
-
-            InitializePages((TabControl)FindControl("tabControl"));
+            InitializeComponent();
+            InitializePages();
         }
 
-        private void InitializePages(TabControl tabControl)
+        private void InitializePages()
         {
             foreach (var page in drawingPages)
                 tabControl.Pages.Add(CreateTabPage(page));

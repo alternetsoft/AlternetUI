@@ -1,6 +1,12 @@
 ﻿<Project>
     <!-- <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" /> -->
 
+    <PropertyGroup Condition="'$(AlternetUIBuildTaskAllPlatformsPath)' == ''">
+        <AlternetUIBuildTaskAllPlatformsPath>$(MSBuildThisFileDirectory)..\Alternet.UI.Build.Tasks\bin\Debug\</AlternetUIBuildTaskAllPlatformsPath>
+    </PropertyGroup>
+
+    <Import Project="$(MSBuildThisFileDirectory)..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.targets" />
+
     <PropertyGroup>
         <IsSampleProject>false</IsSampleProject>
         <IsSampleProject Condition="!($(MSBuildProjectName.EndsWith('.Test')) OR $(MSBuildProjectName.Contains('.Test.')) OR $(MSBuildProjectName.EndsWith('.Testing')) OR $(MSBuildProjectName.Contains('.Testing.')) OR $(MSBuildProjectName.Contains('.Harness.')))">true</IsSampleProject>

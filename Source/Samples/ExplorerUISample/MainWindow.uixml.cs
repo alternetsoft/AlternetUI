@@ -8,16 +8,12 @@ using Image = Alternet.UI.Image;
 
 namespace ExplorerUISample
 {
-    internal class MainWindow : Window
+    partial class MainWindow : Window
     {
         public MainWindow()
         {
-            var xamlStream = typeof(MainWindow).Assembly.GetManifestResourceStream("ExplorerUISample.MainWindow.xaml");
-            if (xamlStream == null)
-                throw new InvalidOperationException();
-            new XamlLoader().LoadExisting(xamlStream, this);
+            InitializeComponent();
 
-            var listView = (ListView)FindControl("listView");
             var date = DateTime.Now.ToShortDateString();
             listView.Items.Add(new ListViewItem(new[] {"July Report 1", "1K", date}, 0));
             listView.Items.Add(new ListViewItem(new[] {"06.21 M&A Meeting Memo", "1.5K", date}, 2));
@@ -25,7 +21,6 @@ namespace ExplorerUISample
             listView.Items.Add(new ListViewItem(new[] {"3rd quarter results - Mary", "1M", date}, 3));
 
             const int FolderImageIndex = 1;
-            var treeView = (TreeView)FindControl("treeView");
             var maryM = new TreeViewItem("MaryM", FolderImageIndex);
             maryM.Items.Add(new TreeViewItem("Docs", FolderImageIndex));
             maryM.Items.Add(new TreeViewItem("New Reports", FolderImageIndex));
