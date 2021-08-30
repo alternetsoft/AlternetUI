@@ -65,4 +65,17 @@
   <ItemGroup Condition="$(DefineConstants.Contains(';NETFRAMEWORK'))">
     <Reference Include="System.Runtime" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.props" Visible="false" Pack="True" PackagePath="build" />
+    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.targets" Visible="false" Pack="True" PackagePath="build" />
+    <None Include="..\Alternet.UI.Build.Tasks\msbuild\UIXml.xml" Visible="false" Pack="True" PackagePath="build" />
+    <None Include="build\Alternet.UI.props" Visible="false" Pack="True" PackagePath="build" />
+    <None Include="build\Alternet.UI.targets" Visible="false" Pack="True" PackagePath="build" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)'=='Release'">
+    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netcoreapp3.1\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\netcoreapp3.1" />
+    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\net46\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net46" />
+  </ItemGroup>
 </Project>

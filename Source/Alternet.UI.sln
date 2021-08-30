@@ -5,6 +5,7 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI", "Alternet.UI\Alternet.UI.csproj", "{04851FA9-146A-4D00-84C6-3D20040289D0}"
 	ProjectSection(ProjectDependencies) = postProject
+		{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2} = {D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}
 		{79F2529C-C711-457A-9087-325C333CDE60} = {79F2529C-C711-457A-9087-325C333CDE60}
 	EndProjectSection
 EndProject
@@ -33,7 +34,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExplorerUISample", "Samples
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawingSample", "Samples\DrawingSample\DrawingSample.csproj", "{9ED9FA1D-2AA3-4813-A100-DE02D541B759}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alternet.UI.Build.Tasks", "Alternet.UI.Build.Tasks\Alternet.UI.Build.Tasks.csproj", "{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Build.Tasks", "Alternet.UI.Build.Tasks\Alternet.UI.Build.Tasks.csproj", "{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
