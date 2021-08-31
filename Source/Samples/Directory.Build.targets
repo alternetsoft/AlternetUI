@@ -66,6 +66,12 @@
         </None>
     </ItemGroup>
 
+    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Release|AnyCPU' AND '$(IsSampleProject)'=='true'">
+        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Release\Alternet.UI.Pal.dll" Link="x64\Alternet.UI.Pal.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX')) AND '$(IsSampleProject)'=='true'">
         <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dylib" Link="Alternet.UI.Pal.dylib">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
