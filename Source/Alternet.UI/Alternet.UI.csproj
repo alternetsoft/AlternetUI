@@ -12,7 +12,7 @@
     <PackageId>Alternet.UI</PackageId>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-
+  
   <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
     <TargetFrameworks>net45;netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>

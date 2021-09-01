@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
@@ -12,8 +12,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Alternet.UI.Build.Tasks.ApiInfoCollector\**" />
+    <EmbeddedResource Remove="Alternet.UI.Build.Tasks.ApiInfoCollector\**" />
+    <None Remove="Alternet.UI.Build.Tasks.ApiInfoCollector\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Build.Framework" Version="15.9.20" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.9.20" PrivateAssets="all" />
   </ItemGroup>
 
+  <Target Name="EmbedWellKnownApiInfo" BeforeTargets="PrepareForBuild" Condition="'$(TargetFramework)' != ''">
+    <PropertyGroup>
+      <ApiInfoXmlFilePath>$(IntermediateOutputPath)\WellKnownApiInfo.xml</ApiInfoXmlFilePath>
+      <ApiInfoCollectorToolPath>$(MSBuildThisFileDirectory)\Alternet.UI.Build.Tasks.ApiInfoCollector\bin\$(Configuration)\net45\Alternet.UI.Build.Tasks.ApiInfoCollector</ApiInfoCollectorToolPath>
+      <ApiInfoCollectorInputAssemblyPath>$(MSBuildThisFileDirectory)\..\Alternet.UI\bin\$(Configuration)\net45\Alternet.UI.dll</ApiInfoCollectorInputAssemblyPath>
+    </PropertyGroup>
+    
+    <Exec Command="$(ApiInfoCollectorToolPath) $(ApiInfoCollectorInputAssemblyPath) $(ApiInfoXmlFilePath)" />
+
+    <ItemGroup>
+      <EmbeddedResource Include="$(ApiInfoXmlFilePath)" LogicalName="WellKnownApiInfo.xml" />
+      <FileWrites Include="$(ApiInfoXmlFilePath)" />
+    </ItemGroup>
+  </Target>
 </Project>
