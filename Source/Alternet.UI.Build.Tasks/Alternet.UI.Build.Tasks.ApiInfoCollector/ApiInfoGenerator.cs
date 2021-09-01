@@ -29,7 +29,7 @@ namespace Alternet.UI.Build.Tasks.ApiInfoCollector
         {
             var typeElement = new XElement("Type");
             typeElement.Add(new XAttribute("Name", type.FullName));
-            foreach (var @event in type.GetEvents(BindingFlags.Public | BindingFlags.Instance))
+            foreach (var @event in type.GetEvents(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
                 GenerateEvent(@event, typeElement);
 
             parentElement.Add(typeElement);

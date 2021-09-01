@@ -14,16 +14,23 @@ namespace Alternet.UI.Build.Tasks
 
         public override bool Execute()
         {
-            foreach (var inputFile in InputFiles)
+            try
             {
-                try
+                foreach (var inputFile in InputFiles)
                 {
-                    TranslateFile(inputFile);
+                    try
+                    {
+                        TranslateFile(inputFile);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogError(inputFile, $"Error generating file: {ex}");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    LogError(inputFile, $"Error generating file: {ex}");
-                }
+            }
+            catch (Exception ex)
+            {
+                LogError(null, $"Code generation error: {ex}");
             }
 
             return !Log.HasLoggedErrors;

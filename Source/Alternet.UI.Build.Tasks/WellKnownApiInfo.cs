@@ -4,8 +4,10 @@ namespace Alternet.UI.Build.Tasks
 {
     internal static class WellKnownApiInfo
     {
-        public static ApiInfoProvider Provider { get; } =
-            new ApiInfoProvider(
+        private static ApiInfoProvider? provider;
+
+        public static ApiInfoProvider Provider =>
+            provider ??= new ApiInfoProvider(
                 typeof(WellKnownApiInfo).Assembly.GetManifestResourceStream("WellKnownApiInfo.xml") ?? throw new Exception());
     }
 }

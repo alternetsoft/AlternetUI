@@ -80,7 +80,7 @@ namespace Alternet.UI.Build.Tasks
                 if (objectName != null)
                     return new NamedObjectEventBinding(eventName, handlerName, typeFullName, objectName);
 
-                return new IndexedObjectEventBinding(eventName, handlerName, typeFullName, indices.ToArray());
+                return new IndexedObjectEventBinding(eventName, handlerName, typeFullName, indices.Reverse().ToArray());
             }
 
             var indices = new Stack<int>();
@@ -247,7 +247,9 @@ namespace Alternet.UI.Build.Tasks
             }
 
             public string EventName { get; }
+
             public string HandlerName { get; }
+
             public string ObjectTypeFullName { get; }
         }
 
