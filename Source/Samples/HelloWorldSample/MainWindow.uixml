@@ -15,7 +15,7 @@
     </StackPanel>
 
     <StackPanel Orientation="Vertical" Margin="10,0,0,0">
-      <TextBox Name="textBox" Text="Hello"/>
+      <TextBox Name="textBox" Text="Hello" TextChanged="TextBox_TextChanged"/>
       <local:CustomDrawnControl Margin="0,10,0,10" Name="customDrawnControl" />
       <Button Text="System Native" Margin="0,0,0,5" Name="systemNativeButton" />
       <Button Text="Generic Light" Margin="0,0,0,5" Name="genericLightButton" />

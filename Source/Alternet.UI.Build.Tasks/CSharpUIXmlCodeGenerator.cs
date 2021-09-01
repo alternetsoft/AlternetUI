@@ -1,5 +1,8 @@
-﻿using System.CodeDom.Compiler;
+﻿using System;
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace Alternet.UI.Build.Tasks
 {
@@ -47,11 +50,50 @@ using System;
                         w.WriteLine();
                         foreach (var namedObject in namedObjects)
                             w.WriteLine($"{namedObject.Name} = ({namedObject.TypeFullName})FindControl(\"{namedObject.Name}\");");
+
+                        w.WriteLine();
+                        foreach (var eventBinding in document.EventBindings)
+                            WriteEventBinding(w, eventBinding);
                     }
                 }
             }
 
             return codeWriter.ToString();
+        }
+
+        private static void WriteEventBinding(IndentedTextWriter w, UIXmlDocument.EventBinding eventBinding)
+        {
+            switch (eventBinding)
+            {
+                case UIXmlDocument.NamedObjectEventBinding x:
+                    w.WriteLine($"{x.ObjectName}.{x.EventName} += {x.HandlerName};");
+                    break;
+                case UIXmlDocument.IndexedObjectEventBinding x:
+                    w.WriteLine($"{GetIndexedObjectRetreivalExpression(x.ObjectTypeFullName, x.ObjectIndices)}.{x.EventName} += {x.HandlerName};");
+                    break;
+                default:
+                    throw new InvalidOperationException();
+            }
+        }
+
+        private static string GetIndexedObjectRetreivalExpression(string objectTypeFullName, IReadOnlyList<int> objectIndices)
+        {
+            var result = new StringBuilder();
+            result.Append($"(({objectTypeFullName})(");
+            
+            if (objectIndices.Count == 0)
+                throw new InvalidOperationException();
+
+            for (int i = 0; i < objectIndices.Count; i++)
+            {
+                int index = objectIndices[i];
+                if (i > 0)
+                    result.Append(".");
+                result.Append($"Children[{index}]");
+            }
+
+            result.Append("))");
+            return result.ToString();
         }
 
         private static void WriteHeader(IndentedTextWriter w)

@@ -70,15 +70,17 @@ namespace Alternet.UI.Build.Tasks
             EventBinding? TryGetEventBinding(XElement element, string? objectName, Stack<int> indices, XAttribute attribute)
             {
                 var assemblyName = GetTypeAssemblyName(element.Name);
-                var typeName = GetTypeFullName(element.Name);
+                var typeFullName = GetTypeFullName(element.Name);
                 string eventName = attribute.Name.LocalName;
-                if (!apiInfoProvider.IsEvent(assemblyName, typeName, eventName))
+                if (!apiInfoProvider.IsEvent(assemblyName, typeFullName, eventName))
                     return null;
 
-                if (objectName != null)
-                    return new NamedObjectEventBinding(eventName, objectName);
+                var handlerName = attribute.Value;
 
-                return new IndexedObjectEventBinding(eventName, indices.ToArray());
+                if (objectName != null)
+                    return new NamedObjectEventBinding(eventName, handlerName, typeFullName, objectName);
+
+                return new IndexedObjectEventBinding(eventName, handlerName, typeFullName, indices.ToArray());
             }
 
             var indices = new Stack<int>();
@@ -237,17 +239,22 @@ namespace Alternet.UI.Build.Tasks
 
         public abstract class EventBinding
         {
-            protected EventBinding(string eventName)
+            protected EventBinding(string eventName, string handlerName, string objectTypeFullName)
             {
                 EventName = eventName;
+                HandlerName = handlerName;
+                ObjectTypeFullName = objectTypeFullName;
             }
 
             public string EventName { get; }
+            public string HandlerName { get; }
+            public string ObjectTypeFullName { get; }
         }
 
         public sealed class NamedObjectEventBinding : EventBinding
         {
-            public NamedObjectEventBinding(string eventName, string objectName) : base(eventName)
+            public NamedObjectEventBinding(string eventName, string handlerName, string objectTypeFullName, string objectName) :
+                base(eventName, handlerName, objectTypeFullName)
             {
                 ObjectName = objectName;
             }
@@ -257,7 +264,8 @@ namespace Alternet.UI.Build.Tasks
 
         public sealed class IndexedObjectEventBinding : EventBinding
         {
-            public IndexedObjectEventBinding(string eventName, IReadOnlyList<int> objectIndices) : base(eventName)
+            public IndexedObjectEventBinding(string eventName, string handlerName, string objectTypeFullName, IReadOnlyList<int> objectIndices) :
+                base(eventName, handlerName, objectTypeFullName)
             {
                 ObjectIndices = objectIndices;
             }
