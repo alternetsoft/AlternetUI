@@ -33,7 +33,7 @@ namespace Alternet.UI.Build.Tasks
                             document.Descendants("Type").Select(
                                 x => new TypeInfo(
                                     x.Attribute("Name").Value,
-                                    x.Descendants("Event").Select(x => x.Name.LocalName))))));
+                                    x.Descendants("Event").Select(x => x.Attribute("Name").Value))))));
             }
         }
 

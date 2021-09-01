@@ -13,7 +13,7 @@ namespace HelloWorldSample
         {
             InitializeComponent();
 
-            textBox.TextChanged += TextBox_TextChanged;
+            //textBox.TextChanged += TextBox_TextChanged;
             redButton.Click += RedButton_Click;
             greenButton.Click += GreenButton_Click;
             blueButton.Click += BlueButton_Click;
