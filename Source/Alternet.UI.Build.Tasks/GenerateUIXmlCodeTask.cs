@@ -9,10 +9,6 @@ namespace Alternet.UI.Build.Tasks
     {
         private const string LogSubcategory = "Alternet.UI.UIXml.CodeGeneration";
 
-        private static readonly ApiInfoProvider wellKnownApiInfoProvider =
-            new ApiInfoProvider(
-                typeof(GenerateUIXmlCodeTask).Assembly.GetManifestResourceStream("WellKnownApiInfo.xml") ?? throw new Exception());
-
         [Required]
         public ITaskItem[] InputFiles { get; set; } = default!;
 
@@ -51,9 +47,10 @@ namespace Alternet.UI.Build.Tasks
 
             var document = new UIXmlDocument(
                 inputFile.GetMetadata("ResourceName") ?? throw new InvalidOperationException("No resource name specified"),
-                stream);
+                stream,
+                WellKnownApiInfo.Provider);
 
-            var output = CSharpUIXmlCodeGenerator.Generate(document, wellKnownApiInfoProvider);
+            var output = CSharpUIXmlCodeGenerator.Generate(document);
 
             File.WriteAllText(GetValidTargetFilePath(inputFile), output);
 

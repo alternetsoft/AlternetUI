@@ -11,8 +11,10 @@ namespace Alternet.UI.Build.Tasks
         private const string UINamespace = "http://schemas.alternetsoft.com/ui";
         private const string UIXmlNamespace = "http://schemas.alternetsoft.com/uixml";
         private const string ClassAttributeNotFound = "x:Class attribute on root node was not found.";
+        private const string NameAttributeName = "Name";
         private static readonly XName classAttributeName = (XNamespace)UIXmlNamespace + "Class";
         private readonly Stream xmlContent;
+        private readonly ApiInfoProvider apiInfoProvider;
         private XDocument document;
 
         private XDocument? sanitizedDocument;
@@ -27,10 +29,11 @@ namespace Alternet.UI.Build.Tasks
 
         private IReadOnlyList<NamedObject>? namedObjects;
 
-        public UIXmlDocument(string resourceName, Stream xmlContent)
+        public UIXmlDocument(string resourceName, Stream xmlContent, ApiInfoProvider apiInfoProvider)
         {
             ResourceName = resourceName;
             this.xmlContent = xmlContent;
+            this.apiInfoProvider = apiInfoProvider;
             document = XDocument.Load(xmlContent);
 
             xmlContent.Position = 0;
@@ -62,7 +65,49 @@ namespace Alternet.UI.Build.Tasks
             return true;
         }
 
-        private IEnumerable<EventBinding> GetEventBindings() => throw new NotImplementedException();
+        private IEnumerable<EventBinding> GetEventBindings()
+        {
+            EventBinding? TryGetEventBinding(XElement element, string? objectName, Stack<int> indices, XAttribute attribute)
+            {
+                var assemblyName = GetTypeAssemblyName(element.Name);
+                var typeName = GetTypeFullName(element.Name);
+                string eventName = attribute.Name.LocalName;
+                if (!apiInfoProvider.IsEvent(assemblyName, typeName, eventName))
+                    return null;
+
+                if (objectName != null)
+                    return new NamedObjectEventBinding(eventName, objectName);
+
+                return new IndexedObjectEventBinding(eventName, indices.ToArray());
+            }
+
+            var indices = new Stack<int>();
+            var results = new List<EventBinding>();
+
+            void CollectBindings(IEnumerable<XElement> elements)
+            {
+                for (int i = 0; i < elements.Count(); i++)
+                {
+                    var element = elements.ElementAt(i);
+                    indices.Push(i);
+
+                    var objectName = element.Attribute(NameAttributeName)?.Value;
+
+                    foreach (var attribute in element.Attributes())
+                    {
+                        var binding = TryGetEventBinding(element, objectName, indices, attribute);
+                        if (binding != null)
+                            results.Add(binding);
+                    }
+
+                    CollectBindings(element.Elements());
+                    indices.Pop();
+                }
+            }
+
+            CollectBindings(document.Root.Elements());
+            return results;
+        }
 
         private XDocument Sanitize(XDocument document)
         {
@@ -81,7 +126,6 @@ namespace Alternet.UI.Build.Tasks
 
         private IEnumerable<NamedObject> GetNamedObjects()
         {
-            const string NameAttributeName = "Name";
             var namedElements = document.Root.DescendantsAndSelf().Where(e => e.Attributes().Any(a => a.Name == NameAttributeName));
             return namedElements.Select(
                 x => new NamedObject(GetTypeFullName(x.Name), x.Attribute(NameAttributeName).Value));
@@ -145,6 +189,15 @@ namespace Alternet.UI.Build.Tasks
                 return "Alternet.UI";
 
             return ParseClrNamespaceFromXmlns(ns);
+        }
+
+        private string GetTypeAssemblyName(XName name)
+        {
+            var ns = name.NamespaceName;
+            if (ns == UINamespace)
+                return "Alternet.UI";
+
+            return "<unknown-assembly>";
         }
 
         private string ParseClrNamespaceFromXmlns(string ns)
