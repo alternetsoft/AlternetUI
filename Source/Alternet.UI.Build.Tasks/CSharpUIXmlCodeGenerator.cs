@@ -5,7 +5,7 @@ namespace Alternet.UI.Build.Tasks
 {
     static class CSharpUIXmlCodeGenerator
     {
-        public static string Generate(UIXmlDocument document)
+        public static string Generate(UIXmlDocument document, ApiInfoProvider apiInfoProvider)
         {
             var codeWriter = new StringWriter();
             var w = new IndentedTextWriter(codeWriter);
