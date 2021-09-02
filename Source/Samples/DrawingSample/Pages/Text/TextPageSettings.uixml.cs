@@ -14,18 +14,11 @@ namespace DrawingSample
             this.page = page;
 
             fontSizeSlider.Value = (int)page.FontSize;
-            fontSizeSlider.ValueChanged += FontSizeSlider_ValueChanged;
-
-            boldCheckBox.CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Bold, ((CheckBox)o!).IsChecked);
-            italicCheckBox.CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Italic, ((CheckBox)o!).IsChecked);
-            underlinedCheckBox.CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Underlined, ((CheckBox)o!).IsChecked);
-            strikethroughCheckBox.CheckedChanged += (o, e) => ApplyFontStyle(FontStyle.Strikethrough, ((CheckBox)o!).IsChecked);
 
             foreach (var family in FontFamily.Families)
                 customFontFamilyComboBox.Items.Add(family.Name);
 
             customFontFamilyComboBox.SelectedItem = page.CustomFontFamilyName;
-            customFontFamilyComboBox.SelectedItemChanged += CustomFontFamilyComboBox_SelectedItemChanged;
         }
 
         private void CustomFontFamilyComboBox_SelectedItemChanged(object? sender, EventArgs e)
@@ -37,6 +30,14 @@ namespace DrawingSample
         {
             page.FontSize = ((Slider)sender!).Value;
         }
+
+        private void BoldCheckBox_CheckedChanged(object? sender, EventArgs e) => ApplyFontStyle(FontStyle.Bold, ((CheckBox)sender!).IsChecked);
+
+        private void ItalicCheckBox_CheckedChanged(object? sender, EventArgs e) => ApplyFontStyle(FontStyle.Italic, ((CheckBox)sender!).IsChecked);
+
+        private void UnderlinedCheckBox_CheckedChanged(object? sender, EventArgs e) => ApplyFontStyle(FontStyle.Underlined, ((CheckBox)sender!).IsChecked);
+
+        private void StrikethroughCheckBox_CheckedChanged(object? sender, EventArgs e) => ApplyFontStyle(FontStyle.Strikethrough, ((CheckBox)sender!).IsChecked);
 
         private void ApplyFontStyle(FontStyle style, bool value)
         {

@@ -14,40 +14,23 @@ namespace DrawingSample
             this.page = page;
 
             shapeCountSlider.Value = page.ShapeCount;
-            shapeCountSlider.ValueChanged += ShapeCountSlider_ValueChanged;
-
             brushColorHueSlider.Value = (int)MapRanges(page.BrushColorHue, 0, 1, brushColorHueSlider.Minimum, brushColorHueSlider.Maximum);
-            brushColorHueSlider.ValueChanged += BrushColorHueSlider_ValueChanged;
-
             penColorHueSlider.Value = (int)MapRanges(page.PenColorHue, 0, 1, brushColorHueSlider.Minimum, brushColorHueSlider.Maximum);
-            penColorHueSlider.ValueChanged += PenColorHueSlider_ValueChanged;
-
             penWidthSlider.Value = (int)page.PenWidth;
-            penWidthSlider.ValueChanged += PenWidthSlider_ValueChanged;
-
             rectanglesCheckBox.IsChecked = IsShapeIncluded(BrushesAndPensPage.AllShapeTypes.Rectangle);
-            rectanglesCheckBox.CheckedChanged += (o, e) => ApplyIncludedShape(BrushesAndPensPage.AllShapeTypes.Rectangle, ((CheckBox)o!).IsChecked);
-
             ellipsesCheckBox.IsChecked = IsShapeIncluded(BrushesAndPensPage.AllShapeTypes.Ellipse);
-            ellipsesCheckBox.CheckedChanged += (o, e) => ApplyIncludedShape(BrushesAndPensPage.AllShapeTypes.Ellipse, ((CheckBox)o!).IsChecked);
 
             foreach (var brushType in Enum.GetValues(typeof(BrushesAndPensPage.BrushType)))
                 brushComboBox.Items.Add(brushType!);
             brushComboBox.SelectedItem = page.Brush;
 
-            brushComboBox.SelectedItemChanged += BrushComboBox_SelectedItemChanged;
-
             foreach (var style in Enum.GetValues(typeof(BrushHatchStyle)))
                 hatchStyleComboBox.Items.Add(style!);
             hatchStyleComboBox.SelectedItem = page.HatchStyle;
 
-            hatchStyleComboBox.SelectedItemChanged += HatchStyleComboBox_SelectedItemChanged;
-
             foreach (var style in Enum.GetValues(typeof(PenDashStyle)))
                 dashStyleComboBox.Items.Add(style!);
             dashStyleComboBox.SelectedItem = page.PenDashStyle;
-
-            dashStyleComboBox.SelectedItemChanged += DashStyleComboBox_SelectedItemChanged;
         }
 
         private static double MapRanges(double value, double fromLow, double fromHigh, double toLow, double toHigh) =>
@@ -56,6 +39,16 @@ namespace DrawingSample
         private void PenWidthSlider_ValueChanged(object? sender, EventArgs e)
         {
             page.PenWidth = ((Slider)sender!).Value;
+        }
+
+        private void RectanglesCheckBox_CheckedChanged(object? sender, EventArgs e)
+        {
+            ApplyIncludedShape(BrushesAndPensPage.AllShapeTypes.Rectangle, ((CheckBox)sender!).IsChecked);
+        }
+
+        private void EllipsesCheckBox_CheckedChanged(object? sender, EventArgs e)
+        {
+            ApplyIncludedShape(BrushesAndPensPage.AllShapeTypes.Ellipse, ((CheckBox)sender!).IsChecked);
         }
 
         private void DashStyleComboBox_SelectedItemChanged(object? sender, EventArgs e)

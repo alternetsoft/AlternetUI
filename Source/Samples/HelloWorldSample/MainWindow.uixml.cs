@@ -1,7 +1,5 @@
 ﻿using Alternet.UI;
 using System;
-using System.ComponentModel;
-using System.Drawing;
 using Brush = Alternet.UI.Brush;
 using Brushes = Alternet.UI.Brushes;
 
@@ -13,20 +11,7 @@ namespace HelloWorldSample
         {
             InitializeComponent();
 
-            //textBox.TextChanged += TextBox_TextChanged;
-            redButton.Click += RedButton_Click;
-            greenButton.Click += GreenButton_Click;
-            blueButton.Click += BlueButton_Click;
-            systemNativeButton.Click += SystemNativeButton_Click;
-            genericLightButton.Click += GenericLightButton_Click;
-            option1RadioButton.CheckedChanged += Option1RadioButton_CheckedChanged;
-
             UpdateText();
-        }
-
-        private void Option1RadioButton_CheckedChanged(object? sender, EventArgs e)
-        {
-            MessageBox.Show(option1RadioButton.IsChecked.ToString(), "Option 1");
         }
 
         protected override void OnClosing(WindowClosingEventArgs e)
@@ -38,6 +23,11 @@ namespace HelloWorldSample
             }
 
             base.OnClosing(e);
+        }
+
+        private void Option1RadioButton_CheckedChanged(object? sender, EventArgs e)
+        {
+            MessageBox.Show(option1RadioButton.IsChecked.ToString(), "Option 1");
         }
 
         private void GenericLightButton_Click(object? sender, EventArgs e)
