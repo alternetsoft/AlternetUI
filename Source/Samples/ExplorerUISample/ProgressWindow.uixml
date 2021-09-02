@@ -1,6 +1,6 @@
 ﻿<Window x:Class="ExplorerUISample.ProgressWindow"
-        xmlns="http://schemas.alternetsoft.com/ui"
-        xmlns:x="http://schemas.alternetsoft.com/uixml"
+        xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ExplorerUISample;assembly=ExplorerUISample"
         Title="Operation in Progress"
         Width="400" Height="100">

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
-[assembly: XmlnsDefinition("http://schemas.alternetsoft.com/ui", "Alternet.UI")]
+[assembly: XmlnsDefinition("http://schemas.alternetsoft.com/ui/2021", "Alternet.UI")]
 
 namespace Alternet.UI
 {

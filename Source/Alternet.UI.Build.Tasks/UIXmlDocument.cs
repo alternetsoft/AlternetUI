@@ -8,8 +8,8 @@ namespace Alternet.UI.Build.Tasks
 {
     internal class UIXmlDocument
     {
-        private const string UINamespace = "http://schemas.alternetsoft.com/ui";
-        private const string UIXmlNamespace = "http://schemas.alternetsoft.com/uixml";
+        private const string UINamespace = "http://schemas.alternetsoft.com/ui/2021";
+        private const string UIXmlNamespace = "http://schemas.alternetsoft.com/ui/2021/uixml";
         private const string ClassAttributeNotFound = "x:Class attribute on root node was not found.";
         private const string NameAttributeName = "Name";
         private static readonly XName classAttributeName = (XNamespace)UIXmlNamespace + "Class";
