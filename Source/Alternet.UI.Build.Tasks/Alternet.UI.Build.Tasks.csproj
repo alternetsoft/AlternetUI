@@ -24,13 +24,27 @@
   </ItemGroup>
 
   <Target Name="EmbedWellKnownApiInfo" BeforeTargets="PrepareForBuild" Condition="'$(TargetFramework)' != ''">
-    <PropertyGroup>
-      <ApiInfoXmlFilePath>$(IntermediateOutputPath)\WellKnownApiInfo.xml</ApiInfoXmlFilePath>
-      <ApiInfoCollectorToolPath>$(MSBuildThisFileDirectory)\Alternet.UI.Build.Tasks.ApiInfoCollector\bin\$(Configuration)\net45\Alternet.UI.Build.Tasks.ApiInfoCollector</ApiInfoCollectorToolPath>
-      <ApiInfoCollectorInputAssemblyPath>$(MSBuildThisFileDirectory)\..\Alternet.UI\bin\$(Configuration)\net45\Alternet.UI.dll</ApiInfoCollectorInputAssemblyPath>
+    <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+      <ApiInfoCollectorTargetFramework>net45</ApiInfoCollectorTargetFramework>
+    </PropertyGroup>
+    <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
+      <ApiInfoCollectorTargetFramework>netcoreapp3.1</ApiInfoCollectorTargetFramework>
     </PropertyGroup>
     
-    <Exec Command="$(ApiInfoCollectorToolPath) $(ApiInfoCollectorInputAssemblyPath) $(ApiInfoXmlFilePath)" />
+    <PropertyGroup>
+      <ApiInfoXmlFilePath>$(IntermediateOutputPath)\WellKnownApiInfo.xml</ApiInfoXmlFilePath>
+      <ApiInfoCollectorToolPath>$(MSBuildThisFileDirectory)\Alternet.UI.Build.Tasks.ApiInfoCollector\bin\$(Configuration)\$(ApiInfoCollectorTargetFramework)\Alternet.UI.Build.Tasks.ApiInfoCollector</ApiInfoCollectorToolPath>
+      <ApiInfoCollectorInputAssemblyPath>$(MSBuildThisFileDirectory)\..\Alternet.UI\bin\$(Configuration)\$(ApiInfoCollectorTargetFramework)\Alternet.UI.dll</ApiInfoCollectorInputAssemblyPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+      <ApiInfoCollectorCommand>$(ApiInfoCollectorToolPath) $(ApiInfoCollectorInputAssemblyPath) $(ApiInfoXmlFilePath)</ApiInfoCollectorCommand>
+    </PropertyGroup>
+    <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
+      <ApiInfoCollectorCommand>dotnet $(ApiInfoCollectorToolPath).dll $(ApiInfoCollectorInputAssemblyPath) $(ApiInfoXmlFilePath)</ApiInfoCollectorCommand>
+    </PropertyGroup>
+
+    <Exec Command="$(ApiInfoCollectorCommand)" />
 
     <ItemGroup>
       <EmbeddedResource Include="$(ApiInfoXmlFilePath)" LogicalName="WellKnownApiInfo.xml" />
