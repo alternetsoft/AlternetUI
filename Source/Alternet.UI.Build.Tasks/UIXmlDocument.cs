@@ -51,9 +51,9 @@ namespace Alternet.UI.Build.Tasks
 
         public IReadOnlyList<NamedObject> NamedObjects => namedObjects ??= GetNamedObjects().ToArray();
 
-        public IReadOnlyList<EventBinding> EventBindings => eventBindings ??= GetEventBindings().ToArray();
+        public IReadOnlyList<EventBinding> EventBindings => eventBindings ??= GetEventBindings(apiInfoProvider, document).Select(x => x.Binding).ToArray();
 
-        public bool IsValidIdentifier(string text)
+        private static bool IsValidIdentifier(string text)
         {
             if (string.IsNullOrEmpty(text))
                 return false;
@@ -65,7 +65,7 @@ namespace Alternet.UI.Build.Tasks
             return true;
         }
 
-        private IEnumerable<EventBinding> GetEventBindings()
+        private static IEnumerable<(EventBinding Binding, XAttribute Attribute)> GetEventBindings(ApiInfoProvider apiInfoProvider, XDocument document)
         {
             EventBinding? TryGetEventBinding(XElement element, string? objectName, Stack<int> indices, XAttribute attribute)
             {
@@ -84,7 +84,7 @@ namespace Alternet.UI.Build.Tasks
             }
 
             var indices = new Stack<int>();
-            var results = new List<EventBinding>();
+            var results = new List<(EventBinding, XAttribute)>();
 
             void CollectBindings(IEnumerable<XElement> elements)
             {
@@ -99,7 +99,7 @@ namespace Alternet.UI.Build.Tasks
                     {
                         var binding = TryGetEventBinding(element, objectName, indices, attribute);
                         if (binding != null)
-                            results.Add(binding);
+                            results.Add(new(binding, attribute));
                     }
 
                     CollectBindings(element.Elements());
@@ -111,9 +111,59 @@ namespace Alternet.UI.Build.Tasks
             return results;
         }
 
+        static private string GetTypeName(XName name)
+        {
+            return name.LocalName;
+        }
+
+        static private string GetTypeFullName(XName name)
+        {
+            return GetTypeNamespaceName(name) + "." + GetTypeName(name);
+        }
+
+        static private string GetTypeNamespaceName(XName name)
+        {
+            var ns = name.NamespaceName;
+            if (ns == UINamespace)
+                return "Alternet.UI";
+
+            return ParseClrNamespaceFromXmlns(ns);
+        }
+
+        static private string GetTypeAssemblyName(XName name)
+        {
+            var ns = name.NamespaceName;
+            if (ns == UINamespace)
+                return "Alternet.UI";
+
+            return "<unknown-assembly>";
+        }
+
+        static private string ParseClrNamespaceFromXmlns(string ns)
+        {
+            const string ClrNamespacePrefix = "clr-namespace:";
+            int startIndex = ns.IndexOf(ClrNamespacePrefix);
+            if (startIndex == -1)
+                throw new Exception("CLR type namespace declaration must start with 'clr-namespace:'");
+
+            startIndex += ClrNamespacePrefix.Length;
+            int endIndex = ns.IndexOf(';', startIndex);
+            if (endIndex == -1)
+                endIndex = ns.Length;
+
+            var value = ns.Substring(startIndex, endIndex - startIndex);
+            if (value == "")
+                return value;
+
+            if (!IsValidIdentifier(value))
+                throw new Exception($"'{value}' is not a valid CLR namespace name.");
+
+            return value;
+        }
+
         private XDocument Sanitize(XDocument document)
         {
-            static void RemoveClassAttribute(XDocument document)
+            void RemoveClassAttribute()
             {
                 var attribute = document.Root.Attribute(classAttributeName);
                 if (attribute == null)
@@ -121,7 +171,15 @@ namespace Alternet.UI.Build.Tasks
                 attribute.Remove();
             }
 
-            RemoveClassAttribute(document);
+            void RemoveEventAttributes()
+            {
+                var attributes = GetEventBindings(apiInfoProvider, document).Select(x => x.Attribute).ToArray();
+                foreach (var attribute in attributes)
+                    attribute.Remove();
+            }
+
+            RemoveClassAttribute();
+            RemoveEventAttributes();
 
             return document;
         }
@@ -156,11 +214,6 @@ namespace Alternet.UI.Build.Tasks
             return GetTypeNamespaceFromFullName(GetClassFullName());
         }
 
-        private string GetTypeName(XName name)
-        {
-            return name.LocalName;
-        }
-
         private string GetTypeNameFromFullName(string fullName)
         {
             int i = fullName.LastIndexOf('.');
@@ -177,51 +230,6 @@ namespace Alternet.UI.Build.Tasks
                 return "";
 
             return fullName.Substring(0, i);
-        }
-
-        private string GetTypeFullName(XName name)
-        {
-            return GetTypeNamespaceName(name) + "." + GetTypeName(name);
-        }
-
-        private string GetTypeNamespaceName(XName name)
-        {
-            var ns = name.NamespaceName;
-            if (ns == UINamespace)
-                return "Alternet.UI";
-
-            return ParseClrNamespaceFromXmlns(ns);
-        }
-
-        private string GetTypeAssemblyName(XName name)
-        {
-            var ns = name.NamespaceName;
-            if (ns == UINamespace)
-                return "Alternet.UI";
-
-            return "<unknown-assembly>";
-        }
-
-        private string ParseClrNamespaceFromXmlns(string ns)
-        {
-            const string ClrNamespacePrefix = "clr-namespace:";
-            int startIndex = ns.IndexOf(ClrNamespacePrefix);
-            if (startIndex == -1)
-                throw new Exception("CLR type namespace declaration must start with 'clr-namespace:'");
-
-            startIndex += ClrNamespacePrefix.Length;
-            int endIndex = ns.IndexOf(';', startIndex);
-            if (endIndex == -1)
-                endIndex = ns.Length;
-
-            var value = ns.Substring(startIndex, endIndex - startIndex);
-            if (value == "")
-                return value;
-
-            if (!IsValidIdentifier(value))
-                throw new Exception($"'{value}' is not a valid CLR namespace name.");
-
-            return value;
         }
 
         public sealed class NamedObject
