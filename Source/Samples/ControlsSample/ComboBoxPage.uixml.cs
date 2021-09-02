@@ -13,22 +13,10 @@ namespace ControlsSample
 
             this.site = site;
 
-            comboBox.SelectedItemChanged += ComboBox_SelectionChanged;
-            comboBox.TextChanged += ComboBox_TextChanged;
-
             comboBox.Items.Add("One");
             comboBox.Items.Add("Two");
             comboBox.Items.Add("Three");
             comboBox.SelectedIndex = 1;
-
-            addItemButton.Click += AddItemButton_Click;
-            removeItemButton.Click += RemoveItemButton_Click;
-            addManyItemsButton.Click += AddManyItemsButton_Click;
-            setTextToEmptyStringButton.Click += SetTextToEmptyStringButton_Click;
-            setSelectedIndexTo2Button.Click += SetSelectedIndexTo2_Click;
-            setSelectedItemToNullButton.Click += SetSelectedItemToNullButton_Click;
-
-            allowTextEditingCheckBox.CheckedChanged += AllowTextEditingCheckBox_CheckedChanged;
         }
 
         private void SetSelectedItemToNullButton_Click(object? sender, EventArgs e)
@@ -67,9 +55,9 @@ namespace ControlsSample
             site.LogEvent($"ComboBox: TextChanged. Text: {text}");
         }
 
-        private void ComboBox_SelectionChanged(object? sender, EventArgs e)
+        private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            site.LogEvent($"ComboBox: SelectionChanged. SelectedIndex: {(comboBox.SelectedIndex == null ? "<null>" : comboBox.SelectedIndex.ToString() )}");
+            site.LogEvent($"ComboBox: SelectedItemChanged. SelectedIndex: {(comboBox.SelectedIndex == null ? "<null>" : comboBox.SelectedIndex.ToString())}");
         }
 
         private void AllowTextEditingCheckBox_CheckedChanged(object? sender, EventArgs e)

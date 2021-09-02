@@ -1,8 +1,5 @@
 ﻿using Alternet.UI;
 using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 
 namespace ControlsSample
 {
@@ -14,8 +11,6 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            listView.SelectionChanged += ListView_SelectionChanged;
-
             var imageLists = ResourceLoader.LoadImageLists();
             listView.SmallImageList = imageLists.Small;
             listView.LargeImageList = imageLists.Large;
@@ -25,14 +20,7 @@ namespace ControlsSample
 
             AddItems(10);
 
-            addItemButton.Click += AddItemButton_Click;
-            removeItemButton.Click += RemoveItemButton_Click;
-            addManyItemsButton.Click += AddManyItemsButton_Click;
-
-            allowMultipleSelectionCheckBox.CheckedChanged += AllowMultipleSelectionCheckBox_CheckedChanged;
-
-            viewComboBox.SelectedItemChanged += ViewComboBox_SelectedItemChanged;
-            foreach(var item in Enum.GetValues(typeof(ListViewView)))
+            foreach (var item in Enum.GetValues(typeof(ListViewView)))
                 viewComboBox.Items.Add(item ?? throw new Exception());
             viewComboBox.SelectedIndex = 0;
 

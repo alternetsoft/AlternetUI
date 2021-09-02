@@ -12,19 +12,9 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            treeView.SelectionChanged += TreeView_SelectionChanged;
-            treeView.ExpandedChanged += TreeView_ExpandedChanged;
-
             treeView.ImageList = ResourceLoader.LoadImageLists().Small;
 
             AddItems(10);
-
-            addItemButton.Click += AddItemButton_Click;
-            removeItemButton.Click += RemoveItemButton_Click;
-            addManyItemsButton.Click += AddManyItemsButton_Click;
-
-            allowMultipleSelectionCheckBox = (CheckBox)FindControl("allowMultipleSelectionCheckBox");
-            allowMultipleSelectionCheckBox.CheckedChanged += AllowMultipleSelectionCheckBox_CheckedChanged;
 
             this.site = site;
         }

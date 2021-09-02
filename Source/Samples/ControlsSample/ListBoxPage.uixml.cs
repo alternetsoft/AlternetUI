@@ -11,17 +11,10 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            listBox.SelectionChanged += ListBox_SelectionChanged;
-
             listBox.Items.Add("One");
             listBox.Items.Add("Two");
             listBox.Items.Add("Three");
 
-            addItemButton.Click += AddItemButton_Click;
-            removeItemButton.Click += RemoveItemButton_Click;
-            addManyItemsButton.Click += AddManyItemsButton_Click;
-
-            allowMultipleSelectionCheckBox.CheckedChanged += AllowMultipleSelectionCheckBox_CheckedChanged;
             this.site = site;
         }
 

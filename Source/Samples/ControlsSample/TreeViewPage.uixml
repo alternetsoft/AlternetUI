@@ -1,17 +1,18 @@
 ﻿<Control x:Class="ControlsSample.TreeViewPage"
         xmlns="http://schemas.alternetsoft.com/ui"
         xmlns:x="http://schemas.alternetsoft.com/uixml"
-        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample"
-         >
+        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
     <StackPanel Orientation="Vertical" Padding="10">
         <GroupBox Title="Tree View">
             <StackPanel Orientation="Horizontal" Margin="5">
-                <TreeView Width="300" Height="300" Name="treeView"/>
+                <TreeView Width="300" Height="300" Name="treeView"
+                          SelectionChanged="TreeView_SelectionChanged" ExpandedChanged="TreeView_ExpandedChanged"/>
+                
                 <StackPanel Orientation="Vertical" Margin="5,0,0,0">
-                    <Button Text="Add Item" Name="addItemButton" />
-                    <Button Text="Remove Item" Name="removeItemButton" Margin="0,3,0,0" />
-                    <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0" />
-                    <CheckBox Text="Allow Multiple Selection" Name="allowMultipleSelectionCheckBox" Margin="0,10,0,0"/>
+                    <Button Text="Add Item" Name="addItemButton" Click="AddItemButton_Click"/>
+                    <Button Text="Remove Item" Name="removeItemButton" Margin="0,3,0,0" Click="RemoveItemButton_Click"/>
+                    <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0" Click="AddManyItemsButton_Click"/>
+                    <CheckBox Text="Allow Multiple Selection" Name="allowMultipleSelectionCheckBox" Margin="0,10,0,0" CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
                 </StackPanel>
             </StackPanel>
         </GroupBox>
