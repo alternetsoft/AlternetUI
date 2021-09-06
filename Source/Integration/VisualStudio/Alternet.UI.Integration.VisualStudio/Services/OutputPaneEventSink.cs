@@ -15,7 +15,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
     /// </summary>
     internal class OutputPaneEventSink : ILogEventSink
     {
-        private static readonly Guid paneGuid = new Guid("DC845612-459C-485C-8157-71BC39C9A044");
+        private static readonly Guid paneGuid = new Guid("aaa45612-459C-485C-8157-71BC39C9A044");
         private readonly IVsOutputWindowPane _pane;
         private readonly ITextFormatter _formatter;
 

@@ -81,7 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <VSTemplate Include="AlternetUIWindowTemplate.vstemplate">
-      <OutputSubPath>AlternetUI</OutputSubPath>
+      <OutputSubPath>Alternet UI</OutputSubPath>
     </VSTemplate>
   </ItemGroup>
   <ItemGroup>
