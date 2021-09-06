@@ -42,7 +42,7 @@ namespace HelloWorldSample
 
         private void BlueButton_Click(object? sender, EventArgs e)
         {
-            SetBrush(Brushes.Pink);
+            SetBrush(Brushes.LightBlue);
         }
 
         private void GreenButton_Click(object? sender, EventArgs e)
@@ -52,7 +52,7 @@ namespace HelloWorldSample
 
         private void RedButton_Click(object? sender, EventArgs e)
         {
-            SetBrush(Brushes.LightBlue);
+            SetBrush(Brushes.Pink);
         }
 
         private void SetBrush(Brush b) => customDrawnControl!.Brush = customCompositeControl!.Brush = b;
