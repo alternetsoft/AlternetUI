@@ -180,7 +180,7 @@ namespace Alternet.UI.Integration.IntelliSense
                 //
             }
             if (!rv.ContainsKey(""))
-                rv[""] = Utils.AvaloniaNamespace;
+                rv[""] = Utils.AlternetUINamespace;
             return rv;
         }
 
@@ -347,7 +347,7 @@ namespace Alternet.UI.Integration.IntelliSense
                     }
                     else if (state.AttributeName.EndsWith(":Class"))
                     {
-                        if (_helper.Aliases.TryGetValue(state.AttributeName.Replace(":Class", ""), out var ns) && ns == Utils.Xaml2006Namespace)
+                        if (_helper.Aliases.TryGetValue(state.AttributeName.Replace(":Class", ""), out var ns) && ns == Utils.UIXmlNamespace)
                         {
                             var asmKey = $";assembly={currentAssemblyName}";
                             var fullClassNames = _helper.Metadata.Namespaces.Where(v => v.Key.EndsWith(asmKey))

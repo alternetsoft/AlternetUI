@@ -47,7 +47,7 @@ namespace Alternet.UI.Integration.VisualStudio
     //    "xaml",
     //    LogicalViewID.Designer,
     //    10000,
-    //    Namespace = "https://github.com/avaloniaui",
+    //    Namespace = "http://schemas.alternetsoft.com/ui/2021",
     //    MatchExtensionAndNamespace = true,
     //    CodeLogicalViewEditor = typeof(EditorFactory),
     //    DesignerLogicalViewEditor = typeof(EditorFactory),

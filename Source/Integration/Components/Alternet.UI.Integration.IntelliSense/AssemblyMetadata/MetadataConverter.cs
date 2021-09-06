@@ -347,7 +347,7 @@ namespace Alternet.UI.Integration.IntelliSense
         {
             foreach (
                 var attr in
-                asm.CustomAttributes.Where(a => a.TypeFullName == "Avalonia.Metadata.XmlnsDefinitionAttribute" ||
+                asm.CustomAttributes.Where(a => a.TypeFullName == "Alternet.UI.XmlnsDefinitionAttribute" ||
                                                 a.TypeFullName == "Portable.Xaml.Markup.XmlnsDefinitionAttribute"))
             {
                 var ns = attr.ConstructorArguments[1].Value.ToString();
@@ -365,7 +365,7 @@ namespace Alternet.UI.Integration.IntelliSense
         {
             //look like we don't have xmlns for avalonia.layout TODO: add it in avalonia
             //may be don 't remove it for avalonia 0.7 or below for support completion for layout enums etc.
-            aliases["Avalonia.Layout"] = new[] { "https://github.com/avaloniaui" };
+            aliases["Avalonia.Layout"] = new[] { "http://schemas.alternetsoft.com/ui/2021" };
         }
 
         private static void PreProcessTypes(Dictionary<string, MetadataType> types, Metadata metadata)
@@ -443,7 +443,7 @@ namespace Alternet.UI.Integration.IntelliSense
             //as in avalonia 0.9 Portablexaml is missing we need to hardcode some extensions
             foreach (var t in portableXamlExtTypes)
             {
-                metadata.AddType(Utils.Xaml2006Namespace, t);
+                metadata.AddType(Utils.UIXmlNamespace, t);
             }
 
             types.Add(xDataType.Name, xDataType);
@@ -539,7 +539,7 @@ namespace Alternet.UI.Integration.IntelliSense
                     bindingExtType.IsMarkupExtension = true;
 
                     types.Add(bindingExtType.FullName, bindingExtType);
-                    metadata.AddType(Utils.AvaloniaNamespace, bindingExtType);
+                    metadata.AddType(Utils.AlternetUINamespace, bindingExtType);
                 }
             }
 
@@ -577,7 +577,7 @@ namespace Alternet.UI.Integration.IntelliSense
                 };
 
                 types["TemplateBindingExtension"] = tbext;
-                metadata.AddType(Utils.AvaloniaNamespace, tbext);
+                metadata.AddType(Utils.AlternetUINamespace, tbext);
             }
 
             if (types.TryGetValue("Portable.Xaml.Markup.TypeExtension", out MetadataType typeExtension))
@@ -702,7 +702,7 @@ namespace Alternet.UI.Integration.IntelliSense
                     Properties = { new MetadataProperty("", typeType, null, false, false, false, true) }
                 };
 
-                metadata.AddType(Utils.Xaml2006Namespace, typeArguments);
+                metadata.AddType(Utils.UIXmlNamespace, typeArguments);
             }
         }
     }

@@ -32,7 +32,7 @@ namespace Alternet.UI.Integration.IntelliSense
                     if (reader.Name == "xmlns")
                     {
                         reader.ReadAttributeValue();
-                        return reader.Value.ToLower() == AvaloniaNamespace;
+                        return reader.Value.ToLower() == AlternetUINamespace;
                     }
 
                 } while (reader.MoveToNextAttribute());
@@ -44,8 +44,8 @@ namespace Alternet.UI.Integration.IntelliSense
             }
         }
 
-        public const string AvaloniaNamespace = "https://github.com/avaloniaui";
-        public const string Xaml2006Namespace = "http://schemas.microsoft.com/winfx/2006/xaml";
+        public const string AlternetUINamespace = "http://schemas.alternetsoft.com/ui/2021";
+        public const string UIXmlNamespace = "http://schemas.alternetsoft.com/ui/2021/uixml";
 
         public static TValue GetOrCreate<TKey, TValue>(this Dictionary<TKey, TValue> dic, TKey key,
             Func<TKey, TValue> getter)
