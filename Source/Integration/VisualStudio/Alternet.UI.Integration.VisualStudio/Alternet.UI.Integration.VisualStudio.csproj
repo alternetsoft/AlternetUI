@@ -70,6 +70,7 @@
     <Compile Include="Models\ProjectInfo.cs" />
     <Compile Include="Models\ProjectOutputInfo.cs" />
     <Compile Include="Models\XamlBufferMetadata.cs" />
+    <Compile Include="Services\EditorFactory.cs" />
     <Compile Include="Services\AlternetUIVisualStudioSettings.cs" />
     <Compile Include="Services\IAlternetUIVisualStudioSettings.cs" />
     <Compile Include="Services\IVsFindTarget3.cs" />
@@ -81,6 +82,13 @@
     <Compile Include="ServiceProviderExtensions.cs" />
     <Compile Include="TaskExtensions.cs" />
     <Compile Include="Utils\FrameworkInfoUtils.cs" />
+    <Compile Include="Views\AlternetUIDesigner.xaml.cs">
+      <DependentUpon>AlternetUIDesigner.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AlternetUIPreviewer.xaml.cs">
+      <DependentUpon>AlternetUIPreviewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DesignerPane.cs" />
     <Compile Include="Views\EditorHostPane.cs" />
     <Compile Include="Views\OptionsDialogPage.cs">
       <SubType>Component</SubType>
@@ -150,6 +158,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\AlternetUIDesigner.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AlternetUIPreviewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\OptionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

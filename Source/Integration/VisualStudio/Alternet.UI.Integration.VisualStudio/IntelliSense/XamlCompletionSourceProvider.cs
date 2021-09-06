@@ -11,7 +11,7 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
 {
     [Export(typeof(ICompletionSourceProvider))]
     [ContentType("xml")]
-    [Name("Avalonia XAML Completion")]
+    [Name("Alternet UIXML Completion")]
     internal class XamlCompletionSourceProvider : ICompletionSourceProvider
     {
         private readonly IVsImageService2 _imageService;

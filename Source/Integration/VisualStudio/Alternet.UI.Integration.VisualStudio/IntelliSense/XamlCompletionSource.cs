@@ -42,8 +42,8 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
                     var applicableTo = pos.Snapshot.CreateTrackingSpan(span, SpanTrackingMode.EdgeInclusive);
 
                     completionSets.Insert(0, new CompletionSet(
-                        "Avalonia",
-                        "Avalonia",
+                        "AlternetUI",
+                        "Alternet UI",
                         applicableTo,
                         XamlCompletion.Create(completions.Completions, _imageService),
                         null));
