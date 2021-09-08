@@ -97,9 +97,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AlternetUIWindowTemplate.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Window.uixml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

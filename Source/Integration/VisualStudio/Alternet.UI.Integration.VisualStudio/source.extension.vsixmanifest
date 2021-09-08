@@ -3,7 +3,7 @@
     <Metadata>
         <Identity Id="AlternetUIForVisualStudio" Version="0.0.0.1" Language="en-US" Publisher="Alternet Software" />
         <DisplayName>Alternet UI for Visual Studio</DisplayName>
-        <Description xml:space="preserve">Alternet UI for Visual Studio.</Description>
+        <Description xml:space="preserve">Visual Studio integration for the Alternet UI - a cross-platform user interface framework. Provides UIXML IntelliSense and more.</Description>
         <Icon>icon.ico</Icon>
     </Metadata>
     <Installation>
