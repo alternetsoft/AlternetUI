@@ -69,6 +69,7 @@ namespace Alternet.UI.Integration.IntelliSense.Dnlib
         public bool IsEnum => _type.IsEnum;
         public bool IsStatic => _type.IsAbstract && _type.IsSealed;
         public bool IsInterface => _type.IsInterface;
+        public bool IsAbstract => _type.IsAbstract;
         public bool IsPublic => _type.IsPublic;
         public bool IsGeneric => _type.HasGenericParameters;
         public IEnumerable<string> EnumValues

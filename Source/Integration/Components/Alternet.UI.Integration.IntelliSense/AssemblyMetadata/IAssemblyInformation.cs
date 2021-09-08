@@ -37,6 +37,7 @@ namespace Alternet.UI.Integration.IntelliSense.AssemblyMetadata
         bool IsEnum { get; }
         bool IsStatic { get; }
         bool IsInterface { get; }
+        bool IsAbstract { get; }
         bool IsPublic { get; }
         bool IsGeneric { get; }
         IEnumerable<string> EnumValues { get; }

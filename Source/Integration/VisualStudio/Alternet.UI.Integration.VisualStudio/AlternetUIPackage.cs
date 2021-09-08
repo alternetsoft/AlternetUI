@@ -78,7 +78,15 @@ namespace Alternet.UI.Integration.VisualStudio
             Log.Logger.Information("Alternet UI Package initialized");
         }
 
+        bool outputPaneLoggingEnabled = false;
+
         private void InitializeLogging()
+        {
+            if (outputPaneLoggingEnabled)
+                InitializeOutputPaneLogging();
+        }
+
+        private void InitializeOutputPaneLogging()
         {
             const string format = "{Timestamp:HH:mm:ss.fff} [{Level}] {Pid} {Message}{NewLine}{Exception}";
             var ouput = this.GetService<IVsOutputWindow, SVsOutputWindow>();

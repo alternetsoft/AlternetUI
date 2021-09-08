@@ -58,10 +58,7 @@ namespace Alternet.UI.Integration.IntelliSense
 
         static bool IsTypeIncluded(ITypeInformation type)
         {
-            if (type.IsInterface || !type.IsPublic)
-                return false;
-
-            if (type.IsGeneric)
+            if (type.IsInterface || !type.IsPublic || type.IsGeneric || type.IsAbstract)
                 return false;
 
             return true;
