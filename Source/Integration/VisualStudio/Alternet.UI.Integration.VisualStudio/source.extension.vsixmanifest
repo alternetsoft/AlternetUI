@@ -4,7 +4,12 @@
         <Identity Id="AlternetUIForVisualStudio" Version="0.0.0.1" Language="en-US" Publisher="Alternet Software" />
         <DisplayName>Alternet UI for Visual Studio</DisplayName>
         <Description xml:space="preserve">Visual Studio integration for the Alternet UI - a cross-platform user interface framework. Provides UIXML IntelliSense and more.</Description>
+        <MoreInfo>https://www.alternet-ui.com</MoreInfo>
+        <License>License.rtf</License>
+        <GettingStartedGuide>https://www.alternet-ui.com/how-it-works</GettingStartedGuide>
+        <ReleaseNotes>https://www.alternet-ui.com</ReleaseNotes>
         <Icon>AlternetUI.ico</Icon>
+        <Tags>UI, Cross Platform, .NET, User Interface, macOS, Linux, Windows</Tags>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0, 17.0)" />
