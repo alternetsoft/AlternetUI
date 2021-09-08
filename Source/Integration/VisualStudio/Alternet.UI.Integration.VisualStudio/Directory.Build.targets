@@ -1,0 +1,11 @@
+﻿<Project>
+    <Target Name="AlternetUITemplates_CopySharedContent" BeforeTargets="BeforeCompile">
+		<PropertyGroup>
+			<MediaDirectory>$(MSBuildThisFileDirectory)\..\..\..\..\Media\</MediaDirectory>
+		</PropertyGroup>
+        <ItemGroup>
+            <SharedContent Include="$(MediaDirectory)\AlternetUI.ico"/>
+        </ItemGroup>
+        <Copy SourceFiles="@(SharedContent)" DestinationFolder="$(MSBuildProjectDirectory)" />
+		</Target>
+</Project>
