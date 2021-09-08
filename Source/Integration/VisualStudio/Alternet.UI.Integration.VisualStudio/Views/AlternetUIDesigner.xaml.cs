@@ -17,6 +17,8 @@ using System.Windows;
 using System.Windows.Controls;
 using Task = System.Threading.Tasks.Task;
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+
 namespace Alternet.UI.Integration.VisualStudio.Views
 {
     internal partial class AlternetUIDesigner : UserControl, IDisposable
@@ -487,3 +489,5 @@ namespace Alternet.UI.Integration.VisualStudio.Views
         }
     }
 }
+
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously

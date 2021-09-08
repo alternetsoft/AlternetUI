@@ -56,6 +56,17 @@ namespace Alternet.UI.Integration.IntelliSense
             public override string ToString() => GlobalUrl;
         }
 
+        static bool IsTypeIncluded(ITypeInformation type)
+        {
+            if (type.IsInterface || !type.IsPublic)
+                return false;
+
+            if (type.IsGeneric)
+                return false;
+
+            return true;
+        }
+
         public static Metadata ConvertMetadata(IMetadataReaderSession provider)
         {
             var types = new Dictionary<string, MetadataType>();
@@ -79,7 +90,7 @@ namespace Alternet.UI.Integration.IntelliSense
 
                 var asmTypes = asm.Types.ToArray();
 
-                foreach (var type in asmTypes.Where(x => !x.IsInterface && x.IsPublic))
+                foreach (var type in asmTypes.Where(IsTypeIncluded))
                 {
                     var mt = types[type.FullName] = ConvertTypeInfomation(type);
                     typeDefs[mt] = type;

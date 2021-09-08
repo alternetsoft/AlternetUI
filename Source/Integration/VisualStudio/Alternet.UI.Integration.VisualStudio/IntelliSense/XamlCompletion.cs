@@ -19,6 +19,7 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
     {
         private static ImageSource[] s_images;
 
+#pragma warning disable VSTHRD010 // warning VSTHRD010: Accessing "xxx" should only be done on the main thread.
         public XamlCompletion(Completion completion, IVsImageService2 imageService)
             : base(
                 completion.DisplayText,
@@ -34,6 +35,7 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
 
             Kind = completion.Kind;
         }
+#pragma warning restore VSTHRD010 // warning VSTHRD010: Accessing "xxx" should only be done on the main thread.
 
         public int CursorOffset { get; }
         public CompletionKind Kind { get; }
