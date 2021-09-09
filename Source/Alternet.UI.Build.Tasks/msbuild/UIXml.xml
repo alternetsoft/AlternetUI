@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ProjectSchemaDefinitions xmlns="http://schemas.microsoft.com/build/2009/properties">
-  <ContentType Name="UIXml" DisplayName="Alternet UI XML" ItemType="UIXml" />
+  <ContentType Name="UIXml" DisplayName="Alternet UI XML" ItemType="UIXml">
+    <NameValuePair Name="DependentExtensions" Value=".uixml.cs" />
+  </ContentType>
   <ItemType Name="UIXml" DisplayName="Alternet UI XML" />
   <FileExtension Name=".uixml" ContentType="UIXml" />
 

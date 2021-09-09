@@ -48,4 +48,5 @@
       <Generator>MSBuild:Compile</Generator>
     </UIXml>
   </ItemGroup>
+
 </Project>
