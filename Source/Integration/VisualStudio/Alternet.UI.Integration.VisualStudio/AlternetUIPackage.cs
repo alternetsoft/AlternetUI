@@ -75,7 +75,7 @@ namespace Alternet.UI.Integration.VisualStudio
             var dte = (DTE)await GetServiceAsync(typeof(DTE));
             SolutionService = new SolutionService(dte);
 
-            Log.Logger.Information("Alternet UI Package initialized");
+            //Log.Logger.Information("Alternet UI Package initialized");
         }
 
         bool outputPaneLoggingEnabled = false;

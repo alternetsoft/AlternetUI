@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="AlternetUIForVisualStudio" Version="0.0.0.1" Language="en-US" Publisher="Alternet Software" />
+    <DisplayName>Alternet UI for Visual Studio</DisplayName>
+    <Description xml:space="preserve">Visual Studio integration for the Alternet UI - a cross-platform user interface framework. Provides UIXML IntelliSense and more.</Description>
+    <MoreInfo>https://www.alternet-ui.com</MoreInfo>
+    <License>License.rtf</License>
+    <GettingStartedGuide>https://www.alternet-ui.com/how-it-works</GettingStartedGuide>
+    <ReleaseNotes>https://www.alternet-ui.com</ReleaseNotes>
+    <Icon>AlternetUI.ico</Icon>
+    <Tags>UI, Cross Platform, .NET, User Interface, macOS, Linux, Windows</Tags>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0,18.0)">
+      <ProductArchitecture>amd64</ProductArchitecture>
+    </InstallationTarget>
+  </Installation>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,)" DisplayName="Visual Studio core editor" />
+    <Prerequisite Id="Microsoft.NetCore.Component.DevelopmentTools" Version="[15.8.27729.1,17.0)" DisplayName=".NET Core development tools" />
+    <Prerequisite Id="Microsoft.VisualStudio.Component.Roslyn.LanguageServices" Version="[15.0.26208.0,17.0)" DisplayName="C# and Visual Basic" />
+  </Prerequisites>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:TargetPath="|AlternetUIApplicationTemplate;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" d:ProjectName="AlternetUIApplicationTemplate" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="AlternetUIWindowTemplate" d:TargetPath="|AlternetUIWindowTemplate;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="File" Path="icons.pkgdef" />
+  </Assets>
+</PackageManifest>
