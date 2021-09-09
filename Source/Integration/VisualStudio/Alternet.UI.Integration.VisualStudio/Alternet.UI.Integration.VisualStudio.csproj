@@ -140,6 +140,7 @@
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
         <PackageReference Include="System.ComponentModel.Composition" Version="5.0.0" />
+        <PackageReference Include="Microsoft.VisualStudio.ProjectSystem" Version="17.0.667-pre" />
       </ItemGroup>
     </When>
     <Otherwise>
