@@ -11,7 +11,8 @@ if not exist "%RELEASE_DIRECTORY_VS_2019%" (mkdir "%RELEASE_DIRECTORY_VS_2019%")
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-del /q /s "%RELEASE_DIRECTORY_VS_2019%\*.vsix"
+IF EXIST "%RELEASE_DIRECTORY_VS_2019%\*.vsix" (
+    del /q /s "%RELEASE_DIRECTORY_VS_2019%\*.vsix")
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
@@ -19,7 +20,8 @@ if not exist "%RELEASE_DIRECTORY_VS_2022%" (mkdir "%RELEASE_DIRECTORY_VS_2022%")
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-del /q /s "%RELEASE_DIRECTORY_VS_2022%\*.vsix"
+IF EXIST "%RELEASE_DIRECTORY_VS_2022%\*.vsix" (
+    del /q /s "%RELEASE_DIRECTORY_VS_2022%\*.vsix")
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
