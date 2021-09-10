@@ -24,10 +24,14 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
             _engine = new CompletionEngine();
         }
 
+        DateTime _lastRequestTime = DateTime.MinValue;
+
         public void AugmentCompletionSession(ICompletionSession session, IList<CompletionSet> completionSets)
         {
-            if (completionSets.Count > 0)
+            var currentRequestTime = DateTime.Now;
+            if ((currentRequestTime - _lastRequestTime).TotalMilliseconds < 500)
                 return;
+            _lastRequestTime = currentRequestTime;
 
             if (_buffer.Properties.TryGetProperty<XamlBufferMetadata>(typeof(XamlBufferMetadata), out var metadata) &&
                 metadata.CompletionMetadata != null)
