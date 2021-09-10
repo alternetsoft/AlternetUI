@@ -29,7 +29,7 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
         public void AugmentCompletionSession(ICompletionSession session, IList<CompletionSet> completionSets)
         {
             var currentRequestTime = DateTime.Now;
-            if ((currentRequestTime - _lastRequestTime).TotalMilliseconds < 500)
+            if ((currentRequestTime - _lastRequestTime).TotalMilliseconds < 50)
                 return;
             _lastRequestTime = currentRequestTime;
 
