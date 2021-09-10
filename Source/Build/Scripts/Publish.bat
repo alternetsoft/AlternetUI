@@ -38,6 +38,22 @@ copy "%SCRIPT_HOME%\..\..\Alternet.UI\bin\Release\*.nupkg" "%PackagesPublishDire
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
+:: Build Visual Studio extension.
+
+call "%SCRIPT_HOME%\Build VS Extension.bat"
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
+:: Publish Visual Studio extension.
+
+copy "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\bin\VS2019\Release\*.vsix" "%PackagesPublishDirectory%"
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
+copy "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\bin\VS2022\Release\*.vsix" "%PackagesPublishDirectory%"
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
 @REM :: Generate public source.
 
 @REM set PublicSourceGeneratorToolProject=%SCRIPT_HOME%\..\..\Tools\PublicSourceGenerator\PublicSourceGenerator.csproj
