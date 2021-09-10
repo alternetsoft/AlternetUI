@@ -32,7 +32,8 @@ if not !ERRORLEVEL! EQU 0 (
 
 :: Build
 
-dotnet restore "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
+dotnet msbuild /restore /p:VsTargetVersion=VS2019 "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
+dotnet msbuild /restore /p:VsTargetVersion=VS2022 "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
 
 :: VS 2019
 
