@@ -50,6 +50,8 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
             return _nextCommandHandler.QueryStatus(ref pguidCmdGroup, cCmds, prgCmds, pCmdText);
         }
 
+        public static bool SkipCompletion = false;
+
         public int Exec(ref Guid pguidCmdGroup, uint nCmdID, uint nCmdexecopt, IntPtr pvaIn, IntPtr pvaOut)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
@@ -67,7 +69,17 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
                     return VSConstants.S_OK;
                 }
 
-                var result = _nextCommandHandler.Exec(ref pguidCmdGroup, nCmdID, nCmdexecopt, pvaIn, pvaOut);
+                // HACK: in some cases on VS2019 double code completion list are displayed. See https://github.com/AvaloniaUI/AvaloniaVS/issues/85.
+                int result;
+                SkipCompletion = true;
+                try
+                {
+                    result = _nextCommandHandler.Exec(ref pguidCmdGroup, nCmdID, nCmdexecopt, pvaIn, pvaOut);
+                }
+                finally
+                {
+                    SkipCompletion = false;
+                }                
 
                 if (HandleSessionStart(c))
                 {

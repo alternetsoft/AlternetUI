@@ -115,7 +115,6 @@
     <Message Text="Signing $(TargetVsixContainer)" Importance="High" />
     <Exec Command="$(VsixSignCommand) $(MSBuildProjectDirectory)\$(TargetVsixContainer)" />
   </Target>
-
   <PropertyGroup>
     <VsTargetVersion Condition="'$(VsTargetVersion)' == '' and '$(VisualStudioVersion)' == '17.0' ">VS2022</VsTargetVersion>
     <VsTargetVersion Condition="'$(VsTargetVersion)' == '' and '$(VisualStudioVersion)' == '16.0' ">VS2019</VsTargetVersion>
@@ -153,16 +152,15 @@
           <SubType>Designer</SubType>
         </None>
         <!-- <PackageReference Include="Microsoft.VisualStudio.SDK" Version="15.0.1" ExcludeAssets="runtime"> -->
-          <!-- <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets> -->
+        <!-- <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets> -->
         <!-- </PackageReference> -->
         <!-- <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="15.9.3032"> -->
-          <!-- <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets> -->
-          <!-- <PrivateAssets>all</PrivateAssets> -->
+        <!-- <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets> -->
+        <!-- <PrivateAssets>all</PrivateAssets> -->
         <!-- </PackageReference> -->
         <!-- <PackageReference Include="System.ComponentModel.Composition" Version="5.0.0" /> -->
         <!-- <PackageReference Include="Microsoft.VisualStudio.ProjectSystem" Version="15.8.243" /> -->
         <!-- <PackageReference Include="Microsoft.VisualStudio.Text.Data" Version="15.8.525" /> -->
-
         <PackageReference Include="Madskristensen.VisualStudio.SDK">
           <Version>15.8.81-pre</Version>
         </PackageReference>
@@ -172,11 +170,10 @@
         <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="15.9.3032">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
-        </PackageReference>                
+        </PackageReference>
       </ItemGroup>
     </Otherwise>
   </Choose>
-  
   <ItemGroup>
     <PackageReference Include="Serilog">
       <Version>2.8.0</Version>
@@ -188,7 +185,6 @@
       <Version>0.15.0</Version>
     </PackageReference>
   </ItemGroup>
-  
   <ItemGroup>
     <Content Include="AlternetUI.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

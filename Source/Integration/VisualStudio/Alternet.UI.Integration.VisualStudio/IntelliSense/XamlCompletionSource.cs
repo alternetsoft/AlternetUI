@@ -24,14 +24,11 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
             _engine = new CompletionEngine();
         }
 
-        DateTime _lastRequestTime = DateTime.MinValue;
-
         public void AugmentCompletionSession(ICompletionSession session, IList<CompletionSet> completionSets)
         {
-            var currentRequestTime = DateTime.Now;
-            if ((currentRequestTime - _lastRequestTime).TotalMilliseconds < 50)
+            // HACK: in some cases on VS2019 double code completion list are displayed. See https://github.com/AvaloniaUI/AvaloniaVS/issues/85.
+            if (XamlCompletionCommandHandler.SkipCompletion)
                 return;
-            _lastRequestTime = currentRequestTime;
 
             if (_buffer.Properties.TryGetProperty<XamlBufferMetadata>(typeof(XamlBufferMetadata), out var metadata) &&
                 metadata.CompletionMetadata != null)
