@@ -1,3 +1,6 @@
+if %USERNAME% EQU LocalSystem (
+    set NUGET_PACKAGES=C:\Windows\system32\config\systemprofile\.nuget\packages)
+
 SETLOCAL EnableDelayedExpansion
 
 set SCRIPT_HOME=%~dp0.
