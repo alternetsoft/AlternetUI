@@ -1,5 +1,5 @@
-::if %USERNAME% EQU %COMPUTERNAME%$ (
-::    set NUGET_PACKAGES=C:\Windows\system32\config\systemprofile\.nuget\packages)
+if %USERNAME% EQU %COMPUTERNAME%$ (
+    set NUGET_PACKAGES=C:\Windows\system32\config\systemprofile\.nuget\packages)
 
 ::set NUGET_PACKAGES=C:\Windows\system32\config\systemprofile\.nuget\packages
 
@@ -32,15 +32,13 @@ if not !ERRORLEVEL! EQU 0 (
 
 :: Build
 
+dotnet restore "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
+
 :: VS 2019
 
 "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -prerelease -version [16.0,17.0) -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe > tmpFile 
 set /p FOUND_MSBUILD_PATH_VS_2019= < tmpFile 
 del tmpFile 
-
-"%FOUND_MSBUILD_PATH_VS_2019%" /restore "%SCRIPT_HOME%\..\..\Integration\Components\Alternet.UI.Integration.IntelliSense\Alternet.UI.Integration.IntelliSense.csproj"
-if not !ERRORLEVEL! EQU 0 (
-    exit /b !ERRORLEVEL!)
 
 "%FOUND_MSBUILD_PATH_VS_2019%" /restore /t:Clean,Build /p:Configuration=Release "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
 if not !ERRORLEVEL! EQU 0 (
@@ -51,10 +49,6 @@ if not !ERRORLEVEL! EQU 0 (
 "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -prerelease -version [17.0,18.0) -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe > tmpFile 
 set /p FOUND_MSBUILD_PATH_VS_2019= < tmpFile 
 del tmpFile 
-
-"%FOUND_MSBUILD_PATH_VS_2019%" /restore "%SCRIPT_HOME%\..\..\Integration\Components\Alternet.UI.Integration.IntelliSense\Alternet.UI.Integration.IntelliSense.csproj"
-if not !ERRORLEVEL! EQU 0 (
-    exit /b !ERRORLEVEL!)
 
 "%FOUND_MSBUILD_PATH_VS_2019%" /restore /t:Clean,Build /p:Configuration=Release "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
 if not !ERRORLEVEL! EQU 0 (
