@@ -26,6 +26,9 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
 
         public void AugmentCompletionSession(ICompletionSession session, IList<CompletionSet> completionSets)
         {
+            if (completionSets.Count > 0)
+                return;
+
             if (_buffer.Properties.TryGetProperty<XamlBufferMetadata>(typeof(XamlBufferMetadata), out var metadata) &&
                 metadata.CompletionMetadata != null)
             {
