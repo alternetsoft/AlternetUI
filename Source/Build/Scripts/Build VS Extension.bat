@@ -33,11 +33,7 @@ if not !ERRORLEVEL! EQU 0 (
 set /p FOUND_MSBUILD_PATH_VS_2019= < tmpFile 
 del tmpFile 
 
-"%FOUND_MSBUILD_PATH_VS_2019%" /restore "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
-if not !ERRORLEVEL! EQU 0 (
-    exit /b !ERRORLEVEL!)
-
-"%FOUND_MSBUILD_PATH_VS_2019%" /t:Clean,Build /p:Configuration=Release "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
+"%FOUND_MSBUILD_PATH_VS_2019%" /restore /t:Clean,Build /p:Configuration=Release "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
@@ -47,11 +43,7 @@ if not !ERRORLEVEL! EQU 0 (
 set /p FOUND_MSBUILD_PATH_VS_2019= < tmpFile 
 del tmpFile 
 
-"%FOUND_MSBUILD_PATH_VS_2019%" /restore "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
-if not !ERRORLEVEL! EQU 0 (
-    exit /b !ERRORLEVEL!)
-    
-"%FOUND_MSBUILD_PATH_VS_2019%" /t:Clean,Build /p:Configuration=Release "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
+"%FOUND_MSBUILD_PATH_VS_2019%" /restore /t:Clean,Build /p:Configuration=Release "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
     
