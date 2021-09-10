@@ -1,4 +1,4 @@
-if %USERNAME% EQU LocalSystem (
+if %USERNAME% EQU %COMPUTERNAME%$ (
     set NUGET_PACKAGES=C:\Windows\system32\config\systemprofile\.nuget\packages)
 
 SETLOCAL EnableDelayedExpansion
