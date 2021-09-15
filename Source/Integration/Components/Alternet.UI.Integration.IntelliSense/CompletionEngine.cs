@@ -139,6 +139,9 @@ namespace Alternet.UI.Integration.IntelliSense
 
             public MetadataProperty LookupProperty(string typeName, string propName)
                 => LookupType(typeName)?.Properties?.FirstOrDefault(p => p.Name == propName);
+
+            public MetadataEvent LookupEvent(string typeName, string eventName)
+                => LookupType(typeName)?.Events?.FirstOrDefault(e => e.Name == eventName);
         }
 
         private MetadataHelper _helper = new MetadataHelper();
@@ -278,14 +281,21 @@ namespace Alternet.UI.Integration.IntelliSense
             else if (state.State == XmlParser.ParserState.AttributeValue)
             {
                 MetadataProperty prop;
+                MetadataEvent @event = null;
                 if (state.AttributeName.Contains("."))
                 {
                     //Attached property
                     var split = state.AttributeName.Split('.');
                     prop = _helper.LookupProperty(split[0], split[1]);
+                    if (prop == null)
+                        @event = _helper.LookupEvent(split[0], split[1]);
                 }
                 else
+                {
                     prop = _helper.LookupProperty(state.TagName, state.AttributeName);
+                    if (prop == null)
+                        @event = _helper.LookupEvent(state.TagName, state.AttributeName);
+                }
 
                 //Markup extension, ignore everything else
                 if (state.AttributeValue.StartsWith("{"))
@@ -298,7 +308,11 @@ namespace Alternet.UI.Integration.IntelliSense
                 {
                     prop = prop ?? _helper.LookupType(state.AttributeName)?.Properties.FirstOrDefault(p => p.Name == "");
 
-                    if (prop?.Type?.HasHintValues == true)
+                    if (@event != null)
+                    {
+                        completions.Add(new Completion("<New Event Handler>", "Button_Click", "Create new event handler", CompletionKind.Enum));
+                    }
+                    else if (prop?.Type?.HasHintValues == true)
                     {
                         var search = textToCursor.Substring(state.CurrentValueStart.Value);
                         if (prop.Type.IsCompositeValue)

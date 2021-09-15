@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using Alternet.UI.Integration.IntelliSense;
 using Microsoft.VisualStudio;
@@ -204,14 +205,56 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
 
             // Subscribe to the Dismissed event on the session.
             _session.Dismissed += SessionDismissed;
+            _session.Committed += Session_Committed;
             _session.Start();
 
             return true;
         }
 
+        private void Session_Committed(object sender, EventArgs e)
+        {
+            static string GetTextViewPath(ITextView textView)
+            {
+                ThreadHelper.ThrowIfNotOnUIThread();
+
+                textView.TextBuffer.Properties.TryGetProperty(typeof(IVsTextBuffer), out IVsTextBuffer bufferAdapter);
+                var persistFileFormat = bufferAdapter as Microsoft.VisualStudio.Shell.Interop.IPersistFileFormat;
+
+                if (persistFileFormat == null)
+                    return null;
+
+                persistFileFormat.GetCurFile(out string filePath, out _);
+                return filePath;
+            }
+
+
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            if (_session.SelectedCompletionSet.SelectionStatus.Completion.DisplayText == "<New Event Handler>")
+            {
+                var uixmlPath = GetTextViewPath(_session.TextView);
+                var codeBehindPath = uixmlPath.Replace(".uixml", ".uixml.cs");
+                if (!File.Exists(codeBehindPath))
+                    return;
+
+                var dte = _serviceProvider.GetService<EnvDTE.DTE>();
+
+                var uixmlDocument = dte.ActiveDocument;
+
+                dte.ItemOperations.OpenFile(codeBehindPath);
+
+                var codeBehindDocument = dte.ActiveDocument.Object("TextDocument") as EnvDTE.TextDocument;
+                var editPoint = codeBehindDocument.CreateEditPoint();
+                editPoint.Insert("Button_Click");
+
+                uixmlDocument.Activate();
+            }
+        }
+
         private void SessionDismissed(object sender, EventArgs e)
         {
             _session.Dismissed -= SessionDismissed;
+            _session.Committed -= Session_Committed;
             _session = null;
         }
 
