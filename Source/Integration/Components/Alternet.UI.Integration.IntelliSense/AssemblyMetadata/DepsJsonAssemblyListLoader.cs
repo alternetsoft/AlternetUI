@@ -40,33 +40,10 @@ namespace Alternet.UI.Integration.IntelliSense.AssemblyMetadata
             }
         }
 
-        static string[] GetNugetPackagesDirs()
-        {
-            var home = Environment.GetEnvironmentVariable(
-#if DESKTOP
-                Environment.OSVersion.Platform == PlatformID.Win32NT
-#else
-                RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-#endif
-                    ? "USERPROFILE"
-                    : "HOME");
-
-            var redirectedPath = Environment.GetEnvironmentVariable("NUGET_PACKAGES");
-
-            if (redirectedPath != null)
-            {
-                return new[] { Path.Combine(home, ".nuget/packages"), redirectedPath };
-            }
-            else
-            {
-                return new[] { Path.Combine(home, ".nuget/packages") };
-            }
-        }
-
         public static IEnumerable<string> ParseFile(string path)
         {
             var dir = Path.GetDirectoryName(path);
-            var nugetDirs = GetNugetPackagesDirs();
+            var nugetDirs = NuGetPackagesLocator.GetNugetPackagesDirs();
             var deps = JObject.Parse(File.ReadAllText(path));
             var target = deps["runtimeTarget"]["name"].ToString();
             foreach (var l in TransformDeps((JObject) deps["targets"][target]))
@@ -95,6 +72,5 @@ namespace Alternet.UI.Integration.IntelliSense.AssemblyMetadata
 
 
         }
-
     }
 }

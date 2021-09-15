@@ -29,10 +29,13 @@ namespace Alternet.UI.Integration.IntelliSense.AssemblyMetadata
 
         public Metadata GetForTargetAssembly(string path)
         {
-            if (!File.Exists(path))
-                return null;
-            
-            using (var session = _provider.GetMetadata(GetAssemblies(path)))
+            IEnumerable<string> assemblies;
+            if (File.Exists(path))
+                assemblies = GetAssemblies(path);
+            else
+                assemblies = DefaultAssembliesLocator.GetAssemblies();
+
+            using (var session = _provider.GetMetadata(assemblies))
                 return MetadataConverter.ConvertMetadata(session);
         }
         
