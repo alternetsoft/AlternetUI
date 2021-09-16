@@ -159,7 +159,7 @@ namespace Alternet.UI.Integration.IntelliSense
                         var m = new MetadataMethod(
                             methodDef.Name,
                             types.GetValueOrDefault(methodDef.ReturnTypeFullName),
-                            methodDef.Parameters.Select(x => types.GetValueOrDefault(x.TypeFullName)).ToArray(),
+                            methodDef.Parameters.Select(x => new MetadataParameter(x.Name, types.GetValueOrDefault(x.TypeFullName))).ToArray(),
                             types.GetValueOrDefault(typeDef.FullName), 
                             methodDef.IsStatic);
 

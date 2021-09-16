@@ -6,13 +6,13 @@
     /// </summary>
     public class TextManipulation
     {
-        public static TextManipulation Insert(int postition, string text)
+        public static TextManipulation Insert(int position, string text)
         {
-            return new TextManipulation(postition, postition + text.Length, text, ManipulationType.Insert);
+            return new TextManipulation(position, position + text.Length, text, ManipulationType.Insert);
         }
-        public static TextManipulation Delete(int postition, int length)
+        public static TextManipulation Delete(int position, int length)
         {
-            return new TextManipulation(postition, postition + length, null, ManipulationType.Delete);
+            return new TextManipulation(position, position + length, null, ManipulationType.Delete);
         }
 
         private TextManipulation(int start, int end, string text, ManipulationType type)

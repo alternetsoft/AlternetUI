@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Alternet.UI.Integration.IntelliSense
 {
@@ -20,11 +19,7 @@ namespace Alternet.UI.Integration.IntelliSense
 
     public class Completion
     {
-        public string DisplayText { get; }
-        public string InsertText { get; }
-        public string Description { get; }
-        public CompletionKind Kind { get; }
-        public int? RecommendedCursorOffset { get; }
+        private Dictionary<object, object> properties;
 
         public Completion(string displayText, string insertText, string description, CompletionKind kind, int? recommendedCursorOffset = null)
         {
@@ -35,11 +30,23 @@ namespace Alternet.UI.Integration.IntelliSense
             RecommendedCursorOffset = recommendedCursorOffset;
         }
 
-        public override string ToString() => DisplayText;
-
         public Completion(string insertText, CompletionKind kind) : this(insertText, insertText, insertText, kind)
         {
-
         }
+
+        public string DisplayText { get; }
+
+        public string InsertText { get; }
+
+        public string Description { get; }
+
+        public CompletionKind Kind { get; }
+
+        public int? RecommendedCursorOffset { get; }
+
+        public Dictionary<object, object> Properties => properties ??= new Dictionary<object, object>();
+        public Dictionary<object, object> TryGetProperties() => properties;
+
+        public override string ToString() => DisplayText;
     }
 }

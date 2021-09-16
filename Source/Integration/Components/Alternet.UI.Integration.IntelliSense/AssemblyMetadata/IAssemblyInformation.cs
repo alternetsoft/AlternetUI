@@ -65,6 +65,7 @@ namespace Alternet.UI.Integration.IntelliSense.AssemblyMetadata
     public interface IParameterInformation
     {
         string TypeFullName { get; }
+        string Name { get; }
     }
 
     public interface IPropertyInformation

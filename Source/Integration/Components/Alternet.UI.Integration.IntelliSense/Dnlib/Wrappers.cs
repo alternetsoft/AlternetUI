@@ -220,6 +220,7 @@ namespace Alternet.UI.Integration.IntelliSense.Dnlib
             _param = param;
         }
         public string TypeFullName => _param.Type.FullName;
+        public string Name => _param.Name;
     }
 
     static class WrapperExtensions

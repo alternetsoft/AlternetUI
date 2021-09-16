@@ -34,6 +34,13 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
             }
 
             Kind = completion.Kind;
+
+            var properties = completion.TryGetProperties();
+            if (properties != null)
+            {
+                foreach (var property in properties)
+                    Properties.AddProperty(property.Key, property.Value);
+            }
         }
 #pragma warning restore VSTHRD010 // warning VSTHRD010: Accessing "xxx" should only be done on the main thread.
 

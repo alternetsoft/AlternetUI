@@ -83,21 +83,34 @@ namespace Alternet.UI.Integration.IntelliSense
         }
     }
 
+    [DebuggerDisplay("{DeclaringType} {Name}")]
+    public class MetadataParameter
+    {
+        public MetadataParameter(string name, MetadataType parameterType)
+        {
+            Name = name;
+            ParameterType = parameterType;
+        }
+
+        public string Name { get; }
+        public MetadataType ParameterType { get; }
+    }
+
     [DebuggerDisplay("{Name} from {DeclaringType}")]
     public class MetadataMethod
     {
-        public MetadataMethod(string name, MetadataType returnType, MetadataType[] parameterTypes, MetadataType declaringType, bool isStatic)
+        public MetadataMethod(string name, MetadataType returnType, MetadataParameter[] parameters, MetadataType declaringType, bool isStatic)
         {
             Name = name;
             ReturnType = returnType;
-            ParameterTypes = parameterTypes;
+            Parameters = parameters;
             DeclaringType = declaringType;
             IsStatic = isStatic;
         }
 
         public string Name { get; }
         public MetadataType ReturnType { get; }
-        public MetadataType[] ParameterTypes { get; }
+        public MetadataParameter[] Parameters { get; }
         public MetadataType DeclaringType { get; }
         public bool IsStatic { get; }
     }

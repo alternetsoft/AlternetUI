@@ -188,6 +188,13 @@ namespace Alternet.UI.Integration.IntelliSense
             return rv;
         }
 
+        public static class PropertyKeys
+        {
+            public const string CreateNewEventHandler = nameof(CreateNewEventHandler);
+            public const string Event = nameof(Event);
+        }
+
+
         public CompletionSet GetCompletions(
             Metadata metadata,
             string fullText,
@@ -319,8 +326,18 @@ namespace Alternet.UI.Integration.IntelliSense
                     {
                         if (codeBehindFullText != null)
                         {
-                            completions.Add(new Completion("<New Event Handler>", "Button_Click", "Create new event handler", CompletionKind.Enum));
-                            var names = EventBinderProvider.GetEventBinder(codeBehindLanguage).GetSuitableHandlerMethodNames(codeBehindFullText, @event);
+                            var eventBinder = EventBinderProvider.GetEventBinder(codeBehindLanguage);
+                            if (eventBinder.CanAddEventHandlers(codeBehindFullText))
+                            {
+                                var targetType = _helper.LookupType(state.TagName);
+                                var insertText = eventBinder.CreateUniqueHandlerName(codeBehindFullText, @event, targetType, null);
+                                var item = new Completion("<New Event Handler>", insertText, "Create a new event handler.", CompletionKind.Enum);
+                                item.Properties.Add(PropertyKeys.CreateNewEventHandler, true);
+                                item.Properties.Add(PropertyKeys.Event, @event);
+                                completions.Add(item);
+                            }
+
+                            var names = eventBinder.GetSuitableHandlerMethodNames(codeBehindFullText, @event);
                             foreach (var name in names)
                                 completions.Add(new Completion(name, name, $"Use {name} event handler.", CompletionKind.Enum));
                         }

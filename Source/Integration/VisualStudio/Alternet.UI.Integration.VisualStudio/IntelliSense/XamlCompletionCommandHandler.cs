@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using Alternet.UI.Integration.IntelliSense;
+using Alternet.UI.Integration.IntelliSense.EventBinding;
 using Alternet.UI.Integration.VisualStudio.Utils;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Language.Intellisense;
@@ -220,11 +221,12 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            if (_session.SelectedCompletionSet.SelectionStatus.Completion.DisplayText == "<New Event Handler>")
+            var completion = _session.SelectedCompletionSet.SelectionStatus.Completion;
+            if (completion.Properties.ContainsProperty(CompletionEngine.PropertyKeys.CreateNewEventHandler))
             {
                 var uixmlPath = TextBufferHelper.GetTextBufferFilePath(_session.TextView.TextBuffer);
-                var codeBehindPath = uixmlPath.Replace(".uixml", ".uixml.cs");
-                if (!File.Exists(codeBehindPath))
+                var codeBehindPath = CodeBehindFileLocator.TryFindCodeBehindFile(uixmlPath);
+                if (codeBehindPath == null)
                     return;
 
                 var uixmlDocument = documentOperations.GetActiveDocument();
@@ -232,8 +234,19 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
                 documentOperations.OpenFile(codeBehindPath);
 
                 var codeBehindDocument = documentOperations.GetTextDocumentFromDocument(documentOperations.GetActiveDocument());
-                var editPoint = codeBehindDocument.CreateEditPoint();
-                editPoint.Insert("Button_Click");
+
+                var codeBehindText = documentOperations.GetDocumentText(codeBehindDocument);
+
+                var eventBinder = EventBinderProvider.GetEventBinder(LanguageDetector.DetectLanguageFromFileName(codeBehindPath));
+                var @event = (MetadataEvent)completion.Properties[CompletionEngine.PropertyKeys.Event];
+                
+                var insertion = eventBinder.TryAddEventHandler(codeBehindText, @event, completion.InsertionText);
+                if (insertion != null)
+                {
+                    var editPoint = codeBehindDocument.StartPoint.CreateEditPoint();
+                    editPoint.MoveToLineAndOffset(insertion.Line + 1, 1);
+                    editPoint.Insert(insertion.Text);
+                }
 
                 uixmlDocument.Activate();
             }
