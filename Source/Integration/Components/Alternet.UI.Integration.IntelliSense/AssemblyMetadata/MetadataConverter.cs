@@ -154,6 +154,18 @@ namespace Alternet.UI.Integration.IntelliSense
                         type.Events.Add(e);
                     }
 
+                    foreach (var methodDef in typeDef.Methods)
+                    {
+                        var m = new MetadataMethod(
+                            methodDef.Name,
+                            types.GetValueOrDefault(methodDef.ReturnTypeFullName),
+                            methodDef.Parameters.Select(x => types.GetValueOrDefault(x.TypeFullName)).ToArray(),
+                            types.GetValueOrDefault(typeDef.FullName), 
+                            methodDef.IsStatic);
+
+                        type.Methods.Add(m);
+                    }
+
                     //check for attached properties only on top level
                     if (level == 0)
                     {

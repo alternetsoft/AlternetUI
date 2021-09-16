@@ -15,11 +15,13 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
     internal class XamlCompletionSourceProvider : ICompletionSourceProvider
     {
         private readonly IVsImageService2 _imageService;
+        private readonly IServiceProvider serviceProvider;
 
         [ImportingConstructor]
         public XamlCompletionSourceProvider(
             [Import(typeof(SVsServiceProvider))] IServiceProvider serviceProvider)
         {
+            this.serviceProvider = serviceProvider;
             _imageService = serviceProvider.GetService<IVsImageService2, SVsImageService>();
         }
 
@@ -27,7 +29,7 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
         {
             if (textBuffer.Properties.ContainsProperty(typeof(XamlBufferMetadata)))
             {
-                return new XamlCompletionSource(textBuffer, _imageService);
+                return new XamlCompletionSource(serviceProvider, textBuffer, _imageService);
             }
 
             return null;

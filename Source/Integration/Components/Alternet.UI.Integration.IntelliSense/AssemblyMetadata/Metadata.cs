@@ -31,6 +31,7 @@ namespace Alternet.UI.Integration.IntelliSense
         public string FullName { get; set; } = "";
         public List<MetadataProperty> Properties { get; set; } = new List<MetadataProperty>();
         public List<MetadataEvent> Events { get; set; } = new List<MetadataEvent>();
+        public List<MetadataMethod> Methods { get; set; } = new List<MetadataMethod>();
         public bool HasAttachedProperties { get; set; }
         public bool HasAttachedEvents { get; set; }
         public bool HasStaticGetProperties { get; set; }
@@ -80,6 +81,25 @@ namespace Alternet.UI.Integration.IntelliSense
             HasGetter = hasGetter;
             HasSetter = hasSetter;
         }
+    }
+
+    [DebuggerDisplay("{Name} from {DeclaringType}")]
+    public class MetadataMethod
+    {
+        public MetadataMethod(string name, MetadataType returnType, MetadataType[] parameterTypes, MetadataType declaringType, bool isStatic)
+        {
+            Name = name;
+            ReturnType = returnType;
+            ParameterTypes = parameterTypes;
+            DeclaringType = declaringType;
+            IsStatic = isStatic;
+        }
+
+        public string Name { get; }
+        public MetadataType ReturnType { get; }
+        public MetadataType[] ParameterTypes { get; }
+        public MetadataType DeclaringType { get; }
+        public bool IsStatic { get; }
     }
 
     public class MetadataEvent

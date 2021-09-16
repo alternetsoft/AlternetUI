@@ -78,6 +78,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceProviderExtensions.cs" />
     <Compile Include="TaskExtensions.cs" />
+    <Compile Include="Utils\FileContentProvider.cs" />
+    <Compile Include="Utils\DocumentOperations.cs" />
+    <Compile Include="Utils\TextBufferHelper.cs" />
     <Compile Include="Utils\FrameworkInfoUtils.cs" />
     <Compile Include="Views\AlternetUIDesigner.xaml.cs">
       <DependentUpon>AlternetUIDesigner.xaml</DependentUpon>

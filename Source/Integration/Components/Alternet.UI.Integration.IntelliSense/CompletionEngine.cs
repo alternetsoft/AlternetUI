@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Alternet.UI.Integration.IntelliSense.EventBinding;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -187,7 +188,13 @@ namespace Alternet.UI.Integration.IntelliSense
             return rv;
         }
 
-        public CompletionSet GetCompletions(Metadata metadata, string fullText, int pos, string currentAssemblyName = null)
+        public CompletionSet GetCompletions(
+            Metadata metadata,
+            string fullText,
+            int pos,
+            string currentAssemblyName,
+            string codeBehindFullText,
+            Language codeBehindLanguage)
         {
             string textToCursor = fullText.Substring(0, pos);
             _helper.SetMetadata(metadata, textToCursor, currentAssemblyName);
@@ -310,7 +317,13 @@ namespace Alternet.UI.Integration.IntelliSense
 
                     if (@event != null)
                     {
-                        completions.Add(new Completion("<New Event Handler>", "Button_Click", "Create new event handler", CompletionKind.Enum));
+                        if (codeBehindFullText != null)
+                        {
+                            completions.Add(new Completion("<New Event Handler>", "Button_Click", "Create new event handler", CompletionKind.Enum));
+                            var names = EventBinderProvider.GetEventBinder(codeBehindLanguage).GetSuitableHandlerMethodNames(codeBehindFullText, @event);
+                            foreach (var name in names)
+                                completions.Add(new Completion(name, name, $"Use {name} event handler.", CompletionKind.Enum));
+                        }
                     }
                     else if (prop?.Type?.HasHintValues == true)
                     {

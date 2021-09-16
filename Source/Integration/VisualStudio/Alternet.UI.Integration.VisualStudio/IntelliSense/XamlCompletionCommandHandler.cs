@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using Alternet.UI.Integration.IntelliSense;
+using Alternet.UI.Integration.VisualStudio.Utils;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Microsoft.VisualStudio.OLE.Interop;
@@ -39,6 +40,8 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
             _serviceProvider = serviceProvider;
             _completionBroker = completionBroker;
             _textView = textView;
+
+            documentOperations = new DocumentOperations(serviceProvider);
 
             // Add ourselves as a command to the text view.
             textViewAdapter.AddCommandFilter(this, out _nextCommandHandler);
@@ -211,39 +214,24 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
             return true;
         }
 
+        DocumentOperations documentOperations;
+
         private void Session_Committed(object sender, EventArgs e)
         {
-            static string GetTextViewPath(ITextView textView)
-            {
-                ThreadHelper.ThrowIfNotOnUIThread();
-
-                textView.TextBuffer.Properties.TryGetProperty(typeof(IVsTextBuffer), out IVsTextBuffer bufferAdapter);
-                var persistFileFormat = bufferAdapter as Microsoft.VisualStudio.Shell.Interop.IPersistFileFormat;
-
-                if (persistFileFormat == null)
-                    return null;
-
-                persistFileFormat.GetCurFile(out string filePath, out _);
-                return filePath;
-            }
-
-
             ThreadHelper.ThrowIfNotOnUIThread();
 
             if (_session.SelectedCompletionSet.SelectionStatus.Completion.DisplayText == "<New Event Handler>")
             {
-                var uixmlPath = GetTextViewPath(_session.TextView);
+                var uixmlPath = TextBufferHelper.GetTextBufferFilePath(_session.TextView.TextBuffer);
                 var codeBehindPath = uixmlPath.Replace(".uixml", ".uixml.cs");
                 if (!File.Exists(codeBehindPath))
                     return;
 
-                var dte = _serviceProvider.GetService<EnvDTE.DTE>();
+                var uixmlDocument = documentOperations.GetActiveDocument();
 
-                var uixmlDocument = dte.ActiveDocument;
+                documentOperations.OpenFile(codeBehindPath);
 
-                dte.ItemOperations.OpenFile(codeBehindPath);
-
-                var codeBehindDocument = dte.ActiveDocument.Object("TextDocument") as EnvDTE.TextDocument;
+                var codeBehindDocument = documentOperations.GetTextDocumentFromDocument(documentOperations.GetActiveDocument());
                 var editPoint = codeBehindDocument.CreateEditPoint();
                 editPoint.Insert("Button_Click");
 

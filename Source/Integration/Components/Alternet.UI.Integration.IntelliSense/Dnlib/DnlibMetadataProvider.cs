@@ -33,12 +33,14 @@ namespace Alternet.UI.Integration.IntelliSense.Dnlib
             asmResolver.DefaultModuleContext = modCtx;
             asmResolver.EnableTypeDefCache = true;
 
-            foreach (var path in lst)
+            var assemblyNames = lst.Concat(new[] { new Uri(typeof(System.EventHandler).Assembly.CodeBase).LocalPath }).ToArray();
+
+            foreach (var path in assemblyNames)
                 asmResolver.PreSearchPaths.Add(path);
 
             List<AssemblyDef> assemblies = new List<AssemblyDef>();
 
-            foreach (var asm in lst)
+            foreach (var asm in assemblyNames)
             {
                 try
                 {
