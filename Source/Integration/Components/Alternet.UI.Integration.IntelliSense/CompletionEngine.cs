@@ -330,7 +330,8 @@ namespace Alternet.UI.Integration.IntelliSense
                             if (eventBinder.CanAddEventHandlers(codeBehindFullText))
                             {
                                 var targetType = _helper.LookupType(state.TagName);
-                                var insertText = eventBinder.CreateUniqueHandlerName(codeBehindFullText, @event, targetType, null);
+                                var objectName = state.FindParentAttributeValue("Name");
+                                var insertText = eventBinder.CreateUniqueHandlerName(codeBehindFullText, @event, targetType, objectName);
                                 var item = new Completion("<New Event Handler>", insertText, "Create a new event handler.", CompletionKind.Enum);
                                 item.Properties.Add(PropertyKeys.CreateNewEventHandler, true);
                                 item.Properties.Add(PropertyKeys.Event, @event);

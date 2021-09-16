@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using Alternet.UI.Integration.IntelliSense;
 using Alternet.UI.Integration.IntelliSense.EventBinding;
@@ -217,12 +219,17 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
 
         DocumentOperations documentOperations;
 
+        PropertyInfo filterBufferTextPropertyInfo = typeof(Microsoft.VisualStudio.Language.Intellisense.CompletionSet).GetProperty(
+            "FilterBufferText",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
         private void Session_Committed(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            var completion = _session.SelectedCompletionSet.SelectionStatus.Completion;
-            if (completion.Properties.ContainsProperty(CompletionEngine.PropertyKeys.CreateNewEventHandler))
+            var filterBufferText = (string)filterBufferTextPropertyInfo.GetValue(_session.SelectedCompletionSet);
+            var completion = _session.SelectedCompletionSet.Completions.FirstOrDefault(x => x.InsertionText == filterBufferText);
+            if (completion != null && completion.Properties.ContainsProperty(CompletionEngine.PropertyKeys.CreateNewEventHandler))
             {
                 var uixmlPath = TextBufferHelper.GetTextBufferFilePath(_session.TextView.TextBuffer);
                 var codeBehindPath = CodeBehindFileLocator.TryFindCodeBehindFile(uixmlPath);
