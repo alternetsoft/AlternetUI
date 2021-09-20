@@ -1,6 +1,6 @@
 ﻿using ApiCommon;
 using System;
-using System.Drawing;
+using Alternet.Drawing;
 
 namespace NativeApi.Api
 {

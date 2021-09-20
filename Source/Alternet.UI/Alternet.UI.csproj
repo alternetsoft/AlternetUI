@@ -41,7 +41,6 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(';NETCOREAPP'))">
-    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
     <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
   </ItemGroup>
 
@@ -49,11 +48,6 @@
     <PackageReference Include="Alternet.UI.Pal" Version="$(Version)">
       <PrivateAssets>None</PrivateAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX')) AND $(DefineConstants.Contains(';NETCOREAPP'))">
-    <!-- libgdiplus native binaries. See https://stackoverflow.com/a/47208816/71689 -->
-    <PackageReference Include="runtime.osx.10.10-x64.CoreCompat.System.Drawing" Version="5.8.64" />
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(';NETCOREAPP'))">

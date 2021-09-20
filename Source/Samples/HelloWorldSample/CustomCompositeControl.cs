@@ -1,9 +1,6 @@
 ﻿using Alternet.UI;
 using System;
-using System.Drawing;
-using Brush = Alternet.UI.Brush;
-using Brushes = Alternet.UI.Brushes;
-using SolidBrush = Alternet.UI.SolidBrush;
+using Alternet.Drawing;
 
 namespace HelloWorldSample
 {

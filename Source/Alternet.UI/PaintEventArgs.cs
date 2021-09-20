@@ -1,5 +1,5 @@
 using System;
-using System.Drawing;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -22,8 +22,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the drawing context used to paint.
         /// </summary>
-        /// <value>The <see cref="UI.DrawingContext"/> object used to paint.
-        /// The <see cref="UI.DrawingContext"/> object provides methods for drawing objects on the display device.</value>
+        /// <value>The <see cref="DrawingContext"/> object used to paint.
+        /// The <see cref="DrawingContext"/> object provides methods for drawing objects on the display device.</value>
         public DrawingContext DrawingContext { get; }
 
         /// <summary>

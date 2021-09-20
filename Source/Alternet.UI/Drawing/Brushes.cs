@@ -1,6 +1,6 @@
-using System.Drawing;
+using Alternet.Drawing;
 
-namespace Alternet.UI
+namespace Alternet.Drawing
 {
     /// <summary>
     /// Brushes for all the standard colors.

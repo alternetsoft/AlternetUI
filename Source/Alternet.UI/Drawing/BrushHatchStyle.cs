@@ -1,5 +1,5 @@
 ﻿
-namespace Alternet.UI
+namespace Alternet.Drawing
 {
     /// <summary>
     /// Specifies the different patterns available for <see cref="HatchBrush"/> objects.

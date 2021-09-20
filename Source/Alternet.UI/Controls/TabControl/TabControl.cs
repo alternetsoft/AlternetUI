@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {

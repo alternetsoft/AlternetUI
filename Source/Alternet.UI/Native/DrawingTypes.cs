@@ -17,9 +17,9 @@ namespace Alternet.UI.Native
                 Height = height;
             }
 
-            public static implicit operator System.Drawing.Size(Size v) => new System.Drawing.Size(v.Width, v.Height);
+            public static implicit operator Drawing.Size(Size v) => new Drawing.Size(v.Width, v.Height);
 
-            public static implicit operator Size(System.Drawing.Size v) => new Size(v.Width, v.Height);
+            public static implicit operator Size(Drawing.Size v) => new Size(v.Width, v.Height);
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -33,9 +33,9 @@ namespace Alternet.UI.Native
                 Height = height;
             }
 
-            public static implicit operator System.Drawing.SizeF(SizeF v) => new System.Drawing.SizeF(v.Width, v.Height);
+            public static implicit operator Drawing.SizeF(SizeF v) => new Drawing.SizeF(v.Width, v.Height);
 
-            public static implicit operator SizeF(System.Drawing.SizeF v) => new SizeF(v.Width, v.Height);
+            public static implicit operator SizeF(Drawing.SizeF v) => new SizeF(v.Width, v.Height);
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -49,9 +49,9 @@ namespace Alternet.UI.Native
                 Y = y;
             }
 
-            public static implicit operator System.Drawing.Point(Point v) => new System.Drawing.Point(v.X, v.Y);
+            public static implicit operator Drawing.Point(Point v) => new Drawing.Point(v.X, v.Y);
 
-            public static implicit operator Point(System.Drawing.Point v) => new Point(v.X, v.Y);
+            public static implicit operator Point(Drawing.Point v) => new Point(v.X, v.Y);
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -65,9 +65,9 @@ namespace Alternet.UI.Native
                 Y = y;
             }
 
-            public static implicit operator System.Drawing.PointF(PointF v) => new System.Drawing.PointF(v.X, v.Y);
+            public static implicit operator Drawing.PointF(PointF v) => new Drawing.PointF(v.X, v.Y);
 
-            public static implicit operator PointF(System.Drawing.PointF v) => new PointF(v.X, v.Y);
+            public static implicit operator PointF(Drawing.PointF v) => new PointF(v.X, v.Y);
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -83,9 +83,9 @@ namespace Alternet.UI.Native
                 Height = height;
             }
 
-            public static implicit operator System.Drawing.Rectangle(Rectangle v) => new System.Drawing.Rectangle(v.X, v.Y, v.Width, v.Height);
+            public static implicit operator Drawing.Rectangle(Rectangle v) => new Drawing.Rectangle(v.X, v.Y, v.Width, v.Height);
 
-            public static implicit operator Rectangle(System.Drawing.Rectangle v) => new Rectangle(v.X, v.Y, v.Width, v.Height);
+            public static implicit operator Rectangle(Drawing.Rectangle v) => new Rectangle(v.X, v.Y, v.Width, v.Height);
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -101,9 +101,9 @@ namespace Alternet.UI.Native
                 Height = height;
             }
 
-            public static implicit operator System.Drawing.RectangleF(RectangleF v) => new System.Drawing.RectangleF(v.X, v.Y, v.Width, v.Height);
+            public static implicit operator Drawing.RectangleF(RectangleF v) => new Drawing.RectangleF(v.X, v.Y, v.Width, v.Height);
 
-            public static implicit operator RectangleF(System.Drawing.RectangleF v) => new RectangleF(v.X, v.Y, v.Width, v.Height);
+            public static implicit operator RectangleF(Drawing.RectangleF v) => new RectangleF(v.X, v.Y, v.Width, v.Height);
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -144,9 +144,9 @@ namespace Alternet.UI.Native
                 state = 1;
             }
 
-            public static implicit operator System.Drawing.Color(Color v) => v.IsEmpty ? System.Drawing.Color.Empty : System.Drawing.Color.FromArgb(v.A, v.R, v.G, v.B);
+            public static implicit operator Drawing.Color(Color v) => v.IsEmpty ? Drawing.Color.Empty : Drawing.Color.FromArgb(v.A, v.R, v.G, v.B);
 
-            public static implicit operator Color(System.Drawing.Color color) => color.IsEmpty ? Color.Empty : new Color(color.R, color.G, color.B, color.A);
+            public static implicit operator Color(Drawing.Color color) => color.IsEmpty ? Color.Empty : new Color(color.R, color.G, color.B, color.A);
         }
     }
 }

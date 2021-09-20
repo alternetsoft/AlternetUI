@@ -1,3 +1,6 @@
+using Alternet.Base.Collections;
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>

@@ -1,6 +1,6 @@
-using System.Drawing;
+using Alternet.Drawing;
 
-namespace Alternet.UI
+namespace Alternet.Drawing
 {
     /// <summary>
     /// Pens for all the standard colors.

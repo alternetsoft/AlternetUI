@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
+using Alternet.Drawing;
 using System.Linq;
 
 namespace Alternet.UI

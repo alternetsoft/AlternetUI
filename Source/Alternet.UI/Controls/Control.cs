@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
+using Alternet.Drawing;
+using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {

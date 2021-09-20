@@ -1,7 +1,7 @@
 ﻿using Alternet.UI;
 using System;
 using System.ComponentModel;
-using System.Drawing;
+using Alternet.Drawing;
 
 namespace ControlsSample
 {

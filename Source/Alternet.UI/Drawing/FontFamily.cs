@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace Alternet.UI
+namespace Alternet.Drawing
 {
     /// <summary>
     /// Defines a group of type faces having a similar basic design and certain variations in styles.
@@ -24,7 +24,7 @@ namespace Alternet.UI
             if (name == string.Empty)
                 throw new ArgumentException($"'{nameof(name)}' cannot be empty.", nameof(name));
 
-            if (!Native.Font.IsFamilyValid(name))
+            if (!UI.Native.Font.IsFamilyValid(name))
                 throw new ArgumentException($"'{name}' font family is not installed on this computer.", nameof(name));
 
             this.name = name;
@@ -63,13 +63,13 @@ namespace Alternet.UI
         /// <value>
         /// An array of <see cref="FontFamily"/> objects currently available in the system.
         /// </value>
-        public static FontFamily[] Families => Native.Font.Families.Select(x => new FontFamily(x)).ToArray();
+        public static FontFamily[] Families => UI.Native.Font.Families.Select(x => new FontFamily(x)).ToArray();
 
         /// <summary>
         /// Gets the name of this <see cref="FontFamily"/>.
         /// </summary>
         /// <value>A string that represents the name of this <see cref="FontFamily"/>.</value>
-        public string Name => name ??= Native.Font.GetGenericFamilyName((Native.GenericFontFamily)(GenericFamily ?? throw new Exception()));
+        public string Name => name ??= UI.Native.Font.GetGenericFamilyName((UI.Native.GenericFontFamily)(GenericFamily ?? throw new Exception()));
 
         internal GenericFontFamily? GenericFamily { get; }
     }

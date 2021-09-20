@@ -1,6 +1,6 @@
 using System;
 
-namespace Alternet.UI
+namespace Alternet.Drawing
 {
     /// <summary>
     /// Specifies style information applied to text.

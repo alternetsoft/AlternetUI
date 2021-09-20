@@ -1,7 +1,7 @@
 using System;
-using System.Drawing;
+using Alternet.Drawing;
 
-namespace Alternet.UI
+namespace Alternet.Drawing
 {
     /// <summary>
     /// Defines a brush with a hatch style and a color.
@@ -18,12 +18,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="hatchStyle">One of the <see cref="BrushHatchStyle"/> values that represents the pattern drawn by this <see cref="HatchBrush"/>.</param>
         /// <param name="color">The <see cref="System.Drawing.Color"/> structure that represents the color of lines drawn by this <see cref="HatchBrush"/>.</param>
-        public HatchBrush(BrushHatchStyle hatchStyle, Color color) : base(new Native.HatchBrush())
+        public HatchBrush(BrushHatchStyle hatchStyle, Color color) : base(new UI.Native.HatchBrush())
         {
             HatchStyle = hatchStyle;
             Color = color;
 
-            ((Native.HatchBrush)NativeBrush).Initialize((Native.BrushHatchStyle)hatchStyle, color);
+            ((UI.Native.HatchBrush)NativeBrush).Initialize((UI.Native.BrushHatchStyle)hatchStyle, color);
         }
 
         /// <summary>

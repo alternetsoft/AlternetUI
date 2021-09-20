@@ -1,6 +1,6 @@
 using System;
 
-namespace Alternet.UI
+namespace Alternet.Drawing
 {
     /// <summary>
     /// Defines objects used to fill the interiors of graphical shapes such as rectangles, ellipses, pies, polygons, and paths.
@@ -13,12 +13,12 @@ namespace Alternet.UI
     {
         private bool isDisposed;
 
-        internal Brush(Native.Brush nativeBrush)
+        internal Brush(UI.Native.Brush nativeBrush)
         {
             NativeBrush = nativeBrush;
         }
 
-        internal Native.Brush NativeBrush { get; private set; }
+        internal UI.Native.Brush NativeBrush { get; private set; }
 
         /// <summary>
         /// Returns a value that indicates whether the two objects are equal.

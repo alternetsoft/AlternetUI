@@ -1,7 +1,7 @@
 using System;
-using System.Drawing;
+using Alternet.Drawing;
 
-namespace Alternet.UI
+namespace Alternet.Drawing
 {
     /// <summary>
     /// Defines an object used to draw lines and curves.
@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// <param name="color">A <see cref="Color"/> structure that indicates the color of this <see cref="Pen"/>.</param>
         /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in device-independent units (1/96th inch per unit).</param>
         /// <param name="dashStyle">A style used for dashed lines drawn with this <see cref="Pen"/>.</param>
-        public Pen(Color color, float width, PenDashStyle dashStyle) : this(new Native.Pen())
+        public Pen(Color color, float width, PenDashStyle dashStyle) : this(new UI.Native.Pen())
         {
             DashStyle = dashStyle;
             Color = color;
@@ -63,7 +63,7 @@ namespace Alternet.UI
         {
         }
 
-        internal Pen(Native.Pen nativePen)
+        internal Pen(UI.Native.Pen nativePen)
         {
             NativePen = nativePen;
         }
@@ -122,7 +122,7 @@ namespace Alternet.UI
             }
         }
 
-        internal Native.Pen NativePen { get; private set; }
+        internal UI.Native.Pen NativePen { get; private set; }
 
         /// <summary>
         /// Returns a value that indicates whether the two objects are equal.
@@ -203,7 +203,7 @@ namespace Alternet.UI
 
         private void ReinitializeNativePen()
         {
-            NativePen.Initialize((Native.PenDashStyle)DashStyle, Color, Width);
+            NativePen.Initialize((UI.Native.PenDashStyle)DashStyle, Color, Width);
         }
 
         /// <summary>

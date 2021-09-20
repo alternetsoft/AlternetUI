@@ -1,13 +1,14 @@
 using System;
-using System.Drawing;
+using Alternet.Drawing;
+using Alternet.Base.Collections;
 
-namespace Alternet.UI
+namespace Alternet.Drawing
 {
     /// <summary>
     /// Provides methods to manage a collection of <see cref="Image"/> objects.
     /// </summary>
     /// <remarks>
-    /// ImageList is typically used by other controls, such as the <see cref="ListView"/>.
+    /// ImageList is typically used by other controls, such as the <see cref="Alternet.UI.ListView"/>.
     /// You can add images to the <see cref="ImageList"/>, and the other controls are
     /// able to use the images as they require.
     /// </remarks>
@@ -20,7 +21,7 @@ namespace Alternet.UI
         /// </summary>
         public ImageList() // todo: lifetime
         {
-            NativeImageList = new Native.ImageList();
+            NativeImageList = new UI.Native.ImageList();
 
             Images.ItemInserted += Images_ItemInserted;
             Images.ItemRemoved += Images_ItemRemoved;
@@ -67,7 +68,7 @@ namespace Alternet.UI
         /// </remarks>
         public SizeF ImageSize { get => NativeImageList.ImageSize; set => NativeImageList.ImageSize = value; }
 
-        internal Native.ImageList NativeImageList { get; private set; }
+        internal UI.Native.ImageList NativeImageList { get; private set; }
 
         /// <summary>
         /// Releases all resources used by the <see cref="ImageList"/> object.

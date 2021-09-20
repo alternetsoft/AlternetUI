@@ -1,8 +1,8 @@
 using System;
-using System.Drawing;
+using Alternet.Drawing;
 using System.IO;
 
-namespace Alternet.UI
+namespace Alternet.Drawing
 {
     /// <summary>
     /// Describes an image to be drawn on a <see cref="DrawingContext"/> or displayed in a UI control.
@@ -17,8 +17,8 @@ namespace Alternet.UI
         /// <param name="stream">The data stream used to load the image.</param>
         public Image(Stream stream) // todo: stream lifetime
         {
-            NativeImage = new Native.Image();
-            using (var inputStream = new Native.InputStream(stream))
+            NativeImage = new UI.Native.Image();
+            using (var inputStream = new UI.Native.InputStream(stream))
                 NativeImage.LoadFromStream(inputStream);
         }
 
@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// </summary>
         public Size PixelSize => NativeImage.PixelSize;
 
-        internal Native.Image NativeImage { get; private set; }
+        internal UI.Native.Image NativeImage { get; private set; }
 
         /// <summary>
         /// Releases all resources used by the <see cref="Image"/> object.

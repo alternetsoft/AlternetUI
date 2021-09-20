@@ -1,10 +1,9 @@
 ﻿using Alternet.UI;
 using System;
 using System.ComponentModel;
-using System.Drawing;
+using Alternet.Drawing;
 using System.Linq;
 using System.Reflection;
-using Image = Alternet.UI.Image;
 
 namespace ExplorerUISample
 {

@@ -21,6 +21,8 @@ namespace ApiGenerator.Managed
 
             var typeName = type.Name;
 
+            w.WriteLine("#nullable enable");
+
             w.WriteLine(@"
 using System;
 using System.Runtime.InteropServices;

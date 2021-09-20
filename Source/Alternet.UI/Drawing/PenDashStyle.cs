@@ -1,5 +1,5 @@
 ﻿
-namespace Alternet.UI
+namespace Alternet.Drawing
 {
     /// <summary>
     /// Gets or sets the style used for dashed lines drawn with this <see cref="Pen"/>.

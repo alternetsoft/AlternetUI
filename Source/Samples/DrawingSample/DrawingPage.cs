@@ -1,6 +1,5 @@
 ﻿using Alternet.UI;
-using System.Drawing;
-using Pens = Alternet.UI.Pens;
+using Alternet.Drawing;
 
 namespace DrawingSample
 {

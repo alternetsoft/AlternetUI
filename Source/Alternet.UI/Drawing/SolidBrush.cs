@@ -1,7 +1,7 @@
 using System;
-using System.Drawing;
+using Alternet.Drawing;
 
-namespace Alternet.UI
+namespace Alternet.Drawing
 {
     /// <summary>
     /// Defines a brush of a single color. Brushes are used to fill graphics shapes, such as rectangles, ellipses, pies, polygons, and paths.
@@ -12,10 +12,10 @@ namespace Alternet.UI
         /// Initializes a new <see cref="SolidBrush"/> object of the specified color.
         /// </summary>
         /// <param name="color">A <see cref="Color"/> structure that represents the color of this brush.</param>
-        public SolidBrush(Color color) : base(new Native.SolidBrush())
+        public SolidBrush(Color color) : base(new UI.Native.SolidBrush())
         {
             Color = color;
-            ((Native.SolidBrush)NativeBrush).Initialize(color);
+            ((UI.Native.SolidBrush)NativeBrush).Initialize(color);
         }
 
         /// <summary>

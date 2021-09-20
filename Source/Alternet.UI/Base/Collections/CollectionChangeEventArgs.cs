@@ -1,6 +1,6 @@
 using System;
 
-namespace Alternet.UI
+namespace Alternet.Base.Collections
 {
     /// <summary>
     /// Provides data for the <see cref="Collection{T}.ItemInserted"/> and <see cref="Collection{T}.ItemRemoved"/> events.

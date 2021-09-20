@@ -1,17 +1,17 @@
 using System;
-using System.Drawing;
+using Alternet.Drawing;
 
-namespace Alternet.UI
+namespace Alternet.Drawing
 {
     /// <summary>
     /// Describes a drawing surface.
     /// </summary>
     public class DrawingContext : IDisposable
     {
-        private Native.DrawingContext dc;
+        private UI.Native.DrawingContext dc;
         private bool isDisposed;
 
-        internal DrawingContext(Native.DrawingContext dc)
+        internal DrawingContext(UI.Native.DrawingContext dc)
         {
             this.dc = dc;
         }

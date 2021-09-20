@@ -1,6 +1,6 @@
-using System.Drawing;
+using Alternet.Drawing;
 
-namespace Alternet.UI
+namespace Alternet.Drawing
 {
     /// <summary>
     /// Defines functionality that enables transformations in a 2-D plane.

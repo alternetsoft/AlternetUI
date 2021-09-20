@@ -1,6 +1,6 @@
 ﻿using Alternet.UI;
 using System;
-using System.Drawing;
+using Alternet.Drawing;
 using System.IO;
 using System.Reflection;
 using Brush = Alternet.UI.Brush;

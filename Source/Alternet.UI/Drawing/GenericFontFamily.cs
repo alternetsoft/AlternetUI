@@ -1,5 +1,5 @@
 
-namespace Alternet.UI
+namespace Alternet.Drawing
 {
     /// <summary>
     /// Specifies a generic <see cref="FontFamily"/> object.

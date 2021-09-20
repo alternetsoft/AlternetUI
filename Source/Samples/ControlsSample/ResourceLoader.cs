@@ -1,4 +1,5 @@
-﻿using Alternet.UI;
+﻿using Alternet.Drawing;
+using Alternet.UI;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -20,7 +21,7 @@ namespace ControlsSample
         private static ImageLists LoadImageListsCore()
         {
             var smallImageList = new ImageList();
-            var largeImageList = new ImageList() { ImageSize = new System.Drawing.SizeF(32, 32) };
+            var largeImageList = new ImageList() { ImageSize = new SizeF(32, 32) };
 
             var assembly = Assembly.GetExecutingAssembly();
             var allResourceNames = assembly.GetManifestResourceNames();

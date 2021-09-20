@@ -1,6 +1,6 @@
 using System;
 
-namespace Alternet.UI
+namespace Alternet.Drawing
 {
     /// <summary>
     /// Defines a particular format for text, including font face, size, and style attributes. This class cannot be inherited.
@@ -34,15 +34,15 @@ namespace Alternet.UI
             if (emSize <= 0 || float.IsInfinity(emSize) || float.IsNaN(emSize))
                 throw new ArgumentException(nameof(emSize));
 
-            NativeFont = new Native.Font();
+            NativeFont = new UI.Native.Font();
             NativeFont.Initialize(
-                family.GenericFamily == null ? Native.GenericFontFamily.None : (Native.GenericFontFamily)family.GenericFamily,
+                family.GenericFamily == null ? UI.Native.GenericFontFamily.None : (UI.Native.GenericFontFamily)family.GenericFamily,
                 family.Name,
                 emSize,
-                (Native.FontStyle)style);
+                (UI.Native.FontStyle)style);
         }
 
-        internal Font(Native.Font nativeFont)
+        internal Font(UI.Native.Font nativeFont)
         {
             NativeFont = nativeFont;
         }
@@ -123,7 +123,7 @@ namespace Alternet.UI
             }
         }
 
-        internal Native.Font NativeFont { get; private set; }
+        internal UI.Native.Font NativeFont { get; private set; }
 
         /// <summary>
         /// Returns a value that indicates whether the two objects are equal.
@@ -206,7 +206,7 @@ namespace Alternet.UI
 
         internal static Font CreateDefaultFont()
         {
-            var nativeFont = new Native.Font();
+            var nativeFont = new UI.Native.Font();
             nativeFont.InitializeWithDefaultFont();
             return new Font(nativeFont);
         }

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 
-namespace Alternet.UI
+namespace Alternet.Base.Collections
 {
     /// <summary>
     /// Represents a dynamic data collection that provides notifications when items get added,

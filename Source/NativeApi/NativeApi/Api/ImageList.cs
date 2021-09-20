@@ -1,6 +1,6 @@
 ﻿using NativeApi.Api.ManagedServers;
 using System;
-using System.Drawing;
+using Alternet.Drawing;
 
 namespace NativeApi.Api
 {
