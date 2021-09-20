@@ -3,11 +3,6 @@ using System;
 using System.Collections.Generic;
 using Alternet.Drawing;
 using System.Linq;
-using Brush = Alternet.UI.Brush;
-using Brushes = Alternet.UI.Brushes;
-using Font = Alternet.UI.Font;
-using FontFamily = Alternet.UI.FontFamily;
-using SolidBrush = Alternet.UI.SolidBrush;
 
 namespace DrawingSample
 {
@@ -15,11 +10,11 @@ namespace DrawingSample
     {
         private const string LoremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nSuspendisse tincidunt orci vitae arcu congue commodo.\nProin fermentum rhoncus dictum.";
 
-        private static Font fontInfoFont = new Alternet.UI.Font(FontFamily.GenericMonospace, 8);
+        private static Font fontInfoFont = new Font(FontFamily.GenericMonospace, 8);
         private static Brush fontInfoBrush = Brushes.Black;
         private Paragraph[]? paragraphs;
         private float fontSize = 10;
-        private Alternet.UI.FontStyle fontStyle;
+        private FontStyle fontStyle;
         private string customFontFamilyName = Control.DefaultFont.FontFamily.Name;
 
         public override string Name => "Text";
@@ -34,7 +29,7 @@ namespace DrawingSample
             }
         }
 
-        public Alternet.UI.FontStyle FontStyle
+        public FontStyle FontStyle
         {
             get => fontStyle;
             set

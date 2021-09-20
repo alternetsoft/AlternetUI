@@ -3,9 +3,6 @@ using System;
 using Alternet.Drawing;
 using System.IO;
 using System.Reflection;
-using Brush = Alternet.UI.Brush;
-using Brushes = Alternet.UI.Brushes;
-using Pens = Alternet.UI.Pens;
 
 namespace HelloWorldSample
 {
@@ -13,8 +10,8 @@ namespace HelloWorldSample
     {
         private Brush brush = Brushes.LightGreen;
 
-        Alternet.UI.Image image =
-            new Alternet.UI.Image(Assembly.GetExecutingAssembly().GetManifestResourceStream("HelloWorldSample.Resources.Car.png")!);
+        Image image =
+            new Image(Assembly.GetExecutingAssembly().GetManifestResourceStream("HelloWorldSample.Resources.Car.png")!);
 
         public CustomDrawnControl()
         {

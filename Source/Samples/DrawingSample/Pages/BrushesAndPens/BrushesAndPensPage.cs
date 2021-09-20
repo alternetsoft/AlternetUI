@@ -3,9 +3,6 @@ using System;
 using System.Collections.Generic;
 using Alternet.Drawing;
 using System.Linq;
-using Brush = Alternet.UI.Brush;
-using Pen = Alternet.UI.Pen;
-using SolidBrush = Alternet.UI.SolidBrush;
 
 namespace DrawingSample
 {
