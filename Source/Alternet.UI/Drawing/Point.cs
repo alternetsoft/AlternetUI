@@ -1,243 +1,179 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using System;
 using System.ComponentModel;
-using System.Globalization;
-using System.Runtime.InteropServices;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Alternet.Drawing
 {
-	/// <summary>Represents an ordered pair of integer x- and y-coordinates that defines a point in a two-dimensional plane.</summary>
-	//[TypeConverter(typeof(PointConverter))]
-	[ComVisible(true)]
-	[Serializable]
-	public struct Point
-	{
-		/// <summary>Initializes a new instance of the <see cref="T:System.Drawing.Point" /> class with the specified coordinates.</summary>
-		/// <param name="x">The horizontal position of the point. </param>
-		/// <param name="y">The vertical position of the point. </param>
-		public Point(int x, int y)
-		{
-			this.x = x;
-			this.y = y;
-		}
+    /// <summary>
+    /// Represents an ordered pair of x and y coordinates that define a point in a two-dimensional plane.
+    /// </summary>
+    [Serializable]
+    //[TypeConverter("System.Drawing.PointConverter, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    public struct Point : IEquatable<Point>
+    {
+        /// <summary>
+        /// Creates a new instance of the <see cref='System.Drawing.Point'/> class with member data left uninitialized.
+        /// </summary>
+        public static readonly Point Empty;
 
-		/// <summary>Initializes a new instance of the <see cref="T:System.Drawing.Point" /> class from a <see cref="T:System.Drawing.Size" />.</summary>
-		/// <param name="sz">A <see cref="T:System.Drawing.Size" /> that specifies the coordinates for the new <see cref="T:System.Drawing.Point" />. </param>
-		public Point(Size sz)
-		{
-			this.x = sz.Width;
-			this.y = sz.Height;
-		}
+        private int x; // Do not rename (binary serialization)
+        private int y; // Do not rename (binary serialization)
 
-		/// <summary>Initializes a new instance of the <see cref="T:System.Drawing.Point" /> class using coordinates specified by an integer value.</summary>
-		/// <param name="dw">A 32-bit integer that specifies the coordinates for the new <see cref="T:System.Drawing.Point" />. </param>
-		public Point(int dw)
-		{
-			this.x = (int)((short)Point.LOWORD(dw));
-			this.y = (int)((short)Point.HIWORD(dw));
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref='System.Drawing.Point'/> class with the specified coordinates.
+        /// </summary>
+        public Point(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
 
-		/// <summary>Gets a value indicating whether this <see cref="T:System.Drawing.Point" /> is empty.</summary>
-		/// <returns>
-		///     <see langword="true" /> if both <see cref="P:System.Drawing.Point.X" /> and <see cref="P:System.Drawing.Point.Y" /> are 0; otherwise, <see langword="false" />.</returns>
-		[Browsable(false)]
-		public bool IsEmpty
-		{
-			get
-			{
-				return this.x == 0 && this.y == 0;
-			}
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref='System.Drawing.Point'/> class from a <see cref='System.Drawing.Size'/> .
+        /// </summary>
+        public Point(Size sz)
+        {
+            x = sz.Width;
+            y = sz.Height;
+        }
 
-		/// <summary>Gets or sets the x-coordinate of this <see cref="T:System.Drawing.Point" />.</summary>
-		/// <returns>The x-coordinate of this <see cref="T:System.Drawing.Point" />.</returns>
-		public int X
-		{
-			get
-			{
-				return this.x;
-			}
-			set
-			{
-				this.x = value;
-			}
-		}
+        /// <summary>
+        /// Initializes a new instance of the Point class using coordinates specified by an integer value.
+        /// </summary>
+        public Point(int dw)
+        {
+            x = LowInt16(dw);
+            y = HighInt16(dw);
+        }
 
-		/// <summary>Gets or sets the y-coordinate of this <see cref="T:System.Drawing.Point" />.</summary>
-		/// <returns>The y-coordinate of this <see cref="T:System.Drawing.Point" />.</returns>
-		public int Y
-		{
-			get
-			{
-				return this.y;
-			}
-			set
-			{
-				this.y = value;
-			}
-		}
+        /// <summary>
+        /// Gets a value indicating whether this <see cref='System.Drawing.Point'/> is empty.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsEmpty => x == 0 && y == 0;
 
-		/// <summary>Converts the specified <see cref="T:System.Drawing.Point" /> structure to a <see cref="T:System.Drawing.PointF" /> structure.</summary>
-		/// <param name="p">The <see cref="T:System.Drawing.Point" /> to be converted.</param>
-		/// <returns>The <see cref="T:System.Drawing.PointF" /> that results from the conversion.</returns>
-		public static implicit operator PointF(Point p)
-		{
-			return new PointF((float)p.X, (float)p.Y);
-		}
+        /// <summary>
+        /// Gets the x-coordinate of this <see cref='System.Drawing.Point'/>.
+        /// </summary>
+        public int X
+        {
+            readonly get => x;
+            set => x = value;
+        }
 
-		/// <summary>Converts the specified <see cref="T:System.Drawing.Point" /> structure to a <see cref="T:System.Drawing.Size" /> structure.</summary>
-		/// <param name="p">The <see cref="T:System.Drawing.Point" /> to be converted.</param>
-		/// <returns>The <see cref="T:System.Drawing.Size" /> that results from the conversion.</returns>
-		public static explicit operator Size(Point p)
-		{
-			return new Size(p.X, p.Y);
-		}
+        /// <summary>
+        /// Gets the y-coordinate of this <see cref='System.Drawing.Point'/>.
+        /// </summary>
+        public int Y
+        {
+            readonly get => y;
+            set => y = value;
+        }
 
-		/// <summary>Translates a <see cref="T:System.Drawing.Point" /> by a given <see cref="T:System.Drawing.Size" />.</summary>
-		/// <param name="pt">The <see cref="T:System.Drawing.Point" /> to translate. </param>
-		/// <param name="sz">A <see cref="T:System.Drawing.Size" /> that specifies the pair of numbers to add to the coordinates of <paramref name="pt" />. </param>
-		/// <returns>The translated <see cref="T:System.Drawing.Point" />.</returns>
-		public static Point operator +(Point pt, Size sz)
-		{
-			return Point.Add(pt, sz);
-		}
+        /// <summary>
+        /// Creates a <see cref='System.Drawing.PointF'/> with the coordinates of the specified <see cref='System.Drawing.Point'/>
+        /// </summary>
+        public static implicit operator PointF(Point p) => new PointF(p.X, p.Y);
 
-		/// <summary>Translates a <see cref="T:System.Drawing.Point" /> by the negative of a given <see cref="T:System.Drawing.Size" />.</summary>
-		/// <param name="pt">The <see cref="T:System.Drawing.Point" /> to translate. </param>
-		/// <param name="sz">A <see cref="T:System.Drawing.Size" /> that specifies the pair of numbers to subtract from the coordinates of <paramref name="pt" />. </param>
-		/// <returns>A <see cref="T:System.Drawing.Point" /> structure that is translated by the negative of a given <see cref="T:System.Drawing.Size" /> structure.</returns>
-		public static Point operator -(Point pt, Size sz)
-		{
-			return Point.Subtract(pt, sz);
-		}
+        /// <summary>
+        /// Creates a <see cref='System.Drawing.Size'/> with the coordinates of the specified <see cref='System.Drawing.Point'/> .
+        /// </summary>
+        public static explicit operator Size(Point p) => new Size(p.X, p.Y);
 
-		/// <summary>Compares two <see cref="T:System.Drawing.Point" /> objects. The result specifies whether the values of the <see cref="P:System.Drawing.Point.X" /> and <see cref="P:System.Drawing.Point.Y" /> properties of the two <see cref="T:System.Drawing.Point" /> objects are equal.</summary>
-		/// <param name="left">A <see cref="T:System.Drawing.Point" /> to compare. </param>
-		/// <param name="right">A <see cref="T:System.Drawing.Point" /> to compare. </param>
-		/// <returns>
-		///     <see langword="true" /> if the <see cref="P:System.Drawing.Point.X" /> and <see cref="P:System.Drawing.Point.Y" /> values of <paramref name="left" /> and <paramref name="right" /> are equal; otherwise, <see langword="false" />.</returns>
-		public static bool operator ==(Point left, Point right)
-		{
-			return left.X == right.X && left.Y == right.Y;
-		}
+        /// <summary>
+        /// Translates a <see cref='System.Drawing.Point'/> by a given <see cref='System.Drawing.Size'/> .
+        /// </summary>
+        public static Point operator +(Point pt, Size sz) => Add(pt, sz);
 
-		/// <summary>Compares two <see cref="T:System.Drawing.Point" /> objects. The result specifies whether the values of the <see cref="P:System.Drawing.Point.X" /> or <see cref="P:System.Drawing.Point.Y" /> properties of the two <see cref="T:System.Drawing.Point" /> objects are unequal.</summary>
-		/// <param name="left">A <see cref="T:System.Drawing.Point" /> to compare. </param>
-		/// <param name="right">A <see cref="T:System.Drawing.Point" /> to compare. </param>
-		/// <returns>
-		///     <see langword="true" /> if the values of either the <see cref="P:System.Drawing.Point.X" /> properties or the <see cref="P:System.Drawing.Point.Y" /> properties of <paramref name="left" /> and <paramref name="right" /> differ; otherwise, <see langword="false" />.</returns>
-		public static bool operator !=(Point left, Point right)
-		{
-			return !(left == right);
-		}
+        /// <summary>
+        /// Translates a <see cref='System.Drawing.Point'/> by the negative of a given <see cref='System.Drawing.Size'/> .
+        /// </summary>
+        public static Point operator -(Point pt, Size sz) => Subtract(pt, sz);
 
-		/// <summary>Adds the specified <see cref="T:System.Drawing.Size" /> to the specified <see cref="T:System.Drawing.Point" />.</summary>
-		/// <param name="pt">The <see cref="T:System.Drawing.Point" /> to add.</param>
-		/// <param name="sz">The <see cref="T:System.Drawing.Size" /> to add</param>
-		/// <returns>The <see cref="T:System.Drawing.Point" /> that is the result of the addition operation.</returns>
-		public static Point Add(Point pt, Size sz)
-		{
-			return new Point(pt.X + sz.Width, pt.Y + sz.Height);
-		}
+        /// <summary>
+        /// Compares two <see cref='System.Drawing.Point'/> objects. The result specifies whether the values of the
+        /// <see cref='System.Drawing.Point.X'/> and <see cref='System.Drawing.Point.Y'/> properties of the two
+        /// <see cref='System.Drawing.Point'/> objects are equal.
+        /// </summary>
+        public static bool operator ==(Point left, Point right) => left.X == right.X && left.Y == right.Y;
 
-		/// <summary>Returns the result of subtracting specified <see cref="T:System.Drawing.Size" /> from the specified <see cref="T:System.Drawing.Point" />.</summary>
-		/// <param name="pt">The <see cref="T:System.Drawing.Point" /> to be subtracted from. </param>
-		/// <param name="sz">The <see cref="T:System.Drawing.Size" /> to subtract from the <see cref="T:System.Drawing.Point" />.</param>
-		/// <returns>The <see cref="T:System.Drawing.Point" /> that is the result of the subtraction operation.</returns>
-		public static Point Subtract(Point pt, Size sz)
-		{
-			return new Point(pt.X - sz.Width, pt.Y - sz.Height);
-		}
+        /// <summary>
+        /// Compares two <see cref='System.Drawing.Point'/> objects. The result specifies whether the values of the
+        /// <see cref='System.Drawing.Point.X'/> or <see cref='System.Drawing.Point.Y'/> properties of the two
+        /// <see cref='System.Drawing.Point'/>  objects are unequal.
+        /// </summary>
+        public static bool operator !=(Point left, Point right) => !(left == right);
 
-		/// <summary>Converts the specified <see cref="T:System.Drawing.PointF" /> to a <see cref="T:System.Drawing.Point" /> by rounding the values of the <see cref="T:System.Drawing.PointF" /> to the next higher integer values.</summary>
-		/// <param name="value">The <see cref="T:System.Drawing.PointF" /> to convert. </param>
-		/// <returns>The <see cref="T:System.Drawing.Point" /> this method converts to.</returns>
-		public static Point Ceiling(PointF value)
-		{
-			return new Point((int)Math.Ceiling((double)value.X), (int)Math.Ceiling((double)value.Y));
-		}
+        /// <summary>
+        /// Translates a <see cref='System.Drawing.Point'/> by a given <see cref='System.Drawing.Size'/> .
+        /// </summary>
+        public static Point Add(Point pt, Size sz) => new Point(unchecked(pt.X + sz.Width), unchecked(pt.Y + sz.Height));
 
-		/// <summary>Converts the specified <see cref="T:System.Drawing.PointF" /> to a <see cref="T:System.Drawing.Point" /> by truncating the values of the <see cref="T:System.Drawing.Point" />.</summary>
-		/// <param name="value">The <see cref="T:System.Drawing.PointF" /> to convert. </param>
-		/// <returns>The <see cref="T:System.Drawing.Point" /> this method converts to.</returns>
-		public static Point Truncate(PointF value)
-		{
-			return new Point((int)value.X, (int)value.Y);
-		}
+        /// <summary>
+        /// Translates a <see cref='System.Drawing.Point'/> by the negative of a given <see cref='System.Drawing.Size'/> .
+        /// </summary>
+        public static Point Subtract(Point pt, Size sz) => new Point(unchecked(pt.X - sz.Width), unchecked(pt.Y - sz.Height));
 
-		/// <summary>Converts the specified <see cref="T:System.Drawing.PointF" /> to a <see cref="T:System.Drawing.Point" /> object by rounding the <see cref="T:System.Drawing.Point" /> values to the nearest integer.</summary>
-		/// <param name="value">The <see cref="T:System.Drawing.PointF" /> to convert. </param>
-		/// <returns>The <see cref="T:System.Drawing.Point" /> this method converts to.</returns>
-		public static Point Round(PointF value)
-		{
-			return new Point((int)Math.Round((double)value.X), (int)Math.Round((double)value.Y));
-		}
+        /// <summary>
+        /// Converts a PointF to a Point by performing a ceiling operation on all the coordinates.
+        /// </summary>
+        public static Point Ceiling(PointF value) => new Point(unchecked((int)Math.Ceiling(value.X)), unchecked((int)Math.Ceiling(value.Y)));
 
-		/// <summary>Specifies whether this <see cref="T:System.Drawing.Point" /> contains the same coordinates as the specified <see cref="T:System.Object" />.</summary>
-		/// <param name="obj">The <see cref="T:System.Object" /> to test. </param>
-		/// <returns>
-		///     <see langword="true" /> if <paramref name="obj" /> is a <see cref="T:System.Drawing.Point" /> and has the same coordinates as this <see cref="T:System.Drawing.Point" />.</returns>
-		public override bool Equals(object? obj)
-		{
-			if (!(obj is Point))
-			{
-				return false;
-			}
-			Point point = (Point)obj;
-			return point.X == this.X && point.Y == this.Y;
-		}
+        /// <summary>
+        /// Converts a PointF to a Point by performing a truncate operation on all the coordinates.
+        /// </summary>
+        public static Point Truncate(PointF value) => new Point(unchecked((int)value.X), unchecked((int)value.Y));
 
-		/// <summary>Returns a hash code for this <see cref="T:System.Drawing.Point" />.</summary>
-		/// <returns>An integer value that specifies a hash value for this <see cref="T:System.Drawing.Point" />.</returns>
-		public override int GetHashCode()
-		{
-			return this.x ^ this.y;
-		}
+        /// <summary>
+        /// Converts a PointF to a Point by performing a round operation on all the coordinates.
+        /// </summary>
+        public static Point Round(PointF value) => new Point(unchecked((int)Math.Round(value.X)), unchecked((int)Math.Round(value.Y)));
 
-		/// <summary>Translates this <see cref="T:System.Drawing.Point" /> by the specified amount.</summary>
-		/// <param name="dx">The amount to offset the x-coordinate. </param>
-		/// <param name="dy">The amount to offset the y-coordinate. </param>
-		public void Offset(int dx, int dy)
-		{
-			this.X += dx;
-			this.Y += dy;
-		}
+        /// <summary>
+        /// Specifies whether this <see cref='System.Drawing.Point'/> contains the same coordinates as the specified
+        /// <see cref='object'/>.
+        /// </summary>
+        public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Point && Equals((Point)obj);
 
-		/// <summary>Translates this <see cref="T:System.Drawing.Point" /> by the specified <see cref="T:System.Drawing.Point" />.</summary>
-		/// <param name="p">The <see cref="T:System.Drawing.Point" /> used offset this <see cref="T:System.Drawing.Point" />.</param>
-		public void Offset(Point p)
-		{
-			this.Offset(p.X, p.Y);
-		}
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns><c>true</c> if the current object is equal to other; otherwise, <c>false</c>.</returns>
+        public readonly bool Equals(Point other) => this == other;
 
-		/// <summary>Converts this <see cref="T:System.Drawing.Point" /> to a human-readable string.</summary>
-		/// <returns>A string that represents this <see cref="T:System.Drawing.Point" />.</returns>
-		public override string ToString()
-		{
-			return string.Concat(new string[]
-			{
-				"{X=",
-				this.X.ToString(CultureInfo.CurrentCulture),
-				",Y=",
-				this.Y.ToString(CultureInfo.CurrentCulture),
-				"}"
-			});
-		}
+        /// <summary>
+        /// Returns a hash code.
+        /// </summary>
+        public override readonly int GetHashCode() => HashCode.Combine(X, Y);
 
-		private static int HIWORD(int n)
-		{
-			return n >> 16 & 65535;
-		}
+        /// <summary>
+        /// Translates this <see cref='System.Drawing.Point'/> by the specified amount.
+        /// </summary>
+        public void Offset(int dx, int dy)
+        {
+            unchecked
+            {
+                X += dx;
+                Y += dy;
+            }
+        }
 
-		private static int LOWORD(int n)
-		{
-			return n & 65535;
-		}
+        /// <summary>
+        /// Translates this <see cref='System.Drawing.Point'/> by the specified amount.
+        /// </summary>
+        public void Offset(Point p) => Offset(p.X, p.Y);
 
-		/// <summary>Represents a <see cref="T:System.Drawing.Point" /> that has <see cref="P:System.Drawing.Point.X" /> and <see cref="P:System.Drawing.Point.Y" /> values set to zero. </summary>
-		public static readonly Point Empty;
+        /// <summary>
+        /// Converts this <see cref='System.Drawing.Point'/> to a human readable string.
+        /// </summary>
+        public override readonly string ToString() => $"{{X={X},Y={Y}}}";
 
-		private int x;
+        private static short HighInt16(int n) => unchecked((short)((n >> 16) & 0xffff));
 
-		private int y;
-	}
+        private static short LowInt16(int n) => unchecked((short)(n & 0xffff));
+    }
 }

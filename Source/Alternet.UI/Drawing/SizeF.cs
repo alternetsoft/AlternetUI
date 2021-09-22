@@ -1,196 +1,211 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using System;
 using System.ComponentModel;
-using System.Globalization;
-using System.Runtime.InteropServices;
+using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 
 namespace Alternet.Drawing
 {
-	/// <summary>Stores an ordered pair of floating-point numbers, typically the width and height of a rectangle.</summary>
-	[ComVisible(true)]
-	//[TypeConverter(typeof(SizeFConverter))]
-	[Serializable]
-	public struct SizeF
-	{
-		/// <summary>Initializes a new instance of the <see cref="T:System.Drawing.SizeF" /> structure from the specified existing <see cref="T:System.Drawing.SizeF" /> structure.</summary>
-		/// <param name="size">The <see cref="T:System.Drawing.SizeF" /> structure from which to create the new <see cref="T:System.Drawing.SizeF" /> structure. </param>
-		public SizeF(SizeF size)
-		{
-			this.width = size.width;
-			this.height = size.height;
-		}
+    /// <summary>
+    /// Represents the size of a rectangular region with an ordered pair of width and height.
+    /// </summary>
+    [Serializable]
+    [System.Runtime.CompilerServices.TypeForwardedFrom("System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [TypeConverter("System.Drawing.SizeFConverter, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    public struct SizeF : IEquatable<SizeF>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref='System.Drawing.SizeF'/> class.
+        /// </summary>
+        public static readonly SizeF Empty;
+        private float width; // Do not rename (binary serialization)
+        private float height; // Do not rename (binary serialization)
 
-		/// <summary>Initializes a new instance of the <see cref="T:System.Drawing.SizeF" /> structure from the specified <see cref="T:System.Drawing.PointF" /> structure.</summary>
-		/// <param name="pt">The <see cref="T:System.Drawing.PointF" /> structure from which to initialize this <see cref="T:System.Drawing.SizeF" /> structure. </param>
-		public SizeF(PointF pt)
-		{
-			this.width = pt.X;
-			this.height = pt.Y;
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref='System.Drawing.SizeF'/> class from the specified
+        /// existing <see cref='System.Drawing.SizeF'/>.
+        /// </summary>
+        public SizeF(SizeF size)
+        {
+            width = size.width;
+            height = size.height;
+        }
 
-		/// <summary>Initializes a new instance of the <see cref="T:System.Drawing.SizeF" /> structure from the specified dimensions.</summary>
-		/// <param name="width">The width component of the new <see cref="T:System.Drawing.SizeF" /> structure. </param>
-		/// <param name="height">The height component of the new <see cref="T:System.Drawing.SizeF" /> structure. </param>
-		public SizeF(float width, float height)
-		{
-			this.width = width;
-			this.height = height;
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref='System.Drawing.SizeF'/> class from the specified
+        /// <see cref='System.Drawing.PointF'/>.
+        /// </summary>
+        public SizeF(PointF pt)
+        {
+            width = pt.X;
+            height = pt.Y;
+        }
 
-		/// <summary>Adds the width and height of one <see cref="T:System.Drawing.SizeF" /> structure to the width and height of another <see cref="T:System.Drawing.SizeF" /> structure.</summary>
-		/// <param name="sz1">The first <see cref="T:System.Drawing.SizeF" /> structure to add. </param>
-		/// <param name="sz2">The second <see cref="T:System.Drawing.SizeF" /> structure to add. </param>
-		/// <returns>A <see cref="T:System.Drawing.Size" /> structure that is the result of the addition operation.</returns>
-		public static SizeF operator +(SizeF sz1, SizeF sz2)
-		{
-			return SizeF.Add(sz1, sz2);
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref='System.Drawing.SizeF'/> struct from the specified
+        /// <see cref="System.Numerics.Vector2"/>.
+        /// </summary>
+        public SizeF(Vector2 vector)
+        {
+            width = vector.X;
+            height = vector.Y;
+        }
 
-		/// <summary>Subtracts the width and height of one <see cref="T:System.Drawing.SizeF" /> structure from the width and height of another <see cref="T:System.Drawing.SizeF" /> structure.</summary>
-		/// <param name="sz1">The <see cref="T:System.Drawing.SizeF" /> structure on the left side of the subtraction operator. </param>
-		/// <param name="sz2">The <see cref="T:System.Drawing.SizeF" /> structure on the right side of the subtraction operator. </param>
-		/// <returns>A <see cref="T:System.Drawing.SizeF" /> that is the result of the subtraction operation.</returns>
-		public static SizeF operator -(SizeF sz1, SizeF sz2)
-		{
-			return SizeF.Subtract(sz1, sz2);
-		}
+        /// <summary>
+        /// Creates a new <see cref="System.Numerics.Vector2"/> from this <see cref="System.Drawing.SizeF"/>.
+        /// </summary>
+        public Vector2 ToVector2() => new Vector2(width, height);
 
-		/// <summary>Tests whether two <see cref="T:System.Drawing.SizeF" /> structures are equal.</summary>
-		/// <param name="sz1">The <see cref="T:System.Drawing.SizeF" /> structure on the left side of the equality operator. </param>
-		/// <param name="sz2">The <see cref="T:System.Drawing.SizeF" /> structure on the right of the equality operator. </param>
-		/// <returns>This operator returns <see langword="true" /> if <paramref name="sz1" /> and <paramref name="sz2" /> have equal width and height; otherwise, <see langword="false" />.</returns>
-		public static bool operator ==(SizeF sz1, SizeF sz2)
-		{
-			return sz1.Width == sz2.Width && sz1.Height == sz2.Height;
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref='System.Drawing.SizeF'/> class from the specified dimensions.
+        /// </summary>
+        public SizeF(float width, float height)
+        {
+            this.width = width;
+            this.height = height;
+        }
 
-		/// <summary>Tests whether two <see cref="T:System.Drawing.SizeF" /> structures are different.</summary>
-		/// <param name="sz1">The <see cref="T:System.Drawing.SizeF" /> structure on the left of the inequality operator. </param>
-		/// <param name="sz2">The <see cref="T:System.Drawing.SizeF" /> structure on the right of the inequality operator. </param>
-		/// <returns>This operator returns <see langword="true" /> if <paramref name="sz1" /> and <paramref name="sz2" /> differ either in width or height; <see langword="false" /> if <paramref name="sz1" /> and <paramref name="sz2" /> are equal.</returns>
-		public static bool operator !=(SizeF sz1, SizeF sz2)
-		{
-			return !(sz1 == sz2);
-		}
+        /// <summary>
+        /// Converts the specified <see cref="System.Drawing.SizeF"/> to a <see cref="System.Numerics.Vector2"/>.
+        /// </summary>
+        public static explicit operator Vector2(SizeF size) => size.ToVector2();
 
-		/// <summary>Converts the specified <see cref="T:System.Drawing.SizeF" /> structure to a <see cref="T:System.Drawing.PointF" /> structure.</summary>
-		/// <param name="size">The <see cref="T:System.Drawing.SizeF" /> structure to be converted</param>
-		/// <returns>The <see cref="T:System.Drawing.PointF" /> structure to which this operator converts.</returns>
-		public static explicit operator PointF(SizeF size)
-		{
-			return new PointF(size.Width, size.Height);
-		}
+        /// <summary>
+        /// Converts the specified <see cref="System.Numerics.Vector2"/> to a <see cref="System.Drawing.SizeF"/>.
+        /// </summary>
+        public static explicit operator SizeF(Vector2 vector) => new SizeF(vector);
 
-		/// <summary>Gets a value that indicates whether this <see cref="T:System.Drawing.SizeF" /> structure has zero width and height.</summary>
-		/// <returns>This property returns <see langword="true" /> when this <see cref="T:System.Drawing.SizeF" /> structure has both a width and height of zero; otherwise, <see langword="false" />.</returns>
-		[Browsable(false)]
-		public bool IsEmpty
-		{
-			get
-			{
-				return this.width == 0f && this.height == 0f;
-			}
-		}
+        /// <summary>
+        /// Performs vector addition of two <see cref='System.Drawing.SizeF'/> objects.
+        /// </summary>
+        public static SizeF operator +(SizeF sz1, SizeF sz2) => Add(sz1, sz2);
 
-		/// <summary>Gets or sets the horizontal component of this <see cref="T:System.Drawing.SizeF" /> structure.</summary>
-		/// <returns>The horizontal component of this <see cref="T:System.Drawing.SizeF" /> structure, typically measured in pixels.</returns>
-		public float Width
-		{
-			get
-			{
-				return this.width;
-			}
-			set
-			{
-				this.width = value;
-			}
-		}
+        /// <summary>
+        /// Contracts a <see cref='System.Drawing.SizeF'/> by another <see cref='System.Drawing.SizeF'/>
+        /// </summary>
+        public static SizeF operator -(SizeF sz1, SizeF sz2) => Subtract(sz1, sz2);
 
-		/// <summary>Gets or sets the vertical component of this <see cref="T:System.Drawing.SizeF" /> structure.</summary>
-		/// <returns>The vertical component of this <see cref="T:System.Drawing.SizeF" /> structure, typically measured in pixels.</returns>
-		public float Height
-		{
-			get
-			{
-				return this.height;
-			}
-			set
-			{
-				this.height = value;
-			}
-		}
+        /// <summary>
+        /// Multiplies <see cref="SizeF"/> by a <see cref="float"/> producing <see cref="SizeF"/>.
+        /// </summary>
+        /// <param name="left">Multiplier of type <see cref="float"/>.</param>
+        /// <param name="right">Multiplicand of type <see cref="SizeF"/>.</param>
+        /// <returns>Product of type <see cref="SizeF"/>.</returns>
+        public static SizeF operator *(float left, SizeF right) => Multiply(right, left);
 
-		/// <summary>Adds the width and height of one <see cref="T:System.Drawing.SizeF" /> structure to the width and height of another <see cref="T:System.Drawing.SizeF" /> structure.</summary>
-		/// <param name="sz1">The first <see cref="T:System.Drawing.SizeF" /> structure to add.</param>
-		/// <param name="sz2">The second <see cref="T:System.Drawing.SizeF" /> structure to add.</param>
-		/// <returns>A <see cref="T:System.Drawing.SizeF" /> structure that is the result of the addition operation.</returns>
-		public static SizeF Add(SizeF sz1, SizeF sz2)
-		{
-			return new SizeF(sz1.Width + sz2.Width, sz1.Height + sz2.Height);
-		}
+        /// <summary>
+        /// Multiplies <see cref="SizeF"/> by a <see cref="float"/> producing <see cref="SizeF"/>.
+        /// </summary>
+        /// <param name="left">Multiplicand of type <see cref="SizeF"/>.</param>
+        /// <param name="right">Multiplier of type <see cref="float"/>.</param>
+        /// <returns>Product of type <see cref="SizeF"/>.</returns>
+        public static SizeF operator *(SizeF left, float right) => Multiply(left, right);
 
-		/// <summary>Subtracts the width and height of one <see cref="T:System.Drawing.SizeF" /> structure from the width and height of another <see cref="T:System.Drawing.SizeF" /> structure.</summary>
-		/// <param name="sz1">The <see cref="T:System.Drawing.SizeF" /> structure on the left side of the subtraction operator. </param>
-		/// <param name="sz2">The <see cref="T:System.Drawing.SizeF" /> structure on the right side of the subtraction operator. </param>
-		/// <returns>A <see cref="T:System.Drawing.SizeF" /> structure that is a result of the subtraction operation.</returns>
-		public static SizeF Subtract(SizeF sz1, SizeF sz2)
-		{
-			return new SizeF(sz1.Width - sz2.Width, sz1.Height - sz2.Height);
-		}
+        /// <summary>
+        /// Divides <see cref="SizeF"/> by a <see cref="float"/> producing <see cref="SizeF"/>.
+        /// </summary>
+        /// <param name="left">Dividend of type <see cref="SizeF"/>.</param>
+        /// <param name="right">Divisor of type <see cref="int"/>.</param>
+        /// <returns>Result of type <see cref="SizeF"/>.</returns>
+        public static SizeF operator /(SizeF left, float right)
+            => new SizeF(left.width / right, left.height / right);
 
-		/// <summary>Tests to see whether the specified object is a <see cref="T:System.Drawing.SizeF" /> structure with the same dimensions as this <see cref="T:System.Drawing.SizeF" /> structure.</summary>
-		/// <param name="obj">The <see cref="T:System.Object" /> to test. </param>
-		/// <returns>This method returns <see langword="true" /> if <paramref name="obj" /> is a <see cref="T:System.Drawing.SizeF" /> and has the same width and height as this <see cref="T:System.Drawing.SizeF" />; otherwise, <see langword="false" />.</returns>
-		public override bool Equals(object? obj)
-		{
-			if (!(obj is SizeF))
-			{
-				return false;
-			}
-			SizeF sizeF = (SizeF)obj;
-			return sizeF.Width == this.Width && sizeF.Height == this.Height && sizeF.GetType().Equals(base.GetType());
-		}
+        /// <summary>
+        /// Tests whether two <see cref='System.Drawing.SizeF'/> objects are identical.
+        /// </summary>
+        public static bool operator ==(SizeF sz1, SizeF sz2) => sz1.Width == sz2.Width && sz1.Height == sz2.Height;
 
-		/// <summary>Returns a hash code for this <see cref="T:System.Drawing.Size" /> structure.</summary>
-		/// <returns>An integer value that specifies a hash value for this <see cref="T:System.Drawing.Size" /> structure.</returns>
-		public override int GetHashCode()
-		{
-			return base.GetHashCode();
-		}
+        /// <summary>
+        /// Tests whether two <see cref='System.Drawing.SizeF'/> objects are different.
+        /// </summary>
+        public static bool operator !=(SizeF sz1, SizeF sz2) => !(sz1 == sz2);
 
-		/// <summary>Converts a <see cref="T:System.Drawing.SizeF" /> structure to a <see cref="T:System.Drawing.PointF" /> structure.</summary>
-		/// <returns>Returns a <see cref="T:System.Drawing.PointF" /> structure.</returns>
-		public PointF ToPointF()
-		{
-			return (PointF)this;
-		}
+        /// <summary>
+        /// Converts the specified <see cref='System.Drawing.SizeF'/> to a <see cref='System.Drawing.PointF'/>.
+        /// </summary>
+        public static explicit operator PointF(SizeF size) => new PointF(size.Width, size.Height);
 
-		/// <summary>Converts a <see cref="T:System.Drawing.SizeF" /> structure to a <see cref="T:System.Drawing.Size" /> structure.</summary>
-		/// <returns>Returns a <see cref="T:System.Drawing.Size" /> structure.</returns>
-		public Size ToSize()
-		{
-			return Size.Truncate(this);
-		}
+        /// <summary>
+        /// Tests whether this <see cref='System.Drawing.SizeF'/> has zero width and height.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsEmpty => width == 0 && height == 0;
 
-		/// <summary>Creates a human-readable string that represents this <see cref="T:System.Drawing.SizeF" /> structure.</summary>
-		/// <returns>A string that represents this <see cref="T:System.Drawing.SizeF" /> structure.</returns>
-		public override string ToString()
-		{
-			return string.Concat(new string[]
-			{
-				"{Width=",
-				this.width.ToString(CultureInfo.CurrentCulture),
-				", Height=",
-				this.height.ToString(CultureInfo.CurrentCulture),
-				"}"
-			});
-		}
+        /// <summary>
+        /// Represents the horizontal component of this <see cref='System.Drawing.SizeF'/>.
+        /// </summary>
+        public float Width
+        {
+            readonly get => width;
+            set => width = value;
+        }
 
-		/// <summary>Gets a <see cref="T:System.Drawing.SizeF" /> structure that has a <see cref="P:System.Drawing.SizeF.Height" /> and <see cref="P:System.Drawing.SizeF.Width" /> value of 0. </summary>
-		/// <returns>A <see cref="T:System.Drawing.SizeF" /> structure that has a <see cref="P:System.Drawing.SizeF.Height" /> and <see cref="P:System.Drawing.SizeF.Width" /> value of 0.</returns>
-		public static readonly SizeF Empty;
+        /// <summary>
+        /// Represents the vertical component of this <see cref='System.Drawing.SizeF'/>.
+        /// </summary>
+        public float Height
+        {
+            readonly get => height;
+            set => height = value;
+        }
 
-		private float width;
+        /// <summary>
+        /// Performs vector addition of two <see cref='System.Drawing.SizeF'/> objects.
+        /// </summary>
+        public static SizeF Add(SizeF sz1, SizeF sz2) => new SizeF(sz1.Width + sz2.Width, sz1.Height + sz2.Height);
 
-		private float height;
-	}
+        /// <summary>
+        /// Contracts a <see cref='System.Drawing.SizeF'/> by another <see cref='System.Drawing.SizeF'/>.
+        /// </summary>
+        public static SizeF Subtract(SizeF sz1, SizeF sz2) => new SizeF(sz1.Width - sz2.Width, sz1.Height - sz2.Height);
+
+        /// <summary>
+        /// Tests to see whether the specified object is a <see cref='System.Drawing.SizeF'/>  with the same dimensions
+        /// as this <see cref='System.Drawing.SizeF'/>.
+        /// </summary>
+        public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is SizeF && Equals((SizeF)obj);
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns><c>true</c> if the current object is equal to other; otherwise, <c>false</c>.</returns>
+        public readonly bool Equals(SizeF other) => this == other;
+
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        /// <returns></returns>
+        public override readonly int GetHashCode() => HashCode.Combine(Width, Height);
+
+        /// <summary>
+        /// Converts a <see cref="SizeF"/> structure to a <see cref="PointF"/> structure.
+        /// </summary>
+        /// <returns>A <see cref="PointF"/> structure.</returns>
+        public readonly PointF ToPointF() => (PointF)this;
+
+        /// <summary>
+        /// Converts a <see cref="SizeF"/> structure to a <see cref="Size"/> structure.
+        /// </summary>
+        /// <returns>A <see cref="Size"/> structure.</returns>
+        /// <remarks>The <see cref="SizeF"/> structure is converted to a <see cref="Size"/> structure by
+        /// truncating the values of the <see cref="SizeF"/> to the next lower integer values.</remarks>
+        public readonly Size ToSize() => Size.Truncate(this);
+
+        /// <summary>
+        /// Creates a human-readable string that represents this <see cref='System.Drawing.SizeF'/>.
+        /// </summary>
+        public override readonly string ToString() => $"{{Width={width}, Height={height}}}";
+
+        /// <summary>
+        /// Multiplies <see cref="SizeF"/> by a <see cref="float"/> producing <see cref="SizeF"/>.
+        /// </summary>
+        /// <param name="size">Multiplicand of type <see cref="SizeF"/>.</param>
+        /// <param name="multiplier">Multiplier of type <see cref="float"/>.</param>
+        /// <returns>Product of type SizeF.</returns>
+        private static SizeF Multiply(SizeF size, float multiplier) =>
+            new SizeF(size.width * multiplier, size.height * multiplier);
+    }
 }

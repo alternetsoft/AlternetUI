@@ -1,403 +1,356 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using System;
 using System.ComponentModel;
-using System.Globalization;
-using System.Runtime.InteropServices;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Alternet.Drawing
 {
-	/// <summary>Stores a set of four integers that represent the location and size of a rectangle</summary>
-	//[TypeConverter(typeof(RectangleConverter))]
-	[ComVisible(true)]
-	[Serializable]
-	public struct Rectangle
-	{
-		/// <summary>Initializes a new instance of the <see cref="T:System.Drawing.Rectangle" /> class with the specified location and size.</summary>
-		/// <param name="x">The x-coordinate of the upper-left corner of the rectangle. </param>
-		/// <param name="y">The y-coordinate of the upper-left corner of the rectangle. </param>
-		/// <param name="width">The width of the rectangle. </param>
-		/// <param name="height">The height of the rectangle. </param>
-		public Rectangle(int x, int y, int width, int height)
-		{
-			this.x = x;
-			this.y = y;
-			this.width = width;
-			this.height = height;
-		}
+    /// <summary>
+    /// Stores the location and size of a rectangular region.
+    /// </summary>
+    [Serializable]
+    //[TypeConverter("System.Drawing.RectangleConverter, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    public struct Rectangle : IEquatable<Rectangle>
+    {
+        /// <summary>
+        /// Represents a <see cref="Rectangle"/> structure with its properties left uninitialized.
+        /// </summary>
+        public static readonly Rectangle Empty;
 
-		/// <summary>Initializes a new instance of the <see cref="T:System.Drawing.Rectangle" /> class with the specified location and size.</summary>
-		/// <param name="location">A <see cref="T:System.Drawing.Point" /> that represents the upper-left corner of the rectangular region. </param>
-		/// <param name="size">A <see cref="T:System.Drawing.Size" /> that represents the width and height of the rectangular region. </param>
-		public Rectangle(Point location, Size size)
-		{
-			this.x = location.X;
-			this.y = location.Y;
-			this.width = size.Width;
-			this.height = size.Height;
-		}
+        private int x; // Do not rename (binary serialization)
+        private int y; // Do not rename (binary serialization)
+        private int width; // Do not rename (binary serialization)
+        private int height; // Do not rename (binary serialization)
 
-		/// <summary>Creates a <see cref="T:System.Drawing.Rectangle" /> structure with the specified edge locations.</summary>
-		/// <param name="left">The x-coordinate of the upper-left corner of this <see cref="T:System.Drawing.Rectangle" /> structure. </param>
-		/// <param name="top">The y-coordinate of the upper-left corner of this <see cref="T:System.Drawing.Rectangle" /> structure. </param>
-		/// <param name="right">The x-coordinate of the lower-right corner of this <see cref="T:System.Drawing.Rectangle" /> structure. </param>
-		/// <param name="bottom">The y-coordinate of the lower-right corner of this <see cref="T:System.Drawing.Rectangle" /> structure. </param>
-		/// <returns>The new <see cref="T:System.Drawing.Rectangle" /> that this method creates.</returns>
-		public static Rectangle FromLTRB(int left, int top, int right, int bottom)
-		{
-			return new Rectangle(left, top, right - left, bottom - top);
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref='System.Drawing.Rectangle'/> class with the specified location
+        /// and size.
+        /// </summary>
+        public Rectangle(int x, int y, int width, int height)
+        {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+        }
 
-		/// <summary>Gets or sets the coordinates of the upper-left corner of this <see cref="T:System.Drawing.Rectangle" /> structure.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Point" /> that represents the upper-left corner of this <see cref="T:System.Drawing.Rectangle" /> structure.</returns>
-		[Browsable(false)]
-		public Point Location
-		{
-			get
-			{
-				return new Point(this.X, this.Y);
-			}
-			set
-			{
-				this.X = value.X;
-				this.Y = value.Y;
-			}
-		}
+        /// <summary>
+        /// Initializes a new instance of the Rectangle class with the specified location and size.
+        /// </summary>
+        public Rectangle(Point location, Size size)
+        {
+            x = location.X;
+            y = location.Y;
+            width = size.Width;
+            height = size.Height;
+        }
 
-		/// <summary>Gets or sets the size of this <see cref="T:System.Drawing.Rectangle" />.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Size" /> that represents the width and height of this <see cref="T:System.Drawing.Rectangle" /> structure.</returns>
-		[Browsable(false)]
-		public Size Size
-		{
-			get
-			{
-				return new Size(this.Width, this.Height);
-			}
-			set
-			{
-				this.Width = value.Width;
-				this.Height = value.Height;
-			}
-		}
+        /// <summary>
+        /// Creates a new <see cref='System.Drawing.Rectangle'/> with the specified location and size.
+        /// </summary>
+        public static Rectangle FromLTRB(int left, int top, int right, int bottom) =>
+            new Rectangle(left, top, unchecked(right - left), unchecked(bottom - top));
 
-		/// <summary>Gets or sets the x-coordinate of the upper-left corner of this <see cref="T:System.Drawing.Rectangle" /> structure.</summary>
-		/// <returns>The x-coordinate of the upper-left corner of this <see cref="T:System.Drawing.Rectangle" /> structure. The default is 0.</returns>
-		public int X
-		{
-			get
-			{
-				return this.x;
-			}
-			set
-			{
-				this.x = value;
-			}
-		}
+        /// <summary>
+        /// Gets or sets the coordinates of the upper-left corner of the rectangular region represented by this
+        /// <see cref='System.Drawing.Rectangle'/>.
+        /// </summary>
+        [Browsable(false)]
+        public Point Location
+        {
+            readonly get => new Point(X, Y);
+            set
+            {
+                X = value.X;
+                Y = value.Y;
+            }
+        }
 
-		/// <summary>Gets or sets the y-coordinate of the upper-left corner of this <see cref="T:System.Drawing.Rectangle" /> structure.</summary>
-		/// <returns>The y-coordinate of the upper-left corner of this <see cref="T:System.Drawing.Rectangle" /> structure. The default is 0.</returns>
-		public int Y
-		{
-			get
-			{
-				return this.y;
-			}
-			set
-			{
-				this.y = value;
-			}
-		}
+        /// <summary>
+        /// Gets or sets the size of this <see cref='System.Drawing.Rectangle'/>.
+        /// </summary>
+        [Browsable(false)]
+        public Size Size
+        {
+            readonly get => new Size(Width, Height);
+            set
+            {
+                Width = value.Width;
+                Height = value.Height;
+            }
+        }
 
-		/// <summary>Gets or sets the width of this <see cref="T:System.Drawing.Rectangle" /> structure.</summary>
-		/// <returns>The width of this <see cref="T:System.Drawing.Rectangle" /> structure. The default is 0.</returns>
-		public int Width
-		{
-			get
-			{
-				return this.width;
-			}
-			set
-			{
-				this.width = value;
-			}
-		}
+        /// <summary>
+        /// Gets or sets the x-coordinate of the upper-left corner of the rectangular region defined by this
+        /// <see cref='System.Drawing.Rectangle'/>.
+        /// </summary>
+        public int X
+        {
+            readonly get => x;
+            set => x = value;
+        }
 
-		/// <summary>Gets or sets the height of this <see cref="T:System.Drawing.Rectangle" /> structure.</summary>
-		/// <returns>The height of this <see cref="T:System.Drawing.Rectangle" /> structure. The default is 0.</returns>
-		public int Height
-		{
-			get
-			{
-				return this.height;
-			}
-			set
-			{
-				this.height = value;
-			}
-		}
+        /// <summary>
+        /// Gets or sets the y-coordinate of the upper-left corner of the rectangular region defined by this
+        /// <see cref='System.Drawing.Rectangle'/>.
+        /// </summary>
+        public int Y
+        {
+            readonly get => y;
+            set => y = value;
+        }
 
-		/// <summary>Gets the x-coordinate of the left edge of this <see cref="T:System.Drawing.Rectangle" /> structure.</summary>
-		/// <returns>The x-coordinate of the left edge of this <see cref="T:System.Drawing.Rectangle" /> structure.</returns>
-		[Browsable(false)]
-		public int Left
-		{
-			get
-			{
-				return this.X;
-			}
-		}
+        /// <summary>
+        /// Gets or sets the width of the rectangular region defined by this <see cref='System.Drawing.Rectangle'/>.
+        /// </summary>
+        public int Width
+        {
+            readonly get => width;
+            set => width = value;
+        }
 
-		/// <summary>Gets the y-coordinate of the top edge of this <see cref="T:System.Drawing.Rectangle" /> structure.</summary>
-		/// <returns>The y-coordinate of the top edge of this <see cref="T:System.Drawing.Rectangle" /> structure.</returns>
-		[Browsable(false)]
-		public int Top
-		{
-			get
-			{
-				return this.Y;
-			}
-		}
+        /// <summary>
+        /// Gets or sets the width of the rectangular region defined by this <see cref='System.Drawing.Rectangle'/>.
+        /// </summary>
+        public int Height
+        {
+            readonly get => height;
+            set => height = value;
+        }
 
-		/// <summary>Gets the x-coordinate that is the sum of <see cref="P:System.Drawing.Rectangle.X" /> and <see cref="P:System.Drawing.Rectangle.Width" /> property values of this <see cref="T:System.Drawing.Rectangle" /> structure.</summary>
-		/// <returns>The x-coordinate that is the sum of <see cref="P:System.Drawing.Rectangle.X" /> and <see cref="P:System.Drawing.Rectangle.Width" /> of this <see cref="T:System.Drawing.Rectangle" />.</returns>
-		[Browsable(false)]
-		public int Right
-		{
-			get
-			{
-				return this.X + this.Width;
-			}
-		}
+        /// <summary>
+        /// Gets the x-coordinate of the upper-left corner of the rectangular region defined by this
+        /// <see cref='System.Drawing.Rectangle'/> .
+        /// </summary>
+        [Browsable(false)]
+        public readonly int Left => X;
 
-		/// <summary>Gets the y-coordinate that is the sum of the <see cref="P:System.Drawing.Rectangle.Y" /> and <see cref="P:System.Drawing.Rectangle.Height" /> property values of this <see cref="T:System.Drawing.Rectangle" /> structure.</summary>
-		/// <returns>The y-coordinate that is the sum of <see cref="P:System.Drawing.Rectangle.Y" /> and <see cref="P:System.Drawing.Rectangle.Height" /> of this <see cref="T:System.Drawing.Rectangle" />.</returns>
-		[Browsable(false)]
-		public int Bottom
-		{
-			get
-			{
-				return this.Y + this.Height;
-			}
-		}
+        /// <summary>
+        /// Gets the y-coordinate of the upper-left corner of the rectangular region defined by this
+        /// <see cref='System.Drawing.Rectangle'/>.
+        /// </summary>
+        [Browsable(false)]
+        public readonly int Top => Y;
 
-		/// <summary>Tests whether all numeric properties of this <see cref="T:System.Drawing.Rectangle" /> have values of zero.</summary>
-		/// <returns>This property returns <see langword="true" /> if the <see cref="P:System.Drawing.Rectangle.Width" />, <see cref="P:System.Drawing.Rectangle.Height" />, <see cref="P:System.Drawing.Rectangle.X" />, and <see cref="P:System.Drawing.Rectangle.Y" /> properties of this <see cref="T:System.Drawing.Rectangle" /> all have values of zero; otherwise, <see langword="false" />.</returns>
-		[Browsable(false)]
-		public bool IsEmpty
-		{
-			get
-			{
-				return this.height == 0 && this.width == 0 && this.x == 0 && this.y == 0;
-			}
-		}
+        /// <summary>
+        /// Gets the x-coordinate of the lower-right corner of the rectangular region defined by this
+        /// <see cref='System.Drawing.Rectangle'/>.
+        /// </summary>
+        [Browsable(false)]
+        public readonly int Right => unchecked(X + Width);
 
-		/// <summary>Tests whether <paramref name="obj" /> is a <see cref="T:System.Drawing.Rectangle" /> structure with the same location and size of this <see cref="T:System.Drawing.Rectangle" /> structure.</summary>
-		/// <param name="obj">The <see cref="T:System.Object" /> to test. </param>
-		/// <returns>This method returns <see langword="true" /> if <paramref name="obj" /> is a <see cref="T:System.Drawing.Rectangle" /> structure and its <see cref="P:System.Drawing.Rectangle.X" />, <see cref="P:System.Drawing.Rectangle.Y" />, <see cref="P:System.Drawing.Rectangle.Width" />, and <see cref="P:System.Drawing.Rectangle.Height" /> properties are equal to the corresponding properties of this <see cref="T:System.Drawing.Rectangle" /> structure; otherwise, <see langword="false" />.</returns>
-		public override bool Equals(object? obj)
-		{
-			if (!(obj is Rectangle))
-			{
-				return false;
-			}
-			Rectangle rectangle = (Rectangle)obj;
-			return rectangle.X == this.X && rectangle.Y == this.Y && rectangle.Width == this.Width && rectangle.Height == this.Height;
-		}
+        /// <summary>
+        /// Gets the y-coordinate of the lower-right corner of the rectangular region defined by this
+        /// <see cref='System.Drawing.Rectangle'/>.
+        /// </summary>
+        [Browsable(false)]
+        public readonly int Bottom => unchecked(Y + Height);
 
-		/// <summary>Tests whether two <see cref="T:System.Drawing.Rectangle" /> structures have equal location and size.</summary>
-		/// <param name="left">The <see cref="T:System.Drawing.Rectangle" /> structure that is to the left of the equality operator. </param>
-		/// <param name="right">The <see cref="T:System.Drawing.Rectangle" /> structure that is to the right of the equality operator. </param>
-		/// <returns>This operator returns <see langword="true" /> if the two <see cref="T:System.Drawing.Rectangle" /> structures have equal <see cref="P:System.Drawing.Rectangle.X" />, <see cref="P:System.Drawing.Rectangle.Y" />, <see cref="P:System.Drawing.Rectangle.Width" />, and <see cref="P:System.Drawing.Rectangle.Height" /> properties.</returns>
-		public static bool operator ==(Rectangle left, Rectangle right)
-		{
-			return left.X == right.X && left.Y == right.Y && left.Width == right.Width && left.Height == right.Height;
-		}
+        /// <summary>
+        /// Tests whether this <see cref='System.Drawing.Rectangle'/> has a <see cref='System.Drawing.Rectangle.Width'/>
+        /// or a <see cref='System.Drawing.Rectangle.Height'/> of 0.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsEmpty => height == 0 && width == 0 && x == 0 && y == 0;
 
-		/// <summary>Tests whether two <see cref="T:System.Drawing.Rectangle" /> structures differ in location or size.</summary>
-		/// <param name="left">The <see cref="T:System.Drawing.Rectangle" /> structure that is to the left of the inequality operator. </param>
-		/// <param name="right">The <see cref="T:System.Drawing.Rectangle" /> structure that is to the right of the inequality operator. </param>
-		/// <returns>This operator returns <see langword="true" /> if any of the <see cref="P:System.Drawing.Rectangle.X" />, <see cref="P:System.Drawing.Rectangle.Y" />, <see cref="P:System.Drawing.Rectangle.Width" /> or <see cref="P:System.Drawing.Rectangle.Height" /> properties of the two <see cref="T:System.Drawing.Rectangle" /> structures are unequal; otherwise <see langword="false" />.</returns>
-		public static bool operator !=(Rectangle left, Rectangle right)
-		{
-			return !(left == right);
-		}
+        /// <summary>
+        /// Tests whether <paramref name="obj"/> is a <see cref='System.Drawing.Rectangle'/> with the same location
+        /// and size of this Rectangle.
+        /// </summary>
+        public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Rectangle && Equals((Rectangle)obj);
 
-		/// <summary>Converts the specified <see cref="T:System.Drawing.RectangleF" /> structure to a <see cref="T:System.Drawing.Rectangle" /> structure by rounding the <see cref="T:System.Drawing.RectangleF" /> values to the next higher integer values.</summary>
-		/// <param name="value">The <see cref="T:System.Drawing.RectangleF" /> structure to be converted. </param>
-		/// <returns>Returns a <see cref="T:System.Drawing.Rectangle" />.</returns>
-		public static Rectangle Ceiling(RectangleF value)
-		{
-			return new Rectangle((int)Math.Ceiling((double)value.X), (int)Math.Ceiling((double)value.Y), (int)Math.Ceiling((double)value.Width), (int)Math.Ceiling((double)value.Height));
-		}
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <returns><c>true</c> if the current object is equal to other; otherwise, <c>false</c>.</returns>
+        public readonly bool Equals(Rectangle other) => this == other;
 
-		/// <summary>Converts the specified <see cref="T:System.Drawing.RectangleF" /> to a <see cref="T:System.Drawing.Rectangle" /> by truncating the <see cref="T:System.Drawing.RectangleF" /> values.</summary>
-		/// <param name="value">The <see cref="T:System.Drawing.RectangleF" /> to be converted. </param>
-		/// <returns>The truncated value of the  <see cref="T:System.Drawing.Rectangle" />.</returns>
-		public static Rectangle Truncate(RectangleF value)
-		{
-			return new Rectangle((int)value.X, (int)value.Y, (int)value.Width, (int)value.Height);
-		}
+        /// <summary>
+        /// Tests whether two <see cref='System.Drawing.Rectangle'/> objects have equal location and size.
+        /// </summary>
+        public static bool operator ==(Rectangle left, Rectangle right) =>
+            left.X == right.X && left.Y == right.Y && left.Width == right.Width && left.Height == right.Height;
 
-		/// <summary>Converts the specified <see cref="T:System.Drawing.RectangleF" /> to a <see cref="T:System.Drawing.Rectangle" /> by rounding the <see cref="T:System.Drawing.RectangleF" /> values to the nearest integer values.</summary>
-		/// <param name="value">The <see cref="T:System.Drawing.RectangleF" /> to be converted. </param>
-		/// <returns>The rounded interger value of the <see cref="T:System.Drawing.Rectangle" />.</returns>
-		public static Rectangle Round(RectangleF value)
-		{
-			return new Rectangle((int)Math.Round((double)value.X), (int)Math.Round((double)value.Y), (int)Math.Round((double)value.Width), (int)Math.Round((double)value.Height));
-		}
+        /// <summary>
+        /// Tests whether two <see cref='System.Drawing.Rectangle'/> objects differ in location or size.
+        /// </summary>
+        public static bool operator !=(Rectangle left, Rectangle right) => !(left == right);
 
-		/// <summary>Determines if the specified point is contained within this <see cref="T:System.Drawing.Rectangle" /> structure.</summary>
-		/// <param name="x">The x-coordinate of the point to test. </param>
-		/// <param name="y">The y-coordinate of the point to test. </param>
-		/// <returns>This method returns <see langword="true" /> if the point defined by <paramref name="x" /> and <paramref name="y" /> is contained within this <see cref="T:System.Drawing.Rectangle" /> structure; otherwise <see langword="false" />.</returns>
-		public bool Contains(int x, int y)
-		{
-			return this.X <= x && x < this.X + this.Width && this.Y <= y && y < this.Y + this.Height;
-		}
+        /// <summary>
+        /// Converts a RectangleF to a Rectangle by performing a ceiling operation on all the coordinates.
+        /// </summary>
+        public static Rectangle Ceiling(RectangleF value)
+        {
+            unchecked
+            {
+                return new Rectangle(
+                    (int)Math.Ceiling(value.X),
+                    (int)Math.Ceiling(value.Y),
+                    (int)Math.Ceiling(value.Width),
+                    (int)Math.Ceiling(value.Height));
+            }
+        }
 
-		/// <summary>Determines if the specified point is contained within this <see cref="T:System.Drawing.Rectangle" /> structure.</summary>
-		/// <param name="pt">The <see cref="T:System.Drawing.Point" /> to test. </param>
-		/// <returns>This method returns <see langword="true" /> if the point represented by <paramref name="pt" /> is contained within this <see cref="T:System.Drawing.Rectangle" /> structure; otherwise <see langword="false" />.</returns>
-		public bool Contains(Point pt)
-		{
-			return this.Contains(pt.X, pt.Y);
-		}
+        /// <summary>
+        /// Converts a RectangleF to a Rectangle by performing a truncate operation on all the coordinates.
+        /// </summary>
+        public static Rectangle Truncate(RectangleF value)
+        {
+            unchecked
+            {
+                return new Rectangle(
+                    (int)value.X,
+                    (int)value.Y,
+                    (int)value.Width,
+                    (int)value.Height);
+            }
+        }
 
-		/// <summary>Determines if the rectangular region represented by <paramref name="rect" /> is entirely contained within this <see cref="T:System.Drawing.Rectangle" /> structure.</summary>
-		/// <param name="rect">The <see cref="T:System.Drawing.Rectangle" /> to test. </param>
-		/// <returns>This method returns <see langword="true" /> if the rectangular region represented by <paramref name="rect" /> is entirely contained within this <see cref="T:System.Drawing.Rectangle" /> structure; otherwise <see langword="false" />.</returns>
-		public bool Contains(Rectangle rect)
-		{
-			return this.X <= rect.X && rect.X + rect.Width <= this.X + this.Width && this.Y <= rect.Y && rect.Y + rect.Height <= this.Y + this.Height;
-		}
+        /// <summary>
+        /// Converts a RectangleF to a Rectangle by performing a round operation on all the coordinates.
+        /// </summary>
+        public static Rectangle Round(RectangleF value)
+        {
+            unchecked
+            {
+                return new Rectangle(
+                    (int)Math.Round(value.X),
+                    (int)Math.Round(value.Y),
+                    (int)Math.Round(value.Width),
+                    (int)Math.Round(value.Height));
+            }
+        }
 
-		/// <summary>Returns the hash code for this <see cref="T:System.Drawing.Rectangle" /> structure. For information about the use of hash codes, see <see cref="M:System.Object.GetHashCode" /> .</summary>
-		/// <returns>An integer that represents the hash code for this rectangle.</returns>
-		public override int GetHashCode()
-		{
-			return this.X ^ (this.Y << 13 | (int)((uint)this.Y >> 19)) ^ (this.Width << 26 | (int)((uint)this.Width >> 6)) ^ (this.Height << 7 | (int)((uint)this.Height >> 25));
-		}
+        /// <summary>
+        /// Determines if the specified point is contained within the rectangular region defined by this
+        /// <see cref='System.Drawing.Rectangle'/> .
+        /// </summary>
+        public readonly bool Contains(int x, int y) => X <= x && x < X + Width && Y <= y && y < Y + Height;
 
-		/// <summary>Enlarges this <see cref="T:System.Drawing.Rectangle" /> by the specified amount.</summary>
-		/// <param name="width">The amount to inflate this <see cref="T:System.Drawing.Rectangle" /> horizontally. </param>
-		/// <param name="height">The amount to inflate this <see cref="T:System.Drawing.Rectangle" /> vertically. </param>
-		public void Inflate(int width, int height)
-		{
-			this.X -= width;
-			this.Y -= height;
-			this.Width += 2 * width;
-			this.Height += 2 * height;
-		}
+        /// <summary>
+        /// Determines if the specified point is contained within the rectangular region defined by this
+        /// <see cref='System.Drawing.Rectangle'/> .
+        /// </summary>
+        public readonly bool Contains(Point pt) => Contains(pt.X, pt.Y);
 
-		/// <summary>Enlarges this <see cref="T:System.Drawing.Rectangle" /> by the specified amount.</summary>
-		/// <param name="size">The amount to inflate this rectangle. </param>
-		public void Inflate(Size size)
-		{
-			this.Inflate(size.Width, size.Height);
-		}
+        /// <summary>
+        /// Determines if the rectangular region represented by <paramref name="rect"/> is entirely contained within the
+        /// rectangular region represented by this <see cref='System.Drawing.Rectangle'/> .
+        /// </summary>
+        public readonly bool Contains(Rectangle rect) =>
+            (X <= rect.X) && (rect.X + rect.Width <= X + Width) &&
+            (Y <= rect.Y) && (rect.Y + rect.Height <= Y + Height);
 
-		/// <summary>Creates and returns an enlarged copy of the specified <see cref="T:System.Drawing.Rectangle" /> structure. The copy is enlarged by the specified amount. The original <see cref="T:System.Drawing.Rectangle" /> structure remains unmodified.</summary>
-		/// <param name="rect">The <see cref="T:System.Drawing.Rectangle" /> with which to start. This rectangle is not modified. </param>
-		/// <param name="x">The amount to inflate this <see cref="T:System.Drawing.Rectangle" /> horizontally. </param>
-		/// <param name="y">The amount to inflate this <see cref="T:System.Drawing.Rectangle" /> vertically. </param>
-		/// <returns>The enlarged <see cref="T:System.Drawing.Rectangle" />.</returns>
-		public static Rectangle Inflate(Rectangle rect, int x, int y)
-		{
-			Rectangle result = rect;
-			result.Inflate(x, y);
-			return result;
-		}
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        public override readonly int GetHashCode() => HashCode.Combine(X, Y, Width, Height);
 
-		/// <summary>Replaces this <see cref="T:System.Drawing.Rectangle" /> with the intersection of itself and the specified <see cref="T:System.Drawing.Rectangle" />.</summary>
-		/// <param name="rect">The <see cref="T:System.Drawing.Rectangle" /> with which to intersect. </param>
-		public void Intersect(Rectangle rect)
-		{
-			Rectangle rectangle = Rectangle.Intersect(rect, this);
-			this.X = rectangle.X;
-			this.Y = rectangle.Y;
-			this.Width = rectangle.Width;
-			this.Height = rectangle.Height;
-		}
+        /// <summary>
+        /// Inflates this <see cref='System.Drawing.Rectangle'/> by the specified amount.
+        /// </summary>
+        public void Inflate(int width, int height)
+        {
+            unchecked
+            {
+                X -= width;
+                Y -= height;
 
-		/// <summary>Returns a third <see cref="T:System.Drawing.Rectangle" /> structure that represents the intersection of two other <see cref="T:System.Drawing.Rectangle" /> structures. If there is no intersection, an empty <see cref="T:System.Drawing.Rectangle" /> is returned.</summary>
-		/// <param name="a">A rectangle to intersect. </param>
-		/// <param name="b">A rectangle to intersect. </param>
-		/// <returns>A <see cref="T:System.Drawing.Rectangle" /> that represents the intersection of <paramref name="a" /> and <paramref name="b" />.</returns>
-		public static Rectangle Intersect(Rectangle a, Rectangle b)
-		{
-			int num = Math.Max(a.X, b.X);
-			int num2 = Math.Min(a.X + a.Width, b.X + b.Width);
-			int num3 = Math.Max(a.Y, b.Y);
-			int num4 = Math.Min(a.Y + a.Height, b.Y + b.Height);
-			if (num2 >= num && num4 >= num3)
-			{
-				return new Rectangle(num, num3, num2 - num, num4 - num3);
-			}
-			return Rectangle.Empty;
-		}
+                Width += 2 * width;
+                Height += 2 * height;
+            }
+        }
 
-		/// <summary>Determines if this rectangle intersects with <paramref name="rect" />.</summary>
-		/// <param name="rect">The rectangle to test. </param>
-		/// <returns>This method returns <see langword="true" /> if there is any intersection, otherwise <see langword="false" />.</returns>
-		public bool IntersectsWith(Rectangle rect)
-		{
-			return rect.X < this.X + this.Width && this.X < rect.X + rect.Width && rect.Y < this.Y + this.Height && this.Y < rect.Y + rect.Height;
-		}
+        /// <summary>
+        /// Inflates this <see cref='System.Drawing.Rectangle'/> by the specified amount.
+        /// </summary>
+        public void Inflate(Size size) => Inflate(size.Width, size.Height);
 
-		/// <summary>Gets a <see cref="T:System.Drawing.Rectangle" /> structure that contains the union of two <see cref="T:System.Drawing.Rectangle" /> structures.</summary>
-		/// <param name="a">A rectangle to union. </param>
-		/// <param name="b">A rectangle to union. </param>
-		/// <returns>A <see cref="T:System.Drawing.Rectangle" /> structure that bounds the union of the two <see cref="T:System.Drawing.Rectangle" /> structures.</returns>
-		public static Rectangle Union(Rectangle a, Rectangle b)
-		{
-			int num = Math.Min(a.X, b.X);
-			int num2 = Math.Max(a.X + a.Width, b.X + b.Width);
-			int num3 = Math.Min(a.Y, b.Y);
-			int num4 = Math.Max(a.Y + a.Height, b.Y + b.Height);
-			return new Rectangle(num, num3, num2 - num, num4 - num3);
-		}
+        /// <summary>
+        /// Creates a <see cref='System.Drawing.Rectangle'/> that is inflated by the specified amount.
+        /// </summary>
+        public static Rectangle Inflate(Rectangle rect, int x, int y)
+        {
+            Rectangle r = rect;
+            r.Inflate(x, y);
+            return r;
+        }
 
-		/// <summary>Adjusts the location of this rectangle by the specified amount.</summary>
-		/// <param name="pos">Amount to offset the location. </param>
-		public void Offset(Point pos)
-		{
-			this.Offset(pos.X, pos.Y);
-		}
+        /// <summary>
+        /// Creates a Rectangle that represents the intersection between this Rectangle and rect.
+        /// </summary>
+        public void Intersect(Rectangle rect)
+        {
+            Rectangle result = Intersect(rect, this);
 
-		/// <summary>Adjusts the location of this rectangle by the specified amount.</summary>
-		/// <param name="x">The horizontal offset. </param>
-		/// <param name="y">The vertical offset. </param>
-		public void Offset(int x, int y)
-		{
-			this.X += x;
-			this.Y += y;
-		}
+            X = result.X;
+            Y = result.Y;
+            Width = result.Width;
+            Height = result.Height;
+        }
 
-		/// <summary>Converts the attributes of this <see cref="T:System.Drawing.Rectangle" /> to a human-readable string.</summary>
-		/// <returns>A string that contains the position, width, and height of this <see cref="T:System.Drawing.Rectangle" /> structure ¾ for example, {X=20, Y=20, Width=100, Height=50} </returns>
-		public override string ToString()
-		{
-			return string.Concat(new string[]
-			{
-				"{X=",
-				this.X.ToString(CultureInfo.CurrentCulture),
-				",Y=",
-				this.Y.ToString(CultureInfo.CurrentCulture),
-				",Width=",
-				this.Width.ToString(CultureInfo.CurrentCulture),
-				",Height=",
-				this.Height.ToString(CultureInfo.CurrentCulture),
-				"}"
-			});
-		}
+        /// <summary>
+        /// Creates a rectangle that represents the intersection between a and b. If there is no intersection, an
+        /// empty rectangle is returned.
+        /// </summary>
+        public static Rectangle Intersect(Rectangle a, Rectangle b)
+        {
+            int x1 = Math.Max(a.X, b.X);
+            int x2 = Math.Min(a.X + a.Width, b.X + b.Width);
+            int y1 = Math.Max(a.Y, b.Y);
+            int y2 = Math.Min(a.Y + a.Height, b.Y + b.Height);
 
-		/// <summary>Represents a <see cref="T:System.Drawing.Rectangle" /> structure with its properties left uninitialized.</summary>
-		public static readonly Rectangle Empty;
+            if (x2 >= x1 && y2 >= y1)
+            {
+                return new Rectangle(x1, y1, x2 - x1, y2 - y1);
+            }
 
-		private int x;
+            return Empty;
+        }
 
-		private int y;
+        /// <summary>
+        /// Determines if this rectangle intersects with rect.
+        /// </summary>
+        public readonly bool IntersectsWith(Rectangle rect) =>
+            (rect.X < X + Width) && (X < rect.X + rect.Width) &&
+            (rect.Y < Y + Height) && (Y < rect.Y + rect.Height);
 
-		private int width;
+        /// <summary>
+        /// Creates a rectangle that represents the union between a and b.
+        /// </summary>
+        public static Rectangle Union(Rectangle a, Rectangle b)
+        {
+            int x1 = Math.Min(a.X, b.X);
+            int x2 = Math.Max(a.X + a.Width, b.X + b.Width);
+            int y1 = Math.Min(a.Y, b.Y);
+            int y2 = Math.Max(a.Y + a.Height, b.Y + b.Height);
 
-		private int height;
-	}
+            return new Rectangle(x1, y1, x2 - x1, y2 - y1);
+        }
+
+        /// <summary>
+        /// Adjusts the location of this rectangle by the specified amount.
+        /// </summary>
+        public void Offset(Point pos) => Offset(pos.X, pos.Y);
+
+        /// <summary>
+        /// Adjusts the location of this rectangle by the specified amount.
+        /// </summary>
+        public void Offset(int x, int y)
+        {
+            unchecked
+            {
+                X += x;
+                Y += y;
+            }
+        }
+
+        /// <summary>
+        /// Converts the attributes of this <see cref='System.Drawing.Rectangle'/> to a human readable string.
+        /// </summary>
+        public override readonly string ToString() => $"{{X={X},Y={Y},Width={Width},Height={Height}}}";
+    }
 }

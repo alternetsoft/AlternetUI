@@ -13,7 +13,8 @@ namespace Alternet.Drawing
     {
         public static Color ConvertFromString(string strValue, CultureInfo culture)
         {
-            Debug.Assert(culture != null);
+            if (culture is null)
+                throw new ArgumentNullException(nameof(culture));
 
             string text = strValue.Trim();
 
@@ -100,6 +101,9 @@ namespace Alternet.Drawing
 
         private static int IntFromString(string text, CultureInfo culture)
         {
+            if (culture is null)
+                throw new ArgumentNullException(nameof(culture));
+
             text = text.Trim();
 
             try
@@ -115,7 +119,6 @@ namespace Alternet.Drawing
                 }
                 else
                 {
-                    Debug.Assert(culture != null);
                     var formatInfo = (NumberFormatInfo?)culture.GetFormat(typeof(NumberFormatInfo));
                     return IntFromString(text, formatInfo);
                 }
