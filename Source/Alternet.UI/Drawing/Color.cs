@@ -1,1919 +1,622 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing.Design;
-using System.Globalization;
-using System.Text;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace Alternet.Drawing
 {
-	/// <summary>Represents an ARGB (alpha, red, green, blue) color.</summary>
-	//[TypeConverter(typeof(ColorConverter))]
-	[DebuggerDisplay("{NameAndARGBValue}")]
-	//[Editor("System.Drawing.Design.ColorEditor, System.Drawing.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", typeof(UITypeEditor))]
-	[Serializable]
-	public struct Color
-	{
-		/// <summary>Gets a system-defined color.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Transparent
-		{
-			get
-			{
-				return new Color(KnownColor.Transparent);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFF0F8FF.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color AliceBlue
-		{
-			get
-			{
-				return new Color(KnownColor.AliceBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFAEBD7.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color AntiqueWhite
-		{
-			get
-			{
-				return new Color(KnownColor.AntiqueWhite);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF00FFFF.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Aqua
-		{
-			get
-			{
-				return new Color(KnownColor.Aqua);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF7FFFD4.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Aquamarine
-		{
-			get
-			{
-				return new Color(KnownColor.Aquamarine);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFF0FFFF.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Azure
-		{
-			get
-			{
-				return new Color(KnownColor.Azure);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFF5F5DC.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Beige
-		{
-			get
-			{
-				return new Color(KnownColor.Beige);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFE4C4.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Bisque
-		{
-			get
-			{
-				return new Color(KnownColor.Bisque);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF000000.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Black
-		{
-			get
-			{
-				return new Color(KnownColor.Black);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFEBCD.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color BlanchedAlmond
-		{
-			get
-			{
-				return new Color(KnownColor.BlanchedAlmond);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF0000FF.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Blue
-		{
-			get
-			{
-				return new Color(KnownColor.Blue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF8A2BE2.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color BlueViolet
-		{
-			get
-			{
-				return new Color(KnownColor.BlueViolet);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFA52A2A.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Brown
-		{
-			get
-			{
-				return new Color(KnownColor.Brown);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFDEB887.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color BurlyWood
-		{
-			get
-			{
-				return new Color(KnownColor.BurlyWood);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF5F9EA0.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color CadetBlue
-		{
-			get
-			{
-				return new Color(KnownColor.CadetBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF7FFF00.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Chartreuse
-		{
-			get
-			{
-				return new Color(KnownColor.Chartreuse);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFD2691E.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Chocolate
-		{
-			get
-			{
-				return new Color(KnownColor.Chocolate);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFF7F50.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Coral
-		{
-			get
-			{
-				return new Color(KnownColor.Coral);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF6495ED.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color CornflowerBlue
-		{
-			get
-			{
-				return new Color(KnownColor.CornflowerBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFF8DC.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Cornsilk
-		{
-			get
-			{
-				return new Color(KnownColor.Cornsilk);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFDC143C.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Crimson
-		{
-			get
-			{
-				return new Color(KnownColor.Crimson);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF00FFFF.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Cyan
-		{
-			get
-			{
-				return new Color(KnownColor.Cyan);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF00008B.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DarkBlue
-		{
-			get
-			{
-				return new Color(KnownColor.DarkBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF008B8B.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DarkCyan
-		{
-			get
-			{
-				return new Color(KnownColor.DarkCyan);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFB8860B.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DarkGoldenrod
-		{
-			get
-			{
-				return new Color(KnownColor.DarkGoldenrod);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFA9A9A9.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DarkGray
-		{
-			get
-			{
-				return new Color(KnownColor.DarkGray);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF006400.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DarkGreen
-		{
-			get
-			{
-				return new Color(KnownColor.DarkGreen);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFBDB76B.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DarkKhaki
-		{
-			get
-			{
-				return new Color(KnownColor.DarkKhaki);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF8B008B.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DarkMagenta
-		{
-			get
-			{
-				return new Color(KnownColor.DarkMagenta);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF556B2F.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DarkOliveGreen
-		{
-			get
-			{
-				return new Color(KnownColor.DarkOliveGreen);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFF8C00.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DarkOrange
-		{
-			get
-			{
-				return new Color(KnownColor.DarkOrange);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF9932CC.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DarkOrchid
-		{
-			get
-			{
-				return new Color(KnownColor.DarkOrchid);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF8B0000.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DarkRed
-		{
-			get
-			{
-				return new Color(KnownColor.DarkRed);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFE9967A.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DarkSalmon
-		{
-			get
-			{
-				return new Color(KnownColor.DarkSalmon);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF8FBC8F.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DarkSeaGreen
-		{
-			get
-			{
-				return new Color(KnownColor.DarkSeaGreen);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF483D8B.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DarkSlateBlue
-		{
-			get
-			{
-				return new Color(KnownColor.DarkSlateBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF2F4F4F.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DarkSlateGray
-		{
-			get
-			{
-				return new Color(KnownColor.DarkSlateGray);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF00CED1.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DarkTurquoise
-		{
-			get
-			{
-				return new Color(KnownColor.DarkTurquoise);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF9400D3.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DarkViolet
-		{
-			get
-			{
-				return new Color(KnownColor.DarkViolet);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFF1493.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DeepPink
-		{
-			get
-			{
-				return new Color(KnownColor.DeepPink);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF00BFFF.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DeepSkyBlue
-		{
-			get
-			{
-				return new Color(KnownColor.DeepSkyBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF696969.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DimGray
-		{
-			get
-			{
-				return new Color(KnownColor.DimGray);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF1E90FF.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color DodgerBlue
-		{
-			get
-			{
-				return new Color(KnownColor.DodgerBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFB22222.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Firebrick
-		{
-			get
-			{
-				return new Color(KnownColor.Firebrick);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFFAF0.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color FloralWhite
-		{
-			get
-			{
-				return new Color(KnownColor.FloralWhite);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF228B22.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color ForestGreen
-		{
-			get
-			{
-				return new Color(KnownColor.ForestGreen);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFF00FF.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Fuchsia
-		{
-			get
-			{
-				return new Color(KnownColor.Fuchsia);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFDCDCDC.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Gainsboro
-		{
-			get
-			{
-				return new Color(KnownColor.Gainsboro);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFF8F8FF.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color GhostWhite
-		{
-			get
-			{
-				return new Color(KnownColor.GhostWhite);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFD700.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Gold
-		{
-			get
-			{
-				return new Color(KnownColor.Gold);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFDAA520.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Goldenrod
-		{
-			get
-			{
-				return new Color(KnownColor.Goldenrod);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF808080.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> strcture representing a system-defined color.</returns>
-		public static Color Gray
-		{
-			get
-			{
-				return new Color(KnownColor.Gray);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF008000.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Green
-		{
-			get
-			{
-				return new Color(KnownColor.Green);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFADFF2F.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color GreenYellow
-		{
-			get
-			{
-				return new Color(KnownColor.GreenYellow);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFF0FFF0.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Honeydew
-		{
-			get
-			{
-				return new Color(KnownColor.Honeydew);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFF69B4.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color HotPink
-		{
-			get
-			{
-				return new Color(KnownColor.HotPink);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFCD5C5C.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color IndianRed
-		{
-			get
-			{
-				return new Color(KnownColor.IndianRed);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF4B0082.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Indigo
-		{
-			get
-			{
-				return new Color(KnownColor.Indigo);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFFFF0.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Ivory
-		{
-			get
-			{
-				return new Color(KnownColor.Ivory);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFF0E68C.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Khaki
-		{
-			get
-			{
-				return new Color(KnownColor.Khaki);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFE6E6FA.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Lavender
-		{
-			get
-			{
-				return new Color(KnownColor.Lavender);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFF0F5.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color LavenderBlush
-		{
-			get
-			{
-				return new Color(KnownColor.LavenderBlush);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF7CFC00.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color LawnGreen
-		{
-			get
-			{
-				return new Color(KnownColor.LawnGreen);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFFACD.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color LemonChiffon
-		{
-			get
-			{
-				return new Color(KnownColor.LemonChiffon);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFADD8E6.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color LightBlue
-		{
-			get
-			{
-				return new Color(KnownColor.LightBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFF08080.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color LightCoral
-		{
-			get
-			{
-				return new Color(KnownColor.LightCoral);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFE0FFFF.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color LightCyan
-		{
-			get
-			{
-				return new Color(KnownColor.LightCyan);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFAFAD2.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color LightGoldenrodYellow
-		{
-			get
-			{
-				return new Color(KnownColor.LightGoldenrodYellow);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF90EE90.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color LightGreen
-		{
-			get
-			{
-				return new Color(KnownColor.LightGreen);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFD3D3D3.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color LightGray
-		{
-			get
-			{
-				return new Color(KnownColor.LightGray);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFB6C1.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color LightPink
-		{
-			get
-			{
-				return new Color(KnownColor.LightPink);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFA07A.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color LightSalmon
-		{
-			get
-			{
-				return new Color(KnownColor.LightSalmon);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF20B2AA.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color LightSeaGreen
-		{
-			get
-			{
-				return new Color(KnownColor.LightSeaGreen);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF87CEFA.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color LightSkyBlue
-		{
-			get
-			{
-				return new Color(KnownColor.LightSkyBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF778899.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color LightSlateGray
-		{
-			get
-			{
-				return new Color(KnownColor.LightSlateGray);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFB0C4DE.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color LightSteelBlue
-		{
-			get
-			{
-				return new Color(KnownColor.LightSteelBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFFFE0.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color LightYellow
-		{
-			get
-			{
-				return new Color(KnownColor.LightYellow);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF00FF00.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Lime
-		{
-			get
-			{
-				return new Color(KnownColor.Lime);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF32CD32.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color LimeGreen
-		{
-			get
-			{
-				return new Color(KnownColor.LimeGreen);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFAF0E6.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Linen
-		{
-			get
-			{
-				return new Color(KnownColor.Linen);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFF00FF.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Magenta
-		{
-			get
-			{
-				return new Color(KnownColor.Magenta);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF800000.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Maroon
-		{
-			get
-			{
-				return new Color(KnownColor.Maroon);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF66CDAA.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color MediumAquamarine
-		{
-			get
-			{
-				return new Color(KnownColor.MediumAquamarine);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF0000CD.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color MediumBlue
-		{
-			get
-			{
-				return new Color(KnownColor.MediumBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFBA55D3.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color MediumOrchid
-		{
-			get
-			{
-				return new Color(KnownColor.MediumOrchid);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF9370DB.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color MediumPurple
-		{
-			get
-			{
-				return new Color(KnownColor.MediumPurple);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF3CB371.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color MediumSeaGreen
-		{
-			get
-			{
-				return new Color(KnownColor.MediumSeaGreen);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF7B68EE.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color MediumSlateBlue
-		{
-			get
-			{
-				return new Color(KnownColor.MediumSlateBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF00FA9A.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color MediumSpringGreen
-		{
-			get
-			{
-				return new Color(KnownColor.MediumSpringGreen);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF48D1CC.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color MediumTurquoise
-		{
-			get
-			{
-				return new Color(KnownColor.MediumTurquoise);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFC71585.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color MediumVioletRed
-		{
-			get
-			{
-				return new Color(KnownColor.MediumVioletRed);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF191970.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color MidnightBlue
-		{
-			get
-			{
-				return new Color(KnownColor.MidnightBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFF5FFFA.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color MintCream
-		{
-			get
-			{
-				return new Color(KnownColor.MintCream);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFE4E1.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color MistyRose
-		{
-			get
-			{
-				return new Color(KnownColor.MistyRose);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFE4B5.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Moccasin
-		{
-			get
-			{
-				return new Color(KnownColor.Moccasin);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFDEAD.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color NavajoWhite
-		{
-			get
-			{
-				return new Color(KnownColor.NavajoWhite);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF000080.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Navy
-		{
-			get
-			{
-				return new Color(KnownColor.Navy);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFDF5E6.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color OldLace
-		{
-			get
-			{
-				return new Color(KnownColor.OldLace);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF808000.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Olive
-		{
-			get
-			{
-				return new Color(KnownColor.Olive);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF6B8E23.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color OliveDrab
-		{
-			get
-			{
-				return new Color(KnownColor.OliveDrab);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFA500.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Orange
-		{
-			get
-			{
-				return new Color(KnownColor.Orange);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFF4500.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color OrangeRed
-		{
-			get
-			{
-				return new Color(KnownColor.OrangeRed);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFDA70D6.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Orchid
-		{
-			get
-			{
-				return new Color(KnownColor.Orchid);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFEEE8AA.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color PaleGoldenrod
-		{
-			get
-			{
-				return new Color(KnownColor.PaleGoldenrod);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF98FB98.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color PaleGreen
-		{
-			get
-			{
-				return new Color(KnownColor.PaleGreen);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFAFEEEE.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color PaleTurquoise
-		{
-			get
-			{
-				return new Color(KnownColor.PaleTurquoise);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFDB7093.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color PaleVioletRed
-		{
-			get
-			{
-				return new Color(KnownColor.PaleVioletRed);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFEFD5.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color PapayaWhip
-		{
-			get
-			{
-				return new Color(KnownColor.PapayaWhip);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFDAB9.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color PeachPuff
-		{
-			get
-			{
-				return new Color(KnownColor.PeachPuff);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFCD853F.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Peru
-		{
-			get
-			{
-				return new Color(KnownColor.Peru);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFC0CB.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Pink
-		{
-			get
-			{
-				return new Color(KnownColor.Pink);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFDDA0DD.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Plum
-		{
-			get
-			{
-				return new Color(KnownColor.Plum);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFB0E0E6.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color PowderBlue
-		{
-			get
-			{
-				return new Color(KnownColor.PowderBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF800080.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Purple
-		{
-			get
-			{
-				return new Color(KnownColor.Purple);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFF0000.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Red
-		{
-			get
-			{
-				return new Color(KnownColor.Red);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFBC8F8F.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color RosyBrown
-		{
-			get
-			{
-				return new Color(KnownColor.RosyBrown);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF4169E1.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color RoyalBlue
-		{
-			get
-			{
-				return new Color(KnownColor.RoyalBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF8B4513.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color SaddleBrown
-		{
-			get
-			{
-				return new Color(KnownColor.SaddleBrown);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFA8072.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Salmon
-		{
-			get
-			{
-				return new Color(KnownColor.Salmon);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFF4A460.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color SandyBrown
-		{
-			get
-			{
-				return new Color(KnownColor.SandyBrown);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF2E8B57.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color SeaGreen
-		{
-			get
-			{
-				return new Color(KnownColor.SeaGreen);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFF5EE.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color SeaShell
-		{
-			get
-			{
-				return new Color(KnownColor.SeaShell);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFA0522D.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Sienna
-		{
-			get
-			{
-				return new Color(KnownColor.Sienna);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFC0C0C0.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Silver
-		{
-			get
-			{
-				return new Color(KnownColor.Silver);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF87CEEB.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color SkyBlue
-		{
-			get
-			{
-				return new Color(KnownColor.SkyBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF6A5ACD.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color SlateBlue
-		{
-			get
-			{
-				return new Color(KnownColor.SlateBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF708090.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color SlateGray
-		{
-			get
-			{
-				return new Color(KnownColor.SlateGray);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFFAFA.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Snow
-		{
-			get
-			{
-				return new Color(KnownColor.Snow);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF00FF7F.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color SpringGreen
-		{
-			get
-			{
-				return new Color(KnownColor.SpringGreen);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF4682B4.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color SteelBlue
-		{
-			get
-			{
-				return new Color(KnownColor.SteelBlue);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFD2B48C.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Tan
-		{
-			get
-			{
-				return new Color(KnownColor.Tan);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF008080.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Teal
-		{
-			get
-			{
-				return new Color(KnownColor.Teal);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFD8BFD8.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Thistle
-		{
-			get
-			{
-				return new Color(KnownColor.Thistle);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFF6347.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Tomato
-		{
-			get
-			{
-				return new Color(KnownColor.Tomato);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF40E0D0.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Turquoise
-		{
-			get
-			{
-				return new Color(KnownColor.Turquoise);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFEE82EE.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Violet
-		{
-			get
-			{
-				return new Color(KnownColor.Violet);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFF5DEB3.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Wheat
-		{
-			get
-			{
-				return new Color(KnownColor.Wheat);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFFFFF.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color White
-		{
-			get
-			{
-				return new Color(KnownColor.White);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFF5F5F5.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color WhiteSmoke
-		{
-			get
-			{
-				return new Color(KnownColor.WhiteSmoke);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FFFFFF00.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color Yellow
-		{
-			get
-			{
-				return new Color(KnownColor.Yellow);
-			}
-		}
-
-		/// <summary>Gets a system-defined color that has an ARGB value of #FF9ACD32.</summary>
-		/// <returns>A <see cref="T:System.Drawing.Color" /> representing a system-defined color.</returns>
-		public static Color YellowGreen
-		{
-			get
-			{
-				return new Color(KnownColor.YellowGreen);
-			}
-		}
-
-		internal Color(KnownColor knownColor)
-		{
-			this.value = 0L;
-			this.state = Color.StateKnownColorValid;
-			this.name = null;
-			this.knownColor = (short)knownColor;
-		}
-
-		private Color(long value, short state, string? name, KnownColor knownColor)
-		{
-			this.value = value;
-			this.state = state;
-			this.name = name;
-			this.knownColor = (short)knownColor;
-		}
-
-		/// <summary>Gets the red component value of this <see cref="T:System.Drawing.Color" /> structure.</summary>
-		/// <returns>The red component value of this <see cref="T:System.Drawing.Color" />.</returns>
-		public byte R
-		{
-			get
-			{
-				return (byte)(this.Value >> 16 & 255L);
-			}
-		}
-
-		/// <summary>Gets the green component value of this <see cref="T:System.Drawing.Color" /> structure.</summary>
-		/// <returns>The green component value of this <see cref="T:System.Drawing.Color" />.</returns>
-		public byte G
-		{
-			get
-			{
-				return (byte)(this.Value >> 8 & 255L);
-			}
-		}
-
-		/// <summary>Gets the blue component value of this <see cref="T:System.Drawing.Color" /> structure.</summary>
-		/// <returns>The blue component value of this <see cref="T:System.Drawing.Color" />.</returns>
-		public byte B
-		{
-			get
-			{
-				return (byte)(this.Value & 255L);
-			}
-		}
-
-		/// <summary>Gets the alpha component value of this <see cref="T:System.Drawing.Color" /> structure.</summary>
-		/// <returns>The alpha component value of this <see cref="T:System.Drawing.Color" />.</returns>
-		public byte A
-		{
-			get
-			{
-				return (byte)(this.Value >> 24 & 255L);
-			}
-		}
-
-		/// <summary>Gets a value indicating whether this <see cref="T:System.Drawing.Color" /> structure is a predefined color. Predefined colors are represented by the elements of the <see cref="T:System.Drawing.KnownColor" /> enumeration.</summary>
-		/// <returns>
-		///     <see langword="true" /> if this <see cref="T:System.Drawing.Color" /> was created from a predefined color by using either the <see cref="M:System.Drawing.Color.FromName(System.String)" /> method or the <see cref="M:System.Drawing.Color.FromKnownColor(System.Drawing.KnownColor)" /> method; otherwise, <see langword="false" />.</returns>
-		public bool IsKnownColor
-		{
-			get
-			{
-				return (this.state & Color.StateKnownColorValid) != 0;
-			}
-		}
-
-		/// <summary>Specifies whether this <see cref="T:System.Drawing.Color" /> structure is uninitialized.</summary>
-		/// <returns>This property returns <see langword="true" /> if this color is uninitialized; otherwise, <see langword="false" />.</returns>
-		public bool IsEmpty
-		{
-			get
-			{
-				return this.state == 0;
-			}
-		}
-
-		/// <summary>Gets a value indicating whether this <see cref="T:System.Drawing.Color" /> structure is a named color or a member of the <see cref="T:System.Drawing.KnownColor" /> enumeration.</summary>
-		/// <returns>
-		///     <see langword="true" /> if this <see cref="T:System.Drawing.Color" /> was created by using either the <see cref="M:System.Drawing.Color.FromName(System.String)" /> method or the <see cref="M:System.Drawing.Color.FromKnownColor(System.Drawing.KnownColor)" /> method; otherwise, <see langword="false" />.</returns>
-		public bool IsNamedColor
-		{
-			get
-			{
-				return (this.state & Color.StateNameValid) != 0 || this.IsKnownColor;
-			}
-		}
-
-		/// <summary>Gets a value indicating whether this <see cref="T:System.Drawing.Color" /> structure is a system color. A system color is a color that is used in a Windows display element. System colors are represented by elements of the <see cref="T:System.Drawing.KnownColor" /> enumeration.</summary>
-		/// <returns>
-		///     <see langword="true" /> if this <see cref="T:System.Drawing.Color" /> was created from a system color by using either the <see cref="M:System.Drawing.Color.FromName(System.String)" /> method or the <see cref="M:System.Drawing.Color.FromKnownColor(System.Drawing.KnownColor)" /> method; otherwise, <see langword="false" />.</returns>
-		public bool IsSystemColor
-		{
-			get
-			{
-				return this.IsKnownColor && (this.knownColor <= 26 || this.knownColor > 167);
-			}
-		}
-
-		private string NameAndARGBValue
-		{
-			get
-			{
-				return string.Format(CultureInfo.CurrentCulture, "{{Name={0}, ARGB=({1}, {2}, {3}, {4})}}", new object[]
-				{
-					this.Name,
-					this.A,
-					this.R,
-					this.G,
-					this.B
-				});
-			}
-		}
-
-		/// <summary>Gets the name of this <see cref="T:System.Drawing.Color" />.</summary>
-		/// <returns>The name of this <see cref="T:System.Drawing.Color" />.</returns>
-		public string Name
-		{
-			get
-			{
-				if ((this.state & Color.StateNameValid) != 0)
-				{
-					return this.name ?? throw new InvalidOperationException();
-				}
-				if (!this.IsKnownColor)
-				{
-					return Convert.ToString(this.value, 16);
-				}
-				string text = KnownColorTable.KnownColorToName((KnownColor)this.knownColor) ?? throw new InvalidOperationException();
-				if (text != null)
-				{
-					return text;
-				}
-				return ((KnownColor)this.knownColor).ToString();
-			}
-		}
-
-		private long Value
-		{
-			get
-			{
-				if ((this.state & Color.StateValueMask) != 0)
-				{
-					return this.value;
-				}
-				if (this.IsKnownColor)
-				{
-					return (long)KnownColorTable.KnownColorToArgb((KnownColor)this.knownColor);
-				}
-				return Color.NotDefinedValue;
-			}
-		}
-
-		private static void CheckByte(int value, string name)
-		{
-			if (value < 0 || value > 255)
-			{
-				throw new ArgumentException(string.Format("Variable {0} has invalid value {1}. Minimum allowed value is {2}, maximum is {3}.", new object[]
-				{
-					name,
-					value,
-					0,
-					255
-				}));
-			}
-		}
-
-		private static long MakeArgb(byte alpha, byte red, byte green, byte blue)
-		{
-			return (long)((ulong)((int)red << 16 | (int)green << 8 | (int)blue | (int)alpha << 24) & unchecked((ulong)-1));
-		}
-
-		/// <summary>Creates a <see cref="T:System.Drawing.Color" /> structure from a 32-bit ARGB value.</summary>
-		/// <param name="argb">A value specifying the 32-bit ARGB value. </param>
-		/// <returns>The <see cref="T:System.Drawing.Color" /> structure that this method creates.</returns>
-		public static Color FromArgb(int argb)
-		{
-			return new Color((long)argb & unchecked((long)((ulong)-1)), Color.StateARGBValueValid, null, (KnownColor)0);
-		}
-
-		/// <summary>Creates a <see cref="T:System.Drawing.Color" /> structure from the four ARGB component (alpha, red, green, and blue) values. Although this method allows a 32-bit value to be passed for each component, the value of each component is limited to 8 bits.</summary>
-		/// <param name="alpha">The alpha component. Valid values are 0 through 255. </param>
-		/// <param name="red">The red component. Valid values are 0 through 255. </param>
-		/// <param name="green">The green component. Valid values are 0 through 255. </param>
-		/// <param name="blue">The blue component. Valid values are 0 through 255. </param>
-		/// <returns>The <see cref="T:System.Drawing.Color" /> that this method creates.</returns>
-		/// <exception cref="T:System.ArgumentException">
-		///         <paramref name="alpha" />, <paramref name="red" />, <paramref name="green" />, or <paramref name="blue" /> is less than 0 or greater than 255.</exception>
-		public static Color FromArgb(int alpha, int red, int green, int blue)
-		{
-			Color.CheckByte(alpha, "alpha");
-			Color.CheckByte(red, "red");
-			Color.CheckByte(green, "green");
-			Color.CheckByte(blue, "blue");
-			return new Color(Color.MakeArgb((byte)alpha, (byte)red, (byte)green, (byte)blue), Color.StateARGBValueValid, null, (KnownColor)0);
-		}
-
-		/// <summary>Creates a <see cref="T:System.Drawing.Color" /> structure from the specified <see cref="T:System.Drawing.Color" /> structure, but with the new specified alpha value. Although this method allows a 32-bit value to be passed for the alpha value, the value is limited to 8 bits.</summary>
-		/// <param name="alpha">The alpha value for the new <see cref="T:System.Drawing.Color" />. Valid values are 0 through 255. </param>
-		/// <param name="baseColor">The <see cref="T:System.Drawing.Color" /> from which to create the new <see cref="T:System.Drawing.Color" />. </param>
-		/// <returns>The <see cref="T:System.Drawing.Color" /> that this method creates.</returns>
-		/// <exception cref="T:System.ArgumentException">
-		///         <paramref name="alpha" /> is less than 0 or greater than 255.</exception>
-		public static Color FromArgb(int alpha, Color baseColor)
-		{
-			Color.CheckByte(alpha, "alpha");
-			return new Color(Color.MakeArgb((byte)alpha, baseColor.R, baseColor.G, baseColor.B), Color.StateARGBValueValid, null, (KnownColor)0);
-		}
-
-		/// <summary>Creates a <see cref="T:System.Drawing.Color" /> structure from the specified 8-bit color values (red, green, and blue). The alpha value is implicitly 255 (fully opaque). Although this method allows a 32-bit value to be passed for each color component, the value of each component is limited to 8 bits.</summary>
-		/// <param name="red">The red component value for the new <see cref="T:System.Drawing.Color" />. Valid values are 0 through 255. </param>
-		/// <param name="green">The green component value for the new <see cref="T:System.Drawing.Color" />. Valid values are 0 through 255. </param>
-		/// <param name="blue">The blue component value for the new <see cref="T:System.Drawing.Color" />. Valid values are 0 through 255. </param>
-		/// <returns>The <see cref="T:System.Drawing.Color" /> that this method creates.</returns>
-		/// <exception cref="T:System.ArgumentException">
-		///         <paramref name="red" />, <paramref name="green" />, or <paramref name="blue" /> is less than 0 or greater than 255.</exception>
-		public static Color FromArgb(int red, int green, int blue)
-		{
-			return Color.FromArgb(255, red, green, blue);
-		}
-
-		static bool IsEnumValid(Enum enumValue, int value, int minValue, int maxValue)
-		{
-			return value >= minValue && value <= maxValue;
-		}
-
-		/// <summary>Creates a <see cref="T:System.Drawing.Color" /> structure from the specified predefined color.</summary>
-		/// <param name="color">An element of the <see cref="T:System.Drawing.KnownColor" /> enumeration. </param>
-		/// <returns>The <see cref="T:System.Drawing.Color" /> that this method creates.</returns>
-		public static Color FromKnownColor(KnownColor color)
-		{
-			if (!IsEnumValid(color, (int)color, 1, 174))
-			{
-				return Color.FromName(color.ToString());
-			}
-			return new Color(color);
-		}
-
-		/// <summary>Creates a <see cref="T:System.Drawing.Color" /> structure from the specified name of a predefined color.</summary>
-		/// <param name="name">A string that is the name of a predefined color. Valid names are the same as the names of the elements of the <see cref="T:System.Drawing.KnownColor" /> enumeration. </param>
-		/// <returns>The <see cref="T:System.Drawing.Color" /> that this method creates.</returns>
-		public static Color FromName(string name)
-		{
-			object? namedColor = ColorConverter.GetNamedColor(name);
-			if (namedColor != null)
-			{
-				return (Color)namedColor;
-			}
-			return new Color(Color.NotDefinedValue, Color.StateNameValid, name, (KnownColor)0);
-		}
-
-		/// <summary>Gets the hue-saturation-brightness (HSB) brightness value for this <see cref="T:System.Drawing.Color" /> structure.</summary>
-		/// <returns>The brightness of this <see cref="T:System.Drawing.Color" />. The brightness ranges from 0.0 through 1.0, where 0.0 represents black and 1.0 represents white.</returns>
-		public float GetBrightness()
-		{
-			float num = (float)this.R / 255f;
-			float num2 = (float)this.G / 255f;
-			float num3 = (float)this.B / 255f;
-			float num4 = num;
-			float num5 = num;
-			if (num2 > num4)
-			{
-				num4 = num2;
-			}
-			if (num3 > num4)
-			{
-				num4 = num3;
-			}
-			if (num2 < num5)
-			{
-				num5 = num2;
-			}
-			if (num3 < num5)
-			{
-				num5 = num3;
-			}
-			return (num4 + num5) / 2f;
-		}
-
-		/// <summary>Gets the hue-saturation-brightness (HSB) hue value, in degrees, for this <see cref="T:System.Drawing.Color" /> structure.</summary>
-		/// <returns>The hue, in degrees, of this <see cref="T:System.Drawing.Color" />. The hue is measured in degrees, ranging from 0.0 through 360.0, in HSB color space.</returns>
-		public float GetHue()
-		{
-			if (this.R == this.G && this.G == this.B)
-			{
-				return 0f;
-			}
-			float num = (float)this.R / 255f;
-			float num2 = (float)this.G / 255f;
-			float num3 = (float)this.B / 255f;
-			float num4 = 0f;
-			float num5 = num;
-			float num6 = num;
-			if (num2 > num5)
-			{
-				num5 = num2;
-			}
-			if (num3 > num5)
-			{
-				num5 = num3;
-			}
-			if (num2 < num6)
-			{
-				num6 = num2;
-			}
-			if (num3 < num6)
-			{
-				num6 = num3;
-			}
-			float num7 = num5 - num6;
-			if (num == num5)
-			{
-				num4 = (num2 - num3) / num7;
-			}
-			else if (num2 == num5)
-			{
-				num4 = 2f + (num3 - num) / num7;
-			}
-			else if (num3 == num5)
-			{
-				num4 = 4f + (num - num2) / num7;
-			}
-			num4 *= 60f;
-			if (num4 < 0f)
-			{
-				num4 += 360f;
-			}
-			return num4;
-		}
-
-		/// <summary>Gets the hue-saturation-brightness (HSB) saturation value for this <see cref="T:System.Drawing.Color" /> structure.</summary>
-		/// <returns>The saturation of this <see cref="T:System.Drawing.Color" />. The saturation ranges from 0.0 through 1.0, where 0.0 is grayscale and 1.0 is the most saturated.</returns>
-		public float GetSaturation()
-		{
-			float num = (float)this.R / 255f;
-			float num2 = (float)this.G / 255f;
-			float num3 = (float)this.B / 255f;
-			float result = 0f;
-			float num4 = num;
-			float num5 = num;
-			if (num2 > num4)
-			{
-				num4 = num2;
-			}
-			if (num3 > num4)
-			{
-				num4 = num3;
-			}
-			if (num2 < num5)
-			{
-				num5 = num2;
-			}
-			if (num3 < num5)
-			{
-				num5 = num3;
-			}
-			if (num4 != num5)
-			{
-				float num6 = (num4 + num5) / 2f;
-				if ((double)num6 <= 0.5)
-				{
-					result = (num4 - num5) / (num4 + num5);
-				}
-				else
-				{
-					result = (num4 - num5) / (2f - num4 - num5);
-				}
-			}
-			return result;
-		}
-
-		/// <summary>Gets the 32-bit ARGB value of this <see cref="T:System.Drawing.Color" /> structure.</summary>
-		/// <returns>The 32-bit ARGB value of this <see cref="T:System.Drawing.Color" />.</returns>
-		public int ToArgb()
-		{
-			return (int)this.Value;
-		}
-
-		/// <summary>Gets the <see cref="T:System.Drawing.KnownColor" /> value of this <see cref="T:System.Drawing.Color" /> structure.</summary>
-		/// <returns>An element of the <see cref="T:System.Drawing.KnownColor" /> enumeration, if the <see cref="T:System.Drawing.Color" /> is created from a predefined color by using either the <see cref="M:System.Drawing.Color.FromName(System.String)" /> method or the <see cref="M:System.Drawing.Color.FromKnownColor(System.Drawing.KnownColor)" /> method; otherwise, 0.</returns>
-		public KnownColor ToKnownColor()
-		{
-			return (KnownColor)this.knownColor;
-		}
-
-		/// <summary>Converts this <see cref="T:System.Drawing.Color" /> structure to a human-readable string.</summary>
-		/// <returns>A string that is the name of this <see cref="T:System.Drawing.Color" />, if the <see cref="T:System.Drawing.Color" /> is created from a predefined color by using either the <see cref="M:System.Drawing.Color.FromName(System.String)" /> method or the <see cref="M:System.Drawing.Color.FromKnownColor(System.Drawing.KnownColor)" /> method; otherwise, a string that consists of the ARGB component names and their values.</returns>
-		public override string ToString()
-		{
-			StringBuilder stringBuilder = new StringBuilder(32);
-			stringBuilder.Append(base.GetType().Name);
-			stringBuilder.Append(" [");
-			if ((this.state & Color.StateNameValid) != 0)
-			{
-				stringBuilder.Append(this.Name);
-			}
-			else if ((this.state & Color.StateKnownColorValid) != 0)
-			{
-				stringBuilder.Append(this.Name);
-			}
-			else if ((this.state & Color.StateValueMask) != 0)
-			{
-				stringBuilder.Append("A=");
-				stringBuilder.Append(this.A);
-				stringBuilder.Append(", R=");
-				stringBuilder.Append(this.R);
-				stringBuilder.Append(", G=");
-				stringBuilder.Append(this.G);
-				stringBuilder.Append(", B=");
-				stringBuilder.Append(this.B);
-			}
-			else
-			{
-				stringBuilder.Append("Empty");
-			}
-			stringBuilder.Append("]");
-			return stringBuilder.ToString();
-		}
-
-		/// <summary>Tests whether two specified <see cref="T:System.Drawing.Color" /> structures are equivalent.</summary>
-		/// <param name="left">The <see cref="T:System.Drawing.Color" /> that is to the left of the equality operator. </param>
-		/// <param name="right">The <see cref="T:System.Drawing.Color" /> that is to the right of the equality operator. </param>
-		/// <returns>
-		///     <see langword="true" /> if the two <see cref="T:System.Drawing.Color" /> structures are equal; otherwise, <see langword="false" />.</returns>
-		public static bool operator ==(Color left, Color right)
-		{
-			return left.value == right.value && left.state == right.state && left.knownColor == right.knownColor && (left.name == right.name || (left.name != null && right.name != null && left.name.Equals(right.name)));
-		}
-
-		/// <summary>Tests whether two specified <see cref="T:System.Drawing.Color" /> structures are different.</summary>
-		/// <param name="left">The <see cref="T:System.Drawing.Color" /> that is to the left of the inequality operator. </param>
-		/// <param name="right">The <see cref="T:System.Drawing.Color" /> that is to the right of the inequality operator. </param>
-		/// <returns>
-		///     <see langword="true" /> if the two <see cref="T:System.Drawing.Color" /> structures are different; otherwise, <see langword="false" />.</returns>
-		public static bool operator !=(Color left, Color right)
-		{
-			return !(left == right);
-		}
-
-		/// <summary>Tests whether the specified object is a <see cref="T:System.Drawing.Color" /> structure and is equivalent to this <see cref="T:System.Drawing.Color" /> structure.</summary>
-		/// <param name="obj">The object to test. </param>
-		/// <returns>
-		///     <see langword="true" /> if <paramref name="obj" /> is a <see cref="T:System.Drawing.Color" /> structure equivalent to this <see cref="T:System.Drawing.Color" /> structure; otherwise, <see langword="false" />.</returns>
-		public override bool Equals(object? obj)
-		{
-			if (obj is Color)
-			{
-				Color color = (Color)obj;
-				if (this.value == color.value && this.state == color.state && this.knownColor == color.knownColor)
-				{
-					return this.name == color.name || (this.name != null && color.name != null && this.name.Equals(this.name));
-				}
-			}
-			return false;
-		}
-
-		/// <summary>Returns a hash code for this <see cref="T:System.Drawing.Color" /> structure.</summary>
-		/// <returns>An integer value that specifies the hash code for this <see cref="T:System.Drawing.Color" />.</returns>
-		public override int GetHashCode()
-		{
-			return this.value.GetHashCode() ^ this.state.GetHashCode() ^ this.knownColor.GetHashCode();
-		}
-
-		/// <summary>Represents a color that is <see langword="null" />.</summary>
-		public static readonly Color Empty = default(Color);
-
-		private static short StateKnownColorValid = 1;
-
-		private static short StateARGBValueValid = 2;
-
-		private static short StateValueMask = Color.StateARGBValueValid;
-
-		private static short StateNameValid = 8;
-
-		private static long NotDefinedValue = 0L;
-
-		private const int ARGBAlphaShift = 24;
-
-		private const int ARGBRedShift = 16;
-
-		private const int ARGBGreenShift = 8;
-
-		private const int ARGBBlueShift = 0;
-
-		private readonly string? name;
-
-		private readonly long value;
-
-		private readonly short knownColor;
-
-		private readonly short state;
-	}
+    /// <summary>
+    /// Represents an ARGB (alpha, red, green, blue) color.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Named colors are represented by using the properties of the <see cref="Color"/> structure.
+    /// </para>
+    /// <para>
+    /// The color of each pixel is represented as a 32-bit number: 8 bits each for alpha, red, green, and blue (ARGB).
+    /// Each of the four components is a number from 0 through 255, with 0 representing no intensity and 255 representing full intensity.
+    /// The alpha component specifies the transparency of the color: 0 is fully transparent, and 255 is fully opaque.
+    /// To determine the alpha, red, green, or blue component of a color, use the <see cref="A"/>, <see cref="R"/>, <see cref="G"/>, or <see cref="B"/> property,
+    /// respectively. You can create a custom color by using one of the <see cref="FromArgb(int)"/> method.
+    /// </para>
+    /// </remarks>
+    [DebuggerDisplay("{NameAndARGBValue}")]
+    //[Editor("System.Drawing.Design.ColorEditor, System.Drawing.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a",
+    //        "System.Drawing.Design.UITypeEditor, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [Serializable]
+    [TypeConverter(typeof(ColorConverter))]
+    public readonly struct Color : IEquatable<Color>
+    {
+        public static readonly Color Empty;
+
+        // -------------------------------------------------------------------
+        //  static list of "web" colors...
+        //
+        public static Color Transparent => new Color(KnownColor.Transparent);
+
+        public static Color AliceBlue => new Color(KnownColor.AliceBlue);
+
+        public static Color AntiqueWhite => new Color(KnownColor.AntiqueWhite);
+
+        public static Color Aqua => new Color(KnownColor.Aqua);
+
+        public static Color Aquamarine => new Color(KnownColor.Aquamarine);
+
+        public static Color Azure => new Color(KnownColor.Azure);
+
+        public static Color Beige => new Color(KnownColor.Beige);
+
+        public static Color Bisque => new Color(KnownColor.Bisque);
+
+        public static Color Black => new Color(KnownColor.Black);
+
+        public static Color BlanchedAlmond => new Color(KnownColor.BlanchedAlmond);
+
+        public static Color Blue => new Color(KnownColor.Blue);
+
+        public static Color BlueViolet => new Color(KnownColor.BlueViolet);
+
+        public static Color Brown => new Color(KnownColor.Brown);
+
+        public static Color BurlyWood => new Color(KnownColor.BurlyWood);
+
+        public static Color CadetBlue => new Color(KnownColor.CadetBlue);
+
+        public static Color Chartreuse => new Color(KnownColor.Chartreuse);
+
+        public static Color Chocolate => new Color(KnownColor.Chocolate);
+
+        public static Color Coral => new Color(KnownColor.Coral);
+
+        public static Color CornflowerBlue => new Color(KnownColor.CornflowerBlue);
+
+        public static Color Cornsilk => new Color(KnownColor.Cornsilk);
+
+        public static Color Crimson => new Color(KnownColor.Crimson);
+
+        public static Color Cyan => new Color(KnownColor.Cyan);
+
+        public static Color DarkBlue => new Color(KnownColor.DarkBlue);
+
+        public static Color DarkCyan => new Color(KnownColor.DarkCyan);
+
+        public static Color DarkGoldenrod => new Color(KnownColor.DarkGoldenrod);
+
+        public static Color DarkGray => new Color(KnownColor.DarkGray);
+
+        public static Color DarkGreen => new Color(KnownColor.DarkGreen);
+
+        public static Color DarkKhaki => new Color(KnownColor.DarkKhaki);
+
+        public static Color DarkMagenta => new Color(KnownColor.DarkMagenta);
+
+        public static Color DarkOliveGreen => new Color(KnownColor.DarkOliveGreen);
+
+        public static Color DarkOrange => new Color(KnownColor.DarkOrange);
+
+        public static Color DarkOrchid => new Color(KnownColor.DarkOrchid);
+
+        public static Color DarkRed => new Color(KnownColor.DarkRed);
+
+        public static Color DarkSalmon => new Color(KnownColor.DarkSalmon);
+
+        public static Color DarkSeaGreen => new Color(KnownColor.DarkSeaGreen);
+
+        public static Color DarkSlateBlue => new Color(KnownColor.DarkSlateBlue);
+
+        public static Color DarkSlateGray => new Color(KnownColor.DarkSlateGray);
+
+        public static Color DarkTurquoise => new Color(KnownColor.DarkTurquoise);
+
+        public static Color DarkViolet => new Color(KnownColor.DarkViolet);
+
+        public static Color DeepPink => new Color(KnownColor.DeepPink);
+
+        public static Color DeepSkyBlue => new Color(KnownColor.DeepSkyBlue);
+
+        public static Color DimGray => new Color(KnownColor.DimGray);
+
+        public static Color DodgerBlue => new Color(KnownColor.DodgerBlue);
+
+        public static Color Firebrick => new Color(KnownColor.Firebrick);
+
+        public static Color FloralWhite => new Color(KnownColor.FloralWhite);
+
+        public static Color ForestGreen => new Color(KnownColor.ForestGreen);
+
+        public static Color Fuchsia => new Color(KnownColor.Fuchsia);
+
+        public static Color Gainsboro => new Color(KnownColor.Gainsboro);
+
+        public static Color GhostWhite => new Color(KnownColor.GhostWhite);
+
+        public static Color Gold => new Color(KnownColor.Gold);
+
+        public static Color Goldenrod => new Color(KnownColor.Goldenrod);
+
+        public static Color Gray => new Color(KnownColor.Gray);
+
+        public static Color Green => new Color(KnownColor.Green);
+
+        public static Color GreenYellow => new Color(KnownColor.GreenYellow);
+
+        public static Color Honeydew => new Color(KnownColor.Honeydew);
+
+        public static Color HotPink => new Color(KnownColor.HotPink);
+
+        public static Color IndianRed => new Color(KnownColor.IndianRed);
+
+        public static Color Indigo => new Color(KnownColor.Indigo);
+
+        public static Color Ivory => new Color(KnownColor.Ivory);
+
+        public static Color Khaki => new Color(KnownColor.Khaki);
+
+        public static Color Lavender => new Color(KnownColor.Lavender);
+
+        public static Color LavenderBlush => new Color(KnownColor.LavenderBlush);
+
+        public static Color LawnGreen => new Color(KnownColor.LawnGreen);
+
+        public static Color LemonChiffon => new Color(KnownColor.LemonChiffon);
+
+        public static Color LightBlue => new Color(KnownColor.LightBlue);
+
+        public static Color LightCoral => new Color(KnownColor.LightCoral);
+
+        public static Color LightCyan => new Color(KnownColor.LightCyan);
+
+        public static Color LightGoldenrodYellow => new Color(KnownColor.LightGoldenrodYellow);
+
+        public static Color LightGreen => new Color(KnownColor.LightGreen);
+
+        public static Color LightGray => new Color(KnownColor.LightGray);
+
+        public static Color LightPink => new Color(KnownColor.LightPink);
+
+        public static Color LightSalmon => new Color(KnownColor.LightSalmon);
+
+        public static Color LightSeaGreen => new Color(KnownColor.LightSeaGreen);
+
+        public static Color LightSkyBlue => new Color(KnownColor.LightSkyBlue);
+
+        public static Color LightSlateGray => new Color(KnownColor.LightSlateGray);
+
+        public static Color LightSteelBlue => new Color(KnownColor.LightSteelBlue);
+
+        public static Color LightYellow => new Color(KnownColor.LightYellow);
+
+        public static Color Lime => new Color(KnownColor.Lime);
+
+        public static Color LimeGreen => new Color(KnownColor.LimeGreen);
+
+        public static Color Linen => new Color(KnownColor.Linen);
+
+        public static Color Magenta => new Color(KnownColor.Magenta);
+
+        public static Color Maroon => new Color(KnownColor.Maroon);
+
+        public static Color MediumAquamarine => new Color(KnownColor.MediumAquamarine);
+
+        public static Color MediumBlue => new Color(KnownColor.MediumBlue);
+
+        public static Color MediumOrchid => new Color(KnownColor.MediumOrchid);
+
+        public static Color MediumPurple => new Color(KnownColor.MediumPurple);
+
+        public static Color MediumSeaGreen => new Color(KnownColor.MediumSeaGreen);
+
+        public static Color MediumSlateBlue => new Color(KnownColor.MediumSlateBlue);
+
+        public static Color MediumSpringGreen => new Color(KnownColor.MediumSpringGreen);
+
+        public static Color MediumTurquoise => new Color(KnownColor.MediumTurquoise);
+
+        public static Color MediumVioletRed => new Color(KnownColor.MediumVioletRed);
+
+        public static Color MidnightBlue => new Color(KnownColor.MidnightBlue);
+
+        public static Color MintCream => new Color(KnownColor.MintCream);
+
+        public static Color MistyRose => new Color(KnownColor.MistyRose);
+
+        public static Color Moccasin => new Color(KnownColor.Moccasin);
+
+        public static Color NavajoWhite => new Color(KnownColor.NavajoWhite);
+
+        public static Color Navy => new Color(KnownColor.Navy);
+
+        public static Color OldLace => new Color(KnownColor.OldLace);
+
+        public static Color Olive => new Color(KnownColor.Olive);
+
+        public static Color OliveDrab => new Color(KnownColor.OliveDrab);
+
+        public static Color Orange => new Color(KnownColor.Orange);
+
+        public static Color OrangeRed => new Color(KnownColor.OrangeRed);
+
+        public static Color Orchid => new Color(KnownColor.Orchid);
+
+        public static Color PaleGoldenrod => new Color(KnownColor.PaleGoldenrod);
+
+        public static Color PaleGreen => new Color(KnownColor.PaleGreen);
+
+        public static Color PaleTurquoise => new Color(KnownColor.PaleTurquoise);
+
+        public static Color PaleVioletRed => new Color(KnownColor.PaleVioletRed);
+
+        public static Color PapayaWhip => new Color(KnownColor.PapayaWhip);
+
+        public static Color PeachPuff => new Color(KnownColor.PeachPuff);
+
+        public static Color Peru => new Color(KnownColor.Peru);
+
+        public static Color Pink => new Color(KnownColor.Pink);
+
+        public static Color Plum => new Color(KnownColor.Plum);
+
+        public static Color PowderBlue => new Color(KnownColor.PowderBlue);
+
+        public static Color Purple => new Color(KnownColor.Purple);
+
+        /// <summary>
+        /// Gets a system-defined color that has an ARGB value of <c>#663399</c>.
+        /// </summary>
+        /// <value>A system-defined color.</value>
+        public static Color RebeccaPurple => new Color(KnownColor.RebeccaPurple);
+
+        public static Color Red => new Color(KnownColor.Red);
+
+        public static Color RosyBrown => new Color(KnownColor.RosyBrown);
+
+        public static Color RoyalBlue => new Color(KnownColor.RoyalBlue);
+
+        public static Color SaddleBrown => new Color(KnownColor.SaddleBrown);
+
+        public static Color Salmon => new Color(KnownColor.Salmon);
+
+        public static Color SandyBrown => new Color(KnownColor.SandyBrown);
+
+        public static Color SeaGreen => new Color(KnownColor.SeaGreen);
+
+        public static Color SeaShell => new Color(KnownColor.SeaShell);
+
+        public static Color Sienna => new Color(KnownColor.Sienna);
+
+        public static Color Silver => new Color(KnownColor.Silver);
+
+        public static Color SkyBlue => new Color(KnownColor.SkyBlue);
+
+        public static Color SlateBlue => new Color(KnownColor.SlateBlue);
+
+        public static Color SlateGray => new Color(KnownColor.SlateGray);
+
+        public static Color Snow => new Color(KnownColor.Snow);
+
+        public static Color SpringGreen => new Color(KnownColor.SpringGreen);
+
+        public static Color SteelBlue => new Color(KnownColor.SteelBlue);
+
+        public static Color Tan => new Color(KnownColor.Tan);
+
+        public static Color Teal => new Color(KnownColor.Teal);
+
+        public static Color Thistle => new Color(KnownColor.Thistle);
+
+        public static Color Tomato => new Color(KnownColor.Tomato);
+
+        public static Color Turquoise => new Color(KnownColor.Turquoise);
+
+        public static Color Violet => new Color(KnownColor.Violet);
+
+        public static Color Wheat => new Color(KnownColor.Wheat);
+
+        public static Color White => new Color(KnownColor.White);
+
+        public static Color WhiteSmoke => new Color(KnownColor.WhiteSmoke);
+
+        public static Color Yellow => new Color(KnownColor.Yellow);
+
+        public static Color YellowGreen => new Color(KnownColor.YellowGreen);
+        //
+        //  end "web" colors
+        // -------------------------------------------------------------------
+
+        // NOTE : The "zero" pattern (all members being 0) must represent
+        //      : "not set". This allows "Color c;" to be correct.
+
+        private const short StateKnownColorValid = 0x0001;
+        private const short StateARGBValueValid = 0x0002;
+        private const short StateValueMask = StateARGBValueValid;
+        private const short StateNameValid = 0x0008;
+        private const long NotDefinedValue = 0;
+
+        // Shift counts and bit masks for A, R, G, B components in ARGB mode
+
+        internal const int ARGBAlphaShift = 24;
+        internal const int ARGBRedShift = 16;
+        internal const int ARGBGreenShift = 8;
+        internal const int ARGBBlueShift = 0;
+        internal const uint ARGBAlphaMask = 0xFFu << ARGBAlphaShift;
+        internal const uint ARGBRedMask = 0xFFu << ARGBRedShift;
+        internal const uint ARGBGreenMask = 0xFFu << ARGBGreenShift;
+        internal const uint ARGBBlueMask = 0xFFu << ARGBBlueShift;
+
+        // User supplied name of color. Will not be filled in if
+        // we map to a "knowncolor"
+        private readonly string? name; // Do not rename (binary serialization)
+
+        // Standard 32bit sRGB (ARGB)
+        private readonly long value; // Do not rename (binary serialization)
+
+        // Ignored, unless "state" says it is valid
+        private readonly short knownColor; // Do not rename (binary serialization)
+
+        // State flags.
+        private readonly short state; // Do not rename (binary serialization)
+
+        internal Color(KnownColor knownColor)
+        {
+            value = 0;
+            state = StateKnownColorValid;
+            name = null;
+            this.knownColor = unchecked((short)knownColor);
+        }
+
+        private Color(long value, short state, string? name, KnownColor knownColor)
+        {
+            this.value = value;
+            this.state = state;
+            this.name = name;
+            this.knownColor = unchecked((short)knownColor);
+        }
+
+        public byte R => unchecked((byte)(Value >> ARGBRedShift));
+
+        public byte G => unchecked((byte)(Value >> ARGBGreenShift));
+
+        public byte B => unchecked((byte)(Value >> ARGBBlueShift));
+
+        public byte A => unchecked((byte)(Value >> ARGBAlphaShift));
+
+        public bool IsKnownColor => (state & StateKnownColorValid) != 0;
+
+        public bool IsEmpty => state == 0;
+
+        public bool IsNamedColor => ((state & StateNameValid) != 0) || IsKnownColor;
+
+        public bool IsSystemColor => IsKnownColor && IsKnownColorSystem((KnownColor)knownColor);
+
+        internal static bool IsKnownColorSystem(KnownColor knownColor)
+            => KnownColorTable.ColorKindTable[(int)knownColor] == KnownColorTable.KnownColorKindSystem;
+
+        // Used for the [DebuggerDisplay]. Inlining in the attribute is possible, but
+        // against best practices as the current project language parses the string with
+        // language specific heuristics.
+
+        private string NameAndARGBValue => $"{{Name={Name}, ARGB=({A}, {R}, {G}, {B})}}";
+
+        public string Name
+        {
+            get
+            {
+                if ((state & StateNameValid) != 0)
+                {
+                    Debug.Assert(name != null);
+                    return name;
+                }
+
+                if (IsKnownColor)
+                {
+                    string tablename = KnownColorNames.KnownColorToName((KnownColor)knownColor);
+                    Debug.Assert(tablename != null, $"Could not find known color '{(KnownColor)knownColor}' in the KnownColorTable");
+
+                    return tablename;
+                }
+
+                // if we reached here, just encode the value
+                //
+                return value.ToString("x");
+            }
+        }
+
+        private long Value
+        {
+            get
+            {
+                if ((state & StateValueMask) != 0)
+                {
+                    return value;
+                }
+
+                // This is the only place we have system colors value exposed
+                if (IsKnownColor)
+                {
+                    return KnownColorTable.KnownColorToArgb((KnownColor)knownColor);
+                }
+
+                return NotDefinedValue;
+            }
+        }
+
+        private static void CheckByte(int value, string name)
+        {
+            static void ThrowOutOfByteRange(int v, string n) =>
+                throw new ArgumentException(
+                    string.Format(
+                        "Variable {0} has invalid value {1}. Minimum allowed value is {2}, maximum is {3}.",
+                        new object[] { n, v, byte.MinValue, byte.MaxValue }));
+
+            if (unchecked((uint)value) > byte.MaxValue)
+                ThrowOutOfByteRange(value, name);
+        }
+
+        private static Color FromArgb(uint argb) => new Color(argb, StateARGBValueValid, null, (KnownColor)0);
+
+        public static Color FromArgb(int argb) => FromArgb(unchecked((uint)argb));
+
+        public static Color FromArgb(int alpha, int red, int green, int blue)
+        {
+            CheckByte(alpha, nameof(alpha));
+            CheckByte(red, nameof(red));
+            CheckByte(green, nameof(green));
+            CheckByte(blue, nameof(blue));
+
+            return FromArgb(
+                (uint)alpha << ARGBAlphaShift |
+                (uint)red << ARGBRedShift |
+                (uint)green << ARGBGreenShift |
+                (uint)blue << ARGBBlueShift
+            );
+        }
+
+        public static Color FromArgb(int alpha, Color baseColor)
+        {
+            CheckByte(alpha, nameof(alpha));
+
+            return FromArgb(
+                (uint)alpha << ARGBAlphaShift |
+                (uint)baseColor.Value & ~ARGBAlphaMask
+            );
+        }
+
+        public static Color FromArgb(int red, int green, int blue) => FromArgb(byte.MaxValue, red, green, blue);
+
+        public static Color FromKnownColor(KnownColor color) =>
+            color <= 0 || color > KnownColor.RebeccaPurple ? FromName(color.ToString()) : new Color(color);
+
+        public static Color FromName(string name)
+        {
+            // try to get a known color first
+            if (ColorTable.TryGetNamedColor(name, out Color color))
+                return color;
+
+            // otherwise treat it as a named color
+            return new Color(NotDefinedValue, StateNameValid, name, (KnownColor)0);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void GetRgbValues(out int r, out int g, out int b)
+        {
+            uint value = (uint)Value;
+            r = (int)(value & ARGBRedMask) >> ARGBRedShift;
+            g = (int)(value & ARGBGreenMask) >> ARGBGreenShift;
+            b = (int)(value & ARGBBlueMask) >> ARGBBlueShift;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void MinMaxRgb(out int min, out int max, int r, int g, int b)
+        {
+            if (r > g)
+            {
+                max = r;
+                min = g;
+            }
+            else
+            {
+                max = g;
+                min = r;
+            }
+            if (b > max)
+            {
+                max = b;
+            }
+            else if (b < min)
+            {
+                min = b;
+            }
+        }
+
+        public float GetBrightness()
+        {
+            GetRgbValues(out int r, out int g, out int b);
+
+            MinMaxRgb(out int min, out int max, r, g, b);
+
+            return (max + min) / (byte.MaxValue * 2f);
+        }
+
+        public float GetHue()
+        {
+            GetRgbValues(out int r, out int g, out int b);
+
+            if (r == g && g == b)
+                return 0f;
+
+            MinMaxRgb(out int min, out int max, r, g, b);
+
+            float delta = max - min;
+            float hue;
+
+            if (r == max)
+                hue = (g - b) / delta;
+            else if (g == max)
+                hue = (b - r) / delta + 2f;
+            else
+                hue = (r - g) / delta + 4f;
+
+            hue *= 60f;
+            if (hue < 0f)
+                hue += 360f;
+
+            return hue;
+        }
+
+        public float GetSaturation()
+        {
+            GetRgbValues(out int r, out int g, out int b);
+
+            if (r == g && g == b)
+                return 0f;
+
+            MinMaxRgb(out int min, out int max, r, g, b);
+
+            int div = max + min;
+            if (div > byte.MaxValue)
+                div = byte.MaxValue * 2 - max - min;
+
+            return (max - min) / (float)div;
+        }
+
+        public int ToArgb() => unchecked((int)Value);
+
+        public KnownColor ToKnownColor() => (KnownColor)knownColor;
+
+        public override string ToString() =>
+            IsNamedColor ? $"{nameof(Color)} [{Name}]" :
+            (state & StateValueMask) != 0 ? $"{nameof(Color)} [A={A}, R={R}, G={G}, B={B}]" :
+            $"{nameof(Color)} [Empty]";
+
+        public static bool operator ==(Color left, Color right) =>
+            left.value == right.value
+                && left.state == right.state
+                && left.knownColor == right.knownColor
+                && left.name == right.name;
+
+        public static bool operator !=(Color left, Color right) => !(left == right);
+
+        public override bool Equals([NotNullWhen(true)] object? obj) => obj is Color other && Equals(other);
+
+        public bool Equals(Color other) => this == other;
+
+        public override int GetHashCode()
+        {
+            // Three cases:
+            // 1. We don't have a name. All relevant data, including this fact, is in the remaining fields.
+            // 2. We have a known name. The name will be the same instance of any other with the same
+            // knownColor value, so we can ignore it for hashing. Note this also hashes different to
+            // an unnamed color with the same ARGB value.
+            // 3. Have an unknown name. Will differ from other unknown-named colors only by name, so we
+            // can usefully use the names hash code alone.
+            if (name != null && !IsKnownColor)
+                return name.GetHashCode();
+
+            return HashCode.Combine(value.GetHashCode(), state.GetHashCode(), knownColor.GetHashCode());
+        }
+    }
 }

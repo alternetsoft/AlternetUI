@@ -1,482 +1,508 @@
-using System;
-using Microsoft.Win32;
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using System.Diagnostics;
 
 namespace Alternet.Drawing
 {
-	internal static class KnownColorTable
-	{
-		public static Color ArgbToKnownColor(int targetARGB)
-		{
-			KnownColorTable.EnsureColorTable();
-			if (KnownColorTable.colorTable == null)
-				throw new InvalidOperationException();
+    internal static class KnownColorTable
+    {
+        public const byte KnownColorKindSystem = 0;
+        public const byte KnownColorKindWeb = 1;
+        public const byte KnownColorKindUnknown = 2;
 
-			for (int i = 0; i < KnownColorTable.colorTable.Length; i++)
-			{
-				int num = KnownColorTable.colorTable[i];
-				if (num == targetARGB)
-				{
-					Color result = Color.FromKnownColor((KnownColor)i);
-					if (!result.IsSystemColor)
-					{
-						return result;
-					}
-				}
-			}
-			return Color.FromArgb(targetARGB);
-		}
+        // All known color values (in order of definition in the KnownColor enum).
+        public static readonly uint[] s_colorValueTable = new uint[]
+        {
+            // "not a known color"
+            0,
+            // "System" colors, Part 1
+#if FEATURE_WINDOWS_SYSTEM_COLORS
+            (uint)(byte)Interop.User32.Win32SystemColors.ActiveBorder,
+            (uint)(byte)Interop.User32.Win32SystemColors.ActiveCaption,
+            (uint)(byte)Interop.User32.Win32SystemColors.ActiveCaptionText,
+            (uint)(byte)Interop.User32.Win32SystemColors.AppWorkspace,
+            (uint)(byte)Interop.User32.Win32SystemColors.Control,
+            (uint)(byte)Interop.User32.Win32SystemColors.ControlDark,
+            (uint)(byte)Interop.User32.Win32SystemColors.ControlDarkDark,
+            (uint)(byte)Interop.User32.Win32SystemColors.ControlLight,
+            (uint)(byte)Interop.User32.Win32SystemColors.ControlLightLight,
+            (uint)(byte)Interop.User32.Win32SystemColors.ControlText,
+            (uint)(byte)Interop.User32.Win32SystemColors.Desktop,
+            (uint)(byte)Interop.User32.Win32SystemColors.GrayText,
+            (uint)(byte)Interop.User32.Win32SystemColors.Highlight,
+            (uint)(byte)Interop.User32.Win32SystemColors.HighlightText,
+            (uint)(byte)Interop.User32.Win32SystemColors.HotTrack,
+            (uint)(byte)Interop.User32.Win32SystemColors.InactiveBorder,
+            (uint)(byte)Interop.User32.Win32SystemColors.InactiveCaption,
+            (uint)(byte)Interop.User32.Win32SystemColors.InactiveCaptionText,
+            (uint)(byte)Interop.User32.Win32SystemColors.Info,
+            (uint)(byte)Interop.User32.Win32SystemColors.InfoText,
+            (uint)(byte)Interop.User32.Win32SystemColors.Menu,
+            (uint)(byte)Interop.User32.Win32SystemColors.MenuText,
+            (uint)(byte)Interop.User32.Win32SystemColors.ScrollBar,
+            (uint)(byte)Interop.User32.Win32SystemColors.Window,
+            (uint)(byte)Interop.User32.Win32SystemColors.WindowFrame,
+            (uint)(byte)Interop.User32.Win32SystemColors.WindowText,
+#else
+            // Hard-coded constants, based on default Windows settings.
+            0xFFD4D0C8,     // ActiveBorder
+            0xFF0054E3,     // ActiveCaption
+            0xFFFFFFFF,     // ActiveCaptionText
+            0xFF808080,     // AppWorkspace
+            0xFFECE9D8,     // Control
+            0xFFACA899,     // ControlDark
+            0xFF716F64,     // ControlDarkDark
+            0xFFF1EFE2,     // ControlLight
+            0xFFFFFFFF,     // ControlLightLight
+            0xFF000000,     // ControlText
+            0xFF004E98,     // Desktop
+            0xFFACA899,     // GrayText
+            0xFF316AC5,     // Highlight
+            0xFFFFFFFF,     // HighlightText
+            0xFF000080,     // HotTrack
+            0xFFD4D0C8,     // InactiveBorder
+            0xFF7A96DF,     // InactiveCaption
+            0xFFD8E4F8,     // InactiveCaptionText
+            0xFFFFFFE1,     // Info
+            0xFF000000,     // InfoText
+            0xFFFFFFFF,     // Menu
+            0xFF000000,     // MenuText
+            0xFFD4D0C8,     // ScrollBar
+            0xFFFFFFFF,     // Window
+            0xFF000000,     // WindowFrame
+            0xFF000000,     // WindowText
+#endif
+            // "Web" Colors, Part 1
+            0x00FFFFFF,     // Transparent
+            0xFFF0F8FF,     // AliceBlue
+            0xFFFAEBD7,     // AntiqueWhite
+            0xFF00FFFF,     // Aqua
+            0xFF7FFFD4,     // Aquamarine
+            0xFFF0FFFF,     // Azure
+            0xFFF5F5DC,     // Beige
+            0xFFFFE4C4,     // Bisque
+            0xFF000000,     // Black
+            0xFFFFEBCD,     // BlanchedAlmond
+            0xFF0000FF,     // Blue
+            0xFF8A2BE2,     // BlueViolet
+            0xFFA52A2A,     // Brown
+            0xFFDEB887,     // BurlyWood
+            0xFF5F9EA0,     // CadetBlue
+            0xFF7FFF00,     // Chartreuse
+            0xFFD2691E,     // Chocolate
+            0xFFFF7F50,     // Coral
+            0xFF6495ED,     // CornflowerBlue
+            0xFFFFF8DC,     // Cornsilk
+            0xFFDC143C,     // Crimson
+            0xFF00FFFF,     // Cyan
+            0xFF00008B,     // DarkBlue
+            0xFF008B8B,     // DarkCyan
+            0xFFB8860B,     // DarkGoldenrod
+            0xFFA9A9A9,     // DarkGray
+            0xFF006400,     // DarkGreen
+            0xFFBDB76B,     // DarkKhaki
+            0xFF8B008B,     // DarkMagenta
+            0xFF556B2F,     // DarkOliveGreen
+            0xFFFF8C00,     // DarkOrange
+            0xFF9932CC,     // DarkOrchid
+            0xFF8B0000,     // DarkRed
+            0xFFE9967A,     // DarkSalmon
+            0xFF8FBC8F,     // DarkSeaGreen
+            0xFF483D8B,     // DarkSlateBlue
+            0xFF2F4F4F,     // DarkSlateGray
+            0xFF00CED1,     // DarkTurquoise
+            0xFF9400D3,     // DarkViolet
+            0xFFFF1493,     // DeepPink
+            0xFF00BFFF,     // DeepSkyBlue
+            0xFF696969,     // DimGray
+            0xFF1E90FF,     // DodgerBlue
+            0xFFB22222,     // Firebrick
+            0xFFFFFAF0,     // FloralWhite
+            0xFF228B22,     // ForestGreen
+            0xFFFF00FF,     // Fuchsia
+            0xFFDCDCDC,     // Gainsboro
+            0xFFF8F8FF,     // GhostWhite
+            0xFFFFD700,     // Gold
+            0xFFDAA520,     // Goldenrod
+            0xFF808080,     // Gray
+            0xFF008000,     // Green
+            0xFFADFF2F,     // GreenYellow
+            0xFFF0FFF0,     // Honeydew
+            0xFFFF69B4,     // HotPink
+            0xFFCD5C5C,     // IndianRed
+            0xFF4B0082,     // Indigo
+            0xFFFFFFF0,     // Ivory
+            0xFFF0E68C,     // Khaki
+            0xFFE6E6FA,     // Lavender
+            0xFFFFF0F5,     // LavenderBlush
+            0xFF7CFC00,     // LawnGreen
+            0xFFFFFACD,     // LemonChiffon
+            0xFFADD8E6,     // LightBlue
+            0xFFF08080,     // LightCoral
+            0xFFE0FFFF,     // LightCyan
+            0xFFFAFAD2,     // LightGoldenrodYellow
+            0xFFD3D3D3,     // LightGray
+            0xFF90EE90,     // LightGreen
+            0xFFFFB6C1,     // LightPink
+            0xFFFFA07A,     // LightSalmon
+            0xFF20B2AA,     // LightSeaGreen
+            0xFF87CEFA,     // LightSkyBlue
+            0xFF778899,     // LightSlateGray
+            0xFFB0C4DE,     // LightSteelBlue
+            0xFFFFFFE0,     // LightYellow
+            0xFF00FF00,     // Lime
+            0xFF32CD32,     // LimeGreen
+            0xFFFAF0E6,     // Linen
+            0xFFFF00FF,     // Magenta
+            0xFF800000,     // Maroon
+            0xFF66CDAA,     // MediumAquamarine
+            0xFF0000CD,     // MediumBlue
+            0xFFBA55D3,     // MediumOrchid
+            0xFF9370DB,     // MediumPurple
+            0xFF3CB371,     // MediumSeaGreen
+            0xFF7B68EE,     // MediumSlateBlue
+            0xFF00FA9A,     // MediumSpringGreen
+            0xFF48D1CC,     // MediumTurquoise
+            0xFFC71585,     // MediumVioletRed
+            0xFF191970,     // MidnightBlue
+            0xFFF5FFFA,     // MintCream
+            0xFFFFE4E1,     // MistyRose
+            0xFFFFE4B5,     // Moccasin
+            0xFFFFDEAD,     // NavajoWhite
+            0xFF000080,     // Navy
+            0xFFFDF5E6,     // OldLace
+            0xFF808000,     // Olive
+            0xFF6B8E23,     // OliveDrab
+            0xFFFFA500,     // Orange
+            0xFFFF4500,     // OrangeRed
+            0xFFDA70D6,     // Orchid
+            0xFFEEE8AA,     // PaleGoldenrod
+            0xFF98FB98,     // PaleGreen
+            0xFFAFEEEE,     // PaleTurquoise
+            0xFFDB7093,     // PaleVioletRed
+            0xFFFFEFD5,     // PapayaWhip
+            0xFFFFDAB9,     // PeachPuff
+            0xFFCD853F,     // Peru
+            0xFFFFC0CB,     // Pink
+            0xFFDDA0DD,     // Plum
+            0xFFB0E0E6,     // PowderBlue
+            0xFF800080,     // Purple
+            0xFFFF0000,     // Red
+            0xFFBC8F8F,     // RosyBrown
+            0xFF4169E1,     // RoyalBlue
+            0xFF8B4513,     // SaddleBrown
+            0xFFFA8072,     // Salmon
+            0xFFF4A460,     // SandyBrown
+            0xFF2E8B57,     // SeaGreen
+            0xFFFFF5EE,     // SeaShell
+            0xFFA0522D,     // Sienna
+            0xFFC0C0C0,     // Silver
+            0xFF87CEEB,     // SkyBlue
+            0xFF6A5ACD,     // SlateBlue
+            0xFF708090,     // SlateGray
+            0xFFFFFAFA,     // Snow
+            0xFF00FF7F,     // SpringGreen
+            0xFF4682B4,     // SteelBlue
+            0xFFD2B48C,     // Tan
+            0xFF008080,     // Teal
+            0xFFD8BFD8,     // Thistle
+            0xFFFF6347,     // Tomato
+            0xFF40E0D0,     // Turquoise
+            0xFFEE82EE,     // Violet
+            0xFFF5DEB3,     // Wheat
+            0xFFFFFFFF,     // White
+            0xFFF5F5F5,     // WhiteSmoke
+            0xFFFFFF00,     // Yellow
+            0xFF9ACD32,     // YellowGreen
+#if FEATURE_WINDOWS_SYSTEM_COLORS
+            // "System" colors, Part 2
+            (uint)(byte)Interop.User32.Win32SystemColors.ButtonFace,
+            (uint)(byte)Interop.User32.Win32SystemColors.ButtonHighlight,
+            (uint)(byte)Interop.User32.Win32SystemColors.ButtonShadow,
+            (uint)(byte)Interop.User32.Win32SystemColors.GradientActiveCaption,
+            (uint)(byte)Interop.User32.Win32SystemColors.GradientInactiveCaption,
+            (uint)(byte)Interop.User32.Win32SystemColors.MenuBar,
+            (uint)(byte)Interop.User32.Win32SystemColors.MenuHighlight,
+#else
+            0xFFF0F0F0,     // ButtonFace
+            0xFFFFFFFF,     // ButtonHighlight
+            0xFFA0A0A0,     // ButtonShadow
+            0xFFB9D1EA,     // GradientActiveCaption
+            0xFFD7E4F2,     // GradientInactiveCaption
+            0xFFF0F0F0,     // MenuBar
+            0xFF3399FF,     // MenuHighlight
+#endif
+            // "Web" colors, Part 2
+            0xFF663399,     // RebeccaPurple
+        };
 
-		private static void EnsureColorTable()
-		{
-			if (KnownColorTable.colorTable == null)
-			{
-				KnownColorTable.InitColorTable();
-			}
-		}
+        // All known color kinds (in order of definition in the KnownColor enum).
+        public static byte[] ColorKindTable => new byte[]
+        {
+            // "not a known color"
+            KnownColorKindUnknown,
+            // "System" colors, Part 1
+#if FEATURE_WINDOWS_SYSTEM_COLORS
+            KnownColorKindSystem,       // ActiveBorder
+            KnownColorKindSystem,       // ActiveCaption
+            KnownColorKindSystem,       // ActiveCaptionText
+            KnownColorKindSystem,       // AppWorkspace
+            KnownColorKindSystem,       // Control
+            KnownColorKindSystem,       // ControlDark
+            KnownColorKindSystem,       // ControlDarkDark
+            KnownColorKindSystem,       // ControlLight
+            KnownColorKindSystem,       // ControlLightLight
+            KnownColorKindSystem,       // ControlText
+            KnownColorKindSystem,       // Desktop
+            KnownColorKindSystem,       // GrayText
+            KnownColorKindSystem,       // Highlight
+            KnownColorKindSystem,       // HighlightText
+            KnownColorKindSystem,       // HotTrack
+            KnownColorKindSystem,       // InactiveBorder
+            KnownColorKindSystem,       // InactiveCaption
+            KnownColorKindSystem,       // InactiveCaptionText
+            KnownColorKindSystem,       // Info
+            KnownColorKindSystem,       // InfoText
+            KnownColorKindSystem,       // Menu
+            KnownColorKindSystem,       // MenuText
+            KnownColorKindSystem,       // ScrollBar
+            KnownColorKindSystem,       // Window
+            KnownColorKindSystem,       // WindowFrame
+            KnownColorKindSystem,       // WindowText
+#else
+            // Hard-coded constants, based on default Windows settings.
+            KnownColorKindSystem,       // ActiveBorder
+            KnownColorKindSystem,       // ActiveCaption
+            KnownColorKindSystem,       // ActiveCaptionText
+            KnownColorKindSystem,       // AppWorkspace
+            KnownColorKindSystem,       // Control
+            KnownColorKindSystem,       // ControlDark
+            KnownColorKindSystem,       // ControlDarkDark
+            KnownColorKindSystem,       // ControlLight
+            KnownColorKindSystem,       // ControlLightLight
+            KnownColorKindSystem,       // ControlText
+            KnownColorKindSystem,       // Desktop
+            KnownColorKindSystem,       // GrayText
+            KnownColorKindSystem,       // Highlight
+            KnownColorKindSystem,       // HighlightText
+            KnownColorKindSystem,       // HotTrack
+            KnownColorKindSystem,       // InactiveBorder
+            KnownColorKindSystem,       // InactiveCaption
+            KnownColorKindSystem,       // InactiveCaptionText
+            KnownColorKindSystem,       // Info
+            KnownColorKindSystem,       // InfoText
+            KnownColorKindSystem,       // Menu
+            KnownColorKindSystem,       // MenuText
+            KnownColorKindSystem,       // ScrollBar
+            KnownColorKindSystem,       // Window
+            KnownColorKindSystem,       // WindowFrame
+            KnownColorKindSystem,       // WindowText
+#endif
+            // "Web" Colors, Part 1
+            KnownColorKindWeb,      // Transparent
+            KnownColorKindWeb,      // AliceBlue
+            KnownColorKindWeb,      // AntiqueWhite
+            KnownColorKindWeb,      // Aqua
+            KnownColorKindWeb,      // Aquamarine
+            KnownColorKindWeb,      // Azure
+            KnownColorKindWeb,      // Beige
+            KnownColorKindWeb,      // Bisque
+            KnownColorKindWeb,      // Black
+            KnownColorKindWeb,      // BlanchedAlmond
+            KnownColorKindWeb,      // Blue
+            KnownColorKindWeb,      // BlueViolet
+            KnownColorKindWeb,      // Brown
+            KnownColorKindWeb,      // BurlyWood
+            KnownColorKindWeb,      // CadetBlue
+            KnownColorKindWeb,      // Chartreuse
+            KnownColorKindWeb,      // Chocolate
+            KnownColorKindWeb,      // Coral
+            KnownColorKindWeb,      // CornflowerBlue
+            KnownColorKindWeb,      // Cornsilk
+            KnownColorKindWeb,      // Crimson
+            KnownColorKindWeb,      // Cyan
+            KnownColorKindWeb,      // DarkBlue
+            KnownColorKindWeb,      // DarkCyan
+            KnownColorKindWeb,      // DarkGoldenrod
+            KnownColorKindWeb,      // DarkGray
+            KnownColorKindWeb,      // DarkGreen
+            KnownColorKindWeb,      // DarkKhaki
+            KnownColorKindWeb,      // DarkMagenta
+            KnownColorKindWeb,      // DarkOliveGreen
+            KnownColorKindWeb,      // DarkOrange
+            KnownColorKindWeb,      // DarkOrchid
+            KnownColorKindWeb,      // DarkRed
+            KnownColorKindWeb,      // DarkSalmon
+            KnownColorKindWeb,      // DarkSeaGreen
+            KnownColorKindWeb,      // DarkSlateBlue
+            KnownColorKindWeb,      // DarkSlateGray
+            KnownColorKindWeb,      // DarkTurquoise
+            KnownColorKindWeb,      // DarkViolet
+            KnownColorKindWeb,      // DeepPink
+            KnownColorKindWeb,      // DeepSkyBlue
+            KnownColorKindWeb,      // DimGray
+            KnownColorKindWeb,      // DodgerBlue
+            KnownColorKindWeb,      // Firebrick
+            KnownColorKindWeb,      // FloralWhite
+            KnownColorKindWeb,      // ForestGreen
+            KnownColorKindWeb,      // Fuchsia
+            KnownColorKindWeb,      // Gainsboro
+            KnownColorKindWeb,      // GhostWhite
+            KnownColorKindWeb,      // Gold
+            KnownColorKindWeb,      // Goldenrod
+            KnownColorKindWeb,      // Gray
+            KnownColorKindWeb,      // Green
+            KnownColorKindWeb,      // GreenYellow
+            KnownColorKindWeb,      // Honeydew
+            KnownColorKindWeb,      // HotPink
+            KnownColorKindWeb,      // IndianRed
+            KnownColorKindWeb,      // Indigo
+            KnownColorKindWeb,      // Ivory
+            KnownColorKindWeb,      // Khaki
+            KnownColorKindWeb,      // Lavender
+            KnownColorKindWeb,      // LavenderBlush
+            KnownColorKindWeb,      // LawnGreen
+            KnownColorKindWeb,      // LemonChiffon
+            KnownColorKindWeb,      // LightBlue
+            KnownColorKindWeb,      // LightCoral
+            KnownColorKindWeb,      // LightCyan
+            KnownColorKindWeb,      // LightGoldenrodYellow
+            KnownColorKindWeb,      // LightGray
+            KnownColorKindWeb,      // LightGreen
+            KnownColorKindWeb,      // LightPink
+            KnownColorKindWeb,      // LightSalmon
+            KnownColorKindWeb,      // LightSeaGreen
+            KnownColorKindWeb,      // LightSkyBlue
+            KnownColorKindWeb,      // LightSlateGray
+            KnownColorKindWeb,      // LightSteelBlue
+            KnownColorKindWeb,      // LightYellow
+            KnownColorKindWeb,      // Lime
+            KnownColorKindWeb,      // LimeGreen
+            KnownColorKindWeb,      // Linen
+            KnownColorKindWeb,      // Magenta
+            KnownColorKindWeb,      // Maroon
+            KnownColorKindWeb,      // MediumAquamarine
+            KnownColorKindWeb,      // MediumBlue
+            KnownColorKindWeb,      // MediumOrchid
+            KnownColorKindWeb,      // MediumPurple
+            KnownColorKindWeb,      // MediumSeaGreen
+            KnownColorKindWeb,      // MediumSlateBlue
+            KnownColorKindWeb,      // MediumSpringGreen
+            KnownColorKindWeb,      // MediumTurquoise
+            KnownColorKindWeb,      // MediumVioletRed
+            KnownColorKindWeb,      // MidnightBlue
+            KnownColorKindWeb,      // MintCream
+            KnownColorKindWeb,      // MistyRose
+            KnownColorKindWeb,      // Moccasin
+            KnownColorKindWeb,      // NavajoWhite
+            KnownColorKindWeb,      // Navy
+            KnownColorKindWeb,      // OldLace
+            KnownColorKindWeb,      // Olive
+            KnownColorKindWeb,      // OliveDrab
+            KnownColorKindWeb,      // Orange
+            KnownColorKindWeb,      // OrangeRed
+            KnownColorKindWeb,      // Orchid
+            KnownColorKindWeb,      // PaleGoldenrod
+            KnownColorKindWeb,      // PaleGreen
+            KnownColorKindWeb,      // PaleTurquoise
+            KnownColorKindWeb,      // PaleVioletRed
+            KnownColorKindWeb,      // PapayaWhip
+            KnownColorKindWeb,      // PeachPuff
+            KnownColorKindWeb,      // Peru
+            KnownColorKindWeb,      // Pink
+            KnownColorKindWeb,      // Plum
+            KnownColorKindWeb,      // PowderBlue
+            KnownColorKindWeb,      // Purple
+            KnownColorKindWeb,      // Red
+            KnownColorKindWeb,      // RosyBrown
+            KnownColorKindWeb,      // RoyalBlue
+            KnownColorKindWeb,      // SaddleBrown
+            KnownColorKindWeb,      // Salmon
+            KnownColorKindWeb,      // SandyBrown
+            KnownColorKindWeb,      // SeaGreen
+            KnownColorKindWeb,      // SeaShell
+            KnownColorKindWeb,      // Sienna
+            KnownColorKindWeb,      // Silver
+            KnownColorKindWeb,      // SkyBlue
+            KnownColorKindWeb,      // SlateBlue
+            KnownColorKindWeb,      // SlateGray
+            KnownColorKindWeb,      // Snow
+            KnownColorKindWeb,      // SpringGreen
+            KnownColorKindWeb,      // SteelBlue
+            KnownColorKindWeb,      // Tan
+            KnownColorKindWeb,      // Teal
+            KnownColorKindWeb,      // Thistle
+            KnownColorKindWeb,      // Tomato
+            KnownColorKindWeb,      // Turquoise
+            KnownColorKindWeb,      // Violet
+            KnownColorKindWeb,      // Wheat
+            KnownColorKindWeb,      // White
+            KnownColorKindWeb,      // WhiteSmoke
+            KnownColorKindWeb,      // Yellow
+            KnownColorKindWeb,      // YellowGreen
+#if FEATURE_WINDOWS_SYSTEM_COLORS
+            // "System" colors, Part 2
+            KnownColorKindSystem,       // ButtonFace
+            KnownColorKindSystem,       // ButtonHighlight
+            KnownColorKindSystem,       // ButtonShadow
+            KnownColorKindSystem,       // GradientActiveCaption
+            KnownColorKindSystem,       // GradientInactiveCaption
+            KnownColorKindSystem,       // MenuBar
+            KnownColorKindSystem,       // MenuHighlight
+#else
+            KnownColorKindSystem,       // ButtonFace
+            KnownColorKindSystem,       // ButtonHighlight
+            KnownColorKindSystem,       // ButtonShadow
+            KnownColorKindSystem,       // GradientActiveCaption
+            KnownColorKindSystem,       // GradientInactiveCaption
+            KnownColorKindSystem,       // MenuBar
+            KnownColorKindSystem,       // MenuHighlight
+#endif
+            // "Web" colors, Part 2
+            KnownColorKindWeb,      // RebeccaPurple
+        };
 
-		private static void InitColorTable()
-		{
-			int[] array = new int[175];
-			// TODO
-			//SystemEvents.UserPreferenceChanging += KnownColorTable.OnUserPreferenceChanging;
-			KnownColorTable.UpdateSystemColors(array);
-			array[27] = 16777215;
-			array[28] = -984833;
-			array[29] = -332841;
-			array[30] = -16711681;
-			array[31] = -8388652;
-			array[32] = -983041;
-			array[33] = -657956;
-			array[34] = -6972;
-			array[35] = -16777216;
-			array[36] = -5171;
-			array[37] = -16776961;
-			array[38] = -7722014;
-			array[39] = -5952982;
-			array[40] = -2180985;
-			array[41] = -10510688;
-			array[42] = -8388864;
-			array[43] = -2987746;
-			array[44] = -32944;
-			array[45] = -10185235;
-			array[46] = -1828;
-			array[47] = -2354116;
-			array[48] = -16711681;
-			array[49] = -16777077;
-			array[50] = -16741493;
-			array[51] = -4684277;
-			array[52] = -5658199;
-			array[53] = -16751616;
-			array[54] = -4343957;
-			array[55] = -7667573;
-			array[56] = -11179217;
-			array[57] = -29696;
-			array[58] = -6737204;
-			array[59] = -7667712;
-			array[60] = -1468806;
-			array[61] = -7357301;
-			array[62] = -12042869;
-			array[63] = -13676721;
-			array[64] = -16724271;
-			array[65] = -7077677;
-			array[66] = -60269;
-			array[67] = -16728065;
-			array[68] = -9868951;
-			array[69] = -14774017;
-			array[70] = -5103070;
-			array[71] = -1296;
-			array[72] = -14513374;
-			array[73] = -65281;
-			array[74] = -2302756;
-			array[75] = -460545;
-			array[76] = -10496;
-			array[77] = -2448096;
-			array[78] = -8355712;
-			array[79] = -16744448;
-			array[80] = -5374161;
-			array[81] = -983056;
-			array[82] = -38476;
-			array[83] = -3318692;
-			array[84] = -11861886;
-			array[85] = -16;
-			array[86] = -989556;
-			array[87] = -1644806;
-			array[88] = -3851;
-			array[89] = -8586240;
-			array[90] = -1331;
-			array[91] = -5383962;
-			array[92] = -1015680;
-			array[93] = -2031617;
-			array[94] = -329006;
-			array[95] = -2894893;
-			array[96] = -7278960;
-			array[97] = -18751;
-			array[98] = -24454;
-			array[99] = -14634326;
-			array[100] = -7876870;
-			array[101] = -8943463;
-			array[102] = -5192482;
-			array[103] = -32;
-			array[104] = -16711936;
-			array[105] = -13447886;
-			array[106] = -331546;
-			array[107] = -65281;
-			array[108] = -8388608;
-			array[109] = -10039894;
-			array[110] = -16777011;
-			array[111] = -4565549;
-			array[112] = -7114533;
-			array[113] = -12799119;
-			array[114] = -8689426;
-			array[115] = -16713062;
-			array[116] = -12004916;
-			array[117] = -3730043;
-			array[118] = -15132304;
-			array[119] = -655366;
-			array[120] = -6943;
-			array[121] = -6987;
-			array[122] = -8531;
-			array[123] = -16777088;
-			array[124] = -133658;
-			array[125] = -8355840;
-			array[126] = -9728477;
-			array[127] = -23296;
-			array[128] = -47872;
-			array[129] = -2461482;
-			array[130] = -1120086;
-			array[131] = -6751336;
-			array[132] = -5247250;
-			array[133] = -2396013;
-			array[134] = -4139;
-			array[135] = -9543;
-			array[136] = -3308225;
-			array[137] = -16181;
-			array[138] = -2252579;
-			array[139] = -5185306;
-			array[140] = -8388480;
-			array[141] = -65536;
-			array[142] = -4419697;
-			array[143] = -12490271;
-			array[144] = -7650029;
-			array[145] = -360334;
-			array[146] = -744352;
-			array[147] = -13726889;
-			array[148] = -2578;
-			array[149] = -6270419;
-			array[150] = -4144960;
-			array[151] = -7876885;
-			array[152] = -9807155;
-			array[153] = -9404272;
-			array[154] = -1286;
-			array[155] = -16711809;
-			array[156] = -12156236;
-			array[157] = -2968436;
-			array[158] = -16744320;
-			array[159] = -2572328;
-			array[160] = -40121;
-			array[161] = -12525360;
-			array[162] = -1146130;
-			array[163] = -663885;
-			array[164] = -1;
-			array[165] = -657931;
-			array[166] = -256;
-			array[167] = -6632142;
-			KnownColorTable.colorTable = array;
-		}
+        internal static Color ArgbToKnownColor(uint argb)
+        {
+            Debug.Assert((argb & Color.ARGBAlphaMask) == Color.ARGBAlphaMask);
+            Debug.Assert(s_colorValueTable.Length == ColorKindTable.Length);
 
-		private static void EnsureColorNameTable()
-		{
-			if (KnownColorTable.colorNameTable == null)
-			{
-				KnownColorTable.InitColorNameTable();
-			}
-		}
+            for (int index = 1; index < s_colorValueTable.Length; ++index)
+            {
+                if (ColorKindTable[index] == KnownColorKindWeb && s_colorValueTable[index] == argb)
+                {
+                    return Color.FromKnownColor((KnownColor)index);
+                }
+            }
 
-		private static void InitColorNameTable()
-		{
-			string[] array = new string[175];
-			array[1] = "ActiveBorder";
-			array[2] = "ActiveCaption";
-			array[3] = "ActiveCaptionText";
-			array[4] = "AppWorkspace";
-			array[168] = "ButtonFace";
-			array[169] = "ButtonHighlight";
-			array[170] = "ButtonShadow";
-			array[5] = "Control";
-			array[6] = "ControlDark";
-			array[7] = "ControlDarkDark";
-			array[8] = "ControlLight";
-			array[9] = "ControlLightLight";
-			array[10] = "ControlText";
-			array[11] = "Desktop";
-			array[171] = "GradientActiveCaption";
-			array[172] = "GradientInactiveCaption";
-			array[12] = "GrayText";
-			array[13] = "Highlight";
-			array[14] = "HighlightText";
-			array[15] = "HotTrack";
-			array[16] = "InactiveBorder";
-			array[17] = "InactiveCaption";
-			array[18] = "InactiveCaptionText";
-			array[19] = "Info";
-			array[20] = "InfoText";
-			array[21] = "Menu";
-			array[173] = "MenuBar";
-			array[174] = "MenuHighlight";
-			array[22] = "MenuText";
-			array[23] = "ScrollBar";
-			array[24] = "Window";
-			array[25] = "WindowFrame";
-			array[26] = "WindowText";
-			array[27] = "Transparent";
-			array[28] = "AliceBlue";
-			array[29] = "AntiqueWhite";
-			array[30] = "Aqua";
-			array[31] = "Aquamarine";
-			array[32] = "Azure";
-			array[33] = "Beige";
-			array[34] = "Bisque";
-			array[35] = "Black";
-			array[36] = "BlanchedAlmond";
-			array[37] = "Blue";
-			array[38] = "BlueViolet";
-			array[39] = "Brown";
-			array[40] = "BurlyWood";
-			array[41] = "CadetBlue";
-			array[42] = "Chartreuse";
-			array[43] = "Chocolate";
-			array[44] = "Coral";
-			array[45] = "CornflowerBlue";
-			array[46] = "Cornsilk";
-			array[47] = "Crimson";
-			array[48] = "Cyan";
-			array[49] = "DarkBlue";
-			array[50] = "DarkCyan";
-			array[51] = "DarkGoldenrod";
-			array[52] = "DarkGray";
-			array[53] = "DarkGreen";
-			array[54] = "DarkKhaki";
-			array[55] = "DarkMagenta";
-			array[56] = "DarkOliveGreen";
-			array[57] = "DarkOrange";
-			array[58] = "DarkOrchid";
-			array[59] = "DarkRed";
-			array[60] = "DarkSalmon";
-			array[61] = "DarkSeaGreen";
-			array[62] = "DarkSlateBlue";
-			array[63] = "DarkSlateGray";
-			array[64] = "DarkTurquoise";
-			array[65] = "DarkViolet";
-			array[66] = "DeepPink";
-			array[67] = "DeepSkyBlue";
-			array[68] = "DimGray";
-			array[69] = "DodgerBlue";
-			array[70] = "Firebrick";
-			array[71] = "FloralWhite";
-			array[72] = "ForestGreen";
-			array[73] = "Fuchsia";
-			array[74] = "Gainsboro";
-			array[75] = "GhostWhite";
-			array[76] = "Gold";
-			array[77] = "Goldenrod";
-			array[78] = "Gray";
-			array[79] = "Green";
-			array[80] = "GreenYellow";
-			array[81] = "Honeydew";
-			array[82] = "HotPink";
-			array[83] = "IndianRed";
-			array[84] = "Indigo";
-			array[85] = "Ivory";
-			array[86] = "Khaki";
-			array[87] = "Lavender";
-			array[88] = "LavenderBlush";
-			array[89] = "LawnGreen";
-			array[90] = "LemonChiffon";
-			array[91] = "LightBlue";
-			array[92] = "LightCoral";
-			array[93] = "LightCyan";
-			array[94] = "LightGoldenrodYellow";
-			array[95] = "LightGray";
-			array[96] = "LightGreen";
-			array[97] = "LightPink";
-			array[98] = "LightSalmon";
-			array[99] = "LightSeaGreen";
-			array[100] = "LightSkyBlue";
-			array[101] = "LightSlateGray";
-			array[102] = "LightSteelBlue";
-			array[103] = "LightYellow";
-			array[104] = "Lime";
-			array[105] = "LimeGreen";
-			array[106] = "Linen";
-			array[107] = "Magenta";
-			array[108] = "Maroon";
-			array[109] = "MediumAquamarine";
-			array[110] = "MediumBlue";
-			array[111] = "MediumOrchid";
-			array[112] = "MediumPurple";
-			array[113] = "MediumSeaGreen";
-			array[114] = "MediumSlateBlue";
-			array[115] = "MediumSpringGreen";
-			array[116] = "MediumTurquoise";
-			array[117] = "MediumVioletRed";
-			array[118] = "MidnightBlue";
-			array[119] = "MintCream";
-			array[120] = "MistyRose";
-			array[121] = "Moccasin";
-			array[122] = "NavajoWhite";
-			array[123] = "Navy";
-			array[124] = "OldLace";
-			array[125] = "Olive";
-			array[126] = "OliveDrab";
-			array[127] = "Orange";
-			array[128] = "OrangeRed";
-			array[129] = "Orchid";
-			array[130] = "PaleGoldenrod";
-			array[131] = "PaleGreen";
-			array[132] = "PaleTurquoise";
-			array[133] = "PaleVioletRed";
-			array[134] = "PapayaWhip";
-			array[135] = "PeachPuff";
-			array[136] = "Peru";
-			array[137] = "Pink";
-			array[138] = "Plum";
-			array[139] = "PowderBlue";
-			array[140] = "Purple";
-			array[141] = "Red";
-			array[142] = "RosyBrown";
-			array[143] = "RoyalBlue";
-			array[144] = "SaddleBrown";
-			array[145] = "Salmon";
-			array[146] = "SandyBrown";
-			array[147] = "SeaGreen";
-			array[148] = "SeaShell";
-			array[149] = "Sienna";
-			array[150] = "Silver";
-			array[151] = "SkyBlue";
-			array[152] = "SlateBlue";
-			array[153] = "SlateGray";
-			array[154] = "Snow";
-			array[155] = "SpringGreen";
-			array[156] = "SteelBlue";
-			array[157] = "Tan";
-			array[158] = "Teal";
-			array[159] = "Thistle";
-			array[160] = "Tomato";
-			array[161] = "Turquoise";
-			array[162] = "Violet";
-			array[163] = "Wheat";
-			array[164] = "White";
-			array[165] = "WhiteSmoke";
-			array[166] = "Yellow";
-			array[167] = "YellowGreen";
-			KnownColorTable.colorNameTable = array;
-		}
+            // Not a known color
+            return Color.FromArgb((int)argb);
+        }
 
-		public static int KnownColorToArgb(KnownColor color)
-		{
-			KnownColorTable.EnsureColorTable();
-			if (color <= KnownColor.MenuHighlight)
-			{
-				if (KnownColorTable.colorTable == null)
-					throw new InvalidOperationException();
+        public static uint KnownColorToArgb(KnownColor color)
+        {
+            Debug.Assert(color > 0 && color <= KnownColor.RebeccaPurple);
 
-				return KnownColorTable.colorTable[(int)color];
-			}
-			return 0;
-		}
+            return ColorKindTable[(int)color] == KnownColorKindSystem
+                 ? GetSystemColorArgb(color)
+                 : s_colorValueTable[(int)color];
+        }
 
-		public static string? KnownColorToName(KnownColor color)
-		{
-			KnownColorTable.EnsureColorNameTable();
-			if (color <= KnownColor.MenuHighlight)
-			{
-				if (KnownColorTable.colorNameTable == null)
-					throw new InvalidOperationException();
+#if FEATURE_WINDOWS_SYSTEM_COLORS
+        public static uint GetSystemColorArgb(KnownColor color)
+        {
+            Debug.Assert(Color.IsKnownColorSystem(color));
 
-				return KnownColorTable.colorNameTable[(int)color];
-			}
-			return null;
-		}
+            return ColorTranslator.COLORREFToARGB(Interop.User32.GetSysColor((byte)s_colorValueTable[(int)color]));
+        }
+#else
+        public static uint GetSystemColorArgb(KnownColor color)
+        {
+            Debug.Assert(Color.IsKnownColorSystem(color));
 
-		private static int SystemColorToArgb(int index)
-		{
-			// TODO
-			//return KnownColorTable.FromWin32Value(SafeNativeMethods.GetSysColor(index));
-			return KnownColorTable.FromWin32Value(0);
-		}
-
-		private static int Encode(int alpha, int red, int green, int blue)
-		{
-			return red << 16 | green << 8 | blue | alpha << 24;
-		}
-
-		private static int FromWin32Value(int value)
-		{
-			return KnownColorTable.Encode(255, value & 255, value >> 8 & 255, value >> 16 & 255);
-		}
-
-		// TODO
-		//private static void OnUserPreferenceChanging(object sender, UserPreferenceChangingEventArgs e)
-		//{
-		//	if (e.Category == UserPreferenceCategory.Color && KnownColorTable.colorTable != null)
-		//	{
-		//		KnownColorTable.UpdateSystemColors(KnownColorTable.colorTable);
-		//	}
-		//}
-
-		private static void UpdateSystemColors(int[] colorTable)
-		{
-			colorTable[1] = KnownColorTable.SystemColorToArgb(10);
-			colorTable[2] = KnownColorTable.SystemColorToArgb(2);
-			colorTable[3] = KnownColorTable.SystemColorToArgb(9);
-			colorTable[4] = KnownColorTable.SystemColorToArgb(12);
-			colorTable[168] = KnownColorTable.SystemColorToArgb(15);
-			colorTable[169] = KnownColorTable.SystemColorToArgb(20);
-			colorTable[170] = KnownColorTable.SystemColorToArgb(16);
-			colorTable[5] = KnownColorTable.SystemColorToArgb(15);
-			colorTable[6] = KnownColorTable.SystemColorToArgb(16);
-			colorTable[7] = KnownColorTable.SystemColorToArgb(21);
-			colorTable[8] = KnownColorTable.SystemColorToArgb(22);
-			colorTable[9] = KnownColorTable.SystemColorToArgb(20);
-			colorTable[10] = KnownColorTable.SystemColorToArgb(18);
-			colorTable[11] = KnownColorTable.SystemColorToArgb(1);
-			colorTable[171] = KnownColorTable.SystemColorToArgb(27);
-			colorTable[172] = KnownColorTable.SystemColorToArgb(28);
-			colorTable[12] = KnownColorTable.SystemColorToArgb(17);
-			colorTable[13] = KnownColorTable.SystemColorToArgb(13);
-			colorTable[14] = KnownColorTable.SystemColorToArgb(14);
-			colorTable[15] = KnownColorTable.SystemColorToArgb(26);
-			colorTable[16] = KnownColorTable.SystemColorToArgb(11);
-			colorTable[17] = KnownColorTable.SystemColorToArgb(3);
-			colorTable[18] = KnownColorTable.SystemColorToArgb(19);
-			colorTable[19] = KnownColorTable.SystemColorToArgb(24);
-			colorTable[20] = KnownColorTable.SystemColorToArgb(23);
-			colorTable[21] = KnownColorTable.SystemColorToArgb(4);
-			colorTable[173] = KnownColorTable.SystemColorToArgb(30);
-			colorTable[174] = KnownColorTable.SystemColorToArgb(29);
-			colorTable[22] = KnownColorTable.SystemColorToArgb(7);
-			colorTable[23] = KnownColorTable.SystemColorToArgb(0);
-			colorTable[24] = KnownColorTable.SystemColorToArgb(5);
-			colorTable[25] = KnownColorTable.SystemColorToArgb(6);
-			colorTable[26] = KnownColorTable.SystemColorToArgb(8);
-		}
-
-		private static int[]? colorTable;
-
-		private static string[]? colorNameTable;
-
-		private const int AlphaShift = 24;
-
-		private const int RedShift = 16;
-
-		private const int GreenShift = 8;
-
-		private const int BlueShift = 0;
-
-		private const int Win32RedShift = 0;
-
-		private const int Win32GreenShift = 8;
-
-		private const int Win32BlueShift = 16;
-	}
+            return s_colorValueTable[(int)color];
+        }
+#endif
+    }
 }
