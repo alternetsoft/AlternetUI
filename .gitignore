@@ -14,5 +14,3 @@ Source/Build/Alternet.UI.Pal-old/*.nupkg
 Source/Build/Alternet.UI.Pal-old/NuGet/runtimes
 Source/Samples/HelloWorldSample/HelloWorldSample.csproj.user
 Source/**/AlternetUI.ico
-
-Documentation/Alternet.UI.Documentation/Help/
