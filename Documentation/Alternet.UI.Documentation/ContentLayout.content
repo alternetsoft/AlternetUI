@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Topics>
-  <Topic id="fed201e7-e554-4502-98ce-946f915cadf4" visible="True" isDefault="true" isSelected="true" title="Welcome to the [TODO: Add project name]">
+  <Topic id="fed201e7-e554-4502-98ce-946f915cadf4" visible="True" isDefault="true" isSelected="true" title="Welcome to AlterNET UI Framework">
     <HelpKeywords>
       <HelpKeyword index="K" term="Welcome" />
     </HelpKeywords>
