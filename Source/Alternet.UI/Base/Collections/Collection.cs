@@ -28,9 +28,7 @@ namespace Alternet.Base.Collections
         /// </summary>
         public bool ThrowOnNullItemAddition { get; set; }
 
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         protected override void InsertItem(int index, T item)
         {
             if (ThrowOnNullItemAddition && item is null)
@@ -41,9 +39,7 @@ namespace Alternet.Base.Collections
             OnItemInserted(new CollectionChangeEventArgs<T>(index, item));
         }
 
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         protected override void RemoveItem(int index)
         {
             var item = this[index];

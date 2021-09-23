@@ -51,9 +51,7 @@ namespace Alternet.Drawing
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public override int GetHashCode()
         {
             CheckDisposed();
@@ -72,18 +70,14 @@ namespace Alternet.Drawing
             return EqualsCore(other);
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public override string ToString()
         {
             CheckDisposed();
             return ToStringCore();
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public override bool Equals(object? obj)
         {
             var brush = obj as Brush;
@@ -113,8 +107,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// <inheritdoc/>
+        /// Releases the unmanaged resources used by the System.ComponentModel.Component
+        /// and optionally releases the managed resources.
         /// </summary>
+        /// <param name="disposing">
+        /// <c>true</c> to release both managed and unmanaged resources; false<c></c> to release only unmanaged resources.
+        /// </param>
         protected virtual void Dispose(bool disposing)
         {
             if (!isDisposed)

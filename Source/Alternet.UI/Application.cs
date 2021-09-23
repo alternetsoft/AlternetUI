@@ -100,9 +100,7 @@ namespace Alternet.UI
             windows.Remove(window);
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);

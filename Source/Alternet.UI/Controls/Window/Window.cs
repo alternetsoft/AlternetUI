@@ -221,9 +221,7 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="WindowClosedEventArgs"/> that contains the event data.</param>
         protected virtual void OnClosed(WindowClosedEventArgs e) => Closed?.Invoke(this, e);
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
@@ -232,9 +230,7 @@ namespace Alternet.UI
                 Application.Current.UnregisterWindow(this);
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         protected override ControlHandler CreateHandler() => new NativeWindowHandler();
     }
 }

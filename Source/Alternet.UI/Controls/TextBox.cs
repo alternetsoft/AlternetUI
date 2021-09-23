@@ -93,9 +93,7 @@ namespace Alternet.UI
         {
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         protected override ControlHandler CreateHandler()
         {
             if (EditControlOnly)

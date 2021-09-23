@@ -244,9 +244,7 @@ namespace Alternet.Drawing
             (X <= rect.X) && (rect.X + rect.Width <= X + Width) &&
             (Y <= rect.Y) && (rect.Y + rect.Height <= Y + Height);
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public override readonly int GetHashCode() => HashCode.Combine(X, Y, Width, Height);
 
         /// <summary>

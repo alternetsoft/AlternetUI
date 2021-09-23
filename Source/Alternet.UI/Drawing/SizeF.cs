@@ -174,10 +174,7 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the current object is equal to other; otherwise, <c>false</c>.</returns>
         public readonly bool Equals(SizeF other) => this == other;
 
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override readonly int GetHashCode() => HashCode.Combine(Width, Height);
 
         /// <summary>

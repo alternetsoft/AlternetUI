@@ -134,9 +134,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static PointF Subtract(PointF pt, SizeF sz) => new PointF(pt.X - sz.Width, pt.Y - sz.Height);
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is PointF && Equals((PointF)obj);
 
         /// <summary>
@@ -146,14 +144,10 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the current object is equal to other; otherwise, <c>false</c>.</returns>
         public readonly bool Equals(PointF other) => this == other;
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public override readonly int GetHashCode() => HashCode.Combine(X.GetHashCode(), Y.GetHashCode());
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public override readonly string ToString() => $"{{X={x}, Y={y}}}";
     }
 }

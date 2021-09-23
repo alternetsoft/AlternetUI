@@ -155,9 +155,7 @@ namespace Alternet.Drawing
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public override int GetHashCode()
         {
             CheckDisposed();
@@ -176,18 +174,14 @@ namespace Alternet.Drawing
             return Color == o.Color && DashStyle == o.DashStyle && Width == o.Width;
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public override string ToString()
         {
             CheckDisposed();
             return $"Pen ({Color}, {Width}, {DashStyle})";
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public override bool Equals(object? obj)
         {
             var pen = obj as Pen;
@@ -215,9 +209,7 @@ namespace Alternet.Drawing
                 throw new ObjectDisposedException(null);
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         private void Dispose(bool disposing)
         {
             if (!isDisposed)

@@ -9,7 +9,7 @@ namespace Alternet.UI
         where TControl : Control
     {
         /// <summary>
-        /// <inheritdoc />
+        /// Gets a <see cref="Control"/> this handler provides the implementation for.
         /// </summary>
         public new TControl Control => (TControl)base.Control;
     }

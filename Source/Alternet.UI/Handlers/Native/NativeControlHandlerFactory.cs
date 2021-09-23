@@ -5,9 +5,7 @@ namespace Alternet.UI
     /// </summary>
     public class NativeControlHandlerFactory : IControlHandlerFactory
     {
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
+        /// <inheritdoc/>
         public ControlHandler CreateControlHandler(Control control) => control switch
         {
             Button => new NativeButtonHandler(),

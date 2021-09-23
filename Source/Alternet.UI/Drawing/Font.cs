@@ -156,9 +156,7 @@ namespace Alternet.Drawing
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public override int GetHashCode()
         {
             CheckDisposed();
@@ -179,18 +177,14 @@ namespace Alternet.Drawing
             return NativeFont.IsEqualTo(other.NativeFont);
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public override string ToString()
         {
             CheckDisposed();
             return NativeFont.Description;
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         public override bool Equals(object? obj)
         {
             var font = obj as Font;

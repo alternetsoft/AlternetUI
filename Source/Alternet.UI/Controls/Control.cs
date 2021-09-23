@@ -405,7 +405,6 @@ namespace Alternet.UI
         /// <summary>
         /// Returns a collection of controls which can be treated as "logical children" of this control.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         protected virtual IEnumerable<Control> LogicalChildren => Children; // todo: consider changing this to Site.GetService()
 
         private IControlHandlerFactory? ControlHandlerFactory { get; set; }
@@ -693,9 +692,7 @@ namespace Alternet.UI
         /// </remarks>
         protected virtual ControlHandler CreateHandler() => GetEffectiveControlHandlerHactory().CreateControlHandler(this);
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
