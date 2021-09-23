@@ -15,7 +15,7 @@ namespace Alternet.Drawing
     public struct Size : IEquatable<Size>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref='System.Drawing.Size'/> class.
+        /// Initializes a new instance of the <see cref='Drawing.Size'/> class.
         /// </summary>
         public static readonly Size Empty;
 
@@ -23,8 +23,8 @@ namespace Alternet.Drawing
         private int height; // Do not rename (binary serialization)
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='System.Drawing.Size'/> class from the specified
-        /// <see cref='System.Drawing.Point'/>.
+        /// Initializes a new instance of the <see cref='Drawing.Size'/> class from the specified
+        /// <see cref='Drawing.Point'/>.
         /// </summary>
         public Size(Point pt)
         {
@@ -33,7 +33,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='System.Drawing.Size'/> class from the specified dimensions.
+        /// Initializes a new instance of the <see cref='Drawing.Size'/> class from the specified dimensions.
         /// </summary>
         public Size(int width, int height)
         {
@@ -42,17 +42,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts the specified <see cref='System.Drawing.Size'/> to a <see cref='System.Drawing.SizeF'/>.
+        /// Converts the specified <see cref='Drawing.Size'/> to a <see cref='Drawing.SizeF'/>.
         /// </summary>
         public static implicit operator SizeF(Size p) => new SizeF(p.Width, p.Height);
 
         /// <summary>
-        /// Performs vector addition of two <see cref='System.Drawing.Size'/> objects.
+        /// Performs vector addition of two <see cref='Drawing.Size'/> objects.
         /// </summary>
         public static Size operator +(Size sz1, Size sz2) => Add(sz1, sz2);
 
         /// <summary>
-        /// Contracts a <see cref='System.Drawing.Size'/> by another <see cref='System.Drawing.Size'/>
+        /// Contracts a <see cref='Drawing.Size'/> by another <see cref='Drawing.Size'/>
         /// </summary>
         public static Size operator -(Size sz1, Size sz2) => Subtract(sz1, sz2);
 
@@ -106,28 +106,28 @@ namespace Alternet.Drawing
             => new SizeF(left.width / right, left.height / right);
 
         /// <summary>
-        /// Tests whether two <see cref='System.Drawing.Size'/> objects are identical.
+        /// Tests whether two <see cref='Drawing.Size'/> objects are identical.
         /// </summary>
         public static bool operator ==(Size sz1, Size sz2) => sz1.Width == sz2.Width && sz1.Height == sz2.Height;
 
         /// <summary>
-        /// Tests whether two <see cref='System.Drawing.Size'/> objects are different.
+        /// Tests whether two <see cref='Drawing.Size'/> objects are different.
         /// </summary>
         public static bool operator !=(Size sz1, Size sz2) => !(sz1 == sz2);
 
         /// <summary>
-        /// Converts the specified <see cref='System.Drawing.Size'/> to a <see cref='System.Drawing.Point'/>.
+        /// Converts the specified <see cref='Drawing.Size'/> to a <see cref='Drawing.Point'/>.
         /// </summary>
         public static explicit operator Point(Size size) => new Point(size.Width, size.Height);
 
         /// <summary>
-        /// Tests whether this <see cref='System.Drawing.Size'/> has zero width and height.
+        /// Tests whether this <see cref='Drawing.Size'/> has zero width and height.
         /// </summary>
         [Browsable(false)]
         public readonly bool IsEmpty => width == 0 && height == 0;
 
         /// <summary>
-        /// Represents the horizontal component of this <see cref='System.Drawing.Size'/>.
+        /// Represents the horizontal component of this <see cref='Drawing.Size'/>.
         /// </summary>
         public int Width
         {
@@ -136,7 +136,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Represents the vertical component of this <see cref='System.Drawing.Size'/>.
+        /// Represents the vertical component of this <see cref='Drawing.Size'/>.
         /// </summary>
         public int Height
         {
@@ -145,7 +145,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Performs vector addition of two <see cref='System.Drawing.Size'/> objects.
+        /// Performs vector addition of two <see cref='Drawing.Size'/> objects.
         /// </summary>
         public static Size Add(Size sz1, Size sz2) =>
             new Size(unchecked(sz1.Width + sz2.Width), unchecked(sz1.Height + sz2.Height));
@@ -157,7 +157,7 @@ namespace Alternet.Drawing
             new Size(unchecked((int)Math.Ceiling(value.Width)), unchecked((int)Math.Ceiling(value.Height)));
 
         /// <summary>
-        /// Contracts a <see cref='System.Drawing.Size'/> by another <see cref='System.Drawing.Size'/> .
+        /// Contracts a <see cref='Drawing.Size'/> by another <see cref='Drawing.Size'/> .
         /// </summary>
         public static Size Subtract(Size sz1, Size sz2) =>
             new Size(unchecked(sz1.Width - sz2.Width), unchecked(sz1.Height - sz2.Height));
@@ -174,8 +174,8 @@ namespace Alternet.Drawing
             new Size(unchecked((int)Math.Round(value.Width)), unchecked((int)Math.Round(value.Height)));
 
         /// <summary>
-        /// Tests to see whether the specified object is a <see cref='System.Drawing.Size'/>  with the same dimensions
-        /// as this <see cref='System.Drawing.Size'/>.
+        /// Tests to see whether the specified object is a <see cref='Drawing.Size'/>  with the same dimensions
+        /// as this <see cref='Drawing.Size'/>.
         /// </summary>
         public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Size && Equals((Size)obj);
 
@@ -192,7 +192,7 @@ namespace Alternet.Drawing
         public override readonly int GetHashCode() => HashCode.Combine(Width, Height);
 
         /// <summary>
-        /// Creates a human-readable string that represents this <see cref='System.Drawing.Size'/>.
+        /// Creates a human-readable string that represents this <see cref='Drawing.Size'/>.
         /// </summary>
         public override readonly string ToString() => $"{{Width={width}, Height={height}}}";
 

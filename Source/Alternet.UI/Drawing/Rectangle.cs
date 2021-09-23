@@ -25,7 +25,7 @@ namespace Alternet.Drawing
         private int height; // Do not rename (binary serialization)
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='System.Drawing.Rectangle'/> class with the specified location
+        /// Initializes a new instance of the <see cref='Drawing.Rectangle'/> class with the specified location
         /// and size.
         /// </summary>
         public Rectangle(int x, int y, int width, int height)
@@ -48,14 +48,14 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a new <see cref='System.Drawing.Rectangle'/> with the specified location and size.
+        /// Creates a new <see cref='Drawing.Rectangle'/> with the specified location and size.
         /// </summary>
         public static Rectangle FromLTRB(int left, int top, int right, int bottom) =>
             new Rectangle(left, top, unchecked(right - left), unchecked(bottom - top));
 
         /// <summary>
         /// Gets or sets the coordinates of the upper-left corner of the rectangular region represented by this
-        /// <see cref='System.Drawing.Rectangle'/>.
+        /// <see cref='Drawing.Rectangle'/>.
         /// </summary>
         [Browsable(false)]
         public Point Location
@@ -69,7 +69,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the size of this <see cref='System.Drawing.Rectangle'/>.
+        /// Gets or sets the size of this <see cref='Drawing.Rectangle'/>.
         /// </summary>
         [Browsable(false)]
         public Size Size
@@ -84,7 +84,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets the x-coordinate of the upper-left corner of the rectangular region defined by this
-        /// <see cref='System.Drawing.Rectangle'/>.
+        /// <see cref='Drawing.Rectangle'/>.
         /// </summary>
         public int X
         {
@@ -94,7 +94,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets the y-coordinate of the upper-left corner of the rectangular region defined by this
-        /// <see cref='System.Drawing.Rectangle'/>.
+        /// <see cref='Drawing.Rectangle'/>.
         /// </summary>
         public int Y
         {
@@ -103,7 +103,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the width of the rectangular region defined by this <see cref='System.Drawing.Rectangle'/>.
+        /// Gets or sets the width of the rectangular region defined by this <see cref='Drawing.Rectangle'/>.
         /// </summary>
         public int Width
         {
@@ -112,7 +112,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the width of the rectangular region defined by this <see cref='System.Drawing.Rectangle'/>.
+        /// Gets or sets the width of the rectangular region defined by this <see cref='Drawing.Rectangle'/>.
         /// </summary>
         public int Height
         {
@@ -122,41 +122,41 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets the x-coordinate of the upper-left corner of the rectangular region defined by this
-        /// <see cref='System.Drawing.Rectangle'/> .
+        /// <see cref='Drawing.Rectangle'/> .
         /// </summary>
         [Browsable(false)]
         public readonly int Left => X;
 
         /// <summary>
         /// Gets the y-coordinate of the upper-left corner of the rectangular region defined by this
-        /// <see cref='System.Drawing.Rectangle'/>.
+        /// <see cref='Drawing.Rectangle'/>.
         /// </summary>
         [Browsable(false)]
         public readonly int Top => Y;
 
         /// <summary>
         /// Gets the x-coordinate of the lower-right corner of the rectangular region defined by this
-        /// <see cref='System.Drawing.Rectangle'/>.
+        /// <see cref='Drawing.Rectangle'/>.
         /// </summary>
         [Browsable(false)]
         public readonly int Right => unchecked(X + Width);
 
         /// <summary>
         /// Gets the y-coordinate of the lower-right corner of the rectangular region defined by this
-        /// <see cref='System.Drawing.Rectangle'/>.
+        /// <see cref='Drawing.Rectangle'/>.
         /// </summary>
         [Browsable(false)]
         public readonly int Bottom => unchecked(Y + Height);
 
         /// <summary>
-        /// Tests whether this <see cref='System.Drawing.Rectangle'/> has a <see cref='System.Drawing.Rectangle.Width'/>
-        /// or a <see cref='System.Drawing.Rectangle.Height'/> of 0.
+        /// Tests whether this <see cref='Drawing.Rectangle'/> has a <see cref='Drawing.Rectangle.Width'/>
+        /// or a <see cref='Drawing.Rectangle.Height'/> of 0.
         /// </summary>
         [Browsable(false)]
         public readonly bool IsEmpty => height == 0 && width == 0 && x == 0 && y == 0;
 
         /// <summary>
-        /// Tests whether <paramref name="obj"/> is a <see cref='System.Drawing.Rectangle'/> with the same location
+        /// Tests whether <paramref name="obj"/> is a <see cref='Drawing.Rectangle'/> with the same location
         /// and size of this Rectangle.
         /// </summary>
         public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Rectangle && Equals((Rectangle)obj);
@@ -169,13 +169,13 @@ namespace Alternet.Drawing
         public readonly bool Equals(Rectangle other) => this == other;
 
         /// <summary>
-        /// Tests whether two <see cref='System.Drawing.Rectangle'/> objects have equal location and size.
+        /// Tests whether two <see cref='Drawing.Rectangle'/> objects have equal location and size.
         /// </summary>
         public static bool operator ==(Rectangle left, Rectangle right) =>
             left.X == right.X && left.Y == right.Y && left.Width == right.Width && left.Height == right.Height;
 
         /// <summary>
-        /// Tests whether two <see cref='System.Drawing.Rectangle'/> objects differ in location or size.
+        /// Tests whether two <see cref='Drawing.Rectangle'/> objects differ in location or size.
         /// </summary>
         public static bool operator !=(Rectangle left, Rectangle right) => !(left == right);
 
@@ -226,19 +226,19 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Determines if the specified point is contained within the rectangular region defined by this
-        /// <see cref='System.Drawing.Rectangle'/> .
+        /// <see cref='Drawing.Rectangle'/> .
         /// </summary>
         public readonly bool Contains(int x, int y) => X <= x && x < X + Width && Y <= y && y < Y + Height;
 
         /// <summary>
         /// Determines if the specified point is contained within the rectangular region defined by this
-        /// <see cref='System.Drawing.Rectangle'/> .
+        /// <see cref='Drawing.Rectangle'/> .
         /// </summary>
         public readonly bool Contains(Point pt) => Contains(pt.X, pt.Y);
 
         /// <summary>
         /// Determines if the rectangular region represented by <paramref name="rect"/> is entirely contained within the
-        /// rectangular region represented by this <see cref='System.Drawing.Rectangle'/> .
+        /// rectangular region represented by this <see cref='Drawing.Rectangle'/> .
         /// </summary>
         public readonly bool Contains(Rectangle rect) =>
             (X <= rect.X) && (rect.X + rect.Width <= X + Width) &&
@@ -250,7 +250,7 @@ namespace Alternet.Drawing
         public override readonly int GetHashCode() => HashCode.Combine(X, Y, Width, Height);
 
         /// <summary>
-        /// Inflates this <see cref='System.Drawing.Rectangle'/> by the specified amount.
+        /// Inflates this <see cref='Drawing.Rectangle'/> by the specified amount.
         /// </summary>
         public void Inflate(int width, int height)
         {
@@ -265,12 +265,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Inflates this <see cref='System.Drawing.Rectangle'/> by the specified amount.
+        /// Inflates this <see cref='Drawing.Rectangle'/> by the specified amount.
         /// </summary>
         public void Inflate(Size size) => Inflate(size.Width, size.Height);
 
         /// <summary>
-        /// Creates a <see cref='System.Drawing.Rectangle'/> that is inflated by the specified amount.
+        /// Creates a <see cref='Drawing.Rectangle'/> that is inflated by the specified amount.
         /// </summary>
         public static Rectangle Inflate(Rectangle rect, int x, int y)
         {
@@ -349,7 +349,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts the attributes of this <see cref='System.Drawing.Rectangle'/> to a human readable string.
+        /// Converts the attributes of this <see cref='Drawing.Rectangle'/> to a human readable string.
         /// </summary>
         public override readonly string ToString() => $"{{X={X},Y={Y},Width={Width},Height={Height}}}";
     }

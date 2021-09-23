@@ -16,14 +16,14 @@ namespace Alternet.Drawing
     public struct PointF : IEquatable<PointF>
     {
         /// <summary>
-        /// Creates a new instance of the <see cref='System.Drawing.PointF'/> class with member data left uninitialized.
+        /// Creates a new instance of the <see cref='Drawing.PointF'/> class with member data left uninitialized.
         /// </summary>
         public static readonly PointF Empty;
         private float x; // Do not rename (binary serialization)
         private float y; // Do not rename (binary serialization)
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='System.Drawing.PointF'/> class with the specified coordinates.
+        /// Initializes a new instance of the <see cref='Drawing.PointF'/> class with the specified coordinates.
         /// </summary>
         public PointF(float x, float y)
         {
@@ -32,7 +32,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='System.Drawing.PointF'/> struct from the specified
+        /// Initializes a new instance of the <see cref='Drawing.PointF'/> struct from the specified
         /// <see cref="System.Numerics.Vector2"/>.
         /// </summary>
         public PointF(Vector2 vector)
@@ -47,13 +47,13 @@ namespace Alternet.Drawing
         public Vector2 ToVector2() => new Vector2(x, y);
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref='System.Drawing.PointF'/> is empty.
+        /// Gets a value indicating whether this <see cref='Drawing.PointF'/> is empty.
         /// </summary>
         [Browsable(false)]
         public readonly bool IsEmpty => x == 0f && y == 0f;
 
         /// <summary>
-        /// Gets the x-coordinate of this <see cref='System.Drawing.PointF'/>.
+        /// Gets the x-coordinate of this <see cref='Drawing.PointF'/>.
         /// </summary>
         public float X
         {
@@ -62,7 +62,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets the y-coordinate of this <see cref='System.Drawing.PointF'/>.
+        /// Gets the y-coordinate of this <see cref='Drawing.PointF'/>.
         /// </summary>
         public float Y
         {
@@ -71,66 +71,66 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts the specified <see cref="System.Drawing.PointF"/> to a <see cref="System.Numerics.Vector2"/>.
+        /// Converts the specified <see cref="Drawing.PointF"/> to a <see cref="System.Numerics.Vector2"/>.
         /// </summary>
         public static explicit operator Vector2(PointF point) => point.ToVector2();
 
         /// <summary>
-        /// Converts the specified <see cref="System.Numerics.Vector2"/> to a <see cref="System.Drawing.PointF"/>.
+        /// Converts the specified <see cref="System.Numerics.Vector2"/> to a <see cref="Drawing.PointF"/>.
         /// </summary>
         public static explicit operator PointF(Vector2 vector) => new PointF(vector);
 
         /// <summary>
-        /// Translates a <see cref='System.Drawing.PointF'/> by a given <see cref='System.Drawing.Size'/> .
+        /// Translates a <see cref='Drawing.PointF'/> by a given <see cref='Drawing.Size'/> .
         /// </summary>
         public static PointF operator +(PointF pt, Size sz) => Add(pt, sz);
 
         /// <summary>
-        /// Translates a <see cref='System.Drawing.PointF'/> by the negative of a given <see cref='System.Drawing.Size'/> .
+        /// Translates a <see cref='Drawing.PointF'/> by the negative of a given <see cref='Drawing.Size'/> .
         /// </summary>
         public static PointF operator -(PointF pt, Size sz) => Subtract(pt, sz);
 
         /// <summary>
-        /// Translates a <see cref='System.Drawing.PointF'/> by a given <see cref='System.Drawing.SizeF'/> .
+        /// Translates a <see cref='Drawing.PointF'/> by a given <see cref='Drawing.SizeF'/> .
         /// </summary>
         public static PointF operator +(PointF pt, SizeF sz) => Add(pt, sz);
 
         /// <summary>
-        /// Translates a <see cref='System.Drawing.PointF'/> by the negative of a given <see cref='System.Drawing.SizeF'/> .
+        /// Translates a <see cref='Drawing.PointF'/> by the negative of a given <see cref='Drawing.SizeF'/> .
         /// </summary>
         public static PointF operator -(PointF pt, SizeF sz) => Subtract(pt, sz);
 
         /// <summary>
-        /// Compares two <see cref='System.Drawing.PointF'/> objects. The result specifies whether the values of the
-        /// <see cref='System.Drawing.PointF.X'/> and <see cref='System.Drawing.PointF.Y'/> properties of the two
-        /// <see cref='System.Drawing.PointF'/> objects are equal.
+        /// Compares two <see cref='Drawing.PointF'/> objects. The result specifies whether the values of the
+        /// <see cref='Drawing.PointF.X'/> and <see cref='Drawing.PointF.Y'/> properties of the two
+        /// <see cref='Drawing.PointF'/> objects are equal.
         /// </summary>
         public static bool operator ==(PointF left, PointF right) => left.X == right.X && left.Y == right.Y;
 
         /// <summary>
-        /// Compares two <see cref='System.Drawing.PointF'/> objects. The result specifies whether the values of the
-        /// <see cref='System.Drawing.PointF.X'/> or <see cref='System.Drawing.PointF.Y'/> properties of the two
-        /// <see cref='System.Drawing.PointF'/> objects are unequal.
+        /// Compares two <see cref='Drawing.PointF'/> objects. The result specifies whether the values of the
+        /// <see cref='Drawing.PointF.X'/> or <see cref='Drawing.PointF.Y'/> properties of the two
+        /// <see cref='Drawing.PointF'/> objects are unequal.
         /// </summary>
         public static bool operator !=(PointF left, PointF right) => !(left == right);
 
         /// <summary>
-        /// Translates a <see cref='System.Drawing.PointF'/> by a given <see cref='System.Drawing.Size'/> .
+        /// Translates a <see cref='Drawing.PointF'/> by a given <see cref='Drawing.Size'/> .
         /// </summary>
         public static PointF Add(PointF pt, Size sz) => new PointF(pt.X + sz.Width, pt.Y + sz.Height);
 
         /// <summary>
-        /// Translates a <see cref='System.Drawing.PointF'/> by the negative of a given <see cref='System.Drawing.Size'/> .
+        /// Translates a <see cref='Drawing.PointF'/> by the negative of a given <see cref='Drawing.Size'/> .
         /// </summary>
         public static PointF Subtract(PointF pt, Size sz) => new PointF(pt.X - sz.Width, pt.Y - sz.Height);
 
         /// <summary>
-        /// Translates a <see cref='System.Drawing.PointF'/> by a given <see cref='System.Drawing.SizeF'/> .
+        /// Translates a <see cref='Drawing.PointF'/> by a given <see cref='Drawing.SizeF'/> .
         /// </summary>
         public static PointF Add(PointF pt, SizeF sz) => new PointF(pt.X + sz.Width, pt.Y + sz.Height);
 
         /// <summary>
-        /// Translates a <see cref='System.Drawing.PointF'/> by the negative of a given <see cref='System.Drawing.SizeF'/> .
+        /// Translates a <see cref='Drawing.PointF'/> by the negative of a given <see cref='Drawing.SizeF'/> .
         /// </summary>
         public static PointF Subtract(PointF pt, SizeF sz) => new PointF(pt.X - sz.Width, pt.Y - sz.Height);
 

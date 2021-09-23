@@ -71,7 +71,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the color of this <see cref="Pen"/>.
         /// </summary>
-        /// <value>A <see cref="System.Drawing.Color"/> structure that represents the color for this <see cref="Pen"/>.</value>
+        /// <value>A <see cref="Drawing.Color"/> structure that represents the color for this <see cref="Pen"/>.</value>
         public Color Color
         {
             get => color;
