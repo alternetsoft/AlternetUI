@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<topic id="fed201e7-e554-4502-98ce-946f915cadf4" revisionNumber="1">
+	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<introduction>
+			<para>Use established .NET standards and productivity tools for your cross-platform desktop application. Keep up good engineering practices.
+      Deliver your application quickly. Be native on desktop, whether it is Windows, Mac OS or Linux.</para>
+		</introduction>
+
+		<section>
+			<title>Getting Started</title>
+			<content>
+				<para>
+          To start with AlterNET UI you will need to download AlterNET UI Visual Studio extension or install NuGet packages directly to your .NET Console project.
+				  AlterNET UI NuGet package contains all necessary runtime libraries and design-time tasks to build your project for different platforms.
+				</para>
+			</content>
+		</section>
+		<relatedTopics>
+			<link xlink:href="40f4feb4-7b9e-4c49-a283-cd675ea4447a" />
+		</relatedTopics>
+	</developerConceptualDocument>
+</topic>
