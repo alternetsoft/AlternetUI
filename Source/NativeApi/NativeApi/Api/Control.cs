@@ -39,6 +39,8 @@ namespace NativeApi.Api
         public virtual Thickness IntrinsicPreferredSizePadding { get; }
 
         public bool Visible { get; set; }
+        
+        public bool Enabled { get; set; }
 
         public bool IsMouseOver { get; }
 

@@ -58,6 +58,11 @@ namespace ControlsSample
             site.LogEvent($"TreeView: ExpandedChanged. Item: '{e.Item.Text}', IsExpanded: {e.Item.IsExpanded}");
         }
 
+        private void EnabledCheckBox_CheckedChanged(object? sender, EventArgs e)
+        {
+            treeView.Enabled = enabledCheckBox.IsChecked;
+        }
+
         private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
             treeView.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ? TreeViewSelectionMode.Multiple : TreeViewSelectionMode.Single;

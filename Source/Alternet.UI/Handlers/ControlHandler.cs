@@ -443,6 +443,7 @@ namespace Alternet.UI
         protected virtual void OnAttach()
         {
             ApplyVisible();
+            ApplyEnabled();
             ApplyBorderColor();
             ApplyBackgroundColor();
             ApplyForegroundColor();
@@ -456,6 +457,7 @@ namespace Alternet.UI
             Control.FontChanged += Control_FontChanged;
             Control.BorderBrushChanged += Control_BorderBrushChanged;
             Control.VisibleChanged += Control_VisibleChanged;
+            Control.EnabledChanged += Control_EnabledChanged;
             Control.VerticalAlignmentChanged += Control_VerticalAlignmentChanged;
             Control.HorizontalAlignmentChanged += Control_HorizontalAlignmentChanged;
 
@@ -484,6 +486,7 @@ namespace Alternet.UI
             Control.FontChanged -= Control_FontChanged;
             Control.BorderBrushChanged -= Control_BorderBrushChanged;
             Control.VisibleChanged -= Control_VisibleChanged;
+            Control.EnabledChanged -= Control_EnabledChanged;
             Control.VerticalAlignmentChanged -= Control_VerticalAlignmentChanged;
             Control.HorizontalAlignmentChanged -= Control_HorizontalAlignmentChanged;
 
@@ -645,6 +648,11 @@ namespace Alternet.UI
                 Control.Parent?.PerformLayout();
         }
 
+        private void Control_EnabledChanged(object? sender, EventArgs e)
+        {
+            ApplyEnabled();
+        }
+
         private protected virtual bool NeedRelayoutParentOnVisibleChanged => !(Control.Parent is TabControl); // todo
 
         private Color GetBrushColor(Brush? brush)
@@ -667,6 +675,12 @@ namespace Alternet.UI
         {
             if (NativeControl != null)
                 NativeControl.Visible = Control.Visible;
+        }
+
+        private void ApplyEnabled()
+        {
+            if (NativeControl != null)
+                NativeControl.Enabled = Control.Enabled;
         }
 
         private void ApplyForegroundColor()

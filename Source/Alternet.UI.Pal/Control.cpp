@@ -10,6 +10,7 @@ namespace Alternet::UI
             {
                 {DelayedControlFlags::Visible, std::make_tuple(&Control::RetrieveVisible, &Control::ApplyVisible)},
                 {DelayedControlFlags::Frozen, std::make_tuple(&Control::RetrieveFrozen, &Control::ApplyFrozen)},
+                {DelayedControlFlags::Enabled, std::make_tuple(&Control::RetrieveEnabled, &Control::ApplyEnabled)},
             }),
             _bounds(*this, RectangleF(), &Control::IsWxWindowCreated, &Control::RetrieveBounds, &Control::ApplyBounds),
             _backgroundColor(*this, Color(), &Control::IsWxWindowCreated, &Control::RetrieveBackgroundColor, &Control::ApplyBackgroundColor),
@@ -221,6 +222,20 @@ namespace Alternet::UI
             wxWindow->Show();
         else
             wxWindow->Hide();
+    }
+
+    bool Control::RetrieveEnabled()
+    {
+        return GetWxWindow()->IsEnabled();
+    }
+
+    void Control::ApplyEnabled(bool value)
+    {
+        auto wxWindow = GetWxWindow();
+        if (value)
+            wxWindow->Enable();
+        else
+            wxWindow->Disable();
     }
 
     bool Control::RetrieveFrozen()
@@ -509,6 +524,16 @@ namespace Alternet::UI
     void Control::SetVisible(bool value)
     {
         _delayedFlags.Set(DelayedControlFlags::Visible, value);
+    }
+
+    bool Control::GetEnabled()
+    {
+        return _delayedFlags.Get(DelayedControlFlags::Enabled);
+    }
+
+    void Control::SetEnabled(bool value)
+    {
+        _delayedFlags.Set(DelayedControlFlags::Enabled, value);
     }
 
     void Control::AddChild(Control* control)

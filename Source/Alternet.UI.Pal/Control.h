@@ -47,7 +47,8 @@ namespace Alternet::UI
         {
             None = 0,
             Visible = 1 << 0,
-            Frozen = 1 << 1
+            Frozen = 1 << 1,
+            Enabled = 1 << 2,
         };
 
         enum class ControlFlags
@@ -71,6 +72,9 @@ namespace Alternet::UI
 
         bool RetrieveVisible();
         void ApplyVisible(bool value);
+
+        bool RetrieveEnabled();
+        void ApplyEnabled(bool value);
 
         bool RetrieveFrozen();
         void ApplyFrozen(bool value);

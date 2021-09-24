@@ -74,6 +74,16 @@ ALTERNET_UI_API void Control_SetVisible_(Control* obj, c_bool value)
     obj->SetVisible(value);
 }
 
+ALTERNET_UI_API c_bool Control_GetEnabled_(Control* obj)
+{
+    return obj->GetEnabled();
+}
+
+ALTERNET_UI_API void Control_SetEnabled_(Control* obj, c_bool value)
+{
+    obj->SetEnabled(value);
+}
+
 ALTERNET_UI_API c_bool Control_GetIsMouseOver_(Control* obj)
 {
     return obj->GetIsMouseOver();

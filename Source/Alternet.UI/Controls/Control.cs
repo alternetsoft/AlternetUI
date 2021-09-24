@@ -26,6 +26,7 @@ namespace Alternet.UI
         private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Stretch;
 
         private bool visible = true;
+        private bool enabled = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -68,6 +69,11 @@ namespace Alternet.UI
         /// Occurs when the value of the <see cref="Visible"/> property changes.
         /// </summary>
         public event EventHandler? VisibleChanged;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="Enabled"/> property changes.
+        /// </summary>
+        public event EventHandler? EnabledChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Background"/> property changes.
@@ -137,6 +143,30 @@ namespace Alternet.UI
                 visible = value;
                 OnVisibleChanged(EventArgs.Empty);
                 VisibleChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control can respond to user interaction.
+        /// </summary>
+        /// <value><c>true</c> if the control can respond to user interaction; otherwise, <c>false</c>. The default is <c>true</c>.</value>
+        /// <remarks>
+        /// With the <see cref="Enabled"/> property, you can enable or disable controls at run time.
+        /// For example, you can disable controls that do not apply to the current state of the application.
+        /// You can also disable a control to restrict its use. For example, a button can be disabled to prevent the user from clicking it.
+        /// </remarks>
+        public bool Enabled
+        {
+            get => enabled;
+
+            set
+            {
+                if (enabled == value)
+                    return;
+
+                enabled = value;
+                OnEnabledChanged(EventArgs.Empty);
+                EnabledChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -651,6 +681,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnVisibleChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="Enabled"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnEnabledChanged(EventArgs e)
         {
         }
 

@@ -30,6 +30,10 @@ bool GetVisible();
 void SetVisible(bool value);
 
 
+bool GetEnabled();
+void SetEnabled(bool value);
+
+
 bool GetIsMouseOver();
 
 

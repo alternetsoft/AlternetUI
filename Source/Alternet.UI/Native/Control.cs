@@ -123,6 +123,21 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool Enabled
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Control_GetEnabled_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetEnabled_(NativePointer, value);
+            }
+        }
+        
         public bool IsMouseOver
         {
             get
@@ -344,6 +359,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetVisible_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetEnabled_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetEnabled_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_GetIsMouseOver_(IntPtr obj);
