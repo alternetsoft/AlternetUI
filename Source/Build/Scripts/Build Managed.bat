@@ -16,14 +16,18 @@ if not !ERRORLEVEL! EQU 0 (
 
 :: Build
 
+dotnet msbuild /restore /t:Clean,Build /p:Configuration=Release /p:AlternetUIPackagesBuild=true "%SCRIPT_HOME%\..\..\Alternet.UI\Alternet.UI.csproj"
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
 dotnet msbuild /restore /t:Clean,Build /p:Configuration=Release "%SCRIPT_HOME%\..\..\Alternet.UI.Build.Tasks\Alternet.UI.Build.Tasks.ApiInfoCollector\Alternet.UI.Build.Tasks.ApiInfoCollector.csproj"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-dotnet msbuild /restore /t:Clean,Build,Pack /p:Configuration=Release /p:AlternetUIPackagesBuild=true "%SCRIPT_HOME%\..\..\Alternet.UI\Alternet.UI.csproj"
+dotnet msbuild /restore /t:Clean,Build /p:Configuration=Release "%SCRIPT_HOME%\..\..\Alternet.UI.Build.Tasks\Alternet.UI.Build.Tasks.csproj"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-dotnet msbuild /restore /t:Clean,Build /p:Configuration=Release "%SCRIPT_HOME%\..\..\Alternet.UI.Build.Tasks\Alternet.UI.Build.Tasks.csproj"
+dotnet msbuild /restore /t:Pack /p:Configuration=Release /p:AlternetUIPackagesBuild=true "%SCRIPT_HOME%\..\..\Alternet.UI\Alternet.UI.csproj"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
