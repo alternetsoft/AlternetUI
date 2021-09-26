@@ -3,7 +3,7 @@
     {
       "src": [
         {
-          "src": "../../../Source/Alternet.UI",
+          "src": "../../Source/Alternet.UI",
           "files": [ "**/*.csproj" ],
           "exclude": [ "**/bin/**", "**/obj/**" ]
         }
