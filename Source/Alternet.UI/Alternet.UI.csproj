@@ -74,9 +74,10 @@
   <ItemGroup>
     <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.props" Visible="false" Pack="True" PackagePath="build" />
     <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.targets" Visible="false" Pack="True" PackagePath="build" />
-    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.props" Visible="false" Pack="True" PackagePath="build" />
-    <None Include="..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.targets" Visible="false" Pack="True" PackagePath="build" />
     <None Include="..\Alternet.UI.Build.Tasks\msbuild\UIXml.xml" Visible="false" Pack="True" PackagePath="build" />
+
+    <None Include="build\Alternet.UI.props" Visible="false" Pack="True" PackagePath="build" />
+    <None Include="build\Alternet.UI.targets" Visible="false" Pack="True" PackagePath="build" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
