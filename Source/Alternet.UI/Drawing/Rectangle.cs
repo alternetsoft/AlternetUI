@@ -244,7 +244,10 @@ namespace Alternet.Drawing
             (X <= rect.X) && (rect.X + rect.Width <= X + Width) &&
             (Y <= rect.Y) && (rect.Y + rect.Height <= Y + Height);
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
         public override readonly int GetHashCode() => HashCode.Combine(X, Y, Width, Height);
 
         /// <summary>

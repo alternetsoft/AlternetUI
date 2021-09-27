@@ -1210,7 +1210,11 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the two <see cref="Color"/> structures are different; otherwise, <c>false</c>.</returns>
         public static bool operator !=(Color left, Color right) => !(left == right);
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
         public override bool Equals([NotNullWhen(true)] object? obj) => obj is Color other && Equals(other);
 
         /// <summary>
@@ -1220,7 +1224,10 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the current object is equal to other; otherwise, <c>false</c>.</returns>
         public bool Equals(Color other) => this == other;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
             // Three cases:

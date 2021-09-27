@@ -188,9 +188,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// This function returns a hash code.
+        /// Serves as the default hash function.
         /// </summary>
-        /// <returns>Hash code</returns>
+        /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
             return left.GetHashCode() ^ top.GetHashCode() ^ right.GetHashCode() ^ bottom.GetHashCode();

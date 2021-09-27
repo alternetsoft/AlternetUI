@@ -28,7 +28,11 @@ namespace Alternet.Base.Collections
         /// </summary>
         public bool ThrowOnNullItemAddition { get; set; }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Inserts an item into the collection at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index at which <c>item</c> should be inserted.</param>
+        /// <param name="item">The object to insert.</param>
         protected override void InsertItem(int index, T item)
         {
             if (ThrowOnNullItemAddition && item is null)
@@ -39,7 +43,10 @@ namespace Alternet.Base.Collections
             OnItemInserted(new CollectionChangeEventArgs<T>(index, item));
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Removes the item at the specified index of the collection.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element to remove.</param>
         protected override void RemoveItem(int index)
         {
             var item = this[index];
