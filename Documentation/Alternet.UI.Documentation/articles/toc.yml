@@ -2,3 +2,7 @@
   href: intro.md
 - name: Video Test Page
   href: video-test-page.md
+- name: Standard Controls
+  items:
+    - name: Button
+      href: controls/button.md
