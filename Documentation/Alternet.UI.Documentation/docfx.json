@@ -16,6 +16,9 @@
   "build": {
     "content": [
       {
+        "files": "navigation/**"
+      },
+      {
         "files": [
           "api/**.yml",
           "api/index.md"
@@ -64,7 +67,9 @@
     "globalMetadata": {
       "_appLogoPath": "images/logo/logo.png",
       "_appFaviconPath": "images/logo/favicon.ico",
-      "_disableContribution": true
+      "_disableContribution": true,
+      "_enableNewTab": true,
+      "_appFooter": "Copyright AlterNET Software"
     }
   }
 }

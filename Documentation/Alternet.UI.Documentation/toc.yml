@@ -1,5 +1,5 @@
-- name: Articles
+- name: Alternet UI Documentation
   href: articles/
-- name: Api Documentation
-  href: api/
-  homepage: api/index.md
+#- name: Alternet UI Documentation
+#  href: api-navigation/
+#  homepage: api/index.md
