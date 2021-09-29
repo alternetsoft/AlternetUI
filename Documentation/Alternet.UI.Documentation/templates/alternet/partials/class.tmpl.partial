@@ -191,6 +191,23 @@
 {{/seealso.0}}
 {{/children}}
 {{/children}}
+{{#inheritedMembers.0}}
+<div class="inheritedMembers">
+  <h5>{{__global.inheritedMembers}}</h5>
+{{/inheritedMembers.0}}
+{{#inheritedMembers}}
+  <div>
+  {{#definition}}
+    <xref uid="{{definition}}" text="{{nameWithType.0.value}}" alt="{{fullName.0.value}}"/>
+  {{/definition}}
+  {{^definition}}
+    <xref uid="{{uid}}" text="{{nameWithType.0.value}}" alt="{{fullName.0.value}}"/>
+  {{/definition}}
+  </div>
+{{/inheritedMembers}}
+{{#inheritedMembers.0}}
+</div>
+{{/inheritedMembers.0}}
 {{#implements.0}}
 <h3 id="implements">{{__global.implements}}</h3>
 {{/implements.0}}
