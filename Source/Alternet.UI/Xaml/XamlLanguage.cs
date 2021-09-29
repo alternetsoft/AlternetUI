@@ -90,14 +90,6 @@ namespace XamlX.Runtime
     /// <summary>
     /// This item supports the framework infrastructure and is not intended to be used directly from your code.
     /// </summary>
-    [System.Runtime.CompilerServices.CompilerGenerated]
-    class NamespaceDoc
-    {
-    }
-
-    /// <summary>
-    /// This item supports the framework infrastructure and is not intended to be used directly from your code.
-    /// </summary>
     public interface IXamlParentStackProviderV1
     {
         /// <summary>
