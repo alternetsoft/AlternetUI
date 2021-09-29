@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="ButtonExamples.uixml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Alternet.UI" Version="0.1.0-beta.*" />
+  </ItemGroup>
+</Project>
