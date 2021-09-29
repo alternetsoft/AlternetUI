@@ -9,8 +9,8 @@
         }
       ],
       "dest": "api",
-      "disableGitFeatures": false,
-      "disableDefaultFilter": false
+      "filter": "filterConfig.yml",
+      "disableGitFeatures": false
     }
   ],
   "build": {
