@@ -55,7 +55,9 @@
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
-      "templates/alternet"
+      "templates/alternet",
+      "templates/memberpage",
+      "templates/memberpage-postprocess"
     ],
     "xrefservice": [ "https://xref.docs.microsoft.com/query?uid={uid}" ],
     "postProcessors": [],

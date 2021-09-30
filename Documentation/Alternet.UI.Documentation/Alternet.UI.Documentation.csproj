@@ -8,9 +8,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="memberpage" Version="2.58.4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Source\Alternet.UI\Alternet.UI.csproj" />
   </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="!Exists('$(ProjectDir)\templates\memberpage')">
+    <Exec Command="xcopy $(USERPROFILE)\.nuget\packages\memberpage\2.58.4\content $(ProjectDir)\templates\memberpage /E /H /C /I /Y" />
+  </Target>
 
 </Project>
