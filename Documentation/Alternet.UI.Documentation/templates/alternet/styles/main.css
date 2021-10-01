@@ -4,6 +4,7 @@
 
 body {
     font-size: 16px;
+    font-family: Segoe UI, SegoeUI, SF Pro Text, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica, Arial, sans-serif;
 }
 
 .summary
@@ -54,3 +55,18 @@ article h4 {
 .sidetoc.shiftup {
     bottom: 50px;
 }
+
+@media (min-width: 1000px) {
+    .container {
+        width: 100%;
+        padding-left: 5vw;
+        padding-right: 5vw;
+    }
+}
+
+@media (min-width: 1600px) {
+    .container {
+        padding-left: 6vw;
+        padding-right: 6vw;
+    }
+}    
