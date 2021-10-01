@@ -60,7 +60,7 @@
       "templates/memberpage-postprocess"
     ],
     "xrefservice": [ "https://xref.docs.microsoft.com/query?uid={uid}" ],
-    "postProcessors": [],
+    "postProcessors": [ "ExtractSearchIndex" ],
     "markdownEngineName": "markdig",
     "noLangKeyword": false,
     "keepFileLink": false,
@@ -71,7 +71,8 @@
       "_appFaviconPath": "images/logo/favicon.ico",
       "_disableContribution": true,
       "_enableNewTab": true,
-      "_appFooter": "Copyright AlterNET Software"
+      "_appFooter": "Copyright AlterNET Software",
+      "_enableSearch": true
     }
   }
 }
