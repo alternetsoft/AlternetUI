@@ -59,6 +59,36 @@ article h4 {
 .sidetoc {
     background: none;
     border: none;
+    font-size: 14px;
+}
+
+.sidefilter {
+    background: none;
+    border: none;
+    padding-right: 0;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.sidefilter form {
+    margin-right: 0;
+    padding-right: 0;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.sidefilter input {
+    border-radius: 2px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ddd;
+    box-shadow: inset 0 1px 2px #ddd;
+    font-size: 14px;
+    padding: 4px 4px 4px 25px;
+}
+
+.sidefilter .glyphicon {
+    padding-top: 3px;
 }
 
 body .toc {
