@@ -5,6 +5,7 @@
 body {
     font-size: 16px;
     font-family: Segoe UI, SegoeUI, SF Pro Text, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica, Arial, sans-serif;
+    color: rgb(23, 23, 23);
 }
 
 .summary
@@ -60,6 +61,7 @@ article h4 {
     background: none;
     border: none;
     font-size: 14px;
+    width: 20vw;
 }
 
 .sidefilter {
@@ -68,6 +70,7 @@ article h4 {
     padding-right: 0;
     margin-left: 0;
     padding-left: 0;
+    width: 20vw;
 }
 
 .sidefilter form {
@@ -95,6 +98,37 @@ body .toc {
     background: none;
 }
 
+.toc ul {
+    font-size: 14px;
+    margin-left: 15px;
+}
+
+.toc {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.toc .nav > li > a {
+    color: rgb(23, 23, 23);
+    line-height: 25px;
+    margin-left: 0;
+    padding-left: 5px;
+}
+
+.toc .nav > li > a:hover {
+    text-decoration: underline;
+}
+
+.toc .nav > li.active > a {
+    background: rgb(242, 242, 242);
+    color: rgb(23, 23, 23);
+    font-weight: 600;
+}
+
+.article.grid-right {
+    margin-left: 21vw;
+}
+
 @media (min-width: 1000px) {
     .container {
         width: 100%;
@@ -108,4 +142,4 @@ body .toc {
         padding-left: 6vw;
         padding-right: 6vw;
     }
-}    
+}
