@@ -55,6 +55,7 @@
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
+      "default",
       "templates/alternet",
       "templates/memberpage",
       "templates/memberpage-postprocess"
