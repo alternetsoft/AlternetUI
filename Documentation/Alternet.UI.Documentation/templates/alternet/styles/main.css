@@ -14,7 +14,11 @@ body {
 }
 
 .h1, h1 {
-    font-size: 30px;
+    font-size: 40px;
+}
+
+.h2, h2 {
+    font-size: 34px;
 }
 
 .h5, h5 {
@@ -24,10 +28,21 @@ body {
 
 .h6, h6 {
     font-size: 16px;
+    margin-top: 15px;
+    margin-bottom: 10px;
 }
 
 .navbar-brand {
     padding-right: 3em;
+}
+
+.api-secondary-data {
+    font-size: 14px;
+    color: rgb(80, 80, 80);
+}
+
+.level0.summary {
+    margin: 25px 0 15px 0;
 }
 
 article h1, article h2, article h3, article h4 {
