@@ -56,6 +56,15 @@ article h4 {
     bottom: 50px;
 }
 
+.sidetoc {
+    background: none;
+    border: none;
+}
+
+body .toc {
+    background: none;
+}
+
 @media (min-width: 1000px) {
     .container {
         width: 100%;
