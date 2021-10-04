@@ -3,18 +3,31 @@
   <PropertyGroup>
     <TargetFramework>net462</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup>
+      <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="docfx.console" Version="2.58.4">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="memberpage" Version="2.58.4" />
+    <Compile Remove="utils\**" />
+    <EmbeddedResource Remove="utils\**" />
+    <None Remove="utils\**" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Source\Alternet.UI\Alternet.UI.csproj" />
+    <None Remove=".gitignore" />
+    <None Remove="Build.bat" />
+    <None Remove="Deploy.bat" />
+    <None Remove="log.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="memberpage" Version="2.58.4" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="!Exists('$(ProjectDir)\templates\memberpage')">
     <Exec Command="xcopy $(USERPROFILE)\.nuget\packages\memberpage\2.58.4\content $(ProjectDir)\templates\memberpage /E /H /C /I /Y" />
+  </Target>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="!Exists('$(USERPROFILE)\.nuget\packages\docfx.console\2.58.4')">
+    <Exec Command="dotnet restore $(ProjectDir)\utils\DocFXInstaller\DocFXInstaller.csproj" />
+  </Target>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="$(USERPROFILE)\.nuget\packages\docfx.console\2.58.4\tools\docfx.exe" />
   </Target>
 
 </Project>
