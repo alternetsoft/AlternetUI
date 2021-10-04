@@ -33,7 +33,8 @@ body {
 
 .navbar-brand {
     padding-right: 3em;
-    padding-top: 12px;
+    display: flex;
+    align-items: center;
 }
 
 .api-secondary-data {
@@ -263,11 +264,59 @@ code {
 
 .subnav {
     border: none;
-    background: none;
+    background: white;
 }
 
 .navbar-inverse {
-    background: none;
+    background: white;
     border-bottom-color: #E6E6E6;
     border-bottom-width: 1px;
+}
+
+.navbar-nav li {
+    display: none;
+}
+
+.site-menu {
+    float: left;
+}
+
+    .site-menu ul {
+        margin: 0;
+        list-style-type: none;
+        padding: 0;
+        overflow: hidden;
+    }
+
+        .site-menu ul li {
+            float: left;
+        }
+
+            .site-menu ul li a {
+                display: block;
+                color: black;
+                text-align: center;
+                padding: 13px 13px;
+                font-size: 16px;
+                text-decoration: none;
+            }
+
+                .site-menu ul li a:hover:not(.active) {
+                    color: black;
+                }
+
+            .site-menu ul li .active {
+                font-weight: bold;
+            }
+
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: black;
+}
+
+.navbar-inverse .navbar-toggle:hover {
+    background-color: white;
+}
+
+.navbar-form {
+    border-top: 0;
 }
