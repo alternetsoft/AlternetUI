@@ -8,8 +8,7 @@ body {
     color: rgb(23, 23, 23);
 }
 
-.summary
-{ 
+.summary {
     font-size: 16px;
 }
 
@@ -73,45 +72,52 @@ article h4 {
     white-space: nowrap;
 }
 
-.sidetoc.shiftup {
-    bottom: 50px;
-}
+@media (min-width: 769px) {
 
-.sidetoc {
-    background: none;
-    border: none;
-    font-size: 14px;
-    width: 20vw;
-}
+    .sidetoc.shiftup {
+        bottom: 50px;
+    }
 
-.sidefilter {
-    background: none;
-    border: none;
-    padding-right: 0;
-    margin-left: 0;
-    padding-left: 0;
-    width: 20vw;
-}
+    .sidetoc {
+        background: none;
+        border: none;
+        font-size: 14px;
+        width: 20vw;
+    }
 
-.sidefilter form {
-    margin-right: 0;
-    padding-right: 0;
-    margin-left: 0;
-    padding-left: 0;
-}
+    .sidefilter {
+        background: none;
+        border: none;
+        padding-right: 0;
+        margin-left: 0;
+        padding-left: 0;
+        width: 20vw;
+    }
 
-.sidefilter input {
-    border-radius: 2px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: #ddd;
-    box-shadow: inset 0 1px 2px #ddd;
-    font-size: 14px;
-    padding: 4px 4px 4px 25px;
-}
+        .sidefilter form {
+            margin-right: 0;
+            padding-right: 0;
+            margin-left: 0;
+            padding-left: 0;
+        }
 
-.sidefilter .glyphicon {
-    padding-top: 3px;
+        .sidefilter input {
+            border-radius: 2px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: #ddd;
+            box-shadow: inset 0 1px 2px #ddd;
+            font-size: 14px;
+            padding: 4px 4px 4px 25px;
+        }
+
+        .sidefilter .glyphicon {
+            padding-top: 3px;
+        }
+
+    .article.grid-right {
+        margin-left: 21vw;
+    }
 }
 
 body .toc {
@@ -128,26 +134,22 @@ body .toc {
     padding-left: 0;
 }
 
-.toc .nav > li > a {
-    color: rgb(23, 23, 23);
-    line-height: 25px;
-    margin-left: 0;
-    padding-left: 5px;
-}
+    .toc .nav > li > a {
+        color: rgb(23, 23, 23);
+        line-height: 25px;
+        margin-left: 0;
+        padding-left: 5px;
+    }
 
-.toc .nav > li > a:hover {
-    text-decoration: underline;
-}
+        .toc .nav > li > a:hover {
+            text-decoration: underline;
+        }
 
-.toc .nav > li.active > a {
-    background: rgb(242, 242, 242);
-    color: rgb(23, 23, 23);
-    font-weight: 600;
-}
-
-.article.grid-right {
-    margin-left: 21vw;
-}
+    .toc .nav > li.active > a {
+        background: rgb(242, 242, 242);
+        color: rgb(23, 23, 23);
+        font-weight: 600;
+    }
 
 @media (min-width: 1000px) {
     .container {
@@ -175,9 +177,9 @@ body .toc {
     border-top: 1px solid #ddd;
 }
 
-.inheritedMembers, .table-bordered td {
-    font-size: 14px;
-}
+    .inheritedMembers, .table-bordered td {
+        font-size: 14px;
+    }
 
 .table-striped > tbody > tr:nth-of-type(odd) {
     background: none;
@@ -186,6 +188,12 @@ body .toc {
 @media print, screen and (min-width: 768px) {
     .table-bordered > tbody > tr > td:nth-of-type(1) {
         width: 33% !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .table-responsive {
+        border: 0;
     }
 }
 
@@ -250,4 +258,4 @@ code {
 
 .toc .nav li > .expand-stub {
     left: -13px;
-} 
+}
