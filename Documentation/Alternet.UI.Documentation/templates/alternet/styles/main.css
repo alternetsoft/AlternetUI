@@ -232,3 +232,22 @@ code {
     color: #bd2c00;
     background-color: #ffecec
 }
+
+.toc .nav > li .expand-stub::before,
+.toc .nav > li.active > .expand-stub::before {
+    font-family: 'Material Icons';
+    content: "chevron_right";
+    vertical-align: middle;
+}
+
+.toc .nav > li.in > .expand-stub::before,
+.toc .nav > li.in.active > .expand-stub::before,
+.toc .nav > li.filtered > .expand-stub::before {
+    font-family: 'Material Icons';
+    content: "expand_more";
+    vertical-align: middle;
+}
+
+.toc .nav li > .expand-stub {
+    left: -13px;
+} 
