@@ -2,7 +2,7 @@
 
 {{>partials/class.header}}
 {{#children}}
-<h3 id="{{id}}">{{>partials/classSubtitle}}</h3>
+<h2 id="{{id}}">{{>partials/classSubtitle}}</h2>
 {{#children}}
 {{^_disableContribution}}
 {{#docurl}}
@@ -209,7 +209,7 @@
 </div>
 {{/inheritedMembers.0}}
 {{#implements.0}}
-<h3 id="implements">{{__global.implements}}</h3>
+<h2 id="implements">{{__global.implements}}</h2>
 {{/implements.0}}
 {{#implements}}
 <div>
@@ -222,7 +222,7 @@
 </div>
 {{/implements}}
 {{#extensionMethods.0}}
-<h3 id="extensionmethods">{{__global.extensionMethods}}</h3>
+<h2 id="extensionmethods">{{__global.extensionMethods}}</h2>
 {{/extensionMethods.0}}
 {{#extensionMethods}}
 <div>
@@ -235,7 +235,7 @@
 </div>
 {{/extensionMethods}}
 {{#seealso.0}}
-<h3 id="seealso">{{__global.seealso}}</h3>
+<h2 id="seealso">{{__global.seealso}}</h2>
 <div class="seealso">
 {{/seealso.0}}
 {{#seealso}}
