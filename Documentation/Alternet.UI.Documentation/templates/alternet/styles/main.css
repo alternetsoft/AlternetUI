@@ -33,6 +33,7 @@ body {
 
 .navbar-brand {
     padding-right: 3em;
+    padding-top: 12px;
 }
 
 .api-secondary-data {
@@ -258,4 +259,15 @@ code {
 
 .toc .nav li > .expand-stub {
     left: -13px;
+}
+
+.subnav {
+    border: none;
+    background: none;
+}
+
+.navbar-inverse {
+    background: none;
+    border-bottom-color: #E6E6E6;
+    border-bottom-width: 1px;
 }

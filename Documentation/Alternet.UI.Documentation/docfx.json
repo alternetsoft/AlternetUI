@@ -68,7 +68,7 @@
     "cleanupCacheHistory": false,
     "disableGitFeatures": false,
     "globalMetadata": {
-      "_appLogoPath": "images/logo/logo.png",
+      "_appLogoPath": "images/logo/logo.svg",
       "_appFaviconPath": "images/logo/favicon.ico",
       "_disableContribution": true,
       "_enableNewTab": true,
