@@ -188,3 +188,47 @@ body .toc {
         width: 33% !important;
     }
 }
+
+/* Code snippet */
+code {
+    color: rgb(23, 23, 23);
+    background-color: rgb(242, 242, 242);
+}
+
+.hljs-comment, .hljs-meta {
+    color: rgb(0, 128, 0)
+}
+
+.hljs-emphasis, .hljs-quote, .hljs-string, .hljs-strong, .hljs-template-variable, .hljs-variable {
+    color: rgb(163, 21, 21)
+}
+
+.hljs-keyword, .hljs-selector-tag, .hljs-type {
+    color: rgb(1, 1, 253)
+}
+
+.hljs-attribute, .hljs-bullet, .hljs-literal, .hljs-symbol {
+    color: #0451a5
+}
+
+.hljs-name, .hljs-section {
+    color: #0101fd
+}
+
+.hljs-tag {
+    color: #0101fd;
+}
+
+.hljs-attr, .hljs-selector-attr, .hljs-selector-class, .hljs-selector-id, .hljs-selector-pseudo, .hljs-title {
+    color: #0451a5
+}
+
+.hljs-addition {
+    color: #55a532;
+    background-color: #eaffea
+}
+
+.hljs-deletion {
+    color: #bd2c00;
+    background-color: #ffecec
+}
