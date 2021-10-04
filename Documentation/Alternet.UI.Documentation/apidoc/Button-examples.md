@@ -6,7 +6,7 @@ TODO: THIS IS A TEST COPY FROM WINFORMS, WRITE A PROPER BUTTON EXAMPLES.
 
 The following code example creates a Button, sets its DialogResult property to DialogResult.OK, and adds it to a Form.
 
-[!code[Example1](~/../Examples/ButtonExamples.uixml.cs#ButtonExample1)]
+[!code-csharp[Example1](~/../Examples/ButtonExamples.uixml.cs#ButtonExample1)]
 
 UIXML Example:
 

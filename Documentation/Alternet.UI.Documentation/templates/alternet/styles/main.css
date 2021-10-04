@@ -220,7 +220,7 @@ code {
 }
 
 .hljs-attr, .hljs-selector-attr, .hljs-selector-class, .hljs-selector-id, .hljs-selector-pseudo, .hljs-title {
-    color: #0451a5
+    color: rgb(23, 23, 23)
 }
 
 .hljs-addition {
