@@ -77,12 +77,6 @@
 {{#syntax.typeParameters.0}}
 <h5 class="typeParameters">{{__global.typeParameters}}</h5>
 <table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <th>{{__global.name}}</th>
-      <th>{{__global.description}}</th>
-    </tr>
-  </thead>
   <tbody>
 {{/syntax.typeParameters.0}}
 {{#syntax.typeParameters}}

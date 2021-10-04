@@ -50,7 +50,7 @@ article h1, article h2, article h3, article h4 {
     font-weight: 600;
 }
 
-#fields, #properties, #methods, #events {
+#fields, #properties, #methods, #events, #constructors {
     font-weight: 600;
     font-size: 34px;
 }
@@ -161,5 +161,30 @@ body .toc {
     .container {
         padding-left: 6vw;
         padding-right: 6vw;
+    }
+}
+
+.table-bordered,
+.table-bordered > tbody > tr > td,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > td,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > thead > tr > th {
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+.inheritedMembers, .table-bordered td {
+    font-size: 14px;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background: none;
+}
+
+@media print, screen and (min-width: 768px) {
+    .table-bordered > tbody > tr > td:nth-of-type(1) {
+        width: 33% !important;
     }
 }
