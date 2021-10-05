@@ -1,0 +1,7 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="Alternet.UI.Documentation.Examples.ExampleWindow">
+<!-- <ButtonExample1> -->
+  <Button Text="Hello" Click="Button_Click"/>
+<!-- </ButtonExample1> -->
+</Window>
