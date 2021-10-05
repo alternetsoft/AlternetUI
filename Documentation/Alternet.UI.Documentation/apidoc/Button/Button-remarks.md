@@ -6,4 +6,7 @@ A button is one of the most commonly used UI controls. It is a designed to mimic
 event is raised. This event is then handled to execute some code in response to user clicking a button.
 
 Examples of how a button can look on different platforms:
-![Button on Windows](images/button-windows.png)
+
+|Windows|macOS|Linux|
+|-------|-----|-----|
+|![Button on Windows](images/button-windows.png)|![Button on macOS](images/button-macos.png)|![Button on Linux](images/button-linux.png)
