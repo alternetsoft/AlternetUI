@@ -424,11 +424,13 @@ $(function () {
 
       // Scroll to active item
       var top = 0;
+
+      // modified by yezo: highlight only the active node, not all of its parents.
       $('#toc a.active').parents('li').each(function (i, e) {
         $(e).addClass(expanded);
       })
-
       $('#toc a.active').closest('li').addClass(active);
+      // end modified by yezo
 
       $('#toc a.active').parents('li').each(function (i, e) {
         top += $(e).position().top;
