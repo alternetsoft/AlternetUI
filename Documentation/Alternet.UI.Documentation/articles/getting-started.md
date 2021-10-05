@@ -11,8 +11,10 @@ which is a  declarative markup language that allows you to specify visible eleme
 
 It also adds AlterNET UI Window project type allowing to create a new AlterNET UI Window from Add New Item dialog box. 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/-XQhSPvUcDM" title="AlterNET UI Visual Studio Extension"
-	frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div class="videoWrapper">
+	<iframe width="560" height="315" src="https://www.youtube.com/embed/-XQhSPvUcDM?rel=0&amp;modestbranding=1" title="AlterNET UI Visual Studio Extension"
+		frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen vq=hd1080></iframe>
+</div>
 
 ### Developing on macOS and Linux
 
