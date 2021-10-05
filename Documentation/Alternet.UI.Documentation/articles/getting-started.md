@@ -29,3 +29,12 @@ to these PDB files, to enable source debugging in Visual Studio.
 Todo: debugging in vs code.
 
 Please note that we do not publish source code of platform - specific implementation layer.
+
+### Downloads
+
+[AlterNET UI NuGet package](https://www.nuget.org/packages/Alternet.UI)
+
+[AlterNET UI Visual Studio extension](https://marketplace.visualstudio.com/items?itemName=AlterNET-UI)
+
+---
+*Read next*: [Programming with AlterNET UI](programming-with-alternet-ui.md)

@@ -30,6 +30,9 @@
           "articles/**/toc.yml",
           "toc.yml",
           "*.md"
+        ],
+        "exclude": [
+          "articles/**/examples/**"
         ]
       }
     ],
@@ -48,7 +51,8 @@
         "exclude": [
           "obj/**",
           "site/**",
-          "apidoc/**/images/**"
+          "apidoc/**/images/**",
+          "apidoc/**/examples/**"
         ]
       }
     ],

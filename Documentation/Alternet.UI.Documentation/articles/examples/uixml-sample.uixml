@@ -1,0 +1,12 @@
+<Window x:Class="HelloWorldSample.MainWindow"
+        xmlns="http://schemas.alternetsoft.com/ui"
+        xmlns:x="http://schemas.alternetsoft.com/uixml"
+        xmlns:local="clr-namespace:HelloWorldSample;assembly=HelloWorldSample"
+        Title="Alternet UI"
+        Width="600" Height="400">
+  <StackPanel Orientation="Horizontal" Margin="10">
+    <Button Text="System Native" Margin="0,0,0,5" Name="systemNativeButton" Click="SystemNativeButton_Click"/>
+    <Button Text="Generic Light" Margin="0,0,0,5" Name="genericLightButton" Click="GenericLightButton_Click"/>
+    <CheckBox Text="Allow closing the window" Name="allowCloseWindowCheckBox" Margin="10" IsChecked="true"/>
+  </StackPanel>
+</Window>
