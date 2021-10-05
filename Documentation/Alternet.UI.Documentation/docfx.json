@@ -36,8 +36,7 @@
     "resource": [
       {
         "files": [
-          "images/**",
-          "apidoc/**/images/**"
+          "**/images/**"
         ]
       }
     ],

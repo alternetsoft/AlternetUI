@@ -1,6 +1,2 @@
-- name: Introduction
-  href: intro.md
-- name: Video Test Page
-  href: video-test-page.md
-- name: Control Concepts
-  href: control-concepts.md
+- name: Getting Started
+  href: getting-started.md
