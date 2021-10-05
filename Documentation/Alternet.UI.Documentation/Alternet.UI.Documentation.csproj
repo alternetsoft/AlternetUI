@@ -11,6 +11,10 @@
     <EmbeddedResource Remove="utils\**" />
     <None Remove="utils\**" />
   </ItemGroup>
+  <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);**\examples\**\*; **\examples</DefaultItemExcludes>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove=".gitignore" />
     <None Remove="Build.bat" />

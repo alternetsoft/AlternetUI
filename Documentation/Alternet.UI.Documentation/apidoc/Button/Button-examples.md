@@ -2,13 +2,12 @@
 uid: Alternet.UI.Button
 example: [*content]
 ---
-TODO: THIS IS A TEST COPY FROM WINFORMS, WRITE A PROPER BUTTON EXAMPLES.
 
-The following code example creates a Button, sets its DialogResult property to DialogResult.OK, and adds it to a Form.
+Here is how to declare a Button in UIXML:
+[!code-xml[](examples/ExampleWindow.uixml#CreateUixmlDeclaration)]
 
-[!code-csharp[Example1](~/../Examples/ButtonExamples.uixml.cs#ButtonExample1)]
+And the corresponding event handler in the code-behind:
+[!code-csharp[](examples/ExampleWindow.uixml.cs#ButtonEventHandler)]
 
-UIXML Example:
-
-[!code-xml[Example2](~/../Examples/ButtonExamples.uixml#ButtonExample1)]
-
+Also a button can be created from code:
+[!code-csharp[](examples/ExampleWindow.uixml.cs#ButtonCSharpCreation)]

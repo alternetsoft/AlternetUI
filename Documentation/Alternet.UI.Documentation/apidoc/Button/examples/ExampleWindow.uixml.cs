@@ -10,17 +10,20 @@ namespace Alternet.UI.Documentation.Examples
             InitializeComponent();
         }
 
-        public static void ButtonExample1()
+        public void ButtonExample1()
         {
-            #region ButtonExample1
+            #region ButtonCSharpCreation
             var button = new Button();
             button.Text = "Hello, world!";
-            button.Click += Button_Click;
+            button.Click += ExecuteButton_Click;
             #endregion
         }
 
-        private static void Button_Click(object sender, EventArgs e)
+        #region ButtonEventHandler
+        private void ExecuteButton_Click(object sender, System.EventArgs e)
         {
+            MessageBox.Show("Hello", "Message");
         }
+        #endregion
     }
 }

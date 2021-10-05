@@ -36,18 +36,20 @@
     "resource": [
       {
         "files": [
-          "images/**"
+          "images/**",
+          "apidoc/**/images/**"
         ]
       }
     ],
     "overwrite": [
       {
         "files": [
-          "apidoc/**.md"
+          "apidoc/**"
         ],
         "exclude": [
           "obj/**",
-          "site/**"
+          "site/**",
+          "apidoc/**/images/**"
         ]
       }
     ],

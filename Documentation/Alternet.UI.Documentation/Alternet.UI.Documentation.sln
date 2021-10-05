@@ -7,6 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.CodeExamples", "..\Examples\Alternet.UI.Documentation.CodeExamples.csproj", "{A8343870-CDCE-4AD9-A289-7191CB02D190}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Examples", "02. Examples", "{74977C1D-4C89-482A-AF1E-6024FB453117}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01. Documentation", "01. Documentation", "{33CD307E-3DA9-460D-97EA-38798EA71408}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.Button", "apidoc\Button\examples\Alternet.UI.Documentation.Examples.Button.csproj", "{0F6BE2B1-20EB-463A-9F3E-80EFE3DC3260}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +27,18 @@ Global
 		{A8343870-CDCE-4AD9-A289-7191CB02D190}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8343870-CDCE-4AD9-A289-7191CB02D190}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8343870-CDCE-4AD9-A289-7191CB02D190}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F6BE2B1-20EB-463A-9F3E-80EFE3DC3260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F6BE2B1-20EB-463A-9F3E-80EFE3DC3260}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F6BE2B1-20EB-463A-9F3E-80EFE3DC3260}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F6BE2B1-20EB-463A-9F3E-80EFE3DC3260}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5372EAEB-FF23-480E-B9F2-6F99AC82E54F} = {33CD307E-3DA9-460D-97EA-38798EA71408}
+		{A8343870-CDCE-4AD9-A289-7191CB02D190} = {74977C1D-4C89-482A-AF1E-6024FB453117}
+		{0F6BE2B1-20EB-463A-9F3E-80EFE3DC3260} = {74977C1D-4C89-482A-AF1E-6024FB453117}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {85D8E652-2803-432F-B61C-02E2B3A618EC}

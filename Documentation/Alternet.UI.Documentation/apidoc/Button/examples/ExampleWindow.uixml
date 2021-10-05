@@ -1,7 +1,12 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="Alternet.UI.Documentation.Examples.ExampleWindow">
-<!-- <ButtonExample1> -->
-  <Button Text="Hello" Click="Button_Click"/>
-<!-- </ButtonExample1> -->
+  <StackPanel Orientation="Vertical">
+    <!-- <CreateUixmlDeclaration> -->
+    <Button Name="executeButton" Text="Execute" Click="ExecuteButton_Click"/>
+    <!-- </CreateUixmlDeclaration> -->
+
+    <Button Text="Execute" Margin="20, 20, 250, 0" Click="ExecuteButton_Click"/>
+
+  </StackPanel>
 </Window>
