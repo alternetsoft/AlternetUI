@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\..\Mastering\Version\Version.props" />
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>0.0.1</PackageVersion>
     <PackageId>Alternet.UI.Templates</PackageId>
     <Title>AlterNET UI Templates</Title>
     <Description>Templates for creating AlterNET UI projects and project items.</Description>
@@ -22,5 +22,13 @@
     <Content Include="CSharp\**\*" Exclude="CSharp\**\bin\**;CSharp\**\obj\**" />
     <Compile Remove="**\*" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Install.bat" />
+  </ItemGroup>
+  <Target Name="InstallTemplate" AfterTargets="Build" Condition="'$(Configuration)'=='Debug'">
+    <Exec Command="dotnet new --install Alternet.UI.Templates --nuget-source $(ProjectDir)/Bin/Debug" />
+  </Target>
+
 
 </Project>

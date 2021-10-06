@@ -1,25 +1,26 @@
 {
-    "author": "AlterNET Software",
-    "classifications": [ "ui", "gui", "alternet-ui" ],
-    "description": "A blank Alternet UI Window.",
-    "name": "Window (Alternet UI)",
-    "identity": "Alternet.UI.Window.CSharp",
-    "shortName": "alternet-ui-window",
-    "tags": {
-        "language": "C#",
-        "type" : "item"
-    },
-    "sourceName": "NewWindow",
-    "primaryOutputs": [ 
-        { "path": "NewWindow.uixml.cs" }, 
-        { "path": "NewWindow.uixml" } 
-    ],
-    "defaultName": "NewWindow",
-    "symbols": {
-        "namespace": {
-            "description": "Namespace for the generated code",
-            "replaces": "Alternet.UI.Templates.Application.Window",
-            "type": "parameter"
-        }
+  "author": "AlterNET Software",
+  "classifications": [ "ui", "gui", "alternet-ui" ],
+  "description": "A blank Alternet UI Window.",
+  "name": "Window (Alternet UI)",
+  "identity": "Alternet.UI.Window.CSharp",
+  "shortName": "alternet-ui-window",
+  "tags": {
+    "language": "C#",
+    "type": "item"
+  },
+  "sourceName": "NewWindow",
+  "primaryOutputs": [
+    { "path": "NewWindow.uixml.cs" },
+    { "path": "NewWindow.uixml" }
+  ],
+  "defaultName": "NewWindow",
+  "symbols": {
+    "namespace": {
+      "description": "Namespace for the generated code",
+      "replaces": "Alternet.UI.Templates.Application.Window",
+      "type": "parameter",
+      "isRequired": true
     }
+  }
 }

@@ -17,7 +17,10 @@ namespace VersionTool
             var informationalVersion = doc.Descendants(ns + "Project").Descendants(ns + "PropertyGroup").Descendants(ns + "InformationalVersion").Single();
             TrySetBuildNumber(informationalVersion, x => TrySetBuildNumberInInformationalVersion(x, buildNumber));
 
-            var packageVersion = doc.Descendants(ns + "Project").Descendants(ns + "PropertyGroup").Descendants(ns + "Version").Single();
+            var version = doc.Descendants(ns + "Project").Descendants(ns + "PropertyGroup").Descendants(ns + "Version").Single();
+            TrySetBuildNumber(version, x => TrySetBuildNumberInPackageVersion(x, buildNumber));
+
+            var packageVersion = doc.Descendants(ns + "Project").Descendants(ns + "PropertyGroup").Descendants(ns + "PackageVersion").Single();
             TrySetBuildNumber(packageVersion, x => TrySetBuildNumberInPackageVersion(x, buildNumber));
 
             doc.Save(versionFilePath);
