@@ -1,0 +1,15 @@
+{
+    "author": "AlterNET Software",
+    "classifications": [ "ui", "gui", "alternet-ui" ],
+    "description": "A project for creating an Alternet UI cross-platform application.",
+    "name": "Alternet UI Application",
+    "identity": "Alternet.UI.Application.CSharp",
+    "groupidentity": "Alternet.UI.Application",
+    "shortName": "alternet-ui",
+    "tags": {
+        "language": "C#",
+        "type" : "project"
+    },
+    "sourceName": "Alternet.UI.Templates.Application.CSharp",
+    "preferNameDirectory" : "true"
+}

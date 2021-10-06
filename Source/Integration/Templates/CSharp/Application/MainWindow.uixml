@@ -1,0 +1,5 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="Alternet.UI.Templates.Application.CSharp.MainWindow"
+        Title="Alternet.UI.Templates.Application.CSharp">
+</Window>
