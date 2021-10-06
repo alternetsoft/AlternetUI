@@ -29,13 +29,13 @@
     <None Include="articles\examples\code-behind-csharp.cs" />
     <None Include="articles\examples\uixml-sample.uixml" />
   </ItemGroup>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="!Exists('$(ProjectDir)\templates\memberpage')">
+  <Target Name="CopyMemberpage" AfterTargets="Build" Condition="!Exists('$(ProjectDir)\templates\memberpage')">
     <Exec Command="xcopy $(USERPROFILE)\.nuget\packages\memberpage\2.58.4\content $(ProjectDir)\templates\memberpage /E /H /C /I /Y" />
   </Target>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="!Exists('$(USERPROFILE)\.nuget\packages\docfx.console\2.58.4')">
+  <Target Name="RestoreDocFx" AfterTargets="Build" Condition="!Exists('$(USERPROFILE)\.nuget\packages\docfx.console\2.58.4')">
     <Exec Command="dotnet restore $(ProjectDir)\utils\DocFXInstaller\DocFXInstaller.csproj" />
   </Target>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+  <Target Name="BuildDocumentation" AfterTargets="Build">
     <Exec Command="$(USERPROFILE)\.nuget\packages\docfx.console\2.58.4\tools\docfx.exe" />
   </Target>
 
