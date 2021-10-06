@@ -179,7 +179,7 @@ body .toc {
     border-top: 1px solid #ddd;
 }
 
-    .inheritedMembers, .table-bordered td {
+    .inheritedMembers, .table-bordered td, .table-bordered th {
         font-size: 14px;
     }
 
@@ -335,4 +335,12 @@ code {
         left: 0;
         width: 100%;
         height: 100%;
+    }
+
+a {
+    color: rgb(0, 101, 179)
+}
+
+    a:visited {
+        color: rgb(98, 73, 145)
     }
