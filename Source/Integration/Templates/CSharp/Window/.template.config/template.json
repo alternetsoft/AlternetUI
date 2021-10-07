@@ -1,8 +1,8 @@
 {
   "author": "AlterNET Software",
-  "classifications": [ "ui", "gui", "alternet-ui" ],
+  "classifications": [ "UI", "GUI", "AlterNET UI", "Cross Platform", "Desktop" ],
   "description": "A blank Alternet UI Window.",
-  "name": "Window (Alternet UI)",
+  "name": "AlterNET UI Window (C#)",
   "identity": "Alternet.UI.Window.CSharp",
   "shortName": "alternet-ui-window",
   "tags": {

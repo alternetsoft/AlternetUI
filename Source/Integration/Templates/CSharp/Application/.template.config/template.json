@@ -1,8 +1,8 @@
 {
     "author": "AlterNET Software",
-    "classifications": [ "ui", "gui", "alternet-ui" ],
+    "classifications": [ "UI", "GUI", "AlterNET UI", "Cross Platform", "Desktop" ],
     "description": "A project for creating an Alternet UI cross-platform application.",
-    "name": "Alternet UI Application",
+    "name": "AlterNET UI Application (C#)",
     "identity": "Alternet.UI.Application.CSharp",
     "groupidentity": "Alternet.UI.Application",
     "shortName": "alternet-ui",
