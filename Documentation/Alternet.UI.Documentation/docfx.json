@@ -30,12 +30,15 @@
           "articles/**/toc.yml",
           "introduction/**.md",
           "introduction/**/toc.yml",
+          "tutorials/**.md",
+          "tutorials/**/toc.yml",
           "toc.yml",
           "*.md"
         ],
         "exclude": [
           "articles/**/examples/**",
-          "introduction/**/examples/**"
+          "introduction/**/examples/**",
+          "tutorials/**/examples/**"
         ]
       }
     ],

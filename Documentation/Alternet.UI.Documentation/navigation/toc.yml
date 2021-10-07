@@ -1,4 +1,6 @@
 - name: Introduction
   href: ../introduction/toc.yml
+- name: Tutorials
+  href: ../tutorials/toc.yml
 - name: Reference
   href: ../api/toc.yml
