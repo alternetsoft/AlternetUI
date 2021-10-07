@@ -9,7 +9,7 @@ set SCRIPT_HOME=%~dp0.
 
 set RELEASE_DIRECTORY_VS_2019=%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\bin\VS2019\Release
 set RELEASE_DIRECTORY_VS_2022=%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\bin\VS2022\Release
-set RELEASE_DIRECTORY_COMMAND_LINE_TEMPLATES=%SCRIPT_HOME%\..\..\Integration\Templates
+set RELEASE_DIRECTORY_COMMAND_LINE_TEMPLATES=%SCRIPT_HOME%\..\..\Integration\Templates\bin\Release
 
 if not exist "%RELEASE_DIRECTORY_VS_2019%" (mkdir "%RELEASE_DIRECTORY_VS_2019%")
 if not !ERRORLEVEL! EQU 0 (
