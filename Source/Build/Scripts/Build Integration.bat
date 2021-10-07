@@ -9,6 +9,7 @@ set SCRIPT_HOME=%~dp0.
 
 set RELEASE_DIRECTORY_VS_2019=%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\bin\VS2019\Release
 set RELEASE_DIRECTORY_VS_2022=%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\bin\VS2022\Release
+set RELEASE_DIRECTORY_COMMAND_LINE_TEMPLATES=%SCRIPT_HOME%\..\..\Integration\Templates
 
 if not exist "%RELEASE_DIRECTORY_VS_2019%" (mkdir "%RELEASE_DIRECTORY_VS_2019%")
 if not !ERRORLEVEL! EQU 0 (
@@ -25,6 +26,15 @@ if not !ERRORLEVEL! EQU 0 (
 
 IF EXIST "%RELEASE_DIRECTORY_VS_2022%\*.vsix" (
     del /q /s "%RELEASE_DIRECTORY_VS_2022%\*.vsix")
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
+if not exist "%RELEASE_DIRECTORY_COMMAND_LINE_TEMPLATES%" (mkdir "%RELEASE_DIRECTORY_COMMAND_LINE_TEMPLATES%")
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
+IF EXIST "%RELEASE_DIRECTORY_COMMAND_LINE_TEMPLATES%\*.nupkg" (
+    del /q /s "%RELEASE_DIRECTORY_COMMAND_LINE_TEMPLATES%\*.nupkg")
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
