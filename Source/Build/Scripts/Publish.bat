@@ -38,9 +38,9 @@ copy "%SCRIPT_HOME%\..\..\Alternet.UI\bin\Release\*.nupkg" "%PackagesPublishDire
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-:: Build Visual Studio extension.
+:: Build integration components.
 
-call "%SCRIPT_HOME%\Build VS Extension.bat"
+call "%SCRIPT_HOME%\Build Integration.bat"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
@@ -51,6 +51,12 @@ if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
 copy "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\bin\VS2022\Release\*.vsix" "%PackagesPublishDirectory%"
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
+:: Publish command line templates.
+
+copy "%SCRIPT_HOME%\..\..\Integration\Templates\bin\Release\*.nupkg" "%PackagesPublishDirectory%"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 

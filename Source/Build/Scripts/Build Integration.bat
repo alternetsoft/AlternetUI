@@ -32,11 +32,11 @@ if not !ERRORLEVEL! EQU 0 (
 
 :: VS 2019
 
-dotnet msbuild /restore /p:VsTargetVersion=VS2019 "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
-
 "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -prerelease -version [16.0,17.0) -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe > tmpFile 
 set /p FOUND_MSBUILD_PATH_VS_2019= < tmpFile 
 del tmpFile 
+
+"%FOUND_MSBUILD_PATH_VS_2019%" /restore /p:VsTargetVersion=VS2019 "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
 
 "%FOUND_MSBUILD_PATH_VS_2019%" /restore /t:Clean,Build /p:Configuration=Release;DeployExtension=False "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
 if not !ERRORLEVEL! EQU 0 (
@@ -44,13 +44,20 @@ if not !ERRORLEVEL! EQU 0 (
 
 :: VS 2022
 
-dotnet msbuild /restore /p:VsTargetVersion=VS2022 "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
-
 "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -prerelease -version [17.0,18.0) -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe > tmpFile 
-set /p FOUND_MSBUILD_PATH_VS_2019= < tmpFile 
+set /p FOUND_MSBUILD_PATH_VS_2022= < tmpFile 
 del tmpFile 
 
-"%FOUND_MSBUILD_PATH_VS_2019%" /restore /t:Clean,Build /p:Configuration=Release;DeployExtension=False "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
+"%FOUND_MSBUILD_PATH_VS_2022%" /restore /p:VsTargetVersion=VS2022 "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
+
+"%FOUND_MSBUILD_PATH_VS_2022%" /restore /t:Clean,Build /p:Configuration=Release;DeployExtension=False "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
+
+:: Command Line Templates
+
+dotnet msbuild /restore /t:Clean,Build,Pack /p:Configuration=Release "%SCRIPT_HOME%\..\..\Integration\Templates\Alternet.UI.Templates.csproj"
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
     
