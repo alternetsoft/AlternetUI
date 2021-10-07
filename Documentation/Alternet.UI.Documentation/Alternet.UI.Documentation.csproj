@@ -25,9 +25,12 @@
     <PackageReference Include="memberpage" Version="2.58.4" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="articles\examples\rendering-graphics.cs" />
-    <None Include="articles\examples\code-behind-csharp.cs" />
-    <None Include="articles\examples\uixml-sample.uixml" />
+    <None Include="introduction\examples\rendering-graphics.cs" />
+    <None Include="introduction\examples\code-behind-csharp.cs" />
+    <None Include="introduction\examples\uixml-sample.uixml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="articles\" />
   </ItemGroup>
   <Target Name="CopyMemberpage" AfterTargets="Build" Condition="!Exists('$(ProjectDir)\templates\memberpage')">
     <Exec Command="xcopy $(USERPROFILE)\.nuget\packages\memberpage\2.58.4\content $(ProjectDir)\templates\memberpage /E /H /C /I /Y" />

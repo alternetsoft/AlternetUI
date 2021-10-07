@@ -301,11 +301,11 @@ code {
                 text-decoration: none;
             }
 
-                .site-menu ul li a:hover:not(.active) {
+                .site-menu ul li a:hover:not(.menu-active) {
                     color: black;
                 }
 
-            .site-menu ul li .active {
+            .site-menu ul li .menu-active {
                 font-weight: bold;
             }
 

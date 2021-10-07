@@ -28,11 +28,14 @@
         "files": [
           "articles/**.md",
           "articles/**/toc.yml",
+          "introduction/**.md",
+          "introduction/**/toc.yml",
           "toc.yml",
           "*.md"
         ],
         "exclude": [
-          "articles/**/examples/**"
+          "articles/**/examples/**",
+          "introduction/**/examples/**"
         ]
       }
     ],
