@@ -27,8 +27,7 @@
   <ItemGroup>
     <None Remove="Install.bat" />
   </ItemGroup>
-  <Target Name="InstallTemplate" AfterTargets="Build" Condition="'$(Configuration)'=='Debug'">
-    <Exec Command="dotnet new --uninstall Alternet.UI.Templates --nuget-source $(ProjectDir)/Bin/Debug" />
+  <Target Name="InstallTemplate" AfterTargets="Pack" Condition="'$(Configuration)'=='Debug'">
     <Exec Command="dotnet new --install Alternet.UI.Templates --nuget-source $(ProjectDir)/Bin/Debug" />
   </Target>
 </Project>
