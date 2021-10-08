@@ -4,16 +4,31 @@ In this tutorial you will create a cross-platform desktop application which disp
 
 ### 1. Install Prerequisites
 
+The required prerequisites depend on whether you use Visual Studio or command line tools in your development workflow.
+We recommend Visual Studio on Windows operating system, and command line tools with Visual Studio Code on macOS and Linux.
+
 # [Visual Studio](#tab/prerequisites-visual-studio)
 
 - Install [Microsoft Visual Studio](https://visualstudio.microsoft.com/vs/community/). Visual Studio 2019 and Visual Studio 2022 are supported.
-- Make sure ".NET Desktop Development" or "ASP.NET and web development" workflows is installed.
+- Make sure ".NET Desktop Development" or "ASP.NET and web development" workflow is installed.
 - Download and install [AlterNET UI Visual Studio extension](https://marketplace.visualstudio.com/items?itemName=AlterNET-UI).
+- Visual Studio workflow is available only on Windows operating system.
 
 # [Command Line with VS Code](#tab/prerequisites-command-line)
 
 - Download and install [.NET SDK](https://dotnet.microsoft.com/download/dotnet). Minimum supported SDK version is .NET Core 3.1.
 - Download and install [Visual Studio Code](https://code.visualstudio.com/download)
 - In Visual Studio Code, make sure the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) is installed.
+- With "Command Line with VS Code" workflow, Windows, macOS, and Linux operating systems are supported.
+
+***
+
+### 2. Create New Project
+
+# [Visual Studio](#tab/create-new-project-visual-studio)
+
+
+# [Command Line with VS Code](#tab/create-new-project-command-line)
+
 
 ***
