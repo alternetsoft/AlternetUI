@@ -28,10 +28,6 @@ article h3 {
     padding-bottom: 10px;
 }
 
-article ul li {
-    padding-bottom: 5px;
-}
-
 .tabGroup section[role="tabpanel"] {
     padding-top: 25px
 }
@@ -382,3 +378,7 @@ article img {
     margin-bottom: 15px;
 }
 
+.tabGroup section[role="tabpanel"] > .codeHeader, .tabGroup section[role="tabpanel"] > pre {
+    margin-left: 0px;
+    margin-right: 0px;
+}

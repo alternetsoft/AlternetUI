@@ -17,7 +17,8 @@ We recommend Visual Studio on Windows operating system, and command line tools w
 
 - Download and install [.NET SDK](https://dotnet.microsoft.com/download/dotnet). Minimum supported SDK version is .NET Core 3.1.
 - Download and install [Visual Studio Code](https://code.visualstudio.com/download)
-- In Visual Studio Code, make sure the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) is installed.
+- In Visual Studio Code, make sure the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) is installed. For
+  information about how to install extensions on Visual Studio Code, see [VS Code Extension Marketplace](https://code.visualstudio.com/docs/editor/extension-gallery).
 
 ***
 
@@ -32,11 +33,27 @@ We recommend Visual Studio on Windows operating system, and command line tools w
 - Open Visual Studio, in the start window select **Create new project**.
 - On the **Create new project** page, locate the AlterNET UI Application template. Select it, click **Next**.
 ![Create new project in Visual Studio](images/vs-create-new-project.png)
-- On the **Configure your new project** page set the desired project name and location, then click **Create**.
+- On the **Configure your new project** page set the the project name to `HelloWorld`, and specify the desired project location, then click **Create**.
 - The project will be created and you will be presented with a familiar project environment.
 ![New project in Visual Studio after creation](images/vs-new-project-created.png)
 
 # [Command Line with VS Code](#tab/create-new-project-command-line)
 
-
+1. Create a new directory for your application, name it `HelloWorld`
+1. Open Command Prompt window (Terminal on macOS or Linux)
+1. Navigate the terminal to the created directory:
+    ```dos
+    cd path/to/directory
+    ```
+1. Enter the following command to create the project in the current directory:
+    ```dos
+    dotnet new alternet-ui
+    ```
+1. The following files will be created in the current directory:
+    ```
+    HelloWorld.csproj
+    MainWindow.uixml
+    MainWindow.uixml.cs
+    Program.cs
+    ```
 ***
