@@ -12,14 +12,12 @@ We recommend Visual Studio on Windows operating system, and command line tools w
 - Install [Microsoft Visual Studio](https://visualstudio.microsoft.com/vs/community/). Visual Studio 2019 and Visual Studio 2022 are supported.
 - Make sure ".NET Desktop Development" or "ASP.NET and web development" workflow is installed.
 - Download and install [AlterNET UI Visual Studio extension](https://marketplace.visualstudio.com/items?itemName=AlterNET-UI).
-- Visual Studio workflow is available only on Windows operating system.
 
 # [Command Line with VS Code](#tab/prerequisites-command-line)
 
 - Download and install [.NET SDK](https://dotnet.microsoft.com/download/dotnet). Minimum supported SDK version is .NET Core 3.1.
 - Download and install [Visual Studio Code](https://code.visualstudio.com/download)
 - In Visual Studio Code, make sure the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) is installed.
-- With "Command Line with VS Code" workflow, Windows, macOS, and Linux operating systems are supported.
 
 ***
 
@@ -31,6 +29,12 @@ We recommend Visual Studio on Windows operating system, and command line tools w
 
 # [Visual Studio](#tab/create-new-project-visual-studio)
 
+- Open Visual Studio, in the start window select **Create new project**.
+- On the **Create new project** page, locate the AlterNET UI Application template. Select it, click **Next**.
+![Create new project in Visual Studio](images/vs-create-new-project.png)
+- On the **Configure your new project** page set the desired project name and location, then click **Create**.
+- The project will be created and you will be presented with a familiar project environment.
+![New project in Visual Studio after creation](images/vs-new-project-created.png)
 
 # [Command Line with VS Code](#tab/create-new-project-command-line)
 

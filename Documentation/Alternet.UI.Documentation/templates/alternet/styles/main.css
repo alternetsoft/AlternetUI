@@ -372,3 +372,13 @@ a {
 div.NOTE {
     margin-top: 10px;
 }
+
+article ul > li:not(li[role="presentation"]) {
+    padding-bottom: 10px;
+}
+
+article img {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
