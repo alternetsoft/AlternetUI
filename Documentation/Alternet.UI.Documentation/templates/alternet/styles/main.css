@@ -12,6 +12,30 @@ body {
     font-size: 16px;
 }
 
+article h1 {
+    padding-bottom: 25px;
+}
+
+    article h1 + h2, article h1 + h3, article h1 + h4 {
+        margin-top: 0px;
+    }
+
+article h1, article h2, article h3, article h4 {
+    margin-top: 25px;
+}
+
+article h3 {
+    padding-bottom: 10px;
+}
+
+article ul li {
+    padding-bottom: 5px;
+}
+
+.tabGroup section[role="tabpanel"] {
+    padding-top: 25px
+}
+
 .h1, h1 {
     font-size: 40px;
 }
