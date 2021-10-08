@@ -17,7 +17,7 @@
 
   <!-- NuGet Specification -->
   <PropertyGroup>
-    <PackageVersion>0.0.1-beta.1</PackageVersion>
+    <PackageVersion>0.1.0-beta.1</PackageVersion>
     <Version>0.1.0-beta.1</Version>
     <Authors>AlterNET Software</Authors>
   </PropertyGroup>
