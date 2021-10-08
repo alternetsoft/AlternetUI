@@ -369,7 +369,7 @@ div.NOTE {
     margin-top: 10px;
 }
 
-article ul > li:not(li[role="presentation"]) {
+article ul > li:not(li[role="presentation"]), article ol > li:not(li[role="presentation"]) {
     padding-bottom: 10px;
 }
 
@@ -381,4 +381,8 @@ article img {
 .tabGroup section[role="tabpanel"] > .codeHeader, .tabGroup section[role="tabpanel"] > pre {
     margin-left: 0px;
     margin-right: 0px;
+}
+
+pre {
+    margin-top: 10px;
 }
