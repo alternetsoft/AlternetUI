@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
   <TemplateData>
-    <Name>Window (Alternet UI)</Name>
-    <Description>A blank Alternet UI Window.</Description>
+    <Name>Window (AlterNET UI)</Name>
+    <Description>A blank AlterNET UI Window.</Description>
     <Icon>AlternetUI.ico</Icon>
     <TemplateID>aaab29b4-8396-45e8-9668-9b944681d371</TemplateID>
     <ProjectType>CSharp</ProjectType>

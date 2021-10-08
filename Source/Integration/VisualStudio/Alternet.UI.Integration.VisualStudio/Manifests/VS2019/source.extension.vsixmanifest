@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="AlternetUIForVisualStudio" Version="0.0.0.1" Language="en-US" Publisher="Alternet Software" />
-        <DisplayName>Alternet UI for Visual Studio</DisplayName>
-        <Description xml:space="preserve">Visual Studio integration for the Alternet UI - a cross-platform user interface framework. Provides UIXML IntelliSense and more.</Description>
+        <Identity Id="AlternetUIForVisualStudio" Version="0.0.0.1" Language="en-US" Publisher="AlterNET Software" />
+        <DisplayName>AlterNET UI for Visual Studio</DisplayName>
+        <Description xml:space="preserve">Visual Studio integration for the AlterNET UI - a cross-platform user interface framework. Provides UIXML IntelliSense and more.</Description>
         <MoreInfo>https://www.alternet-ui.com</MoreInfo>
         <License>License.rtf</License>
         <GettingStartedGuide>https://www.alternet-ui.com/how-it-works</GettingStartedGuide>
