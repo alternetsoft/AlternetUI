@@ -368,3 +368,7 @@ a {
     a:visited {
         color: rgb(98, 73, 145)
     }
+
+div.NOTE {
+    margin-top: 10px;
+}

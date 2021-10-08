@@ -23,6 +23,10 @@ We recommend Visual Studio on Windows operating system, and command line tools w
 
 ***
 
+> [!NOTE]
+> By default the created project will use .NET Core 3.1 as a target framework. If .NET Core 3.1 runtime is not installed on your machine you
+> will be prompted to do so on the first application run.
+
 ### 2. Create New Project
 
 # [Visual Studio](#tab/create-new-project-visual-studio)
