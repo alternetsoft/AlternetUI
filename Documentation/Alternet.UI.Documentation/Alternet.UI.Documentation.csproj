@@ -30,6 +30,7 @@
     <None Include="introduction\examples\uixml-sample.uixml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="apidoc\ComboBox\" />
     <Folder Include="articles\" />
   </ItemGroup>
   <Target Name="CopyMemberpage" AfterTargets="Build" Condition="!Exists('$(ProjectDir)\templates\memberpage')">
