@@ -69,3 +69,12 @@ The application will start and display its window:
 > For information and tutorials on general C# development with Visual Studio Code, see the
 > [corresponding MSDN article](https://docs.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio-code).
 
+### Add Button to the Window
+
+1. In `MainWindow.uixml`, add the following markup:
+   [!code-xml[](../examples/add-button.uixml?highlight=5-7)]
+1. Run the application by pressing `Ctrl+F5`:
+   
+   ![Button Added](images/added-button.png)
+
+### Respond to Button Click
