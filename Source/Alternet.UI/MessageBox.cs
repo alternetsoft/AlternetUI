@@ -32,7 +32,7 @@ namespace Alternet.UI
             if (text is null)
                 throw new ArgumentNullException(nameof(text));
 
-            Native.MessageBox.Show(text, "");
+            Native.MessageBox.Show(text, " ");
         }
     }
 }
