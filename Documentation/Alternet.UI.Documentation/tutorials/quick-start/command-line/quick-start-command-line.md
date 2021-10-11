@@ -63,7 +63,7 @@ The application will start and display its window:
 1. Open `MainWindow.uixml` by clicking the corresponing item in the VS Code **Explorer** panel. In the editor, change the `Title` attribute value from
    `"HelloWorld"` to `"My First Application"`:
    [!code-xml[](../examples/change-title.uixml?highlight=4)]
-1. Press `F5` to build and run the application and see its window title had changed accordingly.
+1. Press `Ctrl+F5` to build and run the application and see its window title had changed accordingly.
 
 > [!NOTE]
 > For information and tutorials on general C# development and debugging with Visual Studio Code, see the
