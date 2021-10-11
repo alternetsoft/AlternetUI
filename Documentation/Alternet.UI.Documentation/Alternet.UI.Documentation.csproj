@@ -26,7 +26,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="articles\" />
-    <None Include="**\*.cs; **\*.uixml" />
+    <Folder Include="tutorials\quick-start\command-line\images\" />
+    <None Include="**\*.cs; **\*.uixml; apidoc\**\*.csproj" />
   </ItemGroup>
   <Target Name="CopyMemberpage" AfterTargets="Build" Condition="!Exists('$(ProjectDir)\templates\memberpage')">
     <Exec Command="xcopy $(USERPROFILE)\.nuget\packages\memberpage\2.58.4\content $(ProjectDir)\templates\memberpage /E /H /C /I /Y" />

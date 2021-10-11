@@ -16,7 +16,7 @@ The application will display a message box in response to a button click.
 1. Open the **Command Prompt** window (**Terminal** on macOS or Linux)
 1. Navigate the terminal to the created directory:
     ```dos
-    cd path/to/directory
+    cd path/to/HelloWorld
     ```
 1. Enter the following command to create a new project in the current directory:
     ```dos
@@ -29,8 +29,43 @@ The application will display a message box in response to a button click.
     MainWindow.uixml.cs
     Program.cs
     ```
+1. Compile and run the created project by executing:
+    ```dos
+    dotnet run
+    ```
+The application will start and display its window:
+
+![Created Application Window](images/created-application-window.png)
 
 > [!NOTE]
 > By default the created project will use .NET Core 3.1 as a target framework. If .NET Core 3.1 runtime is not installed on your machine you
 > will be prompted to do so on the first application run.
+
+### Open Project with Visual Studio Code
+
+1. Start Visual Studio Code.
+1. Select **File** > **Open Folder** (**File** > **Open...** on macOS) from the main menu.
+1. In the **Open Folder** dialog, locate a *HelloWorld* folder and click **Select Folder** (**Open** on macOS).
+1. The popup prompting **Select 1 of 2 projects** will appear at the top of the screen:
+   
+   ![Select Project Popup](images/vscode-select-project-popup.png)
+   
+   Select **All contained projects**.
+
+1. After several seconds, a popup dialog with message **Required assets to build and debug are missing from 'HelloWorld'. Add them?** will appear at
+   the bottom-right corner of the screen:
+   
+   ![Required Assets Popup](images/vscode-required-assets-popup.png)
+
+   Select **Yes**. The `.vscode` subdirectory will be created with the workspace settings automatically set up.
+1. Now you can debug your application by pressing `F5`, or run it without debugging by pressing `Ctrl+F5`.
+   The application will be built automatically, if required.
+1. Open `MainWindow.uixml` by clicking the corresponing item in the VS Code **Explorer** panel. In the editor, change the `Title` attribute value from
+   `"HelloWorld"` to `"My First Application"`:
+   [!code-xml[](../examples/change-title.uixml?highlight=4)]
+1. Press `F5` to build and run the application and see its window title had changed accordingly.
+
+> [!NOTE]
+> For information and tutorials on general C# development with Visual Studio Code, see the
+> [corresponding MSDN article](https://docs.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio-code).
 

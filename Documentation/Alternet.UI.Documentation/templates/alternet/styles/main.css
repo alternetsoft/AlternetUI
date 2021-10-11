@@ -365,6 +365,10 @@ a {
         color: rgb(98, 73, 145)
     }
 
+.content a:hover {
+    text-decoration: underline;
+}
+
 div.NOTE {
     margin-top: 10px;
 }
@@ -386,3 +390,8 @@ article img {
 pre {
     margin-top: 10px;
 }
+
+    pre > code .line-highlight {
+        background-color: transparent;
+        font-weight: bold;
+    }
