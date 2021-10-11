@@ -77,4 +77,11 @@ The application will start and display its window:
    
    ![Button Added](images/added-button.png)
 
-### Respond to Button Click
+### Write Code to Respond to the Button Click
+
+1. In `MainWindow.uixml`, add the `Click` attribute to the `Button` element like the following:
+   [!code-xml[](../examples/add-click-handler.uixml?highlight=6)]
+   This will bind the `Click` event to its handler named `HelloButton_Click`.
+1. In `MainWindow.uixml.cs` file, add the following `HelloButton_Click` method:
+   [!code-csharp[](../examples/add-click-handler.uixml?highlight=6)]
+    

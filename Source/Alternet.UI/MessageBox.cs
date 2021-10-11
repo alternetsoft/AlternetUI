@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// A <see cref="MessageBox"/> can contain text, buttons, and symbols that inform and instruct the user.
     /// </summary>
     /// <remarks>
-    /// To display a message box, call the static method <see cref="MessageBox.Show"/>. The title, message, buttons, and icons
+    /// To display a message box, call the static method <see cref="Show(string, string)"/>. The title, message, buttons, and icons
     /// displayed in the message box are determined by parameters that you pass to this method.
     /// </remarks>
     public static class MessageBox
@@ -22,6 +22,17 @@ namespace Alternet.UI
                 throw new ArgumentNullException(nameof(text));
 
             Native.MessageBox.Show(text, caption);
+        }
+
+        /// <summary>
+        /// Displays a message box with specified text.
+        /// </summary>
+        public static void Show(string text)
+        {
+            if (text is null)
+                throw new ArgumentNullException(nameof(text));
+
+            Native.MessageBox.Show(text, "");
         }
     }
 }
