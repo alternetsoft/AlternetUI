@@ -26,7 +26,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="articles\" />
-    <Folder Include="tutorials\quick-start\command-line\images\" />
     <None Include="**\*.cs; **\*.uixml; apidoc\**\*.csproj" />
   </ItemGroup>
   <Target Name="CopyMemberpage" AfterTargets="Build" Condition="!Exists('$(ProjectDir)\templates\memberpage')">

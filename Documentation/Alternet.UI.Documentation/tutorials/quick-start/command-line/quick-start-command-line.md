@@ -35,7 +35,7 @@ The application will display a message box in response to a button click.
     ```
 The application will start and display its window:
 
-![Created Application Window](images/created-application-window.png)
+![Created Application Window](images/created-application-window-macos.png)
 
 > [!NOTE]
 > By default the created project will use .NET Core 3.1 as a target framework. If .NET Core 3.1 runtime is not installed on your machine you
@@ -66,7 +66,7 @@ The application will start and display its window:
 1. Press `F5` to build and run the application and see its window title had changed accordingly.
 
 > [!NOTE]
-> For information and tutorials on general C# development with Visual Studio Code, see the
+> For information and tutorials on general C# development and debugging with Visual Studio Code, see the
 > [corresponding MSDN article](https://docs.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio-code).
 
 ### Add Button to the Window
@@ -75,7 +75,7 @@ The application will start and display its window:
    [!code-xml[](../examples/add-button.uixml?highlight=5-7)]
 1. Run the application by pressing `Ctrl+F5`:
    
-   ![Button Added](images/added-button.png)
+   ![Button Added](images/added-button-macos.png)
 
 ### Write Code to Respond to the Button Click
 
@@ -83,5 +83,15 @@ The application will start and display its window:
    [!code-xml[](../examples/add-click-handler.uixml?highlight=6)]
    This will bind the `Click` event to its handler named `HelloButton_Click`.
 1. In `MainWindow.uixml.cs` file, add the following `HelloButton_Click` method:
-   [!code-csharp[](../examples/add-click-handler.uixml?highlight=6)]
-    
+   [!code-csharp[](../examples/add-click-handler.uixml.cs?highlight=1,13-16)]
+1. Run the application, then click **Say Hello** button. The message box appears:
+
+   ![MessageBox on Click](images/message-box-on-click-macos.png)
+
+> [!NOTE]
+> The application created in this tutorial can be compiled and run without any modifications on all the supported platforms: Windows, macOS, Linux.
+
+---
+*Congratulations, you have successfully completed the Quick Start tutorial using command line tools and Visual Studio Code.*
+
+*For a similar tutorial, but using Visual Studio on Windows, see [Quick Start with Visual Studio](../visual-studio/quick-start-visual-studio.md).*

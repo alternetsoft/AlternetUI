@@ -395,3 +395,8 @@ pre {
         background-color: transparent;
         font-weight: bold;
     }
+
+.content img[src$="-macos.png"] {
+    margin-top: -10px;
+    margin-bottom: -15px;
+}
