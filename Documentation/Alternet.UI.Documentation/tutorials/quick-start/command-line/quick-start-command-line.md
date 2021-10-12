@@ -6,6 +6,10 @@ The application will display a message box in response to a button click.
 ### Prerequisites
 
 1. Download and install [.NET SDK](https://dotnet.microsoft.com/download/dotnet). Minimum supported SDK version is .NET Core 3.1.
+1. Install AlterNET UI project templates by running
+    ```dos
+    dotnet new --install Alternet.UI.Templates
+    ```
 1. Download and install [Visual Studio Code](https://code.visualstudio.com/download)
 1. In Visual Studio Code, make sure the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) is installed. For
    information about how to install extensions on Visual Studio Code, see [VS Code Extension Marketplace](https://code.visualstudio.com/docs/editor/extension-gallery).
