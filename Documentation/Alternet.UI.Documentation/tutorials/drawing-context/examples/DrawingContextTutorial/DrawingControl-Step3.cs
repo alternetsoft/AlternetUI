@@ -12,6 +12,7 @@ namespace DrawingContextTutorial
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            e.DrawingContext.FillRectangle(Brushes.LightBlue, e.Bounds);
         }
     }
 }

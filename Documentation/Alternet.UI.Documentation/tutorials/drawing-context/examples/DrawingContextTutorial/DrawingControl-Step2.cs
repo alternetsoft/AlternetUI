@@ -9,5 +9,9 @@ namespace DrawingContextTutorial
         {
             UserPaint = true;
         }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+        }
     }
 }
