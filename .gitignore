@@ -1,6 +1,7 @@
 bin/
 obj/
 .vs/
+packages/
 *.csproj.user
 
 Publish/Artifacts/
