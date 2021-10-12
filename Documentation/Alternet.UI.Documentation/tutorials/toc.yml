@@ -5,3 +5,5 @@
     href: quick-start/visual-studio/quick-start-visual-studio.md
   - name: Quick Start with Command Line and VS Code
     href: quick-start/command-line/quick-start-command-line.md
+- name: Rendering Graphics with DrawingContext
+  href: drawing-context/drawing-context.md
