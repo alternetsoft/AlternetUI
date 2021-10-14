@@ -24,5 +24,15 @@
     <StackPanel Orientation="Vertical" Margin="10,0,0,0">
       <local:CustomCompositeControl Margin="0,10,0,10" Name="customCompositeControl"/>
     </StackPanel>
+
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="11" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="0.1*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <Button Grid.Column="1"/>
+    </Grid>
   </StackPanel>
 </Window>
