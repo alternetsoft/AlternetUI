@@ -69,7 +69,7 @@ namespace Alternet.UI
                 throw new ArgumentException();
             }
 
-            _unitValue = (type == GridUnitType.Auto) ? 0.0 : value;
+            _unitValue = (type == GridUnitType.Auto) ? 0 : value;
             _unitType = type;
         }
 
@@ -167,7 +167,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns value part of this GridLength instance.
         /// </summary>
-        public float Value { get { return ((_unitType == GridUnitType.Auto) ? 1.0 : _unitValue); } }
+        public float Value { get { return ((_unitType == GridUnitType.Auto) ? 1 : _unitValue); } }
 
         /// <summary>
         /// Returns unit type of this GridLength instance.
@@ -213,7 +213,7 @@ namespace Alternet.UI
         private GridUnitType _unitType; //  unit type storage
 
         //  static instance of Auto GridLength
-        private static readonly GridLength s_auto = new GridLength(1.0, GridUnitType.Auto);
+        private static readonly GridLength s_auto = new GridLength(1, GridUnitType.Auto);
         #endregion Private Fields 
     }
 

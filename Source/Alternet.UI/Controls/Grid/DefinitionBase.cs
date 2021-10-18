@@ -1,51 +1,34 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Alternet.UI
 {
     public abstract class DefinitionBase
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
-
-        #region Constructors
-
         internal DefinitionBase(bool isColumnDefinition)
         {
             _isColumnDefinition = isColumnDefinition;
             _parentIndex = -1;
         }
 
-        #endregion Constructors
-
-        //------------------------------------------------------
-        //
-        //  Public Properties
-        //
-        //------------------------------------------------------
-
-        #region Public Properties
+        string sharedSizeGroup;
 
         /// <summary>
         /// SharedSizeGroup property.
         /// </summary>
         public string SharedSizeGroup
         {
-            get { return (string)GetValue(SharedSizeGroupProperty); }
-            set { SetValue(SharedSizeGroupProperty, value); }
+            get { return sharedSizeGroup; }
+            set
+            {
+                if (!SharedSizeGroupPropertyValueValid(value))
+                    throw new ArgumentException();
+                sharedSizeGroup = value;
+                OnSharedSizeGroupPropertyChanged(value);
+            }
         }
-
-        #endregion Public Properties
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
-
-        #region Internal Methods
 
         /// <summary>
         /// Callback to notify about entering model tree.
@@ -59,12 +42,13 @@ namespace Alternet.UI
                 string sharedSizeGroupId = SharedSizeGroup;
                 if (sharedSizeGroupId != null)
                 {
-                    SharedSizeScope privateSharedSizeScope = PrivateSharedSizeScope;
-                    if (privateSharedSizeScope != null)
-                    {
-                        _sharedState = privateSharedSizeScope.EnsureSharedState(sharedSizeGroupId);
-                        _sharedState.AddMember(this);
-                    }
+                    // yezo todo
+                    //var privateSharedSizeScope = GetPrivateSharedSizeScope();
+                    //if (privateSharedSizeScope != null)
+                    //{
+                    //    _sharedState = privateSharedSizeScope.EnsureSharedState(sharedSizeGroupId);
+                    //    _sharedState.AddMember(this);
+                    //}
                 }
             }
         }
@@ -119,27 +103,25 @@ namespace Alternet.UI
         /// <remarks>
         /// This method needs to be internal to be accessable from derived classes.
         /// </remarks>
-        internal static void OnUserSizePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        internal void OnUserSizePropertyChanged(GridLength oldValue, GridLength newValue)
         {
-            DefinitionBase definition = (DefinitionBase)d;
-
-            if (definition.InParentLogicalTree)
+            if (InParentLogicalTree)
             {
-                if (definition._sharedState != null)
+                if (_sharedState != null)
                 {
-                    definition._sharedState.Invalidate();
+                    _sharedState.Invalidate();
                 }
                 else
                 {
-                    Grid parentGrid = (Grid)definition.Parent;
+                    Grid parentGrid = (Grid)Parent;
 
-                    if (((GridLength)e.OldValue).GridUnitType != ((GridLength)e.NewValue).GridUnitType)
+                    if (((GridLength)oldValue).GridUnitType != ((GridLength)newValue).GridUnitType)
                     {
                         parentGrid.InvalidateCells();
                     }
                     else
                     {
-                        parentGrid.InvalidateMeasure();
+                        //parentGrid.InvalidateMeasure(); // yezo
                     }
                 }
             }
@@ -162,14 +144,12 @@ namespace Alternet.UI
         /// <remarks>
         /// This method needs to be internal to be accessable from derived classes.
         /// </remarks>
-        internal static void OnUserMinSizePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        internal void OnUserMinSizePropertyChanged(float newValue)
         {
-            DefinitionBase definition = (DefinitionBase)d;
-
-            if (definition.InParentLogicalTree)
+            if (InParentLogicalTree)
             {
-                Grid parentGrid = (Grid)definition.Parent;
-                parentGrid.InvalidateMeasure();
+                Grid parentGrid = (Grid)Parent;
+                //parentGrid.InvalidateMeasure(); // yezo
             }
         }
 
@@ -193,14 +173,12 @@ namespace Alternet.UI
         /// <remarks>
         /// This method needs to be internal to be accessable from derived classes.
         /// </remarks>
-        internal static void OnUserMaxSizePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        internal void OnUserMaxSizePropertyChanged(float newValue)
         {
-            DefinitionBase definition = (DefinitionBase)d;
-
-            if (definition.InParentLogicalTree)
+            if (InParentLogicalTree)
             {
-                Grid parentGrid = (Grid)definition.Parent;
-                parentGrid.InvalidateMeasure();
+                Grid parentGrid = (Grid)Parent;
+                // parentGrid.InvalidateMeasure(); yezo
             }
         }
 
@@ -229,29 +207,20 @@ namespace Alternet.UI
         /// </remarks>
         internal static void OnIsSharedSizeScopePropertyChanged(Control control, bool newValue)
         {
-            //  is it possible to optimize here something like this:
-            //  if ((bool)d.GetValue(Grid.IsSharedSizeScopeProperty) == (d.GetLocalValue(PrivateSharedSizeScopeProperty) != null)
-            //  { /* do nothing */ }
-            if ((bool)e.NewValue)
-            {
-                SharedSizeScope sharedStatesCollection = new SharedSizeScope();
-                d.SetValue(PrivateSharedSizeScopeProperty, sharedStatesCollection);
-            }
-            else
-            {
-                d.ClearValue(PrivateSharedSizeScopeProperty);
-            }
+            // yezo todo
+            ////  is it possible to optimize here something like this:
+            ////  if ((bool)d.GetValue(Grid.IsSharedSizeScopeProperty) == (d.GetLocalValue(PrivateSharedSizeScopeProperty) != null)
+            ////  { /* do nothing */ }
+            //if (newValue)
+            //{
+            //    SharedSizeScope sharedStatesCollection = new SharedSizeScope();
+            //    SetPrivateSharedSizeScope(sharedStatesCollection);
+            //}
+            //else
+            //{
+            //    SetPrivateSharedSizeScope(null);
+            //}
         }
-
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Internal Properties
-        //
-        //------------------------------------------------------
-
-        #region Internal Properties
 
         /// <summary>
         /// Returns <c>true</c> if this definition is a part of shared group.
@@ -408,10 +377,7 @@ namespace Alternet.UI
         {
             get
             {
-                return (GridLength)GetValue(
-                        _isColumnDefinition ?
-                        ColumnDefinition.WidthProperty :
-                        RowDefinition.HeightProperty);
+                return _isColumnDefinition ? ((ColumnDefinition)this).Width : ((RowDefinition)this).Height;
             }
         }
 
@@ -422,10 +388,7 @@ namespace Alternet.UI
         {
             get
             {
-                return (float)GetValue(
-                        _isColumnDefinition ?
-                        ColumnDefinition.MinWidthProperty :
-                        RowDefinition.MinHeightProperty);
+                return _isColumnDefinition ? ((ColumnDefinition)this).MinWidth : ((RowDefinition)this).MinHeight;
             }
         }
 
@@ -436,10 +399,7 @@ namespace Alternet.UI
         {
             get
             {
-                return (float)GetValue(
-                        _isColumnDefinition ?
-                        ColumnDefinition.MaxWidthProperty :
-                        RowDefinition.MaxHeightProperty);
+                return _isColumnDefinition ? ((ColumnDefinition)this).MaxWidth : ((RowDefinition)this).MaxHeight;
             }
         }
 
@@ -450,16 +410,6 @@ namespace Alternet.UI
         {
             get { return (_parentIndex != -1); }
         }
-
-        #endregion Internal Properties
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
-
-        #region Private Methods
 
         /// <summary>
         /// SetFlags is used to set or unset one or multiple
@@ -482,32 +432,30 @@ namespace Alternet.UI
         /// <summary>
         /// <see cref="PropertyMetadata.PropertyChangedCallback"/>
         /// </summary>
-        private static void OnSharedSizeGroupPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private void OnSharedSizeGroupPropertyChanged(string newValue)
         {
-            DefinitionBase definition = (DefinitionBase)d;
-
-            if (definition.InParentLogicalTree)
+            if (InParentLogicalTree)
             {
-                string sharedSizeGroupId = (string)e.NewValue;
+                string sharedSizeGroupId = newValue;
 
-                if (definition._sharedState != null)
+                if (_sharedState != null)
                 {
                     //  if definition is already registered AND shared size group id is changing,
                     //  then un-register the definition from the current shared size state object.
-                    definition._sharedState.RemoveMember(definition);
-                    definition._sharedState = null;
+                    _sharedState.RemoveMember(this);
+                    _sharedState = null;
                 }
 
-                if ((definition._sharedState == null) && (sharedSizeGroupId != null))
+                if ((_sharedState == null) && (sharedSizeGroupId != null))
                 {
-                    SharedSizeScope privateSharedSizeScope = definition.PrivateSharedSizeScope;
-                    if (privateSharedSizeScope != null)
-                    {
-                        //  if definition is not registered and both: shared size group id AND private shared scope
-                        //  are available, then register definition.
-                        definition._sharedState = privateSharedSizeScope.EnsureSharedState(sharedSizeGroupId);
-                        definition._sharedState.AddMember(definition);
-                    }
+                    //SharedSizeScope privateSharedSizeScope = GetPrivateSharedSizeScope(); // yezo todo
+                    //if (privateSharedSizeScope != null)
+                    //{
+                    //    //  if definition is not registered and both: shared size group id AND private shared scope
+                    //    //  are available, then register definition.
+                    //    _sharedState = privateSharedSizeScope.EnsureSharedState(sharedSizeGroupId);
+                    //    _sharedState.AddMember(this);
+                    //}
                 }
             }
         }
@@ -564,13 +512,13 @@ namespace Alternet.UI
         /// existing scope just left. In both cases if the DefinitionBase object is already registered
         /// in SharedSizeState, it should un-register and register itself in a new one.
         /// </remark>
-        private static void OnPrivateSharedSizeScopePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private void OnPrivateSharedSizeScopePropertyChanged(SharedSizeScope? newValue)
         {
-            DefinitionBase definition = (DefinitionBase)d;
+            DefinitionBase definition = this;
 
             if (definition.InParentLogicalTree)
             {
-                SharedSizeScope privateSharedSizeScope = (SharedSizeScope)e.NewValue;
+                SharedSizeScope privateSharedSizeScope = newValue;
 
                 if (definition._sharedState != null)
                 {
@@ -594,22 +542,23 @@ namespace Alternet.UI
             }
         }
 
-        #endregion Private Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Properties
-        //
-        //------------------------------------------------------
-
-        #region Private Properties
+        static Dictionary<Control, SharedSizeScope?> privateSharedSizeScopes = new Dictionary<Control, SharedSizeScope?>();
 
         /// <summary>
         /// Private getter of shared state collection dynamic property.
         /// </summary>
-        private SharedSizeScope PrivateSharedSizeScope
+        private static SharedSizeScope? GetPrivateSharedSizeScope(Control control)
         {
-            get { return (SharedSizeScope)GetValue(PrivateSharedSizeScopeProperty); }
+            return privateSharedSizeScopes.TryGetValue(control, out var value) ? value : null;
+        }
+
+        /// <summary>
+        /// Private getter of shared state collection dynamic property.
+        /// </summary>
+        private void SetPrivateSharedSizeScope(Control control, SharedSizeScope? value)
+        {
+            privateSharedSizeScopes[control] = value;
+            OnPrivateSharedSizeScopePropertyChanged(value);
         }
 
         /// <summary>
@@ -630,15 +579,6 @@ namespace Alternet.UI
             set { SetFlags(value, Flags.LayoutWasUpdated); }
         }
 
-        #endregion Private Properties
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
-
-        #region Private Fields
         private readonly bool _isColumnDefinition;      //  when "true", this is a ColumnDefinition; when "false" this is a RowDefinition (faster than a type check)
         private Flags _flags;                           //  flags reflecting various aspects of internal state
         private int _parentIndex;                       //  this instance's index in parent's children collection
@@ -654,16 +594,6 @@ namespace Alternet.UI
 
         internal const bool ThisIsColumnDefinition = true;
         internal const bool ThisIsRowDefinition = false;
-
-        #endregion Private Fields
-
-        //------------------------------------------------------
-        //
-        //  Private Structures / Classes
-        //
-        //------------------------------------------------------
-
-        #region Private Structures Classes
 
         [System.Flags]
         private enum Flags : byte
@@ -778,12 +708,12 @@ namespace Alternet.UI
             /// <summary>
             /// Makes sure that one and only one layout updated handler is registered for this shared state.
             /// </summary>
-            internal void EnsureDeferredValidation(UIElement layoutUpdatedHost)
+            internal void EnsureDeferredValidation(Control layoutUpdatedHost)
             {
                 if (_layoutUpdatedHost == null)
                 {
                     _layoutUpdatedHost = layoutUpdatedHost;
-                    _layoutUpdatedHost.LayoutUpdated += _layoutUpdated;
+                    //_layoutUpdatedHost.LayoutUpdated += _layoutUpdated; // yezo todo
                 }
             }
 
@@ -837,7 +767,7 @@ namespace Alternet.UI
                 //  this is a "solution" to avoid shared definitions from been sized to
                 //  different final size at arrange time, if / when different grids receive
                 //  different final sizes.
-                _minSize = _userSize.IsAbsolute ? _userSize.Value : 0.0;
+                _minSize = _userSize.IsAbsolute ? _userSize.Value : 0;
 
                 _userSizeValid = true;
             }
@@ -908,7 +838,7 @@ namespace Alternet.UI
                     if (!measureIsValid)
                     {
                         Grid parentGrid = (Grid)definitionBase.Parent;
-                        parentGrid.InvalidateMeasure();
+                        // parentGrid.InvalidateMeasure(); // yezo
                     }
                     else if (!DoubleUtil.AreClose(sharedMinSize, definitionBase.SizeCache))
                     {
@@ -916,7 +846,9 @@ namespace Alternet.UI
                         //  Note: definitionBase.SizeCache is volatile but at this point
                         //  it contains up-to-date final size
                         Grid parentGrid = (Grid)definitionBase.Parent;
-                        parentGrid.InvalidateArrange();
+                        
+                        //parentGrid.InvalidateArrange(); // yezo
+                        parentGrid.PerformLayout();
                     }
 
                     // now we can restore the invariant, and clear the layout flag
@@ -926,7 +858,7 @@ namespace Alternet.UI
 
                 _minSize = sharedMinSize;
 
-                _layoutUpdatedHost.LayoutUpdated -= _layoutUpdated;
+                // _layoutUpdatedHost.LayoutUpdated -= _layoutUpdated; // yezo todo
                 _layoutUpdatedHost = null;
 
                 _broadcastInvalidation = true;
@@ -936,71 +868,11 @@ namespace Alternet.UI
             private readonly string _sharedSizeGroupId;         //  Id of the shared size group this object is servicing
             private readonly List<DefinitionBase> _registry;    //  registry of participating definitions
             private readonly EventHandler _layoutUpdated;       //  instance event handler for layout updated event
-            private UIElement _layoutUpdatedHost;               //  UIElement for which layout updated event handler is registered
+            private Control _layoutUpdatedHost;               //  UIElement for which layout updated event handler is registered
             private bool _broadcastInvalidation;                //  "true" when broadcasting of invalidation is needed
             private bool _userSizeValid;                        //  "true" when _userSize is up to date
             private GridLength _userSize;                       //  shared state
             private float _minSize;                            //  shared state
         }
-
-        #endregion Private Structures Classes
-
-        //------------------------------------------------------
-        //
-        //  Properties
-        //
-        //------------------------------------------------------
-
-        #region Properties
-
-        /// <summary>
-        /// Private shared size scope property holds a collection of shared state objects for the a given shared size scope.
-        /// <see cref="OnIsSharedSizeScopePropertyChanged"/>
-        /// </summary>
-        internal static readonly DependencyProperty PrivateSharedSizeScopeProperty =
-                DependencyProperty.RegisterAttached(
-                        "PrivateSharedSizeScope",
-                        typeof(SharedSizeScope),
-                        typeof(DefinitionBase),
-                        new FrameworkPropertyMetadata(
-                                null,
-                                FrameworkPropertyMetadataOptions.Inherits));
-
-        /// <summary>
-        /// Shared size group property marks column / row definition as belonging to a group "Foo" or "Bar".
-        /// </summary>
-        /// <remarks>
-        /// Value of the Shared Size Group Property must satisfy the following rules:
-        /// <list type="bullet">
-        /// <item><description>
-        /// String must not be empty.
-        /// </description></item>
-        /// <item><description>
-        /// String must consist of letters, digits and underscore ('_') only.
-        /// </description></item>
-        /// <item><description>
-        /// String must not start with a digit.
-        /// </description></item>
-        /// </list>
-        /// </remarks>
-        public static readonly DependencyProperty SharedSizeGroupProperty =
-                DependencyProperty.Register(
-                        "SharedSizeGroup",
-                        typeof(string),
-                        typeof(DefinitionBase),
-                        new FrameworkPropertyMetadata(new PropertyChangedCallback(OnSharedSizeGroupPropertyChanged)),
-                        new ValidateValueCallback(SharedSizeGroupPropertyValueValid));
-
-        /// <summary>
-        /// Static ctor. Used for static registration of properties.
-        /// </summary>
-        static DefinitionBase()
-        {
-            PrivateSharedSizeScopeProperty.OverrideMetadata(
-                    typeof(DefinitionBase),
-                    new FrameworkPropertyMetadata(new PropertyChangedCallback(OnPrivateSharedSizeScopePropertyChanged)));
-        }
-
-        #endregion Properties
     }
 }
