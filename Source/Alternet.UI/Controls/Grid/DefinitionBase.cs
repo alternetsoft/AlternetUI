@@ -99,7 +99,7 @@ namespace Alternet.UI
         /// Updates min size.
         /// </summary>
         /// <param name="minSize">New size.</param>
-        internal void UpdateMinSize(double minSize)
+        internal void UpdateMinSize(float minSize)
         {
             _minSize = Math.Max(_minSize, minSize);
         }
@@ -108,7 +108,7 @@ namespace Alternet.UI
         /// Sets min size.
         /// </summary>
         /// <param name="minSize">New size.</param>
-        internal void SetMinSize(double minSize)
+        internal void SetMinSize(float minSize)
         {
             _minSize = minSize;
         }
@@ -135,7 +135,7 @@ namespace Alternet.UI
 
                     if (((GridLength)e.OldValue).GridUnitType != ((GridLength)e.NewValue).GridUnitType)
                     {
-                        parentGrid.Invalidate();
+                        parentGrid.InvalidateCells();
                     }
                     else
                     {
@@ -183,7 +183,7 @@ namespace Alternet.UI
         /// </remarks>
         internal static bool IsUserMinSizePropertyValueValid(object value)
         {
-            double v = (double)value;
+            float v = (float)value;
             return (!DoubleUtil.IsNaN(v) && v >= 0.0d && !Double.IsPositiveInfinity(v));
         }
 
@@ -212,7 +212,7 @@ namespace Alternet.UI
         /// </remarks>
         internal static bool IsUserMaxSizePropertyValueValid(object value)
         {
-            double v = (double)value;
+            float v = (float)value;
             return (!DoubleUtil.IsNaN(v) && v >= 0.0d);
         }
 
@@ -272,7 +272,7 @@ namespace Alternet.UI
         /// <summary>
         /// Internal accessor to user min size field.
         /// </summary>
-        internal double UserMinSize
+        internal float UserMinSize
         {
             get { return (UserMinSizeValueCache); }
         }
@@ -280,7 +280,7 @@ namespace Alternet.UI
         /// <summary>
         /// Internal accessor to user max size field.
         /// </summary>
-        internal double UserMaxSize
+        internal float UserMaxSize
         {
             get { return (UserMaxSizeValueCache); }
         }
@@ -313,7 +313,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns or sets measure size for the definition.
         /// </summary>
-        internal double MeasureSize
+        internal float MeasureSize
         {
             get { return (_measureSize); }
             set { _measureSize = value; }
@@ -325,11 +325,11 @@ namespace Alternet.UI
         /// <remarks>
         /// Returned value is guaranteed to be true preferred size.
         /// </remarks>
-        internal double PreferredSize
+        internal float PreferredSize
         {
             get
             {
-                double preferredSize = MinSize;
+                float preferredSize = MinSize;
                 if (_sizeType != Grid.LayoutTimeSizeType.Auto
                     && preferredSize < _measureSize)
                 {
@@ -342,7 +342,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns or sets size cache for the definition.
         /// </summary>
-        internal double SizeCache
+        internal float SizeCache
         {
             get { return (_sizeCache); }
             set { _sizeCache = value; }
@@ -351,11 +351,11 @@ namespace Alternet.UI
         /// <summary>
         /// Returns min size.
         /// </summary>
-        internal double MinSize
+        internal float MinSize
         {
             get
             {
-                double minSize = _minSize;
+                float minSize = _minSize;
                 if (UseSharedMinimum
                     && _sharedState != null
                     && minSize < _sharedState.MinSize)
@@ -369,11 +369,11 @@ namespace Alternet.UI
         /// <summary>
         /// Returns min size, always taking into account shared state.
         /// </summary>
-        internal double MinSizeForArrange
+        internal float MinSizeForArrange
         {
             get
             {
-                double minSize = _minSize;
+                float minSize = _minSize;
                 if (_sharedState != null
                     && (UseSharedMinimum || !LayoutWasUpdated)
                     && minSize < _sharedState.MinSize)
@@ -387,7 +387,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns min size, never taking into account shared state.
         /// </summary>
-        internal double RawMinSize
+        internal float RawMinSize
         {
             get { return _minSize; }
         }
@@ -418,11 +418,11 @@ namespace Alternet.UI
         /// <summary>
         /// Internal helper to access up-to-date UserMinSize property value.
         /// </summary>
-        internal double UserMinSizeValueCache
+        internal float UserMinSizeValueCache
         {
             get
             {
-                return (double)GetValue(
+                return (float)GetValue(
                         _isColumnDefinition ?
                         ColumnDefinition.MinWidthProperty :
                         RowDefinition.MinHeightProperty);
@@ -432,11 +432,11 @@ namespace Alternet.UI
         /// <summary>
         /// Internal helper to access up-to-date UserMaxSize property value.
         /// </summary>
-        internal double UserMaxSizeValueCache
+        internal float UserMaxSizeValueCache
         {
             get
             {
-                return (double)GetValue(
+                return (float)GetValue(
                         _isColumnDefinition ?
                         ColumnDefinition.MaxWidthProperty :
                         RowDefinition.MaxHeightProperty);
@@ -645,10 +645,10 @@ namespace Alternet.UI
 
         private Grid.LayoutTimeSizeType _sizeType;      //  layout-time user size type. it may differ from _userSizeValueCache.UnitType when calculating "to-content"
 
-        private double _minSize;                        //  used during measure to accumulate size for "Auto" and "Star" DefinitionBase's
-        private double _measureSize;                    //  size, calculated to be the input contstraint size for Child.Measure
-        private double _sizeCache;                      //  cache used for various purposes (sorting, caching, etc) during calculations
-        private double _offset;                         //  offset of the DefinitionBase from left / top corner (assuming LTR case)
+        private float _minSize;                        //  used during measure to accumulate size for "Auto" and "Star" DefinitionBase's
+        private float _measureSize;                    //  size, calculated to be the input contstraint size for Child.Measure
+        private float _sizeCache;                      //  cache used for various purposes (sorting, caching, etc) during calculations
+        private float _offset;                         //  offset of the DefinitionBase from left / top corner (assuming LTR case)
 
         private SharedSizeState _sharedState;           //  reference to shared state object this instance is registered with
 
@@ -769,7 +769,7 @@ namespace Alternet.UI
                     for (int i = 0, count = _registry.Count; i < count; ++i)
                     {
                         Grid parentGrid = (Grid)(_registry[i].Parent);
-                        parentGrid.Invalidate();
+                        parentGrid.InvalidateCells();
                     }
                     _broadcastInvalidation = false;
                 }
@@ -790,7 +790,7 @@ namespace Alternet.UI
             /// <summary>
             /// DefinitionBase's specific code.
             /// </summary>
-            internal double MinSize
+            internal float MinSize
             {
                 get
                 {
@@ -848,7 +848,7 @@ namespace Alternet.UI
             /// </summary>
             private void OnLayoutUpdated(object sender, EventArgs e)
             {
-                double sharedMinSize = 0;
+                float sharedMinSize = 0;
 
                 //  accumulate min size of all participating definitions
                 for (int i = 0, count = _registry.Count; i < count; ++i)
@@ -940,7 +940,7 @@ namespace Alternet.UI
             private bool _broadcastInvalidation;                //  "true" when broadcasting of invalidation is needed
             private bool _userSizeValid;                        //  "true" when _userSize is up to date
             private GridLength _userSize;                       //  shared state
-            private double _minSize;                            //  shared state
+            private float _minSize;                            //  shared state
         }
 
         #endregion Private Structures Classes

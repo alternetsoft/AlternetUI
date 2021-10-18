@@ -479,7 +479,7 @@ namespace Alternet.UI
 		{
 			this._version++;
 			this._owner.RowDefinitionCollectionDirty = true;
-			this._owner.Invalidate();
+			this._owner.InvalidateCells();
 		}
 
 		private void PrivateSetCapacity(int value)
