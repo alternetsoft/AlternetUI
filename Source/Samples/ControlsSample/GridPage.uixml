@@ -1,0 +1,23 @@
+﻿<Control x:Class="ControlsSample.GridPage"
+        xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Button Text="Button (0, 0)" />
+    <Button Text="Button (1, 0)" Grid.Column="1"/>
+    <Button Text="Button (0, 1)" Grid.Row="1"/>
+    <Button Text="Button (1, 1)" Grid.Column="1" Grid.Row="1"/>
+    <Button Text="Bottom Button" Grid.ColumnSpan="2" Grid.Row="2"/>
+    <Button Text="Right Button" Grid.RowSpan="2" Grid.Column="2"/>
+  </Grid>
+</Control>

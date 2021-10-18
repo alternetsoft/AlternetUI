@@ -28,6 +28,7 @@
 
     <ItemGroup>
       <None Remove="ComboBoxPage.uixml" />
+      <None Remove="GridPage.uixml" />
       <None Remove="ListBoxPage.uixml" />
       <None Remove="ListViewPage.uixml" />
       <None Remove="MainWindow.uixml" />
@@ -63,6 +64,9 @@
       </UIXml>
       <UIXml Update="ListViewPage.uixml">
         <Generator>MSBuild:Compile</Generator>
+      </UIXml>
+      <UIXml Update="GridPage.uixml">
+        <SubType>Designer</SubType>
       </UIXml>
       <UIXml Update="TreeViewPage.uixml">
         <SubType>Designer</SubType>
