@@ -115,7 +115,7 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
         _wxWindow->Bind(wxEVT_LEFT_DOWN, &Control::OnMouseLeftButtonDown, this);
         _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftButtonUp, this);
-        
+
         OnWxWindowCreated();
         _delayedValues.ApplyIfPossible();
 

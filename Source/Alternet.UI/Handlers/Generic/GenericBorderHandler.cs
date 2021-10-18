@@ -15,10 +15,22 @@ namespace Alternet.UI
                 drawingContext.DrawRectangle(new Pen(Control.BorderBrush), ClientRectangle);
         }
 
+        public override RectangleF ChildrenLayoutBounds
+        {
+            get
+            {
+                var bounds = base.ChildrenLayoutBounds;
+                bounds.X++;
+                bounds.Y++;
+                bounds.Width -= 2;
+                bounds.Height -= 2;
+                return bounds; // todo: border thickness.
+            }
+        }
+
         public override SizeF GetPreferredSize(SizeF availableSize)
         {
-            var size = GetChildrenMaxPreferredSize(availableSize);
-            return size + new SizeF(2, 2); // todo: BorderThickness
+            return base.GetPreferredSize(availableSize) + new SizeF(2, 2);
         }
     }
 }

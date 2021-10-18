@@ -1,3 +1,5 @@
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -5,5 +7,9 @@ namespace Alternet.UI
     /// </summary>
     public class Border : Control
     {
+        public Border()
+        {
+            BorderBrush = Brushes.Gray;
+        }
     }
 }
