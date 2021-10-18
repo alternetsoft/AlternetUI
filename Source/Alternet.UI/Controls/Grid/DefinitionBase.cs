@@ -1,3 +1,5 @@
+#nullable disable
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -512,7 +514,7 @@ namespace Alternet.UI
         /// existing scope just left. In both cases if the DefinitionBase object is already registered
         /// in SharedSizeState, it should un-register and register itself in a new one.
         /// </remark>
-        private void OnPrivateSharedSizeScopePropertyChanged(SharedSizeScope? newValue)
+        private void OnPrivateSharedSizeScopePropertyChanged(SharedSizeScope newValue)
         {
             DefinitionBase definition = this;
 
@@ -542,12 +544,12 @@ namespace Alternet.UI
             }
         }
 
-        static Dictionary<Control, SharedSizeScope?> privateSharedSizeScopes = new Dictionary<Control, SharedSizeScope?>();
+        static Dictionary<Control, SharedSizeScope> privateSharedSizeScopes = new Dictionary<Control, SharedSizeScope>();
 
         /// <summary>
         /// Private getter of shared state collection dynamic property.
         /// </summary>
-        private static SharedSizeScope? GetPrivateSharedSizeScope(Control control)
+        private static SharedSizeScope GetPrivateSharedSizeScope(Control control)
         {
             return privateSharedSizeScopes.TryGetValue(control, out var value) ? value : null;
         }
@@ -555,7 +557,7 @@ namespace Alternet.UI
         /// <summary>
         /// Private getter of shared state collection dynamic property.
         /// </summary>
-        private void SetPrivateSharedSizeScope(Control control, SharedSizeScope? value)
+        private void SetPrivateSharedSizeScope(Control control, SharedSizeScope value)
         {
             privateSharedSizeScopes[control] = value;
             OnPrivateSharedSizeScopePropertyChanged(value);

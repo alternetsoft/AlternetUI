@@ -1,9 +1,10 @@
-using System;
+#nullable disable
 
 namespace Alternet.UI
 {
     /// <summary>
-    /// TODO
+    /// GridUnitType enum is used to indicate what kind of value the 
+    /// GridLength is holding.
     /// </summary>
     public enum GridUnitType
     {

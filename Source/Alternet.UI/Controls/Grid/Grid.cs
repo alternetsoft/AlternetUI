@@ -1,3 +1,5 @@
+#nullable disable
+
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 using System;
@@ -3072,7 +3074,7 @@ namespace Alternet.UI
 
         private ExtendedData _data;                             //  extended data instantiated on demand, for non-trivial case handling only
         private Flags _flags;                                   //  grid validity / property caches dirtiness flags
-        private GridLinesRenderer _gridLinesRenderer;
+        //private GridLinesRenderer _gridLinesRenderer;
 
         // Keeps track of definition indices.
         int[] _definitionIndices;
@@ -3732,12 +3734,12 @@ namespace Alternet.UI
                 {
                     if (_currentEnumerator == -1)
                     {
-#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+#pragma warning disable 6503 // IEnumerator.Current is documented to throw this exception
                         throw new InvalidOperationException();
                     }
                     if (_currentEnumerator >= 3)
                     {
-#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+#pragma warning restore 6503 // IEnumerator.Current is documented to throw this exception
                         throw new InvalidOperationException();
                     }
 

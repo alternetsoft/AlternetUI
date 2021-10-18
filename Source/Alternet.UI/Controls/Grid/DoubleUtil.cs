@@ -1,3 +1,5 @@
+#nullable disable
+
 using Alternet.Drawing;
 using System;
 using System.Numerics;
