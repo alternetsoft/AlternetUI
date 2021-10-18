@@ -512,6 +512,8 @@ namespace Alternet.UI
 
         void OnLayout()
         {
+            GetPreferredSize(new SizeF(float.PositiveInfinity, float.PositiveInfinity)); // yezo
+
             var arrangeSize = Handler.ChildrenLayoutBounds.Size;
             try
             {
