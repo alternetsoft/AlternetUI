@@ -13,6 +13,7 @@ namespace Alternet.UI
         public Border()
         {
             BorderBrush = Brushes.Gray;
+            Padding = new Thickness(2);
         }
     }
 }

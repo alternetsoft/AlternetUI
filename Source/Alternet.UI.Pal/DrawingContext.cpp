@@ -56,6 +56,7 @@ namespace Alternet::UI
         auto oldPen = _dc->GetPen();
         auto oldBrush = _dc->GetBrush();
 
+        auto penThickness = pen->GetWxPen().GetWidth();
         _dc->SetPen(pen->GetWxPen());
         _dc->SetBrush(*wxTRANSPARENT_BRUSH);
 
@@ -64,10 +65,10 @@ namespace Alternet::UI
         _dc->DrawRectangle(
             fromDip(
                 RectangleF(
-                    rectangle.X/* + penThickness / 2*/,
-                    rectangle.Y/* + penThickness / 2*/,
-                    rectangle.Width/* - penThickness / 2*/,
-                    rectangle.Height/* - penThickness / 2*/).Offset(_translation),
+                    rectangle.X + penThickness / 2,
+                    rectangle.Y + penThickness / 2,
+                    rectangle.Width - penThickness / 2,
+                    rectangle.Height - penThickness / 2).Offset(_translation),
                 _dc->GetWindow()));
 
         _dc->SetPen(oldPen);
