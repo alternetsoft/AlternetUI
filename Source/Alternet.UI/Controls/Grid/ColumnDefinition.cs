@@ -5,10 +5,10 @@ using System.ComponentModel;
 
 namespace Alternet.UI
 {
-	/// <summary>Defines column-specific properties that apply to <see cref="T:System.Windows.Controls.Grid" /> elements. </summary>
+	/// <summary>Defines column-specific properties that apply to <see cref="Grid" /> elements. </summary>
 	public class ColumnDefinition : DefinitionBase
 	{
-		/// <summary>Initializes a new instance of the <see cref="T:System.Windows.Controls.ColumnDefinition" /> class.</summary>
+		/// <summary>Initializes a new instance of the <see cref="ColumnDefinition" /> class.</summary>
 		public ColumnDefinition() : base(true)
 		{
 		}
@@ -17,8 +17,8 @@ namespace Alternet.UI
 		float minWidth;
 		float maxWidth = float.PositiveInfinity;
 
-		/// <summary>Gets the calculated width of a <see cref="T:System.Windows.Controls.ColumnDefinition" /> element, or sets the <see cref="T:System.Windows.GridLength" /> value of a column that is defined by the <see cref="T:System.Windows.Controls.ColumnDefinition" />.   </summary>
-		/// <returns>The <see cref="T:System.Windows.GridLength" /> that represents the width of the Column. The default value is 1.0.</returns>
+		/// <summary>Gets the calculated width of a <see cref="ColumnDefinition" /> element, or sets the <see cref="GridLength" /> value of a column that is defined by the <see cref="ColumnDefinition" />.   </summary>
+		/// <returns>The <see cref="GridLength" /> that represents the width of the Column. The default value is 1.0.</returns>
 		public GridLength Width
 		{
 			get
@@ -36,8 +36,8 @@ namespace Alternet.UI
 			}
 		}
 
-		/// <summary>Gets or sets a value that represents the minimum width of a <see cref="T:System.Windows.Controls.ColumnDefinition" />.   </summary>
-		/// <returns>A <see cref="T:System.Double" /> that represents the minimum width. The default value is 0.</returns>
+		/// <summary>Gets or sets a value that represents the minimum width of a <see cref="ColumnDefinition" />.   </summary>
+		/// <returns>A <see cref="float" /> that represents the minimum width. The default value is 0.</returns>
 		[TypeConverter(typeof(LengthConverter))]
 		public float MinWidth
 		{
@@ -55,8 +55,8 @@ namespace Alternet.UI
 			}
 		}
 
-		/// <summary>Gets or sets a value that represents the maximum width of a <see cref="T:System.Windows.Controls.ColumnDefinition" />.   </summary>
-		/// <returns>A <see cref="T:System.Double" /> that represents the maximum width. The default value is <see cref="F:System.Double.PositiveInfinity" />.</returns>
+		/// <summary>Gets or sets a value that represents the maximum width of a <see cref="ColumnDefinition" />.   </summary>
+		/// <returns>A <see cref="float" /> that represents the maximum width. The default value is <see cref="F:System.Double.PositiveInfinity" />.</returns>
 		[TypeConverter(typeof(LengthConverter))]
 		public float MaxWidth
 		{
@@ -75,8 +75,8 @@ namespace Alternet.UI
 			}
 		}
 
-		/// <summary>Gets a value that represents the actual calculated width of a <see cref="T:System.Windows.Controls.ColumnDefinition" />. </summary>
-		/// <returns>A <see cref="T:System.Double" /> that represents the actual calculated width in device independent pixels. The default value is 0.</returns>
+		/// <summary>Gets a value that represents the actual calculated width of a <see cref="ColumnDefinition" />. </summary>
+		/// <returns>A <see cref="float" /> that represents the actual calculated width in device independent pixels. The default value is 0.</returns>
 		public float ActualWidth
 		{
 			get
@@ -90,8 +90,8 @@ namespace Alternet.UI
 			}
 		}
 
-		/// <summary>Gets a value that represents the offset value of this <see cref="T:System.Windows.Controls.ColumnDefinition" />. </summary>
-		/// <returns>A <see cref="T:System.Double" /> that represents the offset of the column. The default value is 0.</returns>
+		/// <summary>Gets a value that represents the offset value of this <see cref="ColumnDefinition" />. </summary>
+		/// <returns>A <see cref="float" /> that represents the offset of the column. The default value is 0.</returns>
 		public float Offset
 		{
 			get

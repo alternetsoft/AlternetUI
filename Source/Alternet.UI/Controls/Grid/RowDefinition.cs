@@ -5,9 +5,12 @@ using System.ComponentModel;
 
 namespace Alternet.UI
 {
-	public class RowDefinition : DefinitionBase
+    /// <summary>
+    /// Defines row-specific properties that apply to <see cref="Grid"/> elements.
+    /// </summary>
+    public class RowDefinition : DefinitionBase
 	{
-		/// <summary>Initializes a new instance of the <see cref="T:System.Windows.Controls.RowDefinition" /> class.</summary>
+		/// <summary>Initializes a new instance of the <see cref="RowDefinition" /> class.</summary>
 		public RowDefinition() : base(false)
 		{
 		}
@@ -17,8 +20,8 @@ namespace Alternet.UI
 		float maxHeight = float.PositiveInfinity;
 
 
-		/// <summary>Gets the calculated height of a <see cref="T:System.Windows.Controls.RowDefinition" /> element, or sets the <see cref="T:System.Windows.GridLength" /> value of a row that is defined by the <see cref="T:System.Windows.Controls.RowDefinition" />.   </summary>
-		/// <returns>The <see cref="T:System.Windows.GridLength" /> that represents the height of the row. The default value is 1.0.</returns>
+		/// <summary>Gets the calculated height of a <see cref="RowDefinition" /> element, or sets the <see cref="GridLength" /> value of a row that is defined by the <see cref="RowDefinition" />.   </summary>
+		/// <returns>The <see cref="GridLength" /> that represents the height of the row. The default value is 1.0.</returns>
 		public GridLength Height
 		{
 			get
@@ -36,8 +39,8 @@ namespace Alternet.UI
 			}
 		}
 
-		/// <summary>Gets or sets a value that represents the minimum allowable height of a <see cref="T:System.Windows.Controls.RowDefinition" />.  </summary>
-		/// <returns>A <see cref="T:System.Double" /> that represents the minimum allowable height. The default value is 0.</returns>
+		/// <summary>Gets or sets a value that represents the minimum allowable height of a <see cref="RowDefinition" />.  </summary>
+		/// <returns>A <see cref="float" /> that represents the minimum allowable height. The default value is 0.</returns>
 		[TypeConverter(typeof(LengthConverter))]
 		public float MinHeight
 		{
@@ -55,8 +58,8 @@ namespace Alternet.UI
 			}
 		}
 
-		/// <summary>Gets or sets a value that represents the maximum height of a <see cref="T:System.Windows.Controls.RowDefinition" />.  </summary>
-		/// <returns>A <see cref="T:System.Double" /> that represents the maximum height. </returns>
+		/// <summary>Gets or sets a value that represents the maximum height of a <see cref="RowDefinition" />.  </summary>
+		/// <returns>A <see cref="float" /> that represents the maximum height. </returns>
 		[TypeConverter(typeof(LengthConverter))]
 		public float MaxHeight
 		{
@@ -74,8 +77,8 @@ namespace Alternet.UI
 			}
 		}
 
-		/// <summary>Gets a value that represents the calculated height of the <see cref="T:System.Windows.Controls.RowDefinition" />.</summary>
-		/// <returns>A <see cref="T:System.Double" /> that represents the calculated height in device independent pixels. The default value is 0.</returns>
+		/// <summary>Gets a value that represents the calculated height of the <see cref="RowDefinition" />.</summary>
+		/// <returns>A <see cref="float" /> that represents the calculated height in device independent pixels. The default value is 0.</returns>
 		public float ActualHeight
 		{
 			get
@@ -89,8 +92,8 @@ namespace Alternet.UI
 			}
 		}
 
-		/// <summary>Gets a value that represents the offset value of this <see cref="T:System.Windows.Controls.RowDefinition" />.</summary>
-		/// <returns>A <see cref="T:System.Double" /> that represents the offset of the row. The default value is 0.</returns>
+		/// <summary>Gets a value that represents the offset value of this <see cref="RowDefinition" />.</summary>
+		/// <returns>A <see cref="float" /> that represents the offset of the row. The default value is 0.</returns>
 		public float Offset
 		{
 			get

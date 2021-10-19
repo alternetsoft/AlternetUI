@@ -7,6 +7,10 @@ using System.Diagnostics;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Defines the functionality that is used by the <see cref="ColumnDefinitionCollection"/> and
+    /// <see cref="RowDefinitionCollection"/> classes. This is an abstract class.
+    /// </summary>
     public abstract class DefinitionBase
     {
         internal DefinitionBase(bool isColumnDefinition)
@@ -15,45 +19,45 @@ namespace Alternet.UI
             _parentIndex = -1;
         }
 
-        string sharedSizeGroup;
+        //string sharedSizeGroup;
 
-        /// <summary>
-        /// SharedSizeGroup property.
-        /// </summary>
-        public string SharedSizeGroup
-        {
-            get { return sharedSizeGroup; }
-            set
-            {
-                if (!SharedSizeGroupPropertyValueValid(value))
-                    throw new ArgumentException();
-                sharedSizeGroup = value;
-                OnSharedSizeGroupPropertyChanged(value);
-            }
-        }
+        ///// <summary>
+        ///// SharedSizeGroup property.
+        ///// </summary>
+        //public string SharedSizeGroup
+        //{
+        //    get { return sharedSizeGroup; }
+        //    set
+        //    {
+        //        if (!SharedSizeGroupPropertyValueValid(value))
+        //            throw new ArgumentException();
+        //        sharedSizeGroup = value;
+        //        OnSharedSizeGroupPropertyChanged(value);
+        //    }
+        //}
 
-        /// <summary>
-        /// Callback to notify about entering model tree.
-        /// </summary>
-        internal void OnEnterParentTree()
-        {
-            if (_sharedState == null)
-            {
-                //  start with getting SharedSizeGroup value.
-                //  this property is NOT inhereted which should result in better overall perf.
-                string sharedSizeGroupId = SharedSizeGroup;
-                if (sharedSizeGroupId != null)
-                {
-                    // yezo todo
-                    //var privateSharedSizeScope = GetPrivateSharedSizeScope();
-                    //if (privateSharedSizeScope != null)
-                    //{
-                    //    _sharedState = privateSharedSizeScope.EnsureSharedState(sharedSizeGroupId);
-                    //    _sharedState.AddMember(this);
-                    //}
-                }
-            }
-        }
+        ///// <summary>
+        ///// Callback to notify about entering model tree.
+        ///// </summary>
+        //internal void OnEnterParentTree()
+        //{
+        //    if (_sharedState == null)
+        //    {
+        //        //  start with getting SharedSizeGroup value.
+        //        //  this property is NOT inhereted which should result in better overall perf.
+        //        string sharedSizeGroupId = SharedSizeGroup;
+        //        if (sharedSizeGroupId != null)
+        //        {
+        //            // yezo todo
+        //            //var privateSharedSizeScope = GetPrivateSharedSizeScope();
+        //            //if (privateSharedSizeScope != null)
+        //            //{
+        //            //    _sharedState = privateSharedSizeScope.EnsureSharedState(sharedSizeGroupId);
+        //            //    _sharedState.AddMember(this);
+        //            //}
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Callback to notify about exitting model tree.
@@ -99,9 +103,6 @@ namespace Alternet.UI
             _minSize = minSize;
         }
 
-        /// <summary>
-        /// <see cref="PropertyMetadata.PropertyChangedCallback"/>
-        /// </summary>
         /// <remarks>
         /// This method needs to be internal to be accessable from derived classes.
         /// </remarks>
@@ -129,9 +130,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// <see cref="DependencyProperty.ValidateValueCallback"/>
-        /// </summary>
         /// <remarks>
         /// This method needs to be internal to be accessable from derived classes.
         /// </remarks>
@@ -140,9 +138,6 @@ namespace Alternet.UI
             return (((GridLength)value).Value >= 0);
         }
 
-        /// <summary>
-        /// <see cref="PropertyMetadata.PropertyChangedCallback"/>
-        /// </summary>
         /// <remarks>
         /// This method needs to be internal to be accessable from derived classes.
         /// </remarks>
@@ -155,11 +150,11 @@ namespace Alternet.UI
             }
         }
 
-        public Control Parent { get; set; }
-
         /// <summary>
-        /// <see cref="DependencyProperty.ValidateValueCallback"/>
+        /// Gets or sets a parent <see cref="Control"/> for this <see cref="DefinitionBase"/>.
         /// </summary>
+        internal Control Parent { get; set; }
+
         /// <remarks>
         /// This method needs to be internal to be accessable from derived classes.
         /// </remarks>
@@ -169,9 +164,6 @@ namespace Alternet.UI
             return (!DoubleUtil.IsNaN(v) && v >= 0.0d && !Double.IsPositiveInfinity(v));
         }
 
-        /// <summary>
-        /// <see cref="PropertyMetadata.PropertyChangedCallback"/>
-        /// </summary>
         /// <remarks>
         /// This method needs to be internal to be accessable from derived classes.
         /// </remarks>
@@ -184,9 +176,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// <see cref="DependencyProperty.ValidateValueCallback"/>
-        /// </summary>
         /// <remarks>
         /// This method needs to be internal to be accessable from derived classes.
         /// </remarks>
@@ -196,9 +185,6 @@ namespace Alternet.UI
             return (!DoubleUtil.IsNaN(v) && v >= 0.0d);
         }
 
-        /// <summary>
-        /// <see cref="PropertyMetadata.PropertyChangedCallback"/>
-        /// </summary>
         /// <remarks>
         /// This method reflects Grid.SharedScopeProperty state by setting / clearing
         /// dynamic property PrivateSharedSizeScopeProperty. Value of PrivateSharedSizeScopeProperty
@@ -431,83 +417,76 @@ namespace Alternet.UI
             return ((_flags & flags) == flags);
         }
 
-        /// <summary>
-        /// <see cref="PropertyMetadata.PropertyChangedCallback"/>
-        /// </summary>
-        private void OnSharedSizeGroupPropertyChanged(string newValue)
-        {
-            if (InParentLogicalTree)
-            {
-                string sharedSizeGroupId = newValue;
+        //private void OnSharedSizeGroupPropertyChanged(string newValue)
+        //{
+        //    if (InParentLogicalTree)
+        //    {
+        //        string sharedSizeGroupId = newValue;
 
-                if (_sharedState != null)
-                {
-                    //  if definition is already registered AND shared size group id is changing,
-                    //  then un-register the definition from the current shared size state object.
-                    _sharedState.RemoveMember(this);
-                    _sharedState = null;
-                }
+        //        if (_sharedState != null)
+        //        {
+        //            //  if definition is already registered AND shared size group id is changing,
+        //            //  then un-register the definition from the current shared size state object.
+        //            _sharedState.RemoveMember(this);
+        //            _sharedState = null;
+        //        }
 
-                if ((_sharedState == null) && (sharedSizeGroupId != null))
-                {
-                    //SharedSizeScope privateSharedSizeScope = GetPrivateSharedSizeScope(); // yezo todo
-                    //if (privateSharedSizeScope != null)
-                    //{
-                    //    //  if definition is not registered and both: shared size group id AND private shared scope
-                    //    //  are available, then register definition.
-                    //    _sharedState = privateSharedSizeScope.EnsureSharedState(sharedSizeGroupId);
-                    //    _sharedState.AddMember(this);
-                    //}
-                }
-            }
-        }
+        //        if ((_sharedState == null) && (sharedSizeGroupId != null))
+        //        {
+        //            //SharedSizeScope privateSharedSizeScope = GetPrivateSharedSizeScope(); // yezo todo
+        //            //if (privateSharedSizeScope != null)
+        //            //{
+        //            //    //  if definition is not registered and both: shared size group id AND private shared scope
+        //            //    //  are available, then register definition.
+        //            //    _sharedState = privateSharedSizeScope.EnsureSharedState(sharedSizeGroupId);
+        //            //    _sharedState.AddMember(this);
+        //            //}
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// <see cref="DependencyProperty.ValidateValueCallback"/>
-        /// </summary>
-        /// <remarks>
-        /// Verifies that Shared Size Group Property string
-        /// a) not empty.
-        /// b) contains only letters, digits and underscore ('_').
-        /// c) does not start with a digit.
-        /// </remarks>
-        private static bool SharedSizeGroupPropertyValueValid(object value)
-        {
-            //  null is default value
-            if (value == null)
-            {
-                return (true);
-            }
+        ///// <remarks>
+        ///// Verifies that Shared Size Group Property string
+        ///// a) not empty.
+        ///// b) contains only letters, digits and underscore ('_').
+        ///// c) does not start with a digit.
+        ///// </remarks>
+        //private static bool SharedSizeGroupPropertyValueValid(object value)
+        //{
+        //    //  null is default value
+        //    if (value == null)
+        //    {
+        //        return (true);
+        //    }
 
-            string id = (string)value;
+        //    string id = (string)value;
 
-            if (id != string.Empty)
-            {
-                int i = -1;
-                while (++i < id.Length)
-                {
-                    bool isDigit = Char.IsDigit(id[i]);
+        //    if (id != string.Empty)
+        //    {
+        //        int i = -1;
+        //        while (++i < id.Length)
+        //        {
+        //            bool isDigit = Char.IsDigit(id[i]);
 
-                    if ((i == 0 && isDigit)
-                        || !(isDigit
-                            || Char.IsLetter(id[i])
-                            || '_' == id[i]))
-                    {
-                        break;
-                    }
-                }
+        //            if ((i == 0 && isDigit)
+        //                || !(isDigit
+        //                    || Char.IsLetter(id[i])
+        //                    || '_' == id[i]))
+        //            {
+        //                break;
+        //            }
+        //        }
 
-                if (i == id.Length)
-                {
-                    return (true);
-                }
-            }
+        //        if (i == id.Length)
+        //        {
+        //            return (true);
+        //        }
+        //    }
 
-            return (false);
-        }
+        //    return (false);
+        //}
 
         /// <summary>
-        /// <see cref="PropertyMetadata.PropertyChangedCallback"/>
         /// </summary>
         /// <remark>
         /// OnPrivateSharedSizeScopePropertyChanged is called when new scope enters or
@@ -516,32 +495,32 @@ namespace Alternet.UI
         /// </remark>
         private void OnPrivateSharedSizeScopePropertyChanged(SharedSizeScope newValue)
         {
-            DefinitionBase definition = this;
+            //DefinitionBase definition = this;
 
-            if (definition.InParentLogicalTree)
-            {
-                SharedSizeScope privateSharedSizeScope = newValue;
+            //if (definition.InParentLogicalTree)
+            //{
+            //    SharedSizeScope privateSharedSizeScope = newValue;
 
-                if (definition._sharedState != null)
-                {
-                    //  if definition is already registered And shared size scope is changing,
-                    //  then un-register the definition from the current shared size state object.
-                    definition._sharedState.RemoveMember(definition);
-                    definition._sharedState = null;
-                }
+            //    if (definition._sharedState != null)
+            //    {
+            //        //  if definition is already registered And shared size scope is changing,
+            //        //  then un-register the definition from the current shared size state object.
+            //        definition._sharedState.RemoveMember(definition);
+            //        definition._sharedState = null;
+            //    }
 
-                if ((definition._sharedState == null) && (privateSharedSizeScope != null))
-                {
-                    string sharedSizeGroup = definition.SharedSizeGroup;
-                    if (sharedSizeGroup != null)
-                    {
-                        //  if definition is not registered and both: shared size group id AND private shared scope
-                        //  are available, then register definition.
-                        definition._sharedState = privateSharedSizeScope.EnsureSharedState(definition.SharedSizeGroup);
-                        definition._sharedState.AddMember(definition);
-                    }
-                }
-            }
+            //    if ((definition._sharedState == null) && (privateSharedSizeScope != null))
+            //    {
+            //        string sharedSizeGroup = definition.SharedSizeGroup;
+            //        if (sharedSizeGroup != null)
+            //        {
+            //            //  if definition is not registered and both: shared size group id AND private shared scope
+            //            //  are available, then register definition.
+            //            definition._sharedState = privateSharedSizeScope.EnsureSharedState(definition.SharedSizeGroup);
+            //            definition._sharedState.AddMember(definition);
+            //        }
+            //    }
+            //}
         }
 
         static Dictionary<Control, SharedSizeScope> privateSharedSizeScopes = new Dictionary<Control, SharedSizeScope>();

@@ -10,7 +10,7 @@
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);XAMLX_INTERNAL</DefineConstants>
     <PackageId>Alternet.UI</PackageId>
-    <!--<GenerateDocumentationFile>true</GenerateDocumentationFile>-->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Description>AlterNET UI: a cross-platform graphical user interface framework.</Description>
   </PropertyGroup>
 

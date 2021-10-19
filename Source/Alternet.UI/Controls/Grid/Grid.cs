@@ -11,10 +11,13 @@ using System.Threading;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Defines a flexible grid area that consists of columns and rows.
+    /// </summary>
     public class Grid : Control
     {
         /// <summary>
-        /// Default constructor.
+        /// Initializes a new instance of <see cref="Grid"/>.
         /// </summary>
         public Grid()
         {
@@ -30,6 +33,11 @@ namespace Alternet.UI
         static Dictionary<Control, int> controlRowSpans = new Dictionary<Control, int>();
         static Dictionary<Control, bool> controlIsSharedSizeScopes = new Dictionary<Control, bool>();
 
+        /// <summary>
+        /// Sets a value that indicates which column child control within a <see cref="Grid"/> should appear in.
+        /// </summary>
+        /// <param name="control">The control on which to set the column index.</param>
+        /// <param name="value">The 0-based column index to set.</param>
         public static void SetColumn(Control control, int value)
         {
             if (control == null)
@@ -44,6 +52,11 @@ namespace Alternet.UI
             OnCellAttachedPropertyChanged(control);
         }
 
+        /// <summary>
+        /// Gets a value that indicates which column child control within a <see cref="Grid"/> should appear in.
+        /// </summary>
+        /// <param name="control">The control for which to get the column index.</param>
+        /// <remarks>The 0-based column index.</remarks>
         public static int GetColumn(Control control)
         {
             if (control is null)
@@ -54,6 +67,11 @@ namespace Alternet.UI
             return controlColumns.TryGetValue(control, out var value) ? value : 0;
         }
 
+        /// <summary>
+        /// Sets a value that indicates which row child control within a <see cref="Grid"/> should appear in.
+        /// </summary>
+        /// <param name="control">The control on which to set the row index.</param>
+        /// <param name="value">The 0-based row index to set.</param>
         public static void SetRow(Control control, int value)
         {
             if (control == null)
@@ -68,6 +86,11 @@ namespace Alternet.UI
             OnCellAttachedPropertyChanged(control);
         }
 
+        /// <summary>
+        /// Gets a value that indicates which row child control within a <see cref="Grid"/> should appear in.
+        /// </summary>
+        /// <param name="control">The control for which to get the row index.</param>
+        /// <remarks>The 0-based row index.</remarks>
         public static int GetRow(Control control)
         {
             if (control is null)
@@ -78,6 +101,11 @@ namespace Alternet.UI
             return controlRows.TryGetValue(control, out var value) ? value : 0;
         }
 
+        /// <summary>
+        /// Gets a value that indicates the total number of rows that child content spans within a <see cref="Grid"/>.
+        /// </summary>
+        /// <param name="control">The control for which to get the row span.</param>
+        /// <returns>The total number of rows that child content spans within a <see cref="Grid"/>.</returns>
         public static int GetRowSpan(Control control)
         {
             if (control is null)
@@ -88,6 +116,11 @@ namespace Alternet.UI
             return controlRowSpans.TryGetValue(control, out var value) ? value : 1;
         }
 
+        /// <summary>
+        /// Sets a value that indicates the total number of rows that child content spans within a <see cref="Grid"/>.
+        /// </summary>
+        /// <param name="control">The control for which to set the row span.</param>
+        /// <param name="value">The total number of rows that child content spans within a <see cref="Grid"/>.</param>
         public static void SetRowSpan(Control control, int value)
         {
             if (control == null)
@@ -102,6 +135,11 @@ namespace Alternet.UI
             OnCellAttachedPropertyChanged(control);
         }
 
+        /// <summary>
+        /// Gets a value that indicates the total number of columns that child content spans within a <see cref="Grid"/>.
+        /// </summary>
+        /// <param name="control">The control for which to get the column span.</param>
+        /// <returns>The total number of columns that child content spans within a <see cref="Grid"/>.</returns>
         public static int GetColumnSpan(Control control)
         {
             if (control is null)
@@ -112,6 +150,11 @@ namespace Alternet.UI
             return controlColumnSpans.TryGetValue(control, out var value) ? value : 1;
         }
 
+        /// <summary>
+        /// Sets a value that indicates the total number of columns that child content spans within a <see cref="Grid"/>.
+        /// </summary>
+        /// <param name="control">The control for which to set the column span.</param>
+        /// <param name="value">The total number of columns that child content spans within a <see cref="Grid"/>.</param>
         public static void SetColumnSpan(Control control, int value)
         {
             if (control == null)
@@ -126,39 +169,46 @@ namespace Alternet.UI
             OnCellAttachedPropertyChanged(control);
         }
 
-        public static bool GetIsSharedSizeScope(Control control)
-        {
-            if (control is null)
-            {
-                throw new ArgumentNullException(nameof(control));
-            }
+        //public static bool GetIsSharedSizeScope(Control control)
+        //{
+        //    if (control is null)
+        //    {
+        //        throw new ArgumentNullException(nameof(control));
+        //    }
 
-            return controlIsSharedSizeScopes.TryGetValue(control, out var value) ? value : false;
-        }
+        //    return controlIsSharedSizeScopes.TryGetValue(control, out var value) ? value : false;
+        //}
 
-        public static void SetIsSharedSizeScope(Control control, bool value)
-        {
-            if (control == null)
-            {
-                throw new ArgumentNullException(nameof(control));
-            }
+        //public static void SetIsSharedSizeScope(Control control, bool value)
+        //{
+        //    if (control == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(control));
+        //    }
 
-            controlIsSharedSizeScopes[control] = value;
-            DefinitionBase.OnIsSharedSizeScopePropertyChanged(control, value);
-        }
+        //    controlIsSharedSizeScopes[control] = value;
+        //    DefinitionBase.OnIsSharedSizeScopePropertyChanged(control, value);
+        //}
 
-        bool showGridLines = false;
+        //bool showGridLines = false;
 
-        public bool ShowGridLines
-        {
-            get { return (CheckFlagsAnd(Flags.ShowGridLinesPropertyValue)); }
-            set
-            {
-                showGridLines = value;
-                OnShowGridLinesPropertyChanged(this, value);
-            }
-        }
+        //public bool ShowGridLines
+        //{
+        //    get { return (CheckFlagsAnd(Flags.ShowGridLinesPropertyValue)); }
+        //    set
+        //    {
+        //        showGridLines = value;
+        //        OnShowGridLinesPropertyChanged(this, value);
+        //    }
+        //}
 
+        /// <summary>
+        /// Gets a <see cref="ColumnDefinitionCollection"/> defined on this instance of <see cref="Grid"/>.
+        /// </summary>
+        /// <remarks>
+        /// This collection contains one or more <see cref="ColumnDefinition"/> objects.
+        /// Each such <see cref="ColumnDefinition"/> becomes a placeholder representing a column in the final grid layout.
+        /// </remarks>
         public ColumnDefinitionCollection ColumnDefinitions
         {
             get
@@ -170,6 +220,13 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets a <see cref="RowDefinitionCollection"/> defined on this instance of <see cref="Grid"/>.
+        /// </summary>
+        /// <remarks>
+        /// This collection contains one or more <see cref="RowDefinition"/> objects.
+        /// Each such <see cref="RowDefinition"/> becomes a placeholder representing a column in the final grid layout.
+        /// </remarks>
         public RowDefinitionCollection RowDefinitions
         {
             get
@@ -181,13 +238,15 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e); // todo: draw grid lines.
         }
 
-        public bool UseLayoutRounding { get; set; }
+        private bool UseLayoutRounding { get; set; }
 
+        /// <inheritdoc/>
         public override SizeF GetPreferredSize(SizeF availableSize)
         {
             SizeF gridDesiredSize;
@@ -507,6 +566,7 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
         protected override ControlHandler CreateHandler()
         {
             return new GridHandler();
@@ -988,6 +1048,7 @@ namespace Alternet.UI
         /// width is not registered in columns.</param>
         /// <param name="forceInfinityV">Passed through to MeasureCell.
         /// When "true" cells' desired height is not registered in rows.</param>
+        /// <param name="hasDesiredSizeUChanged"></param>
         private void MeasureCellsGroup(
             int cellsHead,
             SizeF referenceSize,
@@ -1846,7 +1907,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="definitions">Array of definitions to process.</param>
         /// <param name="finalSize">Final size to lay out to.</param>
-        /// <param name="rows">True if sizing row definitions, false for columns</param>
+        /// <param name="columns">True if sizing column definitions, false for rows</param>
         private void SetFinalSize(
             DefinitionBase[] definitions,
             float finalSize,
@@ -2603,9 +2664,9 @@ namespace Alternet.UI
         ///                 if the max constraint has higher discrepancy
         ///     null    if proportion doesn't fail a min or max constraint
         /// The discrepancy is the ratio of the proportion to the max- or min-ratio.
-        /// When both ratios hit the constraint,  minRatio < proportion < maxRatio,
+        /// When both ratios hit the constraint,  minRatio &lt; proportion &lt; maxRatio,
         /// and the minRatio has higher discrepancy if
-        ///         (proportion / minRatio) > (maxRatio / proportion)
+        ///         (proportion / minRatio) &gt; (maxRatio / proportion)
         /// </summary>
         private static bool? Choose(float minRatio, float maxRatio, float proportion)
         {
@@ -2784,9 +2845,6 @@ namespace Alternet.UI
             return (flags == 0 || (_flags & flags) != 0);
         }
 
-        /// <summary>
-        /// <see cref="PropertyMetadata.PropertyChangedCallback"/>
-        /// </summary>
         private static void OnShowGridLinesPropertyChanged(Grid grid, bool newValue)
         {
             if (grid.ExtData != null    // trivial grid is 1 by 1. there is no grid lines anyway
@@ -2798,9 +2856,6 @@ namespace Alternet.UI
             grid.SetFlags(newValue, Flags.ShowGridLinesPropertyValue);
         }
 
-        /// <summary>
-        /// <see cref="PropertyMetadata.PropertyChangedCallback"/>
-        /// </summary>
         private static void OnCellAttachedPropertyChanged(Control child)
         {
             if (child != null)
@@ -2816,17 +2871,11 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// <see cref="DependencyProperty.ValidateValueCallback"/>
-        /// </summary>
         private static bool IsIntValueNotNegative(object value)
         {
             return ((int)value >= 0);
         }
 
-        /// <summary>
-        /// <see cref="DependencyProperty.ValidateValueCallback"/>
-        /// </summary>
         private static bool IsIntValueGreaterThanZero(object value)
         {
             return ((int)value > 0);

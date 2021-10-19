@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Alternet.UI
 {
-	/// <summary>Provides access to an ordered, strongly typed collection of <see cref="T:System.Windows.Controls.ColumnDefinition" /> objects.</summary>
+	/// <summary>Provides access to an ordered, strongly typed collection of <see cref="ColumnDefinition" /> objects.</summary>
 	public sealed class ColumnDefinitionCollection : IList<ColumnDefinition>, ICollection<ColumnDefinition>, IEnumerable<ColumnDefinition>, IEnumerable, IList, ICollection
 	{
 		internal ColumnDefinitionCollection(Grid owner)
@@ -16,7 +16,7 @@ namespace Alternet.UI
 		}
 
 		/// <summary>For a description of this member, see <see cref="M:System.Collections.ICollection.CopyTo(System.Array,System.Int32)" />.</summary>
-		/// <param name="array">A zero-based <see cref="T:System.Array" /> that receives the copied items from the <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</param>
+		/// <param name="array">A zero-based <see cref="T:System.Array" /> that receives the copied items from the <see cref="ColumnDefinitionCollection" />.</param>
 		/// <param name="index">The first position in the specified <see cref="T:System.Array" /> to receive the copied contents.</param>
 		void ICollection.CopyTo(Array array, int index)
 		{
@@ -42,9 +42,9 @@ namespace Alternet.UI
 			}
 		}
 
-		/// <summary>Copies an array of <see cref="T:System.Windows.Controls.ColumnDefinition" /> objects to a given index position within a <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</summary>
-		/// <param name="array">An array of <see cref="T:System.Windows.Controls.ColumnDefinition" /> objects.</param>
-		/// <param name="index">Identifies the index position within <paramref name="array" /> to which the <see cref="T:System.Windows.Controls.ColumnDefinition" /> objects are copied.</param>
+		/// <summary>Copies an array of <see cref="ColumnDefinition" /> objects to a given index position within a <see cref="ColumnDefinitionCollection" />.</summary>
+		/// <param name="array">An array of <see cref="ColumnDefinition" /> objects.</param>
+		/// <param name="index">Identifies the index position within <paramref name="array" /> to which the <see cref="ColumnDefinition" /> objects are copied.</param>
 		/// <exception cref="T:System.ArgumentNullException">
 		///         <paramref name="array" /> is <see langword="null" />.</exception>
 		/// <exception cref="T:System.ArgumentException">
@@ -72,7 +72,7 @@ namespace Alternet.UI
 		}
 
 		/// <summary>For a description of this member, see <see cref="M:System.Collections.IList.Add(System.Object)" />.</summary>
-		/// <param name="value">The <see cref="T:System.Object" /> to add to the <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</param>
+		/// <param name="value">The <see cref="T:System.Object" /> to add to the <see cref="ColumnDefinitionCollection" />.</param>
 		/// <returns>The position into which the new element was inserted.</returns>
 		int IList.Add(object value)
 		{
@@ -82,8 +82,8 @@ namespace Alternet.UI
 			return this._size - 1;
 		}
 
-		/// <summary>Adds a <see cref="T:System.Windows.Controls.ColumnDefinition" /> element to a <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</summary>
-		/// <param name="value">Identifies the <see cref="T:System.Windows.Controls.ColumnDefinition" /> to add to the collection.</param>
+		/// <summary>Adds a <see cref="ColumnDefinition" /> element to a <see cref="ColumnDefinitionCollection" />.</summary>
+		/// <param name="value">Identifies the <see cref="ColumnDefinition" /> to add to the collection.</param>
 		public void Add(ColumnDefinition value)
 		{
 			this.PrivateVerifyWriteAccess();
@@ -91,7 +91,7 @@ namespace Alternet.UI
 			this.PrivateInsert(this._size, value);
 		}
 
-		/// <summary>Clears the content of the <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</summary>
+		/// <summary>Clears the content of the <see cref="ColumnDefinitionCollection" />.</summary>
 		public void Clear()
 		{
 			this.PrivateVerifyWriteAccess();
@@ -105,34 +105,34 @@ namespace Alternet.UI
 		}
 
 		/// <summary>For a description of this member, see <see cref="M:System.Collections.IList.Contains(System.Object)" />.</summary>
-		/// <param name="value">The <see cref="T:System.Object" /> to locate in the <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</param>
+		/// <param name="value">The <see cref="T:System.Object" /> to locate in the <see cref="ColumnDefinitionCollection" />.</param>
 		/// <returns>
-		///     <see langword="true" /> if the <see cref="T:System.Object" /> is found in the <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />; otherwise, <see langword="false" />.</returns>
+		///     <see langword="true" /> if the <see cref="T:System.Object" /> is found in the <see cref="ColumnDefinitionCollection" />; otherwise, <see langword="false" />.</returns>
 		bool IList.Contains(object value)
 		{
 			ColumnDefinition columnDefinition = value as ColumnDefinition;
 			return columnDefinition != null && columnDefinition.Parent == this._owner;
 		}
 
-		/// <summary>Determines whether a given <see cref="T:System.Windows.Controls.ColumnDefinition" /> exists within a <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</summary>
-		/// <param name="value">Identifies the <see cref="T:System.Windows.Controls.ColumnDefinition" /> that is being tested.</param>
+		/// <summary>Determines whether a given <see cref="ColumnDefinition" /> exists within a <see cref="ColumnDefinitionCollection" />.</summary>
+		/// <param name="value">Identifies the <see cref="ColumnDefinition" /> that is being tested.</param>
 		/// <returns>
-		///     <see langword="true" /> if the <see cref="T:System.Windows.Controls.ColumnDefinition" /> exists within the collection; otherwise <see langword="false" />.</returns>
+		///     <see langword="true" /> if the <see cref="ColumnDefinition" /> exists within the collection; otherwise <see langword="false" />.</returns>
 		public bool Contains(ColumnDefinition value)
 		{
 			return value != null && value.Parent == this._owner;
 		}
 
 		/// <summary>For a description of this member, see <see cref="M:System.Collections.IList.IndexOf(System.Object)" />.</summary>
-		/// <param name="value">The <see cref="T:System.Object" /> to locate in the <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</param>
+		/// <param name="value">The <see cref="T:System.Object" /> to locate in the <see cref="ColumnDefinitionCollection" />.</param>
 		/// <returns>The index of <paramref name="value" /> if found in the list; otherwise, -1.</returns>
 		int IList.IndexOf(object value)
 		{
 			return this.IndexOf(value as ColumnDefinition);
 		}
 
-		/// <summary>Returns the index position of a given <see cref="T:System.Windows.Controls.ColumnDefinition" /> within a <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</summary>
-		/// <param name="value">The <see cref="T:System.Windows.Controls.ColumnDefinition" /> whose index position is desired.</param>
+		/// <summary>Returns the index position of a given <see cref="ColumnDefinition" /> within a <see cref="ColumnDefinitionCollection" />.</summary>
+		/// <param name="value">The <see cref="ColumnDefinition" /> whose index position is desired.</param>
 		/// <returns>The index of <paramref name="value" /> if found in the collection; otherwise, -1.</returns>
 		public int IndexOf(ColumnDefinition value)
 		{
@@ -145,7 +145,7 @@ namespace Alternet.UI
 
 		/// <summary>For a description of this member, see <see cref="M:System.Collections.IList.Insert(System.Int32,System.Object)" />.</summary>
 		/// <param name="index">The zero-based index at which to insert the <see cref="T:System.Object" />.</param>
-		/// <param name="value">The <see cref="T:System.Object" /> to insert into the <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</param>
+		/// <param name="value">The <see cref="T:System.Object" /> to insert into the <see cref="ColumnDefinitionCollection" />.</param>
 		void IList.Insert(int index, object value)
 		{
 			this.PrivateVerifyWriteAccess();
@@ -157,9 +157,9 @@ namespace Alternet.UI
 			this.PrivateInsert(index, value as ColumnDefinition);
 		}
 
-		/// <summary>Inserts a <see cref="T:System.Windows.Controls.ColumnDefinition" /> at the specified index position within a <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</summary>
+		/// <summary>Inserts a <see cref="ColumnDefinition" /> at the specified index position within a <see cref="ColumnDefinitionCollection" />.</summary>
 		/// <param name="index">The position within the collection where the item is inserted.</param>
-		/// <param name="value">The <see cref="T:System.Windows.Controls.ColumnDefinition" /> to insert.</param>
+		/// <param name="value">The <see cref="ColumnDefinition" /> to insert.</param>
 		/// <exception cref="T:System.ArgumentOutOfRangeException">
 		///         <paramref name="index" /> is not a valid index in the <see cref="T:System.Collections.IList" />. </exception>
 		public void Insert(int index, ColumnDefinition value)
@@ -174,7 +174,7 @@ namespace Alternet.UI
 		}
 
 		/// <summary>For a description of this member, see <see cref="M:System.Collections.IList.Remove(System.Object)" />.</summary>
-		/// <param name="value">The <see cref="T:System.Object" /> to remove from the <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</param>
+		/// <param name="value">The <see cref="T:System.Object" /> to remove from the <see cref="ColumnDefinitionCollection" />.</param>
 		void IList.Remove(object value)
 		{
 			this.PrivateVerifyWriteAccess();
@@ -185,10 +185,10 @@ namespace Alternet.UI
 			}
 		}
 
-		/// <summary>Removes a <see cref="T:System.Windows.Controls.ColumnDefinition" /> from a <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</summary>
-		/// <param name="value">The <see cref="T:System.Windows.Controls.ColumnDefinition" /> to remove from the collection.</param>
+		/// <summary>Removes a <see cref="ColumnDefinition" /> from a <see cref="ColumnDefinitionCollection" />.</summary>
+		/// <param name="value">The <see cref="ColumnDefinition" /> to remove from the collection.</param>
 		/// <returns>
-		///     <see langword="true" /> if the <see cref="T:System.Windows.Controls.ColumnDefinition" /> was found in the collection and removed; otherwise, <see langword="false" />.</returns>
+		///     <see langword="true" /> if the <see cref="ColumnDefinition" /> was found in the collection and removed; otherwise, <see langword="false" />.</returns>
 		public bool Remove(ColumnDefinition value)
 		{
 			bool flag = this.PrivateValidateValueForRemoval(value);
@@ -199,8 +199,8 @@ namespace Alternet.UI
 			return flag;
 		}
 
-		/// <summary>Removes a <see cref="T:System.Windows.Controls.ColumnDefinition" /> from a <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" /> at the specified index position.</summary>
-		/// <param name="index">The position within the collection at which the <see cref="T:System.Windows.Controls.ColumnDefinition" /> is removed.</param>
+		/// <summary>Removes a <see cref="ColumnDefinition" /> from a <see cref="ColumnDefinitionCollection" /> at the specified index position.</summary>
+		/// <param name="index">The position within the collection at which the <see cref="ColumnDefinition" /> is removed.</param>
 		public void RemoveAt(int index)
 		{
 			this.PrivateVerifyWriteAccess();
@@ -211,9 +211,9 @@ namespace Alternet.UI
 			this.PrivateRemove(this._items[index]);
 		}
 
-		/// <summary>Removes a range of <see cref="T:System.Windows.Controls.ColumnDefinition" /> objects from a <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</summary>
-		/// <param name="index">The position within the collection at which the first <see cref="T:System.Windows.Controls.ColumnDefinition" /> is removed.</param>
-		/// <param name="count">The total number of <see cref="T:System.Windows.Controls.ColumnDefinition" /> objects to remove from the collection.</param>
+		/// <summary>Removes a range of <see cref="ColumnDefinition" /> objects from a <see cref="ColumnDefinitionCollection" />.</summary>
+		/// <param name="index">The position within the collection at which the first <see cref="ColumnDefinition" /> is removed.</param>
+		/// <param name="count">The total number of <see cref="ColumnDefinition" /> objects to remove from the collection.</param>
 		public void RemoveRange(int index, int count)
 		{
 			this.PrivateVerifyWriteAccess();
@@ -258,7 +258,7 @@ namespace Alternet.UI
 			return new ColumnDefinitionCollection.Enumerator(this);
 		}
 
-		/// <summary>Gets the total number of items within this instance of <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</summary>
+		/// <summary>Gets the total number of items within this instance of <see cref="ColumnDefinitionCollection" />.</summary>
 		/// <returns>The total number of items in the collection. This property has no default value.</returns>
 		public int Count
 		{
@@ -270,7 +270,7 @@ namespace Alternet.UI
 
 		/// <summary>For a description of this member, see <see cref="P:System.Collections.IList.IsFixedSize" />.</summary>
 		/// <returns>
-		///     <see langword="true" /> if the the <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" /> has a fixed size; otherwise, <see langword="false" />.</returns>
+		///     <see langword="true" /> if the the <see cref="ColumnDefinitionCollection" /> has a fixed size; otherwise, <see langword="false" />.</returns>
 		bool IList.IsFixedSize
 		{
 			get
@@ -279,7 +279,7 @@ namespace Alternet.UI
 			}
 		}
 
-		/// <summary>Gets a value that indicates whether a <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" /> is read-only.</summary>
+		/// <summary>Gets a value that indicates whether a <see cref="ColumnDefinitionCollection" /> is read-only.</summary>
 		/// <returns>
 		///     <see langword="true" /> if the collection is read-only; otherwise <see langword="false" />. This property has no default value.</returns>
 		public bool IsReadOnly
@@ -290,7 +290,7 @@ namespace Alternet.UI
 			}
 		}
 
-		/// <summary>Gets a value that indicates whether access to this <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" /> is synchronized (thread safe).</summary>
+		/// <summary>Gets a value that indicates whether access to this <see cref="ColumnDefinitionCollection" /> is synchronized (thread safe).</summary>
 		/// <returns>
 		///     <see langword="true" /> if access to this collection is synchronized; otherwise, <see langword="false" />.</returns>
 		public bool IsSynchronized
@@ -301,8 +301,8 @@ namespace Alternet.UI
 			}
 		}
 
-		/// <summary>Gets an object that can be used to synchronize access to the <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</summary>
-		/// <returns>An object that can be used to synchronize access to the <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</returns>
+		/// <summary>Gets an object that can be used to synchronize access to the <see cref="ColumnDefinitionCollection" />.</summary>
+		/// <returns>An object that can be used to synchronize access to the <see cref="ColumnDefinitionCollection" />.</returns>
 		public object SyncRoot
 		{
 			get
@@ -339,7 +339,7 @@ namespace Alternet.UI
 			}
 		}
 
-		/// <summary>Gets a value that indicates the current item within a <see cref="T:System.Windows.Controls.ColumnDefinitionCollection" />.</summary>
+		/// <summary>Gets a value that indicates the current item within a <see cref="ColumnDefinitionCollection" />.</summary>
 		/// <param name="index">The current item in the collection.</param>
 		/// <returns>The element at the specified index.</returns>
 		/// <exception cref="T:System.ArgumentOutOfRangeException">
@@ -432,7 +432,7 @@ namespace Alternet.UI
 			this._items[index] = value;
 			value.Index = index;
 			//this._owner.AddLogicalChild(value); //yezo
-			value.OnEnterParentTree();
+			//value.OnEnterParentTree();
 		}
 
 		private void PrivateDisconnectChild(DefinitionBase value)

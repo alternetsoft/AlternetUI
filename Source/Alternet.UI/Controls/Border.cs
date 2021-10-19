@@ -7,6 +7,9 @@ namespace Alternet.UI
     /// </summary>
     public class Border : Control
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Border"/> class.
+        /// </summary>
         public Border()
         {
             BorderBrush = Brushes.Gray;
