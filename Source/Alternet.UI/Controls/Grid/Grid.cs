@@ -2811,7 +2811,7 @@ namespace Alternet.UI
                     && grid.ListenToNotifications)
                 {
                     grid.CellsStructureDirty = true;
-                    //grid.InvalidateMeasure();
+                    grid.PerformLayout();
                 }
             }
         }

@@ -27,10 +27,13 @@ namespace ControlsSample
             //Children.Add(new GroupBox { Title = "Hello"});
 
             var tc = new TabControl();
-            var rootPanel = new StackPanel { Orientation = StackPanelOrientation.Vertical };
+            var rootPanel = new Grid();
+            rootPanel.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            rootPanel.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
             Children.Add(rootPanel);
 
             rootPanel.Children.Add(tc);
+            Grid.SetRow(tc, 0);
 
             tc.Pages.Add(new TabPage { Title = "Grid", Children = { new GridPage(this) } });
             tc.Pages.Add(new TabPage { Title = "Tree View", Children = { new TreeViewPage(this) } });
@@ -65,6 +68,7 @@ namespace ControlsSample
 
             eventsListBox.Height = 100;
             rootPanel.Children.Add(eventsListBox);
+            Grid.SetRow(eventsListBox, 1);
         }
 
         private static void InitProgressBarPage(TabPage page)
