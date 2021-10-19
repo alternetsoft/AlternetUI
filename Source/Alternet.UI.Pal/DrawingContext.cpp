@@ -62,13 +62,25 @@ namespace Alternet::UI
 
         // todo: different OSes and DPI levels may require adjustment to the rectangle.
         // maybe we will need to make platform-specific DC implementations?
+
+#ifdef __WXOSX_COCOA__
+        auto locationOffset = penThickness;
+        auto sizeOffset = penThickness;
+#elif __WXMSW__
+        auto locationOffset = penThickness / 2;
+        auto sizeOffset = penThickness / 2;
+#else
+        auto locationOffset = 0;
+        auto sizeOffset = 0;
+#endif
+
         _dc->DrawRectangle(
             fromDip(
                 RectangleF(
-                    rectangle.X + penThickness / 2,
-                    rectangle.Y + penThickness / 2,
-                    rectangle.Width - penThickness / 2,
-                    rectangle.Height - penThickness / 2).Offset(_translation),
+                    rectangle.X + locationOffset,
+                    rectangle.Y + locationOffset,
+                    rectangle.Width - sizeOffset,
+                    rectangle.Height - sizeOffset).Offset(_translation),
                 _dc->GetWindow()));
 
         _dc->SetPen(oldPen);
