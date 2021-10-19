@@ -35,6 +35,7 @@ namespace Alternet.UI
                 throw new InvalidOperationException();
 
             NativeControl.InsertPage(index, pageNativeControl, page.Title);
+            PerformLayout();
         }
 
         private void RemovePage(int index, TabPage page)
