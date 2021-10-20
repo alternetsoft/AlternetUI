@@ -82,7 +82,7 @@
       "_appLogoPath": "images/logo/logo.svg",
       "_appFaviconPath": "images/logo/favicon.ico",
       "_disableContribution": true,
-      "_enableNewTab": true,
+      "_enableNewTab": false,
       "_appFooter": "Copyright AlterNET Software",
       "_enableSearch": true
     }
