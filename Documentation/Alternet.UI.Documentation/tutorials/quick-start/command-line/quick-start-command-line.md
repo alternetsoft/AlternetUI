@@ -39,7 +39,7 @@ The application will display a message box in response to a button click.
     ```
 The application will start and display its window:
 
-![Created Application Window](images/created-application-window-macos.png)
+![Created Application Window](images/created-application-window-macos-window.png)
 
 > [!NOTE]
 > By default the created project will use .NET Core 3.1 as a target framework. If .NET Core 3.1 runtime is not installed on your machine you
@@ -79,7 +79,7 @@ The application will start and display its window:
    [!code-xml[](../examples/add-button.uixml?highlight=5-7)]
 1. Run the application by pressing `Ctrl+F5`:
    
-   ![Button Added](images/added-button-macos.png)
+   ![Button Added](images/added-button-macos-window.png)
 
 ### Write Code to Respond to the Button Click
 
@@ -90,7 +90,7 @@ The application will start and display its window:
    [!code-csharp[](../examples/add-click-handler.uixml.cs?highlight=1,13-16)]
 1. Run the application, then click **Say Hello** button. The message box appears:
 
-   ![MessageBox on Click](images/message-box-on-click-macos.png)
+   ![MessageBox on Click](images/message-box-on-click-macos-window.png)
 
 > [!NOTE]
 > The application created in this tutorial can be compiled and run without any modifications on all the supported platforms: Windows, macOS, Linux.

@@ -396,7 +396,7 @@ pre {
         font-weight: bold;
     }
 
-.content img[src$="-macos.png"] {
+.content img[src$="-macos-window.png"] {
     margin-top: -10px;
     margin-bottom: -15px;
 }
