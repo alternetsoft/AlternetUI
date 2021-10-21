@@ -3,9 +3,9 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
-namespace VersionTool
+namespace Alternet.UI.Versioning
 {
-    internal class BuildNumberSetter
+    public class BuildNumberSetter
     {
         public static void SetBuildNumber(string versionFilePath, int buildNumber)
         {

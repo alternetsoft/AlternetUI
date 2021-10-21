@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace VersionTool
+namespace VersionTool.Cli
 {
     internal class Program
     {
@@ -24,7 +24,7 @@ namespace VersionTool
         private static void CheckArguments(string[] args, out int buildNumber)
         {
             if (args.Length != 2 || !args[0].Equals("set-build-number", StringComparison.OrdinalIgnoreCase))
-                throw new Exception("Usage: VersionTool.exe set-build-number <build-number>");
+                throw new Exception("Usage: Alternet.UI.VersionTool.Cli.exe set-build-number <build-number>");
             buildNumber = int.Parse(args[1]);
         }
 
@@ -32,7 +32,7 @@ namespace VersionTool
         {
             var repoRoot = Path.Combine(
                 Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? throw new Exception(),
-                "../../../../../../");
+                "../../../../../../../");
 
             var versionFilePath = Path.GetFullPath(Path.Combine(repoRoot, "Source/Mastering/Version/Version.props"));
             if (!File.Exists(versionFilePath))
