@@ -1,0 +1,25 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="Alternet.UI.Documentation.Examples.GroupBox.MainWindow"
+        Title="Alternet.UI.Documentation.Examples.GroupBox">
+  <StackPanel Orientation="Vertical">
+    <!-- <CreateUixmlDeclaration> -->
+    <GroupBox Name="groupBox" Margin="8,8,8,8" Title="Combo Box Group" EnabledChanged="GroupBox_EnabledChanged">
+      <StackPanel Orientation="Horizontal" Margin="5">
+        <ComboBox Width="200" Name="comboBox" IsEditable="false" VerticalAlignment="Top" />
+
+        <StackPanel Orientation="Vertical" Margin="5,0,0,0">
+          <Button Text="Add Item" Name="addItemButton" Margin="0,3,0,0"/>
+          <Button Text="Remove Item" Name="removeItemButton" Margin="0,3,0,0"/>
+          <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0"/>
+          <Button Text="Set Text to Empty String" Name="setTextToEmptyStringButton" Margin="0,3,0,0"/>
+          <Button Text="Set SelectedIndex to 2" Name="setSelectedIndexTo2Button" Margin="0,3,0,0"/>
+          <Button Text="Set SelectedItem to null" Name="setSelectedItemToNullButton" Margin="0,3,0,0"/>
+          <CheckBox Text="Allow Text Editing" Name="allowTextEditingCheckBox" Margin="0,10,0,0"/>
+        </StackPanel>
+      </StackPanel>
+    </GroupBox>
+    <!-- </CreateUixmlDeclaration> -->
+
+  </StackPanel>
+</Window>
