@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawingContextTutorial", "tutorials\drawing-context\examples\DrawingContextTutorial\DrawingContextTutorial.csproj", "{A660A0A3-5946-4EEC-AB6C-3BFBE9B0A4B9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.CheckBox", "apidoc\CheckBox\examples\Alternet.UI.Documentation.Examples.CheckBox.csproj", "{15FA9347-F19C-4C3B-8A8A-E527A7A09111}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{A660A0A3-5946-4EEC-AB6C-3BFBE9B0A4B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A660A0A3-5946-4EEC-AB6C-3BFBE9B0A4B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A660A0A3-5946-4EEC-AB6C-3BFBE9B0A4B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15FA9347-F19C-4C3B-8A8A-E527A7A09111}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15FA9347-F19C-4C3B-8A8A-E527A7A09111}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15FA9347-F19C-4C3B-8A8A-E527A7A09111}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15FA9347-F19C-4C3B-8A8A-E527A7A09111}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{0F6BE2B1-20EB-463A-9F3E-80EFE3DC3260} = {74977C1D-4C89-482A-AF1E-6024FB453117}
 		{D726A170-F0C2-4CA7-A932-F26B6C07B9D6} = {74977C1D-4C89-482A-AF1E-6024FB453117}
 		{A660A0A3-5946-4EEC-AB6C-3BFBE9B0A4B9} = {74977C1D-4C89-482A-AF1E-6024FB453117}
+		{15FA9347-F19C-4C3B-8A8A-E527A7A09111} = {74977C1D-4C89-482A-AF1E-6024FB453117}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {85D8E652-2803-432F-B61C-02E2B3A618EC}
