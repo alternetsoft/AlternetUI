@@ -8,6 +8,10 @@ namespace Alternet.UI.Documentation.Examples.ComboBox
         public MainWindow()
         {
             InitializeComponent();
+            comboBox.Items.Add("One");
+            comboBox.Items.Add("Two");
+            comboBox.Items.Add("Three");
+            comboBox.SelectedIndex = 1;
         }
 
         public void ComboBoxExample1()
@@ -26,12 +30,16 @@ namespace Alternet.UI.Documentation.Examples.ComboBox
         private void ComboBox_TextChanged(object? sender, EventArgs e)
         {
             var text = comboBox.Text == "" ? "\"\"" : comboBox.Text;
-            System.Console.WriteLine(text);
+            MessageBox.Show(text, string.Empty);
         }
 
         private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            System.Console.WriteLine($"ComboBox: SelectedItemChanged. SelectedIndex: {(comboBox.SelectedIndex == null ? "<null>" : comboBox.SelectedIndex.ToString())}");
+            int selectedIndex = comboBox.SelectedIndex.Value;
+            object selectedItem = comboBox.SelectedItem;
+
+            MessageBox.Show("Selected Item Text: " + selectedItem.ToString() + "\n" +
+                            "Index: " + selectedIndex.ToString(), string.Empty);
         }
         #endregion    
     }
