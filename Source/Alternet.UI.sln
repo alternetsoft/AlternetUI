@@ -49,9 +49,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{D27E40C1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Versioning", "Versioning", "{EA7937C6-0A05-419E-8600-99176911053B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alternet.UI.Versioning", "Tools\Versioning\Alternet.UI.Versioning\Alternet.UI.Versioning.csproj", "{85DFE479-BF62-471D-8677-6CEBD9EB724F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Versioning", "Tools\Versioning\Alternet.UI.Versioning\Alternet.UI.Versioning.csproj", "{85DFE479-BF62-471D-8677-6CEBD9EB724F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.VersionTool.Cli", "Tools\Versioning\Alternet.UI.VersionTool.Cli\Alternet.UI.VersionTool.Cli.csproj", "{F85FA19A-FC05-4337-B592-841637A83C4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alternet.UI.VersionTool", "Tools\Versioning\Alternet.UI.VersionTool\Alternet.UI.VersionTool.csproj", "{44502B02-963C-43DB-9E69-132886535197}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -219,6 +221,18 @@ Global
 		{F85FA19A-FC05-4337-B592-841637A83C4E}.Release|x64.Build.0 = Release|Any CPU
 		{F85FA19A-FC05-4337-B592-841637A83C4E}.Release|x86.ActiveCfg = Release|Any CPU
 		{F85FA19A-FC05-4337-B592-841637A83C4E}.Release|x86.Build.0 = Release|Any CPU
+		{44502B02-963C-43DB-9E69-132886535197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44502B02-963C-43DB-9E69-132886535197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44502B02-963C-43DB-9E69-132886535197}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{44502B02-963C-43DB-9E69-132886535197}.Debug|x64.Build.0 = Debug|Any CPU
+		{44502B02-963C-43DB-9E69-132886535197}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{44502B02-963C-43DB-9E69-132886535197}.Debug|x86.Build.0 = Debug|Any CPU
+		{44502B02-963C-43DB-9E69-132886535197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44502B02-963C-43DB-9E69-132886535197}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44502B02-963C-43DB-9E69-132886535197}.Release|x64.ActiveCfg = Release|Any CPU
+		{44502B02-963C-43DB-9E69-132886535197}.Release|x64.Build.0 = Release|Any CPU
+		{44502B02-963C-43DB-9E69-132886535197}.Release|x86.ActiveCfg = Release|Any CPU
+		{44502B02-963C-43DB-9E69-132886535197}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -239,6 +253,7 @@ Global
 		{EA7937C6-0A05-419E-8600-99176911053B} = {329A8C06-CA7B-42DF-8261-84A5E289290B}
 		{85DFE479-BF62-471D-8677-6CEBD9EB724F} = {EA7937C6-0A05-419E-8600-99176911053B}
 		{F85FA19A-FC05-4337-B592-841637A83C4E} = {EA7937C6-0A05-419E-8600-99176911053B}
+		{44502B02-963C-43DB-9E69-132886535197} = {EA7937C6-0A05-419E-8600-99176911053B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BD17D7DB-AEF9-418B-81F8-8E0920FC6FF7}
