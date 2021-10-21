@@ -1,10 +1,10 @@
-# Quick Start with Visual Studio
+# "Hello, World" with Visual Studio
 
 In this tutorial you will create a cross-platform desktop application using C# and Microsoft Visual Studio.
 The application will display a message box in response to a button click.
 
 Microsoft Visual Studio is supported on Windows OS only.
-To develop on macOS or Linux, see [Quick Start with Command Line and VS Code](../command-line/quick-start-command-line.md).
+To develop on macOS or Linux, see ["Hello, World" with Command Line and VS Code](../command-line/hello-world-command-line.md).
 
 ### Prerequisites
 
@@ -61,6 +61,6 @@ To develop on macOS or Linux, see [Quick Start with Command Line and VS Code](..
 > The application created in this tutorial can be compiled and run without any modifications on all the supported platforms: Windows, macOS, Linux.
 
 ---
-*Congratulations, you have successfully completed the Quick Start tutorial using Microsoft Visual Studio.*
+*Congratulations, you have successfully completed the "Hello, World" tutorial using Microsoft Visual Studio.*
 
-*For a similar tutorial, but using command line tools and Visual Studio Code, see [Quick Start with Command Line and Visual Studio Code](../command-line/quick-start-command-line.md).*
+*For a similar tutorial, but using command line tools and Visual Studio Code, see ["Hello, World" with Command Line and Visual Studio Code](../command-line/hello-world-command-line.md).*

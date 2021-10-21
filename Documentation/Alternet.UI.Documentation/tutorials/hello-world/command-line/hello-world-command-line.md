@@ -1,4 +1,4 @@
-#  Quick Start with Command Line and Visual Studio Code
+#  "Hello, World" with Command Line and Visual Studio Code
 
 In this tutorial you will create a cross-platform desktop application using C#, .NET command line tools and Visual Studio Code.
 The application will display a message box in response to a button click.
@@ -96,6 +96,6 @@ The application will start and display its window:
 > The application created in this tutorial can be compiled and run without any modifications on all the supported platforms: Windows, macOS, Linux.
 
 ---
-*Congratulations, you have successfully completed the Quick Start tutorial using command line tools and Visual Studio Code.*
+*Congratulations, you have successfully completed the "Hello, World" tutorial using command line tools and Visual Studio Code.*
 
-*For a similar tutorial, but using Visual Studio on Windows, see [Quick Start with Visual Studio](../visual-studio/quick-start-visual-studio.md).*
+*For a similar tutorial, but using Visual Studio on Windows, see ["Hello, World" with Visual Studio](../visual-studio/hello-world-visual-studio.md).*

@@ -3,7 +3,7 @@
 In this tutorial you will learn how to create a custom <xref:Alternet.UI.Control> which draws itself on screen using <xref:Alternet.Drawing.DrawingContext> class.
 
 1. Create a new AlterNET UI Application project, name it `DrawingContextTutorial`. For a step-by-step guidance on how to create a new AlterNET UI project,
-    see [Quick Start Tutorial](../quick-start/quick-start.md).
+    see ["Hello, World" Tutorial](../hello-world/hello-world.md).
 1. Add a new empty class named `DrawingControl` to the project. Make the class `public`, and derive it from <xref:Alternet.UI.Control>:
    [!code-csharp[](examples/DrawingContextTutorial/DrawingControl-Step1.cs?highlight=1,5)]
 1. Open `MainWindow.uixml`. Add the reference to the local namespace, and add a `DrawingControl` to the window:
