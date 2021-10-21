@@ -13,7 +13,7 @@ namespace Alternet.UI.Documentation.Examples.CheckBox
         public void CheckBoxExample1()
         {
             #region CheckBoxCSharpCreation
-            var CheckBox = new Alternet.UI.CheckBox() { Text = "Option 1.1", Margin = new Thickness(0, 0, 0, 5) };
+            var checkBox = new Alternet.UI.CheckBox() { Text = "Option 1.1", Margin = new Thickness(0, 0, 0, 5) };
             #endregion
         }
 
