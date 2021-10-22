@@ -25,6 +25,12 @@ namespace Alternet.UI.Versioning
             var packageVersion = doc.Descendants(ns + "Project").Descendants(ns + "PropertyGroup").Descendants(ns + "PackageVersion").Single();
             TrySetBuildNumber(packageVersion, x => TrySetBuildNumberInPackageVersion(x, buildNumber));
 
+            var assemblyVersion = doc.Descendants(ns + "Project").Descendants(ns + "PropertyGroup").Descendants(ns + "AssemblyVersion").Single();
+            TrySetBuildNumber(assemblyVersion, x => TrySetBuildNumberInAssemblyVersion(x, buildNumber));
+
+            var fileVersion = doc.Descendants(ns + "Project").Descendants(ns + "PropertyGroup").Descendants(ns + "FileVersion").Single();
+            TrySetBuildNumber(fileVersion, x => TrySetBuildNumberInAssemblyVersion(x, buildNumber));
+
             doc.Save(versionFilePath);
         }
 
@@ -50,6 +56,9 @@ namespace Alternet.UI.Versioning
 
         private static string TrySetBuildNumberInPackageVersion(string value, int buildNumber) =>
             TrySetBuildNumber(new Regex(@"^\d+\.\d+\.(?<build>\d+)-\w+$"), value, buildNumber, "build");
+
+        private static string TrySetBuildNumberInAssemblyVersion(string value, int buildNumber) =>
+            TrySetBuildNumber(new Regex(@"^\d+\.\d+\.(?<build>\d+).\d+$"), value, buildNumber, "build");
 
         private static string ReplaceNamedGroup(string groupName, string replacement, Match m)
         {
