@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.ListBox", "apidoc\ListBox\examples\Alternet.UI.Documentation.Examples.ListBox.csproj", "{A4A1B6CE-3496-4197-A0DA-C6123096E503}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.ListView", "apidoc\ListView\examples\Alternet.UI.Documentation.Examples.ListView.csproj", "{4255702D-57D9-4802-9B76-9B407FE41372}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{A4A1B6CE-3496-4197-A0DA-C6123096E503}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4A1B6CE-3496-4197-A0DA-C6123096E503}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4A1B6CE-3496-4197-A0DA-C6123096E503}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4255702D-57D9-4802-9B76-9B407FE41372}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4255702D-57D9-4802-9B76-9B407FE41372}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4255702D-57D9-4802-9B76-9B407FE41372}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4255702D-57D9-4802-9B76-9B407FE41372}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{15FA9347-F19C-4C3B-8A8A-E527A7A09111} = {74977C1D-4C89-482A-AF1E-6024FB453117}
 		{475FA9D8-8464-4671-973E-B192B1685099} = {74977C1D-4C89-482A-AF1E-6024FB453117}
 		{A4A1B6CE-3496-4197-A0DA-C6123096E503} = {74977C1D-4C89-482A-AF1E-6024FB453117}
+		{4255702D-57D9-4802-9B76-9B407FE41372} = {74977C1D-4C89-482A-AF1E-6024FB453117}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {85D8E652-2803-432F-B61C-02E2B3A618EC}

@@ -1,0 +1,11 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="Alternet.UI.Documentation.Examples.ListView.MainWindow"
+        Title="Alternet.UI.Documentation.Examples.ListView">
+  <StackPanel Orientation="Vertical">
+    <!-- <CreateUixmlDeclaration> -->
+    <ListView Width="300" Height="102" Name="listView" Margin="8,8,8,8" SelectionChanged="ListView_SelectionChanged"/>
+    <!-- </CreateUixmlDeclaration> -->
+
+  </StackPanel>
+</Window>
