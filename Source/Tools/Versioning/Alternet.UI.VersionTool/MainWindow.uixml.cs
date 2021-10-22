@@ -8,5 +8,10 @@ namespace Alternet.UI.VersionTool
         {
             InitializeComponent();
         }
+
+        private void ApplyButton_Click(object sender, System.EventArgs e)
+        {
+            
+        }
     }
 }
