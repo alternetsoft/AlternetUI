@@ -7,6 +7,8 @@ namespace Alternet.UI.Versioning
 {
     public class BuildNumberSetter
     {
+        private static Regex informationalVersionRegex = new Regex(@"^\d+\.\d+\.(?<build1>\d+) \(\d+\.\d+\ \w+ build (?<build2>\d+)\)$");
+
         public static void SetBuildNumber(string versionFilePath, int buildNumber)
         {
             Console.WriteLine($"Increasing build number...");
@@ -26,25 +28,28 @@ namespace Alternet.UI.Versioning
             doc.Save(versionFilePath);
         }
 
-        private static string TrySetBuildNumber(Regex regex, string value, int buildNumber)
+        private static string TrySetBuildNumber(Regex regex, string value, int buildNumber, string groupName)
         {
             var match = regex.Match(value);
             if (!match.Success)
                 return value;
 
-            if (!match.Groups.TryGetValue("build", out var group))
+            if (!match.Groups.TryGetValue(groupName, out var group))
                 return value;
             if (!int.TryParse(group.Value, out var _))
                 return value;
 
-            return ReplaceNamedGroup("build", buildNumber.ToString(), match);
+            return ReplaceNamedGroup(groupName, buildNumber.ToString(), match);
         }
 
-        private static string TrySetBuildNumberInInformationalVersion(string value, int buildNumber) =>
-            TrySetBuildNumber(new Regex(@"^\d+\.\d+\.\d+ \(\d+\.\d+\.\d+ \w+ build (?<build>\d+)\)$"), value, buildNumber);
+        private static string TrySetBuildNumberInInformationalVersion(string value, int buildNumber)
+        {
+            var v = TrySetBuildNumber(informationalVersionRegex, value, buildNumber, "build1");
+            return TrySetBuildNumber(informationalVersionRegex, v, buildNumber, "build2");
+        }
 
         private static string TrySetBuildNumberInPackageVersion(string value, int buildNumber) =>
-            TrySetBuildNumber(new Regex(@"^\d+\.\d+\.\d+-\w+\.(?<build>\d+)$"), value, buildNumber);
+            TrySetBuildNumber(new Regex(@"^\d+\.\d+\.(?<build>\d+)-\w+$"), value, buildNumber, "build");
 
         private static string ReplaceNamedGroup(string groupName, string replacement, Match m)
         {
