@@ -55,7 +55,7 @@ namespace Alternet.UI.Versioning
         }
 
         private static string TrySetBuildNumberInPackageVersion(string value, int buildNumber) =>
-            TrySetBuildNumber(new Regex(@"^\d+\.\d+\.(?<build>\d+)-\w+$"), value, buildNumber, "build");
+            TrySetBuildNumber(new Regex(@"^\d+\.\d+\.(?<build>\d+)(-\w+)*$"), value, buildNumber, "build");
 
         private static string TrySetBuildNumberInAssemblyVersion(string value, int buildNumber) =>
             TrySetBuildNumber(new Regex(@"^\d+\.\d+\.(?<build>\d+).\d+$"), value, buildNumber, "build");
