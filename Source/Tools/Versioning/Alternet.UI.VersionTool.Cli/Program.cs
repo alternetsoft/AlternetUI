@@ -35,10 +35,7 @@ namespace VersionTool.Cli
                 Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? throw new Exception(),
                 "../../../../../../../");
 
-            var versionFilePath = Path.GetFullPath(Path.Combine(repoRoot, "Source/Mastering/Version/Version.props"));
-            if (!File.Exists(versionFilePath))
-                throw new InvalidOperationException("Cannot locate Version.props file at" + versionFilePath);
-            return versionFilePath;
+            return VersionFileLocator.LocateVersionFile(repoRoot);
         }
     }
 }

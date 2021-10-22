@@ -6,4 +6,7 @@
   <ItemGroup>
     <PackageReference Include="Alternet.UI" Version="0.1.0-beta.*" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Alternet.UI.Versioning\Alternet.UI.Versioning.csproj" />
+  </ItemGroup>
 </Project>
