@@ -1,0 +1,19 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="Alternet.UI.Documentation.Examples.Grid.MainWindow"
+        Title="Alternet.UI.Documentation.Examples.Grid">
+    <!-- <CreateUixmlDeclaration> -->
+  <Grid Name="grid" EnabledChanged="Grid_EnabledChanged">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Border Grid.Row="0">
+      <Label Text="(0, 1)" />
+    </Border>
+    <Border Grid.Row="1">
+      <Label Text="(1, 1)" />
+    </Border>
+  </Grid>
+    <!-- </CreateUixmlDeclaration> -->
+</Window>
