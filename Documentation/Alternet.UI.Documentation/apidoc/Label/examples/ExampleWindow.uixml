@@ -1,0 +1,13 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="Alternet.UI.Documentation.Examples.Label.MainWindow"
+        Title="Alternet.UI.Documentation.Examples.Label">
+  <StackPanel Orientation="Vertical">
+    <!-- <CreateUixmlDeclaration> -->
+    <Border>
+      <Label Name="label" Text="(0, 0)" Margin="8,8,8,8" TextChanged="Label_TextChanged"/>
+    </Border>
+    <!-- </CreateUixmlDeclaration> -->
+
+  </StackPanel>
+</Window>

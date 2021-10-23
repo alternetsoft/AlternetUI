@@ -1,0 +1,11 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="Alternet.UI.Documentation.Examples.TabControl.MainWindow"
+        Title="Alternet.UI.Documentation.Examples.TabControl">
+  <StackPanel Orientation="Vertical">
+    <!-- <CreateUixmlDeclaration> -->
+    <TabControl Width="200" Height="23" Name="tabControl" Margin="8,8,8,8" EnabledChanged="TabControl_EnabledChanged" />
+    <!-- </CreateUixmlDeclaration> -->
+
+  </StackPanel>
+</Window>
