@@ -1,7 +1,7 @@
 using System;
 using Alternet.UI;
 
-namespace Alternet.UI.Documentation.Examples.ComboBox
+namespace Alternet.UI.Documentation.Examples.TreeView
 {
     class Program
     {

@@ -1,11 +1,10 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        x:Class="Alternet.UI.Documentation.Examples.ComboBox.MainWindow"
-        Title="Alternet.UI.Documentation.Examples.ComboBox">
+        x:Class="Alternet.UI.Documentation.Examples.TextBox.MainWindow"
+        Title="Alternet.UI.Documentation.Examples.TextBox">
   <StackPanel Orientation="Vertical">
     <!-- <CreateUixmlDeclaration> -->
-    <ComboBox Width="200" Height="23" Name="comboBox" IsEditable="false" VerticalAlignment="Top" 
-              SelectedItemChanged="ComboBox_SelectedItemChanged" TextChanged="ComboBox_TextChanged" />
+    <TextBox Width="200" Height="23" Name="textBox" Text="Text 1.1" Margin="8,8,8,8" TextChanged="TextBox_TextChanged" />
     <!-- </CreateUixmlDeclaration> -->
 
   </StackPanel>

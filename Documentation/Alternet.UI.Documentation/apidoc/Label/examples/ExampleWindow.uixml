@@ -5,7 +5,7 @@
   <StackPanel Orientation="Vertical">
     <!-- <CreateUixmlDeclaration> -->
     <Border>
-      <Label Name="label" Text="(0, 0)" Margin="8,8,8,8" TextChanged="Label_TextChanged"/>
+      <Label Name="label" Text="Sample Label" Margin="8,8,8,8" TextChanged="Label_TextChanged"/>
     </Border>
     <!-- </CreateUixmlDeclaration> -->
 

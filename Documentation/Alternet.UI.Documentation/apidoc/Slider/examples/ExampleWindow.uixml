@@ -4,7 +4,7 @@
         Title="Alternet.UI.Documentation.Examples.Slider">
   <StackPanel Orientation="Vertical">
     <!-- <CreateUixmlDeclaration> -->
-    <Slider Width="200" Height="23" Name="slider" Minimum="50" Maximum="250" Value="125" Margin="8,8,8,8" ValueChanged="Slider_ValueChanged" />
+    <Slider Width="200" Height="28" Name="slider" Minimum="50" Maximum="250" Value="125" Margin="8,8,8,8" ValueChanged="Slider_ValueChanged" />
     <!-- </CreateUixmlDeclaration> -->
 
   </StackPanel>

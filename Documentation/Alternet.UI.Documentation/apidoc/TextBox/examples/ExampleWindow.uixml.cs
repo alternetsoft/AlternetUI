@@ -1,45 +1,27 @@
 using Alternet.UI;
 using System;
 
-namespace Alternet.UI.Documentation.Examples.ComboBox
+namespace Alternet.UI.Documentation.Examples.TextBox
 {
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-            comboBox.Items.Add("One");
-            comboBox.Items.Add("Two");
-            comboBox.Items.Add("Three");
-            comboBox.SelectedIndex = 1;
         }
 
-        public void ComboBoxExample1()
+        public void TextBoxExample1()
         {
-            #region ComboBoxCSharpCreation
-            var comboBox = new Alternet.UI.ComboBox();
-            comboBox.Items.Add("One");
-            comboBox.Items.Add("Two");
-            comboBox.Items.Add("Three");
-            comboBox.SelectedIndex = 1;
-            comboBox.SelectedItemChanged += ComboBox_SelectedItemChanged;
+            #region TextBoxCSharpCreation
+            var TextBox = new Alternet.UI.TextBox{ Text = "Text 1.1", Margin = new Thickness(0, 0, 0, 5) };
             #endregion
         }
 
-        #region ComboBoxEventHandler
-        private void ComboBox_TextChanged(object? sender, EventArgs e)
+        #region TextBoxEventHandler
+        private void TextBox_TextChanged(object? sender, EventArgs e)
         {
-            var text = comboBox.Text == "" ? "\"\"" : comboBox.Text;
+            var text = textBox.Text == "" ? "\"\"" : textBox.Text;
             MessageBox.Show(text, string.Empty);
-        }
-
-        private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)
-        {
-            int selectedIndex = comboBox.SelectedIndex.Value;
-            object selectedItem = comboBox.SelectedItem;
-
-            MessageBox.Show("Selected Item Text: " + selectedItem.ToString() + "\n" +
-                            "Index: " + selectedIndex.ToString(), string.Empty);
         }
         #endregion    
     }

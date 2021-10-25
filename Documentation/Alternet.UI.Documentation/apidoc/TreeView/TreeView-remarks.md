@@ -1,29 +1,28 @@
 ---
-uid: Alternet.UI.ComboBox
+uid: Alternet.UI.TreeView
 remarks: *content
 ---
-A <xref:Alternet.UI.ComboBox> displays a text box combined with a <xref:Alternet.UI.ListBox>, which enables the user
-to select items from the list or enter a new value.
-The <xref:Alternet.UI.ComboBox.IsEditable> property specifies whether the text portion can be edited.
+The <xref:Alternet.UI.TreeView.Items> collection holds all the <xref:Alternet.UI.TreeViewItem> objects that are assigned to the <xref:Alternet.UI.TreeView> control.
+The items in this collection are referred to as the root items. Any item that is subsequently added to a root item is referred to as a child node.
+Each <xref:Alternet.UI.TreeViewItem> can contain a collection of other <xref:Alternet.UI.TreeViewItem> objects.
 
-To add or remove objects in the list at run time, use methods of the object returned by the <xref:Alternet.UI.ListControl.Items> property of the <xref:Alternet.UI.ComboBox>.
-The list then displays the default string value for each object. You can add individual objects with the Add method of the <xref:Alternet.UI.ComboBox>.<xref:Alternet.UI.ListControl.Items> object.
-You can delete items with the Remove method or clear the entire list with the Clear method.
+You can display images next to the tree nodes by assigning an <xref:Alternet.UI.ImageList> to the <xref:Alternet.UI.TreeView.ImageList> property and
+referencing the index value of an <xref:Alternet.UI.Image> in the <xref:Alternet.UI.TreeView.ImageList> to assign that <xref:Alternet.UI.Image>.
+Set the <xref:Alternet.UI.TreeView.ImageIndex> property to the index value of the <xref:Alternet.UI.Image> that you want to display for all items by default.
+Individual items can override the default images by setting the <xref:Alternet.UI.TreeViewItem.ImageIndex> property.
 
-In addition to display and selection functionality, the <xref:Alternet.UI.ComboBox> also provides features that enable you to
-efficiently add items to the <xref:Alternet.UI.ComboBox> and to find text within the items of the list. With the <xref:Alternet.UI.Control.BeginUpdate>
-and <xref:Alternet.UI.Control.EndUpdate> methods, you can add a large number of items to the <xref:Alternet.UI.ComboBox> without the control
-being repainted each time an item is added to the list.
+<xref:Alternet.UI.TreeView> items can be expanded to display the next level of child items.
+The user can expand the <xref:Alternet.UI.TreeViewItem> by clicking the expand button, if one is displayed
+next to the <xref:Alternet.UI.TreeViewItem>, or you can expand the <xref:Alternet.UI.TreeViewItem> by calling the <xref:Alternet.UI.TreeViewItem.Expand> method.
+To expand all the child item levels in the <xref:Alternet.UI.TreeView.Items> collection, call the <xref:Alternet.UI.TreeViewItem.ExpandAll> method.
+You can collapse the child <xref:Alternet.UI.TreeViewItem> level by calling the <xref:Alternet.UI.TreeViewItem.Collapse> method,
+or the user can press the expand button, if one is displayed next to the <xref:Alternet.UI.TreeViewItem>.
+You can also call the <xref:Alternet.UI.TreeViewItem.Toggle> method to alternate between the expanded and collapsed states.
 
-You can use the <xref:Alternet.UI.ComboBox.Text> property to specify the string displayed in the editing field,
-the <xref:Alternet.UI.ComboBox.SelectedIndex> property to get or set the current item,
-and the <xref:Alternet.UI.ComboBox.SelectedItem> property to get or set a reference to the selected object.
-
-Examples of how a <xref:Alternet.UI.ComboBox> can look on different platforms:
+Examples of how a <xref:Alternet.UI.TreeView> can look on different platforms:
 
 |Windows|macOS|Linux|
 |-------|-----|-----|
-|![ComboBox on Windows](images/combobox-windows.png)|![ComboBox on macOS](images/combobox-macos.png)|![ComboBox on Linux](images/combobox-linux.png)
+|![TreeView on Windows](images/treeview-windows.png)|![TreeView on macOS](images/treeview-macos.png)|![TreeView on Linux](images/treeview-linux.png)
 
-Set <xref:Alternet.UI.ComboBox.Text> property to specify the text displayed on the control.
-A <xref:Alternet.UI.ComboBox>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.
+A <xref:Alternet.UI.TreeView>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.

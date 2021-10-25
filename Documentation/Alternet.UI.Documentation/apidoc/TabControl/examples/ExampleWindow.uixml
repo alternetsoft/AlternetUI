@@ -4,7 +4,13 @@
         Title="Alternet.UI.Documentation.Examples.TabControl">
   <StackPanel Orientation="Vertical">
     <!-- <CreateUixmlDeclaration> -->
-    <TabControl Width="200" Height="23" Name="tabControl" Margin="8,8,8,8" EnabledChanged="TabControl_EnabledChanged" />
+    <TabControl Width="180" Height="180" Name="tabControl" Margin="8,8,8,8" EnabledChanged="TabControl_EnabledChanged">
+      <TabPage Title="Grid"/>
+      <TabPage Title="Tree View"/>
+      <TabPage Title="List View"/>
+      <TabPage Title="List Box"/>
+      <TabPage Title="Combo Box"/>
+    </TabControl>
     <!-- </CreateUixmlDeclaration> -->
 
   </StackPanel>

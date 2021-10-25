@@ -8,6 +8,7 @@ namespace Alternet.UI.Documentation.Examples.Label
         public MainWindow()
         {
             InitializeComponent();
+            label.Background = Alternet.Drawing.Brushes.DarkGray;
         }
 
         public void LabelExample1()

@@ -1,46 +1,82 @@
 using Alternet.UI;
 using System;
+using System.Linq;
 
-namespace Alternet.UI.Documentation.Examples.ComboBox
+namespace Alternet.UI.Documentation.Examples.TreeView
 {
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-            comboBox.Items.Add("One");
-            comboBox.Items.Add("Two");
-            comboBox.Items.Add("Three");
-            comboBox.SelectedIndex = 1;
+            void AddItems(Alternet.UI.TreeView treeView, int count)
+            {
+                int start = treeView.Items.Count + 1;
+
+                treeView.BeginUpdate();
+                try
+                {
+                    for (int i = start; i < start + count; i++)
+                    {
+                        int imageIndex = i % 4;
+                        var item = new TreeViewItem("Item " + i, imageIndex);
+                        for (int j = 0; j < 3; j++)
+                            item.Items.Add(new TreeViewItem(item.Text + "." + j, imageIndex));
+                        treeView.Items.Add(item);
+                    }
+                }
+                finally
+                {
+                    treeView.EndUpdate();
+                }
+            }
+
+            AddItems(treeView, 10);
         }
 
-        public void ComboBoxExample1()
+        public void TreeViewExample1()
         {
-            #region ComboBoxCSharpCreation
-            var comboBox = new Alternet.UI.ComboBox();
-            comboBox.Items.Add("One");
-            comboBox.Items.Add("Two");
-            comboBox.Items.Add("Three");
-            comboBox.SelectedIndex = 1;
-            comboBox.SelectedItemChanged += ComboBox_SelectedItemChanged;
+            #region TreeViewCSharpCreation
+            void AddItems(Alternet.UI.TreeView treeView, int count)
+            {
+                int start = treeView.Items.Count + 1;
+
+                treeView.BeginUpdate();
+                try
+                {
+                    for (int i = start; i < start + count; i++)
+                    {
+                        int imageIndex = i % 4;
+                        var item = new TreeViewItem("Item " + i, imageIndex);
+                        for (int j = 0; j < 3; j++)
+                            item.Items.Add(new TreeViewItem(item.Text + "." + j, imageIndex));
+                        treeView.Items.Add(item);
+                    }
+                }
+                finally
+                {
+                    treeView.EndUpdate();
+                }
+            }
+
+            var TreeView = new Alternet.UI.TreeView();
+            AddItems(TreeView, 10);
             #endregion
         }
 
-        #region ComboBoxEventHandler
-        private void ComboBox_TextChanged(object? sender, EventArgs e)
+        #region TreeViewEventHandler
+        private void TreeView_SelectionChanged(object? sender, EventArgs e)
         {
-            var text = comboBox.Text == "" ? "\"\"" : comboBox.Text;
-            MessageBox.Show(text, string.Empty);
+            var selectedItems = treeView.SelectedItems;
+            string selectedItemsString = selectedItems.Count > 100 ? "too many indices to display" : string.Join(",", selectedItems.Select(x => x.Text));
+            MessageBox.Show("TreeView: SelectionChanged. SelectedItems: "  + selectedItemsString, string.Empty);
         }
 
-        private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)
+        private void TreeView_ExpandedChanged(object? sender, TreeViewItemExpandedChangedEventArgs e)
         {
-            int selectedIndex = comboBox.SelectedIndex.Value;
-            object selectedItem = comboBox.SelectedItem;
-
-            MessageBox.Show("Selected Item Text: " + selectedItem.ToString() + "\n" +
-                            "Index: " + selectedIndex.ToString(), string.Empty);
+            MessageBox.Show("TreeView: ExpandedChanged. Item: " + e.Item.Text + e.Item.IsExpanded.ToString(), string.Empty);
         }
+
         #endregion    
     }
 }

@@ -1,11 +1,14 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        x:Class="Alternet.UI.Documentation.Examples.ComboBox.MainWindow"
-        Title="Alternet.UI.Documentation.Examples.ComboBox">
+        x:Class="Alternet.UI.Documentation.Examples.TreeView.MainWindow"
+        Title="Alternet.UI.Documentation.Examples.TreeView">
   <StackPanel Orientation="Vertical">
     <!-- <CreateUixmlDeclaration> -->
-    <ComboBox Width="200" Height="23" Name="comboBox" IsEditable="false" VerticalAlignment="Top" 
-              SelectedItemChanged="ComboBox_SelectedItemChanged" TextChanged="ComboBox_TextChanged" />
+    <GroupBox Title="Tree View">
+      <StackPanel Orientation="Horizontal" Margin="5">
+        <TreeView Width="300" Height="300" Name="treeView" SelectionChanged="TreeView_SelectionChanged" ExpandedChanged="TreeView_ExpandedChanged" />
+      </StackPanel>
+    </GroupBox>
     <!-- </CreateUixmlDeclaration> -->
 
   </StackPanel>
