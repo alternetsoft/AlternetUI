@@ -4,7 +4,7 @@
         Title="Alternet.UI.Documentation.Examples.ComboBox">
   <StackPanel Orientation="Vertical">
     <!-- <CreateUixmlDeclaration> -->
-    <ComboBox Width="200" Height="23" Name="comboBox" IsEditable="false" VerticalAlignment="Top" 
+    <ComboBox Width="200" Height="23" Name="comboBox" Margin="8,8,8,8" IsEditable="false" VerticalAlignment="Top" 
               SelectedItemChanged="ComboBox_SelectedItemChanged" TextChanged="ComboBox_TextChanged" />
     <!-- </CreateUixmlDeclaration> -->
 

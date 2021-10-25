@@ -28,8 +28,7 @@ namespace Alternet.UI.Documentation.Examples.ListView
         #region ListViewEventHandler
         private void ListView_SelectionChanged(object? sender, EventArgs e)
         {
-            string selectedIndicesString = listView.SelectedIndices.Count > 100 ? "too many indices to display" : string.Join(",", listView.SelectedIndices);
-            MessageBox.Show("ListView: SelectionChanged. SelectedIndices: ({selectedIndicesString})", string.Empty);
+            MessageBox.Show("ListView: SelectionChanged. SelectedIndex: " + listView.SelectedIndex.ToString(), string.Empty);
         }
 
         #endregion    

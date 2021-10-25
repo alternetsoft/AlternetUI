@@ -28,8 +28,7 @@ namespace Alternet.UI.Documentation.Examples.ListBox
         #region ListBoxEventHandler
         private void ListBox_SelectionChanged(object? sender, EventArgs e)
         {
-            string selectedIndicesString = listBox.SelectedIndices.Count > 100 ? "too many indices to display" : string.Join(",", listBox.SelectedIndices);
-            MessageBox.Show("ListBox: SelectionChanged. SelectedIndices: ({selectedIndicesString})", string.Empty);
+            MessageBox.Show("ListBox: SelectionChanged. SelectedIndex: " + listBox.SelectedIndex.ToString(), string.Empty);
         }
 
         #endregion    

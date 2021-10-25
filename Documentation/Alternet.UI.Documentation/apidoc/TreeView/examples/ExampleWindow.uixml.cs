@@ -67,9 +67,7 @@ namespace Alternet.UI.Documentation.Examples.TreeView
         #region TreeViewEventHandler
         private void TreeView_SelectionChanged(object? sender, EventArgs e)
         {
-            var selectedItems = treeView.SelectedItems;
-            string selectedItemsString = selectedItems.Count > 100 ? "too many indices to display" : string.Join(",", selectedItems.Select(x => x.Text));
-            MessageBox.Show("TreeView: SelectionChanged. SelectedItems: "  + selectedItemsString, string.Empty);
+            MessageBox.Show("TreeView: SelectionChanged. SelectedItem: "  + treeView.SelectedItem.Text, string.Empty);
         }
 
         private void TreeView_ExpandedChanged(object? sender, TreeViewItemExpandedChangedEventArgs e)
