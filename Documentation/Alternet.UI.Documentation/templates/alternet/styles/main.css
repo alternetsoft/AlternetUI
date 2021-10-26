@@ -345,9 +345,18 @@ code {
                 font-weight: bold;
             }
 
-.navbar-inverse .navbar-toggle .icon-bar {
-    background-color: black;
+.navbar-inverse .navbar-toggle {
+    border: none;
 }
+
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: #9B9B9B;
+    width: 35px;
+}
+
+    .navbar-inverse .navbar-toggle .icon-bar:nth-of-type(3) {
+        background-color: white;
+    }
 
 .navbar-inverse .navbar-toggle:hover {
     background-color: white;
