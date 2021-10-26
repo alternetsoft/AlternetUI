@@ -10,8 +10,9 @@ namespace Alternet.UI.Versioning
     {
         public static void PatchAttribute(string filePath, string elementSelector, XName attributeName, string newValue)
         {
-            using var fs = File.OpenRead(filePath);
-            var document = XDocument.Load(fs);
+            XDocument document;
+            using (var fs = File.OpenRead(filePath))
+                document = XDocument.Load(fs);
 
             var element = document.XPathSelectElement(elementSelector);
 
