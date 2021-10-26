@@ -11,8 +11,12 @@ in a grid with column headers. <xref:Alternet.UI.ListView> supports single or mu
 
 Examples of how a <xref:Alternet.UI.ListView> can look on different platforms:
 
-|Windows|macOS|Linux|
-|-------|-----|-----|
-|![ListView on Windows](images/listview-windows.png)|![ListView on macOS](images/listview-macos.png)|![ListView on Linux](images/listview-linux.png)
+# [Windows](#tab/screenshot-windows)
+![ListView on Windows](images/listview-windows.png)
+# [macOS](#tab/screenshot-macos)
+![ListView on macOS](images/listview-macos.png)
+# [Linux](#tab/screenshot-linux)
+![ListView on Linux](images/listview-linux.png)
+***
 
 A <xref:Alternet.UI.ListView>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.

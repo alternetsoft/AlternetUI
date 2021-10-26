@@ -19,9 +19,13 @@ the visually highlighted bar.
 
 Examples of how a <xref:Alternet.UI.ProgressBar> can look on different platforms:
 
-|Windows|macOS|Linux|
-|-------|-----|-----|
-|![ProgressBar on Windows](images/progressbar-windows.png)|![ProgressBar on macOS](images/progressbar-macos.png)|![ProgressBar on Linux](images/progressbar-linux.png)
+# [Windows](#tab/screenshot-windows)
+![ProgressBar on Windows](images/progressbar-windows.png)
+# [macOS](#tab/screenshot-macos)
+![ProgressBar on macOS](images/progressbar-macos.png)
+# [Linux](#tab/screenshot-linux)
+![ProgressBar on Linux](images/progressbar-linux.png)
+***
 
 Set <xref:Alternet.UI.ProgressBar.Value> property to specify the current position of the progress bar.
 A <xref:Alternet.UI.ProgressBar>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.

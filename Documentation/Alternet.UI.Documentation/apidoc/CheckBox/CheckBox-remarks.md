@@ -10,9 +10,13 @@ In contrast, <xref:Alternet.UI.RadioButton> controls allow a user to choose from
 
 Examples of how a <xref:Alternet.UI.CheckBox> can look on different platforms:
 
-|Windows|macOS|Linux|
-|-------|-----|-----|
-|![CheckBox on Windows](images/checkbox-windows.png)|![CheckBox on macOS](images/checkbox-macos.png)|![CheckBox on Linux](images/checkbox-linux.png)
+# [Windows](#tab/screenshot-windows)
+![CheckBox on Windows](images/checkbox-windows.png)
+# [macOS](#tab/screenshot-macos)
+![CheckBox on macOS](images/checkbox-macos.png)
+# [Linux](#tab/screenshot-linux)
+![CheckBox on Linux](images/checkbox-linux.png)
+***
 
 Set <xref:Alternet.UI.ButtonBase.Text> property to specify the text displayed on the control.
 A <xref:Alternet.UI.CheckBox>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.

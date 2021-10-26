@@ -15,9 +15,13 @@ You can display this numeric data in a control or use it in code.
 
 Examples of how a <xref:Alternet.UI.Slider> can look on different platforms:
 
-|Windows|macOS|Linux|
-|-------|-----|-----|
-|![Slider on Windows](images/slider-windows.png)|![Slider on macOS](images/slider-macos.png)|![Slider on Linux](images/slider-linux.png)
+# [Windows](#tab/screenshot-windows)
+![Slider on Windows](images/slider-windows.png)
+# [macOS](#tab/screenshot-macos)
+![Slider on macOS](images/slider-macos.png)
+# [Linux](#tab/screenshot-linux)
+![Slider on Linux](images/slider-linux.png)
+***
 
 Set <xref:Alternet.UI.Slider.Value> property to represent the current position of the scroll box on the slider.
 A <xref:Alternet.UI.Slider>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.

@@ -13,9 +13,13 @@ method of the <xref:Alternet.UI.Control.Children> property.
 
 Examples of how a <xref:Alternet.UI.GroupBox> can look on different platforms:
 
-|Windows|macOS|Linux|
-|-------|-----|-----|
-|![GroupBox on Windows](images/groupbox-windows.png)|![GroupBox on macOS](images/groupbox-macos.png)|![GroupBox on Linux](images/groupbox-linux.png)
+# [Windows](#tab/screenshot-windows)
+![GroupBox on Windows](images/groupbox-windows.png)
+# [macOS](#tab/screenshot-macos)
+![GroupBox on macOS](images/groupbox-macos.png)
+# [Linux](#tab/screenshot-linux)
+![GroupBox on Linux](images/groupbox-linux.png)
+***
 
 Set <xref:Alternet.UI.GroupBox.Title> property to specify the title text displayed on the control.
 A <xref:Alternet.UI.GroupBox>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.

@@ -14,9 +14,13 @@ you can add a <xref:Alternet.UI.Label> control to a form to display the status o
 
 Examples of how a <xref:Alternet.UI.Label> can look on different platforms:
 
-|Windows|macOS|Linux|
-|-------|-----|-----|
-|![Label on Windows](images/label-windows.png)|![Label on macOS](images/label-macos.png)|![Label on Linux](images/label-linux.png)
+# [Windows](#tab/screenshot-windows)
+![Label on Windows](images/label-windows.png)
+# [macOS](#tab/screenshot-macos)
+![Label on macOS](images/label-macos.png)
+# [Linux](#tab/screenshot-linux)
+![Label on Linux](images/label-linux.png)
+***
 
 Set <xref:Alternet.UI.Label.Text> property to specify the text displayed on the control.
 A <xref:Alternet.UI.Label>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.

@@ -16,9 +16,13 @@ Use the <xref:Alternet.UI.RadioButton.IsChecked> property to get or set the stat
 
 Examples of how a <xref:Alternet.UI.RadioButton> can look on different platforms:
 
-|Windows|macOS|Linux|
-|-------|-----|-----|
-|![RadioButton on Windows](images/radiobutton-windows.png)|![RadioButton on macOS](images/radiobutton-macos.png)|![RadioButton on Linux](images/radiobutton-linux.png)
+# [Windows](#tab/screenshot-windows)
+![RadioButton on Windows](images/radiobutton-windows.png)
+# [macOS](#tab/screenshot-macos)
+![RadioButton on macOS](images/radiobutton-macos.png)
+# [Linux](#tab/screenshot-linux)
+![RadioButton on Linux](images/radiobutton-linux.png)
+***
 
 Set <xref:Alternet.UI.ButtonBase.Text> property to specify the text displayed on the control.
 A <xref:Alternet.UI.RadioButton>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.

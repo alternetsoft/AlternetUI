@@ -11,8 +11,12 @@ collections that are used by the <xref:Alternet.UI.ListBox>.
 
 Examples of how a <xref:Alternet.UI.ListBox> can look on different platforms:
 
-|Windows|macOS|Linux|
-|-------|-----|-----|
-|![ListBox on Windows](images/listbox-windows.png)|![ListBox on macOS](images/listbox-macos.png)|![ListBox on Linux](images/listbox-linux.png)
+# [Windows](#tab/screenshot-windows)
+![ListBox on Windows](images/listbox-windows.png)
+# [macOS](#tab/screenshot-macos)
+![ListBox on macOS](images/listbox-macos.png)
+# [Linux](#tab/screenshot-linux)
+![ListBox on Linux](images/listbox-linux.png)
+***
 
 A <xref:Alternet.UI.ListBox>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.
