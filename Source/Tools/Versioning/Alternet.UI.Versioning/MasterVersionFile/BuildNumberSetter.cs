@@ -17,7 +17,7 @@ namespace Alternet.UI.Versioning
 
             var doc = XDocument.Load(versionFilePath);
 
-            XNamespace ns = "http://schemas.microsoft.com/developer/msbuild/2003";
+            XNamespace ns = XmlNamespaces.MSBuild;
             var informationalVersion = doc.Descendants(ns + "Project").Descendants(ns + "PropertyGroup").Descendants(ns + "InformationalVersion").Single();
             TrySetBuildNumber(informationalVersion, x => TrySetBuildNumberInInformationalVersion(x, buildNumber));
 

@@ -8,11 +8,18 @@ namespace Alternet.UI.Versioning
     {
         public static void SetVersion(Repository repository, ProductVersion productVersion)
         {
-            MasterVersionFileService.SetVersion(GetVersionFilePath(repository), productVersion);
+            var locator = new FileLocator(repository);
+
+            MasterVersionFileService.SetVersion(locator.GetMasterVersionFile(), productVersion);
+
+            foreach (var file in locator.GetTemplateProjectFiles())
+                XmlPatcher.PatchAttribute(
+                    file,
+                    "/Project/ItemGroup/PackageReference[@Include='Alternet.UI']",
+                    "Version",
+                    productVersion.GetPackageReferenceVersion());
         }
 
-        private static string GetVersionFilePath(Repository repository) => new FileLocator(repository).GetMasterVersionFile();
-
-        public static ProductVersion GetVersion(Repository repository) => MasterVersionFileService.GetVersion(GetVersionFilePath(repository));
+        public static ProductVersion GetVersion(Repository repository) => MasterVersionFileService.GetVersion(new FileLocator(repository).GetMasterVersionFile());
     }
 }
