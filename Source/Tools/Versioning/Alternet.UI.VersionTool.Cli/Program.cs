@@ -11,7 +11,7 @@ namespace VersionTool.Cli
             try
             {
                 CheckArguments(args, out var buildNumber);
-                BuildNumberSetter.SetBuildNumber(LocateVersionFile(), buildNumber);
+                BuildNumberSetter.SetBuildNumber(LocateRepository(), buildNumber);
             }
             catch (Exception e)
             {
@@ -29,13 +29,13 @@ namespace VersionTool.Cli
             buildNumber = int.Parse(args[1]);
         }
 
-        private static string LocateVersionFile()
+        private static Repository LocateRepository()
         {
             var repoRoot = Path.Combine(
                 Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? throw new Exception(),
                 "../../../../../../../");
 
-            return VersionFileLocator.LocateVersionFile(repoRoot);
+            return new Repository(repoRoot);
         }
     }
 }

@@ -6,14 +6,14 @@ namespace Alternet.UI.VersionTool
 {
     public partial class MainWindow : Window
     {
-        private string versionFilePath;
+        private Repository repository;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            versionFilePath = VersionFileLocator.LocateVersionFile(RepoLocator.GetRepoRootPath());
-            var version = VersionReader.GetVersion(versionFilePath);
+            repository = RepositoryLocator.GetRepository();
+            var version = VersionService.GetVersion(repository);
             versionTextBox.Text = version.GetSimpleVersion();
 
             SetType(version);
@@ -27,7 +27,7 @@ namespace Alternet.UI.VersionTool
 
             try
             {
-                VersionSetter.SetVersion(versionFilePath, version);
+                VersionService.SetVersion(repository, version);
                 MessageBox.Show("New version was set successfully.", "Version Tool");
             }
             catch (Exception ex)

@@ -6,11 +6,11 @@ using System.Xml.Linq;
 
 namespace Alternet.UI.Versioning
 {
-    public static class VersionFileLocator
+    internal static class VersionFileLocator
     {
-        public static string LocateVersionFile(string repoRootPath)
+        public static string LocateVersionFile(Repository repository)
         {
-            var versionFilePath = Path.GetFullPath(Path.Combine(repoRootPath, "Source/Mastering/Version/Version.props"));
+            var versionFilePath = Path.GetFullPath(Path.Combine(repository.RootPath, "Source/Mastering/Version/Version.props"));
             if (!File.Exists(versionFilePath))
                 throw new InvalidOperationException("Cannot locate Version.props file at" + versionFilePath);
             return versionFilePath;

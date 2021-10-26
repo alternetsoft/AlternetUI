@@ -9,9 +9,11 @@ namespace Alternet.UI.Versioning
     {
         private static Regex informationalVersionRegex = new Regex(@"^\d+\.\d+\.(?<build1>\d+) \(\d+\.\d+\ \w+ build (?<build2>\d+)\)$");
 
-        public static void SetBuildNumber(string versionFilePath, int buildNumber)
+        public static void SetBuildNumber(Repository repository, int buildNumber)
         {
             Console.WriteLine($"Increasing build number...");
+
+            var versionFilePath = VersionFileLocator.LocateVersionFile(repository);
 
             var doc = XDocument.Load(versionFilePath);
 
