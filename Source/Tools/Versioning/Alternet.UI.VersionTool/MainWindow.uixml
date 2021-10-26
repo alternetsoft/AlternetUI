@@ -19,9 +19,9 @@
       <TextBox Name="versionTextBox" Grid.Column="1" TextChanged="VersionTextBox_TextChanged" />
     </Grid>
     
-    <GroupBox Title="Type" Grid.Row="1" Margin="0,10,0,10">
+    <GroupBox Title="Type" Grid.Row="1" Margin="0,10,0,10" Padding="5">
       <StackPanel Orientation="Vertical">
-        <RadioButton Text="Release" Name="releaseRadioButton" CheckedChanged="TypeRadioButton_CheckedChanged" />
+        <RadioButton Text="Release" Name="releaseRadioButton" CheckedChanged="TypeRadioButton_CheckedChanged" Margin="0,0,0,5"/>
         <RadioButton Text="Beta" Name="betaRadioButton" CheckedChanged="TypeRadioButton_CheckedChanged" />
       </StackPanel>
     </GroupBox>
