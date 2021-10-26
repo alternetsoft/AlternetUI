@@ -18,9 +18,14 @@ namespace Alternet.UI.Versioning
 
         public string GetMasterVersionFile()
         {
-            var versionFilePath = Path.GetFullPath(Path.Combine(repository.RootPath, "Source/Mastering/Version/Version.props"));
+            return GetValidFullPath("Source/Mastering/Version/Version.props");
+        }
+
+        string GetValidFullPath(string relativePath)
+        {
+            var versionFilePath = Path.GetFullPath(Path.Combine(repository.RootPath, relativePath));
             if (!File.Exists(versionFilePath))
-                throw new InvalidOperationException("Cannot locate Version.props file at" + versionFilePath);
+                throw new InvalidOperationException($"Cannot locate {Path.GetFileName(versionFilePath)} file at {versionFilePath}");
             return versionFilePath;
         }
 
@@ -33,13 +38,18 @@ namespace Alternet.UI.Versioning
                 @"Source\Integration\Templates\CSharp\Application\Alternet.UI.Templates.Application.CSharp.csproj"
             };
 
-            foreach (var file in files)
+            return files.Select(file => GetValidFullPath(file));
+        }
+
+        public IEnumerable<string> GetVSPackageManifestFiles()
+        {
+            var files = new[]
             {
-                var filePath = Path.GetFullPath(Path.Combine(repository.RootPath, file));
-                if (!File.Exists(filePath))
-                    throw new InvalidOperationException("Cannot locate file at" + filePath);
-                yield return filePath;
-            }
+                @"Source\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Manifests\VS2019\source.extension.vsixmanifest",
+                @"Source\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Manifests\VS2022\source.extension.vsixmanifest",
+            };
+
+            return files.Select(file => GetValidFullPath(file));
         }
     }
 }
