@@ -21,9 +21,13 @@ and the <xref:Alternet.UI.ComboBox.SelectedItem> property to get or set a refere
 
 Examples of how a <xref:Alternet.UI.ComboBox> can look on different platforms:
 
-|Windows|macOS|Linux|
-|-------|-----|-----|
-|![ComboBox on Windows](images/combobox-windows.png)|![ComboBox on macOS](images/combobox-macos.png)|![ComboBox on Linux](images/combobox-linux.png)
+# [Windows](#tab/screenshot-windows)
+![ComboBox on Windows](images/combobox-windows.png)
+# [macOS](#tab/screenshot-macos)
+![ComboBox on macOS](images/combobox-macos.png)
+# [Linux](#tab/screenshot-linux)
+![ComboBox on Linux](images/combobox-linux.png)
+***
 
 Set <xref:Alternet.UI.ComboBox.Text> property to specify the text displayed on the control.
 A <xref:Alternet.UI.ComboBox>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.

@@ -214,6 +214,22 @@ body .toc {
 }
 
 @media screen and (max-width: 767px) {
+    .table-responsive td {
+        white-space: normal !important;
+    }
+
+        .table-responsive td:first-of-type {
+            display: block;
+            padding: 10px 0 0px 0;
+            width: 100%;
+        }
+
+        .table-responsive td:not(:first-of-type) {
+            border: 0;
+            padding: 0;
+            display: block;
+        }
+
     .table-responsive {
         border: 0;
     }
