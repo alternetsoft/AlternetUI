@@ -1,11 +1,13 @@
 ﻿<Project>
+    <Sdk Name="DasMulli.AssemblyInfoGeneration.Sdk" Version="1.0.0" /> <!-- To use version from Mastering\Version\Version.props in a legacy-style .csproj -->
+
     <Target Name="AlternetUITemplates_CopySharedContent" BeforeTargets="BeforeCompile">
-		<PropertyGroup>
-			<MediaDirectory>$(MSBuildThisFileDirectory)\..\..\..\..\Media\</MediaDirectory>
-		</PropertyGroup>
+        <PropertyGroup>
+            <MediaDirectory>$(MSBuildThisFileDirectory)\..\..\..\..\Media\</MediaDirectory>
+        </PropertyGroup>
         <ItemGroup>
             <SharedContent Include="$(MediaDirectory)\AlternetUI.ico"/>
         </ItemGroup>
         <Copy SourceFiles="@(SharedContent)" DestinationFolder="$(MSBuildProjectDirectory)" />
-		</Target>
+        </Target>
 </Project>

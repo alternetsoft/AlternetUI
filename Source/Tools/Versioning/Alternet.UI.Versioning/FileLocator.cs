@@ -6,9 +6,16 @@ using System.Xml.Linq;
 
 namespace Alternet.UI.Versioning
 {
-    internal static class VersionFileLocator
+    internal class FileLocator
     {
-        public static string LocateVersionFile(Repository repository)
+        Repository repository;
+
+        public FileLocator(Repository repository)
+        {
+            this.repository = repository;
+        }
+
+        public string GetMasterVersionFile()
         {
             var versionFilePath = Path.GetFullPath(Path.Combine(repository.RootPath, "Source/Mastering/Version/Version.props"));
             if (!File.Exists(versionFilePath))

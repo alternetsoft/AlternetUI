@@ -11,7 +11,7 @@ namespace Alternet.UI.Versioning
             MasterVersionFileService.SetVersion(GetVersionFilePath(repository), productVersion);
         }
 
-        private static string GetVersionFilePath(Repository repository) => VersionFileLocator.LocateVersionFile(repository);
+        private static string GetVersionFilePath(Repository repository) => new FileLocator(repository).GetMasterVersionFile();
 
         public static ProductVersion GetVersion(Repository repository) => MasterVersionFileService.GetVersion(GetVersionFilePath(repository));
     }

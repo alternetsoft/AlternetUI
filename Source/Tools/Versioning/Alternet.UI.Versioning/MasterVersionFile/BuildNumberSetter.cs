@@ -13,7 +13,7 @@ namespace Alternet.UI.Versioning
         {
             Console.WriteLine($"Increasing build number...");
 
-            var versionFilePath = VersionFileLocator.LocateVersionFile(repository);
+            var versionFilePath = new FileLocator(repository).GetMasterVersionFile();
 
             var doc = XDocument.Load(versionFilePath);
 
