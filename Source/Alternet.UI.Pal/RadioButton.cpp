@@ -83,7 +83,15 @@ namespace Alternet::UI
 
     void RadioButton::OnCheckedChanged(wxCommandEvent& event)
     {
-        RaiseEvent(RadioButtonEvent::CheckedChanged);
+        auto group = GetRadioButtonsInGroup();
+        if (group.size() > 0)
+        {
+            // wxEVT_RADIOBUTTON is not fired on unchecked, only on "click". So we need to create an illusion of that.
+            for (auto rb : group)
+                rb->RaiseEvent(RadioButtonEvent::CheckedChanged);
+        }
+        else
+            RaiseEvent(RadioButtonEvent::CheckedChanged);
     }
 
     bool RadioButton::GetIsChecked()

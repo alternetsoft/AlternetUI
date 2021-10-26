@@ -4,7 +4,7 @@
 
 namespace Alternet::UI
 {
-    class RadioButton : Control
+    class RadioButton : public Control
     {
 #include "Api/RadioButton.inc"
 
