@@ -26,15 +26,20 @@ namespace Alternet.UI.Versioning
             IDictionary<string, string>? namespaceBindings = null)
         {
             XDocument document;
+            XmlReader reader;
+
             using (var stream = File.OpenRead(filePath))
-                document = XDocument.Load(stream);
+            {
+                reader = new XmlTextReader(stream);
+                document = XDocument.Load(reader);
+            }
 
             XmlNamespaceManager? xmlNamespaceResolver = null;
             if (namespaceBindings != null)
             {
-                xmlNamespaceResolver = new XmlNamespaceManager(new NameTable());
+                xmlNamespaceResolver = new XmlNamespaceManager(reader.NameTable);
                 foreach (var binding in namespaceBindings)
-                    xmlNamespaceResolver.AddNamespace(binding.Key, "urn:" + binding.Value);
+                    xmlNamespaceResolver.AddNamespace(binding.Key, binding.Value);
             }
 
             var element = document.XPathSelectElement(elementSelector, xmlNamespaceResolver);
@@ -49,7 +54,7 @@ namespace Alternet.UI.Versioning
                 new XmlWriterSettings
                 {
                     OmitXmlDeclaration = omitXmlDeclaration,
-                    Encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false),
+                    Encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: !omitXmlDeclaration),
                     Indent = true
                 }))
                 document.Save(writer);
