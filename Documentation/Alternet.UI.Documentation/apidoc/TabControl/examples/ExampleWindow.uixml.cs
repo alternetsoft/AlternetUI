@@ -21,14 +21,5 @@ namespace Alternet.UI.Documentation.Examples.TabControl
             tc.Pages.Add(new TabPage { Title = "Combo Box" });
             #endregion
         }
-
-        #region TabControlEventHandler
-        private void TabControl_EnabledChanged(object? sender, EventArgs e)
-        {
-            var text = tabControl.Enabled.ToString();
-            MessageBox.Show(text, string.Empty);
-        }
-
-        #endregion    
     }
 }

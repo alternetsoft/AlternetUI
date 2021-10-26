@@ -8,9 +8,27 @@ namespace Alternet.UI.Documentation.Examples.ListView
         public MainWindow()
         {
             InitializeComponent();
-            listView.Items.Add(new Alternet.UI.ListViewItem { Text = "Item1" });
-            listView.Items.Add(new Alternet.UI.ListViewItem { Text = "Item2" });
-            listView.Items.Add(new Alternet.UI.ListViewItem { Text = "Item2" });
+
+            void AddItems(int count)
+            {
+                int start = listView.Items.Count + 1;
+
+                listView.BeginUpdate();
+                try
+                {
+                    for (int i = start; i < start + count; i++)
+                        listView.Items.Add(new ListViewItem(new[] { "Item " + i, "Some Info " + i }, i % 4));
+                }
+                finally
+                {
+                    listView.EndUpdate();
+                }
+            }
+
+            var imageLists = ResourceLoader.LoadImageLists();
+            listView.SmallImageList = imageLists.Small;
+            listView.LargeImageList = imageLists.Large;
+            AddItems(4);
             listView.SelectedIndex = 1;
         }
 

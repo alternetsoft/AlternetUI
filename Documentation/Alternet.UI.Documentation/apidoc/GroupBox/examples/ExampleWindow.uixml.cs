@@ -20,10 +20,6 @@ namespace Alternet.UI.Documentation.Examples.GroupBox
         }
 
         #region GroupBoxEventHandler
-        private void GroupBox_EnabledChanged(object? sender, EventArgs e)
-        {
-            MessageBox.Show(groupBox.Enabled.ToString(), string.Empty);
-        }
         #endregion    
     }
 }
