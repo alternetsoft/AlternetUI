@@ -20,6 +20,14 @@ del "%PackagesPublishDirectory%\*.nupkg"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
+del "%PackagesPublishDirectory%\*.vsix"
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
+del "%PackagesPublishDirectory%\*.zip"
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
 :: Publish PAL packages.
 
 copy "%SCRIPT_HOME%\..\Alternet.UI.Pal\bin\NuGet\*.nupkg" "%PackagesPublishDirectory%"
