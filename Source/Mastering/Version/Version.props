@@ -1,25 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
   <!-- Product Information -->
   <PropertyGroup>
     <Company>AlterNET Software</Company>
     <Product>AlterNET UI</Product>
     <Copyright>Copyright © 2021 AlterNET Software</Copyright>
   </PropertyGroup>
-
   <!-- Assembly Information -->
   <PropertyGroup>
     <AssemblyVersion>0.1.0.0</AssemblyVersion>
     <FileVersion>0.1.0.0</FileVersion>
     <InformationalVersion>0.1.0 (0.1 Beta build 0)</InformationalVersion>
   </PropertyGroup>
-
   <!-- NuGet Specification -->
   <PropertyGroup>
     <PackageVersion>0.1.0-beta</PackageVersion>
     <Version>0.1.0-beta</Version>
     <Authors>AlterNET Software</Authors>
   </PropertyGroup>
-
 </Project>
