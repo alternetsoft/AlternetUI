@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Alternet.UI.Versioning
 {
@@ -18,9 +19,9 @@ namespace Alternet.UI.Versioning
         public string GetInformationalVersion() =>
             $"{Major}.{Minor}.0 ({Major}.{Minor} {Type} build 0)";
 
-        public string GetPackageVersion()
+        public string GetPackageVersion(int buildNumber = 0)
         {
-            var v = $"{Major}.{Minor}.0";
+            var v = $"{Major}.{Minor}.{buildNumber}";
             if (Type == VersionType.Release)
                 return v;
             return $"{v}-{Type.ToString().ToLower()}";
@@ -56,6 +57,12 @@ namespace Alternet.UI.Versioning
 
             version = new ProductVersion(major, minor, VersionType.Release);
             return true;
+        }
+
+        public Version GetAssemblyVersion(int buildNumber)
+        {
+            var version = Version.Parse(GetAssemblyVersion());
+            return new Version(version.Major, version.Minor, buildNumber, 0);
         }
 
         public ProductVersion WithType(VersionType value) => new ProductVersion(Major, Minor, value);

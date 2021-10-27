@@ -7,15 +7,28 @@ namespace Alternet.UI.Versioning
 {
     static class MasterVersionFileService
     {
-        private static Regex informationalVersionRegex = new Regex(@"^(?<major>\d+)\.(?<minor>\d+)\.\d+ \(\d+\.\d+\ (?<type>\w+) build \d+\)$");
+        private static Regex informationalVersionRegex = new Regex(@"^(?<major>\d+)\.(?<minor>\d+)\.(?<build>\d+) \(\d+\.\d+\ (?<type>\w+) build \d+\)$");
 
         public static ProductVersion GetVersion(string versionFilePath)
         {
             var doc = XDocument.Load(versionFilePath);
+            var informationalVersion = GetInformationalVersionElement(doc);
+            return GetVersion(informationalVersion);
+        }
 
+        private static XElement GetInformationalVersionElement(XDocument doc)
+        {
             XNamespace ns = XmlNamespaces.MSBuild;
             var informationalVersion = doc.Descendants(ns + "Project").Descendants(ns + "PropertyGroup").Descendants(ns + "InformationalVersion").Single();
-            return GetVersion(informationalVersion);
+            return informationalVersion;
+        }
+
+        public static int GetBuildNumber(string versionFilePath)
+        {
+            var doc = XDocument.Load(versionFilePath);
+
+            var informationalVersion = GetInformationalVersionElement(doc);
+            return GetBuildNumber(informationalVersion);
         }
 
         private static ProductVersion GetVersion(XElement informationalVersion)
@@ -28,6 +41,15 @@ namespace Alternet.UI.Versioning
                 int.Parse(match.Groups["major"].Value),
                 int.Parse(match.Groups["minor"].Value),
                 (VersionType)Enum.Parse(typeof(VersionType), match.Groups["type"].Value));
+        }
+
+        private static int GetBuildNumber(XElement informationalVersion)
+        {
+            var match = informationalVersionRegex.Match(informationalVersion.Value);
+            if (!match.Success)
+                throw new FormatException();
+
+            return int.Parse(match.Groups["build"].Value);
         }
 
         public static void SetVersion(string versionFilePath, ProductVersion productVersion)

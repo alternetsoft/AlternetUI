@@ -15,6 +15,7 @@ namespace Alternet.UI.PublicSourceGenerator
             {
                 var repository = LocateRepository();
                 var productVersion = VersionService.GetVersion(repository);
+                var packageVersion = productVersion.GetPackageVersion(VersionService.GetBuildNumber(repository));
                 var targetDirectory = Path.Combine(repository.RootPath, "Publish/Packages");
 
                 return CommandLine.Parser.Default.ParseArguments<ComponentsSourceGeneratorOptions, SamplesSourceGeneratorOptions>(args)
@@ -22,11 +23,11 @@ namespace Alternet.UI.PublicSourceGenerator
                     (ComponentsSourceGeneratorOptions o) => ComponentsSourceGenerator.Generate(
                         repository,
                         productVersion,
-                        Path.Combine(targetDirectory, $"PublicSourceCode-{productVersion.GetPackageVersion()}.zip")),
+                        Path.Combine(targetDirectory, $"PublicSourceCode-{packageVersion}.zip")),
                     (SamplesSourceGeneratorOptions o) => SamplesSourceGenerator.Generate(
                         repository,
                         productVersion,
-                        Path.Combine(targetDirectory, $"PublicSamples-{productVersion.GetPackageVersion()}.zip")),
+                        Path.Combine(targetDirectory, $"PublicSamples-{packageVersion}.zip")),
                     errors => 1);
             }
             catch (Exception e)
