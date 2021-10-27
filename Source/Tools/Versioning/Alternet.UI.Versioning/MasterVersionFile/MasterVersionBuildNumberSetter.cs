@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 namespace Alternet.UI.Versioning
 {
-    public static class BuildNumberSetter
+    internal static class MasterVersionBuildNumberSetter
     {
         private static Regex informationalVersionRegex = new Regex(@"^\d+\.\d+\.(?<build1>\d+) \(\d+\.\d+\ \w+ build (?<build2>\d+)\)$");
 
