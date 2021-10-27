@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Alternet.UI.Versioning;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -6,30 +7,30 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
 {
     static class SamplesSourceGenerator
     {
-        public static int Generate(SamplesSourceGeneratorOptions options)
+        public static int Generate(Repository repository, ProductVersion productVersion, string targetFilePath)
         {
             try
             {
                 using (var tempDirectory = new TempDirectory("Samples"))
                 {
                     var samplesRootRelativePath = @"Source\Samples";
-                    var samplesRootFullPath = Path.GetFullPath(Path.Combine(options.RepoRootDirectory, samplesRootRelativePath));
+                    var samplesRootFullPath = Path.GetFullPath(Path.Combine(repository.RootPath, samplesRootRelativePath));
                     var sampleDirectoryNames = Directory.GetDirectories(samplesRootFullPath, "*Sample").Select(x => Path.GetFileName(x)!);
 
                     foreach (var sampleDirectoryName in sampleDirectoryNames)
                     {
                         SourceDirectoryCopier.CopyDirectory(
-                            repoRootDirectory: options.RepoRootDirectory,
+                            repoRootDirectory: repository.RootPath,
                             tempDirectory: tempDirectory.Path,
                             sourceName: Path.Combine(samplesRootRelativePath, sampleDirectoryName),
                             targetName: sampleDirectoryName,
                             ignoredDirectores: new[] { "build", "Testing" });
 
                         var projectFiles = Directory.GetFiles(Path.Combine(tempDirectory.Path, sampleDirectoryName), "*Sample.csproj");
-                        PatchSampleProjectFile(projectFiles.Single(), options.PackagesVersion);
+                        PatchSampleProjectFile(projectFiles.Single(), productVersion.GetPackageReferenceVersion());
                     }
 
-                    tempDirectory.Pack(options.TargetFilePath);
+                    tempDirectory.Pack(targetFilePath);
                 }
 
                 return 0;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Alternet.UI.Versioning;
+using System;
 using System.IO;
 using System.IO.Compression;
 
@@ -6,7 +7,7 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Components
 {
     static class ComponentsSourceGenerator
     {
-        public static int Generate(ComponentsSourceGeneratorOptions options)
+        public static int Generate(Repository repository, ProductVersion productVersion, string targetFilePath)
         {
             try
             {
@@ -14,15 +15,17 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Components
                 {
                     var tempDirectoryPath = tempDirectory.Path;
 
-                    SourceDirectoryCopier.CopyDirectory(options.RepoRootDirectory, tempDirectoryPath, "Source\\Keys", "Keys");
-                    SourceDirectoryCopier.CopyDirectory(options.RepoRootDirectory, tempDirectoryPath, "Source\\Alternet.UI", "Alternet.UI");
+                    SourceDirectoryCopier.CopyDirectory(repository.RootPath, tempDirectoryPath, "Source\\Keys", "Keys");
+                    SourceDirectoryCopier.CopyDirectory(repository.RootPath, tempDirectoryPath, "Source\\Alternet.UI", "Alternet.UI");
+                    SourceDirectoryCopier.CopyDirectory(repository.RootPath, tempDirectoryPath, @"Source\Mastering\Version", @"Mastering\Version");
+                    SourceDirectoryCopier.CopyDirectory(repository.RootPath, tempDirectoryPath, @"Source\Alternet.UI.Build.Tasks\msbuild", @"Alternet.UI.Build.Tasks\msbuild");
 
                     PatchPackageReference(
                         Path.Combine(tempDirectoryPath, "Alternet.UI\\Alternet.UI.csproj"),
                         "Alternet.UI.Pal",
-                        options.PackagesVersion);
+                        productVersion.GetPackageReferenceVersion());
 
-                    tempDirectory.Pack(options.TargetFilePath);
+                    tempDirectory.Pack(targetFilePath);
                 }
 
                 return 0;
