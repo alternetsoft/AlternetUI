@@ -60,23 +60,16 @@ copy "%SCRIPT_HOME%\..\..\Integration\Templates\bin\Release\*.nupkg" "%PackagesP
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-@REM :: Generate public source.
+:: Generate public source.
 
-@REM set PublicSourceGeneratorToolProject=%SCRIPT_HOME%\..\..\Tools\PublicSourceGenerator\PublicSourceGenerator.csproj
-@REM set TargetPublicSource=%SourcePublishDirectory%\Public Source Code.zip
-@REM set TargetPublicSamples=%SourcePublishDirectory%\Public Samples.zip
-@REM set RepoRoot=%SCRIPT_HOME%\..\..\..
+set PublicSourceGeneratorToolProject=%SCRIPT_HOME%\..\..\Tools\PublicSourceGenerator\Alternet.UI.PublicSourceGenerator.csproj
 
-@REM FOR /F %%i IN ('call "%SCRIPT_HOME%\xpath.bat" "%SCRIPT_HOME%\..\..\Mastering\Version\Version.props" //Project/PropertyGroup/Version') DO set PACKAGES_VERSION=%%i
-@REM if not !ERRORLEVEL! EQU 0 (
-@REM     exit /b !ERRORLEVEL!)
+dotnet run --project "%PublicSourceGeneratorToolProject%" -- components
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
 
-@REM dotnet run --project "%PublicSourceGeneratorToolProject%" -- components --repoRoot "%RepoRoot%" --targetFile "%TargetPublicSource%" --packagesVersion "%PACKAGES_VERSION%"
-@REM if not !ERRORLEVEL! EQU 0 (
-@REM     exit /b !ERRORLEVEL!)
-
-@REM dotnet run --project "%PublicSourceGeneratorToolProject%" -- samples --repoRoot "%RepoRoot%" --targetFile "%TargetPublicSamples%" --packagesVersion "%PACKAGES_VERSION%"
-@REM if not !ERRORLEVEL! EQU 0 (
-@REM     exit /b !ERRORLEVEL!)
+dotnet run --project "%PublicSourceGeneratorToolProject%" -- samples
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
 
 exit /b
