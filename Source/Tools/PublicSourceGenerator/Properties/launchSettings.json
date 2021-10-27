@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Components": {
+        "commandName": "Project",
+        "commandLineArgs": "components"
+    },
+    "Samples": {
+        "commandName": "Project",
+        "commandLineArgs": "samples"
+    }
+  }
+}
