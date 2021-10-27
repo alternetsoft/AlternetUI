@@ -1,0 +1,11 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="Alternet.UI.Documentation.Examples.Border.MainWindow"
+        Title="Alternet.UI.Documentation.Examples.Border">
+  <StackPanel Orientation="Vertical">
+    <!-- <CreateUixmlDeclaration> -->
+    <Border Width="120" Height="120" Name="border" Margin="16,16,16,16">
+    </Border>
+    <!-- </CreateUixmlDeclaration> -->
+  </StackPanel>
+</Window>

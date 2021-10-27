@@ -8,14 +8,15 @@ namespace Alternet.UI.Documentation.Examples.Grid
         public MainWindow()
         {
             InitializeComponent();
+            grid.Background = Alternet.Drawing.Brushes.LightGray;
         }
 
         public void GridExample1()
         {
             #region GridCSharpCreation
-            //var Grid = new Alternet.UI.Grid();
-            //Grid.RowDefinitions.Add(new Alternet.UI.RowDefinition { Height = new Alternet.UI.GridLength(1, Alternet.UI.GridUnitType.Star) });
-            //Grid.RowDefinitions.Add(new Alternet.UI.RowDefinition { Height = new Alternet.UI.GridLength(1, Alternet.UI.GridUnitType.Auto) });
+            var Grid = new Alternet.UI.Grid();
+            Grid.RowDefinitions.Add(new Alternet.UI.RowDefinition { Height = new Alternet.UI.GridLength(1, Alternet.UI.GridUnitType.Star) });
+            Grid.RowDefinitions.Add(new Alternet.UI.RowDefinition { Height = new Alternet.UI.GridLength(1, Alternet.UI.GridUnitType.Auto) });
             #endregion
         }
 
