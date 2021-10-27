@@ -26,13 +26,13 @@ namespace Alternet.UI.Versioning
 
                 var version = Version.Parse(versionString);
 
-                var newVersion = new Version(version.Major, version.Minor, buildNumber);
+                var newVersion = new Version(version.Major, version.Minor, buildNumber, 0);
 
                 patcher.PatchAttribute(
                     file,
                     Selector,
                     AttributeName,
-                    newVersion.ToString(4),
+                    newVersion.ToString(),
                     namespaceBindings);
             }
         }
