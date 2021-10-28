@@ -1,8 +1,4 @@
-# Framework Overview
-
-The design of the AlterNET UI framework is influenced by **Windows Forms** and **Windows Presentation Foundation (WPF)** frameworks from Microsoft. While
-incorporating WPF-inspired features like UIXML, AlterNET UI design aims to bring the developers the ease of use of Windows Forms, as well as a
-platform-native look and feel.
+# Programming With AlterNET UI
 
 The basic building blocks of a typical AlterNET UI application are simple. One such class is <xref:Alternet.UI.Application>, which allows to start and stop an
 application, and a <xref:Alternet.UI.Window>, which represents an on-screen window to display UI elements inside of it.
@@ -21,7 +17,7 @@ The following example shows how you can create a window with a few controls as p
 
 [Explore more examples on GitHub](https://github.com/todo).
 
-### Native controls look and feel
+### Layout and Controls
 
 AlterNET UI provides a set of standard controls which use native API and look and feel exactly like native elements on all platforms and different screen resolutions.
 
@@ -48,7 +44,7 @@ In AlterNET UI, each control is defined within a rectangle that represents its b
 layout system at runtime using automatic measurements based on the available screen size, parent properties and element properties such as border,
 width, height, margin and padding.
 
-### Platform-independent graphics device interface
+### Rendering Graphics
 
 AlterNET UI incudes set of resolution-independent graphics features that use native rendering on every supported platform.
 
