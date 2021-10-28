@@ -2,6 +2,7 @@
 using Alternet.UI;
 using System;
 
+
 namespace HelloWorldSample
 {
     internal partial class MainWindow : Window
