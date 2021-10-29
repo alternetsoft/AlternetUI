@@ -16,3 +16,4 @@ Source/Build/Alternet.UI.Pal-old/NuGet/runtimes
 Source/Samples/HelloWorldSample/HelloWorldSample.csproj.user
 Source/**/AlternetUI.ico
 Documentation/Alternet.UI.Documentation/log.txt
+.DS_Store

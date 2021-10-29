@@ -9,9 +9,6 @@ namespace Alternet::UI
 {
     typedef std::u16string string;
 
-    template<typename T> using optional = std::optional<T>;
-    using std::nullopt;
-
 #if !defined(__WXMSW__)
 
     // https://stackoverflow.com/a/42899668

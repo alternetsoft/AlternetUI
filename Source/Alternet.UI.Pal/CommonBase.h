@@ -17,7 +17,8 @@
 #include <locale>
 #include <tuple>
 #include <codecvt>
-#include <optional>
+
+#include "OptionalInclude.h"
 
 #ifdef __WXMSW__
 #include <sstream>

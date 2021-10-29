@@ -44,7 +44,11 @@
     <Target Name="BuildWxWidgets_MacOS" Condition="$([MSBuild]::IsOsPlatform('OSX'))">
         <Exec WorkingDirectory="$(WxWidgetsDirectory)" Command="chmod +x configure" />
         <Exec WorkingDirectory="$(WxWidgetsDirectory)" Command="mkdir $(WxWidgetsMacOSBuildDirectoryName)" />
-        <Exec WorkingDirectory="$(WxWidgetsMacOSBuildDirectory)" Command="../configure --disable-shared --disable-sys-libs" />
+        
+        <!-- On macOS High Sierra (10.13.6, the minimum supported version), libtiff and expat fail to build. So have to exclude them. -->
+        <Exec WorkingDirectory="$(WxWidgetsMacOSBuildDirectory)"
+            Command="../configure --disable-shared --disable-sys-libs --with-macosx-version-min=10.13 --without-libtiff --without-expat" />
+        
         <Exec WorkingDirectory="$(WxWidgetsMacOSBuildDirectory)" Command="make -j8" />
     </Target>
 
