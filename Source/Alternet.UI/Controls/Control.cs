@@ -615,7 +615,7 @@ namespace Alternet.UI
         /// The <see cref="EndInit"/> method ends the initialization. Using the <see cref="BeginInit"/> and <see cref="EndInit"/> methods
         /// prevents the control from being used before it is fully initialized.
         /// </remarks>
-        public void BeginInit()
+        public virtual void BeginInit()
         {
             SuspendLayout();
         }
@@ -628,7 +628,7 @@ namespace Alternet.UI
         /// The <see cref="BeginInit"/> method starts the initialization. Using the <see cref="BeginInit"/> and <see cref="EndInit"/> methods
         /// prevents the control from being used before it is fully initialized.
         /// </remarks>
-        public void EndInit()
+        public virtual void EndInit()
         {
             ResumeLayout();
         }

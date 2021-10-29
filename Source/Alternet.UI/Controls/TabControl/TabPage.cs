@@ -51,6 +51,28 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
+        public override void BeginInit()
+        {
+#if NETCOREAPP
+            // Workaround: on Linux, only the first tab is visible if the tab if PerformLayout is called from EndInit().
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
+                return;
+#endif
+            base.BeginInit();
+        }
+
+        /// <inheritdoc/>
+        public override void EndInit()
+        {
+#if NETCOREAPP
+            // Workaround: on Linux, only the first tab is visible if the tab if PerformLayout is called from EndInit().
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
+                return;
+#endif
+            base.EndInit();
+        }
+
         /// <summary>
         /// Raises the <see cref="TitleChanged"/> event and calls <see cref="OnTitleChanged(EventArgs)"/>.
         /// </summary>
