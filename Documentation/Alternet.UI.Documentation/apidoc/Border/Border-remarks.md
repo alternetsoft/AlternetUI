@@ -12,5 +12,3 @@ Examples of how a <xref:Alternet.UI.Border> can look on different platforms:
 # [Linux](#tab/screenshot-linux)
 ![Border on Linux](images/border-linux.png)
 ***
-
-A <xref:Alternet.UI.Border>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.

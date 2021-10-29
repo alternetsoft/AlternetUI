@@ -19,13 +19,5 @@ namespace Alternet.UI.Documentation.Examples.StackPanel
             StackPanel.Children.Add(new Button() { Text = "remove Item", Margin = new Thickness(8, 8, 8, 8) });
             #endregion
         }
-
-        #region StackPanelEventHandler
-        private void StackPanel_OrientationChanged(object? sender, EventArgs e)
-        {
-            var text = stackPanel.Orientation.ToString();
-            MessageBox.Show(text, string.Empty);
-        }
-        #endregion    
     }
 }

@@ -22,4 +22,3 @@ Examples of how a <xref:Alternet.UI.GroupBox> can look on different platforms:
 ***
 
 Set <xref:Alternet.UI.GroupBox.Title> property to specify the title text displayed on the control.
-A <xref:Alternet.UI.GroupBox>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.

@@ -5,6 +5,8 @@
   <StackPanel Orientation="Vertical">
     <!-- <CreateUixmlDeclaration> -->
     <Border Width="120" Height="120" Name="border" Margin="16,16,16,16">
+      <Label Text="Label inside border" Margin="8,8,8,8" />
+      <Button Width ="120" Height="23" Text="Button inside border" Margin="8,40,8,8" />
     </Border>
     <!-- </CreateUixmlDeclaration> -->
   </StackPanel>

@@ -14,4 +14,3 @@ Examples of how a <xref:Alternet.UI.StackPanel> can look on different platforms:
 ***
 
 Set <xref:Alternet.UI.StackPanel.Orientation> property to specify the dimension by which child controls are stacked.
-A <xref:Alternet.UI.StackPanel>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.

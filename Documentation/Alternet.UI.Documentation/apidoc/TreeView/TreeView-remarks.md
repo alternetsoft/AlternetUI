@@ -28,5 +28,3 @@ Examples of how a <xref:Alternet.UI.TreeView> can look on different platforms:
 # [Linux](#tab/screenshot-linux)
 ![TreeView on Linux](images/treeview-linux.png)
 ***
-
-A <xref:Alternet.UI.TreeView>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.

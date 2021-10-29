@@ -17,14 +17,13 @@ namespace Alternet.UI.Documentation.Examples.Grid
             var Grid = new Alternet.UI.Grid();
             Grid.RowDefinitions.Add(new Alternet.UI.RowDefinition { Height = new Alternet.UI.GridLength(1, Alternet.UI.GridUnitType.Star) });
             Grid.RowDefinitions.Add(new Alternet.UI.RowDefinition { Height = new Alternet.UI.GridLength(1, Alternet.UI.GridUnitType.Auto) });
+            var bt1 = new Button{Text="First button" };
+            var bt2 = new Button { Text = "Second button" };
+            Grid.Children.Add(bt1);
+            Grid.Children.Add(bt2);
+            Alternet.UI.Grid.SetRow(bt1, 0);
+            Alternet.UI.Grid.SetRow(bt2, 1);
             #endregion
         }
-
-        #region GridEventHandler
-        private void Grid_EnabledChanged(object? sender, EventArgs e)
-        {
-            MessageBox.Show(grid.Enabled.ToString(), string.Empty);
-        }
-        #endregion    
     }
 }

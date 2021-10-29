@@ -15,4 +15,3 @@ Examples of how a <xref:Alternet.UI.Window> can look on different platforms:
 ***
 
 Set <xref:Alternet.UI.Window.Title> property to specify the title of this window.
-A <xref:Alternet.UI.Window>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.

@@ -12,5 +12,3 @@ Examples of how a <xref:Alternet.UI.Grid> can look on different platforms:
 # [Linux](#tab/screenshot-linux)
 ![Grid on Linux](images/grid-linux.png)
 ***
-
-A <xref:Alternet.UI.Grid>, like any other <xref:Alternet.UI.Control>, can be disabled by setting its <xref:Alternet.UI.Control.Enabled> property to `false`.
