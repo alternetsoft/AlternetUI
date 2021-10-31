@@ -30,6 +30,10 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
                         PatchSampleProjectFile(projectFiles.Single(), productVersion.GetPackageReferenceVersion());
                     }
 
+                    File.Copy(
+                        Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\Alternet.UI.Samples.sln"),
+                        Path.Combine(tempDirectory.Path, "Alternet.UI.Samples.sln"));
+
                     tempDirectory.Pack(targetFilePath);
                 }
 

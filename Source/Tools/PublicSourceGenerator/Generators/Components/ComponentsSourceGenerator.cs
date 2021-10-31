@@ -15,15 +15,25 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Components
                 {
                     var tempDirectoryPath = tempDirectory.Path;
 
-                    SourceDirectoryCopier.CopyDirectory(repository.RootPath, tempDirectoryPath, "Source\\Keys", "Keys");
+                    SourceDirectoryCopier.CopyDirectory(repository.RootPath, tempDirectoryPath, @"Publish\PublicFiles\Components\Keys", "Keys");
                     SourceDirectoryCopier.CopyDirectory(repository.RootPath, tempDirectoryPath, "Source\\Alternet.UI", "Alternet.UI");
                     SourceDirectoryCopier.CopyDirectory(repository.RootPath, tempDirectoryPath, @"Source\Mastering\Version", @"Mastering\Version");
-                    SourceDirectoryCopier.CopyDirectory(repository.RootPath, tempDirectoryPath, @"Source\Alternet.UI.Build.Tasks\msbuild", @"Alternet.UI.Build.Tasks\msbuild");
+                    SourceDirectoryCopier.CopyDirectory(
+                        repository.RootPath,
+                        tempDirectoryPath,
+                        @"Source\Alternet.UI.Build.Tasks",
+                        @"Alternet.UI.Build.Tasks",
+                        ignoredDirectores: new[] { "build" });
 
                     PatchPackageReference(
                         Path.Combine(tempDirectoryPath, "Alternet.UI\\Alternet.UI.csproj"),
                         "Alternet.UI.Pal",
                         productVersion.GetPackageReferenceVersion());
+
+                    File.Copy(
+                        Path.Combine(repository.RootPath, @"Publish\PublicFiles\Components\Alternet.UI.sln"),
+                        Path.Combine(tempDirectory.Path, "Alternet.UI.sln"));
+
 
                     tempDirectory.Pack(targetFilePath);
                 }
