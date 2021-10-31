@@ -1284,7 +1284,7 @@ namespace Alternet.Drawing
         private static Pen GetPen(ref Pen? pen, Color color)
         {
             if (pen == null)
-                pen = new Pen(color);
+                pen = new Pen(color, 1, PenDashStyle.Solid, immutable: true);
             return pen;
         }
     }

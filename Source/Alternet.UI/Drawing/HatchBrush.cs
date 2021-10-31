@@ -18,7 +18,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="hatchStyle">One of the <see cref="BrushHatchStyle"/> values that represents the pattern drawn by this <see cref="HatchBrush"/>.</param>
         /// <param name="color">The <see cref="Drawing.Color"/> structure that represents the color of lines drawn by this <see cref="HatchBrush"/>.</param>
-        public HatchBrush(BrushHatchStyle hatchStyle, Color color) : base(new UI.Native.HatchBrush())
+        public HatchBrush(BrushHatchStyle hatchStyle, Color color) : base(new UI.Native.HatchBrush(), immutable: false)
         {
             HatchStyle = hatchStyle;
             Color = color;

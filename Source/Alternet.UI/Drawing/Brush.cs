@@ -13,10 +13,13 @@ namespace Alternet.Drawing
     {
         private bool isDisposed;
 
-        internal Brush(UI.Native.Brush nativeBrush)
+        internal Brush(UI.Native.Brush nativeBrush, bool immutable)
         {
             NativeBrush = nativeBrush;
+            this.immutable = immutable;
         }
+
+        private bool immutable;
 
         internal UI.Native.Brush NativeBrush { get; private set; }
 
@@ -127,6 +130,9 @@ namespace Alternet.Drawing
         {
             if (!isDisposed)
             {
+                if (immutable)
+                    throw new InvalidOperationException("Cannot dispose an immutable brush.");
+
                 if (disposing)
                 {
                     NativeBrush.Dispose();

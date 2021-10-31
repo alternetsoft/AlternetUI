@@ -18,7 +18,7 @@ namespace Alternet.UI
             NativeControl.SizeChanged += NativeControl_SizeChanged;
         }
 
-        private void NativeControl_SizeChanged(object sender, EventArgs e)
+        private void NativeControl_SizeChanged(object? sender, EventArgs e)
         {
             PerformLayout();
         }

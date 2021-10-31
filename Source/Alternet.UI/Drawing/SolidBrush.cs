@@ -12,7 +12,11 @@ namespace Alternet.Drawing
         /// Initializes a new <see cref="SolidBrush"/> object of the specified color.
         /// </summary>
         /// <param name="color">A <see cref="Color"/> structure that represents the color of this brush.</param>
-        public SolidBrush(Color color) : base(new UI.Native.SolidBrush())
+        public SolidBrush(Color color) : this(color, immutable: false)
+        {
+        }
+
+        internal SolidBrush(Color color, bool immutable) : base(new UI.Native.SolidBrush(), immutable)
         {
             Color = color;
             ((UI.Native.SolidBrush)NativeBrush).Initialize(color);

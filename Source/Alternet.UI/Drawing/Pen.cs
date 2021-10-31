@@ -24,14 +24,21 @@ namespace Alternet.Drawing
         /// <param name="color">A <see cref="Color"/> structure that indicates the color of this <see cref="Pen"/>.</param>
         /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in device-independent units (1/96th inch per unit).</param>
         /// <param name="dashStyle">A style used for dashed lines drawn with this <see cref="Pen"/>.</param>
-        public Pen(Color color, float width, PenDashStyle dashStyle) : this(new UI.Native.Pen())
+        public Pen(Color color, float width, PenDashStyle dashStyle) : this(color, width, dashStyle, immutable: false)
+        {
+        }
+
+        internal Pen(Color color, float width, PenDashStyle dashStyle, bool immutable) : this(new UI.Native.Pen())
         {
             DashStyle = dashStyle;
             Color = color;
             Width = width;
 
             ReinitializeNativePen();
+            this.immutable = true;
         }
+
+        private bool immutable;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Pen"/> class with the specified
@@ -63,7 +70,7 @@ namespace Alternet.Drawing
         {
         }
 
-        internal Pen(UI.Native.Pen nativePen)
+        private Pen(UI.Native.Pen nativePen)
         {
             NativePen = nativePen;
         }
@@ -78,6 +85,7 @@ namespace Alternet.Drawing
 
             set
             {
+                CheckModificationOfImmutableObject();
                 if (color == value)
                     return;
 
@@ -96,6 +104,7 @@ namespace Alternet.Drawing
 
             set
             {
+                CheckModificationOfImmutableObject();
                 if (dashStyle == value)
                     return;
 
@@ -114,12 +123,19 @@ namespace Alternet.Drawing
 
             set
             {
+                CheckModificationOfImmutableObject();
                 if (width == value)
                     return;
 
                 width = value;
                 ReinitializeNativePen();
             }
+        }
+
+        private void CheckModificationOfImmutableObject()
+        {
+            if (immutable)
+                throw new InvalidOperationException("Cannot change an immutable pen.");
         }
 
         internal UI.Native.Pen NativePen { get; private set; }
@@ -224,6 +240,9 @@ namespace Alternet.Drawing
         {
             if (!isDisposed)
             {
+                if (immutable)
+                    throw new InvalidOperationException("Cannot dispose an immutable pen.");
+
                 if (disposing)
                 {
                     NativePen.Dispose();
