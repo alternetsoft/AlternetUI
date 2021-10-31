@@ -269,7 +269,8 @@ namespace Alternet.UI
                         Control child = children[i];
                         if (child != null)
                         {
-                            var childDesiredSize = child.GetPreferredSize(availableSize);
+                            var s = child.GetPreferredSize(availableSize);
+                            var childDesiredSize = new SizeF(s.Width + child.Margin.Horizontal, s.Height + child.Margin.Vertical);
                             gridDesiredSize.Width = Math.Max(gridDesiredSize.Width, childDesiredSize.Width);
                             gridDesiredSize.Height = Math.Max(gridDesiredSize.Height, childDesiredSize.Height);
                         }
@@ -629,7 +630,7 @@ namespace Alternet.UI
                             GetFinalSizeForRange(DefinitionsV, rowIndex, rowSpan));
 
                         EnterCounter(Counters._ArrangeChildHelper2);
-                        cell.Handler.Bounds = cellRect;
+                        SetControlBounds(cell, cellRect);
                         ExitCounter(Counters._ArrangeChildHelper2);
                     }
 
@@ -647,6 +648,20 @@ namespace Alternet.UI
                 ArrangeOverrideInProgress = false;
                 ExitCounterScope(Counters.ArrangeOverride);
             }
+        }
+
+        void SetControlBounds(Control control, RectangleF bounds)
+        {
+            var preferredSize = control.GetPreferredSize(bounds.Size);
+
+            var horizontalPosition = AlignedLayout.AlignHorizontal(bounds, control, preferredSize);
+            var verticalPosition = AlignedLayout.AlignVertical(bounds, control, preferredSize);
+
+            control.Handler.Bounds = new RectangleF(
+                horizontalPosition.Origin,
+                verticalPosition.Origin,
+                horizontalPosition.Size,
+                verticalPosition.Size);
         }
 
         void OnChildrenChanged()
@@ -1070,7 +1085,9 @@ namespace Alternet.UI
             int i = cellsHead;
             do
             {
-                var childPreferredSize = children[i].GetPreferredSize(referenceSize);
+                var child = children[i];
+                var s = child.GetPreferredSize(referenceSize);
+                var childPreferredSize = new SizeF(s.Width + child.Margin.Horizontal, s.Height + child.Margin.Vertical);
                 float oldWidth = childPreferredSize.Width;
 
                 MeasureCell(i, forceInfinityV);

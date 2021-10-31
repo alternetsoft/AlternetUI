@@ -39,28 +39,9 @@ namespace Alternet.UI
                     var horizontalMargin = margin.Horizontal;
 
                     var preferredSize = control.GetPreferredSize(new SizeF(childrenLayoutBounds.Width - x - horizontalMargin, childrenLayoutBounds.Height));
-                    var alignedPosition = AlignChild(childrenLayoutBounds, control, preferredSize);
+                    var alignedPosition = AlignedLayout.AlignHorizontal(childrenLayoutBounds, control, preferredSize);
                     control.Handler.Bounds = new RectangleF(childrenLayoutBounds.Left + x + margin.Left, alignedPosition.Origin, preferredSize.Width, alignedPosition.Size);
                     x += preferredSize.Width + horizontalMargin;
-                }
-            }
-
-            private AlignedPosition AlignChild(RectangleF layoutBounds, Control childControl, SizeF childPreferredSize)
-            {
-                switch (childControl.VerticalAlignment)
-                {
-                    case VerticalAlignment.Top:
-                        return new AlignedPosition(layoutBounds.Top + childControl.Margin.Top, childPreferredSize.Height);
-                    case VerticalAlignment.Center:
-                        return new AlignedPosition(
-                            layoutBounds.Top + (layoutBounds.Height - (childPreferredSize.Height + childControl.Margin.Vertical)) / 2 + childControl.Margin.Top,
-                            childPreferredSize.Height);
-                    case VerticalAlignment.Bottom:
-                        return new AlignedPosition(layoutBounds.Bottom - childControl.Margin.Vertical - childPreferredSize.Height, childPreferredSize.Height);
-                    case VerticalAlignment.Stretch:
-                        return new AlignedPosition(layoutBounds.Top + childControl.Margin.Top, layoutBounds.Height - childControl.Margin.Vertical);
-                    default:
-                        throw new InvalidOperationException();
                 }
             }
         }
