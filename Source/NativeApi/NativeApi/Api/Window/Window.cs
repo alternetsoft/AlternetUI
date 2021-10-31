@@ -11,5 +11,7 @@ namespace NativeApi.Api
 
         [NativeEvent(cancellable: true)]
         public event EventHandler? Closing { add => throw new Exception(); remove => throw new Exception(); }
+
+        public event EventHandler SizeChanged { add => throw new Exception(); remove => throw new Exception(); }
     }
 }

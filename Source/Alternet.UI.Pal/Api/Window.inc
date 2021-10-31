@@ -12,6 +12,7 @@ public:
 enum class WindowEvent
 {
     Closing,
+    SizeChanged,
 };
 typedef void* (*WindowEventCallbackType)(Window* obj, WindowEvent event, void* param);
 static void SetEventCallback(WindowEventCallbackType value) { eventCallback = value; }

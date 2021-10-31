@@ -32,6 +32,7 @@ namespace Alternet::UI
         wxPanel* _panel = nullptr;
 
         void OnClose(wxCloseEvent& event);
+        void OnSizeChanged(wxSizeEvent& event);
         void OnDestroy(wxWindowDestroyEvent& event);
     };
 }

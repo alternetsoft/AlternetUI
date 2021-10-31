@@ -77,11 +77,14 @@ namespace Alternet.UI.Native
                     Closing?.Invoke(this, cea);
                     return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
                 }
+                case NativeApi.WindowEvent.SizeChanged:
+                SizeChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 default: throw new Exception("Unexpected WindowEvent value: " + e);
             }
         }
         
         public event EventHandler<CancelEventArgs>? Closing;
+        public event EventHandler? SizeChanged;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -94,6 +97,7 @@ namespace Alternet.UI.Native
             public enum WindowEvent
             {
                 Closing,
+                SizeChanged,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]

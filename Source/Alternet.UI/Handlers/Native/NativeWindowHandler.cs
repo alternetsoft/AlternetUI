@@ -15,6 +15,12 @@ namespace Alternet.UI
             base.OnAttach();
             Control.TitleChanged += Control_TitleChanged;
             NativeControl.Closing += Control_Closing;
+            NativeControl.SizeChanged += NativeControl_SizeChanged;
+        }
+
+        private void NativeControl_SizeChanged(object sender, EventArgs e)
+        {
+            PerformLayout();
         }
 
         private void Control_Closing(object? sender, CancelEventArgs? e)
@@ -34,6 +40,7 @@ namespace Alternet.UI
 
         protected override void OnDetach()
         {
+            NativeControl.SizeChanged -= NativeControl_SizeChanged;
             NativeControl.Closing -= Control_Closing;
             Control.TitleChanged -= Control_TitleChanged;
 

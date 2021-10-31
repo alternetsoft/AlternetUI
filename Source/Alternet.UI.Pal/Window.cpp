@@ -19,6 +19,7 @@ namespace Alternet::UI
         _panel->Destroy();
         _panel = nullptr;
 
+        _frame->Unbind(wxEVT_SIZE, &Window::OnSizeChanged, this);
         _frame->Unbind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
 
         _frame->Destroy();
@@ -48,6 +49,7 @@ namespace Alternet::UI
     {
         _frame = new Frame();
 
+        _frame->Bind(wxEVT_SIZE, &Window::OnSizeChanged, this);
         _frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
         _frame->Bind(wxEVT_DESTROY, &Window::OnDestroy, this);
 
@@ -75,6 +77,12 @@ namespace Alternet::UI
     {
         if (RaiseEvent(WindowEvent::Closing))
             event.Veto();
+    }
+
+    void Window::OnSizeChanged(wxSizeEvent& event)
+    {
+        event.Skip();
+        RaiseEvent(WindowEvent::SizeChanged);
     }
 
     void Window::OnDestroy(wxWindowDestroyEvent& event)
