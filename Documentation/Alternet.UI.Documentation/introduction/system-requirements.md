@@ -13,4 +13,4 @@ The following versions of **Microsoft Visual Studio** are supported by the **Alt
 - Visual Studio 2019
 - Visual Studio 2022
 
-AlterNET UI tooling also supports a development workflow with **Visual Studio Code** and `dotnet` command line tools.
+AlterNET UI also supports a development workflow with **Visual Studio Code** and `dotnet` command line tools.

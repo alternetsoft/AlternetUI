@@ -2,5 +2,9 @@
   href: getting-started.md
 - name: Programming With AlterNET UI
   href: programming-with-alternet-ui.md
+- name: Layout and Controls
+  href: layout-and-controls.md
+- name: Rendering Graphics
+  href: rendering-graphics.md
 - name: System Requirements
   href: system-requirements.md

@@ -45,6 +45,13 @@ The application will start and display its window:
 > By default the created project will use .NET Core 3.1 as a target framework. If .NET Core 3.1 runtime is not installed on your machine you
 > will be prompted to do so on the first application run.
 
+> [!NOTE]
+> You can also create .cs/.uixml files for a new window from the console like this:
+> ```dos
+> dotnet new alternet-ui-window -n MyNewWindow --namespace Test1
+> ```
+> Where `MyNewWindow` is a name for a new window class, and `Test1` is the created class namespace name.
+
 ### Open Project with Visual Studio Code
 
 1. Start Visual Studio Code.
