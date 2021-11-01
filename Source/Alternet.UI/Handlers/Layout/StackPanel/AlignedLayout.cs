@@ -28,7 +28,7 @@ namespace Alternet.UI
                         layoutBounds.Left + (layoutBounds.Width - (childPreferredSize.Width + childControl.Margin.Horizontal)) / 2 + childControl.Margin.Left,
                         childPreferredSize.Width);
                 case HorizontalAlignment.Right:
-                    return new AlignedPosition(layoutBounds.Right - childControl.Margin.Horizontal - childPreferredSize.Width, childPreferredSize.Width);
+                    return new AlignedPosition(layoutBounds.Right - childControl.Margin.Right - childPreferredSize.Width, childPreferredSize.Width);
                 case HorizontalAlignment.Stretch:
                     return new AlignedPosition(layoutBounds.Left + childControl.Margin.Left, layoutBounds.Width - childControl.Margin.Horizontal);
                 default:
@@ -47,7 +47,7 @@ namespace Alternet.UI
                         layoutBounds.Top + (layoutBounds.Height - (childPreferredSize.Height + control.Margin.Vertical)) / 2 + control.Margin.Top,
                         childPreferredSize.Height);
                 case VerticalAlignment.Bottom:
-                    return new AlignedPosition(layoutBounds.Bottom - control.Margin.Vertical - childPreferredSize.Height, childPreferredSize.Height);
+                    return new AlignedPosition(layoutBounds.Bottom - control.Margin.Bottom - childPreferredSize.Height, childPreferredSize.Height);
                 case VerticalAlignment.Stretch:
                     return new AlignedPosition(layoutBounds.Top + control.Margin.Top, layoutBounds.Height - control.Margin.Vertical);
                 default:

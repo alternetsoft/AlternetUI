@@ -242,16 +242,27 @@ namespace Alternet.UI
             var childrenLayoutBounds = ChildrenLayoutBounds;
             foreach (var control in AllChildrenIncludedInLayout)
             {
-                var margin = control.Margin;
+                var preferredSize = control.GetPreferredSize(childrenLayoutBounds.Size);
 
-                var specifiedWidth = control.Width;
-                var specifiedHeight = control.Height;
+                var horizontalPosition = AlignedLayout.AlignHorizontal(childrenLayoutBounds, control, preferredSize);
+                var verticalPosition = AlignedLayout.AlignVertical(childrenLayoutBounds, control, preferredSize);
 
                 control.Handler.Bounds = new RectangleF(
-                    childrenLayoutBounds.Location + new SizeF(margin.Left, margin.Top),
-                    new SizeF(
-                        float.IsNaN(specifiedWidth) ? childrenLayoutBounds.Width - margin.Horizontal : specifiedWidth,
-                        float.IsNaN(specifiedHeight) ? childrenLayoutBounds.Height - margin.Vertical : specifiedHeight));
+                    horizontalPosition.Origin,
+                    verticalPosition.Origin,
+                    horizontalPosition.Size,
+                    verticalPosition.Size);
+
+                //var margin = control.Margin;
+
+                //var specifiedWidth = control.Width;
+                //var specifiedHeight = control.Height;
+
+                //control.Handler.Bounds = new RectangleF(
+                //    childrenLayoutBounds.Location + new SizeF(margin.Left, margin.Top),
+                //    new SizeF(
+                //        float.IsNaN(specifiedWidth) ? childrenLayoutBounds.Width - margin.Horizontal : specifiedWidth,
+                //        float.IsNaN(specifiedHeight) ? childrenLayoutBounds.Height - margin.Vertical : specifiedHeight));
             }
         }
 
