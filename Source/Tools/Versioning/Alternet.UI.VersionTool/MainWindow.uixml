@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="Alternet.UI.VersionTool.MainWindow"
-        Title="Alternet UI Version Tool" Padding="10">
+        Title="Alternet UI Version Tool" Padding="10" Height="250" Width="350">
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
