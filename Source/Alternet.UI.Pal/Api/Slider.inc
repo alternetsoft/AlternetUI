@@ -32,7 +32,7 @@ enum class SliderEvent
 typedef void* (*SliderEventCallbackType)(Slider* obj, SliderEvent event, void* param);
 static void SetEventCallback(SliderEventCallbackType value) { eventCallback = value; }
 protected:
-bool RaiseEvent(SliderEvent event, void* parameter = nullptr) { if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+bool RaiseEvent(SliderEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
 private:
 inline static SliderEventCallbackType eventCallback = nullptr;
 public:

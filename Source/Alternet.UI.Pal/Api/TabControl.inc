@@ -18,7 +18,7 @@ enum class TabControlEvent
 typedef void* (*TabControlEventCallbackType)(TabControl* obj, TabControlEvent event, void* param);
 static void SetEventCallback(TabControlEventCallbackType value) { eventCallback = value; }
 protected:
-bool RaiseEvent(TabControlEvent event, void* parameter = nullptr) { if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+bool RaiseEvent(TabControlEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
 private:
 inline static TabControlEventCallbackType eventCallback = nullptr;
 public:

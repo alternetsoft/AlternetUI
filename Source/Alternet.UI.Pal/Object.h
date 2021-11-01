@@ -30,6 +30,10 @@ namespace Alternet::UI
         }
 
     protected:
+        virtual bool EventsSuspended()
+        {
+            return false;
+        }
 
     private:
         int _referenceCount;

@@ -42,6 +42,8 @@ namespace Alternet::UI
         virtual RectangleF RetrieveBounds();
         virtual void ApplyBounds(const RectangleF& value);
 
+        bool EventsSuspended() override;
+
     private:
         enum class DelayedControlFlags
         {
@@ -62,6 +64,7 @@ namespace Alternet::UI
         std::vector<Control*> _children;
         ControlFlags _flags = ControlFlags::None;
         int _beginUpdateCount = 0;
+        bool _creatingWxWindow = false;
 
         DelayedFlags<Control, DelayedControlFlags> _delayedFlags;
         DelayedValue<Control, RectangleF> _bounds;

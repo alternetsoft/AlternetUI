@@ -96,6 +96,7 @@ namespace Alternet::UI
 
     void Control::CreateWxWindow()
     {
+        _creatingWxWindow = true;
         wxWindow* parentingWxWindow = nullptr;
         if (_parent != nullptr)
             parentingWxWindow = _parent->GetParentingWxWindow();
@@ -118,6 +119,8 @@ namespace Alternet::UI
 
         OnWxWindowCreated();
         _delayedValues.ApplyIfPossible();
+
+        _creatingWxWindow = false;
 
         for (auto child : _children)
             child->UpdateWxWindowParent();
@@ -397,6 +400,11 @@ namespace Alternet::UI
         wxWindow->SetPosition(rect.GetPosition());
         wxWindow->SetSize(rect.GetSize());
         wxWindow->Refresh();
+    }
+
+    bool Control::EventsSuspended()
+    {
+        return _creatingWxWindow;
     }
 
     void Control::OnPaint(wxPaintEvent& event)

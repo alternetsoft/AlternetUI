@@ -27,7 +27,7 @@ enum class ComboBoxEvent
 typedef void* (*ComboBoxEventCallbackType)(ComboBox* obj, ComboBoxEvent event, void* param);
 static void SetEventCallback(ComboBoxEventCallbackType value) { eventCallback = value; }
 protected:
-bool RaiseEvent(ComboBoxEvent event, void* parameter = nullptr) { if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+bool RaiseEvent(ComboBoxEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
 private:
 inline static ComboBoxEventCallbackType eventCallback = nullptr;
 public:
