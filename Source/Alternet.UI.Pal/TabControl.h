@@ -12,6 +12,8 @@ namespace Alternet::UI
 
     private:
 
+        void OnSelectedPageChanged(wxBookCtrlEvent& event);
+
         wxNotebook* GetNotebook();
     };
 }

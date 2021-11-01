@@ -12,6 +12,7 @@ namespace Alternet.UI.Native
         public TabControl()
         {
             SetNativePointer(NativeApi.TabControl_Create_());
+            SetEventCallback();
         }
         
         public TabControl(IntPtr nativePointer) : base(nativePointer)
@@ -26,6 +27,21 @@ namespace Alternet.UI.Native
                 return NativeApi.TabControl_GetPageCount_(NativePointer);
             }
             
+        }
+        
+        public int SelectedPageIndex
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.TabControl_GetSelectedPageIndex_(NativePointer);
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TabControl_SetSelectedPageIndex_(NativePointer, value);
+            }
         }
         
         public void InsertPage(int index, Control page, string title)
@@ -46,17 +62,63 @@ namespace Alternet.UI.Native
             return NativeApi.TabControl_GetTotalPreferredSizeFromPageSize_(NativePointer, pageSize);
         }
         
+        static GCHandle eventCallbackGCHandle;
+        
+        static void SetEventCallback()
+        {
+            if (!eventCallbackGCHandle.IsAllocated)
+            {
+                var sink = new NativeApi.TabControlEventCallbackType((obj, e, parameter) =>
+                {
+                    var w = NativeObject.GetFromNativePointer<TabControl>(obj, p => new TabControl(p));
+                    if (w == null) return IntPtr.Zero;
+                    return w.OnEvent(e, parameter);
+                }
+                );
+                eventCallbackGCHandle = GCHandle.Alloc(sink);
+                NativeApi.TabControl_SetEventCallback_(sink);
+            }
+        }
+        
+        IntPtr OnEvent(NativeApi.TabControlEvent e, IntPtr parameter)
+        {
+            switch (e)
+            {
+                case NativeApi.TabControlEvent.SelectedPageIndexChanged:
+                SelectedPageIndexChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                default: throw new Exception("Unexpected TabControlEvent value: " + e);
+            }
+        }
+        
+        public event EventHandler? SelectedPageIndexChanged;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate IntPtr TabControlEventCallbackType(IntPtr obj, TabControlEvent e, IntPtr param);
+            
+            public enum TabControlEvent
+            {
+                SelectedPageIndexChanged,
+            }
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TabControl_SetEventCallback_(TabControlEventCallbackType callback);
+            
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr TabControl_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int TabControl_GetPageCount_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int TabControl_GetSelectedPageIndex_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TabControl_SetSelectedPageIndex_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TabControl_InsertPage_(IntPtr obj, int index, IntPtr page, string title);

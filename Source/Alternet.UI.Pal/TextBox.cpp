@@ -10,6 +10,11 @@ namespace Alternet::UI
 
     TextBox::~TextBox()
     {
+        auto window = GetWxWindow();
+        if (window != nullptr)
+        {
+            window->Unbind(wxEVT_TEXT, &TextBox::OnTextChanged, this);
+        }
     }
 
     string TextBox::GetText()

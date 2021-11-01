@@ -18,6 +18,16 @@ ALTERNET_UI_API int TabControl_GetPageCount_(TabControl* obj)
     return obj->GetPageCount();
 }
 
+ALTERNET_UI_API int TabControl_GetSelectedPageIndex_(TabControl* obj)
+{
+    return obj->GetSelectedPageIndex();
+}
+
+ALTERNET_UI_API void TabControl_SetSelectedPageIndex_(TabControl* obj, int value)
+{
+    obj->SetSelectedPageIndex(value);
+}
+
 ALTERNET_UI_API void TabControl_InsertPage_(TabControl* obj, int index, Control* page, const char16_t* title)
 {
     obj->InsertPage(index, page, title);
@@ -31,5 +41,10 @@ ALTERNET_UI_API void TabControl_RemovePage_(TabControl* obj, int index, Control*
 ALTERNET_UI_API SizeF_C TabControl_GetTotalPreferredSizeFromPageSize_(TabControl* obj, SizeF pageSize)
 {
     return obj->GetTotalPreferredSizeFromPageSize(pageSize);
+}
+
+ALTERNET_UI_API void TabControl_SetEventCallback_(TabControl::TabControlEventCallbackType callback)
+{
+    TabControl::SetEventCallback(callback);
 }
 

@@ -17,14 +17,35 @@ namespace Alternet.UI
 
             Control.Pages.ItemInserted += Pages_ItemInserted;
             Control.Pages.ItemRemoved += Pages_ItemRemoved;
+
+            NativeControl.SelectedPageIndexChanged += NativeControl_SelectedPageIndexChanged;
+        }
+
+        private void NativeControl_SelectedPageIndexChanged(object sender, EventArgs e)
+        {
+            LayoutSelectedPage();
         }
 
         protected override void OnDetach()
         {
+            NativeControl.SelectedPageIndexChanged -= NativeControl_SelectedPageIndexChanged;
+
             Control.Pages.ItemInserted -= Pages_ItemInserted;
             Control.Pages.ItemRemoved -= Pages_ItemRemoved;
 
             base.OnDetach();
+        }
+
+        public override void OnLayout()
+        {
+            LayoutSelectedPage();
+        }
+
+        private void LayoutSelectedPage()
+        {
+            var selectedPageIndex = NativeControl.SelectedPageIndex;
+            if (selectedPageIndex >= 0)
+                Control.Pages[selectedPageIndex].PerformLayout();
         }
 
         private void InsertPage(int index, TabPage page)

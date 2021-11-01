@@ -12,6 +12,10 @@ namespace NativeApi.Api
 
         public int PageCount { get; }
 
+        public int SelectedPageIndex { get; set; }
+
+        public event EventHandler SelectedPageIndexChanged { add => throw new Exception(); remove => throw new Exception(); }
+
         public SizeF GetTotalPreferredSizeFromPageSize(SizeF pageSize) => throw new Exception();
     }
 }

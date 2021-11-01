@@ -39,7 +39,7 @@ namespace Alternet.UI
                     var horizontalMargin = margin.Horizontal;
 
                     var preferredSize = control.GetPreferredSize(new SizeF(childrenLayoutBounds.Width - x - horizontalMargin, childrenLayoutBounds.Height));
-                    var alignedPosition = AlignedLayout.AlignHorizontal(childrenLayoutBounds, control, preferredSize);
+                    var alignedPosition = AlignedLayout.AlignVertical(childrenLayoutBounds, control, preferredSize);
                     control.Handler.Bounds = new RectangleF(childrenLayoutBounds.Left + x + margin.Left, alignedPosition.Origin, preferredSize.Width, alignedPosition.Size);
                     x += preferredSize.Width + horizontalMargin;
                 }

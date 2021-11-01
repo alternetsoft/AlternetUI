@@ -8,11 +8,28 @@ namespace Alternet::UI
 
     TabControl::~TabControl()
     {
+        auto window = GetWxWindow();
+        if (window != nullptr)
+        {
+            window->Unbind(wxEVT_NOTEBOOK_PAGE_CHANGED, &TabControl::OnSelectedPageChanged, this);
+        }
+    }
+
+    int TabControl::GetSelectedPageIndex()
+    {
+        return GetNotebook()->GetSelection();
+    }
+
+    void TabControl::SetSelectedPageIndex(int value)
+    {
+        GetNotebook()->SetSelection(value);
     }
 
     wxWindow* TabControl::CreateWxWindowCore(wxWindow* parent)
     {
-        return new wxNotebook(parent, -1, wxDefaultPosition, wxDefaultSize);
+        auto notebook = new wxNotebook(parent, -1, wxDefaultPosition, wxDefaultSize);
+        notebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, &TabControl::OnSelectedPageChanged, this);
+        return notebook;
     }
 
     SizeF TabControl::GetTotalPreferredSizeFromPageSize(const SizeF& pageSize)
@@ -39,6 +56,11 @@ namespace Alternet::UI
     {
         GetNotebook()->RemovePage(index);
         page->SetDoNotDestroyWxWindow(false); // See the corresponding SetDoNotDestroyWxWindow(true) call.
+    }
+
+    void TabControl::OnSelectedPageChanged(wxBookCtrlEvent& event)
+    {
+        RaiseEvent(TabControlEvent::SelectedPageIndexChanged);
     }
 
     wxNotebook* TabControl::GetNotebook()

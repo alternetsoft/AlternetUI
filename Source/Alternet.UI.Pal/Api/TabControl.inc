@@ -3,9 +3,24 @@ public:
 
 int GetPageCount();
 
+
+int GetSelectedPageIndex();
+void SetSelectedPageIndex(int value);
+
 void InsertPage(int index, Control* page, const string& title);
 void RemovePage(int index, Control* page);
 SizeF GetTotalPreferredSizeFromPageSize(const SizeF& pageSize);
+public:
+enum class TabControlEvent
+{
+    SelectedPageIndexChanged,
+};
+typedef void* (*TabControlEventCallbackType)(TabControl* obj, TabControlEvent event, void* param);
+static void SetEventCallback(TabControlEventCallbackType value) { eventCallback = value; }
+protected:
+bool RaiseEvent(TabControlEvent event, void* parameter = nullptr) { if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+private:
+inline static TabControlEventCallbackType eventCallback = nullptr;
 public:
 TabControl();
 protected:
