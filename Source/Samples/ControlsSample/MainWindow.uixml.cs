@@ -19,13 +19,6 @@ namespace ControlsSample
             Width = 800;
             Height = 600;
 
-//#if NETCOREAPP
-//            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
-//                Width = 750;
-//#endif
-
-            //Children.Add(new GroupBox { Title = "Hello"});
-
             var pc = new PageContainer();
             var rootPanel = new Grid();
             rootPanel.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });

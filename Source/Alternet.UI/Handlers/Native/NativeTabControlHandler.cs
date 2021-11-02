@@ -45,7 +45,15 @@ namespace Alternet.UI
         {
             var selectedPageIndex = NativeControl.SelectedPageIndex;
             if (selectedPageIndex >= 0)
-                Control.Pages[selectedPageIndex].PerformLayout();
+            {
+                var page = Control.Pages[selectedPageIndex];
+
+#if NETCOREAPP
+           if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
+                page.Handler.Bounds = ChildrenLayoutBounds;
+#endif
+                page.PerformLayout();
+            }
         }
 
         private void InsertPage(int index, TabPage page)
