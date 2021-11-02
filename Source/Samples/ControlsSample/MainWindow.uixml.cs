@@ -26,48 +26,50 @@ namespace ControlsSample
 
             //Children.Add(new GroupBox { Title = "Hello"});
 
-            var tc = new PageContainer();
+            var pc = new PageContainer();
             var rootPanel = new Grid();
             rootPanel.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             rootPanel.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
             Children.Add(rootPanel);
 
-            rootPanel.Children.Add(tc);
-            Grid.SetRow(tc, 0);
+            rootPanel.Children.Add(pc);
+            Grid.SetRow(pc, 0);
 
-            tc.Pages.Add(new PageContainer.Page("Tree View", new TreeViewPage(this)));
-            tc.Pages.Add(new PageContainer.Page("Grid", new GridPage(this)));
-            tc.Pages.Add(new PageContainer.Page("List View", new ListViewPage(this)));
-            tc.Pages.Add(new PageContainer.Page("List Box", new ListBoxPage(this)));
-            tc.Pages.Add(new PageContainer.Page("Combo Box", new ComboBoxPage(this)));
+            pc.Pages.Add(new PageContainer.Page("Tree View", new TreeViewPage(this)));
+            pc.Pages.Add(new PageContainer.Page("Grid", new GridPage(this)));
+            pc.Pages.Add(new PageContainer.Page("List View", new ListViewPage(this)));
+            pc.Pages.Add(new PageContainer.Page("List Box", new ListBoxPage(this)));
+            pc.Pages.Add(new PageContainer.Page("Combo Box", new ComboBoxPage(this)));
 
             var progressBarPage = new Control();
             InitProgressBarPage(progressBarPage);
-            tc.Pages.Add(new PageContainer.Page("Progress Bar", progressBarPage));
+            pc.Pages.Add(new PageContainer.Page("Progress Bar", progressBarPage));
 
             var sliderPage = new Control();
             InitSliderPage(sliderPage);
-            tc.Pages.Add(new PageContainer.Page("Slider", sliderPage));
+            pc.Pages.Add(new PageContainer.Page("Slider", sliderPage));
 
             var numericInputPage = new Control();
             InitNumericInputPage(numericInputPage);
-            tc.Pages.Add(new PageContainer.Page("Numeric Input", numericInputPage));
+            pc.Pages.Add(new PageContainer.Page("Numeric Input", numericInputPage));
 
             var radioButtonsPage = new Control();
             InitRadioButtonsPage(radioButtonsPage);
-            tc.Pages.Add(new PageContainer.Page("Radio Buttons", radioButtonsPage));
+            pc.Pages.Add(new PageContainer.Page("Radio Buttons", radioButtonsPage));
 
             var checkBoxesPage = new Control();
             InitCheckBoxesPage(checkBoxesPage);
-            tc.Pages.Add(new PageContainer.Page("Check Boxes", checkBoxesPage));
+            pc.Pages.Add(new PageContainer.Page("Check Boxes", checkBoxesPage));
 
             var textBoxesPage = new Control();
             InitTextBoxesPage(textBoxesPage);
-            tc.Pages.Add(new PageContainer.Page("Text Boxes", textBoxesPage));
+            pc.Pages.Add(new PageContainer.Page("Text Boxes", textBoxesPage));
 
             eventsListBox.Height = 100;
             rootPanel.Children.Add(eventsListBox);
             Grid.SetRow(eventsListBox, 1);
+
+            pc.SelectedIndex = 0;
         }
 
         private static void InitProgressBarPage(Control page)

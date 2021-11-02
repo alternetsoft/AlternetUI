@@ -44,9 +44,6 @@ namespace ControlsSample
             get => pagesListBox.SelectedIndex;
             set
             {
-                if (pagesListBox.SelectedIndex == value)
-                    return;
-
                 pagesListBox.SelectedIndex = value;
                 SetActivePageControl();
             }

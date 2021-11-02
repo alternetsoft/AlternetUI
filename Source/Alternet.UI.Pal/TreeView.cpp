@@ -161,6 +161,10 @@ namespace Alternet::UI
 
     void TreeView::OnSelectionChanged(wxCommandEvent& event)
     {
+        auto window = dynamic_cast<wxWindow*>(event.GetEventObject());
+        if (window->IsBeingDeleted())
+            return;
+
         if (!_skipSelectionChangedEvent)
             RaiseEvent(TreeViewEvent::SelectionChanged);
     }
