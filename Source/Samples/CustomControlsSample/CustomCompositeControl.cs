@@ -2,7 +2,7 @@
 using System;
 using Alternet.Drawing;
 
-namespace HelloWorldSample
+namespace CustomControlsSample
 {
     public class CustomCompositeControl : Control
     {
