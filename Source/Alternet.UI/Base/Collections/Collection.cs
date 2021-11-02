@@ -56,6 +56,18 @@ namespace Alternet.Base.Collections
         }
 
         /// <summary>
+        /// Removes all items from the collection.
+        /// </summary>
+        /// <remarks>The base class calls this method when the list is being cleared.</remarks>
+        protected override void ClearItems()
+        {
+            for (int i = 0; i < Count; i++)
+                OnItemRemoved(new CollectionChangeEventArgs<T>(i, this[i]));
+
+            base.ClearItems();
+        }
+
+        /// <summary>
         /// Raises the <see cref="ItemInserted"/> event with the provided arguments.
         /// </summary>
         /// <param name="e">Arguments of the event being raised.</param>

@@ -21,7 +21,7 @@ namespace Alternet.UI
             NativeControl.SelectedPageIndexChanged += NativeControl_SelectedPageIndexChanged;
         }
 
-        private void NativeControl_SelectedPageIndexChanged(object sender, EventArgs e)
+        private void NativeControl_SelectedPageIndexChanged(object? sender, EventArgs e)
         {
             LayoutSelectedPage();
         }

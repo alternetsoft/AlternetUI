@@ -349,7 +349,7 @@ namespace Alternet.UI
                 if (parent != null)
                     parent.PerformLayout();
 
-                OnLayout();
+                Control.InvokeOnLayout();
             }
             finally
             {
@@ -737,8 +737,8 @@ namespace Alternet.UI
 
         private void TryRemoveNativeControl(int childIndex, Control childControl)
         {
-            if (NativeControl != null && childControl.Handler.NativeControl != null)
-                NativeControl?.RemoveChild(childControl.Handler.NativeControl);
+            if (nativeControl != null && childControl.Handler.nativeControl != null)
+                nativeControl?.RemoveChild(childControl.Handler.nativeControl);
         }
 
         private Control? TryFindClosestParentWithNativeControl()

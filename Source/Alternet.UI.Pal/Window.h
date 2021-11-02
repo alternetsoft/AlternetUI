@@ -34,5 +34,8 @@ namespace Alternet::UI
         void OnClose(wxCloseEvent& event);
         void OnSizeChanged(wxSizeEvent& event);
         void OnDestroy(wxWindowDestroyEvent& event);
+
+        int GetTopLevelWindowsCount();
+        wxWindow* GetNextTopLevelWindow();
     };
 }

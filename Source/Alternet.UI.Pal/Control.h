@@ -57,6 +57,7 @@ namespace Alternet::UI
         {
             None = 0,
             DoNotDestroyWxWindow = 1 << 0,
+            CreatingWxWindow = 1 << 1,
         };
 
         wxWindow* _wxWindow = nullptr;
@@ -64,7 +65,6 @@ namespace Alternet::UI
         std::vector<Control*> _children;
         ControlFlags _flags = ControlFlags::None;
         int _beginUpdateCount = 0;
-        bool _creatingWxWindow = false;
 
         DelayedFlags<Control, DelayedControlFlags> _delayedFlags;
         DelayedValue<Control, RectangleF> _bounds;

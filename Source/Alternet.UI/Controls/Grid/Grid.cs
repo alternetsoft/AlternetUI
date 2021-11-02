@@ -549,11 +549,6 @@ namespace Alternet.UI
 
         class GridHandler : ControlHandler<Grid>
         {
-            public override void OnLayout()
-            {
-                Control.OnLayout();
-            }
-
             protected override void OnChildInserted(int childIndex, Control childControl)
             {
                 base.OnChildInserted(childIndex, childControl);
@@ -573,7 +568,8 @@ namespace Alternet.UI
             return new GridHandler();
         }
 
-        void OnLayout()
+        /// <inheritdoc/>
+        protected override void OnLayout()
         {
             GetPreferredSize(new SizeF(float.PositiveInfinity, float.PositiveInfinity)); // yezo
 

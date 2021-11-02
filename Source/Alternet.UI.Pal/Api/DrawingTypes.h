@@ -210,6 +210,7 @@ namespace Alternet::UI
         {
             if (s_parkingWindow != nullptr)
             {
+                s_parkingWindow->Unbind(wxEVT_CLOSE_WINDOW, &ParkingWindow::OnClose);
                 s_parkingWindow->Destroy();
                 s_parkingWindow = nullptr;
             }
@@ -221,6 +222,7 @@ namespace Alternet::UI
             {
                 s_parkingWindow = new wxFrame();
                 s_parkingWindow->Create(0, wxID_ANY, _T("AlterNET UI Parking Window"));
+                s_parkingWindow->Bind(wxEVT_CLOSE_WINDOW, &ParkingWindow::OnClose);
             }
 
             return s_parkingWindow;
@@ -228,6 +230,11 @@ namespace Alternet::UI
 
     private:
         inline static wxFrame* s_parkingWindow = nullptr;
+
+        static void OnClose(wxCloseEvent& event)
+        {
+            event.Veto();
+        }
     };
 
     inline double GetDPIScaleFactor(wxWindow* window)

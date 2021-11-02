@@ -16,17 +16,17 @@ namespace ControlsSample
 
             eventsListBox = new ListBox();
 
-            Width = 600;
+            Width = 800;
             Height = 600;
 
-#if NETCOREAPP
-            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
-                Width = 750;
-#endif
+//#if NETCOREAPP
+//            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
+//                Width = 750;
+//#endif
 
             //Children.Add(new GroupBox { Title = "Hello"});
 
-            var tc = new TabControl();
+            var tc = new PageContainer();
             var rootPanel = new Grid();
             rootPanel.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             rootPanel.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
@@ -35,43 +35,42 @@ namespace ControlsSample
             rootPanel.Children.Add(tc);
             Grid.SetRow(tc, 0);
 
-            tc.Pages.Add(new TabPage { Title = "Grid", Children = { new GridPage(this) } });
-            tc.Pages.Add(new TabPage { Title = "Tree View", Children = { new TreeViewPage(this) } });
-            tc.Pages.Add(new TabPage { Title = "List View", Children = { new ListViewPage(this) } });
-            tc.Pages.Add(new TabPage { Title = "List Box", Children = { new ListBoxPage(this) } });
-            tc.Pages.Add(new TabPage { Title = "Combo Box", Children = { new ComboBoxPage(this) } });
+            tc.Pages.Add(new PageContainer.Page("Tree View", new TreeViewPage(this)));
+            tc.Pages.Add(new PageContainer.Page("Grid", new GridPage(this)));
+            tc.Pages.Add(new PageContainer.Page("List View", new ListViewPage(this)));
+            tc.Pages.Add(new PageContainer.Page("List Box", new ListBoxPage(this)));
+            tc.Pages.Add(new PageContainer.Page("Combo Box", new ComboBoxPage(this)));
 
-            var progressBarPage = new TabPage { Title = "Progress Bar" };
-            tc.Pages.Add(progressBarPage);
+            var progressBarPage = new Control();
             InitProgressBarPage(progressBarPage);
+            tc.Pages.Add(new PageContainer.Page("Progress Bar", progressBarPage));
 
-            var sliderPage = new TabPage { Title = "Slider" };
-            tc.Pages.Add(sliderPage);
+            var sliderPage = new Control();
             InitSliderPage(sliderPage);
+            tc.Pages.Add(new PageContainer.Page("Slider", sliderPage));
 
-            var numericInputPage = new TabPage { Title = "Numeric Input" };
-            tc.Pages.Add(numericInputPage);
+            var numericInputPage = new Control();
             InitNumericInputPage(numericInputPage);
+            tc.Pages.Add(new PageContainer.Page("Numeric Input", numericInputPage));
 
-            var radioButtonsPage = new TabPage { Title = "Radio Buttons" };
-            tc.Pages.Add(radioButtonsPage);
+            var radioButtonsPage = new Control();
             InitRadioButtonsPage(radioButtonsPage);
+            tc.Pages.Add(new PageContainer.Page("Radio Buttons", radioButtonsPage));
 
-            var checkBoxesPage = new TabPage { Title = "Check Boxes" };
-            tc.Pages.Add(checkBoxesPage);
+            var checkBoxesPage = new Control();
             InitCheckBoxesPage(checkBoxesPage);
+            tc.Pages.Add(new PageContainer.Page("Check Boxes", checkBoxesPage));
 
-            var textBoxesPage = new TabPage { Title = "Text Boxes" };
-            tc.Pages.Add(textBoxesPage);
+            var textBoxesPage = new Control();
             InitTextBoxesPage(textBoxesPage);
-
+            tc.Pages.Add(new PageContainer.Page("Text Boxes", textBoxesPage));
 
             eventsListBox.Height = 100;
             rootPanel.Children.Add(eventsListBox);
             Grid.SetRow(eventsListBox, 1);
         }
 
-        private static void InitProgressBarPage(TabPage page)
+        private static void InitProgressBarPage(Control page)
         {
             var panel = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(10) };
 
@@ -110,7 +109,7 @@ namespace ControlsSample
             page.Children.Add(panel);
         }
 
-        private static void InitSliderPage(TabPage page)
+        private static void InitSliderPage(Control page)
         {
             var enableMessageHandlingCheckBox = new CheckBox { Text = "Enable value change event handling", IsChecked = true };
             Slider AddMessageBoxHandler(Slider slider)
@@ -173,7 +172,7 @@ namespace ControlsSample
             page.Children.Add(panel);
         }
 
-        private static void InitNumericInputPage(TabPage page)
+        private static void InitNumericInputPage(Control page)
         {
             var enableMessageHandlingCheckBox = new CheckBox { Text = "Enable value change event handling", IsChecked = true };
             NumericUpDown AddMessageBoxHandler(NumericUpDown control)
@@ -236,7 +235,7 @@ namespace ControlsSample
             page.Children.Add(panel);
         }
 
-        private static void InitTextBoxesPage(TabPage page)
+        private static void InitTextBoxesPage(Control page)
         {
             var enableMessageHandlingCheckBox = new CheckBox { Text = "Enable text change event handling", IsChecked = true };
             TextBox AddMessageBoxHandler(TextBox control)
@@ -276,7 +275,7 @@ namespace ControlsSample
             page.Children.Add(panel);
         }
 
-        private static void InitRadioButtonsPage(TabPage page)
+        private static void InitRadioButtonsPage(Control page)
         {
             var panel = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(10) };
 
@@ -303,7 +302,7 @@ namespace ControlsSample
             page.Children.Add(panel);
         }
 
-        private static void InitCheckBoxesPage(TabPage page)
+        private static void InitCheckBoxesPage(Control page)
         {
             var panel = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(10) };
 

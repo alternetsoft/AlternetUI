@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Alternet.Drawing;
 using Alternet.Base.Collections;
+using System.Linq;
 
 namespace Alternet.UI
 {
@@ -563,7 +564,7 @@ namespace Alternet.UI
         /// </remarks>
         public void ResumeLayout(bool performLayout = true)
         {
-            Handler.ResumeLayout();
+            Handler.ResumeLayout(performLayout);
             if (performLayout)
                 PerformLayout();
         }
@@ -595,6 +596,19 @@ namespace Alternet.UI
         public void PerformLayout()
         {
             Handler.PerformLayout();
+        }
+
+        /// <summary>
+        /// Called when the control should reposition the child controls of the control.
+        /// </summary>
+        protected virtual void OnLayout()
+        {
+            Handler.OnLayout();
+        }
+
+        internal void InvokeOnLayout()
+        {
+            OnLayout();
         }
 
         /// <summary>
@@ -742,11 +756,15 @@ namespace Alternet.UI
             {
                 if (disposing)
                 {
-                    foreach (var child in Handler.AllChildren)
-                        child.Dispose();
+                    var children = Handler.AllChildren.ToArray();
 
+                    SuspendLayout();
                     Children.Clear();
                     Handler.VisualChildren.Clear();
+                    ResumeLayout(performLayout: false);
+
+                    foreach (var child in children)
+                        child.Dispose();
 
                     DetachHandler();
                 }

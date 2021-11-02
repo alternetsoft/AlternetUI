@@ -85,6 +85,19 @@ namespace Alternet::UI
         RaiseEvent(WindowEvent::SizeChanged);
     }
 
+    int Window::GetTopLevelWindowsCount()
+    {
+        int count = 0;
+        wxWindowList::compatibility_iterator node = wxTopLevelWindows.GetFirst();
+        while (node)
+        {
+            count++;
+            node = node->GetNext();
+        }
+
+        return count;
+    }
+
     void Window::OnDestroy(wxWindowDestroyEvent& event)
     {
         // Ensure the parking window is closed after all regular windows have been closed.
@@ -96,6 +109,27 @@ namespace Alternet::UI
             return;
 
         if (wxTheApp->GetTopWindow() == ParkingWindow::GetWindow())
-            ParkingWindow::Destroy();
+        {
+            if (GetTopLevelWindowsCount() == 2)
+                ParkingWindow::Destroy();
+            else
+                GetNextTopLevelWindow()->SetFocus();
+        }
+    }
+
+    wxWindow* Window::GetNextTopLevelWindow()
+    {
+        wxWindowList::compatibility_iterator node = wxTopLevelWindows.GetFirst();
+        while (node)
+        {
+            auto window = node->GetData();
+
+            if (!ParkingWindow::IsCreated() || window != ParkingWindow::GetWindow())
+                return window;
+
+            node = node->GetNext();
+        }
+
+        return nullptr;
     }
 }

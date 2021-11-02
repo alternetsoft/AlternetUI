@@ -96,7 +96,7 @@ namespace Alternet::UI
 
     void Control::CreateWxWindow()
     {
-        _creatingWxWindow = true;
+        SetFlag(ControlFlags::CreatingWxWindow, true);
         wxWindow* parentingWxWindow = nullptr;
         if (_parent != nullptr)
             parentingWxWindow = _parent->GetParentingWxWindow();
@@ -120,7 +120,7 @@ namespace Alternet::UI
         OnWxWindowCreated();
         _delayedValues.ApplyIfPossible();
 
-        _creatingWxWindow = false;
+        SetFlag(ControlFlags::CreatingWxWindow, false);
 
         for (auto child : _children)
             child->UpdateWxWindowParent();
@@ -404,7 +404,7 @@ namespace Alternet::UI
 
     bool Control::EventsSuspended()
     {
-        return _creatingWxWindow;
+        return GetFlag(ControlFlags::CreatingWxWindow);
     }
 
     void Control::OnPaint(wxPaintEvent& event)
@@ -471,6 +471,12 @@ namespace Alternet::UI
     void Control::OnVisibleChanged(wxShowEvent& event)
     {
         event.Skip();
+
+        // For some reason this event is being called while destroying the window, despite the Unbind call prior to destruction.
+        auto window = dynamic_cast<wxWindow*>(event.GetEventObject());
+        if (window->IsBeingDeleted())
+            return;
+
         RaiseEvent(ControlEvent::VisibleChanged);
     }
 
