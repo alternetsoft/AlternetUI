@@ -4,7 +4,7 @@
         Title="Alternet.UI.Documentation.Examples.ListBox">
   <StackPanel Orientation="Vertical">
     <!-- <CreateUixmlDeclaration> -->
-    <ListBox Width="200" Height="100" Margin="8,8,8,8" Name="listBox" SelectionChanged="ListBox_SelectionChanged"/>
+    <ListBox Width="200" Height="100" Margin="8" Name="listBox" SelectionChanged="ListBox_SelectionChanged"/>
     <!-- </CreateUixmlDeclaration> -->
 
   </StackPanel>

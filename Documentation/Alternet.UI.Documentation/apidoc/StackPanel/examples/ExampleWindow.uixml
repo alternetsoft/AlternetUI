@@ -3,9 +3,9 @@
         x:Class="Alternet.UI.Documentation.Examples.StackPanel.MainWindow"
         Title="Alternet.UI.Documentation.Examples.StackPanel">
     <!-- <CreateUixmlDeclaration> -->
-    <StackPanel Width="200" Height="100" Name="stackPanel" Margin="16,16,16,16" Orientation="Vertical">
-      <Button Text="Add Item" Name="addItemButton" Margin="8,8,8,8"/>
-      <Button Text="Remove Item" Name="removeItemButton" Margin="8,8,8,8"/>
+    <StackPanel Width="200" Height="100" Name="stackPanel" Margin="16" Orientation="Vertical">
+      <Button Text="Add Item" Name="addItemButton" Margin="8"/>
+      <Button Text="Remove Item" Name="removeItemButton" Margin="8"/>
     </StackPanel>
     <!-- </CreateUixmlDeclaration> -->
 </Window>

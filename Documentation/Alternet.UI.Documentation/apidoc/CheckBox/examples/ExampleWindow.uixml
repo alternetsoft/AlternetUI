@@ -5,7 +5,7 @@
   <StackPanel Orientation="Vertical">
     <ComboBox Width="200" Name="comboBox" IsEditable="false" VerticalAlignment="Top" />
     <!-- <CreateUixmlDeclaration> -->
-    <CheckBox Text="Allow Text Editing" Name="allowTextEditingCheckBox" Margin="8,8,8,8" CheckedChanged="AllowTextEditingCheckBox_CheckedChanged"/>
+    <CheckBox Text="Allow Text Editing" Name="allowTextEditingCheckBox" Margin="8" CheckedChanged="AllowTextEditingCheckBox_CheckedChanged"/>
     <!-- </CreateUixmlDeclaration> -->
 
   </StackPanel>

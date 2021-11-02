@@ -4,7 +4,7 @@
         Title="Alternet.UI.Documentation.Examples.ProgressBar">
   <StackPanel Orientation="Vertical">
     <!-- <CreateUixmlDeclaration> -->
-    <ProgressBar Width="200" Height="23" Name="progressBar" Margin="8,8,8,8" Minimum="50" Maximum="200" Value="125" ValueChanged="ProgressBar_ValueChanged" />
+    <ProgressBar Width="200" Height="23" Name="progressBar" Margin="8" Minimum="50" Maximum="200" Value="125" ValueChanged="ProgressBar_ValueChanged" />
     <!-- </CreateUixmlDeclaration> -->
 
   </StackPanel>
