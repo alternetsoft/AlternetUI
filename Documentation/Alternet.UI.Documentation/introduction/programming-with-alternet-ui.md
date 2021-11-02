@@ -11,8 +11,13 @@ code-behind files. This approach is inspired by WPF design and is proven by a wi
 
 The following example shows how you can create a window with a few controls as part of a user interface. 
 
-[!code-xml[](examples/uixml-sample.uixml)]
+[!code-xml[](../tutorials/hello-world/examples/add-click-handler.uixml)]
+[!code-csharp[](../tutorials/hello-world/examples/add-click-handler.uixml.cs)]
 
-[!code-csharp[](examples/code-behind-csharp.cs)]
+Here is how this application looks on different operating systems:
 
-[Explore more examples on GitHub](https://github.com/todo).
+![Application on Windows](../tutorials/hello-world/visual-studio/images/message-box-on-click-windows.png)
+![Application on macOS](../tutorials/hello-world/command-line/images/message-box-on-click-macos-window.png)
+
+---
+*[Explore more examples on GitHub](https://github.com/todo).*

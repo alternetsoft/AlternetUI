@@ -17,6 +17,16 @@ These controls most often detect and respond to user input. The control classes 
 
 These controls provide a visual representation of a data elements in different layouts or views.
 
+Examples of how a <xref:Alternet.UI.ListBox> can look on different platforms:
+
+# [Windows](#tab/screenshot-windows)
+![ListBox on Windows](../apidoc/ListBox/images/listbox-windows.png)
+# [macOS](#tab/screenshot-macos)
+![ListBox on macOS](../apidoc/ListBox/images/listbox-macos.png)
+# [Linux](#tab/screenshot-linux)
+![ListBox on Linux](../apidoc/ListBox/images/listbox-linux.png)
+***
+
 **Informational**: <xref:Alternet.UI.Label>, <xref:Alternet.UI.ProgressBar>.
 
 These controls are designed to present an information to the user in a visual form.
