@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExplorerUISample", "Explore
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorldSample", "HelloWorldSample\HelloWorldSample.csproj", "{61431CC9-F1B7-4382-9094-C66CE8626754}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomControlsSample", "CustomControlsSample\CustomControlsSample.csproj", "{9191BA9E-0E83-4DFA-B5D6-60B5A6A3BE1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{61431CC9-F1B7-4382-9094-C66CE8626754}.Release|x64.Build.0 = Release|x64
 		{61431CC9-F1B7-4382-9094-C66CE8626754}.Release|x86.ActiveCfg = Release|x86
 		{61431CC9-F1B7-4382-9094-C66CE8626754}.Release|x86.Build.0 = Release|x86
+		{9191BA9E-0E83-4DFA-B5D6-60B5A6A3BE1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9191BA9E-0E83-4DFA-B5D6-60B5A6A3BE1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9191BA9E-0E83-4DFA-B5D6-60B5A6A3BE1D}.Debug|x64.ActiveCfg = Debug|x64
+		{9191BA9E-0E83-4DFA-B5D6-60B5A6A3BE1D}.Debug|x64.Build.0 = Debug|x64
+		{9191BA9E-0E83-4DFA-B5D6-60B5A6A3BE1D}.Debug|x86.ActiveCfg = Debug|x86
+		{9191BA9E-0E83-4DFA-B5D6-60B5A6A3BE1D}.Debug|x86.Build.0 = Debug|x86
+		{9191BA9E-0E83-4DFA-B5D6-60B5A6A3BE1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9191BA9E-0E83-4DFA-B5D6-60B5A6A3BE1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9191BA9E-0E83-4DFA-B5D6-60B5A6A3BE1D}.Release|x64.ActiveCfg = Release|x64
+		{9191BA9E-0E83-4DFA-B5D6-60B5A6A3BE1D}.Release|x64.Build.0 = Release|x64
+		{9191BA9E-0E83-4DFA-B5D6-60B5A6A3BE1D}.Release|x86.ActiveCfg = Release|x86
+		{9191BA9E-0E83-4DFA-B5D6-60B5A6A3BE1D}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
