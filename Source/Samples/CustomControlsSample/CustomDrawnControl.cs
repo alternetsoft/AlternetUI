@@ -4,14 +4,14 @@ using Alternet.Drawing;
 using System.IO;
 using System.Reflection;
 
-namespace HelloWorldSample
+namespace CustomControlsSample
 {
     public class CustomDrawnControl : Control
     {
         private Brush brush = Brushes.LightGreen;
 
         Image image =
-            new Image(Assembly.GetExecutingAssembly().GetManifestResourceStream("HelloWorldSample.Resources.Car.png")!);
+            new Image(Assembly.GetExecutingAssembly().GetManifestResourceStream("CustomControlsSample.Resources.Car.png")!);
 
         public CustomDrawnControl()
         {
