@@ -3,6 +3,7 @@ using Alternet.UI;
 
 namespace Alternet.UI.Documentation.Examples.Application
 {
+    #region class
     class Program
     {
         [STAThread]
@@ -17,4 +18,5 @@ namespace Alternet.UI.Documentation.Examples.Application
             application.Dispose();
         }
     }
+    #endregion
 }

@@ -3,7 +3,7 @@
         x:Class="Alternet.UI.Documentation.Examples.Grid.MainWindow"
         Title="Alternet.UI.Documentation.Examples.Grid">
     <!-- <CreateUixmlDeclaration> -->
-  <Grid Name="grid" Margin="16,16,16,16" Width="250" Height="100">
+  <Grid Name="grid" Margin="16" Width="250" Height="100">
     <Grid.ColumnDefinitions>
       <ColumnDefinition />
       <ColumnDefinition />
@@ -16,7 +16,7 @@
       <RowDefinition />
     </Grid.RowDefinitions>
 
-    <Label Grid.ColumnSpan="3" Grid.Row="0" Text="2005 Products Shipped"/>
+    <Label Grid.ColumnSpan="3" Grid.Row="0" Text="2021 Products Shipped"/>
     <Label Grid.Row="1" Grid.Column="0" Text="Quarter 1"/>
     <Label Grid.Row="1" Grid.Column="1" Text="Quarter 2"/>
     <Label Grid.Row="1" Grid.Column="2" Text="Quarter 3"/>

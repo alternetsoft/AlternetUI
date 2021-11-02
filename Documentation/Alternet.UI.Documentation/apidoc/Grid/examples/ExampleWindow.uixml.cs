@@ -17,7 +17,7 @@ namespace Alternet.UI.Documentation.Examples.Grid
             var Grid = new Alternet.UI.Grid();
             Grid.RowDefinitions.Add(new Alternet.UI.RowDefinition { Height = new Alternet.UI.GridLength(1, Alternet.UI.GridUnitType.Star) });
             Grid.RowDefinitions.Add(new Alternet.UI.RowDefinition { Height = new Alternet.UI.GridLength(1, Alternet.UI.GridUnitType.Auto) });
-            var bt1 = new Button{Text="First button" };
+            var bt1 = new Button { Text = "First button" };
             var bt2 = new Button { Text = "Second button" };
             Grid.Children.Add(bt1);
             Grid.Children.Add(bt2);

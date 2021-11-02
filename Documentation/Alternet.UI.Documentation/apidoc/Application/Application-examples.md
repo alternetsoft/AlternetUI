@@ -2,8 +2,6 @@
 uid: Alternet.UI.Application
 example: [*content]
 ---
-And the corresponding event handler in the code-behind:
-[!code-csharp[](examples/ExampleWindow.uixml.cs#ApplicationEventHandler)]
+The following code shows how the Main method calls <xref:Alternet.UI.Application.Run*> to start the <xref:Alternet.UI.Application> event loop, with the given <xref:Alternet.UI.Window>:
 
-Also a <xref:Alternet.UI.Application> can be created from code:
-[!code-csharp[](examples/ExampleWindow.uixml.cs#ApplicationCSharpCreation)]
+[!code-csharp[](examples/Program.cs#class)]
