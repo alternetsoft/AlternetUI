@@ -11,4 +11,8 @@
     <ProjectReference Include="..\Alternet.UI.Versioning\Alternet.UI.Versioning.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.7.82" />
+  </ItemGroup>
+
 </Project>

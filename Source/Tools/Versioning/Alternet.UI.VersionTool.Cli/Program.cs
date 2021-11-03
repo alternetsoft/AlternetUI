@@ -1,4 +1,5 @@
 ﻿using Alternet.UI.Versioning;
+using CommandLine;
 using System;
 using System.IO;
 
@@ -6,12 +7,39 @@ namespace VersionTool.Cli
 {
     internal class Program
     {
+        [Verb("set-build-number", HelpText = "Set build number.")]
+        class SetBuildNumberOptions
+        {
+            public SetBuildNumberOptions(int buildNumber)
+            {
+                BuildNumber = buildNumber;
+            }
+
+            [Value(0, Required = true, HelpText = "Build number")]
+            public int BuildNumber { get; }
+        }
+
+        [Verb("append-version-suffix", HelpText = "Append version suffix.")]
+        class AppendVersionSuffixOptions
+        {
+            public AppendVersionSuffixOptions(string filePath)
+            {
+                FilePath = filePath;
+            }
+
+            [Value(0, Required = true, HelpText = "File path.")]
+            public string FilePath { get; }
+        }
+
         private static int Main(string[] args)
         {
             try
             {
-                CheckArguments(args, out var buildNumber);
-                BuildNumberSetter.SetBuildNumber(LocateRepository(), buildNumber);
+                CommandLine.Parser.Default.ParseArguments<SetBuildNumberOptions, AppendVersionSuffixOptions>(args)
+                  .MapResult(
+                    (SetBuildNumberOptions o) => { BuildNumberSetter.SetBuildNumber(LocateRepository(), o.BuildNumber); return 0; },
+                    (AppendVersionSuffixOptions o) => { FileSuffixAppender.AppendVersionSuffix(LocateRepository(), o.FilePath); return 0; },
+                    errors => 0);
             }
             catch (Exception e)
             {
@@ -20,13 +48,6 @@ namespace VersionTool.Cli
             }
 
             return 0;
-        }
-
-        private static void CheckArguments(string[] args, out int buildNumber)
-        {
-            if (args.Length != 2 || !args[0].Equals("set-build-number", StringComparison.OrdinalIgnoreCase))
-                throw new Exception("Usage: Alternet.UI.VersionTool.Cli.exe set-build-number <build-number>");
-            buildNumber = int.Parse(args[1]);
         }
 
         private static Repository LocateRepository()

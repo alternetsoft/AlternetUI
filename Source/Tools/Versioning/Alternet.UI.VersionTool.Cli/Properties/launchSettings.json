@@ -1,8 +1,12 @@
 {
   "profiles": {
-    "PrereleaseVersionTool": {
-        "commandName": "Project",
-        "commandLineArgs": "set-build-number 12"
+    "set-build-number": {
+      "commandName": "Project",
+      "commandLineArgs": "set-build-number 12"
+    },
+    "append-version-suffix": {
+      "commandName": "Project",
+      "commandLineArgs": "append-version-suffix C:\\Temp\\myfile.txt"
     }
   }
 }

@@ -62,11 +62,21 @@ if not !ERRORLEVEL! EQU 0 (
 
 :: Publish Visual Studio extension.
 
+set VersionToolProject=%SCRIPT_HOME%\..\..\Tools\Versioning\Alternet.UI.VersionTool.Cli\Alternet.UI.VersionTool.Cli.csproj
+
 copy "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\bin\VS2019\Release\*.vsix" "%PackagesPublishDirectory%"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
+dotnet run --project "%VersionToolProject%" -- append-version-suffix "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.VS2019.vsix"
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
 copy "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\bin\VS2022\Release\*.vsix" "%PackagesPublishDirectory%"
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
+dotnet run --project "%VersionToolProject%" -- append-version-suffix "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.VS2022.vsix"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
