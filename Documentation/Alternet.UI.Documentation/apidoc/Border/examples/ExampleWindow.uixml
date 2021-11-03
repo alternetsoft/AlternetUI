@@ -4,7 +4,7 @@
         Title="Alternet.UI.Documentation.Examples.Border">
   <StackPanel Orientation="Vertical">
     <!-- <CreateUixmlDeclaration> -->
-    <Border Width="120" Height="120" Name="border" Margin="16">
+    <Border Name="border" Margin="16">
       <StackPanel Orientation="Vertical" Margin="5,0,0,0">
         <Label Text="Label inside border" Margin="8" />
         <Button Text="Button inside border" HorizontalAlignment="Left" Margin="8" />
