@@ -5,8 +5,8 @@
     <version>$version$</version>
     <authors>AlterNET Software</authors>
     <owners>AlterNET Software</owners>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Alternet UI</description>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Platform Abstraction Layer for AlterNET UI: a cross-platform graphical user interface framework.</description>
     <projectUrl>https://alternet-ui.com</projectUrl>
     <license type="file">License.txt</license>
     <icon>icon.png</icon>
