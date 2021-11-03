@@ -123,7 +123,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the identifying name of the control.
         /// The name provides a reference so that code-behind, such as event handler code,
-        /// can refer to a markup element after it is constructed during processing by a XAML processor.
+        /// can refer to a markup element after it is constructed during processing by a UIXML processor.
         /// </summary>
         /// <value>The name of the element. The default is <c>null</c>.</value>
         public string? Name { get; set; } // todo: maybe use Site.Name?
@@ -308,7 +308,7 @@ namespace Alternet.UI
         /// <remarks>
         /// The margin is the space between this control and the adjacent control.
         /// Margin is set as a <see cref="Thickness"/> structure rather than as a number so that the margin can be set asymmetrically.
-        /// The <see cref="Thickness"/> structure itself supports string type conversion so that you can specify an asymmetric <see cref="Margin"/> in XAML attribute syntax also.
+        /// The <see cref="Thickness"/> structure itself supports string type conversion so that you can specify an asymmetric <see cref="Margin"/> in UIXML attribute syntax also.
         /// </remarks>
         public Thickness Margin
         {
@@ -332,7 +332,7 @@ namespace Alternet.UI
         /// <remarks>
         /// The padding is the amount of space between the content of a <see cref="Control"/> and its border.
         /// Padding is set as a <see cref="Thickness"/> structure rather than as a number so that the padding can be set asymmetrically.
-        /// The <see cref="Thickness"/> structure itself supports string type conversion so that you can specify an asymmetric <see cref="Padding"/> in XAML attribute syntax also.
+        /// The <see cref="Thickness"/> structure itself supports string type conversion so that you can specify an asymmetric <see cref="Padding"/> in UIXML attribute syntax also.
         /// </remarks>
         public Thickness Padding
         {
