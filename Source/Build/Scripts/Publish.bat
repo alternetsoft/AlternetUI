@@ -20,6 +20,10 @@ del "%PackagesPublishDirectory%\*.nupkg"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
+del "%PackagesPublishDirectory%\*.snupkg"
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
 del "%PackagesPublishDirectory%\*.vsix"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
@@ -43,6 +47,10 @@ if not !ERRORLEVEL! EQU 0 (
 :: Publish managed packages.
 
 copy "%SCRIPT_HOME%\..\..\Alternet.UI\bin\Release\*.nupkg" "%PackagesPublishDirectory%"
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
+copy "%SCRIPT_HOME%\..\..\Alternet.UI\bin\Release\*.snupkg" "%PackagesPublishDirectory%"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 

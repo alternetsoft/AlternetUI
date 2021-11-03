@@ -14,6 +14,10 @@ del /q /s "%ALTERNET_UI_RELEASE_DIRECTORY%\*.nupkg"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
+del /q /s "%ALTERNET_UI_RELEASE_DIRECTORY%\*.snupkg"
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
 :: Build
 
 dotnet msbuild /restore /t:Clean,Build /p:Configuration=Release /p:AlternetUIPackagesBuild=true "%SCRIPT_HOME%\..\..\Alternet.UI\Alternet.UI.csproj"
