@@ -13,6 +13,11 @@
     </PropertyGroup>
 
     <PropertyGroup>
+        <LicensesDirectoryPath>$(MSBuildProjectDirectory)/../../Licenses</LicensesDirectoryPath>
+        <LicenseFileName>License.txt</LicenseFileName>
+    </PropertyGroup>
+
+    <PropertyGroup>
         <NugetNativeDllFileName>Alternet.UI.Pal.*</NugetNativeDllFileName>
 
         <NugetPayloadDirectoryPath_Windows_X86>$(BinDirectoryPath)\$(PlatformName_Windows)\$(ManagedBuildConfiguration)\x86\</NugetPayloadDirectoryPath_Windows_X86>

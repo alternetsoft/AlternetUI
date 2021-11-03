@@ -3,6 +3,9 @@
     <Import Project="Alternet.UI.Pal.NuGet.props"/>
 
     <ItemGroup>
+        <NugetPayload_License
+            Include="$(LicensesDirectoryPath)\$(LicenseFileName)" />
+
         <!-- Windows -->
 
         <NugetPayload_Native_Windows_X64
@@ -32,6 +35,8 @@
     </Target>
 
     <Target Name="NuGet_PrepareSource" >
+        <Copy SourceFiles="@(NugetPayload_License)" DestinationFolder="$(NuGetDirectoryPath)" />
+
         <!-- Windows -->
         
         <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_X86)\native"/>

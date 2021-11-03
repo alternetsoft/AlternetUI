@@ -5,7 +5,7 @@
     <DisplayName>AlterNET UI for Visual Studio</DisplayName>
     <Description xml:space="preserve">Visual Studio integration for the AlterNET UI - a cross-platform user interface framework. Provides UIXML IntelliSense and more.</Description>
     <MoreInfo>https://www.alternet-ui.com</MoreInfo>
-    <License>License.rtf</License>
+    <License>License.txt</License>
     <GettingStartedGuide>https://www.alternet-ui.com/how-it-works</GettingStartedGuide>
     <ReleaseNotes>https://www.alternet-ui.com</ReleaseNotes>
     <Icon>AlternetUI.ico</Icon>

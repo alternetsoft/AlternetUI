@@ -3,12 +3,12 @@
   <metadata>
     <id>Alternet.UI.Pal</id>
     <version>$version$</version>
-    <authors>Alternet</authors>
-    <owners>Alternet</owners>
+    <authors>AlterNET Software</authors>
+    <owners>AlterNET Software</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Alternet UI</description>
-    <projectUrl>https://alternetsoft.com</projectUrl>
-    <license type="file">license.txt</license>
+    <projectUrl>https://alternet-ui.com</projectUrl>
+    <license type="file">License.txt</license>
     <icon>icon.png</icon>
     <copyright>Copyright © 2021 AlterNET Software</copyright>
   </metadata>
