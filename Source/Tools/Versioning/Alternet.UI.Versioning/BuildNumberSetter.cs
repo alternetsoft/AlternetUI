@@ -8,7 +8,11 @@ namespace Alternet.UI.Versioning
         public static void SetBuildNumber(Repository repository, int buildNumber)
         {
             MasterVersionBuildNumberSetter.SetBuildNumber(repository, buildNumber);
-            PatchVSPackageManifests(buildNumber, new FileLocator(repository));
+
+            var fileLocator = new FileLocator(repository);
+
+            PatchVSPackageManifests(buildNumber, fileLocator);
+            VersionService.PatchTemplateProjectFiles(VersionService.GetVersion(repository), buildNumber, fileLocator);
         }
 
         private static void PatchVSPackageManifests(int buildNumber, FileLocator locator)

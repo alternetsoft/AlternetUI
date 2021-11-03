@@ -7,7 +7,7 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Components
 {
     static class ComponentsSourceGenerator
     {
-        public static int Generate(Repository repository, ProductVersion productVersion, string targetFilePath)
+        public static int Generate(Repository repository, ProductVersion productVersion, int buildNumber, string targetFilePath)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Components
                     PatchPackageReference(
                         Path.Combine(tempDirectoryPath, "Alternet.UI\\Alternet.UI.csproj"),
                         "Alternet.UI.Pal",
-                        productVersion.GetPackageReferenceVersion());
+                        productVersion.GetPackageVersion(buildNumber));
 
                     File.Copy(
                         Path.Combine(repository.RootPath, @"Publish\PublicFiles\Components\Alternet.UI.sln"),

@@ -7,7 +7,7 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
 {
     static class SamplesSourceGenerator
     {
-        public static int Generate(Repository repository, ProductVersion productVersion, string targetFilePath)
+        public static int Generate(Repository repository, ProductVersion productVersion, int buildNumber, string targetFilePath)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
                             ignoredDirectores: new[] { "build", "Testing" });
 
                         var projectFiles = Directory.GetFiles(Path.Combine(tempDirectory.Path, sampleDirectoryName), "*Sample.csproj");
-                        PatchSampleProjectFile(projectFiles.Single(), productVersion.GetPackageReferenceVersion());
+                        PatchSampleProjectFile(projectFiles.Single(), productVersion.GetPackageVersion(buildNumber));
                     }
 
                     File.Copy(

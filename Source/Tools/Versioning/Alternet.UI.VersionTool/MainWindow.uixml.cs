@@ -27,7 +27,7 @@ namespace Alternet.UI.VersionTool
 
             try
             {
-                VersionService.SetVersion(repository, version);
+                VersionService.SetVersion(repository, version, 0);
                 MessageBox.Show("New version was set successfully.", "Version Tool");
             }
             catch (Exception ex)

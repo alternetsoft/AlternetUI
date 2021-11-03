@@ -27,7 +27,7 @@ namespace Alternet.UI.Versioning
             return $"{v}-{Type.ToString().ToLower()}";
         }
 
-        public string GetPackageReferenceVersion()
+        public string GetPackageFloatingReferenceVersion()
         {
             var v = $"{Major}.{Minor}.*";
             if (Type == VersionType.Release)

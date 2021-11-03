@@ -8,17 +8,17 @@ namespace Alternet.UI.Versioning
 {
     public static class VersionService
     {
-        public static void SetVersion(Repository repository, ProductVersion productVersion)
+        public static void SetVersion(Repository repository, ProductVersion productVersion, int buildNumber)
         {
             var locator = new FileLocator(repository);
 
             MasterVersionFileService.SetVersion(locator.GetMasterVersionFile(), productVersion);
 
-            PatchTemplateProjectFiles(productVersion, locator);
+            PatchTemplateProjectFiles(productVersion, buildNumber, locator);
             PatchVSPackageManifests(productVersion, locator);
         }
 
-        static void PatchTemplateProjectFiles(ProductVersion productVersion, FileLocator locator)
+        internal static void PatchTemplateProjectFiles(ProductVersion productVersion, int buildNumber, FileLocator locator)
         {
             var patcher = new XmlPatcher(omitXmlDeclaration: true);
             foreach (var file in locator.GetTemplateProjectFiles())
@@ -26,7 +26,7 @@ namespace Alternet.UI.Versioning
                     file,
                     "/Project/ItemGroup/PackageReference[@Include='Alternet.UI']",
                     "Version",
-                    productVersion.GetPackageReferenceVersion());
+                    productVersion.GetPackageVersion(buildNumber));
         }
 
         static void PatchVSPackageManifests(ProductVersion productVersion, FileLocator locator)

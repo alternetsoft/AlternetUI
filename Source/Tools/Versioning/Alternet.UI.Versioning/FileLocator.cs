@@ -34,7 +34,6 @@ namespace Alternet.UI.Versioning
             var files = new[]
             {
                 "Source/Integration/VisualStudio/Templates/AlternetUIApplicationTemplate/ProjectTemplate.csproj",
-                "Source/Integration/VisualStudio/Templates/AlternetUIApplicationTemplate/ProjectTemplate.csproj",
                 "Source/Integration/Templates/CSharp/Application/Alternet.UI.Templates.Application.CSharp.csproj"
             };
 
