@@ -34,6 +34,14 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Components
                         Path.Combine(repository.RootPath, @"Publish\PublicFiles\Components\Alternet.UI.sln"),
                         Path.Combine(tempDirectory.Path, "Alternet.UI.sln"));
 
+                    File.Copy(
+                        Path.Combine(repository.RootPath, @"Publish\PublicFiles\Components\License.txt"),
+                        Path.Combine(tempDirectory.Path, "License.txt"));
+
+                    File.Copy(
+                        Path.Combine(repository.RootPath, @"Publish\PublicFiles\Components\readme.md"),
+                        Path.Combine(tempDirectory.Path, "readme.md"));
+
 
                     tempDirectory.Pack(targetFilePath);
                 }

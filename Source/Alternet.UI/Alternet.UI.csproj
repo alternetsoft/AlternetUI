@@ -16,7 +16,12 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\PublicFiles\Package\readme.md" Pack="true" PackagePath=""/>
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\Licenses\License.txt" Pack="true" PackagePath=""/>

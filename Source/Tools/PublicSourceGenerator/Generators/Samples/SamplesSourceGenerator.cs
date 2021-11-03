@@ -31,8 +31,16 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
                     }
 
                     File.Copy(
-                        Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\Alternet.UI.Samples.sln"),
-                        Path.Combine(tempDirectory.Path, "Alternet.UI.Samples.sln"));
+                        Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\Alternet.UI.Examples.sln"),
+                        Path.Combine(tempDirectory.Path, "Alternet.UI.Examples.sln"));
+
+                    File.Copy(
+                        Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\License.txt"),
+                        Path.Combine(tempDirectory.Path, "License.txt"));
+
+                    File.Copy(
+                        Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\readme.md"),
+                        Path.Combine(tempDirectory.Path, "readme.md"));
 
                     tempDirectory.Pack(targetFilePath);
                 }
