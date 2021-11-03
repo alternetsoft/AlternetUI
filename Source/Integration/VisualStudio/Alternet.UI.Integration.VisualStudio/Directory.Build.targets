@@ -1,5 +1,5 @@
 ﻿<Project>
-    <Sdk Name="DasMulli.AssemblyInfoGeneration.Sdk" Version="1.0.0" /> <!-- To use version from Mastering\Version\Version.props in a legacy-style .csproj -->
+    <Sdk Name="DasMulli.AssemblyInfoGeneration.Sdk" Version="1.0.0" /> <!-- To use version from Version\Version.props in a legacy-style .csproj -->
 
     <Target Name="AlternetUITemplates_CopySharedContent" BeforeTargets="BeforeCompile">
         <PropertyGroup>

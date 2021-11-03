@@ -18,7 +18,7 @@ namespace Alternet.UI.Versioning
 
         public string GetMasterVersionFile()
         {
-            return GetValidFullPath("Source/Mastering/Version/Version.props");
+            return GetValidFullPath("Source/Version/Version.props");
         }
 
         string GetValidFullPath(string relativePath)

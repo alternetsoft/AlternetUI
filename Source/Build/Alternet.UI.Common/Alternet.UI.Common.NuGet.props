@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="..\..\Mastering\Version\Version.props"/>
+    <Import Project="..\..\Version\Version.props"/>
 
     <PropertyGroup>
         <NuGetExeDownloadUrl>https://dist.nuget.org/win-x86-commandline/latest/nuget.exe</NuGetExeDownloadUrl>
