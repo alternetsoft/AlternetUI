@@ -4,7 +4,7 @@
         Title="Alternet.UI.Documentation.Examples.NumericUpDown">
   <StackPanel Orientation="Vertical">
     <!-- <CreateUixmlDeclaration> -->
-    <NumericUpDown Width="200" Height="23" Name="numericUpDown" Margin="8" Minimum="50" Maximum="200" Value="125" ValueChanged="NumericUpDown_ValueChanged" />
+    <NumericUpDown Name="numericUpDown" Margin="8" Minimum="50" Maximum="200" Value="125" ValueChanged="NumericUpDown_ValueChanged" />
     <!-- </CreateUixmlDeclaration> -->
 
   </StackPanel>

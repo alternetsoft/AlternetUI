@@ -4,7 +4,7 @@
         Title="Alternet.UI.Documentation.Examples.ListView">
   <StackPanel Orientation="Vertical">
     <!-- <CreateUixmlDeclaration> -->
-    <ListView Width="300" Height="102" Name="listView" View="LargeIcon" Margin="8" SelectionChanged="ListView_SelectionChanged"/>
+    <ListView Name="listView" View="LargeIcon" Margin="8" SelectionChanged="ListView_SelectionChanged"/>
     <!-- </CreateUixmlDeclaration> -->
 
   </StackPanel>

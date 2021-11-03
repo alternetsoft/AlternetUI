@@ -4,9 +4,9 @@
         Title="Alternet.UI.Documentation.Examples.RadioButton">
   <StackPanel Orientation="Vertical">
     <!-- <CreateUixmlDeclaration> -->
-    <RadioButton Height="23" Name="radioButton1" Margin="8" Text="Option 1.1" CheckedChanged="RadioButton_CheckedChanged" />
-    <RadioButton Height="23" Name="radioButton2" Margin="8" Text="Option 1.2" CheckedChanged="RadioButton_CheckedChanged" />
-    <RadioButton Height="23" Name="radioButton3" Margin="8" Text="Option 1.3" CheckedChanged="RadioButton_CheckedChanged" />
+    <RadioButton Name="radioButton1" Margin="8" Text="Option 1.1" CheckedChanged="RadioButton_CheckedChanged" />
+    <RadioButton Name="radioButton2" Margin="8" Text="Option 1.2" CheckedChanged="RadioButton_CheckedChanged" />
+    <RadioButton Name="radioButton3" Margin="8" Text="Option 1.3" CheckedChanged="RadioButton_CheckedChanged" />
     <!-- </CreateUixmlDeclaration> -->
 
   </StackPanel>
