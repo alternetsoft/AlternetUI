@@ -1,7 +1,9 @@
 {
     "$schema": "http://json.schemastore.org/vsix-publish",
-    "categories": [ "framework and libraries" ],
-    "identity": { "internalName": "AlternetUI" },
+    "categories": [ "other" ],
+    "identity": {
+        "internalName": "Alternet-UI"
+    },
     "assetFiles": [
         {
           "pathOnDisk": "images\\create-new-project.png",
