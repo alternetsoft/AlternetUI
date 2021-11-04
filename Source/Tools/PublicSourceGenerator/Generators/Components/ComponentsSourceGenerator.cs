@@ -12,7 +12,7 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Components
             try
             {
                 if (Directory.Exists(targetDirectoryPath))
-                    Directory.Delete(targetDirectoryPath);
+                    Directory.Delete(targetDirectoryPath, recursive: true);
                 Directory.CreateDirectory(targetDirectoryPath);
 
                 SourceDirectoryCopier.CopyDirectory(repository.RootPath, targetDirectoryPath, @"Publish\PublicFiles\Components\Keys", "Keys");

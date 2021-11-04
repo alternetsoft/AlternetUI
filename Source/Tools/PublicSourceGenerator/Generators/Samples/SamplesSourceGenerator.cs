@@ -12,7 +12,7 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
             try
             {
                 if (Directory.Exists(targetDirectoryPath))
-                    Directory.Delete(targetDirectoryPath);
+                    Directory.Delete(targetDirectoryPath, recursive: true);
                 Directory.CreateDirectory(targetDirectoryPath);
 
                 var samplesRootRelativePath = @"Source\Samples";
