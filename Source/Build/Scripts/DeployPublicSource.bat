@@ -51,7 +51,7 @@ git add -A
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-git commit -F "%CommitMessageFile%"
+git -c "user.name=Yevgeni Zolotko" -c "user.email=yevgeni.zolotko@alternetsoft.com" commit -F "%CommitMessageFile%"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
