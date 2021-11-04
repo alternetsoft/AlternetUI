@@ -9,7 +9,7 @@
         <GettingStartedGuide>https://www.alternet-ui.com/how-it-works</GettingStartedGuide>
         <ReleaseNotes>https://www.alternet-ui.com</ReleaseNotes>
         <Icon>AlternetUI.ico</Icon>
-        <Tags>UI, Cross Platform, .NET, User Interface, macOS, Linux, Windows</Tags>
+        <Tags>UI, Cross Platform, .NET, macOS, Linux, Windows</Tags>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0, 17.0)" />
