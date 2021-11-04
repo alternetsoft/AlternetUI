@@ -55,7 +55,7 @@ git -c "user.name=Yevgeni Zolotko" -c "user.email=yevgeni.zolotko@alternetsoft.c
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-@REM git push %RepoUrl%
+git push %RepoUrl%
 
 for /f %%i in ('dotnet run --project "%VersionToolProject%" -- get-version') do set ProductVersion=%%i
 
@@ -63,6 +63,6 @@ git tag %ProductVersion%
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-@REM git push %RepoUrl% --tags
+git push %RepoUrl% --tags
 
 popd

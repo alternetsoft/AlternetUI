@@ -23,9 +23,9 @@ set GitHubApiKey=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
 
 :: NuGet packages.
 
-@REM dotnet nuget push "%PublishRoot%\*.nupkg" -k %NuGetApiKey% -s https://api.nuget.org/v3/index.json
-@REM if not !ERRORLEVEL! EQU 0 (
-@REM     exit /b !ERRORLEVEL!)
+dotnet nuget push "%PublishRoot%\*.nupkg" -k %NuGetApiKey% -s https://api.nuget.org/v3/index.json
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
 
 :: Public Components Sources
 
@@ -40,6 +40,6 @@ if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
 :: Clean Up
-@REM RD /S /Q "%PublicRepo%"
+RD /S /Q "%PublicRepo%"
 
 exit /b
