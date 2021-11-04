@@ -13,7 +13,7 @@
     "overview": "readme.md",
     "priceCategory": "paid",
     "publisher": "AlternetSoftwarePTYLTD",
-    "private": true,
+    "private": false,
     "qna": true,
     "repo": "https://github.com/alternetsoft/alternet-ui-examples"
 }
