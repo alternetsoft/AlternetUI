@@ -25,12 +25,12 @@ namespace Alternet.UI.PublicSourceGenerator
                         repository,
                         productVersion,
                         buildNumber,
-                        Path.Combine(targetDirectory, $"PublicSourceCode-{packageVersion}.zip")),
+                        Path.Combine(targetDirectory, "PublicComponents")),
                     (SamplesSourceGeneratorOptions o) => SamplesSourceGenerator.Generate(
                         repository,
                         productVersion,
                         buildNumber,
-                        Path.Combine(targetDirectory, $"PublicSamples-{packageVersion}.zip")),
+                        Path.Combine(targetDirectory, "PublicExamples")),
                     errors => 1);
             }
             catch (Exception e)

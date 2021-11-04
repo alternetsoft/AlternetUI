@@ -1,45 +1,45 @@
-SETLOCAL EnableDelayedExpansion
+@REM SETLOCAL EnableDelayedExpansion
 
-set SCRIPT_HOME=%~dp0.
+@REM set SCRIPT_HOME=%~dp0.
 
-:: Set up.
+@REM :: Set up.
 
-set PublishRoot=%SCRIPT_HOME%\..\..\..\Publish\Artifacts\Deploy
-if not exist "%PublishRoot%" (exit /b 1)
+@REM set PublishRoot=%SCRIPT_HOME%\..\..\..\Publish\Artifacts\Deploy
+@REM if not exist "%PublishRoot%" (exit /b 1)
 
-set PublicComponentsSources=%PublishRoot%\PublicComponents
-if not exist "%PublicComponentsSources%" (exit /b 1)
+@REM set PublicComponentsSources=%PublishRoot%\PublicComponents
+@REM if not exist "%PublicComponentsSources%" (exit /b 1)
 
-set PublicExamplesSources=%PublishRoot%\PublicExamples
-if not exist "%PublicExamplesSources%" (exit /b 1)
+@REM set PublicExamplesSources=%PublishRoot%\PublicExamples
+@REM if not exist "%PublicExamplesSources%" (exit /b 1)
 
-set PublicRepo=%PublishRoot%\Repo
-mkdir %PublicRepo%
-if not !ERRORLEVEL! EQU 0 (
-    exit /b !ERRORLEVEL!)
+@REM set PublicRepo=%PublishRoot%\Repo
+@REM mkdir %PublicRepo%
+@REM if not !ERRORLEVEL! EQU 0 (
+@REM     exit /b !ERRORLEVEL!)
 
-set NuGetApiKey=oy2iknibdcdvlz5ztp3ae34lrw65b5uebhs2dcvfwrlitq
-set GitHubApiKey=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
+@REM set NuGetApiKey=oy2iknibdcdvlz5ztp3ae34lrw65b5uebhs2dcvfwrlitq
+@REM set GitHubApiKey=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
 
-:: NuGet packages.
+@REM :: NuGet packages.
 
-dotnet nuget push "%PublishRoot%\*.nupkg" -k %NuGetApiKey% -s https://api.nuget.org/v3/index.json
-if not !ERRORLEVEL! EQU 0 (
-    exit /b !ERRORLEVEL!)
+@REM dotnet nuget push "%PublishRoot%\*.nupkg" -k %NuGetApiKey% -s https://api.nuget.org/v3/index.json
+@REM if not !ERRORLEVEL! EQU 0 (
+@REM     exit /b !ERRORLEVEL!)
 
-:: Public Components Sources
+@REM :: Public Components Sources
 
-call "%SCRIPT_HOME%\DeployPublicSource.bat" %PublicComponentsSources% %PublicRepo%\Components %PublicRepo%\ComponentsCommitMessage.txt %GitHubApiKey% alternet-ui
-if not !ERRORLEVEL! EQU 0 (
-    exit /b !ERRORLEVEL!)
+@REM call "%SCRIPT_HOME%\DeployPublicSource.bat" %PublicComponentsSources% %PublicRepo%\Components %PublicRepo%\ComponentsCommitMessage.txt %GitHubApiKey% alternet-ui
+@REM if not !ERRORLEVEL! EQU 0 (
+@REM     exit /b !ERRORLEVEL!)
 
-:: Public Examples Sources
+@REM :: Public Examples Sources
 
-call "%SCRIPT_HOME%\DeployPublicSource.bat" %PublicExamplesSources% %PublicRepo%\Examples %PublicRepo%\ExamplesCommitMessage.txt %GitHubApiKey% alternet-ui-examples
-if not !ERRORLEVEL! EQU 0 (
-    exit /b !ERRORLEVEL!)
+@REM call "%SCRIPT_HOME%\DeployPublicSource.bat" %PublicExamplesSources% %PublicRepo%\Examples %PublicRepo%\ExamplesCommitMessage.txt %GitHubApiKey% alternet-ui-examples
+@REM if not !ERRORLEVEL! EQU 0 (
+@REM     exit /b !ERRORLEVEL!)
 
-:: Clean Up
-RD /S /Q "%PublicRepo%"
+@REM :: Clean Up
+@REM RD /S /Q "%PublicRepo%"
 
-exit /b
+@REM exit /b

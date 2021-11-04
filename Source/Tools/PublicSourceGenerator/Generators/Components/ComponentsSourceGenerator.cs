@@ -7,50 +7,46 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Components
 {
     static class ComponentsSourceGenerator
     {
-        public static int Generate(Repository repository, ProductVersion productVersion, int buildNumber, string targetFilePath)
+        public static int Generate(Repository repository, ProductVersion productVersion, int buildNumber, string targetDirectoryPath)
         {
             try
             {
-                using (var tempDirectory = new TempDirectory("Components"))
-                {
-                    var tempDirectoryPath = tempDirectory.Path;
+                if (Directory.Exists(targetDirectoryPath))
+                    Directory.Delete(targetDirectoryPath);
+                Directory.CreateDirectory(targetDirectoryPath);
 
-                    SourceDirectoryCopier.CopyDirectory(repository.RootPath, tempDirectoryPath, @"Publish\PublicFiles\Components\Keys", "Keys");
-                    SourceDirectoryCopier.CopyDirectory(repository.RootPath, tempDirectoryPath, "Source\\Alternet.UI", "Alternet.UI");
-                    SourceDirectoryCopier.CopyDirectory(repository.RootPath, tempDirectoryPath, @"Source\Version", @"Version");
-                    SourceDirectoryCopier.CopyDirectory(repository.RootPath, tempDirectoryPath, @"Source\Docs", @"Docs");
-                    SourceDirectoryCopier.CopyDirectory(repository.RootPath, tempDirectoryPath, @"Source\Licenses", @"Licenses");
-                    SourceDirectoryCopier.CopyDirectory(
-                        repository.RootPath,
-                        tempDirectoryPath,
-                        @"Source\Alternet.UI.Build.Tasks",
-                        @"Alternet.UI.Build.Tasks",
-                        ignoredDirectores: new[] { "build" });
+                SourceDirectoryCopier.CopyDirectory(repository.RootPath, targetDirectoryPath, @"Publish\PublicFiles\Components\Keys", "Keys");
+                SourceDirectoryCopier.CopyDirectory(repository.RootPath, targetDirectoryPath, "Source\\Alternet.UI", "Alternet.UI");
+                SourceDirectoryCopier.CopyDirectory(repository.RootPath, targetDirectoryPath, @"Source\Version", @"Version");
+                SourceDirectoryCopier.CopyDirectory(repository.RootPath, targetDirectoryPath, @"Source\Docs", @"Docs");
+                SourceDirectoryCopier.CopyDirectory(repository.RootPath, targetDirectoryPath, @"Source\Licenses", @"Licenses");
+                SourceDirectoryCopier.CopyDirectory(
+                    repository.RootPath,
+                    targetDirectoryPath,
+                    @"Source\Alternet.UI.Build.Tasks",
+                    @"Alternet.UI.Build.Tasks",
+                    ignoredDirectores: new[] { "build" });
 
-                    PatchPackageReference(
-                        Path.Combine(tempDirectoryPath, "Alternet.UI\\Alternet.UI.csproj"),
-                        "Alternet.UI.Pal",
-                        productVersion.GetPackageVersion(buildNumber));
+                PatchPackageReference(
+                    Path.Combine(targetDirectoryPath, "Alternet.UI\\Alternet.UI.csproj"),
+                    "Alternet.UI.Pal",
+                    productVersion.GetPackageVersion(buildNumber));
 
-                    File.Copy(
-                        Path.Combine(repository.RootPath, @"Publish\PublicFiles\Components\Alternet.UI.sln"),
-                        Path.Combine(tempDirectory.Path, "Alternet.UI.sln"));
+                File.Copy(
+                    Path.Combine(repository.RootPath, @"Publish\PublicFiles\Components\Alternet.UI.sln"),
+                    Path.Combine(targetDirectoryPath, "Alternet.UI.sln"));
 
-                    File.Copy(
-                        Path.Combine(repository.RootPath, @"Publish\PublicFiles\Components\License.txt"),
-                        Path.Combine(tempDirectory.Path, "License.txt"));
+                File.Copy(
+                    Path.Combine(repository.RootPath, @"Publish\PublicFiles\Components\License.txt"),
+                    Path.Combine(targetDirectoryPath, "License.txt"));
 
-                    File.Copy(
-                        Path.Combine(repository.RootPath, @"Publish\PublicFiles\Components\readme.md"),
-                        Path.Combine(tempDirectory.Path, "readme.md"));
+                File.Copy(
+                    Path.Combine(repository.RootPath, @"Publish\PublicFiles\Components\readme.md"),
+                    Path.Combine(targetDirectoryPath, "readme.md"));
 
-                    File.Copy(
-                        Path.Combine(repository.RootPath, @"Publish\PublicFiles\Components\.gitignore"),
-                        Path.Combine(tempDirectory.Path, ".gitignore"));
-
-
-                    tempDirectory.Pack(targetFilePath);
-                }
+                File.Copy(
+                    Path.Combine(repository.RootPath, @"Publish\PublicFiles\Components\.gitignore"),
+                    Path.Combine(targetDirectoryPath, ".gitignore"));
 
                 return 0;
             }

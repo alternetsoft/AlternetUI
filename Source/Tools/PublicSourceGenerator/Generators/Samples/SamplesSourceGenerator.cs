@@ -7,47 +7,46 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
 {
     static class SamplesSourceGenerator
     {
-        public static int Generate(Repository repository, ProductVersion productVersion, int buildNumber, string targetFilePath)
+        public static int Generate(Repository repository, ProductVersion productVersion, int buildNumber, string targetDirectoryPath)
         {
             try
             {
-                using (var tempDirectory = new TempDirectory("Samples"))
+                if (Directory.Exists(targetDirectoryPath))
+                    Directory.Delete(targetDirectoryPath);
+                Directory.CreateDirectory(targetDirectoryPath);
+
+                var samplesRootRelativePath = @"Source\Samples";
+                var samplesRootFullPath = Path.GetFullPath(Path.Combine(repository.RootPath, samplesRootRelativePath));
+                var sampleDirectoryNames = Directory.GetDirectories(samplesRootFullPath, "*Sample").Select(x => Path.GetFileName(x)!);
+
+                foreach (var sampleDirectoryName in sampleDirectoryNames)
                 {
-                    var samplesRootRelativePath = @"Source\Samples";
-                    var samplesRootFullPath = Path.GetFullPath(Path.Combine(repository.RootPath, samplesRootRelativePath));
-                    var sampleDirectoryNames = Directory.GetDirectories(samplesRootFullPath, "*Sample").Select(x => Path.GetFileName(x)!);
+                    SourceDirectoryCopier.CopyDirectory(
+                        repoRootDirectory: repository.RootPath,
+                        tempDirectory: targetDirectoryPath,
+                        sourceName: Path.Combine(samplesRootRelativePath, sampleDirectoryName),
+                        targetName: sampleDirectoryName,
+                        ignoredDirectores: new[] { "build", "Testing" });
 
-                    foreach (var sampleDirectoryName in sampleDirectoryNames)
-                    {
-                        SourceDirectoryCopier.CopyDirectory(
-                            repoRootDirectory: repository.RootPath,
-                            tempDirectory: tempDirectory.Path,
-                            sourceName: Path.Combine(samplesRootRelativePath, sampleDirectoryName),
-                            targetName: sampleDirectoryName,
-                            ignoredDirectores: new[] { "build", "Testing" });
-
-                        var projectFiles = Directory.GetFiles(Path.Combine(tempDirectory.Path, sampleDirectoryName), "*Sample.csproj");
-                        PatchSampleProjectFile(projectFiles.Single(), productVersion.GetPackageVersion(buildNumber));
-                    }
-
-                    File.Copy(
-                        Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\Alternet.UI.Examples.sln"),
-                        Path.Combine(tempDirectory.Path, "Alternet.UI.Examples.sln"));
-
-                    File.Copy(
-                        Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\License.txt"),
-                        Path.Combine(tempDirectory.Path, "License.txt"));
-
-                    File.Copy(
-                        Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\readme.md"),
-                        Path.Combine(tempDirectory.Path, "readme.md"));
-
-                    File.Copy(
-                        Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\.gitignore"),
-                        Path.Combine(tempDirectory.Path, ".gitignore"));
-
-                    tempDirectory.Pack(targetFilePath);
+                    var projectFiles = Directory.GetFiles(Path.Combine(targetDirectoryPath, sampleDirectoryName), "*Sample.csproj");
+                    PatchSampleProjectFile(projectFiles.Single(), productVersion.GetPackageVersion(buildNumber));
                 }
+
+                File.Copy(
+                    Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\Alternet.UI.Examples.sln"),
+                    Path.Combine(targetDirectoryPath, "Alternet.UI.Examples.sln"));
+
+                File.Copy(
+                    Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\License.txt"),
+                    Path.Combine(targetDirectoryPath, "License.txt"));
+
+                File.Copy(
+                    Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\readme.md"),
+                    Path.Combine(targetDirectoryPath, "readme.md"));
+
+                File.Copy(
+                    Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\.gitignore"),
+                    Path.Combine(targetDirectoryPath, ".gitignore"));
 
                 return 0;
             }
