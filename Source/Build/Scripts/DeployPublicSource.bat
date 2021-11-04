@@ -55,7 +55,7 @@ git commit -F "%CommitMessageFile%"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-git push %RepoUrl%
+@REM git push %RepoUrl%
 
 for /f %%i in ('dotnet run --project "%VersionToolProject%" -- get-version') do set ProductVersion=%%i
 
@@ -63,6 +63,6 @@ git tag %ProductVersion%
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-git push %RepoUrl% --tags
+@REM git push %RepoUrl% --tags
 
 popd
