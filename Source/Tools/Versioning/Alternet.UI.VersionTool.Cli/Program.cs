@@ -7,38 +7,21 @@ namespace VersionTool.Cli
 {
     internal class Program
     {
-        [Verb("set-build-number", HelpText = "Set build number.")]
-        class SetBuildNumberOptions
-        {
-            public SetBuildNumberOptions(int buildNumber)
-            {
-                BuildNumber = buildNumber;
-            }
-
-            [Value(0, Required = true, HelpText = "Build number")]
-            public int BuildNumber { get; }
-        }
-
-        [Verb("append-version-suffix", HelpText = "Append version suffix.")]
-        class AppendVersionSuffixOptions
-        {
-            public AppendVersionSuffixOptions(string filePath)
-            {
-                FilePath = filePath;
-            }
-
-            [Value(0, Required = true, HelpText = "File path.")]
-            public string FilePath { get; }
-        }
-
         private static int Main(string[] args)
         {
             try
             {
-                CommandLine.Parser.Default.ParseArguments<SetBuildNumberOptions, AppendVersionSuffixOptions>(args)
+                var repository = LocateRepository();
+                CommandLine.Parser.Default.ParseArguments<
+                    BuildNumberSetter.Options,
+                    VersionFileSuffixAppender.Options,
+                    PublicCommitMessageGenerator.Options,
+                    VersionStdoutWriter.Options>(args)
                   .MapResult(
-                    (SetBuildNumberOptions o) => { BuildNumberSetter.SetBuildNumber(LocateRepository(), o.BuildNumber); return 0; },
-                    (AppendVersionSuffixOptions o) => { FileSuffixAppender.AppendVersionSuffix(LocateRepository(), o.FilePath); return 0; },
+                    (BuildNumberSetter.Options o) => { BuildNumberSetter.SetBuildNumber(repository, o); return 0; },
+                    (VersionFileSuffixAppender.Options o) => { VersionFileSuffixAppender.AppendVersionSuffix(repository, o); return 0; },
+                    (PublicCommitMessageGenerator.Options o) => { PublicCommitMessageGenerator.Generate(repository, o); return 0; },
+                    (VersionStdoutWriter.Options o) => { VersionStdoutWriter.Write(repository); return 0; },
                     errors => 0);
             }
             catch (Exception e)

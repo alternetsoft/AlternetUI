@@ -7,6 +7,14 @@
     "append-version-suffix": {
       "commandName": "Project",
       "commandLineArgs": "append-version-suffix C:\\Temp\\myfile.txt"
+    },
+    "generate-public-commit-message": {
+      "commandName": "Project",
+      "commandLineArgs": "generate-public-commit-message C:\\Temp\\public-commit-message.txt"
+    },
+    "get-version": {
+      "commandName": "Project",
+      "commandLineArgs": "get-version"
     }
   }
 }

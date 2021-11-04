@@ -44,6 +44,10 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Components
                         Path.Combine(repository.RootPath, @"Publish\PublicFiles\Components\readme.md"),
                         Path.Combine(tempDirectory.Path, "readme.md"));
 
+                    File.Copy(
+                        Path.Combine(repository.RootPath, @"Publish\PublicFiles\Components\.gitignore"),
+                        Path.Combine(tempDirectory.Path, ".gitignore"));
+
 
                     tempDirectory.Pack(targetFilePath);
                 }
