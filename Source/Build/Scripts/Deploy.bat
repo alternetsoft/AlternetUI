@@ -40,6 +40,6 @@ if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
 :: Clean Up
-RD /S /Q "%PublicRepo%"
+@REM RD /S /Q "%PublicRepo%"
 
 exit /b
