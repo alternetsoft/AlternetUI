@@ -17,7 +17,17 @@
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <DisableFastUpToDateCheck>True</DisableFastUpToDateCheck>
+    <PackageLicenseFile>License.txt</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <PackageIcon>icon-48x48.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\Media\icon-48x48.png" Pack="true" PackagePath=""/>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Licenses\License.txt" Pack="true" PackagePath=""/>
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="CSharp\**\*" Exclude="CSharp\**\bin\**;CSharp\**\obj\**" />
