@@ -17,10 +17,12 @@
     <PackageLicenseFile>License.txt</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\Docs\Package\readme.md" Pack="true" PackagePath=""/>
+    <None Include="Package\readme.md" Pack="true" PackagePath=""/>
+    <None Include="Package\icon.png" Pack="true" PackagePath=""/>
   </ItemGroup>
 
   <ItemGroup>

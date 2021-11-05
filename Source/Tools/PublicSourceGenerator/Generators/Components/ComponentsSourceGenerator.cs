@@ -18,7 +18,6 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Components
                 SourceDirectoryCopier.CopyDirectory(repository.RootPath, targetDirectoryPath, @"Publish\PublicFiles\Components\Keys", "Keys");
                 SourceDirectoryCopier.CopyDirectory(repository.RootPath, targetDirectoryPath, "Source\\Alternet.UI", "Alternet.UI");
                 SourceDirectoryCopier.CopyDirectory(repository.RootPath, targetDirectoryPath, @"Source\Version", @"Version");
-                SourceDirectoryCopier.CopyDirectory(repository.RootPath, targetDirectoryPath, @"Source\Docs", @"Docs");
                 SourceDirectoryCopier.CopyDirectory(repository.RootPath, targetDirectoryPath, @"Source\Licenses", @"Licenses");
                 SourceDirectoryCopier.CopyDirectory(
                     repository.RootPath,
