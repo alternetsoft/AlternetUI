@@ -3,7 +3,7 @@
     <Metadata>
         <Identity Id="AlternetUIForVS2019" Version="0.1.0.0" Language="en-US" Publisher="Alternet Software PTY LTD" />
         <DisplayName>AlterNET UI for Visual Studio 2019</DisplayName>
-        <Description xml:space="preserve">Visual Studio integration for the AlterNET UI - a cross-platform user interface framework. Provides UIXML IntelliSense and more.</Description>
+        <Description xml:space="preserve">Visual Studio integration for the AlterNET UI - a cross-platform user interface framework. Provides templates, UIXML IntelliSense and more.</Description>
         <MoreInfo>https://www.alternet-ui.com</MoreInfo>
         <License>License.txt</License>
         <GettingStartedGuide>https://www.alternet-ui.com/how-it-works</GettingStartedGuide>
