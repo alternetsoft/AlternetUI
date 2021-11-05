@@ -16,6 +16,6 @@ The framework includes a platform-independent graphic device interface for rende
 
 For more info, see [alternet-ui.com](https://alternet-ui.com).
 
-![Running on macOS](https://raw.githubusercontent.com/alternetsoft/alternet-ui/master/Source/Alternet.UI/Package/message-box-on-click-macos-window.png)
-![Running on Windows](https://raw.githubusercontent.com/alternetsoft/alternet-ui/master/Source/Alternet.UI/Package/message-box-on-click-windows.png)
+![Running on macOS](https://raw.githubusercontent.com/alternetsoft/alternet-ui/master/Alternet.UI/Package/message-box-on-click-macos-window.png)
+![Running on Windows](https://raw.githubusercontent.com/alternetsoft/alternet-ui/master/Alternet.UI/Package/message-box-on-click-windows.png)
 ![Create new project in Visual Studio](images/create-new-project.png)

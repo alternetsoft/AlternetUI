@@ -13,5 +13,5 @@ For increased developer productivity, [AlterNET UI extension for Visual Studio](
 
 For more info, see [alternet-ui.com](https://alternet-ui.com).
 
-![Running on macOS](https://raw.githubusercontent.com/alternetsoft/alternet-ui/master/Source/Alternet.UI/Package/message-box-on-click-macos-window.png)
-![Running on Windows](https://raw.githubusercontent.com/alternetsoft/alternet-ui/master/Source/Alternet.UI/Package/message-box-on-click-windows.png)
+![Running on macOS](https://raw.githubusercontent.com/alternetsoft/alternet-ui/master/Alternet.UI/Package/message-box-on-click-macos-window.png)
+![Running on Windows](https://raw.githubusercontent.com/alternetsoft/alternet-ui/master/Alternet.UI/Package/message-box-on-click-windows.png)
