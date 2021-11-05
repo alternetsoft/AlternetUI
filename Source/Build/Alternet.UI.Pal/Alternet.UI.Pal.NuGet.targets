@@ -3,8 +3,10 @@
     <Import Project="Alternet.UI.Pal.NuGet.props"/>
 
     <ItemGroup>
-        <NugetPayload_License
-            Include="$(LicensesDirectoryPath)\$(LicenseFileName)" />
+        <NugetPayload_License Include="$(LicensesDirectoryPath)\$(LicenseFileName)" />
+
+        <SourceIcon Include="$(MediaDirectoryPath)\$(SourceIconFileName)" />
+        <TargetIcon Include="$(NuGetDirectoryPath)\$(TargetIconFileName)" />
 
         <!-- Windows -->
 
@@ -35,7 +37,7 @@
     </Target>
 
     <Target Name="NuGet_PrepareSource" >
-        <Copy SourceFiles="@(NugetPayload_License)" DestinationFolder="$(NuGetDirectoryPath)" />
+        <Copy SourceFiles="@(SourceIcon)" DestinationFiles="@(TargetIcon)" />
 
         <!-- Windows -->
         

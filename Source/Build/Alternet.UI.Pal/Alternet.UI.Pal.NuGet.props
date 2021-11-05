@@ -18,6 +18,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
+        <MediaDirectoryPath>$(MSBuildProjectDirectory)/../../../Media</MediaDirectoryPath>
+        <SourceIconFileName>icon-48x48.png</SourceIconFileName>
+        <TargetIconFileName>icon.png</TargetIconFileName>
+    </PropertyGroup>
+
+    <PropertyGroup>
         <NugetNativeDllFileName>Alternet.UI.Pal.*</NugetNativeDllFileName>
 
         <NugetPayloadDirectoryPath_Windows_X86>$(BinDirectoryPath)\$(PlatformName_Windows)\$(ManagedBuildConfiguration)\x86\</NugetPayloadDirectoryPath_Windows_X86>
