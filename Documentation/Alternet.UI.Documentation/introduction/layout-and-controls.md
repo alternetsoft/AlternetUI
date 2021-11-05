@@ -1,5 +1,8 @@
 # Layout and Controls
 
+> [!NOTE]
+> Warning: AlterNET UI is still in early beta, and the API is subject to change in the next beta releases.
+
 AlterNET UI provides a set of standard controls which use native API and look and feel exactly like native elements on all platforms and different screen resolutions.
 
 AlterNET UI provides the following core controls:

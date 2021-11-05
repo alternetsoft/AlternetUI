@@ -1,5 +1,8 @@
 # Rendering Graphics
 
+> [!NOTE]
+> Warning: AlterNET UI is still in early beta, and the API is subject to change in the next beta releases.
+
 AlterNET UI incudes set of resolution-independent graphics features that use native rendering on every supported platform.
 
 It supports rendering graphic primitives such as text, images, graphic shapes with different fonts, pens and brushes.
