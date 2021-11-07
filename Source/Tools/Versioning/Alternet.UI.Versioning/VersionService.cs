@@ -16,17 +16,28 @@ namespace Alternet.UI.Versioning
 
             PatchTemplateProjectFiles(productVersion, buildNumber, locator);
             PatchVSPackageManifests(productVersion, locator);
+            PatchDocumentationExamplesProjectFiles(productVersion, locator);
         }
 
         internal static void PatchTemplateProjectFiles(ProductVersion productVersion, int buildNumber, FileLocator locator)
         {
+            PatchVersionInProjectFiles(locator.GetTemplateProjectFiles(), productVersion.GetPackageVersion(buildNumber));
+        }
+
+        internal static void PatchDocumentationExamplesProjectFiles(ProductVersion productVersion, FileLocator locator)
+        {
+            PatchVersionInProjectFiles(locator.GetDocumentationExamplesProjectFiles(), productVersion.GetPackageFloatingReferenceVersion());
+        }
+
+        static void PatchVersionInProjectFiles(IEnumerable<string> files, string version)
+        {
             var patcher = new XmlPatcher(omitXmlDeclaration: true);
-            foreach (var file in locator.GetTemplateProjectFiles())
+            foreach (var file in files)
                 patcher.PatchAttribute(
                     file,
                     "/Project/ItemGroup/PackageReference[@Include='Alternet.UI']",
                     "Version",
-                    productVersion.GetPackageVersion(buildNumber));
+                    version);
         }
 
         static void PatchVSPackageManifests(ProductVersion productVersion, FileLocator locator)

@@ -18,15 +18,23 @@ namespace Alternet.UI.Versioning
 
         public string GetMasterVersionFile()
         {
-            return GetValidFullPath("Source/Version/Version.props");
+            return GetValidFullFilePath("Source/Version/Version.props");
         }
 
-        string GetValidFullPath(string relativePath)
+        string GetValidFullFilePath(string relativePath)
         {
-            var versionFilePath = Path.GetFullPath(Path.Combine(repository.RootPath, relativePath));
-            if (!File.Exists(versionFilePath))
-                throw new InvalidOperationException($"Cannot locate {Path.GetFileName(versionFilePath)} file at {versionFilePath}");
-            return versionFilePath;
+            var path = Path.GetFullPath(Path.Combine(repository.RootPath, relativePath));
+            if (!File.Exists(path))
+                throw new InvalidOperationException($"Cannot locate {Path.GetFileName(path)} file at {path}");
+            return path;
+        }
+
+        string GetValidFullDirectoryPath(string relativePath)
+        {
+            var path = Path.GetFullPath(Path.Combine(repository.RootPath, relativePath));
+            if (!Directory.Exists(path))
+                throw new InvalidOperationException($"Cannot locate {Path.GetFileName(path)} directory at {path}");
+            return path;
         }
 
         public IEnumerable<string> GetTemplateProjectFiles()
@@ -37,7 +45,15 @@ namespace Alternet.UI.Versioning
                 "Source/Integration/Templates/CSharp/Application/Alternet.UI.Templates.Application.CSharp.csproj"
             };
 
-            return files.Select(file => GetValidFullPath(file));
+            return files.Select(file => GetValidFullFilePath(file));
+        }
+
+        public IEnumerable<string> GetDocumentationExamplesProjectFiles()
+        {
+            return Directory.GetFiles(
+                GetValidFullDirectoryPath(@"Documentation\Alternet.UI.Documentation"),
+                "*.Examples.*.csproj",
+                SearchOption.AllDirectories);
         }
 
         public IEnumerable<string> GetVSPackageManifestFiles()
@@ -48,7 +64,7 @@ namespace Alternet.UI.Versioning
                 "Source/Integration/VisualStudio/Alternet.UI.Integration.VisualStudio/Manifests/VS2022/source.extension.vsixmanifest",
             };
 
-            return files.Select(file => GetValidFullPath(file));
+            return files.Select(file => GetValidFullFilePath(file));
         }
     }
 }
