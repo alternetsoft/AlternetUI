@@ -123,9 +123,9 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the identifying name of the control.
         /// The name provides a reference so that code-behind, such as event handler code,
-        /// can refer to a markup element after it is constructed during processing by a UIXML processor.
+        /// can refer to a markup control after it is constructed during processing by a UIXML processor.
         /// </summary>
-        /// <value>The name of the element. The default is <c>null</c>.</value>
+        /// <value>The name of the control. The default is <c>null</c>.</value>
         public string? Name { get; set; } // todo: maybe use Site.Name?
 
         /// <summary>
@@ -255,11 +255,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the suggested width of the control.
         /// </summary>
-        /// <value>The suggested width of the element, in device-independent units (1/96th inch per unit).
+        /// <value>The suggested width of the control, in device-independent units (1/96th inch per unit).
         /// The default value is <see cref="float.NaN"/>.
         /// </value>
         /// <remarks>
-        /// This property specifies the suggested width of the element. An actual width is calculated by the layout system.
+        /// This property specifies the suggested width of the control. An actual width is calculated by the layout system.
         /// Set this property to <see cref="float.NaN"/> to specify auto sizing behavior.
         /// The value of this property is always the same as the value that was set to it and is not changed by the layout system.
         /// </remarks>

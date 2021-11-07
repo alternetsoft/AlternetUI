@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace Alternet.UI
 {
-	/// <summary>Defines column-specific properties that apply to <see cref="Grid" /> elements. </summary>
+	/// <summary>Defines column-specific properties that apply to <see cref="Grid" /> controls. </summary>
 	public class ColumnDefinition : DefinitionBase
 	{
 		/// <summary>Initializes a new instance of the <see cref="ColumnDefinition" /> class.</summary>
@@ -17,7 +17,7 @@ namespace Alternet.UI
 		float minWidth;
 		float maxWidth = float.PositiveInfinity;
 
-		/// <summary>Gets the calculated width of a <see cref="ColumnDefinition" /> element, or sets the <see cref="GridLength" /> value of a column that is defined by the <see cref="ColumnDefinition" />.   </summary>
+		/// <summary>Gets the calculated width of a <see cref="ColumnDefinition" />, or sets the <see cref="GridLength" /> value of a column that is defined by the <see cref="ColumnDefinition" />.   </summary>
 		/// <returns>The <see cref="GridLength" /> that represents the width of the Column. The default value is 1.0.</returns>
 		public GridLength Width
 		{

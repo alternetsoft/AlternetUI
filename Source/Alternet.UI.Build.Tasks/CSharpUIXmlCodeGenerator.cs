@@ -45,7 +45,7 @@ using System;
                         w.WriteLine("if (uixmlStream == null)");
                         using (new LineIndent(w))
                             w.WriteLine("throw new InvalidOperationException();");
-                        w.WriteLine("new Alternet.UI.XamlLoader().LoadExisting(uixmlStream, this);");
+                        w.WriteLine("new Alternet.UI.UixmlLoader().LoadExisting(uixmlStream, this);");
 
                         w.WriteLine();
                         foreach (var namedObject in namedObjects)

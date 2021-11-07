@@ -4,9 +4,9 @@ using System.Reflection;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Creates an object graph from a source XAML.
+    /// Creates an object graph from a source UIXML.
     /// </summary>
-    public class XamlLoader
+    public class UixmlLoader
     {
         /// <summary>
         /// Returns an object graph created from a source XAML.

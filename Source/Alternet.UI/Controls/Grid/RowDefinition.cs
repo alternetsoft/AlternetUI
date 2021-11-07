@@ -6,7 +6,7 @@ using System.ComponentModel;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines row-specific properties that apply to <see cref="Grid"/> elements.
+    /// Defines row-specific properties that apply to <see cref="Grid"/> controls.
     /// </summary>
     public class RowDefinition : DefinitionBase
 	{
@@ -20,7 +20,7 @@ namespace Alternet.UI
 		float maxHeight = float.PositiveInfinity;
 
 
-		/// <summary>Gets the calculated height of a <see cref="RowDefinition" /> element, or sets the <see cref="GridLength" /> value of a row that is defined by the <see cref="RowDefinition" />.   </summary>
+		/// <summary>Gets the calculated height of a <see cref="RowDefinition" />, or sets the <see cref="GridLength" /> value of a row that is defined by the <see cref="RowDefinition" />.   </summary>
 		/// <returns>The <see cref="GridLength" /> that represents the height of the row. The default value is 1.0.</returns>
 		public GridLength Height
 		{
