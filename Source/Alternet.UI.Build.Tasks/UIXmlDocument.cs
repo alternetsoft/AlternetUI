@@ -88,10 +88,17 @@ namespace Alternet.UI.Build.Tasks
 
             void CollectBindings(IEnumerable<XElement> elements)
             {
+                int index = 0;
                 for (int i = 0; i < elements.Count(); i++)
                 {
                     var element = elements.ElementAt(i);
-                    indices.Push(i);
+                    bool skipIndex = element.Name.LocalName.Contains("."); // cases like <Grid.RowDefinitions>
+                    
+                    if (!skipIndex)
+                    {
+                        indices.Push(index);
+                        index++;
+                    }
 
                     var objectName = element.Attribute(NameAttributeName)?.Value;
 
@@ -103,7 +110,9 @@ namespace Alternet.UI.Build.Tasks
                     }
 
                     CollectBindings(element.Elements());
-                    indices.Pop();
+
+                    if (!skipIndex)
+                        indices.Pop();
                 }
             }
 
