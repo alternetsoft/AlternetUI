@@ -34,6 +34,7 @@
       <None Remove="MainWindow.uixml" />
       <None Remove="NumericInput.uixml" />
       <None Remove="ProgressBarPage.uixml" />
+      <None Remove="RadioButtonsPage.uixml" />
       <None Remove="Resources\ImageListIcons\Large\Calendar32.png" />
       <None Remove="Resources\ImageListIcons\Large\LineGraph32.png" />
       <None Remove="Resources\ImageListIcons\Large\Pencil32.png" />
@@ -62,6 +63,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <UIXml Update="RadioButtonsPage.uixml">
+        <SubType>Designer</SubType>
+      </UIXml>
       <UIXml Update="NumericInput.uixml">
         <SubType>Designer</SubType>
       </UIXml>
