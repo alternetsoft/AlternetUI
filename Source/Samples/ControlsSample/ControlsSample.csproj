@@ -32,6 +32,7 @@
       <None Remove="ListBoxPage.uixml" />
       <None Remove="ListViewPage.uixml" />
       <None Remove="MainWindow.uixml" />
+      <None Remove="ProgressBarPage.uixml" />
       <None Remove="Resources\ImageListIcons\Large\Calendar32.png" />
       <None Remove="Resources\ImageListIcons\Large\LineGraph32.png" />
       <None Remove="Resources\ImageListIcons\Large\Pencil32.png" />
@@ -59,6 +60,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <UIXml Update="ProgressBarPage.uixml">
+        <SubType>Designer</SubType>
+      </UIXml>
       <UIXml Update="ComboBoxPage.uixml">
         <Generator>MSBuild:Compile</Generator>
       </UIXml>

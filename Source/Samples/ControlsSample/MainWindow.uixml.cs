@@ -33,10 +33,7 @@ namespace ControlsSample
             pc.Pages.Add(new PageContainer.Page("List View", new ListViewPage(this)));
             pc.Pages.Add(new PageContainer.Page("List Box", new ListBoxPage(this)));
             pc.Pages.Add(new PageContainer.Page("Combo Box", new ComboBoxPage(this)));
-
-            var progressBarPage = new Control();
-            InitProgressBarPage(progressBarPage);
-            pc.Pages.Add(new PageContainer.Page("Progress Bar", progressBarPage));
+            pc.Pages.Add(new PageContainer.Page("Progress Bar", new ProgressBarPage(this)));
 
             var sliderPage = new Control();
             InitSliderPage(sliderPage);
@@ -63,45 +60,6 @@ namespace ControlsSample
             Grid.SetRow(eventsListBox, 1);
 
             pc.SelectedIndex = 0;
-        }
-
-        private static void InitProgressBarPage(Control page)
-        {
-            var panel = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(10) };
-
-            var groupBox1 = new GroupBox { Title = "Regular Progress Bars" };
-            var panel2 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
-            groupBox1.Children.Add(panel2);
-
-            panel2.Children.Add(new Label() { Text = "0 [0..100]", Margin = new Thickness(0, 0, 0, 5) });
-            panel2.Children.Add(new ProgressBar() { Value = 0, Margin = new Thickness(0, 0, 0, 5) });
-
-            panel2.Children.Add(new Label() { Text = "50 [0..100]", Margin = new Thickness(0, 0, 0, 5) });
-            panel2.Children.Add(new ProgressBar() { Value = 50, Margin = new Thickness(0, 0, 0, 5) });
-
-            panel2.Children.Add(new Label() { Text = "100 [0..100]", Margin = new Thickness(0, 0, 0, 5) });
-            panel2.Children.Add(new ProgressBar() { Value = 100, Margin = new Thickness(0, 0, 0, 5) });
-
-            panel2.Children.Add(new Label() { Text = "125 [50..200]", Margin = new Thickness(0, 10, 0, 5) });
-            panel2.Children.Add(new ProgressBar() { Minimum = 50, Maximum = 200, Value = 125, Margin = new Thickness(0, 0, 0, 5) });
-
-            panel2.Children.Add(new Label() { Text = "Custom height, 50 [0..100]", Margin = new Thickness(0, 10, 0, 5) });
-            panel2.Children.Add(new ProgressBar() { Value = 50, Margin = new Thickness(0, 0, 0, 5), Height = 25 });
-
-            var increaseAllButton = new Button() { Text = "Increase All", Margin = new Thickness(0, 10, 0, 5) };
-            panel2.Children.Add(increaseAllButton);
-            increaseAllButton.Click += (o, e) =>
-            {
-                foreach (var progressBar in panel2.Children.OfType<ProgressBar>())
-                {
-                    if (progressBar.Value < progressBar.Maximum)
-                        progressBar.Value++;
-                }
-            };
-
-            panel.Children.Add(groupBox1);
-
-            page.Children.Add(panel);
         }
 
         private static void InitSliderPage(Control page)
