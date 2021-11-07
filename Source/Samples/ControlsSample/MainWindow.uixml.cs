@@ -34,10 +34,7 @@ namespace ControlsSample
             pc.Pages.Add(new PageContainer.Page("List Box", new ListBoxPage(this)));
             pc.Pages.Add(new PageContainer.Page("Combo Box", new ComboBoxPage(this)));
             pc.Pages.Add(new PageContainer.Page("Progress Bar", new ProgressBarPage(this)));
-
-            var sliderPage = new Control();
-            InitSliderPage(sliderPage);
-            pc.Pages.Add(new PageContainer.Page("Slider", sliderPage));
+            pc.Pages.Add(new PageContainer.Page("Slider", new SliderPage(this)));
 
             var numericInputPage = new Control();
             InitNumericInputPage(numericInputPage);
@@ -60,69 +57,6 @@ namespace ControlsSample
             Grid.SetRow(eventsListBox, 1);
 
             pc.SelectedIndex = 0;
-        }
-
-        private static void InitSliderPage(Control page)
-        {
-            var enableMessageHandlingCheckBox = new CheckBox { Text = "Enable value change event handling", IsChecked = true };
-            Slider AddMessageBoxHandler(Slider slider)
-            {
-                slider.ValueChanged += (o, e) =>
-                {
-                    if (!enableMessageHandlingCheckBox.IsChecked)
-                        return;
-
-                    MessageBox.Show("New value is: " + ((Slider)o!).Value, "Slider Value Changed");
-                };
-                return slider;
-            }
-
-            var panel = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(10) };
-
-            var groupBox1 = new GroupBox { Title = "Horizontal Sliders" };
-            var panel2 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
-            groupBox1.Children.Add(panel2);
-
-            panel2.Children.Add(new Label() { Text = "0 [0..10]", Margin = new Thickness(0, 0, 0, 5) });
-            panel2.Children.Add(AddMessageBoxHandler(new Slider() { Margin = new Thickness(0, 0, 0, 5) }));
-
-            panel2.Children.Add(new Label() { Text = "5 [0..20]", Margin = new Thickness(0, 0, 0, 5) });
-            panel2.Children.Add(AddMessageBoxHandler(new Slider() { Value = 5, Maximum = 20, Margin = new Thickness(0, 0, 0, 5) }));
-
-            panel2.Children.Add(new Label() { Text = "125 [50..200]", Margin = new Thickness(0, 10, 0, 5) });
-            panel2.Children.Add(AddMessageBoxHandler(new Slider() { Minimum = 50, Maximum = 200, Value = 125, Margin = new Thickness(0, 0, 0, 5) }));
-
-            var increaseAllButton = new Button() { Text = "Increase All", Margin = new Thickness(0, 10, 0, 5) };
-            panel2.Children.Add(increaseAllButton);
-            increaseAllButton.Click += (o, e) =>
-            {
-                foreach (var slider in panel2.Children.OfType<Slider>())
-                {
-                    if (slider.Value < slider.Maximum)
-                        slider.Value++;
-                }
-            };
-
-            panel2.Children.Add(enableMessageHandlingCheckBox);
-
-            panel.Children.Add(groupBox1);
-
-            var groupBox2 = new GroupBox { Title = "Linked Progress Bar", Margin = new Thickness(0, 10, 0, 0) };
-            var panel3 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
-            groupBox2.Children.Add(panel3);
-
-            var progressBarControlSlider = new Slider() { Margin = new Thickness(0, 0, 0, 5) };
-            var progressBar = new ProgressBar() { Maximum = 10, Margin = new Thickness(0, 0, 0, 5) };
-
-            progressBarControlSlider.ValueChanged += (o, e) => progressBar.Value = progressBarControlSlider.Value;
-            progressBarControlSlider.Value = 1;
-
-            panel3.Children.Add(progressBarControlSlider);
-            panel3.Children.Add(progressBar);
-
-            panel.Children.Add(groupBox2);
-
-            page.Children.Add(panel);
         }
 
         private static void InitNumericInputPage(Control page)

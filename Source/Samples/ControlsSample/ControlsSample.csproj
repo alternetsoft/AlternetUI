@@ -41,6 +41,7 @@
       <None Remove="Resources\ImageListIcons\Small\LineGraph16.png" />
       <None Remove="Resources\ImageListIcons\Small\Pencil16.png" />
       <None Remove="Resources\ImageListIcons\Small\Photo16.png" />
+      <None Remove="SliderPage.uixml" />
       <None Remove="TreeViewPage.uixml" />
     </ItemGroup>
 
@@ -60,6 +61,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <UIXml Update="SliderPage.uixml">
+        <SubType>Designer</SubType>
+      </UIXml>
       <UIXml Update="ProgressBarPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>
