@@ -10,7 +10,7 @@ namespace Alternet::UI
         _largeChange(*this, 5, &Control::IsWxWindowCreated, &Slider::RetrieveLargeChange, &Slider::ApplyLargeChange),
         _tickFrequency(*this, 1, &Control::IsWxWindowCreated, &Slider::RetrieveTickFrequency, &Slider::ApplyTickFrequency)
     {
-        GetDelayedValues().Add({ &_value, &_maximum, &_minimum, &_smallChange, &_largeChange, &_tickFrequency });
+        GetDelayedValues().Add({ &_minimum, &_maximum, &_value, &_smallChange, &_largeChange, &_tickFrequency });
     }
 
     Slider::~Slider()

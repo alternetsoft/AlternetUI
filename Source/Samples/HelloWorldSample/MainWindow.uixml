@@ -3,6 +3,7 @@
         x:Class="HelloWorldSample.MainWindow"
         Title="My First Application">
   <StackPanel>
+    <NumericUpDown Minimum="50" Maximum="200" Value="125" Margin="0,0,0,5" />
     <Button Name="helloButton" Text="Say Hello" Margin="20" Click="HelloButton_Click" />
   </StackPanel>
 </Window>

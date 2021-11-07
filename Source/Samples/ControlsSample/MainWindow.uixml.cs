@@ -35,10 +35,7 @@ namespace ControlsSample
             pc.Pages.Add(new PageContainer.Page("Combo Box", new ComboBoxPage(this)));
             pc.Pages.Add(new PageContainer.Page("Progress Bar", new ProgressBarPage(this)));
             pc.Pages.Add(new PageContainer.Page("Slider", new SliderPage(this)));
-
-            var numericInputPage = new Control();
-            InitNumericInputPage(numericInputPage);
-            pc.Pages.Add(new PageContainer.Page("Numeric Input", numericInputPage));
+            pc.Pages.Add(new PageContainer.Page("Numeric Input", new NumericInputPage(this)));
 
             var radioButtonsPage = new Control();
             InitRadioButtonsPage(radioButtonsPage);
@@ -57,69 +54,6 @@ namespace ControlsSample
             Grid.SetRow(eventsListBox, 1);
 
             pc.SelectedIndex = 0;
-        }
-
-        private static void InitNumericInputPage(Control page)
-        {
-            var enableMessageHandlingCheckBox = new CheckBox { Text = "Enable value change event handling", IsChecked = true };
-            NumericUpDown AddMessageBoxHandler(NumericUpDown control)
-            {
-                control.ValueChanged += (o, e) =>
-                {
-                    if (!enableMessageHandlingCheckBox.IsChecked)
-                        return;
-
-                    MessageBox.Show("New value is: " + ((NumericUpDown)o!).Value, "NumericUpDown Value Changed");
-                };
-                return control;
-            }
-
-            var panel = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(10) };
-
-            var groupBox1 = new GroupBox { Title = "Integer Numeric Input" };
-            var panel2 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
-            groupBox1.Children.Add(panel2);
-
-            panel2.Children.Add(new Label() { Text = "0 [0..10]", Margin = new Thickness(0, 0, 0, 5) });
-            panel2.Children.Add(AddMessageBoxHandler(new NumericUpDown() { Maximum = 10, Margin = new Thickness(0, 0, 0, 5) }));
-
-            panel2.Children.Add(new Label() { Text = "5 [-20..20]", Margin = new Thickness(0, 0, 0, 5) });
-            panel2.Children.Add(AddMessageBoxHandler(new NumericUpDown() { Value = 5, Minimum = -20, Maximum = 20, Margin = new Thickness(0, 0, 0, 5) }));
-
-            panel2.Children.Add(new Label() { Text = "125 [50..200]", Margin = new Thickness(0, 10, 0, 5) });
-            panel2.Children.Add(AddMessageBoxHandler(new NumericUpDown() { Minimum = 50, Maximum = 200, Value = 125, Margin = new Thickness(0, 0, 0, 5) }));
-
-            var increaseAllButton = new Button() { Text = "Increase All", Margin = new Thickness(0, 10, 0, 5) };
-            panel2.Children.Add(increaseAllButton);
-            increaseAllButton.Click += (o, e) =>
-            {
-                foreach (var control in panel2.Children.OfType<NumericUpDown>())
-                {
-                    if (control.Value < control.Maximum)
-                        control.Value++;
-                }
-            };
-
-            panel2.Children.Add(enableMessageHandlingCheckBox);
-
-            panel.Children.Add(groupBox1);
-
-            var groupBox2 = new GroupBox { Title = "Linked Progress Bar", Margin = new Thickness(0, 10, 0, 0) };
-            var panel3 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
-            groupBox2.Children.Add(panel3);
-
-            var progressBarControlNumericUpDown = new NumericUpDown() { Maximum = 10, Margin = new Thickness(0, 0, 0, 5) };
-            var progressBar = new ProgressBar() { Maximum = 10, Margin = new Thickness(0, 0, 0, 5) };
-
-            progressBarControlNumericUpDown.ValueChanged += (o, e) => progressBar.Value = (int)progressBarControlNumericUpDown.Value;
-            progressBarControlNumericUpDown.Value = 1;
-
-            panel3.Children.Add(progressBarControlNumericUpDown);
-            panel3.Children.Add(progressBar);
-
-            panel.Children.Add(groupBox2);
-
-            page.Children.Add(panel);
         }
 
         private static void InitTextBoxesPage(Control page)

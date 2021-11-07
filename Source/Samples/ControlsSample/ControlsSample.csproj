@@ -32,6 +32,7 @@
       <None Remove="ListBoxPage.uixml" />
       <None Remove="ListViewPage.uixml" />
       <None Remove="MainWindow.uixml" />
+      <None Remove="NumericInput.uixml" />
       <None Remove="ProgressBarPage.uixml" />
       <None Remove="Resources\ImageListIcons\Large\Calendar32.png" />
       <None Remove="Resources\ImageListIcons\Large\LineGraph32.png" />
@@ -61,6 +62,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <UIXml Update="NumericInput.uixml">
+        <SubType>Designer</SubType>
+      </UIXml>
       <UIXml Update="SliderPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>

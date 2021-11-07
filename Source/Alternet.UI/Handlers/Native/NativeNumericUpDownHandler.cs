@@ -47,12 +47,12 @@ namespace Alternet.UI
 
         private void Control_MaximumChanged(object? sender, System.EventArgs e)
         {
-            NativeControl.Minimum = (int)Control.Minimum;
+            NativeControl.Maximum = (int)Control.Maximum;
         }
 
         private void Control_MinimumChanged(object? sender, System.EventArgs e)
         {
-            NativeControl.Maximum = (int)Control.Maximum;
+            NativeControl.Minimum = (int)Control.Minimum;
         }
     }
 }

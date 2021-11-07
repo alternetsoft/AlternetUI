@@ -7,6 +7,7 @@ namespace Alternet::UI
         _maximum(*this, 100, &Control::IsWxWindowCreated, &NumericUpDown::RetrieveMaximum, &NumericUpDown::ApplyMaximum),
         _minimum(*this, 0, &Control::IsWxWindowCreated, &NumericUpDown::RetrieveMinimum, &NumericUpDown::ApplyMinimum)
     {
+        GetDelayedValues().Add({&_minimum, &_maximum, &_value });
     }
 
     NumericUpDown::~NumericUpDown()
