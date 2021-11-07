@@ -27,6 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="CheckBoxesPage.uixml" />
       <None Remove="ComboBoxPage.uixml" />
       <None Remove="GridPage.uixml" />
       <None Remove="ListBoxPage.uixml" />
@@ -63,6 +64,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <UIXml Update="CheckBoxesPage.uixml">
+        <SubType>Designer</SubType>
+      </UIXml>
       <UIXml Update="RadioButtonsPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>

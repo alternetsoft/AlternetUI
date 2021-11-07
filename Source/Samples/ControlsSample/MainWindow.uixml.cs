@@ -37,10 +37,7 @@ namespace ControlsSample
             pc.Pages.Add(new PageContainer.Page("Slider", new SliderPage(this)));
             pc.Pages.Add(new PageContainer.Page("Numeric Input", new NumericInputPage(this)));
             pc.Pages.Add(new PageContainer.Page("Radio Buttons", new RadioButtonsPage(this)));
-
-            var checkBoxesPage = new Control();
-            InitCheckBoxesPage(checkBoxesPage);
-            pc.Pages.Add(new PageContainer.Page("Check Boxes", checkBoxesPage));
+            pc.Pages.Add(new PageContainer.Page("Check Boxes", new CheckBoxesPage(this)));
 
             var textBoxesPage = new Control();
             InitTextBoxesPage(textBoxesPage);
@@ -89,33 +86,6 @@ namespace ControlsSample
             panel2.Children.Add(enableMessageHandlingCheckBox);
 
             panel.Children.Add(groupBox1);
-
-            page.Children.Add(panel);
-        }
-
-        private static void InitCheckBoxesPage(Control page)
-        {
-            var panel = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(10) };
-
-            var groupBox1 = new GroupBox { Title = "Option Group 1" };
-            var panel2 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
-            groupBox1.Children.Add(panel2);
-
-            panel2.Children.Add(new CheckBox() { Text = "Option 1.1", Margin = new Thickness(0, 0, 0, 5) });
-            panel2.Children.Add(new CheckBox() { Text = "Option 1.2", Margin = new Thickness(0, 0, 0, 5) });
-            panel2.Children.Add(new CheckBox() { Text = "Option 1.3", Margin = new Thickness(0, 0, 0, 5) });
-
-            panel.Children.Add(groupBox1);
-
-            var groupBox2 = new GroupBox { Title = "Option Group 2", Margin = new Thickness(0, 10, 0, 0) };
-            var panel3 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
-            groupBox2.Children.Add(panel3);
-
-            panel3.Children.Add(new CheckBox() { Text = "Option 2.1", Margin = new Thickness(0, 0, 0, 5) });
-            panel3.Children.Add(new CheckBox() { Text = "Option 2.2", Margin = new Thickness(0, 0, 0, 5) });
-            panel3.Children.Add(new CheckBox() { Text = "Option 2.3", Margin = new Thickness(0, 0, 0, 5) });
-
-            panel.Children.Add(groupBox2);
 
             page.Children.Add(panel);
         }
