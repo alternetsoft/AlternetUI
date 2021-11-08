@@ -1,0 +1,16 @@
+﻿<Control x:Class="ControlsSample.TextInputPage"
+        xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
+  <StackPanel Orientation="Vertical" Padding="10">
+    <GroupBox Title="Text Input">
+      <StackPanel Orientation="Vertical" Margin="5" Name="textBoxesPanel">
+        <TextBox Text="Text 1.1" Margin="0,0,0,5" TextChanged="TextBox_ValueChanged" />
+        <TextBox Text="Text 1.2" Margin="0,0,0,5" TextChanged="TextBox_ValueChanged" />
+        <TextBox Text="Text 1.3" Margin="0,0,0,5" TextChanged="TextBox_ValueChanged" />
+
+        <Button Text="Add Letter &quot;A&quot;" Margin="0,10,0,5" Click="AddLetterAButton_Click" />
+      </StackPanel>
+    </GroupBox>
+  </StackPanel>
+  </Control>

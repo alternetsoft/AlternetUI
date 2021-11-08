@@ -1,14 +1,13 @@
 ﻿using Alternet.Base.Collections;
 using Alternet.UI;
 
-
 namespace ControlsSample
 {
-    internal class PageContainer : Control
+    public class PageContainer : Control
     {
-        ListBox pagesListBox;
-        Control activePageHolder;
-        Grid grid;
+        private ListBox pagesListBox;
+        private Control activePageHolder;
+        private Grid grid;
 
         public PageContainer()
         {
@@ -29,16 +28,6 @@ namespace ControlsSample
             Pages.ItemInserted += Pages_ItemInserted;
         }
 
-        private void PagesListBox_SelectionChanged(object? sender, System.EventArgs e)
-        {
-            SetActivePageControl();
-        }
-
-        private void Pages_ItemInserted(object? sender, CollectionChangeEventArgs<Page> e)
-        {
-            pagesListBox.Items.Insert(e.Index, e.Item.Title);
-        }
-
         public int? SelectedIndex
         {
             get => pagesListBox.SelectedIndex;
@@ -49,11 +38,23 @@ namespace ControlsSample
             }
         }
 
+        public Collection<Page> Pages { get; } = new Collection<Page>();
+
+        private void PagesListBox_SelectionChanged(object? sender, System.EventArgs e)
+        {
+            SetActivePageControl();
+        }
+
+        private void Pages_ItemInserted(object? sender, CollectionChangeEventArgs<Page> e)
+        {
+            pagesListBox.Items.Insert(e.Index, e.Item.Title);
+        }
+
         private void SetActivePageControl()
         {
             activePageHolder.SuspendLayout();
             activePageHolder.Children.Clear();
-            
+
             var selectedIndex = pagesListBox.SelectedIndex;
             if (selectedIndex != null)
                 activePageHolder.Children.Add(Pages[selectedIndex.Value].Control);
@@ -69,9 +70,8 @@ namespace ControlsSample
             }
 
             public string Title { get; }
+
             public Control Control { get; }
         }
-
-        public Collection<Page> Pages { get; } = new Collection<Page>();
     }
 }

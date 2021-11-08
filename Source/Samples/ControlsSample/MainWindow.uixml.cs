@@ -1,96 +1,33 @@
 ﻿using Alternet.UI;
-using System;
-using System.ComponentModel;
-using Alternet.Drawing;
-using System.Linq;
 
 namespace ControlsSample
 {
-    partial class MainWindow : Window, IPageSite
+    internal partial class MainWindow : Window, IPageSite
     {
-        ListBox eventsListBox;
+        private int lastEventNumber = 1;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            eventsListBox = new ListBox();
+            var pages = pageContainer.Pages;
 
-            Width = 800;
-            Height = 600;
+            pages.Add(new PageContainer.Page("Tree View", new TreeViewPage(this)));
+            pages.Add(new PageContainer.Page("Grid", new GridPage(this)));
+            pages.Add(new PageContainer.Page("List View", new ListViewPage(this)));
+            pages.Add(new PageContainer.Page("List Box", new ListBoxPage(this)));
+            pages.Add(new PageContainer.Page("Combo Box", new ComboBoxPage(this)));
+            pages.Add(new PageContainer.Page("Progress Bar", new ProgressBarPage(this)));
+            pages.Add(new PageContainer.Page("Slider", new SliderPage(this)));
+            pages.Add(new PageContainer.Page("Numeric Input", new NumericInputPage(this)));
+            pages.Add(new PageContainer.Page("Radio Buttons", new RadioButtonsPage(this)));
+            pages.Add(new PageContainer.Page("Check Boxes", new CheckBoxesPage(this)));
+            pages.Add(new PageContainer.Page("Text Input", new TextInputPage(this)));
 
-            var pc = new PageContainer();
-            var rootPanel = new Grid();
-            rootPanel.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            rootPanel.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-            Children.Add(rootPanel);
-
-            rootPanel.Children.Add(pc);
-            Grid.SetRow(pc, 0);
-
-            pc.Pages.Add(new PageContainer.Page("Tree View", new TreeViewPage(this)));
-            pc.Pages.Add(new PageContainer.Page("Grid", new GridPage(this)));
-            pc.Pages.Add(new PageContainer.Page("List View", new ListViewPage(this)));
-            pc.Pages.Add(new PageContainer.Page("List Box", new ListBoxPage(this)));
-            pc.Pages.Add(new PageContainer.Page("Combo Box", new ComboBoxPage(this)));
-            pc.Pages.Add(new PageContainer.Page("Progress Bar", new ProgressBarPage(this)));
-            pc.Pages.Add(new PageContainer.Page("Slider", new SliderPage(this)));
-            pc.Pages.Add(new PageContainer.Page("Numeric Input", new NumericInputPage(this)));
-            pc.Pages.Add(new PageContainer.Page("Radio Buttons", new RadioButtonsPage(this)));
-            pc.Pages.Add(new PageContainer.Page("Check Boxes", new CheckBoxesPage(this)));
-
-            var textBoxesPage = new Control();
-            InitTextBoxesPage(textBoxesPage);
-            pc.Pages.Add(new PageContainer.Page("Text Boxes", textBoxesPage));
-
-            eventsListBox.Height = 100;
-            rootPanel.Children.Add(eventsListBox);
             Grid.SetRow(eventsListBox, 1);
 
-            pc.SelectedIndex = 0;
+            pageContainer.SelectedIndex = 0;
         }
-
-        private static void InitTextBoxesPage(Control page)
-        {
-            var enableMessageHandlingCheckBox = new CheckBox { Text = "Enable text change event handling", IsChecked = true };
-            TextBox AddMessageBoxHandler(TextBox control)
-            {
-                control.TextChanged += (o, e) =>
-                {
-                    if (!enableMessageHandlingCheckBox.IsChecked)
-                        return;
-
-                    MessageBox.Show("New value is: " + ((TextBox)o!).Text, "TextBox Text Changed");
-                };
-                return control;
-            }
-
-            var panel = new StackPanel { Orientation = StackPanelOrientation.Vertical, Padding = new Thickness(10) };
-
-            var groupBox1 = new GroupBox { Title = "Text Input" };
-            var panel2 = new StackPanel { Orientation = StackPanelOrientation.Vertical, Margin = new Thickness(5) };
-            groupBox1.Children.Add(panel2);
-
-            panel2.Children.Add(AddMessageBoxHandler(new TextBox() { Text = "Text 1.1", Margin = new Thickness(0, 0, 0, 5) }));
-            panel2.Children.Add(AddMessageBoxHandler(new TextBox() { Text = "Text 1.2", Margin = new Thickness(0, 0, 0, 5) }));
-            panel2.Children.Add(AddMessageBoxHandler(new TextBox() { Text = "Text 1.3", Margin = new Thickness(0, 0, 0, 5) }));
-
-            var addLetterAButton = new Button() { Text = "Add Letter \"A\"", Margin = new Thickness(0, 10, 0, 5) };
-            panel2.Children.Add(addLetterAButton);
-            addLetterAButton.Click += (o, e) =>
-            {
-                foreach (var control in panel2.Children.OfType<TextBox>())
-                    control.Text += "A";
-            };
-
-            panel2.Children.Add(enableMessageHandlingCheckBox);
-
-            panel.Children.Add(groupBox1);
-
-            page.Children.Add(panel);
-        }
-
-        int lastEventNumber = 1;
 
         void IPageSite.LogEvent(string message)
         {

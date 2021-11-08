@@ -3,6 +3,8 @@
 > [!NOTE]
 > Warning: AlterNET UI is still in early beta, and the API is subject to change in the next beta releases.
 
+AlterNET UI allows you to develop light-footprint cross-platform .NET desktop applications.
+
 You can use your favourite .NET development environments on Windows, macOS and Linux to develop AlterNET UI applications:
 [Microsoft Visual Studio](https://visualstudio.microsoft.com/), [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) and [Visual Studio Code](https://code.visualstudio.com/).
 
@@ -20,3 +22,5 @@ Refer to our [Visual Studio step-by-step tutorial](../tutorials/hello-world/visu
 You will need to use a command-line tool to download AlterNET UI project template and create AlterNET UI application.
 
 Refer to our [command line step-by-step tutorial](../tutorials/hello-world/command-line/hello-world-command-line.md) for more details.
+
+AlterNET UI is [published on nuget.org](https://www.nuget.org/packages/Alternet.UI) as a package you can use in your .NET projects.

@@ -28,10 +28,10 @@ namespace ControlsSample
 
         private void IncreaseAllButton_Click(object? sender, EventArgs e)
         {
-            foreach (var NumericUpDown in numericUpDownsPanel.Children.OfType<NumericUpDown>())
+            foreach (var numericUpDown in numericUpDownsPanel.Children.OfType<NumericUpDown>())
             {
-                if (NumericUpDown.Value < NumericUpDown.Maximum)
-                    NumericUpDown.Value++;
+                if (numericUpDown.Value < numericUpDown.Maximum)
+                    numericUpDown.Value++;
             }
         }
     }
