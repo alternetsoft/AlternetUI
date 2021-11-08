@@ -22,6 +22,18 @@ namespace Alternet::UI
         }
     }
 
+    SizeF Slider::GetPreferredSize(const SizeF& availableSize)
+    {
+        auto size = Control::GetPreferredSize(availableSize);
+
+#ifdef __WXOSX_COCOA__
+        // Hacky workaround to fix macOS ListBox measurement.
+        size.Height += 4;
+#endif
+
+        return size;
+    }
+
     int Slider::GetMinimum()
     {
         return _minimum.Get();
