@@ -9,7 +9,7 @@ You can use your favourite .NET development environments on Windows, macOS and L
 ### IDE Support
 
 #### Microsoft Visual Studio
-To use AlterNET UI with Visual Studio you need to install [AlterNET UI extension](https://marketplace.visualstudio.com/items?itemName=AlterNET-UI) for Visual Studio.
+To use AlterNET UI with Visual Studio you need to install [AlterNET UI extension](https://marketplace.visualstudio.com/items?itemName=AlternetSoftwarePTYLTD.AlternetUIForVS2022) for Visual Studio.
 This extension adds a new project type - **AlterNET UI Application** and a new project item type - **UIXML file**. 
 
 ![Create new project in Visual Studio](../tutorials/hello-world/visual-studio/images/create-new-project.png)

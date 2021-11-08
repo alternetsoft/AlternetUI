@@ -10,7 +10,7 @@ To develop on macOS or Linux, see ["Hello, World" with Command Line and VS Code]
 
 1. Install [Microsoft Visual Studio](https://visualstudio.microsoft.com/vs/community/). Visual Studio 2019 and Visual Studio 2022 are supported.
 1. Make sure ".NET Desktop Development" or "ASP.NET and web development" workflow is installed.
-1. Download and install [AlterNET UI Visual Studio extension](https://marketplace.visualstudio.com/items?itemName=AlterNET-UI).
+1. Download and install [AlterNET UI Visual Studio extension](https://marketplace.visualstudio.com/items?itemName=AlternetSoftwarePTYLTD.AlternetUIForVS2022).
 
 ### Create New Project
 
@@ -49,7 +49,7 @@ To develop on macOS or Linux, see ["Hello, World" with Command Line and VS Code]
    This will bind the `Click` event to its handler named `HelloButton_Click`.
 1. In `MainWindow.uixml.cs` file, add the following `HelloButton_Click` method:
    [!code-csharp[](../examples/add-click-handler.uixml.cs?highlight=1,13-16)]
-1. You can use IntelliSense features provided by the [AlterNET UI Visual Studio Extension](https://marketplace.visualstudio.com/items?itemName=AlterNET-UI):
+1. You can use IntelliSense features provided by the [AlterNET UI Visual Studio Extension](https://marketplace.visualstudio.com/items?itemName=AlternetSoftwarePTYLTD.AlternetUIForVS2022):
 
     ![Event IntelliSense](images/event-intellisense.gif)
 
