@@ -489,15 +489,20 @@ namespace Alternet::UI
         if (parent == nullptr)
         {
             if (wxWindow->GetParent() != parkingWindow)
-                wxWindow->Reparent(parkingWindow);
+                SetWxWindowParent(parkingWindow);
         }
         else
         {
             auto parentWxWindow = parent->GetParentingWxWindow();
             auto oldParent = wxWindow->GetParent();
             if (oldParent != parentWxWindow)
-                wxWindow->Reparent(parentWxWindow);
+                SetWxWindowParent(parentWxWindow);
         }
+    }
+
+    void Control::SetWxWindowParent(wxWindow* parent)
+    {
+        GetWxWindow()->Reparent(parent);
     }
 
     SizeF Control::GetSize()

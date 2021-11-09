@@ -81,6 +81,11 @@ namespace Alternet::UI
         GetRadioButton()->SetValue(value);
     }
 
+    void RadioButton::SetWxWindowParent(wxWindow* parent)
+    {
+        Control::SetWxWindowParent(parent);
+    }
+
     void RadioButton::OnCheckedChanged(wxCommandEvent& event)
     {
         auto group = GetRadioButtonsInGroup();

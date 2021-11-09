@@ -44,6 +44,8 @@ namespace Alternet::UI
 
         bool EventsSuspended() override;
 
+        virtual void SetWxWindowParent(wxWindow* parent);
+
     private:
         enum class DelayedControlFlags
         {

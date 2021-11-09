@@ -32,6 +32,9 @@ namespace Alternet::UI
 
         bool RetrieveChecked();
         void ApplyChecked(bool value);
+
+    protected:
+        void SetWxWindowParent(wxWindow* parent) override;
     };
 }
 
