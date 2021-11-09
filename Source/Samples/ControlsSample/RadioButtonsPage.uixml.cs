@@ -14,5 +14,11 @@ namespace ControlsSample
 
             this.site = site;
         }
+
+        private void RadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            var rb = (RadioButton)sender;
+            site.LogEvent("Radio button " + rb.Text + " IsChecked changed to " + rb.IsChecked);
+        }
     }
 }
