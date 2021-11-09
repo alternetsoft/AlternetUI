@@ -39,7 +39,7 @@ namespace Alternet::UI
             wxDefaultPosition,
             wxDefaultSize,
             _firstInGroup ? wxRB_GROUP : 0);
-        
+
         radioButton->Bind(wxEVT_RADIOBUTTON, &RadioButton::OnCheckedChanged, this);
         return radioButton;
     }
@@ -80,6 +80,13 @@ namespace Alternet::UI
 
     bool RadioButton::RetrieveChecked()
     {
+#ifdef __WXGTK20__
+        // On Linux, it seems wxGTK seem to not support radio groups with no selection.
+        // So wxRadioButton::GetValue() will return true when a radio button is the only one in the group
+        // So while control is a child of the parking window a wrong value is returned. This is a workaround:
+        if (_isRecreating)
+            return _isCheckedWhileRecreating;
+#endif
         return GetRadioButton()->GetValue();
     }
 
@@ -108,7 +115,10 @@ namespace Alternet::UI
     void RadioButton::SetWxWindowParent(wxWindow* parent)
     {
         _firstInGroup = GetChildRadioButtonsCount(parent) == 0;
+        _isRecreating = true;
+        _isCheckedWhileRecreating = _flags.GetDelayed(RadioButtonFlags::Checked);
         RecreateWxWindowIfNeeded();
+        _isRecreating = false;
 
         Control::SetWxWindowParent(parent);
     }

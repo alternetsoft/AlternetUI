@@ -36,6 +36,9 @@ namespace Alternet::UI
         void ApplyChecked(bool value);
 
         bool _firstInGroup = false;
+        
+        bool _isCheckedWhileRecreating = false;
+        bool _isRecreating = false;
 
     protected:
         void SetWxWindowParent(wxWindow* parent) override;

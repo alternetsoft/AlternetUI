@@ -152,6 +152,11 @@ namespace Alternet::UI
                 SetDelayed(it.first, RetrieveValue(it.first));
         }
 
+        bool GetDelayed(TFlags flag)
+        {
+            return (_flags & flag) == flag;
+        }
+
     private:
         BYREF_ONLY(DelayedFlags);
 
@@ -177,11 +182,6 @@ namespace Alternet::UI
                 throw std::exception();
 
             return (_owner.*std::get<0>(it->second))();
-        }
-
-        bool GetDelayed(TFlags flag)
-        {
-            return (_flags & flag) == flag;
         }
 
         void SetDelayed(TFlags flag, bool value)
