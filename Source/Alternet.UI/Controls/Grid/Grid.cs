@@ -22,7 +22,7 @@ namespace Alternet.UI
         public Grid()
         {
             SetFlags(ShowGridLinesDefaultValue, Flags.ShowGridLinesPropertyValue);
-            UserPaint = true;
+            // UserPaint = true;
         }
 
         const bool ShowGridLinesDefaultValue = false;

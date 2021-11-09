@@ -13,7 +13,7 @@
     <GroupBox Title="Radio Group 2" Margin="0,10,0,0">
       <StackPanel Orientation="Vertical" Margin="5">
         <RadioButton Text="Option 2.1" Margin="0,0,0,5" />
-        <RadioButton Text="Option 2.2" Margin="0,0,0,5" />
+        <RadioButton Text="Option 2.2" Margin="0,0,0,5" IsChecked="True"/>
         <RadioButton Text="Option 2.3" Margin="0,0,0,5" />
       </StackPanel>
     </GroupBox>
