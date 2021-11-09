@@ -55,6 +55,20 @@ namespace Alternet::UI
         return value;
     }
 
+    SizeF ListBox::GetPreferredSize(const SizeF& availableSize)
+    {
+        auto size = Control::GetPreferredSize(availableSize);
+
+#ifdef __WXOSX_COCOA__
+        // Hacky workaround to fix macOS ListBox measurement.
+        size.Width += 4;
+        size.Height += 4;
+#endif
+
+        return size;
+    }
+
+
     void ListBox::OnSelectionChanged(wxCommandEvent& event)
     {
         RaiseEvent(ListBoxEvent::SelectionChanged);

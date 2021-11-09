@@ -12,6 +12,8 @@ namespace Alternet::UI
 
         void OnSelectionChanged(wxCommandEvent& event);
 
+        SizeF GetPreferredSize(const SizeF& availableSize) override;
+
     protected:
         void OnWxWindowCreated() override;
         void OnWxWindowDestroying() override;
