@@ -32,9 +32,16 @@ namespace Alternet::UI
 
     wxWindow* RadioButton::CreateWxWindowCore(wxWindow* parent)
     {
-        auto checkBox = new wxRadioButton(parent, wxID_ANY, wxStr(_text.Get()));
-        checkBox->Bind(wxEVT_RADIOBUTTON, &RadioButton::OnCheckedChanged, this);
-        return checkBox;
+        auto radioButton = new wxRadioButton(
+            parent,
+            wxID_ANY,
+            wxStr(_text.Get()),
+            wxDefaultPosition,
+            wxDefaultSize,
+            _firstInGroup ? wxRB_GROUP : 0);
+        
+        radioButton->Bind(wxEVT_RADIOBUTTON, &RadioButton::OnCheckedChanged, this);
+        return radioButton;
     }
 
     wxRadioButton* RadioButton::GetRadioButton()
@@ -81,8 +88,34 @@ namespace Alternet::UI
         GetRadioButton()->SetValue(value);
     }
 
+    int RadioButton::GetChildRadioButtonsCount(wxWindow* parent)
+    {
+        int result = 0;
+
+        if (parent == nullptr)
+            return result;
+
+        for (auto child : parent->GetChildren())
+        {
+            auto radioButton = dynamic_cast<wxRadioButton*>(child);
+            if (radioButton != nullptr)
+                result++;
+        }
+
+        return result;
+    }
+
     void RadioButton::SetWxWindowParent(wxWindow* parent)
     {
+        auto group = GetChildRadioButtonsCount(parent);
+        if (group == 0)
+        {
+            _firstInGroup = true;
+            RecreateWxWindowIfNeeded();
+        }
+        else
+            _firstInGroup = false;
+
         Control::SetWxWindowParent(parent);
     }
 

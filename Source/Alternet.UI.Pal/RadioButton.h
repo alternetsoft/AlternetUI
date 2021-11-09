@@ -30,8 +30,12 @@ namespace Alternet::UI
 
         std::vector<RadioButton*> GetRadioButtonsInGroup();
 
+        int GetChildRadioButtonsCount(wxWindow* parent);
+
         bool RetrieveChecked();
         void ApplyChecked(bool value);
+
+        bool _firstInGroup = false;
 
     protected:
         void SetWxWindowParent(wxWindow* parent) override;
