@@ -6,49 +6,60 @@ http://www.alternet-ui.com
 
 You should carefully read the following terms and conditions before using the software. By using this software you indicate that you accept the present license agreement.
 
-COMMUNITY EDITION
+Community Edition
+Individual usage
 
-INDIVIDUAL USAGE:
 If you are an individual working on your own applications, either to sell or for any other purpose, you may use the software to develop and test those applications.
 
-ACADEMIC USAGE:
-Any number of your users may use the software to develop and test your applications as part of online or in person classroom training and education, or for performing academic research.
+Organizational usage
 
-ORGANIZATIONAL USAGE:
 If you are an organization, your users may use the software as follows:
+
+Academic organizations: Any number of your users may use the software to develop and test your applications as part of online or in person classroom training and education, or for performing academic research.
+
+Non-for-profit organizations:  If you are registered as non-for-profit organization, your users may use the software for developing and testing purposes without any restrictions.
 
 If none of the above apply, then up to 5 of your individual users can use the Community Edition of the software concurrently to develop and test your applications. Otherwise every user of the software in your organisation must obtain Professional or Enterprise subscription.
 
-PROFESSIONAL AND ENTERPRISE SUBSCRIPTIONS
+Professional and Enterprise subscriptions
+AlterNET UI Professional or Enterprise editions are licensed on a Subscription basis.  Subject to all the terms and conditions of this Agreement, ALTERNET SOFTWARE PTY LTD grants the licensed user a non-exclusive, non-transferable license to install and use the Software for developing and testing purposes.  One copy of the Software may be used by an individual developer who uses the software personally on one or more computers. The licensed user is eligible to receive all major and minor updates for the Software during the Subscription Term.  
 
-AlterNET UI Professional or Enterprise are licensed on a subscription basis.  During a subscription period one copy of the Professional or Enterprise editions of this software may be used by an individual developer who uses the software personally on one or more computers, provided that he has a valid subscription. The licensed user will be eligible to receive all major and minor updates for the Software during the subscription term. The subscription can be cancelled at any time. 
+AlterNET UI Productivity Features
 
-SOURCE CODE
+AlterNETUI includes Microsoft Visual Studio Extension that provides a functionality marked as productivity features. The aim of these features is facilitate development process, but they do not include functionality critical for the development or testing with AlterNET UI.  Productivity features can only be used with the valid Subscription.
 
+Subscription Cancellation
+
+You may choose to cancel your Subscription early at your convenience provided that, we will not provide any refunds of prepaid fees or unused Subscription Fees. In case subscription is cancelled or expired, the licensed user will be able to use the licensed Software, except for productivity features, but no longer eligible for all major and minor updates.
+
+Source Code
 AlterNET UI includes source code of the managed layer for the purposes of debugging your products, maintaining your products, or enhancing the interoperability of your products with AlterNET UI software. In the event you develop any modifications, enhancements, derivative works and/or extensions to the licensed source code, either independently or jointly with ALTERNET SOFTWARE PTY LTD, such modifications, enhancements, derivative works and/or extensions and all rights associated therewith will be the exclusive property of ALTERNET SOFTWARE PTY LTD. You will not grant, either expressly or impliedly, any rights, title, interest, or licenses to any such modifications, enhancements, derivative works and/or extensions to any third party. You will, however, be entitled to use such modifications, enhancements, derivative works and/or extensions to produce, distribute and publish software under the terms set in the "Royalty Free Distribution" section of this agreement. 
 
-EXAMPLE PROJECTS AND TUTORIALS
-
+Example Projects and Tutorials
 AlterNET UI includes source code of example and tutorial projects. These sources are managed by its own permissive MIT license.
 
-INTELLECTUAL PROPERTY RIGHTS
+Pre-release software
+Software  marked as pre-release (includingthe designation of Alpha, Beta, Community Technology Preview, or Release Candidate) may contain deficiencies and as such, should not be considered for use or integrated in any mission critical application. 
 
+Intellectual property rights
 The entire content of source files is protected by Australian and International Copyright Laws. Unauthorized reproduction, reverse-engineering, and distribution of all or any portion of the code contained in source files is strictly prohibited and may result in severe civil and criminal penalties and will be prosecuted to the maximum extent possible under the law. The source codes and all resulting intermediate files are confidential and proprietary trade secrets of ALTERNET SOFTWARE PTY LTD. The source code contained within source and related files or any portion of its contents shall at no time be copied, transferred, sold, distributed, or otherwise made available to other individuals without prior written permission.
 
-ROYALTY FREE DISTRIBUTION
-
+Royalty free distribution
 The AlterNET UI product and all accompanying .NET controls can be distributed in a binary form as part of an executable program only with the following conditions:
-- Executables must add primary and substantial functionality, and may not be merely a set or subset of any of the libraries, code, Redistributables or other files of the software.
-- Software may include certain files ("Redistributables") intended for distribution with executables. These files may be included in the distribution WITHOUT any royalty fees owed to ALTERNET SOFTWARE PTY LTD.
 
-DISTRIBUTION OF ALTERNET UI BINARIES AND DOCUMENTATION
+Executables must add primary and substantial functionality, and may not be merely a set or subset of any of the libraries, code, Redistributables or other files of the software.
+
+Software may include certain files ("Redistributables") intended for distribution with executables. These files may be included in the distribution WITHOUT any royalty fees owed to ALTERNET SOFTWARE PTY LTD.
+
+Distribution of AlterNET UI binaries and documentation
 Provided that you verify that you are distributing the AlterNET UI binaries (AlterNET UI Visual Studio Extension or NuGet packages) and documentation, you are hereby licensed to make as many copies of this binary copy of the software and the documentation as you wish; give exact copies of the original version to anyone; and distribute the software and the documentation in its unmodified form via electronic means. There is no charge for any of the above-mentioned actions. You are prohibited from charging, or requesting donations, for any such copies, however made; and from distributing the software and/or the documentation with other products (commercial or otherwise) without a prior written permission.
 
-DISCLAIMER
+Disclaimer
 This software is provided on an "as is" basis without warranty of any kind, expressed or implied, including but not limited to the implied warranties of merchantability and fitness for a particular purpose. The person using the software bears all risk as to the quality and performance of the software. The author will not be liable for any special, incidental, consequential, indirect or similar damages due to loss of data or any other reason, even if the author or an agent of the author has been advised of the possibility of such damages. In no event shall the author's liability for any damages ever exceed the price paid for the license to use the software, regardless of the form of the claim.
 
-REDISTRIBUTABLES
+Redistributables
 The following file(s) are considered redistributables under this license agreement:
+
 Alternet.UI.dll
 Alternet.UI.Pal.dll
 Alternet.UI.dylib

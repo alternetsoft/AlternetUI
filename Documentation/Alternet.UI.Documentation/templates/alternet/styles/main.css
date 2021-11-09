@@ -32,6 +32,10 @@ article h3 {
     padding-top: 25px
 }
 
+.tabGroup {
+    margin-bottom: 10px;
+}
+
 .h1, h1 {
     font-size: 40px;
 }

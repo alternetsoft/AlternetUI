@@ -5,6 +5,16 @@
 
 AlterNET UI provides a set of standard controls which use native API and look and feel exactly like native elements on all platforms and different screen resolutions.
 
+Examples of how a <xref:Alternet.UI.ListBox> can look on different platforms:
+
+# [Windows](#tab/screenshot-windows)
+![ListBox on Windows](../apidoc/ListBox/images/listbox-windows.png)
+# [macOS](#tab/screenshot-macos)
+![ListBox on macOS](../apidoc/ListBox/images/listbox-macos.png)
+# [Linux](#tab/screenshot-linux)
+![ListBox on Linux](../apidoc/ListBox/images/listbox-linux.png)
+***
+
 AlterNET UI provides the following core controls:
 
 **Containers**: <xref:Alternet.UI.Grid>, <xref:Alternet.UI.StackPanel>, <xref:Alternet.UI.GroupBox>, <xref:Alternet.UI.Border> and <xref:Alternet.UI.TabControl>.
@@ -19,16 +29,6 @@ These controls most often detect and respond to user input. The control classes 
 **Data display**: <xref:Alternet.UI.ListBox>, <xref:Alternet.UI.ListView>, <xref:Alternet.UI.TreeView>.
 
 These controls provide a visual representation of a data elements in different layouts or views.
-
-Examples of how a <xref:Alternet.UI.ListBox> can look on different platforms:
-
-# [Windows](#tab/screenshot-windows)
-![ListBox on Windows](../apidoc/ListBox/images/listbox-windows.png)
-# [macOS](#tab/screenshot-macos)
-![ListBox on macOS](../apidoc/ListBox/images/listbox-macos.png)
-# [Linux](#tab/screenshot-linux)
-![ListBox on Linux](../apidoc/ListBox/images/listbox-linux.png)
-***
 
 **Informational**: <xref:Alternet.UI.Label>, <xref:Alternet.UI.ProgressBar>.
 
