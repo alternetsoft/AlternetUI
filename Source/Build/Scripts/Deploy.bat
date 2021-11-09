@@ -24,7 +24,7 @@ set AzureDevOpsAccessToken=4u542gllvtm2sl3zkuquchj6ma4aexme5qykv7dyozkrmz26cora
 
 :: NuGet packages.
 
-dotnet nuget push "%PublishRoot%\*.nupkg" -k %NuGetApiKey% -s https://api.nuget.org/v3/index.json
+dotnet nuget push "%PublishRoot%\*.nupkg" --skip-duplicate -k %NuGetApiKey% -s https://api.nuget.org/v3/index.json
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
