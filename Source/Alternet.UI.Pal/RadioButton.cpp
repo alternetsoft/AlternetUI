@@ -107,14 +107,8 @@ namespace Alternet::UI
 
     void RadioButton::SetWxWindowParent(wxWindow* parent)
     {
-        auto group = GetChildRadioButtonsCount(parent);
-        if (group == 0)
-        {
-            _firstInGroup = true;
-            RecreateWxWindowIfNeeded();
-        }
-        else
-            _firstInGroup = false;
+        _firstInGroup = GetChildRadioButtonsCount(parent) == 0;
+        RecreateWxWindowIfNeeded();
 
         Control::SetWxWindowParent(parent);
     }
