@@ -6,7 +6,7 @@
 AlterNET UI allows you to develop light-footprint cross-platform .NET desktop applications.
 
 You can use your favourite .NET development environments on Windows, macOS and Linux to develop AlterNET UI applications:
-[Microsoft Visual Studio](https://visualstudio.microsoft.com/), [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) and [Visual Studio Code](https://code.visualstudio.com/).
+[Microsoft Visual Studio](https://visualstudio.microsoft.com/) and [Visual Studio Code](https://code.visualstudio.com/).
 
 ### IDE Support
 

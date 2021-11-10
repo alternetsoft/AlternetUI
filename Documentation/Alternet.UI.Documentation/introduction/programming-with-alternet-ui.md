@@ -23,4 +23,4 @@ Here is how this application looks on different operating systems:
 ![Application on macOS](../tutorials/hello-world/command-line/images/message-box-on-click-macos-window.png)
 
 ---
-*[Explore more examples on GitHub](https://github.com/todo).*
+*[Explore more examples on GitHub](https://github.com/alternetsoft/alternet-ui-examples).*

@@ -8,7 +8,7 @@ To develop on macOS or Linux, see ["Hello, World" with Command Line and VS Code]
 
 ### Prerequisites
 
-1. Install [Microsoft Visual Studio](https://visualstudio.microsoft.com/vs/community/). Visual Studio 2019 and Visual Studio 2022 are supported.
+1. Install [Microsoft Visual Studio](https://visualstudio.microsoft.com/vs/). Visual Studio 2019 and Visual Studio 2022 are supported.
 1. Make sure ".NET Desktop Development" or "ASP.NET and web development" workflow is installed.
 1. Download and install [AlterNET UI Visual Studio extension](https://marketplace.visualstudio.com/items?itemName=AlternetSoftwarePTYLTD.AlternetUIForVS2022).
 
