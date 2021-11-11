@@ -1,4 +1,4 @@
-ALTERNET UI LICENSE AGEEMENT
+ALTERNET UI LICENSE AGREEMENT
 
 Copyright (c) 2016-2021  ALTERNET SOFTWARE PTY LTD. All Rights Reserved
 e-mail: support@alternetsoft.com
@@ -22,15 +22,15 @@ Non-for-profit organizations:  If you are registered as non-for-profit organizat
 If none of the above apply, then up to 5 of your individual users can use the Community Edition of the software concurrently to develop and test your applications. Otherwise every user of the software in your organisation must obtain Professional or Enterprise subscription.
 
 Professional and Enterprise subscriptions
-AlterNET UI Professional or Enterprise editions are licensed on a Subscription basis.  Subject to all the terms and conditions of this Agreement, ALTERNET SOFTWARE PTY LTD grants the licensed user a non-exclusive, non-transferable license to install and use the Software for developing and testing purposes.  One copy of the Software may be used by an individual developer who uses the software personally on one or more computers. The licensed user is eligible to receive all major and minor updates for the Software during the Subscription Term.  
+AlterNET UI Professional or Enterprise editions are licensed on a Subscription basis.  Subject to all the terms and conditions of this Agreement, ALTERNET SOFTWARE PTY LTD grants the licensed user a non-exclusive, non-transferable license to install and use the Software for developing and testing purposes.  One copy of the Software may be used by an individual developer who uses the software personally on one or more computers. The licensed user is eligible to receive all major and minor updates for the Software during the Subscription Term and use AlterNET UI Productivity features.
 
 AlterNET UI Productivity Features
 
-AlterNETUI includes Microsoft Visual Studio Extension that provides a functionality marked as productivity features. The aim of these features is facilitate development process, but they do not include functionality critical for the development or testing with AlterNET UI.  Productivity features can only be used with the valid Subscription.
+AlterNET UI includes Microsoft Visual Studio Extension that provides a functionality marked as productivity features. The aim of these features is facilitate development process, but they do not include functionality critical for the development or testing with AlterNET UI.  Productivity Features can only be used with the valid Subscription.
 
-Subscription Cancellation
+Subscription cancellation, expiration and re-joining 
 
-You may choose to cancel your Subscription early at your convenience provided that, we will not provide any refunds of prepaid fees or unused Subscription Fees. In case subscription is cancelled or expired, the licensed user will be able to use the licensed Software, except for productivity features, but no longer eligible for all major and minor updates.
+The licensed user may choose to cancel your Subscription early at your convenience provided that we will not provide any refunds of prepaid fees or unused Subscription Fees. In case subscription is cancelled or expired, the user will be still able to use the licensed Software to develop, test and distribute applications. However the user with an inactive subscription will no longer be eligible to receive major and minor updates, and to use Productivity Features. If the Subscription is cancelled or expired, the user can choose to re-join it at any time and continue receiving benefits provided by the Subscription.
 
 Source Code
 AlterNET UI includes source code of the managed layer for the purposes of debugging your products, maintaining your products, or enhancing the interoperability of your products with AlterNET UI software. In the event you develop any modifications, enhancements, derivative works and/or extensions to the licensed source code, either independently or jointly with ALTERNET SOFTWARE PTY LTD, such modifications, enhancements, derivative works and/or extensions and all rights associated therewith will be the exclusive property of ALTERNET SOFTWARE PTY LTD. You will not grant, either expressly or impliedly, any rights, title, interest, or licenses to any such modifications, enhancements, derivative works and/or extensions to any third party. You will, however, be entitled to use such modifications, enhancements, derivative works and/or extensions to produce, distribute and publish software under the terms set in the "Royalty Free Distribution" section of this agreement. 
@@ -39,7 +39,7 @@ Example Projects and Tutorials
 AlterNET UI includes source code of example and tutorial projects. These sources are managed by its own permissive MIT license.
 
 Pre-release software
-Software  marked as pre-release (includingthe designation of Alpha, Beta, Community Technology Preview, or Release Candidate) may contain deficiencies and as such, should not be considered for use or integrated in any mission critical application. 
+Software  marked as pre-release (including the designation of Alpha, Beta, Community Technology Preview, or Release Candidate) may contain deficiencies and as such, should not be considered for use or integrated in any mission critical application. 
 
 Intellectual property rights
 The entire content of source files is protected by Australian and International Copyright Laws. Unauthorized reproduction, reverse-engineering, and distribution of all or any portion of the code contained in source files is strictly prohibited and may result in severe civil and criminal penalties and will be prosecuted to the maximum extent possible under the law. The source codes and all resulting intermediate files are confidential and proprietary trade secrets of ALTERNET SOFTWARE PTY LTD. The source code contained within source and related files or any portion of its contents shall at no time be copied, transferred, sold, distributed, or otherwise made available to other individuals without prior written permission.
