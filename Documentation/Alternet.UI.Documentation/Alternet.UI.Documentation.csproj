@@ -26,6 +26,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="articles\" />
+    <Folder Include="how-to-guides\debugging-with-alternet-ui-sources\images\" />
     <None Include="**\*.cs; **\*.uixml; apidoc\**\*.csproj" />
     <None Remove="site\**" />
     <None Remove="obj\**" />

@@ -2,5 +2,7 @@
   href: ../introduction/toc.yml
 - name: Tutorials
   href: ../tutorials/toc.yml
+- name: How-To Guides
+  href: ../how-to-guides/toc.yml
 - name: Reference
   href: ../api/toc.yml

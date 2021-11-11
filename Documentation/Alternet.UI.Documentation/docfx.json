@@ -32,13 +32,16 @@
           "introduction/**/toc.yml",
           "tutorials/**.md",
           "tutorials/**/toc.yml",
+          "how-to-guides/**.md",
+          "how-to-guides/**/toc.yml",
           "toc.yml",
           "*.md"
         ],
         "exclude": [
           "articles/**/examples/**",
           "introduction/**/examples/**",
-          "tutorials/**/examples/**"
+          "tutorials/**/examples/**",
+          "how-to-guides/**/examples/**"
         ]
       }
     ],
