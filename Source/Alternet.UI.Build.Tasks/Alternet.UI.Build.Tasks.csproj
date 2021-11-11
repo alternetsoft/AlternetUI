@@ -24,14 +24,8 @@
   </ItemGroup>
 
   <Target Name="EmbedWellKnownApiInfo" BeforeTargets="PrepareForBuild" Condition="'$(TargetFramework)' != ''">
-    <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-      <ApiInfoCollectorTargetFramework>net45</ApiInfoCollectorTargetFramework>
-    </PropertyGroup>
-    <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-      <ApiInfoCollectorTargetFramework>netcoreapp3.1</ApiInfoCollectorTargetFramework>
-    </PropertyGroup>
-    
     <PropertyGroup>
+      <ApiInfoCollectorTargetFramework>netcoreapp3.1</ApiInfoCollectorTargetFramework>
       <ApiInfoXmlFilePath>$(IntermediateOutputPath)\WellKnownApiInfo.xml</ApiInfoXmlFilePath>
       <ApiInfoCollectorToolPath>$(MSBuildThisFileDirectory)\Alternet.UI.Build.Tasks.ApiInfoCollector\bin\$(Configuration)\$(ApiInfoCollectorTargetFramework)\Alternet.UI.Build.Tasks.ApiInfoCollector</ApiInfoCollectorToolPath>
       <ApiInfoCollectorInputAssemblyPath>$(MSBuildThisFileDirectory)\..\Alternet.UI\bin\$(Configuration)\$(ApiInfoCollectorTargetFramework)\Alternet.UI.dll</ApiInfoCollectorInputAssemblyPath>
