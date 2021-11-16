@@ -1,0 +1,47 @@
+AlterNET UI Roadmap
+
+0.2-beta (basic infrastructure release):
+    - adopt from WPF:
+        - dependency properties
+        - routed events
+        - bindings
+        - layout
+        - styles
+        - resource URI support (pack://)
+        
+    - keyboard and mouse input support
+    - establish API to create custom controls abd layouts
+    - scrollable controls support
+    - user controls defined in UIXML support
+    - ensure native exceptions marshalled to .NET properly
+    - basic unit tests (UI automation)
+    - basic stress and memory tests
+
+0.3-beta (common features release):
+    - window properties and management
+    - modal dialogs
+    - message box full API
+    - menus with keyboard shortcuts, context menus
+    - commands
+    - common dialogs (Open file etc)
+    - tool tips
+    - focus management
+    - drag and drop, clipboard
+    - timers
+    - unhandled exception dialog
+    - SynchronizationContext, Invoke/BeginInvoke
+    - tray icon
+    - application deployment and packaging documentation (on macOS, Linux)
+    
+
+0.4-beta (drawing and printing release):
+    - drawing context and printing features, TBD
+    
+1.0 Release (first stable release):
+    - implement all the missing controls features, TBD
+    - possibly add some missing controls (RichEdit, Toolbar, Splitter etc), TBD
+    - port several small open source GUI applications to AlterNET UI to find and fix bugs / uncover unsupported scenarios
+
+Future releases:
+    - custom visual themes
+    - additional controls
