@@ -16,6 +16,7 @@ AlterNET UI Roadmap
     - ensure native exceptions marshalled to .NET properly
     - basic unit tests (UI automation)
     - basic stress and memory tests
+    - use data binding and UIXML used controls in the existing samples
 
 0.3-beta (common features release):
     - window properties and management
@@ -32,13 +33,17 @@ AlterNET UI Roadmap
     - SynchronizationContext, Invoke/BeginInvoke
     - tray icon
     - application deployment and packaging documentation (on macOS, Linux)
+    - full-featured document-based application sample
     
 
 0.4-beta (drawing and printing release):
     - drawing context and printing features, TBD
+    - advanced drawing/printing sample
     
 1.0 Release (first stable release):
     - implement all the missing controls features, TBD
+    - UIXML previewer
+    - VS Code and Rider extensions
     - possibly add some missing controls (RichEdit, Toolbar, Splitter etc), TBD
     - port several small open source GUI applications to AlterNET UI to find and fix bugs / uncover unsupported scenarios
 
