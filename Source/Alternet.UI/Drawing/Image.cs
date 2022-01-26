@@ -30,7 +30,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the size of the image in pixels.
         /// </summary>
-        public Size PixelSize => NativeImage.PixelSize;
+        public Int32Size PixelSize => NativeImage.PixelSize;
 
         internal UI.Native.Image NativeImage { get; private set; }
 

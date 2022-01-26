@@ -187,12 +187,12 @@ namespace Alternet.Drawing
         public readonly PointF ToPointF() => (PointF)this;
 
         /// <summary>
-        /// Converts a <see cref="SizeF"/> structure to a <see cref="Size"/> structure.
+        /// Converts a <see cref="SizeF"/> structure to a <see cref="Int32Size"/> structure.
         /// </summary>
-        /// <returns>A <see cref="Size"/> structure.</returns>
-        /// <remarks>The <see cref="SizeF"/> structure is converted to a <see cref="Size"/> structure by
+        /// <returns>A <see cref="Int32Size"/> structure.</returns>
+        /// <remarks>The <see cref="SizeF"/> structure is converted to a <see cref="Int32Size"/> structure by
         /// truncating the values of the <see cref="SizeF"/> to the next lower integer values.</remarks>
-        public readonly Size ToSize() => Size.Truncate(this);
+        public readonly Int32Size ToSize() => Int32Size.Truncate(this);
 
         /// <summary>
         /// Creates a human-readable string that represents this <see cref='Drawing.SizeF'/>.

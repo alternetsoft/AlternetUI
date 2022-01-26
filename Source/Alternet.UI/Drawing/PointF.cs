@@ -81,14 +81,14 @@ namespace Alternet.Drawing
         public static explicit operator PointF(Vector2 vector) => new PointF(vector);
 
         /// <summary>
-        /// Translates a <see cref='Drawing.PointF'/> by a given <see cref='Drawing.Size'/> .
+        /// Translates a <see cref='Drawing.PointF'/> by a given <see cref='Drawing.Int32Size'/> .
         /// </summary>
-        public static PointF operator +(PointF pt, Size sz) => Add(pt, sz);
+        public static PointF operator +(PointF pt, Int32Size sz) => Add(pt, sz);
 
         /// <summary>
-        /// Translates a <see cref='Drawing.PointF'/> by the negative of a given <see cref='Drawing.Size'/> .
+        /// Translates a <see cref='Drawing.PointF'/> by the negative of a given <see cref='Drawing.Int32Size'/> .
         /// </summary>
-        public static PointF operator -(PointF pt, Size sz) => Subtract(pt, sz);
+        public static PointF operator -(PointF pt, Int32Size sz) => Subtract(pt, sz);
 
         /// <summary>
         /// Translates a <see cref='Drawing.PointF'/> by a given <see cref='Drawing.SizeF'/> .
@@ -115,14 +115,14 @@ namespace Alternet.Drawing
         public static bool operator !=(PointF left, PointF right) => !(left == right);
 
         /// <summary>
-        /// Translates a <see cref='Drawing.PointF'/> by a given <see cref='Drawing.Size'/> .
+        /// Translates a <see cref='Drawing.PointF'/> by a given <see cref='Drawing.Int32Size'/> .
         /// </summary>
-        public static PointF Add(PointF pt, Size sz) => new PointF(pt.X + sz.Width, pt.Y + sz.Height);
+        public static PointF Add(PointF pt, Int32Size sz) => new PointF(pt.X + sz.Width, pt.Y + sz.Height);
 
         /// <summary>
-        /// Translates a <see cref='Drawing.PointF'/> by the negative of a given <see cref='Drawing.Size'/> .
+        /// Translates a <see cref='Drawing.PointF'/> by the negative of a given <see cref='Drawing.Int32Size'/> .
         /// </summary>
-        public static PointF Subtract(PointF pt, Size sz) => new PointF(pt.X - sz.Width, pt.Y - sz.Height);
+        public static PointF Subtract(PointF pt, Int32Size sz) => new PointF(pt.X - sz.Width, pt.Y - sz.Height);
 
         /// <summary>
         /// Translates a <see cref='Drawing.PointF'/> by a given <see cref='Drawing.SizeF'/> .

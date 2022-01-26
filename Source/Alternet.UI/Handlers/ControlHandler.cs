@@ -270,7 +270,7 @@ namespace Alternet.UI
         /// Retrieves the size of a rectangular area into which the control can be fitted, in device-independent units (1/96th inch per unit).
         /// </summary>
         /// <param name="availableSize">The available space that a parent element can allocate a child control.</param>
-        /// <returns>A <see cref="Size"/> representing the width and height of a rectangle, in device-independent units (1/96th inch per unit).</returns>
+        /// <returns>A <see cref="SizeF"/> representing the width and height of a rectangle, in device-independent units (1/96th inch per unit).</returns>
         public virtual SizeF GetPreferredSize(SizeF availableSize)
         {
             if (Control.Children.Count == 0 && VisualChildren.Count == 0)

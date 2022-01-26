@@ -163,7 +163,7 @@ namespace Alternet.UI
         /// <param name='size1'>The first size to compare</param>
         /// <param name='size2'>The second size to compare</param>
         /// <returns>Whether or not the two Size instances are equal</returns>
-        public static bool AreClose(Size size1, Size size2)
+        public static bool AreClose(SizeF size1, SizeF size2)
         {
             return DoubleUtil.AreClose(size1.Width, size2.Width) &&
                    DoubleUtil.AreClose(size1.Height, size2.Height);

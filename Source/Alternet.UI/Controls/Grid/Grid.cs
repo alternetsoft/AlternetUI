@@ -261,7 +261,7 @@ namespace Alternet.UI
 
                 if (extData == null)
                 {
-                    gridDesiredSize = new Size();
+                    gridDesiredSize = new SizeF();
                     var children = Children;
 
                     for (int i = 0, count = children.Count; i < count; ++i)
@@ -3861,7 +3861,7 @@ namespace Alternet.UI
             /// UpdateRenderBounds.
             /// </summary>
             /// <param name="boundsSize">Size of render bounds</param>
-            internal void UpdateRenderBounds(Size boundsSize)
+            internal void UpdateRenderBounds(SizeF boundsSize)
             {
                 //using (DrawingContext drawingContext = RenderOpen())
                 //{

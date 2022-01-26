@@ -208,19 +208,19 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Determines if the specified point is contained within the rectangular region defined by this
-        /// <see cref='Drawing.Rectangle'/> .
+        /// <see cref='Drawing.RectangleF'/> .
         /// </summary>
         public readonly bool Contains(float x, float y) => X <= x && x < X + Width && Y <= y && y < Y + Height;
 
         /// <summary>
         /// Determines if the specified point is contained within the rectangular region defined by this
-        /// <see cref='Drawing.Rectangle'/> .
+        /// <see cref='Drawing.RectangleF'/> .
         /// </summary>
         public readonly bool Contains(PointF pt) => Contains(pt.X, pt.Y);
 
         /// <summary>
         /// Determines if the rectangular region represented by <paramref name="rect"/> is entirely contained within
-        /// the rectangular region represented by this <see cref='Drawing.Rectangle'/> .
+        /// the rectangular region represented by this <see cref='Drawing.RectangleF'/> .
         /// </summary>
         public readonly bool Contains(RectangleF rect) =>
             (X <= rect.X) && (rect.X + rect.Width <= X + Width) && (Y <= rect.Y) && (rect.Y + rect.Height <= Y + Height);
@@ -231,7 +231,7 @@ namespace Alternet.Drawing
         public override readonly int GetHashCode() => HashCode.Combine(X, Y, Width, Height);
 
         /// <summary>
-        /// Inflates this <see cref='Drawing.Rectangle'/> by the specified amount.
+        /// Inflates this <see cref='Drawing.RectangleF'/> by the specified amount.
         /// </summary>
         public void Inflate(float x, float y)
         {
@@ -242,12 +242,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Inflates this <see cref='Drawing.Rectangle'/> by the specified amount.
+        /// Inflates this <see cref='Drawing.RectangleF'/> by the specified amount.
         /// </summary>
         public void Inflate(SizeF size) => Inflate(size.Width, size.Height);
 
         /// <summary>
-        /// Creates a <see cref='Drawing.Rectangle'/> that is inflated by the specified amount.
+        /// Creates a <see cref='Drawing.RectangleF'/> that is inflated by the specified amount.
         /// </summary>
         public static RectangleF Inflate(RectangleF rect, float x, float y)
         {
@@ -322,10 +322,10 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts the specified <see cref='Drawing.Rectangle'/> to a
+        /// Converts the specified <see cref='Drawing.Int32Rect'/> to a
         /// <see cref='Drawing.RectangleF'/>.
         /// </summary>
-        public static implicit operator RectangleF(Rectangle r) => new RectangleF(r.X, r.Y, r.Width, r.Height);
+        public static implicit operator RectangleF(Int32Rect r) => new RectangleF(r.X, r.Y, r.Width, r.Height);
 
         /// <summary>
         /// Converts the <see cref='Drawing.RectangleF.Location'/> and <see cref='Drawing.RectangleF.Size'/>
