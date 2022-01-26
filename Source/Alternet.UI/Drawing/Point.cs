@@ -19,13 +19,13 @@ namespace Alternet.Drawing
         /// Creates a new instance of the <see cref='Drawing.Point'/> class with member data left uninitialized.
         /// </summary>
         public static readonly Point Empty;
-        private float x; // Do not rename (binary serialization)
-        private float y; // Do not rename (binary serialization)
+        private double x; // Do not rename (binary serialization)
+        private double y; // Do not rename (binary serialization)
 
         /// <summary>
         /// Initializes a new instance of the <see cref='Drawing.Point'/> class with the specified coordinates.
         /// </summary>
-        public Point(float x, float y)
+        public Point(double x, double y)
         {
             this.x = x;
             this.y = y;
@@ -41,10 +41,17 @@ namespace Alternet.Drawing
             y = vector.Y;
         }
 
+        /* TODO: uncommment when Double System.Numerics is availble. See https://github.com/dotnet/runtime/issues/24168
         /// <summary>
         /// Creates a new <see cref="System.Numerics.Vector2"/> from this <see cref="System.Drawing.PointF"/>.
         /// </summary>
         public Vector2 ToVector2() => new Vector2(x, y);
+
+
+        /// <summary>
+        /// Converts the specified <see cref="Drawing.Point"/> to a <see cref="System.Numerics.Vector2"/>.
+        /// </summary>
+        public static explicit operator Vector2(Point point) => point.ToVector2();*/
 
         /// <summary>
         /// Gets a value indicating whether this <see cref='Drawing.Point'/> is empty.
@@ -55,7 +62,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the x-coordinate of this <see cref='Drawing.Point'/>.
         /// </summary>
-        public float X
+        public double X
         {
             readonly get => x;
             set => x = value;
@@ -64,16 +71,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the y-coordinate of this <see cref='Drawing.Point'/>.
         /// </summary>
-        public float Y
+        public double Y
         {
             readonly get => y;
             set => y = value;
         }
-
-        /// <summary>
-        /// Converts the specified <see cref="Drawing.Point"/> to a <see cref="System.Numerics.Vector2"/>.
-        /// </summary>
-        public static explicit operator Vector2(Point point) => point.ToVector2();
 
         /// <summary>
         /// Converts the specified <see cref="System.Numerics.Vector2"/> to a <see cref="Drawing.Point"/>.

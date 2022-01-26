@@ -15,7 +15,7 @@ namespace Alternet.Drawing
         private bool isDisposed;
         private Color color;
         private PenDashStyle dashStyle;
-        private float width;
+        private double width;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Pen"/> class with the specified
@@ -24,11 +24,11 @@ namespace Alternet.Drawing
         /// <param name="color">A <see cref="Color"/> structure that indicates the color of this <see cref="Pen"/>.</param>
         /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in device-independent units (1/96th inch per unit).</param>
         /// <param name="dashStyle">A style used for dashed lines drawn with this <see cref="Pen"/>.</param>
-        public Pen(Color color, float width, PenDashStyle dashStyle) : this(color, width, dashStyle, immutable: false)
+        public Pen(Color color, double width, PenDashStyle dashStyle) : this(color, width, dashStyle, immutable: false)
         {
         }
 
-        internal Pen(Color color, float width, PenDashStyle dashStyle, bool immutable) : this(new UI.Native.Pen())
+        internal Pen(Color color, double width, PenDashStyle dashStyle, bool immutable) : this(new UI.Native.Pen())
         {
             DashStyle = dashStyle;
             Color = color;
@@ -46,7 +46,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="color">A <see cref="Color"/> structure that indicates the color of this <see cref="Pen"/>.</param>
         /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in device-independent units (1/96th inch per unit).</param>
-        public Pen(Color color, float width) : this(color, width, PenDashStyle.Solid)
+        public Pen(Color color, double width) : this(color, width, PenDashStyle.Solid)
         {
         }
 
@@ -117,7 +117,7 @@ namespace Alternet.Drawing
         /// Gets or sets the width of this <see cref="Pen"/>, in device-independent units (1/96th inch per unit).
         /// </summary>
         /// <value>The width of this <see cref="Pen"/>, in device-independent units (1/96th inch per unit).</value>
-        public float Width
+        public double Width
         {
             get => width;
 

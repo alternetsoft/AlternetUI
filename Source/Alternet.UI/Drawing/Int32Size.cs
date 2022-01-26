@@ -81,28 +81,28 @@ namespace Alternet.Drawing
         public static Int32Size operator /(Int32Size left, int right) => new Int32Size(unchecked(left.width / right), unchecked(left.height / right));
 
         /// <summary>
-        /// Multiplies <see cref="Int32Size"/> by a <see cref="float"/> producing <see cref="Size"/>.
+        /// Multiplies <see cref="Int32Size"/> by a <see cref="double"/> producing <see cref="Size"/>.
         /// </summary>
-        /// <param name="left">Multiplier of type <see cref="float"/>.</param>
+        /// <param name="left">Multiplier of type <see cref="double"/>.</param>
         /// <param name="right">Multiplicand of type <see cref="Int32Size"/>.</param>
         /// <returns>Product of type <see cref="Size"/>.</returns>
-        public static Size operator *(float left, Int32Size right) => Multiply(right, left);
+        public static Size operator *(double left, Int32Size right) => Multiply(right, left);
 
         /// <summary>
-        /// Multiplies <see cref="Int32Size"/> by a <see cref="float"/> producing <see cref="Size"/>.
+        /// Multiplies <see cref="Int32Size"/> by a <see cref="double"/> producing <see cref="Size"/>.
         /// </summary>
         /// <param name="left">Multiplicand of type <see cref="Int32Size"/>.</param>
-        /// <param name="right">Multiplier of type <see cref="float"/>.</param>
+        /// <param name="right">Multiplier of type <see cref="double"/>.</param>
         /// <returns>Product of type <see cref="Size"/>.</returns>
-        public static Size operator *(Int32Size left, float right) => Multiply(left, right);
+        public static Size operator *(Int32Size left, double right) => Multiply(left, right);
 
         /// <summary>
-        /// Divides <see cref="Int32Size"/> by a <see cref="float"/> producing <see cref="Size"/>.
+        /// Divides <see cref="Int32Size"/> by a <see cref="double"/> producing <see cref="Size"/>.
         /// </summary>
         /// <param name="left">Dividend of type <see cref="Int32Size"/>.</param>
         /// <param name="right">Divisor of type <see cref="int"/>.</param>
         /// <returns>Result of type <see cref="Size"/>.</returns>
-        public static Size operator /(Int32Size left, float right)
+        public static Size operator /(Int32Size left, double right)
             => new Size(left.width / right, left.height / right);
 
         /// <summary>
@@ -206,12 +206,12 @@ namespace Alternet.Drawing
             new Int32Size(unchecked(size.width * multiplier), unchecked(size.height * multiplier));
 
         /// <summary>
-        /// Multiplies <see cref="Int32Size"/> by a <see cref="float"/> producing <see cref="Size"/>.
+        /// Multiplies <see cref="Int32Size"/> by a <see cref="double"/> producing <see cref="Size"/>.
         /// </summary>
         /// <param name="size">Multiplicand of type <see cref="Int32Size"/>.</param>
-        /// <param name="multiplier">Multiplier of type <see cref="float"/>.</param>
+        /// <param name="multiplier">Multiplier of type <see cref="double"/>.</param>
         /// <returns>Product of type SizeF.</returns>
-        private static Size Multiply(Int32Size size, float multiplier) =>
+        private static Size Multiply(Int32Size size, double multiplier) =>
             new Size(size.width * multiplier, size.height * multiplier);
     }
 }

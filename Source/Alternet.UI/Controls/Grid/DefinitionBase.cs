@@ -89,7 +89,7 @@ namespace Alternet.UI
         /// Updates min size.
         /// </summary>
         /// <param name="minSize">New size.</param>
-        internal void UpdateMinSize(float minSize)
+        internal void UpdateMinSize(double minSize)
         {
             _minSize = Math.Max(_minSize, minSize);
         }
@@ -98,7 +98,7 @@ namespace Alternet.UI
         /// Sets min size.
         /// </summary>
         /// <param name="minSize">New size.</param>
-        internal void SetMinSize(float minSize)
+        internal void SetMinSize(double minSize)
         {
             _minSize = minSize;
         }
@@ -141,7 +141,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This method needs to be internal to be accessable from derived classes.
         /// </remarks>
-        internal void OnUserMinSizePropertyChanged(float newValue)
+        internal void OnUserMinSizePropertyChanged(double newValue)
         {
             if (InParentLogicalTree)
             {
@@ -160,14 +160,14 @@ namespace Alternet.UI
         /// </remarks>
         internal static bool IsUserMinSizePropertyValueValid(object value)
         {
-            float v = (float)value;
+            double v = (double)value;
             return (!DoubleUtil.IsNaN(v) && v >= 0.0d && !Double.IsPositiveInfinity(v));
         }
 
         /// <remarks>
         /// This method needs to be internal to be accessable from derived classes.
         /// </remarks>
-        internal void OnUserMaxSizePropertyChanged(float newValue)
+        internal void OnUserMaxSizePropertyChanged(double newValue)
         {
             if (InParentLogicalTree)
             {
@@ -181,7 +181,7 @@ namespace Alternet.UI
         /// </remarks>
         internal static bool IsUserMaxSizePropertyValueValid(object value)
         {
-            float v = (float)value;
+            double v = (double)value;
             return (!DoubleUtil.IsNaN(v) && v >= 0.0d);
         }
 
@@ -229,7 +229,7 @@ namespace Alternet.UI
         /// <summary>
         /// Internal accessor to user min size field.
         /// </summary>
-        internal float UserMinSize
+        internal double UserMinSize
         {
             get { return (UserMinSizeValueCache); }
         }
@@ -237,7 +237,7 @@ namespace Alternet.UI
         /// <summary>
         /// Internal accessor to user max size field.
         /// </summary>
-        internal float UserMaxSize
+        internal double UserMaxSize
         {
             get { return (UserMaxSizeValueCache); }
         }
@@ -270,7 +270,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns or sets measure size for the definition.
         /// </summary>
-        internal float MeasureSize
+        internal double MeasureSize
         {
             get { return (_measureSize); }
             set { _measureSize = value; }
@@ -282,11 +282,11 @@ namespace Alternet.UI
         /// <remarks>
         /// Returned value is guaranteed to be true preferred size.
         /// </remarks>
-        internal float PreferredSize
+        internal double PreferredSize
         {
             get
             {
-                float preferredSize = MinSize;
+                double preferredSize = MinSize;
                 if (_sizeType != Grid.LayoutTimeSizeType.Auto
                     && preferredSize < _measureSize)
                 {
@@ -299,7 +299,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns or sets size cache for the definition.
         /// </summary>
-        internal float SizeCache
+        internal double SizeCache
         {
             get { return (_sizeCache); }
             set { _sizeCache = value; }
@@ -308,11 +308,11 @@ namespace Alternet.UI
         /// <summary>
         /// Returns min size.
         /// </summary>
-        internal float MinSize
+        internal double MinSize
         {
             get
             {
-                float minSize = _minSize;
+                double minSize = _minSize;
                 if (UseSharedMinimum
                     && _sharedState != null
                     && minSize < _sharedState.MinSize)
@@ -326,11 +326,11 @@ namespace Alternet.UI
         /// <summary>
         /// Returns min size, always taking into account shared state.
         /// </summary>
-        internal float MinSizeForArrange
+        internal double MinSizeForArrange
         {
             get
             {
-                float minSize = _minSize;
+                double minSize = _minSize;
                 if (_sharedState != null
                     && (UseSharedMinimum || !LayoutWasUpdated)
                     && minSize < _sharedState.MinSize)
@@ -344,7 +344,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns min size, never taking into account shared state.
         /// </summary>
-        internal float RawMinSize
+        internal double RawMinSize
         {
             get { return _minSize; }
         }
@@ -352,7 +352,7 @@ namespace Alternet.UI
         /// <summary>
         /// Offset.
         /// </summary>
-        internal float FinalOffset
+        internal double FinalOffset
         {
             get { return _offset; }
             set { _offset = value; }
@@ -372,7 +372,7 @@ namespace Alternet.UI
         /// <summary>
         /// Internal helper to access up-to-date UserMinSize property value.
         /// </summary>
-        internal float UserMinSizeValueCache
+        internal double UserMinSizeValueCache
         {
             get
             {
@@ -383,7 +383,7 @@ namespace Alternet.UI
         /// <summary>
         /// Internal helper to access up-to-date UserMaxSize property value.
         /// </summary>
-        internal float UserMaxSizeValueCache
+        internal double UserMaxSizeValueCache
         {
             get
             {
@@ -566,10 +566,10 @@ namespace Alternet.UI
 
         private Grid.LayoutTimeSizeType _sizeType;      //  layout-time user size type. it may differ from _userSizeValueCache.UnitType when calculating "to-content"
 
-        private float _minSize;                        //  used during measure to accumulate size for "Auto" and "Star" DefinitionBase's
-        private float _measureSize;                    //  size, calculated to be the input contstraint size for Child.Measure
-        private float _sizeCache;                      //  cache used for various purposes (sorting, caching, etc) during calculations
-        private float _offset;                         //  offset of the DefinitionBase from left / top corner (assuming LTR case)
+        private double _minSize;                        //  used during measure to accumulate size for "Auto" and "Star" DefinitionBase's
+        private double _measureSize;                    //  size, calculated to be the input contstraint size for Child.Measure
+        private double _sizeCache;                      //  cache used for various purposes (sorting, caching, etc) during calculations
+        private double _offset;                         //  offset of the DefinitionBase from left / top corner (assuming LTR case)
 
         private SharedSizeState _sharedState;           //  reference to shared state object this instance is registered with
 
@@ -701,7 +701,7 @@ namespace Alternet.UI
             /// <summary>
             /// DefinitionBase's specific code.
             /// </summary>
-            internal float MinSize
+            internal double MinSize
             {
                 get
                 {
@@ -759,7 +759,7 @@ namespace Alternet.UI
             /// </summary>
             private void OnLayoutUpdated(object sender, EventArgs e)
             {
-                float sharedMinSize = 0;
+                double sharedMinSize = 0;
 
                 //  accumulate min size of all participating definitions
                 for (int i = 0, count = _registry.Count; i < count; ++i)
@@ -853,7 +853,7 @@ namespace Alternet.UI
             private bool _broadcastInvalidation;                //  "true" when broadcasting of invalidation is needed
             private bool _userSizeValid;                        //  "true" when _userSize is up to date
             private GridLength _userSize;                       //  shared state
-            private float _minSize;                            //  shared state
+            private double _minSize;                            //  shared state
         }
     }
 }

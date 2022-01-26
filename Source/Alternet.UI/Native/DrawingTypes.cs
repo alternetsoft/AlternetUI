@@ -25,9 +25,9 @@ namespace Alternet.UI.Native
         [StructLayout(LayoutKind.Sequential)]
         public struct Size
         {
-            public float Width, Height;
+            public double Width, Height;
 
-            public Size(float width, float height)
+            public Size(double width, double height)
             {
                 Width = width;
                 Height = height;
@@ -57,9 +57,9 @@ namespace Alternet.UI.Native
         [StructLayout(LayoutKind.Sequential)]
         public struct Point
         {
-            public float X, Y;
+            public double X, Y;
 
-            public Point(float x, float y)
+            public Point(double x, double y)
             {
                 X = x;
                 Y = y;
@@ -91,9 +91,9 @@ namespace Alternet.UI.Native
         [StructLayout(LayoutKind.Sequential)]
         public struct Rect
         {
-            public float X, Y, Width, Height;
+            public double X, Y, Width, Height;
 
-            public Rect(float x, float y, float width, float height)
+            public Rect(double x, double y, double width, double height)
             {
                 X = x;
                 Y = y;
@@ -109,9 +109,9 @@ namespace Alternet.UI.Native
         [StructLayout(LayoutKind.Sequential)]
         public struct Thickness
         {
-            public float Left, Top, Right, Bottom;
+            public double Left, Top, Right, Bottom;
 
-            public Thickness(float left, float top, float right, float bottom)
+            public Thickness(double left, double top, double right, double bottom)
             {
                 Left = left;
                 Top = top;

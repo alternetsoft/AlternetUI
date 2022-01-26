@@ -18,7 +18,7 @@ namespace DrawingSample
 
         private double penColorHue = 0.25;
 
-        private float penWidth = 4;
+        private double penWidth = 4;
 
         private BrushHatchStyle hatchStyle = BrushHatchStyle.DiagonalCross;
 
@@ -87,7 +87,7 @@ namespace DrawingSample
             }
         }
 
-        public float PenWidth
+        public double PenWidth
         {
             get => penWidth;
             set

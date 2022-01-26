@@ -12,7 +12,7 @@ ALTERNET_UI_API Pen* Pen_Create_()
     return new Pen();
 }
 
-ALTERNET_UI_API void Pen_Initialize_(Pen* obj, PenDashStyle style, Color color, float width)
+ALTERNET_UI_API void Pen_Initialize_(Pen* obj, PenDashStyle style, Color color, double width)
 {
     obj->Initialize(style, color, width);
 }

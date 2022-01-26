@@ -52,7 +52,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public float SizeInPoints
+        public double SizeInPoints
         {
             get
             {
@@ -82,7 +82,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public void Initialize(GenericFontFamily genericFamily, string? familyName, float emSizeInPoints, FontStyle style)
+        public void Initialize(GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, FontStyle style)
         {
             CheckDisposed();
             NativeApi.Font_Initialize_(NativePointer, genericFamily, familyName, emSizeInPoints, style);
@@ -129,7 +129,7 @@ namespace Alternet.UI.Native
             public static extern string Font_GetName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern float Font_GetSizeInPoints_(IntPtr obj);
+            public static extern double Font_GetSizeInPoints_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern FontStyle Font_GetStyle_(IntPtr obj);
@@ -150,7 +150,7 @@ namespace Alternet.UI.Native
             public static extern void Font_CloseFamiliesArray_(System.IntPtr array);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Font_Initialize_(IntPtr obj, GenericFontFamily genericFamily, string? familyName, float emSizeInPoints, FontStyle style);
+            public static extern void Font_Initialize_(IntPtr obj, GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, FontStyle style);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Font_InitializeWithDefaultFont_(IntPtr obj);

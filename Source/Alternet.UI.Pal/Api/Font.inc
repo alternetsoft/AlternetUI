@@ -4,7 +4,7 @@ public:
 string GetName();
 
 
-float GetSizeInPoints();
+double GetSizeInPoints();
 
 
 FontStyle GetStyle();
@@ -16,7 +16,7 @@ static void* OpenFamiliesArray();
 static int GetFamiliesItemCount(void* array);
 static string GetFamiliesItemAt(void* array, int index);
 static void CloseFamiliesArray(void* array);
-void Initialize(GenericFontFamily genericFamily, optional<string> familyName, float emSizeInPoints, FontStyle style);
+void Initialize(GenericFontFamily genericFamily, optional<string> familyName, double emSizeInPoints, FontStyle style);
 void InitializeWithDefaultFont();
 static bool IsFamilyValid(const string& fontFamily);
 static string GetGenericFamilyName(GenericFontFamily genericFamily);

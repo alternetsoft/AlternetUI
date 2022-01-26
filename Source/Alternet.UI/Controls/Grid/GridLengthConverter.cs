@@ -104,7 +104,7 @@ namespace Alternet.UI
                 else
                 {
                     //  conversion from numeric type
-                    float value;
+                    double value;
                     GridUnitType type;
 
                     value = Convert.ToSingle(source, cultureInfo);
@@ -166,7 +166,7 @@ namespace Alternet.UI
 
                 if (destinationType == typeof(InstanceDescriptor))
                 {
-                    ConstructorInfo ci = typeof(GridLength).GetConstructor(new Type[] { typeof(float), typeof(GridUnitType) });
+                    ConstructorInfo ci = typeof(GridLength).GetConstructor(new Type[] { typeof(double), typeof(GridUnitType) });
                     return (new InstanceDescriptor(ci, new object[] { gl.Value, gl.GridUnitType }));
                 }
             }
@@ -221,7 +221,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Formats: 
         /// "[value][unit]"
-        ///     [value] is a float
+        ///     [value] is a double
         ///     [unit] is a string in GridLength._unitTypes connected to a GridUnitType
         /// "[value]"
         ///     As above, but the GridUnitType is assumed to be GridUnitType.Pixel
@@ -231,7 +231,7 @@ namespace Alternet.UI
         /// </remarks>
         static internal GridLength FromString(string s, CultureInfo cultureInfo)
         {
-            float value;
+            double value;
             GridUnitType unit;
             XamlGridLengthSerializer.FromString(s, cultureInfo,
                 out value, out unit);

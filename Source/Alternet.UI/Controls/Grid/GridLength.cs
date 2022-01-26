@@ -28,11 +28,11 @@ namespace Alternet.UI
         /// <param name="pixels">Specifies the number of 'device-independent pixels' 
         /// (96 pixels-per-inch).</param>
         /// <exception cref="ArgumentException">
-        /// If <c>pixels</c> parameter is <c>float.NaN</c>
-        /// or <c>pixels</c> parameter is <c>float.NegativeInfinity</c>
-        /// or <c>pixels</c> parameter is <c>float.PositiveInfinity</c>.
+        /// If <c>pixels</c> parameter is <c>double.NaN</c>
+        /// or <c>pixels</c> parameter is <c>double.NegativeInfinity</c>
+        /// or <c>pixels</c> parameter is <c>double.PositiveInfinity</c>.
         /// </exception>
-        public GridLength(float pixels)
+        public GridLength(double pixels)
             : this(pixels, GridUnitType.Pixel)
         {
         }
@@ -50,17 +50,17 @@ namespace Alternet.UI
         /// then passed in value is ignored and replaced with <c>0</c>.
         /// </remarks>
         /// <exception cref="ArgumentException">
-        /// If <c>value</c> parameter is <c>float.NaN</c>
-        /// or <c>value</c> parameter is <c>float.NegativeInfinity</c>
-        /// or <c>value</c> parameter is <c>float.PositiveInfinity</c>.
+        /// If <c>value</c> parameter is <c>double.NaN</c>
+        /// or <c>value</c> parameter is <c>double.NegativeInfinity</c>
+        /// or <c>value</c> parameter is <c>double.PositiveInfinity</c>.
         /// </exception>
-        public GridLength(float value, GridUnitType type)
+        public GridLength(double value, GridUnitType type)
         {
             if (DoubleUtil.IsNaN(value))
             {
                 throw new ArgumentException();
             }
-            if (float.IsInfinity(value))
+            if (double.IsInfinity(value))
             {
                 throw new ArgumentException();
             }
@@ -169,7 +169,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns value part of this GridLength instance.
         /// </summary>
-        public float Value { get { return ((_unitType == GridUnitType.Auto) ? 1 : _unitValue); } }
+        public double Value { get { return ((_unitType == GridUnitType.Auto) ? 1 : _unitValue); } }
 
         /// <summary>
         /// Returns unit type of this GridLength instance.
@@ -211,7 +211,7 @@ namespace Alternet.UI
         //------------------------------------------------------
 
         #region Private Fields 
-        private float _unitValue;      //  unit value storage
+        private double _unitValue;      //  unit value storage
         private GridUnitType _unitType; //  unit type storage
 
         //  static instance of Auto GridLength

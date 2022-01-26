@@ -20,8 +20,8 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref='Drawing.Size'/> class.
         /// </summary>
         public static readonly Size Empty;
-        private float width; // Do not rename (binary serialization)
-        private float height; // Do not rename (binary serialization)
+        private double width; // Do not rename (binary serialization)
+        private double height; // Do not rename (binary serialization)
 
         /// <summary>
         /// Initializes a new instance of the <see cref='Drawing.Size'/> class from the specified
@@ -54,23 +54,24 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a new <see cref="System.Numerics.Vector2"/> from this <see cref="Drawing.Size"/>.
-        /// </summary>
-        public Vector2 ToVector2() => new Vector2(width, height);
-
-        /// <summary>
         /// Initializes a new instance of the <see cref='Drawing.Size'/> class from the specified dimensions.
         /// </summary>
-        public Size(float width, float height)
+        public Size(double width, double height)
         {
             this.width = width;
             this.height = height;
         }
 
+        /* TODO: uncommment when Double System.Numerics is availble. See https://github.com/dotnet/runtime/issues/24168
+        /// <summary>
+        /// Creates a new <see cref="System.Numerics.Vector2"/> from this <see cref="Drawing.Size"/>.
+        /// </summary>
+        public Vector2 ToVector2() => new Vector2(width, height);
+
         /// <summary>
         /// Converts the specified <see cref="Drawing.Size"/> to a <see cref="System.Numerics.Vector2"/>.
         /// </summary>
-        public static explicit operator Vector2(Size size) => size.ToVector2();
+        public static explicit operator Vector2(Size size) => size.ToVector2();*/
 
         /// <summary>
         /// Converts the specified <see cref="System.Numerics.Vector2"/> to a <see cref="Drawing.Size"/>.
@@ -88,28 +89,28 @@ namespace Alternet.Drawing
         public static Size operator -(Size sz1, Size sz2) => Subtract(sz1, sz2);
 
         /// <summary>
-        /// Multiplies <see cref="Size"/> by a <see cref="float"/> producing <see cref="Size"/>.
+        /// Multiplies <see cref="Size"/> by a <see cref="double"/> producing <see cref="Size"/>.
         /// </summary>
-        /// <param name="left">Multiplier of type <see cref="float"/>.</param>
+        /// <param name="left">Multiplier of type <see cref="double"/>.</param>
         /// <param name="right">Multiplicand of type <see cref="Size"/>.</param>
         /// <returns>Product of type <see cref="Size"/>.</returns>
-        public static Size operator *(float left, Size right) => Multiply(right, left);
+        public static Size operator *(double left, Size right) => Multiply(right, left);
 
         /// <summary>
-        /// Multiplies <see cref="Size"/> by a <see cref="float"/> producing <see cref="Size"/>.
+        /// Multiplies <see cref="Size"/> by a <see cref="double"/> producing <see cref="Size"/>.
         /// </summary>
         /// <param name="left">Multiplicand of type <see cref="Size"/>.</param>
-        /// <param name="right">Multiplier of type <see cref="float"/>.</param>
+        /// <param name="right">Multiplier of type <see cref="double"/>.</param>
         /// <returns>Product of type <see cref="Size"/>.</returns>
-        public static Size operator *(Size left, float right) => Multiply(left, right);
+        public static Size operator *(Size left, double right) => Multiply(left, right);
 
         /// <summary>
-        /// Divides <see cref="Size"/> by a <see cref="float"/> producing <see cref="Size"/>.
+        /// Divides <see cref="Size"/> by a <see cref="double"/> producing <see cref="Size"/>.
         /// </summary>
         /// <param name="left">Dividend of type <see cref="Size"/>.</param>
         /// <param name="right">Divisor of type <see cref="int"/>.</param>
         /// <returns>Result of type <see cref="Size"/>.</returns>
-        public static Size operator /(Size left, float right)
+        public static Size operator /(Size left, double right)
             => new Size(left.width / right, left.height / right);
 
         /// <summary>
@@ -136,7 +137,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Represents the horizontal component of this <see cref='Drawing.Size'/>.
         /// </summary>
-        public float Width
+        public double Width
         {
             readonly get => width;
             set => width = value;
@@ -145,7 +146,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Represents the vertical component of this <see cref='Drawing.Size'/>.
         /// </summary>
-        public float Height
+        public double Height
         {
             readonly get => height;
             set => height = value;
@@ -200,12 +201,12 @@ namespace Alternet.Drawing
         public override readonly string ToString() => $"{{Width={width}, Height={height}}}";
 
         /// <summary>
-        /// Multiplies <see cref="Size"/> by a <see cref="float"/> producing <see cref="Size"/>.
+        /// Multiplies <see cref="Size"/> by a <see cref="double"/> producing <see cref="Size"/>.
         /// </summary>
         /// <param name="size">Multiplicand of type <see cref="Size"/>.</param>
-        /// <param name="multiplier">Multiplier of type <see cref="float"/>.</param>
+        /// <param name="multiplier">Multiplier of type <see cref="double"/>.</param>
         /// <returns>Product of type SizeF.</returns>
-        private static Size Multiply(Size size, float multiplier) =>
+        private static Size Multiply(Size size, double multiplier) =>
             new Size(size.width * multiplier, size.height * multiplier);
     }
 }

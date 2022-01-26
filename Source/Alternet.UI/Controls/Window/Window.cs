@@ -97,11 +97,11 @@ namespace Alternet.UI
         /// Gets or sets the size of the window.
         /// </summary>
         /// <value>The size of the window, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="Drawing.Size"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>)/>.
+        /// The default value is <see cref="Drawing.Size"/>(<see cref="double.NaN"/>, <see cref="double.NaN"/>)/>.
         /// </value>
         /// <remarks>
         /// This property specifies the size of the window.
-        /// Set this property to <see cref="Drawing.Size"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>) to specify system-default sizing
+        /// Set this property to <see cref="Drawing.Size"/>(<see cref="double.NaN"/>, <see cref="double.NaN"/>) to specify system-default sizing
         /// behavior when the window is first shown.
         /// </remarks>
         public override Size Size
@@ -121,27 +121,27 @@ namespace Alternet.UI
         /// Gets or sets the width of the window.
         /// </summary>
         /// <value>The width of the window, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="float.NaN"/>.
+        /// The default value is <see cref="double.NaN"/>.
         /// </value>
         /// <remarks>
         /// This property specifies the width of the window.
-        /// Set this property to <see cref="float.NaN"/> to specify system-default sizing
+        /// Set this property to <see cref="double.NaN"/> to specify system-default sizing
         /// behavior before the window is first shown.
         /// </remarks>
-        public override float Width { get => Size.Width; set => Size = new Size(value, Height); }
+        public override double Width { get => Size.Width; set => Size = new Size(value, Height); }
 
         /// <summary>
         /// Gets or sets the height of the window.
         /// </summary>
         /// <value>The height of the window, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="float.NaN"/>.
+        /// The default value is <see cref="double.NaN"/>.
         /// </value>
         /// <remarks>
         /// This property specifies the height of the window.
-        /// Set this property to <see cref="float.NaN"/> to specify system-default sizing
+        /// Set this property to <see cref="double.NaN"/> to specify system-default sizing
         /// behavior before the window is first shown.
         /// </remarks>
-        public override float Height { get => Size.Height; set => Size = new Size(Width, value); }
+        public override double Height { get => Size.Height; set => Size = new Size(Width, value); }
 
         /// <summary>
         /// Gets or sets the location of upper-left corner of the window, in device-independent units (1/96th inch per unit).

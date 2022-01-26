@@ -40,7 +40,7 @@ namespace Alternet.UI
         static internal void FromString(
                 string s,
                 CultureInfo cultureInfo,
-            out float value,
+            out double value,
             out GridUnitType unit)
         {
             string goodString = s.Trim().ToLowerInvariant();
@@ -51,7 +51,7 @@ namespace Alternet.UI
             int i;
             int strLen = goodString.Length;
             int strLenUnit = 0;
-            float unitFactor = 1.0f;
+            double unitFactor = 1.0f;
 
             //  this is where we would handle trailing whitespace on the input string.
             //  peel [unit] off the end of the string
@@ -111,7 +111,7 @@ namespace Alternet.UI
 
 //                ReadOnlySpan<char> valueString = goodString.AsSpan(0, strLen - strLenUnit);
                 var valueString = goodString.Substring(0, strLen - strLenUnit);
-                value = float.Parse(valueString, provider: cultureInfo) * unitFactor;
+                value = double.Parse(valueString, provider: cultureInfo) * unitFactor;
             }
         }
 
@@ -125,7 +125,7 @@ namespace Alternet.UI
 
         //  this array contains strings for unit types that are not present in the GridUnitType enum
         static private string[] PixelUnitStrings = { "in", "cm", "pt" };
-        static private float[] PixelUnitFactors =
+        static private double[] PixelUnitFactors =
         {
             96.0f,             // Pixels per Inch
             96.0f / 2.54f,      // Pixels per Centimeter

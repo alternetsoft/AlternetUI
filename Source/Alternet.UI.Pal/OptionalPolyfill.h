@@ -554,14 +554,14 @@ union max_align_t
     optional_ALIGN_TYPE( short int );
     optional_ALIGN_TYPE( int );
     optional_ALIGN_TYPE( long int  );
-    optional_ALIGN_TYPE( float  );
+    optional_ALIGN_TYPE( double  );
     optional_ALIGN_TYPE( double );
     optional_ALIGN_TYPE( long double );
     optional_ALIGN_TYPE( char * );
     optional_ALIGN_TYPE( short int * );
     optional_ALIGN_TYPE( int *  );
     optional_ALIGN_TYPE( long int * );
-    optional_ALIGN_TYPE( float * );
+    optional_ALIGN_TYPE( double * );
     optional_ALIGN_TYPE( double * );
     optional_ALIGN_TYPE( long double * );
     optional_ALIGN_TYPE( void * );
@@ -653,7 +653,7 @@ typedef
     optional_ALIGN_TYPE( short ),
     optional_ALIGN_TYPE( int ),
     optional_ALIGN_TYPE( long ),
-    optional_ALIGN_TYPE( float ),
+    optional_ALIGN_TYPE( double ),
     optional_ALIGN_TYPE( double ),
     optional_ALIGN_TYPE( long double ),
 
@@ -661,7 +661,7 @@ typedef
     optional_ALIGN_TYPE( short * ),
     optional_ALIGN_TYPE( int * ),
     optional_ALIGN_TYPE( long * ),
-    optional_ALIGN_TYPE( float * ),
+    optional_ALIGN_TYPE( double * ),
     optional_ALIGN_TYPE( double * ),
     optional_ALIGN_TYPE( long double * ),
 

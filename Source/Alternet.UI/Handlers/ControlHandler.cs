@@ -261,8 +261,8 @@ namespace Alternet.UI
                 //control.Handler.Bounds = new RectangleF(
                 //    childrenLayoutBounds.Location + new SizeF(margin.Left, margin.Top),
                 //    new SizeF(
-                //        float.IsNaN(specifiedWidth) ? childrenLayoutBounds.Width - margin.Horizontal : specifiedWidth,
-                //        float.IsNaN(specifiedHeight) ? childrenLayoutBounds.Height - margin.Vertical : specifiedHeight));
+                //        double.IsNaN(specifiedWidth) ? childrenLayoutBounds.Width - margin.Horizontal : specifiedWidth,
+                //        double.IsNaN(specifiedHeight) ? childrenLayoutBounds.Height - margin.Vertical : specifiedHeight));
             }
         }
 
@@ -277,8 +277,8 @@ namespace Alternet.UI
             {
                 var s = NativeControl?.GetPreferredSize(availableSize) ?? new Size();
                 return new Size(
-                    float.IsNaN(Control.Width) ? s.Width : Control.Width,
-                    float.IsNaN(Control.Height) ? s.Height : Control.Height);
+                    double.IsNaN(Control.Width) ? s.Width : Control.Width,
+                    double.IsNaN(Control.Height) ? s.Height : Control.Height);
             }
             else
             {
@@ -422,11 +422,11 @@ namespace Alternet.UI
         {
             var specifiedWidth = Control.Width;
             var specifiedHeight = Control.Height;
-            if (!float.IsNaN(specifiedWidth) && !float.IsNaN(specifiedHeight))
+            if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
                 return new Size(specifiedWidth, specifiedHeight);
 
-            float maxWidth = 0;
-            float maxHeight = 0;
+            double maxWidth = 0;
+            double maxHeight = 0;
 
             foreach (var control in AllChildrenIncludedInLayout)
             {
@@ -442,8 +442,8 @@ namespace Alternet.UI
             if (nativeControl != null)
                 intrinsicPadding = nativeControl.IntrinsicPreferredSizePadding;
 
-            var width = float.IsNaN(specifiedWidth) ? maxWidth + padding.Horizontal + intrinsicPadding.Horizontal : specifiedWidth;
-            var height = float.IsNaN(specifiedHeight) ? maxHeight + padding.Vertical + intrinsicPadding.Vertical : specifiedHeight;
+            var width = double.IsNaN(specifiedWidth) ? maxWidth + padding.Horizontal + intrinsicPadding.Horizontal : specifiedWidth;
+            var height = double.IsNaN(specifiedHeight) ? maxHeight + padding.Vertical + intrinsicPadding.Vertical : specifiedHeight;
 
             return new Size(width, height);
         }

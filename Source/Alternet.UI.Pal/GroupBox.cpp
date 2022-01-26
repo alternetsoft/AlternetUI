@@ -47,12 +47,12 @@ namespace Alternet::UI
         staticBox->GetBordersForSizer(&topBorder, &otherBorder);
 
 #if defined( __WXGTK20__ )
-        float border = 3;
+        double border = 3;
         if (preferredSize)
             return Thickness(otherBorder, topBorder, otherBorder + border, otherBorder + border);
         return Thickness(border, border, border, topBorder + border);
 #elif defined(__WXOSX__) && wxOSX_USE_COCOA
-        float border = 3;
+        double border = 3;
         return Thickness(border, border + (preferredSize ? topBorder : 0), border, border);
 #else
         return toDip(Thickness(otherBorder, topBorder, otherBorder, otherBorder), staticBox);

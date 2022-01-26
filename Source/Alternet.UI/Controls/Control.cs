@@ -13,7 +13,7 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public class Control : Component, ISupportInitialize
     {
-        private static readonly Size DefaultSize = new Size(float.NaN, float.NaN);
+        private static readonly Size DefaultSize = new Size(double.NaN, double.NaN);
         private static Font? defaultFont;
         private Size size = DefaultSize;
         private Thickness margin;
@@ -229,11 +229,11 @@ namespace Alternet.UI
         /// Gets or sets the suggested size of the control.
         /// </summary>
         /// <value>The suggested size of the control, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="Drawing.Size"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>)/>.
+        /// The default value is <see cref="Drawing.Size"/>(<see cref="double.NaN"/>, <see cref="double.NaN"/>)/>.
         /// </value>
         /// <remarks>
         /// This property specifies the suggested size of the control. An actual size is calculated by the layout system.
-        /// Set this property to <see cref="Drawing.Size"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>) to specify auto sizing behavior.
+        /// Set this property to <see cref="Drawing.Size"/>(<see cref="double.NaN"/>, <see cref="double.NaN"/>) to specify auto sizing behavior.
         /// The value of this property is always the same as the value that was set to it and is not changed by the layout system.
         /// </remarks>
         public virtual Size Size
@@ -256,14 +256,14 @@ namespace Alternet.UI
         /// Gets or sets the suggested width of the control.
         /// </summary>
         /// <value>The suggested width of the control, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="float.NaN"/>.
+        /// The default value is <see cref="double.NaN"/>.
         /// </value>
         /// <remarks>
         /// This property specifies the suggested width of the control. An actual width is calculated by the layout system.
-        /// Set this property to <see cref="float.NaN"/> to specify auto sizing behavior.
+        /// Set this property to <see cref="double.NaN"/> to specify auto sizing behavior.
         /// The value of this property is always the same as the value that was set to it and is not changed by the layout system.
         /// </remarks>
-        public virtual float Width
+        public virtual double Width
         {
             get => size.Width;
 
@@ -277,14 +277,14 @@ namespace Alternet.UI
         /// Gets or sets the suggested height of the control.
         /// </summary>
         /// <value>The suggested height of the control, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="float.NaN"/>.
+        /// The default value is <see cref="double.NaN"/>.
         /// </value>
         /// <remarks>
         /// This property specifies the suggested height of the control. An actual height is calculated by the layout system.
-        /// Set this property to <see cref="float.NaN"/> to specify auto sizing behavior.
+        /// Set this property to <see cref="double.NaN"/> to specify auto sizing behavior.
         /// The value of this property is always the same as the value that was set to it and is not changed by the layout system.
         /// </remarks>
-        public virtual float Height
+        public virtual double Height
         {
             get => size.Height;
 

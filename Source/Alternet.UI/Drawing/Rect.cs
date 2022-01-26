@@ -19,16 +19,16 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly Rect Empty;
 
-        private float x; // Do not rename (binary serialization)
-        private float y; // Do not rename (binary serialization)
-        private float width; // Do not rename (binary serialization)
-        private float height; // Do not rename (binary serialization)
+        private double x; // Do not rename (binary serialization)
+        private double y; // Do not rename (binary serialization)
+        private double width; // Do not rename (binary serialization)
+        private double height; // Do not rename (binary serialization)
 
         /// <summary>
         /// Initializes a new instance of the <see cref='Drawing.Rect'/> class with the specified location
         /// and size.
         /// </summary>
-        public Rect(float x, float y, float width, float height)
+        public Rect(double x, double y, double width, double height)
         {
             this.x = x;
             this.y = y;
@@ -60,6 +60,7 @@ namespace Alternet.Drawing
             height = vector.W;
         }
 
+        /* TODO: uncommment when Double System.Numerics is availble. See https://github.com/dotnet/runtime/issues/24168
         /// <summary>
         /// Creates a new <see cref="System.Numerics.Vector4"/> from this <see cref="Drawing.Rect"/>.
         /// </summary>
@@ -68,7 +69,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts the specified <see cref="Drawing.Rect"/> to a <see cref="System.Numerics.Vector4"/>.
         /// </summary>
-        public static explicit operator Vector4(Rect rectangle) => rectangle.ToVector4();
+        public static explicit operator Vector4(Rect rectangle) => rectangle.ToVector4();*/
 
         /// <summary>
         /// Converts the specified <see cref="System.Numerics.Vector2"/> to a <see cref="Drawing.Rect"/>.
@@ -78,7 +79,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a new <see cref='Drawing.Rect'/> with the specified location and size.
         /// </summary>
-        public static Rect FromLTRB(float left, float top, float right, float bottom) =>
+        public static Rect FromLTRB(double left, double top, double right, double bottom) =>
             new Rect(left, top, right - left, bottom - top);
 
         /// <summary>
@@ -114,7 +115,7 @@ namespace Alternet.Drawing
         /// Gets or sets the x-coordinate of the upper-left corner of the rectangular region defined by this
         /// <see cref='Drawing.Rect'/>.
         /// </summary>
-        public float X
+        public double X
         {
             readonly get => x;
             set => x = value;
@@ -124,7 +125,7 @@ namespace Alternet.Drawing
         /// Gets or sets the y-coordinate of the upper-left corner of the rectangular region defined by this
         /// <see cref='Drawing.Rect'/>.
         /// </summary>
-        public float Y
+        public double Y
         {
             readonly get => y;
             set => y = value;
@@ -133,7 +134,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the width of the rectangular region defined by this <see cref='Drawing.Rect'/>.
         /// </summary>
-        public float Width
+        public double Width
         {
             readonly get => width;
             set => width = value;
@@ -142,7 +143,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the height of the rectangular region defined by this <see cref='Drawing.Rect'/>.
         /// </summary>
-        public float Height
+        public double Height
         {
             readonly get => height;
             set => height = value;
@@ -153,28 +154,28 @@ namespace Alternet.Drawing
         /// <see cref='Drawing.Rect'/> .
         /// </summary>
         [Browsable(false)]
-        public readonly float Left => X;
+        public readonly double Left => X;
 
         /// <summary>
         /// Gets the y-coordinate of the upper-left corner of the rectangular region defined by this
         /// <see cref='Drawing.Rect'/>.
         /// </summary>
         [Browsable(false)]
-        public readonly float Top => Y;
+        public readonly double Top => Y;
 
         /// <summary>
         /// Gets the x-coordinate of the lower-right corner of the rectangular region defined by this
         /// <see cref='Drawing.Rect'/>.
         /// </summary>
         [Browsable(false)]
-        public readonly float Right => X + Width;
+        public readonly double Right => X + Width;
 
         /// <summary>
         /// Gets the y-coordinate of the lower-right corner of the rectangular region defined by this
         /// <see cref='Drawing.Rect'/>.
         /// </summary>
         [Browsable(false)]
-        public readonly float Bottom => Y + Height;
+        public readonly double Bottom => Y + Height;
 
         /// <summary>
         /// Tests whether this <see cref='Drawing.Rect'/> has a <see cref='Drawing.Rect.Width'/> or a <see cref='Drawing.Rect.Height'/> of 0.
@@ -210,7 +211,7 @@ namespace Alternet.Drawing
         /// Determines if the specified point is contained within the rectangular region defined by this
         /// <see cref='Drawing.Rect'/> .
         /// </summary>
-        public readonly bool Contains(float x, float y) => X <= x && x < X + Width && Y <= y && y < Y + Height;
+        public readonly bool Contains(double x, double y) => X <= x && x < X + Width && Y <= y && y < Y + Height;
 
         /// <summary>
         /// Determines if the specified point is contained within the rectangular region defined by this
@@ -233,7 +234,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Inflates this <see cref='Drawing.Rect'/> by the specified amount.
         /// </summary>
-        public void Inflate(float x, float y)
+        public void Inflate(double x, double y)
         {
             X -= x;
             Y -= y;
@@ -249,7 +250,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a <see cref='Drawing.Rect'/> that is inflated by the specified amount.
         /// </summary>
-        public static Rect Inflate(Rect rect, float x, float y)
+        public static Rect Inflate(Rect rect, double x, double y)
         {
             Rect r = rect;
             r.Inflate(x, y);
@@ -275,10 +276,10 @@ namespace Alternet.Drawing
         /// </summary>
         public static Rect Intersect(Rect a, Rect b)
         {
-            float x1 = Math.Max(a.X, b.X);
-            float x2 = Math.Min(a.X + a.Width, b.X + b.Width);
-            float y1 = Math.Max(a.Y, b.Y);
-            float y2 = Math.Min(a.Y + a.Height, b.Y + b.Height);
+            double x1 = Math.Max(a.X, b.X);
+            double x2 = Math.Min(a.X + a.Width, b.X + b.Width);
+            double y1 = Math.Max(a.Y, b.Y);
+            double y2 = Math.Min(a.Y + a.Height, b.Y + b.Height);
 
             if (x2 >= x1 && y2 >= y1)
             {
@@ -299,10 +300,10 @@ namespace Alternet.Drawing
         /// </summary>
         public static Rect Union(Rect a, Rect b)
         {
-            float x1 = Math.Min(a.X, b.X);
-            float x2 = Math.Max(a.X + a.Width, b.X + b.Width);
-            float y1 = Math.Min(a.Y, b.Y);
-            float y2 = Math.Max(a.Y + a.Height, b.Y + b.Height);
+            double x1 = Math.Min(a.X, b.X);
+            double x2 = Math.Max(a.X + a.Width, b.X + b.Width);
+            double y1 = Math.Min(a.Y, b.Y);
+            double y2 = Math.Max(a.Y + a.Height, b.Y + b.Height);
 
             return new Rect(x1, y1, x2 - x1, y2 - y1);
         }
@@ -315,7 +316,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Adjusts the location of this rectangle by the specified amount.
         /// </summary>
-        public void Offset(float x, float y)
+        public void Offset(double x, double y)
         {
             X += x;
             Y += y;

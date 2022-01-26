@@ -10,7 +10,7 @@ namespace Alternet::UI
     {
     }
 
-    void Pen::Initialize(PenDashStyle style, const Color& color, float width)
+    void Pen::Initialize(PenDashStyle style, const Color& color, double width)
     {
         _pen = wxPen(color, fromDip(width, nullptr), GetWxStyle(style));
     }

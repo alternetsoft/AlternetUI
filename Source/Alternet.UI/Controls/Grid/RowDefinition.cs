@@ -16,8 +16,8 @@ namespace Alternet.UI
 		}
 
 		GridLength height = new GridLength(1, GridUnitType.Star);
-		float minHeight;
-		float maxHeight = float.PositiveInfinity;
+		double minHeight;
+		double maxHeight = double.PositiveInfinity;
 
 
 		/// <summary>Gets the calculated height of a <see cref="RowDefinition" />, or sets the <see cref="GridLength" /> value of a row that is defined by the <see cref="RowDefinition" />.   </summary>
@@ -40,9 +40,9 @@ namespace Alternet.UI
 		}
 
 		/// <summary>Gets or sets a value that represents the minimum allowable height of a <see cref="RowDefinition" />.  </summary>
-		/// <returns>A <see cref="float" /> that represents the minimum allowable height. The default value is 0.</returns>
+		/// <returns>A <see cref="double" /> that represents the minimum allowable height. The default value is 0.</returns>
 		[TypeConverter(typeof(LengthConverter))]
-		public float MinHeight
+		public double MinHeight
 		{
 			get
 			{
@@ -59,9 +59,9 @@ namespace Alternet.UI
 		}
 
 		/// <summary>Gets or sets a value that represents the maximum height of a <see cref="RowDefinition" />.  </summary>
-		/// <returns>A <see cref="float" /> that represents the maximum height. </returns>
+		/// <returns>A <see cref="double" /> that represents the maximum height. </returns>
 		[TypeConverter(typeof(LengthConverter))]
-		public float MaxHeight
+		public double MaxHeight
 		{
 			get
 			{
@@ -78,12 +78,12 @@ namespace Alternet.UI
 		}
 
 		/// <summary>Gets a value that represents the calculated height of the <see cref="RowDefinition" />.</summary>
-		/// <returns>A <see cref="float" /> that represents the calculated height in device independent pixels. The default value is 0.</returns>
-		public float ActualHeight
+		/// <returns>A <see cref="double" /> that represents the calculated height in device independent pixels. The default value is 0.</returns>
+		public double ActualHeight
 		{
 			get
 			{
-				float result = 0;
+				double result = 0;
 				if (base.InParentLogicalTree)
 				{
 					result = ((Grid)base.Parent).GetFinalRowDefinitionHeight(base.Index);
@@ -93,12 +93,12 @@ namespace Alternet.UI
 		}
 
 		/// <summary>Gets a value that represents the offset value of this <see cref="RowDefinition" />.</summary>
-		/// <returns>A <see cref="float" /> that represents the offset of the row. The default value is 0.</returns>
-		public float Offset
+		/// <returns>A <see cref="double" /> that represents the offset of the row. The default value is 0.</returns>
+		public double Offset
 		{
 			get
 			{
-				float result = 0;
+				double result = 0;
 				if (base.Index != 0)
 				{
 					result = base.FinalOffset;

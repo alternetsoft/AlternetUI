@@ -1083,7 +1083,7 @@ namespace Alternet.Drawing
         /// Gets the hue-saturation-lightness (HSL) lightness value for this <see cref="Color"/> structure.
         /// </summary>
         /// <returns>The lightness of this <see cref="Color"/>. The lightness ranges from 0.0 through 1.0, where 0.0 represents black and 1.0 represents white.</returns>
-        public float GetBrightness()
+        public double GetBrightness()
         {
             GetRgbValues(out int r, out int g, out int b);
 
@@ -1096,7 +1096,7 @@ namespace Alternet.Drawing
         /// Gets the hue-saturation-lightness (HSL) hue value, in degrees, for this <see cref="Color"/> structure.
         /// </summary>
         /// <returns>The hue, in degrees, of this <see cref="Color"/>. The hue is measured in degrees, ranging from 0.0 through 360.0, in HSL color space.</returns>
-        public float GetHue()
+        public double GetHue()
         {
             GetRgbValues(out int r, out int g, out int b);
 
@@ -1105,8 +1105,8 @@ namespace Alternet.Drawing
 
             MinMaxRgb(out int min, out int max, r, g, b);
 
-            float delta = max - min;
-            float hue;
+            double delta = max - min;
+            double hue;
 
             if (r == max)
                 hue = (g - b) / delta;
@@ -1129,7 +1129,7 @@ namespace Alternet.Drawing
         /// The saturation of this <see cref="Color"/>. The saturation ranges from 0.0 through 1.0,
         /// where 0.0 is grayscale and 1.0 is the most saturated.
         /// </returns>
-        public float GetSaturation()
+        public double GetSaturation()
         {
             GetRgbValues(out int r, out int g, out int b);
 
@@ -1142,7 +1142,7 @@ namespace Alternet.Drawing
             if (div > byte.MaxValue)
                 div = byte.MaxValue * 2 - max - min;
 
-            return (max - min) / (float)div;
+            return (max - min) / (double)div;
         }
 
         /// <summary>

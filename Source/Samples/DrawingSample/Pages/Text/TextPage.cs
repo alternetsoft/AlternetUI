@@ -13,13 +13,13 @@ namespace DrawingSample
         private static Font fontInfoFont = new Font(FontFamily.GenericMonospace, 8);
         private static Brush fontInfoBrush = Brushes.Black;
         private Paragraph[]? paragraphs;
-        private float fontSize = 10;
+        private double fontSize = 10;
         private FontStyle fontStyle;
         private string customFontFamilyName = Control.DefaultFont.FontFamily.Name;
 
         public override string Name => "Text";
 
-        public float FontSize
+        public double FontSize
         {
             get => fontSize;
             set
@@ -57,8 +57,8 @@ namespace DrawingSample
             var color = Color.MidnightBlue;
             float lighten = 10;
 
-            float x = 20;
-            float y = 20;
+            double x = 20;
+            double y = 20;
             foreach (var paragraph in paragraphs)
             {
                 dc.DrawText(paragraph.FontInfo, fontInfoFont, fontInfoBrush, new Point(x, y));

@@ -10,19 +10,19 @@ namespace Alternet.UI
     /// </summary>
     public struct Thickness : IEquatable<Thickness>
     {
-        private float left;
+        private double left;
 
-        private float top;
+        private double top;
 
-        private float right;
+        private double right;
 
-        private float bottom;
+        private double bottom;
 
         /// <summary>
         /// This constructur builds a Thickness with a specified value on every side.
         /// </summary>
         /// <param name="uniformLength">The specified uniform length.</param>
-        public Thickness(float uniformLength)
+        public Thickness(double uniformLength)
         {
             left = top = right = bottom = uniformLength;
         }
@@ -34,7 +34,7 @@ namespace Alternet.UI
         /// <param name="top">The thickness for the top side.</param>
         /// <param name="right">The thickness for the right side.</param>
         /// <param name="bottom">The thickness for the bottom side.</param>
-        public Thickness(float left, float top, float right, float bottom)
+        public Thickness(double left, double top, double right, double bottom)
         {
             this.left = left;
             this.top = top;
@@ -47,7 +47,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="horizontal">The thickness on the left and right.</param>
         /// <param name="vertical">The thickness on the top and bottom.</param>
-        public Thickness(float horizontal, float vertical)
+        public Thickness(double horizontal, double vertical)
         {
             left = right = horizontal;
             top = bottom = vertical;
@@ -67,37 +67,37 @@ namespace Alternet.UI
         /// Gets the combined padding for the right and left edges.
         /// </summary>
         /// <value>Gets the sum, of the <see cref="Left"/> and <see cref="Right"/> padding values.</value>
-        public float Horizontal => left + right;
+        public double Horizontal => left + right;
 
         /// <summary>
         /// Gets the combined padding for the top and bottom edges.
         /// </summary>
         /// <value>Gets the sum, of the <see cref="Top"/> and <see cref="Bottom"/> padding values.</value>
-        public float Vertical => top + bottom;
+        public double Vertical => top + bottom;
 
         /// <summary>This property is the Length on the thickness' left side</summary>
-        public float Left
+        public double Left
         {
             get { return left; }
             set { left = value; }
         }
 
         /// <summary>This property is the Length on the thickness' top side</summary>
-        public float Top
+        public double Top
         {
             get { return top; }
             set { top = value; }
         }
 
         /// <summary>This property is the Length on the thickness' right side</summary>
-        public float Right
+        public double Right
         {
             get { return right; }
             set { right = value; }
         }
 
         /// <summary>This property is the Length on the thickness' bottom side</summary>
-        public float Bottom
+        public double Bottom
         {
             get { return bottom; }
             set { bottom = value; }
@@ -112,10 +112,10 @@ namespace Alternet.UI
         //  SEEALSO
         public static bool operator ==(Thickness t1, Thickness t2)
         {
-            return ((t1.left == t2.left || (float.IsNaN(t1.left) && float.IsNaN(t2.left)))
-                    && (t1.top == t2.top || (float.IsNaN(t1.top) && float.IsNaN(t2.top)))
-                    && (t1.right == t2.right || (float.IsNaN(t1.right) && float.IsNaN(t2.right)))
-                    && (t1.bottom == t2.bottom || (float.IsNaN(t1.bottom) && float.IsNaN(t2.bottom)))
+            return ((t1.left == t2.left || (double.IsNaN(t1.left) && double.IsNaN(t2.left)))
+                    && (t1.top == t2.top || (double.IsNaN(t1.top) && double.IsNaN(t2.top)))
+                    && (t1.right == t2.right || (double.IsNaN(t1.right) && double.IsNaN(t2.right)))
+                    && (t1.bottom == t2.bottom || (double.IsNaN(t1.bottom) && double.IsNaN(t2.bottom)))
                     );
         }
 

@@ -15,8 +15,8 @@ namespace Alternet.UI
             {
                 var stackPanelPadding = Control.Padding;
 
-                float maxWidth = 0;
-                float height = 0;
+                double maxWidth = 0;
+                double height = 0;
                 foreach (var control in Handler.AllChildrenIncludedInLayout)
                 {
                     var margin = control.Margin;
@@ -25,14 +25,14 @@ namespace Alternet.UI
                     height += preferredSize.Height + margin.Vertical;
                 }
 
-                return new Size(float.IsNaN(Control.Width) ? maxWidth + stackPanelPadding.Horizontal : Control.Width, height + stackPanelPadding.Vertical);
+                return new Size(double.IsNaN(Control.Width) ? maxWidth + stackPanelPadding.Horizontal : Control.Width, height + stackPanelPadding.Vertical);
             }
 
             public override void Layout()
             {
                 var childrenLayoutBounds = Handler.ChildrenLayoutBounds;
 
-                float y = childrenLayoutBounds.Top;
+                double y = childrenLayoutBounds.Top;
                 foreach (var control in Handler.AllChildrenIncludedInLayout)
                 {
                     var margin = control.Margin;

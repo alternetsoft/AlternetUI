@@ -28,7 +28,7 @@ namespace ApiGenerator.Native
                         { typeof(uint), "uint32_t" },
                         { typeof(long), "int64_t" },
                         { typeof(ulong), "uint64_t" },
-                        { typeof(float), "float" },
+                        { typeof(double), "double" },
                         { typeof(double), "double" },
                         { typeof(char), "char16_t" },
                         { typeof(void), "void" },

@@ -10,7 +10,7 @@ namespace Alternet::UI
     {
     }
 
-    void Font::Initialize(GenericFontFamily genericFamily, optional<string> familyName, float emSize, FontStyle style)
+    void Font::Initialize(GenericFontFamily genericFamily, optional<string> familyName, double emSize, FontStyle style)
     {
         wxFontInfo fontInfo(emSize);
 
@@ -70,7 +70,7 @@ namespace Alternet::UI
         return style;
     }
 
-    float Font::GetSizeInPoints()
+    double Font::GetSizeInPoints()
     {
         return _font.GetFractionalPointSize();
     }

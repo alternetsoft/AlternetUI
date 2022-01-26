@@ -18,7 +18,7 @@ namespace Alternet.Drawing
         /// <param name="emSize">The em-size, in points, of the new font.</param>
         /// <param name="style">The <see cref="FontStyle"/> of the new font.</param>
         /// <exception cref="ArgumentException"><c>emSize</c> is less than or equal to 0, evaluates to infinity or is not a valid number.</exception>
-        public Font(string familyName, float emSize, FontStyle style = FontStyle.Regular) : this(new FontFamily(familyName), emSize, style)
+        public Font(string familyName, double emSize, FontStyle style = FontStyle.Regular) : this(new FontFamily(familyName), emSize, style)
         {
         }
 
@@ -29,9 +29,9 @@ namespace Alternet.Drawing
         /// <param name="emSize">The em-size, in points, of the new font.</param>
         /// <param name="style">The <see cref="FontStyle"/> of the new font.</param>
         /// <exception cref="ArgumentException"><c>emSize</c> is less than or equal to 0, evaluates to infinity or is not a valid number.</exception>
-        public Font(FontFamily family, float emSize, FontStyle style = FontStyle.Regular)
+        public Font(FontFamily family, double emSize, FontStyle style = FontStyle.Regular)
         {
-            if (emSize <= 0 || float.IsInfinity(emSize) || float.IsNaN(emSize))
+            if (emSize <= 0 || double.IsInfinity(emSize) || double.IsNaN(emSize))
                 throw new ArgumentException(nameof(emSize));
 
             NativeFont = new UI.Native.Font();
@@ -88,7 +88,7 @@ namespace Alternet.Drawing
         /// Gets the em-size, in points, of this <see cref="Font"/>.
         /// </summary>
         /// <value>The em-size, in points, of this <see cref="Font"/>.</value>
-        public float SizeInPoints
+        public double SizeInPoints
         {
             get
             {

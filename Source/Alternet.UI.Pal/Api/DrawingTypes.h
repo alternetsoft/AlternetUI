@@ -15,7 +15,7 @@ namespace Alternet::UI
 
         struct Size_C
         {
-            float Width, Height;
+            double Width, Height;
         };
 
         struct Int32Point_C
@@ -25,7 +25,7 @@ namespace Alternet::UI
 
         struct Point_C
         {
-            float X, Y;
+            double X, Y;
         };
 
         struct Int32Rect_C
@@ -35,12 +35,12 @@ namespace Alternet::UI
 
         struct Rect_C
         {
-            float X, Y, Width, Height;
+            double X, Y, Width, Height;
         };
 
         struct Thickness_C
         {
-            float Left, Top, Right, Bottom;
+            double Left, Top, Right, Bottom;
         };
 
         struct Color_C
@@ -69,11 +69,11 @@ namespace Alternet::UI
 
     struct Size
     {
-        float Width = 0, Height = 0;
+        double Width = 0, Height = 0;
 
         Size() {}
 
-        Size(float width, float height) : Width(width), Height(height) {}
+        Size(double width, double height) : Width(width), Height(height) {}
 
         inline Size operator+(const Size& rhs) const { return Size(Width + rhs.Width, Height + rhs.Height); }
         inline Size& operator+=(const Size& rhs) 
@@ -105,11 +105,11 @@ namespace Alternet::UI
 
     struct Point
     {
-        float X = 0, Y = 0;
+        double X = 0, Y = 0;
 
         Point() {}
 
-        Point(float x, float y) : X(x), Y(y) {}
+        Point(double x, double y) : X(x), Y(y) {}
 
         operator Point_C() const { return Point_C{ X, Y }; }
 
@@ -140,11 +140,11 @@ namespace Alternet::UI
 
     struct Rect
     {
-        float X = 0, Y = 0, Width = 0, Height = 0;
+        double X = 0, Y = 0, Width = 0, Height = 0;
 
         Rect() {}
 
-        Rect(float x, float y, float width, float height) : X(x), Y(y), Width(width), Height(height) {}
+        Rect(double x, double y, double width, double height) : X(x), Y(y), Width(width), Height(height) {}
 
         Rect(const Point& location, const Size& size) : Rect(location.X, location.Y, size.Width, size.Height) {}
 
@@ -161,11 +161,11 @@ namespace Alternet::UI
 
     struct Thickness
     {
-        float Left = 0, Top = 0, Right = 0, Bottom = 0;
+        double Left = 0, Top = 0, Right = 0, Bottom = 0;
 
         Thickness() {}
 
-        Thickness(float left, float top, float right, float bottom) : Left(left), Top(top), Right(right), Bottom(bottom) {}
+        Thickness(double left, double top, double right, double bottom) : Left(left), Top(top), Right(right), Bottom(bottom) {}
 
         operator Thickness_C() { return Thickness_C{ Left, Top, Right, Bottom }; }
 
@@ -246,7 +246,7 @@ namespace Alternet::UI
 #endif
     }
 
-    inline int fromDip(float value, wxWindow* window)
+    inline int fromDip(double value, wxWindow* window)
     {
         if (window == nullptr)
             window = ParkingWindow::GetWindow();
@@ -254,7 +254,7 @@ namespace Alternet::UI
         return wxRound(value * GetDPIScaleFactor(window));
     }
 
-    inline double fromDipF(float value, wxWindow* window)
+    inline double fromDipF(double value, wxWindow* window)
     {
         if (window == nullptr)
             window = ParkingWindow::GetWindow();
@@ -262,7 +262,7 @@ namespace Alternet::UI
         return value * GetDPIScaleFactor(window);
     }
 
-    inline float toDip(int value, wxWindow* window)
+    inline double toDip(int value, wxWindow* window)
     {
         if (window == nullptr)
             window = ParkingWindow::GetWindow();
