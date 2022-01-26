@@ -21,7 +21,7 @@ namespace ControlsSample
         private static ImageLists LoadImageListsCore()
         {
             var smallImageList = new ImageList();
-            var largeImageList = new ImageList() { ImageSize = new SizeF(32, 32) };
+            var largeImageList = new ImageList() { ImageSize = new Size(32, 32) };
 
             var assembly = Assembly.GetExecutingAssembly();
             var allResourceNames = assembly.GetManifestResourceNames();

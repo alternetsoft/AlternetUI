@@ -25,7 +25,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the size of the image in device-independent units (1/96th inch per unit).
         /// </summary>
-        public SizeF Size => NativeImage.Size;
+        public Size Size => NativeImage.Size;
 
         /// <summary>
         /// Gets the size of the image in pixels.

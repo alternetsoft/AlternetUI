@@ -123,7 +123,7 @@ namespace DrawingSample
                 new ShapeType(CreateRectangle),
                 new ShapeType(CreateEllipse));
 
-        public override void Draw(DrawingContext dc, RectangleF bounds)
+        public override void Draw(DrawingContext dc, Rect bounds)
         {
             if (Canvas == null)
                 throw new Exception();
@@ -142,9 +142,9 @@ namespace DrawingSample
 
         protected override Control CreateSettingsControl() => new BrushesAndPensPageSettings(this);
 
-        private static RectangleShape CreateRectangle(Random random, RectangleF bounds, Brush fill, Pen stroke)
+        private static RectangleShape CreateRectangle(Random random, Rect bounds, Brush fill, Pen stroke)
         {
-            var rect = new RectangleF(
+            var rect = new Rect(
                 random.Next(0, (int)bounds.Width / 2),
                 random.Next(0, (int)bounds.Height / 2),
                 random.Next((int)bounds.Width / 5, (int)bounds.Width / 3),
@@ -152,9 +152,9 @@ namespace DrawingSample
             return new RectangleShape(rect, fill, stroke);
         }
 
-        private static EllipseShape CreateEllipse(Random random, RectangleF bounds, Brush fill, Pen stroke)
+        private static EllipseShape CreateEllipse(Random random, Rect bounds, Brush fill, Pen stroke)
         {
-            var rect = new RectangleF(
+            var rect = new Rect(
                 random.Next(0, (int)bounds.Width / 2),
                 random.Next(0, (int)bounds.Height / 2),
                 random.Next((int)bounds.Width / 5, (int)bounds.Width / 3),
@@ -168,7 +168,7 @@ namespace DrawingSample
             Canvas?.Update();
         }
 
-        private IEnumerable<Shape> CreateShapes(Random random, RectangleF bounds, Brush fill, Pen stroke)
+        private IEnumerable<Shape> CreateShapes(Random random, Rect bounds, Brush fill, Pen stroke)
         {
             if (includedShapeTypes.Length == 0)
                 yield break;
@@ -217,7 +217,7 @@ namespace DrawingSample
                 ShapeFactory = shapeFactory;
             }
 
-            public delegate Shape Factory(Random random, RectangleF bounds, Brush fill, Pen stroke);
+            public delegate Shape Factory(Random random, Rect bounds, Brush fill, Pen stroke);
 
             public Factory ShapeFactory { get; }
         }
@@ -237,9 +237,9 @@ namespace DrawingSample
 
         private class RectangleShape : Shape
         {
-            private RectangleF rectangle;
+            private Rect rectangle;
 
-            public RectangleShape(RectangleF rectangle, Brush fill, Pen stroke) : base(fill, stroke)
+            public RectangleShape(Rect rectangle, Brush fill, Pen stroke) : base(fill, stroke)
             {
                 this.rectangle = rectangle;
             }
@@ -253,9 +253,9 @@ namespace DrawingSample
 
         private class EllipseShape : Shape
         {
-            private RectangleF bounds;
+            private Rect bounds;
 
-            public EllipseShape(RectangleF bounds, Brush fill, Pen stroke) : base(fill, stroke)
+            public EllipseShape(Rect bounds, Brush fill, Pen stroke) : base(fill, stroke)
             {
                 this.bounds = bounds;
             }

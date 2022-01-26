@@ -15,7 +15,7 @@ namespace Alternet.UI
                 drawingContext.DrawRectangle(new Pen(Control.BorderBrush), ClientRectangle);
         }
 
-        public override RectangleF ChildrenLayoutBounds
+        public override Rect ChildrenLayoutBounds
         {
             get
             {
@@ -28,9 +28,9 @@ namespace Alternet.UI
             }
         }
 
-        public override SizeF GetPreferredSize(SizeF availableSize)
+        public override Size GetPreferredSize(Size availableSize)
         {
-            return base.GetPreferredSize(availableSize) + new SizeF(2, 2);
+            return base.GetPreferredSize(availableSize) + new Size(2, 2);
         }
     }
 }

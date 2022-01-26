@@ -17,7 +17,7 @@ namespace Alternet.UI
             public float Size { get; }
         }
 
-        public static AlignedPosition AlignHorizontal(RectangleF layoutBounds, Control childControl, SizeF childPreferredSize)
+        public static AlignedPosition AlignHorizontal(Rect layoutBounds, Control childControl, Size childPreferredSize)
         {
             switch (childControl.HorizontalAlignment)
             {
@@ -36,7 +36,7 @@ namespace Alternet.UI
             }
         }
 
-        public static AlignedPosition AlignVertical(RectangleF layoutBounds, Control control, SizeF childPreferredSize)
+        public static AlignedPosition AlignVertical(Rect layoutBounds, Control control, Size childPreferredSize)
         {
             switch (control.VerticalAlignment)
             {

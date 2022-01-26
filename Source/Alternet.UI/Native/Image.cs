@@ -18,7 +18,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public Alternet.Drawing.SizeF Size
+        public Alternet.Drawing.Size Size
         {
             get
             {
@@ -54,7 +54,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr Image_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.SizeF Image_GetSize_(IntPtr obj);
+            public static extern NativeApiTypes.Size Image_GetSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Int32Size Image_GetPixelSize_(IntPtr obj);

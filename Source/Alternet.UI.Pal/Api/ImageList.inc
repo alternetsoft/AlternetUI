@@ -5,8 +5,8 @@ Int32Size GetPixelImageSize();
 void SetPixelImageSize(const Int32Size& value);
 
 
-SizeF GetImageSize();
-void SetImageSize(const SizeF& value);
+Size GetImageSize();
+void SetImageSize(const Size& value);
 
 void AddImage(Image* image);
 public:

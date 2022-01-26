@@ -42,13 +42,13 @@ namespace CustomControlsSample
             }
         }
 
-        public override SizeF GetPreferredSize(SizeF availableSize)
+        public override Size GetPreferredSize(Size availableSize)
         {
             using (var dc = CreateDrawingContext())
             {
                 var textSize = dc.MeasureText(text, DefaultFont);
                 var imageSize = image.Size;
-                return new SizeF(Math.Max(textSize.Width, imageSize.Width), textSize.Height + imageSize.Height) + new SizeF(20, 20);
+                return new Size(Math.Max(textSize.Width, imageSize.Width), textSize.Height + imageSize.Height) + new Size(20, 20);
             }
         }
 
@@ -56,8 +56,8 @@ namespace CustomControlsSample
         {
             e.DrawingContext.FillRectangle(brush, Handler.ClientRectangle);
             e.DrawingContext.DrawRectangle(Pens.Gray, Handler.ClientRectangle);
-            e.DrawingContext.DrawText(text, DefaultFont, Brushes.Black, new PointF(10, 10));
-            e.DrawingContext.DrawImage(image, new PointF(0, 10 + e.DrawingContext.MeasureText(text, DefaultFont).Height));
+            e.DrawingContext.DrawText(text, DefaultFont, Brushes.Black, new Point(10, 10));
+            e.DrawingContext.DrawImage(image, new Point(0, 10 + e.DrawingContext.MeasureText(text, DefaultFont).Height));
         }
     }
 }

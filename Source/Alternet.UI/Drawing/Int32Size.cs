@@ -42,9 +42,9 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts the specified <see cref='Drawing.Int32Size'/> to a <see cref='Drawing.SizeF'/>.
+        /// Converts the specified <see cref='Drawing.Int32Size'/> to a <see cref='Drawing.Size'/>.
         /// </summary>
-        public static implicit operator SizeF(Int32Size p) => new SizeF(p.Width, p.Height);
+        public static implicit operator Size(Int32Size p) => new Size(p.Width, p.Height);
 
         /// <summary>
         /// Performs vector addition of two <see cref='Drawing.Int32Size'/> objects.
@@ -81,29 +81,29 @@ namespace Alternet.Drawing
         public static Int32Size operator /(Int32Size left, int right) => new Int32Size(unchecked(left.width / right), unchecked(left.height / right));
 
         /// <summary>
-        /// Multiplies <see cref="Int32Size"/> by a <see cref="float"/> producing <see cref="SizeF"/>.
+        /// Multiplies <see cref="Int32Size"/> by a <see cref="float"/> producing <see cref="Size"/>.
         /// </summary>
         /// <param name="left">Multiplier of type <see cref="float"/>.</param>
         /// <param name="right">Multiplicand of type <see cref="Int32Size"/>.</param>
-        /// <returns>Product of type <see cref="SizeF"/>.</returns>
-        public static SizeF operator *(float left, Int32Size right) => Multiply(right, left);
+        /// <returns>Product of type <see cref="Size"/>.</returns>
+        public static Size operator *(float left, Int32Size right) => Multiply(right, left);
 
         /// <summary>
-        /// Multiplies <see cref="Int32Size"/> by a <see cref="float"/> producing <see cref="SizeF"/>.
+        /// Multiplies <see cref="Int32Size"/> by a <see cref="float"/> producing <see cref="Size"/>.
         /// </summary>
         /// <param name="left">Multiplicand of type <see cref="Int32Size"/>.</param>
         /// <param name="right">Multiplier of type <see cref="float"/>.</param>
-        /// <returns>Product of type <see cref="SizeF"/>.</returns>
-        public static SizeF operator *(Int32Size left, float right) => Multiply(left, right);
+        /// <returns>Product of type <see cref="Size"/>.</returns>
+        public static Size operator *(Int32Size left, float right) => Multiply(left, right);
 
         /// <summary>
-        /// Divides <see cref="Int32Size"/> by a <see cref="float"/> producing <see cref="SizeF"/>.
+        /// Divides <see cref="Int32Size"/> by a <see cref="float"/> producing <see cref="Size"/>.
         /// </summary>
         /// <param name="left">Dividend of type <see cref="Int32Size"/>.</param>
         /// <param name="right">Divisor of type <see cref="int"/>.</param>
-        /// <returns>Result of type <see cref="SizeF"/>.</returns>
-        public static SizeF operator /(Int32Size left, float right)
-            => new SizeF(left.width / right, left.height / right);
+        /// <returns>Result of type <see cref="Size"/>.</returns>
+        public static Size operator /(Int32Size left, float right)
+            => new Size(left.width / right, left.height / right);
 
         /// <summary>
         /// Tests whether two <see cref='Drawing.Int32Size'/> objects are identical.
@@ -153,7 +153,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts a SizeF to a Size by performing a ceiling operation on all the coordinates.
         /// </summary>
-        public static Int32Size Ceiling(SizeF value) =>
+        public static Int32Size Ceiling(Size value) =>
             new Int32Size(unchecked((int)Math.Ceiling(value.Width)), unchecked((int)Math.Ceiling(value.Height)));
 
         /// <summary>
@@ -165,12 +165,12 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts a SizeF to a Size by performing a truncate operation on all the coordinates.
         /// </summary>
-        public static Int32Size Truncate(SizeF value) => new Int32Size(unchecked((int)value.Width), unchecked((int)value.Height));
+        public static Int32Size Truncate(Size value) => new Int32Size(unchecked((int)value.Width), unchecked((int)value.Height));
 
         /// <summary>
         /// Converts a SizeF to a Size by performing a round operation on all the coordinates.
         /// </summary>
-        public static Int32Size Round(SizeF value) =>
+        public static Int32Size Round(Size value) =>
             new Int32Size(unchecked((int)Math.Round(value.Width)), unchecked((int)Math.Round(value.Height)));
 
         /// <summary>
@@ -206,12 +206,12 @@ namespace Alternet.Drawing
             new Int32Size(unchecked(size.width * multiplier), unchecked(size.height * multiplier));
 
         /// <summary>
-        /// Multiplies <see cref="Int32Size"/> by a <see cref="float"/> producing <see cref="SizeF"/>.
+        /// Multiplies <see cref="Int32Size"/> by a <see cref="float"/> producing <see cref="Size"/>.
         /// </summary>
         /// <param name="size">Multiplicand of type <see cref="Int32Size"/>.</param>
         /// <param name="multiplier">Multiplier of type <see cref="float"/>.</param>
         /// <returns>Product of type SizeF.</returns>
-        private static SizeF Multiply(Int32Size size, float multiplier) =>
-            new SizeF(size.width * multiplier, size.height * multiplier);
+        private static Size Multiply(Int32Size size, float multiplier) =>
+            new Size(size.width * multiplier, size.height * multiplier);
     }
 }

@@ -32,7 +32,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Drawing.Int32Point'/> class from a <see cref='Drawing.SizeF'/>.
+        /// Initializes a new instance of the <see cref='Drawing.Int32Point'/> class from a <see cref='Drawing.Size'/>.
         /// </summary>
         public Int32Point(Int32Size sz)
         {
@@ -74,9 +74,9 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a <see cref='Drawing.PointF'/> with the coordinates of the specified <see cref='Drawing.Int32Point'/>
+        /// Creates a <see cref='Drawing.Point'/> with the coordinates of the specified <see cref='Drawing.Int32Point'/>
         /// </summary>
-        public static implicit operator PointF(Int32Point p) => new PointF(p.X, p.Y);
+        public static implicit operator Point(Int32Point p) => new Point(p.X, p.Y);
 
         /// <summary>
         /// Creates a <see cref='Drawing.Int32Size'/> with the coordinates of the specified <see cref='Drawing.Int32Point'/> .
@@ -120,17 +120,17 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts a PointF to a Point by performing a ceiling operation on all the coordinates.
         /// </summary>
-        public static Int32Point Ceiling(PointF value) => new Int32Point(unchecked((int)Math.Ceiling(value.X)), unchecked((int)Math.Ceiling(value.Y)));
+        public static Int32Point Ceiling(Point value) => new Int32Point(unchecked((int)Math.Ceiling(value.X)), unchecked((int)Math.Ceiling(value.Y)));
 
         /// <summary>
         /// Converts a PointF to a Point by performing a truncate operation on all the coordinates.
         /// </summary>
-        public static Int32Point Truncate(PointF value) => new Int32Point(unchecked((int)value.X), unchecked((int)value.Y));
+        public static Int32Point Truncate(Point value) => new Int32Point(unchecked((int)value.X), unchecked((int)value.Y));
 
         /// <summary>
         /// Converts a PointF to a Point by performing a round operation on all the coordinates.
         /// </summary>
-        public static Int32Point Round(PointF value) => new Int32Point(unchecked((int)Math.Round(value.X)), unchecked((int)Math.Round(value.Y)));
+        public static Int32Point Round(Point value) => new Int32Point(unchecked((int)Math.Round(value.X)), unchecked((int)Math.Round(value.Y)));
 
         /// <summary>
         /// Specifies whether this <see cref='Drawing.Int32Point'/> contains the same coordinates as the specified

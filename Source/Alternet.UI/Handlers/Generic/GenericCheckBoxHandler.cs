@@ -11,7 +11,7 @@ namespace Alternet.UI
         private Border? outerBorder;
         private Border? innerBorder;
 
-        public override SizeF GetPreferredSize(SizeF availableSize)
+        public override Size GetPreferredSize(Size availableSize)
         {
             return base.GetPreferredSize(availableSize);
         }

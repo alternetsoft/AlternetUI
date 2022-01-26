@@ -12,7 +12,7 @@ namespace Alternet::UI
                 {DelayedControlFlags::Frozen, std::make_tuple(&Control::RetrieveFrozen, &Control::ApplyFrozen)},
                 {DelayedControlFlags::Enabled, std::make_tuple(&Control::RetrieveEnabled, &Control::ApplyEnabled)},
             }),
-            _bounds(*this, RectangleF(), &Control::IsWxWindowCreated, &Control::RetrieveBounds, &Control::ApplyBounds),
+            _bounds(*this, Rect(), &Control::IsWxWindowCreated, &Control::RetrieveBounds, &Control::ApplyBounds),
             _backgroundColor(*this, Color(), &Control::IsWxWindowCreated, &Control::RetrieveBackgroundColor, &Control::ApplyBackgroundColor),
             _foregroundColor(*this, Color(), &Control::IsWxWindowCreated, &Control::RetrieveForegroundColor, &Control::ApplyForegroundColor),
             _delayedValues({&_delayedFlags, &_bounds, &_backgroundColor, &_foregroundColor})
@@ -337,17 +337,17 @@ namespace Alternet::UI
         }
     }
 
-    SizeF Control::GetClientSize()
+    Size Control::GetClientSize()
     {
         return SizeToClientSize(GetBounds().GetSize()); // todo: cache client size.
     }
 
-    void Control::SetClientSize(const SizeF& value)
+    void Control::SetClientSize(const Size& value)
     {
-        SetBounds(RectangleF(GetBounds().GetLocation(), ClientSizeToSize(value)));
+        SetBounds(Rect(GetBounds().GetLocation(), ClientSizeToSize(value)));
     }
 
-    SizeF Control::ClientSizeToSize(const SizeF& clientSize)
+    Size Control::ClientSizeToSize(const Size& clientSize)
     {
         // todo: On Linux ClientSize is not reported correctly until the window is shown
         // See https://forums.wxwidgets.org/viewtopic.php?f=1&t=47439
@@ -358,7 +358,7 @@ namespace Alternet::UI
         return toDip(GetWxWindow()->ClientToWindowSize(fromDip(clientSize, window)), window);
     }
 
-    SizeF Control::SizeToClientSize(const SizeF& size)
+    Size Control::SizeToClientSize(const Size& size)
     {
         auto window = GetWxWindow();
         return toDip(GetWxWindow()->WindowToClientSize(fromDip(size, window)), window);
@@ -387,13 +387,13 @@ namespace Alternet::UI
             _flags &= ~flag;
     }
 
-    RectangleF Control::RetrieveBounds()
+    Rect Control::RetrieveBounds()
     {
         auto wxWindow = GetWxWindow();
         return toDip(wxWindow->GetRect(), wxWindow);
     }
 
-    void Control::ApplyBounds(const RectangleF& value)
+    void Control::ApplyBounds(const Rect& value)
     {
         auto wxWindow = GetWxWindow();
         wxRect rect(fromDip(value, wxWindow));
@@ -505,32 +505,32 @@ namespace Alternet::UI
         GetWxWindow()->Reparent(parent);
     }
 
-    SizeF Control::GetSize()
+    Size Control::GetSize()
     {
         return GetBounds().GetSize();
     }
 
-    void Control::SetSize(const SizeF& value)
+    void Control::SetSize(const Size& value)
     {
-        SetBounds(RectangleF(GetLocation(), value));
+        SetBounds(Rect(GetLocation(), value));
     }
 
-    PointF Control::GetLocation()
+    Point Control::GetLocation()
     {
         return GetBounds().GetLocation();
     }
 
-    void Control::SetLocation(const PointF& value)
+    void Control::SetLocation(const Point& value)
     {
-        SetBounds(RectangleF(value, GetSize()));
+        SetBounds(Rect(value, GetSize()));
     }
 
-    RectangleF Control::GetBounds()
+    Rect Control::GetBounds()
     {
         return _bounds.Get();
     }
 
-    void Control::SetBounds(const RectangleF& value)
+    void Control::SetBounds(const Rect& value)
     {
         _bounds.Set(value);
     }
@@ -571,7 +571,7 @@ namespace Alternet::UI
         control->UpdateWxWindowParent();
     }
 
-    SizeF Control::GetPreferredSize(const SizeF& availableSize)
+    Size Control::GetPreferredSize(const Size& availableSize)
     {
         auto wxWindow = GetWxWindow();
         return toDip(wxWindow->GetBestSize(), wxWindow);

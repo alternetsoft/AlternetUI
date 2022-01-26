@@ -13,9 +13,9 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public class Control : Component, ISupportInitialize
     {
-        private static readonly SizeF DefaultSize = new SizeF(float.NaN, float.NaN);
+        private static readonly Size DefaultSize = new Size(float.NaN, float.NaN);
         private static Font? defaultFont;
-        private SizeF size = DefaultSize;
+        private Size size = DefaultSize;
         private Thickness margin;
         private Thickness padding;
         private ControlHandler? handler;
@@ -229,14 +229,14 @@ namespace Alternet.UI
         /// Gets or sets the suggested size of the control.
         /// </summary>
         /// <value>The suggested size of the control, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="SizeF"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>)/>.
+        /// The default value is <see cref="Drawing.Size"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>)/>.
         /// </value>
         /// <remarks>
         /// This property specifies the suggested size of the control. An actual size is calculated by the layout system.
-        /// Set this property to <see cref="SizeF"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>) to specify auto sizing behavior.
+        /// Set this property to <see cref="Drawing.Size"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>) to specify auto sizing behavior.
         /// The value of this property is always the same as the value that was set to it and is not changed by the layout system.
         /// </remarks>
-        public virtual SizeF Size
+        public virtual Size Size
         {
             get
             {
@@ -269,7 +269,7 @@ namespace Alternet.UI
 
             set
             {
-                Size = new SizeF(value, Size.Height);
+                Size = new Size(value, Size.Height);
             }
         }
 
@@ -290,7 +290,7 @@ namespace Alternet.UI
 
             set
             {
-                Size = new SizeF(Size.Width, value);
+                Size = new Size(Size.Width, value);
             }
         }
 
@@ -616,7 +616,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="availableSize">The available space that a parent element can allocate a child control.</param>
         /// <returns>A <see cref="Size"/> representing the width and height of a rectangle, in device-independent units (1/96th inch per unit).</returns>
-        public virtual SizeF GetPreferredSize(SizeF availableSize)
+        public virtual Size GetPreferredSize(Size availableSize)
         {
             return Handler.GetPreferredSize(availableSize);
         }

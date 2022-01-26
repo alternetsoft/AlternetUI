@@ -39,8 +39,8 @@ namespace Alternet::UI
         virtual Color RetrieveForegroundColor();
         virtual void ApplyForegroundColor(const Color& value);
 
-        virtual RectangleF RetrieveBounds();
-        virtual void ApplyBounds(const RectangleF& value);
+        virtual Rect RetrieveBounds();
+        virtual void ApplyBounds(const Rect& value);
 
         bool EventsSuspended() override;
 
@@ -69,7 +69,7 @@ namespace Alternet::UI
         int _beginUpdateCount = 0;
 
         DelayedFlags<Control, DelayedControlFlags> _delayedFlags;
-        DelayedValue<Control, RectangleF> _bounds;
+        DelayedValue<Control, Rect> _bounds;
         DelayedValue<Control, Color> _backgroundColor;
         DelayedValue<Control, Color> _foregroundColor;
 
@@ -84,8 +84,8 @@ namespace Alternet::UI
         bool RetrieveFrozen();
         void ApplyFrozen(bool value);
 
-        virtual SizeF ClientSizeToSize(const SizeF& clientSize);
-        virtual SizeF SizeToClientSize(const SizeF& size);
+        virtual Size ClientSizeToSize(const Size& clientSize);
+        virtual Size SizeToClientSize(const Size& size);
 
         bool GetFlag(ControlFlags flag);
         void SetFlag(ControlFlags flag, bool value);

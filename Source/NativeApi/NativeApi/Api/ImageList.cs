@@ -10,6 +10,6 @@ namespace NativeApi.Api
 
         public Int32Size PixelImageSize { get; set; }
 
-        public SizeF ImageSize { get; set; }
+        public Size ImageSize { get; set; }
     }
 }

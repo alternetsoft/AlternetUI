@@ -22,8 +22,8 @@ namespace Alternet::UI
         wxGraphicsRenderer* _dcRenderer = nullptr;
         wxGraphicsContext* _dcGraphicsContext = nullptr;
 
-        SizeF _translation;
-        std::stack<SizeF> _translationStack;
+        Size _translation;
+        std::stack<Size> _translationStack;
 
         wxGraphicsBrush GetGraphicsBrush(Brush* brush);
         wxGraphicsPen GetGraphicsPen(Pen* pen);

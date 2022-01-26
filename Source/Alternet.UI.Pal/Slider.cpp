@@ -22,7 +22,7 @@ namespace Alternet::UI
         }
     }
 
-    SizeF Slider::GetPreferredSize(const SizeF& availableSize)
+    Size Slider::GetPreferredSize(const Size& availableSize)
     {
         auto size = Control::GetPreferredSize(availableSize);
 

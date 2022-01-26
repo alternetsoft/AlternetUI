@@ -13,7 +13,7 @@ namespace Alternet::UI
             int Width, Height;
         };
 
-        struct SizeF_C
+        struct Size_C
         {
             float Width, Height;
         };
@@ -23,7 +23,7 @@ namespace Alternet::UI
             int X, Y;
         };
 
-        struct PointF_C
+        struct Point_C
         {
             float X, Y;
         };
@@ -33,7 +33,7 @@ namespace Alternet::UI
             int X, Y, Width, Height;
         };
 
-        struct RectangleF_C
+        struct Rect_C
         {
             float X, Y, Width, Height;
         };
@@ -67,26 +67,26 @@ namespace Alternet::UI
         bool operator!=(const Int32Size& rhs) { return !(*this == rhs); }
     };
 
-    struct SizeF
+    struct Size
     {
         float Width = 0, Height = 0;
 
-        SizeF() {}
+        Size() {}
 
-        SizeF(float width, float height) : Width(width), Height(height) {}
+        Size(float width, float height) : Width(width), Height(height) {}
 
-        inline SizeF operator+(const SizeF& rhs) const { return SizeF(Width + rhs.Width, Height + rhs.Height); }
-        inline SizeF& operator+=(const SizeF& rhs) 
+        inline Size operator+(const Size& rhs) const { return Size(Width + rhs.Width, Height + rhs.Height); }
+        inline Size& operator+=(const Size& rhs) 
         {
             Width += rhs.Width;
             Height += rhs.Height;
             return *this;
         }
 
-        operator SizeF_C() { return SizeF_C{ Width, Height }; }
+        operator Size_C() { return Size_C{ Width, Height }; }
 
-        bool operator==(const SizeF& rhs) { return Width == rhs.Width && Height == rhs.Height; }
-        bool operator!=(const SizeF& rhs) { return !(*this == rhs); }
+        bool operator==(const Size& rhs) { return Width == rhs.Width && Height == rhs.Height; }
+        bool operator!=(const Size& rhs) { return !(*this == rhs); }
     };
 
     struct Int32Point
@@ -103,20 +103,20 @@ namespace Alternet::UI
         bool operator!=(const Int32Point& rhs) { return !(*this == rhs); }
     };
 
-    struct PointF
+    struct Point
     {
         float X = 0, Y = 0;
 
-        PointF() {}
+        Point() {}
 
-        PointF(float x, float y) : X(x), Y(y) {}
+        Point(float x, float y) : X(x), Y(y) {}
 
-        operator PointF_C() const { return PointF_C{ X, Y }; }
+        operator Point_C() const { return Point_C{ X, Y }; }
 
-        inline PointF operator+(const SizeF& value) const { return PointF(X + value.Width, Y + value.Height); }
+        inline Point operator+(const Size& value) const { return Point(X + value.Width, Y + value.Height); }
 
-        bool operator==(const PointF& rhs) { return X == rhs.X && Y == rhs.Y; }
-        bool operator!=(const PointF& rhs) { return !(*this == rhs); }
+        bool operator==(const Point& rhs) { return X == rhs.X && Y == rhs.Y; }
+        bool operator!=(const Point& rhs) { return !(*this == rhs); }
     };
 
     struct Int32Rect
@@ -138,25 +138,25 @@ namespace Alternet::UI
         bool operator!=(const Int32Rect& rhs) { return !(*this == rhs); }
     };
 
-    struct RectangleF
+    struct Rect
     {
         float X = 0, Y = 0, Width = 0, Height = 0;
 
-        RectangleF() {}
+        Rect() {}
 
-        RectangleF(float x, float y, float width, float height) : X(x), Y(y), Width(width), Height(height) {}
+        Rect(float x, float y, float width, float height) : X(x), Y(y), Width(width), Height(height) {}
 
-        RectangleF(const PointF& location, const SizeF& size) : RectangleF(location.X, location.Y, size.Width, size.Height) {}
+        Rect(const Point& location, const Size& size) : Rect(location.X, location.Y, size.Width, size.Height) {}
 
-        inline PointF GetLocation() const { return PointF(X, Y); };
-        inline SizeF GetSize() const { return SizeF(Width, Height); };
+        inline Point GetLocation() const { return Point(X, Y); };
+        inline Size GetSize() const { return Size(Width, Height); };
 
-        inline RectangleF Offset(const SizeF& value) const { return RectangleF(X + value.Width, Y + value.Height, Width, Height); }
+        inline Rect Offset(const Size& value) const { return Rect(X + value.Width, Y + value.Height, Width, Height); }
 
-        operator RectangleF_C() { return RectangleF_C{ X, Y, Width, Height }; }
+        operator Rect_C() { return Rect_C{ X, Y, Width, Height }; }
 
-        bool operator==(const RectangleF& rhs) { return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height; }
-        bool operator!=(const RectangleF& rhs) { return !(*this == rhs); }
+        bool operator==(const Rect& rhs) { return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height; }
+        bool operator!=(const Rect& rhs) { return !(*this == rhs); }
     };
 
     struct Thickness
@@ -270,7 +270,7 @@ namespace Alternet::UI
         return value / GetDPIScaleFactor(window);
     }
 
-    inline wxRect fromDip(const RectangleF& value, wxWindow* window)
+    inline wxRect fromDip(const Rect& value, wxWindow* window)
     {
         if (window == nullptr)
             window = ParkingWindow::GetWindow();
@@ -282,31 +282,31 @@ namespace Alternet::UI
             fromDip(value.Height, window));
     };
 
-    inline RectangleF fromDipF(const RectangleF& value, wxWindow* window)
+    inline Rect fromDipF(const Rect& value, wxWindow* window)
     {
         if (window == nullptr)
             window = ParkingWindow::GetWindow();
 
-        return RectangleF(
+        return Rect(
             fromDipF(value.X, window),
             fromDipF(value.Y, window),
             fromDipF(value.Width, window),
             fromDipF(value.Height, window));
     };
 
-    inline RectangleF toDip(const wxRect& value, wxWindow* window)
+    inline Rect toDip(const wxRect& value, wxWindow* window)
     {
         if (window == nullptr)
             window = ParkingWindow::GetWindow();
 
-        return RectangleF(
+        return Rect(
             toDip(value.x, window),
             toDip(value.y, window),
             toDip(value.width, window),
             toDip(value.height, window));
     };
 
-    inline wxSize fromDip(const SizeF& value, wxWindow* window)
+    inline wxSize fromDip(const Size& value, wxWindow* window)
     {
         if (window == nullptr)
             window = ParkingWindow::GetWindow();
@@ -316,22 +316,22 @@ namespace Alternet::UI
             fromDip(value.Height, window));
     };
 
-    inline SizeF fromDipF(const SizeF& value, wxWindow* window)
+    inline Size fromDipF(const Size& value, wxWindow* window)
     {
         if (window == nullptr)
             window = ParkingWindow::GetWindow();
 
-        return SizeF(
+        return Size(
             fromDipF(value.Width, window),
             fromDipF(value.Height, window));
     };
 
-    inline SizeF toDip(const wxSize& value, wxWindow* window)
+    inline Size toDip(const wxSize& value, wxWindow* window)
     {
         if (window == nullptr)
             window = ParkingWindow::GetWindow();
 
-        return SizeF(
+        return Size(
             toDip(value.x, window),
             toDip(value.y, window));
     };
@@ -348,7 +348,7 @@ namespace Alternet::UI
             toDip(value.Bottom, window));
     };
 
-    inline wxPoint fromDip(const PointF& value, wxWindow* window)
+    inline wxPoint fromDip(const Point& value, wxWindow* window)
     {
         if (window == nullptr)
             window = ParkingWindow::GetWindow();
@@ -358,22 +358,22 @@ namespace Alternet::UI
             fromDip(value.Y, window));
     };
 
-    inline PointF fromDipF(const PointF& value, wxWindow* window)
+    inline Point fromDipF(const Point& value, wxWindow* window)
     {
         if (window == nullptr)
             window = ParkingWindow::GetWindow();
 
-        return PointF(
+        return Point(
             fromDipF(value.X, window),
             fromDipF(value.Y, window));
     };
 
-    inline PointF toDip(const wxPoint& value, wxWindow* window)
+    inline Point toDip(const wxPoint& value, wxWindow* window)
     {
         if (window == nullptr)
             window = ParkingWindow::GetWindow();
 
-        return PointF(
+        return Point(
             toDip(value.x, window),
             toDip(value.y, window));
     };

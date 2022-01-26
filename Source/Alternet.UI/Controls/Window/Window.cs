@@ -23,7 +23,7 @@ namespace Alternet.UI
         {
             Application.Current.RegisterWindow(this);
             SetVisibleValue(false);
-            Bounds = new RectangleF(100, 100, 400, 400);
+            Bounds = new Rect(100, 100, 400, 400);
         }
 
         /// <summary>
@@ -97,14 +97,14 @@ namespace Alternet.UI
         /// Gets or sets the size of the window.
         /// </summary>
         /// <value>The size of the window, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="SizeF"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>)/>.
+        /// The default value is <see cref="Drawing.Size"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>)/>.
         /// </value>
         /// <remarks>
         /// This property specifies the size of the window.
-        /// Set this property to <see cref="SizeF"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>) to specify system-default sizing
+        /// Set this property to <see cref="Drawing.Size"/>(<see cref="float.NaN"/>, <see cref="float.NaN"/>) to specify system-default sizing
         /// behavior when the window is first shown.
         /// </remarks>
-        public override SizeF Size
+        public override Size Size
         {
             get
             {
@@ -113,7 +113,7 @@ namespace Alternet.UI
 
             set
             {
-                Handler.Bounds = new RectangleF(Bounds.Location, value);
+                Handler.Bounds = new Rect(Bounds.Location, value);
             }
         }
 
@@ -128,7 +128,7 @@ namespace Alternet.UI
         /// Set this property to <see cref="float.NaN"/> to specify system-default sizing
         /// behavior before the window is first shown.
         /// </remarks>
-        public override float Width { get => Size.Width; set => Size = new SizeF(value, Height); }
+        public override float Width { get => Size.Width; set => Size = new Size(value, Height); }
 
         /// <summary>
         /// Gets or sets the height of the window.
@@ -141,7 +141,7 @@ namespace Alternet.UI
         /// Set this property to <see cref="float.NaN"/> to specify system-default sizing
         /// behavior before the window is first shown.
         /// </remarks>
-        public override float Height { get => Size.Height; set => Size = new SizeF(Width, value); }
+        public override float Height { get => Size.Height; set => Size = new Size(Width, value); }
 
         /// <summary>
         /// Gets or sets the location of upper-left corner of the window, in device-independent units (1/96th inch per unit).
@@ -151,7 +151,7 @@ namespace Alternet.UI
         /// To specify the window positioning behavior when it is being shown for the first time,
         /// use <see cref="StartLocation"/> property.
         /// </remarks>
-        public PointF Location
+        public Point Location
         {
             get
             {
@@ -160,16 +160,16 @@ namespace Alternet.UI
 
             set
             {
-                Bounds = new RectangleF(value, Bounds.Size);
+                Bounds = new Rect(value, Bounds.Size);
             }
         }
 
         /// <summary>
         /// Gets or sets the size and location of the window.
         /// </summary>
-        /// <value>A <see cref="RectangleF"/> that represents the bounds of the form on
+        /// <value>A <see cref="Rect"/> that represents the bounds of the form on
         /// the desktop, in logical units (1/96th of an inch).</value>
-        public RectangleF Bounds
+        public Rect Bounds
         {
             get
             {

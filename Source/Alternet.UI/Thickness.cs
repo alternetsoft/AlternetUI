@@ -54,14 +54,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the combined padding information in the form of a <see cref="SizeF"/>.
+        /// Gets the combined padding information in the form of a <see cref="Drawing.Size"/>.
         /// </summary>
-        /// <value>A <see cref="SizeF"/> containing the padding information.</value>
+        /// <value>A <see cref="Drawing.Size"/> containing the padding information.</value>
         /// <remarks>
-        /// The <see cref="Horizontal"/> property corresponds to the <see cref="SizeF.Width"/> property,
-        /// and the <see cref="Vertical"/> property corresponds to the <see cref="SizeF.Height"/> property.
+        /// The <see cref="Horizontal"/> property corresponds to the <see cref="Size.Width"/> property,
+        /// and the <see cref="Vertical"/> property corresponds to the <see cref="Size.Height"/> property.
         /// </remarks>
-        public SizeF Size => new SizeF(Horizontal, Vertical);
+        public Size Size => new Size(Horizontal, Vertical);
 
         /// <summary>
         /// Gets the combined padding for the right and left edges.

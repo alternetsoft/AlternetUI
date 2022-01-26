@@ -17,49 +17,49 @@ namespace Alternet.UI.Native
         {
         }
         
-        public void FillRectangle(Alternet.Drawing.RectangleF rectangle, Brush brush)
+        public void FillRectangle(Alternet.Drawing.Rect rectangle, Brush brush)
         {
             CheckDisposed();
             NativeApi.DrawingContext_FillRectangle_(NativePointer, rectangle, brush.NativePointer);
         }
         
-        public void DrawRectangle(Alternet.Drawing.RectangleF rectangle, Pen pen)
+        public void DrawRectangle(Alternet.Drawing.Rect rectangle, Pen pen)
         {
             CheckDisposed();
             NativeApi.DrawingContext_DrawRectangle_(NativePointer, rectangle, pen.NativePointer);
         }
         
-        public void FillEllipse(Alternet.Drawing.RectangleF bounds, Brush brush)
+        public void FillEllipse(Alternet.Drawing.Rect bounds, Brush brush)
         {
             CheckDisposed();
             NativeApi.DrawingContext_FillEllipse_(NativePointer, bounds, brush.NativePointer);
         }
         
-        public void DrawEllipse(Alternet.Drawing.RectangleF bounds, Pen pen)
+        public void DrawEllipse(Alternet.Drawing.Rect bounds, Pen pen)
         {
             CheckDisposed();
             NativeApi.DrawingContext_DrawEllipse_(NativePointer, bounds, pen.NativePointer);
         }
         
-        public void DrawText(string text, Alternet.Drawing.PointF origin, Font font, Brush brush)
+        public void DrawText(string text, Alternet.Drawing.Point origin, Font font, Brush brush)
         {
             CheckDisposed();
             NativeApi.DrawingContext_DrawText_(NativePointer, text, origin, font.NativePointer, brush.NativePointer);
         }
         
-        public void DrawImage(Image image, Alternet.Drawing.PointF origin)
+        public void DrawImage(Image image, Alternet.Drawing.Point origin)
         {
             CheckDisposed();
             NativeApi.DrawingContext_DrawImage_(NativePointer, image.NativePointer, origin);
         }
         
-        public Alternet.Drawing.SizeF MeasureText(string text, Font font)
+        public Alternet.Drawing.Size MeasureText(string text, Font font)
         {
             CheckDisposed();
             return NativeApi.DrawingContext_MeasureText_(NativePointer, text, font.NativePointer);
         }
         
-        public void PushTransform(Alternet.Drawing.SizeF translation)
+        public void PushTransform(Alternet.Drawing.Size translation)
         {
             CheckDisposed();
             NativeApi.DrawingContext_PushTransform_(NativePointer, translation);
@@ -78,28 +78,28 @@ namespace Alternet.UI.Native
             static NativeApi() => Initialize();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_FillRectangle_(IntPtr obj, NativeApiTypes.RectangleF rectangle, IntPtr brush);
+            public static extern void DrawingContext_FillRectangle_(IntPtr obj, NativeApiTypes.Rect rectangle, IntPtr brush);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawRectangle_(IntPtr obj, NativeApiTypes.RectangleF rectangle, IntPtr pen);
+            public static extern void DrawingContext_DrawRectangle_(IntPtr obj, NativeApiTypes.Rect rectangle, IntPtr pen);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_FillEllipse_(IntPtr obj, NativeApiTypes.RectangleF bounds, IntPtr brush);
+            public static extern void DrawingContext_FillEllipse_(IntPtr obj, NativeApiTypes.Rect bounds, IntPtr brush);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawEllipse_(IntPtr obj, NativeApiTypes.RectangleF bounds, IntPtr pen);
+            public static extern void DrawingContext_DrawEllipse_(IntPtr obj, NativeApiTypes.Rect bounds, IntPtr pen);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawText_(IntPtr obj, string text, NativeApiTypes.PointF origin, IntPtr font, IntPtr brush);
+            public static extern void DrawingContext_DrawText_(IntPtr obj, string text, NativeApiTypes.Point origin, IntPtr font, IntPtr brush);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawImage_(IntPtr obj, IntPtr image, NativeApiTypes.PointF origin);
+            public static extern void DrawingContext_DrawImage_(IntPtr obj, IntPtr image, NativeApiTypes.Point origin);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.SizeF DrawingContext_MeasureText_(IntPtr obj, string text, IntPtr font);
+            public static extern NativeApiTypes.Size DrawingContext_MeasureText_(IntPtr obj, string text, IntPtr font);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_PushTransform_(IntPtr obj, NativeApiTypes.SizeF translation);
+            public static extern void DrawingContext_PushTransform_(IntPtr obj, NativeApiTypes.Size translation);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_Pop_(IntPtr obj);

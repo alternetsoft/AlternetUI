@@ -16,6 +16,6 @@ namespace NativeApi.Api
 
         public event EventHandler SelectedPageIndexChanged { add => throw new Exception(); remove => throw new Exception(); }
 
-        public SizeF GetTotalPreferredSizeFromPageSize(SizeF pageSize) => throw new Exception();
+        public Size GetTotalPreferredSizeFromPageSize(Size pageSize) => throw new Exception();
     }
 }

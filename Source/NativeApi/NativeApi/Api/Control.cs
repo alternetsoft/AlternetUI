@@ -26,13 +26,13 @@ namespace NativeApi.Api
 
         public Control? Parent { get; }
 
-        public SizeF Size { get; set; }
+        public Size Size { get; set; }
 
-        public PointF Location { get; set; }
+        public Point Location { get; set; }
 
-        public RectangleF Bounds { get; set; }
+        public Rect Bounds { get; set; }
 
-        public SizeF ClientSize { get; set; }
+        public Size ClientSize { get; set; }
 
         public virtual Thickness IntrinsicLayoutPadding { get; }
         
@@ -56,7 +56,7 @@ namespace NativeApi.Api
 
         public Font? Font { get; set; }
 
-        public virtual SizeF GetPreferredSize(SizeF availableSize) => throw new Exception();
+        public virtual Size GetPreferredSize(Size availableSize) => throw new Exception();
 
         public DrawingContext OpenPaintDrawingContext() => throw new Exception();
         public DrawingContext OpenClientDrawingContext() => throw new Exception();

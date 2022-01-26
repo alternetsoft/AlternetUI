@@ -13,7 +13,7 @@ ALTERNET_UI_API Image* Image_Create_()
     return new Image();
 }
 
-ALTERNET_UI_API SizeF_C Image_GetSize_(Image* obj)
+ALTERNET_UI_API Size_C Image_GetSize_(Image* obj)
 {
     return obj->GetSize();
 }

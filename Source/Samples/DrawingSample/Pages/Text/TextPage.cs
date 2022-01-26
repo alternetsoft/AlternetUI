@@ -49,7 +49,7 @@ namespace DrawingSample
             }
         }
 
-        public override void Draw(DrawingContext dc, RectangleF bounds)
+        public override void Draw(DrawingContext dc, Rect bounds)
         {
             if (paragraphs == null)
                 paragraphs = CreateParagraphs().ToArray();
@@ -61,10 +61,10 @@ namespace DrawingSample
             float y = 20;
             foreach (var paragraph in paragraphs)
             {
-                dc.DrawText(paragraph.FontInfo, fontInfoFont, fontInfoBrush, new PointF(x, y));
+                dc.DrawText(paragraph.FontInfo, fontInfoFont, fontInfoBrush, new Point(x, y));
                 y += dc.MeasureText(paragraph.FontInfo, fontInfoFont).Height + 3;
 
-                dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new PointF(20, y));
+                dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new Point(20, y));
                 y += dc.MeasureText(LoremIpsum, paragraph.Font).Height + 20;
 
                 var c = new Skybrud.Colors.RgbColor(color.R, color.G, color.B).Lighten(lighten).ToRgb();

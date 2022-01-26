@@ -32,7 +32,7 @@ namespace Alternet::UI
         return notebook;
     }
 
-    SizeF TabControl::GetTotalPreferredSizeFromPageSize(const SizeF& pageSize)
+    Size TabControl::GetTotalPreferredSizeFromPageSize(const Size& pageSize)
     {
         auto notebook = GetNotebook();
         return toDip(notebook->CalcSizeFromPage(fromDip(pageSize, notebook)), notebook);

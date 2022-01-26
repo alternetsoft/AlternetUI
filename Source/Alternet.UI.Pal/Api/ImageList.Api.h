@@ -23,12 +23,12 @@ ALTERNET_UI_API void ImageList_SetPixelImageSize_(ImageList* obj, Int32Size valu
     obj->SetPixelImageSize(value);
 }
 
-ALTERNET_UI_API SizeF_C ImageList_GetImageSize_(ImageList* obj)
+ALTERNET_UI_API Size_C ImageList_GetImageSize_(ImageList* obj)
 {
     return obj->GetImageSize();
 }
 
-ALTERNET_UI_API void ImageList_SetImageSize_(ImageList* obj, SizeF value)
+ALTERNET_UI_API void ImageList_SetImageSize_(ImageList* obj, Size value)
 {
     obj->SetImageSize(value);
 }

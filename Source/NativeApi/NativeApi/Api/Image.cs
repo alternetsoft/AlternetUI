@@ -8,7 +8,7 @@ namespace NativeApi.Api
     {
         public void LoadFromStream(InputStream stream) => throw new Exception();
 
-        public SizeF Size { get; }
+        public Size Size { get; }
         public Int32Size PixelSize { get; }
     }
 }

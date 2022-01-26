@@ -17,7 +17,7 @@ namespace Alternet.UI
 
         private Control? control;
 
-        private RectangleF bounds;
+        private Rect bounds;
 
         private Native.Control? nativeControl;
         private bool isVisualChild;
@@ -47,7 +47,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the <see cref="Control"/> bounds relative to the parent, in device-independent units (1/96th inch per unit).
         /// </summary>
-        public virtual RectangleF Bounds
+        public virtual Rect Bounds
         {
             get => NativeControl != null ? NativeControl.Bounds : bounds;
             set
@@ -64,7 +64,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets size of the <see cref="Control"/>'s client area, in device-independent units (1/96th inch per unit).
         /// </summary>
-        public SizeF ClientSize
+        public Size ClientSize
         {
             get => NativeControl != null ? NativeControl.ClientSize : bounds.Size;
             set
@@ -72,7 +72,7 @@ namespace Alternet.UI
                 if (NativeControl != null)
                     NativeControl.ClientSize = value;
                 else
-                    bounds = new RectangleF(bounds.Location, value);
+                    bounds = new Rect(bounds.Location, value);
 
                 PerformLayout(); // todo: use event
             }
@@ -82,13 +82,13 @@ namespace Alternet.UI
         /// Gets a rectangle which describes an area inside of the <see cref="Control"/> available
         /// for positioning (layout) of its child controls, in device-independent units (1/96th inch per unit).
         /// </summary>
-        public virtual RectangleF ChildrenLayoutBounds
+        public virtual Rect ChildrenLayoutBounds
         {
             get
             {
                 var childrenBounds = ClientRectangle;
                 if (childrenBounds.IsEmpty)
-                    return RectangleF.Empty;
+                    return Rect.Empty;
 
                 var padding = Control.Padding;
 
@@ -97,8 +97,8 @@ namespace Alternet.UI
                 if (nativeControl != null)
                     intrinsicPadding = nativeControl.IntrinsicLayoutPadding;
 
-                return new RectangleF(
-                    new PointF(padding.Left + intrinsicPadding.Left, padding.Top + intrinsicPadding.Top),
+                return new Rect(
+                    new Point(padding.Left + intrinsicPadding.Left, padding.Top + intrinsicPadding.Top),
                     childrenBounds.Size - padding.Size - intrinsicPadding.Size);
             }
         }
@@ -107,7 +107,7 @@ namespace Alternet.UI
         /// Gets a rectangle which describes the client area inside of the <see cref="Control"/>,
         /// in device-independent units (1/96th inch per unit).
         /// </summary>
-        public virtual RectangleF ClientRectangle => new RectangleF(new PointF(), ClientSize);
+        public virtual Rect ClientRectangle => new Rect(new Point(), ClientSize);
 
         /// <summary>
         /// Gets a value indicating whether the mouse pointer is over the <see cref="Control"/>.
@@ -247,7 +247,7 @@ namespace Alternet.UI
                 var horizontalPosition = AlignedLayout.AlignHorizontal(childrenLayoutBounds, control, preferredSize);
                 var verticalPosition = AlignedLayout.AlignVertical(childrenLayoutBounds, control, preferredSize);
 
-                control.Handler.Bounds = new RectangleF(
+                control.Handler.Bounds = new Rect(
                     horizontalPosition.Origin,
                     verticalPosition.Origin,
                     horizontalPosition.Size,
@@ -270,13 +270,13 @@ namespace Alternet.UI
         /// Retrieves the size of a rectangular area into which the control can be fitted, in device-independent units (1/96th inch per unit).
         /// </summary>
         /// <param name="availableSize">The available space that a parent element can allocate a child control.</param>
-        /// <returns>A <see cref="SizeF"/> representing the width and height of a rectangle, in device-independent units (1/96th inch per unit).</returns>
-        public virtual SizeF GetPreferredSize(SizeF availableSize)
+        /// <returns>A <see cref="Size"/> representing the width and height of a rectangle, in device-independent units (1/96th inch per unit).</returns>
+        public virtual Size GetPreferredSize(Size availableSize)
         {
             if (Control.Children.Count == 0 && VisualChildren.Count == 0)
             {
-                var s = NativeControl?.GetPreferredSize(availableSize) ?? new SizeF();
-                return new SizeF(
+                var s = NativeControl?.GetPreferredSize(availableSize) ?? new Size();
+                return new Size(
                     float.IsNaN(Control.Width) ? s.Width : Control.Width,
                     float.IsNaN(Control.Height) ? s.Height : Control.Height);
             }
@@ -418,12 +418,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the size of the area which can fit all the children of this control.
         /// </summary>
-        protected SizeF GetChildrenMaxPreferredSize(SizeF availableSize)
+        protected Size GetChildrenMaxPreferredSize(Size availableSize)
         {
             var specifiedWidth = Control.Width;
             var specifiedHeight = Control.Height;
             if (!float.IsNaN(specifiedWidth) && !float.IsNaN(specifiedHeight))
-                return new SizeF(specifiedWidth, specifiedHeight);
+                return new Size(specifiedWidth, specifiedHeight);
 
             float maxWidth = 0;
             float maxHeight = 0;
@@ -445,7 +445,7 @@ namespace Alternet.UI
             var width = float.IsNaN(specifiedWidth) ? maxWidth + padding.Horizontal + intrinsicPadding.Horizontal : specifiedWidth;
             var height = float.IsNaN(specifiedHeight) ? maxHeight + padding.Vertical + intrinsicPadding.Vertical : specifiedHeight;
 
-            return new SizeF(width, height);
+            return new Size(width, height);
         }
 
         /// <summary>

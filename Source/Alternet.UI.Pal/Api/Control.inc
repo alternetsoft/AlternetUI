@@ -4,20 +4,20 @@ public:
 Control* GetParent();
 
 
-SizeF GetSize();
-void SetSize(const SizeF& value);
+Size GetSize();
+void SetSize(const Size& value);
 
 
-PointF GetLocation();
-void SetLocation(const PointF& value);
+Point GetLocation();
+void SetLocation(const Point& value);
 
 
-RectangleF GetBounds();
-void SetBounds(const RectangleF& value);
+Rect GetBounds();
+void SetBounds(const Rect& value);
 
 
-SizeF GetClientSize();
-void SetClientSize(const SizeF& value);
+Size GetClientSize();
+void SetClientSize(const Size& value);
 
 
 virtual Thickness GetIntrinsicLayoutPadding();
@@ -52,7 +52,7 @@ void SetMouseCapture(bool value);
 void AddChild(Control* control);
 void RemoveChild(Control* control);
 void Update();
-virtual SizeF GetPreferredSize(const SizeF& availableSize);
+virtual Size GetPreferredSize(const Size& availableSize);
 DrawingContext* OpenPaintDrawingContext();
 DrawingContext* OpenClientDrawingContext();
 void BeginUpdate();

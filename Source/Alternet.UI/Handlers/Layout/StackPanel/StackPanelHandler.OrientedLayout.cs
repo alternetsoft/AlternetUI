@@ -28,7 +28,7 @@ namespace Alternet.UI
             public StackPanelHandler Handler { get; }
 
             public abstract void Layout();
-            public abstract SizeF GetPreferredSize(SizeF availableSize);
+            public abstract Size GetPreferredSize(Size availableSize);
         }
     }
 }

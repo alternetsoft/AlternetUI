@@ -247,9 +247,9 @@ namespace Alternet.UI
         private bool UseLayoutRounding { get; set; }
 
         /// <inheritdoc/>
-        public override SizeF GetPreferredSize(SizeF availableSize)
+        public override Size GetPreferredSize(Size availableSize)
         {
-            SizeF gridDesiredSize;
+            Size gridDesiredSize;
             ExtendedData extData = ExtData;
 
             try
@@ -261,7 +261,7 @@ namespace Alternet.UI
 
                 if (extData == null)
                 {
-                    gridDesiredSize = new SizeF();
+                    gridDesiredSize = new Size();
                     var children = Children;
 
                     for (int i = 0, count = children.Count; i < count; ++i)
@@ -270,7 +270,7 @@ namespace Alternet.UI
                         if (child != null)
                         {
                             var s = child.GetPreferredSize(availableSize);
-                            var childDesiredSize = new SizeF(s.Width + child.Margin.Horizontal, s.Height + child.Margin.Vertical);
+                            var childDesiredSize = new Size(s.Width + child.Margin.Horizontal, s.Height + child.Margin.Vertical);
                             gridDesiredSize.Width = Math.Max(gridDesiredSize.Width, childDesiredSize.Width);
                             gridDesiredSize.Height = Math.Max(gridDesiredSize.Height, childDesiredSize.Height);
                         }
@@ -532,7 +532,7 @@ namespace Alternet.UI
                     MeasureCellsGroup(extData.CellGroup4, availableSize, false, false);
 
                     EnterCounter(Counters._CalculateDesiredSize);
-                    gridDesiredSize = new SizeF(
+                    gridDesiredSize = new Size(
                             CalculateDesiredSize(DefinitionsU),
                             CalculateDesiredSize(DefinitionsV));
                     ExitCounter(Counters._CalculateDesiredSize);
@@ -571,7 +571,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnLayout()
         {
-            GetPreferredSize(new SizeF(float.PositiveInfinity, float.PositiveInfinity)); // yezo
+            GetPreferredSize(new Size(float.PositiveInfinity, float.PositiveInfinity)); // yezo
 
             var arrangeSize = Handler.ChildrenLayoutBounds.Size;
             try
@@ -589,7 +589,7 @@ namespace Alternet.UI
                         var child = children[i];
                         if (child != null)
                         {
-                            child.Handler.Bounds = new RectangleF(new PointF(), arrangeSize);
+                            child.Handler.Bounds = new Rect(new Point(), arrangeSize);
                         }
                     }
                 }
@@ -619,7 +619,7 @@ namespace Alternet.UI
                         int columnSpan = PrivateCells[currentCell].ColumnSpan;
                         int rowSpan = PrivateCells[currentCell].RowSpan;
 
-                        var cellRect = new RectangleF(
+                        var cellRect = new Rect(
                             columnIndex == 0 ? 0.0f : DefinitionsU[columnIndex].FinalOffset,
                             rowIndex == 0 ? 0.0f : DefinitionsV[rowIndex].FinalOffset,
                             GetFinalSizeForRange(DefinitionsU, columnIndex, columnSpan),
@@ -646,14 +646,14 @@ namespace Alternet.UI
             }
         }
 
-        void SetControlBounds(Control control, RectangleF bounds)
+        void SetControlBounds(Control control, Rect bounds)
         {
             var preferredSize = control.GetPreferredSize(bounds.Size);
 
             var horizontalPosition = AlignedLayout.AlignHorizontal(bounds, control, preferredSize);
             var verticalPosition = AlignedLayout.AlignVertical(bounds, control, preferredSize);
 
-            control.Handler.Bounds = new RectangleF(
+            control.Handler.Bounds = new Rect(
                 horizontalPosition.Origin,
                 verticalPosition.Origin,
                 horizontalPosition.Size,
@@ -1041,7 +1041,7 @@ namespace Alternet.UI
 
         private void MeasureCellsGroup(
             int cellsHead,
-            SizeF referenceSize,
+            Size referenceSize,
             bool ignoreDesiredSizeU,
             bool forceInfinityV)
         {
@@ -1062,7 +1062,7 @@ namespace Alternet.UI
         /// <param name="hasDesiredSizeUChanged"></param>
         private void MeasureCellsGroup(
             int cellsHead,
-            SizeF referenceSize,
+            Size referenceSize,
             bool ignoreDesiredSizeU,
             bool forceInfinityV,
             out bool hasDesiredSizeUChanged)
@@ -1083,7 +1083,7 @@ namespace Alternet.UI
             {
                 var child = children[i];
                 var s = child.GetPreferredSize(referenceSize);
-                var childPreferredSize = new SizeF(s.Width + child.Margin.Horizontal, s.Height + child.Margin.Vertical);
+                var childPreferredSize = new Size(s.Width + child.Margin.Horizontal, s.Height + child.Margin.Vertical);
                 float oldWidth = childPreferredSize.Width;
 
                 MeasureCell(i, forceInfinityV);
@@ -1230,7 +1230,7 @@ namespace Alternet.UI
             var child = Children[cell];
             if (child != null)
             {
-                var childConstraint = new SizeF(cellMeasureWidth, cellMeasureHeight);
+                var childConstraint = new Size(cellMeasureWidth, cellMeasureHeight);
                 // child.Measure(childConstraint); // yezo
             }
             ExitCounter(Counters.__MeasureChild);
@@ -3861,7 +3861,7 @@ namespace Alternet.UI
             /// UpdateRenderBounds.
             /// </summary>
             /// <param name="boundsSize">Size of render bounds</param>
-            internal void UpdateRenderBounds(SizeF boundsSize)
+            internal void UpdateRenderBounds(Size boundsSize)
             {
                 //using (DrawingContext drawingContext = RenderOpen())
                 //{

@@ -30,7 +30,7 @@ namespace Alternet::UI
         return _image;
     }
     
-    SizeF Image::GetSize()
+    Size Image::GetSize()
     {
         return toDip(_image.GetSize(), nullptr);
     }

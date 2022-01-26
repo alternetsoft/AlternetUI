@@ -27,12 +27,12 @@ namespace Alternet::UI
         RecreateImageList();
     }
 
-    SizeF ImageList::GetImageSize()
+    Size ImageList::GetImageSize()
     {
         return toDip(_imageList->GetSize(), nullptr);
     }
 
-    void ImageList::SetImageSize(const SizeF& value)
+    void ImageList::SetImageSize(const Size& value)
     {
         SetPixelImageSize(fromDip(value, nullptr));
     }

@@ -14,42 +14,42 @@ ALTERNET_UI_API Control* Control_GetParent_(Control* obj)
     return obj->GetParent();
 }
 
-ALTERNET_UI_API SizeF_C Control_GetSize_(Control* obj)
+ALTERNET_UI_API Size_C Control_GetSize_(Control* obj)
 {
     return obj->GetSize();
 }
 
-ALTERNET_UI_API void Control_SetSize_(Control* obj, SizeF value)
+ALTERNET_UI_API void Control_SetSize_(Control* obj, Size value)
 {
     obj->SetSize(value);
 }
 
-ALTERNET_UI_API PointF_C Control_GetLocation_(Control* obj)
+ALTERNET_UI_API Point_C Control_GetLocation_(Control* obj)
 {
     return obj->GetLocation();
 }
 
-ALTERNET_UI_API void Control_SetLocation_(Control* obj, PointF value)
+ALTERNET_UI_API void Control_SetLocation_(Control* obj, Point value)
 {
     obj->SetLocation(value);
 }
 
-ALTERNET_UI_API RectangleF_C Control_GetBounds_(Control* obj)
+ALTERNET_UI_API Rect_C Control_GetBounds_(Control* obj)
 {
     return obj->GetBounds();
 }
 
-ALTERNET_UI_API void Control_SetBounds_(Control* obj, RectangleF value)
+ALTERNET_UI_API void Control_SetBounds_(Control* obj, Rect value)
 {
     obj->SetBounds(value);
 }
 
-ALTERNET_UI_API SizeF_C Control_GetClientSize_(Control* obj)
+ALTERNET_UI_API Size_C Control_GetClientSize_(Control* obj)
 {
     return obj->GetClientSize();
 }
 
-ALTERNET_UI_API void Control_SetClientSize_(Control* obj, SizeF value)
+ALTERNET_UI_API void Control_SetClientSize_(Control* obj, Size value)
 {
     obj->SetClientSize(value);
 }
@@ -139,7 +139,7 @@ ALTERNET_UI_API void Control_Update_(Control* obj)
     obj->Update();
 }
 
-ALTERNET_UI_API SizeF_C Control_GetPreferredSize_(Control* obj, SizeF availableSize)
+ALTERNET_UI_API Size_C Control_GetPreferredSize_(Control* obj, Size availableSize)
 {
     return obj->GetPreferredSize(availableSize);
 }

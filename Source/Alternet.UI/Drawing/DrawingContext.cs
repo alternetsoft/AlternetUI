@@ -17,15 +17,15 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Fills the interior of a rectangle specified by a <see cref="RectangleF"/> structure.
+        /// Fills the interior of a rectangle specified by a <see cref="Rect"/> structure.
         /// </summary>
         /// <param name="brush"><see cref="Brush"/> that determines the characteristics of the fill.</param>
-        /// <param name="rectangle"><see cref="RectangleF"/> structure that represents the rectangle to fill.</param>
+        /// <param name="rectangle"><see cref="Rect"/> structure that represents the rectangle to fill.</param>
         /// <remarks>
         /// This method fills the interior of the rectangle defined by the <c>rect</c> parameter,
         /// including the specified upper-left corner and up to the calculated lower and bottom edges.
         /// </remarks>
-        public void FillRectangle(Brush brush, RectangleF rectangle)
+        public void FillRectangle(Brush brush, Rect rectangle)
         {
             if (brush is null)
                 throw new ArgumentNullException(nameof(brush));
@@ -34,15 +34,15 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Fills the interior of an ellipse defined by a bounding rectangle specified by a <see cref="RectangleF"/> structure.
+        /// Fills the interior of an ellipse defined by a bounding rectangle specified by a <see cref="Rect"/> structure.
         /// </summary>
         /// <param name="brush"><see cref="Brush"/> that determines the characteristics of the fill.</param>
-        /// <param name="bounds"><see cref="RectangleF"/> structure that represents the bounding rectangle that defines the ellipse.</param>
+        /// <param name="bounds"><see cref="Rect"/> structure that represents the bounding rectangle that defines the ellipse.</param>
         /// <remarks>
         /// This method fills the interior of an ellipse with a <see cref="Brush"/>.
         /// The ellipse is defined by the bounding rectangle represented by the <c>bounds</c> parameter.
         /// </remarks>
-        public void FillEllipse(Brush brush, RectangleF bounds)
+        public void FillEllipse(Brush brush, Rect bounds)
         {
             if (brush is null)
                 throw new ArgumentNullException(nameof(brush));
@@ -51,11 +51,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Draws a rectangle specified by a <see cref="RectangleF"/> structure.
+        /// Draws a rectangle specified by a <see cref="Rect"/> structure.
         /// </summary>
         /// <param name="pen">A <see cref="Pen"/> that determines the color, width, and style of the rectangle.</param>
-        /// <param name="rectangle">A <see cref="RectangleF"/> structure that represents the rectangle to draw.</param>
-        public void DrawRectangle(Pen pen, RectangleF rectangle)
+        /// <param name="rectangle">A <see cref="Rect"/> structure that represents the rectangle to draw.</param>
+        public void DrawRectangle(Pen pen, Rect rectangle)
         {
             if (pen is null)
                 throw new ArgumentNullException(nameof(pen));
@@ -64,11 +64,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Draws an ellipse defined by a bounding <see cref="RectangleF"/>.
+        /// Draws an ellipse defined by a bounding <see cref="Rect"/>.
         /// </summary>
         /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the ellipse.</param>
-        /// <param name="bounds"><see cref="RectangleF"/> structure that defines the boundaries of the ellipse.</param>
-        public void DrawEllipse(Pen pen, RectangleF bounds)
+        /// <param name="bounds"><see cref="Rect"/> structure that defines the boundaries of the ellipse.</param>
+        public void DrawEllipse(Pen pen, Rect bounds)
         {
             if (pen is null)
                 throw new ArgumentNullException(nameof(pen));
@@ -80,8 +80,8 @@ namespace Alternet.Drawing
         /// Draws the specified <see cref="Image"/>, using its original size, at the specified location.
         /// </summary>
         /// <param name="image"><see cref="Image"/> to draw.</param>
-        /// <param name="origin"><see cref="PointF"/> structure that represents the upper-left corner of the drawn image.</param>
-        public void DrawImage(Image image, PointF origin)
+        /// <param name="origin"><see cref="Point"/> structure that represents the upper-left corner of the drawn image.</param>
+        public void DrawImage(Image image, Point origin)
         {
             if (image is null)
                 throw new ArgumentNullException(nameof(image));
@@ -95,8 +95,8 @@ namespace Alternet.Drawing
         /// <param name="text">String to draw.</param>
         /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
         /// <param name="brush"><see cref="Brush"/> that determines the color and texture of the drawn text.</param>
-        /// <param name="origin"><see cref="PointF"/> structure that specifies the upper-left corner of the drawn text.</param>
-        public void DrawText(string text, Font font, Brush brush, PointF origin)
+        /// <param name="origin"><see cref="Point"/> structure that specifies the upper-left corner of the drawn text.</param>
+        public void DrawText(string text, Font font, Brush brush, Point origin)
         {
             if (text is null)
                 throw new ArgumentNullException(nameof(text));
@@ -113,11 +113,11 @@ namespace Alternet.Drawing
         /// <param name="text">String to measure.</param>
         /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
         /// <returns>
-        /// This method returns a <see cref="SizeF"/> structure that represents the size,
+        /// This method returns a <see cref="Size"/> structure that represents the size,
         /// in device-independent units (1/96th inch per unit), of the
         /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
         /// </returns>
-        public SizeF MeasureText(string text, Font font)
+        public Size MeasureText(string text, Font font)
         {
             if (text is null)
                 throw new ArgumentNullException(nameof(text));

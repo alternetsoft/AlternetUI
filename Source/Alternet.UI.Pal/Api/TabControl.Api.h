@@ -38,7 +38,7 @@ ALTERNET_UI_API void TabControl_RemovePage_(TabControl* obj, int index, Control*
     obj->RemovePage(index, page);
 }
 
-ALTERNET_UI_API SizeF_C TabControl_GetTotalPreferredSizeFromPageSize_(TabControl* obj, SizeF pageSize)
+ALTERNET_UI_API Size_C TabControl_GetTotalPreferredSizeFromPageSize_(TabControl* obj, Size pageSize)
 {
     return obj->GetTotalPreferredSizeFromPageSize(pageSize);
 }

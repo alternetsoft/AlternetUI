@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Alternet.Drawing
 {
-    public struct SizeF
+    public struct Point
     {
     }
 }

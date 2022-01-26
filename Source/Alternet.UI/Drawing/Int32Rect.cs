@@ -182,7 +182,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts a RectangleF to a Rectangle by performing a ceiling operation on all the coordinates.
         /// </summary>
-        public static Int32Rect Ceiling(RectangleF value)
+        public static Int32Rect Ceiling(Rect value)
         {
             unchecked
             {
@@ -197,7 +197,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts a RectangleF to a Rectangle by performing a truncate operation on all the coordinates.
         /// </summary>
-        public static Int32Rect Truncate(RectangleF value)
+        public static Int32Rect Truncate(Rect value)
         {
             unchecked
             {
@@ -212,7 +212,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts a RectangleF to a Rectangle by performing a round operation on all the coordinates.
         /// </summary>
-        public static Int32Rect Round(RectangleF value)
+        public static Int32Rect Round(Rect value)
         {
             unchecked
             {

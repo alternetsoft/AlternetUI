@@ -23,19 +23,19 @@ namespace Alternet.UI.Native
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct SizeF
+        public struct Size
         {
             public float Width, Height;
 
-            public SizeF(float width, float height)
+            public Size(float width, float height)
             {
                 Width = width;
                 Height = height;
             }
 
-            public static implicit operator Drawing.SizeF(SizeF v) => new Drawing.SizeF(v.Width, v.Height);
+            public static implicit operator Drawing.Size(Size v) => new Drawing.Size(v.Width, v.Height);
 
-            public static implicit operator SizeF(Drawing.SizeF v) => new SizeF(v.Width, v.Height);
+            public static implicit operator Size(Drawing.Size v) => new Size(v.Width, v.Height);
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -55,19 +55,19 @@ namespace Alternet.UI.Native
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct PointF
+        public struct Point
         {
             public float X, Y;
 
-            public PointF(float x, float y)
+            public Point(float x, float y)
             {
                 X = x;
                 Y = y;
             }
 
-            public static implicit operator Drawing.PointF(PointF v) => new Drawing.PointF(v.X, v.Y);
+            public static implicit operator Drawing.Point(Point v) => new Drawing.Point(v.X, v.Y);
 
-            public static implicit operator PointF(Drawing.PointF v) => new PointF(v.X, v.Y);
+            public static implicit operator Point(Drawing.Point v) => new Point(v.X, v.Y);
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -89,11 +89,11 @@ namespace Alternet.UI.Native
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct RectangleF
+        public struct Rect
         {
             public float X, Y, Width, Height;
 
-            public RectangleF(float x, float y, float width, float height)
+            public Rect(float x, float y, float width, float height)
             {
                 X = x;
                 Y = y;
@@ -101,9 +101,9 @@ namespace Alternet.UI.Native
                 Height = height;
             }
 
-            public static implicit operator Drawing.RectangleF(RectangleF v) => new Drawing.RectangleF(v.X, v.Y, v.Width, v.Height);
+            public static implicit operator Drawing.Rect(Rect v) => new Drawing.Rect(v.X, v.Y, v.Width, v.Height);
 
-            public static implicit operator RectangleF(Drawing.RectangleF v) => new RectangleF(v.X, v.Y, v.Width, v.Height);
+            public static implicit operator Rect(Drawing.Rect v) => new Rect(v.X, v.Y, v.Width, v.Height);
         }
 
         [StructLayout(LayoutKind.Sequential)]

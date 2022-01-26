@@ -12,7 +12,7 @@ namespace Alternet::UI
 
         void OnSliderValueChanged(wxCommandEvent& event);
 
-        SizeF GetPreferredSize(const SizeF& availableSize) override;
+        Size GetPreferredSize(const Size& availableSize) override;
 
     private:
         wxSlider* GetSlider();

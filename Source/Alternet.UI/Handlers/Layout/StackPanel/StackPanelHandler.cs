@@ -11,7 +11,7 @@ namespace Alternet.UI
 
         public override void OnLayout() => Layout.Layout();
 
-        public override SizeF GetPreferredSize(SizeF availableSize) => Layout.GetPreferredSize(availableSize);
+        public override Size GetPreferredSize(Size availableSize) => Layout.GetPreferredSize(availableSize);
 
         protected override void OnAttach()
         {

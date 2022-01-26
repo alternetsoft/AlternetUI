@@ -12,12 +12,12 @@ namespace Alternet.Drawing
     /// Stores the location and size of a rectangular region.
     /// </summary>
     [Serializable]
-    public struct RectangleF : IEquatable<RectangleF>
+    public struct Rect : IEquatable<Rect>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref='Drawing.RectangleF'/> class.
+        /// Initializes a new instance of the <see cref='Drawing.Rect'/> class.
         /// </summary>
-        public static readonly RectangleF Empty;
+        public static readonly Rect Empty;
 
         private float x; // Do not rename (binary serialization)
         private float y; // Do not rename (binary serialization)
@@ -25,10 +25,10 @@ namespace Alternet.Drawing
         private float height; // Do not rename (binary serialization)
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Drawing.RectangleF'/> class with the specified location
+        /// Initializes a new instance of the <see cref='Drawing.Rect'/> class with the specified location
         /// and size.
         /// </summary>
-        public RectangleF(float x, float y, float width, float height)
+        public Rect(float x, float y, float width, float height)
         {
             this.x = x;
             this.y = y;
@@ -37,10 +37,10 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Drawing.RectangleF'/> class with the specified location
+        /// Initializes a new instance of the <see cref='Drawing.Rect'/> class with the specified location
         /// and size.
         /// </summary>
-        public RectangleF(PointF location, SizeF size)
+        public Rect(Point location, Size size)
         {
             x = location.X;
             y = location.Y;
@@ -49,10 +49,10 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Drawing.RectangleF'/> struct from the specified
+        /// Initializes a new instance of the <see cref='Drawing.Rect'/> struct from the specified
         /// <see cref="System.Numerics.Vector4"/>.
         /// </summary>
-        public RectangleF(Vector4 vector)
+        public Rect(Vector4 vector)
         {
             x = vector.X;
             y = vector.Y;
@@ -61,34 +61,34 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a new <see cref="System.Numerics.Vector4"/> from this <see cref="Drawing.RectangleF"/>.
+        /// Creates a new <see cref="System.Numerics.Vector4"/> from this <see cref="Drawing.Rect"/>.
         /// </summary>
         public Vector4 ToVector4() => new Vector4(x, y, width, height);
 
         /// <summary>
-        /// Converts the specified <see cref="Drawing.RectangleF"/> to a <see cref="System.Numerics.Vector4"/>.
+        /// Converts the specified <see cref="Drawing.Rect"/> to a <see cref="System.Numerics.Vector4"/>.
         /// </summary>
-        public static explicit operator Vector4(RectangleF rectangle) => rectangle.ToVector4();
+        public static explicit operator Vector4(Rect rectangle) => rectangle.ToVector4();
 
         /// <summary>
-        /// Converts the specified <see cref="System.Numerics.Vector2"/> to a <see cref="Drawing.RectangleF"/>.
+        /// Converts the specified <see cref="System.Numerics.Vector2"/> to a <see cref="Drawing.Rect"/>.
         /// </summary>
-        public static explicit operator RectangleF(Vector4 vector) => new RectangleF(vector);
+        public static explicit operator Rect(Vector4 vector) => new Rect(vector);
 
         /// <summary>
-        /// Creates a new <see cref='Drawing.RectangleF'/> with the specified location and size.
+        /// Creates a new <see cref='Drawing.Rect'/> with the specified location and size.
         /// </summary>
-        public static RectangleF FromLTRB(float left, float top, float right, float bottom) =>
-            new RectangleF(left, top, right - left, bottom - top);
+        public static Rect FromLTRB(float left, float top, float right, float bottom) =>
+            new Rect(left, top, right - left, bottom - top);
 
         /// <summary>
         /// Gets or sets the coordinates of the upper-left corner of the rectangular region represented by this
-        /// <see cref='Drawing.RectangleF'/>.
+        /// <see cref='Drawing.Rect'/>.
         /// </summary>
         [Browsable(false)]
-        public PointF Location
+        public Point Location
         {
-            readonly get => new PointF(X, Y);
+            readonly get => new Point(X, Y);
             set
             {
                 X = value.X;
@@ -97,12 +97,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the size of this <see cref='Drawing.RectangleF'/>.
+        /// Gets or sets the size of this <see cref='Drawing.Rect'/>.
         /// </summary>
         [Browsable(false)]
-        public SizeF Size
+        public Size Size
         {
-            readonly get => new SizeF(Width, Height);
+            readonly get => new Size(Width, Height);
             set
             {
                 Width = value.Width;
@@ -112,7 +112,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets the x-coordinate of the upper-left corner of the rectangular region defined by this
-        /// <see cref='Drawing.RectangleF'/>.
+        /// <see cref='Drawing.Rect'/>.
         /// </summary>
         public float X
         {
@@ -122,7 +122,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets the y-coordinate of the upper-left corner of the rectangular region defined by this
-        /// <see cref='Drawing.RectangleF'/>.
+        /// <see cref='Drawing.Rect'/>.
         /// </summary>
         public float Y
         {
@@ -131,7 +131,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the width of the rectangular region defined by this <see cref='Drawing.RectangleF'/>.
+        /// Gets or sets the width of the rectangular region defined by this <see cref='Drawing.Rect'/>.
         /// </summary>
         public float Width
         {
@@ -140,7 +140,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the height of the rectangular region defined by this <see cref='Drawing.RectangleF'/>.
+        /// Gets or sets the height of the rectangular region defined by this <see cref='Drawing.Rect'/>.
         /// </summary>
         public float Height
         {
@@ -150,88 +150,88 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets the x-coordinate of the upper-left corner of the rectangular region defined by this
-        /// <see cref='Drawing.RectangleF'/> .
+        /// <see cref='Drawing.Rect'/> .
         /// </summary>
         [Browsable(false)]
         public readonly float Left => X;
 
         /// <summary>
         /// Gets the y-coordinate of the upper-left corner of the rectangular region defined by this
-        /// <see cref='Drawing.RectangleF'/>.
+        /// <see cref='Drawing.Rect'/>.
         /// </summary>
         [Browsable(false)]
         public readonly float Top => Y;
 
         /// <summary>
         /// Gets the x-coordinate of the lower-right corner of the rectangular region defined by this
-        /// <see cref='Drawing.RectangleF'/>.
+        /// <see cref='Drawing.Rect'/>.
         /// </summary>
         [Browsable(false)]
         public readonly float Right => X + Width;
 
         /// <summary>
         /// Gets the y-coordinate of the lower-right corner of the rectangular region defined by this
-        /// <see cref='Drawing.RectangleF'/>.
+        /// <see cref='Drawing.Rect'/>.
         /// </summary>
         [Browsable(false)]
         public readonly float Bottom => Y + Height;
 
         /// <summary>
-        /// Tests whether this <see cref='Drawing.RectangleF'/> has a <see cref='Drawing.RectangleF.Width'/> or a <see cref='Drawing.RectangleF.Height'/> of 0.
+        /// Tests whether this <see cref='Drawing.Rect'/> has a <see cref='Drawing.Rect.Width'/> or a <see cref='Drawing.Rect.Height'/> of 0.
         /// </summary>
         [Browsable(false)]
         public readonly bool IsEmpty => (Width <= 0) || (Height <= 0);
 
         /// <summary>
-        /// Tests whether <paramref name="obj"/> is a <see cref='Drawing.RectangleF'/> with the same location and
-        /// size of this <see cref='Drawing.RectangleF'/>.
+        /// Tests whether <paramref name="obj"/> is a <see cref='Drawing.Rect'/> with the same location and
+        /// size of this <see cref='Drawing.Rect'/>.
         /// </summary>
-        public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is RectangleF && Equals((RectangleF)obj);
+        public override readonly bool Equals([NotNullWhen(true)] object? obj) => obj is Rect && Equals((Rect)obj);
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
         /// </summary>
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><c>true</c> if the current object is equal to other; otherwise, <c>false</c>.</returns>
-        public readonly bool Equals(RectangleF other) => this == other;
+        public readonly bool Equals(Rect other) => this == other;
 
         /// <summary>
-        /// Tests whether two <see cref='Drawing.RectangleF'/> objects have equal location and size.
+        /// Tests whether two <see cref='Drawing.Rect'/> objects have equal location and size.
         /// </summary>
-        public static bool operator ==(RectangleF left, RectangleF right) =>
+        public static bool operator ==(Rect left, Rect right) =>
             left.X == right.X && left.Y == right.Y && left.Width == right.Width && left.Height == right.Height;
 
         /// <summary>
-        /// Tests whether two <see cref='Drawing.RectangleF'/> objects differ in location or size.
+        /// Tests whether two <see cref='Drawing.Rect'/> objects differ in location or size.
         /// </summary>
-        public static bool operator !=(RectangleF left, RectangleF right) => !(left == right);
+        public static bool operator !=(Rect left, Rect right) => !(left == right);
 
         /// <summary>
         /// Determines if the specified point is contained within the rectangular region defined by this
-        /// <see cref='Drawing.RectangleF'/> .
+        /// <see cref='Drawing.Rect'/> .
         /// </summary>
         public readonly bool Contains(float x, float y) => X <= x && x < X + Width && Y <= y && y < Y + Height;
 
         /// <summary>
         /// Determines if the specified point is contained within the rectangular region defined by this
-        /// <see cref='Drawing.RectangleF'/> .
+        /// <see cref='Drawing.Rect'/> .
         /// </summary>
-        public readonly bool Contains(PointF pt) => Contains(pt.X, pt.Y);
+        public readonly bool Contains(Point pt) => Contains(pt.X, pt.Y);
 
         /// <summary>
         /// Determines if the rectangular region represented by <paramref name="rect"/> is entirely contained within
-        /// the rectangular region represented by this <see cref='Drawing.RectangleF'/> .
+        /// the rectangular region represented by this <see cref='Drawing.Rect'/> .
         /// </summary>
-        public readonly bool Contains(RectangleF rect) =>
+        public readonly bool Contains(Rect rect) =>
             (X <= rect.X) && (rect.X + rect.Width <= X + Width) && (Y <= rect.Y) && (rect.Y + rect.Height <= Y + Height);
 
         /// <summary>
-        /// Gets the hash code for this <see cref='Drawing.RectangleF'/>.
+        /// Gets the hash code for this <see cref='Drawing.Rect'/>.
         /// </summary>
         public override readonly int GetHashCode() => HashCode.Combine(X, Y, Width, Height);
 
         /// <summary>
-        /// Inflates this <see cref='Drawing.RectangleF'/> by the specified amount.
+        /// Inflates this <see cref='Drawing.Rect'/> by the specified amount.
         /// </summary>
         public void Inflate(float x, float y)
         {
@@ -242,16 +242,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Inflates this <see cref='Drawing.RectangleF'/> by the specified amount.
+        /// Inflates this <see cref='Drawing.Rect'/> by the specified amount.
         /// </summary>
-        public void Inflate(SizeF size) => Inflate(size.Width, size.Height);
+        public void Inflate(Size size) => Inflate(size.Width, size.Height);
 
         /// <summary>
-        /// Creates a <see cref='Drawing.RectangleF'/> that is inflated by the specified amount.
+        /// Creates a <see cref='Drawing.Rect'/> that is inflated by the specified amount.
         /// </summary>
-        public static RectangleF Inflate(RectangleF rect, float x, float y)
+        public static Rect Inflate(Rect rect, float x, float y)
         {
-            RectangleF r = rect;
+            Rect r = rect;
             r.Inflate(x, y);
             return r;
         }
@@ -259,9 +259,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a Rectangle that represents the intersection between this Rectangle and rect.
         /// </summary>
-        public void Intersect(RectangleF rect)
+        public void Intersect(Rect rect)
         {
-            RectangleF result = Intersect(rect, this);
+            Rect result = Intersect(rect, this);
 
             X = result.X;
             Y = result.Y;
@@ -273,7 +273,7 @@ namespace Alternet.Drawing
         /// Creates a rectangle that represents the intersection between a and b. If there is no intersection, an
         /// empty rectangle is returned.
         /// </summary>
-        public static RectangleF Intersect(RectangleF a, RectangleF b)
+        public static Rect Intersect(Rect a, Rect b)
         {
             float x1 = Math.Max(a.X, b.X);
             float x2 = Math.Min(a.X + a.Width, b.X + b.Width);
@@ -282,7 +282,7 @@ namespace Alternet.Drawing
 
             if (x2 >= x1 && y2 >= y1)
             {
-                return new RectangleF(x1, y1, x2 - x1, y2 - y1);
+                return new Rect(x1, y1, x2 - x1, y2 - y1);
             }
 
             return Empty;
@@ -291,26 +291,26 @@ namespace Alternet.Drawing
         /// <summary>
         /// Determines if this rectangle intersects with rect.
         /// </summary>
-        public readonly bool IntersectsWith(RectangleF rect) =>
+        public readonly bool IntersectsWith(Rect rect) =>
             (rect.X < X + Width) && (X < rect.X + rect.Width) && (rect.Y < Y + Height) && (Y < rect.Y + rect.Height);
 
         /// <summary>
         /// Creates a rectangle that represents the union between a and b.
         /// </summary>
-        public static RectangleF Union(RectangleF a, RectangleF b)
+        public static Rect Union(Rect a, Rect b)
         {
             float x1 = Math.Min(a.X, b.X);
             float x2 = Math.Max(a.X + a.Width, b.X + b.Width);
             float y1 = Math.Min(a.Y, b.Y);
             float y2 = Math.Max(a.Y + a.Height, b.Y + b.Height);
 
-            return new RectangleF(x1, y1, x2 - x1, y2 - y1);
+            return new Rect(x1, y1, x2 - x1, y2 - y1);
         }
 
         /// <summary>
         /// Adjusts the location of this rectangle by the specified amount.
         /// </summary>
-        public void Offset(PointF pos) => Offset(pos.X, pos.Y);
+        public void Offset(Point pos) => Offset(pos.X, pos.Y);
 
         /// <summary>
         /// Adjusts the location of this rectangle by the specified amount.
@@ -323,13 +323,13 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Converts the specified <see cref='Drawing.Int32Rect'/> to a
-        /// <see cref='Drawing.RectangleF'/>.
+        /// <see cref='Drawing.Rect'/>.
         /// </summary>
-        public static implicit operator RectangleF(Int32Rect r) => new RectangleF(r.X, r.Y, r.Width, r.Height);
+        public static implicit operator Rect(Int32Rect r) => new Rect(r.X, r.Y, r.Width, r.Height);
 
         /// <summary>
-        /// Converts the <see cref='Drawing.RectangleF.Location'/> and <see cref='Drawing.RectangleF.Size'/>
-        /// of this <see cref='Drawing.RectangleF'/> to a human-readable string.
+        /// Converts the <see cref='Drawing.Rect.Location'/> and <see cref='Drawing.Rect.Size'/>
+        /// of this <see cref='Drawing.Rect'/> to a human-readable string.
         /// </summary>
         public override readonly string ToString() => $"{{X={X},Y={Y},Width={Width},Height={Height}}}";
     }

@@ -15,13 +15,13 @@ namespace Alternet::UI
         wxDELETE(_dc);
     }
 
-    void DrawingContext::DrawImage(Image* image, const PointF& origin)
+    void DrawingContext::DrawImage(Image* image, const Point& origin)
     {
         wxBitmap bitmap(image->GetImage());
         _dc->DrawBitmap(bitmap, fromDip(origin, _dc->GetWindow()));
     }
 
-    void DrawingContext::PushTransform(const SizeF& translation)
+    void DrawingContext::PushTransform(const Size& translation)
     {
         _translationStack.push(_translation);
         _translation += translation;
@@ -33,7 +33,7 @@ namespace Alternet::UI
         _translationStack.pop();
     }
 
-    void DrawingContext::FillRectangle(const RectangleF& rectangle, Brush* brush)
+    void DrawingContext::FillRectangle(const Rect& rectangle, Brush* brush)
     {
         _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
         _graphicsContext->SetBrush(GetGraphicsBrush(brush));
@@ -42,7 +42,7 @@ namespace Alternet::UI
         _graphicsContext->DrawRectangle(rect.X, rect.Y, rect.Width, rect.Height);
     }
 
-    void DrawingContext::FillEllipse(const RectangleF& bounds, Brush* brush)
+    void DrawingContext::FillEllipse(const Rect& bounds, Brush* brush)
     {
         _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
         _graphicsContext->SetBrush(GetGraphicsBrush(brush));
@@ -51,7 +51,7 @@ namespace Alternet::UI
         _graphicsContext->DrawEllipse(rect.X, rect.Y, rect.Width, rect.Height);
     }
 
-    void DrawingContext::DrawRectangle(const RectangleF& rectangle, Pen* pen)
+    void DrawingContext::DrawRectangle(const Rect& rectangle, Pen* pen)
     {
         auto oldPen = _dc->GetPen();
         auto oldBrush = _dc->GetBrush();
@@ -76,7 +76,7 @@ namespace Alternet::UI
 
         _dc->DrawRectangle(
             fromDip(
-                RectangleF(
+                Rect(
                     rectangle.X + locationOffset,
                     rectangle.Y + locationOffset,
                     rectangle.Width - sizeOffset,
@@ -87,7 +87,7 @@ namespace Alternet::UI
         _dc->SetBrush(oldBrush);
     }
 
-    void DrawingContext::DrawEllipse(const RectangleF& bounds, Pen* pen)
+    void DrawingContext::DrawEllipse(const Rect& bounds, Pen* pen)
     {
         auto oldPen = _dc->GetPen();
         auto oldBrush = _dc->GetBrush();
@@ -97,7 +97,7 @@ namespace Alternet::UI
 
         _dc->DrawEllipse(
             fromDip(
-                RectangleF(
+                Rect(
                     bounds.X,
                     bounds.Y,
                     bounds.Width,
@@ -108,7 +108,7 @@ namespace Alternet::UI
         _dc->SetBrush(oldBrush);
     }
 
-    void DrawingContext::DrawText(const string& text, const PointF& origin, Font* font, Brush* brush)
+    void DrawingContext::DrawText(const string& text, const Point& origin, Font* font, Brush* brush)
     {
         if (_useDCForText)
         {
@@ -146,7 +146,7 @@ namespace Alternet::UI
         return pen->GetGraphicsPen(_graphicsContext->GetRenderer());
     }
 
-    SizeF DrawingContext::MeasureText(const string& text, Font* font)
+    Size DrawingContext::MeasureText(const string& text, Font* font)
     {
         if (_useDCForText)
         {

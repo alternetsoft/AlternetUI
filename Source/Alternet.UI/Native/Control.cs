@@ -28,7 +28,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.Drawing.SizeF Size
+        public Alternet.Drawing.Size Size
         {
             get
             {
@@ -43,7 +43,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.PointF Location
+        public Alternet.Drawing.Point Location
         {
             get
             {
@@ -58,7 +58,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.RectangleF Bounds
+        public Alternet.Drawing.Rect Bounds
         {
             get
             {
@@ -73,7 +73,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.SizeF ClientSize
+        public Alternet.Drawing.Size ClientSize
         {
             get
             {
@@ -217,7 +217,7 @@ namespace Alternet.UI.Native
             NativeApi.Control_Update_(NativePointer);
         }
         
-        public Alternet.Drawing.SizeF GetPreferredSize(Alternet.Drawing.SizeF availableSize)
+        public Alternet.Drawing.Size GetPreferredSize(Alternet.Drawing.Size availableSize)
         {
             CheckDisposed();
             return NativeApi.Control_GetPreferredSize_(NativePointer, availableSize);
@@ -325,28 +325,28 @@ namespace Alternet.UI.Native
             public static extern IntPtr Control_GetParent_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.SizeF Control_GetSize_(IntPtr obj);
+            public static extern NativeApiTypes.Size Control_GetSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetSize_(IntPtr obj, NativeApiTypes.SizeF value);
+            public static extern void Control_SetSize_(IntPtr obj, NativeApiTypes.Size value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.PointF Control_GetLocation_(IntPtr obj);
+            public static extern NativeApiTypes.Point Control_GetLocation_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetLocation_(IntPtr obj, NativeApiTypes.PointF value);
+            public static extern void Control_SetLocation_(IntPtr obj, NativeApiTypes.Point value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.RectangleF Control_GetBounds_(IntPtr obj);
+            public static extern NativeApiTypes.Rect Control_GetBounds_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetBounds_(IntPtr obj, NativeApiTypes.RectangleF value);
+            public static extern void Control_SetBounds_(IntPtr obj, NativeApiTypes.Rect value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.SizeF Control_GetClientSize_(IntPtr obj);
+            public static extern NativeApiTypes.Size Control_GetClientSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetClientSize_(IntPtr obj, NativeApiTypes.SizeF value);
+            public static extern void Control_SetClientSize_(IntPtr obj, NativeApiTypes.Size value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Thickness Control_GetIntrinsicLayoutPadding_(IntPtr obj);
@@ -400,7 +400,7 @@ namespace Alternet.UI.Native
             public static extern void Control_Update_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.SizeF Control_GetPreferredSize_(IntPtr obj, NativeApiTypes.SizeF availableSize);
+            public static extern NativeApiTypes.Size Control_GetPreferredSize_(IntPtr obj, NativeApiTypes.Size availableSize);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_OpenPaintDrawingContext_(IntPtr obj);

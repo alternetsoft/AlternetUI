@@ -33,7 +33,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.SizeF ImageSize
+        public Alternet.Drawing.Size ImageSize
         {
             get
             {
@@ -70,10 +70,10 @@ namespace Alternet.UI.Native
             public static extern void ImageList_SetPixelImageSize_(IntPtr obj, NativeApiTypes.Int32Size value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.SizeF ImageList_GetImageSize_(IntPtr obj);
+            public static extern NativeApiTypes.Size ImageList_GetImageSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ImageList_SetImageSize_(IntPtr obj, NativeApiTypes.SizeF value);
+            public static extern void ImageList_SetImageSize_(IntPtr obj, NativeApiTypes.Size value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ImageList_AddImage_(IntPtr obj, IntPtr image);

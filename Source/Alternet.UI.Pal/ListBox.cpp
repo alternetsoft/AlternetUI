@@ -55,7 +55,7 @@ namespace Alternet::UI
         return value;
     }
 
-    SizeF ListBox::GetPreferredSize(const SizeF& availableSize)
+    Size ListBox::GetPreferredSize(const Size& availableSize)
     {
         auto size = Control::GetPreferredSize(availableSize);
 
