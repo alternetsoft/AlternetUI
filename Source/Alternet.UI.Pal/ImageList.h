@@ -19,7 +19,7 @@ namespace Alternet::UI
 
         void AddImageCore(const wxImage& image);
 
-        Size _pixelImageSize;
+        Int32Size _pixelImageSize;
         wxImageList* _imageList = nullptr;
     };
 }

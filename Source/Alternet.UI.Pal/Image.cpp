@@ -35,7 +35,7 @@ namespace Alternet::UI
         return toDip(_image.GetSize(), nullptr);
     }
     
-    Size Image::GetPixelSize()
+    Int32Size Image::GetPixelSize()
     {
         return _image.GetSize();
     }

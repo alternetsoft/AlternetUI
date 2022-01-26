@@ -8,7 +8,7 @@ namespace Alternet::UI
 
     extern "C"
     {
-        struct Size_C
+        struct Int32Size_C
         {
             int Width, Height;
         };
@@ -18,7 +18,7 @@ namespace Alternet::UI
             float Width, Height;
         };
 
-        struct Point_C
+        struct Int32Point_C
         {
             int X, Y;
         };
@@ -28,7 +28,7 @@ namespace Alternet::UI
             float X, Y;
         };
 
-        struct Rectangle_C
+        struct Int32Rect_C
         {
             int X, Y, Width, Height;
         };
@@ -51,20 +51,20 @@ namespace Alternet::UI
 
 #pragma pack(pop)
 
-    struct Size
+    struct Int32Size
     {
         int Width = 0, Height = 0;
 
-        Size(const wxSize& s) : Width(s.x), Height(s.y)
+        Int32Size(const wxSize& s) : Width(s.x), Height(s.y)
         {
         }
 
-        Size(int width, int height) : Width(width), Height(height) {}
+        Int32Size(int width, int height) : Width(width), Height(height) {}
 
-        operator Size_C() { return Size_C{ Width, Height }; }
+        operator Int32Size_C() { return Int32Size_C{ Width, Height }; }
 
-        bool operator==(const Size& rhs) { return Width == rhs.Width && Height == rhs.Height; }
-        bool operator!=(const Size& rhs) { return !(*this == rhs); }
+        bool operator==(const Int32Size& rhs) { return Width == rhs.Width && Height == rhs.Height; }
+        bool operator!=(const Int32Size& rhs) { return !(*this == rhs); }
     };
 
     struct SizeF
@@ -89,18 +89,18 @@ namespace Alternet::UI
         bool operator!=(const SizeF& rhs) { return !(*this == rhs); }
     };
 
-    struct Point
+    struct Int32Point
     {
         int X = 0, Y = 0;
 
-        Point() {}
+        Int32Point() {}
 
-        Point(int x, int y) : X(x), Y(y) {}
+        Int32Point(int x, int y) : X(x), Y(y) {}
 
-        operator Point_C() const { return Point_C{ X, Y }; }
+        operator Int32Point_C() const { return Int32Point_C{ X, Y }; }
 
-        bool operator==(const Point& rhs) { return X == rhs.X && Y == rhs.Y; }
-        bool operator!=(const Point& rhs) { return !(*this == rhs); }
+        bool operator==(const Int32Point& rhs) { return X == rhs.X && Y == rhs.Y; }
+        bool operator!=(const Int32Point& rhs) { return !(*this == rhs); }
     };
 
     struct PointF
@@ -119,23 +119,23 @@ namespace Alternet::UI
         bool operator!=(const PointF& rhs) { return !(*this == rhs); }
     };
 
-    struct Rectangle
+    struct Int32Rect
     {
         int X = 0, Y = 0, Width = 0, Height = 0;
 
-        Rectangle() {}
+        Int32Rect() {}
 
-        Rectangle(int x, int y, int width, int height) : X(x), Y(y), Width(width), Height(height) {}
+        Int32Rect(int x, int y, int width, int height) : X(x), Y(y), Width(width), Height(height) {}
 
-        Rectangle(const Point& location, const Size& size) : Rectangle(location.X, location.Y, size.Width, size.Height) {}
+        Int32Rect(const Int32Point& location, const Int32Size& size) : Int32Rect(location.X, location.Y, size.Width, size.Height) {}
 
-        inline Point GetLocation() const { return Point(X, Y); };
-        inline Size GetSize() const { return Size(Width, Height); };
+        inline Int32Point GetLocation() const { return Int32Point(X, Y); };
+        inline Int32Size GetSize() const { return Int32Size(Width, Height); };
 
-        operator Rectangle_C() { return Rectangle_C{ X, Y, Width, Height }; }
+        operator Int32Rect_C() { return Int32Rect_C{ X, Y, Width, Height }; }
 
-        bool operator==(const Rectangle& rhs) { return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height; }
-        bool operator!=(const Rectangle& rhs) { return !(*this == rhs); }
+        bool operator==(const Int32Rect& rhs) { return X == rhs.X && Y == rhs.Y && Width == rhs.Width && Height == rhs.Height; }
+        bool operator!=(const Int32Rect& rhs) { return !(*this == rhs); }
     };
 
     struct RectangleF

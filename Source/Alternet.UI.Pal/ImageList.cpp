@@ -13,12 +13,12 @@ namespace Alternet::UI
         DestroyImageList();
     }
 
-    Size ImageList::GetPixelImageSize()
+    Int32Size ImageList::GetPixelImageSize()
     {
         return _imageList->GetSize();
     }
 
-    void ImageList::SetPixelImageSize(const Size& value)
+    void ImageList::SetPixelImageSize(const Int32Size& value)
     {
         if (_pixelImageSize == value)
             return;
