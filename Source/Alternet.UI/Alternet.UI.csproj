@@ -21,12 +21,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Package\readme.md" Pack="true" PackagePath=""/>
-    <None Include="Package\icon.png" Pack="true" PackagePath=""/>
+    <None Include="Package\readme.md" Pack="true" PackagePath="" />
+    <None Include="Package\icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\Licenses\License.txt" Pack="true" PackagePath=""/>
+    <None Include="..\Licenses\License.txt" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
@@ -60,8 +60,8 @@
 
   <ItemGroup>
     <PackageReference Include="System.Memory" Version="4.5.4" />
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Include="Nullable" Version="1.2.1">
+	  <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+	  <PackageReference Include="Nullable" Version="1.2.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -100,5 +100,18 @@
   <ItemGroup Condition="'$(Configuration)'=='Release'">
     <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netcoreapp3.1\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\netcoreapp3.1" />
     <None Include="..\Alternet.UI.Build.Tasks\bin\Release\net46\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net46" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(DefineConstants.Contains(';NETFRAMEWORK'))">
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains(';NETCOREAPP'))">
+	  <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+  </ItemGroup>
+
+	<ItemGroup>
+    <EmbeddedResource Update="Resources\Strings.resx">
+      <Generator>MSBuild:_GenerateResxSource</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

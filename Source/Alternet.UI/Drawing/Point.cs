@@ -1,9 +1,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Alternet.UI;
+using Alternet.UI.Markup;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 
@@ -39,6 +42,51 @@ namespace Alternet.Drawing
         {
             x = vector.X;
             y = vector.Y;
+        }
+
+        /// <summary>
+        /// Parse - returns an instance converted from the provided string using
+        /// the culture "en-US"
+        /// <param name="source"> string with Point data </param>
+        /// </summary>
+        public static Point Parse(string source)
+        {
+            IFormatProvider formatProvider = TypeConverterHelper.InvariantEnglishUS;
+
+            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
+
+            Point value;
+
+            String firstToken = th.NextTokenRequired();
+
+            value = new Point(
+                Convert.ToDouble(firstToken, formatProvider),
+                Convert.ToDouble(th.NextTokenRequired(), formatProvider));
+
+            // There should be no more tokens in this string.
+            th.LastTokenRequired();
+
+            return value;
+        }
+
+        /// <summary>
+        /// Creates a string representation of this object based on the format string
+        /// and IFormatProvider passed in.
+        /// If the provider is null, the CurrentCulture is used.
+        /// See the documentation for IFormattable for more information.
+        /// </summary>
+        /// <returns>
+        /// A string representation of this object.
+        /// </returns>
+        internal string ConvertToString(string format, IFormatProvider provider)
+        {
+            // Helper to get the numeric list separator for a given culture.
+            char separator = TokenizerHelper.GetNumericListSeparator(provider);
+            return String.Format(provider,
+                                 "{1:" + format + "}{0}{2:" + format + "}",
+                                 separator,
+                                 X,
+                                 Y);
         }
 
         /* TODO: uncommment when Double System.Numerics is availble. See https://github.com/dotnet/runtime/issues/24168

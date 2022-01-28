@@ -1,9 +1,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Alternet.UI;
+using Alternet.UI.Markup;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace Alternet.Drawing
 {
@@ -52,6 +55,70 @@ namespace Alternet.Drawing
         /// </summary>
         public static Int32Rect FromLTRB(int left, int top, int right, int bottom) =>
             new Int32Rect(left, top, unchecked(right - left), unchecked(bottom - top));
+
+        /// <summary>
+        /// Parse - returns an instance converted from the provided string using
+        /// the culture "en-US"
+        /// <param name="source"> string with Int32Rect data </param>
+        /// </summary>
+        public static Int32Rect Parse(string source)
+        {
+            IFormatProvider formatProvider = TypeConverterHelper.InvariantEnglishUS;
+
+            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
+
+            Int32Rect value;
+
+            String firstToken = th.NextTokenRequired();
+
+            // The token will already have had whitespace trimmed so we can do a
+            // simple string compare.
+            if (firstToken == "Empty")
+            {
+                value = Empty;
+            }
+            else
+            {
+                value = new Int32Rect(
+                    Convert.ToInt32(firstToken, formatProvider),
+                    Convert.ToInt32(th.NextTokenRequired(), formatProvider),
+                    Convert.ToInt32(th.NextTokenRequired(), formatProvider),
+                    Convert.ToInt32(th.NextTokenRequired(), formatProvider));
+            }
+
+            // There should be no more tokens in this string.
+            th.LastTokenRequired();
+
+            return value;
+        }
+
+        /// <summary>
+        /// Creates a string representation of this object based on the format string
+        /// and IFormatProvider passed in.
+        /// If the provider is null, the CurrentCulture is used.
+        /// See the documentation for IFormattable for more information.
+        /// </summary>
+        /// <returns>
+        /// A string representation of this object.
+        /// </returns>
+        internal string ConvertToString(string format, IFormatProvider provider)
+        {
+            if (IsEmpty)
+            {
+                return "Empty";
+            }
+
+            // Helper to get the numeric list separator for a given culture.
+            char separator = TokenizerHelper.GetNumericListSeparator(provider);
+            return String.Format(provider,
+                                 "{1:" + format + "}{0}{2:" + format + "}{0}{3:" + format + "}{0}{4:" + format + "}",
+                                 separator,
+                                 X,
+                                 Y,
+                                 Width,
+                                 Height);
+        }
+
 
         /// <summary>
         /// Gets or sets the coordinates of the upper-left corner of the rectangular region represented by this

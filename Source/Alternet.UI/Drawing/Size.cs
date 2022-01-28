@@ -1,9 +1,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Alternet.UI;
+using Alternet.UI.Markup;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Numerics;
 
 namespace Alternet.Drawing
@@ -87,6 +90,65 @@ namespace Alternet.Drawing
         /// Contracts a <see cref='Drawing.Size'/> by another <see cref='Drawing.Size'/>
         /// </summary>
         public static Size operator -(Size sz1, Size sz2) => Subtract(sz1, sz2);
+
+        /// <summary>
+        /// Parse - returns an instance converted from the provided string using
+        /// the culture "en-US"
+        /// <param name="source"> string with Size data </param>
+        /// </summary>
+        public static Size Parse(string source)
+        {
+            IFormatProvider formatProvider = TypeConverterHelper.InvariantEnglishUS;
+
+            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
+
+            Size value;
+
+            String firstToken = th.NextTokenRequired();
+
+            // The token will already have had whitespace trimmed so we can do a
+            // simple string compare.
+            if (firstToken == "Empty")
+            {
+                value = Empty;
+            }
+            else
+            {
+                value = new Size(
+                    Convert.ToDouble(firstToken, formatProvider),
+                    Convert.ToDouble(th.NextTokenRequired(), formatProvider));
+            }
+
+            // There should be no more tokens in this string.
+            th.LastTokenRequired();
+
+            return value;
+        }
+
+        /// <summary>
+        /// Creates a string representation of this object based on the format string
+        /// and IFormatProvider passed in.
+        /// If the provider is null, the CurrentCulture is used.
+        /// See the documentation for IFormattable for more information.
+        /// </summary>
+        /// <returns>
+        /// A string representation of this object.
+        /// </returns>
+        internal string ConvertToString(string format, IFormatProvider provider)
+        {
+            if (IsEmpty)
+            {
+                return "Empty";
+            }
+
+            // Helper to get the numeric list separator for a given culture.
+            char separator = TokenizerHelper.GetNumericListSeparator(provider);
+            return String.Format(provider,
+                                 "{1:" + format + "}{0}{2:" + format + "}",
+                                 separator,
+                                 width,
+                                 height);
+        }
 
         /// <summary>
         /// Multiplies <see cref="Size"/> by a <see cref="double"/> producing <see cref="Size"/>.

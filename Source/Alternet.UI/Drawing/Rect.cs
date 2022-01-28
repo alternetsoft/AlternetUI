@@ -1,6 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Alternet.UI;
+using Alternet.UI.Markup;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -58,6 +60,70 @@ namespace Alternet.Drawing
             y = vector.Y;
             width = vector.Z;
             height = vector.W;
+        }
+
+        /// <summary>
+        /// Parse - returns an instance converted from the provided string using
+        /// the culture "en-US"
+        /// <param name="source"> string with Rect data </param>
+        /// </summary>
+        public static Rect Parse(string source)
+        {
+            IFormatProvider formatProvider = TypeConverterHelper.InvariantEnglishUS;
+
+            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
+
+            Rect value;
+
+            String firstToken = th.NextTokenRequired();
+
+            // The token will already have had whitespace trimmed so we can do a
+            // simple string compare.
+            if (firstToken == "Empty")
+            {
+                value = Empty;
+            }
+            else
+            {
+                value = new Rect(
+                    Convert.ToDouble(firstToken, formatProvider),
+                    Convert.ToDouble(th.NextTokenRequired(), formatProvider),
+                    Convert.ToDouble(th.NextTokenRequired(), formatProvider),
+                    Convert.ToDouble(th.NextTokenRequired(), formatProvider));
+            }
+
+            // There should be no more tokens in this string.
+            th.LastTokenRequired();
+
+            return value;
+        }
+
+
+        /// <summary>
+        /// Creates a string representation of this object based on the format string
+        /// and IFormatProvider passed in.
+        /// If the provider is null, the CurrentCulture is used.
+        /// See the documentation for IFormattable for more information.
+        /// </summary>
+        /// <returns>
+        /// A string representation of this object.
+        /// </returns>
+        internal string ConvertToString(string format, IFormatProvider provider)
+        {
+            if (IsEmpty)
+            {
+                return "Empty";
+            }
+
+            // Helper to get the numeric list separator for a given culture.
+            char separator = TokenizerHelper.GetNumericListSeparator(provider);
+            return String.Format(provider,
+                                 "{1:" + format + "}{0}{2:" + format + "}{0}{3:" + format + "}{0}{4:" + format + "}",
+                                 separator,
+                                 x,
+                                 y,
+                                 width,
+                                 height);
         }
 
         /* TODO: uncommment when Double System.Numerics is availble. See https://github.com/dotnet/runtime/issues/24168
@@ -182,6 +248,54 @@ namespace Alternet.Drawing
         /// </summary>
         [Browsable(false)]
         public readonly bool IsEmpty => (Width <= 0) || (Height <= 0);
+
+        /// <summary>
+        /// TopLeft Property - This is a read-only alias for the Point which is at X, Y
+        /// If this is the empty rectangle, the value will be positive infinity, positive infinity.
+        /// </summary>
+        public Point TopLeft
+        {
+            get
+            {
+                return new Point(Left, Top);
+            }
+        }
+
+        /// <summary>
+        /// TopRight Property - This is a read-only alias for the Point which is at X + Width, Y
+        /// If this is the empty rectangle, the value will be negative infinity, positive infinity.
+        /// </summary>
+        public Point TopRight
+        {
+            get
+            {
+                return new Point(Right, Top);
+            }
+        }
+
+        /// <summary>
+        /// BottomLeft Property - This is a read-only alias for the Point which is at X, Y + Height
+        /// If this is the empty rectangle, the value will be positive infinity, negative infinity.
+        /// </summary>
+        public Point BottomLeft
+        {
+            get
+            {
+                return new Point(Left, Bottom);
+            }
+        }
+
+        /// <summary>
+        /// BottomRight Property - This is a read-only alias for the Point which is at X + Width, Y + Height
+        /// If this is the empty rectangle, the value will be negative infinity, negative infinity.
+        /// </summary>
+        public Point BottomRight
+        {
+            get
+            {
+                return new Point(Right, Bottom);
+            }
+        }
 
         /// <summary>
         /// Tests whether <paramref name="obj"/> is a <see cref='Drawing.Rect'/> with the same location and

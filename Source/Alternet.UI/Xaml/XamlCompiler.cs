@@ -115,19 +115,19 @@ namespace Alternet.UI
 
         (Func<IServiceProvider?, object> create, Action<IServiceProvider?, object> populate, Assembly assembly) GetCallbacks(Type created, Assembly assembly)
         {
-            var isp = Expression.Parameter(typeof(IServiceProvider));
-            var createCb = Expression.Lambda<Func<IServiceProvider?, object>>(
-                Expression.Convert(Expression.Call(
+            var isp = System.Linq.Expressions.Expression.Parameter(typeof(IServiceProvider));
+            var createCb = System.Linq.Expressions.Expression.Lambda<Func<IServiceProvider?, object>>(
+                System.Linq.Expressions.Expression.Convert(System.Linq.Expressions.Expression.Call(
                     created.GetMethod("Build"), isp), typeof(object)), isp).Compile();
 
-            var epar = Expression.Parameter(typeof(object));
+            var epar = System.Linq.Expressions.Expression.Parameter(typeof(object));
             var populate = created.GetMethod("Populate");
             if (populate == null)
                 throw new InvalidOperationException();
 
-            isp = Expression.Parameter(typeof(IServiceProvider));
-            var populateCb = Expression.Lambda<Action<IServiceProvider?, object>>(
-                Expression.Call(populate, isp, Expression.Convert(epar, populate.GetParameters()[1].ParameterType)),
+            isp = System.Linq.Expressions.Expression.Parameter(typeof(IServiceProvider));
+            var populateCb = System.Linq.Expressions.Expression.Lambda<Action<IServiceProvider?, object>>(
+                System.Linq.Expressions.Expression.Call(populate, isp, System.Linq.Expressions.Expression.Convert(epar, populate.GetParameters()[1].ParameterType)),
                 isp, epar).Compile();
 
             return (createCb, populateCb, assembly);
