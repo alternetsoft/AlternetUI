@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Defines the base class for controls, which are components with visual representation.
     /// </summary>
     [System.ComponentModel.DesignerCategory("Code")]
-    public class Control : Component, ISupportInitialize
+    public class Control : ISupportInitialize, IDisposable
     {
         private static readonly Size DefaultSize = new Size(double.NaN, double.NaN);
         private static Font? defaultFont;
@@ -748,10 +748,8 @@ namespace Alternet.UI
         /// Releases the unmanaged resources used by the object and optionally releases the managed resources.
         /// </summary>
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected override void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
-            base.Dispose(disposing);
-
             if (!IsDisposed)
             {
                 if (disposing)
@@ -829,6 +827,15 @@ namespace Alternet.UI
         private void Children_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
         {
             e.Item.Parent = null;
+        }
+
+        /// <summary>
+        /// Releases all resources used by the object.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

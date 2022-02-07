@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31112.23
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI", "Alternet.UI\Alternet.UI.csproj", "{04851FA9-146A-4D00-84C6-3D20040289D0}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -60,6 +60,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.PublicSourceGenerator", "Tools\PublicSourceGenerator\Alternet.UI.PublicSourceGenerator.csproj", "{3E6A8209-1A60-4938-A9B5-D5BFE95D417B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomControlsSample", "Samples\CustomControlsSample\CustomControlsSample.csproj", "{5D0E5A4C-2598-474B-951F-1EFFA0BE605E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBindingSample", "Samples\DataBindingSample\DataBindingSample.csproj", "{8AE61E41-E815-4A77-9D8D-84821DECE00B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -263,6 +265,18 @@ Global
 		{5D0E5A4C-2598-474B-951F-1EFFA0BE605E}.Release|x64.Build.0 = Release|x64
 		{5D0E5A4C-2598-474B-951F-1EFFA0BE605E}.Release|x86.ActiveCfg = Release|x86
 		{5D0E5A4C-2598-474B-951F-1EFFA0BE605E}.Release|x86.Build.0 = Release|x86
+		{8AE61E41-E815-4A77-9D8D-84821DECE00B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AE61E41-E815-4A77-9D8D-84821DECE00B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AE61E41-E815-4A77-9D8D-84821DECE00B}.Debug|x64.ActiveCfg = Debug|x64
+		{8AE61E41-E815-4A77-9D8D-84821DECE00B}.Debug|x64.Build.0 = Debug|x64
+		{8AE61E41-E815-4A77-9D8D-84821DECE00B}.Debug|x86.ActiveCfg = Debug|x86
+		{8AE61E41-E815-4A77-9D8D-84821DECE00B}.Debug|x86.Build.0 = Debug|x86
+		{8AE61E41-E815-4A77-9D8D-84821DECE00B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AE61E41-E815-4A77-9D8D-84821DECE00B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AE61E41-E815-4A77-9D8D-84821DECE00B}.Release|x64.ActiveCfg = Release|x64
+		{8AE61E41-E815-4A77-9D8D-84821DECE00B}.Release|x64.Build.0 = Release|x64
+		{8AE61E41-E815-4A77-9D8D-84821DECE00B}.Release|x86.ActiveCfg = Release|x86
+		{8AE61E41-E815-4A77-9D8D-84821DECE00B}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -287,6 +301,7 @@ Global
 		{A45E1550-E1A9-48B3-8BBC-E918EC8D813A} = {329A8C06-CA7B-42DF-8261-84A5E289290B}
 		{3E6A8209-1A60-4938-A9B5-D5BFE95D417B} = {A45E1550-E1A9-48B3-8BBC-E918EC8D813A}
 		{5D0E5A4C-2598-474B-951F-1EFFA0BE605E} = {B3B7BFD7-CEFB-46C2-BAF5-710D858DE73B}
+		{8AE61E41-E815-4A77-9D8D-84821DECE00B} = {B3B7BFD7-CEFB-46C2-BAF5-710D858DE73B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BD17D7DB-AEF9-418B-81F8-8E0920FC6FF7}
