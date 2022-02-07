@@ -1,8 +1,18 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="HelloWorldSample.MainWindow"
-        Title="My First Application">
-  <StackPanel>
-    <Button Name="helloButton" Text="Say Hello" Margin="20" Click="HelloButton_Click" />
-  </StackPanel>
+        Title="My First Application"
+		>
+	<Grid VerticalAlignment="Top" Margin="10">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition />
+		</Grid.RowDefinitions>
+
+		<Label Text="Name:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,0,10,0" />
+		<TextBox Grid.Column="1" Grid.Row="0" />
+	</Grid>
 </Window>

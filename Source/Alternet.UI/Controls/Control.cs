@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Defines the base class for controls, which are components with visual representation.
     /// </summary>
     [System.ComponentModel.DesignerCategory("Code")]
-    public class Control : ISupportInitialize, IDisposable
+    public class Control : DependencyObject, ISupportInitialize, IDisposable
     {
         private static readonly Size DefaultSize = new Size(double.NaN, double.NaN);
         private static Font? defaultFont;
