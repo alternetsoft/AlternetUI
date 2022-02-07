@@ -1,0 +1,34 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="SRAdder.MainWindow"
+        Title="SRAdder">
+	<StackPanel Orientation="Vertical" Margin="10">
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition />
+			</Grid.RowDefinitions>
+
+			<Label Text="SR ID:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,0,10,0" />
+			<TextBox Grid.Column="1" Grid.Row="0" Name="srIdTextBox" TextChanged="SrIdTextBox_TextChanged" />
+		</Grid>
+		
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition />
+			</Grid.RowDefinitions>
+
+			<Label Text="Status:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,20,5,0" />
+			<Label Grid.Column="1" Grid.Row="0" Name="statusLabel" Margin="0,20,0,0"/>
+		</Grid>
+
+		<Button Grid.Column="0" Grid.Row="1" Name="applyButton" Margin="0,10,0,0" Text="Apply" Click="ApplyButton_Click" />
+	</StackPanel>
+</Window>
