@@ -11,7 +11,7 @@ namespace Alternet.UI.Internal.ComponentModel
     using System.Diagnostics;
     using System.Globalization;
     using System.Reflection;
-    using System.Windows;
+    
 
     /// <summary>
     ///     This is a reflection binder that is used to 

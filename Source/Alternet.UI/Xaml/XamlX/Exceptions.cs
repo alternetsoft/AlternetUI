@@ -9,6 +9,11 @@ namespace XamlX
 #endif
     class XamlParseException : XmlException
     {
+        public XamlParseException(string message) : base(
+            message, null, 0, 0)
+        {
+        }
+
         public XamlParseException(string message, int line, int position) : base(
             message, null, line, position)
         {

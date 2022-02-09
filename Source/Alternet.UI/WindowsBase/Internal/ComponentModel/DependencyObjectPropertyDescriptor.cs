@@ -12,7 +12,7 @@ namespace Alternet.UI.Internal.ComponentModel
     using System.Diagnostics;
     using System.Globalization;
     using System.Reflection;
-    using System.Windows;
+    
     using System.Security;
     using Alternet.UI;
 

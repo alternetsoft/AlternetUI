@@ -3,7 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-namespace Alternet.Base.ComponentModel 
+namespace Alternet.UI 
 {
     using System;
 

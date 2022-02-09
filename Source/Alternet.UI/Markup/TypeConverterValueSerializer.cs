@@ -5,7 +5,7 @@
 //  Contents:  TypeConverter to ValueSerializer adapter
 
 using System.ComponentModel;
-using System.Windows.Markup;
+
 
 namespace Alternet.UI.Markup
 {

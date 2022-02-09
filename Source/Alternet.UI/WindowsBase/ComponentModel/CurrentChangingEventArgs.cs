@@ -11,7 +11,7 @@ using System;
 using Alternet.UI;
 using Alternet.UI;
 
-namespace Alternet.Base.ComponentModel
+namespace Alternet.UI
 {
     /// <summary>
     /// Arguments for the CurrentChanging event.

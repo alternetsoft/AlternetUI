@@ -193,7 +193,6 @@ namespace Alternet.UI.Markup
             return GetFrameworkType(SystemReflectionAssemblyName, type);
         }
 
-#if WINDOWS_BASE
         /// <summary>
         /// Get the type to use for reflection:  the custom type, if any, otherwise just the type.
         /// </summary>
@@ -208,7 +207,6 @@ namespace Alternet.UI.Markup
             else
                 return ictp.GetCustomType();
         }
-#endif
         
 #endregion Type
 

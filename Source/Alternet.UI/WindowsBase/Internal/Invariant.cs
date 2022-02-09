@@ -14,7 +14,7 @@ namespace Alternet.UI
     using System.Security; 
     using Microsoft.Win32;
     using System.Diagnostics;
-    using System.Windows;
+    
     
     /// <summary>
     /// Provides methods that assert an application is in a valid state. 

@@ -10,7 +10,7 @@
 using Alternet.UI;
 using System;
 using System.Diagnostics;
-using System.Windows;
+
 using System.Collections.ObjectModel; // ObservableCollection
 using System.Collections.Specialized; // NotifyCollectionChangedEventHandler
 

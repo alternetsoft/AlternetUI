@@ -16,7 +16,7 @@ using Alternet.Drawing;
 using Alternet.UI.Media;
 using System;
 using System.Diagnostics;
-using System.Windows;
+
 
 namespace Alternet.UI
 {

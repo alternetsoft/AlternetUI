@@ -12,7 +12,7 @@
 
 using System;
 
-namespace Alternet.Base.ComponentModel
+namespace Alternet.UI
 {
 /// <summary>
 /// Describes the desired position of the new item placeholder in an

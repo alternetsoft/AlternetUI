@@ -1,1 +1,3 @@
-dotnet run
+@echo off
+dotnet build
+start bin\Debug\net6.0\SRAdder.exe

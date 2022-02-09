@@ -11,7 +11,7 @@
 using System;
 using System.Collections.ObjectModel;
 
-namespace Alternet.Base.ComponentModel
+namespace Alternet.UI
 {
     ///<summary>
     /// A collection view can implement the ICollectionViewLiveShaping interface if it

@@ -9,7 +9,7 @@
 
 using Alternet.UI;  // FriendAccessAllowed
 using System;
-using System.Windows;
+
 
 namespace Alternet.UI.Internal
 {

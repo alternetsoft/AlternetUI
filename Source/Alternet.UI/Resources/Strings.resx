@@ -180,6 +180,9 @@
   <data name="InvalidPriority" xml:space="preserve">
     <value>Specified priority is not valid.</value>
   </data>
+  <data name="RoutedEventCannotChangeWhileRouting" xml:space="preserve">
+    <value>Cannot change the RoutedEvent property while the RoutedEvent is being routed.</value>
+  </data>
   <data name="InvalidPriorityRangeOrder" xml:space="preserve">
     <value>The minimum priority must be less than or equal to the maximum priority.</value>
   </data>
@@ -257,6 +260,9 @@
   </data>
   <data name="LocalValueEnumerationInvalidated" xml:space="preserve">
     <value>Current local value enumeration is outdated because one or more local values have been set since its creation.</value>
+  </data>
+  <data name="TooManyRoutedEvents" xml:space="preserve">
+    <value>RoutedEvent/EventPrivateKey limit exceeded. Routed events or EventPrivateKey for CLR events are typically static class members registered with field initializers or static constructors. In this case, routed events or EventPrivateKeys might be getting initialized in instance constructors, causing the limit to be exceeded.</value>
   </data>
   <data name="MissingCreateDefaultValue" xml:space="preserve">
     <value>Default value factory user must override PropertyMetadata.CreateDefaultValue.</value>
@@ -1805,5 +1811,371 @@
   </data>
   <data name="WpfDllConsistencyErrorHeader" xml:space="preserve">
     <value>Failed WPF DLL consistency checks. Expected location: {0}.</value>
+  </data>
+  <data name="RoutedEventArgsMustHaveRoutedEvent" xml:space="preserve">
+    <value>Every RoutedEventArgs must have a non-null RoutedEvent associated with it.</value>
+  </data>
+  <data name="MarkupExtensionDynamicOrBindingOnClrProp" xml:space="preserve">
+    <value>A '{0}' cannot be set on the '{1}' property of type '{2}'. A '{0}' can only be set on a DependencyProperty of a DependencyObject.</value>
+  </data>
+  <data name="MarkupExtensionDynamicOrBindingInCollection" xml:space="preserve">
+    <value>A '{0}' cannot be used within a '{1}' collection. A '{0}' can only be set on a DependencyProperty of a DependencyObject.</value>
+  </data>
+  <data name="ChangeSealedBinding" xml:space="preserve">
+    <value>Binding cannot be changed after it has been used.</value>
+  </data>
+  <data name="ValidationRule_UnexpectedValue" xml:space="preserve">
+    <value>Validation rule '{0}' received unexpected value '{1}'.  (This could be caused by assigning the wrong ValidationStep to the rule.)</value>
+  </data>
+  <data name="PathSyntax" xml:space="preserve">
+    <value>Syntax error in Binding.Path '{0}' ... '{1}'.</value>
+  </data>
+  <data name="UnmatchedParen" xml:space="preserve">
+    <value>Unmatched parenthesis '{0}'.</value>
+  </data>
+  <data name="UnmatchedBracket" xml:space="preserve">
+    <value>Unmatched bracket '{0}'.</value>
+  </data>
+  <data name="UriMustBeAbsolute" xml:space="preserve">
+    <value>URI must be absolute. Relative URIs are not supported.</value>
+  </data>
+  <data name="UriSchemeMismatch" xml:space="preserve">
+    <value>This factory supports only URIs with the '{0}' scheme.</value>
+  </data>
+  <data name="NotAllowedPackageUri" xml:space="preserve">
+    <value>The package URI is not allowed in the package store.</value>
+  </data>
+  <data name="PackageAlreadyExists" xml:space="preserve">
+    <value>A package with the same URI is already in the package store.</value>
+  </data>
+  <data name="ResourceNotFoundUnderCacheOnlyPolicy" xml:space="preserve">
+    <value>Current CachePolicy is CacheOnly but the requested resource does not exist in the cache.</value>
+  </data>
+  <data name="PackWebRequestCachePolicyIllegal" xml:space="preserve">
+    <value>Cache policy is not valid.</value>
+  </data>
+  <data name="InvalidTempFileName" xml:space="preserve">
+    <value>Cannot have empty name of a temporary file.</value>
+  </data>
+  <data name="RequestAlreadyStarted" xml:space="preserve">
+    <value>The operation is not allowed after the first request is made.</value>
+  </data>
+  <data name="ByteRangeDownloaderDisposed" xml:space="preserve">
+    <value>Cannot access a disposed HTTP byte range downloader.</value>
+  </data>
+  <data name="InvalidScheme" xml:space="preserve">
+    <value>HTTP byte range downloader can support only HTTP or HTTPS schemes.</value>
+  </data>
+  <data name="InvalidEventHandle" xml:space="preserve">
+    <value>The event handle is not usable.</value>
+  </data>
+  <data name="ByteRangeDownloaderErroredOut" xml:space="preserve">
+    <value>Byte range request failed.</value>
+  </data>
+  <data name="InvalidByteRanges" xml:space="preserve">
+    <value>Byte ranges are not valid in '{0}'.</value>
+  </data>
+  <data name="ByteRangeRequestIsNotSupported" xml:space="preserve">
+    <value>Server does not support byte range request.</value>
+  </data>
+  <data name="WebResponsePartNotFound" xml:space="preserve">
+    <value>Requested PackagePart not found in target resource.</value>
+  </data>
+  <data name="WebResponseFailure" xml:space="preserve">
+    <value>Error processing WebResponse.</value>
+  </data>
+  <data name="WebRequestTimeout" xml:space="preserve">
+    <value>WebRequest timed out. Response did not arrive before the specified Timeout period elapsed.</value>
+  </data>
+  <data name="SchemaInvalidForTransport" xml:space="preserve">
+    <value>Cannot resolve current inner request URI schema. Bypass cache only for resolvable schema types such as http, ftp, or file.</value>
+  </data>
+  <data name="CannotConvertType" xml:space="preserve">
+    <value>Cannot convert type '{0}' to '{1}'.</value>
+  </data>
+  <data name="UnexpectedParameterType" xml:space="preserve">
+    <value>Parameter is unexpected type '{0}'. Expected type is '{1}'.</value>
+  </data>
+  <data name="PropertyPathNoProperty" xml:space="preserve">
+    <value>Property path is not valid. '{0}' does not have a public property named '{1}'.</value>
+  </data>
+  <data name="IndexedPropDescNotImplemented" xml:space="preserve">
+    <value>Cannot use indexed Value on PropertyDescriptor.</value>
+  </data>
+  <data name="NonCLSException" xml:space="preserve">
+    <value>Text formatting engine encountered a non-CLS exception.</value>
+  </data>
+  <data name="CannotWriteToReadOnly" xml:space="preserve">
+    <value>A TwoWay or OneWayToSource binding cannot work on the read-only property '{1}' of type '{0}'.</value>
+  </data>
+  <data name="RelativeSourceNeedsMode" xml:space="preserve">
+    <value>Mode must be specified for RelativeSource.</value>
+  </data>
+  <data name="RelativeSourceNeedsAncestorType" xml:space="preserve">
+    <value>AncestorType must be specified for RelativeSource in FindAncestor mode.</value>
+  </data>
+  <data name="RelativeSourceModeIsImmutable" xml:space="preserve">
+    <value>RelativeSource.Mode is immutable after initialization; instead of changing the Mode on this instance, create a new RelativeSource or use a different static instance.</value>
+  </data>
+  <data name="RelativeSourceNotInFindAncestorMode" xml:space="preserve">
+    <value>RelativeSource is not in FindAncestor mode.</value>
+  </data>
+  <data name="RelativeSourceInvalidAncestorLevel" xml:space="preserve">
+    <value>AncestorLevel cannot be set to less than 1.</value>
+  </data>
+  <data name="RelativeSourceModeInvalid" xml:space="preserve">
+    <value>Invalid value for RelativeSourceMode enum.</value>
+  </data>
+  <data name="PropertyPathSyntaxError" xml:space="preserve">
+    <value>Syntax error in PropertyPath '{0}'.</value>
+  </data>
+  <data name="ParserProvideValueCantSetUri" xml:space="preserve">
+    <value>Cannot set BaseUri on this IUriContext implementation.</value>
+  </data>
+  <data name="PropertyPathInvalidAccessor" xml:space="preserve">
+    <value>Object '{0}' cannot be used as an accessor parameter for a PropertyPath. An accessor parameter must be DependencyProperty, PropertyInfo, or PropertyDescriptor.</value>
+  </data>
+  <data name="PathParametersIndexOutOfRange" xml:space="preserve">
+    <value>Index {0} is out of range of the PathParameters list, which has length {1}.</value>
+  </data>
+  <data name="PropertyPathNoOwnerType" xml:space="preserve">
+    <value>Property path is not valid. Cannot resolve type name '{0}'.</value>
+  </data>
+  <data name="PathParameterIsNull" xml:space="preserve">
+    <value>PathParameters list contains null at index {0}.</value>
+  </data>
+  <data name="PropertyPathIndexWrongType" xml:space="preserve">
+    <value>Path indexer parameter has value that cannot be resolved to specified type: '{0}'</value>
+  </data>
+  <data name="InvalidOperation_IComparerFailed" xml:space="preserve">
+    <value>Failed to compare two elements in the array.</value>
+  </data>
+  <data name="Argument_InvalidOffLen" xml:space="preserve">
+    <value>Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.</value>
+  </data>
+  <data name="CollectionView_MissingSynchronizationCallback" xml:space="preserve">
+    <value>Synchronization callback for '{0}' collection is no longer available.\n This could happen if the callback is an anonymous method.</value>
+  </data>
+  <data name="CopyToNotEnoughSpace" xml:space="preserve">
+    <value>Number of elements in source Enumerable is greater than available space from index to the end of destination array.</value>
+  </data>
+  <data name="EnumeratorVersionChanged" xml:space="preserve">
+    <value>Collection was modified; enumeration operation may not execute.</value>
+  </data>
+  <data name="MustBeFrameworkDerived" xml:space="preserve">
+    <value>'{0}' type must derive from FrameworkElement or FrameworkContentElement.</value>
+  </data>
+  <data name="DuplicateEventName" xml:space="preserve">
+    <value>RoutedEvent Name '{0}' for OwnerType '{1}' already used.</value>
+  </data>
+  <data name="ClassTypeIllegal" xml:space="preserve">
+    <value>Class handlers can be registered only for UIElement or ContentElement and their subtypes.</value>
+  </data>
+  <data name="HandlerTypeIllegal" xml:space="preserve">
+    <value>Handler type is mismatched.</value>
+  </data>
+  <data name="NoDefaultUpdateSourceTrigger" xml:space="preserve">
+    <value>FrameworkPropertyMetadata.DefaultUpdateSourceTrigger cannot be set to UpdateSourceTrigger.Default; this would create a circular definition.</value>
+  </data>
+  <data name="BindingGroup_NoEntry" xml:space="preserve">
+    <value>The binding group has no binding that uses item '{0}' and property '{1}'.</value>
+  </data>
+  <data name="BindingGroup_ValueUnavailable" xml:space="preserve">
+    <value>The value for item '{0}' and property '{1}' is not available because a previous validation rule deemed the value invalid, or because the value could not be computed (e.g., conversion failure).</value>
+  </data>
+  <data name="BindingListCannotCustomFilter" xml:space="preserve">
+    <value>Underlying list of this CollectionView does not support filtering.</value>
+  </data>
+  <data name="MemberNotAllowedDuringAddOrEdit" xml:space="preserve">
+    <value>'{0}' is not allowed during an AddNew or EditItem transaction.</value>
+  </data>
+  <data name="MemberNotAllowedDuringTransaction" xml:space="preserve">
+    <value>'{0}' is not allowed during a transaction begun by '{1}'.</value>
+  </data>
+  <data name="MemberNotAllowedForView" xml:space="preserve">
+    <value>'{0}' is not allowed for this view.</value>
+  </data>
+  <data name="RemovingPlaceholder" xml:space="preserve">
+    <value>Removing the NewItem placeholder is not allowed.</value>
+  </data>
+  <data name="CannotEditPlaceholder" xml:space="preserve">
+    <value>Editing the NewItem placeholder is not allowed.</value>
+  </data>
+  <data name="CancelEditNotSupported" xml:space="preserve">
+    <value>CancelEdit is not supported for the current edit item.</value>
+  </data>
+  <data name="CannotChangeLiveShaping" xml:space="preserve">
+    <value>Cannot set '{0}' property when '{1}' property is false.</value>
+  </data>
+  <data name="UnexpectedCollectionChangeAction" xml:space="preserve">
+    <value>Unexpected collection change action '{0}'.</value>
+  </data>
+  <data name="InconsistentBindingList" xml:space="preserve">
+    <value>IBindingList '{0}' has unexpected length after a '{1}' event.\nThis can happen if the IBindingList has been changed without raising a corresponding ListChanged event.</value>
+  </data>
+  <data name="CannotDetermineSortByPropertiesForCollection" xml:space="preserve">
+    <value>Cannot find type information on collection; property names to SortBy cannot be resolved.</value>
+  </data>
+  <data name="PropertyToSortByNotFoundOnType" xml:space="preserve">
+    <value>'{0}' type does not have property named '{1}', so cannot sort data collection.</value>
+  </data>
+  <data name="RangeActionsNotSupported" xml:space="preserve">
+    <value>Range actions are not supported.</value>
+  </data>
+  <data name="CannotMoveToUnknownPosition" xml:space="preserve">
+    <value>Cannot Move items to an unknown position (-1).</value>
+  </data>
+  <data name="BindingListCanOnlySortByOneProperty" xml:space="preserve">
+    <value>IBindingList can sort by only one property.</value>
+  </data>
+  <data name="AccessCollectionAfterShutDown" xml:space="preserve">
+    <value>AccessCollection for '{0}' collection cannot be called after shutdown.</value>
+  </data>
+  <data name="ImplementOtherMembersWithSort" xml:space="preserve">
+    <value>If SortDescriptions is overridden in derived classes, then must also override '{0}'.</value>
+  </data>
+  <data name="MultiThreadedCollectionChangeNotSupported" xml:space="preserve">
+    <value>This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread.</value>
+  </data>
+  <data name="NoCheckOrChangeWhenDeferred" xml:space="preserve">
+    <value>Cannot change or check the contents or Current position of CollectionView while Refresh is being deferred.</value>
+  </data>
+  <data name="RemovedItemNotFound" xml:space="preserve">
+    <value>Collection Remove event must specify item position.</value>
+  </data>
+  <data name="CollectionViewTypeIsInitOnly" xml:space="preserve">
+    <value>CollectionViewType property can only be set during initialization.</value>
+  </data>
+  <data name="CannotSortView" xml:space="preserve">
+    <value>'{0}' view does not support sorting.</value>
+  </data>
+  <data name="CannotFilterView" xml:space="preserve">
+    <value>'{0}' view does not support filtering.</value>
+  </data>
+  <data name="CannotGroupView" xml:space="preserve">
+    <value>'{0}' view does not support grouping.</value>
+  </data>
+  <data name="ItemCollectionRemoveArgumentOutOfRange" xml:space="preserve">
+    <value>removeIndex is less than zero or greater than or equal to Count.</value>
+  </data>
+  <data name="CompositeCollectionResetOnlyOnClear" xml:space="preserve">
+    <value>CompositeCollectionView only supports NotifyCollectionChangeAction.Reset when the collection is empty or is being cleared.</value>
+  </data>
+  <data name="EnumeratorNotStarted" xml:space="preserve">
+    <value>Enumeration has not started. Call MoveNext.</value>
+  </data>
+  <data name="EnumeratorReachedEnd" xml:space="preserve">
+    <value>Enumeration already finished.</value>
+  </data>
+  <data name="CollectionContainerMustBeUniqueForComposite" xml:space="preserve">
+    <value>CompositeCollection can accept only CollectionContainers it does not already have.</value>
+  </data>
+  <data name="CollectionChangeIndexOutOfRange" xml:space="preserve">
+    <value>'{0}' index in collection change event is not valid for collection of size '{1}'.</value>
+  </data>
+  <data name="AddedItemNotAtIndex" xml:space="preserve">
+    <value>Added item does not appear at given index '{0}'.</value>
+  </data>
+  <data name="AddedItemNotInCollection" xml:space="preserve">
+    <value>A collection Add event refers to item that does not belong to collection.</value>
+  </data>
+  <data name="BindingCollectionContainsNonBinding" xml:space="preserve">
+    <value>BindingCollection does not support items of type {0}. Only Binding is allowed.</value>
+  </data>
+  <data name="ChildHasWrongType" xml:space="preserve">
+    <value>'{0}' child does not have type '{1}' : '{2}'.</value>
+  </data>
+  <data name="NonWhiteSpaceInAddText" xml:space="preserve">
+    <value>Text content is not allowed on this element. Cannot add the text '{0}'.</value>
+  </data>
+  <data name="MultiBindingHasNoConverter" xml:space="preserve">
+    <value>Cannot set MultiBinding because MultiValueConverter must be specified.</value>
+  </data>
+  <data name="NoUpdateSourceTriggerForInnerBindingOfMultiBinding" xml:space="preserve">
+    <value>Cannot set UpdateSourceTrigger on inner Binding of MultiBinding. Only the default Immediate UpdateSourceTrigger is valid.</value>
+  </data>
+  <data name="BindingGroup_CannotChangeGroups" xml:space="preserve">
+    <value>The binding expression already belongs to a BindingGroup;  it cannot be added to a different BindingGroup.</value>
+  </data>
+  <data name="BindingExpressionStatusChanged" xml:space="preserve">
+    <value>Internal error: internal WPF code tried to reactivate a BindingExpression that was already marked as detached.</value>
+  </data>
+  <data name="BindingConflict" xml:space="preserve">
+    <value>Binding.{0} cannot be set while using Binding.{1}.</value>
+  </data>
+  <data name="GetResponseFailed" xml:space="preserve">
+    <value>Cannot get response for web request to '{0}'.</value>
+  </data>
+  <data name="WebRequestCreationFailed" xml:space="preserve">
+    <value>Cannot create web request for specified Pack URI.</value>
+  </data>
+  <data name="BindingExpressionIsDetached" xml:space="preserve">
+    <value>Cannot perform this operation when binding is detached.</value>
+  </data>
+  <data name="ArgumentPropertyMustNotBeNull" xml:space="preserve">
+    <value>'{1}' property of argument '{0}' must not be null.</value>
+  </data>
+  <data name="PropertyNotBindable" xml:space="preserve">
+    <value>'{0}' property cannot be data-bound.</value>
+  </data>
+  <data name="TwoWayBindingNeedsPath" xml:space="preserve">
+    <value>Two-way binding requires Path or XPath.</value>
+  </data>
+  <data name="MissingValueConverter" xml:space="preserve">
+    <value>Cannot find converter.</value>
+  </data>
+  <data name="ValidationRule_UnknownStep" xml:space="preserve">
+    <value>Unrecognized ValidationStep '{0}' obtained from '{1}'.</value>
+  </data>
+  <data name="Validation_ConversionFailed" xml:space="preserve">
+    <value>Value '{0}' could not be converted.</value>
+  </data>
+  <data name="RequiresXmlNamespaceMapping" xml:space="preserve">
+    <value>XmlDataNamespaceMappingCollection child does not have type XmlNamespaceMapping '{0}'.</value>
+  </data>
+  <data name="RequiresXmlNamespaceMappingUri" xml:space="preserve">
+    <value>XmlDataNamespaceMappingCollection cannot use XmlNamespaceMapping that has null URI.</value>
+  </data>
+  <data name="Collection_CopyTo_NumberOfElementsExceedsArrayLength" xml:space="preserve">
+    <value>The number of elements in this collection is greater than the available space from '{0}' to the end of destination '{1}'.</value>
+  </data>
+  <data name="ObjectDataProviderParameterCollectionIsNotInUse" xml:space="preserve">
+    <value>ConstructorParameters cannot be changed because ObjectDataProvider is using user-assigned ObjectInstance.</value>
+  </data>
+  <data name="ObjectDataProviderCanHaveOnlyOneSource" xml:space="preserve">
+    <value>ObjectDataProvider can only be assigned an ObjectType or an ObjectInstance, not both.</value>
+  </data>
+  <data name="ObjectDataProviderHasNoSource" xml:space="preserve">
+    <value>ObjectDataProvider needs either an ObjectType or ObjectInstance.</value>
+  </data>
+  <data name="ObjectDataProviderNonCLSException" xml:space="preserve">
+    <value>Unknown exception while creating type '{0}' for ObjectDataProvider.</value>
+  </data>
+  <data name="ObjectDataProviderNonCLSExceptionInvoke" xml:space="preserve">
+    <value>Unknown exception while invoking method '{0}' on type '{1}' for ObjectDataProvider.</value>
+  </data>
+  <data name="WrongFirstSegment" xml:space="preserve">
+    <value>The required pattern for URI containing ";component" is "AssemblyName;Vxxxx;PublicKey;component", where Vxxxx is the assembly version and PublicKey is the 16-character string representing the assembly public key token. Vxxxx and PublicKey are optional.</value>
+  </data>
+  <data name="CannotNavigateToApplicationResourcesInWebBrowser" xml:space="preserve">
+    <value>Cannot navigate to application resource '{0}' by using a WebBrowser control. For URI navigation, the resource must be at the application's site of origin. Use the pack://siteoforigin:,,,/ prefix to avoid hard-coding the URI.</value>
+  </data>
+  <data name="PropertyIsInitializeOnly" xml:space="preserve">
+    <value>The '{0}' property of the '{1}' type can be set only during initialization.</value>
+  </data>
+  <data name="PropertyIsImmutable" xml:space="preserve">
+    <value>The '{0}' property of the '{1}' type cannot be changed after it has been set.</value>
+  </data>
+  <data name="PropertyMustHaveValue" xml:space="preserve">
+    <value>The '{0}' property of the '{1}' type must be set during initialization.</value>
+  </data>
+  <data name="CollectionView_WrongType" xml:space="preserve">
+    <value>'{0}' type is not a CollectionView type.</value>
+  </data>
+  <data name="CollectionView_ViewTypeInsufficient" xml:space="preserve">
+    <value>'{0}' does not have a constructor that accepts collection type '{1}'.</value>
+  </data>
+  <data name="CollectionView_NameTypeDuplicity" xml:space="preserve">
+    <value>Cannot get CollectionView of type '{0}' for CollectionViewSource that already uses type '{1}'.</value>
   </data>
 </root>

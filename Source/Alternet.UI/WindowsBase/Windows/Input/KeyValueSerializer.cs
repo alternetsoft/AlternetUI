@@ -19,8 +19,8 @@ using System.ComponentModel;    // for TypeConverter
 using System.Globalization;     // for CultureInfo
 using System.Reflection;
 using Alternet.UI;
-using System.Windows.Input;
-using System.Windows.Markup;
+
+
 using Alternet.UI.Markup;
 
 namespace Alternet.UI.Input

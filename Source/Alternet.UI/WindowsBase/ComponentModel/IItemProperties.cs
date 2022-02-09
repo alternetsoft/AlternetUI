@@ -13,7 +13,7 @@
 using System;
 using System.Collections.ObjectModel;   // ReadOnlyCollection<T>
 
-namespace Alternet.Base.ComponentModel
+namespace Alternet.UI
 {
 /// <summary>
 /// IItemProperties is an interface that a collection view

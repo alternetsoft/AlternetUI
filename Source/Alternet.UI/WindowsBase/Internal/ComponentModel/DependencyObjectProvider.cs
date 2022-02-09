@@ -11,10 +11,10 @@ namespace Alternet.UI.Internal.ComponentModel
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Reflection;
-    using System.Windows;
-    using System.Windows.Markup;
+    
+    
     using System.Text;
-    using Alternet.Base.ComponentModel;
+    
 
     /// <summary>
     ///     A type description provider provides metadata for types.  It allows a type
@@ -53,7 +53,7 @@ namespace Alternet.UI.Internal.ComponentModel
                     ClearCache();
                     DependencyObjectPropertyDescriptor.ClearCache();
                     DPCustomTypeDescriptor.ClearCache();
-                    DependencyPropertyDescriptor.ClearCache();
+                    Alternet.UI.DependencyPropertyDescriptor.ClearCache();
 }
             };
         }

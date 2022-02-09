@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Defines the base class for controls, which are components with visual representation.
     /// </summary>
     [System.ComponentModel.DesignerCategory("Code")]
-    public class Control : DependencyObject, ISupportInitialize, IDisposable
+    public class Control : FrameworkElement, ISupportInitialize, IDisposable
     {
         private static readonly Size DefaultSize = new Size(double.NaN, double.NaN);
         private static Font? defaultFont;
@@ -121,14 +121,6 @@ namespace Alternet.UI
         public object? Tag { get; set; }
 
         /// <summary>
-        /// Gets or sets the identifying name of the control.
-        /// The name provides a reference so that code-behind, such as event handler code,
-        /// can refer to a markup control after it is constructed during processing by a UIXML processor.
-        /// </summary>
-        /// <value>The name of the control. The default is <c>null</c>.</value>
-        public string? Name { get; set; } // todo: maybe use Site.Name?
-
-        /// <summary>
         /// Gets or sets a value indicating whether the control and all its child controls are displayed.
         /// </summary>
         /// <value><c>true</c> if the control and all its child controls are displayed; otherwise, <c>false</c>. The default is <c>true</c>.</value>
@@ -185,6 +177,11 @@ namespace Alternet.UI
                 borderBrush = value;
                 BorderBrushChanged?.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        internal static void OnVisualStatePropertyChanged(Control control, DependencyPropertyChangedEventArgs e)
+        {
+            throw new NotImplementedException(); // yezo
         }
 
         /// <summary>

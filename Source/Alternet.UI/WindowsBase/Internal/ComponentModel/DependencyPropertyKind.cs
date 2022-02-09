@@ -6,7 +6,7 @@
 namespace Alternet.UI.Internal.ComponentModel 
 {
     using System;
-    using System.Windows;
+    
 
     //
     // Determines what kind of DP we are dealing with.  DependencyPropertyKind

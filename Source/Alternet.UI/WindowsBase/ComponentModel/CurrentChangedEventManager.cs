@@ -11,7 +11,7 @@
 using System;
 using Alternet.UI;       // WeakEventManager
 
-namespace Alternet.Base.ComponentModel
+namespace Alternet.UI
 {
     /// <summary>
     /// Manager for the ICollectionView.CurrentChanged event.

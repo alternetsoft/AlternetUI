@@ -11,10 +11,10 @@ namespace Alternet.UI.Internal.ComponentModel
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Reflection;
-    using System.Windows;
-    using System.Windows.Markup;
+    
+    
     using System.Text;
-    using Alternet.Base.ComponentModel;
+    
 
 
     /// <summary>

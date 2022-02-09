@@ -6,7 +6,7 @@
 namespace Alternet.UI.Internal.ComponentModel
 {
     using System;
-    using System.Windows;
+    
 
     /// <summary>
     ///     This attribute is synthesized by our DependencyObjectProvider

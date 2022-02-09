@@ -19,7 +19,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.ComponentModel.Design.Serialization;
-using System.Windows.Markup;
+
 using Alternet.UI;
 using Alternet.UI.Markup;
 

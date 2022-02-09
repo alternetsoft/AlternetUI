@@ -6,10 +6,10 @@ using System;
 using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
-using System.Windows;
+
 using System.Diagnostics.CodeAnalysis;
 
-//using MS.Internal.PresentationCore;
+//
 //using SR=MS.Internal.WindowsBase.SR;
 //using SRID=MS.Internal.WindowsBase.SRID;
 

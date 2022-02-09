@@ -12,7 +12,11 @@ namespace SRAdder
             InitializeComponent();
 
             engine = new Engine(
-                new[] { @"C:\Temp\OpenSources\wpf\src\Microsoft.DotNet.Wpf\src\PresentationCore\Resources\Strings.resx" },
+                new[]
+                {
+                    @"C:\Temp\OpenSources\wpf\src\Microsoft.DotNet.Wpf\src\PresentationCore\Resources\Strings.resx",
+                    @"C:\Temp\OpenSources\wpf\src\Microsoft.DotNet.Wpf\src\PresentationFramework\Resources\Strings.resx",
+                },
                 @"C:\Work\UI\Source\Alternet.UI\Resources\Strings.resx",
                 @"C:\Work\UI\Source\Alternet.UI\Resources\SRID.cs");
 

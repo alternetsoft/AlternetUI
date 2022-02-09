@@ -12,7 +12,7 @@
 
 using System;
 
-namespace Alternet.Base.ComponentModel
+namespace Alternet.UI
 {
     /// <summary>
     /// Allows an implementing collection to create a view to its data.

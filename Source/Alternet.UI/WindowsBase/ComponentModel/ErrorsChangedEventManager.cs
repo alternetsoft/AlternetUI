@@ -12,7 +12,7 @@ using System;
 using System.ComponentModel;
 using Alternet.UI;       // WeakEventManager
 
-namespace Alternet.Base.ComponentModel
+namespace Alternet.UI
 {
     /// <summary>
     /// Manager for the INotifyDataErrorInfo.ErrorsChanged event.

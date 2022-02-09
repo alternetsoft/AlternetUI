@@ -7,12 +7,12 @@
 // Description: Helper methods for code that uses types from System.Xml.
 //
 
-using Alternet.Base.ComponentModel;
+
 using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Globalization;
-using System.Windows;
+
 
 namespace Alternet.UI.Internal
 {

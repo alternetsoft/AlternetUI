@@ -8,6 +8,7 @@
 using Alternet.Base.Diagnostics;
 using System;
 using System.Diagnostics;
+using PresentationTraceSources = Alternet.Base.Diagnostics.PresentationTraceSources;
 
 namespace Alternet.UI.Internal
 {

@@ -49,7 +49,7 @@
 using System;
 using System.Collections.Generic;   // For Dictionary<string, string>
 using System.Text;                  // For StringBuilder
-using System.Windows;               // For Exception strings - SRID
+               // For Exception strings - SRID
 using Alternet.UI;      // For FriendAccessAllowed
 using System.Diagnostics;           // For Debug.Assert
 

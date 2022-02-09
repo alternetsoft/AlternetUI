@@ -10,7 +10,7 @@
 
 using System;
 using System.Diagnostics;
-using System.Windows;       // WeakEventManager
+       // WeakEventManager
 using Alternet.UI;  // [FriendAccessAllowed]
 
 namespace Alternet.UI.Internal

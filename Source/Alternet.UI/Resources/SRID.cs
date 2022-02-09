@@ -201,6 +201,10 @@ namespace Alternet.UI
         internal const string @DataSpaceMapEntryInvalid = "DataSpaceMapEntryInvalid";
         /// <summary>FileAccess value is not valid.</summary>
         internal const string @FileAccessInvalid = "FileAccessInvalid";
+        /// <summary>
+        /// RoutedEvent/EventPrivateKey limit exceeded. Routed events or EventPrivateKey for CLR events are typically static class members registered with field initializers or static constructors. In this case, routed events or EventPrivateKeys might be getting initialized in instance constructors, causing the limit to be exceeded.
+        /// </summary>
+        internal const string @TooManyRoutedEvents = "TooManyRoutedEvents";
         /// <summary>File already exists.</summary>
         internal const string @FileAlreadyExists = "FileAlreadyExists";
         /// <summary>FileMode value is not supported.</summary>
@@ -385,6 +389,8 @@ namespace Alternet.UI
         internal const string @VersionUpdateFailure = "VersionUpdateFailure";
         /// <summary>Cannot remove signature from read-only file.</summary>
         internal const string @CannotRemoveSignatureFromReadOnlyFile = "CannotRemoveSignatureFromReadOnlyFile";
+        /// <summary>Cannot change the RoutedEvent property while the RoutedEvent is being routed.</summary>
+        internal const string @RoutedEventCannotChangeWhileRouting = "RoutedEventCannotChangeWhileRouting";
         /// <summary>Cannot sign read-only file.</summary>
         internal const string @CannotSignReadOnlyFile = "CannotSignReadOnlyFile";
         /// <summary>Cannot locate the selected digital certificate.</summary>
@@ -1143,6 +1149,250 @@ namespace Alternet.UI
         internal const string @WpfDllConsistencyErrorData = "WpfDllConsistencyErrorData";
         /// <summary>Failed WPF DLL consistency checks. Expected location: {0}.</summary>
         internal const string @WpfDllConsistencyErrorHeader = "WpfDllConsistencyErrorHeader";
+        /// <summary>Every RoutedEventArgs must have a non-null RoutedEvent associated with it.</summary>
+        internal const string @RoutedEventArgsMustHaveRoutedEvent = "RoutedEventArgsMustHaveRoutedEvent";
+        /// <summary>A '{0}' cannot be set on the '{1}' property of type '{2}'. A '{0}' can only be set on a DependencyProperty of a DependencyObject.</summary>
+        internal const string @MarkupExtensionDynamicOrBindingOnClrProp = "MarkupExtensionDynamicOrBindingOnClrProp";
+        /// <summary>A '{0}' cannot be used within a '{1}' collection. A '{0}' can only be set on a DependencyProperty of a DependencyObject.</summary>
+        internal const string @MarkupExtensionDynamicOrBindingInCollection = "MarkupExtensionDynamicOrBindingInCollection";
+        /// <summary>Binding cannot be changed after it has been used.</summary>
+        internal const string @ChangeSealedBinding = "ChangeSealedBinding";
+        /// <summary>Validation rule '{0}' received unexpected value '{1}'.  (This could be caused by assigning the wrong ValidationStep to the rule.)</summary>
+        internal const string @ValidationRule_UnexpectedValue = "ValidationRule_UnexpectedValue";
+        /// <summary>Syntax error in Binding.Path '{0}' ... '{1}'.</summary>
+        internal const string @PathSyntax = "PathSyntax";
+        /// <summary>Unmatched parenthesis '{0}'.</summary>
+        internal const string @UnmatchedParen = "UnmatchedParen";
+        /// <summary>Unmatched bracket '{0}'.</summary>
+        internal const string @UnmatchedBracket = "UnmatchedBracket";
+        /// <summary>URI must be absolute. Relative URIs are not supported.</summary>
+        internal const string @UriMustBeAbsolute = "UriMustBeAbsolute";
+        /// <summary>This factory supports only URIs with the '{0}' scheme.</summary>
+        internal const string @UriSchemeMismatch = "UriSchemeMismatch";
+        /// <summary>The package URI is not allowed in the package store.</summary>
+        internal const string @NotAllowedPackageUri = "NotAllowedPackageUri";
+        /// <summary>A package with the same URI is already in the package store.</summary>
+        internal const string @PackageAlreadyExists = "PackageAlreadyExists";
+        /// <summary>Current CachePolicy is CacheOnly but the requested resource does not exist in the cache.</summary>
+        internal const string @ResourceNotFoundUnderCacheOnlyPolicy = "ResourceNotFoundUnderCacheOnlyPolicy";
+        /// <summary>Cache policy is not valid.</summary>
+        internal const string @PackWebRequestCachePolicyIllegal = "PackWebRequestCachePolicyIllegal";
+        /// <summary>Cannot have empty name of a temporary file.</summary>
+        internal const string @InvalidTempFileName = "InvalidTempFileName";
+        /// <summary>The operation is not allowed after the first request is made.</summary>
+        internal const string @RequestAlreadyStarted = "RequestAlreadyStarted";
+        /// <summary>Cannot access a disposed HTTP byte range downloader.</summary>
+        internal const string @ByteRangeDownloaderDisposed = "ByteRangeDownloaderDisposed";
+        /// <summary>HTTP byte range downloader can support only HTTP or HTTPS schemes.</summary>
+        internal const string @InvalidScheme = "InvalidScheme";
+        /// <summary>The event handle is not usable.</summary>
+        internal const string @InvalidEventHandle = "InvalidEventHandle";
+        /// <summary>Byte range request failed.</summary>
+        internal const string @ByteRangeDownloaderErroredOut = "ByteRangeDownloaderErroredOut";
+        /// <summary>Byte ranges are not valid in '{0}'.</summary>
+        internal const string @InvalidByteRanges = "InvalidByteRanges";
+        /// <summary>Server does not support byte range request.</summary>
+        internal const string @ByteRangeRequestIsNotSupported = "ByteRangeRequestIsNotSupported";
+        /// <summary>Requested PackagePart not found in target resource.</summary>
+        internal const string @WebResponsePartNotFound = "WebResponsePartNotFound";
+        /// <summary>Error processing WebResponse.</summary>
+        internal const string @WebResponseFailure = "WebResponseFailure";
+        /// <summary>WebRequest timed out. Response did not arrive before the specified Timeout period elapsed.</summary>
+        internal const string @WebRequestTimeout = "WebRequestTimeout";
+        /// <summary>Cannot resolve current inner request URI schema. Bypass cache only for resolvable schema types such as http, ftp, or file.</summary>
+        internal const string @SchemaInvalidForTransport = "SchemaInvalidForTransport";
+        /// <summary>Cannot convert type '{0}' to '{1}'.</summary>
+        internal const string @CannotConvertType = "CannotConvertType";
+        /// <summary>Parameter is unexpected type '{0}'. Expected type is '{1}'.</summary>
+        internal const string @UnexpectedParameterType = "UnexpectedParameterType";
+        /// <summary>Property path is not valid. '{0}' does not have a public property named '{1}'.</summary>
+        internal const string @PropertyPathNoProperty = "PropertyPathNoProperty";
+        /// <summary>Cannot use indexed Value on PropertyDescriptor.</summary>
+        internal const string @IndexedPropDescNotImplemented = "IndexedPropDescNotImplemented";
+        /// <summary>Text formatting engine encountered a non-CLS exception.</summary>
+        internal const string @NonCLSException = "NonCLSException";
+        /// <summary>A TwoWay or OneWayToSource binding cannot work on the read-only property '{1}' of type '{0}'.</summary>
+        internal const string @CannotWriteToReadOnly = "CannotWriteToReadOnly";
+        /// <summary>Mode must be specified for RelativeSource.</summary>
+        internal const string @RelativeSourceNeedsMode = "RelativeSourceNeedsMode";
+        /// <summary>AncestorType must be specified for RelativeSource in FindAncestor mode.</summary>
+        internal const string @RelativeSourceNeedsAncestorType = "RelativeSourceNeedsAncestorType";
+        /// <summary>RelativeSource.Mode is immutable after initialization; instead of changing the Mode on this instance, create a new RelativeSource or use a different static instance.</summary>
+        internal const string @RelativeSourceModeIsImmutable = "RelativeSourceModeIsImmutable";
+        /// <summary>RelativeSource is not in FindAncestor mode.</summary>
+        internal const string @RelativeSourceNotInFindAncestorMode = "RelativeSourceNotInFindAncestorMode";
+        /// <summary>AncestorLevel cannot be set to less than 1.</summary>
+        internal const string @RelativeSourceInvalidAncestorLevel = "RelativeSourceInvalidAncestorLevel";
+        /// <summary>Invalid value for RelativeSourceMode enum.</summary>
+        internal const string @RelativeSourceModeInvalid = "RelativeSourceModeInvalid";
+        /// <summary>Syntax error in PropertyPath '{0}'.</summary>
+        internal const string @PropertyPathSyntaxError = "PropertyPathSyntaxError";
+        /// <summary>Cannot set BaseUri on this IUriContext implementation.</summary>
+        internal const string @ParserProvideValueCantSetUri = "ParserProvideValueCantSetUri";
+        /// <summary>Object '{0}' cannot be used as an accessor parameter for a PropertyPath. An accessor parameter must be DependencyProperty, PropertyInfo, or PropertyDescriptor.</summary>
+        internal const string @PropertyPathInvalidAccessor = "PropertyPathInvalidAccessor";
+        /// <summary>Index {0} is out of range of the PathParameters list, which has length {1}.</summary>
+        internal const string @PathParametersIndexOutOfRange = "PathParametersIndexOutOfRange";
+        /// <summary>Property path is not valid. Cannot resolve type name '{0}'.</summary>
+        internal const string @PropertyPathNoOwnerType = "PropertyPathNoOwnerType";
+        /// <summary>PathParameters list contains null at index {0}.</summary>
+        internal const string @PathParameterIsNull = "PathParameterIsNull";
+        /// <summary>Path indexer parameter has value that cannot be resolved to specified type: '{0}'</summary>
+        internal const string @PropertyPathIndexWrongType = "PropertyPathIndexWrongType";
+        /// <summary>Failed to compare two elements in the array.</summary>
+        internal const string @InvalidOperation_IComparerFailed = "InvalidOperation_IComparerFailed";
+        /// <summary>Offset and length were out of bounds for the array or count is greater than the number of elements from index to the end of the source collection.</summary>
+        internal const string @Argument_InvalidOffLen = "Argument_InvalidOffLen";
+        /// <summary>Synchronization callback for '{0}' collection is no longer available.\n This could happen if the callback is an anonymous method.</summary>
+        internal const string @CollectionView_MissingSynchronizationCallback = "CollectionView_MissingSynchronizationCallback";
+        /// <summary>Number of elements in source Enumerable is greater than available space from index to the end of destination array.</summary>
+        internal const string @CopyToNotEnoughSpace = "CopyToNotEnoughSpace";
+        /// <summary>Collection was modified; enumeration operation may not execute.</summary>
+        internal const string @EnumeratorVersionChanged = "EnumeratorVersionChanged";
+        /// <summary>'{0}' type must derive from FrameworkElement or FrameworkContentElement.</summary>
+        internal const string @MustBeFrameworkDerived = "MustBeFrameworkDerived";
+        /// <summary>RoutedEvent Name '{0}' for OwnerType '{1}' already used.</summary>
+        internal const string @DuplicateEventName = "DuplicateEventName";
+        /// <summary>Class handlers can be registered only for UIElement or ContentElement and their subtypes.</summary>
+        internal const string @ClassTypeIllegal = "ClassTypeIllegal";
+        /// <summary>Handler type is mismatched.</summary>
+        internal const string @HandlerTypeIllegal = "HandlerTypeIllegal";
+        /// <summary>FrameworkPropertyMetadata.DefaultUpdateSourceTrigger cannot be set to UpdateSourceTrigger.Default; this would create a circular definition.</summary>
+        internal const string @NoDefaultUpdateSourceTrigger = "NoDefaultUpdateSourceTrigger";
+        /// <summary>The binding group has no binding that uses item '{0}' and property '{1}'.</summary>
+        internal const string @BindingGroup_NoEntry = "BindingGroup_NoEntry";
+        /// <summary>The value for item '{0}' and property '{1}' is not available because a previous validation rule deemed the value invalid, or because the value could not be computed (e.g., conversion failure).</summary>
+        internal const string @BindingGroup_ValueUnavailable = "BindingGroup_ValueUnavailable";
+        /// <summary>Underlying list of this CollectionView does not support filtering.</summary>
+        internal const string @BindingListCannotCustomFilter = "BindingListCannotCustomFilter";
+        /// <summary>'{0}' is not allowed during an AddNew or EditItem transaction.</summary>
+        internal const string @MemberNotAllowedDuringAddOrEdit = "MemberNotAllowedDuringAddOrEdit";
+        /// <summary>'{0}' is not allowed during a transaction begun by '{1}'.</summary>
+        internal const string @MemberNotAllowedDuringTransaction = "MemberNotAllowedDuringTransaction";
+        /// <summary>'{0}' is not allowed for this view.</summary>
+        internal const string @MemberNotAllowedForView = "MemberNotAllowedForView";
+        /// <summary>Removing the NewItem placeholder is not allowed.</summary>
+        internal const string @RemovingPlaceholder = "RemovingPlaceholder";
+        /// <summary>Editing the NewItem placeholder is not allowed.</summary>
+        internal const string @CannotEditPlaceholder = "CannotEditPlaceholder";
+        /// <summary>CancelEdit is not supported for the current edit item.</summary>
+        internal const string @CancelEditNotSupported = "CancelEditNotSupported";
+        /// <summary>Cannot set '{0}' property when '{1}' property is false.</summary>
+        internal const string @CannotChangeLiveShaping = "CannotChangeLiveShaping";
+        /// <summary>Unexpected collection change action '{0}'.</summary>
+        internal const string @UnexpectedCollectionChangeAction = "UnexpectedCollectionChangeAction";
+        /// <summary>IBindingList '{0}' has unexpected length after a '{1}' event.\nThis can happen if the IBindingList has been changed without raising a corresponding ListChanged event.</summary>
+        internal const string @InconsistentBindingList = "InconsistentBindingList";
+        /// <summary>Cannot find type information on collection; property names to SortBy cannot be resolved.</summary>
+        internal const string @CannotDetermineSortByPropertiesForCollection = "CannotDetermineSortByPropertiesForCollection";
+        /// <summary>'{0}' type does not have property named '{1}', so cannot sort data collection.</summary>
+        internal const string @PropertyToSortByNotFoundOnType = "PropertyToSortByNotFoundOnType";
+        /// <summary>Range actions are not supported.</summary>
+        internal const string @RangeActionsNotSupported = "RangeActionsNotSupported";
+        /// <summary>Cannot Move items to an unknown position (-1).</summary>
+        internal const string @CannotMoveToUnknownPosition = "CannotMoveToUnknownPosition";
+        /// <summary>IBindingList can sort by only one property.</summary>
+        internal const string @BindingListCanOnlySortByOneProperty = "BindingListCanOnlySortByOneProperty";
+        /// <summary>AccessCollection for '{0}' collection cannot be called after shutdown.</summary>
+        internal const string @AccessCollectionAfterShutDown = "AccessCollectionAfterShutDown";
+        /// <summary>If SortDescriptions is overridden in derived classes, then must also override '{0}'.</summary>
+        internal const string @ImplementOtherMembersWithSort = "ImplementOtherMembersWithSort";
+        /// <summary>This type of CollectionView does not support changes to its SourceCollection from a thread different from the Dispatcher thread.</summary>
+        internal const string @MultiThreadedCollectionChangeNotSupported = "MultiThreadedCollectionChangeNotSupported";
+        /// <summary>Cannot change or check the contents or Current position of CollectionView while Refresh is being deferred.</summary>
+        internal const string @NoCheckOrChangeWhenDeferred = "NoCheckOrChangeWhenDeferred";
+        /// <summary>Collection Remove event must specify item position.</summary>
+        internal const string @RemovedItemNotFound = "RemovedItemNotFound";
+        /// <summary>CollectionViewType property can only be set during initialization.</summary>
+        internal const string @CollectionViewTypeIsInitOnly = "CollectionViewTypeIsInitOnly";
+        /// <summary>'{0}' view does not support sorting.</summary>
+        internal const string @CannotSortView = "CannotSortView";
+        /// <summary>'{0}' view does not support filtering.</summary>
+        internal const string @CannotFilterView = "CannotFilterView";
+        /// <summary>'{0}' view does not support grouping.</summary>
+        internal const string @CannotGroupView = "CannotGroupView";
+        /// <summary>removeIndex is less than zero or greater than or equal to Count.</summary>
+        internal const string @ItemCollectionRemoveArgumentOutOfRange = "ItemCollectionRemoveArgumentOutOfRange";
+        /// <summary>CompositeCollectionView only supports NotifyCollectionChangeAction.Reset when the collection is empty or is being cleared.</summary>
+        internal const string @CompositeCollectionResetOnlyOnClear = "CompositeCollectionResetOnlyOnClear";
+        /// <summary>Enumeration has not started. Call MoveNext.</summary>
+        internal const string @EnumeratorNotStarted = "EnumeratorNotStarted";
+        /// <summary>Enumeration already finished.</summary>
+        internal const string @EnumeratorReachedEnd = "EnumeratorReachedEnd";
+        /// <summary>CompositeCollection can accept only CollectionContainers it does not already have.</summary>
+        internal const string @CollectionContainerMustBeUniqueForComposite = "CollectionContainerMustBeUniqueForComposite";
+        /// <summary>'{0}' index in collection change event is not valid for collection of size '{1}'.</summary>
+        internal const string @CollectionChangeIndexOutOfRange = "CollectionChangeIndexOutOfRange";
+        /// <summary>Added item does not appear at given index '{0}'.</summary>
+        internal const string @AddedItemNotAtIndex = "AddedItemNotAtIndex";
+        /// <summary>A collection Add event refers to item that does not belong to collection.</summary>
+        internal const string @AddedItemNotInCollection = "AddedItemNotInCollection";
+        /// <summary>BindingCollection does not support items of type {0}. Only Binding is allowed.</summary>
+        internal const string @BindingCollectionContainsNonBinding = "BindingCollectionContainsNonBinding";
+        /// <summary>'{0}' child does not have type '{1}' : '{2}'.</summary>
+        internal const string @ChildHasWrongType = "ChildHasWrongType";
+        /// <summary>Text content is not allowed on this element. Cannot add the text '{0}'.</summary>
+        internal const string @NonWhiteSpaceInAddText = "NonWhiteSpaceInAddText";
+        /// <summary>Cannot set MultiBinding because MultiValueConverter must be specified.</summary>
+        internal const string @MultiBindingHasNoConverter = "MultiBindingHasNoConverter";
+        /// <summary>Cannot set UpdateSourceTrigger on inner Binding of MultiBinding. Only the default Immediate UpdateSourceTrigger is valid.</summary>
+        internal const string @NoUpdateSourceTriggerForInnerBindingOfMultiBinding = "NoUpdateSourceTriggerForInnerBindingOfMultiBinding";
+        /// <summary>The binding expression already belongs to a BindingGroup;  it cannot be added to a different BindingGroup.</summary>
+        internal const string @BindingGroup_CannotChangeGroups = "BindingGroup_CannotChangeGroups";
+        /// <summary>Internal error: internal WPF code tried to reactivate a BindingExpression that was already marked as detached.</summary>
+        internal const string @BindingExpressionStatusChanged = "BindingExpressionStatusChanged";
+        /// <summary>Binding.{0} cannot be set while using Binding.{1}.</summary>
+        internal const string @BindingConflict = "BindingConflict";
+        /// <summary>Cannot get response for web request to '{0}'.</summary>
+        internal const string @GetResponseFailed = "GetResponseFailed";
+        /// <summary>Cannot create web request for specified Pack URI.</summary>
+        internal const string @WebRequestCreationFailed = "WebRequestCreationFailed";
+        /// <summary>Cannot perform this operation when binding is detached.</summary>
+        internal const string @BindingExpressionIsDetached = "BindingExpressionIsDetached";
+        /// <summary>'{1}' property of argument '{0}' must not be null.</summary>
+        internal const string @ArgumentPropertyMustNotBeNull = "ArgumentPropertyMustNotBeNull";
+        /// <summary>'{0}' property cannot be data-bound.</summary>
+        internal const string @PropertyNotBindable = "PropertyNotBindable";
+        /// <summary>Two-way binding requires Path or XPath.</summary>
+        internal const string @TwoWayBindingNeedsPath = "TwoWayBindingNeedsPath";
+        /// <summary>Cannot find converter.</summary>
+        internal const string @MissingValueConverter = "MissingValueConverter";
+        /// <summary>Unrecognized ValidationStep '{0}' obtained from '{1}'.</summary>
+        internal const string @ValidationRule_UnknownStep = "ValidationRule_UnknownStep";
+        /// <summary>Value '{0}' could not be converted.</summary>
+        internal const string @Validation_ConversionFailed = "Validation_ConversionFailed";
+        /// <summary>XmlDataNamespaceMappingCollection child does not have type XmlNamespaceMapping '{0}'.</summary>
+        internal const string @RequiresXmlNamespaceMapping = "RequiresXmlNamespaceMapping";
+        /// <summary>XmlDataNamespaceMappingCollection cannot use XmlNamespaceMapping that has null URI.</summary>
+        internal const string @RequiresXmlNamespaceMappingUri = "RequiresXmlNamespaceMappingUri";
+        /// <summary>The number of elements in this collection is greater than the available space from '{0}' to the end of destination '{1}'.</summary>
+        internal const string @Collection_CopyTo_NumberOfElementsExceedsArrayLength = "Collection_CopyTo_NumberOfElementsExceedsArrayLength";
+        /// <summary>ConstructorParameters cannot be changed because ObjectDataProvider is using user-assigned ObjectInstance.</summary>
+        internal const string @ObjectDataProviderParameterCollectionIsNotInUse = "ObjectDataProviderParameterCollectionIsNotInUse";
+        /// <summary>ObjectDataProvider can only be assigned an ObjectType or an ObjectInstance, not both.</summary>
+        internal const string @ObjectDataProviderCanHaveOnlyOneSource = "ObjectDataProviderCanHaveOnlyOneSource";
+        /// <summary>ObjectDataProvider needs either an ObjectType or ObjectInstance.</summary>
+        internal const string @ObjectDataProviderHasNoSource = "ObjectDataProviderHasNoSource";
+        /// <summary>Unknown exception while creating type '{0}' for ObjectDataProvider.</summary>
+        internal const string @ObjectDataProviderNonCLSException = "ObjectDataProviderNonCLSException";
+        /// <summary>Unknown exception while invoking method '{0}' on type '{1}' for ObjectDataProvider.</summary>
+        internal const string @ObjectDataProviderNonCLSExceptionInvoke = "ObjectDataProviderNonCLSExceptionInvoke";
+        /// <summary>The required pattern for URI containing ";component" is "AssemblyName;Vxxxx;PublicKey;component", where Vxxxx is the assembly version and PublicKey is the 16-character string representing the assembly public key token. Vxxxx and PublicKey are optional.</summary>
+        internal const string @WrongFirstSegment = "WrongFirstSegment";
+        /// <summary>Cannot navigate to application resource '{0}' by using a WebBrowser control. For URI navigation, the resource must be at the application's site of origin. Use the pack://siteoforigin:,,,/ prefix to avoid hard-coding the URI.</summary>
+        internal const string @CannotNavigateToApplicationResourcesInWebBrowser = "CannotNavigateToApplicationResourcesInWebBrowser";
+        /// <summary>The '{0}' property of the '{1}' type can be set only during initialization.</summary>
+        internal const string @PropertyIsInitializeOnly = "PropertyIsInitializeOnly";
+        /// <summary>The '{0}' property of the '{1}' type cannot be changed after it has been set.</summary>
+        internal const string @PropertyIsImmutable = "PropertyIsImmutable";
+        /// <summary>The '{0}' property of the '{1}' type must be set during initialization.</summary>
+        internal const string @PropertyMustHaveValue = "PropertyMustHaveValue";
+        /// <summary>'{0}' type is not a CollectionView type.</summary>
+        internal const string @CollectionView_WrongType = "CollectionView_WrongType";
+        /// <summary>'{0}' does not have a constructor that accepts collection type '{1}'.</summary>
+        internal const string @CollectionView_ViewTypeInsufficient = "CollectionView_ViewTypeInsufficient";
+        /// <summary>Cannot get CollectionView of type '{0}' for CollectionViewSource that already uses type '{1}'.</summary>
+        internal const string @CollectionView_NameTypeDuplicity = "CollectionView_NameTypeDuplicity";
 
     }
 }

@@ -10,7 +10,7 @@
 
 using System;
 
-namespace Alternet.Base.ComponentModel
+namespace Alternet.UI
 {
 /// <summary>
 /// IAddNewItem is an interface that a collection view

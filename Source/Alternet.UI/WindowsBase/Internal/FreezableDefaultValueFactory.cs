@@ -10,7 +10,7 @@
 using Alternet.UI;
 using System;
 using System.Diagnostics;
-using System.Windows;
+
 
 namespace Alternet.UI.Internal
 {

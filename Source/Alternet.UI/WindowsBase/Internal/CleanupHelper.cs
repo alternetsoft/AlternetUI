@@ -16,7 +16,7 @@ using System.Collections.Specialized; // HybridDictionary
 using System.Runtime.CompilerServices;  // RuntimeHelpers
 using System.Security;              // 
 using System.Threading;             // [ThreadStatic]
-using System.Windows;               // WeakEventManager
+               // WeakEventManager
 using Alternet.UI.Threading;     // DispatcherObject
 using Alternet.UI.Threading;
 

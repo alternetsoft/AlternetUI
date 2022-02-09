@@ -14,7 +14,7 @@ using Alternet.UI.Internal.ComponentModel;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
-namespace Alternet.Base.ComponentModel
+namespace Alternet.UI
 {
     /// <summary>
     ///     This is a wrapper property descriptor that offers a merged API of

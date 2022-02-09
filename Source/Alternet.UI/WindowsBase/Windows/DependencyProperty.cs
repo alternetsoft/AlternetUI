@@ -9,12 +9,13 @@ using System.Diagnostics;
 using System.Threading;
 using System.Globalization;
 using System.ComponentModel;
-using System.Windows.Markup;// For ValueSerializerAttribute
+// For ValueSerializerAttribute
 using Alternet.UI.Threading; // For DispatcherObject
 
 using Alternet.UI;
 using System.Reflection;   // for IsInstanceOfType
 using Alternet.UI.Internal;
+using Alternet.UI.Markup;
 
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings

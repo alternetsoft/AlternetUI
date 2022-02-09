@@ -11,7 +11,7 @@ namespace Alternet.UI.Internal.ComponentModel
     using System.Diagnostics;
     using System.Globalization;
     using System.Reflection;
-    using System.Windows;
+    
 
     /// <summary>
     ///     A change tracking expression that is used to raise property change events.

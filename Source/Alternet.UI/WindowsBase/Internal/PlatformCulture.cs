@@ -11,7 +11,7 @@
 
 using System;
 using System.Globalization;
-using System.Windows;
+
 using Alternet.UI;      
 
 namespace Alternet.UI.Internal

@@ -13,7 +13,7 @@ using System.ComponentModel;
 using Alternet.UI;           // SR
 using Alternet.UI;
 
-namespace Alternet.Base.ComponentModel
+namespace Alternet.UI
 {
     /// <summary>
     /// Defines a property and direction to sort a list by.

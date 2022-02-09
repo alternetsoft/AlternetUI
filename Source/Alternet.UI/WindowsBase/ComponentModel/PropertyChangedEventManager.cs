@@ -18,7 +18,7 @@ using System.Reflection;        // MethodInfo
 using Alternet.UI;           // WeakEventManager
 using Alternet.UI.Internal;
 
-namespace Alternet.Base.ComponentModel
+namespace Alternet.UI
 {
     /// <summary>
     /// Manager for the INotifyPropertyChanged.PropertyChanged event.

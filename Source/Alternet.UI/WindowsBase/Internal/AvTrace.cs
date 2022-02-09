@@ -24,12 +24,13 @@ using System.Security;
 using System.Text;
 using System.Reflection;
 using System.Collections;
-using System.Windows;
+
 
 using Microsoft.Win32;
 using Alternet.UI;
 using Alternet.Base.Diagnostics;
 using Alternet.UI.Markup;
+using PresentationTraceSources = Alternet.Base.Diagnostics.PresentationTraceSources;
 
 namespace Alternet.UI.Internal
 {

@@ -13,9 +13,9 @@ using SRCS = System.Runtime.CompilerServices;
 #if PBTCOMPILER
 namespace MS.Internal.Markup
 #elif WINDOWS_BASE
-using MS.Internal.WindowsBase;     // FriendAccessAllowed
+     // FriendAccessAllowed
 
-namespace System.Windows.Markup
+namespace Alternet.UI.Markup
 #else
 namespace Alternet.UI
 #endif

@@ -14,7 +14,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using System.Windows.Markup;
+
 using Alternet.UI;
 
 namespace Alternet.UI.Markup.Primitives

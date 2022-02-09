@@ -15,7 +15,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Alternet.UI;
 
-namespace Alternet.Base.ComponentModel
+namespace Alternet.UI
 {
     /// <summary>
     /// Implementation of a dynamic data collection of SortDescriptions.

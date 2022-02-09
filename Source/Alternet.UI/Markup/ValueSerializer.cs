@@ -17,7 +17,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Markup;
+
 
 //DateTimeConverter2
 
@@ -37,7 +37,6 @@ namespace Alternet.UI.Markup
     /// should avoid throwing exceptions. Any exceptions thrown could possibly terminate serialization.
     /// </summary>
     /// 
-    [TypeForwardedFrom("WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
     public abstract class ValueSerializer
     {
         /// <summary>

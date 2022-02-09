@@ -13,7 +13,7 @@
 
 
 using System;
-using System.Windows;
+
 using Alternet.UI;
 
 namespace Alternet.UI.Internal

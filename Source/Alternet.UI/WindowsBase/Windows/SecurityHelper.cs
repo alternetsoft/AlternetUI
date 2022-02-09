@@ -172,14 +172,10 @@ internal static class SecurityHelper
         }
 #endif
 
-#if PRESENTATION_CORE || PRESENTATIONFRAMEWORK || WINDOWS_BASE
-
         internal static bool AreStringTypesEqual(string m1, string m2)
         {
             return (String.Compare(m1, m2, StringComparison.OrdinalIgnoreCase) == 0);
         }
-
-#endif //PRESENTATION_CORE || PRESENTATIONFRAMEWORK || WINDOWS_BASE
 
 
 #if WINDOWS_BASE

@@ -13,7 +13,7 @@ using System.Reflection;
 using Alternet.UI.Threading;
 
 using Alternet.UI;
-using System.Windows.Markup;
+
 using Alternet.UI.Internal.ComponentModel;
 using Alternet.UI.Threading;
 using Alternet.UI.Internal.KnownBoxes;
