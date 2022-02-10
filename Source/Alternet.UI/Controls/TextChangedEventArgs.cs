@@ -9,6 +9,7 @@
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System;
 
 namespace Alternet.UI
 {
@@ -18,6 +19,15 @@ namespace Alternet.UI
 
     public class TextChangedEventArgs : RoutedEventArgs
     {
+        public TextChangedEventArgs(RoutedEvent id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException("id");
+            }
+
+            RoutedEvent = id;
+        }
     }
 
     #endregion TextChangedEvent

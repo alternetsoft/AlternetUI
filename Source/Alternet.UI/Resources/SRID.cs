@@ -1393,6 +1393,12 @@ namespace Alternet.UI
         internal const string @CollectionView_ViewTypeInsufficient = "CollectionView_ViewTypeInsufficient";
         /// <summary>Cannot get CollectionView of type '{0}' for CollectionViewSource that already uses type '{1}'.</summary>
         internal const string @CollectionView_NameTypeDuplicity = "CollectionView_NameTypeDuplicity";
+        /// <summary>Must set Source in RoutedEventArgs before building event route or invoking handlers.</summary>
+        internal const string @SourceNotSet = "SourceNotSet";
+        /// <summary>RoutedEvent in RoutedEventArgs and EventRoute are mismatched.</summary>
+        internal const string @Mismatched_RoutedEvent = "Mismatched_RoutedEvent";
+        /// <summary>Potential cycle in tree found while building the event route.</summary>
+        internal const string @TreeLoop = "TreeLoop";
 
     }
 }

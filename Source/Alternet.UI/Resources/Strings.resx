@@ -2178,4 +2178,13 @@
   <data name="CollectionView_NameTypeDuplicity" xml:space="preserve">
     <value>Cannot get CollectionView of type '{0}' for CollectionViewSource that already uses type '{1}'.</value>
   </data>
+  <data name="SourceNotSet" xml:space="preserve">
+    <value>Must set Source in RoutedEventArgs before building event route or invoking handlers.</value>
+  </data>
+  <data name="Mismatched_RoutedEvent" xml:space="preserve">
+    <value>RoutedEvent in RoutedEventArgs and EventRoute are mismatched.</value>
+  </data>
+  <data name="TreeLoop" xml:space="preserve">
+    <value>Potential cycle in tree found while building the event route.</value>
+  </data>
 </root>

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace Alternet.UI
@@ -24,74 +25,278 @@ namespace Alternet.UI
         /// </param>
         public void RaiseEvent(RoutedEventArgs e)
         {
-            //// VerifyAccess();
+            // VerifyAccess();
 
-            //if (e == null)
-            //{
-            //    throw new ArgumentNullException("e");
-            //}
-            //e.ClearUserInitiated();
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
+            e.ClearUserInitiated();
 
-            //UIElement.RaiseEventImpl(this, e);
+            UIElement.RaiseEventImpl(this, e);
         }
 
-        ///// <summary>
-        /////     Implementation of RaiseEvent.
-        /////     Called by both the trusted and non-trusted flavors of RaiseEvent.
-        ///// </summary>
-        //internal static void RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
-        //{
-        //    EventRoute route = EventRouteFactory.FetchObject(args.RoutedEvent);
+        internal const int MAX_ELEMENTS_IN_ROUTE = 4096;
 
-        //    if (TraceRoutedEvent.IsEnabled)
-        //    {
-        //        TraceRoutedEvent.Trace(
-        //            TraceEventType.Start,
-        //            TraceRoutedEvent.RaiseEvent,
-        //            args.RoutedEvent,
-        //            sender,
-        //            args,
-        //            args.Handled);
-        //    }
-
-        //    try
-        //    {
-        //        // Set Source
-        //        args.Source = sender;
-
-        //        UIElement.BuildRouteHelper(sender, route, args);
-
-        //        route.InvokeHandlers(sender, args);
-
-        //        // Reset Source to OriginalSource
-        //        args.Source = args.OriginalSource;
-        //    }
-
-        //    finally
-        //    {
-        //        if (TraceRoutedEvent.IsEnabled)
-        //        {
-        //            TraceRoutedEvent.Trace(
-        //                TraceEventType.Stop,
-        //                TraceRoutedEvent.RaiseEvent,
-        //                args.RoutedEvent,
-        //                sender,
-        //                args,
-        //                args.Handled);
-        //        }
-        //    }
-
-        //    EventRouteFactory.RecycleObject(route);
-        //}
-
-        internal DependencyObject GetUIParentCore()
+        /// <summary>
+        ///     Add the event handlers for this element to the route.
+        /// </summary>
+        public void AddToEventRoute(EventRoute route, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (route == null)
+            {
+                throw new ArgumentNullException("route");
+            }
+            if (e == null)
+            {
+                throw new ArgumentNullException("e");
+            }
+
+            // Get class listeners for this UIElement
+            RoutedEventHandlerInfoList classListeners =
+                GlobalEventManager.GetDTypedClassListeners(this.DependencyObjectType, e.RoutedEvent);
+
+            // Add all class listeners for this UIElement
+            while (classListeners != null)
+            {
+                for (int i = 0; i < classListeners.Handlers.Length; i++)
+                {
+                    route.Add(this, classListeners.Handlers[i].Handler, classListeners.Handlers[i].InvokeHandledEventsToo);
+                }
+
+                classListeners = classListeners.Next;
+            }
+
+            // Get instance listeners for this UIElement
+            FrugalObjectList<RoutedEventHandlerInfo> instanceListeners = null;
+            EventHandlersStore store = EventHandlersStore;
+            if (store != null)
+            {
+                instanceListeners = store[e.RoutedEvent];
+
+                // Add all instance listeners for this UIElement
+                if (instanceListeners != null)
+                {
+                    for (int i = 0; i < instanceListeners.Count; i++)
+                    {
+                        route.Add(this, instanceListeners[i].Handler, instanceListeners[i].InvokeHandledEventsToo);
+                    }
+                }
+            }
+
+            // Allow Framework to add event handlers in styles
+            AddToEventRouteCore(route, e);
+        }
+
+        /// <summary>
+        ///     This virtual method is to be overridden in Framework
+        ///     to be able to add handlers for styles
+        /// </summary>
+        internal virtual void AddToEventRouteCore(EventRoute route, RoutedEventArgs args)
+        {
+        }
+
+        internal static void BuildRouteHelper(DependencyObject e, EventRoute route, RoutedEventArgs args)
+        {
+            if (route == null)
+            {
+                throw new ArgumentNullException("route");
+            }
+
+            if (args == null)
+            {
+                throw new ArgumentNullException("args");
+            }
+
+            if (args.Source == null)
+            {
+                throw new ArgumentException(SR.Get(SRID.SourceNotSet));
+            }
+
+            if (args.RoutedEvent != route.RoutedEvent)
+            {
+                throw new ArgumentException(SR.Get(SRID.Mismatched_RoutedEvent));
+            }
+
+            // Route via visual tree
+            if (args.RoutedEvent.RoutingStrategy == RoutingStrategy.Direct)
+            {
+                UIElement uiElement = e as UIElement;
+
+                // Add this element to route
+                if (uiElement != null)
+                {
+                    uiElement.AddToEventRoute(route, args);
+                }
+            }
+            else
+            {
+                int cElements = 0;
+
+                while (e != null)
+                {
+                    UIElement uiElement = e as UIElement;
+
+                    // Protect against infinite loops by limiting the number of elements
+                    // that we will process.
+                    if (cElements++ > MAX_ELEMENTS_IN_ROUTE)
+                    {
+                        throw new InvalidOperationException(SR.Get(SRID.TreeLoop));
+                    }
+
+                    // Allow the element to adjust source
+                    object newSource = null;
+                    if (uiElement != null)
+                    {
+                        newSource = uiElement.AdjustEventSource(args);
+                    }
+
+                    // Add changed source information to the route
+                    if (newSource != null)
+                    {
+                        route.AddSource(newSource);
+                    }
+
+                    // Invoke BuildRouteCore
+                    bool continuePastVisualTree = false;
+                    if (uiElement != null)
+                    {
+                        /* yezo
+                        //Add a Synchronized input pre-opportunity handler just before the class and instance handlers
+                        uiElement.AddSynchronizedInputPreOpportunityHandler(route, args);
+                        */
+
+                        continuePastVisualTree = uiElement.BuildRouteCore(route, args);
+
+                        // Add this element to route
+                        uiElement.AddToEventRoute(route, args);
+
+                        /* yezo
+                        //Add a Synchronized input post-opportunity handler just after class and instance handlers
+                        uiElement.AddSynchronizedInputPostOpportunityHandler(route, args);*/
+
+                        // Get element's visual parent
+                        e = uiElement.GetUIParent(continuePastVisualTree);
+                    }
+
+                    // If the BuildRouteCore implementation changed the
+                    // args.Source to the route parent, respect it in
+                    // the actual route.
+                    if (e == args.Source)
+                    {
+                        route.AddSource(e);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Allows UIElement to augment the
+        ///     <see cref="EventRoute"/>
+        /// </summary>
+        /// <remarks>
+        ///     Sub-classes of UIElement can override
+        ///     this method to custom augment the route
+        /// </remarks>
+        /// <param name="route">
+        ///     The <see cref="EventRoute"/> to be
+        ///     augmented
+        /// </param>
+        /// <param name="args">
+        ///     <see cref="RoutedEventArgs"/> for the
+        ///     RoutedEvent to be raised post building
+        ///     the route
+        /// </param>
+        /// <returns>
+        ///     Whether or not the route should continue past the visual tree.
+        ///     If this is true, and there are no more visual parents, the route
+        ///     building code will call the GetUIParentCore method to find the
+        ///     next non-visual parent.
+        /// </returns>
+        internal virtual bool BuildRouteCore(EventRoute route, RoutedEventArgs args)
+        {
+            return false;
+        }
+
+        /// <summary>
+        ///     Allows adjustment to the event source
+        /// </summary>
+        /// <remarks>
+        ///     Subclasses must override this method
+        ///     to be able to adjust the source during
+        ///     route invocation <para/>
+        ///
+        ///     NOTE: Expected to return null when no
+        ///     change is made to source
+        /// </remarks>
+        /// <param name="args">
+        ///     Routed Event Args
+        /// </param>
+        /// <returns>
+        ///     Returns new source
+        /// </returns>
+        internal virtual object AdjustEventSource(RoutedEventArgs args)
+        {
+            return null;
+        }
+
+        /// <summary>
+        ///     Implementation of RaiseEvent.
+        ///     Called by both the trusted and non-trusted flavors of RaiseEvent.
+        /// </summary>
+        internal static void RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+        {
+            EventRoute route = EventRouteFactory.FetchObject(args.RoutedEvent);
+
+            if (TraceRoutedEvent.IsEnabled)
+            {
+                TraceRoutedEvent.Trace(
+                    TraceEventType.Start,
+                    TraceRoutedEvent.RaiseEvent,
+                    args.RoutedEvent,
+                    sender,
+                    args,
+                    args.Handled);
+            }
+
+            try
+            {
+                // Set Source
+                args.Source = sender;
+
+                UIElement.BuildRouteHelper(sender, route, args);
+
+                route.InvokeHandlers(sender, args);
+
+                // Reset Source to OriginalSource
+                args.Source = args.OriginalSource;
+            }
+
+            finally
+            {
+                if (TraceRoutedEvent.IsEnabled)
+                {
+                    TraceRoutedEvent.Trace(
+                        TraceEventType.Stop,
+                        TraceRoutedEvent.RaiseEvent,
+                        args.RoutedEvent,
+                        sender,
+                        args,
+                        args.Handled);
+                }
+            }
+
+            EventRouteFactory.RecycleObject(route);
+        }
+
+        internal virtual DependencyObject GetUIParentCore()
+        {
+            return null;
         }
 
         internal DependencyObject GetUIParent(bool v)
         {
-            throw new NotImplementedException();
+            return GetUIParentCore();
         }
 
         /// <summary>

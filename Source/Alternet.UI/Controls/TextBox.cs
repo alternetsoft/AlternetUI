@@ -86,7 +86,7 @@ namespace Alternet.UI
 
         private void OnTextPropertyChanged(string oldText, string newText)
         {
-            OnTextChanged(new TextChangedEventArgs());
+            OnTextChanged(new TextChangedEventArgs(TextChangedEvent));
         }
 
         /// <summary>

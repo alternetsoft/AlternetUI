@@ -28,6 +28,9 @@ namespace Alternet.UI
 
         private bool visible = true;
         private bool enabled = true;
+        private Control? parent;
+
+        internal override bool HasLogicalChildren => Children.Count > 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -220,7 +223,15 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the parent container of the control.
         /// </summary>
-        public Control? Parent { get; internal set; } // todo: allow users to set the Parent property?
+        public Control? Parent
+        {
+            get => parent;
+            internal set
+            {
+                parent = value;
+                base.Parent = value;
+            }
+        } // todo: allow users to set the Parent property?
 
         /// <summary>
         /// Gets or sets the suggested size of the control.
