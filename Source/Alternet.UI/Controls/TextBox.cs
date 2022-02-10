@@ -72,7 +72,8 @@ namespace Alternet.UI
                         new PropertyChangedCallback(OnTextPropertyChanged),    // property changed callback
                         new CoerceValueCallback(CoerceText),
                         true, // IsAnimationProhibited
-                        UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
+                        UpdateSourceTrigger.PropertyChanged
+                        //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
                         ));
 
         /// <summary>

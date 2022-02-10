@@ -6,21 +6,19 @@ namespace HelloWorldSample
 {
     public partial class MainWindow : Window
     {
-        private MyData myDataObject;
-
         public MainWindow()
         {
             InitializeComponent();
 
-            myDataObject = new MyData(DateTime.Now);
+            DataContext = new MyData(DateTime.Now);
             Binding myBinding = new Binding("MyDataProperty") { Mode = BindingMode.TwoWay };
-            myBinding.Source = myDataObject;
+            myBinding.Source = DataContext;
             BindingOperations.SetBinding(myDataTextBox, TextBox.TextProperty, myBinding);
         }
 
         private void ShowDataButton_Click(object? sender, EventArgs e)
         {
-            MessageBox.Show("MyDataProperty: " + myDataObject.MyDataProperty);
+            MessageBox.Show("MyDataProperty: " + ((MyData)DataContext).MyDataProperty);
         }
 
         public class MyData : INotifyPropertyChanged
