@@ -11,9 +11,9 @@ namespace HelloWorldSample
             InitializeComponent();
 
             DataContext = new MyData(DateTime.Now);
-            Binding myBinding = new Binding("MyDataProperty") { Mode = BindingMode.TwoWay };
-            myBinding.Source = DataContext;
-            BindingOperations.SetBinding(myDataTextBox, TextBox.TextProperty, myBinding);
+            //Binding myBinding = new Binding("MyDataProperty") { Mode = BindingMode.TwoWay };
+            //myBinding.Source = DataContext;
+            //BindingOperations.SetBinding(myDataTextBox, TextBox.TextProperty, myBinding);
         }
 
         private void ShowDataButton_Click(object? sender, EventArgs e)
@@ -30,7 +30,7 @@ namespace HelloWorldSample
                 myDataProperty = "Last bound time was " + dateTime.ToLongTimeString();
             }
 
-            public String MyDataProperty
+            public string MyDataProperty
             {
                 get => myDataProperty;
                 set
