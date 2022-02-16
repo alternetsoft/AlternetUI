@@ -14,6 +14,7 @@
 		</Grid.RowDefinitions>
 
 		<Label Text="MyData:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,0,10,0" />
+		<!--<TextBox Grid.Column="1" Grid.Row="0" Name="myDataTextBox" />-->
 		<TextBox Grid.Column="1" Grid.Row="0" Name="myDataTextBox" Text="{Binding MyDataProperty}" />
 
 		<Button Grid.Column="1" Grid.Row="1" Name="showData" Text="Show Data" Click="ShowDataButton_Click" />
