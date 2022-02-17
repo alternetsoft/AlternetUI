@@ -885,334 +885,302 @@ namespace Alternet.UI
 
         //    #region InheritablePropertyChange
 
-        //    /// <summary>
-        //    /// </summary>
-        //    internal static void InvalidateOnInheritablePropertyChange(
-        //        FrameworkElement              fe,
-        //        FrameworkContentElement       fce,
-        //        InheritablePropertyChangeInfo info,
-        //        bool                          skipStartNode)
-        //    {
-        //        DependencyProperty dp = info.Property;
-        //        FrameworkObject fo = new FrameworkObject(fe, fce);
-        //        Debug.Assert(fo.IsValid, "Node with the resources change notification must be an FE or an FCE.");
+        /// <summary>
+        /// </summary>
+        internal static void InvalidateOnInheritablePropertyChange(
+            FrameworkElement fe,
+            InheritablePropertyChangeInfo info,
+            bool skipStartNode)
+        {
+            DependencyProperty dp = info.Property;
+            FrameworkObject fo = new FrameworkObject(fe);
+            Debug.Assert(fo.IsValid, "Node with the resources change notification must be an FE or an FCE.");
 
-        //        if (HasChildren(fe, fce))
-        //        {
-        //            // Spin up a DescendentsWalker only when
-        //            // the current node has children to walk
+            if (HasChildren(fe))
+            {
+                // Spin up a DescendentsWalker only when
+                // the current node has children to walk
 
-        //            DependencyObject d = fo.DO;
+                DependencyObject d = fo.DO;
 
-        //            DescendentsWalker<InheritablePropertyChangeInfo> walker = new DescendentsWalker<InheritablePropertyChangeInfo>(
-        //                TreeWalkPriority.LogicalTree, InheritablePropertyChangeDelegate, info);
+                DescendentsWalker<InheritablePropertyChangeInfo> walker = new DescendentsWalker<InheritablePropertyChangeInfo>(
+                    TreeWalkPriority.LogicalTree, InheritablePropertyChangeDelegate, info);
 
-        //            walker.StartWalk(d, skipStartNode);
-        //        }
-        //        else if (!skipStartNode)
-        //        {
-        //            // Degenerate case when the current node is a leaf node and has no children.
-        //            // If the current node needs a notification, do so now.
-        //            bool visitedViaVisualTree = false;
-        //            OnInheritablePropertyChanged(fo.DO, info, visitedViaVisualTree);
-        //        }
-        //    }
+                walker.StartWalk(d, skipStartNode);
+            }
+            else if (!skipStartNode)
+            {
+                // Degenerate case when the current node is a leaf node and has no children.
+                // If the current node needs a notification, do so now.
+                bool visitedViaVisualTree = false;
+                OnInheritablePropertyChanged(fo.DO, info, visitedViaVisualTree);
+            }
+        }
 
-        //    /// <summary>
-        //    ///     Callback on visiting each node in the descendency
-        //    ///     during an inheritable property change
-        //    /// </summary>
-        //    private static bool OnInheritablePropertyChanged(
-        //        DependencyObject              d,
-        //        InheritablePropertyChangeInfo info,
-        //        bool                          visitedViaVisualTree)
-        //    {
-        //        Debug.Assert(d != null, "Must have non-null current node");
+        /// <summary>
+        ///     Callback on visiting each node in the descendency
+        ///     during an inheritable property change
+        /// </summary>
+        private static bool OnInheritablePropertyChanged(
+            DependencyObject d,
+            InheritablePropertyChangeInfo info,
+            bool visitedViaVisualTree)
+        {
+            Debug.Assert(d != null, "Must have non-null current node");
 
-        //        DependencyProperty dp = info.Property;
-        //        EffectiveValueEntry oldEntry = info.OldEntry;
-        //        EffectiveValueEntry newEntry = info.NewEntry;
+            DependencyProperty dp = info.Property;
+            EffectiveValueEntry oldEntry = info.OldEntry;
+            EffectiveValueEntry newEntry = info.NewEntry;
 
-        //        InheritanceBehavior inheritanceBehavior;
-        //        bool inheritanceNode = IsInheritanceNode(d, dp, out inheritanceBehavior);
-        //        bool isForceInheritedProperty = IsForceInheritedProperty(dp);
+            InheritanceBehavior inheritanceBehavior;
+            bool inheritanceNode = IsInheritanceNode(d, dp, out inheritanceBehavior);
+            bool isForceInheritedProperty = IsForceInheritedProperty(dp);
 
-        //        // Note that if a node is marked SkipNext means it hasn't acquired any values from its parent and
-        //        // hence we do not need to invalidate this node or any of its descendents. However if a node is
-        //        // marked SkipNow then this node might have acquired values from its parent but none of its
-        //        // descendents would. Hence in this case we process the current node but omit all of its descendents.
-        //        if (inheritanceNode && (!SkipNext(inheritanceBehavior) || isForceInheritedProperty))
-        //        {
-        //            PropertyMetadata metadata = dp.GetMetadata(d);
-        //            EntryIndex entryIndex = d.LookupEntry(dp.GlobalIndex);
+            // Note that if a node is marked SkipNext means it hasn't acquired any values from its parent and
+            // hence we do not need to invalidate this node or any of its descendents. However if a node is
+            // marked SkipNow then this node might have acquired values from its parent but none of its
+            // descendents would. Hence in this case we process the current node but omit all of its descendents.
+            if (inheritanceNode && (!SkipNext(inheritanceBehavior) || isForceInheritedProperty))
+            {
+                PropertyMetadata metadata = dp.GetMetadata(d);
+                EntryIndex entryIndex = d.LookupEntry(dp.GlobalIndex);
 
-        //            // Found an inheritance node
-        //            if (!d.IsSelfInheritanceParent)
-        //            {
-        //                DependencyObject parent = FrameworkElement.GetFrameworkParent(d);
-        //                InheritanceBehavior parentInheritanceBehavior = InheritanceBehavior.Default;
+                // Found an inheritance node
+                if (!d.IsSelfInheritanceParent)
+                {
+                    DependencyObject parent = FrameworkElement.GetFrameworkParent(d);
+                    InheritanceBehavior parentInheritanceBehavior = InheritanceBehavior.Default;
 
-        //                if (parent != null)
-        //                {
-        //                    FrameworkObject parentFO = new FrameworkObject(parent, true);
-        //                    parentInheritanceBehavior = parentFO.InheritanceBehavior;
-        //                }
+                    if (parent != null)
+                    {
+                        FrameworkObject parentFO = new FrameworkObject(parent, true);
+                        parentInheritanceBehavior = parentFO.InheritanceBehavior;
+                    }
 
-        //                if (!SkipNext(inheritanceBehavior) && !SkipNow(parentInheritanceBehavior))
-        //                {
-        //                    // Synchronize InheritanceParent
-        //                    d.SynchronizeInheritanceParent(parent);
-        //                }
+                    if (!SkipNext(inheritanceBehavior) && !SkipNow(parentInheritanceBehavior))
+                    {
+                        // Synchronize InheritanceParent
+                        d.SynchronizeInheritanceParent(parent);
+                    }
 
-        //                // What should the oldValueSource on the child be?
-        //                // When the oldValue on the parent was default it
-        //                // means that the child also used its own default
-        //                // and did not inherit from the parent. However
-        //                // when the value on the parent was non-default
-        //                // it means that the child inherited it.
-        //                // Note that the oldValueSource on inheritablePropertyChangedData
-        //                // is actually the parent's oldValueSource
+                    // What should the oldValueSource on the child be?
+                    // When the oldValue on the parent was default it
+                    // means that the child also used its own default
+                    // and did not inherit from the parent. However
+                    // when the value on the parent was non-default
+                    // it means that the child inherited it.
+                    // Note that the oldValueSource on inheritablePropertyChangedData
+                    // is actually the parent's oldValueSource
 
-        //                if (oldEntry.BaseValueSourceInternal == BaseValueSourceInternal.Unknown)
-        //                {
-        //                    // we use an empty EffectiveValueEntry as a signal that the old entry was the default value
-        //                    oldEntry = EffectiveValueEntry.CreateDefaultValueEntry(dp, metadata.GetDefaultValue(d, dp));
-        //                }
-        //            }
-        //            else
-        //            {
-        //                oldEntry = d.GetValueEntry(
-        //                                    entryIndex,
-        //                                    dp,
-        //                                    metadata,
-        //                                    RequestFlags.RawEntry);
-        //             }
+                    if (oldEntry.BaseValueSourceInternal == BaseValueSourceInternal.Unknown)
+                    {
+                        // we use an empty EffectiveValueEntry as a signal that the old entry was the default value
+                        oldEntry = EffectiveValueEntry.CreateDefaultValueEntry(dp, metadata.GetDefaultValue(d, dp));
+                    }
+                }
+                else
+                {
+                    oldEntry = d.GetValueEntry(
+                                        entryIndex,
+                                        dp,
+                                        metadata,
+                                        RequestFlags.RawEntry);
+                }
 
-        //            // If the oldValueSource is of lower precedence than Inheritance
-        //            // only then do we need to Invalidate the property
-        //            if (BaseValueSourceInternal.Inherited >= oldEntry.BaseValueSourceInternal)
-        //            {
-        //                if (visitedViaVisualTree && FrameworkElement.DType.IsInstanceOfType(d))
-        //                {
-        //                    DependencyObject logicalParent = LogicalTreeHelper.GetParent(d);
-        //                    if (logicalParent != null)
-        //                    {
-        //                        DependencyObject visualParent = VisualTreeHelper.GetParent(d);
-        //                        if (visualParent != null && visualParent != logicalParent)
-        //                        {
-        //                            // Consider the following logical tree configuration. In this case we want
-        //                            // to RibbonToggleButton to pick up the new DataContext flowing in from
-        //                            // the Window.
-        //                            //
-        //                            // Window (info.RootElement)
-        //                            //   ...
-        //                            //   RibbonGroup (IsCollapsed)
-        //                            //      RibbonControl (only in visual tree)
-        //                            //          RibbonToggleButton
-        //                            //
-        //                            // Consider the following logical tree configuration. In this case we do not
-        //                            // want to RibbonToggleButton to change its DataContext because the changes
-        //                            // are only within the visual tree.
-        //                            //
-        //                            // Window
-        //                            //   ...
-        //                            //   RibbonGroup (IsCollapsed)
-        //                            //      RibbonControl (only in visual tree) (info.RootElement)
-        //                            //          RibbonToggleButton
-        //                            //
-        //                            // Saying it another way, the RibbonToggleButton in the above case belongs in a
-        //                            // different logical tree than the one that the current invalidation storm begun.
-        //                            //
-        //                            // Any change in an inheritable property begins an invalidation storm using the
-        //                            // DescendentsWalker and configures it to first traverse the logical children
-        //                            // and then visual children. Also nodes that have previously been visited via the
-        //                            // logical tree do not get visited again through the visual tree. I use this very
-        //                            // behavior as the basis for detecting nodes such as RibbonToggleButton. If the
-        //                            // RibbonToggleButton is being visisted for the first time via the visual tree then
-        //                            // the invalidation storm did not include its logical parent. And therefore the
-        //                            // RibbonToggleButton can early out of this storm.
-        //                            return false;
-        //                        }
-        //                    }
-        //                }
+                // If the oldValueSource is of lower precedence than Inheritance
+                // only then do we need to Invalidate the property
+                if (BaseValueSourceInternal.Inherited >= oldEntry.BaseValueSourceInternal)
+                {
+                    if (visitedViaVisualTree && FrameworkElement.DType.IsInstanceOfType(d))
+                    {
+                        DependencyObject logicalParent = LogicalTreeHelper.GetParent(d);
+                        if (logicalParent != null)
+                        {
+                            //DependencyObject visualParent = VisualTreeHelper.GetParent(d);
+                            //if (visualParent != null && visualParent != logicalParent)
+                            //{
+                            //    // Consider the following logical tree configuration. In this case we want
+                            //    // to RibbonToggleButton to pick up the new DataContext flowing in from
+                            //    // the Window.
+                            //    //
+                            //    // Window (info.RootElement)
+                            //    //   ...
+                            //    //   RibbonGroup (IsCollapsed)
+                            //    //      RibbonControl (only in visual tree)
+                            //    //          RibbonToggleButton
+                            //    //
+                            //    // Consider the following logical tree configuration. In this case we do not
+                            //    // want to RibbonToggleButton to change its DataContext because the changes
+                            //    // are only within the visual tree.
+                            //    //
+                            //    // Window
+                            //    //   ...
+                            //    //   RibbonGroup (IsCollapsed)
+                            //    //      RibbonControl (only in visual tree) (info.RootElement)
+                            //    //          RibbonToggleButton
+                            //    //
+                            //    // Saying it another way, the RibbonToggleButton in the above case belongs in a
+                            //    // different logical tree than the one that the current invalidation storm begun.
+                            //    //
+                            //    // Any change in an inheritable property begins an invalidation storm using the
+                            //    // DescendentsWalker and configures it to first traverse the logical children
+                            //    // and then visual children. Also nodes that have previously been visited via the
+                            //    // logical tree do not get visited again through the visual tree. I use this very
+                            //    // behavior as the basis for detecting nodes such as RibbonToggleButton. If the
+                            //    // RibbonToggleButton is being visisted for the first time via the visual tree then
+                            //    // the invalidation storm did not include its logical parent. And therefore the
+                            //    // RibbonToggleButton can early out of this storm.
+                            //    return false;
+                            //}
+                        }
+                    }
 
-        //                // Since we do not hold a cache of the oldValue we need to supply one
-        //                // in order to correctly fire the change notification
-        //                return (d.UpdateEffectiveValue(
-        //                        entryIndex,
-        //                        dp,
-        //                        metadata,
-        //                        oldEntry,
-        //                        ref newEntry,
-        //                        false /* coerceWithDeferredReference */,
-        //                        false /* coerceWithCurrentValue */,
-        //                        OperationType.Inherit)
-        //                    & (UpdateResult.ValueChanged | UpdateResult.InheritedValueOverridden))
-        //                    == UpdateResult.ValueChanged;
-        //                // return false if either the value didn't change or
-        //                // it changed because the inherited value was overridden by coercion or animation.
-        //            }
-        //            else if (isForceInheritedProperty)
-        //            {
-        //                // IsCoerced == true && value == UnsetValue indicates that we need to re-coerce this value
-        //                newEntry = new EffectiveValueEntry(dp, FullValueSource.IsCoerced);
+                    // Since we do not hold a cache of the oldValue we need to supply one
+                    // in order to correctly fire the change notification
+                    return (d.UpdateEffectiveValue(
+                            entryIndex,
+                            dp,
+                            metadata,
+                            oldEntry,
+                            ref newEntry,
+                            false /* coerceWithDeferredReference */,
+                            false /* coerceWithCurrentValue */,
+                            OperationType.Inherit)
+                        & (UpdateResult.ValueChanged | UpdateResult.InheritedValueOverridden))
+                        == UpdateResult.ValueChanged;
+                    // return false if either the value didn't change or
+                    // it changed because the inherited value was overridden by coercion or animation.
+                }
+                else if (isForceInheritedProperty)
+                {
+                    // IsCoerced == true && value == UnsetValue indicates that we need to re-coerce this value
+                    newEntry = new EffectiveValueEntry(dp, FullValueSource.IsCoerced);
 
-        //                // Re-coerce a force inherited property because it's coersion depends on treeness
-        //                return (d.UpdateEffectiveValue(
-        //                        d.LookupEntry(dp.GlobalIndex),
-        //                        dp,
-        //                        metadata,
-        //                        oldEntry,
-        //                        ref newEntry,
-        //                        false /* coerceWithDeferredReference */,
-        //                        false /* coerceWithCurrentValue */,
-        //                        OperationType.Inherit)
-        //                    & (UpdateResult.ValueChanged | UpdateResult.InheritedValueOverridden))
-        //                    == UpdateResult.ValueChanged;
-        //                // return false if either the value didn't change or
-        //                // it changed because the inherited value was overridden by coercion or animation.
-        //            }
-        //            else
-        //            {
-        //                return false;
-        //            }
-        //        }
+                    // Re-coerce a force inherited property because it's coersion depends on treeness
+                    return (d.UpdateEffectiveValue(
+                            d.LookupEntry(dp.GlobalIndex),
+                            dp,
+                            metadata,
+                            oldEntry,
+                            ref newEntry,
+                            false /* coerceWithDeferredReference */,
+                            false /* coerceWithCurrentValue */,
+                            OperationType.Inherit)
+                        & (UpdateResult.ValueChanged | UpdateResult.InheritedValueOverridden))
+                        == UpdateResult.ValueChanged;
+                    // return false if either the value didn't change or
+                    // it changed because the inherited value was overridden by coercion or animation.
+                }
+                else
+                {
+                    return false;
+                }
+            }
 
-        //        // Do not continue walk down subtree if the walk was forced to stop
-        //        // (due to separated trees)
-        //        return (inheritanceBehavior == InheritanceBehavior.Default || isForceInheritedProperty);
-        //    }
+            // Do not continue walk down subtree if the walk was forced to stop
+            // (due to separated trees)
+            return (inheritanceBehavior == InheritanceBehavior.Default || isForceInheritedProperty);
+        }
 
-        //    // raise the InheritedPropertyChanged event to mentees.  Called from FE/FCE
-        //    // OnPropertyChanged
-        //    internal static void OnInheritedPropertyChanged(DependencyObject d,
-        //                                        ref InheritablePropertyChangeInfo info,
-        //                                        InheritanceBehavior inheritanceBehavior)
-        //    {
-        //        if (inheritanceBehavior == InheritanceBehavior.Default || IsForceInheritedProperty(info.Property))
-        //        {
-        //            FrameworkObject fo = new FrameworkObject(d);
-        //            fo.OnInheritedPropertyChanged(ref info);
-        //        }
-        //    }
+        // raise the InheritedPropertyChanged event to mentees.  Called from FE/FCE
+        // OnPropertyChanged
+        internal static void OnInheritedPropertyChanged(DependencyObject d,
+                                            ref InheritablePropertyChangeInfo info,
+                                            InheritanceBehavior inheritanceBehavior)
+        {
+            if (inheritanceBehavior == InheritanceBehavior.Default || IsForceInheritedProperty(info.Property))
+            {
+                FrameworkObject fo = new FrameworkObject(d);
+                fo.OnInheritedPropertyChanged(ref info);
+            }
+        }
 
-        //    /// <summary>
-        //    ///     Determine if the current DependencyObject is a candidate for
-        //    ///     producing inheritable values
-        //    /// </summary>
-        //    /// <remarks>
-        //    ///     This is called by both InvalidateTree and GetValueCore
-        //    /// </remarks>
-        //    internal static bool IsInheritanceNode(
-        //        DependencyObject    d,
-        //        DependencyProperty  dp,
-        //    out InheritanceBehavior inheritanceBehavior)
-        //    {
-        //        // Assume can continue search
-        //        inheritanceBehavior = InheritanceBehavior.Default;
+        /// <summary>
+        ///     Determine if the current DependencyObject is a candidate for
+        ///     producing inheritable values
+        /// </summary>
+        /// <remarks>
+        ///     This is called by both InvalidateTree and GetValueCore
+        /// </remarks>
+        internal static bool IsInheritanceNode(
+            DependencyObject d,
+            DependencyProperty dp,
+        out InheritanceBehavior inheritanceBehavior)
+        {
+            // Assume can continue search
+            inheritanceBehavior = InheritanceBehavior.Default;
 
-        //        // Get Framework metadata (if exists)
-        //        FrameworkPropertyMetadata metadata = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
+            // Get Framework metadata (if exists)
+            FrameworkPropertyMetadata metadata = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
 
-        //        // Check for correct type of metadata
-        //        if (metadata != null)
-        //        {
-        //            FrameworkObject fo = new FrameworkObject(d);
+            // Check for correct type of metadata
+            if (metadata != null)
+            {
+                FrameworkObject fo = new FrameworkObject(d);
 
-        //            if (fo.IsValid)
-        //            {
-        //                // If parent is a Framework type, then check if it is at a
-        //                // tree separation boundary. Stop inheritance at the boundary unless
-        //                // overridden by the medata.OverridesInheritanceBehavior flag.
+                if (fo.IsValid)
+                {
+                    // If parent is a Framework type, then check if it is at a
+                    // tree separation boundary. Stop inheritance at the boundary unless
+                    // overridden by the medata.OverridesInheritanceBehavior flag.
 
-        //                // GetValue from Parent only if instance is not a TreeSeparator
-        //                // or fmetadata.OverridesInheritanceBehavior is set to override separated tree behavior
-        //                if (fo.InheritanceBehavior != InheritanceBehavior.Default && !metadata.OverridesInheritanceBehavior)
-        //                {
-        //                    // Hit a tree boundary
-        //                    inheritanceBehavior = fo.InheritanceBehavior;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                // If not a Framework type, then, this isn't an inheritance node.
-        //                // Only Framework types know how to inherit
+                    // GetValue from Parent only if instance is not a TreeSeparator
+                    // or fmetadata.OverridesInheritanceBehavior is set to override separated tree behavior
+                    if (fo.InheritanceBehavior != InheritanceBehavior.Default && !metadata.OverridesInheritanceBehavior)
+                    {
+                        // Hit a tree boundary
+                        inheritanceBehavior = fo.InheritanceBehavior;
+                    }
+                }
+                else
+                {
+                    // If not a Framework type, then, this isn't an inheritance node.
+                    // Only Framework types know how to inherit
 
-        //                return false;
-        //            }
+                    return false;
+                }
 
-        //            // Check if metadata is marked as inheritable
-        //            if (metadata.Inherits)
-        //            {
-        //                return true;
-        //            }
-        //        }
+                // Check if metadata is marked as inheritable
+                if (metadata.Inherits)
+                {
+                    return true;
+                }
+            }
 
-        //        // Not a framework type with inheritable metadata
-        //        return false;
-        //    }
+            // Not a framework type with inheritable metadata
+            return false;
+        }
 
-        //    /// <summary>
-        //    ///     FrameworkElement variant of IsInheritanceNode
-        //    /// </summary>
-        //    internal static bool IsInheritanceNode(
-        //        FrameworkElement        fe,
-        //        DependencyProperty      dp,
-        //        out InheritanceBehavior inheritanceBehavior)
-        //    {
-        //        // Assume can continue search
-        //        inheritanceBehavior = InheritanceBehavior.Default;
+        /// <summary>
+        ///     FrameworkElement variant of IsInheritanceNode
+        /// </summary>
+        internal static bool IsInheritanceNode(
+            FrameworkElement fe,
+            DependencyProperty dp,
+            out InheritanceBehavior inheritanceBehavior)
+        {
+            // Assume can continue search
+            inheritanceBehavior = InheritanceBehavior.Default;
 
-        //        // Get Framework metadata (if exists)
-        //        FrameworkPropertyMetadata metadata = dp.GetMetadata(fe.DependencyObjectType) as FrameworkPropertyMetadata;
+            // Get Framework metadata (if exists)
+            FrameworkPropertyMetadata metadata = dp.GetMetadata(fe.DependencyObjectType) as FrameworkPropertyMetadata;
 
-        //        // Check for correct type of metadata
-        //        if (metadata != null)
-        //        {
-        //            if (fe.InheritanceBehavior != InheritanceBehavior.Default && !metadata.OverridesInheritanceBehavior)
-        //            {
-        //                // Hit a tree boundary
-        //                inheritanceBehavior = fe.InheritanceBehavior;
-        //            }
+            // Check for correct type of metadata
+            if (metadata != null)
+            {
+                if (fe.InheritanceBehavior != InheritanceBehavior.Default && !metadata.OverridesInheritanceBehavior)
+                {
+                    // Hit a tree boundary
+                    inheritanceBehavior = fe.InheritanceBehavior;
+                }
 
-        //            // Return true if metadata is marked as inheritable; false otherwise
-        //            return metadata.Inherits;
-        //        }
+                // Return true if metadata is marked as inheritable; false otherwise
+                return metadata.Inherits;
+            }
 
-        //        // Not framework type metadata
-        //        return false;
-        //    }
-
-        //    /// <summary>
-        //    ///     FrameworkContentElement variant of IsInheritanceNode
-        //    /// </summary>
-        //    internal static bool IsInheritanceNode(
-        //        FrameworkContentElement fce,
-        //        DependencyProperty      dp,
-        //        out InheritanceBehavior inheritanceBehavior)
-        //    {
-        //        // Assume can continue search
-        //        inheritanceBehavior = InheritanceBehavior.Default;
-
-        //        // Get Framework metadata (if exists)
-        //        FrameworkPropertyMetadata metadata = dp.GetMetadata(fce.DependencyObjectType) as FrameworkPropertyMetadata;
-
-        //        // Check for correct type of metadata
-        //        if (metadata != null)
-        //        {
-        //            if (fce.InheritanceBehavior != InheritanceBehavior.Default && !metadata.OverridesInheritanceBehavior)
-        //            {
-        //                // Hit a tree boundary
-        //                inheritanceBehavior = fce.InheritanceBehavior;
-        //            }
-
-        //            // Return true if metadata is marked as inheritable; false otherwise
-        //            return metadata.Inherits;
-        //        }
-
-        //        // Not framework type metadata
-        //        return false;
-        //    }
+            // Not framework type metadata
+            return false;
+        }
 
         /// <summary>
         ///     Says if the given value has SkipNow behavior
@@ -1292,8 +1260,8 @@ namespace Alternet.UI
         //    private static VisitedCallback<ResourcesChangeInfo> ResourcesChangeDelegate
         //        = new VisitedCallback<ResourcesChangeInfo>(OnResourcesChangedCallback);
 
-        //    private static VisitedCallback<InheritablePropertyChangeInfo> InheritablePropertyChangeDelegate
-        //        = new VisitedCallback<InheritablePropertyChangeInfo>(OnInheritablePropertyChanged);
+        private static VisitedCallback<InheritablePropertyChangeInfo> InheritablePropertyChangeDelegate
+            = new VisitedCallback<InheritablePropertyChangeInfo>(OnInheritablePropertyChanged);
 
         //    #endregion StaticData
         //}

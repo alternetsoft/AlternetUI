@@ -229,8 +229,10 @@ namespace Alternet.UI
             get => parent;
             internal set
             {
+                var oldParent = parent;
                 parent = value;
                 base.Parent = value;
+                base.ChangeLogicalParent(oldParent, parent);
             }
         } // todo: allow users to set the Parent property?
 

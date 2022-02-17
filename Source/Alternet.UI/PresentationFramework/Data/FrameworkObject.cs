@@ -1031,17 +1031,17 @@ namespace Alternet.UI
         //            }
         //        }
 
-        //        internal void OnInheritedPropertyChanged(ref InheritablePropertyChangeInfo info)
-        //        {
-        //            if (IsFE)
-        //            {
-        //                _fe.RaiseInheritedPropertyChangedEvent(ref info);
-        //            }
-        //            else if (IsFCE)
-        //            {
-        //                _fce.RaiseInheritedPropertyChangedEvent(ref info);
-        //            }
-        //        }
+        internal void OnInheritedPropertyChanged(ref InheritablePropertyChangeInfo info)
+        {
+            if (IsFE)
+            {
+                _fe.RaiseInheritedPropertyChangedEvent(ref info);
+            }
+            //else if (IsFCE)
+            //{
+            //    _fce.RaiseInheritedPropertyChangedEvent(ref info);
+            //}
+        }
 
         // Set the ShouldLookupImplicitStyles flag on the current
         // node if the parent has it set to true.

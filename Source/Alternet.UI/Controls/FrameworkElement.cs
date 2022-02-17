@@ -134,6 +134,96 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        ///     Invoked when logical parent is changed.  This just
+        ///     sets the parent pointer.
+        /// </summary>
+        /// <remarks>
+        ///     A parent change is considered catastrohpic and results in a large
+        ///     amount of invalidations and tree traversals. <cref see="DependencyFastBuild"/>
+        ///     is recommended to reduce the work necessary to build a tree
+        /// </remarks>
+        /// <param name="newParent">
+        ///     New parent that was set
+        /// </param>
+        internal void ChangeLogicalParent(DependencyObject oldParent, DependencyObject newParent)
+        {
+            ///////////////////
+            // OnNewParent:
+            ///////////////////
+
+            //
+            // -- Approved By The Core Team --
+            //
+            // Do not allow foreign threads to change the tree.
+            // (This is a noop if this object is not assigned to a Dispatcher.)
+            //
+            // We also need to ensure that the tree is homogenous with respect
+            // to the dispatchers that the elements belong to.
+            //
+            this.VerifyAccess();
+            if (newParent != null)
+            {
+                newParent.VerifyAccess();
+            }
+
+            //// Logical Parent must first be dropped before you are attached to a newParent
+            //// This mitigates illegal tree state caused by logical child stealing as illustrated in bug 970706
+            //if (_parent != null && newParent != null && _parent != newParent)
+            //{
+            //    throw new System.InvalidOperationException(SR.Get(SRID.HasLogicalParent));
+            //}
+
+            //// Trivial check to avoid loops
+            //if (newParent == this)
+            //{
+            //    throw new System.InvalidOperationException(SR.Get(SRID.CannotBeSelfParent));
+            //}
+
+            //// invalid during a VisualTreeChanged event
+            //VisualDiagnostics.VerifyVisualTreeChange(this);
+
+            // Logical Parent implies no InheritanceContext
+            if (newParent != null)
+            {
+                ClearInheritanceContext();
+            }
+
+            IsParentAnFE = newParent is FrameworkElement;
+
+            OnNewParent(oldParent, newParent);
+
+            // Update Has[Loaded/Unloaded]Handler Flags
+            //BroadcastEventHelper.AddOrRemoveHasLoadedChangeHandlerFlag(this, oldParent, newParent);
+
+
+
+            ///////////////////
+            // OnParentChanged:
+            ///////////////////
+
+            // Invalidate relevant properties for this subtree
+            DependencyObject parent = (newParent != null) ? newParent : oldParent;
+            TreeWalkHelper.InvalidateOnTreeChange(/* fe = */ this, parent, (newParent != null));
+
+            // If no one has called BeginInit then mark the element initialized and fire Initialized event
+            // (non-parser programmatic tree building scenario)
+            //TryFireInitialized();
+        }
+
+        private static readonly UncommonField<DependencyObject> InheritanceContextField = new UncommonField<DependencyObject>();
+
+        // Clear the inheritance context (called when the element
+        // gets a real parent
+        private void ClearInheritanceContext()
+        {
+            if (InheritanceContext != null)
+            {
+                InheritanceContextField.ClearValue(this);
+                OnInheritanceContextChanged(EventArgs.Empty);
+            }
+        }
+
         internal bool ReadInternalFlag(InternalFlags reqFlag)
         {
             return (_flags & reqFlag) != 0;
@@ -397,6 +487,223 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        ///     Notification that a specified property has been changed
+        /// </summary>
+        /// <param name="e">EventArgs that contains the property, metadata, old value, and new value for this change</param>
+        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            DependencyProperty dp = e.Property;
+
+            // invalid during a VisualTreeChanged event
+            //VisualDiagnostics.VerifyVisualTreeChange(this);
+
+            base.OnPropertyChanged(e);
+
+            if (e.IsAValueChange || e.IsASubPropertyChange)
+            {
+                //
+                // Try to fire the Loaded event on the root of the tree
+                // because for this case the OnParentChanged will not
+                // have a chance to fire the Loaded event.
+                //
+                //if (dp != null && dp.OwnerType == typeof(PresentationSource) && dp.Name == "RootSource")
+                //{
+                //    TryFireInitialized();
+                //}
+
+                //if (dp == FrameworkElement.NameProperty &&
+                //    EventTrace.IsEnabled(EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Verbose))
+                //{
+                //    EventTrace.EventProvider.TraceEvent(EventTrace.Event.PerfElementIDName, EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Verbose,
+                //            PerfService.GetPerfElementID(this), GetType().Name, GetValue(dp));
+                //}
+
+                //
+                // Invalidation propagation for Styles
+                //
+
+                // Regardless of metadata, the Style/Template/DefaultStyleKey properties are never a trigger drivers
+                //if (dp != StyleProperty && dp != Control.TemplateProperty && dp != DefaultStyleKeyProperty)
+                {
+                    // Note even properties on non-container nodes within a template could be driving a trigger
+                    //if (TemplatedParent != null)
+                    //{
+                    //    FrameworkElement feTemplatedParent = TemplatedParent as FrameworkElement;
+
+                    //    FrameworkTemplate frameworkTemplate = feTemplatedParent.TemplateInternal;
+                    //    if (frameworkTemplate != null)
+                    //    {
+                    //        StyleHelper.OnTriggerSourcePropertyInvalidated(null, frameworkTemplate, TemplatedParent, dp, e, false /*invalidateOnlyContainer*/,
+                    //            ref frameworkTemplate.TriggerSourceRecordFromChildIndex, ref frameworkTemplate.PropertyTriggersWithActions, TemplateChildIndex /*sourceChildIndex*/);
+                    //    }
+                    //}
+
+                    // Do not validate Style during an invalidation if the Style was
+                    // never used before (dependents do not need invalidation)
+                    //if (Style != null)
+                    //{
+                    //    StyleHelper.OnTriggerSourcePropertyInvalidated(Style, null, this, dp, e, true /*invalidateOnlyContainer*/,
+                    //        ref Style.TriggerSourceRecordFromChildIndex, ref Style.PropertyTriggersWithActions, 0 /*sourceChildIndex*/); // Style can only have triggers that are driven by properties on the container
+                    //}
+
+                    // Do not validate Template during an invalidation if the Template was
+                    // never used before (dependents do not need invalidation)
+                    //if (TemplateInternal != null)
+                    //{
+                    //    StyleHelper.OnTriggerSourcePropertyInvalidated(null, TemplateInternal, this, dp, e, !HasTemplateGeneratedSubTree /*invalidateOnlyContainer*/,
+                    //        ref TemplateInternal.TriggerSourceRecordFromChildIndex, ref TemplateInternal.PropertyTriggersWithActions, 0 /*sourceChildIndex*/); // These are driven by the container
+                    //}
+
+                    // There may be container dependents in the ThemeStyle. Invalidate them.
+                    //if (ThemeStyle != null && Style != ThemeStyle)
+                    //{
+                    //    StyleHelper.OnTriggerSourcePropertyInvalidated(ThemeStyle, null, this, dp, e, true /*invalidateOnlyContainer*/,
+                    //        ref ThemeStyle.TriggerSourceRecordFromChildIndex, ref ThemeStyle.PropertyTriggersWithActions, 0 /*sourceChildIndex*/); // ThemeStyle can only have triggers that are driven by properties on the container
+                    //}
+                }
+            }
+
+            FrameworkPropertyMetadata fmetadata = e.Metadata as FrameworkPropertyMetadata;
+
+            //
+            // Invalidation propagation for Groups and Inheritance
+            //
+
+            // Metadata must exist specifically stating propagate invalidation
+            // due to group or inheritance
+            if (fmetadata != null)
+            {
+                //
+                // Inheritance
+                //
+
+                if (fmetadata.Inherits)
+                {
+                    // Invalidate Inheritable descendents only if instance is not a TreeSeparator
+                    // or fmetadata.OverridesInheritanceBehavior is set to override separated tree behavior
+                    if ((InheritanceBehavior == InheritanceBehavior.Default || fmetadata.OverridesInheritanceBehavior) &&
+                        (!DependencyObject.IsTreeWalkOperation(e.OperationType) || PotentiallyHasMentees))
+                    {
+                        EffectiveValueEntry newEntry = e.NewEntry;
+                        EffectiveValueEntry oldEntry = e.OldEntry;
+                        if (oldEntry.BaseValueSourceInternal > newEntry.BaseValueSourceInternal)
+                        {
+                            // valuesource == Inherited && value == UnsetValue indicates that we are clearing the inherited value
+                            newEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Inherited);
+                        }
+                        else
+                        {
+                            newEntry = newEntry.GetFlattenedEntry(RequestFlags.FullyResolved);
+                            newEntry.BaseValueSourceInternal = BaseValueSourceInternal.Inherited;
+                        }
+
+                        if (oldEntry.BaseValueSourceInternal != BaseValueSourceInternal.Default || oldEntry.HasModifiers)
+                        {
+                            oldEntry = oldEntry.GetFlattenedEntry(RequestFlags.FullyResolved);
+                            oldEntry.BaseValueSourceInternal = BaseValueSourceInternal.Inherited;
+                        }
+                        else
+                        {
+                            // we use an empty EffectiveValueEntry as a signal that the old entry was the default value
+                            oldEntry = new EffectiveValueEntry();
+                        }
+
+                        InheritablePropertyChangeInfo info =
+                                new InheritablePropertyChangeInfo(
+                                        this,
+                                        dp,
+                                        oldEntry,
+                                        newEntry);
+
+                        // Don't InvalidateTree if we're in the middle of doing it.
+                        if (!DependencyObject.IsTreeWalkOperation(e.OperationType))
+                        {
+                            TreeWalkHelper.InvalidateOnInheritablePropertyChange(this, info, true);
+                        }
+
+                        // Notify mentees if they exist
+                        if (PotentiallyHasMentees)
+                        {
+                            TreeWalkHelper.OnInheritedPropertyChanged(this, ref info, InheritanceBehavior);
+                        }
+                    }
+                }
+
+                if (e.IsAValueChange || e.IsASubPropertyChange)
+                {
+                    /*
+                    //
+                    // Layout invalidation
+                    //
+
+                    // Skip if we're traversing an Visibility=Collapsed subtree while
+                    //  in the middle of an invalidation storm due to ancestor change
+                    if (!(AncestorChangeInProgress && InVisibilityCollapsedTree))
+                    {
+                        UIElement layoutParent = null;
+
+                        bool affectsParentMeasure = fmetadata.AffectsParentMeasure;
+                        bool affectsParentArrange = fmetadata.AffectsParentArrange;
+                        bool affectsMeasure = fmetadata.AffectsMeasure;
+                        bool affectsArrange = fmetadata.AffectsArrange;
+                        if (affectsMeasure || affectsArrange || affectsParentArrange || affectsParentMeasure)
+                        {
+                            // Locate nearest Layout parent
+                            for (Visual v = VisualTreeHelper.GetParent(this) as Visual;
+                                 v != null;
+                                 v = VisualTreeHelper.GetParent(v) as Visual)
+                            {
+                                layoutParent = v as UIElement;
+                                if (layoutParent != null)
+                                {
+                                    //let incrementally-updating FrameworkElements to mark the vicinity of the affected child
+                                    //to perform partial update.
+                                    if (FrameworkElement.DType.IsInstanceOfType(layoutParent))
+                                        ((FrameworkElement)layoutParent).ParentLayoutInvalidated(this);
+
+                                    if (affectsParentMeasure)
+                                    {
+                                        layoutParent.InvalidateMeasure();
+                                    }
+
+                                    if (affectsParentArrange)
+                                    {
+                                        layoutParent.InvalidateArrange();
+                                    }
+
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (fmetadata.AffectsMeasure)
+                        {
+                            // Need to complete workaround ...
+                            // this is a test to see if we understand the source of the duplicate renders -- WM_SIZE
+                            // is handled by Window by setting Width & Height, even though the HwndSource will also
+                            // handle WM_SIZE and perform a relayout
+                            if (!BypassLayoutPolicies || !((dp == WidthProperty) || (dp == HeightProperty)))
+                            {
+                                InvalidateMeasure();
+                            }
+                        }
+
+                        if (fmetadata.AffectsArrange)
+                        {
+                            InvalidateArrange();
+                        }
+
+                        if (fmetadata.AffectsRender &&
+                            (e.IsAValueChange || !fmetadata.SubPropertiesDoNotAffectRender))
+                        {
+                            InvalidateVisual();
+                        }
+                    }*/
+                }
+            }
+        }
+
+        /// <summary>
         ///     DataContext DependencyProperty
         /// </summary>
         public static readonly DependencyProperty DataContextProperty =
@@ -458,9 +765,18 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        internal void WriteInternalFlag(object isInitialized, bool v)
+        // Sets or Unsets the required flag based on
+        // the bool argument
+        internal void WriteInternalFlag(InternalFlags reqFlag, bool set)
         {
-            throw new NotImplementedException();
+            if (set)
+            {
+                _flags |= reqFlag;
+            }
+            else
+            {
+                _flags &= (~reqFlag);
+            }
         }
 
         internal static bool GetFrameworkParent(FrameworkElement current, out FrameworkElement feParent)
@@ -495,6 +811,35 @@ namespace Alternet.UI
         {
             get { return ReadInternalFlag(InternalFlags.InVisibilityCollapsedTree); }
             set { WriteInternalFlag(InternalFlags.InVisibilityCollapsedTree, value); }
+        }
+
+        /// <summary>
+        ///     Called before the parent is chanded to the new value.
+        /// </summary>
+        internal virtual void OnNewParent(DependencyObject oldParent, DependencyObject newParent)
+        {
+            //
+            // This API is only here for compatability with the old
+            // behavior.  Note that FrameworkElement does not have
+            // this virtual, so why do we need it here?
+            //
+
+            // Synchronize ForceInherit properties
+            //if (_parent != null && _parent is ContentElement)
+            //{
+            //    UIElement.SynchronizeForceInheritProperties(this, null, null, _parent);
+            //}
+            //else if (oldParent is ContentElement)
+            //{
+            //    UIElement.SynchronizeForceInheritProperties(this, null, null, oldParent);
+            //}
+
+
+            // Synchronize ReverseInheritProperty Flags
+            //
+            // NOTE: do this AFTER synchronizing force-inherited flags, since
+            // they often effect focusability and such.
+            //this.SynchronizeReverseInheritPropertyFlags(oldParent, false);
         }
 
         // OnAncestorChangedInternal variant when we know what type (FE/FCE) the
@@ -599,6 +944,25 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        ///     InheritedPropertyChanged private key
+        /// </summary>
+        internal static readonly EventPrivateKey InheritedPropertyChangedKey = new EventPrivateKey();
+
+        // Helper method to retrieve and fire the InheritedPropertyChanged event
+        internal void RaiseInheritedPropertyChangedEvent(ref InheritablePropertyChangeInfo info)
+        {
+            EventHandlersStore store = EventHandlersStore;
+            if (store != null)
+            {
+                Delegate handler = store.Get(FrameworkElement.InheritedPropertyChangedKey);
+                if (handler != null)
+                {
+                    InheritedPropertyChangedEventArgs args = new InheritedPropertyChangedEventArgs(ref info);
+                    ((InheritedPropertyChangedEventHandler)handler)(this, args);
+                }
+            }
+        }
 
         // Invalidate all the properties that may have changed as a result of
         //  changing this element's parent in the logical (and sometimes visual tree.)
