@@ -1399,6 +1399,10 @@ namespace Alternet.UI
         internal const string @Mismatched_RoutedEvent = "Mismatched_RoutedEvent";
         /// <summary>Potential cycle in tree found while building the event route.</summary>
         internal const string @TreeLoop = "TreeLoop";
+        /// <summary>InheritanceBehavior must be set when the instance is not yet connected to a tree. Set InheritanceBehavior when the object is constructed.</summary>
+        internal const string @Illegal_InheritanceBehaviorSettor = "Illegal_InheritanceBehaviorSettor";
+        /// <summary>Logical tree depth exceeded while traversing the tree. This could indicate a cycle in the tree.</summary>
+        internal const string @LogicalTreeLoop = "LogicalTreeLoop";
 
     }
 }

@@ -14,6 +14,7 @@ namespace HelloWorldSample
             //Binding myBinding = new Binding("MyDataProperty") { Mode = BindingMode.TwoWay };
             //myBinding.Source = DataContext;
             //BindingOperations.SetBinding(myDataTextBox, TextBox.TextProperty, myBinding);
+            var dc = myDataTextBox.DataContext;
         }
 
         private void ShowDataButton_Click(object? sender, EventArgs e)

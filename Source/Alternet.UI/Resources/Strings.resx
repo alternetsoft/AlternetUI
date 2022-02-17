@@ -2187,4 +2187,10 @@
   <data name="TreeLoop" xml:space="preserve">
     <value>Potential cycle in tree found while building the event route.</value>
   </data>
+  <data name="Illegal_InheritanceBehaviorSettor" xml:space="preserve">
+    <value>InheritanceBehavior must be set when the instance is not yet connected to a tree. Set InheritanceBehavior when the object is constructed.</value>
+  </data>
+  <data name="LogicalTreeLoop" xml:space="preserve">
+    <value>Logical tree depth exceeded while traversing the tree. This could indicate a cycle in the tree.</value>
+  </data>
 </root>

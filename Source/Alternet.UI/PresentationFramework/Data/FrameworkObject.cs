@@ -573,24 +573,24 @@ namespace Alternet.UI
         //            }
         //        }
 
-        //        internal InheritanceBehavior InheritanceBehavior
-        //        {
-        //            get
-        //            {
-        //                if (IsFE)
-        //                {
-        //                    return _fe.InheritanceBehavior;
-        //                }
-        //                else if (IsFCE)
-        //                {
-        //                    return _fce.InheritanceBehavior;
-        //                }
-        //                else
-        //                {
-        //                    return InheritanceBehavior.Default;
-        //                }
-        //            }
-        //        }
+        internal InheritanceBehavior InheritanceBehavior
+        {
+            get
+            {
+                if (IsFE)
+                {
+                    return _fe.InheritanceBehavior;
+                }
+                //else if (IsFCE)
+                //{
+                //    return _fce.InheritanceBehavior;
+                //}
+                else
+                {
+                    return InheritanceBehavior.Default;
+                }
+            }
+        }
 
         //        internal bool StoresParentTemplateValues
         //        {
@@ -711,36 +711,36 @@ namespace Alternet.UI
         //            }
         //        }
 
-        //        // Says if there are any implicit styles in the ancestry
-        //        internal bool ShouldLookupImplicitStyles
-        //        {
-        //            get
-        //            {
-        //                if (IsFE)
-        //                {
-        //                    return _fe.ShouldLookupImplicitStyles;
-        //                }
-        //                else if (IsFCE)
-        //                {
-        //                    return _fce.ShouldLookupImplicitStyles;
-        //                }
-        //                else
-        //                {
-        //                    return false;
-        //                }
-        //            }
-        //            set
-        //            {
-        //                if (IsFE)
-        //                {
-        //                    _fe.ShouldLookupImplicitStyles = value;
-        //                }
-        //                else if (IsFCE)
-        //                {
-        //                    _fce.ShouldLookupImplicitStyles = value;
-        //                }
-        //            }
-        //        }
+        // Says if there are any implicit styles in the ancestry
+        internal bool ShouldLookupImplicitStyles
+        {
+            get
+            {
+                if (IsFE)
+                {
+                    return _fe.ShouldLookupImplicitStyles;
+                }
+                //else if (IsFCE)
+                //{
+                //    return _fce.ShouldLookupImplicitStyles;
+                //}
+                else
+                {
+                    return false;
+                }
+            }
+            set
+            {
+                if (IsFE)
+                {
+                    _fe.ShouldLookupImplicitStyles = value;
+                }
+                //else if (IsFCE)
+                //{
+                //    _fce.ShouldLookupImplicitStyles = value;
+                //}
+            }
+        }
 
         //        #endregion Polymorphic Properties
 
@@ -1043,19 +1043,19 @@ namespace Alternet.UI
         //            }
         //        }
 
-        //        // Set the ShouldLookupImplicitStyles flag on the current
-        //        // node if the parent has it set to true.
-        //        internal void SetShouldLookupImplicitStyles()
-        //        {
-        //            if (!ShouldLookupImplicitStyles)
-        //            {
-        //                FrameworkObject parent = FrameworkParent;
-        //                if (parent.IsValid && parent.ShouldLookupImplicitStyles)
-        //                {
-        //                    ShouldLookupImplicitStyles = true;
-        //                }
-        //            }
-        //        }
+        // Set the ShouldLookupImplicitStyles flag on the current
+        // node if the parent has it set to true.
+        internal void SetShouldLookupImplicitStyles()
+        {
+            if (!ShouldLookupImplicitStyles)
+            {
+                FrameworkObject parent = FrameworkParent;
+                if (parent.IsValid && parent.ShouldLookupImplicitStyles)
+                {
+                    ShouldLookupImplicitStyles = true;
+                }
+            }
+        }
 
         //        #endregion Polymorphic Methods
 

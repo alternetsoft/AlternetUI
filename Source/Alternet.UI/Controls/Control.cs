@@ -4,6 +4,7 @@ using System.ComponentModel;
 using Alternet.Drawing;
 using Alternet.Base.Collections;
 using System.Linq;
+using System.Collections;
 
 namespace Alternet.UI
 {
@@ -309,6 +310,8 @@ namespace Alternet.UI
         /// If <c>false</c>, the <see cref="Paint"/> event is not raised.</value>
         public bool UserPaint { get; set; } // todo: rethink design of this
 
+        protected internal override IEnumerator LogicalChildren => LogicalChildrenCollection.GetEnumerator();
+
         /// <summary>
         /// Gets or sets the outer margin of an control.
         /// </summary>
@@ -444,7 +447,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns a collection of controls which can be treated as "logical children" of this control.
         /// </summary>
-        protected virtual IEnumerable<Control> LogicalChildren => Children; // todo: consider changing this to Site.GetService()
+        protected virtual IEnumerable<Control> LogicalChildrenCollection => Children; // todo: consider changing this to Site.GetService()
 
         private IControlHandlerFactory? ControlHandlerFactory { get; set; }
 
@@ -463,7 +466,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Recursively searches all <see cref="LogicalChildren"/> for a control with the specified name, and returns that control if found.
+        /// Recursively searches all <see cref="LogicalChildrenCollection"/> for a control with the specified name, and returns that control if found.
         /// </summary>
         /// <param name="name">The name of the control to be found.</param>
         /// <returns>The found control, or <c>null</c> if no control with the provided name is found.</returns>
@@ -475,7 +478,7 @@ namespace Alternet.UI
             if (Name == name)
                 return this;
 
-            foreach (var child in LogicalChildren)
+            foreach (var child in LogicalChildrenCollection)
             {
                 var result = child.TryFindControl(name);
                 if (result != null)
@@ -504,7 +507,7 @@ namespace Alternet.UI
         public void Hide() => Visible = false;
 
         /// <summary>
-        /// Recursively searches all <see cref="LogicalChildren"/> for a control with the specified name,
+        /// Recursively searches all <see cref="LogicalChildrenCollection"/> for a control with the specified name,
         /// and throws an exception if the requested control is not found.
         /// </summary>
         /// <param name="name">The name of the control to be found.</param>

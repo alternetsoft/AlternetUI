@@ -17,6 +17,6 @@ namespace Alternet.UI
         public Collection<TabPage> Pages { get; } = new Collection<TabPage>();
 
         /// <inheritdoc />
-        protected override IEnumerable<Control> LogicalChildren => Pages;
+        protected override IEnumerable<Control> LogicalChildrenCollection => Pages;
     }
 }
