@@ -17,7 +17,18 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The name of the control. The default is <c>null</c>.</value>
         public string? Name { get; set; } // todo: maybe use Site.Name?
-        public static DependencyProperty? BindingGroupProperty { get; internal set; }
+        
+        /// <summary>
+        ///     BindingGroup DependencyProperty
+        /// </summary>
+        public static readonly DependencyProperty BindingGroupProperty =
+                    DependencyProperty.Register(
+                                "BindingGroup",
+                                typeof(BindingGroup),
+                                typeof(FrameworkElement),
+                                new FrameworkPropertyMetadata(null,
+                                        FrameworkPropertyMetadataOptions.Inherits));
+
         public bool IsInitialized { get; internal set; }
         public FrameworkElement Parent { get; internal set; }
         public bool IsParentAnFE { get; internal set; }

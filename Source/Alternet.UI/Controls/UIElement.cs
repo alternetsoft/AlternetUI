@@ -10,6 +10,11 @@ namespace Alternet.UI
     {
         public event EventHandler LayoutUpdated;
 
+        internal void RaiseLayoutUpdated()
+        {
+            LayoutUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
         /// <summary>
         ///     Raise the events specified by
         ///     <see cref="RoutedEventArgs.RoutedEvent"/>

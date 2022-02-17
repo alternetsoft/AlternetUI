@@ -617,6 +617,7 @@ namespace Alternet.UI
         protected virtual void OnLayout()
         {
             Handler.OnLayout();
+            RaiseLayoutUpdated();
         }
 
         internal void InvokeOnLayout()

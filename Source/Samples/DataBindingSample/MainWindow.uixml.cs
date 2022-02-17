@@ -10,11 +10,10 @@ namespace HelloWorldSample
         {
             InitializeComponent();
 
-            DataContext = new MyData(DateTime.Now);
             //Binding myBinding = new Binding("MyDataProperty") { Mode = BindingMode.TwoWay };
-            //myBinding.Source = DataContext;
             //BindingOperations.SetBinding(myDataTextBox, TextBox.TextProperty, myBinding);
-            var dc = myDataTextBox.DataContext;
+
+            DataContext = new MyData(DateTime.Now);
         }
 
         private void ShowDataButton_Click(object? sender, EventArgs e)
