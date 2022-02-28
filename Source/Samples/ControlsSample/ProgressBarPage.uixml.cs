@@ -6,13 +6,21 @@ namespace ControlsSample
 {
     partial class ProgressBarPage : Control
     {
-        private readonly IPageSite site;
+        private IPageSite site;
 
-        public ProgressBarPage(IPageSite site)
+        public ProgressBarPage()
         {
             InitializeComponent();
+        }
 
-            this.site = site;
+        public IPageSite Site
+        {
+            get => site;
+
+            set
+            {
+                site = value;
+            }
         }
 
         private void IncreaseAllButton_Click(object? sender, EventArgs e)

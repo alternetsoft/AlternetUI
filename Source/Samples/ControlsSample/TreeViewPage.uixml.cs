@@ -6,17 +6,23 @@ namespace ControlsSample
 {
     partial class TreeViewPage : Control
     {
-        private readonly IPageSite site;
+        private IPageSite site;
 
-        public TreeViewPage(IPageSite site)
+        public TreeViewPage()
         {
             InitializeComponent();
+        }
 
-            treeView.ImageList = ResourceLoader.LoadImageLists().Small;
+        public IPageSite Site
+        {
+            get => site;
 
-            AddItems(10);
-
-            this.site = site;
+            set
+            {
+                treeView.ImageList = ResourceLoader.LoadImageLists().Small;
+                AddItems(10);
+                site = value;
+            }
         }
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)

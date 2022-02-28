@@ -12,17 +12,17 @@ namespace ControlsSample
 
             var pages = pageContainer.Pages;
 
-            pages.Add(new PageContainer.Page("Tree View", new TreeViewPage(this)));
-            pages.Add(new PageContainer.Page("Grid", new GridPage(this)));
-            pages.Add(new PageContainer.Page("List View", new ListViewPage(this)));
-            pages.Add(new PageContainer.Page("List Box", new ListBoxPage(this)));
-            pages.Add(new PageContainer.Page("Combo Box", new ComboBoxPage(this)));
-            pages.Add(new PageContainer.Page("Progress Bar", new ProgressBarPage(this)));
-            pages.Add(new PageContainer.Page("Slider", new SliderPage(this)));
-            pages.Add(new PageContainer.Page("Numeric Input", new NumericInputPage(this)));
-            pages.Add(new PageContainer.Page("Radio Buttons", new RadioButtonsPage(this)));
-            pages.Add(new PageContainer.Page("Check Boxes", new CheckBoxesPage(this)));
-            pages.Add(new PageContainer.Page("Text Input", new TextInputPage(this)));
+            pages.Add(new PageContainer.Page("Tree View", new TreeViewPage { Site = this }));
+            pages.Add(new PageContainer.Page("Grid", new GridPage { Site = this }));
+            pages.Add(new PageContainer.Page("List View", new ListViewPage { Site = this }));
+            pages.Add(new PageContainer.Page("List Box", new ListBoxPage { Site = this }));
+            pages.Add(new PageContainer.Page("Combo Box", new ComboBoxPage { Site = this }));
+            pages.Add(new PageContainer.Page("Progress Bar", new ProgressBarPage { Site = this }));
+            pages.Add(new PageContainer.Page("Slider", new SliderPage { Site = this }));
+            pages.Add(new PageContainer.Page("Numeric Input", new NumericInputPage { Site = this }));
+            pages.Add(new PageContainer.Page("Radio Buttons", new RadioButtonsPage { Site = this }));
+            pages.Add(new PageContainer.Page("Check Boxes", new CheckBoxesPage { Site = this }));
+            pages.Add(new PageContainer.Page("Text Input", new TextInputPage { Site = this }));
 
             Grid.SetRow(eventsListBox, 1);
 

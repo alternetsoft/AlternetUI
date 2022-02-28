@@ -6,13 +6,21 @@ namespace ControlsSample
 {
     partial class TextInputPage : Control
     {
-        private readonly IPageSite site;
+        private IPageSite site;
 
-        public TextInputPage(IPageSite site)
+        public TextInputPage()
         {
             InitializeComponent();
+        }
 
-            this.site = site;
+        public IPageSite Site
+        {
+            get => site;
+
+            set
+            {
+                site = value;
+            }
         }
 
         private void TextBox_ValueChanged(object? sender, EventArgs e)

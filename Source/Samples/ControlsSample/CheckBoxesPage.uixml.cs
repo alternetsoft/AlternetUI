@@ -6,13 +6,21 @@ namespace ControlsSample
 {
     partial class CheckBoxesPage : Control
     {
-        private readonly IPageSite site;
+        private IPageSite site;
 
-        public CheckBoxesPage(IPageSite site)
+        public CheckBoxesPage()
         {
             InitializeComponent();
+        }
 
-            this.site = site;
+        public IPageSite Site
+        {
+            get => site;
+
+            set
+            {
+                site = value;
+            }
         }
     }
 }

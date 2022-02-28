@@ -6,12 +6,15 @@ namespace DrawingSample
 {
     partial class TextPageSettings : Control
     {
-        private readonly TextPage page;
+        private TextPage page;
 
-        public TextPageSettings(TextPage page)
+        public TextPageSettings()
         {
             InitializeComponent();
+        }
 
+        public void Initialize(TextPage page)
+        {
             this.page = page;
 
             fontSizeSlider.Value = (int)page.FontSize;

@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// </summary>
         public void LoadExisting(Stream xamlStream, object existingObject)
         {
-            Avalonia.Markup.Xaml.AvaloniaRuntimeXamlLoader.Load(xamlStream, GetType().Assembly, existingObject);
+            Avalonia.Markup.Xaml.AvaloniaRuntimeXamlLoader.Load(xamlStream, existingObject.GetType().Assembly, existingObject);
             return;
 
             const string LogPath = @"c:\temp\UI\xaml-perf.log";

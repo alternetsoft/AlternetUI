@@ -140,7 +140,12 @@ namespace DrawingSample
                 shape.Draw(dc);
         }
 
-        protected override Control CreateSettingsControl() => new BrushesAndPensPageSettings(this);
+        protected override Control CreateSettingsControl()
+        {
+            var control = new BrushesAndPensPageSettings();
+            control.Initialize(this);
+            return control;
+        }
 
         private static RectangleShape CreateRectangle(Random random, Rect bounds, Brush fill, Pen stroke)
         {

@@ -6,15 +6,24 @@ namespace ControlsSample
 {
     partial class NumericInputPage : Control
     {
-        private readonly IPageSite site;
+        private IPageSite site;
 
-        public NumericInputPage(IPageSite site)
+        public NumericInputPage()
         {
             InitializeComponent();
-            progressBarControlNumericUpDown.Value = 1;
-
-            this.site = site;
         }
+
+        public IPageSite Site
+        {
+            get => site;
+
+            set
+            {
+                progressBarControlNumericUpDown.Value = 1;
+                site = value;
+            }
+        }
+
 
         private void NumericUpDown_ValueChanged(object? sender, EventArgs e)
         {

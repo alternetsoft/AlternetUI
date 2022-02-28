@@ -5,17 +5,24 @@ namespace ControlsSample
 {
     partial class ListBoxPage : Control
     {
-        private readonly IPageSite site;
+        private IPageSite site;
 
-        public ListBoxPage(IPageSite site)
+        public ListBoxPage()
         {
             InitializeComponent();
+        }
 
-            listBox.Items.Add("One");
-            listBox.Items.Add("Two");
-            listBox.Items.Add("Three");
+        public IPageSite Site
+        {
+            get => site;
 
-            this.site = site;
+            set
+            {
+                listBox.Items.Add("One");
+                listBox.Items.Add("Two");
+                listBox.Items.Add("Three");
+                site = value;
+            }
         }
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)

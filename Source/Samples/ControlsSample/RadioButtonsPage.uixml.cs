@@ -6,14 +6,23 @@ namespace ControlsSample
 {
     partial class RadioButtonsPage : Control
     {
-        private readonly IPageSite site;
+        private IPageSite site;
 
-        public RadioButtonsPage(IPageSite site)
+        public RadioButtonsPage()
         {
             InitializeComponent();
-
-            this.site = site;
         }
+
+        public IPageSite Site
+        {
+            get => site;
+
+            set
+            {
+                site = value;
+            }
+        }
+
 
         private void RadioButton_CheckedChanged(object sender, EventArgs e)
         {

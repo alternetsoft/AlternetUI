@@ -7,11 +7,15 @@ namespace DrawingSample
 {
     partial class BrushesAndPensPageSettings : Control
     {
-        private readonly BrushesAndPensPage page;
+        private BrushesAndPensPage page;
 
-        public BrushesAndPensPageSettings(BrushesAndPensPage page)
+        public BrushesAndPensPageSettings()
         {
             InitializeComponent();
+        }
+
+        public void Initialize(BrushesAndPensPage page)
+        {
             this.page = page;
 
             shapeCountSlider.Value = page.ShapeCount;

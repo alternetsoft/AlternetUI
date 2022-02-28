@@ -6,13 +6,22 @@ namespace ControlsSample
 {
     partial class GridPage : Control
     {
-        private readonly IPageSite site;
+        private IPageSite site;
 
-        public GridPage(IPageSite site)
+        public GridPage()
         {
             InitializeComponent();
-
-            this.site = site;
         }
+
+        public IPageSite Site
+        {
+            get => site;
+
+            set
+            {
+                site = value;
+            }
+        }
+
     }
 }

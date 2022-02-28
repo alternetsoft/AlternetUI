@@ -72,7 +72,12 @@ namespace DrawingSample
             }
         }
 
-        protected override Control CreateSettingsControl() => new TextPageSettings(this);
+        protected override Control CreateSettingsControl()
+        {
+            var control = new TextPageSettings();
+            control.Initialize(this);
+            return control;
+        }
 
         private void InvalidateParagraphs()
         {

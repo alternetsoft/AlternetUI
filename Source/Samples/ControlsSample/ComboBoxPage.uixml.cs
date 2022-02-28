@@ -5,19 +5,27 @@ namespace ControlsSample
 {
     partial class ComboBoxPage : Control
     {
-        private readonly IPageSite site;
+        private IPageSite site;
 
-        public ComboBoxPage(IPageSite site)
+        public ComboBoxPage()
         {
             InitializeComponent();
-
-            this.site = site;
-
-            comboBox.Items.Add("One");
-            comboBox.Items.Add("Two");
-            comboBox.Items.Add("Three");
-            comboBox.SelectedIndex = 1;
         }
+
+        public IPageSite Site
+        {
+            get => site;
+
+            set
+            {
+                site = value;
+                comboBox.Items.Add("One");
+                comboBox.Items.Add("Two");
+                comboBox.Items.Add("Three");
+                comboBox.SelectedIndex = 1;
+            }
+        }
+
 
         private void SetSelectedItemToNullButton_Click(object? sender, EventArgs e)
         {
