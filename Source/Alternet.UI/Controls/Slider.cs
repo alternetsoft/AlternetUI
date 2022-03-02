@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 namespace Alternet.UI
 {
@@ -22,7 +23,35 @@ namespace Alternet.UI
     /// </remarks>
     public class Slider : Control
     {
-        private int value;
+        public static readonly DependencyProperty ValueProperty =
+            DependencyProperty.Register(
+                    "Value", // Property name
+                    typeof(int), // Property type
+                    typeof(Slider), // Property owner
+                    new FrameworkPropertyMetadata( // Property metadata
+                            0, // default value
+                            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | // Flags
+                                FrameworkPropertyMetadataOptions.Journal,
+                            new PropertyChangedCallback(OnValuePropertyChanged),    // property changed callback
+                            new CoerceValueCallback(CoerceValue),
+                            true, // IsAnimationProhibited
+                            UpdateSourceTrigger.PropertyChanged
+                            //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
+                            ));
+
+        /// <summary>
+        /// Callback for changes to the Value property
+        /// </summary>
+        private static void OnValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            Slider textBox = (Slider)d;
+            textBox.OnValuePropertyChanged((int)e.OldValue, (int)e.NewValue);
+        }
+
+        private void OnValuePropertyChanged(int oldValue, int newValue)
+        {
+            RaiseValueChanged(EventArgs.Empty);
+        }
 
         private int minimum;
 
@@ -74,27 +103,25 @@ namespace Alternet.UI
         /// <exception cref="ArgumentOutOfRangeException">
         /// The value specified is greater than the value of the <see cref="Maximum"/> property or the value specified is less than the value of the <see cref="Minimum"/> property.
         /// </exception>
+        [DefaultValue("")]
         public int Value
         {
-            get
-            {
-                CheckDisposed();
-                return value;
-            }
+            get { return (int)GetValue(ValueProperty); }
+            set { SetValue(ValueProperty, value); }
+        }
 
-            set
-            {
-                CheckDisposed();
+        private static object CoerceValue(DependencyObject d, object value)
+        {
+            var o = (Slider)d;
+            
+            var intValue = (int)value;
+            if (intValue < o.Minimum)
+                return o.Minimum;
 
-                if (value < Minimum || value > Maximum)
-                    throw new ArgumentOutOfRangeException(nameof(value));
+            if (intValue > o.Maximum)
+                return o.Maximum;
 
-                if (this.value == value)
-                    return;
-
-                this.value = value;
-                RaiseValueChanged(EventArgs.Empty);
-            }
+            return value;
         }
 
         /// <summary>

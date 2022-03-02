@@ -11,8 +11,6 @@ namespace Alternet.UI
     /// </remarks>
     public class TextBox : Control
     {
-        private string text = "";
-
         private bool editControlOnly = false;
 
         /// <summary>

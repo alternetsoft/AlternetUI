@@ -4,9 +4,9 @@
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
     <StackPanel Orientation="Vertical" Margin="5">
         <Label Text="Font Size" />
-        <Slider Name="fontSizeSlider" Minimum="5" Maximum="25" Margin="0,0,0,10" ValueChanged="FontSizeSlider_ValueChanged"/>
+		<Slider Name="fontSizeSlider" Minimum="5" Maximum="25" Margin="0,0,0,10" Value="{Binding FontSize}"/>
 
-        <CheckBox Name="boldCheckBox" Text="Bold" Margin="0,0,0,5" CheckedChanged="BoldCheckBox_CheckedChanged"/>
+		<CheckBox Name="boldCheckBox" Text="Bold" Margin="0,0,0,5" CheckedChanged="BoldCheckBox_CheckedChanged"/>
         <CheckBox Name="italicCheckBox" Text="Italic" Margin="0,0,0,5" CheckedChanged="ItalicCheckBox_CheckedChanged"/>
         <CheckBox Name="underlinedCheckBox" Text="Underlined" Margin="0,0,0,5" CheckedChanged="UnderlinedCheckBox_CheckedChanged"/>
         <CheckBox Name="strikethroughCheckBox" Text="Strikethrough" Margin="0,0,0,5" CheckedChanged="StrikethroughCheckBox_CheckedChanged"/>

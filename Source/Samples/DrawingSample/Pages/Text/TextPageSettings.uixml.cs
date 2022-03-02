@@ -16,8 +16,7 @@ namespace DrawingSample
         public void Initialize(TextPage page)
         {
             this.page = page;
-
-            fontSizeSlider.Value = (int)page.FontSize;
+            DataContext = page;
 
             foreach (var family in FontFamily.Families)
                 customFontFamilyComboBox.Items.Add(family.Name);
@@ -28,11 +27,6 @@ namespace DrawingSample
         private void CustomFontFamilyComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
             page.CustomFontFamilyName = ((ComboBox)sender!).SelectedItem?.ToString() ?? throw new Exception();
-        }
-
-        private void FontSizeSlider_ValueChanged(object? sender, EventArgs e)
-        {
-            page.FontSize = ((Slider)sender!).Value;
         }
 
         private void BoldCheckBox_CheckedChanged(object? sender, EventArgs e) => ApplyFontStyle(FontStyle.Bold, ((CheckBox)sender!).IsChecked);
