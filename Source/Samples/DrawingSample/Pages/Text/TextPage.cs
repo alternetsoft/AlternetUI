@@ -29,7 +29,44 @@ namespace DrawingSample
             }
         }
 
-        public FontStyle FontStyle
+        public bool Bold
+        {
+            get => GetFontStyle(FontStyle.Bold);
+            set => SetFontStyle(FontStyle.Bold, value);
+        }
+
+        public bool Italic
+        {
+            get => GetFontStyle(FontStyle.Italic);
+            set => SetFontStyle(FontStyle.Italic, value);
+        }
+
+        public bool Underlined
+        {
+            get => GetFontStyle(FontStyle.Underlined);
+            set => SetFontStyle(FontStyle.Underlined, value);
+        }
+
+        public bool Strikethrough
+        {
+            get => GetFontStyle(FontStyle.Strikethrough);
+            set => SetFontStyle(FontStyle.Strikethrough, value);
+        }
+
+        private void SetFontStyle(FontStyle style, bool value)
+        {
+            if (value)
+                FontStyle |= style;
+            else
+                FontStyle &= ~style;
+        }
+
+        private bool GetFontStyle(FontStyle style)
+        {
+            return (FontStyle & style) != 0;
+        }
+
+        FontStyle FontStyle
         {
             get => fontStyle;
             set

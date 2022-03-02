@@ -28,21 +28,5 @@ namespace DrawingSample
         {
             page.CustomFontFamilyName = ((ComboBox)sender!).SelectedItem?.ToString() ?? throw new Exception();
         }
-
-        private void BoldCheckBox_CheckedChanged(object? sender, EventArgs e) => ApplyFontStyle(FontStyle.Bold, ((CheckBox)sender!).IsChecked);
-
-        private void ItalicCheckBox_CheckedChanged(object? sender, EventArgs e) => ApplyFontStyle(FontStyle.Italic, ((CheckBox)sender!).IsChecked);
-
-        private void UnderlinedCheckBox_CheckedChanged(object? sender, EventArgs e) => ApplyFontStyle(FontStyle.Underlined, ((CheckBox)sender!).IsChecked);
-
-        private void StrikethroughCheckBox_CheckedChanged(object? sender, EventArgs e) => ApplyFontStyle(FontStyle.Strikethrough, ((CheckBox)sender!).IsChecked);
-
-        private void ApplyFontStyle(FontStyle style, bool value)
-        {
-            if (value)
-                page.FontStyle |= style;
-            else
-                page.FontStyle &= ~style;
-        }
     }
 }
