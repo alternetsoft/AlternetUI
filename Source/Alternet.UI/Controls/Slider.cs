@@ -53,6 +53,32 @@ namespace Alternet.UI
             RaiseValueChanged(EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Gets or sets a numeric value that represents the current position of the scroll box on the slider.
+        /// </summary>
+        /// <value>A numeric value that is within the <see cref="Minimum"/> and <see cref="Maximum"/> range. The default value is 0.</value>
+        /// <remarks>The <see cref="Value"/> property contains the number that represents the current position of the scroll box on the slider.</remarks>
+        [DefaultValue("")]
+        public int Value
+        {
+            get { return (int)GetValue(ValueProperty); }
+            set { SetValue(ValueProperty, value); }
+        }
+
+        private static object CoerceValue(DependencyObject d, object value)
+        {
+            var o = (Slider)d;
+
+            var intValue = (int)value;
+            if (intValue < o.Minimum)
+                return o.Minimum;
+
+            if (intValue > o.Maximum)
+                return o.Maximum;
+
+            return value;
+        }
+
         private int minimum;
 
         private int maximum = 10;
@@ -94,35 +120,6 @@ namespace Alternet.UI
         /// Occurs when the value of the <see cref="TickFrequency"/> property changes.
         /// </summary>
         public event EventHandler? TickFrequencyChanged;
-
-        /// <summary>
-        /// Gets or sets a numeric value that represents the current position of the scroll box on the slider.
-        /// </summary>
-        /// <value>A numeric value that is within the <see cref="Minimum"/> and <see cref="Maximum"/> range. The default value is 0.</value>
-        /// <remarks>The <see cref="Value"/> property contains the number that represents the current position of the scroll box on the slider.</remarks>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// The value specified is greater than the value of the <see cref="Maximum"/> property or the value specified is less than the value of the <see cref="Minimum"/> property.
-        /// </exception>
-        [DefaultValue("")]
-        public int Value
-        {
-            get { return (int)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
-        }
-
-        private static object CoerceValue(DependencyObject d, object value)
-        {
-            var o = (Slider)d;
-            
-            var intValue = (int)value;
-            if (intValue < o.Minimum)
-                return o.Minimum;
-
-            if (intValue > o.Maximum)
-                return o.Maximum;
-
-            return value;
-        }
 
         /// <summary>
         /// Gets or sets the lower limit of the range this <see cref="Slider"/> is working with.

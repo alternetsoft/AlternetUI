@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 namespace Alternet.UI
 {
@@ -14,12 +15,35 @@ namespace Alternet.UI
     /// </remarks>
     public class CheckBox : ButtonBase
     {
-        private bool isChecked;
+        public static readonly DependencyProperty IsCheckedProperty =
+            DependencyProperty.Register(
+                    "IsChecked", // Property name
+                    typeof(bool), // Property type
+                    typeof(CheckBox), // Property owner
+                    new FrameworkPropertyMetadata( // Property metadata
+                            false, // default isChecked
+                            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | // Flags
+                                FrameworkPropertyMetadataOptions.Journal,
+                            new PropertyChangedCallback(OnIsCheckedPropertyChanged),    // property changed callback
+                            new CoerceValueCallback(CoerceIsChecked),
+                            true, // IsAnimationProhibited
+                            UpdateSourceTrigger.PropertyChanged
+                            //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
+                            ));
 
         /// <summary>
-        /// Occurs when the value of the <see cref="IsChecked"/> property changes.
+        /// Callback for changes to the IsChecked property
         /// </summary>
-        public event EventHandler? CheckedChanged;
+        private static void OnIsCheckedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            CheckBox control = (CheckBox)d;
+            control.OnIsCheckedPropertyChanged((bool)e.OldValue, (bool)e.NewValue);
+        }
+
+        private void OnIsCheckedPropertyChanged(bool oldValue, bool newValue)
+        {
+            RaiseCheckedChanged(EventArgs.Empty);
+        }
 
         /// <summary>
         /// Gets or set a value indicating whether the <see cref="CheckBox"/> is in the checked state.
@@ -27,18 +51,19 @@ namespace Alternet.UI
         /// <value><c>true</c> if the <see cref="CheckBox"/> is in the checked state; otherwise, <c>false</c>.
         /// The default value is <c>false</c>.</value>
         /// <remarks>When the value is <c>true</c>, the <see cref="CheckBox"/> portion of the control displays a check mark.</remarks>
+        [DefaultValue("")]
         public bool IsChecked
         {
-            get => isChecked;
-            set
-            {
-                if (isChecked == value)
-                    return;
-
-                isChecked = value;
-                RaiseCheckedChanged(EventArgs.Empty);
-            }
+            get { return (bool)GetValue(IsCheckedProperty); }
+            set { SetValue(IsCheckedProperty, value); }
         }
+
+        private static object CoerceIsChecked(DependencyObject d, object value) => value;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="IsChecked"/> property changes.
+        /// </summary>
+        public event EventHandler? CheckedChanged;
 
         /// <summary>
         /// Called when the value of the <see cref="IsChecked"/> property changes.
