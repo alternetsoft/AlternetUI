@@ -14,11 +14,11 @@ namespace DrawingSample
 
         private int shapeCount = 5;
 
-        private double brushColorHue = 0.1;
+        private int brushColorHue = 1;
 
-        private double penColorHue = 0.25;
+        private int penColorHue = 2;
 
-        private double penWidth = 4;
+        private int penWidth = 4;
 
         private BrushHatchStyle hatchStyle = BrushHatchStyle.DiagonalCross;
 
@@ -47,7 +47,7 @@ namespace DrawingSample
             }
         }
 
-        public ShapeType[] IncludedShapes
+        ShapeType[] IncludedShapes
         {
             get => includedShapeTypes;
             set
@@ -56,6 +56,32 @@ namespace DrawingSample
                 Update();
             }
         }
+
+        public bool RectanglesIncluded
+        {
+            get => IsShapeIncluded(AllShapeTypes.Rectangle);
+            set => SetIncludedShape(AllShapeTypes.Rectangle, value);
+        }
+
+        public bool EllipsesIncluded
+        {
+            get => IsShapeIncluded(AllShapeTypes.Ellipse);
+            set => SetIncludedShape(AllShapeTypes.Ellipse, value);
+        }
+
+        private void SetIncludedShape(ShapeType shape, bool value)
+        {
+            var shapes = IncludedShapes.ToList();
+
+            if (value)
+                shapes.Add(shape);
+            else
+                shapes.Remove(shape);
+
+            IncludedShapes = shapes.ToArray();
+        }
+
+        private bool IsShapeIncluded(BrushesAndPensPage.ShapeType shape) => IncludedShapes.Contains(shape);
 
         public int ShapeCount
         {
@@ -67,7 +93,10 @@ namespace DrawingSample
             }
         }
 
-        public double BrushColorHue
+        private static double MapRanges(double value, double fromLow, double fromHigh, double toLow, double toHigh) =>
+            ((value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow)) + toLow;
+
+        public int BrushColorHue
         {
             get => brushColorHue;
             set
@@ -77,7 +106,7 @@ namespace DrawingSample
             }
         }
 
-        public double PenColorHue
+        public int PenColorHue
         {
             get => penColorHue;
             set
@@ -87,7 +116,7 @@ namespace DrawingSample
             }
         }
 
-        public double PenWidth
+        public int PenWidth
         {
             get => penWidth;
             set
@@ -184,13 +213,20 @@ namespace DrawingSample
 
         private Pen CreateStrokePen()
         {
-            var c = new Skybrud.Colors.HslColor(penColorHue, 1, 0.3).ToRgb();
+            var c = new Skybrud.Colors.HslColor(
+                MapRanges(penColorHue, 0, 10, 0, 1),
+                1,
+                0.3).ToRgb();
+
             return new Pen(Color.FromArgb(c.R, c.G, c.B), penWidth, penDashStyle);
         }
 
         private Brush CreateFillBrush()
         {
-            var c = new Skybrud.Colors.HslColor(brushColorHue, 1, 0.7).ToRgb();
+            var c = new Skybrud.Colors.HslColor(
+                MapRanges(brushColorHue, 0, 10, 0, 1),
+                1,
+                0.7).ToRgb();
 
             return brush switch
             {

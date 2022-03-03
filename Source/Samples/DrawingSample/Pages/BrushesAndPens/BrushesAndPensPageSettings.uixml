@@ -4,10 +4,10 @@
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
     <StackPanel Orientation="Vertical" Margin="5">
         <Label Text="Shape Count:" />
-        <Slider Name="shapeCountSlider" Minimum="1" Maximum="100" Margin="0,0,0,10" ValueChanged="ShapeCountSlider_ValueChanged"/>
+        <Slider Minimum="1" Maximum="100" Margin="0,0,0,10" Value="{Binding ShapeCount}"/>
 
-        <CheckBox Name="rectanglesCheckBox" Text="Rectangles" Margin="0,0,0,5" CheckedChanged="RectanglesCheckBox_CheckedChanged"/>
-        <CheckBox Name="ellipsesCheckBox" Text="Ellipses" Margin="0,0,0,5" CheckedChanged="EllipsesCheckBox_CheckedChanged"/>
+        <CheckBox Text="Rectangles" Margin="0,0,0,5" IsChecked="{Binding RectanglesIncluded}"/>
+        <CheckBox Text="Ellipses" Margin="0,0,0,5" IsChecked="{Binding EllipsesIncluded}"/>
 
         <Label Text="Brush:" Margin="0,5,0,5"/>
         <ComboBox Name="brushComboBox" IsEditable="false" SelectedItemChanged="BrushComboBox_SelectedItemChanged"/>
@@ -18,13 +18,13 @@
         </StackPanel>
 
         <Label Text="Brush Color:" Margin="0,5,0,5"/>
-        <Slider Name="brushColorHueSlider" Minimum="0" Maximum="10" Margin="0,0,0,10" ValueChanged="BrushColorHueSlider_ValueChanged"/>
+        <Slider Minimum="0" Maximum="10" Margin="0,0,0,10" Value="{Binding BrushColorHue}"/>
 
         <Label Text="Pen Color:" Margin="0,5,0,5"/>
-        <Slider Name="penColorHueSlider" Minimum="0" Maximum="10" Margin="0,0,0,10" ValueChanged="PenColorHueSlider_ValueChanged"/>
+        <Slider Minimum="0" Maximum="10" Margin="0,0,0,10" Value="{Binding PenColorHue}"/>
 
         <Label Text="Pen Width:" Margin="0,5,0,5"/>
-        <Slider Name="penWidthSlider" Minimum="0" Maximum="6" Margin="0,0,0,10" ValueChanged="PenWidthSlider_ValueChanged"/>
+        <Slider Minimum="0" Maximum="6" Margin="0,0,0,10" Value="{Binding PenWidth}"/>
 
         <Label Text="Pen Dash Style:" Margin="0,5,0,5" />
         <ComboBox Name="dashStyleComboBox" IsEditable="false" SelectedItemChanged="DashStyleComboBox_SelectedItemChanged"/>
