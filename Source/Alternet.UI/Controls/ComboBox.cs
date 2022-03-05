@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 
 namespace Alternet.UI
@@ -133,11 +134,51 @@ namespace Alternet.UI
 
                 selectedIndex = value;
 
+                SelectedItem = selectedIndex == null ? null : Items[selectedIndex.Value];
+
                 var selectedItem = SelectedItem;
                 Text = selectedItem == null ? string.Empty : GetItemText(selectedItem);
 
                 RaiseSelectedItemChanged(EventArgs.Empty);
             }
+        }
+
+        public static readonly DependencyProperty SelectedItemProperty =
+            DependencyProperty.Register(
+                "SelectedItem", // Property name
+                typeof(object), // Property type
+                typeof(ComboBox), // Property owner
+                new FrameworkPropertyMetadata( // Property metadata
+                        null, // default value
+                        FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | // Flags
+                            FrameworkPropertyMetadataOptions.Journal,
+                        new PropertyChangedCallback(OnSelectedItemPropertyChanged),    // property changed callback
+                        new CoerceValueCallback(CoerceSelectedItem),
+                        true, // IsAnimationProhibited
+                        UpdateSourceTrigger.PropertyChanged
+                        //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
+                        ));
+
+        /// <summary>
+        /// Callback for changes to the SelectedItem property
+        /// </summary>
+        private static void OnSelectedItemPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (ComboBox)d;
+            control.OnSelectedItemPropertyChanged(e.OldValue, e.NewValue);
+        }
+
+        private void OnSelectedItemPropertyChanged(object oldValue, object newValue)
+        {
+            if (newValue == null)
+            {
+                SelectedIndex = null;
+                return;
+            }
+
+            var index = Items.IndexOf(newValue);
+            if (index != -1)
+                SelectedIndex = index;
         }
 
         /// <summary>
@@ -153,31 +194,11 @@ namespace Alternet.UI
         /// </remarks>
         public object? SelectedItem
         {
-            get
-            {
-                CheckDisposed();
-
-                if (SelectedIndex == null)
-                    return null;
-
-                return Items[SelectedIndex.Value];
-            }
-
-            set
-            {
-                CheckDisposed();
-
-                if (value == null)
-                {
-                    SelectedIndex = null;
-                    return;
-                }
-
-                var index = Items.IndexOf(value);
-                if (index != -1)
-                    SelectedIndex = index;
-            }
+            get { return GetValue(SelectedItemProperty); }
+            set { SetValue(SelectedItemProperty, value); }
         }
+
+        private static object CoerceSelectedItem(DependencyObject d, object value) => value;
 
         /// <summary>
         /// Gets or a value that enables or disables editing of the text in text box area of the <see cref="ComboBox"/>.

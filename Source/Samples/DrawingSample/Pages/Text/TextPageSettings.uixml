@@ -12,6 +12,6 @@
         <CheckBox Text="Strikethrough" Margin="0,0,0,5" IsChecked="{Binding Strikethrough}"/>
 
         <Label Text="Custom Font Family:" Margin="0,5,0,5"/>
-        <ComboBox Name="customFontFamilyComboBox" IsEditable="false" SelectedItemChanged="CustomFontFamilyComboBox_SelectedItemChanged"/>
+        <ComboBox Name="customFontFamilyComboBox" IsEditable="false" SelectedItem="{Binding CustomFontFamilyName}"/>
     </StackPanel>
 </Control>

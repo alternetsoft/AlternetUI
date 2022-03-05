@@ -58,7 +58,6 @@ namespace Alternet.UI
         /// </summary>
         /// <value>A numeric value that is within the <see cref="Minimum"/> and <see cref="Maximum"/> range. The default value is 0.</value>
         /// <remarks>The <see cref="Value"/> property contains the number that represents the current position of the scroll box on the slider.</remarks>
-        [DefaultValue("")]
         public int Value
         {
             get { return (int)GetValue(ValueProperty); }

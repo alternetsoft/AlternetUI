@@ -10,11 +10,11 @@
         <CheckBox Text="Ellipses" Margin="0,0,0,5" IsChecked="{Binding EllipsesIncluded}"/>
 
         <Label Text="Brush:" Margin="0,5,0,5"/>
-        <ComboBox Name="brushComboBox" IsEditable="false" SelectedItemChanged="BrushComboBox_SelectedItemChanged"/>
+        <ComboBox Name="brushComboBox" IsEditable="false" SelectedItem="{Binding Brush}" SelectedItemChanged="BrushComboBox_SelectedItemChanged"/>
 
         <StackPanel Name="hatchStylePanel" Visible="false">
             <Label Text="Brush Hatch Style:" Margin="0,5,0,5" />
-            <ComboBox Name="hatchStyleComboBox" IsEditable="false" SelectedItemChanged="HatchStyleComboBox_SelectedItemChanged"/>
+            <ComboBox Name="hatchStyleComboBox" IsEditable="false" SelectedItem="{Binding HatchStyle}"/>
         </StackPanel>
 
         <Label Text="Brush Color:" Margin="0,5,0,5"/>
@@ -27,6 +27,6 @@
         <Slider Minimum="0" Maximum="6" Margin="0,0,0,10" Value="{Binding PenWidth}"/>
 
         <Label Text="Pen Dash Style:" Margin="0,5,0,5" />
-        <ComboBox Name="dashStyleComboBox" IsEditable="false" SelectedItemChanged="DashStyleComboBox_SelectedItemChanged"/>
+        <ComboBox Name="dashStyleComboBox" IsEditable="false" SelectedItem="{Binding PenDashStyle}"/>
     </StackPanel>
 </Control>
