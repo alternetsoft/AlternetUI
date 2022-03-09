@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "HelloWorldSample": {
+    "ExplorerUISample": {
       "commandName": "Project",
       "nativeDebugging": true
     }

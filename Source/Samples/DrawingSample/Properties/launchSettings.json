@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "HelloWorldSample": {
+    "DrawingSample": {
       "commandName": "Project",
       "nativeDebugging": true
     }
