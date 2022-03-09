@@ -13,7 +13,6 @@ namespace DrawingSample
 
         public void Initialize(TextPage page)
         {
-            this.page = page;
             DataContext = page;
 
             foreach (var family in FontFamily.Families)

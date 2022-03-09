@@ -7,7 +7,7 @@ namespace DrawingSample
 {
     partial class BrushesAndPensPageSettings : Control
     {
-        private BrushesAndPensPage page;
+        private BrushesAndPensPage? page;
 
         public BrushesAndPensPageSettings()
         {
@@ -31,7 +31,7 @@ namespace DrawingSample
 
         private void BrushComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            hatchStylePanel.Visible = page.Brush == BrushesAndPensPage.BrushType.Hatch;
+            hatchStylePanel.Visible = page!.Brush == BrushesAndPensPage.BrushType.Hatch;
         }
     }
 }
