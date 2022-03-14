@@ -183,7 +183,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual bool VisualChildNeedsNativeControl => false;
 
-        private bool IsLayoutSuspended => layoutSuspendCount != 0;
+        internal bool IsLayoutSuspended => layoutSuspendCount != 0;
 
         /// <summary>
         /// Attaches this handler to the specified <see cref="Control"/>.

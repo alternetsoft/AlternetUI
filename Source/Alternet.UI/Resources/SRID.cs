@@ -1403,6 +1403,16 @@ namespace Alternet.UI
         internal const string @Illegal_InheritanceBehaviorSettor = "Illegal_InheritanceBehaviorSettor";
         /// <summary>Logical tree depth exceeded while traversing the tree. This could indicate a cycle in the tree.</summary>
         internal const string @LogicalTreeLoop = "LogicalTreeLoop";
+        /// <summary>Layout recursion reached allowed limit to avoid stack overflow: '{0}'. Either the tree contains a loop or is too deep.</summary>
+        internal const string @LayoutManager_DeepRecursion = "LayoutManager_DeepRecursion";
+        /// <summary>Cannot call Arrange on a UIElement with infinite size or NaN. Parent of type '{0}' invokes the UIElement. Arrange called on element of type '{1}'.</summary>
+        internal const string @UIElement_Layout_InfinityArrange = "UIElement_Layout_InfinityArrange";
+        /// <summary>UIElement.Measure(availableSize) cannot be called with NaN size.</summary>
+        internal const string @UIElement_Layout_NaNMeasure = "UIElement_Layout_NaNMeasure";
+        /// <summary>Layout measurement override of element '{0}' should not return PositiveInfinity as its DesiredSize, even if Infinity is passed in as available size.</summary>
+        internal const string @UIElement_Layout_PositiveInfinityReturned = "UIElement_Layout_PositiveInfinityReturned";
+        /// <summary>Layout measurement override of element '{0}' should not return NaN values as its DesiredSize.</summary>
+        internal const string @UIElement_Layout_NaNReturned = "UIElement_Layout_NaNReturned";
 
     }
 }

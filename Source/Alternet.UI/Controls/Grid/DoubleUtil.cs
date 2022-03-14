@@ -43,6 +43,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Compares two rectangles for fuzzy equality.  This function
+        /// helps compensate for the fact that double values can 
+        /// acquire error when operated upon
+        /// </summary>
+        /// <param name='rect1'>The first rectangle to compare</param>
+        /// <param name='rect2'>The second rectangle to compare</param>
+        /// <returns>Whether or not the two rectangles are equal</returns>
+        public static bool AreClose(Rect rect1, Rect rect2)
+        {
+            // If they're both empty, don't bother with the double logic.
+            if (rect1.IsEmpty)
+            {
+                return rect2.IsEmpty;
+            }
+
+            // At this point, rect1 isn't empty, so the first thing we can test is
+            // rect2.IsEmpty, followed by property-wise compares.
+
+            return (!rect2.IsEmpty) &&
+                AreClose(rect1.X, rect2.X) &&
+                AreClose(rect1.Y, rect2.Y) &&
+                AreClose(rect1.Height, rect2.Height) &&
+                AreClose(rect1.Width, rect2.Width);
+        }
+
+        /// <summary>
         /// LessThan - Returns whether or not the first double is less than the second double.
         /// That is, whether or not the first is strictly less than *and* not within epsilon of
         /// the other number.  Note that this epsilon is proportional to the numbers themselves

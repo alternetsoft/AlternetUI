@@ -8,7 +8,7 @@ using System.Globalization;
 
 namespace Alternet.UI
 {
-    public class FrameworkElement : UIElement
+    public abstract class FrameworkElement : UIElement
     {
         /// <summary>
         /// Gets or sets the identifying name of the control.

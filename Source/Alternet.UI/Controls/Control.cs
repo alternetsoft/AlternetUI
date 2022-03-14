@@ -27,11 +27,12 @@ namespace Alternet.UI
         private VerticalAlignment verticalAlignment = VerticalAlignment.Stretch;
         private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Stretch;
 
-        private bool visible = true;
         private bool enabled = true;
         private Control? parent;
 
         internal override bool HasLogicalChildren => Children.Count > 0;
+
+        internal override bool IsLayoutSuspended => Handler.IsLayoutSuspended;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
@@ -69,11 +70,6 @@ namespace Alternet.UI
         /// Occurs when the value of the <see cref="Padding"/> property changes.
         /// </summary>
         public event EventHandler? PaddingChanged;
-
-        /// <summary>
-        /// Occurs when the value of the <see cref="Visible"/> property changes.
-        /// </summary>
-        public event EventHandler? VisibleChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Enabled"/> property changes.
@@ -123,25 +119,6 @@ namespace Alternet.UI
         /// A common use for the <see cref="Tag"/> property is to store data that is closely associated with the control.
         /// </remarks>
         public object? Tag { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the control and all its child controls are displayed.
-        /// </summary>
-        /// <value><c>true</c> if the control and all its child controls are displayed; otherwise, <c>false</c>. The default is <c>true</c>.</value>
-        public bool Visible
-        {
-            get => visible;
-
-            set
-            {
-                if (visible == value)
-                    return;
-
-                visible = value;
-                OnVisibleChanged(EventArgs.Empty);
-                VisibleChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the control can respond to user interaction.
@@ -699,16 +676,6 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnClick(EventArgs e)
-        {
-        }
-
-        private protected void SetVisibleValue(bool value) => visible = value;
-
-        /// <summary>
-        /// Called when the value of the <see cref="Visible"/> property changes.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnVisibleChanged(EventArgs e)
         {
         }
 
