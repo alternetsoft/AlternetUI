@@ -2208,4 +2208,7 @@
   <data name="UIElement_Layout_NaNReturned" xml:space="preserve">
     <value>Layout measurement override of element '{0}' should not return NaN values as its DesiredSize.</value>
   </data>
+  <data name="Rect_WidthAndHeightCannotBeNegative" xml:space="preserve">
+    <value>Width and Height cannot be negative.</value>
+  </data>
 </root>

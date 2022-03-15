@@ -569,7 +569,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnLayout()
+        protected override Size ArrangeOverride(Size finalSize)
         {
             GetPreferredSize(new Size(double.PositiveInfinity, double.PositiveInfinity)); // yezo
 
@@ -589,7 +589,7 @@ namespace Alternet.UI
                         var child = children[i];
                         if (child != null)
                         {
-                            child.Handler.Bounds = new Rect(new Point(), arrangeSize);
+                            child.Arrange(new Rect(new Point(), arrangeSize));
                         }
                     }
                 }
@@ -644,6 +644,8 @@ namespace Alternet.UI
                 ArrangeOverrideInProgress = false;
                 ExitCounterScope(Counters.ArrangeOverride);
             }
+
+            return finalSize;
         }
 
         void SetControlBounds(Control control, Rect bounds)

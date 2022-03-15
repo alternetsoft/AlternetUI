@@ -13,7 +13,7 @@ namespace Alternet.UI
     {
         private int layoutSuspendCount;
 
-        private bool inLayout;
+        //private bool inLayout;
 
         private Control? control;
 
@@ -335,26 +335,28 @@ namespace Alternet.UI
         /// </summary>
         public void PerformLayout()
         {
-            if (IsLayoutSuspended)
-                return;
+            Control.InvalidateArrange();
 
-            if (inLayout)
-                return;
+            //if (IsLayoutSuspended)
+            //    return;
 
-            inLayout = true;
-            try
-            {
-                // todo: we need a system to detect when parent relayout is needed?
-                var parent = Control.Parent;
-                if (parent != null)
-                    parent.PerformLayout();
+            //if (inLayout)
+            //    return;
 
-                Control.InvokeOnLayout();
-            }
-            finally
-            {
-                inLayout = false;
-            }
+            //inLayout = true;
+            //try
+            //{
+            //    // todo: we need a system to detect when parent relayout is needed?
+            //    var parent = Control.Parent;
+            //    if (parent != null)
+            //        parent.PerformLayout();
+
+            //    Control.InvokeOnLayout();
+            //}
+            //finally
+            //{
+            //    inLayout = false;
+            //}
         }
 
         /// <summary>

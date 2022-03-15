@@ -1,6 +1,7 @@
 using Alternet.Drawing;
 using Alternet.UI.Input;
 using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -33,11 +34,137 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Rounds a size to integer values for layout purposes, compensating for high DPI screen coordinates.
+        /// </summary>
+        /// <param name="size">Input size.</param>
+        /// <param name="dpiScaleX">DPI along x-dimension.</param>
+        /// <param name="dpiScaleY">DPI along y-dimension.</param>
+        /// <returns>Value of size that will be rounded under screen DPI.</returns>
+        /// <remarks>This is a layout helper method. It takes DPI into account and also does not return
+        /// the rounded value if it is unacceptable for layout, e.g. Infinity or NaN. It's a helper associated with
+        /// UseLayoutRounding  property and should not be used as a general rounding utility.</remarks>
+        internal static Size RoundLayoutSize(Size size, double dpiScaleX, double dpiScaleY)
+        {
+            return new Size(RoundLayoutValue(size.Width, dpiScaleX), RoundLayoutValue(size.Height, dpiScaleY));
+        }
+
+        private static readonly UncommonField<EventHandler> LayoutUpdatedHandlersField = new UncommonField<EventHandler>();
+        private static readonly UncommonField<object> LayoutUpdatedListItemsField = new UncommonField<object>();
+
+        /// <summary>
         /// Occurs when the value of the <see cref="Visible"/> property changes.
         /// </summary>
         public event EventHandler? VisibleChanged;
 
-        public event EventHandler LayoutUpdated;
+        private LayoutEventList.ListItem getLayoutUpdatedHandler(EventHandler d)
+        {
+            object cachedLayoutUpdatedItems = LayoutUpdatedListItemsField.GetValue(this);
+
+            if (cachedLayoutUpdatedItems == null)
+            {
+                return null;
+            }
+            else
+            {
+                EventHandler cachedLayoutUpdatedHandler = LayoutUpdatedHandlersField.GetValue(this);
+                if (cachedLayoutUpdatedHandler != null)
+                {
+                    if (cachedLayoutUpdatedHandler == d) return (LayoutEventList.ListItem)cachedLayoutUpdatedItems;
+                }
+                else //already have a list
+                {
+                    Hashtable list = (Hashtable)cachedLayoutUpdatedItems;
+                    LayoutEventList.ListItem item = (LayoutEventList.ListItem)(list[d]);
+                    return item;
+                }
+                return null;
+            }
+        }
+
+        private void addLayoutUpdatedHandler(EventHandler handler, LayoutEventList.ListItem item)
+        {
+            object cachedLayoutUpdatedItems = LayoutUpdatedListItemsField.GetValue(this);
+
+            if (cachedLayoutUpdatedItems == null)
+            {
+                LayoutUpdatedListItemsField.SetValue(this, item);
+                LayoutUpdatedHandlersField.SetValue(this, handler);
+            }
+            else
+            {
+                EventHandler cachedLayoutUpdatedHandler = LayoutUpdatedHandlersField.GetValue(this);
+                if (cachedLayoutUpdatedHandler != null)
+                {
+                    //second unique handler is coming in.
+                    //allocate a datastructure
+                    Hashtable list = new Hashtable(2);
+
+                    //add previously cached handler
+                    list.Add(cachedLayoutUpdatedHandler, cachedLayoutUpdatedItems);
+
+                    //add new handler
+                    list.Add(handler, item);
+
+                    LayoutUpdatedHandlersField.ClearValue(this);
+                    LayoutUpdatedListItemsField.SetValue(this, list);
+                }
+                else //already have a list
+                {
+                    Hashtable list = (Hashtable)cachedLayoutUpdatedItems;
+                    list.Add(handler, item);
+                }
+            }
+        }
+
+        private void removeLayoutUpdatedHandler(EventHandler d)
+        {
+            object cachedLayoutUpdatedItems = LayoutUpdatedListItemsField.GetValue(this);
+            EventHandler cachedLayoutUpdatedHandler = LayoutUpdatedHandlersField.GetValue(this);
+
+            if (cachedLayoutUpdatedHandler != null) //single handler
+            {
+                if (cachedLayoutUpdatedHandler == d)
+                {
+                    LayoutUpdatedListItemsField.ClearValue(this);
+                    LayoutUpdatedHandlersField.ClearValue(this);
+                }
+            }
+            else //there is an ArrayList allocated
+            {
+                Hashtable list = (Hashtable)cachedLayoutUpdatedItems;
+                list.Remove(d);
+            }
+        }
+
+        /// <summary>
+        /// This event fires every time Layout updates the layout of the trees associated with current Dispatcher.
+        /// Layout update can happen as a result of some propety change, window resize or explicit user request.
+        /// </summary>
+        public event EventHandler LayoutUpdated
+        {
+            add
+            {
+                LayoutEventList.ListItem item = getLayoutUpdatedHandler(value);
+
+                if (item == null)
+                {
+                    //set a weak ref in LM
+                    item = ContextLayoutManager.From(Dispatcher).LayoutEvents.Add(value);
+                    addLayoutUpdatedHandler(value, item);
+                }
+            }
+            remove
+            {
+                LayoutEventList.ListItem item = getLayoutUpdatedHandler(value);
+
+                if (item != null)
+                {
+                    removeLayoutUpdatedHandler(value);
+                    //remove a weak ref from LM
+                    ContextLayoutManager.From(Dispatcher).LayoutEvents.Remove(item);
+                }
+            }
+        }
 
         /// <summary>
         /// This is a public read-only property that returns size of the UIElement.
@@ -73,6 +200,12 @@ namespace Alternet.UI
                 else
                     return _desiredSize;
             }
+        }
+
+        internal bool AreTransformsClean
+        {
+            get { return ReadFlag(CoreFlags.AreTransformsClean); }
+            set { WriteFlag(CoreFlags.AreTransformsClean, value); }
         }
 
         /// <summary>
@@ -1177,11 +1310,6 @@ namespace Alternet.UI
             //    }
             //}
             //return dpi;
-        }
-
-        internal void RaiseLayoutUpdated()
-        {
-            LayoutUpdated?.Invoke(this, EventArgs.Empty);
         }
 
         internal void InvalidateMeasureInternal()

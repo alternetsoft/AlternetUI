@@ -117,7 +117,9 @@ namespace Alternet.UI
             if (!_layoutRequestPosted && !_isUpdating)
             {
                 // yezo
+                _updateCallback(this);
                 //MediaContext.From(Dispatcher).BeginInvokeOnRender(_updateCallback, this);
+
                 _layoutRequestPosted = true;
             }
         }

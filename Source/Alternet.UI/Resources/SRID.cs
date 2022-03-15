@@ -1413,6 +1413,8 @@ namespace Alternet.UI
         internal const string @UIElement_Layout_PositiveInfinityReturned = "UIElement_Layout_PositiveInfinityReturned";
         /// <summary>Layout measurement override of element '{0}' should not return NaN values as its DesiredSize.</summary>
         internal const string @UIElement_Layout_NaNReturned = "UIElement_Layout_NaNReturned";
+        /// <summary>Width and Height cannot be negative.</summary>
+        internal const string @Rect_WidthAndHeightCannotBeNegative = "Rect_WidthAndHeightCannotBeNegative";
 
     }
 }

@@ -14,18 +14,13 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public class Control : FrameworkElement, ISupportInitialize, IDisposable
     {
-        private static readonly Size DefaultSize = new Size(double.NaN, double.NaN);
         private static Font? defaultFont;
-        private Size size = DefaultSize;
-        private Thickness margin;
         private Thickness padding;
         private ControlHandler? handler;
         private Brush? background;
         private Brush? foreground;
         private Font? font;
         private Brush? borderBrush;
-        private VerticalAlignment verticalAlignment = VerticalAlignment.Stretch;
-        private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Stretch;
 
         private bool enabled = true;
         private Control? parent;
@@ -62,11 +57,6 @@ namespace Alternet.UI
         public event EventHandler<PaintEventArgs>? Paint;
 
         /// <summary>
-        /// Occurs when the value of the <see cref="Margin"/> property changes.
-        /// </summary>
-        public event EventHandler? MarginChanged;
-
-        /// <summary>
         /// Occurs when the value of the <see cref="Padding"/> property changes.
         /// </summary>
         public event EventHandler? PaddingChanged;
@@ -90,16 +80,6 @@ namespace Alternet.UI
         /// Occurs when the value of the <see cref="Font"/> property changes.
         /// </summary>
         public event EventHandler? FontChanged;
-
-        /// <summary>
-        /// Occurs when the value of the <see cref="VerticalAlignment"/> property changes.
-        /// </summary>
-        public event EventHandler? VerticalAlignmentChanged;
-
-        /// <summary>
-        /// Occurs when the value of the <see cref="HorizontalAlignment"/> property changes.
-        /// </summary>
-        public event EventHandler? HorizontalAlignmentChanged;
 
         /// <summary>
         /// Gets the default font used for controls.
@@ -214,75 +194,6 @@ namespace Alternet.UI
         } // todo: allow users to set the Parent property?
 
         /// <summary>
-        /// Gets or sets the suggested size of the control.
-        /// </summary>
-        /// <value>The suggested size of the control, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="Drawing.Size"/>(<see cref="double.NaN"/>, <see cref="double.NaN"/>)/>.
-        /// </value>
-        /// <remarks>
-        /// This property specifies the suggested size of the control. An actual size is calculated by the layout system.
-        /// Set this property to <see cref="Drawing.Size"/>(<see cref="double.NaN"/>, <see cref="double.NaN"/>) to specify auto sizing behavior.
-        /// The value of this property is always the same as the value that was set to it and is not changed by the layout system.
-        /// </remarks>
-        public virtual Size Size
-        {
-            get
-            {
-                return size;
-            }
-
-            set
-            {
-                if (size == value)
-                    return;
-
-                size = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the suggested width of the control.
-        /// </summary>
-        /// <value>The suggested width of the control, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="double.NaN"/>.
-        /// </value>
-        /// <remarks>
-        /// This property specifies the suggested width of the control. An actual width is calculated by the layout system.
-        /// Set this property to <see cref="double.NaN"/> to specify auto sizing behavior.
-        /// The value of this property is always the same as the value that was set to it and is not changed by the layout system.
-        /// </remarks>
-        public virtual double Width
-        {
-            get => size.Width;
-
-            set
-            {
-                Size = new Size(value, Size.Height);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the suggested height of the control.
-        /// </summary>
-        /// <value>The suggested height of the control, in device-independent units (1/96th inch per unit).
-        /// The default value is <see cref="double.NaN"/>.
-        /// </value>
-        /// <remarks>
-        /// This property specifies the suggested height of the control. An actual height is calculated by the layout system.
-        /// Set this property to <see cref="double.NaN"/> to specify auto sizing behavior.
-        /// The value of this property is always the same as the value that was set to it and is not changed by the layout system.
-        /// </remarks>
-        public virtual double Height
-        {
-            get => size.Height;
-
-            set
-            {
-                Size = new Size(Size.Width, value);
-            }
-        }
-
-        /// <summary>
         /// Gets or set a value indicating whether the control paints itself rather than the operating system doing so.
         /// </summary>
         /// <value>If <c>true</c>, the control paints itself rather than the operating system doing so.
@@ -290,30 +201,6 @@ namespace Alternet.UI
         public bool UserPaint { get; set; } // todo: rethink design of this
 
         protected internal override IEnumerator LogicalChildren => LogicalChildrenCollection.GetEnumerator();
-
-        /// <summary>
-        /// Gets or sets the outer margin of an control.
-        /// </summary>
-        /// <value>Provides margin values for the control. The default value is a <see cref="Thickness"/> with all properties equal to 0 (zero).</value>
-        /// <remarks>
-        /// The margin is the space between this control and the adjacent control.
-        /// Margin is set as a <see cref="Thickness"/> structure rather than as a number so that the margin can be set asymmetrically.
-        /// The <see cref="Thickness"/> structure itself supports string type conversion so that you can specify an asymmetric <see cref="Margin"/> in UIXML attribute syntax also.
-        /// </remarks>
-        public Thickness Margin
-        {
-            get => margin;
-            set
-            {
-                if (margin == value)
-                    return;
-
-                margin = value;
-
-                OnMarginChanged(EventArgs.Empty);
-                MarginChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
 
         /// <summary>
         /// Gets or sets the padding inside a control.
@@ -390,45 +277,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the vertical alignment applied to this control when it is positioned within a parent control.
-        /// </summary>
-        /// <value>A vertical alignment setting. The default is <see cref="VerticalAlignment.Stretch"/>.</value>
-        public VerticalAlignment VerticalAlignment
-        {
-            get => verticalAlignment;
-            set
-            {
-                if (verticalAlignment == value)
-                    return;
-
-                verticalAlignment = value;
-                VerticalAlignmentChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the horizontal alignment applied to this control when it is positioned within a parent control.
-        /// </summary>
-        /// <value>A horizontal alignment setting. The default is <see cref="HorizontalAlignment.Stretch"/>.</value>
-        public HorizontalAlignment HorizontalAlignment
-        {
-            get => horizontalAlignment;
-            set
-            {
-                if (horizontalAlignment == value)
-                    return;
-
-                horizontalAlignment = value;
-                HorizontalAlignmentChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
         /// Returns a collection of controls which can be treated as "logical children" of this control.
         /// </summary>
         protected virtual IEnumerable<Control> LogicalChildrenCollection => Children; // todo: consider changing this to Site.GetService()
 
         private IControlHandlerFactory? ControlHandlerFactory { get; set; }
+        protected internal override Vector VisualOffset
+        {
+            get
+            {
+                var location = Handler.Bounds.Location;
+                return new Vector(location.X, location.Y);
+            }
+
+            protected set
+            {
+                var bounds = Handler.Bounds;
+                Handler.Bounds = new Rect(value.X, value.Y, bounds.Width, bounds.Height);
+            }
+        }
 
         /// <summary>
         /// Raises the <see cref="Click"/> event and calls <see cref="OnClick(EventArgs)"/>.
@@ -585,22 +452,23 @@ namespace Alternet.UI
         /// </remarks>
         public void PerformLayout()
         {
-            Handler.PerformLayout();
+            InvalidateArrange();
+            //Handler.PerformLayout();
         }
 
-        /// <summary>
-        /// Called when the control should reposition the child controls of the control.
-        /// </summary>
-        protected virtual void OnLayout()
-        {
-            Handler.OnLayout();
-            RaiseLayoutUpdated();
-        }
+        ///// <summary>
+        ///// Called when the control should reposition the child controls of the control.
+        ///// </summary>
+        //protected virtual void OnLayout()
+        //{
+        //    Handler.OnLayout();
+        //    RaiseLayoutUpdated();
+        //}
 
-        internal void InvokeOnLayout()
-        {
-            OnLayout();
-        }
+        //internal void InvokeOnLayout()
+        //{
+        //    OnLayout();
+        //}
 
         /// <summary>
         /// Retrieves the size of a rectangular area into which a control can be fitted, in device-independent units (1/96th inch per unit).
@@ -759,14 +627,6 @@ namespace Alternet.UI
         {
             if (IsDisposed)
                 throw new ObjectDisposedException(null);
-        }
-
-        /// <summary>
-        /// Called when the value of the <see cref="Margin"/> property changes.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnMarginChanged(EventArgs e)
-        {
         }
 
         /// <summary>

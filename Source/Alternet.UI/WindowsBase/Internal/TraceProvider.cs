@@ -418,7 +418,6 @@ namespace Alternet.UI
 
         internal unsafe override void Register(Guid providerGuid)
         {
-            throw new NotImplementedException(); // yezo
             //_etwEnabledCallback =new ManifestEtw.EtwEnableCallback(EtwEnableCallback);
             //ulong registrationHandle = 0;
             //ManifestEtw.EventRegister(ref providerGuid, _etwEnabledCallback, null, ref registrationHandle);

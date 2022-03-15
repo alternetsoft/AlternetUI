@@ -1,3 +1,4 @@
+using Alternet.Drawing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,6 +11,1101 @@ namespace Alternet.UI
 {
     public abstract class FrameworkElement : UIElement
     {
+        static private readonly Type _typeofThis = typeof(FrameworkElement);
+
+        /// <summary>
+        /// Measurement override. Implement your size-to-content logic here.
+        /// </summary>
+        /// <remarks>
+        /// MeasureOverride is designed to be the main customizability point for size control of layout.
+        /// Element authors should override this method, call Measure on each child element,
+        /// and compute their desired size based upon the measurement of the children.
+        /// The return value should be the desired size.<para/>
+        /// Note: It is required that a parent element calls Measure on each child or they won't be sized/arranged.
+        /// Typical override follows a pattern roughly like this (pseudo-code):
+        /// <example>
+        ///     <code lang="C#">
+        /// <![CDATA[
+        ///
+        /// protected override Size MeasureOverride(Size availableSize)
+        /// {
+        ///     foreach (UIElement child in VisualChildren)
+        ///     {
+        ///         child.Measure(availableSize);
+        ///         availableSize.Deflate(child.DesiredSize);
+        ///     }
+        ///
+        ///     Size desired = ... compute sum of children's DesiredSize ...;
+        ///     return desired;
+        /// }
+        /// ]]>
+        ///     </code>
+        /// </example>
+        /// The key aspects of this snippet are:
+        ///     <list type="bullet">
+        /// <item>You must call Measure on each child element</item>
+        /// <item>It is common to cache measurement information between the MeasureOverride and ArrangeOverride method calls</item>
+        /// <item>Calling base.MeasureOverride is not required.</item>
+        /// <item>Calls to Measure on children are passing either the same availableSize as the parent, or a subset of the area depending
+        /// on the type of layout the parent will perform (for example, it would be valid to remove the area
+        /// for some border or padding).</item>
+        ///     </list>
+        /// </remarks>
+        /// <param name="availableSize">Available size that parent can give to the child. May be infinity (when parent wants to
+        /// measure to content). This is soft constraint. Child can return bigger size to indicate that it wants bigger space and hope
+        /// that parent can throw in scrolling...</param>
+        /// <returns>Desired Size of the control, given available size passed as parameter.</returns>
+        protected virtual Size MeasureOverride(Size availableSize)
+        {
+            return new Size(0, 0);
+        }
+
+        /// <summary>
+        /// ArrangeOverride allows for the customization of the positioning of children.
+        /// </summary>
+        /// <remarks>
+        /// Element authors should override this method, call Arrange on each visible child element,
+        /// passing final size for each child element via finalSize parameter.
+        /// Note: It is required that a parent element calls Arrange on each child or they won't be rendered.
+        /// Typical override follows a pattern roughly like this (pseudo-code):
+        /// <example>
+        ///     <code lang="C#">
+        /// <![CDATA[
+        ///
+        ///
+        /// protected override Size ArrangeOverride(Size finalSize)
+        /// {
+        ///     foreach (UIElement child in VisualChildren)
+        ///     {
+        ///         child.Arrange(new Rect(childX, childY, childFinalSize));
+        ///     }
+        ///     return finalSize; //this can be another size if the panel actually takes smaller/larger then finalSize
+        /// }
+        /// ]]>
+        ///     </code>
+        /// </example>
+        /// </remarks>
+        /// <param name="finalSize">The final size that element should use to arrange itself and its children.</param>
+        /// <returns>The size that element actually is going to use for rendering. If this size is not the same as finalSize
+        /// input parameter, the AlignmentX/AlignmentY properties will position the ink rect of the element
+        /// appropriately.</returns>
+        protected virtual Size ArrangeOverride(Size finalSize)
+        {
+            return finalSize;
+        }
+
+        private InternalFlags2 _flags2 = InternalFlags2.Default; // Stores Flags (see Flags enum)
+
+        internal bool BypassLayoutPolicies
+        {
+            get { return ReadInternalFlag2(InternalFlags2.BypassLayoutPolicies); }
+            set { WriteInternalFlag2(InternalFlags2.BypassLayoutPolicies, value); }
+        }
+
+        internal void WriteInternalFlag2(InternalFlags2 reqFlag, bool set)
+        {
+            if (set)
+            {
+                _flags2 |= reqFlag;
+            }
+            else
+            {
+                _flags2 &= (~reqFlag);
+            }
+        }
+
+        internal bool ReadInternalFlag2(InternalFlags2 reqFlag)
+        {
+            return (_flags2 & reqFlag) != 0;
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="Margin"/> property changes.
+        /// </summary>
+        public event EventHandler? MarginChanged;
+
+        private Thickness margin;
+
+        /// <summary>
+        /// Gets or sets the outer margin of an control.
+        /// </summary>
+        /// <value>Provides margin values for the control. The default value is a <see cref="Thickness"/> with all properties equal to 0 (zero).</value>
+        /// <remarks>
+        /// The margin is the space between this control and the adjacent control.
+        /// Margin is set as a <see cref="Thickness"/> structure rather than as a number so that the margin can be set asymmetrically.
+        /// The <see cref="Thickness"/> structure itself supports string type conversion so that you can specify an asymmetric <see cref="Margin"/> in UIXML attribute syntax also.
+        /// </remarks>
+        public Thickness Margin
+        {
+            get => margin;
+            set
+            {
+                if (margin == value)
+                    return;
+
+                margin = value;
+
+                OnMarginChanged(EventArgs.Empty);
+                MarginChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="Margin"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnMarginChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// MinHeight Dependency Property
+        /// </summary>
+        [CommonDependencyProperty]
+        public static readonly DependencyProperty MinHeightProperty =
+                    DependencyProperty.Register(
+                                "MinHeight",
+                                typeof(double),
+                                _typeofThis,
+                                new FrameworkPropertyMetadata(
+                                        0d,
+                                        FrameworkPropertyMetadataOptions.AffectsMeasure,
+                                        new PropertyChangedCallback(OnTransformDirty)),
+                                new ValidateValueCallback(IsMinWidthHeightValid));
+
+        private static bool IsMinWidthHeightValid(object value)
+        {
+            double v = (double)value;
+            return (!DoubleUtil.IsNaN(v) && v >= 0.0d && !Double.IsPositiveInfinity(v));
+        }
+
+        /// <summary>
+        /// MinHeight Property
+        /// </summary>
+        [TypeConverter(typeof(LengthConverter))]
+        [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
+        public double MinHeight
+        {
+            get { return (double)GetValue(MinHeightProperty); }
+            set { SetValue(MinHeightProperty, value); }
+        }
+
+        /// <summary>
+        /// MaxHeight Dependency Property
+        /// </summary>
+        [CommonDependencyProperty]
+        public static readonly DependencyProperty MaxHeightProperty =
+                    DependencyProperty.Register(
+                                "MaxHeight",
+                                typeof(double),
+                                _typeofThis,
+                                new FrameworkPropertyMetadata(
+                                        Double.PositiveInfinity,
+                                        FrameworkPropertyMetadataOptions.AffectsMeasure,
+                                        new PropertyChangedCallback(OnTransformDirty)),
+                                new ValidateValueCallback(IsMaxWidthHeightValid));
+
+        /// <summary>
+        /// MaxHeight Property
+        /// </summary>
+        [TypeConverter(typeof(LengthConverter))]
+        [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
+        public double MaxHeight
+        {
+            get { return (double)GetValue(MaxHeightProperty); }
+            set { SetValue(MaxHeightProperty, value); }
+        }
+
+        private static bool IsMaxWidthHeightValid(object value)
+        {
+            double v = (double)value;
+            return (!DoubleUtil.IsNaN(v) && v >= 0.0d);
+        }
+
+        private static void OnTransformDirty(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            // Callback for MinWidth, MaxWidth, Width, MinHeight, MaxHeight, Height, and RenderTransformOffset
+            FrameworkElement fe = (FrameworkElement)d;
+            fe.AreTransformsClean = false;
+        }
+
+        /// <summary>
+        /// MaxWidth Dependency Property
+        /// </summary>
+        [CommonDependencyProperty]
+        public static readonly DependencyProperty MaxWidthProperty =
+                    DependencyProperty.Register(
+                                "MaxWidth",
+                                typeof(double),
+                                _typeofThis,
+                                new FrameworkPropertyMetadata(
+                                        Double.PositiveInfinity,
+                                        FrameworkPropertyMetadataOptions.AffectsMeasure,
+                                        new PropertyChangedCallback(OnTransformDirty)),
+                                new ValidateValueCallback(IsMaxWidthHeightValid));
+
+
+        /// <summary>
+        /// MaxWidth Property
+        /// </summary>
+        [TypeConverter(typeof(LengthConverter))]
+        [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
+        public double MaxWidth
+        {
+            get { return (double)GetValue(MaxWidthProperty); }
+            set { SetValue(MaxWidthProperty, value); }
+        }
+
+
+        /// <summary>
+        /// MinWidth Dependency Property
+        /// </summary>
+        [CommonDependencyProperty]
+        public static readonly DependencyProperty MinWidthProperty =
+                    DependencyProperty.Register(
+                                "MinWidth",
+                                typeof(double),
+                                _typeofThis,
+                                new FrameworkPropertyMetadata(
+                                        0d,
+                                        FrameworkPropertyMetadataOptions.AffectsMeasure,
+                                        new PropertyChangedCallback(OnTransformDirty)),
+                                new ValidateValueCallback(IsMinWidthHeightValid));
+
+        /// <summary>
+        /// MinWidth Property
+        /// </summary>
+        [TypeConverter(typeof(LengthConverter))]
+        [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
+        public double MinWidth
+        {
+            get { return (double)GetValue(MinWidthProperty); }
+            set { SetValue(MinWidthProperty, value); }
+        }
+
+        private struct MinMax
+        {
+            internal MinMax(FrameworkElement e)
+            {
+                maxHeight = e.MaxHeight;
+                minHeight = e.MinHeight;
+                double l = e.Height;
+
+                double height = (DoubleUtil.IsNaN(l) ? Double.PositiveInfinity : l);
+                maxHeight = Math.Max(Math.Min(height, maxHeight), minHeight);
+
+                height = (DoubleUtil.IsNaN(l) ? 0 : l);
+                minHeight = Math.Max(Math.Min(maxHeight, height), minHeight);
+
+                maxWidth = e.MaxWidth;
+                minWidth = e.MinWidth;
+                l = e.Width;
+
+                double width = (DoubleUtil.IsNaN(l) ? Double.PositiveInfinity : l);
+                maxWidth = Math.Max(Math.Min(width, maxWidth), minWidth);
+
+                width = (DoubleUtil.IsNaN(l) ? 0 : l);
+                minWidth = Math.Max(Math.Min(maxWidth, width), minWidth);
+            }
+
+            internal double minWidth;
+            internal double maxWidth;
+            internal double minHeight;
+            internal double maxHeight;
+        }
+
+        private static readonly Size DefaultSize = new Size(double.NaN, double.NaN);
+
+        private Size size = DefaultSize;
+
+        /// <summary>
+        /// Gets or sets the suggested size of the control.
+        /// </summary>
+        /// <value>The suggested size of the control, in device-independent units (1/96th inch per unit).
+        /// The default value is <see cref="Drawing.Size"/>(<see cref="double.NaN"/>, <see cref="double.NaN"/>)/>.
+        /// </value>
+        /// <remarks>
+        /// This property specifies the suggested size of the control. An actual size is calculated by the layout system.
+        /// Set this property to <see cref="Drawing.Size"/>(<see cref="double.NaN"/>, <see cref="double.NaN"/>) to specify auto sizing behavior.
+        /// The value of this property is always the same as the value that was set to it and is not changed by the layout system.
+        /// </remarks>
+        public virtual Size Size
+        {
+            get
+            {
+                return size;
+            }
+
+            set
+            {
+                if (size == value)
+                    return;
+
+                size = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the suggested width of the control.
+        /// </summary>
+        /// <value>The suggested width of the control, in device-independent units (1/96th inch per unit).
+        /// The default value is <see cref="double.NaN"/>.
+        /// </value>
+        /// <remarks>
+        /// This property specifies the suggested width of the control. An actual width is calculated by the layout system.
+        /// Set this property to <see cref="double.NaN"/> to specify auto sizing behavior.
+        /// The value of this property is always the same as the value that was set to it and is not changed by the layout system.
+        /// </remarks>
+        public virtual double Width
+        {
+            get => size.Width;
+
+            set
+            {
+                Size = new Size(value, Size.Height);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the suggested height of the control.
+        /// </summary>
+        /// <value>The suggested height of the control, in device-independent units (1/96th inch per unit).
+        /// The default value is <see cref="double.NaN"/>.
+        /// </value>
+        /// <remarks>
+        /// This property specifies the suggested height of the control. An actual height is calculated by the layout system.
+        /// Set this property to <see cref="double.NaN"/> to specify auto sizing behavior.
+        /// The value of this property is always the same as the value that was set to it and is not changed by the layout system.
+        /// </remarks>
+        public virtual double Height
+        {
+            get => size.Height;
+
+            set
+            {
+                Size = new Size(Size.Width, value);
+            }
+        }
+
+        /// <summary>
+        /// Override for <seealso cref="UIElement.MeasureCore" />.
+        /// </summary>
+        protected sealed override Size MeasureCore(Size availableSize)
+        {
+
+            // If using layout rounding, check whether rounding needs to compensate for high DPI
+            bool useLayoutRounding = this.UseLayoutRounding;
+            DpiScale dpi = GetDpi();
+            if (useLayoutRounding)
+            {
+                //if (!CheckFlagsAnd(VisualFlags.UseLayoutRounding))
+                //{
+                //    this.SetFlags(true, VisualFlags.UseLayoutRounding);
+                //}
+            }
+
+            //build the visual tree from styles first
+            //ApplyTemplate();
+
+            if (BypassLayoutPolicies)
+            {
+                return MeasureOverride(availableSize);
+            }
+            else
+            {
+                Thickness margin = Margin;
+                double marginWidth = margin.Left + margin.Right;
+                double marginHeight = margin.Top + margin.Bottom;
+
+                if (useLayoutRounding && (/*this is ScrollContentPresenter || */!FrameworkAppContextSwitches.DoNotApplyLayoutRoundingToMarginsAndBorderThickness))
+                {
+                    // Related: WPF popup windows appear in wrong place when
+                    // windows is in Medium DPI and a search box changes height
+                    // 
+                    // ScrollViewer and ScrollContentPresenter depend on rounding their
+                    // measurements in a consistent way.  Round the margins first - if we
+                    // round the result of (size-margin), the answer might round up or
+                    // down depending on size. 
+                    marginWidth = RoundLayoutValue(marginWidth, dpi.DpiScaleX);
+                    marginHeight = RoundLayoutValue(marginHeight, dpi.DpiScaleY);
+                }
+
+                //  parent size is what parent want us to be
+                Size frameworkAvailableSize = new Size(
+                Math.Max(availableSize.Width - marginWidth, 0),
+                Math.Max(availableSize.Height - marginHeight, 0));
+
+                MinMax mm = new MinMax(this);
+
+                if (useLayoutRounding && !FrameworkAppContextSwitches.DoNotApplyLayoutRoundingToMarginsAndBorderThickness)
+                {
+                    mm.maxHeight = UIElement.RoundLayoutValue(mm.maxHeight, dpi.DpiScaleY);
+                    mm.maxWidth = UIElement.RoundLayoutValue(mm.maxWidth, dpi.DpiScaleX);
+                    mm.minHeight = UIElement.RoundLayoutValue(mm.minHeight, dpi.DpiScaleY);
+                    mm.minWidth = UIElement.RoundLayoutValue(mm.minWidth, dpi.DpiScaleX);
+                }
+
+                //LayoutTransformData ltd = LayoutTransformDataField.GetValue(this);
+                //{
+                //    Transform layoutTransform = this.LayoutTransform;
+                //    //  check that LayoutTransform is non-trivial
+                //    if (layoutTransform != null && !layoutTransform.IsIdentity)
+                //    {
+                //        if (ltd == null)
+                //        {
+                //            //  allocate and store ltd if needed
+                //            ltd = new LayoutTransformData();
+                //            LayoutTransformDataField.SetValue(this, ltd);
+                //        }
+
+                //        ltd.CreateTransformSnapshot(layoutTransform);
+                //        ltd.UntransformedDS = new Size();
+
+                //        if (useLayoutRounding)
+                //        {
+                //            ltd.TransformedUnroundedDS = new Size();
+                //        }
+                //    }
+                //    else if (ltd != null)
+                //    {
+                //        //  clear ltd storage
+                //        ltd = null;
+                //        LayoutTransformDataField.ClearValue(this);
+                //    }
+                //}
+
+                //if (ltd != null)
+                //{
+                //    // Find the maximal area rectangle in local (child) space that we can fit, post-transform
+                //    // in the decorator's measure constraint.
+                //    frameworkAvailableSize = FindMaximalAreaLocalSpaceRect(ltd.Transform, frameworkAvailableSize);
+                //}
+
+                frameworkAvailableSize.Width = Math.Max(mm.minWidth, Math.Min(frameworkAvailableSize.Width, mm.maxWidth));
+                frameworkAvailableSize.Height = Math.Max(mm.minHeight, Math.Min(frameworkAvailableSize.Height, mm.maxHeight));
+
+                // If layout rounding is enabled, round available size passed to MeasureOverride.
+                if (useLayoutRounding)
+                {
+                    frameworkAvailableSize = UIElement.RoundLayoutSize(frameworkAvailableSize, dpi.DpiScaleX, dpi.DpiScaleY);
+                }
+
+                //  call to specific layout to measure
+                Size desiredSize = MeasureOverride(frameworkAvailableSize);
+
+                //  maximize desiredSize with user provided min size
+                desiredSize = new Size(
+                    Math.Max(desiredSize.Width, mm.minWidth),
+                    Math.Max(desiredSize.Height, mm.minHeight));
+
+                //here is the "true minimum" desired size - the one that is
+                //for sure enough for the control to render its content.
+                Size unclippedDesiredSize = desiredSize;
+
+                //if (ltd != null)
+                //{
+                //    //need to store unclipped, untransformed desired size to be able to arrange later
+                //    ltd.UntransformedDS = unclippedDesiredSize;
+
+                //    //transform unclipped desired size
+                //    Rect unclippedBoundsTransformed = Rect.Transform(new Rect(0, 0, unclippedDesiredSize.Width, unclippedDesiredSize.Height), ltd.Transform.Value);
+                //    unclippedDesiredSize.Width = unclippedBoundsTransformed.Width;
+                //    unclippedDesiredSize.Height = unclippedBoundsTransformed.Height;
+                //}
+
+                bool clipped = false;
+
+                // User-specified max size starts to "clip" the control here.
+                //Starting from this point desiredSize could be smaller then actually
+                //needed to render the whole control
+                if (desiredSize.Width > mm.maxWidth)
+                {
+                    desiredSize.Width = mm.maxWidth;
+                    clipped = true;
+                }
+
+                if (desiredSize.Height > mm.maxHeight)
+                {
+                    desiredSize.Height = mm.maxHeight;
+                    clipped = true;
+                }
+
+                ////transform desired size to layout slot space
+                //if (ltd != null)
+                //{
+                //    Rect childBoundsTransformed = Rect.Transform(new Rect(0, 0, desiredSize.Width, desiredSize.Height), ltd.Transform.Value);
+                //    desiredSize.Width = childBoundsTransformed.Width;
+                //    desiredSize.Height = childBoundsTransformed.Height;
+                //}
+
+                //  because of negative margins, clipped desired size may be negative.
+                //  need to keep it as doubles for that reason and maximize with 0 at the
+                //  very last point - before returning desired size to the parent.
+                double clippedDesiredWidth = desiredSize.Width + marginWidth;
+                double clippedDesiredHeight = desiredSize.Height + marginHeight;
+
+                // In overconstrained scenario, parent wins and measured size of the child,
+                // including any sizes set or computed, can not be larger then
+                // available size. We will clip the guy later.
+                if (clippedDesiredWidth > availableSize.Width)
+                {
+                    clippedDesiredWidth = availableSize.Width;
+                    clipped = true;
+                }
+
+                if (clippedDesiredHeight > availableSize.Height)
+                {
+                    clippedDesiredHeight = availableSize.Height;
+                    clipped = true;
+                }
+
+                //// Set transformed, unrounded size on layout transform, if any.
+                //if (ltd != null)
+                //{
+                //    ltd.TransformedUnroundedDS = new Size(Math.Max(0, clippedDesiredWidth), Math.Max(0, clippedDesiredHeight));
+                //}
+
+                // If using layout rounding, round desired size.
+                if (useLayoutRounding)
+                {
+                    clippedDesiredWidth = UIElement.RoundLayoutValue(clippedDesiredWidth, dpi.DpiScaleX);
+                    clippedDesiredHeight = UIElement.RoundLayoutValue(clippedDesiredHeight, dpi.DpiScaleY);
+                }
+
+                //  Note: unclippedDesiredSize is needed in ArrangeCore,
+                //  because due to the layout protocol, arrange should be called
+                //  with constraints greater or equal to child's desired size
+                //  returned from MeasureOverride. But in most circumstances
+                //  it is possible to reconstruct original unclipped desired size.
+                //  In such cases we want to optimize space and save 16 bytes by
+                //  not storing it on each FrameworkElement.
+                //
+                //  The if statement conditions below lists the cases when
+                //  it is NOT possible to recalculate unclipped desired size later
+                //  in ArrangeCore, thus we save it into Uncommon Fields...
+                //
+                //  Note 2: use SizeBox to avoid CLR boxing of Size.
+                //  measurements show it is better to allocate an object once than
+                //  have spurious boxing allocations on every resize
+                SizeBox sb = UnclippedDesiredSizeField.GetValue(this);
+                if (clipped
+                    || clippedDesiredWidth < 0
+                    || clippedDesiredHeight < 0)
+                {
+                    if (sb == null) //not yet allocated, allocate the box
+                    {
+                        sb = new SizeBox(unclippedDesiredSize);
+                        UnclippedDesiredSizeField.SetValue(this, sb);
+                    }
+                    else //we already have allocated size box, simply change it
+                    {
+                        sb.Width = unclippedDesiredSize.Width;
+                        sb.Height = unclippedDesiredSize.Height;
+                    }
+                }
+                else
+                {
+                    if (sb != null)
+                        UnclippedDesiredSizeField.ClearValue(this);
+                }
+
+                return new Size(Math.Max(0, clippedDesiredWidth), Math.Max(0, clippedDesiredHeight));
+            }
+        }
+
+        private static readonly UncommonField<SizeBox> UnclippedDesiredSizeField = new UncommonField<SizeBox>();
+
+        /// <summary>
+        /// This is the method layout parent uses to set a location of the child
+        /// relative to parent's visual as a result of layout. Typically, this is called
+        /// by the parent inside of its ArrangeOverride implementation after calling Arrange on a child.
+        /// Note that this method resets layout tarnsform set by <see cref="InternalSetLayoutTransform"/> method,
+        /// so only one of these two should be used by the parent.
+        /// </summary>
+        private void SetLayoutOffset(Vector offset, Size oldRenderSize)
+        {
+            //
+            // Attempt to avoid changing the transform more often than needed,
+            // such as when a parent is arrange dirty but its children aren't.
+            //
+            // The dependencies for VisualTransform are as follows:
+            //     Mirror
+            //         RenderSize.Width
+            //         FlowDirection
+            //         parent.FlowDirection
+            //     RenderTransform
+            //         RenderTransformOrigin
+            //     LayoutTransform
+            //         RenderSize
+            //         Width, MinWidth, MaxWidth
+            //         Height, MinHeight, MaxHeight
+            //
+            // The AreTransformsClean flag will be false (dirty) when FlowDirection,
+            // RenderTransform, LayoutTransform, Min/Max/Width/Height, or
+            // RenderTransformOrigin changes.
+            //
+            // RenderSize is compared here with the previous size to see if it changed.
+            //
+            //if (!AreTransformsClean || !DoubleUtil.AreClose(RenderSize, oldRenderSize))
+            //{
+            //    Transform additionalTransform = GetFlowDirectionTransform(); //rtl
+
+            //    Transform renderTransform = this.RenderTransform;
+            //    if (renderTransform == Transform.Identity) renderTransform = null;
+
+            //    LayoutTransformData ltd = LayoutTransformDataField.GetValue(this);
+
+            //    TransformGroup t = null;
+
+            //    //arbitrary transform, create a collection
+            //    if (additionalTransform != null
+            //        || renderTransform != null
+            //        || ltd != null)
+            //    {
+            //        // Create a TransformGroup and make sure it does not participate
+            //        // in the InheritanceContext treeness because it is internal operation only.
+            //        t = new TransformGroup();
+            //        t.CanBeInheritanceContext = false;
+            //        t.Children.CanBeInheritanceContext = false;
+
+            //        if (additionalTransform != null)
+            //            t.Children.Add(additionalTransform);
+
+            //        if (ltd != null)
+            //        {
+            //            t.Children.Add(ltd.Transform);
+
+            //            // see if  MaxWidth/MaxHeight limit the element
+            //            MinMax mm = new MinMax(this);
+
+            //            //this is in element's local rendering coord system
+            //            Size inkSize = this.RenderSize;
+
+            //            double maxWidthClip = (Double.IsPositiveInfinity(mm.maxWidth) ? inkSize.Width : mm.maxWidth);
+            //            double maxHeightClip = (Double.IsPositiveInfinity(mm.maxHeight) ? inkSize.Height : mm.maxHeight);
+
+            //            //get the size clipped by the MaxWidth/MaxHeight/Width/Height
+            //            inkSize.Width = Math.Min(inkSize.Width, mm.maxWidth);
+            //            inkSize.Height = Math.Min(inkSize.Height, mm.maxHeight);
+
+            //            Rect inkRectTransformed = Rect.Transform(new Rect(inkSize), ltd.Transform.Value);
+
+            //            t.Children.Add(new TranslateTransform(-inkRectTransformed.X, -inkRectTransformed.Y));
+            //        }
+
+            //        if (renderTransform != null)
+            //        {
+            //            Point origin = GetRenderTransformOrigin();
+            //            bool hasOrigin = (origin.X != 0d || origin.Y != 0d);
+            //            if (hasOrigin)
+            //            {
+            //                TranslateTransform backOrigin = new TranslateTransform(-origin.X, -origin.Y);
+            //                backOrigin.Freeze();
+            //                t.Children.Add(backOrigin);
+            //            }
+
+            //            //can not freeze render transform - it can be animated
+            //            t.Children.Add(renderTransform);
+
+            //            if (hasOrigin)
+            //            {
+            //                TranslateTransform forwardOrigin = new TranslateTransform(origin.X, origin.Y);
+            //                forwardOrigin.Freeze();
+            //                t.Children.Add(forwardOrigin);
+            //            }
+
+            //        }
+            //    }
+
+            //    this.VisualTransform = t;
+            //    AreTransformsClean = true;
+            //}
+
+            Vector oldOffset = this.VisualOffset;
+            if (!DoubleUtil.AreClose(oldOffset.X, offset.X) ||
+               !DoubleUtil.AreClose(oldOffset.Y, offset.Y))
+            {
+                this.VisualOffset = offset;
+            }
+        }
+
+        private VerticalAlignment verticalAlignment = VerticalAlignment.Stretch;
+        private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Stretch;
+
+        /// <summary>
+        /// Gets or sets the vertical alignment applied to this control when it is positioned within a parent control.
+        /// </summary>
+        /// <value>A vertical alignment setting. The default is <see cref="VerticalAlignment.Stretch"/>.</value>
+        public VerticalAlignment VerticalAlignment
+        {
+            get => verticalAlignment;
+            set
+            {
+                if (verticalAlignment == value)
+                    return;
+
+                verticalAlignment = value;
+                VerticalAlignmentChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the horizontal alignment applied to this control when it is positioned within a parent control.
+        /// </summary>
+        /// <value>A horizontal alignment setting. The default is <see cref="HorizontalAlignment.Stretch"/>.</value>
+        public HorizontalAlignment HorizontalAlignment
+        {
+            get => horizontalAlignment;
+            set
+            {
+                if (horizontalAlignment == value)
+                    return;
+
+                horizontalAlignment = value;
+                HorizontalAlignmentChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="VerticalAlignment"/> property changes.
+        /// </summary>
+        public event EventHandler? VerticalAlignmentChanged;
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="HorizontalAlignment"/> property changes.
+        /// </summary>
+        public event EventHandler? HorizontalAlignmentChanged;
+
+        /// <summary>
+        /// Gets and sets the offset.
+        /// </summary>
+        protected internal abstract Vector VisualOffset { get; protected set; }
+
+        /// <summary>
+        /// Override for <seealso cref="UIElement.ArrangeCore" />.
+        /// </summary>
+        protected sealed override void ArrangeCore(Rect finalRect)
+        {
+            // If using layout rounding, check whether rounding needs to compensate for high DPI
+            bool useLayoutRounding = this.UseLayoutRounding;
+            DpiScale dpi = GetDpi();
+            //LayoutTransformData ltd = LayoutTransformDataField.GetValue(this);
+            //Size transformedUnroundedDS = Size.Empty;
+
+            if (useLayoutRounding)
+            {
+                //if (!CheckFlagsAnd(VisualFlags.UseLayoutRounding))
+                //{
+                //    SetFlags(true, VisualFlags.UseLayoutRounding);
+                //}
+            }
+
+            if (BypassLayoutPolicies)
+            {
+                Size oldRenderSize = RenderSize;
+                Size inkSize = ArrangeOverride(finalRect.Size);
+                RenderSize = inkSize;
+                SetLayoutOffset(new Vector(finalRect.X, finalRect.Y), oldRenderSize);
+            }
+            else
+            {
+                // If LayoutConstrained==true (parent wins in layout),
+                // we might get finalRect.Size smaller then UnclippedDesiredSize.
+                // Stricltly speaking, this may be the case even if LayoutConstrained==false (child wins),
+                // since who knows what a particualr parent panel will try to do in error.
+                // In this case we will not actually arrange a child at a smaller size,
+                // since the logic of the child does not expect to receive smaller size
+                // (if it coudl deal with smaller size, it probably would accept it in MeasureOverride)
+                // so lets replace the smaller arreange size with UnclippedDesiredSize
+                // and then clip the guy later.
+                // We will use at least UnclippedDesiredSize to compute arrangeSize of the child, and
+                // we will use layoutSlotSize to compute alignments - so the bigger child can be aligned within
+                // smaller slot.
+
+                // This is computed on every ArrangeCore. Depending on LayoutConstrained, actual clip may apply or not
+                // NeedsClipBounds = false; // yezo
+
+                // Start to compute arrange size for the child.
+                // It starts from layout slot or deisred size if layout slot is smaller then desired,
+                // and then we reduce it by margins, apply Width/Height etc, to arrive at the size
+                // that child will get in its ArrangeOverride.
+                Size arrangeSize = finalRect.Size;
+
+                Thickness margin = Margin;
+                double marginWidth = margin.Left + margin.Right;
+                double marginHeight = margin.Top + margin.Bottom;
+                if (useLayoutRounding && !FrameworkAppContextSwitches.DoNotApplyLayoutRoundingToMarginsAndBorderThickness)
+                {
+                    marginWidth = UIElement.RoundLayoutValue(marginWidth, dpi.DpiScaleX);
+                    marginHeight = UIElement.RoundLayoutValue(marginHeight, dpi.DpiScaleY);
+                }
+                arrangeSize.Width = Math.Max(0, arrangeSize.Width - marginWidth);
+                arrangeSize.Height = Math.Max(0, arrangeSize.Height - marginHeight);
+
+                // First, get clipped, transformed, unrounded size.
+                if (useLayoutRounding)
+                {
+                    //// 'transformUnroundedDS' is a non-nullable value type and can never be null.
+                    //if (ltd != null)
+                    //{
+                    //    transformedUnroundedDS = ltd.TransformedUnroundedDS;
+                    //    transformedUnroundedDS.Width = Math.Max(0, transformedUnroundedDS.Width - marginWidth);
+                    //    transformedUnroundedDS.Height = Math.Max(0, transformedUnroundedDS.Height - marginHeight);
+                    //}
+                }
+
+                // Next, compare against unclipped, transformed size.
+                SizeBox sb = UnclippedDesiredSizeField.GetValue(this);
+                Size unclippedDesiredSize;
+                if (sb == null)
+                {
+                    unclippedDesiredSize = new Size(Math.Max(0, this.DesiredSize.Width - marginWidth),
+                                                    Math.Max(0, this.DesiredSize.Height - marginHeight));
+
+                    //// There is no unclipped desired size, so check against clipped, but unrounded DS.
+                    //if (transformedUnroundedDS != Size.Empty)
+                    //{
+                    //    unclippedDesiredSize.Width = Math.Max(transformedUnroundedDS.Width, unclippedDesiredSize.Width);
+                    //    unclippedDesiredSize.Height = Math.Max(transformedUnroundedDS.Height, unclippedDesiredSize.Height);
+                    //}
+                }
+                else
+                {
+                    unclippedDesiredSize = new Size(sb.Width, sb.Height);
+                }
+
+                if (DoubleUtil.LessThan(arrangeSize.Width, unclippedDesiredSize.Width))
+                {
+                    // NeedsClipBounds = true;
+                    arrangeSize.Width = unclippedDesiredSize.Width;
+                }
+
+                if (DoubleUtil.LessThan(arrangeSize.Height, unclippedDesiredSize.Height))
+                {
+                    // NeedsClipBounds = true;
+                    arrangeSize.Height = unclippedDesiredSize.Height;
+                }
+
+                // Alignment==Stretch --> arrange at the slot size minus margins
+                // Alignment!=Stretch --> arrange at the unclippedDesiredSize
+                if (HorizontalAlignment != HorizontalAlignment.Stretch)
+                {
+                    arrangeSize.Width = unclippedDesiredSize.Width;
+                }
+
+                if (VerticalAlignment != VerticalAlignment.Stretch)
+                {
+                    arrangeSize.Height = unclippedDesiredSize.Height;
+                }
+
+                ////if LayoutTransform is set, arrange at untransformed DS always
+                ////alignments apply to the BoundingBox after transform
+                //if (ltd != null)
+                //{
+                //    // Repeat the measure-time algorithm for finding a best fit local rect.
+                //    // This essentially implements Stretch in case of LayoutTransform
+                //    Size potentialArrangeSize = FindMaximalAreaLocalSpaceRect(ltd.Transform, arrangeSize);
+                //    arrangeSize = potentialArrangeSize;
+
+                //    // If using layout rounding, round untransformed desired size - in MeasureCore, this value is first transformed and clipped
+                //    // before rounding, and hence saved unrounded.
+                //    unclippedDesiredSize = ltd.UntransformedDS;
+
+                //    //only use max area rect if both dimensions of it are larger then
+                //    //desired size - replace with desired size otherwise
+                //    if (!DoubleUtil.IsZero(potentialArrangeSize.Width)
+                //        && !DoubleUtil.IsZero(potentialArrangeSize.Height))
+                //    {
+                //        //Use less precise comparision - otherwise FP jitter may cause drastic jumps here
+                //        if (LayoutDoubleUtil.LessThan(potentialArrangeSize.Width, unclippedDesiredSize.Width)
+                //           || LayoutDoubleUtil.LessThan(potentialArrangeSize.Height, unclippedDesiredSize.Height))
+                //        {
+                //            arrangeSize = unclippedDesiredSize;
+                //        }
+                //    }
+
+                //    //if pre-transformed into local space arrangeSize is smaller in any dimension then
+                //    //unclipped local DesiredSize of the element, extend the arrangeSize but
+                //    //remember that we potentially need to clip the result of such arrange.
+                //    if (DoubleUtil.LessThan(arrangeSize.Width, unclippedDesiredSize.Width))
+                //    {
+                //        NeedsClipBounds = true;
+                //        arrangeSize.Width = unclippedDesiredSize.Width;
+                //    }
+
+                //    if (DoubleUtil.LessThan(arrangeSize.Height, unclippedDesiredSize.Height))
+                //    {
+                //        NeedsClipBounds = true;
+                //        arrangeSize.Height = unclippedDesiredSize.Height;
+                //    }
+
+                //}
+
+                MinMax mm = new MinMax(this);
+                if (useLayoutRounding && !FrameworkAppContextSwitches.DoNotApplyLayoutRoundingToMarginsAndBorderThickness)
+                {
+                    mm.maxHeight = UIElement.RoundLayoutValue(mm.maxHeight, dpi.DpiScaleY);
+                    mm.maxWidth = UIElement.RoundLayoutValue(mm.maxWidth, dpi.DpiScaleX);
+                    mm.minHeight = UIElement.RoundLayoutValue(mm.minHeight, dpi.DpiScaleY);
+                    mm.minWidth = UIElement.RoundLayoutValue(mm.minWidth, dpi.DpiScaleX);
+                }
+
+                //we have to choose max between UnclippedDesiredSize and Max here, because
+                //otherwise setting of max property could cause arrange at less then unclippedDS.
+                //Clipping by Max is needed to limit stretch here
+                double effectiveMaxWidth = Math.Max(unclippedDesiredSize.Width, mm.maxWidth);
+                if (DoubleUtil.LessThan(effectiveMaxWidth, arrangeSize.Width))
+                {
+                    // NeedsClipBounds = true;
+                    arrangeSize.Width = effectiveMaxWidth;
+                }
+
+                double effectiveMaxHeight = Math.Max(unclippedDesiredSize.Height, mm.maxHeight);
+                if (DoubleUtil.LessThan(effectiveMaxHeight, arrangeSize.Height))
+                {
+                    // NeedsClipBounds = true;
+                    arrangeSize.Height = effectiveMaxHeight;
+                }
+
+                // If using layout rounding, round size passed to children.
+                if (useLayoutRounding)
+                {
+                    arrangeSize = UIElement.RoundLayoutSize(arrangeSize, dpi.DpiScaleX, dpi.DpiScaleY);
+                }
+
+
+                Size oldRenderSize = RenderSize;
+                Size innerInkSize = ArrangeOverride(arrangeSize);
+
+                //Here we use un-clipped InkSize because element does not know that it is
+                //clipped by layout system and it shoudl have as much space to render as
+                //it returned from its own ArrangeOverride
+                RenderSize = innerInkSize;
+                if (useLayoutRounding)
+                {
+                    RenderSize = UIElement.RoundLayoutSize(RenderSize, dpi.DpiScaleX, dpi.DpiScaleY);
+                }
+
+                //clippedInkSize differs from InkSize only what MaxWidth/Height explicitly clip the
+                //otherwise good arrangement. For ex, DS<clientSize but DS>MaxWidth - in this
+                //case we should initiate clip at MaxWidth and only show Top-Left portion
+                //of the element limited by Max properties. It is Top-left because in case when we
+                //are clipped by container we also degrade to Top-Left, so we are consistent.
+                Size clippedInkSize = new Size(Math.Min(innerInkSize.Width, mm.maxWidth),
+                                               Math.Min(innerInkSize.Height, mm.maxHeight));
+
+                if (useLayoutRounding)
+                {
+                    clippedInkSize = UIElement.RoundLayoutSize(clippedInkSize, dpi.DpiScaleX, dpi.DpiScaleY);
+                }
+
+                //remember we have to clip if Max properties limit the inkSize
+                //NeedsClipBounds |=
+                //        DoubleUtil.LessThan(clippedInkSize.Width, innerInkSize.Width)
+                //    || DoubleUtil.LessThan(clippedInkSize.Height, innerInkSize.Height);
+
+                //if LayoutTransform is set, get the "outer bounds" - the alignments etc work on them
+                //if (ltd != null)
+                //{
+                //    Rect inkRectTransformed = Rect.Transform(new Rect(0, 0, clippedInkSize.Width, clippedInkSize.Height), ltd.Transform.Value);
+                //    clippedInkSize.Width = inkRectTransformed.Width;
+                //    clippedInkSize.Height = inkRectTransformed.Height;
+
+                //    if (useLayoutRounding)
+                //    {
+                //        clippedInkSize = UIElement.RoundLayoutSize(clippedInkSize, dpi.DpiScaleX, dpi.DpiScaleY);
+                //    }
+                //}
+
+                //Note that inkSize now can be bigger then layoutSlotSize-margin (because of layout
+                //squeeze by the parent or LayoutConstrained=true, which clips desired size in Measure).
+
+                // The client size is the size of layout slot decreased by margins.
+                // This is the "window" through which we see the content of the child.
+                // Alignments position ink of the child in this "window".
+                // Max with 0 is neccessary because layout slot may be smaller then unclipped desired size.
+                Size clientSize = new Size(Math.Max(0, finalRect.Width - marginWidth),
+                                        Math.Max(0, finalRect.Height - marginHeight));
+
+                if (useLayoutRounding)
+                {
+                    clientSize = UIElement.RoundLayoutSize(clientSize, dpi.DpiScaleX, dpi.DpiScaleY);
+                }
+
+                ////remember we have to clip if clientSize limits the inkSize
+                //NeedsClipBounds |=
+                //        DoubleUtil.LessThan(clientSize.Width, clippedInkSize.Width)
+                //    || DoubleUtil.LessThan(clientSize.Height, clippedInkSize.Height);
+
+                Vector offset = ComputeAlignmentOffset(clientSize, clippedInkSize);
+
+                offset.X += finalRect.X + margin.Left;
+                offset.Y += finalRect.Y + margin.Top;
+
+                // If using layout rounding, round offset.
+                if (useLayoutRounding)
+                {
+                    offset.X = UIElement.RoundLayoutValue(offset.X, dpi.DpiScaleX);
+                    offset.Y = UIElement.RoundLayoutValue(offset.Y, dpi.DpiScaleY);
+                }
+
+                SetLayoutOffset(offset, oldRenderSize);
+            }
+        }
+
+        private Vector ComputeAlignmentOffset(Size clientSize, Size inkSize)
+        {
+            Vector offset = new Vector();
+
+            HorizontalAlignment ha = HorizontalAlignment;
+            VerticalAlignment va = VerticalAlignment;
+
+            //this is to degenerate Stretch to Top-Left in case when clipping is about to occur
+            //if we need it to be Center instead, simply remove these 2 ifs
+            if (ha == HorizontalAlignment.Stretch
+                && inkSize.Width > clientSize.Width)
+            {
+                ha = HorizontalAlignment.Left;
+            }
+
+            if (va == VerticalAlignment.Stretch
+                && inkSize.Height > clientSize.Height)
+            {
+                va = VerticalAlignment.Top;
+            }
+            //end of degeneration of Stretch to Top-Left
+
+            if (ha == HorizontalAlignment.Center
+                || ha == HorizontalAlignment.Stretch)
+            {
+                offset.X = (clientSize.Width - inkSize.Width) * 0.5;
+            }
+            else if (ha == HorizontalAlignment.Right)
+            {
+                offset.X = clientSize.Width - inkSize.Width;
+            }
+            else
+            {
+                offset.X = 0;
+            }
+
+            if (va == VerticalAlignment.Center
+                || va == VerticalAlignment.Stretch)
+            {
+                offset.Y = (clientSize.Height - inkSize.Height) * 0.5;
+            }
+            else if (va == VerticalAlignment.Bottom)
+            {
+                offset.Y = clientSize.Height - inkSize.Height;
+            }
+            else
+            {
+                offset.Y = 0;
+            }
+
+            return offset;
+        }
+
         /// <summary>
         /// Gets or sets the identifying name of the control.
         /// The name provides a reference so that code-behind, such as event handler code,
@@ -1077,5 +2173,51 @@ namespace Alternet.UI
                 InVisibilityCollapsedTree = false;  // 'false' just means 'we don't know' - see comment at definition of the flag.
             }
         }
+    }
+
+    [Flags]
+    internal enum InternalFlags2 : uint
+    {
+        // RESERVED: Bits 0-15  (0x0000FFFF): TemplateChildIndex
+        R0 = 0x00000001,
+        R1 = 0x00000002,
+        R2 = 0x00000004,
+        R3 = 0x00000008,
+        R4 = 0x00000010,
+        R5 = 0x00000020,
+        R6 = 0x00000040,
+        R7 = 0x00000080,
+        R8 = 0x00000100,
+        R9 = 0x00000200,
+        RA = 0x00000400,
+        RB = 0x00000800,
+        RC = 0x00001000,
+        RD = 0x00002000,
+        RE = 0x00004000,
+        RF = 0x00008000,
+
+        // free bit                 = 0x00010000,
+        // free bit                 = 0x00020000,
+        // free bit                 = 0x00040000,
+        // free bit                 = 0x00080000,
+
+        TreeHasLoadedChangeHandler = 0x00100000,
+        IsLoadedCache = 0x00200000,
+        IsStyleSetFromGenerator = 0x00400000,
+        IsParentAnFE = 0x00800000,
+        IsTemplatedParentAnFE = 0x01000000,
+        HasStyleChanged = 0x02000000,
+        HasTemplateChanged = 0x04000000,
+        HasStyleInvalidated = 0x08000000,
+        IsRequestingExpression = 0x10000000,
+        HasMultipleInheritanceContexts = 0x20000000,
+
+        // free bit                 = 0x40000000,
+        BypassLayoutPolicies = 0x80000000,
+
+        // Default is so that the default value of TemplateChildIndex
+        // (which is stored in the low 16 bits) can be 0xFFFF (interpreted to be -1).
+        Default = 0x0000FFFF,
+
     }
 }
