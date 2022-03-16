@@ -33,8 +33,16 @@ namespace Alternet::UI
 
     //-----------------
 
+    void IdleCallback()
+    {
+        Application::GetCurrent()->RaiseIdle();
+    }
+
     Application::Application()
     {
+        wxASSERT(s_current == nullptr);
+        s_current = this;
+
 #ifdef __WXMSW__
         windowsVisualThemeSupportCookie = WindowsVisualThemeSupport::GetInstance().Enable();
 #endif
@@ -46,10 +54,23 @@ namespace Alternet::UI
         wxTheApp->CallOnInit();
 
         _app = static_cast<App*>(wxTheApp);
+
+        ParkingWindow::SetIdleCallback(IdleCallback);
     }
 
     Application::~Application()
     {
+        s_current = nullptr;
+    }
+
+    void Application::RaiseIdle()
+    {
+        RaiseEvent(ApplicationEvent::Idle);
+    }
+
+    /*static*/ Application* Application::GetCurrent()
+    {
+        return s_current;
     }
 
     void Application::Run(Window* window)

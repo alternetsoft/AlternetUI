@@ -117,8 +117,9 @@ namespace Alternet.UI
             if (!_layoutRequestPosted && !_isUpdating)
             {
                 // yezo
-                _updateCallback(this);
-                //MediaContext.From(Dispatcher).BeginInvokeOnRender(_updateCallback, this);
+                //_updateCallback(this); // yezo: delayed layout
+                // MediaContext.From(Dispatcher).BeginInvokeOnRender(_updateCallback, this);
+                Dispatcher.BeginInvoke(_updateCallback, DispatcherPriority.Render, this);
 
                 _layoutRequestPosted = true;
             }

@@ -1765,6 +1765,8 @@ namespace Alternet.UI.Threading
 
         private Dispatcher()
         {
+            Application.Current.Idle += Application_Idle;
+
             _queue = new PriorityQueue<DispatcherOperation>();
 
             _tlsDispatcher = this; // use TLS for ownership only
@@ -1792,6 +1794,11 @@ namespace Alternet.UI.Threading
 
             // Verify that the accessibility switches are set prior to any major UI code running.
             AccessibilitySwitches.VerifySwitches(this);
+        }
+
+        private void Application_Idle(object sender, EventArgs e)
+        {
+            ProcessQueue();
         }
 
         // creates a "sentinel" dispatcher.  It doesn't do anything, and should never
@@ -2394,7 +2401,7 @@ namespace Alternet.UI.Threading
 
         internal bool CriticalRequestProcessing(bool force)
         {
-            return false; /* yezo
+            return true; /* yezo
             bool succeeded = true;
 
             // This method is called from within the instance lock.  So we

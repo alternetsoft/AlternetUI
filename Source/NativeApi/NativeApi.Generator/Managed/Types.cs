@@ -18,7 +18,7 @@ namespace ApiGenerator.Managed
             { typeof(uint), "uint" },
             { typeof(long), "long" },
             { typeof(ulong), "ulong" },
-            { typeof(double), "double" },
+            { typeof(float), "float" },
             { typeof(double), "double" },
             { typeof(decimal), "decimal" },
             { typeof(object), "object" },

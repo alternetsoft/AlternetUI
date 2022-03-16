@@ -223,17 +223,33 @@ namespace Alternet::UI
                 s_parkingWindow = new wxFrame();
                 s_parkingWindow->Create(0, wxID_ANY, _T("AlterNET UI Parking Window"));
                 s_parkingWindow->Bind(wxEVT_CLOSE_WINDOW, &ParkingWindow::OnClose);
+                s_parkingWindow->Bind(wxEVT_IDLE, &ParkingWindow::OnIdle);
             }
 
             return s_parkingWindow;
         }
 
+        inline static void SetIdleCallback(std::function<void()> idleCallback)
+        {
+            _idleCallback = idleCallback;
+        }
+
     private:
         inline static wxFrame* s_parkingWindow = nullptr;
+
+        inline static std::function<void()> _idleCallback;
 
         static void OnClose(wxCloseEvent& event)
         {
             event.Veto();
+        }
+
+        static void OnIdle(wxIdleEvent& event)
+        {
+            event.Skip();
+            
+            if (_idleCallback)
+                _idleCallback();
         }
     };
 

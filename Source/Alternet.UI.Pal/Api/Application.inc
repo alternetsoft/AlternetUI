@@ -2,6 +2,17 @@
 public:
 void Run(Window* window);
 public:
+enum class ApplicationEvent
+{
+    Idle,
+};
+typedef void* (*ApplicationEventCallbackType)(Application* obj, ApplicationEvent event, void* param);
+static void SetEventCallback(ApplicationEventCallbackType value) { eventCallback = value; }
+protected:
+bool RaiseEvent(ApplicationEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+private:
+inline static ApplicationEventCallbackType eventCallback = nullptr;
+public:
 Application();
 protected:
 virtual ~Application();

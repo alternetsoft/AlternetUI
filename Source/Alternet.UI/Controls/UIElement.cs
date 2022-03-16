@@ -248,6 +248,8 @@ namespace Alternet.UI
                     return;
 
                 visible = value;
+                if (visible)
+                    InvalidateArrange();
                 OnVisibleChanged(EventArgs.Empty);
                 VisibleChanged?.Invoke(this, EventArgs.Empty);
             }
@@ -632,14 +634,14 @@ namespace Alternet.UI
         /// </summary>
         public void InvalidateArrange()
         {
-            if (!ArrangeDirty
-               && !ArrangeInProgress)
+            if (!ArrangeDirty &&
+               !ArrangeInProgress)
             {
                 Debug.Assert(ArrangeRequest == null, "can't be clean and still have MeasureRequest");
 
                 //                 VerifyAccess();
 
-                if (!NeverArranged)
+                //if (!NeverArranged) // yezo
                 {
                     ContextLayoutManager ContextLayoutManager = ContextLayoutManager.From(Dispatcher);
                     ContextLayoutManager.ArrangeQueue.Add(this);
@@ -1281,7 +1283,8 @@ namespace Alternet.UI
         /// </summary>
         internal DpiScale GetDpi()
         {
-            throw new NotImplementedException();
+            return new DpiScale(1, 1); // yezo
+
             //DpiScale dpi;
             //lock (UIElement.DpiLock)
             //{

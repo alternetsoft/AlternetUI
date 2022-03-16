@@ -2,7 +2,11 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="HelloWorldSample.MainWindow"
         Title="My First Application">
-  <StackPanel>
+	<!--Title="My First Application" Width="1000" Height="200">-->
+
+	<Button Name="helloButton" Text="Say Hello" Margin="20" Click="HelloButton_Click" />
+
+	<!--<StackPanel>
     <Button Name="helloButton" Text="Say Hello" Margin="20" Click="HelloButton_Click" />
-  </StackPanel>
+  </StackPanel>-->
 </Window>

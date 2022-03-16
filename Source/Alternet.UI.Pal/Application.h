@@ -28,9 +28,14 @@ namespace Alternet::UI
 #include "Api/Application.inc"
     public:
 
+        void RaiseIdle();
+
+        static Application* GetCurrent();
     private:
 
         App* _app;
+
+        inline static Application* s_current = nullptr;
 
 #ifdef __WXMSW__
         ULONG_PTR windowsVisualThemeSupportCookie = NULL;

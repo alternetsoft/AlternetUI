@@ -12,6 +12,7 @@ namespace Alternet.UI.Native
         public Application()
         {
             SetNativePointer(NativeApi.Application_Create_());
+            SetEventCallback();
         }
         
         public Application(IntPtr nativePointer) : base(nativePointer)
@@ -24,11 +25,51 @@ namespace Alternet.UI.Native
             NativeApi.Application_Run_(NativePointer, window.NativePointer);
         }
         
+        static GCHandle eventCallbackGCHandle;
+        
+        static void SetEventCallback()
+        {
+            if (!eventCallbackGCHandle.IsAllocated)
+            {
+                var sink = new NativeApi.ApplicationEventCallbackType((obj, e, parameter) =>
+                {
+                    var w = NativeObject.GetFromNativePointer<Application>(obj, p => new Application(p));
+                    if (w == null) return IntPtr.Zero;
+                    return w.OnEvent(e, parameter);
+                }
+                );
+                eventCallbackGCHandle = GCHandle.Alloc(sink);
+                NativeApi.Application_SetEventCallback_(sink);
+            }
+        }
+        
+        IntPtr OnEvent(NativeApi.ApplicationEvent e, IntPtr parameter)
+        {
+            switch (e)
+            {
+                case NativeApi.ApplicationEvent.Idle:
+                Idle?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                default: throw new Exception("Unexpected ApplicationEvent value: " + e);
+            }
+        }
+        
+        public event EventHandler? Idle;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate IntPtr ApplicationEventCallbackType(IntPtr obj, ApplicationEvent e, IntPtr param);
+            
+            public enum ApplicationEvent
+            {
+                Idle,
+            }
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetEventCallback_(ApplicationEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Application_Create_();

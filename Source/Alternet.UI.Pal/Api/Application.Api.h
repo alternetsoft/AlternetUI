@@ -18,3 +18,8 @@ ALTERNET_UI_API void Application_Run_(Application* obj, Window* window)
     obj->Run(window);
 }
 
+ALTERNET_UI_API void Application_SetEventCallback_(Application::ApplicationEventCallbackType callback)
+{
+    Application::SetEventCallback(callback);
+}
+

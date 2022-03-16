@@ -9,5 +9,7 @@ namespace NativeApi.Api
         public Application() => throw new Exception();
 
         public void Run(Window window) => throw new Exception();
+
+        public event EventHandler Idle;
     }
 }
