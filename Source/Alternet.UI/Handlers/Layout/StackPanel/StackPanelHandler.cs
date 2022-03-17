@@ -17,12 +17,12 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            Control.OrientationChanged += Control_OrientationChanged;
+            //Control.OrientationChanged += Control_OrientationChanged;
         }
 
         protected override void OnDetach()
         {
-            Control.OrientationChanged -= Control_OrientationChanged;
+            //Control.OrientationChanged -= Control_OrientationChanged;
 
             base.OnDetach();
         }

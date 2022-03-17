@@ -29,6 +29,11 @@ namespace Alternet.UI
 
         internal override bool IsLayoutSuspended => Handler.IsLayoutSuspended;
 
+        protected override Size MeasureOverride(Size availableSize)
+        {
+            return GetPreferredSize(availableSize);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
         /// </summary>
@@ -294,6 +299,20 @@ namespace Alternet.UI
             {
                 var bounds = Handler.Bounds;
                 Handler.Bounds = new Rect(value.X, value.Y, bounds.Width, bounds.Height);
+            }
+        }
+
+        public override Size RenderSize
+        {
+            get
+            {
+                return Handler.Bounds.Size;
+            }
+
+            set
+            {
+                var bounds = Handler.Bounds;
+                Handler.Bounds = new Rect(bounds.X, bounds.Y, value.Width, value.Height);
             }
         }
 

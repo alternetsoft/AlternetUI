@@ -4,9 +4,8 @@
         Title="My First Application">
 	<!--Title="My First Application" Width="1000" Height="200">-->
 
-	<Button Name="helloButton" Text="Say Hello" Margin="20" Click="HelloButton_Click" />
-
-	<!--<StackPanel>
-    <Button Name="helloButton" Text="Say Hello" Margin="20" Click="HelloButton_Click" />
-  </StackPanel>-->
+  <StackPanel Orientation="Vertical">
+	  <Button Name="helloButton" Text="Say Hello" Margin="20" Click="HelloButton_Click" />
+	  <Button Text="Button 1" />
+  </StackPanel>
 </Window>

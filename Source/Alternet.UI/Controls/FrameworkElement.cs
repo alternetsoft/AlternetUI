@@ -55,10 +55,7 @@ namespace Alternet.UI
         /// measure to content). This is soft constraint. Child can return bigger size to indicate that it wants bigger space and hope
         /// that parent can throw in scrolling...</param>
         /// <returns>Desired Size of the control, given available size passed as parameter.</returns>
-        protected virtual Size MeasureOverride(Size availableSize)
-        {
-            return new Size(0, 0);
-        }
+        protected abstract Size MeasureOverride(Size availableSize);
 
         /// <summary>
         /// ArrangeOverride allows for the customization of the positioning of children.

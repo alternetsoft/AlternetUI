@@ -18,7 +18,6 @@ namespace Alternet.UI
         private const uint TreeLevelLimit = 0x7FF;
         private Size _previousAvailableSize;
         private Rect _finalRect;
-        private Size _size;
 
         private uint treeLevel;
 
@@ -171,21 +170,7 @@ namespace Alternet.UI
         /// This size is typcally used to find out where ink of the element will go.
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Size RenderSize
-        {
-            get
-            {
-                if (!Visible)
-                    return new Size();
-                else
-                    return _size;
-            }
-            set
-            {
-                _size = value;
-                //InvalidateHitTestBounds();
-            }
-        }
+        public abstract Size RenderSize { get; set; }
 
         /// <summary>
         /// Returns the size the element computed during the Measure pass.

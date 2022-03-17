@@ -27,6 +27,79 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        ///     ArrangeOverride allows for the customization of the positioning of children.
+        /// </summary>
+        /// <remarks>
+        ///     Deducts the frame size of the window from the constraint and then
+        ///     arranges its child.  Supports only one child.
+        /// </remarks>
+        protected override Size ArrangeOverride(Size arrangeBounds)
+        {
+            //VerifyContextAndObjectState();
+
+            // Window content should respect Window's Max/Min size
+            // setting in a SizeToContent Window.
+
+            //WindowMinMax mm = GetWindowMinMax();
+
+            //arrangeBounds.Width = Math.Max(mm.minWidth, Math.Min(arrangeBounds.Width, mm.maxWidth));
+            //arrangeBounds.Height = Math.Max(mm.minHeight, Math.Min(arrangeBounds.Height, mm.maxHeight));
+
+            // Three primary cases
+            //      1) hwnd does not exist  -- don't do anything
+            //      1a) CompositionTarget is invalid -- don't do anything
+            //      2) Child visual exists  -- arrange child at arrangeBounds - window frame size
+            //      3) No Child visual      -- don't do anything
+
+            // Adding check for IsCompositionTargetInvalid
+            //if (IsSourceWindowNull || IsCompositionTargetInvalid)
+            //{
+            //    return arrangeBounds;
+            //}
+
+            if (Children.Count > 0)
+            {
+                UIElement child = Children[0];
+                if (child != null)
+                {
+                    //// Find out the size of the window frame x.
+                    //// (constraint - x) is the size we pass onto
+                    //// our child
+                    //Size frameSize = GetHwndNonClientAreaSizeInMeasureUnits();
+
+                    //// In some instances (constraint size - frame size) can be negative. One instance
+                    //// is when window is set to minimized before layout has happened.  Apparently, Win32
+                    //// gives a rect(-32000, -32000, -31840, -31975) for GetWindowRect when hwnd is
+                    //// minimized.  However, when we calculate the frame size we get width = 8 and
+                    //// height = 28!!!  Here, we will take the max of zero and the difference b/w the
+                    //// hwnd size and the frame size
+                    ////
+                    //// PS Windows OS Bug: 955861
+
+                    //Size childArrangeBounds = new Size();
+                    //childArrangeBounds.Width = Math.Max(0.0, arrangeBounds.Width - frameSize.Width);
+                    //childArrangeBounds.Height = Math.Max(0.0, arrangeBounds.Height - frameSize.Height);
+
+                    //child.Arrange(new Rect(childArrangeBounds));
+                    child.Arrange(Handler.ChildrenLayoutBounds);
+
+                    //// Windows OS bug # 928719, 953458
+                    //// The default impl of FlowDirection is that it adds a transform on the element
+                    //// on whom the FlowDirection property is RlTb.  However, transforms work only if
+                    //// there is a parent visual.  In the window case, we are the root and thus this
+                    //// does not work.  Thus, we add the same transform to our child, if our
+                    //// FlowDireciton = Rltb.
+                    //if (FlowDirection == FlowDirection.RightToLeft)
+                    //{
+                    //    InternalSetLayoutTransform(child, new MatrixTransform(-1.0, 0.0, 0.0, 1.0, childArrangeBounds.Width, 0.0));
+                    //}
+                }
+            }
+            return arrangeBounds;
+        }
+
+
+        /// <summary>
         /// Occurs when the value of the <see cref="Title"/> property changes.
         /// </summary>
         public event EventHandler? TitleChanged;
