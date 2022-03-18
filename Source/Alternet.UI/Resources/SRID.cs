@@ -1415,6 +1415,34 @@ namespace Alternet.UI
         internal const string @UIElement_Layout_NaNReturned = "UIElement_Layout_NaNReturned";
         /// <summary>Width and Height cannot be negative.</summary>
         internal const string @Rect_WidthAndHeightCannotBeNegative = "Rect_WidthAndHeightCannotBeNegative";
+        /// <summary>'{0}' destination is multidimensional. Expected array of rank 1.</summary>
+        internal const string @GridCollection_DestArrayInvalidRank = "GridCollection_DestArrayInvalidRank";
+        /// <summary>'{0}' is less than the array's lower bound.</summary>
+        internal const string @GridCollection_DestArrayInvalidLowerBound = "GridCollection_DestArrayInvalidLowerBound";
+        /// <summary>'{0}' destination not long enough.</summary>
+        internal const string @GridCollection_DestArrayInvalidLength = "GridCollection_DestArrayInvalidLength";
+        /// <summary>Index is out of collection's boundary.</summary>
+        internal const string @TableCollectionOutOfRange = "TableCollectionOutOfRange";
+        /// <summary>Count must be zero or positive.</summary>
+        internal const string @TableCollectionCountNeedNonNegNum = "TableCollectionCountNeedNonNegNum";
+        /// <summary>Requested range is out of collection's boundary.</summary>
+        internal const string @TableCollectionRangeOutOfRange = "TableCollectionRangeOutOfRange";
+        /// <summary>Cannot modify '{0}' in read-only state.</summary>
+        internal const string @GridCollection_CannotModifyReadOnly = "GridCollection_CannotModifyReadOnly";
+        /// <summary>'{0}' must be type '{1}'.</summary>
+        internal const string @GridCollection_MustBeCertainType = "GridCollection_MustBeCertainType";
+        /// <summary>'{0}' already belongs to another '{1}'.</summary>
+        internal const string @GridCollection_InOtherCollection = "GridCollection_InOtherCollection";
+        /// <summary>Collection was disposed, enumerator operations are not valid.</summary>
+        internal const string @EnumeratorCollectionDisposed = "EnumeratorCollectionDisposed";
+        /// <summary>'{0}' parameter cannot be NaN.</summary>
+        internal const string @InvalidCtorParameterNoNaN = "InvalidCtorParameterNoNaN";
+        /// <summary>'{0}' parameter cannot be Infinity.</summary>
+        internal const string @InvalidCtorParameterNoInfinity = "InvalidCtorParameterNoInfinity";
+        /// <summary>'{0}' parameter is not valid. Valid values are GridUnitType.Auto, GridUnitType.Pixel, or GridUnitType.Star.</summary>
+        internal const string @InvalidCtorParameterUnknownGridUnitType = "InvalidCtorParameterUnknownGridUnitType";
+        /// <summary>'{0}' string cannot be converted to Length.</summary>
+        internal const string @LengthFormatError = "LengthFormatError";
 
     }
 }

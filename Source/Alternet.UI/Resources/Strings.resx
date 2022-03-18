@@ -2211,4 +2211,46 @@
   <data name="Rect_WidthAndHeightCannotBeNegative" xml:space="preserve">
     <value>Width and Height cannot be negative.</value>
   </data>
+  <data name="GridCollection_DestArrayInvalidRank" xml:space="preserve">
+    <value>'{0}' destination is multidimensional. Expected array of rank 1.</value>
+  </data>
+  <data name="GridCollection_DestArrayInvalidLowerBound" xml:space="preserve">
+    <value>'{0}' is less than the array's lower bound.</value>
+  </data>
+  <data name="GridCollection_DestArrayInvalidLength" xml:space="preserve">
+    <value>'{0}' destination not long enough.</value>
+  </data>
+  <data name="TableCollectionOutOfRange" xml:space="preserve">
+    <value>Index is out of collection's boundary.</value>
+  </data>
+  <data name="TableCollectionCountNeedNonNegNum" xml:space="preserve">
+    <value>Count must be zero or positive.</value>
+  </data>
+  <data name="TableCollectionRangeOutOfRange" xml:space="preserve">
+    <value>Requested range is out of collection's boundary.</value>
+  </data>
+  <data name="GridCollection_CannotModifyReadOnly" xml:space="preserve">
+    <value>Cannot modify '{0}' in read-only state.</value>
+  </data>
+  <data name="GridCollection_MustBeCertainType" xml:space="preserve">
+    <value>'{0}' must be type '{1}'.</value>
+  </data>
+  <data name="GridCollection_InOtherCollection" xml:space="preserve">
+    <value>'{0}' already belongs to another '{1}'.</value>
+  </data>
+  <data name="EnumeratorCollectionDisposed" xml:space="preserve">
+    <value>Collection was disposed, enumerator operations are not valid.</value>
+  </data>
+  <data name="InvalidCtorParameterNoNaN" xml:space="preserve">
+    <value>'{0}' parameter cannot be NaN.</value>
+  </data>
+  <data name="InvalidCtorParameterNoInfinity" xml:space="preserve">
+    <value>'{0}' parameter cannot be Infinity.</value>
+  </data>
+  <data name="InvalidCtorParameterUnknownGridUnitType" xml:space="preserve">
+    <value>'{0}' parameter is not valid. Valid values are GridUnitType.Auto, GridUnitType.Pixel, or GridUnitType.Star.</value>
+  </data>
+  <data name="LengthFormatError" xml:space="preserve">
+    <value>'{0}' string cannot be converted to Length.</value>
+  </data>
 </root>
