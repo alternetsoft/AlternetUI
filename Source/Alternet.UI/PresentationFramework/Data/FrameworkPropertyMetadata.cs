@@ -175,7 +175,7 @@ namespace Alternet.UI
         /// <param name="propertyChangedCallback">Called when the property has been changed</param>
         /// <param name="coerceValueCallback">Called on update of value</param>
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
-        public FrameworkPropertyMetadata(object defaultValue,
+        public FrameworkPropertyMetadata(object? defaultValue,
                                          FrameworkPropertyMetadataOptions flags,
                                          PropertyChangedCallback propertyChangedCallback,
                                          CoerceValueCallback coerceValueCallback) :

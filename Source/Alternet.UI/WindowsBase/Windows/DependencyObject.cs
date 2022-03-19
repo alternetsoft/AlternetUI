@@ -419,7 +419,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="dp">Dependency property</param>
         /// <param name="value">New local value</param>
-        public void SetValue(DependencyProperty dp, object value)
+        public void SetValue(DependencyProperty dp, object? value)
         {
             // Do not allow foreign threads access.
             // (This is a noop if this object is not assigned to a Dispatcher.)

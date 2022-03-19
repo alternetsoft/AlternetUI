@@ -9,7 +9,7 @@
 		<Button Text="Button 1" />
 	</StackPanel>-->
 
-	<Grid>
+	<!--<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="150"/>
@@ -38,5 +38,15 @@
 		<Border Grid.RowSpan="2" Grid.Column="2">
 			<Label Text="Row Span" />
 		</Border>
-	</Grid>
+	</Grid>-->
+
+	<TabControl Name="tabControl">
+		<TabPage Title="Hello 1">
+			<Button Text="Button 1" />
+		</TabPage>
+		<!--<TabPage Title="Hello 2">
+			<Button Text="Button 2" />
+		</TabPage>-->
+	</TabControl>
+
 </Window>

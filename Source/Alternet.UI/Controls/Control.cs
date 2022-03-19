@@ -34,6 +34,12 @@ namespace Alternet.UI
             return GetPreferredSize(availableSize);
         }
 
+        protected override Size ArrangeOverride(Size arrangeBounds)
+        {
+            Children.FirstOrDefault()?.Arrange(Handler.ChildrenLayoutBounds);
+            return arrangeBounds;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
         /// </summary>
