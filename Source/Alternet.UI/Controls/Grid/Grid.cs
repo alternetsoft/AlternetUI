@@ -1,20 +1,5 @@
 #nullable disable
 
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-//
-// Description: Grid implementation.
-//
-// Specs
-//      Grid : Grid.mht
-//      Size Sharing: Size Information Sharing.doc
-//
-// Misc
-//      Grid Tutorial: Grid Tutorial.mht
-//
-
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 using System;
@@ -24,224 +9,206 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace Alternet.UI
 {
     /// <summary>
-    /// Grid
+    /// Defines a flexible grid area that consists of columns and rows.
     /// </summary>
-    public class Grid : Control //Panel, IAddChild
+    public class Grid : Control
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
-
-        #region Constructors
-
-        static Grid()
-        {
-            //ControlsTraceLogger.AddControl(TelemetryControls.Grid);
-        }
-
         /// <summary>
-        /// Default constructor.
+        /// Initializes a new instance of <see cref="Grid"/>.
         /// </summary>
         public Grid()
         {
-            SetFlags((bool) ShowGridLinesProperty.GetDefaultValue(DependencyObjectType), Flags.ShowGridLinesPropertyValue);
+            SetFlags(ShowGridLinesDefaultValue, Flags.ShowGridLinesPropertyValue);
+            // UserPaint = true;
         }
 
-        #endregion Constructors
+        const bool ShowGridLinesDefaultValue = false;
 
-        //------------------------------------------------------
-        //
-        //  Public Methods
-        //
-        //------------------------------------------------------
-
-        #region Public Methods
-
+        static Dictionary<Control, int> controlColumns = new Dictionary<Control, int>();
+        static Dictionary<Control, int> controlRows = new Dictionary<Control, int>();
+        static Dictionary<Control, int> controlColumnSpans = new Dictionary<Control, int>();
+        static Dictionary<Control, int> controlRowSpans = new Dictionary<Control, int>();
+        static Dictionary<Control, bool> controlIsSharedSizeScopes = new Dictionary<Control, bool>();
 
         /// <summary>
-        /// Helper for setting Column property on a UIElement.
+        /// Sets a value that indicates which column child control within a <see cref="Grid"/> should appear in.
         /// </summary>
-        /// <param name="element">UIElement to set Column property on.</param>
-        /// <param name="value">Column property value.</param>
-        public static void SetColumn(UIElement element, int value)
+        /// <param name="control">The control on which to set the column index.</param>
+        /// <param name="value">The 0-based column index to set.</param>
+        public static void SetColumn(Control control, int value)
         {
-            if (element == null)
+            if (control == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(control));
             }
 
-            element.SetValue(ColumnProperty, value);
+            if (!IsIntValueNotNegative(value))
+                throw new ArgumentOutOfRangeException(nameof(value));
+
+            controlColumns[control] = value;
+            OnCellAttachedPropertyChanged(control);
         }
 
         /// <summary>
-        /// Helper for reading Column property from a UIElement.
+        /// Gets a value that indicates which column child control within a <see cref="Grid"/> should appear in.
         /// </summary>
-        /// <param name="element">UIElement to read Column property from.</param>
-        /// <returns>Column property value.</returns>
-        [AttachedPropertyBrowsableForChildren()]
-        public static int GetColumn(UIElement element)
+        /// <param name="control">The control for which to get the column index.</param>
+        /// <remarks>The 0-based column index.</remarks>
+        public static int GetColumn(Control control)
         {
-            if (element == null)
+            if (control is null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(control));
             }
 
-            return ((int)element.GetValue(ColumnProperty));
+            return controlColumns.TryGetValue(control, out var value) ? value : 0;
         }
 
         /// <summary>
-        /// Helper for setting Row property on a UIElement.
+        /// Sets a value that indicates which row child control within a <see cref="Grid"/> should appear in.
         /// </summary>
-        /// <param name="element">UIElement to set Row property on.</param>
-        /// <param name="value">Row property value.</param>
-        public static void SetRow(UIElement element, int value)
+        /// <param name="control">The control on which to set the row index.</param>
+        /// <param name="value">The 0-based row index to set.</param>
+        public static void SetRow(Control control, int value)
         {
-            if (element == null)
+            if (control == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(control));
             }
 
-            element.SetValue(RowProperty, value);
+            if (!IsIntValueNotNegative(value))
+                throw new ArgumentOutOfRangeException(nameof(value));
+
+            controlRows[control] = value;
+            OnCellAttachedPropertyChanged(control);
         }
 
         /// <summary>
-        /// Helper for reading Row property from a UIElement.
+        /// Gets a value that indicates which row child control within a <see cref="Grid"/> should appear in.
         /// </summary>
-        /// <param name="element">UIElement to read Row property from.</param>
-        /// <returns>Row property value.</returns>
-        [AttachedPropertyBrowsableForChildren()]
-        public static int GetRow(UIElement element)
+        /// <param name="control">The control for which to get the row index.</param>
+        /// <remarks>The 0-based row index.</remarks>
+        public static int GetRow(Control control)
         {
-            if (element == null)
+            if (control is null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(control));
             }
 
-            return ((int)element.GetValue(RowProperty));
+            return controlRows.TryGetValue(control, out var value) ? value : 0;
         }
 
         /// <summary>
-        /// Helper for setting ColumnSpan property on a UIElement.
+        /// Gets a value that indicates the total number of rows that child content spans within a <see cref="Grid"/>.
         /// </summary>
-        /// <param name="element">UIElement to set ColumnSpan property on.</param>
-        /// <param name="value">ColumnSpan property value.</param>
-        public static void SetColumnSpan(UIElement element, int value)
+        /// <param name="control">The control for which to get the row span.</param>
+        /// <returns>The total number of rows that child content spans within a <see cref="Grid"/>.</returns>
+        public static int GetRowSpan(Control control)
         {
-            if (element == null)
+            if (control is null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(control));
             }
 
-            element.SetValue(ColumnSpanProperty, value);
+            return controlRowSpans.TryGetValue(control, out var value) ? value : 1;
         }
 
         /// <summary>
-        /// Helper for reading ColumnSpan property from a UIElement.
+        /// Sets a value that indicates the total number of rows that child content spans within a <see cref="Grid"/>.
         /// </summary>
-        /// <param name="element">UIElement to read ColumnSpan property from.</param>
-        /// <returns>ColumnSpan property value.</returns>
-        [AttachedPropertyBrowsableForChildren()]
-        public static int GetColumnSpan(UIElement element)
+        /// <param name="control">The control for which to set the row span.</param>
+        /// <param name="value">The total number of rows that child content spans within a <see cref="Grid"/>.</param>
+        public static void SetRowSpan(Control control, int value)
         {
-            if (element == null)
+            if (control == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(control));
             }
 
-            return ((int)element.GetValue(ColumnSpanProperty));
+            if (!IsIntValueGreaterThanZero(value))
+                throw new ArgumentOutOfRangeException(nameof(value));
+
+            controlRowSpans[control] = value;
+            OnCellAttachedPropertyChanged(control);
         }
 
         /// <summary>
-        /// Helper for setting RowSpan property on a UIElement.
+        /// Gets a value that indicates the total number of columns that child content spans within a <see cref="Grid"/>.
         /// </summary>
-        /// <param name="element">UIElement to set RowSpan property on.</param>
-        /// <param name="value">RowSpan property value.</param>
-        public static void SetRowSpan(UIElement element, int value)
+        /// <param name="control">The control for which to get the column span.</param>
+        /// <returns>The total number of columns that child content spans within a <see cref="Grid"/>.</returns>
+        public static int GetColumnSpan(Control control)
         {
-            if (element == null)
+            if (control is null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(control));
             }
 
-            element.SetValue(RowSpanProperty, value);
+            return controlColumnSpans.TryGetValue(control, out var value) ? value : 1;
         }
 
         /// <summary>
-        /// Helper for reading RowSpan property from a UIElement.
+        /// Sets a value that indicates the total number of columns that child content spans within a <see cref="Grid"/>.
         /// </summary>
-        /// <param name="element">UIElement to read RowSpan property from.</param>
-        /// <returns>RowSpan property value.</returns>
-        [AttachedPropertyBrowsableForChildren()]
-        public static int GetRowSpan(UIElement element)
+        /// <param name="control">The control for which to set the column span.</param>
+        /// <param name="value">The total number of columns that child content spans within a <see cref="Grid"/>.</param>
+        public static void SetColumnSpan(Control control, int value)
         {
-            if (element == null)
+            if (control == null)
             {
-                throw new ArgumentNullException("element");
+                throw new ArgumentNullException(nameof(control));
             }
 
-            return ((int)element.GetValue(RowSpanProperty));
+            if (!IsIntValueGreaterThanZero(value))
+                throw new ArgumentOutOfRangeException(nameof(value));
+
+            controlColumnSpans[control] = value;
+            OnCellAttachedPropertyChanged(control);
         }
 
-        /// <summary>
-        /// Helper for setting IsSharedSizeScope property on a UIElement.
-        /// </summary>
-        /// <param name="element">UIElement to set IsSharedSizeScope property on.</param>
-        /// <param name="value">IsSharedSizeScope property value.</param>
-        public static void SetIsSharedSizeScope(UIElement element, bool value)
-        {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+        //public static bool GetIsSharedSizeScope(Control control)
+        //{
+        //    if (control is null)
+        //    {
+        //        throw new ArgumentNullException(nameof(control));
+        //    }
 
-            element.SetValue(IsSharedSizeScopeProperty, value);
-        }
+        //    return controlIsSharedSizeScopes.TryGetValue(control, out var value) ? value : false;
+        //}
 
-        /// <summary>
-        /// Helper for reading IsSharedSizeScope property from a UIElement.
-        /// </summary>
-        /// <param name="element">UIElement to read IsSharedSizeScope property from.</param>
-        /// <returns>IsSharedSizeScope property value.</returns>
-        public static bool GetIsSharedSizeScope(UIElement element)
-        {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+        //public static void SetIsSharedSizeScope(Control control, bool value)
+        //{
+        //    if (control == null)
+        //    {
+        //        throw new ArgumentNullException(nameof(control));
+        //    }
 
-            return ((bool)element.GetValue(IsSharedSizeScopeProperty));
-        }
+        //    controlIsSharedSizeScopes[control] = value;
+        //    DefinitionBase.OnIsSharedSizeScopePropertyChanged(control, value);
+        //}
 
-        #endregion Public Methods
+        //bool showGridLines = false;
 
-        //------------------------------------------------------
-        //
-        //  Public Properties
-        //
-        //------------------------------------------------------
-
-        #region Public Properties
+        //public bool ShowGridLines
+        //{
+        //    get { return (CheckFlagsAnd(Flags.ShowGridLinesPropertyValue)); }
+        //    set
+        //    {
+        //        showGridLines = value;
+        //        OnShowGridLinesPropertyChanged(this, value);
+        //    }
+        //}
 
         /// <summary>
-        /// ShowGridLines property.
+        /// Gets a <see cref="ColumnDefinitionCollection"/> defined on this instance of <see cref="Grid"/>.
         /// </summary>
-        public bool ShowGridLines
-        {
-            get { return (CheckFlagsAnd(Flags.ShowGridLinesPropertyValue)); }
-            set { SetValue(ShowGridLinesProperty, value); }
-        }
-
-        /// <summary>
-        /// Returns a ColumnDefinitionCollection of column definitions.
-        /// </summary>
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        /// <remarks>
+        /// This collection contains one or more <see cref="ColumnDefinition"/> objects.
+        /// Each such <see cref="ColumnDefinition"/> becomes a placeholder representing a column in the final grid layout.
+        /// </remarks>
         public ColumnDefinitionCollection ColumnDefinitions
         {
             get
@@ -254,9 +221,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns a RowDefinitionCollection of row definitions.
+        /// Gets a <see cref="RowDefinitionCollection"/> defined on this instance of <see cref="Grid"/>.
         /// </summary>
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        /// <remarks>
+        /// This collection contains one or more <see cref="RowDefinition"/> objects.
+        /// Each such <see cref="RowDefinition"/> becomes a placeholder representing a column in the final grid layout.
+        /// </remarks>
         public RowDefinitionCollection RowDefinitions
         {
             get
@@ -268,22 +238,16 @@ namespace Alternet.UI
             }
         }
 
-        #endregion Public Properties
+        /// <inheritdoc/>
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e); // todo: draw grid lines.
+        }
 
-        //------------------------------------------------------
-        //
-        //  Protected Methods
-        //
-        //------------------------------------------------------
+        private bool UseLayoutRounding { get; set; }
 
-        #region Protected Methods
-
-        /// <summary>
-        /// Content measurement.
-        /// </summary>
-        /// <param name="constraint">Constraint</param>
-        /// <returns>Desired size</returns>
-        protected override Size MeasureOverride(Size constraint)
+        /// <inheritdoc/>
+        public override Size GetPreferredSize(Size availableSize)
         {
             Size gridDesiredSize;
             ExtendedData extData = ExtData;
@@ -302,20 +266,21 @@ namespace Alternet.UI
 
                     for (int i = 0, count = children.Count; i < count; ++i)
                     {
-                        UIElement child = children[i];
+                        Control child = children[i];
                         if (child != null)
                         {
-                            child.Measure(constraint);
-                            gridDesiredSize.Width = Math.Max(gridDesiredSize.Width, child.DesiredSize.Width);
-                            gridDesiredSize.Height = Math.Max(gridDesiredSize.Height, child.DesiredSize.Height);
+                            var s = child.GetPreferredSize(availableSize);
+                            var childDesiredSize = new Size(s.Width + child.Margin.Horizontal, s.Height + child.Margin.Vertical);
+                            gridDesiredSize.Width = Math.Max(gridDesiredSize.Width, childDesiredSize.Width);
+                            gridDesiredSize.Height = Math.Max(gridDesiredSize.Height, childDesiredSize.Height);
                         }
                     }
                 }
                 else
                 {
                     {
-                        bool sizeToContentU = double.IsPositiveInfinity(constraint.Width);
-                        bool sizeToContentV = double.IsPositiveInfinity(constraint.Height);
+                        bool sizeToContentU = double.IsPositiveInfinity(availableSize.Width);
+                        bool sizeToContentV = double.IsPositiveInfinity(availableSize.Height);
 
                         // Clear index information and rounding errors
                         if (RowDefinitionCollectionDirty || ColumnDefinitionCollectionDirty)
@@ -502,7 +467,7 @@ namespace Alternet.UI
                     //      appears in Auto column.
                     //
 
-                    MeasureCellsGroup(extData.CellGroup1, constraint, false, false);
+                    MeasureCellsGroup(extData.CellGroup1, availableSize, false, false);
 
                     {
                         //  after Group1 is measured,  only Group3 may have cells belonging to Auto rows.
@@ -510,10 +475,10 @@ namespace Alternet.UI
 
                         if (canResolveStarsV)
                         {
-                            if (HasStarCellsV) { ResolveStar(DefinitionsV, constraint.Height); }
-                            MeasureCellsGroup(extData.CellGroup2, constraint, false, false);
-                            if (HasStarCellsU) { ResolveStar(DefinitionsU, constraint.Width); }
-                            MeasureCellsGroup(extData.CellGroup3, constraint, false, false);
+                            if (HasStarCellsV) { ResolveStar(DefinitionsV, availableSize.Height); }
+                            MeasureCellsGroup(extData.CellGroup2, availableSize, false, false);
+                            if (HasStarCellsU) { ResolveStar(DefinitionsU, availableSize.Width); }
+                            MeasureCellsGroup(extData.CellGroup3, availableSize, false, false);
                         }
                         else
                         {
@@ -522,9 +487,9 @@ namespace Alternet.UI
                             bool canResolveStarsU = extData.CellGroup2 > PrivateCells.Length;
                             if (canResolveStarsU)
                             {
-                                if (HasStarCellsU) { ResolveStar(DefinitionsU, constraint.Width); }
-                                MeasureCellsGroup(extData.CellGroup3, constraint, false, false);
-                                if (HasStarCellsV) { ResolveStar(DefinitionsV, constraint.Height); }
+                                if (HasStarCellsU) { ResolveStar(DefinitionsU, availableSize.Width); }
+                                MeasureCellsGroup(extData.CellGroup3, availableSize, false, false);
+                                if (HasStarCellsV) { ResolveStar(DefinitionsV, availableSize.Height); }
                             }
                             else
                             {
@@ -534,13 +499,13 @@ namespace Alternet.UI
                                 // also use a count heuristic to break a loop in case of one.
 
                                 bool hasDesiredSizeUChanged = false;
-                                int cnt=0;
+                                int cnt = 0;
 
                                 // Cache Group2MinWidths & Group3MinHeights
                                 double[] group2MinSizes = CacheMinSizes(extData.CellGroup2, false);
                                 double[] group3MinSizes = CacheMinSizes(extData.CellGroup3, true);
 
-                                MeasureCellsGroup(extData.CellGroup2, constraint, false, true);
+                                MeasureCellsGroup(extData.CellGroup2, availableSize, false, true);
 
                                 do
                                 {
@@ -550,21 +515,21 @@ namespace Alternet.UI
                                         ApplyCachedMinSizes(group3MinSizes, true);
                                     }
 
-                                    if (HasStarCellsU) { ResolveStar(DefinitionsU, constraint.Width); }
-                                    MeasureCellsGroup(extData.CellGroup3, constraint, false, false);
+                                    if (HasStarCellsU) { ResolveStar(DefinitionsU, availableSize.Width); }
+                                    MeasureCellsGroup(extData.CellGroup3, availableSize, false, false);
 
                                     // Reset cached Group2Widths
                                     ApplyCachedMinSizes(group2MinSizes, false);
 
-                                    if (HasStarCellsV) { ResolveStar(DefinitionsV, constraint.Height); }
-                                    MeasureCellsGroup(extData.CellGroup2, constraint, cnt == c_layoutLoopMaxCount, false, out hasDesiredSizeUChanged);
+                                    if (HasStarCellsV) { ResolveStar(DefinitionsV, availableSize.Height); }
+                                    MeasureCellsGroup(extData.CellGroup2, availableSize, cnt == c_layoutLoopMaxCount, false, out hasDesiredSizeUChanged);
                                 }
                                 while (hasDesiredSizeUChanged && ++cnt <= c_layoutLoopMaxCount);
                             }
                         }
                     }
 
-                    MeasureCellsGroup(extData.CellGroup4, constraint, false, false);
+                    MeasureCellsGroup(extData.CellGroup4, availableSize, false, false);
 
                     EnterCounter(Counters._CalculateDesiredSize);
                     gridDesiredSize = new Size(
@@ -580,90 +545,6 @@ namespace Alternet.UI
             }
 
             return (gridDesiredSize);
-        }
-
-        /// <summary>
-        /// Content arrangement.
-        /// </summary>
-        /// <param name="arrangeSize">Arrange size</param>
-        protected override Size ArrangeOverride(Size arrangeSize)
-        {
-            try
-            {
-                EnterCounterScope(Counters.ArrangeOverride);
-
-                ArrangeOverrideInProgress = true;
-
-                if (_data == null)
-                {
-                    var children = Children;
-
-                    for (int i = 0, count = children.Count; i < count; ++i)
-                    {
-                        UIElement child = children[i];
-                        if (child != null)
-                        {
-                            child.Arrange(new Rect(new Point(), arrangeSize));
-                        }
-                    }
-                }
-                else
-                {
-                    Debug.Assert(DefinitionsU.Length > 0 && DefinitionsV.Length > 0);
-
-                    EnterCounter(Counters._SetFinalSize);
-
-                    SetFinalSize(DefinitionsU, arrangeSize.Width, true);
-                    SetFinalSize(DefinitionsV, arrangeSize.Height, false);
-
-                    ExitCounter(Counters._SetFinalSize);
-
-                    var children = Children;
-
-                    for (int currentCell = 0; currentCell < PrivateCells.Length; ++currentCell)
-                    {
-                        UIElement cell = children[currentCell];
-                        if (cell == null)
-                        {
-                            continue;
-                        }
-
-                        int columnIndex = PrivateCells[currentCell].ColumnIndex;
-                        int rowIndex = PrivateCells[currentCell].RowIndex;
-                        int columnSpan = PrivateCells[currentCell].ColumnSpan;
-                        int rowSpan = PrivateCells[currentCell].RowSpan;
-
-                        Rect cellRect = new Rect(
-                            columnIndex == 0 ? 0.0 : DefinitionsU[columnIndex].FinalOffset,
-                            rowIndex == 0 ? 0.0 : DefinitionsV[rowIndex].FinalOffset,
-                            GetFinalSizeForRange(DefinitionsU, columnIndex, columnSpan),
-                            GetFinalSizeForRange(DefinitionsV, rowIndex, rowSpan)   );
-
-                        EnterCounter(Counters._ArrangeChildHelper2);
-                        cell.Arrange(cellRect);
-                        ExitCounter(Counters._ArrangeChildHelper2);
-                    }
-
-                    ////  update render bound on grid lines renderer visual
-                    //GridLinesRenderer gridLinesRenderer = EnsureGridLinesRenderer();
-                    //if (gridLinesRenderer != null)
-                    //{
-                    //    gridLinesRenderer.UpdateRenderBounds(arrangeSize);
-                    //}
-                }
-            }
-            finally
-            {
-                SetValid();
-                ArrangeOverrideInProgress = false;
-                ExitCounterScope(Counters.ArrangeOverride);
-            }
-            return (arrangeSize);
-        }
-
-        void OnChildrenChanged()
-        {
-            CellsStructureDirty = true;
         }
 
         class GridHandler : ControlHandler<Grid>
@@ -687,36 +568,113 @@ namespace Alternet.UI
             return new GridHandler();
         }
 
-        #endregion Protected Methods
-
-        //------------------------------------------------------
-        //
-        //  Internal Methods
-        //
-        //------------------------------------------------------
-
-        #region Internal Methods
-
-        /// <summary>
-        ///     Invalidates grid caches and makes the grid dirty for measure.
-        /// </summary>
-        internal void Invalidate()
+        /// <inheritdoc/>
+        protected override void OnLayout()
         {
-            CellsStructureDirty = true;
-            InvalidateMeasure();
+            GetPreferredSize(new Size(double.PositiveInfinity, double.PositiveInfinity)); // yezo
+
+            var arrangeSize = Handler.ChildrenLayoutBounds.Size;
+            try
+            {
+                EnterCounterScope(Counters.ArrangeOverride);
+
+                ArrangeOverrideInProgress = true;
+
+                if (_data == null)
+                {
+                    var children = Children;
+
+                    for (int i = 0, count = children.Count; i < count; ++i)
+                    {
+                        var child = children[i];
+                        if (child != null)
+                        {
+                            child.Handler.Bounds = new Rect(new Point(), arrangeSize);
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.Assert(DefinitionsU.Length > 0 && DefinitionsV.Length > 0);
+
+                    EnterCounter(Counters._SetFinalSize);
+
+                    SetFinalSize(DefinitionsU, arrangeSize.Width, true);
+                    SetFinalSize(DefinitionsV, arrangeSize.Height, false);
+
+                    ExitCounter(Counters._SetFinalSize);
+
+                    var children = Children;
+
+                    for (int currentCell = 0; currentCell < PrivateCells.Length; ++currentCell)
+                    {
+                        var cell = children[currentCell];
+                        if (cell == null)
+                        {
+                            continue;
+                        }
+
+                        int columnIndex = PrivateCells[currentCell].ColumnIndex;
+                        int rowIndex = PrivateCells[currentCell].RowIndex;
+                        int columnSpan = PrivateCells[currentCell].ColumnSpan;
+                        int rowSpan = PrivateCells[currentCell].RowSpan;
+
+                        var cellRect = new Rect(
+                            columnIndex == 0 ? 0.0f : DefinitionsU[columnIndex].FinalOffset,
+                            rowIndex == 0 ? 0.0f : DefinitionsV[rowIndex].FinalOffset,
+                            GetFinalSizeForRange(DefinitionsU, columnIndex, columnSpan),
+                            GetFinalSizeForRange(DefinitionsV, rowIndex, rowSpan));
+
+                        EnterCounter(Counters._ArrangeChildHelper2);
+                        SetControlBounds(cell, cellRect);
+                        ExitCounter(Counters._ArrangeChildHelper2);
+                    }
+
+                    ////  update render bound on grid lines renderer visual // yezo
+                    //GridLinesRenderer gridLinesRenderer = EnsureGridLinesRenderer();
+                    //if (gridLinesRenderer != null)
+                    //{
+                    //    gridLinesRenderer.UpdateRenderBounds(arrangeSize);
+                    //}
+                }
+            }
+            finally
+            {
+                SetValid();
+                ArrangeOverrideInProgress = false;
+                ExitCounterScope(Counters.ArrangeOverride);
+            }
         }
 
-        /// <summary>
-        ///     Returns final width for a column.
-        /// </summary>
-        /// <remarks>
-        ///     Used from public ColumnDefinition ActualWidth. Calculates final width using offset data.
-        /// </remarks>
+        void SetControlBounds(Control control, Rect bounds)
+        {
+            var preferredSize = control.GetPreferredSize(bounds.Size);
+
+            var horizontalPosition = AlignedLayout.AlignHorizontal(bounds, control, preferredSize);
+            var verticalPosition = AlignedLayout.AlignVertical(bounds, control, preferredSize);
+
+            control.Handler.Bounds = new Rect(
+                horizontalPosition.Origin,
+                verticalPosition.Origin,
+                horizontalPosition.Size,
+                verticalPosition.Size);
+        }
+
+        void OnChildrenChanged()
+        {
+            CellsStructureDirty = true;
+        }
+
+        internal void InvalidateCells()
+        {
+            CellsStructureDirty = true;
+        }
+
         internal double GetFinalColumnDefinitionWidth(int columnIndex)
         {
-            double value = 0.0;
+            double value = 0;
 
-            Invariant.Assert(_data != null);
+            Debug.Assert(_data != null);
 
             //  actual value calculations require structure to be up-to-date
             if (!ColumnDefinitionCollectionDirty)
@@ -736,9 +694,9 @@ namespace Alternet.UI
         /// </remarks>
         internal double GetFinalRowDefinitionHeight(int rowIndex)
         {
-            double value = 0.0;
+            double value = 0;
 
-            Invariant.Assert(_data != null);
+            Debug.Assert(_data != null);
 
             //  actual value calculations require structure to be up-to-date
             if (!RowDefinitionCollectionDirty)
@@ -750,65 +708,30 @@ namespace Alternet.UI
             return (value);
         }
 
-        #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Internal Properties
-        //
-        //------------------------------------------------------
-
-        #region Internal Properties
-
-        /// <summary>
-        /// Convenience accessor to MeasureOverrideInProgress bit flag.
-        /// </summary>
-        internal bool MeasureOverrideInProgress
+        internal bool MeasureOverrideInProgress // todo: rename
         {
             get { return (CheckFlagsAnd(Flags.MeasureOverrideInProgress)); }
             set { SetFlags(value, Flags.MeasureOverrideInProgress); }
         }
 
-        /// <summary>
-        /// Convenience accessor to ArrangeOverrideInProgress bit flag.
-        /// </summary>
-        internal bool ArrangeOverrideInProgress
+        internal bool ArrangeOverrideInProgress // todo: rename
         {
             get { return (CheckFlagsAnd(Flags.ArrangeOverrideInProgress)); }
             set { SetFlags(value, Flags.ArrangeOverrideInProgress); }
         }
 
-        /// <summary>
-        /// Convenience accessor to ValidDefinitionsUStructure bit flag.
-        /// </summary>
         internal bool ColumnDefinitionCollectionDirty
         {
             get { return (!CheckFlagsAnd(Flags.ValidDefinitionsUStructure)); }
             set { SetFlags(!value, Flags.ValidDefinitionsUStructure); }
         }
 
-        /// <summary>
-        /// Convenience accessor to ValidDefinitionsVStructure bit flag.
-        /// </summary>
         internal bool RowDefinitionCollectionDirty
         {
             get { return (!CheckFlagsAnd(Flags.ValidDefinitionsVStructure)); }
             set { SetFlags(!value, Flags.ValidDefinitionsVStructure); }
         }
 
-        #endregion Internal Properties
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
-
-        #region Private Methods
-
-        /// <summary>
-        /// Lays out cells according to rows and columns, and creates lookup grids.
-        /// </summary>
         private void ValidateCells()
         {
             EnterCounter(Counters._ValidateCells);
@@ -822,9 +745,6 @@ namespace Alternet.UI
             ExitCounter(Counters._ValidateCells);
         }
 
-        /// <summary>
-        /// ValidateCellsCore
-        /// </summary>
         private void ValidateCellsCore()
         {
             var children = Children;
@@ -842,7 +762,7 @@ namespace Alternet.UI
 
             for (int i = PrivateCells.Length - 1; i >= 0; --i)
             {
-                UIElement child = children[i];
+                var child = children[i];
                 if (child == null)
                 {
                     continue;
@@ -906,9 +826,9 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    if (    cell.IsAutoU
-                            //  note below: if spans through Star column it is NOT Auto
-                        &&  !cell.IsStarU )
+                    if (cell.IsAutoU
+                        //  note below: if spans through Star column it is NOT Auto
+                        && !cell.IsStarU)
                     {
                         cell.Next = extData.CellGroup2;
                         extData.CellGroup2 = i;
@@ -1078,7 +998,7 @@ namespace Alternet.UI
         {
             double[] minSizes = isRows ? new double[DefinitionsV.Length] : new double[DefinitionsU.Length];
 
-            for (int j=0; j<minSizes.Length; j++)
+            for (int j = 0; j < minSizes.Length; j++)
             {
                 minSizes[j] = -1;
             }
@@ -1103,7 +1023,7 @@ namespace Alternet.UI
 
         private void ApplyCachedMinSizes(double[] minSizes, bool isRows)
         {
-            for (int i=0; i<minSizes.Length; i++)
+            for (int i = 0; i < minSizes.Length; i++)
             {
                 if (DoubleUtil.GreaterThanOrClose(minSizes[i], 0))
                 {
@@ -1139,6 +1059,7 @@ namespace Alternet.UI
         /// width is not registered in columns.</param>
         /// <param name="forceInfinityV">Passed through to MeasureCell.
         /// When "true" cells' desired height is not registered in rows.</param>
+        /// <param name="hasDesiredSizeUChanged"></param>
         private void MeasureCellsGroup(
             int cellsHead,
             Size referenceSize,
@@ -1160,17 +1081,20 @@ namespace Alternet.UI
             int i = cellsHead;
             do
             {
-                double oldWidth = children[i].DesiredSize.Width;
+                var child = children[i];
+                var s = child.GetPreferredSize(referenceSize);
+                var childPreferredSize = new Size(s.Width + child.Margin.Horizontal, s.Height + child.Margin.Vertical);
+                double oldWidth = childPreferredSize.Width;
 
                 MeasureCell(i, forceInfinityV);
 
-                hasDesiredSizeUChanged |= !DoubleUtil.AreClose(oldWidth, children[i].DesiredSize.Width);
+                hasDesiredSizeUChanged |= !DoubleUtil.AreClose(oldWidth, childPreferredSize.Width);
 
                 if (!ignoreDesiredSizeU)
                 {
                     if (PrivateCells[i].ColumnSpan == 1)
                     {
-                        DefinitionsU[PrivateCells[i].ColumnIndex].UpdateMinSize(Math.Min(children[i].DesiredSize.Width, DefinitionsU[PrivateCells[i].ColumnIndex].UserMaxSize));
+                        DefinitionsU[PrivateCells[i].ColumnIndex].UpdateMinSize(Math.Min(childPreferredSize.Width, DefinitionsU[PrivateCells[i].ColumnIndex].UserMaxSize));
                     }
                     else
                     {
@@ -1179,7 +1103,7 @@ namespace Alternet.UI
                             PrivateCells[i].ColumnIndex,
                             PrivateCells[i].ColumnSpan,
                             true,
-                            children[i].DesiredSize.Width);
+                            childPreferredSize.Width);
                     }
                 }
 
@@ -1187,7 +1111,7 @@ namespace Alternet.UI
                 {
                     if (PrivateCells[i].RowSpan == 1)
                     {
-                        DefinitionsV[PrivateCells[i].RowIndex].UpdateMinSize(Math.Min(children[i].DesiredSize.Height, DefinitionsV[PrivateCells[i].RowIndex].UserMaxSize));
+                        DefinitionsV[PrivateCells[i].RowIndex].UpdateMinSize(Math.Min(childPreferredSize.Height, DefinitionsV[PrivateCells[i].RowIndex].UserMaxSize));
                     }
                     else
                     {
@@ -1196,7 +1120,7 @@ namespace Alternet.UI
                             PrivateCells[i].RowIndex,
                             PrivateCells[i].RowSpan,
                             false,
-                            children[i].DesiredSize.Height);
+                            childPreferredSize.Height);
                     }
                 }
 
@@ -1243,8 +1167,8 @@ namespace Alternet.UI
             SpanKey key = new SpanKey(start, count, u);
             object o = store[key];
 
-            if (    o == null
-                ||  value > (double)o   )
+            if (o == null
+                || value > (double)o)
             {
                 store[key] = value;
             }
@@ -1265,8 +1189,8 @@ namespace Alternet.UI
             double cellMeasureWidth;
             double cellMeasureHeight;
 
-            if (    PrivateCells[cell].IsAutoU
-                &&  !PrivateCells[cell].IsStarU   )
+            if (PrivateCells[cell].IsAutoU
+                && !PrivateCells[cell].IsStarU)
             {
                 //  if cell belongs to at least one Auto column and not a single Star column
                 //  then it should be calculated "to content", thus it is possible to "shortcut"
@@ -1286,8 +1210,8 @@ namespace Alternet.UI
             {
                 cellMeasureHeight = double.PositiveInfinity;
             }
-            else if (   PrivateCells[cell].IsAutoV
-                    &&  !PrivateCells[cell].IsStarV   )
+            else if (PrivateCells[cell].IsAutoV
+                    && !PrivateCells[cell].IsStarV)
             {
                 //  if cell belongs to at least one Auto row and not a single Star row
                 //  then it should be calculated "to content", thus it is possible to "shortcut"
@@ -1303,11 +1227,11 @@ namespace Alternet.UI
             }
 
             EnterCounter(Counters.__MeasureChild);
-            UIElement child = Children[cell];
+            var child = Children[cell];
             if (child != null)
             {
-                Size childConstraint = new Size(cellMeasureWidth, cellMeasureHeight);
-                child.Measure(childConstraint);
+                var childConstraint = new Size(cellMeasureWidth, cellMeasureHeight);
+                // child.Measure(childConstraint); // yezo
             }
             ExitCounter(Counters.__MeasureChild);
 
@@ -1418,12 +1342,12 @@ namespace Alternet.UI
 
                     //  sanity check: no matter what, but min size must always be the smaller;
                     //  max size must be the biggest; and preferred should be in between
-                    Debug.Assert(   minSize <= preferredSize
-                                &&  preferredSize <= maxSize
-                                &&  rangeMinSize <= rangePreferredSize
-                                &&  rangePreferredSize <= rangeMaxSize  );
+                    Debug.Assert(minSize <= preferredSize
+                                && preferredSize <= maxSize
+                                && rangeMinSize <= rangePreferredSize
+                                && rangePreferredSize <= rangeMaxSize);
 
-                    if (maxMaxSize < maxSize)   maxMaxSize = maxSize;
+                    if (maxMaxSize < maxSize) maxMaxSize = maxSize;
                     if (definitions[i].UserSize.IsAuto) autoDefinitionsCount++;
                     tempDefinitions[i - start] = definitions[i];
                 }
@@ -1517,8 +1441,8 @@ namespace Alternet.UI
                         //
                         double equalSize = requestedSize / count;
 
-                        if (    equalSize < maxMaxSize
-                            &&  !_AreClose(equalSize, maxMaxSize)   )
+                        if (equalSize < maxMaxSize
+                            && !_AreClose(equalSize, maxMaxSize))
                         {
                             //  equi-size is less than maximum of maxSizes.
                             //  in this case distribute so that smaller definitions grow faster than
@@ -1527,12 +1451,12 @@ namespace Alternet.UI
                             double sizeToDistribute = requestedSize - rangeMaxSize;
 
                             //  sanity check: totalRemainingSize and sizeToDistribute must be real positive numbers
-                            Debug.Assert(   !double.IsInfinity(totalRemainingSize)
-                                        &&  !DoubleUtil.IsNaN(totalRemainingSize)
-                                        &&  totalRemainingSize > 0
-                                        &&  !double.IsInfinity(sizeToDistribute)
-                                        &&  !DoubleUtil.IsNaN(sizeToDistribute)
-                                        &&  sizeToDistribute > 0    );
+                            Debug.Assert(!double.IsInfinity(totalRemainingSize)
+                                        && !DoubleUtil.IsNaN(totalRemainingSize)
+                                        && totalRemainingSize > 0
+                                        && !double.IsInfinity(sizeToDistribute)
+                                        && !DoubleUtil.IsNaN(sizeToDistribute)
+                                        && sizeToDistribute > 0);
 
                             for (int i = 0; i < count; ++i)
                             {
@@ -1556,6 +1480,8 @@ namespace Alternet.UI
             }
         }
 
+        bool StarDefinitionsCanExceedAvailableSpace = true;
+
         /// <summary>
         /// Resolves Star's for given array of definitions.
         /// </summary>
@@ -1568,7 +1494,7 @@ namespace Alternet.UI
             DefinitionBase[] definitions,
             double availableSize)
         {
-            if (FrameworkAppContextSwitches.GridStarDefinitionsCanExceedAvailableSpace)
+            if (StarDefinitionsCanExceedAvailableSpace)
             {
                 ResolveStarLegacy(definitions, availableSize);
             }
@@ -1616,9 +1542,9 @@ namespace Alternet.UI
 
                                 //  Note: normalized star value is temporary cached into MeasureSize
                                 definitions[i].MeasureSize = starValue;
-                                double maxSize             = Math.Max(definitions[i].MinSize, definitions[i].UserMaxSize);
-                                maxSize                    = Math.Min(maxSize, c_starClip);
-                                definitions[i].SizeCache   = maxSize / starValue;
+                                double maxSize = Math.Max(definitions[i].MinSize, definitions[i].UserMaxSize);
+                                maxSize = Math.Min(maxSize, c_starClip);
+                                definitions[i].SizeCache = maxSize / starValue;
                             }
                         }
                         break;
@@ -1655,13 +1581,13 @@ namespace Alternet.UI
                     }
                     else
                     {
-                        double userSize = Math.Max(availableSize - takenSize, 0.0) * (starValue / tempDefinitions[i].SizeCache);
-                        resolvedSize    = Math.Min(userSize, tempDefinitions[i].UserMaxSize);
-                        resolvedSize    = Math.Max(tempDefinitions[i].MinSize, resolvedSize);
+                        double userSize = Math.Max(availableSize - takenSize, 0) * (starValue / tempDefinitions[i].SizeCache);
+                        resolvedSize = Math.Min(userSize, tempDefinitions[i].UserMaxSize);
+                        resolvedSize = Math.Max(tempDefinitions[i].MinSize, resolvedSize);
                     }
 
                     tempDefinitions[i].MeasureSize = resolvedSize;
-                    takenSize                     += resolvedSize;
+                    takenSize += resolvedSize;
                 } while (++i < starDefinitionsCount);
             }
         }
@@ -1687,20 +1613,20 @@ namespace Alternet.UI
             DefinitionBase[] tempDefinitions = TempDefinitions;
             int minCount = 0, maxCount = 0;
             double takenSize = 0;
-            double totalStarWeight = 0.0;
+            double totalStarWeight = 0;
             int starCount = 0;      // number of unresolved *-definitions
-            double scale = 1.0;     // scale factor applied to each *-weight;  negative means "Infinity is present"
+            double scale = 1;     // scale factor applied to each *-weight;  negative means "Infinity is present"
 
             // Phase 1.  Determine the maximum *-weight and prepare to adjust *-weights
-            double maxStar = 0.0;
-            for (int i=0; i<defCount; ++i)
+            double maxStar = 0;
+            for (int i = 0; i < defCount; ++i)
             {
                 DefinitionBase def = definitions[i];
 
                 if (def.SizeType == LayoutTimeSizeType.Star)
                 {
                     ++starCount;
-                    def.MeasureSize = 1.0;  // meaning "not yet resolved in phase 3"
+                    def.MeasureSize = 1;  // meaning "not yet resolved in phase 3"
                     if (def.UserSize.Value > maxStar)
                     {
                         maxStar = def.UserSize.Value;
@@ -1711,24 +1637,24 @@ namespace Alternet.UI
             if (Double.IsPositiveInfinity(maxStar))
             {
                 // negative scale means one or more of the weights was Infinity
-                scale = -1.0;
+                scale = -1;
             }
             else if (starCount > 0)
             {
                 // if maxStar * starCount > Double.Max, summing all the weights could cause
                 // floating-point overflow.  To avoid that, scale the weights by a factor to keep
                 // the sum within limits.  Choose a power of 2, to preserve precision.
-                double power = Math.Floor(Math.Log(Double.MaxValue / maxStar / starCount, 2.0));
-                if (power < 0.0)
+                var power = Math.Floor(Math.Log(double.MaxValue / maxStar / starCount, 2));
+                if (power < 0)
                 {
-                    scale = Math.Pow(2.0, power - 4.0); // -4 is just for paranoia
+                    scale = (double)Math.Pow(2, power - 4); // -4 is just for paranoia
                 }
             }
 
             // normally Phases 2 and 3 execute only once.  But certain unusual combinations of weights
             // and constraints can defeat the algorithm, in which case we repeat Phases 2 and 3.
             // More explanation below...
-            for (bool runPhase2and3=true; runPhase2and3; )
+            for (bool runPhase2and3 = true; runPhase2and3;)
             {
                 // Phase 2.   Compute total *-weight W and available space S.
                 // For *-items that have Min or Max constraints, compute the ratios used to decide
@@ -1736,11 +1662,11 @@ namespace Alternet.UI
                 // corresponding list.  (The "min" list is in the first half of tempDefinitions,
                 // the "max" list in the second half.  TempDefinitions has capacity at least
                 // 2*defCount, so there's room for both lists.)
-                totalStarWeight = 0.0;
-                takenSize = 0.0;
+                totalStarWeight = 0;
+                takenSize = 0;
                 minCount = maxCount = 0;
 
-                for (int i=0; i<defCount; ++i)
+                for (int i = 0; i < defCount; ++i)
                 {
                     DefinitionBase def = definitions[i];
 
@@ -1753,7 +1679,7 @@ namespace Alternet.UI
                             takenSize += def.MeasureSize;
                             break;
                         case (LayoutTimeSizeType.Star):
-                            if (def.MeasureSize < 0.0)
+                            if (def.MeasureSize < 0)
                             {
                                 takenSize += -def.MeasureSize;  // already resolved
                             }
@@ -1762,7 +1688,7 @@ namespace Alternet.UI
                                 double starWeight = StarWeight(def, scale);
                                 totalStarWeight += starWeight;
 
-                                if (def.MinSize > 0.0)
+                                if (def.MinSize > 0)
                                 {
                                     // store ratio w/min in MeasureSize (for now)
                                     tempDefinitions[minCount++] = def;
@@ -1783,13 +1709,13 @@ namespace Alternet.UI
 
                 // Phase 3.  Resolve *-items whose proportional sizes are too big or too small.
                 int minCountPhase2 = minCount, maxCountPhase2 = maxCount;
-                double takenStarWeight = 0.0;
+                double takenStarWeight = 0;
                 double remainingAvailableSize = availableSize - takenSize;
                 double remainingStarWeight = totalStarWeight - takenStarWeight;
                 Array.Sort(tempDefinitions, 0, minCount, s_minRatioComparer);
                 Array.Sort(tempDefinitions, defCount, maxCount, s_maxRatioComparer);
 
-                while (minCount + maxCount > 0 && remainingAvailableSize > 0.0)
+                while (minCount + maxCount > 0 && remainingAvailableSize > 0)
                 {
                     // the calculation
                     //            remainingStarWeight = totalStarWeight - takenStarWeight
@@ -1797,16 +1723,16 @@ namespace Alternet.UI
                     // which leads to meaningless results.   Check for that, and recompute from
                     // the remaining definitions.   [This leads to quadratic behavior in really
                     // pathological cases - but they'd never arise in practice.]
-                    const double starFactor = 1.0 / 256.0;      // lose more than 8 bits of precision -> recalculate
+                    const double starFactor = 1 / 256;      // lose more than 8 bits of precision -> recalculate
                     if (remainingStarWeight < totalStarWeight * starFactor)
                     {
-                        takenStarWeight = 0.0;
-                        totalStarWeight = 0.0;
+                        takenStarWeight = 0;
+                        totalStarWeight = 0;
 
                         for (int i = 0; i < defCount; ++i)
                         {
                             DefinitionBase def = definitions[i];
-                            if (def.SizeType == LayoutTimeSizeType.Star && def.MeasureSize > 0.0)
+                            if (def.SizeType == LayoutTimeSizeType.Star && def.MeasureSize > 0)
                             {
                                 totalStarWeight += StarWeight(def, scale);
                             }
@@ -1815,8 +1741,8 @@ namespace Alternet.UI
                         remainingStarWeight = totalStarWeight - takenStarWeight;
                     }
 
-                    double minRatio = (minCount > 0) ? tempDefinitions[minCount - 1].MeasureSize : Double.PositiveInfinity;
-                    double maxRatio = (maxCount > 0) ? tempDefinitions[defCount + maxCount - 1].SizeCache : -1.0;
+                    double minRatio = (minCount > 0) ? tempDefinitions[minCount - 1].MeasureSize : double.PositiveInfinity;
+                    double maxRatio = (maxCount > 0) ? tempDefinitions[defCount + maxCount - 1].SizeCache : -1;
 
                     // choose the def with larger ratio to the current proportion ("max discrepancy")
                     double proportion = remainingStarWeight / remainingAvailableSize;
@@ -1858,12 +1784,12 @@ namespace Alternet.UI
 
                     // advance to the next candidate defs, removing ones that have been resolved.
                     // Both counts are advanced, as a def might appear in both lists.
-                    while (minCount > 0 && tempDefinitions[minCount - 1].MeasureSize < 0.0)
+                    while (minCount > 0 && tempDefinitions[minCount - 1].MeasureSize < 0)
                     {
                         --minCount;
                         tempDefinitions[minCount] = null;
                     }
-                    while (maxCount > 0 && tempDefinitions[defCount + maxCount - 1].MeasureSize < 0.0)
+                    while (maxCount > 0 && tempDefinitions[defCount + maxCount - 1].MeasureSize < 0)
                     {
                         --maxCount;
                         tempDefinitions[defCount + maxCount] = null;
@@ -1895,7 +1821,7 @@ namespace Alternet.UI
                         DefinitionBase def = tempDefinitions[i];
                         if (def != null)
                         {
-                            def.MeasureSize = 1.0;      // mark as 'not yet resolved'
+                            def.MeasureSize = 1;      // mark as 'not yet resolved'
                             ++starCount;
                             runPhase2and3 = true;       // found a candidate, so re-run Phases 2 and 3
                         }
@@ -1911,7 +1837,7 @@ namespace Alternet.UI
                         DefinitionBase def = tempDefinitions[defCount + i];
                         if (def != null)
                         {
-                            def.MeasureSize = 1.0;      // mark as 'not yet resolved'
+                            def.MeasureSize = 1;      // mark as 'not yet resolved'
                             ++starCount;
                             runPhase2and3 = true;    // found a candidate, so re-run Phases 2 and 3
                         }
@@ -1921,13 +1847,13 @@ namespace Alternet.UI
 
             // Phase 4.  Resolve the remaining defs proportionally.
             starCount = 0;
-            for (int i=0; i<defCount; ++i)
+            for (int i = 0; i < defCount; ++i)
             {
                 DefinitionBase def = definitions[i];
 
                 if (def.SizeType == LayoutTimeSizeType.Star)
                 {
-                    if (def.MeasureSize < 0.0)
+                    if (def.MeasureSize < 0)
                     {
                         // this def was resolved in phase 3 - fix up its measure size
                         def.MeasureSize = -def.MeasureSize;
@@ -1947,7 +1873,7 @@ namespace Alternet.UI
 
                 // compute the partial sums of *-weight, in increasing order of weight
                 // for minimal loss of precision.
-                totalStarWeight = 0.0;
+                totalStarWeight = 0;
                 for (int i = 0; i < starCount; ++i)
                 {
                     DefinitionBase def = tempDefinitions[i];
@@ -1959,7 +1885,7 @@ namespace Alternet.UI
                 for (int i = starCount - 1; i >= 0; --i)
                 {
                     DefinitionBase def = tempDefinitions[i];
-                    double resolvedSize = (def.MeasureSize > 0.0) ? Math.Max(availableSize - takenSize, 0.0) * (def.MeasureSize / def.SizeCache) : 0.0;
+                    double resolvedSize = (def.MeasureSize > 0) ? Math.Max(availableSize - takenSize, 0) * (def.MeasureSize / def.SizeCache) : 0;
 
                     // min and max should have no effect by now, but just in case...
                     resolvedSize = Math.Min(resolvedSize, def.UserMaxSize);
@@ -1994,13 +1920,13 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="definitions">Array of definitions to process.</param>
         /// <param name="finalSize">Final size to lay out to.</param>
-        /// <param name="columns">True if sizing row definitions, false for columns</param>
+        /// <param name="columns">True if sizing column definitions, false for rows</param>
         private void SetFinalSize(
             DefinitionBase[] definitions,
             double finalSize,
             bool columns)
         {
-            if (FrameworkAppContextSwitches.GridStarDefinitionsCanExceedAvailableSpace)
+            if (StarDefinitionsCanExceedAvailableSpace)
             {
                 SetFinalSizeLegacy(definitions, finalSize, columns);
             }
@@ -2008,6 +1934,39 @@ namespace Alternet.UI
             {
                 SetFinalSizeMaxDiscrepancy(definitions, finalSize, columns);
             }
+        }
+
+        /// <summary>
+        /// Calculates the value to be used for layout rounding at high DPI.
+        /// </summary>
+        /// <param name="value">Input value to be rounded.</param>
+        /// <param name="dpiScale">Ratio of screen's DPI to layout DPI</param>
+        /// <returns>Adjusted value that will produce layout rounding on screen at high dpi.</returns>
+        /// <remarks>This is a layout helper method. It takes DPI into account and also does not return
+        /// the rounded value if it is unacceptable for layout, e.g. Infinity or NaN. It's a helper associated with
+        /// UseLayoutRounding  property and should not be used as a general rounding utility.</remarks>
+        static double RoundLayoutValue(double value, double dpiScale)
+        {
+            double newValue;
+
+            // If DPI == 1, don't use DPI-aware rounding.
+            if (!DoubleUtil.AreClose(dpiScale, 1.0))
+            {
+                newValue = (double)Math.Round(value * dpiScale) / dpiScale;
+                // If rounding produces a value unacceptable to layout (NaN, Infinity or MaxValue), use the original value.
+                if (DoubleUtil.IsNaN(newValue) ||
+                    double.IsInfinity(newValue) ||
+                    DoubleUtil.AreClose(newValue, double.MaxValue))
+                {
+                    newValue = value;
+                }
+            }
+            else
+            {
+                newValue = (double)Math.Round(value);
+            }
+
+            return newValue;
         }
 
         // original implementation, used from 3.0 through 4.6.2
@@ -2024,13 +1983,13 @@ namespace Alternet.UI
             double[] roundingErrors = null;
 
             // If using layout rounding, check whether rounding needs to compensate for high DPI
-            double dpi = 1.0;
+            double dpi = 1; // yezo todo
 
             if (useLayoutRounding)
             {
-                DpiScale dpiScale = GetDpi();
-                dpi = columns ? dpiScale.DpiScaleX : dpiScale.DpiScaleY;
-                roundingErrors = RoundingErrors;
+                //DpiScale dpiScale = GetDpi(); // yezo todo
+                //dpi = columns ? dpiScale.DpiScaleX : dpiScale.DpiScaleY;
+                //roundingErrors = RoundingErrors;
             }
 
             for (int i = 0; i < definitions.Length; ++i)
@@ -2062,7 +2021,7 @@ namespace Alternet.UI
                         if (useLayoutRounding)
                         {
                             roundingErrors[i] = definitions[i].SizeCache;
-                            definitions[i].SizeCache = UIElement.RoundLayoutValue(definitions[i].SizeCache, dpi);
+                            definitions[i].SizeCache = RoundLayoutValue(definitions[i].SizeCache, dpi);
                         }
                     }
                     definitionIndices[starDefinitionsCount++] = i;
@@ -2101,7 +2060,7 @@ namespace Alternet.UI
                     if (useLayoutRounding)
                     {
                         roundingErrors[i] = definitions[i].SizeCache;
-                        definitions[i].SizeCache = UIElement.RoundLayoutValue(definitions[i].SizeCache, dpi);
+                        definitions[i].SizeCache = RoundLayoutValue(definitions[i].SizeCache, dpi);
                     }
 
                     allPreferredArrangeSize += definitions[i].SizeCache;
@@ -2143,7 +2102,7 @@ namespace Alternet.UI
                     }
                     else
                     {
-                        double userSize = Math.Max(finalSize - allPreferredArrangeSize, 0.0) * (starValue / definitions[definitionIndices[i]].SizeCache);
+                        double userSize = Math.Max(finalSize - allPreferredArrangeSize, 0) * (starValue / definitions[definitionIndices[i]].SizeCache);
                         resolvedSize = Math.Min(userSize, definitions[definitionIndices[i]].UserMaxSize);
                         resolvedSize = Math.Max(definitions[definitionIndices[i]].MinSizeForArrange, resolvedSize);
                     }
@@ -2152,15 +2111,15 @@ namespace Alternet.UI
                     if (useLayoutRounding)
                     {
                         roundingErrors[definitionIndices[i]] = definitions[definitionIndices[i]].SizeCache;
-                        definitions[definitionIndices[i]].SizeCache = UIElement.RoundLayoutValue(definitions[definitionIndices[i]].SizeCache, dpi);
+                        definitions[definitionIndices[i]].SizeCache = RoundLayoutValue(definitions[definitionIndices[i]].SizeCache, dpi);
                     }
 
                     allPreferredArrangeSize += definitions[definitionIndices[i]].SizeCache;
                 } while (++i < starDefinitionsCount);
             }
 
-            if (    allPreferredArrangeSize > finalSize
-                &&  !_AreClose(allPreferredArrangeSize, finalSize)  )
+            if (allPreferredArrangeSize > finalSize
+                && !_AreClose(allPreferredArrangeSize, finalSize))
             {
                 DistributionOrderIndexComparer distributionOrderIndexComparer = new DistributionOrderIndexComparer(definitions);
                 Array.Sort(definitionIndices, 0, definitions.Length, distributionOrderIndexComparer);
@@ -2177,7 +2136,7 @@ namespace Alternet.UI
                     if (useLayoutRounding)
                     {
                         roundingErrors[definitionIndex] = final;
-                        final = UIElement.RoundLayoutValue(finalOld, dpi);
+                        final = RoundLayoutValue(finalOld, dpi);
                         final = Math.Max(final, definitions[definitionIndex].MinSizeForArrange);
                         final = Math.Min(final, definitions[definitionIndex].SizeCache);
                     }
@@ -2204,7 +2163,7 @@ namespace Alternet.UI
                     RoundingErrorIndexComparer roundingErrorIndexComparer = new RoundingErrorIndexComparer(roundingErrors);
                     Array.Sort(definitionIndices, 0, definitions.Length, roundingErrorIndexComparer);
                     double adjustedSize = allPreferredArrangeSize;
-                    double dpiIncrement = UIElement.RoundLayoutValue(1.0, dpi);
+                    double dpiIncrement = RoundLayoutValue(1, dpi);
 
                     if (allPreferredArrangeSize > finalSize)
                     {
@@ -2241,7 +2200,7 @@ namespace Alternet.UI
                 }
             }
 
-            definitions[0].FinalOffset = 0.0;
+            definitions[0].FinalOffset = 0;
             for (int i = 0; i < definitions.Length; ++i)
             {
                 definitions[(i + 1) % definitions.Length].FinalOffset = definitions[i].FinalOffset + definitions[i].SizeCache;
@@ -2268,21 +2227,21 @@ namespace Alternet.UI
             int defCount = definitions.Length;
             int[] definitionIndices = DefinitionIndices;
             int minCount = 0, maxCount = 0;
-            double takenSize = 0.0;
-            double totalStarWeight = 0.0;
+            double takenSize = 0;
+            double totalStarWeight = 0;
             int starCount = 0;      // number of unresolved *-definitions
-            double scale = 1.0;   // scale factor applied to each *-weight;  negative means "Infinity is present"
+            double scale = 1;   // scale factor applied to each *-weight;  negative means "Infinity is present"
 
             // Phase 1.  Determine the maximum *-weight and prepare to adjust *-weights
-            double maxStar = 0.0;
-            for (int i=0; i<defCount; ++i)
+            double maxStar = 0;
+            for (int i = 0; i < defCount; ++i)
             {
                 DefinitionBase def = definitions[i];
 
                 if (def.UserSize.IsStar)
                 {
                     ++starCount;
-                    def.MeasureSize = 1.0;  // meaning "not yet resolved in phase 3"
+                    def.MeasureSize = 1;  // meaning "not yet resolved in phase 3"
                     if (def.UserSize.Value > maxStar)
                     {
                         maxStar = def.UserSize.Value;
@@ -2293,17 +2252,17 @@ namespace Alternet.UI
             if (Double.IsPositiveInfinity(maxStar))
             {
                 // negative scale means one or more of the weights was Infinity
-                scale = -1.0;
+                scale = -1;
             }
             else if (starCount > 0)
             {
                 // if maxStar * starCount > Double.Max, summing all the weights could cause
                 // floating-point overflow.  To avoid that, scale the weights by a factor to keep
                 // the sum within limits.  Choose a power of 2, to preserve precision.
-                double power = Math.Floor(Math.Log(Double.MaxValue / maxStar / starCount, 2.0));
-                if (power < 0.0)
+                var power = Math.Floor(Math.Log(Double.MaxValue / maxStar / starCount, 2));
+                if (power < 0)
                 {
-                    scale = Math.Pow(2.0, power - 4.0); // -4 is just for paranoia
+                    scale = (double)Math.Pow(2, power - 4.0); // -4 is just for paranoia
                 }
             }
 
@@ -2311,7 +2270,7 @@ namespace Alternet.UI
             // normally Phases 2 and 3 execute only once.  But certain unusual combinations of weights
             // and constraints can defeat the algorithm, in which case we repeat Phases 2 and 3.
             // More explanation below...
-            for (bool runPhase2and3=true; runPhase2and3; )
+            for (bool runPhase2and3 = true; runPhase2and3;)
             {
                 // Phase 2.   Compute total *-weight W and available space S.
                 // For *-items that have Min or Max constraints, compute the ratios used to decide
@@ -2319,11 +2278,11 @@ namespace Alternet.UI
                 // corresponding list.  (The "min" list is in the first half of definitionIndices,
                 // the "max" list in the second half.  DefinitionIndices has capacity at least
                 // 2*defCount, so there's room for both lists.)
-                totalStarWeight = 0.0;
-                takenSize = 0.0;
+                totalStarWeight = 0;
+                takenSize = 0;
                 minCount = maxCount = 0;
 
-                for (int i=0; i<defCount; ++i)
+                for (int i = 0; i < defCount; ++i)
                 {
                     DefinitionBase def = definitions[i];
 
@@ -2331,7 +2290,7 @@ namespace Alternet.UI
                     {
                         Debug.Assert(!def.IsShared, "*-defs cannot be shared");
 
-                        if (def.MeasureSize < 0.0)
+                        if (def.MeasureSize < 0)
                         {
                             takenSize += -def.MeasureSize;  // already resolved
                         }
@@ -2340,7 +2299,7 @@ namespace Alternet.UI
                             double starWeight = StarWeight(def, scale);
                             totalStarWeight += starWeight;
 
-                            if (def.MinSizeForArrange > 0.0)
+                            if (def.MinSizeForArrange > 0)
                             {
                                 // store ratio w/min in MeasureSize (for now)
                                 definitionIndices[minCount++] = i;
@@ -2393,7 +2352,7 @@ namespace Alternet.UI
 
                 // Phase 3.  Resolve *-items whose proportional sizes are too big or too small.
                 int minCountPhase2 = minCount, maxCountPhase2 = maxCount;
-                double takenStarWeight = 0.0;
+                double takenStarWeight = 0;
                 double remainingAvailableSize = finalSize - takenSize;
                 double remainingStarWeight = totalStarWeight - takenStarWeight;
 
@@ -2402,7 +2361,7 @@ namespace Alternet.UI
                 MaxRatioIndexComparer maxRatioIndexComparer = new MaxRatioIndexComparer(definitions);
                 Array.Sort(definitionIndices, defCount, maxCount, maxRatioIndexComparer);
 
-                while (minCount + maxCount > 0 && remainingAvailableSize > 0.0)
+                while (minCount + maxCount > 0 && remainingAvailableSize > 0)
                 {
                     // the calculation
                     //            remainingStarWeight = totalStarWeight - takenStarWeight
@@ -2410,16 +2369,16 @@ namespace Alternet.UI
                     // which leads to meaningless results.   Check for that, and recompute from
                     // the remaining definitions.   [This leads to quadratic behavior in really
                     // pathological cases - but they'd never arise in practice.]
-                    const double starFactor = 1.0 / 256.0;      // lose more than 8 bits of precision -> recalculate
+                    const double starFactor = 1 / 256;      // lose more than 8 bits of precision -> recalculate
                     if (remainingStarWeight < totalStarWeight * starFactor)
                     {
-                        takenStarWeight = 0.0;
-                        totalStarWeight = 0.0;
+                        takenStarWeight = 0;
+                        totalStarWeight = 0;
 
                         for (int i = 0; i < defCount; ++i)
                         {
                             DefinitionBase def = definitions[i];
-                            if (def.UserSize.IsStar && def.MeasureSize > 0.0)
+                            if (def.UserSize.IsStar && def.MeasureSize > 0)
                             {
                                 totalStarWeight += StarWeight(def, scale);
                             }
@@ -2428,8 +2387,8 @@ namespace Alternet.UI
                         remainingStarWeight = totalStarWeight - takenStarWeight;
                     }
 
-                    double minRatio = (minCount > 0) ? definitions[definitionIndices[minCount - 1]].MeasureSize : Double.PositiveInfinity;
-                    double maxRatio = (maxCount > 0) ? definitions[definitionIndices[defCount + maxCount - 1]].SizeCache : -1.0;
+                    double minRatio = (minCount > 0) ? definitions[definitionIndices[minCount - 1]].MeasureSize : double.PositiveInfinity;
+                    double maxRatio = (maxCount > 0) ? definitions[definitionIndices[defCount + maxCount - 1]].SizeCache : -1;
 
                     // choose the def with larger ratio to the current proportion ("max discrepancy")
                     double proportion = remainingStarWeight / remainingAvailableSize;
@@ -2474,12 +2433,12 @@ namespace Alternet.UI
 
                     // advance to the next candidate defs, removing ones that have been resolved.
                     // Both counts are advanced, as a def might appear in both lists.
-                    while (minCount > 0 && definitions[definitionIndices[minCount - 1]].MeasureSize < 0.0)
+                    while (minCount > 0 && definitions[definitionIndices[minCount - 1]].MeasureSize < 0)
                     {
                         --minCount;
                         definitionIndices[minCount] = -1;
                     }
-                    while (maxCount > 0 && definitions[definitionIndices[defCount + maxCount - 1]].MeasureSize < 0.0)
+                    while (maxCount > 0 && definitions[definitionIndices[defCount + maxCount - 1]].MeasureSize < 0)
                     {
                         --maxCount;
                         definitionIndices[defCount + maxCount] = -1;
@@ -2511,7 +2470,7 @@ namespace Alternet.UI
                         if (definitionIndices[i] >= 0)
                         {
                             DefinitionBase def = definitions[definitionIndices[i]];
-                            def.MeasureSize = 1.0;      // mark as 'not yet resolved'
+                            def.MeasureSize = 1;      // mark as 'not yet resolved'
                             ++starCount;
                             runPhase2and3 = true;       // found a candidate, so re-run Phases 2 and 3
                         }
@@ -2527,7 +2486,7 @@ namespace Alternet.UI
                         if (definitionIndices[defCount + i] >= 0)
                         {
                             DefinitionBase def = definitions[definitionIndices[defCount + i]];
-                            def.MeasureSize = 1.0;      // mark as 'not yet resolved'
+                            def.MeasureSize = 1;      // mark as 'not yet resolved'
                             ++starCount;
                             runPhase2and3 = true;    // found a candidate, so re-run Phases 2 and 3
                         }
@@ -2537,13 +2496,13 @@ namespace Alternet.UI
 
             // Phase 4.  Resolve the remaining defs proportionally.
             starCount = 0;
-            for (int i=0; i<defCount; ++i)
+            for (int i = 0; i < defCount; ++i)
             {
                 DefinitionBase def = definitions[i];
 
                 if (def.UserSize.IsStar)
                 {
-                    if (def.MeasureSize < 0.0)
+                    if (def.MeasureSize < 0)
                     {
                         // this def was resolved in phase 3 - fix up its size
                         def.SizeCache = -def.MeasureSize;
@@ -2564,7 +2523,7 @@ namespace Alternet.UI
 
                 // compute the partial sums of *-weight, in increasing order of weight
                 // for minimal loss of precision.
-                totalStarWeight = 0.0;
+                totalStarWeight = 0;
                 for (int i = 0; i < starCount; ++i)
                 {
                     DefinitionBase def = definitions[definitionIndices[i]];
@@ -2576,7 +2535,7 @@ namespace Alternet.UI
                 for (int i = starCount - 1; i >= 0; --i)
                 {
                     DefinitionBase def = definitions[definitionIndices[i]];
-                    double resolvedSize = (def.MeasureSize > 0.0) ? Math.Max(finalSize - takenSize, 0.0) * (def.MeasureSize / def.SizeCache) : 0.0;
+                    double resolvedSize = (def.MeasureSize > 0) ? Math.Max(finalSize - takenSize, 0) * (def.MeasureSize / def.SizeCache) : 0;
 
                     // min and max should have no effect by now, but just in case...
                     resolvedSize = Math.Min(resolvedSize, def.UserMaxSize);
@@ -2594,16 +2553,17 @@ namespace Alternet.UI
             // unrounded sizes, to avoid breaking assumptions in the previous phases
             if (UseLayoutRounding)
             {
-                DpiScale dpiScale = GetDpi();
-                double dpi = columns ? dpiScale.DpiScaleX : dpiScale.DpiScaleY;
+                //DpiScale dpiScale = GetDpi(); // todo yezo
+                //double dpi = columns ? dpiScale.DpiScaleX : dpiScale.DpiScaleY;
+                var dpi = 1.0f;
                 double[] roundingErrors = RoundingErrors;
-                double roundedTakenSize = 0.0;
+                double roundedTakenSize = 0;
 
                 // round each of the allocated sizes, keeping track of the deltas
                 for (int i = 0; i < definitions.Length; ++i)
                 {
                     DefinitionBase def = definitions[i];
-                    double roundedSize = UIElement.RoundLayoutValue(def.SizeCache, dpi);
+                    double roundedSize = RoundLayoutValue(def.SizeCache, dpi);
                     roundingErrors[i] = (roundedSize - def.SizeCache);
                     def.SizeCache = roundedSize;
                     roundedTakenSize += roundedSize;
@@ -2663,7 +2623,7 @@ namespace Alternet.UI
                     RoundingErrorIndexComparer roundingErrorIndexComparer = new RoundingErrorIndexComparer(roundingErrors);
                     Array.Sort(definitionIndices, 0, definitions.Length, roundingErrorIndexComparer);
                     double adjustedSize = roundedTakenSize;
-                    double dpiIncrement = 1.0/dpi;
+                    double dpiIncrement = 1 / dpi;
 
                     if (roundedTakenSize > finalSize)
                     {
@@ -2701,7 +2661,7 @@ namespace Alternet.UI
             }
 
             // Phase 6.  Compute final offsets
-            definitions[0].FinalOffset = 0.0;
+            definitions[0].FinalOffset = 0;
             for (int i = 0; i < definitions.Length; ++i)
             {
                 definitions[(i + 1) % definitions.Length].FinalOffset = definitions[i].FinalOffset + definitions[i].SizeCache;
@@ -2717,9 +2677,9 @@ namespace Alternet.UI
         ///                 if the max constraint has higher discrepancy
         ///     null    if proportion doesn't fail a min or max constraint
         /// The discrepancy is the ratio of the proportion to the max- or min-ratio.
-        /// When both ratios hit the constraint,  minRatio < proportion < maxRatio,
+        /// When both ratios hit the constraint,  minRatio &lt; proportion &lt; maxRatio,
         /// and the minRatio has higher discrepancy if
-        ///         (proportion / minRatio) > (maxRatio / proportion)
+        ///         (proportion / minRatio) &gt; (maxRatio / proportion)
         /// </summary>
         private static bool? Choose(double minRatio, double maxRatio, double proportion)
         {
@@ -2730,9 +2690,9 @@ namespace Alternet.UI
                     // compare proportion/minRatio : maxRatio/proportion, but
                     // do it carefully to avoid floating-point overflow or underflow
                     // and divide-by-0.
-                    double minPower = Math.Floor(Math.Log(minRatio, 2.0));
-                    double maxPower = Math.Floor(Math.Log(maxRatio, 2.0));
-                    double f = Math.Pow(2.0, Math.Floor((minPower + maxPower) / 2.0));
+                    var minPower = Math.Floor(Math.Log(minRatio, 2));
+                    var maxPower = Math.Floor(Math.Log(maxRatio, 2));
+                    double f = (double)Math.Pow(2, Math.Floor((minPower + maxPower) / 2));
                     if ((proportion / f) * (proportion / f) > (minRatio / f) * (maxRatio / f))
                     {
                         return true;
@@ -2805,8 +2765,8 @@ namespace Alternet.UI
             ExtendedData extData = ExtData;
             if (extData != null)
             {
-//                for (int i = 0; i < PrivateColumnCount; ++i) DefinitionsU[i].SetValid ();
-//                for (int i = 0; i < PrivateRowCount; ++i) DefinitionsV[i].SetValid ();
+                //                for (int i = 0; i < PrivateColumnCount; ++i) DefinitionsU[i].SetValid ();
+                //                for (int i = 0; i < PrivateRowCount; ++i) DefinitionsV[i].SetValid ();
 
                 if (extData.TempDefinitions != null)
                 {
@@ -2824,9 +2784,9 @@ namespace Alternet.UI
         public bool ShouldSerializeColumnDefinitions()
         {
             ExtendedData extData = ExtData;
-            return (    extData != null
-                    &&  extData.ColumnDefinitions != null
-                    &&  extData.ColumnDefinitions.Count > 0   );
+            return (extData != null
+                    && extData.ColumnDefinitions != null
+                    && extData.ColumnDefinitions.Count > 0);
         }
 
         /// <summary>
@@ -2836,35 +2796,36 @@ namespace Alternet.UI
         public bool ShouldSerializeRowDefinitions()
         {
             ExtendedData extData = ExtData;
-            return (    extData != null
-                    &&  extData.RowDefinitions != null
-                    &&  extData.RowDefinitions.Count > 0  );
+            return (extData != null
+                    && extData.RowDefinitions != null
+                    && extData.RowDefinitions.Count > 0);
         }
 
-        ///// <summary>
-        ///// Synchronized ShowGridLines property with the state of the grid's visual collection
-        ///// by adding / removing GridLinesRenderer visual.
-        ///// Returns a reference to GridLinesRenderer visual or null.
-        ///// </summary>
-        //private GridLinesRenderer EnsureGridLinesRenderer()
-        //{
-        //    //
-        //    //  synchronize the state
-        //    //
-        //    if (ShowGridLines && (_gridLinesRenderer == null))
-        //    {
-        //        _gridLinesRenderer = new GridLinesRenderer();
-        //        this.AddVisualChild(_gridLinesRenderer);
-        //    }
+        /// <summary>
+        /// Synchronized ShowGridLines property with the state of the grid's visual collection
+        /// by adding / removing GridLinesRenderer visual.
+        /// Returns a reference to GridLinesRenderer visual or null.
+        /// </summary>
+        private GridLinesRenderer EnsureGridLinesRenderer()
+        {
+            //// yezo todo
+            ////  synchronize the state
+            ////
+            //if (ShowGridLines && (_gridLinesRenderer == null))
+            //{
+            //    _gridLinesRenderer = new GridLinesRenderer();
+            //    this.AddVisualChild(_gridLinesRenderer);
+            //}
 
-        //    if ((!ShowGridLines) && (_gridLinesRenderer != null))
-        //    {
-        //        this.RemoveVisualChild(_gridLinesRenderer);
-        //        _gridLinesRenderer = null;
-        //    }
+            //if ((!ShowGridLines) && (_gridLinesRenderer != null))
+            //{
+            //    this.RemoveVisualChild(_gridLinesRenderer);
+            //    _gridLinesRenderer = null;
+            //}
 
-        //    return (_gridLinesRenderer);
-        //}
+            //return (_gridLinesRenderer);
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// SetFlags is used to set or unset one or multiple
@@ -2897,53 +2858,37 @@ namespace Alternet.UI
             return (flags == 0 || (_flags & flags) != 0);
         }
 
-        /// <summary>
-        /// <see cref="PropertyMetadata.PropertyChangedCallback"/>
-        /// </summary>
-        private static void OnShowGridLinesPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnShowGridLinesPropertyChanged(Grid grid, bool newValue)
         {
-            Grid grid = (Grid)d;
-
-            if (    grid.ExtData != null    // trivial grid is 1 by 1. there is no grid lines anyway
-                &&  grid.ListenToNotifications)
+            if (grid.ExtData != null    // trivial grid is 1 by 1. there is no grid lines anyway
+                && grid.ListenToNotifications)
             {
-                grid.InvalidateVisual();
+                grid.Update();
             }
 
-            grid.SetFlags((bool) e.NewValue, Flags.ShowGridLinesPropertyValue);
+            grid.SetFlags(newValue, Flags.ShowGridLinesPropertyValue);
         }
 
-        /// <summary>
-        /// <see cref="PropertyMetadata.PropertyChangedCallback"/>
-        /// </summary>
-        private static void OnCellAttachedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnCellAttachedPropertyChanged(Control child)
         {
-            var child = d as Control;
-
             if (child != null)
             {
                 var grid = child.Parent as Grid;
-                if (    grid != null
-                    &&  grid.ExtData != null
-                    &&  grid.ListenToNotifications  )
+                if (grid != null
+                    && grid.ExtData != null
+                    && grid.ListenToNotifications)
                 {
                     grid.CellsStructureDirty = true;
-                    grid.InvalidateMeasure();
+                    grid.PerformLayout();
                 }
             }
         }
 
-        /// <summary>
-        /// <see cref="DependencyProperty.ValidateValueCallback"/>
-        /// </summary>
         private static bool IsIntValueNotNegative(object value)
         {
             return ((int)value >= 0);
         }
 
-        /// <summary>
-        /// <see cref="DependencyProperty.ValidateValueCallback"/>
-        /// </summary>
         private static bool IsIntValueGreaterThanZero(object value)
         {
             return ((int)value > 0);
@@ -2982,16 +2927,6 @@ namespace Alternet.UI
             return (result != 2);
         }
 
-        #endregion Private Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Properties
-        //
-        //------------------------------------------------------
-
-        #region Private Properties
-
         /// <summary>
         /// Private version returning array of column definitions.
         /// </summary>
@@ -3018,8 +2953,8 @@ namespace Alternet.UI
                 ExtendedData extData = ExtData;
                 int requiredLength = Math.Max(DefinitionsU.Length, DefinitionsV.Length) * 2;
 
-                if (    extData.TempDefinitions == null
-                    ||  extData.TempDefinitions.Length < requiredLength   )
+                if (extData.TempDefinitions == null
+                    || extData.TempDefinitions.Length < requiredLength)
                 {
                     WeakReference tempDefinitionsWeakRef = (WeakReference)Thread.GetData(s_tempDefinitionsDataSlot);
                     if (tempDefinitionsWeakRef == null)
@@ -3030,8 +2965,8 @@ namespace Alternet.UI
                     else
                     {
                         extData.TempDefinitions = (DefinitionBase[])tempDefinitionsWeakRef.Target;
-                        if (    extData.TempDefinitions == null
-                            ||  extData.TempDefinitions.Length < requiredLength   )
+                        if (extData.TempDefinitions == null
+                            || extData.TempDefinitions.Length < requiredLength)
                         {
                             extData.TempDefinitions = new DefinitionBase[requiredLength];
                             tempDefinitionsWeakRef.Target = extData.TempDefinitions;
@@ -3186,12 +3121,12 @@ namespace Alternet.UI
         /// </summary>
         static double StarWeight(DefinitionBase def, double scale)
         {
-            if (scale < 0.0)
+            if (scale < 0)
             {
                 // if one of the *-weights is Infinity, adjust the weights by mapping
-                // Infinty to 1.0 and everything else to 0.0:  the infinite items share the
+                // Infinty to 1 and everything else to 0:  the infinite items share the
                 // available space equally, everyone else gets nothing.
-                return (Double.IsPositiveInfinity(def.UserSize.Value)) ? 1.0 : 0.0;
+                return (Double.IsPositiveInfinity(def.UserSize.Value)) ? 1 : 0;
             }
             else
             {
@@ -3199,15 +3134,6 @@ namespace Alternet.UI
             }
         }
 
-        #endregion Private Properties
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
-
-        #region Private Fields
         private ExtendedData _data;                             //  extended data instantiated on demand, for non-trivial case handling only
         private Flags _flags;                                   //  grid validity / property caches dirtiness flags
         //private GridLinesRenderer _gridLinesRenderer;
@@ -3218,17 +3144,8 @@ namespace Alternet.UI
         // Stores unrounded values and rounding errors during layout rounding.
         double[] _roundingErrors;
 
-        #endregion Private Fields
-
-        //------------------------------------------------------
-        //
-        //  Static Fields
-        //
-        //------------------------------------------------------
-
-        #region Static Fields
-        private const double c_epsilon = 1e-5;                  //  used in fp calculations
-        private const double c_starClip = 1e298;                //  used as maximum for clipping star values during normalization
+        private const double c_epsilon = 1e-5f;                  //  used in fp calculations
+        private const double c_starClip = 1e38f;                //  used as maximum for clipping star values during normalization
         private const int c_layoutLoopMaxCount = 5;             // 5 is an arbitrary constant chosen to end the measure loop
         private static readonly LocalDataStoreSlot s_tempDefinitionsDataSlot = Thread.AllocateDataSlot();
         private static readonly IComparer s_spanPreferredDistributionOrderComparer = new SpanPreferredDistributionOrderComparer();
@@ -3238,16 +3155,6 @@ namespace Alternet.UI
         private static readonly IComparer s_minRatioComparer = new MinRatioComparer();
         private static readonly IComparer s_maxRatioComparer = new MaxRatioComparer();
         private static readonly IComparer s_starWeightComparer = new StarWeightComparer();
-
-        #endregion Static Fields
-
-        //------------------------------------------------------
-        //
-        //  Private Structures / Classes
-        //
-        //------------------------------------------------------
-
-        #region Private Structures Classes
 
         /// <summary>
         /// Extended data instantiated on demand, when grid handles non-trivial case.
@@ -3279,161 +3186,27 @@ namespace Alternet.UI
             //  * Valid???Layout flags indicate that layout time portion of the information
             //    stored on the objects should be updated.
             //
-            ValidDefinitionsUStructure              = 0x00000001,
-            ValidDefinitionsVStructure              = 0x00000002,
-            ValidCellsStructure                     = 0x00000004,
+            ValidDefinitionsUStructure = 0x00000001,
+            ValidDefinitionsVStructure = 0x00000002,
+            ValidCellsStructure = 0x00000004,
 
             //
             //  boolean properties state
             //
-            ShowGridLinesPropertyValue              = 0x00000100,   //  show grid lines ?
+            ShowGridLinesPropertyValue = 0x00000100,   //  show grid lines ?
 
             //
             //  boolean flags
             //
-            ListenToNotifications                   = 0x00001000,   //  "0" when all notifications are ignored
-            SizeToContentU                          = 0x00002000,   //  "1" if calculating to content in U direction
-            SizeToContentV                          = 0x00004000,   //  "1" if calculating to content in V direction
-            HasStarCellsU                           = 0x00008000,   //  "1" if at least one cell belongs to a Star column
-            HasStarCellsV                           = 0x00010000,   //  "1" if at least one cell belongs to a Star row
-            HasGroup3CellsInAutoRows                = 0x00020000,   //  "1" if at least one cell of group 3 belongs to an Auto row
-            MeasureOverrideInProgress               = 0x00040000,   //  "1" while in the context of Grid.MeasureOverride
-            ArrangeOverrideInProgress               = 0x00080000,   //  "1" while in the context of Grid.ArrangeOverride
+            ListenToNotifications = 0x00001000,   //  "0" when all notifications are ignored
+            SizeToContentU = 0x00002000,   //  "1" if calculating to content in U direction
+            SizeToContentV = 0x00004000,   //  "1" if calculating to content in V direction
+            HasStarCellsU = 0x00008000,   //  "1" if at least one cell belongs to a Star column
+            HasStarCellsV = 0x00010000,   //  "1" if at least one cell belongs to a Star row
+            HasGroup3CellsInAutoRows = 0x00020000,   //  "1" if at least one cell of group 3 belongs to an Auto row
+            MeasureOverrideInProgress = 0x00040000,   //  "1" while in the context of Grid.MeasureOverride
+            ArrangeOverrideInProgress = 0x00080000,   //  "1" while in the context of Grid.ArrangeOverride
         }
-
-        #endregion Private Structures Classes
-
-        //------------------------------------------------------
-        //
-        //  Properties
-        //
-        //------------------------------------------------------
-
-        #region Properties
-
-        /// <summary>
-        /// ShowGridLines property. This property is used mostly
-        /// for simplification of visual debuggig. When it is set
-        /// to <c>true</c> grid lines are drawn to visualize location
-        /// of grid lines.
-        /// </summary>
-        public static readonly DependencyProperty ShowGridLinesProperty =
-                DependencyProperty.Register(
-                      "ShowGridLines",
-                      typeof(bool),
-                      typeof(Grid),
-                      new FrameworkPropertyMetadata(
-                              false,
-                              new PropertyChangedCallback(OnShowGridLinesPropertyChanged)));
-
-        /// <summary>
-        /// Column property. This is an attached property.
-        /// Grid defines Column property, so that it can be set
-        /// on any element treated as a cell. Column property
-        /// specifies child's position with respect to columns.
-        /// </summary>
-        /// <remarks>
-        /// <para> Columns are 0 - based. In order to appear in first column, element
-        /// should have Column property set to <c>0</c>. </para>
-        /// <para> Default value for the property is <c>0</c>. </para>
-        /// </remarks>
-        [CommonDependencyProperty]
-        public static readonly DependencyProperty ColumnProperty =
-                DependencyProperty.RegisterAttached(
-                      "Column",
-                      typeof(int),
-                      typeof(Grid),
-                      new FrameworkPropertyMetadata(
-                              0,
-                              new PropertyChangedCallback(OnCellAttachedPropertyChanged)),
-                      new ValidateValueCallback(IsIntValueNotNegative));
-
-        /// <summary>
-        /// Row property. This is an attached property.
-        /// Grid defines Row, so that it can be set
-        /// on any element treated as a cell. Row property
-        /// specifies child's position with respect to rows.
-        /// <remarks>
-        /// <para> Rows are 0 - based. In order to appear in first row, element
-        /// should have Row property set to <c>0</c>. </para>
-        /// <para> Default value for the property is <c>0</c>. </para>
-        /// </remarks>
-        /// </summary>
-        [CommonDependencyProperty]
-        public static readonly DependencyProperty RowProperty =
-                DependencyProperty.RegisterAttached(
-                      "Row",
-                      typeof(int),
-                      typeof(Grid),
-                      new FrameworkPropertyMetadata(
-                              0,
-                              new PropertyChangedCallback(OnCellAttachedPropertyChanged)),
-                      new ValidateValueCallback(IsIntValueNotNegative));
-
-        /// <summary>
-        /// ColumnSpan property. This is an attached property.
-        /// Grid defines ColumnSpan, so that it can be set
-        /// on any element treated as a cell. ColumnSpan property
-        /// specifies child's width with respect to columns.
-        /// Example, ColumnSpan == 2 means that child will span across two columns.
-        /// </summary>
-        /// <remarks>
-        /// Default value for the property is <c>1</c>.
-        /// </remarks>
-        [CommonDependencyProperty]
-        public static readonly DependencyProperty ColumnSpanProperty =
-                DependencyProperty.RegisterAttached(
-                      "ColumnSpan",
-                      typeof(int),
-                      typeof(Grid),
-                      new FrameworkPropertyMetadata(
-                              1,
-                              new PropertyChangedCallback(OnCellAttachedPropertyChanged)),
-                      new ValidateValueCallback(IsIntValueGreaterThanZero));
-
-        /// <summary>
-        /// RowSpan property. This is an attached property.
-        /// Grid defines RowSpan, so that it can be set
-        /// on any element treated as a cell. RowSpan property
-        /// specifies child's height with respect to row grid lines.
-        /// Example, RowSpan == 3 means that child will span across three rows.
-        /// </summary>
-        /// <remarks>
-        /// Default value for the property is <c>1</c>.
-        /// </remarks>
-        [CommonDependencyProperty]
-        public static readonly DependencyProperty RowSpanProperty =
-                DependencyProperty.RegisterAttached(
-                      "RowSpan",
-                      typeof(int),
-                      typeof(Grid),
-                      new FrameworkPropertyMetadata(
-                              1,
-                              new PropertyChangedCallback(OnCellAttachedPropertyChanged)),
-                      new ValidateValueCallback(IsIntValueGreaterThanZero));
-
-
-        /// <summary>
-        /// IsSharedSizeScope property marks scoping element for shared size.
-        /// </summary>
-        public static readonly DependencyProperty IsSharedSizeScopeProperty  =
-                DependencyProperty.RegisterAttached(
-                      "IsSharedSizeScope",
-                      typeof(bool),
-                      typeof(Grid),
-                      new FrameworkPropertyMetadata(
-                              false,
-                              new PropertyChangedCallback(DefinitionBase.OnIsSharedSizeScopePropertyChanged)));
-
-        #endregion Properties
-
-        //------------------------------------------------------
-        //
-        //  Internal Structures / Classes
-        //
-        //------------------------------------------------------
-
-        #region Internal Structures Classes
 
         /// <summary>
         /// LayoutTimeSizeType is used internally and reflects layout-time size type.
@@ -3441,21 +3214,11 @@ namespace Alternet.UI
         [System.Flags]
         internal enum LayoutTimeSizeType : byte
         {
-            None        = 0x00,
-            Pixel       = 0x01,
-            Auto        = 0x02,
-            Star        = 0x04,
+            None = 0x00,
+            Pixel = 0x01,
+            Auto = 0x02,
+            Star = 0x04,
         }
-
-        #endregion Internal Structures Classes
-
-        //------------------------------------------------------
-        //
-        //  Private Structures / Classes
-        //
-        //------------------------------------------------------
-
-        #region Private Structures Classes
 
         /// <summary>
         /// CellCache stored calculated values of
@@ -3504,7 +3267,7 @@ namespace Alternet.UI
                 int hash = (_start ^ (_count << 2));
 
                 if (_u) hash &= 0x7ffffff;
-                else    hash |= 0x8000000;
+                else hash |= 0x8000000;
 
                 return (hash);
             }
@@ -3515,10 +3278,10 @@ namespace Alternet.UI
             public override bool Equals(object obj)
             {
                 SpanKey sk = obj as SpanKey;
-                return (    sk != null
-                        &&  sk._start == _start
-                        &&  sk._count == _count
-                        &&  sk._u == _u );
+                return (sk != null
+                        && sk._start == _start
+                        && sk._count == _count
+                        && sk._u == _u);
             }
 
             /// <summary>
@@ -3650,7 +3413,7 @@ namespace Alternet.UI
         /// <summary>
         /// DistributionOrderComparer.
         /// </summary>
-        private class DistributionOrderComparer: IComparer
+        private class DistributionOrderComparer : IComparer
         {
             public int Compare(object x, object y)
             {
@@ -3680,7 +3443,7 @@ namespace Alternet.UI
 
             internal StarDistributionOrderIndexComparer(DefinitionBase[] definitions)
             {
-                Invariant.Assert(definitions != null);
+                Debug.Assert(definitions != null);
                 this.definitions = definitions;
             }
 
@@ -3721,7 +3484,7 @@ namespace Alternet.UI
 
             internal DistributionOrderIndexComparer(DefinitionBase[] definitions)
             {
-                Invariant.Assert(definitions != null);
+                Debug.Assert(definitions != null);
                 this.definitions = definitions;
             }
 
@@ -3764,7 +3527,7 @@ namespace Alternet.UI
 
             internal RoundingErrorIndexComparer(double[] errors)
             {
-                Invariant.Assert(errors != null);
+                Debug.Assert(errors != null);
                 this.errors = errors;
             }
 
@@ -3863,7 +3626,7 @@ namespace Alternet.UI
 
             internal MinRatioIndexComparer(DefinitionBase[] definitions)
             {
-                Invariant.Assert(definitions != null);
+                Debug.Assert(definitions != null);
                 this.definitions = definitions;
             }
 
@@ -3904,7 +3667,7 @@ namespace Alternet.UI
 
             internal MaxRatioIndexComparer(DefinitionBase[] definitions)
             {
-                Invariant.Assert(definitions != null);
+                Debug.Assert(definitions != null);
                 this.definitions = definitions;
             }
 
@@ -3945,7 +3708,7 @@ namespace Alternet.UI
 
             internal StarWeightIndexComparer(DefinitionBase[] definitions)
             {
-                Invariant.Assert(definitions != null);
+                Debug.Assert(definitions != null);
                 this.definitions = definitions;
             }
 
@@ -4012,13 +3775,14 @@ namespace Alternet.UI
                         {
                             case (0): if (_enumerator0.MoveNext()) { _currentChild = _enumerator0.Current; return (true); } break;
                             case (1): if (_enumerator1.MoveNext()) { _currentChild = _enumerator1.Current; return (true); } break;
-                            case (2): if (_enumerator2Index < _enumerator2Count)
-                                      {
-                                          _currentChild = _enumerator2Collection[_enumerator2Index];
-                                          _enumerator2Index++;
-                                          return (true);
-                                      }
-                                      break;
+                            case (2):
+                                if (_enumerator2Index < _enumerator2Count)
+                                {
+                                    _currentChild = _enumerator2Collection[_enumerator2Index];
+                                    _enumerator2Index++;
+                                    return (true);
+                                }
+                                break;
                         }
                     }
                     _currentEnumerator++;
@@ -4032,13 +3796,13 @@ namespace Alternet.UI
                 {
                     if (_currentEnumerator == -1)
                     {
-                        #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
-                        throw new InvalidOperationException(SR.Get(SRID.EnumeratorNotStarted));
+#pragma warning disable 6503 // IEnumerator.Current is documented to throw this exception
+                        throw new InvalidOperationException();
                     }
                     if (_currentEnumerator >= 3)
                     {
-                        #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
-                        throw new InvalidOperationException(SR.Get(SRID.EnumeratorReachedEnd));
+#pragma warning restore 6503 // IEnumerator.Current is documented to throw this exception
+                        throw new InvalidOperationException();
                     }
 
                     //  assert below is not true anymore since UIElementCollection allowes for null children
@@ -4065,90 +3829,89 @@ namespace Alternet.UI
             private int _enumerator2Count;
         }
 
-        ///// <summary>
-        ///// Helper to render grid lines.
-        ///// </summary>
-        //internal class GridLinesRenderer : DrawingVisual
-        //{
-        //    /// <summary>
-        //    /// Static initialization
-        //    /// </summary>
-        //    static GridLinesRenderer()
-        //    {
-        //        s_oddDashPen = new Pen(Brushes.Blue, c_penWidth);
-        //        DoubleCollection oddDashArray = new DoubleCollection();
-        //        oddDashArray.Add(c_dashLength);
-        //        oddDashArray.Add(c_dashLength);
-        //        s_oddDashPen.DashStyle = new DashStyle(oddDashArray, 0);
-        //        s_oddDashPen.DashCap = PenLineCap.Flat;
-        //        s_oddDashPen.Freeze();
+        /// <summary>
+        /// Helper to render grid lines.
+        /// </summary>
+        internal class GridLinesRenderer
+        {
+            /// <summary>
+            /// Static initialization
+            /// </summary>
+            static GridLinesRenderer()
+            {
+                // yezo todo
+                //s_oddDashPen = new Pen(Brushes.Blue, c_penWidth);
+                //DoubleCollection oddDashArray = new DoubleCollection();
+                //oddDashArray.Add(c_dashLength);
+                //oddDashArray.Add(c_dashLength);
+                //s_oddDashPen.DashStyle = new DashStyle(oddDashArray, 0);
+                //s_oddDashPen.DashCap = PenLineCap.Flat;
+                //s_oddDashPen.Freeze();
 
-        //        s_evenDashPen = new Pen(Brushes.Yellow, c_penWidth);
-        //        DoubleCollection evenDashArray = new DoubleCollection();
-        //        evenDashArray.Add(c_dashLength);
-        //        evenDashArray.Add(c_dashLength);
-        //        s_evenDashPen.DashStyle = new DashStyle(evenDashArray, c_dashLength);
-        //        s_evenDashPen.DashCap = PenLineCap.Flat;
-        //        s_evenDashPen.Freeze();
-        //    }
+                //s_evenDashPen = new Pen(Brushes.Yellow, c_penWidth);
+                //DoubleCollection evenDashArray = new DoubleCollection();
+                //evenDashArray.Add(c_dashLength);
+                //evenDashArray.Add(c_dashLength);
+                //s_evenDashPen.DashStyle = new DashStyle(evenDashArray, c_dashLength);
+                //s_evenDashPen.DashCap = PenLineCap.Flat;
+                //s_evenDashPen.Freeze();
+            }
 
-        //    /// <summary>
-        //    /// UpdateRenderBounds.
-        //    /// </summary>
-        //    /// <param name="boundsSize">Size of render bounds</param>
-        //    internal void UpdateRenderBounds(Size boundsSize)
-        //    {
-        //        using (DrawingContext drawingContext = RenderOpen())
-        //        {
-        //            Grid grid = VisualTreeHelper.GetParent(this) as Grid;
-        //            if (    grid == null
-        //                ||  grid.ShowGridLines == false )
-        //            {
-        //                return;
-        //            }
+            /// <summary>
+            /// UpdateRenderBounds.
+            /// </summary>
+            /// <param name="boundsSize">Size of render bounds</param>
+            internal void UpdateRenderBounds(Size boundsSize)
+            {
+                //using (DrawingContext drawingContext = RenderOpen())
+                //{
+                //    Grid grid = VisualTreeHelper.GetParent(this) as Grid;
+                //    if (grid == null
+                //        || grid.ShowGridLines == false)
+                //    {
+                //        return;
+                //    }
 
-        //            for (int i = 1; i < grid.DefinitionsU.Length; ++i)
-        //            {
-        //                DrawGridLine(
-        //                    drawingContext,
-        //                    grid.DefinitionsU[i].FinalOffset, 0.0,
-        //                    grid.DefinitionsU[i].FinalOffset, boundsSize.Height);
-        //            }
+                //    for (int i = 1; i < grid.DefinitionsU.Length; ++i)
+                //    {
+                //        DrawGridLine(
+                //            drawingContext,
+                //            grid.DefinitionsU[i].FinalOffset, 0,
+                //            grid.DefinitionsU[i].FinalOffset, boundsSize.Height);
+                //    }
 
-        //            for (int i = 1; i < grid.DefinitionsV.Length; ++i)
-        //            {
-        //                DrawGridLine(
-        //                    drawingContext,
-        //                    0.0, grid.DefinitionsV[i].FinalOffset,
-        //                    boundsSize.Width, grid.DefinitionsV[i].FinalOffset);
-        //            }
-        //        }
-        //    }
+                //    for (int i = 1; i < grid.DefinitionsV.Length; ++i)
+                //    {
+                //        DrawGridLine(
+                //            drawingContext,
+                //            0, grid.DefinitionsV[i].FinalOffset,
+                //            boundsSize.Width, grid.DefinitionsV[i].FinalOffset);
+                //    }
+                //}
+            }
 
-        //    /// <summary>
-        //    /// Draw single hi-contrast line.
-        //    /// </summary>
-        //    private static void DrawGridLine(
-        //        DrawingContext drawingContext,
-        //        double startX,
-        //        double startY,
-        //        double endX,
-        //        double endY)
-        //    {
-        //        Point start = new Point(startX, startY);
-        //        Point end = new Point(endX, endY);
-        //        drawingContext.DrawLine(s_oddDashPen, start, end);
-        //        drawingContext.DrawLine(s_evenDashPen, start, end);
-        //    }
+            /// <summary>
+            /// Draw single hi-contrast line.
+            /// </summary>
+            private static void DrawGridLine(
+                DrawingContext drawingContext,
+                double startX,
+                double startY,
+                double endX,
+                double endY)
+            {
+                //Point start = new Point(startX, startY);
+                //Point end = new Point(endX, endY);
+                //drawingContext.DrawLine(s_oddDashPen, start, end);
+                //drawingContext.DrawLine(s_evenDashPen, start, end);
+            }
 
-        //    private const double c_dashLength = 4.0;    //
-        //    private const double c_penWidth = 1.0;      //
-        //    private static readonly Pen s_oddDashPen;   //  first pen to draw dash
-        //    private static readonly Pen s_evenDashPen;  //  second pen to draw dash
-        //    private static readonly Point c_zeroPoint = new Point(0, 0);
-        //}
-
-        #endregion Private Structures Classes
+            //private const double c_dashLength = 4.0;    //
+            //private const double c_penWidth = 1;      //
+            //private static readonly Pen s_oddDashPen;   //  first pen to draw dash
+            //private static readonly Pen s_evenDashPen;  //  second pen to draw dash
+            //private static readonly Point c_zeroPoint = new Point(0, 0);
+        }
 
         //------------------------------------------------------
         //
@@ -4195,20 +3958,20 @@ namespace Alternet.UI
         private bool _hasNewCounterInfo;
 #endif // GRIDPARANOIA
 
-        //
-        //  This property
-        //  1. Finds the correct initial size for the _effectiveValues store on the current DependencyObject
-        //  2. This is a performance optimization
-        //
-        internal override int EffectiveValuesInitialSize
-        {
-            get { return 9; }
-        }
+        ////
+        ////  This property
+        ////  1. Finds the correct initial size for the _effectiveValues store on the current DependencyObject
+        ////  2. This is a performance optimization
+        ////
+        //internal override int EffectiveValuesInitialSize
+        //{
+        //    get { return 9; }
+        //}
 
         [Conditional("GRIDPARANOIA")]
         internal void EnterCounterScope(Counters scopeCounter)
         {
-            #if GRIDPARANOIA
+#if GRIDPARANOIA
             if (ID == "CountThis")
             {
                 if (_counters == null)
@@ -4222,13 +3985,13 @@ namespace Alternet.UI
             {
                 _counters = null;
             }
-            #endif // GRIDPARANOIA
+#endif // GRIDPARANOIA
         }
 
         [Conditional("GRIDPARANOIA")]
         internal void ExitCounterScope(Counters scopeCounter)
         {
-            #if GRIDPARANOIA
+#if GRIDPARANOIA
             if (_counters != null)
             {
                 if (scopeCounter != Counters.Default)
@@ -4269,13 +4032,13 @@ namespace Alternet.UI
                 }
                 _hasNewCounterInfo = false;
             }
-            #endif // GRIDPARANOIA
+#endif // GRIDPARANOIA
         }
 
         [Conditional("GRIDPARANOIA")]
         internal void EnterCounter(Counters counter)
         {
-            #if GRIDPARANOIA
+#if GRIDPARANOIA
             if (_counters != null)
             {
                 Debug.Assert((int)counter < _counters.Length);
@@ -4283,13 +4046,13 @@ namespace Alternet.UI
                 int i = (int)counter;
                 QueryPerformanceCounter(out _counters[i].Start);
             }
-            #endif // GRIDPARANOIA
+#endif // GRIDPARANOIA
         }
 
         [Conditional("GRIDPARANOIA")]
         internal void ExitCounter(Counters counter)
         {
-            #if GRIDPARANOIA
+#if GRIDPARANOIA
             if (_counters != null)
             {
                 Debug.Assert((int)counter < _counters.Length);
@@ -4302,7 +4065,7 @@ namespace Alternet.UI
                 _counters[i].Calls++;
                 _hasNewCounterInfo = true;
             }
-            #endif // GRIDPARANOIA
+#endif // GRIDPARANOIA
         }
 
         internal enum Counters : int
@@ -4326,7 +4089,3 @@ namespace Alternet.UI
         }
     }
 }
-
-
-
-

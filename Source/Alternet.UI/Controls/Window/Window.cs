@@ -26,10 +26,6 @@ namespace Alternet.UI
             Bounds = new Rect(100, 100, 400, 400);
         }
 
-        protected override void SetLayoutOffset(Vector offset, Size oldRenderSize)
-        {
-        }
-
         /// <summary>
         /// Occurs when the value of the <see cref="Title"/> property changes.
         /// </summary>

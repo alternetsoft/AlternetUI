@@ -1,14 +1,10 @@
 #nullable disable
 
-using System.ComponentModel;
-using System.Windows;
 using System;
-using System.Security;
+using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
-using System.Windows.Markup;
 
 namespace Alternet.UI
 {
@@ -16,7 +12,7 @@ namespace Alternet.UI
     /// GridLengthConverter - Converter class for converting 
     /// instances of other types to and from GridLength instances.
     /// </summary> 
-    public class GridLengthConverter: TypeConverter
+    public class GridLengthConverter : TypeConverter
     {
         //-------------------------------------------------------------------
         //
@@ -37,7 +33,7 @@ namespace Alternet.UI
         /// <c>false</c> otherwise.
         /// </returns>
         public override bool CanConvertFrom(
-            ITypeDescriptorContext typeDescriptorContext, 
+            ITypeDescriptorContext typeDescriptorContext,
             Type sourceType)
         {
             // We can only handle strings, integral and floating types
@@ -55,7 +51,7 @@ namespace Alternet.UI
                 case TypeCode.UInt32:
                 case TypeCode.UInt64:
                     return true;
-                default: 
+                default:
                     return false;
             }
         }
@@ -71,11 +67,11 @@ namespace Alternet.UI
         /// <c>false</c> otherwise.
         /// </returns>
         public override bool CanConvertTo(
-            ITypeDescriptorContext typeDescriptorContext, 
-            Type destinationType) 
+            ITypeDescriptorContext typeDescriptorContext,
+            Type destinationType)
         {
-            return (    destinationType == typeof(InstanceDescriptor) 
-                    ||  destinationType == typeof(string)   );
+            return (destinationType == typeof(InstanceDescriptor)
+                    || destinationType == typeof(string));
         }
 
         /// <summary>
@@ -95,8 +91,8 @@ namespace Alternet.UI
         /// and is not a valid type which can be converted to a GridLength.
         /// </exception>
         public override object ConvertFrom(
-            ITypeDescriptorContext typeDescriptorContext, 
-            CultureInfo cultureInfo, 
+            ITypeDescriptorContext typeDescriptorContext,
+            CultureInfo cultureInfo,
             object source)
         {
             if (source != null)
@@ -111,12 +107,12 @@ namespace Alternet.UI
                     double value;
                     GridUnitType type;
 
-                    value = Convert.ToDouble(source, cultureInfo);
+                    value = Convert.ToSingle(source, cultureInfo);
 
                     if (DoubleUtil.IsNaN(value))
                     {
                         //  this allows for conversion from Width / Height = "Auto" 
-                        value = 1.0;
+                        value = 1.0f;
                         type = GridUnitType.Auto;
                     }
                     else
@@ -148,7 +144,7 @@ namespace Alternet.UI
         /// or if the destinationType isn't one of the valid destination types.
         /// </exception>
         public override object ConvertTo(
-            ITypeDescriptorContext typeDescriptorContext, 
+            ITypeDescriptorContext typeDescriptorContext,
             CultureInfo cultureInfo,
             object value,
             Type destinationType)
@@ -158,14 +154,14 @@ namespace Alternet.UI
                 throw new ArgumentNullException("destinationType");
             }
 
-            if (    value != null
-                &&  value is GridLength )
+            if (value != null
+                && value is GridLength)
             {
                 GridLength gl = (GridLength)value;
 
-                if (destinationType == typeof(string)) 
-                { 
-                    return (ToString(gl, cultureInfo)); 
+                if (destinationType == typeof(string))
+                {
+                    return (ToString(gl, cultureInfo));
                 }
 
                 if (destinationType == typeof(InstanceDescriptor))

@@ -2,51 +2,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="HelloWorldSample.MainWindow"
         Title="My First Application">
-	<!--Title="My First Application" Width="1000" Height="200">-->
-
-	<!--<StackPanel Orientation="Vertical">
-		<Button Name="helloButton" Text="Say Hello" Margin="20" Click="HelloButton_Click" />
-		<Button Text="Button 1" />
-	</StackPanel>-->
-
-	<!--<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="150"/>
-			<ColumnDefinition />
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition />
-			<RowDefinition />
-		</Grid.RowDefinitions>
-		<Border>
-			<Label Text="(0, 0)" />
-		</Border>
-		<Border Grid.Column="1">
-			<Label Text="(1, 0)" />
-		</Border>
-		<Border Grid.Row="1">
-			<Label Text="(0, 1)" />
-		</Border>
-		<Border Grid.Column="1" Grid.Row="1">
-			<Label Text="(1, 1)" />
-		</Border>
-		<Border Grid.ColumnSpan="2" Grid.Row="2">
-			<Label Text="Column Span" />
-		</Border>
-		<Border Grid.RowSpan="2" Grid.Column="2">
-			<Label Text="Row Span" />
-		</Border>
-	</Grid>-->
-
-	<TabControl Name="tabControl">
-		<TabPage Title="Hello 1">
-			<Button Text="Button 1" />
-		</TabPage>
-		<!--<TabPage Title="Hello 2">
-			<Button Text="Button 2" />
-		</TabPage>-->
-	</TabControl>
-
+  <StackPanel>
+    <Button Name="helloButton" Text="Say Hello" Margin="20" Click="HelloButton_Click" />
+  </StackPanel>
 </Window>

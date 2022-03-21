@@ -2,20 +2,16 @@
 
 using System;
 using System.ComponentModel;
-
 using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
-using System.Security;
 
 namespace Alternet.UI
 {
-
     /// <summary>
     /// LengthConverter - Converter class for converting instances of other types to and from double representing length.
     /// </summary> 
-    public class LengthConverter: TypeConverter
+    public class LengthConverter : TypeConverter
     {
         //-------------------------------------------------------------------
         //
@@ -50,7 +46,7 @@ namespace Alternet.UI
                 case TypeCode.UInt32:
                 case TypeCode.UInt64:
                     return true;
-                default: 
+                default:
                     return false;
             }
         }
@@ -63,11 +59,11 @@ namespace Alternet.UI
         /// </returns>
         /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="destinationType"> The Type being queried for support. </param>
-        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType) 
+        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
             if (destinationType == typeof(InstanceDescriptor) ||
-                destinationType == typeof(string)) 
+                destinationType == typeof(string))
             {
                 return true;
             }
@@ -93,14 +89,14 @@ namespace Alternet.UI
         /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="source"> The object to convert to a double. </param>
-        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, 
-                                           CultureInfo cultureInfo, 
+        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext,
+                                           CultureInfo cultureInfo,
                                            object source)
         {
             if (source != null)
             {
                 if (source is string) { return FromString((string)source, cultureInfo); }
-                else                  { return (double)(Convert.ToDouble(source, cultureInfo)); }
+                else { return (double)(Convert.ToDouble(source, cultureInfo)); }
             }
 
             throw GetConvertFromException(source);
@@ -123,7 +119,7 @@ namespace Alternet.UI
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="value"> The double to convert. </param>
         /// <param name="destinationType">The type to which to convert the double. </param>
-        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, 
+        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext,
                                          CultureInfo cultureInfo,
                                          object value,
                                          Type destinationType)
@@ -133,16 +129,16 @@ namespace Alternet.UI
                 throw new ArgumentNullException("destinationType");
             }
 
-            if (    value != null
-                &&  value is double )
+            if (value != null
+                && value is double)
             {
                 double l = (double)value;
-                if (destinationType == typeof(string)) 
-                { 
-                    if(DoubleUtil.IsNaN(l)) 
+                if (destinationType == typeof(string))
+                {
+                    if (DoubleUtil.IsNaN(l))
                         return "Auto";
-                    else 
-                        return Convert.ToString(l, cultureInfo); 
+                    else
+                        return Convert.ToString(l, cultureInfo);
                 }
                 else if (destinationType == typeof(InstanceDescriptor))
                 {
@@ -209,7 +205,7 @@ namespace Alternet.UI
             }
             catch (FormatException)
             {
-                throw new FormatException(SR.Get(SRID.LengthFormatError, valueString));
+                throw new FormatException();
             }
         }
 
@@ -217,8 +213,8 @@ namespace Alternet.UI
         // These are effectively "TypeConverter only" units.
         // They are all expressable in terms of the Pixel unit type and a conversion factor.
         static private string[] PixelUnitStrings = { "px", "in", "cm", "pt" };
-        static private double[] PixelUnitFactors = 
-        { 
+        static private double[] PixelUnitFactors =
+        {
             1.0,              // Pixel itself
             96.0,             // Pixels per Inch
             96.0 / 2.54,      // Pixels per Centimeter
@@ -227,7 +223,7 @@ namespace Alternet.UI
 
         static internal string ToString(double l, CultureInfo cultureInfo)
         {
-            if(DoubleUtil.IsNaN(l)) return "Auto";
+            if (DoubleUtil.IsNaN(l)) return "Auto";
             return Convert.ToString(l, cultureInfo);
         }
 

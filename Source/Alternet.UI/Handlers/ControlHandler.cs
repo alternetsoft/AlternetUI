@@ -13,7 +13,7 @@ namespace Alternet.UI
     {
         private int layoutSuspendCount;
 
-        //private bool inLayout;
+        private bool inLayout;
 
         private Control? control;
 
@@ -183,7 +183,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual bool VisualChildNeedsNativeControl => false;
 
-        internal bool IsLayoutSuspended => layoutSuspendCount != 0;
+        private bool IsLayoutSuspended => layoutSuspendCount != 0;
 
         /// <summary>
         /// Attaches this handler to the specified <see cref="Control"/>.
@@ -335,28 +335,26 @@ namespace Alternet.UI
         /// </summary>
         public void PerformLayout()
         {
-            Control.InvalidateArrange();
+            if (IsLayoutSuspended)
+                return;
 
-            //if (IsLayoutSuspended)
-            //    return;
+            if (inLayout)
+                return;
 
-            //if (inLayout)
-            //    return;
+            inLayout = true;
+            try
+            {
+                // todo: we need a system to detect when parent relayout is needed?
+                var parent = Control.Parent;
+                if (parent != null)
+                    parent.PerformLayout();
 
-            //inLayout = true;
-            //try
-            //{
-            //    // todo: we need a system to detect when parent relayout is needed?
-            //    var parent = Control.Parent;
-            //    if (parent != null)
-            //        parent.PerformLayout();
-
-            //    Control.InvokeOnLayout();
-            //}
-            //finally
-            //{
-            //    inLayout = false;
-            //}
+                Control.InvokeOnLayout();
+            }
+            finally
+            {
+                inLayout = false;
+            }
         }
 
         /// <summary>

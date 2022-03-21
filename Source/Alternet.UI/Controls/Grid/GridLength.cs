@@ -7,28 +7,6 @@ using System.Globalization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// GridUnitType enum is used to indicate what kind of value the 
-    /// GridLength is holding.
-    /// </summary>
-    // Note: Keep the GridUnitType enum in sync with the string representation 
-    //       of units (GridLengthConverter._unitString). 
-    public enum GridUnitType 
-    {
-        /// <summary>
-        /// The value indicates that content should be calculated without constraints. 
-        /// </summary>
-        Auto = 0,
-        /// <summary>
-        /// The value is expressed as a pixel.
-        /// </summary>
-        Pixel, 
-        /// <summary>
-        /// The value is expressed as a weighted proportion of available space.
-        /// </summary>
-        Star,
-    }
-
-    /// <summary>
     /// GridLength is the type used for various length-like properties in the system, 
     /// that explicitely support Star unit type. For example, "Width", "Height" 
     /// properties of ColumnDefinition and RowDefinition used by Grid.
@@ -80,20 +58,20 @@ namespace Alternet.UI
         {
             if (DoubleUtil.IsNaN(value))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidCtorParameterNoNaN, "value"));
+                throw new ArgumentException();
             }
             if (double.IsInfinity(value))
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidCtorParameterNoInfinity, "value"));
+                throw new ArgumentException();
             }
-            if (    type != GridUnitType.Auto
-                &&  type != GridUnitType.Pixel
-                &&  type != GridUnitType.Star   )
+            if (type != GridUnitType.Auto
+                && type != GridUnitType.Pixel
+                && type != GridUnitType.Star)
             {
-                throw new ArgumentException(SR.Get(SRID.InvalidCtorParameterUnknownGridUnitType, "type"));
+                throw new ArgumentException();
             }
 
-            _unitValue = (type == GridUnitType.Auto) ? 0.0 : value;
+            _unitValue = (type == GridUnitType.Auto) ? 0 : value;
             _unitType = type;
         }
 
@@ -114,10 +92,10 @@ namespace Alternet.UI
         /// <param name="gl2">second GridLength to compare.</param>
         /// <returns>true if specified GridLengths have same value 
         /// and unit type.</returns>
-        public static bool operator == (GridLength gl1, GridLength gl2)
+        public static bool operator ==(GridLength gl1, GridLength gl2)
         {
-            return (    gl1.GridUnitType == gl2.GridUnitType 
-                    &&  gl1.Value == gl2.Value  );
+            return (gl1.GridUnitType == gl2.GridUnitType
+                    && gl1.Value == gl2.Value);
         }
 
         /// <summary>
@@ -127,10 +105,10 @@ namespace Alternet.UI
         /// <param name="gl2">second GridLength to compare.</param>
         /// <returns>true if specified GridLengths have either different value or 
         /// unit type.</returns>
-        public static bool operator != (GridLength gl1, GridLength gl2)
+        public static bool operator !=(GridLength gl1, GridLength gl2)
         {
-            return (    gl1.GridUnitType != gl2.GridUnitType 
-                    ||  gl1.Value != gl2.Value  );
+            return (gl1.GridUnitType != gl2.GridUnitType
+                    || gl1.Value != gl2.Value);
         }
 
         /// <summary>
@@ -141,7 +119,7 @@ namespace Alternet.UI
         /// and unit type as oCompare.</returns>
         override public bool Equals(object oCompare)
         {
-            if(oCompare is GridLength)
+            if (oCompare is GridLength)
             {
                 GridLength l = (GridLength)oCompare;
                 return (this == l);
@@ -191,7 +169,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns value part of this GridLength instance.
         /// </summary>
-        public double Value { get { return ((_unitType == GridUnitType.Auto) ? 1.0 : _unitValue); } }
+        public double Value { get { return ((_unitType == GridUnitType.Auto) ? 1 : _unitValue); } }
 
         /// <summary>
         /// Returns unit type of this GridLength instance.
@@ -205,7 +183,7 @@ namespace Alternet.UI
         {
             return GridLengthConverter.ToString(this, CultureInfo.InvariantCulture);
         }
-        
+
         #endregion Public Methods 
 
         //------------------------------------------------------
@@ -235,9 +213,10 @@ namespace Alternet.UI
         #region Private Fields 
         private double _unitValue;      //  unit value storage
         private GridUnitType _unitType; //  unit type storage
-        
+
         //  static instance of Auto GridLength
-        private static readonly GridLength s_auto = new GridLength(1.0, GridUnitType.Auto);
+        private static readonly GridLength s_auto = new GridLength(1, GridUnitType.Auto);
         #endregion Private Fields 
     }
+
 }

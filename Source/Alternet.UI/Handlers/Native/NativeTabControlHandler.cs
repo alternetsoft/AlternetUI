@@ -32,19 +32,24 @@ namespace Alternet.UI
         {
             var selectedPageIndex = NativeControl.SelectedPageIndex;
             Control.SelectedPage = selectedPageIndex == -1 ? null : Control.Pages[selectedPageIndex];
-
+            
             LayoutSelectedPage();
         }
 
         protected override void OnDetach()
         {
-            Control.SelectedPageChanged -= Control_SelectedPageChanged;
             NativeControl.SelectedPageIndexChanged -= NativeControl_SelectedPageIndexChanged;
+            Control.SelectedPageChanged -= Control_SelectedPageChanged;
 
             Control.Pages.ItemInserted -= Pages_ItemInserted;
             Control.Pages.ItemRemoved -= Pages_ItemRemoved;
 
             base.OnDetach();
+        }
+
+        public override void OnLayout()
+        {
+            LayoutSelectedPage();
         }
 
         private void LayoutSelectedPage()
@@ -58,7 +63,7 @@ namespace Alternet.UI
            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Linux))
                 page.Handler.Bounds = ChildrenLayoutBounds;
 #endif
-                page.InvalidateArrange();
+                page.PerformLayout();
             }
         }
 

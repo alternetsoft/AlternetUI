@@ -1403,46 +1403,6 @@ namespace Alternet.UI
         internal const string @Illegal_InheritanceBehaviorSettor = "Illegal_InheritanceBehaviorSettor";
         /// <summary>Logical tree depth exceeded while traversing the tree. This could indicate a cycle in the tree.</summary>
         internal const string @LogicalTreeLoop = "LogicalTreeLoop";
-        /// <summary>Layout recursion reached allowed limit to avoid stack overflow: '{0}'. Either the tree contains a loop or is too deep.</summary>
-        internal const string @LayoutManager_DeepRecursion = "LayoutManager_DeepRecursion";
-        /// <summary>Cannot call Arrange on a UIElement with infinite size or NaN. Parent of type '{0}' invokes the UIElement. Arrange called on element of type '{1}'.</summary>
-        internal const string @UIElement_Layout_InfinityArrange = "UIElement_Layout_InfinityArrange";
-        /// <summary>UIElement.Measure(availableSize) cannot be called with NaN size.</summary>
-        internal const string @UIElement_Layout_NaNMeasure = "UIElement_Layout_NaNMeasure";
-        /// <summary>Layout measurement override of element '{0}' should not return PositiveInfinity as its DesiredSize, even if Infinity is passed in as available size.</summary>
-        internal const string @UIElement_Layout_PositiveInfinityReturned = "UIElement_Layout_PositiveInfinityReturned";
-        /// <summary>Layout measurement override of element '{0}' should not return NaN values as its DesiredSize.</summary>
-        internal const string @UIElement_Layout_NaNReturned = "UIElement_Layout_NaNReturned";
-        /// <summary>Width and Height cannot be negative.</summary>
-        internal const string @Rect_WidthAndHeightCannotBeNegative = "Rect_WidthAndHeightCannotBeNegative";
-        /// <summary>'{0}' destination is multidimensional. Expected array of rank 1.</summary>
-        internal const string @GridCollection_DestArrayInvalidRank = "GridCollection_DestArrayInvalidRank";
-        /// <summary>'{0}' is less than the array's lower bound.</summary>
-        internal const string @GridCollection_DestArrayInvalidLowerBound = "GridCollection_DestArrayInvalidLowerBound";
-        /// <summary>'{0}' destination not long enough.</summary>
-        internal const string @GridCollection_DestArrayInvalidLength = "GridCollection_DestArrayInvalidLength";
-        /// <summary>Index is out of collection's boundary.</summary>
-        internal const string @TableCollectionOutOfRange = "TableCollectionOutOfRange";
-        /// <summary>Count must be zero or positive.</summary>
-        internal const string @TableCollectionCountNeedNonNegNum = "TableCollectionCountNeedNonNegNum";
-        /// <summary>Requested range is out of collection's boundary.</summary>
-        internal const string @TableCollectionRangeOutOfRange = "TableCollectionRangeOutOfRange";
-        /// <summary>Cannot modify '{0}' in read-only state.</summary>
-        internal const string @GridCollection_CannotModifyReadOnly = "GridCollection_CannotModifyReadOnly";
-        /// <summary>'{0}' must be type '{1}'.</summary>
-        internal const string @GridCollection_MustBeCertainType = "GridCollection_MustBeCertainType";
-        /// <summary>'{0}' already belongs to another '{1}'.</summary>
-        internal const string @GridCollection_InOtherCollection = "GridCollection_InOtherCollection";
-        /// <summary>Collection was disposed, enumerator operations are not valid.</summary>
-        internal const string @EnumeratorCollectionDisposed = "EnumeratorCollectionDisposed";
-        /// <summary>'{0}' parameter cannot be NaN.</summary>
-        internal const string @InvalidCtorParameterNoNaN = "InvalidCtorParameterNoNaN";
-        /// <summary>'{0}' parameter cannot be Infinity.</summary>
-        internal const string @InvalidCtorParameterNoInfinity = "InvalidCtorParameterNoInfinity";
-        /// <summary>'{0}' parameter is not valid. Valid values are GridUnitType.Auto, GridUnitType.Pixel, or GridUnitType.Star.</summary>
-        internal const string @InvalidCtorParameterUnknownGridUnitType = "InvalidCtorParameterUnknownGridUnitType";
-        /// <summary>'{0}' string cannot be converted to Length.</summary>
-        internal const string @LengthFormatError = "LengthFormatError";
 
     }
 }

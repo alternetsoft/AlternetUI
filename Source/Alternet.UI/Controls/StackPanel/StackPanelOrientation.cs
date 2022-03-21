@@ -8,12 +8,12 @@ namespace Alternet.UI
     public enum StackPanelOrientation
     {
         /// <summary>
+        /// Stack layout should be vertically oriented.
+        /// </summary>
+        Vertical,
+        /// <summary>
         /// Stack layout should be horizontally oriented.
         /// </summary>
         Horizontal,
-        /// <summary>
-        /// Stack layout should be vertically oriented.
-        /// </summary>
-        Vertical
     }
 }
