@@ -619,7 +619,7 @@ namespace Alternet.UI
         /// Note that this method resets layout tarnsform set by <see cref="InternalSetLayoutTransform"/> method,
         /// so only one of these two should be used by the parent.
         /// </summary>
-        private void SetLayoutOffset(Vector offset, Size oldRenderSize)
+        protected virtual void SetLayoutOffset(Vector offset, Size oldRenderSize)
         {
             //
             // Attempt to avoid changing the transform more often than needed,
