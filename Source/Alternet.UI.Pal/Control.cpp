@@ -42,6 +42,7 @@ namespace Alternet::UI
             _wxWindow->Unbind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
             _wxWindow->Unbind(wxEVT_LEFT_DOWN, &Control::OnMouseLeftButtonDown, this);
             _wxWindow->Unbind(wxEVT_LEFT_UP, &Control::OnMouseLeftButtonUp, this);
+            _wxWindow->Unbind(wxEVT_SIZE, &Control::OnSizeChanged, this);
 
             if (!GetDoNotDestroyWxWindow())
                 _wxWindow->Destroy();
@@ -116,6 +117,7 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
         _wxWindow->Bind(wxEVT_LEFT_DOWN, &Control::OnMouseLeftButtonDown, this);
         _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftButtonUp, this);
+        _wxWindow->Bind(wxEVT_SIZE, &Control::OnSizeChanged, this);
 
         OnWxWindowCreated();
         _delayedValues.ApplyIfPossible();
@@ -339,7 +341,18 @@ namespace Alternet::UI
 
     Size Control::GetClientSize()
     {
-        return SizeToClientSize(GetBounds().GetSize()); // todo: cache client size.
+        if (!GetFlag(ControlFlags::ClientSizeCacheValid))
+        {
+            _clientSizeCache = GetClientSizeCore();
+            SetFlag(ControlFlags::ClientSizeCacheValid, true);
+        }
+
+        return _clientSizeCache;
+    }
+
+    Size Control::GetClientSizeCore()
+    {
+        return SizeToClientSize(GetBounds().GetSize());
     }
 
     void Control::SetClientSize(const Size& value)
@@ -478,6 +491,13 @@ namespace Alternet::UI
             return;
 
         RaiseEvent(ControlEvent::VisibleChanged);
+    }
+
+    void Control::OnSizeChanged(wxSizeEvent& event)
+    {
+        event.Skip();
+
+        SetFlag(ControlFlags::ClientSizeCacheValid, false);
     }
 
     void Control::UpdateWxWindowParent()

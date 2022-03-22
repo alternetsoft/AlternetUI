@@ -60,6 +60,7 @@ namespace Alternet::UI
             None = 0,
             DoNotDestroyWxWindow = 1 << 0,
             CreatingWxWindow = 1 << 1,
+            ClientSizeCacheValid = 1 << 2,
         };
 
         wxWindow* _wxWindow = nullptr;
@@ -67,6 +68,7 @@ namespace Alternet::UI
         std::vector<Control*> _children;
         ControlFlags _flags = ControlFlags::None;
         int _beginUpdateCount = 0;
+        Size _clientSizeCache;
 
         DelayedFlags<Control, DelayedControlFlags> _delayedFlags;
         DelayedValue<Control, Rect> _bounds;
@@ -101,9 +103,12 @@ namespace Alternet::UI
         void OnMouseLeftButtonDown(wxMouseEvent& event);
         void OnMouseLeftButtonUp(wxMouseEvent& event);
         void OnVisibleChanged(wxShowEvent& event);
+        void OnSizeChanged(wxSizeEvent& event);
 
         void UpdateWxWindowParent();
         void DestroyWxWindow(bool finalDestroy = false);
+
+        Size GetClientSizeCore();
     };
 }
 

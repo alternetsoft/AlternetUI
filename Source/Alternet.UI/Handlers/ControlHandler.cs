@@ -52,12 +52,15 @@ namespace Alternet.UI
             get => NativeControl != null ? NativeControl.Bounds : bounds;
             set
             {
+                var oldBounds = Bounds;
+                
                 if (NativeControl != null)
                     NativeControl.Bounds = value;
                 else
                     bounds = value;
 
-                PerformLayout(); // todo: use event
+                if (oldBounds != Bounds)
+                    PerformLayout(); // todo: use event
             }
         }
 
