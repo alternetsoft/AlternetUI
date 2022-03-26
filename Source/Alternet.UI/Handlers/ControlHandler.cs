@@ -579,6 +579,20 @@ namespace Alternet.UI
         {
         }
 
+        private void RaiseChildInserted(int childIndex, Control childControl)
+        {
+            // todo: the childIndex passed to this method is wrong as should take VisualChildren into account.
+            Control.RaiseChildInserted(childIndex, childControl);
+            OnChildInserted(childIndex, childControl);
+        }
+
+        private void RaiseChildRemoved(int childIndex, Control childControl)
+        {
+            // todo: the childIndex passed to this method is wrong as should take VisualChildren into account.
+            Control.RaiseChildRemoved(childIndex, childControl);
+            OnChildRemoved(childIndex, childControl);
+        }
+
         /// <summary>
         /// Called when a <see cref="Control"/> is inserted into the <see cref="Control.Children"/> or <see cref="VisualChildren"/> collection.
         /// </summary>
@@ -610,7 +624,7 @@ namespace Alternet.UI
         private void ApplyChildren()
         {
             for (var i = 0; i < Control.Children.Count; i++)
-                OnChildInserted(i, Control.Children[i]);
+                RaiseChildInserted(i, Control.Children[i]);
         }
 
         private void VisualChildren_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
@@ -618,7 +632,7 @@ namespace Alternet.UI
             e.Item.Parent = Control;
             e.Item.Handler.IsVisualChild = true;
 
-            OnChildInserted(e.Index, e.Item);
+            RaiseChildInserted(e.Index, e.Item);
             PerformLayout();
         }
 
@@ -627,7 +641,7 @@ namespace Alternet.UI
             e.Item.Parent = null;
             e.Item.Handler.IsVisualChild = false;
 
-            OnChildRemoved(e.Index, e.Item);
+            RaiseChildRemoved(e.Index, e.Item);
             PerformLayout();
         }
 
@@ -851,13 +865,13 @@ namespace Alternet.UI
 
         private void Children_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
         {
-            OnChildInserted(e.Index, e.Item);
+            RaiseChildInserted(e.Index, e.Item);
             PerformLayout();
         }
 
         private void Children_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
         {
-            OnChildRemoved(e.Index, e.Item);
+            RaiseChildRemoved(e.Index, e.Item);
             PerformLayout();
         }
 

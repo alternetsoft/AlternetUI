@@ -620,6 +620,24 @@ namespace Alternet.UI
             RaiseLayoutUpdated();
         }
 
+        /// <summary>
+        /// Called when a <see cref="Control"/> is inserted into the <see cref="Control.Children"/> or <see cref="ControlHandler.VisualChildren"/> collection.
+        /// </summary>
+        protected virtual void OnChildInserted(int childIndex, Control childControl)
+        {
+        }
+
+        /// <summary>
+        /// Called when a <see cref="Control"/> is removed from the <see cref="Control.Children"/> or <see cref="ControlHandler.VisualChildren"/> collections.
+        /// </summary>
+        protected virtual void OnChildRemoved(int childIndex, Control childControl)
+        {
+        }
+
+        internal void RaiseChildInserted(int childIndex, Control childControl) => OnChildInserted(childIndex, childControl);
+
+        internal void RaiseChildRemoved(int childIndex, Control childControl) => OnChildInserted(childIndex, childControl);
+
         internal void InvokeOnLayout()
         {
             OnLayout();

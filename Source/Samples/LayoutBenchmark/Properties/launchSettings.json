@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LayoutBenchmark": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

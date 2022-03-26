@@ -547,25 +547,22 @@ namespace Alternet.UI
             return (gridDesiredSize);
         }
 
-        class GridHandler : ControlHandler<Grid>
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        protected override void OnChildInserted(int childIndex, Control childControl)
         {
-            protected override void OnChildInserted(int childIndex, Control childControl)
-            {
-                base.OnChildInserted(childIndex, childControl);
-                Control.OnChildrenChanged();
-            }
-
-            protected override void OnChildRemoved(int childIndex, Control childControl)
-            {
-                base.OnChildRemoved(childIndex, childControl);
-                Control.OnChildrenChanged();
-            }
+            base.OnChildInserted(childIndex, childControl);
+            OnChildrenChanged();
         }
 
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        protected override void OnChildRemoved(int childIndex, Control childControl)
         {
-            return new GridHandler();
+            base.OnChildRemoved(childIndex, childControl);
+            OnChildrenChanged();
         }
 
         /// <inheritdoc/>
