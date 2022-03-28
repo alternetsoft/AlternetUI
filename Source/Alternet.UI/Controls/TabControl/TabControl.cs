@@ -93,6 +93,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc />
-        protected override IEnumerable<Control> LogicalChildrenCollection => Pages;
+        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Pages;
     }
 }

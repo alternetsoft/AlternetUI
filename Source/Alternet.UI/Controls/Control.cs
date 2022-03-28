@@ -312,8 +312,6 @@ namespace Alternet.UI
         /// If <c>false</c>, the <see cref="Paint"/> event is not raised.</value>
         public bool UserPaint { get; set; } // todo: rethink design of this
 
-        protected internal override IEnumerator LogicalChildren => LogicalChildrenCollection.GetEnumerator();
-
         /// <summary>
         /// Gets or sets the outer margin of an control.
         /// </summary>
@@ -446,11 +444,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Returns a collection of controls which can be treated as "logical children" of this control.
-        /// </summary>
-        protected virtual IEnumerable<Control> LogicalChildrenCollection => Children; // todo: consider changing this to Site.GetService()
-
         private IControlHandlerFactory? ControlHandlerFactory { get; set; }
 
         /// <summary>
@@ -465,29 +458,6 @@ namespace Alternet.UI
 
             OnClick(e);
             Click?.Invoke(this, e);
-        }
-
-        /// <summary>
-        /// Recursively searches all <see cref="LogicalChildrenCollection"/> for a control with the specified name, and returns that control if found.
-        /// </summary>
-        /// <param name="name">The name of the control to be found.</param>
-        /// <returns>The found control, or <c>null</c> if no control with the provided name is found.</returns>
-        public Control? TryFindControl(string name)
-        {
-            if (name is null)
-                throw new ArgumentNullException(nameof(name));
-
-            if (Name == name)
-                return this;
-
-            foreach (var child in LogicalChildrenCollection)
-            {
-                var result = child.TryFindControl(name);
-                if (result != null)
-                    return result;
-            }
-
-            return null;
         }
 
         /// <summary>
@@ -509,21 +479,6 @@ namespace Alternet.UI
         public void Hide() => Visible = false;
 
         /// <summary>
-        /// Recursively searches all <see cref="LogicalChildrenCollection"/> for a control with the specified name,
-        /// and throws an exception if the requested control is not found.
-        /// </summary>
-        /// <param name="name">The name of the control to be found.</param>
-        /// <returns>The requested resource. If no control with the provided name was found, an exception is thrown.</returns>
-        /// <exception cref="InvalidOperationException">A control with the provided name was found.</exception>
-        public Control FindControl(string name)
-        {
-            if (name is null)
-                throw new ArgumentNullException(nameof(name));
-
-            return TryFindControl(name) ?? throw new InvalidOperationException($"Control with name '{name}' was not found.");
-        }
-
-        /// <summary>
         /// Creates the <see cref="DrawingContext"/> for the control.
         /// </summary>
         /// <returns>The <see cref="DrawingContext"/> for the control.</returns>
@@ -536,6 +491,11 @@ namespace Alternet.UI
         /// and then call <see cref="Dispose"/> when you are finished using it.
         /// </remarks>
         public DrawingContext CreateDrawingContext() => Handler.CreateDrawingContext();
+
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Children;
 
         /// <summary>
         /// Causes the control to redraw.

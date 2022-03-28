@@ -49,7 +49,7 @@ using System;
 
                         w.WriteLine();
                         foreach (var namedObject in namedObjects)
-                            w.WriteLine($"{namedObject.Name} = ({namedObject.TypeFullName})FindControl(\"{namedObject.Name}\");");
+                            w.WriteLine($"{namedObject.Name} = ({namedObject.TypeFullName})FindElement(\"{namedObject.Name}\");");
 
                         w.WriteLine();
                         foreach (var eventBinding in document.EventBindings)

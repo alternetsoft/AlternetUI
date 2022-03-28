@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 
 namespace Alternet.UI
@@ -32,6 +33,8 @@ namespace Alternet.UI
         static Dictionary<Control, int> controlColumnSpans = new Dictionary<Control, int>();
         static Dictionary<Control, int> controlRowSpans = new Dictionary<Control, int>();
         static Dictionary<Control, bool> controlIsSharedSizeScopes = new Dictionary<Control, bool>();
+
+        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => base.LogicalChildrenCollection.Concat(ColumnDefinitions).Concat(RowDefinitions);
 
         /// <summary>
         /// Sets a value that indicates which column child control within a <see cref="Grid"/> should appear in.

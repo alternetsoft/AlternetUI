@@ -17,7 +17,53 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The name of the control. The default is <c>null</c>.</value>
         public string? Name { get; set; } // todo: maybe use Site.Name?
-        
+
+        /// <summary>
+        /// Recursively searches all <see cref="LogicalChildrenCollection"/> for a control with the specified name, and returns that control if found.
+        /// </summary>
+        /// <param name="name">The name of the control to be found.</param>
+        /// <returns>The found control, or <c>null</c> if no control with the provided name is found.</returns>
+        public FrameworkElement? TryFindElement(string name)
+        {
+            if (name is null)
+                throw new ArgumentNullException(nameof(name));
+
+            if (Name == name)
+                return this;
+
+            foreach (var child in LogicalChildrenCollection)
+            {
+                var result = child.TryFindElement(name);
+                if (result != null)
+                    return result;
+            }
+
+            return null;
+        }
+
+
+        /// <summary>
+        /// Recursively searches all <see cref="LogicalChildrenCollection"/> for a control with the specified name,
+        /// and throws an exception if the requested control is not found.
+        /// </summary>
+        /// <param name="name">The name of the control to be found.</param>
+        /// <returns>The requested resource. If no control with the provided name was found, an exception is thrown.</returns>
+        /// <exception cref="InvalidOperationException">A control with the provided name was found.</exception>
+        public UIElement FindElement(string name)
+        {
+            if (name is null)
+                throw new ArgumentNullException(nameof(name));
+
+            return TryFindElement(name) ?? throw new InvalidOperationException($"Element with name '{name}' was not found.");
+        }
+
+        static FrameworkElement[] emptyLogicalChildren = new FrameworkElement[0];
+
+        /// <summary>
+        /// Returns a collection of elements which can be treated as "logical children" of this element.
+        /// </summary>
+        protected virtual IEnumerable<FrameworkElement> LogicalChildrenCollection => emptyLogicalChildren;
+
         /// <summary>
         ///     BindingGroup DependencyProperty
         /// </summary>
@@ -416,10 +462,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Returns enumerator to logical children
         /// </summary>
-        protected internal virtual IEnumerator LogicalChildren
-        {
-            get { return null; }
-        }
+        protected internal virtual IEnumerator LogicalChildren => LogicalChildrenCollection.GetEnumerator();
 
         /// <summary>
         ///     Allows adjustment to the event source

@@ -1,0 +1,90 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="LayoutSample.GridLayoutPropertiesWindow"
+		xmlns:local="clr-namespace:LayoutSample"
+        Title="Grid Layout Properties" Width="800" Height="500" Padding="10">
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+
+		<StackPanel Grid.Column="0" Margin="0,0,20,0">
+			<GroupBox Title="Button">
+				<StackPanel Orientation="Vertical" Padding="5">
+					<Button Text="Increase Margin" Click="IncreaseButtonMarginButton_Click" Margin="0,0,0,5" Padding="5" />
+					<Button Text="Increase Padding" Click="IncreaseButtonPaddingButton_Click" Margin="0,0,0,5" Padding="5" />
+				</StackPanel>
+			</GroupBox>
+			<GroupBox Title="Container">
+				<StackPanel Orientation="Vertical" Padding="5">
+					<Button Text="Increase Margin" Click="IncreaseContainerMarginButton_Click" Margin="0,0,0,5" Padding="5" />
+					<Button Text="Increase Padding" Click="IncreaseContainerPaddingButton_Click" Margin="0,0,0,5" Padding="5" />
+
+					<local:AlignmentControl Name="containerAlignmentControl"/>
+				</StackPanel>
+			</GroupBox>
+		</StackPanel>
+
+		<GroupBox Grid.Column="1" Title="Subject Container" Name="subjectGroupBox" VerticalAlignment="Top" HorizontalAlignment="Left">
+			<Grid Name="subjectGrid">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto" Name="subjectGridColumn"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto" Name="subjectGridRow"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+
+				<Label Grid.Column="1" Text="Auto" />
+				<Label Grid.Column="2" Text="Auto" Name="gridColumnWidthLabel" />
+				<Label Grid.Column="3" Text="*" />
+
+				<Label Grid.Row="1" Text="Auto" />
+				<Label Grid.Row="2" Text="Auto" Name="gridRowWidthLabel" />
+				<Label Grid.Row="3" Text="*" />
+
+				<Border Grid.Column="1" Grid.Row="1">
+					<Label Text="(1, 1)" />
+				</Border>
+
+				<Border Grid.Column="2" Grid.Row="1">
+					<Label Text="(2, 1)" />
+				</Border>
+
+				<Border Grid.Column="3" Grid.Row="1">
+					<Label Text="(3, 1)" />
+				</Border>
+
+				<Border Grid.Column="1" Grid.Row="2">
+					<Label Text="(1, 2)" />
+				</Border>
+
+				<Border Grid.Column="2" Grid.Row="2">
+					<Button Text="Subject Button" Name="subjectButton"/>
+				</Border>
+
+				<Border Grid.Column="3" Grid.Row="2">
+					<Label Text="(3, 2)" />
+				</Border>
+
+				<Border Grid.Column="1" Grid.Row="3">
+					<Label Text="(1, 2)" />
+				</Border>
+
+				<Border Grid.Column="2" Grid.Row="3">
+					<Label Text="(2, 2)" />
+				</Border>
+
+				<Border Grid.Column="3" Grid.Row="3">
+					<Label Text="(3, 2)" />
+				</Border>
+			</Grid>
+		</GroupBox>
+	</Grid>
+</Window>

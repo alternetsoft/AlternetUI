@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Defines the functionality that is used by the <see cref="ColumnDefinitionCollection"/> and
     /// <see cref="RowDefinitionCollection"/> classes. This is an abstract class.
     /// </summary>
-    public abstract class DefinitionBase
+    public abstract class DefinitionBase : FrameworkElement
     {
         internal DefinitionBase(bool isColumnDefinition)
         {

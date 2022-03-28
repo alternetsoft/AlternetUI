@@ -21,5 +21,11 @@ namespace LayoutSample
             var window = new StackLayoutPropertiesWindow();
             window.Show();
         }
+
+        private void ShowGridLayoutPropertiesButton_Click(object? sender, EventArgs e)
+        {
+            var window = new GridLayoutPropertiesWindow();
+            window.Show();
+        }
     }
 }
