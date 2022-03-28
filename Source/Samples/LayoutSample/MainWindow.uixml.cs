@@ -16,9 +16,9 @@ namespace LayoutSample
             window.Show();
         }
 
-        private void ShowLayoutPropertiesButton_Click(object? sender, EventArgs e)
+        private void ShowStackLayoutPropertiesButton_Click(object? sender, EventArgs e)
         {
-            var window = new LayoutPropertiesWindow();
+            var window = new StackLayoutPropertiesWindow();
             window.Show();
         }
     }

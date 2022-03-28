@@ -28,7 +28,7 @@
 
     <ItemGroup>
       <None Remove="Grid10x10Window.uixml" />
-      <None Remove="LayoutPropertiesWindow.uixml" />
+      <None Remove="StackLayoutPropertiesWindow.uixml" />
     </ItemGroup>
 
     <ItemGroup>

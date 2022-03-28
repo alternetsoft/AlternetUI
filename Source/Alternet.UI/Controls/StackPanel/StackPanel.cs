@@ -28,8 +28,8 @@ namespace Alternet.UI
 
                 orientation = value;
 
-                PerformLayout();
                 OnOrientationChanged(EventArgs.Empty);
+                PerformLayout();
             }
         }
 

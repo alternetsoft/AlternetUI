@@ -4,6 +4,6 @@
         Title="Layout Sample" Padding="10">
   <StackPanel>
 	  <Button Text="Grid 10x10" Margin="0,0,0,10" Click="ShowGrid10x10Button_Click" />
-	  <Button Text="Layout Properties" Margin="0,0,0,10" Click="ShowLayoutPropertiesButton_Click" />
+	  <Button Text="Stack Layout Properties" Margin="0,0,0,10" Click="ShowStackLayoutPropertiesButton_Click" />
   </StackPanel>
 </Window>
