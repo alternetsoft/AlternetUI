@@ -26,13 +26,15 @@ namespace DrawingSample
         private TabPage CreateTabPage(DrawingPage page)
         {
             var tabPage = new TabPage { Title = page.Name };
-            var panel = new StackPanel { Orientation = StackPanelOrientation.Horizontal };
-            page.SettingsControl.Width = 270;
-            panel.Children.Add(page.SettingsControl);
-            var canvas = new CanvasControl { Width = 705 };
-            panel.Children.Add(canvas);
+            var grid = new Grid();
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(270) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            grid.Children.Add(page.SettingsControl);
+            var canvas = new CanvasControl();
+            grid.Children.Add(canvas);
+            Grid.SetColumn(canvas, 1);
             page.Canvas = canvas;
-            tabPage.Children.Add(panel);
+            tabPage.Children.Add(grid);
             return tabPage;
         }
     }
