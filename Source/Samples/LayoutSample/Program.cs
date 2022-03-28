@@ -1,7 +1,7 @@
 ﻿using Alternet.UI;
 using System;
 
-namespace LayoutBenchmark
+namespace LayoutSample
 {
     internal class Program
     {

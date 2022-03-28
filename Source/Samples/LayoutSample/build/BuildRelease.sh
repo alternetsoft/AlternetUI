@@ -3,5 +3,5 @@ pushd ../../../Alternet.UI.Pal/build
 ./release.sh
 popd
 pushd ..
-dotnet build LayoutBenchmark.csproj -c Release
+dotnet build LayoutSample.csproj -c Release
 popd

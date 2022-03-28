@@ -278,15 +278,21 @@ namespace Alternet.UI
         {
             if (Control.Children.Count == 0 && VisualChildren.Count == 0)
             {
-                var s = NativeControl?.GetPreferredSize(availableSize) ?? new Size();
-                return new Size(
-                    double.IsNaN(Control.Width) ? s.Width : Control.Width,
-                    double.IsNaN(Control.Height) ? s.Height : Control.Height);
+                return GetNativeControlSize(availableSize);
             }
             else
             {
                 return GetChildrenMaxPreferredSize(availableSize);
             }
+        }
+
+        private protected Size GetNativeControlSize(Size availableSize)
+        {
+            var s = NativeControl?.GetPreferredSize(availableSize) ?? new Size();
+            s += Control.Padding.Size;
+            return new Size(
+                double.IsNaN(Control.Width) ? s.Width : Control.Width,
+                double.IsNaN(Control.Height) ? s.Height : Control.Height);
         }
 
         /// <summary>

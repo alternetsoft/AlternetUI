@@ -1,8 +1,0 @@
-<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
-        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        x:Class="LayoutBenchmark.MainWindow"
-        Title="Layout Benchmark">
-  <StackPanel>
-    <Button Text="Show Window" Margin="20" Click="ShowWindowButton_Click" />
-  </StackPanel>
-</Window>

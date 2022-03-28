@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "LayoutBenchmark": {
+    "LayoutSample": {
       "commandName": "Project",
       "nativeDebugging": true
     }

@@ -1,11 +1,11 @@
 using System;
 using Alternet.UI;
 
-namespace LayoutBenchmark
+namespace LayoutSample
 {
-    public partial class TestWindow : Window
+    public partial class Grid10x10Window : Window
     {
-        public TestWindow()
+        public Grid10x10Window()
         {
             InitializeComponent();
 
