@@ -1,0 +1,25 @@
+<Control xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="LayoutSample.AlignmentControl">
+
+	<GroupBox Title="Alignment" Padding="5,3,3,3">
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition />
+				<RowDefinition />
+			</Grid.RowDefinitions>
+
+			<Label Grid.Column="0" Grid.Row="0" Text="Horizontal:" VerticalAlignment="Center" />
+			<ComboBox Grid.Column="1" Grid.Row="0" SelectedItemChanged="HorizontalAlignmentComboBox_SelectedItemChanged"
+					  Margin="5" Name="horizontalAlignmentComboBox" IsEditable="false" />
+
+			<Label Grid.Column="0" Grid.Row="1" Text="Vertical:"  VerticalAlignment="Center" />
+			<ComboBox Grid.Column="1" Grid.Row="1" SelectedItemChanged="VerticalAlignmentComboBox_SelectedItemChanged"
+					  Margin="5" Name="verticalAlignmentComboBox" IsEditable="false" />
+		</Grid>
+	</GroupBox>
+</Control>

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Alternet.Base.Collections
@@ -41,6 +42,28 @@ namespace Alternet.Base.Collections
             base.InsertItem(index, item);
 
             OnItemInserted(new CollectionChangeEventArgs<T>(index, item));
+        }
+
+        /// <summary>
+        /// Adds the elements of the specified <see cref="IEnumerable{T}"/> to the end of the collection.
+        /// </summary>
+        /// <param name="collection">
+        /// The <see cref="IEnumerable{T}"/> whose elements should be added to the end of the collection.
+        /// The value itself cannot be <c>null</c>, but it can contain elements that are <c>null</c>, if type <c>T</c> is a reference type.
+        /// </param>
+        /// <exception cref="NullReferenceException">
+        /// <c>collection</c> is <c>null</c>.
+        /// </exception>
+        /// <remarks>
+        /// The order of the elements in the <see cref="IEnumerable{T}"/> is preserved in the collection.
+        /// </remarks>
+        public void AddRange(IEnumerable<T> collection)
+        {
+            if (collection is null)
+                throw new ArgumentNullException(nameof(collection));
+
+            foreach (var item in collection)
+                Add(item);
         }
 
         /// <summary>

@@ -8,6 +8,8 @@ namespace LayoutSample
         public StackLayoutPropertiesWindow()
         {
             InitializeComponent();
+
+            containerAlignmentControl.Control = subjectGroupBox;
         }
 
         Thickness IncreaseThickness(Thickness value)
