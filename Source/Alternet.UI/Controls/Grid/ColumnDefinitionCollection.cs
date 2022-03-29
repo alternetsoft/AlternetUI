@@ -431,6 +431,7 @@ namespace Alternet.UI
 		{
 			this._items[index] = value;
 			value.Index = index;
+			value.Parent = _owner;
 			//this._owner.AddLogicalChild(value); //yezo
 			//value.OnEnterParentTree();
 		}
@@ -440,6 +441,7 @@ namespace Alternet.UI
 			value.OnExitParentTree();
 			this._items[value.Index] = null;
 			value.Index = -1;
+			value.Parent = null;
 			//this._owner.RemoveLogicalChild(value); yezo
 		}
 

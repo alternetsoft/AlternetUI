@@ -10,12 +10,27 @@ namespace LayoutSample
             InitializeComponent();
 
             containerAlignmentControl.Control = subjectGroupBox;
+            
+            subjectColumnWidthControl.Value = subjectGridColumn.Width;
+            subjectRowHeightControl.Value = subjectGridRow.Height;
         }
 
         Thickness IncreaseThickness(Thickness value)
         {
             const int D = 10;
             return new Thickness(value.Left + D, value.Top + D, value.Right + D, value.Bottom + D);
+        }
+
+        private void SubjectColumnWidthControl_ValueChanged(object? sender, EventArgs e)
+        {
+            subjectGridColumn.Width = subjectColumnWidthControl.Value;
+            subjectColumnWidthLabel.Text = subjectColumnWidthControl.Value.ToString();
+        }
+
+        private void SubjectRowHeightControl_ValueChanged(object? sender, EventArgs e)
+        {
+            subjectGridRow.Height = subjectRowHeightControl.Value;
+            subjectRowHeightLabel.Text = subjectRowHeightControl.Value.ToString();
         }
 
         private void IncreaseButtonMarginButton_Click(object? sender, EventArgs e) =>

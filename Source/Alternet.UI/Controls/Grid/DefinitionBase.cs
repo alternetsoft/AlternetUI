@@ -124,7 +124,7 @@ namespace Alternet.UI
                     }
                     else
                     {
-                        //parentGrid.InvalidateMeasure(); // yezo
+                        parentGrid.PerformLayout();
                     }
                 }
             }
@@ -146,7 +146,7 @@ namespace Alternet.UI
             if (InParentLogicalTree)
             {
                 Grid parentGrid = (Grid)Parent;
-                //parentGrid.InvalidateMeasure(); // yezo
+                parentGrid.PerformLayout();
             }
         }
 
@@ -172,7 +172,7 @@ namespace Alternet.UI
             if (InParentLogicalTree)
             {
                 Grid parentGrid = (Grid)Parent;
-                // parentGrid.InvalidateMeasure(); yezo
+                parentGrid.PerformLayout();
             }
         }
 
@@ -819,7 +819,7 @@ namespace Alternet.UI
                     if (!measureIsValid)
                     {
                         Grid parentGrid = (Grid)definitionBase.Parent;
-                        // parentGrid.InvalidateMeasure(); // yezo
+                        parentGrid.PerformLayout();
                     }
                     else if (!DoubleUtil.AreClose(sharedMinSize, definitionBase.SizeCache))
                     {
@@ -828,7 +828,6 @@ namespace Alternet.UI
                         //  it contains up-to-date final size
                         Grid parentGrid = (Grid)definitionBase.Parent;
                         
-                        //parentGrid.InvalidateArrange(); // yezo
                         parentGrid.PerformLayout();
                     }
 
