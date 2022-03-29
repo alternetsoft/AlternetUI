@@ -14,9 +14,9 @@ namespace LayoutSample
                 new[]
                 {
                     GridLength.Auto,
-                    new GridLength(50),
                     new GridLength(100),
                     new GridLength(150),
+                    new GridLength(200),
                     new GridLength(2, GridUnitType.Star),
                 }.Cast<object>());
 

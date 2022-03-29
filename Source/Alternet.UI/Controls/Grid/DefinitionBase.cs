@@ -119,13 +119,8 @@ namespace Alternet.UI
                     Grid parentGrid = (Grid)Parent;
 
                     if (((GridLength)oldValue).GridUnitType != ((GridLength)newValue).GridUnitType)
-                    {
                         parentGrid.InvalidateCells();
-                    }
-                    else
-                    {
-                        parentGrid.PerformLayout();
-                    }
+                    parentGrid.PerformLayout();
                 }
             }
         }

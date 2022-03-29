@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="LayoutSample.GridLayoutPropertiesWindow"
 		xmlns:local="clr-namespace:LayoutSample"
-        Title="Grid Layout Properties" Width="800" Height="500" Padding="10">
+        Title="Grid Layout Properties" Width="800" Height="600" Padding="10">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />
@@ -28,6 +28,9 @@
 				<StackPanel Orientation="Vertical" Padding="5">
 					<local:GridLengthControl Name="subjectColumnWidthControl" Label="Column Width:" ValueChanged="SubjectColumnWidthControl_ValueChanged"/>
 					<local:GridLengthControl Name="subjectRowHeightControl" Label="Row Height:" ValueChanged="SubjectRowHeightControl_ValueChanged"/>
+
+					<Button Text="Add Column" Click="AddGridColumnButton_Click" Margin="0,5,0,5" Padding="5" />
+					<Button Text="Add Row" Click="AddGridRowButton_Click" Margin="0,0,0,5" Padding="5" />
 				</StackPanel>
 			</GroupBox>
 		</StackPanel>
