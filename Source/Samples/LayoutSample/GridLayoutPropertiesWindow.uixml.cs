@@ -93,7 +93,7 @@ namespace LayoutSample
                 Grid.SetColumn(lengthLabel, 0);
                 Grid.SetRow(lengthLabel, rowIndex);
 
-                for (int columnIndex = 1; columnIndex < subjectGrid.RowDefinitions.Count; columnIndex++)
+                for (int columnIndex = 1; columnIndex < subjectGrid.ColumnDefinitions.Count; columnIndex++)
                 {
                     var border = new Border();
                     subjectGrid.Children.Add(border);
