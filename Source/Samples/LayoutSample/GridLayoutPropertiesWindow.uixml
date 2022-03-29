@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="LayoutSample.GridLayoutPropertiesWindow"
 		xmlns:local="clr-namespace:LayoutSample"
-        Title="Grid Layout Properties" Width="800" Height="600" Padding="10">
+        Title="Grid Layout Properties" Width="800" Height="650" Padding="10">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />
@@ -12,14 +12,14 @@
 		<StackPanel Grid.Column="0" Margin="0,0,20,0">
 			<GroupBox Title="Button">
 				<StackPanel Orientation="Vertical" Padding="5">
-					<Button Text="Increase Margin" Click="IncreaseButtonMarginButton_Click" Margin="0,0,0,5" Padding="5" />
-					<Button Text="Increase Padding" Click="IncreaseButtonPaddingButton_Click" Margin="0,0,0,5" Padding="5" />
+					<Button Text="Increase Margin" Click="IncreaseButtonMarginButton_Click" Margin="0,0,0,5" />
+					<Button Text="Increase Padding" Click="IncreaseButtonPaddingButton_Click" Margin="0,0,0,5" />
 				</StackPanel>
 			</GroupBox>
 			<GroupBox Title="Container">
 				<StackPanel Orientation="Vertical" Padding="5">
-					<Button Text="Increase Margin" Click="IncreaseContainerMarginButton_Click" Margin="0,0,0,5" Padding="5" />
-					<Button Text="Increase Padding" Click="IncreaseContainerPaddingButton_Click" Margin="0,0,0,5" Padding="5" />
+					<Button Text="Increase Margin" Click="IncreaseContainerMarginButton_Click" Margin="0,0,0,5" />
+					<Button Text="Increase Padding" Click="IncreaseContainerPaddingButton_Click" Margin="0,0,0,5" />
 
 					<local:AlignmentControl Name="containerAlignmentControl"/>
 				</StackPanel>
@@ -29,8 +29,8 @@
 					<local:GridLengthControl Name="subjectColumnWidthControl" Label="Column Width:" ValueChanged="SubjectColumnWidthControl_ValueChanged"/>
 					<local:GridLengthControl Name="subjectRowHeightControl" Label="Row Height:" ValueChanged="SubjectRowHeightControl_ValueChanged"/>
 
-					<Button Text="Add Column" Click="AddGridColumnButton_Click" Margin="0,5,0,5" Padding="5" />
-					<Button Text="Add Row" Click="AddGridRowButton_Click" Margin="0,0,0,5" Padding="5" />
+					<Button Text="Add Column" Click="AddGridColumnButton_Click" Margin="0,5,0,5" />
+					<Button Text="Add Row" Click="AddGridRowButton_Click" Margin="0,0,0,5" />
 				</StackPanel>
 			</GroupBox>
 		</StackPanel>
