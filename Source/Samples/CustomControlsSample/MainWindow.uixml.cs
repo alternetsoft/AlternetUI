@@ -45,7 +45,7 @@ namespace CustomControlsSample
             SetBrush(Brushes.Pink);
         }
 
-        private void SetBrush(Brush b) => customDrawnControl!.Brush = customCompositeControl!.Brush = b;
+        private void SetBrush(Brush b) => customDrawnControl!.Brush = /*customCompositeControl!.Brush =*/ b;
 
         private void TextBox_TextChanged(object? sender, EventArgs e)
         {
@@ -54,7 +54,7 @@ namespace CustomControlsSample
 
         private void UpdateText()
         {
-            customDrawnControl!.Text = customCompositeControl!.Text = textBox!.Text;
+            customDrawnControl!.Text = /*customCompositeControl!.Text =*/ textBox!.Text;
         }
     }
 }

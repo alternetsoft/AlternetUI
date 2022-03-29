@@ -196,6 +196,7 @@
     <ClCompile Include="HatchBrush.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageList.cpp" />
+    <ClCompile Include="Label.cpp" />
     <ClCompile Include="ListBox.cpp" />
     <ClCompile Include="ListView.cpp" />
     <ClCompile Include="ManagedServerApi.cpp" />
@@ -233,6 +234,7 @@
     <ClInclude Include="Api\ImageList.Api.h" />
     <ClInclude Include="Api\InputStream.Api.h" />
     <ClInclude Include="Api\InputStream.h" />
+    <ClInclude Include="Api\Label.Api.h" />
     <ClInclude Include="Api\ListBox.Api.h" />
     <ClInclude Include="Api\ListView.Api.h" />
     <ClInclude Include="Api\MessageBox_.Api.h" />
@@ -265,6 +267,7 @@
     <ClInclude Include="HatchBrush.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageList.h" />
+    <ClInclude Include="Label.h" />
     <ClInclude Include="ListBox.h" />
     <ClInclude Include="ListView.h" />
     <ClInclude Include="MessageBox_.h" />
@@ -296,6 +299,7 @@
     <None Include="Api\HatchBrush.inc" />
     <None Include="Api\Image.inc" />
     <None Include="Api\ImageList.inc" />
+    <None Include="Api\Label.inc" />
     <None Include="Api\ListBox.inc" />
     <None Include="Api\ListView.inc" />
     <None Include="Api\MessageBox_.inc" />

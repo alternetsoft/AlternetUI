@@ -19,8 +19,8 @@
       <local:CustomDrawnControl Margin="0,10,0,10" Name="customDrawnControl" />
     </StackPanel>
 
-    <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+    <!--<StackPanel Orientation="Vertical" Margin="10,0,0,0">
       <local:CustomCompositeControl Margin="0,10,0,10" Name="customCompositeControl"/>
-    </StackPanel>
+    </StackPanel>-->
   </StackPanel>
 </Window>
