@@ -12,14 +12,14 @@
 		<StackPanel Grid.Column="0" Margin="0,0,20,0">
 			<GroupBox Title="Button">
 				<StackPanel Orientation="Vertical" Padding="5">
-					<Button Text="Increase Margin" Click="IncreaseButtonMarginButton_Click" Margin="0,0,0,5" Padding="5" />
-					<Button Text="Increase Padding" Click="IncreaseButtonPaddingButton_Click" Margin="0,0,0,5" Padding="5" />
+					<Button Text="Increase Margin" Click="IncreaseButtonMarginButton_Click" Margin="0,0,0,5" />
+					<Button Text="Increase Padding" Click="IncreaseButtonPaddingButton_Click" Margin="0,0,0,5" />
 				</StackPanel>
 			</GroupBox>
 			<GroupBox Title="Container">
 				<StackPanel Orientation="Vertical" Padding="5">
-					<Button Text="Increase Margin" Click="IncreaseContainerMarginButton_Click" Margin="0,0,0,5" Padding="5" />
-					<Button Text="Increase Padding" Click="IncreaseContainerPaddingButton_Click" Margin="0,0,0,5" Padding="5" />
+					<Button Text="Increase Margin" Click="IncreaseContainerMarginButton_Click" Margin="0,0,0,5" />
+					<Button Text="Increase Padding" Click="IncreaseContainerPaddingButton_Click" Margin="0,0,0,5" />
 
 					<CheckBox Text="Horizontal Layout" CheckedChanged="HorizontalContainerLayoutCheckBox_CheckedChanged" Margin="0,0,0,5" />
 					<local:AlignmentControl Name="containerAlignmentControl"/>
