@@ -2,21 +2,21 @@ AlterNET UI Roadmap
 
 0.2-beta (basic infrastructure release):
     - adopt from WPF:
-        - dependency properties
-        - routed events
-        - bindings
-        - layout
-        - styles
+        + dependency properties
+        + routed events
+        + bindings
+        + layout
+        ? styles
         - resource URI support (pack://)
         
     - keyboard and mouse input support
     - establish API to create custom controls abd layouts
     - scrollable controls support
-    - user controls defined in UIXML support
+    + user controls defined in UIXML support
     - ensure native exceptions marshalled to .NET properly
     - basic unit tests (UI automation)
     - basic stress and memory tests
-    - use data binding and UIXML used controls in the existing samples
+    + use data binding and UIXML used controls in the existing samples
 
 0.3-beta (common features release):
     - window properties and management
