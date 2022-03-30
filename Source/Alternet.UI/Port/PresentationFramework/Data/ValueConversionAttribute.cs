@@ -16,7 +16,7 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     This attribute allows the author of a <seealso cref="System.Windows.Data.IValueConverter"/>
+    ///     This attribute allows the author of a <seealso cref="IValueConverter"/>
     ///     to specify what source and target property types the ValueConverter is capable of converting.
     ///     This meta data is useful for designer tools to help categorize and match ValueConverters.
     /// </summary>

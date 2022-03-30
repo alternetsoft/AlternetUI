@@ -11,14 +11,23 @@ using Avalonia.Controls;
 
 namespace Avalonia.Markup.Xaml.XamlIl.Runtime
 {
+    /// <summary>
+    /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+    /// </summary>
     public static class XamlIlRuntimeHelpers
     {
+        /// <summary>
+        /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+        /// </summary>
         public static Func<IServiceProvider, object> DeferredTransformationFactoryV1(Func<IServiceProvider, object> builder,
             IServiceProvider provider)
         {
             return DeferredTransformationFactoryV2<Alternet.UI.Control>(builder, provider);
         }
-        
+
+        /// <summary>
+        /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+        /// </summary>
         public static Func<IServiceProvider, object> DeferredTransformationFactoryV2<T>(Func<IServiceProvider, object> builder,
             IServiceProvider provider)
         {
@@ -84,6 +93,9 @@ namespace Avalonia.Markup.Xaml.XamlIl.Runtime
         }
 
 
+        /// <summary>
+        /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+        /// </summary>
         public static void ApplyNonMatchingMarkupExtensionV1(object target, object property, IServiceProvider prov,
             object value)
         {
@@ -106,6 +118,9 @@ namespace Avalonia.Markup.Xaml.XamlIl.Runtime
                 throw new ArgumentException("Don't know what to do with " + value.GetType());
         }
 
+        /// <summary>
+        /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+        /// </summary>
         public static IServiceProvider CreateInnerServiceProviderV1(IServiceProvider compiled) 
             => new InnerServiceProvider(compiled);
        
@@ -157,12 +172,18 @@ namespace Avalonia.Markup.Xaml.XamlIl.Runtime
                     string.Join(",", lst.Select(e => $"`{e.ClrAssemblyName}:{e.ClrNamespace}.{name}`")));
             }
         }
-        
+
+        /// <summary>
+        /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+        /// </summary>
         [Obsolete("Don't use", true)]
         public static readonly IServiceProvider RootServiceProviderV1 = new RootServiceProvider(/*null*/);
 
-        // Don't emit debug symbols for this code so debugger will be forced to step into XAML instead
         #line hidden
+        /// <summary>
+        /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+        /// Don't emit debug symbols for this code so debugger will be forced to step into XAML instead
+        /// </summary>
         public static IServiceProvider CreateRootServiceProviderV2()
         {
             return new RootServiceProvider(/*new NameScope()*/);

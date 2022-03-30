@@ -1625,7 +1625,9 @@ namespace Alternet.UI
         //------------------------------------------------------
         #region Protected Methods
 
-
+        /// <summary>
+        /// Occurs when the <see cref="CollectionView.AllowsCrossThreadChanges"/> property changes.
+        /// </summary>
         protected override void OnAllowsCrossThreadChangesChanged()
         {
             if (AllowsCrossThreadChanges)
@@ -2552,8 +2554,6 @@ namespace Alternet.UI
         /// Create, filter and sort the local index array.
         /// called from Refresh(), override in derived classes as needed.
         /// </summary>
-        /// <param name="list">new ILIst to associate this view with</param>
-        /// <returns>new local array to use for this view</returns>
         private void PrepareLocalArray()
         {
             PrepareShaping();

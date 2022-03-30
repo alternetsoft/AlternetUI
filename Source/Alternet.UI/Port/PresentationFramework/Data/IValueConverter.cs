@@ -21,7 +21,7 @@ namespace Alternet.UI
     /// </summary>
     /// <remarks>
     /// When implementing this interface it is a good practice to decorate your implementation
-    /// with a <seealso cref="System.Windows.Data.ValueConversionAttribute"/> attribute
+    /// with a <seealso cref="ValueConversionAttribute"/> attribute
     /// to indicate to development tools between what data types your converter can convert.
     /// <code>
     ///     [ValueConversion(typeof(Employee), typeof(Brush))]

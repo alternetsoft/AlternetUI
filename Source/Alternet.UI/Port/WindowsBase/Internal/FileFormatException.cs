@@ -128,6 +128,9 @@ namespace Alternet.UI
             _sourceUri = sourceUri;
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         protected FileFormatException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
             string? sourceUriString = info.GetString("SourceUri");

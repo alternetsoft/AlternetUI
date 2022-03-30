@@ -9,7 +9,7 @@ namespace Avalonia.Markup.Xaml
     /// <summary>
     /// Loads XAML for a avalonia application.
     /// </summary>
-    public static class AvaloniaXamlLoader
+    internal static class AvaloniaXamlLoader
     {
         public interface IRuntimeXamlLoader
         {

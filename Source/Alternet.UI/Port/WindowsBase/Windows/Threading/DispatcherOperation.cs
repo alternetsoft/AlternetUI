@@ -545,6 +545,10 @@ namespace Alternet.UI.Threading
             }
         }
 
+        /// <summary>
+        /// Begins the operation that is associated with this DispatcherOperation.
+        /// </summary>
+        /// <returns></returns>
         protected virtual object InvokeDelegateCore()
         {
             Action action = (Action) _method;
@@ -764,6 +768,9 @@ namespace Alternet.UI.Threading
             }
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         protected override object InvokeDelegateCore()
         {
             Func<TResult> func = (Func<TResult>) _method;

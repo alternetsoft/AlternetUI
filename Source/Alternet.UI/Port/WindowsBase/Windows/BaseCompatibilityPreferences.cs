@@ -10,7 +10,7 @@ using System.Configuration;             // ConfigurationManager
 
 namespace Alternet.UI
 {
-    public static class BaseCompatibilityPreferences
+    internal static class BaseCompatibilityPreferences
     {
         #region constructor
 

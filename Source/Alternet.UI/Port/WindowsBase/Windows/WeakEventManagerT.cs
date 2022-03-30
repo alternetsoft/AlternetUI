@@ -13,6 +13,10 @@ using System.Reflection;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Provides a type-safe <see cref="WeakEventManager"/> that enables you to specify the event handler to use for the "weak event listener" pattern.
+    /// This class defines a type parameter for the source of the event and a type parameter for the event data that is used.
+    /// </summary>
     public class WeakEventManager<TEventSource, TEventArgs> : WeakEventManager
         where TEventArgs : EventArgs
     {

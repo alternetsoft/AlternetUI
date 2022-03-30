@@ -52,6 +52,9 @@ namespace Alternet.UI
         /// </summary>
         public abstract ValidationResult Validate(object value, CultureInfo cultureInfo);
 
+        /// <summary>
+        /// Performs validation checks on a value.
+        /// </summary>
         public virtual ValidationResult Validate(object value, CultureInfo cultureInfo, BindingExpressionBase owner)
         {
             switch (_validationStep)
@@ -65,6 +68,9 @@ namespace Alternet.UI
             return Validate(value, cultureInfo);
         }
 
+        /// <summary>
+        /// Performs validation checks on a value.
+        /// </summary>
         public virtual ValidationResult Validate(object value, CultureInfo cultureInfo, BindingGroup owner)
         {
             return Validate(owner, cultureInfo);

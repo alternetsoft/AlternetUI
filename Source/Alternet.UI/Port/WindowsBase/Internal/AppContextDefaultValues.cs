@@ -53,7 +53,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// This is the full set of .NET Framework <see cref="AppContext"/> in <see cref="BaseAppContextSwitches"/>. These are being initialized
+        /// This is the full set of .NET Framework <see cref="System.AppContext"/> in <see cref="BaseAppContextSwitches"/>. These are being initialized
         /// to <code>false</code> to ensure that the corresponding functionality will be treated as if it is enabled by default on .NET Core.
         /// </summary>
         private static void InitializeNetFxSwitchDefaultsForNetCoreRuntime()

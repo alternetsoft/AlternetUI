@@ -13,6 +13,9 @@ using System;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Provides data for the <see cref="BindingOperations.CollectionViewRegistering"/> event.
+    /// </summary>
     public class CollectionViewRegisteringEventArgs : EventArgs
     {
         internal CollectionViewRegisteringEventArgs(CollectionView view)
@@ -20,6 +23,9 @@ namespace Alternet.UI
             _view = view;
         }
 
+        /// <summary>
+        /// Gets the collection view to be registered for cross-thread access.
+        /// </summary>
         public CollectionView CollectionView
         {
             get { return _view; }

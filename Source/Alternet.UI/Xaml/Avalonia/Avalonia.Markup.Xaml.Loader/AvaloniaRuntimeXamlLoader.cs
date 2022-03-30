@@ -7,6 +7,9 @@ using Avalonia.Markup.Xaml.XamlIl;
 
 namespace Avalonia.Markup.Xaml
 {
+    /// <summary>
+    /// Loads XAML at runtime.
+    /// </summary>
     public static class AvaloniaRuntimeXamlLoader
     {
         /// <summary>

@@ -622,6 +622,9 @@ namespace Alternet.UI
                 }
             }
 
+            /// <summary>
+            /// Adds the specified event handler to the specified event.
+            /// </summary>
             public void AddHandler(Delegate handler)
             {
                 Invariant.Assert(_users == 0, "Cannot modify a ListenerList that is in use");
@@ -669,6 +672,9 @@ namespace Alternet.UI
                 }
             }
 
+            /// <summary>
+            /// Removes the specified event handler from the specified event.
+            /// </summary>
             public void RemoveHandler(Delegate handler)
             {
                 Invariant.Assert(_users == 0, "Cannot modify a ListenerList that is in use");
@@ -759,6 +765,9 @@ namespace Alternet.UI
                 return inUse;
             }
 
+            /// <summary>
+            /// Delivers the event being managed to each listener in the <see cref="WeakEventManager.ListenerList"/>.
+            /// </summary>
             public virtual bool DeliverEvent(object sender, EventArgs args, Type managerType)
             {
                 bool foundStaleEntries = false;
@@ -842,6 +851,9 @@ namespace Alternet.UI
                 return result;
             }
 
+            /// <summary>
+            /// Copies the current <see cref="WeakEventManager.ListenerList"/> to the specified <see cref="WeakEventManager.ListenerList"/>.
+            /// </summary>
             protected void CopyTo(ListenerList newList)
             {
                 IWeakEventListener iwel;
@@ -895,12 +907,26 @@ namespace Alternet.UI
             private static ListenerList s_empty = new ListenerList();
         }
 
+        /// <summary>
+        /// Provides a built-in collection list for storing listeners for a <see cref="WeakEventManager"/>.
+        /// </summary>
+        /// <typeparam name="TEventArgs"></typeparam>
         protected class ListenerList<TEventArgs> : ListenerList
             where TEventArgs : EventArgs
         {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="WeakEventManager.ListenerList"/> class.
+            /// </summary>
             public ListenerList() : base() {}
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="WeakEventManager.ListenerList"/> class.
+            /// </summary>
             public ListenerList(int capacity) : base(capacity) {}
 
+            /// <summary>
+            /// <inheritdoc />
+            /// </summary>
             public override bool DeliverEvent(object sender, EventArgs e, Type managerType)
             {
                 TEventArgs args = (TEventArgs)e;
@@ -931,6 +957,9 @@ namespace Alternet.UI
                 return foundStaleEntries;
             }
 
+            /// <summary>
+            /// Creates a modifiable clone of this <see cref="WeakEventManager.ListenerList"/>.
+            /// </summary>
             public override ListenerList Clone()
             {
                 ListenerList<TEventArgs> result = new ListenerList<TEventArgs>();

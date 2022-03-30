@@ -47,8 +47,6 @@ namespace Alternet.UI
         ///<summary>
         /// Constructor
         ///</summary>
-        ///<param name="message">Exception message</param>
-        ///<param name="innerException">exception occured</param>
         protected ValueUnavailableException(System.Runtime.Serialization.SerializationInfo info,
                                             System.Runtime.Serialization.StreamingContext context) : base(info, context)
         {

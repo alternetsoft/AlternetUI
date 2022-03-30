@@ -214,6 +214,9 @@ namespace Alternet.UI
         #endregion
 
         #region ICollection<KeyValuePair<string, object> methods
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public int Count
         {
             get
@@ -226,6 +229,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public bool IsReadOnly
         {
             get
@@ -234,11 +240,17 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public void Clear()
         {
             _nameMap = null;
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
         {
             if (_nameMap == null)
@@ -253,6 +265,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public bool Remove(KeyValuePair<string, object> item)
         {
             if (!Contains(item))
@@ -267,6 +282,9 @@ namespace Alternet.UI
             return Remove(item.Key);
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public void Add(KeyValuePair<string, object> item)
         {
             if (item.Key == null)
@@ -281,6 +299,9 @@ namespace Alternet.UI
             Add(item.Key, item.Value);
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public bool Contains(KeyValuePair<string, object> item)
         {
             if (item.Key == null)
@@ -292,6 +313,9 @@ namespace Alternet.UI
         #endregion
 
         #region IDictionary<string, object> methods
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public object this[string key]
         {
             get
@@ -318,6 +342,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public void Add(string key, object value)
         {
             if (key == null)
@@ -328,6 +355,9 @@ namespace Alternet.UI
             RegisterName(key, value);
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public bool ContainsKey(string key)
         {
             if (key == null)
@@ -339,6 +369,9 @@ namespace Alternet.UI
             return (value != null);
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public bool Remove(string key)
         {
             if (!ContainsKey(key))
@@ -349,6 +382,9 @@ namespace Alternet.UI
             return true;
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public bool TryGetValue(string key, out object value)
         {
             if (!ContainsKey(key))
@@ -360,6 +396,9 @@ namespace Alternet.UI
             return true;
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public ICollection<string> Keys
         {
             get
@@ -378,6 +417,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         public ICollection<object> Values
         {
             get

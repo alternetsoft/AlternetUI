@@ -91,7 +91,6 @@ namespace Alternet.UI
         ///     the tree.  Some nodes may not have this called if the preCallback
         ///     returns false - thereby preventing its subtree from being visited.
         /// </summary>
-        /// <param name="d">the node to visit</param>
         protected override void _VisitNode(DependencyObject d, bool visitedViaVisualTree)
         {
             try

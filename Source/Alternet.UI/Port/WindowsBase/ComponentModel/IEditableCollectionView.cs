@@ -129,7 +129,7 @@ public interface IEditableCollectionView
     /// Returns true if the view supports the notion of "pending changes" on the
     /// current edit item.  This may vary, depending on the view and the particular
     /// item.  For example, a view might return true if the current edit item
-    /// implements <seealso cref="IEditableObject"/>, or if the view has special
+    /// implements IEditableObject, or if the view has special
     /// knowledge about the item that it can use to support rollback of pending
     /// changes.
     /// </summary>

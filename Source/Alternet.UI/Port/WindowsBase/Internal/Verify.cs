@@ -25,9 +25,6 @@ namespace Alternet.UI.Internal
         /// <param name="requiredState">
         /// The required apartment state for the current thread.
         /// </param>
-        /// <param name="message">
-        /// The message string for the exception to be thrown if the state is invalid.
-        /// </param>
         /// <exception cref="InvalidOperationException">
         /// Thrown if the calling thread's apartment state is not the same as the requiredState.
         /// </exception>
