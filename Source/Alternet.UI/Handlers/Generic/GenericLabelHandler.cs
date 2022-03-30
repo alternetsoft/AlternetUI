@@ -38,12 +38,12 @@ namespace Alternet.UI
 
         private void Control_ForegroundColorChanged(object? sender, System.EventArgs? e)
         {
-            Update();
+            Invalidate();
         }
 
         private void Control_TextChanged(object? sender, System.EventArgs? e)
         {
-            Update();
+            Invalidate();
         }
     }
 }

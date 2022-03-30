@@ -700,12 +700,15 @@ namespace Alternet.UI
 
             UI_IsAnimationProhibitedID                   = 0x00000020, // True if peer refers to an owner's animation peer property; False if Peer refers to the animation peer's owner property
 
-            FW_AffectsMeasureID                          = 0x00000040,
-            FW_AffectsArrangeID                          = 0x00000080,
-            FW_AffectsParentMeasureID                    = 0x00000100,
-            FW_AffectsParentArrangeID                    = 0x00000200,
-            FW_AffectsRenderID                           = 0x00000400,
-            FW_OverridesInheritanceBehaviorID            = 0x00000800,
+            FW_AffectsLayoutID                          = 0x00000040,
+            FW_AffectsPaintID                          = 0x00000080,
+
+            //FW_AffectsMeasureID                          = 0x00000040,
+            //FW_AffectsArrangeID                          = 0x00000080,
+            //FW_AffectsParentMeasureID                    = 0x00000100,
+            //FW_AffectsParentArrangeID                    = 0x00000200,
+            //FW_AffectsRenderID                           = 0x00000400,
+            FW_OverridesInheritanceBehaviorID = 0x00000800,
             FW_IsNotDataBindableID                       = 0x00001000,
             FW_BindsTwoWayByDefaultID                    = 0x00002000,
             FW_ShouldBeJournaledID                       = 0x00004000,

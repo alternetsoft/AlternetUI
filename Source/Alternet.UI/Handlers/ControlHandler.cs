@@ -209,9 +209,6 @@ namespace Alternet.UI
             control = null;
         }
 
-        /// <summary>
-        /// Causes the control to redraw.
-        /// </summary>
         public void Update()
         {
             var nativeControl = NativeControl;
@@ -223,6 +220,25 @@ namespace Alternet.UI
                 if (parent != null)
                     parent.Update();
             }
+        }
+
+        public void Invalidate()
+        {
+            var nativeControl = NativeControl;
+            if (nativeControl != null)
+                nativeControl.Invalidate();
+            else
+            {
+                var parent = TryFindClosestParentWithNativeControl();
+                if (parent != null)
+                    parent.Invalidate();
+            }
+        }
+
+        public void Refresh()
+        {
+            Invalidate();
+            Update();
         }
 
         /// <summary>
@@ -702,7 +718,7 @@ namespace Alternet.UI
         {
             if (NativeControl != null)
                 NativeControl.BackgroundColor = GetBrushColor(Control.Background);
-            Update();
+            Invalidate();
         }
 
         private void ApplyVisible()
@@ -721,7 +737,7 @@ namespace Alternet.UI
         {
             if (NativeControl != null)
                 NativeControl.ForegroundColor = GetBrushColor(Control.Foreground);
-            Update();
+            Invalidate();
         }
 
         private void ApplyFont()
@@ -729,14 +745,14 @@ namespace Alternet.UI
             if (NativeControl != null)
                 NativeControl.Font = Control.Font?.NativeFont;
 
-            Update();
+            Invalidate();
         }
 
         private void ApplyBorderColor()
         {
             //if (NativeControl != null)
             //    NativeControl.BorderColor = GetBrushColor(Control.BorderBrush);
-            Update();
+            Invalidate();
         }
 
         private void TryInsertNativeControl(int childIndex, Control childControl)

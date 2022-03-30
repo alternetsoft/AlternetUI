@@ -125,7 +125,7 @@ namespace DrawingSample
                 paragraphs = null;
             }
 
-            Canvas?.Update();
+            Canvas?.Invalidate();
         }
 
         private IEnumerable<Paragraph> CreateParagraphs()

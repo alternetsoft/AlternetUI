@@ -103,7 +103,7 @@ namespace Alternet.UI
                                 typeof(FrameworkElement),
                                 new FrameworkPropertyMetadata(
                                         /*XmlLanguage.GetLanguage("en-US")*/"en-US",
-                                        FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
+                                        FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsLayout));
 
         public event RoutedEventHandler LostFocus;
 
@@ -685,10 +685,16 @@ namespace Alternet.UI
 
                 if (e.IsAValueChange || e.IsASubPropertyChange)
                 {
-                    if (fmetadata.AffectsArrange)
+                    if (fmetadata.AffectsLayout)
                     {
                         if (this is Control c)
                             c.PerformLayout();
+                    }
+
+                    if (fmetadata.AffectsPaint)
+                    {
+                        if (this is Control c)
+                            c.Invalidate();
                     }
 
                     ////

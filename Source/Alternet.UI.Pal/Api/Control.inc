@@ -51,6 +51,7 @@ void SetFont(Font* value);
 void SetMouseCapture(bool value);
 void AddChild(Control* control);
 void RemoveChild(Control* control);
+void Invalidate();
 void Update();
 virtual Size GetPreferredSize(const Size& availableSize);
 DrawingContext* OpenPaintDrawingContext();

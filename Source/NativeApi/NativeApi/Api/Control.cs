@@ -48,6 +48,8 @@ namespace NativeApi.Api
 
         public void RemoveChild(Control control) => throw new Exception();
 
+        public void Invalidate() => throw new Exception();
+
         public void Update() => throw new Exception();
 
         public Color BackgroundColor { get; set; }

@@ -21,22 +21,28 @@ namespace Alternet.UI
         None                            = 0x000,
 
         /// <summary>This property affects measurement</summary>
-        AffectsMeasure                  = 0x001,
-
-        /// <summary>This property affects arragement</summary>
-        AffectsArrange                  = 0x002,
-
-        /// <summary>This property affects parent's measurement</summary>
-        AffectsParentMeasure            = 0x004,
-
-        /// <summary>This property affects parent's arrangement</summary>
-        AffectsParentArrange            = 0x008,
+        AffectsLayout                  = 0x001,
 
         /// <summary>This property affects rendering</summary>
-        AffectsRender                   = 0x010,
+        AffectsPaint                   = 0x002,
+
+        ///// <summary>This property affects measurement</summary>
+        //AffectsMeasure                  = 0x001,
+
+        ///// <summary>This property affects arragement</summary>
+        //AffectsArrange                  = 0x002,
+
+        ///// <summary>This property affects parent's measurement</summary>
+        //AffectsParentMeasure            = 0x004,
+
+        ///// <summary>This property affects parent's arrangement</summary>
+        //AffectsParentArrange            = 0x008,
+
+        ///// <summary>This property affects rendering</summary>
+        //AffectsRender                   = 0x010,
 
         /// <summary>This property inherits to children</summary>
-        Inherits                        = 0x020,
+        Inherits = 0x020,
 
         /// <summary>
         /// This property causes inheritance and resource lookup to override values 
@@ -50,8 +56,8 @@ namespace Alternet.UI
         /// <summary>Data bindings on this property default to two-way</summary>
         BindsTwoWayByDefault            = 0x100,
 
-        /// <summary>This property should be saved/restored when journaling/navigating by URI</summary>
-        Journal                         = 0x400,
+        ///// <summary>This property should be saved/restored when journaling/navigating by URI</summary>
+        //Journal                         = 0x400,
 
         /// <summary>
         ///     This property's subproperties do not affect rendering.
@@ -245,7 +251,7 @@ namespace Alternet.UI
         private void TranslateFlags(FrameworkPropertyMetadataOptions flags)
         {
             Initialize();
-            
+
             // Convert flags to state sets. If a flag is set, then,
             // the value is set on the respective property. Otherwise,
             // the state remains unset
@@ -253,30 +259,40 @@ namespace Alternet.UI
             // This means that state is cumulative across base classes
             // on a merge where appropriate
 
-            if (IsFlagSet(FrameworkPropertyMetadataOptions.AffectsMeasure, flags))
+            if (IsFlagSet(FrameworkPropertyMetadataOptions.AffectsLayout, flags))
             {
-                AffectsMeasure = true;
+                AffectsLayout = true;
             }
 
-            if (IsFlagSet(FrameworkPropertyMetadataOptions.AffectsArrange, flags))
+            if (IsFlagSet(FrameworkPropertyMetadataOptions.AffectsPaint, flags))
             {
-                AffectsArrange = true;
+                AffectsPaint = true;
             }
 
-            if (IsFlagSet(FrameworkPropertyMetadataOptions.AffectsParentMeasure, flags))
-            {
-                AffectsParentMeasure = true;
-            }
+            //if (IsFlagSet(FrameworkPropertyMetadataOptions.AffectsMeasure, flags))
+            //{
+            //    AffectsLayout = true;
+            //}
 
-            if (IsFlagSet(FrameworkPropertyMetadataOptions.AffectsParentArrange, flags))
-            {
-                AffectsParentArrange = true;
-            }
+            //if (IsFlagSet(FrameworkPropertyMetadataOptions.AffectsArrange, flags))
+            //{
+            //    AffectsArrange = true;
+            //}
 
-            if (IsFlagSet(FrameworkPropertyMetadataOptions.AffectsRender, flags))
-            {
-                AffectsRender = true;
-            }
+            //if (IsFlagSet(FrameworkPropertyMetadataOptions.AffectsParentMeasure, flags))
+            //{
+            //    AffectsParentMeasure = true;
+            //}
+
+            //if (IsFlagSet(FrameworkPropertyMetadataOptions.AffectsParentArrange, flags))
+            //{
+            //    AffectsParentArrange = true;
+            //}
+
+            //if (IsFlagSet(FrameworkPropertyMetadataOptions.AffectsRender, flags))
+            //{
+            //    AffectsRender = true;
+            //}
 
             if (IsFlagSet(FrameworkPropertyMetadataOptions.Inherits, flags))
             {
@@ -298,10 +314,10 @@ namespace Alternet.UI
                 BindsTwoWayByDefault = true;
             }
 
-            if (IsFlagSet(FrameworkPropertyMetadataOptions.Journal, flags))
-            {
-                Journal = true;
-            }
+            //if (IsFlagSet(FrameworkPropertyMetadataOptions.Journal, flags))
+            //{
+            //    Journal = true;
+            //}
 
             if (IsFlagSet(FrameworkPropertyMetadataOptions.SubPropertiesDoNotAffectRender, flags))
             {
@@ -310,11 +326,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Property affects measurement
+        ///     Property affects layout
         /// </summary>
-        public bool AffectsMeasure
+        public bool AffectsLayout
         {
-            get { return ReadFlag(MetadataFlags.FW_AffectsMeasureID); }
+            get { return ReadFlag(MetadataFlags.FW_AffectsLayoutID); }
             set
             {
                 if (IsSealed)
@@ -322,16 +338,16 @@ namespace Alternet.UI
                     throw new InvalidOperationException(SR.Get(SRID.TypeMetadataCannotChangeAfterUse));
                 }
 
-                WriteFlag(MetadataFlags.FW_AffectsMeasureID, value);
+                WriteFlag(MetadataFlags.FW_AffectsLayoutID, value);
             }
         }
 
         /// <summary>
-        ///     Property affects arragement
+        ///     Property affects paint
         /// </summary>
-        public bool AffectsArrange
+        public bool AffectsPaint
         {
-            get { return ReadFlag(MetadataFlags.FW_AffectsArrangeID); }
+            get { return ReadFlag(MetadataFlags.FW_AffectsPaintID); }
             set
             {
                 if (IsSealed)
@@ -339,60 +355,94 @@ namespace Alternet.UI
                     throw new InvalidOperationException(SR.Get(SRID.TypeMetadataCannotChangeAfterUse));
                 }
 
-                WriteFlag(MetadataFlags.FW_AffectsArrangeID, value);
+                WriteFlag(MetadataFlags.FW_AffectsPaintID, value);
             }
         }
 
-        /// <summary>
-        ///     Property affects parent's measurement
-        /// </summary>
-        public bool AffectsParentMeasure
-        {
-            get { return ReadFlag(MetadataFlags.FW_AffectsParentMeasureID); }
-            set
-            {
-                if (IsSealed)
-                {
-                    throw new InvalidOperationException(SR.Get(SRID.TypeMetadataCannotChangeAfterUse));
-                }
+        ///// <summary>
+        /////     Property affects measurement
+        ///// </summary>
+        //public bool AffectsMeasure
+        //{
+        //    get { return ReadFlag(MetadataFlags.FW_AffectsMeasureID); }
+        //    set
+        //    {
+        //        if (IsSealed)
+        //        {
+        //            throw new InvalidOperationException(SR.Get(SRID.TypeMetadataCannotChangeAfterUse));
+        //        }
 
-                WriteFlag(MetadataFlags.FW_AffectsParentMeasureID, value);
-            }
-        }
+        //        WriteFlag(MetadataFlags.FW_AffectsMeasureID, value);
+        //    }
+        //}
 
-        /// <summary>
-        ///     Property affects parent's arrangement
-        /// </summary>
-        public bool AffectsParentArrange
-        {
-            get { return ReadFlag(MetadataFlags.FW_AffectsParentArrangeID); }
-            set
-            {
-                if (IsSealed)
-                {
-                    throw new InvalidOperationException(SR.Get(SRID.TypeMetadataCannotChangeAfterUse));
-                }
+        ///// <summary>
+        /////     Property affects arragement
+        ///// </summary>
+        //public bool AffectsArrange
+        //{
+        //    get { return ReadFlag(MetadataFlags.FW_AffectsArrangeID); }
+        //    set
+        //    {
+        //        if (IsSealed)
+        //        {
+        //            throw new InvalidOperationException(SR.Get(SRID.TypeMetadataCannotChangeAfterUse));
+        //        }
 
-                WriteFlag(MetadataFlags.FW_AffectsParentArrangeID, value);
-            }
-        }
+        //        WriteFlag(MetadataFlags.FW_AffectsArrangeID, value);
+        //    }
+        //}
 
-        /// <summary>
-        ///     Property affects rendering
-        /// </summary>
-        public bool AffectsRender
-        {
-            get { return ReadFlag(MetadataFlags.FW_AffectsRenderID); }
-            set
-            {
-                if (IsSealed)
-                {
-                    throw new InvalidOperationException(SR.Get(SRID.TypeMetadataCannotChangeAfterUse));
-                }
+        ///// <summary>
+        /////     Property affects parent's measurement
+        ///// </summary>
+        //public bool AffectsParentMeasure
+        //{
+        //    get { return ReadFlag(MetadataFlags.FW_AffectsParentMeasureID); }
+        //    set
+        //    {
+        //        if (IsSealed)
+        //        {
+        //            throw new InvalidOperationException(SR.Get(SRID.TypeMetadataCannotChangeAfterUse));
+        //        }
 
-                WriteFlag(MetadataFlags.FW_AffectsRenderID, value);
-            }
-        }
+        //        WriteFlag(MetadataFlags.FW_AffectsParentMeasureID, value);
+        //    }
+        //}
+
+        ///// <summary>
+        /////     Property affects parent's arrangement
+        ///// </summary>
+        //public bool AffectsParentArrange
+        //{
+        //    get { return ReadFlag(MetadataFlags.FW_AffectsParentArrangeID); }
+        //    set
+        //    {
+        //        if (IsSealed)
+        //        {
+        //            throw new InvalidOperationException(SR.Get(SRID.TypeMetadataCannotChangeAfterUse));
+        //        }
+
+        //        WriteFlag(MetadataFlags.FW_AffectsParentArrangeID, value);
+        //    }
+        //}
+
+        ///// <summary>
+        /////     Property affects rendering
+        ///// </summary>
+        //public bool AffectsRender
+        //{
+        //    get { return ReadFlag(MetadataFlags.FW_AffectsRenderID); }
+        //    set
+        //    {
+        //        if (IsSealed)
+        //        {
+        //            throw new InvalidOperationException(SR.Get(SRID.TypeMetadataCannotChangeAfterUse));
+        //        }
+
+        //        WriteFlag(MetadataFlags.FW_AffectsRenderID, value);
+        //    }
+        //}
 
         /// <summary>
         ///     Property is inheritable
@@ -585,11 +635,15 @@ namespace Alternet.UI
 
                 // Merge state
                 // Defaults to false, derived classes can only enable
-                WriteFlag(MetadataFlags.FW_AffectsMeasureID, ReadFlag(MetadataFlags.FW_AffectsMeasureID) | fbaseMetadata.AffectsMeasure);
-                WriteFlag(MetadataFlags.FW_AffectsArrangeID, ReadFlag(MetadataFlags.FW_AffectsArrangeID) | fbaseMetadata.AffectsArrange);
-                WriteFlag(MetadataFlags.FW_AffectsParentMeasureID, ReadFlag(MetadataFlags.FW_AffectsParentMeasureID) | fbaseMetadata.AffectsParentMeasure);
-                WriteFlag(MetadataFlags.FW_AffectsParentArrangeID, ReadFlag(MetadataFlags.FW_AffectsParentArrangeID) | fbaseMetadata.AffectsParentArrange);
-                WriteFlag(MetadataFlags.FW_AffectsRenderID, ReadFlag(MetadataFlags.FW_AffectsRenderID) | fbaseMetadata.AffectsRender);
+                WriteFlag(MetadataFlags.FW_AffectsLayoutID, ReadFlag(MetadataFlags.FW_AffectsLayoutID) | fbaseMetadata.AffectsLayout);
+                WriteFlag(MetadataFlags.FW_AffectsPaintID, ReadFlag(MetadataFlags.FW_AffectsPaintID) | fbaseMetadata.AffectsPaint);
+
+
+                //WriteFlag(MetadataFlags.FW_AffectsMeasureID, ReadFlag(MetadataFlags.FW_AffectsMeasureID) | fbaseMetadata.AffectsLayout);
+                //WriteFlag(MetadataFlags.FW_AffectsArrangeID, ReadFlag(MetadataFlags.FW_AffectsArrangeID) | fbaseMetadata.AffectsArrange);
+                //WriteFlag(MetadataFlags.FW_AffectsParentMeasureID, ReadFlag(MetadataFlags.FW_AffectsParentMeasureID) | fbaseMetadata.AffectsParentMeasure);
+                //WriteFlag(MetadataFlags.FW_AffectsParentArrangeID, ReadFlag(MetadataFlags.FW_AffectsParentArrangeID) | fbaseMetadata.AffectsParentArrange);
+                //WriteFlag(MetadataFlags.FW_AffectsRenderID, ReadFlag(MetadataFlags.FW_AffectsRenderID) | fbaseMetadata.AffectsRender);
                 WriteFlag(MetadataFlags.FW_BindsTwoWayByDefaultID, ReadFlag(MetadataFlags.FW_BindsTwoWayByDefaultID) | fbaseMetadata.BindsTwoWayByDefault);
                 WriteFlag(MetadataFlags.FW_IsNotDataBindableID, ReadFlag(MetadataFlags.FW_IsNotDataBindableID) | fbaseMetadata.IsNotDataBindable);
 

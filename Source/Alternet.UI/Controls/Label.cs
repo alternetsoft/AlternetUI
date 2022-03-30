@@ -61,7 +61,7 @@ namespace Alternet.UI
                 typeof(Label), // Property owner
                 new FrameworkPropertyMetadata( // Property metadata
                         string.Empty, // default value
-                        FrameworkPropertyMetadataOptions.Journal | FrameworkPropertyMetadataOptions.AffectsArrange,// Flags
+                        FrameworkPropertyMetadataOptions.AffectsLayout | FrameworkPropertyMetadataOptions.AffectsPaint,// Flags
                         new PropertyChangedCallback(OnTextPropertyChanged),    // property changed callback
                         new CoerceValueCallback(CoerceText)
                         ));

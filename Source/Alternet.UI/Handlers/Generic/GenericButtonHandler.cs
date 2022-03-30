@@ -141,7 +141,7 @@ namespace Alternet.UI
                 throw new InvalidOperationException();
 
             label.Text = Control.Text;
-            Update();
+            Invalidate();
         }
     }
 }

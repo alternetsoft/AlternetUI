@@ -134,6 +134,11 @@ ALTERNET_UI_API void Control_RemoveChild_(Control* obj, Control* control)
     obj->RemoveChild(control);
 }
 
+ALTERNET_UI_API void Control_Invalidate_(Control* obj)
+{
+    obj->Invalidate();
+}
+
 ALTERNET_UI_API void Control_Update_(Control* obj)
 {
     obj->Update();

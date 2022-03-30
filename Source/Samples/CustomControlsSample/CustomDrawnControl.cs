@@ -26,8 +26,8 @@ namespace CustomControlsSample
             set
             {
                 text = value;
-                Parent?.PerformLayout();
-                Update();
+                PerformLayout();
+                Invalidate();
             }
         }
 
@@ -38,7 +38,7 @@ namespace CustomControlsSample
             set
             {
                 brush = value;
-                Update();
+                Invalidate();
             }
         }
 

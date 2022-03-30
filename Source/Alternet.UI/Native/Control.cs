@@ -211,6 +211,12 @@ namespace Alternet.UI.Native
             NativeApi.Control_RemoveChild_(NativePointer, control.NativePointer);
         }
         
+        public void Invalidate()
+        {
+            CheckDisposed();
+            NativeApi.Control_Invalidate_(NativePointer);
+        }
+        
         public void Update()
         {
             CheckDisposed();
@@ -395,6 +401,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_RemoveChild_(IntPtr obj, IntPtr control);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_Invalidate_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_Update_(IntPtr obj);

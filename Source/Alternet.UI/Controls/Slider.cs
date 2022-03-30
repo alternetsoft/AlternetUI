@@ -31,7 +31,7 @@ namespace Alternet.UI
                     new FrameworkPropertyMetadata( // Property metadata
                             0, // default value
                             FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | // Flags
-                                FrameworkPropertyMetadataOptions.Journal,
+                                FrameworkPropertyMetadataOptions.AffectsPaint,
                             new PropertyChangedCallback(OnValuePropertyChanged),    // property changed callback
                             new CoerceValueCallback(CoerceValue),
                             true, // IsAnimationProhibited

@@ -199,7 +199,7 @@ namespace DrawingSample
         private void Update()
         {
             shapes = null;
-            Canvas?.Update();
+            Canvas?.Invalidate();
         }
 
         private IEnumerable<Shape> CreateShapes(Random random, Rect bounds, Brush fill, Pen stroke)

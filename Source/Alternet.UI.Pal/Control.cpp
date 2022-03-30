@@ -85,13 +85,21 @@ namespace Alternet::UI
         return _wxWindow;
     }
 
+    void Control::Invalidate()
+    {
+        if (!IsWxWindowCreated())
+            return;
+
+        auto wxWindow = GetWxWindow();
+        wxWindow->Refresh();
+    }
+
     void Control::Update()
     {
         if (!IsWxWindowCreated())
             return;
-        
+
         auto wxWindow = GetWxWindow();
-        wxWindow->Refresh();
         wxWindow->Update();
     }
 

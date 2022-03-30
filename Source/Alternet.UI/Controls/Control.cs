@@ -497,10 +497,11 @@ namespace Alternet.UI
         /// </summary>
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Children;
 
-        /// <summary>
-        /// Causes the control to redraw.
-        /// </summary>
-        public void Update() => Handler.Update(); // todo: consider Invalidate()
+        public void Invalidate() => Handler.Invalidate();
+
+        public void Update() => Handler.Update();
+
+        public void Refresh() => Handler.Refresh();
 
         /// <summary>
         /// Temporarily suspends the layout logic for the control.
@@ -710,7 +711,7 @@ namespace Alternet.UI
             if (handler != null)
                 DetachHandler();
 
-            Update();
+            Invalidate();
         }
 
         /// <summary>

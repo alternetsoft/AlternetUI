@@ -2863,7 +2863,7 @@ namespace Alternet.UI
             if (grid.ExtData != null    // trivial grid is 1 by 1. there is no grid lines anyway
                 && grid.ListenToNotifications)
             {
-                grid.Update();
+                grid.Invalidate();
             }
 
             grid.SetFlags(newValue, Flags.ShowGridLinesPropertyValue);
