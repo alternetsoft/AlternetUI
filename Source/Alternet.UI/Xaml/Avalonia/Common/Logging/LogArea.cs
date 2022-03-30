@@ -4,7 +4,7 @@ namespace Avalonia.Logging
     /// <summary>
     /// Specifies the area in which a log event occurred.
     /// </summary>
-    public static class LogArea
+    internal static class LogArea
     {
         /// <summary>
         /// The log event comes from the property system.

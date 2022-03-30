@@ -4,9 +4,6 @@ using System.Globalization;
 
 namespace Avalonia.Utilities
 {
-#if !BUILDTASK
-    public
-#endif
     static class IdentifierParser
     {
         public static ReadOnlySpan<char> ParseIdentifier(this ref CharacterReader r)

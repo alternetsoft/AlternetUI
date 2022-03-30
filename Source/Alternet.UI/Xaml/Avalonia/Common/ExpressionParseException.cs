@@ -3,12 +3,9 @@ using System;
 namespace Avalonia.Data.Core
 {
     /// <summary>
-    /// Exception thrown when <see cref="ExpressionObserver"/> could not parse the provided
+    /// Exception thrown when ExpressionObserver could not parse the provided
     /// expression string.
     /// </summary>
-#if !BUILDTASK
-    public
-#endif
     class ExpressionParseException : Exception
     {
         /// <summary>

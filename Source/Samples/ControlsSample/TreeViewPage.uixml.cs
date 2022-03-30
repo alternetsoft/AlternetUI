@@ -6,14 +6,14 @@ namespace ControlsSample
 {
     partial class TreeViewPage : Control
     {
-        private IPageSite site;
+        private IPageSite? site;
 
         public TreeViewPage()
         {
             InitializeComponent();
         }
 
-        public IPageSite Site
+        public IPageSite? Site
         {
             get => site;
 
@@ -56,12 +56,12 @@ namespace ControlsSample
         {
             var selectedItems = treeView.SelectedItems;
             string selectedItemsString = selectedItems.Count > 100 ? "too many indices to display" : string.Join(",", selectedItems.Select(x => x.Text));
-            site.LogEvent($"TreeView: SelectionChanged. SelectedItems: ({selectedItemsString})");
+            site?.LogEvent($"TreeView: SelectionChanged. SelectedItems: ({selectedItemsString})");
         }
 
         private void TreeView_ExpandedChanged(object? sender, TreeViewItemExpandedChangedEventArgs e)
         {
-            site.LogEvent($"TreeView: ExpandedChanged. Item: '{e.Item.Text}', IsExpanded: {e.Item.IsExpanded}");
+            site?.LogEvent($"TreeView: ExpandedChanged. Item: '{e.Item.Text}', IsExpanded: {e.Item.IsExpanded}");
         }
 
         private void EnabledCheckBox_CheckedChanged(object? sender, EventArgs e)

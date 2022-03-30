@@ -10,7 +10,7 @@ namespace Avalonia.Markup.Xaml
     /// <summary>
     /// Loads XAML at runtime.
     /// </summary>
-    public static class AvaloniaRuntimeXamlLoader
+    internal static class AvaloniaRuntimeXamlLoader
     {
         /// <summary>
         /// Loads XAML from a string.

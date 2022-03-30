@@ -8,9 +8,6 @@ using Avalonia.Utilities;
 
 namespace Avalonia.Markup.Parsers
 {
-#if !BUILDTASK
-    public
-#endif
     class PropertyPathGrammar
     {
         private enum State
@@ -180,7 +177,7 @@ namespace Avalonia.Markup.Parsers
             return (State.AfterProperty, new CastTypeSyntax {TypeName = type.name, TypeNamespace = type.ns});
         }
 
-        public interface ISyntax
+        internal interface ISyntax
         {
             
         }
@@ -188,7 +185,7 @@ namespace Avalonia.Markup.Parsers
         // Don't need to override GetHashCode as the ISyntax objects will not be stored in a hash; the 
         // only reason they have overridden Equals methods is for unit testing.
 #pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
-        public class PropertySyntax : ISyntax
+        internal class PropertySyntax : ISyntax
         {
             public string Name { get; set; } = string.Empty;
 
@@ -197,7 +194,7 @@ namespace Avalonia.Markup.Parsers
                    && other.Name == Name;
         }
         
-        public class TypeQualifiedPropertySyntax : ISyntax
+        internal class TypeQualifiedPropertySyntax : ISyntax
         {
             public string Name { get; set; } = string.Empty;
             public string TypeName { get; set; } = string.Empty;
@@ -210,13 +207,13 @@ namespace Avalonia.Markup.Parsers
                    && other.TypeNamespace == TypeNamespace;
         }
 
-        public class ChildTraversalSyntax : ISyntax
+        internal class ChildTraversalSyntax : ISyntax
         {
             public static ChildTraversalSyntax Instance { get;  } = new ChildTraversalSyntax();
             public override bool Equals(object? obj) => obj is ChildTraversalSyntax;
         }
         
-        public class EnsureTypeSyntax : ISyntax
+        internal class EnsureTypeSyntax : ISyntax
         {
             public string TypeName { get; set; } = string.Empty;
             public string? TypeNamespace { get; set; }
@@ -226,7 +223,7 @@ namespace Avalonia.Markup.Parsers
                    && other.TypeNamespace == TypeNamespace;
         }
         
-        public class CastTypeSyntax : ISyntax
+        internal class CastTypeSyntax : ISyntax
         {
             public string TypeName { get; set; } = string.Empty;
             public string? TypeNamespace { get; set; }

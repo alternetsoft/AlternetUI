@@ -3,9 +3,6 @@ using System;
 
 namespace Avalonia.Utilities
 {
-#if !BUILDTASK
-    public
-#endif
     ref struct CharacterReader
     {
         private ReadOnlySpan<char> _s;

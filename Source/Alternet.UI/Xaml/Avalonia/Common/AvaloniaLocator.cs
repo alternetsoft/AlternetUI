@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Avalonia
 {
-    public class AvaloniaLocator : IAvaloniaDependencyResolver
+    internal class AvaloniaLocator : IAvaloniaDependencyResolver
     {
         private readonly IAvaloniaDependencyResolver? _parentScope;
         public static IAvaloniaDependencyResolver Current { get; set; }
@@ -32,7 +32,7 @@ namespace Avalonia
             return _registry.TryGetValue(t, out var rv) ? rv() : _parentScope?.GetService(t);
         }
 
-        public class RegistrationHelper<TService>
+        internal class RegistrationHelper<TService>
         {
             private readonly AvaloniaLocator _locator;
 
@@ -114,12 +114,12 @@ namespace Avalonia
         }
     }
 
-    public interface IAvaloniaDependencyResolver
+    internal interface IAvaloniaDependencyResolver
     {
         object? GetService(Type t);
     }
 
-    public static class LocatorExtensions
+    internal static class LocatorExtensions
     {
         public static T? GetService<T>(this IAvaloniaDependencyResolver resolver)
         {

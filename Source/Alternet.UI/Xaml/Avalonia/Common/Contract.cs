@@ -12,7 +12,7 @@ namespace Avalonia
     /// to a crawl and often crashed. Instead use the same signature for checking preconditions
     /// in the hope that it might become usable at some point.
     /// </remarks>
-    public static class Contract
+    internal static class Contract
     {
         /// <summary>
         /// Specifies a precondition.

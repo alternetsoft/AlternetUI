@@ -6,14 +6,14 @@ namespace ControlsSample
 {
     partial class GridPage : Control
     {
-        private IPageSite site;
+        private IPageSite? site;
 
         public GridPage()
         {
             InitializeComponent();
         }
 
-        public IPageSite Site
+        public IPageSite? Site
         {
             get => site;
 

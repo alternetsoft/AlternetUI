@@ -2,9 +2,9 @@
 namespace Avalonia
 {
     /// <summary>
-    /// Tracks registered <see cref="AvaloniaProperty"/> instances.
+    /// Tracks registered AvaloniaProperty instances.
     /// </summary>
-    public class AvaloniaPropertyRegistry
+    internal class AvaloniaPropertyRegistry
     {
         //private readonly Dictionary<int, AvaloniaProperty> _properties =
         //    new Dictionary<int, AvaloniaProperty>();

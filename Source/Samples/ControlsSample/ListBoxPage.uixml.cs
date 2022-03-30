@@ -5,14 +5,14 @@ namespace ControlsSample
 {
     partial class ListBoxPage : Control
     {
-        private IPageSite site;
+        private IPageSite? site;
 
         public ListBoxPage()
         {
             InitializeComponent();
         }
 
-        public IPageSite Site
+        public IPageSite? Site
         {
             get => site;
 
@@ -44,7 +44,7 @@ namespace ControlsSample
         private void ListBox_SelectionChanged(object? sender, EventArgs e)
         {
             string selectedIndicesString = listBox.SelectedIndices.Count > 100 ? "too many indices to display" : string.Join(",", listBox.SelectedIndices);
-            site.LogEvent($"ListBox: SelectionChanged. SelectedIndices: ({selectedIndicesString})");
+            site?.LogEvent($"ListBox: SelectionChanged. SelectedIndices: ({selectedIndicesString})");
         }
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)

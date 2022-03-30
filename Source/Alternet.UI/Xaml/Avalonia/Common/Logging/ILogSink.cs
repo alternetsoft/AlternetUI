@@ -3,7 +3,7 @@ namespace Avalonia.Logging
     /// <summary>
     /// Defines a sink for Avalonia logging messages.
     /// </summary>
-    public interface ILogSink
+    internal interface ILogSink
     {
         /// <summary>
         /// Checks if given log level and area is enabled.

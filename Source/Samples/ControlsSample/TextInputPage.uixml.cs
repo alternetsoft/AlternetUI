@@ -6,14 +6,14 @@ namespace ControlsSample
 {
     partial class TextInputPage : Control
     {
-        private IPageSite site;
+        private IPageSite? site;
 
         public TextInputPage()
         {
             InitializeComponent();
         }
 
-        public IPageSite Site
+        public IPageSite? Site
         {
             get => site;
 
@@ -25,7 +25,7 @@ namespace ControlsSample
 
         private void TextBox_ValueChanged(object? sender, EventArgs e)
         {
-            site.LogEvent("New TextBox value is: " + ((TextBox)sender!).Text);
+            site?.LogEvent("New TextBox value is: " + ((TextBox)sender!).Text);
         }
 
         private void AddLetterAButton_Click(object? sender, EventArgs e)

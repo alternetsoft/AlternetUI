@@ -8,7 +8,7 @@ namespace Avalonia.Platform
     /// <summary>
     /// Loads assets compiled into the application binary.
     /// </summary>
-    public interface IAssetLoader
+    internal interface IAssetLoader
     {
         /// <summary>
         /// We need a way to override the default assembly selected by the host platform

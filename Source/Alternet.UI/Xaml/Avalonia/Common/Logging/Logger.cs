@@ -3,7 +3,7 @@ namespace Avalonia.Logging
     /// <summary>
     /// Logs avalonia messages.
     /// </summary>
-    public static class Logger
+    internal static class Logger
     {
         /// <summary>
         /// Gets or sets the application-defined sink that receives the messages.

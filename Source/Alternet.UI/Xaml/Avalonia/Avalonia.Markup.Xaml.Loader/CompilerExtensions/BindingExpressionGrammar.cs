@@ -419,48 +419,48 @@ namespace Avalonia.Markup.Parsers
             }
         }
 
-        public interface INode { }
+        internal interface INode { }
 
-        public interface ITransformNode { }
+        internal interface ITransformNode { }
 
-        public class EmptyExpressionNode : INode { }
+        internal class EmptyExpressionNode : INode { }
 
-        public class PropertyNameNode : INode
+        internal class PropertyNameNode : INode
         {
             public string PropertyName { get; set; } = string.Empty;
         }
 
-        public class AttachedPropertyNameNode : INode
+        internal class AttachedPropertyNameNode : INode
         {
             public string Namespace { get; set; } = string.Empty;
             public string TypeName { get; set; } = string.Empty;
             public string PropertyName { get; set; } = string.Empty;
         }
 
-        public class IndexerNode : INode
+        internal class IndexerNode : INode
         {
             public IList<string> Arguments { get; set; } = Array.Empty<string>();
         }
 
-        public class NotNode : INode, ITransformNode { }
+        internal class NotNode : INode, ITransformNode { }
 
-        public class StreamNode : INode { }
+        internal class StreamNode : INode { }
 
-        public class SelfNode : INode { }
+        internal class SelfNode : INode { }
 
-        public class NameNode : INode
+        internal class NameNode : INode
         {
             public string Name { get; set; } = string.Empty;
         }
 
-        public class AncestorNode : INode
+        internal class AncestorNode : INode
         {
             public string? Namespace { get; set; }
             public string? TypeName { get; set; }
             public int Level { get; set; }
         }
 
-        public class TypeCastNode : INode
+        internal class TypeCastNode : INode
         {
             public string Namespace { get; set; } = string.Empty;
             public string TypeName { get; set; } = string.Empty;

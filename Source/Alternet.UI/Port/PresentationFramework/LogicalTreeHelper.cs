@@ -220,7 +220,6 @@ namespace Alternet.UI
         //        }
         //    }
 
-        ///*
         //    /// <summary>
         //    // fill this in
         //    /// </summary>

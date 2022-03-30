@@ -54,7 +54,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
         public IXamlAstTypeReference TargetType { get; set; }
         public ScopeTypes ScopeType { get; }
 
-        public enum ScopeTypes
+        internal enum ScopeTypes
         {
             Style,
             ControlTemplate,

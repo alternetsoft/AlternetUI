@@ -5,7 +5,7 @@ namespace Avalonia.Logging
     /// <summary>
     /// Logger sink parametrized for given logging level.
     /// </summary>
-    public readonly struct ParametrizedLogger
+    readonly struct ParametrizedLogger
     {
         private readonly ILogSink _sink;
         private readonly LogEventLevel _level;

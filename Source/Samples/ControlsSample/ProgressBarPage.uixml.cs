@@ -6,14 +6,14 @@ namespace ControlsSample
 {
     partial class ProgressBarPage : Control
     {
-        private IPageSite site;
+        private IPageSite? site;
 
         public ProgressBarPage()
         {
             InitializeComponent();
         }
 
-        public IPageSite Site
+        public IPageSite? Site
         {
             get => site;
 

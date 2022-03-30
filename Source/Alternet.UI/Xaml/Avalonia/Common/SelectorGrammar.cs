@@ -482,18 +482,18 @@ namespace Avalonia.Markup.Parsers
             }
         }
 
-        public interface ISyntax
+        internal interface ISyntax
         {
         }
 
-        public interface ITypeSyntax
+        internal interface ITypeSyntax
         {
             string TypeName { get; set; }
 
             string Xmlns { get; set; }
         }
 
-        public class OfTypeSyntax : ISyntax, ITypeSyntax
+        internal class OfTypeSyntax : ISyntax, ITypeSyntax
         {
             public string TypeName { get; set; } = string.Empty;
 
@@ -506,7 +506,7 @@ namespace Avalonia.Markup.Parsers
             }
         }
 
-        public class AttachedPropertySyntax : ISyntax, ITypeSyntax
+        internal class AttachedPropertySyntax : ISyntax, ITypeSyntax
         {
             public string Xmlns { get; set; } = string.Empty;
 
@@ -526,7 +526,7 @@ namespace Avalonia.Markup.Parsers
             }
         }
 
-        public class IsSyntax : ISyntax, ITypeSyntax
+        internal class IsSyntax : ISyntax, ITypeSyntax
         {
             public string TypeName { get; set; } = string.Empty;
 
@@ -539,7 +539,7 @@ namespace Avalonia.Markup.Parsers
             }
         }
 
-        public class ClassSyntax : ISyntax
+        internal class ClassSyntax : ISyntax
         {
             public string Class { get; set; } = string.Empty;
 
@@ -549,7 +549,7 @@ namespace Avalonia.Markup.Parsers
             }
         }
 
-        public class NameSyntax : ISyntax
+        internal class NameSyntax : ISyntax
         {
             public string Name { get; set; } = string.Empty;
 
@@ -559,7 +559,7 @@ namespace Avalonia.Markup.Parsers
             }
         }
 
-        public class PropertySyntax : ISyntax
+        internal class PropertySyntax : ISyntax
         {
             public string Property { get; set; } = string.Empty;
 
@@ -573,7 +573,7 @@ namespace Avalonia.Markup.Parsers
             }
         }
 
-        public class ChildSyntax : ISyntax
+        internal class ChildSyntax : ISyntax
         {
             public override bool Equals(object? obj)
             {
@@ -581,7 +581,7 @@ namespace Avalonia.Markup.Parsers
             }
         }
 
-        public class DescendantSyntax : ISyntax
+        internal class DescendantSyntax : ISyntax
         {
             public override bool Equals(object? obj)
             {
@@ -589,7 +589,7 @@ namespace Avalonia.Markup.Parsers
             }
         }
 
-        public class TemplateSyntax : ISyntax
+        internal class TemplateSyntax : ISyntax
         {
             public override bool Equals(object? obj)
             {
@@ -597,7 +597,7 @@ namespace Avalonia.Markup.Parsers
             }
         }
 
-        public class NotSyntax : ISyntax
+        internal class NotSyntax : ISyntax
         {
             public IEnumerable<ISyntax> Argument { get; set; } = Enumerable.Empty<ISyntax>();
 
@@ -607,7 +607,7 @@ namespace Avalonia.Markup.Parsers
             }
         }
 
-        public class NthChildSyntax : ISyntax
+        internal class NthChildSyntax : ISyntax
         {
             public int Offset { get; set; }
             public int Step { get; set; }
@@ -618,7 +618,7 @@ namespace Avalonia.Markup.Parsers
             }
         }
 
-        public class NthLastChildSyntax : ISyntax
+        internal class NthLastChildSyntax : ISyntax
         {
             public int Offset { get; set; }
             public int Step { get; set; }
@@ -629,7 +629,7 @@ namespace Avalonia.Markup.Parsers
             }
         }
 
-        public class CommaSyntax : ISyntax
+        internal class CommaSyntax : ISyntax
         {
             public override bool Equals(object? obj)
             {

@@ -4,7 +4,7 @@ namespace Avalonia.Data
     /// <summary>
     /// The priority of a binding.
     /// </summary>
-    public enum BindingPriority
+    internal enum BindingPriority
     {
         /// <summary>
         /// A value that comes from an animation.

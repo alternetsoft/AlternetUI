@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace Avalonia.Markup.Xaml
 {
-    public class XamlLoadException: Exception
+    internal class XamlLoadException: Exception
     {
         public XamlLoadException()
         {

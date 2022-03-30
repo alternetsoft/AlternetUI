@@ -6,14 +6,14 @@ namespace ControlsSample
 {
     partial class NumericInputPage : Control
     {
-        private IPageSite site;
+        private IPageSite? site;
 
         public NumericInputPage()
         {
             InitializeComponent();
         }
 
-        public IPageSite Site
+        public IPageSite? Site
         {
             get => site;
 
@@ -27,7 +27,7 @@ namespace ControlsSample
 
         private void NumericUpDown_ValueChanged(object? sender, EventArgs e)
         {
-            site.LogEvent("New NumericUpDown value is: " + ((NumericUpDown)sender!).Value);
+            site?.LogEvent("New NumericUpDown value is: " + ((NumericUpDown)sender!).Value);
         }
 
         private void ProgressBarControlNumericUpDown_ValueChanged(object? sender, EventArgs e)

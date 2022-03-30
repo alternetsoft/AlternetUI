@@ -11,7 +11,7 @@ namespace Avalonia.Markup.Xaml
     /// </summary>
     internal static class AvaloniaXamlLoader
     {
-        public interface IRuntimeXamlLoader
+        internal interface IRuntimeXamlLoader
         {
             object Load(Stream stream, Assembly localAsm, object o, Uri baseUri, bool designMode);
         }

@@ -4,7 +4,7 @@ namespace Avalonia.Data
     /// <summary>
     /// Defines possible binding modes.
     /// </summary>
-    public enum BindingMode
+    internal enum BindingMode
     {
         /// <summary>
         /// Uses the default binding mode specified for the property.

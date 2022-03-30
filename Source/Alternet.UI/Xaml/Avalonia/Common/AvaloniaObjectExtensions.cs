@@ -3,7 +3,7 @@ using System;
 namespace Avalonia
 {
     /// <summary>
-    /// Provides extension methods for <see cref="AvaloniaObject"/> and related classes.
+    /// Provides extension methods for AvaloniaObject and related classes.
     /// </summary>
     public static class AvaloniaObjectExtensions
     {
@@ -368,6 +368,9 @@ namespace Avalonia
         //    }
         //}
 
+        /// <summary>
+        /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+        /// </summary>
         public static IDisposable Bind(
             this Alternet.UI.DependencyObject target,
             Alternet.UI.DependencyProperty property,

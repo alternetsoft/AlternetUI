@@ -20,6 +20,9 @@ namespace Avalonia.Utilities
             _isValid = true;
         }
 
+        /// <summary>
+        /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+        /// </summary>
         public SynchronousCompletionAsyncResult(T result)
         {
             _result = result;
@@ -30,6 +33,9 @@ namespace Avalonia.Utilities
         static void ThrowNotInitialized() =>
             throw new InvalidOperationException("This SynchronousCompletionAsyncResult was not initialized");
 
+        /// <summary>
+        /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+        /// </summary>
         public bool IsCompleted
         {
             get
@@ -40,6 +46,9 @@ namespace Avalonia.Utilities
             }
         }
 
+        /// <summary>
+        /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+        /// </summary>
         public T GetResult()
         {
             if (!_isValid)
@@ -48,6 +57,9 @@ namespace Avalonia.Utilities
         }
 
 
+        /// <summary>
+        /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+        /// </summary>
         public void OnCompleted(Action continuation)
         {
             if (!_isValid)
@@ -58,6 +70,9 @@ namespace Avalonia.Utilities
                 _source.OnCompleted(continuation);
         }
 
+        /// <summary>
+        /// This item supports the framework infrastructure and is not intended to be used directly from your code.
+        /// </summary>
         public SynchronousCompletionAsyncResult<T> GetAwaiter() => this;
     }
 
@@ -65,7 +80,7 @@ namespace Avalonia.Utilities
     /// Source for incomplete SynchronousCompletionAsyncResult
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class SynchronousCompletionAsyncResultSource<T>
+    internal class SynchronousCompletionAsyncResultSource<T>
     {
         private T? _result;
         internal bool IsCompleted { get; private set; }

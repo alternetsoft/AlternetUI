@@ -8,10 +8,10 @@ namespace Avalonia.Controls
     /// </summary>
     /// <remarks>
     /// The interface represents a common interface for both controls that host resources
-    /// (<see cref="IResourceHost"/>) and resource providers such as <see cref="ResourceDictionary"/>
-    /// (see <see cref="IResourceProvider"/>).
+    /// (IResourceHost) and resource providers such as ResourceDictionary/>
+    /// (see IResourceProvider).
     /// </remarks>
-    public interface IResourceNode
+    internal interface IResourceNode
     {
         /// <summary>
         /// Gets a value indicating whether the object has resources.

@@ -253,7 +253,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
     class XamlIlStringSelector : XamlIlSelectorNode
     {
         public string String { get; set; }
-        public enum SelectorType
+        internal enum SelectorType
         {
             Class,
             Name
@@ -282,7 +282,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
     {
         private readonly SelectorType _type;
 
-        public enum SelectorType
+        internal enum SelectorType
         {
             Child,
             Descendant,
@@ -326,7 +326,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
         private readonly int _offset;
         private readonly SelectorType _type;
 
-        public enum SelectorType
+        internal enum SelectorType
         {
             NthChild,
             NthLastChild

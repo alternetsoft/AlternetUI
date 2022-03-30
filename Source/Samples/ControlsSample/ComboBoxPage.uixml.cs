@@ -5,14 +5,14 @@ namespace ControlsSample
 {
     partial class ComboBoxPage : Control
     {
-        private IPageSite site;
+        private IPageSite? site;
 
         public ComboBoxPage()
         {
             InitializeComponent();
         }
 
-        public IPageSite Site
+        public IPageSite? Site
         {
             get => site;
 
@@ -60,12 +60,12 @@ namespace ControlsSample
         private void ComboBox_TextChanged(object? sender, EventArgs e)
         {
             var text = comboBox.Text == "" ? "\"\"" : comboBox.Text;
-            site.LogEvent($"ComboBox: TextChanged. Text: {text}");
+            site?.LogEvent($"ComboBox: TextChanged. Text: {text}");
         }
 
         private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            site.LogEvent($"ComboBox: SelectedItemChanged. SelectedIndex: {(comboBox.SelectedIndex == null ? "<null>" : comboBox.SelectedIndex.ToString())}");
+            site?.LogEvent($"ComboBox: SelectedItemChanged. SelectedIndex: {(comboBox.SelectedIndex == null ? "<null>" : comboBox.SelectedIndex.ToString())}");
         }
 
         private void AllowTextEditingCheckBox_CheckedChanged(object? sender, EventArgs e)
