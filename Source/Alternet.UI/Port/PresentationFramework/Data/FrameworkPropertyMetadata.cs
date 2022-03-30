@@ -1,3 +1,4 @@
+#nullable disable
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
@@ -181,7 +182,7 @@ namespace Alternet.UI
         /// <param name="propertyChangedCallback">Called when the property has been changed</param>
         /// <param name="coerceValueCallback">Called on update of value</param>
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
-        public FrameworkPropertyMetadata(object? defaultValue,
+        public FrameworkPropertyMetadata(object defaultValue,
                                          FrameworkPropertyMetadataOptions flags,
                                          PropertyChangedCallback propertyChangedCallback,
                                          CoerceValueCallback coerceValueCallback) :

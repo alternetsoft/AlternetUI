@@ -1,4 +1,5 @@
-﻿using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
+#nullable disable
+using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
 using XamlX;
 using XamlX.Ast;
 using XamlX.Emit;

@@ -1,3 +1,4 @@
+#nullable disable
 using System;
 
 #pragma warning disable CS1591 // Enable me later

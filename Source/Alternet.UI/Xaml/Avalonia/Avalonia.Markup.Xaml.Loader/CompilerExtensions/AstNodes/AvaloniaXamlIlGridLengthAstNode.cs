@@ -1,4 +1,5 @@
-﻿using Alternet.UI;
+#nullable disable
+using Alternet.UI;
 using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
 using XamlX.Ast;
 using XamlX.Emit;

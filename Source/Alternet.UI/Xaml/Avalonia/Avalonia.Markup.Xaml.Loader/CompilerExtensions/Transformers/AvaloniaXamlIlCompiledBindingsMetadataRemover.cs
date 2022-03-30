@@ -1,3 +1,4 @@
+#nullable disable
 using XamlX.Ast;
 using XamlX.Transform;
 

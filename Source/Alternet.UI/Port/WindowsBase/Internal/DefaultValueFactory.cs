@@ -1,3 +1,4 @@
+#nullable disable
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
@@ -13,7 +14,7 @@ namespace Alternet.UI.Internal
     // Abstract base class for all DefaultValueFactory implementations. Default 
     // value factories may be registered with the property metadata in place of 
     // a default value instance. When the property system resolve the default 
-    // value for a DP on a DO the factory’s CreateDefaultValue() method will be 
+    // value for a DP on a DO the factoryï¿½s CreateDefaultValue() method will be 
     // invoked. The result will be cached per DP per DO.  Part of this pattern
     // is to get past the requirement that all DefaultValues be free-threaded.
     // For example, this allows using unfrozen Freezables as default values.
@@ -32,7 +33,8 @@ namespace Alternet.UI.Internal
         /// </summary>
         internal abstract object DefaultValue 
         {
-            get;   }
+            get;   
+}
 
         /// <summary>
         ///     See PropertyMetadata.CreateDefaultValue

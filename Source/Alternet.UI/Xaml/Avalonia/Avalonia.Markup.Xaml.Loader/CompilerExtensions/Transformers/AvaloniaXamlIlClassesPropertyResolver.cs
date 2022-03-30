@@ -1,3 +1,4 @@
+#nullable disable
 using System.Collections.Generic;
 using XamlX.Ast;
 using XamlX.Emit;

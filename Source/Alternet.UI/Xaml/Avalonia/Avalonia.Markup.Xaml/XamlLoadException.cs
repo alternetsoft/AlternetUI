@@ -1,4 +1,5 @@
-﻿using System;
+#nullable disable
+using System;
 using System.Runtime.Serialization;
 
 namespace Avalonia.Markup.Xaml

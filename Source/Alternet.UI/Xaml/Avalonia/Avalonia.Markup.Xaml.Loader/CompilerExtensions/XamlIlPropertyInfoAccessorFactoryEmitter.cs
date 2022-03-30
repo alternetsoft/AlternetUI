@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+#nullable disable
+using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
 using XamlX.Ast;

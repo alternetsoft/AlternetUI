@@ -1,3 +1,4 @@
+#nullable disable
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
@@ -16,7 +17,7 @@ namespace Alternet.UI.Internal
     // <summary>
     // FreezableDefaultValueFactory is a DefaultValueFactory implementation which 
     // is inserted by the property system for any DP registered with a default 
-    // value of type Freezable. The user’s given default value is frozen and 
+    // value of type Freezable. The userï¿½s given default value is frozen and 
     // used as a template to create unfrozen copies on a per DP per DO basis. If 
     // the default value is modified it is automatically promoted from default to 
     // local.

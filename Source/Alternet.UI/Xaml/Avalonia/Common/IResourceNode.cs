@@ -1,4 +1,5 @@
-﻿#nullable enable
+#nullable disable
+#nullable enable
 
 namespace Avalonia.Controls
 {

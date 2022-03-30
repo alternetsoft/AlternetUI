@@ -1,4 +1,5 @@
-﻿using Avalonia.Markup.Parsers;
+#nullable disable
+using Avalonia.Markup.Parsers;
 using Avalonia.Utilities;
 using System;
 using System.Collections.Generic;

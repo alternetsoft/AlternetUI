@@ -1,4 +1,5 @@
-﻿using Avalonia.Data.Core;
+#nullable disable
+using Avalonia.Data.Core;
 using Avalonia.Utilities;
 
 namespace Avalonia.Markup.Xaml.Parsers

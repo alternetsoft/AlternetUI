@@ -1,3 +1,4 @@
+#nullable disable
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
@@ -413,7 +414,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="dp">Dependency property</param>
         /// <param name="value">New local value</param>
-        public void SetValue(DependencyProperty dp, object? value)
+        public void SetValue(DependencyProperty dp, object value)
         {
             // Do not allow foreign threads access.
             // (This is a noop if this object is not assigned to a Dispatcher.)
