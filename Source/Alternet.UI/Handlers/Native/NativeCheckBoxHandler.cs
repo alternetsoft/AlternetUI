@@ -1,5 +1,3 @@
-using Alternet.Drawing;
-
 namespace Alternet.UI
 {
     internal class NativeCheckBoxHandler : NativeControlHandler<CheckBox, Native.CheckBox>

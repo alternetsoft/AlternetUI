@@ -1,7 +1,6 @@
 ﻿#nullable disable
 using System;
 using System.Collections.Generic;
-using System.Text;
 using XamlX.Ast;
 
 namespace XamlX.Transform

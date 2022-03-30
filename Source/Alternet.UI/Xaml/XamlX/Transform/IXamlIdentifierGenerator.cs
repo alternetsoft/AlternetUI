@@ -1,5 +1,4 @@
 using System;
-using XamlX.Emit;
 
 namespace XamlX.Transform
 {

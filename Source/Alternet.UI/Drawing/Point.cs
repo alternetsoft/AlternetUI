@@ -6,9 +6,7 @@ using Alternet.UI.Markup;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Numerics;
-using System.Runtime.CompilerServices;
 
 namespace Alternet.Drawing
 {

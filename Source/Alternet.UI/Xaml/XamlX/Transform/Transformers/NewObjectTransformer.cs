@@ -1,8 +1,5 @@
-using System.Collections.Generic;
 using System.Linq;
 using XamlX.Ast;
-using XamlX.IL.Emitters;
-using XamlX.TypeSystem;
 
 namespace XamlX.Transform.Transformers
 {

@@ -1,5 +1,4 @@
 using System;
-using Alternet.Drawing;
 using System.IO;
 
 namespace Alternet.Drawing

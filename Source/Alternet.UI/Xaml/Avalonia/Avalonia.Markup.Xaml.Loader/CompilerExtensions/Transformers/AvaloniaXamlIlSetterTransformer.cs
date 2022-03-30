@@ -1,19 +1,14 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Avalonia.Data.Core;
-using XamlX;
 using XamlX.Ast;
 using XamlX.Emit;
 using XamlX.IL;
 using XamlX.Transform;
-using XamlX.Transform.Transformers;
 using XamlX.TypeSystem;
 
 namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
     using XamlParseException = XamlX.XamlParseException;
-    using XamlLoadException = XamlX.XamlLoadException;
     class AvaloniaXamlIlSetterTransformer : IXamlAstTransformer
     {
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)

@@ -2,7 +2,6 @@
 using System;
 using System.Linq;
 using System.Reflection.Emit;
-using System.Runtime.Serialization;
 using XamlX.Emit;
 using XamlX.IL;
 using XamlX.Transform;

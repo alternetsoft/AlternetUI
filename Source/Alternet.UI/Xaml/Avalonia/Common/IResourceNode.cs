@@ -1,6 +1,4 @@
-﻿using System;
-
-#nullable enable
+﻿#nullable enable
 
 namespace Avalonia.Controls
 {

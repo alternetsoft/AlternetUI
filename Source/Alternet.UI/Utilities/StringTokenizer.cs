@@ -1,16 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Reflection.Emit;
-using XamlX.Ast;
-using XamlX.Emit;
-using XamlX.IL;
-using XamlX.Parsers;
-using XamlX.Transform;
-using XamlX.TypeSystem;
 
 namespace Alternet.UI
 {

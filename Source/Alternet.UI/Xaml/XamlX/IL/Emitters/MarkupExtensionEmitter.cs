@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection.Emit;
 using XamlX.Ast;
 using XamlX.Emit;
-using XamlX.Transform;
 
 namespace XamlX.IL.Emitters
 {

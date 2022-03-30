@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.AstNodes;
 using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
-using XamlX;
 using XamlX.Ast;
 using XamlX.Emit;
 using XamlX.IL;
@@ -18,7 +14,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
         ONLY use types from netstandard and XamlIl. NO dependencies on Avalonia are allowed. Only strings.
         No, nameof isn't welcome here either
      */
-    
+
     class AvaloniaXamlIlLanguage
     {
         public static (XamlLanguageTypeMappings language, XamlLanguageEmitMappings<IXamlILEmitter, XamlILNodeEmitResult> emit) Configure(IXamlTypeSystem typeSystem)

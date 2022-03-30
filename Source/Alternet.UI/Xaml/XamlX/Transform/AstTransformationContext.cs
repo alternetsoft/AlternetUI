@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml;
 using XamlX.Ast;
-using XamlX.TypeSystem;
 
 namespace XamlX.Transform
 {

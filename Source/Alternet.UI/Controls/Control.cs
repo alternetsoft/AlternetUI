@@ -4,7 +4,6 @@ using System.ComponentModel;
 using Alternet.Drawing;
 using Alternet.Base.Collections;
 using System.Linq;
-using System.Collections;
 
 namespace Alternet.UI
 {

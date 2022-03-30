@@ -1,10 +1,7 @@
 #nullable disable
-using System.Linq;
 using System.Reflection.Emit;
 using XamlX.Ast;
 using XamlX.Emit;
-using XamlX.IL;
-using XamlX.Transform;
 using XamlX.TypeSystem;
 
 namespace XamlX.IL.Emitters

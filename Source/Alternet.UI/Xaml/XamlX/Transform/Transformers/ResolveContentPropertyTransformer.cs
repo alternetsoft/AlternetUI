@@ -1,5 +1,4 @@
 #nullable disable
-using System;
 using System.Linq;
 using XamlX.Ast;
 using XamlX.TypeSystem;

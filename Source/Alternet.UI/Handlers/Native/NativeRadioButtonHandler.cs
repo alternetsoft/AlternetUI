@@ -1,5 +1,3 @@
-using Alternet.Drawing;
-
 namespace Alternet.UI
 {
     internal class NativeRadioButtonHandler : NativeControlHandler<RadioButton, Native.RadioButton>

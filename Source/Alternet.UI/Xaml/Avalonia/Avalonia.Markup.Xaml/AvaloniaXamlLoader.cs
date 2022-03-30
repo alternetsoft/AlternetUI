@@ -1,8 +1,6 @@
 using System;
 using System.IO;
 using System.Reflection;
-using System.Text;
-using Avalonia.Markup.Xaml.XamlIl;
 using Avalonia.Platform;
 
 namespace Avalonia.Markup.Xaml

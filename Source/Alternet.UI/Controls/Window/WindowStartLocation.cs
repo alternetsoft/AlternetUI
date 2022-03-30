@@ -1,5 +1,3 @@
-using System;
-
 namespace Alternet.UI
 {
     /// <summary>

@@ -1,5 +1,4 @@
 ﻿using XamlX.Ast;
-using XamlX.Transform;
 
 namespace XamlX.Transform
 {

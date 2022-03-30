@@ -1,4 +1,3 @@
-using System.Linq;
 using XamlX.Ast;
 using XamlX.Transform;
 

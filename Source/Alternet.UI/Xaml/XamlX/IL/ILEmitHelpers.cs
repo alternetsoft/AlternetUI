@@ -1,12 +1,9 @@
 #nullable disable
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection.Emit;
 using XamlX.Ast;
 using XamlX.Emit;
-using XamlX.Transform;
 using XamlX.TypeSystem;
 
 namespace XamlX.IL

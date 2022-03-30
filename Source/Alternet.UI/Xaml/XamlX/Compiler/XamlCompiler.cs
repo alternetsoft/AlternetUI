@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection.Emit;
 using XamlX.Ast;
 using XamlX.Emit;
 using XamlX.Transform;

@@ -6,7 +6,6 @@ using Alternet.UI.Markup;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 
 namespace Alternet.Drawing
 {

@@ -1,6 +1,5 @@
 #nullable disable
 using System.Reflection.Emit;
-using XamlX.Transform;
 using XamlX.IL.Emitters;
 using XamlX.TypeSystem;
 using Visitor = XamlX.Ast.IXamlAstVisitor;

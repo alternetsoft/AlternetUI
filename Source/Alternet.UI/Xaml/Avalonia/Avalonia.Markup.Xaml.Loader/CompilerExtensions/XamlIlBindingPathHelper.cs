@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using System.Reflection.Emit;
 using Avalonia.Markup.Parsers;
@@ -9,10 +8,8 @@ using XamlX.Ast;
 using XamlX.Transform;
 using XamlX.Transform.Transformers;
 using XamlX.TypeSystem;
-using XamlX;
 using XamlX.Emit;
 using XamlX.IL;
-using Avalonia.Utilities;
 
 using XamlIlEmitContext = XamlX.Emit.XamlEmitContext<XamlX.IL.IXamlILEmitter, XamlX.IL.XamlILNodeEmitResult>;
 

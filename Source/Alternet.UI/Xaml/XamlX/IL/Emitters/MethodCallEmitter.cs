@@ -1,9 +1,6 @@
 #nullable disable
-using System.Reflection.Emit;
 using XamlX.Ast;
 using XamlX.Emit;
-using XamlX.Transform;
-using XamlX.TypeSystem;
 
 namespace XamlX.IL.Emitters
 {

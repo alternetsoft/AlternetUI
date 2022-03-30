@@ -3,10 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using XamlX.Ast;
-using XamlX.Emit;
-using XamlX.Transform.Transformers;
 using XamlX.TypeSystem;
 
 namespace XamlX.Transform

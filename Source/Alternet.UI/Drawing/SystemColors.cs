@@ -1,9 +1,7 @@
-using System;
-
 namespace Alternet.Drawing
 {
-	/// <summary>Each property of the <see cref="T:Alternet.Drawing.SystemColors" /> class is a <see cref="T:Alternet.Drawing.Color" /> structure that is the color of a Windows display element.</summary>
-	public sealed class SystemColors
+    /// <summary>Each property of the <see cref="T:Alternet.Drawing.SystemColors" /> class is a <see cref="T:Alternet.Drawing.Color" /> structure that is the color of a Windows display element.</summary>
+    public sealed class SystemColors
 	{
 		private SystemColors()
 		{

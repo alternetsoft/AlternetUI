@@ -6,9 +6,6 @@
 // Description: TextChanged event argument.
 //
 
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System;
 
 namespace Alternet.UI

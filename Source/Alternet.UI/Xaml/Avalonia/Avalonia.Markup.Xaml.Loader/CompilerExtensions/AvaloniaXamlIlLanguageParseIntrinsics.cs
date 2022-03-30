@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using Alternet.Drawing;
 using Alternet.UI;
-using Alternet.UI.Media;
 using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.AstNodes;
 using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
 using XamlX.Ast;

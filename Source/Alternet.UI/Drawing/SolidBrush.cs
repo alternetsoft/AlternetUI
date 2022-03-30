@@ -1,6 +1,3 @@
-using System;
-using Alternet.Drawing;
-
 namespace Alternet.Drawing
 {
     /// <summary>

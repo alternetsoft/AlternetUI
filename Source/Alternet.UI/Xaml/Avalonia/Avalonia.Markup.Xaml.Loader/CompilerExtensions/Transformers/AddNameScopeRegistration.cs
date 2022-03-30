@@ -1,6 +1,4 @@
-using System;
 using System.Linq;
-using XamlX;
 using XamlX.Ast;
 using XamlX.Transform;
 using XamlX.TypeSystem;

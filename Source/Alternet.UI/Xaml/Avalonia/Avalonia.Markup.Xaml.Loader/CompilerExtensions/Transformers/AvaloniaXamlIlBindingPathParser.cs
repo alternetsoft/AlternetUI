@@ -3,8 +3,6 @@ using Avalonia.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using XamlX;
 using XamlX.Ast;
 using XamlX.Transform;
 using XamlX.Transform.Transformers;
