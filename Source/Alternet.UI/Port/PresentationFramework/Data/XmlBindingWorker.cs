@@ -230,7 +230,7 @@ namespace Alternet.UI
                 if (_xmlDataProvider == null)
                 {
                     XmlDataCollection xdc;
-                    ItemsControl ic;
+                    //ItemsControl ic; yezo
 
                     // if the binding knows its data source and it's the right kind, use it
                     if ((_xmlDataProvider = ParentBindingExpression.DataSource as XmlDataProvider) != null)

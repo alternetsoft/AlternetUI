@@ -485,7 +485,7 @@ namespace Alternet.UI
             }
 
             // initiate the data retrieval - must do this at least once to kick off the process
-            _responseStream.BeginRead(_readBuf, 0, _readBuf.Length, new AsyncCallback(ReadCallBack), this);
+            ////_responseStream.BeginRead(_readBuf, 0, _readBuf.Length, new AsyncCallback(ReadCallBack), this);
         }
 
         /// <summary>
@@ -1253,7 +1253,7 @@ namespace Alternet.UI
                 }
 
                 _tempFileStream = null;
-                _tempFileName = null;
+                //_tempFileName = null;
                 _tempFileMutex = null;
             }
         }
@@ -1299,7 +1299,7 @@ namespace Alternet.UI
         private uint            _additionalRequestThreshold = 0x4000;   // dynamically adjusting this value based on network conditions (start small because this only goes up)
         private Stream          _responseStream;        // Stream returned by WebResponse
         private byte[]          _readBuf;               // destination buffer for async inner webResponse reads
-        private string          _tempFileName;          // file name of temp file
+        //private string          _tempFileName;          // file name of temp file
         private long            _fullStreamLength;      // need to return this in call to get_Length
         private volatile bool   _fullDownloadComplete;  // download complete if this is true - prevents us from waiting for more data
                                                         // this is volatile because it can be updated and inspected by different threads

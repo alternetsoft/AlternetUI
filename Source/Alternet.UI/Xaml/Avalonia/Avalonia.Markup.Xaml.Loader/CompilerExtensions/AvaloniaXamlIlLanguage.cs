@@ -97,19 +97,19 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
             private readonly List<KeyValuePair<IXamlType, IXamlType>> _converters =
                 new List<KeyValuePair<IXamlType, IXamlType>>();
 
-            private readonly IXamlType _avaloniaList;
-            private readonly IXamlType _avaloniaListConverter;
+            //private readonly IXamlType _avaloniaList;
+            //private readonly IXamlType _avaloniaListConverter;
 
 
             public AttributeResolver(IXamlTypeSystem typeSystem, XamlLanguageTypeMappings mappings)
             {
                 _typeConverterAttribute = mappings.TypeConverterAttributes.First();
 
-                void AddType(IXamlType type, IXamlType conv) 
-                    => _converters.Add(new KeyValuePair<IXamlType, IXamlType>(type, conv));
+                //void AddType(IXamlType type, IXamlType conv) 
+                //    => _converters.Add(new KeyValuePair<IXamlType, IXamlType>(type, conv));
 
-                void Add(string type, string conv)
-                    => AddType(typeSystem.GetType(type), typeSystem.GetType(conv));
+                //void Add(string type, string conv)
+                //    => AddType(typeSystem.GetType(type), typeSystem.GetType(conv));
                 
                 //Add("Avalonia.Media.IImage","Avalonia.Markup.Xaml.Converters.BitmapTypeConverter");
                 //Add("Avalonia.Media.Imaging.IBitmap","Avalonia.Markup.Xaml.Converters.BitmapTypeConverter");
@@ -130,8 +130,8 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                 foreach(var p in _converters)
                     if (p.Key.Equals(type))
                         return p.Value;
-                if (type.GenericTypeDefinition?.Equals(_avaloniaList) == true)
-                    return _avaloniaListConverter.MakeGenericType(type.GenericArguments[0]);
+                //if (type.GenericTypeDefinition?.Equals(_avaloniaList) == true)
+                //    return _avaloniaListConverter.MakeGenericType(type.GenericArguments[0]);
                 return null;
             }
 

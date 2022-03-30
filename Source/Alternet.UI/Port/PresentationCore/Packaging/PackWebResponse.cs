@@ -472,6 +472,9 @@ namespace Alternet.UI
 #pragma warning restore 56502
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         protected override void Dispose(bool disposing)
         {
             if (!_disposed)

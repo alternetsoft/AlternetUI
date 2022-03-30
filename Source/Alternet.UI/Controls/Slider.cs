@@ -22,6 +22,9 @@ namespace Alternet.UI
     /// </remarks>
     public class Slider : Control
     {
+        /// <summary>
+        /// Identifies the <see cref="Value"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register(
                     "Value", // Property name

@@ -102,7 +102,7 @@ namespace Alternet.UI
             Justification = "It's okay now. Be careful on change.")]
         internal static string GetCookie(Uri uri, bool throwIfNoCookie)
         {
-            UInt32 size = 0;
+            //UInt32 size = 0;
             string uriString = BindUriHelper.UriToString(uri);
             /* yezo
         if (UnsafeNativeMethods.InternetGetCookieEx(uriString, null, null, ref size, 0, IntPtr.Zero))

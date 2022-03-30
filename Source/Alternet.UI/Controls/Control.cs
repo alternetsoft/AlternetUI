@@ -223,7 +223,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the parent container of the control.
         /// </summary>
-        public Control? Parent
+        public new Control? Parent
         {
             get => parent;
             internal set
@@ -487,7 +487,7 @@ namespace Alternet.UI
         /// with that object will be erased with the next paint event. Therefore you cannot cache
         /// the <see cref="DrawingContext"/> object for reuse, except to use non-visual methods like <see cref="DrawingContext.MeasureText"/>.
         /// Instead, you must call <see cref="CreateDrawingContext"/> every time that you want to use the <see cref="DrawingContext"/> object,
-        /// and then call <see cref="Dispose"/> when you are finished using it.
+        /// and then call <see cref="Dispose()"/> when you are finished using it.
         /// </remarks>
         public DrawingContext CreateDrawingContext() => Handler.CreateDrawingContext();
 
@@ -496,10 +496,19 @@ namespace Alternet.UI
         /// </summary>
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Children;
 
+        /// <summary>
+        /// Invalidates the control and causes a paint message to be sent to the control.
+        /// </summary>
         public void Invalidate() => Handler.Invalidate();
 
+        /// <summary>
+        /// Causes the control to redraw the invalidated regions.
+        /// </summary>
         public void Update() => Handler.Update();
 
+        /// <summary>
+        /// Forces the control to invalidate itself and immediately redraw itself and any child controls.
+        /// </summary>
         public void Refresh() => Handler.Refresh();
 
         /// <summary>

@@ -6,6 +6,10 @@ using System.Diagnostics;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Provides a framework-level set of properties, events, and methods for AlterNET UI elements.
+    /// This class represents the provided framework-level implementation that is built on the core-level APIs that are defined by <see cref="UIElement"/>.
+    /// </summary>
     public class FrameworkElement : UIElement
     {
         /// <summary>
@@ -39,6 +43,17 @@ namespace Alternet.UI
             return null;
         }
 
+        // Like GetValueCore, except it returns the expression (if any) instead of its value
+        internal Expression? GetExpressionCore(DependencyProperty dp, PropertyMetadata metadata)
+        {
+            //this.IsRequestingExpression = true; yezo
+            EffectiveValueEntry entry = new EffectiveValueEntry(dp);
+            entry.Value = DependencyProperty.UnsetValue;
+            this.EvaluateBaseValueCore(dp, metadata, ref entry);
+            //this.IsRequestingExpression = false; yezo
+
+            return entry.Value as Expression;
+        }
 
         /// <summary>
         /// Recursively searches all <see cref="LogicalChildrenCollection"/> for a control with the specified name,
@@ -73,11 +88,13 @@ namespace Alternet.UI
                                 new FrameworkPropertyMetadata(null,
                                         FrameworkPropertyMetadataOptions.Inherits));
 
-        public bool IsInitialized { get; internal set; }
-        public FrameworkElement Parent { get; internal set; }
-        public bool IsParentAnFE { get; internal set; }
+        internal bool IsInitialized { get; set; }
+        
+        internal FrameworkElement? Parent { get; set; }
+        
+        internal bool IsParentAnFE { get; set; }
 
-        internal override DependencyObject GetUIParentCore()
+        internal override DependencyObject? GetUIParentCore()
         {
             return Parent;
         }
@@ -102,8 +119,6 @@ namespace Alternet.UI
                                 new FrameworkPropertyMetadata(
                                         /*XmlLanguage.GetLanguage("en-US")*/"en-US",
                                         FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsLayout));
-
-        public event RoutedEventHandler LostFocus;
 
         private InternalFlags _flags = 0; // Stores Flags (see Flags enum)
 
@@ -198,10 +213,7 @@ namespace Alternet.UI
         ///     amount of invalidations and tree traversals. <cref see="DependencyFastBuild"/>
         ///     is recommended to reduce the work necessary to build a tree
         /// </remarks>
-        /// <param name="newParent">
-        ///     New parent that was set
-        /// </param>
-        internal void ChangeLogicalParent(DependencyObject oldParent, DependencyObject newParent)
+        internal void ChangeLogicalParent(DependencyObject? oldParent, DependencyObject? newParent)
         {
             ///////////////////
             // OnNewParent:
@@ -258,7 +270,7 @@ namespace Alternet.UI
             ///////////////////
 
             // Invalidate relevant properties for this subtree
-            DependencyObject parent = (newParent != null) ? newParent : oldParent;
+            var parent = (newParent != null) ? newParent : oldParent;
             TreeWalkHelper.InvalidateOnTreeChange(/* fe = */ this, parent, (newParent != null));
 
             // If no one has called BeginInit then mark the element initialized and fire Initialized event
@@ -334,7 +346,7 @@ namespace Alternet.UI
         {
             while (modelTreeNode != null && modelTreeNode != mergePoint)
             {
-                UIElement uiElement = modelTreeNode as UIElement;
+                var uiElement = modelTreeNode as UIElement;
 
                 if (uiElement != null)
                 {
@@ -358,7 +370,7 @@ namespace Alternet.UI
 
 
             //DependencyObject visualParent = VisualTreeHelper.GetParent(this);
-            DependencyObject modelParent = GetUIParentCore();
+            var modelParent = GetUIParentCore();
 
             // FrameworkElement extends the basic event routing strategy by
             // introducing the concept of a logical tree.  When an event
@@ -369,7 +381,7 @@ namespace Alternet.UI
             // Check the route to see if we are returning into a logical tree
             // that we left before.  If so, restore the source of the event to
             // be the source that it was when we left the logical tree.
-            DependencyObject branchNode = route.PeekBranchNode() as DependencyObject;
+            var branchNode = route.PeekBranchNode() as DependencyObject;
             if (branchNode != null && IsLogicalDescendent(branchNode))
             {
                 // We keep the most recent source in the event args.  Note that
@@ -479,9 +491,9 @@ namespace Alternet.UI
         /// <returns>
         ///     Returns new source
         /// </returns>
-        internal override object AdjustEventSource(RoutedEventArgs args)
+        internal override object? AdjustEventSource(RoutedEventArgs args)
         {
-            object source = null;
+            object? source = null;
 
             // As part of routing events through logical trees, we have
             // to be careful about events that come to us from "foreign"
@@ -496,7 +508,7 @@ namespace Alternet.UI
 
             if (Parent != null || HasLogicalChildren)
             {
-                DependencyObject logicalSource = args.Source as DependencyObject;
+                var logicalSource = args.Source as DependencyObject;
                 if (logicalSource == null || !IsLogicalDescendent(logicalSource))
                 {
                     args.Source = this;
@@ -526,12 +538,12 @@ namespace Alternet.UI
         internal void EventHandlersStoreAdd(EventPrivateKey key, Delegate handler)
         {
             EnsureEventHandlersStore();
-            EventHandlersStore.Add(key, handler);
+            EventHandlersStore!.Add(key, handler);
         }
 
         internal void EventHandlersStoreRemove(EventPrivateKey key, Delegate handler)
         {
-            EventHandlersStore store = EventHandlersStore;
+            var store = EventHandlersStore;
             if (store != null)
             {
                 store.Remove(key, handler);
@@ -615,7 +627,7 @@ namespace Alternet.UI
                 }
             }
 
-            FrameworkPropertyMetadata fmetadata = e.Metadata as FrameworkPropertyMetadata;
+            var fmetadata = e.Metadata as FrameworkPropertyMetadata;
 
             //
             // Invalidation propagation for Groups and Inheritance
@@ -795,7 +807,7 @@ namespace Alternet.UI
         // Helper method to retrieve and fire Clr Event handlers for DependencyPropertyChanged event
         private void RaiseDependencyPropertyChanged(EventPrivateKey key, DependencyPropertyChangedEventArgs args)
         {
-            EventHandlersStore store = EventHandlersStore;
+            var store = EventHandlersStore;
             if (store != null)
             {
                 Delegate handler = store.Get(key);
@@ -880,7 +892,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Called before the parent is chanded to the new value.
         /// </summary>
-        internal virtual void OnNewParent(DependencyObject oldParent, DependencyObject newParent)
+        internal virtual void OnNewParent(DependencyObject? oldParent, DependencyObject? newParent)
         {
             //
             // This API is only here for compatability with the old
@@ -971,7 +983,7 @@ namespace Alternet.UI
         // Helper method to retrieve and fire Clr Event handlers
         internal void RaiseClrEvent(EventPrivateKey key, EventArgs args)
         {
-            EventHandlersStore store = EventHandlersStore;
+            var store = EventHandlersStore;
             if (store != null)
             {
                 Delegate handler = store.Get(key);
@@ -1016,7 +1028,7 @@ namespace Alternet.UI
         // Helper method to retrieve and fire the InheritedPropertyChanged event
         internal void RaiseInheritedPropertyChangedEvent(ref InheritablePropertyChangeInfo info)
         {
-            EventHandlersStore store = EventHandlersStore;
+            var store = EventHandlersStore;
             if (store != null)
             {
                 Delegate handler = store.Get(FrameworkElement.InheritedPropertyChangedKey);
@@ -1092,7 +1104,7 @@ namespace Alternet.UI
                 //FrameworkContentElement parentFCE;
                 bool hasParent = FrameworkElement.GetFrameworkParent(this, out parentFE/*, out parentFCE*/);
 
-                DependencyObject parent = null;
+                DependencyObject? parent = null;
                 InheritanceBehavior parentInheritanceBehavior = InheritanceBehavior.Default;
                 if (hasParent)
                 {

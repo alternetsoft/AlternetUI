@@ -62,7 +62,7 @@ namespace Alternet.UI.Internal
         public void Refresh()
         {
             // Cause the registry to be re-read in case it's changed.
-            _enabledInRegistry = null;
+            //_enabledInRegistry = null;
 
             // Re-initialize everything
             Initialize();
@@ -511,8 +511,8 @@ namespace Alternet.UI.Internal
         // Cache of TraceSource instance; real value resides in PresentationTraceSources.
         TraceSource _traceSource;
 
-        // Cache used by IsWpfTracingEnabledInRegistry
-        static Nullable<bool> _enabledInRegistry = null;
+        //// Cache used by IsWpfTracingEnabledInRegistry
+        //static Nullable<bool> _enabledInRegistry = null;
 
         static char[] FormatChars = new char[]{ '{', '}' };
     }

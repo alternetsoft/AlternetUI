@@ -10,7 +10,7 @@ using System.Configuration;             // ConfigurationManager
 
 namespace Alternet.UI
 {
-    public static class FrameworkCompatibilityPreferences
+    internal static class FrameworkCompatibilityPreferences
     {
         #region Constructor
 
@@ -359,10 +359,10 @@ namespace Alternet.UI
         /// In WPF, such a denial of access to clipboard is 
         /// normally ignored silently. Applications can opt into receiving an ExternalException upon
         /// failure by setting this flag. Opting to receive exceptions requires that 
-        /// the application would take control of handling <see cref="System.Windows.Input.ApplicationCommands.Cut"/>
-        /// and <see cref="System.Windows.Input.ApplicationCommands.Copy"/> RoutedUICommands through a 
-        /// <see cref="System.Windows.Input.CommandBinding"/>, and apply that binding to all TextBoxBase
-        /// controls (<see cref="System.Windows.Controls.TextBox"/> and <see cref="System.Windows.Controls.RichTextBox"/>) 
+        /// the application would take control of handling System.Windows.Input.ApplicationCommands.Cut
+        /// and System.Windows.Input.ApplicationCommands.Copy RoutedUICommands through a 
+        /// System.Windows.Input.CommandBinding, and apply that binding to all TextBoxBase
+        /// controls (System.Windows.Controls.TextBox and System.Windows.Controls.RichTextBox) 
         /// in the application. The application should ensure that it handles ExternalExeptions arising from Copy/Cut 
         /// operations in the CommandBinding's Executed handler. 
         /// </remarks>

@@ -20,8 +20,6 @@ namespace Alternet.UI
     /// <summary>
     /// CompositeCollection will contain items shaped as strings, objects, xml nodes,
     /// elements as well as other collections.
-    /// A <seealso cref="System.Windows.Controls.ItemsControl"/> uses the data
-    /// in the CompositeCollection to generate its content according to its ItemTemplate.
     /// </summary>
 
     [Localizability(LocalizationCategory.Ignore)]

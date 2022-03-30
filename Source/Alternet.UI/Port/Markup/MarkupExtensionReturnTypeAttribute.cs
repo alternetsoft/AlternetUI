@@ -30,14 +30,14 @@ namespace Alternet.UI.Markup
             ReturnType = returnType;
         }
 
-        [Obsolete("The expressionType argument is not used by the XAML parser. To specify the expected return type, " +
-            "use MarkupExtensionReturnTypeAttribute(Type). To specify custom handling for expression types, use " +
-            "XamlSetMarkupExtensionAttribute.")]
-        public MarkupExtensionReturnTypeAttribute(Type returnType, Type expressionType)
-        {
-            ReturnType = returnType;
-            ExpressionType = expressionType;
-        }
+        //[Obsolete("The expressionType argument is not used by the XAML parser. To specify the expected return type, " +
+        //    "use MarkupExtensionReturnTypeAttribute(Type). To specify custom handling for expression types, use " +
+        //    "XamlSetMarkupExtensionAttribute.")]
+        //public MarkupExtensionReturnTypeAttribute(Type returnType, Type expressionType)
+        //{
+        //    ReturnType = returnType;
+        //    ExpressionType = expressionType;
+        //}
 
         /// <summary>
         /// </summary>
@@ -49,7 +49,7 @@ namespace Alternet.UI.Markup
         /// </summary>
         public Type ReturnType { get; }
 
-        [Obsolete("This is not used by the XAML parser. Please look at XamlSetMarkupExtensionAttribute.")]
-        public Type ExpressionType { get; }
+        //[Obsolete("This is not used by the XAML parser. Please look at XamlSetMarkupExtensionAttribute.")]
+        //public Type ExpressionType { get; }
     }
 }

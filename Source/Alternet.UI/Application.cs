@@ -19,7 +19,7 @@ namespace Alternet.UI
 
         private VisualTheme visualTheme = StockVisualThemes.Native;
 
-        internal event EventHandler Idle;
+        internal event EventHandler? Idle;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Application"/> class.
@@ -31,7 +31,7 @@ namespace Alternet.UI
             current = this;
         }
 
-        private void NativeApplication_Idle(object sender, EventArgs e) => Idle?.Invoke(this, EventArgs.Empty);
+        private void NativeApplication_Idle(object? sender, EventArgs e) => Idle?.Invoke(this, EventArgs.Empty);
 
         /// <summary>
         /// Occurs when the <see cref="VisualTheme"/> property changes.

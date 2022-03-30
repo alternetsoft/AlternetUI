@@ -15,6 +15,9 @@ namespace Alternet.UI
     /// </remarks>
     public class CheckBox : ButtonBase
     {
+        /// <summary>
+        /// Identifies the <see cref="IsChecked"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty IsCheckedProperty =
             DependencyProperty.Register(
                     "IsChecked", // Property name

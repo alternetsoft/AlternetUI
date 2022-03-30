@@ -1416,6 +1416,9 @@ namespace Alternet.UI
                 OnPropertyChanged(CurrentItemPropertyName);
         }
 
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         protected override void OnAllowsCrossThreadChangesChanged()
         {
             PrepareCachedList();

@@ -43,11 +43,11 @@ namespace Alternet.UI
         /// <remarks>
         /// In .NET Core 3.0, System.IO.Packaging was removed, in part, from WPF.  WPF now uses the implementation
         /// contained in System.IO.Packaging.dll.  This implementation has distinct differences from the .NET Framework
-        /// WPF implementation.  One such difference is that the <see cref="DeflateStream"/> returned by <see cref="PackagePart.GetStream"/> calls
+        /// WPF implementation.  One such difference is that the DeflateStream returned by PackagePart.GetStream calls
         /// when the <see cref="PackagePart"/> is opened read-only is not a seekable stream.  This breaks several assumptions in WPF
         /// and causes crashes when various parts of the code-base call into <see cref="Stream.Seek"/> or <see cref="Stream.Position"/>.
         /// 
-        /// To fix this, we read the entire <see cref="DeflateStream"/> into a <see cref="MemoryStream"/>, allowing callers to fully seek the stream.
+        /// To fix this, we read the entire DeflateStream into a <see cref="MemoryStream"/>, allowing callers to fully seek the stream.
         /// This is, generally, what would be the case in .NET Framework.
         /// 
         /// Note that if the stream returned is seekable (the <see cref="PackagePart"/> was opened write or read-write) then we just pass the resulting

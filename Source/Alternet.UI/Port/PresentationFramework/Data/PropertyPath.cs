@@ -817,11 +817,11 @@ namespace Alternet.UI
                     if (CriticalExceptions.IsCriticalApplicationException(ex) || throwOnError)
                         throw;
                 }
-                catch
-                {
-                    if (throwOnError)
-                        throw;
-                }
+                //catch
+                //{
+                //    if (throwOnError)
+                //        throw;
+                //}
 
                 #pragma warning restore 56500
                 #pragma warning restore 1634, 1691

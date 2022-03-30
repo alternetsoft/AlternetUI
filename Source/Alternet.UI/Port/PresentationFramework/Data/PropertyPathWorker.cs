@@ -1447,10 +1447,10 @@ namespace Alternet.UI
                         throw;
                     return false;
                 }
-                catch
-                {
-                    return false;
-                }
+                //catch
+                //{
+                //    return false;
+                //}
 
 #pragma warning restore 56500
 #pragma warning restore 1634, 1691
@@ -1573,11 +1573,11 @@ namespace Alternet.UI
                     if (_host != null)
                         _host.ReportGetValueError(k, item, ex);
                 }
-                catch // non CLS compliant exception
-                {
-                    if (_host != null)
-                        _host.ReportGetValueError(k, item, new InvalidOperationException(SR.Get(SRID.NonCLSException, "GetValue")));
-                }
+                //catch // non CLS compliant exception
+                //{
+                //    if (_host != null)
+                //        _host.ReportGetValueError(k, item, new InvalidOperationException(SR.Get(SRID.NonCLSException, "GetValue")));
+                //}
 
                 // catch the pseudo-exception as well
                 if (o == IListIndexOutOfRange)

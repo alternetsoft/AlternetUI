@@ -10,12 +10,23 @@ using System;
 
 namespace Alternet.UI
 {
-    #region TextChangedEvent
-
+    /// <summary>
+    /// Represents the method that will handle the text change routed events.
+    /// </summary>
+    /// <param name="sender">The object where the event handler is attached.</param>
+    /// <param name="e">The event data.</param>
     public delegate void TextChangedEventHandler(object sender, TextChangedEventArgs e);
 
+    /// <summary>
+    /// Provides data for the text change routed events.
+    /// </summary>
     public class TextChangedEventArgs : RoutedEventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextChangedEventArgs"/> class.
+        /// </summary>
+        /// <param name="id">The event identifier (ID).</param>
+        /// <exception cref="ArgumentNullException"></exception>
         public TextChangedEventArgs(RoutedEvent id)
         {
             if (id == null)
@@ -26,6 +37,4 @@ namespace Alternet.UI
             RoutedEvent = id;
         }
     }
-
-    #endregion TextChangedEvent
 }

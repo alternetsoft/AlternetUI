@@ -54,6 +54,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Identifies the <see cref="Text"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty TextProperty =
         DependencyProperty.Register(
                 "Text", // Property name

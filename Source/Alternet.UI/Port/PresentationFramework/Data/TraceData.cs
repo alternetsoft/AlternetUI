@@ -315,8 +315,6 @@ namespace Alternet.UI
         /// Writes trace output for a binding failure plus triggers the event <see cref="BindingDiagnostics.BindingFailed"/>.
         /// The event will not be triggered if the TraceEventType is filtered out.
         /// </summary>
-        /// <param name="binding">The binding is used as a trace parameter, so it get appended to the end of the trace message.</param>
-        /// <param name="exception">If not null, used as both a trace and event parameter.</param>
         public static void TraceAndNotify(TraceEventType eventType, AvTraceDetails traceDetails, BindingExpressionBase binding, Exception exception = null)
         {
             object[] traceParameters = (exception != null) ? new object[] { binding, exception } : new object[] { binding };
@@ -333,7 +331,6 @@ namespace Alternet.UI
         /// Writes trace output for a data failure (with no BindingExpression context available) plus triggers the event <see cref="BindingDiagnostics.BindingFailed"/>.
         /// The event will not be triggered if the TraceEventType is filtered out.
         /// </summary>
-        /// <param name="exception">If not null, used as both a trace and event parameter.</param>
         public static void TraceAndNotify(TraceEventType eventType, AvTraceDetails traceDetails, Exception exception = null)
         {
             object[] parameters = (exception != null) ? new object[] { exception } : null;
@@ -344,7 +341,6 @@ namespace Alternet.UI
         /// Writes trace output for a binding failure plus triggers the event <see cref="BindingDiagnostics.BindingFailed"/>.
         /// The event will not be triggered if the TraceEventType is filtered out. This overload allows specific trace and event parameters to be included.
         /// </summary>
-        /// <param name="binding">The binding is only part of the event, not the trace message.</param>
         public static void TraceAndNotify(TraceEventType eventType, AvTraceDetails traceDetails, BindingExpressionBase binding, object[] traceParameters, object[] eventParameters = null)
         {
             string traceOutput = _avTrace.Trace(eventType, traceDetails.Id, traceDetails.Message, traceDetails.Labels, traceParameters);
@@ -359,7 +355,6 @@ namespace Alternet.UI
         /// Writes trace output for a binding failure plus triggers the event <see cref="BindingDiagnostics.BindingFailed"/>.
         /// The event will not be triggered if the TraceEventType is filtered out. No extra parameters are sent to the trace message or the event.
         /// </summary>
-        /// <param name="binding">The binding is only included in the the event, not the trace message.</param>
         public static void TraceAndNotifyWithNoParameters(TraceEventType eventType, AvTraceDetails traceDetails, BindingExpressionBase binding)
         {
             TraceData.TraceAndNotify(eventType, traceDetails, binding, null, null);

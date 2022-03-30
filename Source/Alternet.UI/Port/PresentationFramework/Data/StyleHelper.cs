@@ -5441,39 +5441,39 @@ namespace Alternet.UI
 
         //        #region AlternateExpressionStorage
 
-        //        //
-        //        //  This method
-        //        //  1. Registers for the "alternative Expression storage" feature, since
-        //        //     we store Expressions in per-instance StyleData.
-        //        //
-        //        internal static void RegisterAlternateExpressionStorage()
-        //        {
-        //            DependencyObject.RegisterForAlternativeExpressionStorage(
-        //                                new AlternativeExpressionStorageCallback(GetExpressionCore),
-        //                                out _getExpression);
-        //        }
+        //
+        //  This method
+        //  1. Registers for the "alternative Expression storage" feature, since
+        //     we store Expressions in per-instance StyleData.
+        //
+        internal static void RegisterAlternateExpressionStorage()
+        {
+            DependencyObject.RegisterForAlternativeExpressionStorage(
+                                new AlternativeExpressionStorageCallback(GetExpressionCore),
+                                out _getExpression);
+        }
 
-        //        private static Expression GetExpressionCore(
-        //            DependencyObject d,
-        //            DependencyProperty dp,
-        //            PropertyMetadata metadata)
-        //        {
-        //            FrameworkElement fe;
-        //            FrameworkContentElement fce;
-        //            Helper.DowncastToFEorFCE(d, out fe, out fce, false);
+        private static Expression GetExpressionCore(
+            DependencyObject d,
+            DependencyProperty dp,
+            PropertyMetadata metadata)
+        {
+            FrameworkElement fe;
+            //FrameworkContentElement fce;
+            Helper.DowncastToFEorFCE(d, out fe, /*out fce,*/ false);
 
-        //            if (fe != null)
-        //            {
-        //                return fe.GetExpressionCore(dp, metadata);
-        //            }
+            if (fe != null)
+            {
+                return fe.GetExpressionCore(dp, metadata);
+            }
 
-        //            if (fce != null)
-        //            {
-        //                return fce.GetExpressionCore(dp, metadata);
-        //            }
+            //if (fce != null)
+            //{
+            //    return fce.GetExpressionCore(dp, metadata);
+            //}
 
-        //            return null;
-        //        }
+            return null;
+        }
 
         //
         //  This method

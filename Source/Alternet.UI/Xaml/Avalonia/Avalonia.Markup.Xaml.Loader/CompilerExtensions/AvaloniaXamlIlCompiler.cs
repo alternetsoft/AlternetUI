@@ -17,7 +17,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
     {
         private readonly IXamlType _contextType;
         private readonly AvaloniaXamlIlDesignPropertiesTransformer _designTransformer;
-        private readonly AvaloniaBindingExtensionTransformer _bindingTransformer;
+        //private readonly AvaloniaBindingExtensionTransformer _bindingTransformer;
 
         private AvaloniaXamlIlCompiler(TransformerConfiguration configuration, XamlLanguageEmitMappings<IXamlILEmitter, XamlILNodeEmitResult> emitMappings)
             : base(configuration, emitMappings, true)
@@ -25,8 +25,8 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
             void InsertAfter<T>(params IXamlAstTransformer[] t) 
                 => Transformers.InsertRange(Transformers.FindIndex(x => x is T) + 1, t);
 
-            void InsertBefore<T>(params IXamlAstTransformer[] t) 
-                => Transformers.InsertRange(Transformers.FindIndex(x => x is T), t);
+            //void InsertBefore<T>(params IXamlAstTransformer[] t) 
+            //    => Transformers.InsertRange(Transformers.FindIndex(x => x is T), t);
 
 
             // Before everything else
@@ -105,8 +105,10 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
 
         public bool DefaultCompileBindings
         {
-            get => _bindingTransformer.CompileBindingsByDefault;
-            set => _bindingTransformer.CompileBindingsByDefault = value;
+            //get => _bindingTransformer.CompileBindingsByDefault;
+            //set => _bindingTransformer.CompileBindingsByDefault = value;
+            get => false;
+            set { }
         }
 
         public void ParseAndCompile(string xaml, string baseUri, IFileSource fileSource, IXamlTypeBuilder<IXamlILEmitter> tb, IXamlType overrideRootType)

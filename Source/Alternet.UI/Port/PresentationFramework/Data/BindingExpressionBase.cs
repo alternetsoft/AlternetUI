@@ -2219,9 +2219,9 @@ namespace Alternet.UI
                     {
                         e = ex;
                     }
-                    catch // non CLS compliant exception
-                    {
-                    }
+                    //catch // non CLS compliant exception
+                    //{
+                    //}
 
                     #pragma warning restore 56500
                     #pragma warning restore 1634, 1691

@@ -2044,7 +2044,7 @@ namespace Alternet.UI.Threading
             // Dequeue the next operation if appropriate.
             lock(_instanceLock)
             {
-                _postedProcessingType = PROCESS_NONE;
+                //_postedProcessingType = PROCESS_NONE;
 
                 // We can only do background processing if there is
                 // no input in the Win32 queue.
@@ -2563,7 +2563,7 @@ namespace Alternet.UI.Threading
                 case BaseCompatibilityPreferences.HandleDispatcherRequestProcessingFailureOptions.Throw:
                     throw new InvalidOperationException(SR.Get(SRID.DispatcherRequestProcessingFailed));
                 case BaseCompatibilityPreferences.HandleDispatcherRequestProcessingFailureOptions.Reset:
-                    _postedProcessingType = PROCESS_NONE;
+                    //_postedProcessingType = PROCESS_NONE;
                     break;
             }
         }
@@ -2706,7 +2706,7 @@ namespace Alternet.UI.Threading
 
                     if(_dueTimeFound)
                     {
-                        if(!_isWin32TimerSet || !oldDueTimeFound || (oldDueTimeInTicks != _dueTimeInTicks))
+                        if(/*!_isWin32TimerSet ||*/ !oldDueTimeFound || (oldDueTimeInTicks != _dueTimeInTicks))
                         {
                             SetWin32Timer(_dueTimeInTicks);
                         }
@@ -2926,7 +2926,7 @@ namespace Alternet.UI.Threading
         private HwndWrapperHook _hook;
 
         private static WindowMessage _msgProcessQueue;*/
-        private int _postedProcessingType;
+        //private int _postedProcessingType;
 
         private static ExceptionWrapper _exceptionWrapper;
         private static readonly object ExceptionDataKey = new object();
@@ -2956,7 +2956,7 @@ namespace Alternet.UI.Threading
         private long _timersVersion;
         private bool _dueTimeFound;
         private int _dueTimeInTicks;
-        private bool _isWin32TimerSet;
+        //private bool _isWin32TimerSet;
 
         // This can be read from any thread, but only written by the dispatcher thread.
         // Dispatcher Thread - lock _instanceLock only on write

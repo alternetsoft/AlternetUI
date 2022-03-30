@@ -609,11 +609,11 @@ namespace Alternet.UI
                         eventParameters: new object[] { ex });
                 }
             }
-            //FXCop Fix: CatchNonClsCompliantExceptionsInGeneralHandlers
-            catch
-            {
-                throw;
-            }
+            ////FXCop Fix: CatchNonClsCompliantExceptionsInGeneralHandlers
+            //catch
+            //{
+            //    throw;
+            //}
 
             if (ex != null)
             {

@@ -490,11 +490,11 @@ namespace Alternet.UI
                 error = null;   // indicate unknown error
                 e = ex;
             }
-            catch // non CLS compliant exception
-            {
-                error = null;   // indicate unknown error
-                e = new InvalidOperationException(SR.Get(SRID.ObjectDataProviderNonCLSException, _objectType.Name));
-            }
+            //catch // non CLS compliant exception
+            //{
+            //    error = null;   // indicate unknown error
+            //    e = new InvalidOperationException(SR.Get(SRID.ObjectDataProviderNonCLSException, _objectType.Name));
+            //}
 
             #pragma warning restore 56500
             #pragma warning restore 1634, 1691
@@ -580,11 +580,11 @@ namespace Alternet.UI
                 error = null;   // indicate unknown error
                 e = ex;
             }
-            catch   //FXCop Fix: CatchNonClsCompliantExceptionsInGeneralHandlers
-            {
-                error = null;   // indicate unknown error
-                e = new InvalidOperationException(SR.Get(SRID.ObjectDataProviderNonCLSExceptionInvoke, MethodName, _objectType.Name));
-            }
+            //catch   //FXCop Fix: CatchNonClsCompliantExceptionsInGeneralHandlers
+            //{
+            //    error = null;   // indicate unknown error
+            //    e = new InvalidOperationException(SR.Get(SRID.ObjectDataProviderNonCLSExceptionInvoke, MethodName, _objectType.Name));
+            //}
 
             #pragma warning restore 56500
             #pragma warning restore 1634, 1691

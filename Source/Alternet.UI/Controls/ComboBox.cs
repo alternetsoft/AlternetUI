@@ -142,6 +142,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Identifies the <see cref="SelectedItem"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register(
                 "SelectedItem", // Property name

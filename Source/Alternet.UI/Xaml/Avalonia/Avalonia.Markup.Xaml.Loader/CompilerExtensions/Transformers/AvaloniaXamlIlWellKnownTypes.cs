@@ -159,13 +159,13 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             //FontFamily = cfg.TypeSystem.GetType("Avalonia.Media.FontFamily");
             //FontFamilyConstructorUriName = FontFamily.GetConstructor(new List<IXamlType> { Uri, XamlIlTypes.String });
 
-            (IXamlType, IXamlConstructor) GetNumericTypeInfo(string name, IXamlType componentType, int componentCount)
-            {
-                var type = cfg.TypeSystem.GetType(name);
-                var ctor = type.GetConstructor(Enumerable.Range(0, componentCount).Select(_ => componentType).ToList());
+            //(IXamlType, IXamlConstructor) GetNumericTypeInfo(string name, IXamlType componentType, int componentCount)
+            //{
+            //    var type = cfg.TypeSystem.GetType(name);
+            //    var ctor = type.GetConstructor(Enumerable.Range(0, componentCount).Select(_ => componentType).ToList());
 
-                return (type, ctor);
-            }
+            //    return (type, ctor);
+            //}
 
             //(Thickness, ThicknessFullConstructor) = GetNumericTypeInfo("Avalonia.Thickness", XamlIlTypes.Double, 4);
             //(Point, PointFullConstructor) = GetNumericTypeInfo("Avalonia.Point", XamlIlTypes.Double, 2);

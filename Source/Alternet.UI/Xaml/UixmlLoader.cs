@@ -20,11 +20,11 @@ namespace Alternet.UI
             }
         }
 
-        static int performanceLogNumber = 1;
-        static System.TimeSpan totalCompilationTime = new System.TimeSpan();
-        static System.TimeSpan totalInitializationTime = new System.TimeSpan();
+        //static int performanceLogNumber = 1;
+        //static System.TimeSpan totalCompilationTime = new System.TimeSpan();
+        //static System.TimeSpan totalInitializationTime = new System.TimeSpan();
 
-        bool logPerformance = false;
+        //bool logPerformance = false;
 
         /// <summary>
         /// Populates an existing root object with the object property values created from a source XAML.
@@ -32,40 +32,40 @@ namespace Alternet.UI
         public void LoadExisting(Stream xamlStream, object existingObject)
         {
             Avalonia.Markup.Xaml.AvaloniaRuntimeXamlLoader.Load(xamlStream, existingObject.GetType().Assembly, existingObject);
-            return;
+            //return;
 
-            const string LogPath = @"c:\temp\UI\xaml-perf.log";
-            System.Diagnostics.Stopwatch? performanceStopwatch = null;
-            if (logPerformance)
-            {
-                if (performanceLogNumber == 1)
-                    File.AppendAllText(LogPath, System.Environment.CommandLine + "---------------\n");
-                performanceStopwatch = new System.Diagnostics.Stopwatch();
-                performanceStopwatch.Start();
-            }
+            //const string LogPath = @"c:\temp\UI\xaml-perf.log";
+            //System.Diagnostics.Stopwatch? performanceStopwatch = null;
+            //if (logPerformance)
+            //{
+            //    if (performanceLogNumber == 1)
+            //        File.AppendAllText(LogPath, System.Environment.CommandLine + "---------------\n");
+            //    performanceStopwatch = new System.Diagnostics.Stopwatch();
+            //    performanceStopwatch.Start();
+            //}
 
-            using (var reader = new StreamReader(xamlStream))
-            {
-                var compiler = new XamlCompiler();
-                var compilation = compiler.Compile(reader.ReadToEnd(), null);
+            //using (var reader = new StreamReader(xamlStream))
+            //{
+            //    var compiler = new XamlCompiler();
+            //    var compilation = compiler.Compile(reader.ReadToEnd(), null);
                 
-                if (performanceStopwatch != null)
-                {
-                    performanceStopwatch.Stop();
-                    totalCompilationTime += performanceStopwatch.Elapsed;
-                    File.AppendAllText(LogPath, $"XAML Load Compile #{performanceLogNumber}: {performanceStopwatch.Elapsed}, Total: {totalCompilationTime.TotalMilliseconds}\n");
-                    performanceStopwatch.Restart();
-                }
+            //    if (performanceStopwatch != null)
+            //    {
+            //        performanceStopwatch.Stop();
+            //        totalCompilationTime += performanceStopwatch.Elapsed;
+            //        File.AppendAllText(LogPath, $"XAML Load Compile #{performanceLogNumber}: {performanceStopwatch.Elapsed}, Total: {totalCompilationTime.TotalMilliseconds}\n");
+            //        performanceStopwatch.Restart();
+            //    }
 
-                compilation.populate(null, existingObject);
-            }
+            //    compilation.populate(null, existingObject);
+            //}
 
-            if (performanceStopwatch != null)
-            {
-                performanceStopwatch.Stop();
-                totalInitializationTime += performanceStopwatch.Elapsed;
-                File.AppendAllText(LogPath, $"XAML Load Init #{performanceLogNumber++}: {performanceStopwatch.Elapsed}, Total Init: {totalInitializationTime.TotalMilliseconds}\n");
-            }
+            //if (performanceStopwatch != null)
+            //{
+            //    performanceStopwatch.Stop();
+            //    totalInitializationTime += performanceStopwatch.Elapsed;
+            //    File.AppendAllText(LogPath, $"XAML Load Init #{performanceLogNumber++}: {performanceStopwatch.Elapsed}, Total Init: {totalInitializationTime.TotalMilliseconds}\n");
+            //}
         }
 
         ///// <summary>

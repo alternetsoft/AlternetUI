@@ -85,10 +85,10 @@ namespace Alternet.UI
 
                 request.Fail(ex);
             }
-            catch // non CLS compliant exception
-            {
-                request.Fail(new InvalidOperationException(SR.Get(SRID.NonCLSException, "processing an async data request")));
-            }
+            //catch // non CLS compliant exception
+            //{
+            //    request.Fail(new InvalidOperationException(SR.Get(SRID.NonCLSException, "processing an async data request")));
+            //}
 
 #pragma warning restore 56500
 #pragma warning restore 1634, 1691

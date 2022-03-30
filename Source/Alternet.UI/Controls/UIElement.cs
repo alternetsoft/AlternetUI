@@ -3,9 +3,15 @@ using System.Diagnostics;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// <see cref="UIElement"/> is a base class for core level implementations building on elements and basic presentation characteristics.
+    /// </summary>
     public class UIElement : DependencyObject
     {
-        public event EventHandler LayoutUpdated;
+        /// <summary>
+        /// Occurs when the layout of the various visual elements changes.
+        /// </summary>
+        public event EventHandler? LayoutUpdated;
 
         internal void RaiseLayoutUpdated()
         {
@@ -16,11 +22,6 @@ namespace Alternet.UI
         ///     Raise the events specified by
         ///     <see cref="RoutedEventArgs.RoutedEvent"/>
         /// </summary>
-        /// <remarks>
-        ///     This method is a shorthand for
-        ///     <see cref="UIElement.BuildRoute"/> and
-        ///     <see cref="EventRoute.InvokeHandlers"/>
-        /// </remarks>
         /// <param name="e">
         ///     <see cref="RoutedEventArgs"/> for the event to
         ///     be raised
@@ -36,6 +37,17 @@ namespace Alternet.UI
             e.ClearUserInitiated();
 
             UIElement.RaiseEventImpl(this, e);
+        }
+
+        /// <summary>
+        /// Occurs when this element loses logical focus.
+        /// </summary>
+        public event RoutedEventHandler? LostFocus;
+
+        internal void RaiseLostFocus()
+        {
+            // todo: call this method from somewhere.
+            LostFocus?.Invoke(this, new RoutedEventArgs());
         }
 
         internal const int MAX_ELEMENTS_IN_ROUTE = 4096;
@@ -70,8 +82,8 @@ namespace Alternet.UI
             }
 
             // Get instance listeners for this UIElement
-            FrugalObjectList<RoutedEventHandlerInfo> instanceListeners = null;
-            EventHandlersStore store = EventHandlersStore;
+            FrugalObjectList<RoutedEventHandlerInfo>? instanceListeners = null;
+            var store = EventHandlersStore;
             if (store != null)
             {
                 instanceListeners = store[e.RoutedEvent];
@@ -98,7 +110,7 @@ namespace Alternet.UI
         {
         }
 
-        internal static void BuildRouteHelper(DependencyObject e, EventRoute route, RoutedEventArgs args)
+        internal static void BuildRouteHelper(DependencyObject? e, EventRoute route, RoutedEventArgs args)
         {
             if (route == null)
             {
@@ -123,7 +135,7 @@ namespace Alternet.UI
             // Route via visual tree
             if (args.RoutedEvent.RoutingStrategy == RoutingStrategy.Direct)
             {
-                UIElement uiElement = e as UIElement;
+                var uiElement = e as UIElement;
 
                 // Add this element to route
                 if (uiElement != null)
@@ -137,7 +149,7 @@ namespace Alternet.UI
 
                 while (e != null)
                 {
-                    UIElement uiElement = e as UIElement;
+                    var uiElement = e as UIElement;
 
                     // Protect against infinite loops by limiting the number of elements
                     // that we will process.
@@ -147,7 +159,7 @@ namespace Alternet.UI
                     }
 
                     // Allow the element to adjust source
-                    object newSource = null;
+                    object? newSource = null;
                     if (uiElement != null)
                     {
                         newSource = uiElement.AdjustEventSource(args);
@@ -237,7 +249,7 @@ namespace Alternet.UI
         /// <returns>
         ///     Returns new source
         /// </returns>
-        internal virtual object AdjustEventSource(RoutedEventArgs args)
+        internal virtual object? AdjustEventSource(RoutedEventArgs args)
         {
             return null;
         }
@@ -291,12 +303,12 @@ namespace Alternet.UI
             EventRouteFactory.RecycleObject(route);
         }
 
-        internal virtual DependencyObject GetUIParentCore()
+        internal virtual DependencyObject? GetUIParentCore()
         {
             return null;
         }
 
-        internal DependencyObject GetUIParent(bool v)
+        internal DependencyObject? GetUIParent(bool v)
         {
             return GetUIParentCore();
         }
@@ -378,7 +390,7 @@ namespace Alternet.UI
             }
 
             EnsureEventHandlersStore();
-            EventHandlersStore.AddRoutedEventHandler(routedEvent, handler, handledEventsToo);
+            EventHandlersStore!.AddRoutedEventHandler(routedEvent, handler, handledEventsToo);
 
             OnAddHandler(routedEvent, handler);
         }
@@ -438,7 +450,7 @@ namespace Alternet.UI
                 throw new ArgumentException(SR.Get(SRID.HandlerTypeIllegal));
             }
 
-            EventHandlersStore store = EventHandlersStore;
+            var store = EventHandlersStore;
             if (store != null)
             {
                 store.RemoveRoutedEventHandler(routedEvent, handler);
@@ -505,7 +517,7 @@ namespace Alternet.UI
         ///     elements in the Framework to generically use
         ///     EventHandlersStore for Clr events as well.
         /// </remarks>
-        internal EventHandlersStore EventHandlersStore
+        internal EventHandlersStore? EventHandlersStore
         {
             [FriendAccessAllowed] // Built into Core, also used by Framework.
             get

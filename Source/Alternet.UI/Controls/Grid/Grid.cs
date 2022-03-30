@@ -34,6 +34,9 @@ namespace Alternet.UI
         static Dictionary<Control, int> controlRowSpans = new Dictionary<Control, int>();
         static Dictionary<Control, bool> controlIsSharedSizeScopes = new Dictionary<Control, bool>();
 
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => base.LogicalChildrenCollection.Concat(ColumnDefinitions).Concat(RowDefinitions);
 
         /// <summary>

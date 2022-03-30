@@ -1675,19 +1675,19 @@ namespace Alternet.UI
                 }
                 convertedValue = DependencyProperty.UnsetValue;
             }
-            catch // non CLS compliant exception
-            {
-                if (TraceData.IsEnabled)
-                {
-                    TraceData.TraceAndNotify(TraceLevel,
-                            TraceData.BadConverterForTransfer(
-                                converter.GetType().Name,
-                                AvTrace.ToStringHelper(value),
-                                AvTrace.TypeName(value)),
-                            this);
-                }
-                convertedValue = DependencyProperty.UnsetValue;
-            }
+            //catch // non CLS compliant exception
+            //{
+            //    if (TraceData.IsEnabled)
+            //    {
+            //        TraceData.TraceAndNotify(TraceLevel,
+            //                TraceData.BadConverterForTransfer(
+            //                    converter.GetType().Name,
+            //                    AvTrace.ToStringHelper(value),
+            //                    AvTrace.TypeName(value)),
+            //                this);
+            //    }
+            //    convertedValue = DependencyProperty.UnsetValue;
+            //}
 
             #pragma warning restore 56500
             #pragma warning restore 1634, 1691
@@ -1740,18 +1740,18 @@ namespace Alternet.UI
                 ProcessException(ex, ValidatesOnExceptions);
                 convertedValue = DependencyProperty.UnsetValue;
             }
-            catch // non CLS compliant exception
-            {
-                if (TraceData.IsEnabled)
-                {
-                    TraceData.TraceAndNotify(TraceEventType.Error,
-                        TraceData.BadConverterForUpdate(
-                            AvTrace.ToStringHelper(Value),
-                            AvTrace.TypeName(value)),
-                        this);
-                }
-                convertedValue = DependencyProperty.UnsetValue;
-            }
+            //catch // non CLS compliant exception
+            //{
+            //    if (TraceData.IsEnabled)
+            //    {
+            //        TraceData.TraceAndNotify(TraceEventType.Error,
+            //            TraceData.BadConverterForUpdate(
+            //                AvTrace.ToStringHelper(Value),
+            //                AvTrace.TypeName(value)),
+            //            this);
+            //    }
+            //    convertedValue = DependencyProperty.UnsetValue;
+            //}
 
             #pragma warning restore 56500
             #pragma warning restore 1634, 1691
@@ -2030,14 +2030,14 @@ namespace Alternet.UI
                 SetStatus(BindingStatusInternal.UpdateSourceError);
                 value = DependencyProperty.UnsetValue;
             }
-            catch // non CLS compliant exception
-            {
-                if (TraceData.IsEnabled)
-                    TraceData.TraceAndNotify(TraceEventType.Error, TraceData.WorkerUpdateFailed, this);
+            //catch // non CLS compliant exception
+            //{
+            //    if (TraceData.IsEnabled)
+            //        TraceData.TraceAndNotify(TraceEventType.Error, TraceData.WorkerUpdateFailed, this);
 
-                SetStatus(BindingStatusInternal.UpdateSourceError);
-                value = DependencyProperty.UnsetValue;
-            }
+            //    SetStatus(BindingStatusInternal.UpdateSourceError);
+            //    value = DependencyProperty.UnsetValue;
+            //}
             finally
             {
                 EndSourceUpdate();

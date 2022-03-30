@@ -209,6 +209,9 @@ namespace Alternet.UI
             control = null;
         }
 
+        /// <summary>
+        /// Causes the control to redraw the invalidated regions.
+        /// </summary>
         public void Update()
         {
             var nativeControl = NativeControl;
@@ -222,6 +225,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Invalidates the control and causes a paint message to be sent to the control.
+        /// </summary>
         public void Invalidate()
         {
             var nativeControl = NativeControl;
@@ -235,6 +241,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Forces the control to invalidate itself and immediately redraw itself and any child controls.
+        /// </summary>
         public void Refresh()
         {
             Invalidate();

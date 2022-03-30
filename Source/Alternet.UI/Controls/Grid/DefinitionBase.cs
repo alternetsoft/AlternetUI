@@ -145,11 +145,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets or sets a parent <see cref="Control"/> for this <see cref="DefinitionBase"/>.
-        /// </summary>
-        internal Control Parent { get; set; }
-
         /// <remarks>
         /// This method needs to be internal to be accessable from derived classes.
         /// </remarks>

@@ -754,6 +754,9 @@ namespace Alternet.UI
                         CurrentChanged != null || CurrentChanging != null; }
         }
 
+        /// <summary>
+        /// Gets the object that is in the collection to represent a new item.
+        /// </summary>
         public static object NewItemPlaceholder
         {
             get { return _newItemPlaceholder; }
@@ -1858,9 +1861,6 @@ namespace Alternet.UI
         ///     UI thread.  Called by ProcessInvoke wich is called by the Dispatcher, so
         ///     the UI thread will have allready been entered by now.
         /// </summary>
-        /// <param name="changeLog">
-        ///     List of NotifyCollectionChangedEventArgs that is to be processed.
-        /// </param>
         private ICollection ProcessChangeLog(ArrayList changeLog, bool processAll=false)
         {
             int currentIndex = 0;
