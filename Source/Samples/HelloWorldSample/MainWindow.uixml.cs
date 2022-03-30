@@ -12,7 +12,8 @@ namespace HelloWorldSample
 
         private void HelloButton_Click(object? sender, EventArgs e)
         {
-            MessageBox.Show("Hello, world!");
+            //MessageBox.Show("Hello, world!");
+            hiL.Text += "1111";
         }
     }
 }

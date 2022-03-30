@@ -61,12 +61,9 @@ namespace Alternet.UI
                 typeof(Label), // Property owner
                 new FrameworkPropertyMetadata( // Property metadata
                         string.Empty, // default value
-                        FrameworkPropertyMetadataOptions.Journal,// Flags
+                        FrameworkPropertyMetadataOptions.Journal | FrameworkPropertyMetadataOptions.AffectsArrange,// Flags
                         new PropertyChangedCallback(OnTextPropertyChanged),    // property changed callback
-                        new CoerceValueCallback(CoerceText),
-                        true, // IsAnimationProhibited
-                        UpdateSourceTrigger.PropertyChanged
-                        //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
+                        new CoerceValueCallback(CoerceText)
                         ));
 
         /// <summary>
@@ -81,7 +78,6 @@ namespace Alternet.UI
         private void OnTextPropertyChanged(string oldText, string newText)
         {
             OnTextChanged(new TextChangedEventArgs(TextChangedEvent));
-            PerformLayout(); // todo: use property flags.
         }
 
         /// <summary>

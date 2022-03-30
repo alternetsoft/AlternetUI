@@ -685,74 +685,80 @@ namespace Alternet.UI
 
                 if (e.IsAValueChange || e.IsASubPropertyChange)
                 {
-                    /*
-                    //
-                    // Layout invalidation
-                    //
-
-                    // Skip if we're traversing an Visibility=Collapsed subtree while
-                    //  in the middle of an invalidation storm due to ancestor change
-                    if (!(AncestorChangeInProgress && InVisibilityCollapsedTree))
+                    if (fmetadata.AffectsArrange)
                     {
-                        UIElement layoutParent = null;
+                        if (this is Control c)
+                            c.PerformLayout();
+                    }
 
-                        bool affectsParentMeasure = fmetadata.AffectsParentMeasure;
-                        bool affectsParentArrange = fmetadata.AffectsParentArrange;
-                        bool affectsMeasure = fmetadata.AffectsMeasure;
-                        bool affectsArrange = fmetadata.AffectsArrange;
-                        if (affectsMeasure || affectsArrange || affectsParentArrange || affectsParentMeasure)
-                        {
-                            // Locate nearest Layout parent
-                            for (Visual v = VisualTreeHelper.GetParent(this) as Visual;
-                                 v != null;
-                                 v = VisualTreeHelper.GetParent(v) as Visual)
-                            {
-                                layoutParent = v as UIElement;
-                                if (layoutParent != null)
-                                {
-                                    //let incrementally-updating FrameworkElements to mark the vicinity of the affected child
-                                    //to perform partial update.
-                                    if (FrameworkElement.DType.IsInstanceOfType(layoutParent))
-                                        ((FrameworkElement)layoutParent).ParentLayoutInvalidated(this);
+                    ////
+                    //// Layout invalidation
+                    ////
 
-                                    if (affectsParentMeasure)
-                                    {
-                                        layoutParent.InvalidateMeasure();
-                                    }
+                    //// Skip if we're traversing an Visibility=Collapsed subtree while
+                    ////  in the middle of an invalidation storm due to ancestor change
+                    //if (!(AncestorChangeInProgress && InVisibilityCollapsedTree))
+                    //{
+                    //    UIElement layoutParent = null;
 
-                                    if (affectsParentArrange)
-                                    {
-                                        layoutParent.InvalidateArrange();
-                                    }
+                    //    bool affectsParentMeasure = fmetadata.AffectsParentMeasure;
+                    //    bool affectsParentArrange = fmetadata.AffectsParentArrange;
+                    //    bool affectsMeasure = fmetadata.AffectsMeasure;
+                    //    bool affectsArrange = fmetadata.AffectsArrange;
+                    //    if (affectsMeasure || affectsArrange || affectsParentArrange || affectsParentMeasure)
+                    //    {
 
-                                    break;
-                                }
-                            }
-                        }
+                    //        // Locate nearest Layout parent
+                    //        for (Visual v = VisualTreeHelper.GetParent(this) as Visual;
+                    //             v != null;
+                    //             v = VisualTreeHelper.GetParent(v) as Visual)
+                    //        {
+                    //            layoutParent = v as UIElement;
+                    //            if (layoutParent != null)
+                    //            {
+                    //                //let incrementally-updating FrameworkElements to mark the vicinity of the affected child
+                    //                //to perform partial update.
+                    //                if (FrameworkElement.DType.IsInstanceOfType(layoutParent))
+                    //                    ((FrameworkElement)layoutParent).ParentLayoutInvalidated(this);
 
-                        if (fmetadata.AffectsMeasure)
-                        {
-                            // Need to complete workaround ...
-                            // this is a test to see if we understand the source of the duplicate renders -- WM_SIZE
-                            // is handled by Window by setting Width & Height, even though the HwndSource will also
-                            // handle WM_SIZE and perform a relayout
-                            if (!BypassLayoutPolicies || !((dp == WidthProperty) || (dp == HeightProperty)))
-                            {
-                                InvalidateMeasure();
-                            }
-                        }
+                    //                if (affectsParentMeasure)
+                    //                {
+                    //                    layoutParent.InvalidateMeasure();
+                    //                }
 
-                        if (fmetadata.AffectsArrange)
-                        {
-                            InvalidateArrange();
-                        }
+                    //                if (affectsParentArrange)
+                    //                {
+                    //                    layoutParent.InvalidateArrange();
+                    //                }
 
-                        if (fmetadata.AffectsRender &&
-                            (e.IsAValueChange || !fmetadata.SubPropertiesDoNotAffectRender))
-                        {
-                            InvalidateVisual();
-                        }
-                    }*/
+                    //                break;
+                    //            }
+                    //        }
+                    //    }
+
+                    //    if (fmetadata.AffectsMeasure)
+                    //    {
+                    //        // Need to complete workaround ...
+                    //        // this is a test to see if we understand the source of the duplicate renders -- WM_SIZE
+                    //        // is handled by Window by setting Width & Height, even though the HwndSource will also
+                    //        // handle WM_SIZE and perform a relayout
+                    //        if (!BypassLayoutPolicies || !((dp == WidthProperty) || (dp == HeightProperty)))
+                    //        {
+                    //            InvalidateMeasure();
+                    //        }
+                    //    }
+
+                    //    if (fmetadata.AffectsArrange)
+                    //    {
+                    //        InvalidateArrange();
+                    //    }
+
+                    //    if (fmetadata.AffectsRender &&
+                    //        (e.IsAValueChange || !fmetadata.SubPropertiesDoNotAffectRender))
+                    //    {
+                    //        InvalidateVisual();
+                    //    }
+                    //}
                 }
             }
         }
