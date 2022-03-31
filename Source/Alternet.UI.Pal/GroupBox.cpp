@@ -53,7 +53,8 @@ namespace Alternet::UI
         return Thickness(border, border, border, topBorder + border);
 #elif defined(__WXOSX__) && wxOSX_USE_COCOA
         double border = 3;
-        return Thickness(border, border + (preferredSize ? topBorder : 0), border, border);
+        double rightBorder = 7;
+        return Thickness(border, border + (preferredSize ? topBorder : 0), preferredSize ? rightBorder : border, border);
 #else
         return toDip(Thickness(otherBorder, topBorder, otherBorder, otherBorder), staticBox);
 #endif
