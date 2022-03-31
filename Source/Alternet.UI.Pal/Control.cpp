@@ -418,8 +418,7 @@ namespace Alternet::UI
     {
         auto wxWindow = GetWxWindow();
         wxRect rect(fromDip(value, wxWindow));
-        wxWindow->SetPosition(rect.GetPosition());
-        wxWindow->SetSize(rect.GetSize());
+        wxWindow->SetSize(rect);
         wxWindow->Refresh();
     }
 
