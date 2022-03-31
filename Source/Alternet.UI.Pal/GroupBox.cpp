@@ -49,7 +49,7 @@ namespace Alternet::UI
 #if defined( __WXGTK20__ )
         double border = 3;
         if (preferredSize)
-            return Thickness(otherBorder, topBorder, otherBorder + border, otherBorder + border);
+            return Thickness(border, topBorder, otherBorder + border, otherBorder + border);
         return Thickness(border, border, border, topBorder + border);
 #elif defined(__WXOSX__) && wxOSX_USE_COCOA
         double border = 3;

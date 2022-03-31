@@ -78,7 +78,7 @@
             "console": "internalConsole"
         },
         {
-            "name": "Drawing: CLR Debug",
+            "name": "Layout: CLR Debug",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "Drawing: Build",
@@ -105,6 +105,35 @@
                 "program": "/usr/bin/dotnet"
             },
             "args": ["${workspaceFolder}/Source/Samples/DrawingSample/bin/Debug/netcoreapp3.1/DrawingSample.dll"],
+        },
+        {
+            "name": "Layout: CLR Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "Layout: Build",
+            // "logging": {"engineLogging": true},
+            "program": "${workspaceFolder}/Source/Samples/LayoutSample/bin/Debug/netcoreapp3.1/LayoutSample.dll",
+            "cwd": "${workspaceFolder}/Source/Samples/LayoutSample/bin/Debug/netcoreapp3.1/",
+            "args": [],
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "Layout: Native Debug",
+            "request": "launch",
+            "internalConsoleOptions": "openOnSessionStart",
+            "preLaunchTask": "Layout: Build",
+            "type": "cppdbg",
+            "cwd": "${workspaceFolder}/Source/Samples/LayoutSample/bin/Debug/netcoreapp3.1",
+            "osx": {
+                "program": "/usr/local/share/dotnet/dotnet"
+                "MIMode": "lldb",
+            },
+            "linux": {
+                "MIMode": "gdb",
+                "program": "/usr/bin/dotnet"
+            },
+            "args": ["${workspaceFolder}/Source/Samples/LayoutSample/bin/Debug/netcoreapp3.1/LayoutSample.dll"],
         },
     ]
 }
