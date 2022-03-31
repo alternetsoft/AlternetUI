@@ -10,7 +10,7 @@ namespace Alternet.Base.Reflection
     /// <summary>
     /// Represents an object that provides a custom type.
     /// </summary>
-    public interface ICustomTypeProvider
+    internal interface ICustomTypeProvider
     {
         /// <summary>
         /// Gets the custom type provided by this object.

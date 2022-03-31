@@ -14,7 +14,7 @@ namespace Alternet.UI
     ///    Xaml Writer Modes for values that 
     ///    are of type Expression.
     /// </summary>
-    public enum XamlWriterMode
+    internal enum XamlWriterMode
     {
         /// <summary>
         ///     Serialize the expression itself 

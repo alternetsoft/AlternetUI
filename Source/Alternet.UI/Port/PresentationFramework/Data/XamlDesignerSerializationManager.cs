@@ -37,7 +37,7 @@ namespace Alternet.UI
     //is in PresentationFramework. When XamlDesignerSerializationManager
     //moved into base or core, we should consider move the methods
     //in ServiceProviders into XamlDesignerSerializationManager.
-    public class XamlDesignerSerializationManager : ServiceProviders
+    internal class XamlDesignerSerializationManager : ServiceProviders
     {        
         #region Construction
 

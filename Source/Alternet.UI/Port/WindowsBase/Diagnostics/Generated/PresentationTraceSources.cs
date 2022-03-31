@@ -13,7 +13,7 @@ using System.Diagnostics;
 namespace Alternet.Base.Diagnostics
 {
     /// <summary>Access point for TraceSources</summary>
-    public static partial class PresentationTraceSources
+    internal static partial class PresentationTraceSources
     {
 		/// <summary>DependencyPropertySource for DependencyProperty</summary>
 		public static TraceSource DependencyPropertySource

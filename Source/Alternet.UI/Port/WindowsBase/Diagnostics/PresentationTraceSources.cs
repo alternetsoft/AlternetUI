@@ -24,7 +24,7 @@ namespace Alternet.Base.Diagnostics
     /// <summary>
     /// PresentationTraceLevel - Enum which describes how much detail to trace about a particular object.
     /// </summary>
-    public enum PresentationTraceLevel
+    internal enum PresentationTraceLevel
     {
         /// <summary>
         /// Trace no additional information.
@@ -51,7 +51,7 @@ namespace Alternet.Base.Diagnostics
     /// Helper class for retrieving TraceSources
     /// </summary>
 
-    public static partial class PresentationTraceSources
+    internal static partial class PresentationTraceSources
     {
         //------------------------------------------------------
         //
