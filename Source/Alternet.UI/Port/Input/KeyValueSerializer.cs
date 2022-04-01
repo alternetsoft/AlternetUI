@@ -7,7 +7,7 @@
 //
 // Description:
 //
-//      ModifierKeysValueSerializer : Serializes a Modifier to and from a string.
+//      KeyValueSerializer: Serializes a key string to a string and vice-versa
 //
 // Features:
 //
@@ -20,13 +20,13 @@ using System.ComponentModel;    // for TypeConverter
 
 using Alternet.UI.Markup;
 
-namespace Alternet.UI.Input
+namespace Alternet.UI
 {
     /// <summary>
-    /// Key Converter class for converting between a string and the Type of a Modifiers
+    /// Key Serializer class for serializing a Key
     /// </summary>
     /// <ExternalAPI/> 
-    public class ModifierKeysValueSerializer : ValueSerializer
+    public class KeyValueSerializer : ValueSerializer
     {
         /// <summary>
         /// CanConvertFromString()
@@ -49,7 +49,10 @@ namespace Alternet.UI.Input
         /// <ExternalAPI/> 
         public override bool CanConvertToString(object value, IValueSerializerContext context) 
         {
-            return (value is ModifierKeys) && ModifierKeysConverter.IsDefinedModifierKeys((ModifierKeys)value);
+            if (!(value is Key))
+                return false;
+            Key key = (Key)value;
+            return ((int)key >= (int)Key.None/* && (int)key <= (int)Key.OemClear*/);
         }
 
         /// <summary>
@@ -60,7 +63,7 @@ namespace Alternet.UI.Input
         /// <returns></returns>
         public override object ConvertFromString(string value, IValueSerializerContext context) 
         {
-            TypeConverter converter = TypeDescriptor.GetConverter(typeof(ModifierKeys));
+            TypeConverter converter = TypeDescriptor.GetConverter(typeof(Key));
             if (converter != null)
                 return converter.ConvertFromString(value);
             else
@@ -75,7 +78,7 @@ namespace Alternet.UI.Input
         /// <returns></returns>
         public override string ConvertToString(object value, IValueSerializerContext context) 
         {
-            TypeConverter converter = TypeDescriptor.GetConverter(typeof(ModifierKeys));
+            TypeConverter converter = TypeDescriptor.GetConverter(typeof(Key));
             if (converter != null)
                 return converter.ConvertToInvariantString(value);
             else
@@ -83,3 +86,4 @@ namespace Alternet.UI.Input
         }
     }
 }
+

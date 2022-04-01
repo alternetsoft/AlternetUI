@@ -19,7 +19,7 @@ using System;
 using System.ComponentModel;    // for TypeConverter
 using System.Globalization;     // for CultureInfo
 
-namespace Alternet.UI.Input
+namespace Alternet.UI
 {
     /// <summary>
     /// Key Converter class for converting between a string and the Type of a Modifiers

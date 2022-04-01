@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 
 
-namespace Alternet.UI.Input
+namespace Alternet.UI
 {
     /// <summary>
     ///     The ModifierKeys enumeration describes a set of common keys
@@ -21,29 +21,39 @@ namespace Alternet.UI.Input
     public enum ModifierKeys
     {
         /// <summary>
-        ///    No modifiers are pressed.
+        /// No modifiers are pressed.
         /// </summary>
         None = 0,
 
         /// <summary>
-        ///    An alt key.
+        /// The "Alt" key on Windows and Linux or "Option" key on macOS.
         /// </summary>
-        Alt = 1,
+        Alt = 1 << 0,
         
         /// <summary>
-        ///    A control key.
+        /// A control key.
         /// </summary>
-        Control = 2,
+        Control = 1 << 1,
 
         /// <summary>
-        ///    A shift key.
+        /// A shift key.
         /// </summary>
-        Shift = 4,
-        
+        Shift = 1 << 2,
+
         /// <summary>
-        ///    A windows key.
+        /// The Microsoft "Windows" key on Windows or "Command" key on macOS or "Meta" key on Linux.
         /// </summary>
-        Windows = 8
+        Windows = 1 << 3,
+
+        /// <summary>
+        /// The "Command" key on Apple keyboard.
+        /// </summary>
+        Command = 1 << 4,
+
+        /// <summary>
+        /// The "Option" key on Apple keyboard.
+        /// </summary>
+        Option = 1 << 5,
     }
 }
 
