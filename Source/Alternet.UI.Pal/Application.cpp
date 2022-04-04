@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "Common.h"
 #include "Window.h"
+#include "KeyUtils.h"
 
 IMPLEMENT_APP_NO_MAIN(Alternet::UI::App);
 IMPLEMENT_WX_THEME_SUPPORT;
@@ -31,13 +32,14 @@ namespace Alternet::UI
         wxApp::OnRun();
     }
 
-    int App::FilterEvent(wxEvent& event)
+    int App::FilterEvent(wxEvent& e)
     {
-        if (event.GetEventType() == wxEVT_KEY_DOWN)
-        {
-            auto keyEvent = (wxKeyEvent&)event;
-            auto kc = keyEvent.GetKeyCode();
-        }
+        if (_owner == nullptr)
+            return Event_Skip;
+
+        auto eventType = e.GetEventType();
+        if (eventType == wxEVT_KEY_DOWN)
+            _owner->OnKeyDown((wxKeyEvent&)e);
 
         return Event_Skip;
     }
@@ -88,6 +90,12 @@ namespace Alternet::UI
     /*static*/ Application* Application::GetCurrent()
     {
         return s_current;
+    }
+
+    void Application::OnKeyDown(wxKeyEvent& e)
+    {
+        KeyEventData data{ WxKeyToKey(e.GetKeyCode()) };
+        RaiseEvent(ApplicationEvent::KeyDown, &data);
     }
 
     void Application::Run(Window* window)

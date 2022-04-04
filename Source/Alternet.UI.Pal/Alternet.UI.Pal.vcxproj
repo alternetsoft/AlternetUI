@@ -267,6 +267,7 @@
     <ClInclude Include="HatchBrush.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageList.h" />
+    <ClInclude Include="KeyUtils.h" />
     <ClInclude Include="Label.h" />
     <ClInclude Include="ListBox.h" />
     <ClInclude Include="ListView.h" />

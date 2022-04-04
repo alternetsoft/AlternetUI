@@ -38,6 +38,8 @@ namespace Alternet::UI
         void RaiseIdle();
 
         static Application* GetCurrent();
+
+        void OnKeyDown(wxKeyEvent& e);
     private:
 
         App* _app;
