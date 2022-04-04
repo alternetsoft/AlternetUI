@@ -73,7 +73,21 @@ namespace ApiGenerator.Api
             return dataType;
         }
 
+        public static IEnumerable<(string Name, object Value)> GetEnumNamesAndValues(Type enumType)
+        {
+            var names = Enum.GetNames(enumType);
+            var values = (Enum.GetValues(enumType) ?? throw new Exception()).Cast<object>().ToArray();
+            for (int i = 0; i < names.Length; i++)
+            {
+                string? name = names[i];
+                object underlyingValue = Convert.ChangeType(values[i], Enum.GetUnderlyingType(values[i].GetType()));
+                yield return (names[i], underlyingValue);
+            }
+        }
+
         public static string GetPInvokeAttributes(ParameterInfo p) =>
             (p.GetCustomAttribute<PInvokeAttributesAttribute>() ?? new PInvokeAttributesAttribute("")).AttributesString;
+
+
     }
 }

@@ -27,13 +27,9 @@ namespace ApiGenerator.Native
                     w.WriteLine($"enum class {typeName}");
                     using (new BlockIndent(w, noNewlineAtEnd: true))
                     {
-                        var names = Enum.GetNames(type);
-                        var values = (Enum.GetValues(type) ?? throw new Exception()).Cast<object>().ToArray();
-                        for (int i = 0; i < names.Length; i++)
+                        foreach (var m in MemberProvider.GetEnumNamesAndValues(type))
                         {
-                            string? name = names[i];
-                            object underlyingValue = Convert.ChangeType(values[i], Enum.GetUnderlyingType(values[i].GetType()));
-                            w.WriteLine(name + " = " + underlyingValue + ",");
+                            w.WriteLine(m.Name + " = " + m.Value + ",");
                         }
                     }
                     w.WriteLine(";");

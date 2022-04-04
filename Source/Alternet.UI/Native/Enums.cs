@@ -4,73 +4,73 @@ namespace Alternet.UI.Native
 {
     enum BrushHatchStyle
     {
-        BackwardDiagonal,
-        ForwardDiagonal,
-        DiagonalCross,
-        Cross,
-        Horizontal,
-        Vertical,
+        BackwardDiagonal = 0,
+        ForwardDiagonal = 1,
+        DiagonalCross = 2,
+        Cross = 3,
+        Horizontal = 4,
+        Vertical = 5,
     }
     
     enum FontStyle
     {
-        Regular,
-        Bold,
-        Italic,
-        Underlined,
-        Strikethrough,
+        Regular = 0,
+        Bold = 1,
+        Italic = 2,
+        Underlined = 4,
+        Strikethrough = 8,
     }
     
     enum GenericFontFamily
     {
-        None,
-        SansSerif,
-        Serif,
-        Monospace,
+        None = 0,
+        SansSerif = 1,
+        Serif = 2,
+        Monospace = 3,
     }
     
     enum ListBoxSelectionMode
     {
-        Single,
-        Multiple,
+        Single = 0,
+        Multiple = 1,
     }
     
     enum ListViewSelectionMode
     {
-        Single,
-        Multiple,
+        Single = 0,
+        Multiple = 1,
     }
     
     enum ListViewView
     {
-        List,
-        Details,
-        SmallIcon,
-        LargeIcon,
+        List = 0,
+        Details = 1,
+        SmallIcon = 2,
+        LargeIcon = 3,
     }
     
     enum PenDashStyle
     {
-        Solid,
-        Dot,
-        Dash,
-        DashDot,
-        Custom,
+        Solid = 0,
+        Dot = 1,
+        Dash = 2,
+        DashDot = 3,
+        Custom = 4,
     }
     
     enum TreeViewSelectionMode
     {
-        Single,
-        Multiple,
+        Single = 0,
+        Multiple = 1,
     }
     
     enum WindowStartPosition
     {
-        SystemDefaultLocation,
-        SystemDefaultBounds,
-        Manual,
-        CenterScreen,
-        CenterOwner,
+        SystemDefaultLocation = 0,
+        SystemDefaultBounds = 1,
+        Manual = 2,
+        CenterScreen = 3,
+        CenterOwner = 4,
     }
     
 }
