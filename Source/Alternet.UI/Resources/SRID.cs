@@ -1398,6 +1398,20 @@ namespace Alternet.UI
         internal const string @Illegal_InheritanceBehaviorSettor = "Illegal_InheritanceBehaviorSettor";
         /// <summary>Logical tree depth exceeded while traversing the tree. This could indicate a cycle in the tree.</summary>
         internal const string @LogicalTreeLoop = "LogicalTreeLoop";
+        /// <summary>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</summary>
+        internal const string @Invalid_IInputElement = "Invalid_IInputElement";
+        /// <summary>Only PreProcessInput and PostProcessInput events can access InputManager staging area.</summary>
+        internal const string @NotAllowedToAccessStagingArea = "NotAllowedToAccessStagingArea";
+        /// <summary>Result text cannot be null.</summary>
+        internal const string @TextComposition_NullResultText = "TextComposition_NullResultText";
+        /// <summary>'{0}' does not have a valid InputManager.</summary>
+        internal const string @TextCompositionManager_NoInputManager = "TextCompositionManager_NoInputManager";
+        /// <summary>'{0}' has already started.</summary>
+        internal const string @TextCompositionManager_TextCompositionHasStarted = "TextCompositionManager_TextCompositionHasStarted";
+        /// <summary>'{0}' has not yet started.</summary>
+        internal const string @TextCompositionManager_TextCompositionNotStarted = "TextCompositionManager_TextCompositionNotStarted";
+        /// <summary>'{0}' has already finished.</summary>
+        internal const string @TextCompositionManager_TextCompositionHasDone = "TextCompositionManager_TextCompositionHasDone";
 
     }
 }

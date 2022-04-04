@@ -2193,4 +2193,25 @@
   <data name="LogicalTreeLoop" xml:space="preserve">
     <value>Logical tree depth exceeded while traversing the tree. This could indicate a cycle in the tree.</value>
   </data>
+  <data name="Invalid_IInputElement" xml:space="preserve">
+    <value>'{0}' is not a valid type for IInputElement. UIElement or ContentElement expected.</value>
+  </data>
+  <data name="NotAllowedToAccessStagingArea" xml:space="preserve">
+    <value>Only PreProcessInput and PostProcessInput events can access InputManager staging area.</value>
+  </data>
+  <data name="TextComposition_NullResultText" xml:space="preserve">
+    <value>Result text cannot be null.</value>
+  </data>
+  <data name="TextCompositionManager_NoInputManager" xml:space="preserve">
+    <value>'{0}' does not have a valid InputManager.</value>
+  </data>
+  <data name="TextCompositionManager_TextCompositionHasStarted" xml:space="preserve">
+    <value>'{0}' has already started.</value>
+  </data>
+  <data name="TextCompositionManager_TextCompositionNotStarted" xml:space="preserve">
+    <value>'{0}' has not yet started.</value>
+  </data>
+  <data name="TextCompositionManager_TextCompositionHasDone" xml:space="preserve">
+    <value>'{0}' has already finished.</value>
+  </data>
 </root>

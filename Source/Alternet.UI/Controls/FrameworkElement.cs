@@ -831,16 +831,6 @@ namespace Alternet.UI
             ((FrameworkElement)d).RaiseDependencyPropertyChanged(DataContextChangedKey, e);
         }
 
-        internal static void AddHandler(DependencyObject d, RoutedEvent routedEvent, Delegate handler)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static void RemoveHandler(DependencyObject d, RoutedEvent routedEvent, Delegate handler)
-        {
-            throw new NotImplementedException();
-        }
-
         // Sets or Unsets the required flag based on
         // the bool argument
         internal void WriteInternalFlag(InternalFlags reqFlag, bool set)

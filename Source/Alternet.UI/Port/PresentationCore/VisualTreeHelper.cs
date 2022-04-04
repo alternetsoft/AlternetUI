@@ -116,24 +116,29 @@ namespace Alternet.UI
         //            visual.RecursiveSetDpiScaleVisualFlags(new DpiRecursiveChangeArgs(dpiFlags, visual.GetDpi(), dpiInfo));
         //        }
 
-        //        /// <summary>
-        //        /// Visual parent of this Visual.
-        //        /// </summary>
-        //        public static DependencyObject GetParent(DependencyObject reference)
-        //        {
-        //            Visual visual;
-        //            Visual3D visual3D;
+        /// <summary>
+        /// Visual parent of this Visual.
+        /// </summary>
+        public static DependencyObject GetParent(DependencyObject reference)
+        {
+            if (reference is FrameworkElement fe)
+                return fe.Parent;
 
-        //            VisualTreeUtils.AsNonNullVisual(reference, out visual, out visual3D);
+            return null;
 
-        //            // x86 branch prediction skips the branch on first encounter.  We favor 2D.
-        //            if (visual3D != null)
-        //            {
-        //                return visual3D.InternalVisualParent;
-        //            }
+            //Visual visual;
+            //Visual3D visual3D;
 
-        //            return visual.InternalVisualParent;
-        //        }
+            //VisualTreeUtils.AsNonNullVisual(reference, out visual, out visual3D);
+
+            //// x86 branch prediction skips the branch on first encounter.  We favor 2D.
+            //if (visual3D != null)
+            //{
+            //    return visual3D.InternalVisualParent;
+            //}
+
+            //return visual.InternalVisualParent;
+        }
 
         //        /// <summary>
         //        /// Equivalent to GetParent except that it does not VerifyAccess and only asserts

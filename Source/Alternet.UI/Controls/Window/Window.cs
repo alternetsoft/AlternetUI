@@ -13,6 +13,22 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public class Window : Control
     {
+        internal static Window? GetParentWindow(DependencyObject dp)
+        {
+            // For use instead of PresentationSource.CriticalFromVisual(focusScope).
+
+            if (dp is Window w)
+                return w;
+
+            if (!(dp is Control c))
+                return null;
+
+            if (c.Parent == null)
+                return null;
+
+            return GetParentWindow(c.Parent);
+        }
+
         private string title = "";
         private WindowStartLocation startLocation = WindowStartLocation.SystemDefault;
 

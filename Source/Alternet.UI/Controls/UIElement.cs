@@ -1,3 +1,4 @@
+using Alternet.UI.Internal.KnownBoxes;
 using System;
 using System.Diagnostics;
 
@@ -9,6 +10,161 @@ namespace Alternet.UI
     public class UIElement : DependencyObject
     {
         /// <summary>
+        ///     The DependencyProperty for the Focusable property.
+        /// </summary>
+        [CommonDependencyProperty]
+        public static readonly DependencyProperty FocusableProperty =
+                DependencyProperty.Register(
+                        "Focusable",
+                        typeof(bool),
+                        typeof(UIElement),
+                        new UIPropertyMetadata(
+                                BooleanBoxes.FalseBox, // default value
+                                new PropertyChangedCallback(OnFocusableChanged)));
+
+        /// <summary>
+        ///     Gettor and Settor for Focusable Property
+        /// </summary>
+        public bool Focusable
+        {
+            get { return (bool)GetValue(FocusableProperty); }
+            set { SetValue(FocusableProperty, BooleanBoxes.Box(value)); }
+        }
+
+        /// <summary>
+        ///     FocusableChanged event
+        /// </summary>
+        public event DependencyPropertyChangedEventHandler FocusableChanged
+        {
+            add { EventHandlersStoreAdd(FocusableChangedKey, value); }
+            remove { EventHandlersStoreRemove(FocusableChangedKey, value); }
+        }
+        internal static readonly EventPrivateKey FocusableChangedKey = new EventPrivateKey(); // Used by ContentElement
+
+        private static void OnFocusableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UIElement uie = (UIElement)d;
+
+            // Raise the public changed event.
+            uie.RaiseDependencyPropertyChanged(FocusableChangedKey, e);
+        }
+
+        /// <summary>
+        ///     The DependencyProperty for the IsFocused property.
+        /// </summary>
+        internal static readonly DependencyPropertyKey IsFocusedPropertyKey =
+                    DependencyProperty.RegisterReadOnly(
+                                "IsFocused",
+                                typeof(bool),
+                                typeof(UIElement),
+                                new PropertyMetadata(
+                                            BooleanBoxes.FalseBox, // default value
+                                            new PropertyChangedCallback(IsFocused_Changed)));
+
+        /// <summary>
+        ///     The DependencyProperty for IsFocused.
+        ///     Flags:              None
+        ///     Read-Only:          true
+        /// </summary>
+        public static readonly DependencyProperty IsFocusedProperty
+            = IsFocusedPropertyKey.DependencyProperty;
+
+        private static void IsFocused_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            UIElement uiElement = ((UIElement)d);
+
+            if ((bool)e.NewValue)
+            {
+                uiElement.OnGotFocus(new RoutedEventArgs(GotFocusEvent, uiElement));
+            }
+            else
+            {
+                uiElement.OnLostFocus(new RoutedEventArgs(LostFocusEvent, uiElement));
+            }
+        }
+
+        /// <summary>
+        ///     This method is invoked when the IsFocused property changes to true
+        /// </summary>
+        /// <param name="e">RoutedEventArgs</param>
+        protected virtual void OnGotFocus(RoutedEventArgs e)
+        {
+            RaiseEvent(e);
+        }
+
+        /// <summary>
+        ///     This method is invoked when the IsFocused property changes to false
+        /// </summary>
+        /// <param name="e">RoutedEventArgs</param>
+        protected virtual void OnLostFocus(RoutedEventArgs e)
+        {
+            RaiseEvent(e);
+        }
+
+        /// <summary>
+        ///     GotFocus event
+        /// </summary>
+        public static readonly RoutedEvent GotFocusEvent = FocusManager.GotFocusEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     An event announcing that IsFocused changed to true.
+        /// </summary>
+        public event RoutedEventHandler GotFocus
+        {
+            add { AddHandler(GotFocusEvent, value); }
+            remove { RemoveHandler(GotFocusEvent, value); }
+        }
+
+        /// <summary>
+        ///     LostFocus event
+        /// </summary>
+        public static readonly RoutedEvent LostFocusEvent = FocusManager.LostFocusEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     An event announcing that IsFocused changed to false.
+        /// </summary>
+        public event RoutedEventHandler LostFocus
+        {
+            add { AddHandler(LostFocusEvent, value); }
+            remove { RemoveHandler(LostFocusEvent, value); }
+        }
+
+        // Helper method to retrieve and fire Clr Event handlers for DependencyPropertyChanged event
+        private void RaiseDependencyPropertyChanged(EventPrivateKey key, DependencyPropertyChangedEventArgs args)
+        {
+            var store = EventHandlersStore;
+            if (store != null)
+            {
+                Delegate handler = store.Get(key);
+                if (handler != null)
+                {
+                    ((DependencyPropertyChangedEventHandler)handler)(this, args);
+                }
+            }
+        }
+
+        private void EventHandlersStoreAdd(EventPrivateKey key, Delegate handler)
+        {
+            EnsureEventHandlersStore();
+            EventHandlersStore!.Add(key, handler);
+        }
+
+        private void EventHandlersStoreRemove(EventPrivateKey key, Delegate handler)
+        {
+            var store = EventHandlersStore;
+            if (store != null)
+            {
+                store.Remove(key, handler);
+                if (store.Count == 0)
+                {
+                    // last event handler was removed -- throw away underlying EventHandlersStore
+                    EventHandlersStoreField.ClearValue(this);
+                    WriteFlag(CoreFlags.ExistsEventHandlersStore, false);
+                }
+            }
+        }
+
+        /// <summary>
         /// Occurs when the layout of the various visual elements changes.
         /// </summary>
         public event EventHandler? LayoutUpdated;
@@ -16,6 +172,93 @@ namespace Alternet.UI
         internal void RaiseLayoutUpdated()
         {
             LayoutUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        ///     Adds a handler for the given attached event
+        /// </summary>
+        [FriendAccessAllowed] // Built into Core, also used by Framework.
+        internal static void AddHandler(DependencyObject d, RoutedEvent routedEvent, Delegate handler)
+        {
+            if (d == null)
+            {
+                throw new ArgumentNullException("d");
+            }
+
+            if (routedEvent is null)
+            {
+                throw new ArgumentNullException(nameof(routedEvent));
+            }
+
+            var uiElement = d as UIElement;
+            if (uiElement != null)
+            {
+                uiElement.AddHandler(routedEvent, handler);
+            }
+            else
+                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, d.GetType()));
+            //{
+            //    ContentElement contentElement = d as ContentElement;
+            //    if (contentElement != null)
+            //    {
+            //        contentElement.AddHandler(routedEvent, handler);
+            //    }
+            //    else
+            //    {
+            //        UIElement3D uiElement3D = d as UIElement3D;
+            //        if (uiElement3D != null)
+            //        {
+            //            uiElement3D.AddHandler(routedEvent, handler);
+            //        }
+            //        else
+            //        {
+            //            throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, d.GetType()));
+            //        }
+            //    }
+            //}
+        }
+
+        /// <summary>
+        ///     Removes a handler for the given attached event
+        /// </summary>
+        [FriendAccessAllowed] // Built into Core, also used by Framework.
+        internal static void RemoveHandler(DependencyObject d, RoutedEvent routedEvent, Delegate handler)
+        {
+            if (d == null)
+            {
+                throw new ArgumentNullException("d");
+            }
+
+            if (routedEvent is null)
+            {
+                throw new ArgumentNullException(nameof(routedEvent));
+            }
+
+            var uiElement = d as UIElement;
+            if (uiElement != null)
+                uiElement.RemoveHandler(routedEvent, handler);
+            else
+                throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, d.GetType()));
+            //else
+            //{
+            //    ContentElement contentElement = d as ContentElement;
+            //    if (contentElement != null)
+            //    {
+            //        contentElement.RemoveHandler(routedEvent, handler);
+            //    }
+            //    else
+            //    {
+            //        UIElement3D uiElement3D = d as UIElement3D;
+            //        if (uiElement3D != null)
+            //        {
+            //            uiElement3D.RemoveHandler(routedEvent, handler);
+            //        }
+            //        else
+            //        {
+            //            throw new ArgumentException(SR.Get(SRID.Invalid_IInputElement, d.GetType()));
+            //        }
+            //    }
+            //}
         }
 
         /// <summary>
@@ -37,17 +280,6 @@ namespace Alternet.UI
             e.ClearUserInitiated();
 
             UIElement.RaiseEventImpl(this, e);
-        }
-
-        /// <summary>
-        /// Occurs when this element loses logical focus.
-        /// </summary>
-        public event RoutedEventHandler? LostFocus;
-
-        internal void RaiseLostFocus()
-        {
-            // todo: call this method from somewhere.
-            LostFocus?.Invoke(this, new RoutedEventArgs());
         }
 
         internal const int MAX_ELEMENTS_IN_ROUTE = 4096;
