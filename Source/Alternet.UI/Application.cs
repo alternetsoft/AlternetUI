@@ -28,7 +28,12 @@ namespace Alternet.UI
         {
             nativeApplication = new Native.Application();
             nativeApplication.Idle += NativeApplication_Idle;
+            nativeApplication.KeyDown += NativeApplication_KeyDown;
             current = this;
+        }
+
+        private void NativeApplication_KeyDown(object? sender, Native.NativeEventArgs<Native.KeyEventData> e)
+        {
         }
 
         private void NativeApplication_Idle(object? sender, EventArgs e) => Idle?.Invoke(this, EventArgs.Empty);
@@ -115,6 +120,7 @@ namespace Alternet.UI
             if (!IsDisposed)
             {
                 nativeApplication.Idle -= NativeApplication_Idle;
+                nativeApplication.KeyDown -= NativeApplication_KeyDown;
                 nativeApplication.Dispose();
                 nativeApplication = null!;
 
