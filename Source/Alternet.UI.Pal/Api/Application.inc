@@ -5,6 +5,7 @@ public:
 enum class ApplicationEvent
 {
     Idle,
+    KeyDown,
 };
 typedef void* (*ApplicationEventCallbackType)(Application* obj, ApplicationEvent event, void* param);
 static void SetEventCallback(ApplicationEventCallbackType value) { eventCallback = value; }

@@ -4,6 +4,12 @@
 namespace Alternet::UI
 {
     #pragma pack(push, 1)
+    struct KeyEventData
+    {
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
     struct TreeViewItemEventData
     {
         void* item;

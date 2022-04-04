@@ -31,6 +31,22 @@ namespace Alternet::UI
         wxApp::OnRun();
     }
 
+    int App::FilterEvent(wxEvent& event)
+    {
+        if (event.GetEventType() == wxEVT_KEY_DOWN)
+        {
+            auto keyEvent = (wxKeyEvent&)event;
+            auto kc = keyEvent.GetKeyCode();
+        }
+
+        return Event_Skip;
+    }
+
+    void App::SetOwner(Application* value)
+    {
+        _owner = value;
+    }
+
     //-----------------
 
     void IdleCallback()
@@ -54,6 +70,7 @@ namespace Alternet::UI
         wxTheApp->CallOnInit();
 
         _app = static_cast<App*>(wxTheApp);
+        _app->SetOwner(this);
 
         ParkingWindow::SetIdleCallback(IdleCallback);
     }

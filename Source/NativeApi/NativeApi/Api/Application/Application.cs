@@ -11,5 +11,7 @@ namespace NativeApi.Api
         public void Run(Window window) => throw new Exception();
 
         public event EventHandler Idle { add => throw new Exception(); remove => throw new Exception(); }
+
+        public event NativeEventHandler<KeyEventData>? KeyDown { add => throw new Exception(); remove => throw new Exception(); }
     }
 }

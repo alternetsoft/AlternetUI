@@ -10,6 +10,34 @@ namespace Alternet.UI
     public class UIElement : DependencyObject
     {
         /// <summary>
+        ///     Alias to the Keyboard.KeyDownEvent.
+        /// </summary>
+        public static readonly RoutedEvent KeyDownEvent = Keyboard.KeyDownEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting a key was pressed
+        /// </summary>
+        public event KeyEventHandler KeyDown
+        {
+            add { AddHandler(Keyboard.KeyDownEvent, value, false); }
+            remove { RemoveHandler(Keyboard.KeyDownEvent, value); }
+        }
+
+        /// <summary>
+        ///     Alias to the Keyboard.KeyUpEvent.
+        /// </summary>
+        public static readonly RoutedEvent KeyUpEvent = Keyboard.KeyUpEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting a key was released
+        /// </summary>
+        public event KeyEventHandler KeyUp
+        {
+            add { AddHandler(Keyboard.KeyUpEvent, value, false); }
+            remove { RemoveHandler(Keyboard.KeyUpEvent, value); }
+        }
+
+        /// <summary>
         ///     The DependencyProperty for the Focusable property.
         /// </summary>
         [CommonDependencyProperty]

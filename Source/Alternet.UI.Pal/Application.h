@@ -7,6 +7,8 @@
 
 namespace Alternet::UI
 {
+    class Application;
+
     class App : public wxApp
     {
     public:
@@ -18,7 +20,12 @@ namespace Alternet::UI
 
         void Run();
 
+        int FilterEvent(wxEvent& event) override;
+
+        void SetOwner(Application* value);
     private:
+
+        Application* _owner = nullptr;
 
         BYREF_ONLY(App);
     };

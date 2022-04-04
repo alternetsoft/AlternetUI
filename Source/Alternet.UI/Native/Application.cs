@@ -49,11 +49,14 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.ApplicationEvent.Idle:
                 Idle?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                case NativeApi.ApplicationEvent.KeyDown:
+                KeyDown?.Invoke(this, new NativeEventArgs<KeyEventData>(MarshalEx.PtrToStructure<KeyEventData>(parameter))); return IntPtr.Zero;
                 default: throw new Exception("Unexpected ApplicationEvent value: " + e);
             }
         }
         
         public event EventHandler? Idle;
+        public event NativeEventHandler<KeyEventData>? KeyDown;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -66,6 +69,7 @@ namespace Alternet.UI.Native
             public enum ApplicationEvent
             {
                 Idle,
+                KeyDown,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
