@@ -20,6 +20,10 @@ namespace Alternet::UI
         bool GetDoNotDestroyWxWindow();
         void SetDoNotDestroyWxWindow(bool value);
 
+        WX_DECLARE_HASH_MAP(wxWindow*, Control*,
+            wxPointerHash, wxPointerEqual,
+            ControlsByWxWindowsMap);
+
     protected:
         void CreateWxWindow();
 
@@ -110,11 +114,7 @@ namespace Alternet::UI
 
         Size GetClientSizeCore();
 
-        WX_DECLARE_HASH_MAP(wxWindow*, Control*,
-            wxPointerHash, wxPointerEqual,
-            ControlsByWxWindowsMap);
-
-        inline static ControlsByWxWindowsMap s_controlsByWxWindowsMap;
+        static ControlsByWxWindowsMap s_controlsByWxWindowsMap;
 
         static Control* TryFindControlByWxWindow(wxWindow* wxWindow);
         static void AssociateControlWithWxWindow(wxWindow* wxWindow, Control* control);
