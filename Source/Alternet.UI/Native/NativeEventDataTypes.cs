@@ -7,7 +7,7 @@ namespace Alternet.UI.Native
     class KeyEventData
     {
         public Key key;
-        public int timestamp;
+        public long timestamp;
         public bool isRepeat;
     }
     

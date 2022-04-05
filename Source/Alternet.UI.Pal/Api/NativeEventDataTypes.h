@@ -8,7 +8,7 @@ namespace Alternet::UI
     struct KeyEventData
     {
         Key key;
-        int timestamp;
+        int64_t timestamp;
         c_bool isRepeat;
     };
     #pragma pack(pop)

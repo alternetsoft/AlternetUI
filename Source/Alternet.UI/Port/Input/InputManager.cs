@@ -617,7 +617,7 @@ namespace Alternet.UI
             return input as StagingAreaInputItem;
         }
 
-        internal void ReportKeyDown(int timestamp, Key key, bool isRepeat)
+        internal void ReportKeyDown(long timestamp, Key key, bool isRepeat)
         {
             var keyEventArgs = new KeyEventArgs(Keyboard.PrimaryDevice, timestamp, key, isRepeat)
             {

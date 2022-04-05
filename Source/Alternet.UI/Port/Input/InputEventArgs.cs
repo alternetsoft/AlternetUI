@@ -27,7 +27,7 @@ namespace Alternet.UI
         /// <param name="timestamp">
         ///     The time when the input occurred. 
         /// </param>
-        public InputEventArgs(InputDevice inputDevice, int timestamp)
+        public InputEventArgs(InputDevice inputDevice, long timestamp)
         {
             /* inputDevice parameter being null is valid*/
 	    /* timestamp parameter is valuetype, need not be checked */
@@ -48,7 +48,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Read-only access to the input timestamp.
         /// </summary>
-        public int Timestamp
+        public long Timestamp
         {
             get {return _timestamp;}
         }
@@ -70,7 +70,7 @@ namespace Alternet.UI
         }
 
         private InputDevice _inputDevice;
-        private static int _timestamp;
+        private static long _timestamp;
      }
 }
 

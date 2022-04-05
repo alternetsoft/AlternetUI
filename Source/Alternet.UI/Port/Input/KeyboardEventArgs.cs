@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// <param name="timestamp">
         ///     The time when the input occurred.
         /// </param>
-        public KeyboardEventArgs(KeyboardDevice keyboard, int timestamp) : base(keyboard, timestamp)
+        public KeyboardEventArgs(KeyboardDevice keyboard, long timestamp) : base(keyboard, timestamp)
         {
         }
 

@@ -28,7 +28,7 @@ namespace Alternet.UI
         ///     The key referenced by the event.
         /// </param>
         /// <param name="isRepeat">Whether the key pressed is a repeated key or not.</param>
-        public KeyEventArgs(KeyboardDevice keyboard, /*PresentationSource inputSource,*/ int timestamp, Key key, bool isRepeat) : base(keyboard, timestamp)
+        public KeyEventArgs(KeyboardDevice keyboard, /*PresentationSource inputSource,*/ long timestamp, Key key, bool isRepeat) : base(keyboard, timestamp)
         {
             //if (inputSource == null)
             //    throw new ArgumentNullException("inputSource");

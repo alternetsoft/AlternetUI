@@ -2,7 +2,7 @@
 
 namespace Alternet::UI
 {
-    /*static*/ Control::ControlsByWxWindowsMap s_controlsByWxWindowsMap;
+    /*static*/ Control::ControlsByWxWindowsMap Control::s_controlsByWxWindowsMap;
 
     Control::Control() :
         _delayedFlags(
