@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// and properties to get information about an application.
     /// </summary>
     [System.ComponentModel.DesignerCategory("Code")]
-    public partial class Application : Component
+    public partial class Application : IDisposable
     {
         private static Application? current;
         private readonly List<Window> windows = new List<Window>();
@@ -109,16 +109,30 @@ namespace Alternet.UI
             windows.Remove(window);
         }
 
+        private void OnVisualThemeChanged()
+        {
+            foreach (var window in Windows)
+                window.RecreateAllHandlers();
+        }
+
+        private void CheckDisposed()
+        {
+            if (IsDisposed)
+                throw new ObjectDisposedException(null);
+        }
+
         /// <summary>
         /// Releases the unmanaged resources used by the object and optionally releases the managed resources.
         /// </summary>
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
-        protected override void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
-            base.Dispose(disposing);
-
-            if (!IsDisposed)
+            if (!isDisposed)
             {
+                if (disposing)
+                {
+                }
+
                 nativeApplication.Idle -= NativeApplication_Idle;
                 nativeApplication.KeyDown -= NativeApplication_KeyDown;
                 nativeApplication.Dispose();
@@ -130,16 +144,13 @@ namespace Alternet.UI
             }
         }
 
-        private void OnVisualThemeChanged()
+        /// <summary>
+        /// Releases all resources used by the object.
+        /// </summary>
+        public void Dispose()
         {
-            foreach (var window in Windows)
-                window.RecreateAllHandlers();
-        }
-
-        private void CheckDisposed()
-        {
-            if (IsDisposed)
-                throw new ObjectDisposedException(null);
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }
