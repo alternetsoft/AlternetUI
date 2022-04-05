@@ -52,7 +52,6 @@ namespace Alternet.UI
         {
             get {return _timestamp;}
         }
-
   
         /// <summary>
         ///     The mechanism used to call the type-specific handler on the

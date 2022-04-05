@@ -30,16 +30,16 @@ namespace Alternet.UI
         //        [FriendAccessAllowed]
         //        internal static readonly RoutedEvent InputReportEvent = GlobalEventManager.RegisterRoutedEvent("InputReport", RoutingStrategy.Bubble, typeof(InputReportEventHandler), typeof(InputManager));
 
-        //        /// <summary>
-        //        ///     Return the input manager associated with the current context.
-        //        /// </summary>
-        //        public static InputManager Current
-        //        {
-        //            get
-        //            {
-        //                return GetCurrentInputManagerImpl();
-        //            }
-        //        }
+        /// <summary>
+        ///     Return the input manager associated with the current context.
+        /// </summary>
+        public static InputManager Current
+        {
+            get
+            {
+                return GetCurrentInputManagerImpl();
+            }
+        }
 
         ///<summary>
         ///     Internal implementation of InputManager.Current.
@@ -170,11 +170,36 @@ namespace Alternet.UI
         //            _inputTimer.Interval = TimeSpan.FromMilliseconds(125);
         //        }
 
-        //        public event PreProcessInputEventHandler PreProcessInput
-        //        {
-        //            add => EventHelper.AddHandler(ref _preProcessInput, value);
-        //            remove => EventHelper.RemoveHandler(ref _preProcessInput, value);
-        //        }
+        void InvokePreProcessInput(InputEventArgs input, out bool isCancelled)
+        {
+            isCancelled = false;
+
+            if (PreProcessInput == null)
+                return;
+
+            var e = new PreProcessInputEventArgs(input);
+            foreach(PreProcessInputEventHandler d in PreProcessInput.GetInvocationList())
+            {
+                d(this, e);
+                if (e.Canceled)
+                {
+                    isCancelled = true;
+                    return;
+                }
+            }
+
+            return;
+        }
+
+        /// <summary>
+        /// Occurs when the <see cref="InputManager"/> starts to process the input item.
+        /// </summary>
+        public event PreProcessInputEventHandler PreProcessInput;
+
+        //{
+        //    add => EventHelper.AddHandler(ref _preProcessInput, value);
+        //    remove => EventHelper.RemoveHandler(ref _preProcessInput, value);
+        //}
 
         //        public event NotifyInputEventHandler PreNotifyInput
         //        {
@@ -590,6 +615,28 @@ namespace Alternet.UI
             }
 
             return input as StagingAreaInputItem;
+        }
+
+        internal void ReportKeyDown(int timestamp, Key key, bool isRepeat)
+        {
+            var keyEventArgs = new KeyEventArgs(Keyboard.PrimaryDevice, timestamp, key, isRepeat)
+            {
+                RoutedEvent = UIElement.KeyDownEvent
+            };
+
+            InvokePreProcessInput(keyEventArgs, out var isCancelled);
+            if (isCancelled)
+                return;
+
+            var focusedNativeControl = Native.Control.GetFocusedControl();
+            if (focusedNativeControl == null)
+                return;
+
+            var handler = ControlHandler.TryGetHandlerByNativeControl(focusedNativeControl);
+            if (handler == null)
+                return;
+
+            handler.Control.RaiseEvent(keyEventArgs);
         }
 
         //        internal object ContinueProcessingStagingArea(object unused)

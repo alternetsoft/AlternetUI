@@ -21,16 +21,14 @@ namespace Alternet.UI
         /// <param name="keyboard">
         ///     The logical keyboard device associated with this event.
         /// </param>
-        /// <param name="inputSource">
-        ///     The input source that provided this input.
-        /// </param>
         /// <param name="timestamp">
         ///     The time when the input occurred.
         /// </param>
         /// <param name="key">
         ///     The key referenced by the event.
         /// </param>
-        public KeyEventArgs(KeyboardDevice keyboard, /*PresentationSource inputSource,*/ int timestamp, Key key) : base(keyboard, timestamp)
+        /// <param name="isRepeat">Whether the key pressed is a repeated key or not.</param>
+        public KeyEventArgs(KeyboardDevice keyboard, /*PresentationSource inputSource,*/ int timestamp, Key key, bool isRepeat) : base(keyboard, timestamp)
         {
             //if (inputSource == null)
             //    throw new ArgumentNullException("inputSource");
@@ -40,11 +38,11 @@ namespace Alternet.UI
 
             //_inputSource = inputSource;
 
-            _realKey = key;
-            _isRepeat = false;
+            //_realKey = key;
+            _isRepeat = isRepeat;
 
             // Start out assuming that this is just a normal key.
-            MarkNormal();
+            //MarkNormal();
         }
 
         ///// <summary>
@@ -68,20 +66,20 @@ namespace Alternet.UI
             get {return _key;}
         }
 
-        /// <summary>
-        ///     The original key, as opposed to <see cref="Key"/>, which might
-        ///     have been changed (e.g. by MarkTextInput).
-        /// </summary>
-        /// <remarks>
-        /// Note:  This should remain internal.  When a processor obfuscates the key,
-        /// such as changing characters to Key.TextInput, we're deliberately trying to
-        /// hide it and make it hard to find.  But internally we'd like an easy way to find
-        /// it.  So we have this internal, but it must remain internal.
-        /// </remarks>
-        internal Key RealKey
-        {
-            get { return _realKey; }
-        }
+        ///// <summary>
+        /////     The original key, as opposed to <see cref="Key"/>, which might
+        /////     have been changed (e.g. by MarkTextInput).
+        ///// </summary>
+        ///// <remarks>
+        ///// Note:  This should remain internal.  When a processor obfuscates the key,
+        ///// such as changing characters to Key.TextInput, we're deliberately trying to
+        ///// hide it and make it hard to find.  But internally we'd like an easy way to find
+        ///// it.  So we have this internal, but it must remain internal.
+        ///// </remarks>
+        //internal Key RealKey
+        //{
+        //    get { return _realKey; }
+        //}
 
         ///// <summary>
         /////     The Key referenced by the event, if the key is going to be
@@ -115,7 +113,7 @@ namespace Alternet.UI
         /// </summary>
         public KeyStates KeyStates
         {
-            get {return this.KeyboardDevice.GetKeyStates(_realKey);}
+            get {return this.KeyboardDevice.GetKeyStates(_key);}
         }
 
         /// <summary>
@@ -132,7 +130,7 @@ namespace Alternet.UI
         /// <ExternalAPI Inherit="true"/>
         public bool IsDown
         {
-            get {return this.KeyboardDevice.IsKeyDown(_realKey);}
+            get {return this.KeyboardDevice.IsKeyDown(_key);}
         }
 
         /// <summary>
@@ -141,7 +139,7 @@ namespace Alternet.UI
         /// <ExternalAPI Inherit="true"/>
         public bool IsUp
         {
-            get {return this.KeyboardDevice.IsKeyUp(_realKey);}
+            get {return this.KeyboardDevice.IsKeyUp(_key);}
         }
 
         /// <summary>
@@ -150,7 +148,7 @@ namespace Alternet.UI
         /// <ExternalAPI Inherit="true"/>
         public bool IsToggled
         {
-            get {return this.KeyboardDevice.IsKeyToggled(_realKey);}
+            get {return this.KeyboardDevice.IsKeyToggled(_key);}
         }
 
         /// <summary>
@@ -171,15 +169,15 @@ namespace Alternet.UI
             handler(genericTarget, this);
         }
 
-        internal void SetRepeat( bool newRepeatState )
-        {
-            _isRepeat = newRepeatState;
-        }
+        //internal void SetRepeat( bool newRepeatState )
+        //{
+        //    _isRepeat = newRepeatState;
+        //}
 
-        internal void MarkNormal()
-        {
-            _key = _realKey;
-        }
+        //internal void MarkNormal()
+        //{
+        //    _key = _realKey;
+        //}
 
         //internal void MarkSystem()
         //{
@@ -203,27 +201,27 @@ namespace Alternet.UI
         //    }
         //}
 
-        internal int ScanCode
-        {
-            get {return _scanCode;}
-            set {_scanCode = value;}
-        }
+        //internal int ScanCode
+        //{
+        //    get {return _scanCode;}
+        //    set {_scanCode = value;}
+        //}
 
-        internal bool IsExtendedKey
-        {
-            get {return _isExtendedKey;}
-            set {_isExtendedKey = value;}
-        }
+        //internal bool IsExtendedKey
+        //{
+        //    get {return _isExtendedKey;}
+        //    set {_isExtendedKey = value;}
+        //}
 
 
-        private Key _realKey;
+        //private Key _realKey;
         private Key _key;
 
         //private PresentationSource _inputSource;
 
         private bool _isRepeat;
-        private int _scanCode;
-        private bool _isExtendedKey;
+        //private int _scanCode;
+        //private bool _isExtendedKey;
 }
 }
 

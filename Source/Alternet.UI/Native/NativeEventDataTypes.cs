@@ -7,6 +7,8 @@ namespace Alternet.UI.Native
     class KeyEventData
     {
         public Key key;
+        public int timestamp;
+        public bool isRepeat;
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]

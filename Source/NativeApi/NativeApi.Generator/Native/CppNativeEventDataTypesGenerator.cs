@@ -19,6 +19,8 @@ namespace ApiGenerator.Native
             w.WriteLine(GeneratorUtils.HeaderText);
             w.WriteLine("#pragma once");
 
+            w.WriteLine("#include \"ApiUtils.h\"");
+
             w.WriteLine();
             w.WriteLine("namespace Alternet::UI");
             using (new BlockIndent(w, noNewlineAtEnd: true))

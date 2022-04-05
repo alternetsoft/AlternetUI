@@ -19,6 +19,8 @@ namespace Alternet.UI
 
         private VisualTheme visualTheme = StockVisualThemes.Native;
 
+        private KeyboardInputProvider keyboardInputProvider;
+
         internal event EventHandler? Idle;
 
         /// <summary>
@@ -28,23 +30,9 @@ namespace Alternet.UI
         {
             nativeApplication = new Native.Application();
             nativeApplication.Idle += NativeApplication_Idle;
-            nativeApplication.KeyDown += NativeApplication_KeyDown;
             current = this;
-        }
 
-        private void NativeApplication_KeyDown(object? sender, Native.NativeEventArgs<Native.KeyEventData> e)
-        {
-            var focusedNativeControl = Native.Control.GetFocusedControl();
-            if (focusedNativeControl != null)
-            {
-                var handler = ControlHandler.TryGetHandlerByNativeControl(focusedNativeControl);
-                if (handler != null)
-                {
-                    var ea = new KeyEventArgs(Keyboard.PrimaryDevice, 0, (Key)e.Data.key);
-                    ea.RoutedEvent = UIElement.KeyDownEvent;
-                    handler.Control.RaiseEvent(ea);
-                }
-            }
+            keyboardInputProvider = new KeyboardInputProvider(nativeApplication);
         }
 
         private void NativeApplication_Idle(object? sender, EventArgs e) => Idle?.Invoke(this, EventArgs.Empty);
@@ -145,7 +133,7 @@ namespace Alternet.UI
                 }
 
                 nativeApplication.Idle -= NativeApplication_Idle;
-                nativeApplication.KeyDown -= NativeApplication_KeyDown;
+                keyboardInputProvider.Dispose();
                 nativeApplication.Dispose();
                 nativeApplication = null!;
 

@@ -21,17 +21,16 @@ namespace Alternet.UI
     ///         </item>
     ///     </list>
     /// </remarks>
-    public sealed class PreProcessInputEventArgs : ProcessInputEventArgs
+    public sealed class PreProcessInputEventArgs : EventArgs
     {
-        // Only we can make these.  Note that we cache and reuse instances.
-        internal PreProcessInputEventArgs() {}
-
-        internal override void Reset(StagingAreaInputItem input, InputManager inputManager)
+        /// <summary>
+        /// Initializes a new instance of <see cref="PreProcessInputEventArgs"/>
+        /// </summary>
+        public PreProcessInputEventArgs(InputEventArgs input)
         {
-            _canceled = false;
-            base.Reset(input, inputManager);
+            Input = input;
         }
-        
+
         /// <summary>
         ///     Cancels the processing of the input event.
         /// </summary>
@@ -40,12 +39,15 @@ namespace Alternet.UI
             _canceled = true;
         }
 
+        public InputEventArgs Input { get; }
+
         /// <summary>
         ///     Whether or not the input event processing was canceled.
         /// </summary>
         public bool Canceled {get {return _canceled;}}
 
         private bool _canceled;
+
     }
 
     /// <summary>

@@ -12,9 +12,9 @@ namespace InputSample
 
         int n;
 
-        private void helloButton_KeyDown(object sender, KeyEventArgs e)
+        private void HelloButton_KeyDown(object sender, KeyEventArgs e)
         {
-            Msg($"{++n} helloButton_KeyDown [{e.Key}], Rep: {e.IsRepeat}");
+            Msg($"{++n} HelloButton_KeyDown [{e.Key}], Rep: {e.IsRepeat}");
         }
 
         private void Msg(string m)
@@ -24,9 +24,14 @@ namespace InputSample
             //lb.ScrollIntoView(lb.SelectedItem);
         }
 
-        private void StackPanel_KeyUp(object sender, KeyEventArgs e)
+        private void StackPanel_KeyDown(object sender, KeyEventArgs e)
         {
-            Msg($"{++n} StackPanel_KeyUp [{e.Key}], Rep: {e.IsRepeat}");
+            Msg($"{++n} StackPanel_KeyDown [{e.Key}], Rep: {e.IsRepeat}");
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            Msg($"{++n} Window_KeyDown [{e.Key}], Rep: {e.IsRepeat}");
         }
     }
 }
