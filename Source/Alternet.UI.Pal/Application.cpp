@@ -94,7 +94,7 @@ namespace Alternet::UI
 
     void Application::OnKeyDown(wxKeyEvent& e)
     {
-        KeyEventData data{ WxKeyToKey(e.GetKeyCode()), e.GetTimestamp(), false };
+        KeyEventData data{ WxKeyToKey(e.GetKeyCode()), e.GetTimestamp(), e.IsAutoRepeat()};
         RaiseEvent(ApplicationEvent::KeyDown, &data);
     }
 

@@ -2,8 +2,6 @@
 
 #define ISOLATION_AWARE_ENABLED 1
 
-#include <windows.h>
-
 #include "WindowsVisualThemeSupport.h"
 #include "Common.h"
 
