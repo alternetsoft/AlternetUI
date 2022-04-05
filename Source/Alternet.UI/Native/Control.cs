@@ -253,6 +253,11 @@ namespace Alternet.UI.Native
             NativeApi.Control_EndUpdate_(NativePointer);
         }
         
+        public static Control? GetFocusedControl()
+        {
+            return NativeObject.GetFromNativePointer<Control>(NativeApi.Control_GetFocusedControl_(), null);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -422,6 +427,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_EndUpdate_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Control_GetFocusedControl_();
             
         }
     }

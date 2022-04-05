@@ -6,7 +6,7 @@ namespace Alternet::UI
     #pragma pack(push, 1)
     struct KeyEventData
     {
-        Key keyCode;
+        Key key;
     };
     #pragma pack(pop)
     

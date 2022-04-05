@@ -44,8 +44,11 @@ namespace Alternet::UI
             _wxWindow->Unbind(wxEVT_LEFT_UP, &Control::OnMouseLeftButtonUp, this);
             _wxWindow->Unbind(wxEVT_SIZE, &Control::OnSizeChanged, this);
 
+            RemoveWxWindowControlAssociation(_wxWindow);
+
             if (!GetDoNotDestroyWxWindow())
                 _wxWindow->Destroy();
+
             _wxWindow = nullptr;
 
             OnWxWindowDestroyed();
@@ -126,6 +129,8 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_LEFT_DOWN, &Control::OnMouseLeftButtonDown, this);
         _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftButtonUp, this);
         _wxWindow->Bind(wxEVT_SIZE, &Control::OnSizeChanged, this);
+
+        AssociateControlWithWxWindow(_wxWindow, this);
 
         OnWxWindowCreated();
         _delayedValues.ApplyIfPossible();
@@ -602,5 +607,30 @@ namespace Alternet::UI
     {
         auto wxWindow = GetWxWindow();
         return toDip(wxWindow->GetBestSize(), wxWindow);
+    }
+
+    /*static*/ Control* Control::TryFindControlByWxWindow(wxWindow* wxWindow)
+    {
+        ControlsByWxWindowsMap::const_iterator i = s_controlsByWxWindowsMap.find(wxWindow);
+        return i == s_controlsByWxWindowsMap.end() ? NULL : i->second;
+    }
+
+    /*static*/ void Control::AssociateControlWithWxWindow(wxWindow* wxWindow, Control* control)
+    {
+        s_controlsByWxWindowsMap[wxWindow] = control;
+    }
+
+    /*static*/ void Control::RemoveWxWindowControlAssociation(wxWindow* wxWindow)
+    {
+        s_controlsByWxWindowsMap.erase(wxWindow);
+    }
+
+    /*static*/ Control* Control::GetFocusedControl()
+    {
+        auto focusedWxWindow = wxWindow::FindFocus();
+        if (focusedWxWindow == nullptr)
+            return nullptr;
+
+        return TryFindControlByWxWindow(focusedWxWindow);
     }
 }

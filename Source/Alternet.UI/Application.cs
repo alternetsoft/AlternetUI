@@ -34,6 +34,17 @@ namespace Alternet.UI
 
         private void NativeApplication_KeyDown(object? sender, Native.NativeEventArgs<Native.KeyEventData> e)
         {
+            var focusedNativeControl = Native.Control.GetFocusedControl();
+            if (focusedNativeControl != null)
+            {
+                var handler = ControlHandler.TryGetHandlerByNativeControl(focusedNativeControl);
+                if (handler != null)
+                {
+                    var ea = new KeyEventArgs(Keyboard.PrimaryDevice, 0, (Key)e.Data.key);
+                    ea.RoutedEvent = UIElement.KeyDownEvent;
+                    handler.Control.RaiseEvent(ea);
+                }
+            }
         }
 
         private void NativeApplication_Idle(object? sender, EventArgs e) => Idle?.Invoke(this, EventArgs.Empty);

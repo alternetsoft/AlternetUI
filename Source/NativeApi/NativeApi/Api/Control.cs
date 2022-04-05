@@ -65,5 +65,7 @@ namespace NativeApi.Api
 
         public void BeginUpdate() => throw new Exception();
         public void EndUpdate() => throw new Exception();
+
+        public static Control? GetFocusedControl() => throw new Exception();
     }
 }

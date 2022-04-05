@@ -169,6 +169,11 @@ ALTERNET_UI_API void Control_EndUpdate_(Control* obj)
     obj->EndUpdate();
 }
 
+ALTERNET_UI_API Control* Control_GetFocusedControl_()
+{
+    return Control::GetFocusedControl();
+}
+
 ALTERNET_UI_API void Control_SetEventCallback_(Control::ControlEventCallbackType callback)
 {
     Control::SetEventCallback(callback);

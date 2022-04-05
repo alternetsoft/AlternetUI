@@ -166,6 +166,7 @@ namespace Alternet.UI
                     if (NeedsNativeControl())
                     {
                         nativeControl = CreateNativeControl();
+                        handlersByNativeControls.Add(nativeControl, this);
                         OnNativeControlCreated();
                     }
                 }
@@ -173,6 +174,11 @@ namespace Alternet.UI
                 return nativeControl;
             }
         }
+
+        internal static ControlHandler? TryGetHandlerByNativeControl(Native.Control control) =>
+            handlersByNativeControls.TryGetValue(control, out var handler) ? handler : null;
+
+        static Dictionary<Native.Control, ControlHandler> handlersByNativeControls = new Dictionary<Native.Control, ControlHandler>();
 
         /// <summary>
         /// This property may be overridden by control handlers to indicate that the handler needs
@@ -680,6 +686,7 @@ namespace Alternet.UI
         {
             if (nativeControl != null)
             {
+                handlersByNativeControls.Remove(nativeControl);
                 nativeControl.Dispose();
                 nativeControl = null;
             }

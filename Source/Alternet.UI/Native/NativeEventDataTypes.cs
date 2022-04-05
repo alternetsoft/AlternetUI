@@ -6,7 +6,7 @@ namespace Alternet.UI.Native
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class KeyEventData
     {
-        public Key keyCode;
+        public Key key;
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]

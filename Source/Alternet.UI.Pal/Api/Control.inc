@@ -58,6 +58,7 @@ DrawingContext* OpenPaintDrawingContext();
 DrawingContext* OpenClientDrawingContext();
 void BeginUpdate();
 void EndUpdate();
+static Control* GetFocusedControl();
 public:
 enum class ControlEvent
 {

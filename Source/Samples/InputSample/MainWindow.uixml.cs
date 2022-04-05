@@ -14,7 +14,7 @@ namespace InputSample
 
         private void helloButton_KeyDown(object sender, KeyEventArgs e)
         {
-            Msg($"{++n} helloButton_KeyDown, Rep: {e.IsRepeat}");
+            Msg($"{++n} helloButton_KeyDown [{e.Key}], Rep: {e.IsRepeat}");
         }
 
         private void Msg(string m)
@@ -26,7 +26,7 @@ namespace InputSample
 
         private void StackPanel_KeyUp(object sender, KeyEventArgs e)
         {
-            Msg($"{++n} StackPanel_KeyUp, Rep: {e.IsRepeat}");
+            Msg($"{++n} StackPanel_KeyUp [{e.Key}], Rep: {e.IsRepeat}");
         }
     }
 }

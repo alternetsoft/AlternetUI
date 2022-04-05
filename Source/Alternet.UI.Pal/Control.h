@@ -109,6 +109,16 @@ namespace Alternet::UI
         void DestroyWxWindow(bool finalDestroy = false);
 
         Size GetClientSizeCore();
+
+        WX_DECLARE_HASH_MAP(wxWindow*, Control*,
+            wxPointerHash, wxPointerEqual,
+            ControlsByWxWindowsMap);
+
+        inline static ControlsByWxWindowsMap s_controlsByWxWindowsMap;
+
+        static Control* TryFindControlByWxWindow(wxWindow* wxWindow);
+        static void AssociateControlWithWxWindow(wxWindow* wxWindow, Control* control);
+        static void RemoveWxWindowControlAssociation(wxWindow* wxWindow);
     };
 }
 
