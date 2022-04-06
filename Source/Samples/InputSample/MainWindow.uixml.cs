@@ -10,28 +10,26 @@ namespace InputSample
             InitializeComponent();
         }
 
-        int n;
+        int messageNumber;
 
-        private void HelloButton_KeyDown(object sender, KeyEventArgs e)
-        {
-            Msg($"{++n} HelloButton_KeyDown [{e.Key}], Rep: {e.IsRepeat}");
-        }
-
-        private void Msg(string m)
+        private void LogMessage(string m)
         {
             lb.Items.Add(m);
             lb.SelectedIndex = lb.Items.Count - 1;
-            //lb.ScrollIntoView(lb.SelectedItem);
         }
 
-        private void StackPanel_KeyDown(object sender, KeyEventArgs e)
-        {
-            Msg($"{++n} StackPanel_KeyDown [{e.Key}], Rep: {e.IsRepeat}");
-        }
+        private void LogKey(KeyEventArgs e, string objectName, string eventName) => LogMessage($"{++messageNumber} {objectName}_{eventName} [{e.Key}], Rep: {e.IsRepeat}");
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            Msg($"{++n} Window_KeyDown [{e.Key}], Rep: {e.IsRepeat}");
-        }
+        private void HelloButton_KeyDown(object sender, KeyEventArgs e) => LogKey(e, "HelloButton", "KeyDown");
+
+        private void StackPanel_KeyDown(object sender, KeyEventArgs e) => LogKey(e, "StackPanel", "KeyDown");
+
+        private void Window_KeyDown(object sender, KeyEventArgs e) => LogKey(e, "Window", "KeyDown");
+
+        private void HelloButton_KeyUp(object sender, KeyEventArgs e) => LogKey(e, "HelloButton", "KeyUp");
+
+        private void StackPanel_KeyUp(object sender, KeyEventArgs e) => LogKey(e, "StackPanel", "KeyUp");
+
+        private void Window_KeyUp(object sender, KeyEventArgs e) => LogKey(e, "Window", "KeyUp");
     }
 }

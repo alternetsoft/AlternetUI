@@ -619,9 +619,19 @@ namespace Alternet.UI
 
         internal void ReportKeyDown(long timestamp, Key key, bool isRepeat)
         {
+            ReportKeyEvent(UIElement.KeyDownEvent, timestamp, key, isRepeat);
+        }
+
+        internal void ReportKeyUp(long timestamp, Key key, bool isRepeat)
+        {
+            ReportKeyEvent(UIElement.KeyUpEvent, timestamp, key, isRepeat);
+        }
+
+        internal void ReportKeyEvent(RoutedEvent e, long timestamp, Key key, bool isRepeat)
+        {
             var keyEventArgs = new KeyEventArgs(Keyboard.PrimaryDevice, timestamp, key, isRepeat)
             {
-                RoutedEvent = UIElement.KeyDownEvent
+                RoutedEvent = e
             };
 
             InvokePreProcessInput(keyEventArgs, out var isCancelled);

@@ -13,5 +13,6 @@ namespace NativeApi.Api
         public event EventHandler Idle { add => throw new Exception(); remove => throw new Exception(); }
 
         public event NativeEventHandler<KeyEventData>? KeyDown { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<KeyEventData>? KeyUp { add => throw new Exception(); remove => throw new Exception(); }
     }
 }

@@ -1,9 +1,9 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="InputSample.MainWindow"
-        Title="My First Application" KeyDown="Window_KeyDown">
-	<StackPanel Orientation="Vertical" KeyDown="StackPanel_KeyDown">
-		<Button Name="helloButton" Text="Say Hello" Margin="20" KeyDown="HelloButton_KeyDown"/>
+        Title="My First Application" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
+	<StackPanel Orientation="Vertical" KeyDown="StackPanel_KeyDown" KeyUp="StackPanel_KeyUp">
+		<Button Name="helloButton" Text="Say Hello" Margin="20" KeyDown="HelloButton_KeyDown" KeyUp="HelloButton_KeyUp"/>
 		<Button Text="Button 1" />
 		<ListBox Name="lb" Height="200" />
 	</StackPanel>

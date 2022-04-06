@@ -40,6 +40,7 @@ namespace Alternet::UI
         static Application* GetCurrent();
 
         void OnKeyDown(wxKeyEvent& e);
+        void OnKeyUp(wxKeyEvent& e);
     private:
 
         App* _app;

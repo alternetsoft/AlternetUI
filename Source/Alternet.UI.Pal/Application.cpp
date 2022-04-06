@@ -40,6 +40,8 @@ namespace Alternet::UI
         auto eventType = e.GetEventType();
         if (eventType == wxEVT_KEY_DOWN)
             _owner->OnKeyDown((wxKeyEvent&)e);
+        if (eventType == wxEVT_KEY_UP)
+            _owner->OnKeyUp((wxKeyEvent&)e);
 
         return Event_Skip;
     }
@@ -94,8 +96,14 @@ namespace Alternet::UI
 
     void Application::OnKeyDown(wxKeyEvent& e)
     {
-        KeyEventData data{ WxKeyToKey(e.GetKeyCode()), e.GetTimestamp(), e.IsAutoRepeat()};
+        KeyEventData data{ WxKeyToKey(e.GetKeyCode()), e.GetTimestamp(), e.IsAutoRepeat() };
         RaiseEvent(ApplicationEvent::KeyDown, &data);
+    }
+
+    void Application::OnKeyUp(wxKeyEvent& e)
+    {
+        KeyEventData data{ WxKeyToKey(e.GetKeyCode()), e.GetTimestamp(), false };
+        RaiseEvent(ApplicationEvent::KeyUp, &data);
     }
 
     void Application::Run(Window* window)
