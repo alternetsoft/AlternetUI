@@ -1,7 +1,6 @@
 #include "Application.h"
 #include "Common.h"
 #include "Window.h"
-#include "KeyUtils.h"
 
 IMPLEMENT_APP_NO_MAIN(Alternet::UI::App);
 IMPLEMENT_WX_THEME_SUPPORT;
@@ -39,9 +38,9 @@ namespace Alternet::UI
 
         auto eventType = e.GetEventType();
         if (eventType == wxEVT_KEY_DOWN)
-            _owner->OnKeyDown((wxKeyEvent&)e);
+            _owner->GetKeyboard()->OnKeyDown((wxKeyEvent&)e);
         if (eventType == wxEVT_KEY_UP)
-            _owner->OnKeyUp((wxKeyEvent&)e);
+            _owner->GetKeyboard()->OnKeyUp((wxKeyEvent&)e);
 
         return Event_Skip;
     }
@@ -73,6 +72,8 @@ namespace Alternet::UI
         wxEntryStart(argc, argv);
         wxTheApp->CallOnInit();
 
+        _keyboard = new Keyboard();
+
         _app = static_cast<App*>(wxTheApp);
         _app->SetOwner(this);
 
@@ -82,6 +83,8 @@ namespace Alternet::UI
     Application::~Application()
     {
         s_current = nullptr;
+        _keyboard->Release();
+        _keyboard = nullptr;
     }
 
     void Application::RaiseIdle()
@@ -94,16 +97,9 @@ namespace Alternet::UI
         return s_current;
     }
 
-    void Application::OnKeyDown(wxKeyEvent& e)
+    Keyboard* Application::GetKeyboard()
     {
-        KeyEventData data{ WxKeyToKey(e.GetKeyCode()), e.GetTimestamp(), e.IsAutoRepeat() };
-        RaiseEvent(ApplicationEvent::KeyDown, &data);
-    }
-
-    void Application::OnKeyUp(wxKeyEvent& e)
-    {
-        KeyEventData data{ WxKeyToKey(e.GetKeyCode()), e.GetTimestamp(), false };
-        RaiseEvent(ApplicationEvent::KeyUp, &data);
+        return _keyboard;
     }
 
     void Application::Run(Window* window)

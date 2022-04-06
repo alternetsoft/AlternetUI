@@ -1,123 +1,143 @@
-#pragma once
-#include "Common.h"
-#include "ApiTypes.h"
+#include "Keyboard.h"
 
 namespace Alternet::UI
 {
-    inline int IsAsciiKey(int value)
+    Keyboard::Keyboard()
+    {
+    }
+    
+    Keyboard::~Keyboard()
+    {
+    }
+
+    void Keyboard::OnKeyDown(wxKeyEvent& e)
+    {
+        KeyEventData data{ WxKeyToKey(e.GetKeyCode()), e.GetTimestamp(), e.IsAutoRepeat() };
+        RaiseEvent(KeyboardEvent::KeyDown, &data);
+    }
+
+    void Keyboard::OnKeyUp(wxKeyEvent& e)
+    {
+        KeyEventData data{ WxKeyToKey(e.GetKeyCode()), e.GetTimestamp(), false };
+        RaiseEvent(KeyboardEvent::KeyUp, &data);
+
+        //wxGetKeyState(wxkeyco)
+    }
+
+    int Keyboard::IsAsciiKey(int value)
     {
         return value >= 33 && value <= 126;
     }
 
-    inline Key WxAsciiKeyToKey(int value)
+    Key Keyboard::WxAsciiKeyToKey(int value)
     {
         if (!IsAsciiKey(value))
             return Key::None;
-    
+
         switch (value)
         {
-            case '!': return Key::None;
-            case '"': return Key::None;
-            case '#': return Key::None;
-            case '$': return Key::None;
-            case '%': return Key::None;
-            case '&': return Key::None;
-            case '\'': return Key::Quote;
-            case '(': return Key::None;
-            case ')': return Key::None;
-            case '*': return Key::None;
-            case '+': return Key::None;
-            case ',': return Key::Comma;
-            case '-': return Key::Minus;
-            case '.': return Key::Period;
-            case '/': return Key::Slash ;
-            case '0': return Key::D0;
-            case '1': return Key::D1;
-            case '2': return Key::D2;
-            case '3': return Key::D3;
-            case '4': return Key::D4;
-            case '5': return Key::D5;
-            case '6': return Key::D6;
-            case '7': return Key::D7;
-            case '8': return Key::D8;
-            case '9': return Key::D9;
-            case ':': return Key::None;
-            case ';': return Key::Semicolon;
-            case '<': return Key::None;
-            case '=': return Key::Equals;
-            case '>': return Key::None;
-            case '?': return Key::None;
-            case '@': return Key::None;
-            case 'A': return Key::A;
-            case 'B': return Key::B;
-            case 'C': return Key::C;
-            case 'D': return Key::D;
-            case 'E': return Key::E;
-            case 'F': return Key::F;
-            case 'G': return Key::G;
-            case 'H': return Key::H;
-            case 'I': return Key::I;
-            case 'J': return Key::J;
-            case 'K': return Key::K;
-            case 'L': return Key::L;
-            case 'M': return Key::M;
-            case 'N': return Key::N;
-            case 'O': return Key::O;
-            case 'P': return Key::P;
-            case 'Q': return Key::Q;
-            case 'R': return Key::R;
-            case 'S': return Key::S;
-            case 'T': return Key::T;
-            case 'U': return Key::U;
-            case 'V': return Key::V;
-            case 'W': return Key::W;
-            case 'X': return Key::X;
-            case 'Y': return Key::Y;
-            case 'Z': return Key::Z;
-            case '[': return Key::OpenBracket;
-            case '\\': return Key::Backslash;
-            case ']': return Key::CloseBracket;
-            case '^': return Key::None;
-            case '_': return Key::None;
-            case '`': return Key::Backtick;
-            case 'a': return Key::A;
-            case 'b': return Key::B;
-            case 'c': return Key::C;
-            case 'd': return Key::D;
-            case 'e': return Key::E;
-            case 'f': return Key::F;
-            case 'g': return Key::G;
-            case 'h': return Key::H;
-            case 'i': return Key::I;
-            case 'j': return Key::J;
-            case 'k': return Key::K;
-            case 'l': return Key::L;
-            case 'm': return Key::M;
-            case 'n': return Key::N;
-            case 'o': return Key::O;
-            case 'p': return Key::P;
-            case 'q': return Key::Q;
-            case 'r': return Key::R;
-            case 's': return Key::S;
-            case 't': return Key::T;
-            case 'u': return Key::U;
-            case 'v': return Key::V;
-            case 'w': return Key::W;
-            case 'x': return Key::X;
-            case 'y': return Key::Y;
-            case 'z': return Key::Z;
-            case '{': return Key::None;
-            case '|': return Key::None;
-            case '}': return Key::None;
-            case '~': return Key::None;
-            default:
-                wxASSERT(false);
-                throw 0;
+        case '!': return Key::None;
+        case '"': return Key::None;
+        case '#': return Key::None;
+        case '$': return Key::None;
+        case '%': return Key::None;
+        case '&': return Key::None;
+        case '\'': return Key::Quote;
+        case '(': return Key::None;
+        case ')': return Key::None;
+        case '*': return Key::None;
+        case '+': return Key::None;
+        case ',': return Key::Comma;
+        case '-': return Key::Minus;
+        case '.': return Key::Period;
+        case '/': return Key::Slash;
+        case '0': return Key::D0;
+        case '1': return Key::D1;
+        case '2': return Key::D2;
+        case '3': return Key::D3;
+        case '4': return Key::D4;
+        case '5': return Key::D5;
+        case '6': return Key::D6;
+        case '7': return Key::D7;
+        case '8': return Key::D8;
+        case '9': return Key::D9;
+        case ':': return Key::None;
+        case ';': return Key::Semicolon;
+        case '<': return Key::None;
+        case '=': return Key::Equals;
+        case '>': return Key::None;
+        case '?': return Key::None;
+        case '@': return Key::None;
+        case 'A': return Key::A;
+        case 'B': return Key::B;
+        case 'C': return Key::C;
+        case 'D': return Key::D;
+        case 'E': return Key::E;
+        case 'F': return Key::F;
+        case 'G': return Key::G;
+        case 'H': return Key::H;
+        case 'I': return Key::I;
+        case 'J': return Key::J;
+        case 'K': return Key::K;
+        case 'L': return Key::L;
+        case 'M': return Key::M;
+        case 'N': return Key::N;
+        case 'O': return Key::O;
+        case 'P': return Key::P;
+        case 'Q': return Key::Q;
+        case 'R': return Key::R;
+        case 'S': return Key::S;
+        case 'T': return Key::T;
+        case 'U': return Key::U;
+        case 'V': return Key::V;
+        case 'W': return Key::W;
+        case 'X': return Key::X;
+        case 'Y': return Key::Y;
+        case 'Z': return Key::Z;
+        case '[': return Key::OpenBracket;
+        case '\\': return Key::Backslash;
+        case ']': return Key::CloseBracket;
+        case '^': return Key::None;
+        case '_': return Key::None;
+        case '`': return Key::Backtick;
+        case 'a': return Key::A;
+        case 'b': return Key::B;
+        case 'c': return Key::C;
+        case 'd': return Key::D;
+        case 'e': return Key::E;
+        case 'f': return Key::F;
+        case 'g': return Key::G;
+        case 'h': return Key::H;
+        case 'i': return Key::I;
+        case 'j': return Key::J;
+        case 'k': return Key::K;
+        case 'l': return Key::L;
+        case 'm': return Key::M;
+        case 'n': return Key::N;
+        case 'o': return Key::O;
+        case 'p': return Key::P;
+        case 'q': return Key::Q;
+        case 'r': return Key::R;
+        case 's': return Key::S;
+        case 't': return Key::T;
+        case 'u': return Key::U;
+        case 'v': return Key::V;
+        case 'w': return Key::W;
+        case 'x': return Key::X;
+        case 'y': return Key::Y;
+        case 'z': return Key::Z;
+        case '{': return Key::None;
+        case '|': return Key::None;
+        case '}': return Key::None;
+        case '~': return Key::None;
+        default:
+            wxASSERT(false);
+            throw 0;
         }
     }
 
-	inline Key WxKeyToKey(int value)
-	{
+    Key Keyboard::WxKeyToKey(int value)
+    {
         auto asciiKey = WxAsciiKeyToKey(value);
         if (asciiKey != Key::None)
             return asciiKey;
@@ -135,12 +155,12 @@ namespace Alternet::UI
         case WXK_CONTROL_E:
         case WXK_CONTROL_F:
         case WXK_CONTROL_G:
-        // case WXK_CONTROL_H: same as WXK_BACK
-        // case WXK_CONTROL_I: same as WXK_TAB
+            // case WXK_CONTROL_H: same as WXK_BACK
+            // case WXK_CONTROL_I: same as WXK_TAB
         case WXK_CONTROL_J:
         case WXK_CONTROL_K:
         case WXK_CONTROL_L:
-        // case WXK_CONTROL_M: same as WXK_RETURN
+            // case WXK_CONTROL_M: same as WXK_RETURN
         case WXK_CONTROL_N:
         case WXK_CONTROL_O:
         case WXK_CONTROL_P:
@@ -351,10 +371,10 @@ namespace Alternet::UI
             return Key::Windows;
         case WXK_WINDOWS_MENU:
             return Key::Menu;
-        // case WXK_RAW_CONTROL: same as WXK_CONTROL
-            //return Key::None;
-        // case WXK_COMMAND: same as WXK_CONTROL
-            //return Key::None;
+            // case WXK_RAW_CONTROL: same as WXK_CONTROL
+                //return Key::None;
+            // case WXK_COMMAND: same as WXK_CONTROL
+                //return Key::None;
         case WXK_SPECIAL1:
         case WXK_SPECIAL2:
         case WXK_SPECIAL3:
@@ -414,5 +434,5 @@ namespace Alternet::UI
             wxASSERT(false);
             throw 0;
         }
-	}
+    }
 }

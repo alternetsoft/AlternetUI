@@ -9,10 +9,14 @@ namespace Alternet.UI.Native
 {
     internal class TreeView : Control
     {
+        static TreeView()
+        {
+            SetEventCallback();
+        }
+        
         public TreeView()
         {
             SetNativePointer(NativeApi.TreeView_Create_());
-            SetEventCallback();
         }
         
         public TreeView(IntPtr nativePointer) : base(nativePointer)

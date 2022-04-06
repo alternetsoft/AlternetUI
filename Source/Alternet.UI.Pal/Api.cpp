@@ -11,6 +11,7 @@
 #include "Api/GroupBox.Api.h"
 #include "Api/Image.Api.h"
 #include "Api/ImageList.Api.h"
+#include "Api/Keyboard.Api.h"
 #include "Api/Label.Api.h"
 #include "Api/ListBox.Api.h"
 #include "Api/ListView.Api.h"

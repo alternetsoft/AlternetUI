@@ -9,10 +9,14 @@ namespace Alternet.UI.Native
 {
     internal class ListBox : Control
     {
+        static ListBox()
+        {
+            SetEventCallback();
+        }
+        
         public ListBox()
         {
             SetNativePointer(NativeApi.ListBox_Create_());
-            SetEventCallback();
         }
         
         public ListBox(IntPtr nativePointer) : base(nativePointer)

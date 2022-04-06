@@ -9,6 +9,10 @@ namespace Alternet.UI.Native
 {
     internal class Image : NativeObject
     {
+        static Image()
+        {
+        }
+        
         public Image()
         {
             SetNativePointer(NativeApi.Image_Create_());

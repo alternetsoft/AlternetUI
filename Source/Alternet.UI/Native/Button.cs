@@ -9,10 +9,14 @@ namespace Alternet.UI.Native
 {
     internal class Button : Control
     {
+        static Button()
+        {
+            SetEventCallback();
+        }
+        
         public Button()
         {
             SetNativePointer(NativeApi.Button_Create_());
-            SetEventCallback();
         }
         
         public Button(IntPtr nativePointer) : base(nativePointer)

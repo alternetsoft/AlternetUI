@@ -4,14 +4,14 @@ namespace Alternet.UI
 {
     internal class KeyboardInputProvider : IDisposable
     {
-        Native.Application nativeApplication;
+        Native.Keyboard nativeKeyboard;
         private bool isDisposed;
 
-        public KeyboardInputProvider(Native.Application nativeApplication)
+        public KeyboardInputProvider(Native.Keyboard nativeKeyboard)
         {
-            this.nativeApplication = nativeApplication;
-            nativeApplication.KeyDown += NativeApplication_KeyDown;
-            nativeApplication.KeyUp += NativeApplication_KeyUp;
+            this.nativeKeyboard = nativeKeyboard;
+            nativeKeyboard.KeyDown += NativeApplication_KeyDown;
+            nativeKeyboard.KeyUp += NativeApplication_KeyUp;
         }
 
         private void NativeApplication_KeyDown(object? sender, Native.NativeEventArgs<Native.KeyEventData> e)
@@ -30,8 +30,8 @@ namespace Alternet.UI
             {
                 if (disposing)
                 {
-                    nativeApplication.KeyDown -= NativeApplication_KeyDown;
-                    nativeApplication.KeyUp -= NativeApplication_KeyUp;
+                    nativeKeyboard.KeyDown -= NativeApplication_KeyDown;
+                    nativeKeyboard.KeyUp -= NativeApplication_KeyUp;
                 }
 
                 isDisposed = true;

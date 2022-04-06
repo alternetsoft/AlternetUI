@@ -9,10 +9,14 @@ namespace Alternet.UI.Native
 {
     internal class Window : Control
     {
+        static Window()
+        {
+            SetEventCallback();
+        }
+        
         public Window()
         {
             SetNativePointer(NativeApi.Window_Create_());
-            SetEventCallback();
         }
         
         public Window(IntPtr nativePointer) : base(nativePointer)

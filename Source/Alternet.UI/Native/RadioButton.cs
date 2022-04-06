@@ -9,10 +9,14 @@ namespace Alternet.UI.Native
 {
     internal class RadioButton : Control
     {
+        static RadioButton()
+        {
+            SetEventCallback();
+        }
+        
         public RadioButton()
         {
             SetNativePointer(NativeApi.RadioButton_Create_());
-            SetEventCallback();
         }
         
         public RadioButton(IntPtr nativePointer) : base(nativePointer)

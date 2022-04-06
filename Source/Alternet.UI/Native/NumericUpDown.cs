@@ -9,10 +9,14 @@ namespace Alternet.UI.Native
 {
     internal class NumericUpDown : Control
     {
+        static NumericUpDown()
+        {
+            SetEventCallback();
+        }
+        
         public NumericUpDown()
         {
             SetNativePointer(NativeApi.NumericUpDown_Create_());
-            SetEventCallback();
         }
         
         public NumericUpDown(IntPtr nativePointer) : base(nativePointer)

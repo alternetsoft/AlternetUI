@@ -9,14 +9,28 @@ namespace Alternet.UI.Native
 {
     internal class Application : NativeObject
     {
+        static Application()
+        {
+            SetEventCallback();
+        }
+        
         public Application()
         {
             SetNativePointer(NativeApi.Application_Create_());
-            SetEventCallback();
         }
         
         public Application(IntPtr nativePointer) : base(nativePointer)
         {
+        }
+        
+        public Keyboard Keyboard
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeObject.GetFromNativePointer<Keyboard>(NativeApi.Application_GetKeyboard_(NativePointer), p => new Keyboard(p))!;
+            }
+            
         }
         
         public void Run(Window window)
@@ -49,17 +63,11 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.ApplicationEvent.Idle:
                 Idle?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
-                case NativeApi.ApplicationEvent.KeyDown:
-                KeyDown?.Invoke(this, new NativeEventArgs<KeyEventData>(MarshalEx.PtrToStructure<KeyEventData>(parameter))); return IntPtr.Zero;
-                case NativeApi.ApplicationEvent.KeyUp:
-                KeyUp?.Invoke(this, new NativeEventArgs<KeyEventData>(MarshalEx.PtrToStructure<KeyEventData>(parameter))); return IntPtr.Zero;
                 default: throw new Exception("Unexpected ApplicationEvent value: " + e);
             }
         }
         
         public event EventHandler? Idle;
-        public event NativeEventHandler<KeyEventData>? KeyDown;
-        public event NativeEventHandler<KeyEventData>? KeyUp;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -72,8 +80,6 @@ namespace Alternet.UI.Native
             public enum ApplicationEvent
             {
                 Idle,
-                KeyDown,
-                KeyUp,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -81,6 +87,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Application_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Application_GetKeyboard_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_Run_(IntPtr obj, IntPtr window);

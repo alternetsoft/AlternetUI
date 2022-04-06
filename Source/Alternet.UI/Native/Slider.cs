@@ -9,10 +9,14 @@ namespace Alternet.UI.Native
 {
     internal class Slider : Control
     {
+        static Slider()
+        {
+            SetEventCallback();
+        }
+        
         public Slider()
         {
             SetNativePointer(NativeApi.Slider_Create_());
-            SetEventCallback();
         }
         
         public Slider(IntPtr nativePointer) : base(nativePointer)

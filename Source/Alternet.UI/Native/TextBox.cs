@@ -9,10 +9,14 @@ namespace Alternet.UI.Native
 {
     internal class TextBox : Control
     {
+        static TextBox()
+        {
+            SetEventCallback();
+        }
+        
         public TextBox()
         {
             SetNativePointer(NativeApi.TextBox_Create_());
-            SetEventCallback();
         }
         
         public TextBox(IntPtr nativePointer) : base(nativePointer)

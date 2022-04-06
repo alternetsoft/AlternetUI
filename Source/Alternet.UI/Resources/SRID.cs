@@ -1412,6 +1412,8 @@ namespace Alternet.UI
         internal const string @TextCompositionManager_TextCompositionNotStarted = "TextCompositionManager_TextCompositionNotStarted";
         /// <summary>'{0}' has already finished.</summary>
         internal const string @TextCompositionManager_TextCompositionHasDone = "TextCompositionManager_TextCompositionHasDone";
+        /// <summary>The calling thread must be STA, because many UI components require this.</summary>
+        internal const string @RequiresSTA = "RequiresSTA";
 
     }
 }

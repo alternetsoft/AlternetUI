@@ -9,6 +9,10 @@ namespace Alternet.UI.Native
 {
     internal class GroupBox : Control
     {
+        static GroupBox()
+        {
+        }
+        
         public GroupBox()
         {
             SetNativePointer(NativeApi.GroupBox_Create_());

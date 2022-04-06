@@ -2,6 +2,7 @@
 
 #include "Common.h"
 #include "Window.h"
+#include "Keyboard.h"
 #include "Object.h"
 #include "WindowsVisualThemeSupport.h"
 
@@ -38,12 +39,11 @@ namespace Alternet::UI
         void RaiseIdle();
 
         static Application* GetCurrent();
-
-        void OnKeyDown(wxKeyEvent& e);
-        void OnKeyUp(wxKeyEvent& e);
     private:
 
-        App* _app;
+        App* _app = nullptr;
+
+        Keyboard* _keyboard = nullptr;
 
         inline static Application* s_current = nullptr;
 

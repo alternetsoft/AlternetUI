@@ -18,8 +18,8 @@ namespace Alternet.UI
     /// </summary>
     public abstract class KeyboardDevice : InputDevice
     {
-        //        protected KeyboardDevice(InputManager inputManager)
-        //        {
+        protected KeyboardDevice(InputManager inputManager)
+        {
         //            _inputManager = new SecurityCriticalDataClass<InputManager>(inputManager);
         //            _inputManager.Value.PreProcessInput += new PreProcessInputEventHandler(PreProcessInput);
         //            _inputManager.Value.PreNotifyInput += new NotifyInputEventHandler(PreNotifyInput);
@@ -37,7 +37,7 @@ namespace Alternet.UI
         //            // so that TIP/IME listeners get precedence.
         //            _TsfManager = new SecurityCriticalDataClass<TextServicesManager>(new TextServicesManager(inputManager));
         //            _textcompositionManager = new SecurityCriticalData<TextCompositionManager>(new TextCompositionManager(inputManager));
-        //        }
+        }
 
         /// <summary>
         ///     Gets the current state of the specified key from the device from the underlying system

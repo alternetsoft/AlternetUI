@@ -9,6 +9,10 @@ namespace Alternet.UI.Native
 {
     internal class DrawingContext : NativeObject
     {
+        static DrawingContext()
+        {
+        }
+        
         private DrawingContext()
         {
         }

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Application.h"
+#include "Keyboard.h"
 #include "Window.h"
 #include "ApiUtils.h"
 
@@ -11,6 +12,11 @@ using namespace Alternet::UI;
 ALTERNET_UI_API Application* Application_Create_()
 {
     return new Application();
+}
+
+ALTERNET_UI_API Keyboard* Application_GetKeyboard_(Application* obj)
+{
+    return obj->GetKeyboard();
 }
 
 ALTERNET_UI_API void Application_Run_(Application* obj, Window* window)

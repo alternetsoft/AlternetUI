@@ -9,10 +9,14 @@ namespace Alternet.UI.Native
 {
     internal class ComboBox : Control
     {
+        static ComboBox()
+        {
+            SetEventCallback();
+        }
+        
         public ComboBox()
         {
             SetNativePointer(NativeApi.ComboBox_Create_());
-            SetEventCallback();
         }
         
         public ComboBox(IntPtr nativePointer) : base(nativePointer)

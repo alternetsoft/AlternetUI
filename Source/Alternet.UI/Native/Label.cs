@@ -9,6 +9,10 @@ namespace Alternet.UI.Native
 {
     internal class Label : Control
     {
+        static Label()
+        {
+        }
+        
         public Label()
         {
             SetNativePointer(NativeApi.Label_Create_());

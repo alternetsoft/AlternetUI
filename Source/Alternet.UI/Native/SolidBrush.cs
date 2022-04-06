@@ -9,6 +9,10 @@ namespace Alternet.UI.Native
 {
     internal class SolidBrush : Brush
     {
+        static SolidBrush()
+        {
+        }
+        
         public SolidBrush()
         {
             SetNativePointer(NativeApi.SolidBrush_Create_());

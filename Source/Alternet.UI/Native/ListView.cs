@@ -9,10 +9,14 @@ namespace Alternet.UI.Native
 {
     internal class ListView : Control
     {
+        static ListView()
+        {
+            SetEventCallback();
+        }
+        
         public ListView()
         {
             SetNativePointer(NativeApi.ListView_Create_());
-            SetEventCallback();
         }
         
         public ListView(IntPtr nativePointer) : base(nativePointer)

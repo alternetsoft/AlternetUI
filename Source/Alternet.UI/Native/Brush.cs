@@ -9,6 +9,10 @@ namespace Alternet.UI.Native
 {
     internal abstract class Brush : NativeObject
     {
+        static Brush()
+        {
+        }
+        
         protected Brush()
         {
         }

@@ -9,10 +9,14 @@ namespace Alternet.UI.Native
 {
     internal class CheckBox : Control
     {
+        static CheckBox()
+        {
+            SetEventCallback();
+        }
+        
         public CheckBox()
         {
             SetNativePointer(NativeApi.CheckBox_Create_());
-            SetEventCallback();
         }
         
         public CheckBox(IntPtr nativePointer) : base(nativePointer)

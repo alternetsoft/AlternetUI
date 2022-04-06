@@ -43,7 +43,8 @@ using System.Security;");
 
             var events = MemberProvider.GetEvents(type).ToArray();
 
-            WriteConstructor(w, types, type, events.Length > 0);
+            WriteStaticConstructor(w, types, type, events.Length > 0);
+            WriteConstructor(w, types, type);
             WriteFromPointerConstructor(w, types, type);
 
             //if (MemberProvider.GetDestructorVisibility(type) == MemberVisibility.Public)
@@ -90,7 +91,20 @@ using System.Security;");
         //    w.WriteLine();
         //}
 
-        private static void WriteConstructor(IndentedTextWriter w, Types types, Type type, bool hasEvents)
+        private static void WriteStaticConstructor(IndentedTextWriter w, Types types, Type type, bool hasEvents)
+        {
+            var declaringTypeName = types.GetTypeName(type.ToContextualType());
+
+            w.WriteLine($"static {declaringTypeName}()");
+            using (new BlockIndent(w))
+            {
+                if (hasEvents)
+                    w.WriteLine("SetEventCallback();");
+            }
+            w.WriteLine();
+        }
+
+        private static void WriteConstructor(IndentedTextWriter w, Types types, Type type)
         {
             var declaringTypeName = types.GetTypeName(type.ToContextualType());
             var visibility = MemberProvider.GetConstructorVisibility(type);
@@ -100,9 +114,6 @@ using System.Security;");
             {
                 if (visibility == MemberVisibility.Public)
                     w.WriteLine($"SetNativePointer(NativeApi.{TypeProvider.GetNativeName(type)}_Create_());");
-
-                if (hasEvents)
-                    w.WriteLine("SetEventCallback();");
             }
             w.WriteLine();
         }

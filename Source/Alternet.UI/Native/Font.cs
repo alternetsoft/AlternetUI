@@ -9,6 +9,10 @@ namespace Alternet.UI.Native
 {
     internal class Font : NativeObject
     {
+        static Font()
+        {
+        }
+        
         public Font()
         {
             SetNativePointer(NativeApi.Font_Create_());

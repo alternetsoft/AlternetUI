@@ -2214,4 +2214,7 @@
   <data name="TextCompositionManager_TextCompositionHasDone" xml:space="preserve">
     <value>'{0}' has already finished.</value>
   </data>
+  <data name="RequiresSTA" xml:space="preserve">
+    <value>The calling thread must be STA, because many UI components require this.</value>
+  </data>
 </root>

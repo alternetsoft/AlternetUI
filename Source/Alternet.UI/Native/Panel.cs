@@ -9,6 +9,10 @@ namespace Alternet.UI.Native
 {
     internal class Panel : Control
     {
+        static Panel()
+        {
+        }
+        
         public Panel()
         {
             SetNativePointer(NativeApi.Panel_Create_());

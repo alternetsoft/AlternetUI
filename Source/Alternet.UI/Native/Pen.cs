@@ -9,6 +9,10 @@ namespace Alternet.UI.Native
 {
     internal class Pen : NativeObject
     {
+        static Pen()
+        {
+        }
+        
         public Pen()
         {
             SetNativePointer(NativeApi.Pen_Create_());

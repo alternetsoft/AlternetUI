@@ -9,10 +9,14 @@ namespace Alternet.UI.Native
 {
     internal class TabControl : Control
     {
+        static TabControl()
+        {
+            SetEventCallback();
+        }
+        
         public TabControl()
         {
             SetNativePointer(NativeApi.TabControl_Create_());
-            SetEventCallback();
         }
         
         public TabControl(IntPtr nativePointer) : base(nativePointer)

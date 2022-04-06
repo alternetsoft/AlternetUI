@@ -9,9 +9,13 @@ namespace Alternet.UI.Native
 {
     internal abstract class Control : NativeObject
     {
-        protected Control()
+        static Control()
         {
             SetEventCallback();
+        }
+        
+        protected Control()
+        {
         }
         
         public Control(IntPtr nativePointer) : base(nativePointer)

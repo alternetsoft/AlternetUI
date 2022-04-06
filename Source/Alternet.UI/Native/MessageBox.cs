@@ -9,6 +9,10 @@ namespace Alternet.UI.Native
 {
     internal abstract class MessageBox : NativeObject
     {
+        static MessageBox()
+        {
+        }
+        
         private MessageBox()
         {
         }

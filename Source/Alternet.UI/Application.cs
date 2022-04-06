@@ -32,7 +32,7 @@ namespace Alternet.UI
             nativeApplication.Idle += NativeApplication_Idle;
             current = this;
 
-            keyboardInputProvider = new KeyboardInputProvider(nativeApplication);
+            keyboardInputProvider = new KeyboardInputProvider(nativeApplication.Keyboard);
         }
 
         private void NativeApplication_Idle(object? sender, EventArgs e) => Idle?.Invoke(this, EventArgs.Empty);

@@ -138,21 +138,21 @@ namespace Alternet.UI
             return inputManager;
         }
 
-        //        private InputManager()
-        //        {
-        //            // STA Requirement
-        //            //
-        //            // Avalon doesn't necessarily require STA, but many components do.  Examples
-        //            // include Cicero, OLE, COM, etc.  So we throw an exception here if the
-        //            // thread is not STA.
-        //            if(Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
-        //            {
-        //                throw new InvalidOperationException(SR.Get(SRID.RequiresSTA));
-        //            }
+        private InputManager()
+        {
+            // STA Requirement
+            //
+            // Avalon doesn't necessarily require STA, but many components do.  Examples
+            // include Cicero, OLE, COM, etc.  So we throw an exception here if the
+            // thread is not STA.
+            if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
+            {
+                throw new InvalidOperationException(SR.Get(SRID.RequiresSTA));
+            }
 
-        //            _stagingArea = new Stack();
+            //            _stagingArea = new Stack();
 
-        //            _primaryKeyboardDevice = new Win32KeyboardDevice(this);
+            _primaryKeyboardDevice = new NativeKeyboardDevice(this);
         //            _primaryMouseDevice = new Win32MouseDevice(this);
         //            _primaryCommandDevice = new CommandDevice(this);
 
@@ -168,7 +168,7 @@ namespace Alternet.UI
         //            _inputTimer = new DispatcherTimer(DispatcherPriority.Background);
         //            _inputTimer.Tick += new EventHandler(ValidateInputDevices);
         //            _inputTimer.Interval = TimeSpan.FromMilliseconds(125);
-        //        }
+        }
 
         void InvokePreProcessInput(InputEventArgs input, out bool isCancelled)
         {

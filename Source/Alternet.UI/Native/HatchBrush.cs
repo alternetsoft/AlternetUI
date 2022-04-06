@@ -9,6 +9,10 @@ namespace Alternet.UI.Native
 {
     internal class HatchBrush : Brush
     {
+        static HatchBrush()
+        {
+        }
+        
         public HatchBrush()
         {
             SetNativePointer(NativeApi.HatchBrush_Create_());

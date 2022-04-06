@@ -3,6 +3,33 @@
 
 namespace Alternet::UI
 {
+    enum class BrushHatchStyle
+    {
+        BackwardDiagonal = 0,
+        ForwardDiagonal = 1,
+        DiagonalCross = 2,
+        Cross = 3,
+        Horizontal = 4,
+        Vertical = 5,
+    };
+    
+    enum class FontStyle
+    {
+        Regular = 0,
+        Bold = 1,
+        Italic = 2,
+        Underlined = 4,
+        Strikethrough = 8,
+    };
+    
+    enum class GenericFontFamily
+    {
+        None = 0,
+        SansSerif = 1,
+        Serif = 2,
+        Monospace = 3,
+    };
+    
     enum class Key
     {
         None = 0,
@@ -138,33 +165,6 @@ namespace Alternet::UI
         Option = 130,
         Windows = 131,
         Menu = 132,
-    };
-    
-    enum class BrushHatchStyle
-    {
-        BackwardDiagonal = 0,
-        ForwardDiagonal = 1,
-        DiagonalCross = 2,
-        Cross = 3,
-        Horizontal = 4,
-        Vertical = 5,
-    };
-    
-    enum class FontStyle
-    {
-        Regular = 0,
-        Bold = 1,
-        Italic = 2,
-        Underlined = 4,
-        Strikethrough = 8,
-    };
-    
-    enum class GenericFontFamily
-    {
-        None = 0,
-        SansSerif = 1,
-        Serif = 2,
-        Monospace = 3,
     };
     
     enum class ListBoxSelectionMode

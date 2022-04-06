@@ -9,6 +9,10 @@ namespace Alternet.UI.Native
 {
     internal class ProgressBar : Control
     {
+        static ProgressBar()
+        {
+        }
+        
         public ProgressBar()
         {
             SetNativePointer(NativeApi.ProgressBar_Create_());
