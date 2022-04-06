@@ -32,7 +32,11 @@ namespace Alternet.UI.Native
             if (!instancesByNativePointers.TryGetValue(pointer, out var w))
             {
                 if (fromPointerFactory != null)
-                    return fromPointerFactory(pointer);
+                {
+                    var newObject = fromPointerFactory(pointer);
+                    NativeApi.Object_AddRef(pointer);
+                    return newObject;
+                }
                 else
                     return null;
             }
@@ -85,6 +89,9 @@ namespace Alternet.UI.Native
         private class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Object_AddRef(IntPtr obj);
 
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Object_Release(IntPtr obj);
