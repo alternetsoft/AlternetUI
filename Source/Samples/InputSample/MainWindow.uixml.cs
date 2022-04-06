@@ -14,10 +14,23 @@ namespace InputSample
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
+            UpdateModifierKeys();
             if (e.Key == Key.F9 && Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
             {
                 MessageBox.Show("You have just pressed Ctrl+Shift+F9.", "Key Combination Pressed");
             }
+        }
+
+        protected override void OnKeyUp(KeyEventArgs e)
+        {
+            UpdateModifierKeys();
+        }
+
+        private void UpdateModifierKeys()
+        {
+            controlPressedCheckBox.IsChecked = (Keyboard.Modifiers & ModifierKeys.Control) != 0;
+            shiftPressedCheckBox.IsChecked = (Keyboard.Modifiers & ModifierKeys.Shift) != 0;
+            altPressedCheckBox.IsChecked = (Keyboard.Modifiers & ModifierKeys.Alt) != 0;
         }
 
         protected override void Dispose(bool disposing)

@@ -38,9 +38,16 @@ namespace Alternet::UI
 
         auto eventType = e.GetEventType();
         if (eventType == wxEVT_KEY_DOWN)
+        {
             _owner->GetKeyboard()->OnKeyDown((wxKeyEvent&)e);
+            return Event_Skip;
+        }
+
         if (eventType == wxEVT_KEY_UP)
+        {
             _owner->GetKeyboard()->OnKeyUp((wxKeyEvent&)e);
+            return Event_Skip;
+        }
 
         return Event_Skip;
     }

@@ -326,8 +326,6 @@ namespace Alternet::UI
         if (asciiKey != Key::None)
             return asciiKey;
 
-        wxASSERT(!IsAsciiKey(value)); // todo: test and remove.
-
         switch (value)
         {
         case WXK_NONE:
