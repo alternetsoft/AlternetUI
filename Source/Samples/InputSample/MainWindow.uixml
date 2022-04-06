@@ -1,10 +1,12 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="InputSample.MainWindow"
-        Title="My First Application" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
-	<StackPanel Orientation="Vertical" KeyDown="StackPanel_KeyDown" KeyUp="StackPanel_KeyUp">
-		<Button Name="helloButton" Text="Say Hello" Margin="20" KeyDown="HelloButton_KeyDown" KeyUp="HelloButton_KeyUp"/>
+        Title="My First Application" PreviewKeyDown="Window_PreviewKeyDown" PreviewKeyUp="Window_PreviewKeyUp" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
+	<StackPanel Orientation="Vertical" KeyDown="StackPanel_KeyDown" KeyUp="StackPanel_KeyUp" PreviewKeyDown="StackPanel_PreviewKeyDown" PreviewKeyUp="StackPanel_PreviewKeyUp">
+		<Button Name="helloButton" Text="Say Hello" Margin="20"
+				KeyDown="HelloButton_KeyDown" KeyUp="HelloButton_KeyUp" PreviewKeyDown="HelloButton_PreviewKeyDown" PreviewKeyUp="HelloButton_PreviewKeyUp"/>
 		<Button Text="Button 1" />
+		<CheckBox Name="handlePreviewEvents" Text="Handle Preview Events at StackPanel" Margin="10"/>
 		<ListBox Name="lb" Height="200" />
 	</StackPanel>
 </Window>

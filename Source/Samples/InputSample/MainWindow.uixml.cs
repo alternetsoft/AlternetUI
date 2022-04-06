@@ -31,5 +31,27 @@ namespace InputSample
         private void StackPanel_KeyUp(object sender, KeyEventArgs e) => LogKey(e, "StackPanel", "KeyUp");
 
         private void Window_KeyUp(object sender, KeyEventArgs e) => LogKey(e, "Window", "KeyUp");
+
+        private void HelloButton_PreviewKeyDown(object sender, KeyEventArgs e) => LogKey(e, "HelloButton", "PreviewKeyDown");
+
+        private void StackPanel_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            LogKey(e, "StackPanel", "PreviewKeyDown");
+            if (handlePreviewEvents.IsChecked)
+                e.Handled = true;
+        }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e) => LogKey(e, "Window", "PreviewKeyDown");
+
+        private void HelloButton_PreviewKeyUp(object sender, KeyEventArgs e) => LogKey(e, "HelloButton", "PreviewKeyUp");
+
+        private void StackPanel_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            LogKey(e, "StackPanel", "PreviewKeyUp");
+            if (handlePreviewEvents.IsChecked)
+                e.Handled = true;
+        }
+
+        private void Window_PreviewKeyUp(object sender, KeyEventArgs e) => LogKey(e, "Window", "PreviewKeyUp");
     }
 }

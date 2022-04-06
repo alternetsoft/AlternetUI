@@ -39,6 +39,7 @@ namespace Alternet.UI
             //_inputSource = inputSource;
 
             //_realKey = key;
+            _key = key;
             _isRepeat = isRepeat;
 
             // Start out assuming that this is just a normal key.

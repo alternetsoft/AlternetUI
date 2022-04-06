@@ -10,6 +10,20 @@ namespace Alternet.UI
     public class UIElement : DependencyObject
     {
         /// <summary>
+        ///     Alias to the Keyboard.PreviewKeyDownEvent.
+        /// </summary>
+        public static readonly RoutedEvent PreviewKeyDownEvent = Keyboard.PreviewKeyDownEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting a key was pressed
+        /// </summary>
+        public event KeyEventHandler PreviewKeyDown
+        {
+            add { AddHandler(Keyboard.PreviewKeyDownEvent, value, false); }
+            remove { RemoveHandler(Keyboard.PreviewKeyDownEvent, value); }
+        }
+
+        /// <summary>
         ///     Alias to the Keyboard.KeyDownEvent.
         /// </summary>
         public static readonly RoutedEvent KeyDownEvent = Keyboard.KeyDownEvent.AddOwner(typeof(UIElement));
@@ -21,6 +35,20 @@ namespace Alternet.UI
         {
             add { AddHandler(Keyboard.KeyDownEvent, value, false); }
             remove { RemoveHandler(Keyboard.KeyDownEvent, value); }
+        }
+
+        /// <summary>
+        ///     Alias to the Keyboard.PreviewKeyUpEvent.
+        /// </summary>
+        public static readonly RoutedEvent PreviewKeyUpEvent = Keyboard.PreviewKeyUpEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting a key was released
+        /// </summary>
+        public event KeyEventHandler PreviewKeyUp
+        {
+            add { AddHandler(Keyboard.PreviewKeyUpEvent, value, false); }
+            remove { RemoveHandler(Keyboard.PreviewKeyUpEvent, value); }
         }
 
         /// <summary>
