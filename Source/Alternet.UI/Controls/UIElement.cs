@@ -9,6 +9,11 @@ namespace Alternet.UI
     /// </summary>
     public class UIElement : DependencyObject
     {
+        static UIElement()
+        {
+            RegisterEvents(typeof(UIElement));
+        }
+
         /// <summary>
         ///     Alias to the Keyboard.PreviewKeyDownEvent.
         /// </summary>
@@ -63,6 +68,139 @@ namespace Alternet.UI
         {
             add { AddHandler(Keyboard.KeyUpEvent, value, false); }
             remove { RemoveHandler(Keyboard.KeyUpEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting a key was pressed
+        /// </summary>
+        protected virtual void OnKeyDown(KeyEventArgs e) { }
+
+        /// <summary>
+        ///     Virtual method reporting a key was pressed
+        /// </summary>
+        protected virtual void OnPreviewKeyDown(KeyEventArgs e) { }
+
+        /// <summary>
+        ///     Virtual method reporting a key was released
+        /// </summary>
+        protected virtual void OnPreviewKeyUp(KeyEventArgs e) { }
+
+        /// <summary>
+        ///     Virtual method reporting a key was released
+        /// </summary>
+        protected virtual void OnKeyUp(KeyEventArgs e) { }
+
+        private static void OnPreviewKeyDownThunk(object sender, KeyEventArgs e)
+        {
+            if (sender is UIElement uie)
+                uie.OnPreviewKeyDown(e);
+        }
+
+        private static void OnKeyDownThunk(object sender, KeyEventArgs e)
+        {
+            //CommandManager.TranslateInput((IInputElement)sender, e);
+
+            if (!e.Handled)
+            {
+                if (sender is UIElement uie)
+                    uie.OnKeyDown(e);
+            }
+        }
+
+        private static void OnPreviewKeyUpThunk(object sender, KeyEventArgs e)
+        {
+            if (sender is UIElement uie)
+                uie.OnPreviewKeyUp(e);
+        }
+
+        private static void OnKeyUpThunk(object sender, KeyEventArgs e)
+        {
+            if (sender is UIElement uie)
+                uie.OnKeyUp(e);
+        }
+
+        static void RegisterEvents(Type type)
+        {
+            //EventManager.RegisterClassHandler(type, Mouse.PreviewMouseDownEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseDownThunk), true);
+            //EventManager.RegisterClassHandler(type, Mouse.MouseDownEvent, new MouseButtonEventHandler(UIElement.OnMouseDownThunk), true);
+            //EventManager.RegisterClassHandler(type, Mouse.PreviewMouseUpEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseUpThunk), true);
+            //EventManager.RegisterClassHandler(type, Mouse.MouseUpEvent, new MouseButtonEventHandler(UIElement.OnMouseUpThunk), true);
+            //EventManager.RegisterClassHandler(type, UIElement.PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseLeftButtonDownThunk), false);
+            //EventManager.RegisterClassHandler(type, UIElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(UIElement.OnMouseLeftButtonDownThunk), false);
+            //EventManager.RegisterClassHandler(type, UIElement.PreviewMouseLeftButtonUpEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseLeftButtonUpThunk), false);
+            //EventManager.RegisterClassHandler(type, UIElement.MouseLeftButtonUpEvent, new MouseButtonEventHandler(UIElement.OnMouseLeftButtonUpThunk), false);
+            //EventManager.RegisterClassHandler(type, UIElement.PreviewMouseRightButtonDownEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseRightButtonDownThunk), false);
+            //EventManager.RegisterClassHandler(type, UIElement.MouseRightButtonDownEvent, new MouseButtonEventHandler(UIElement.OnMouseRightButtonDownThunk), false);
+            //EventManager.RegisterClassHandler(type, UIElement.PreviewMouseRightButtonUpEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseRightButtonUpThunk), false);
+            //EventManager.RegisterClassHandler(type, UIElement.MouseRightButtonUpEvent, new MouseButtonEventHandler(UIElement.OnMouseRightButtonUpThunk), false);
+            //EventManager.RegisterClassHandler(type, Mouse.PreviewMouseMoveEvent, new MouseEventHandler(UIElement.OnPreviewMouseMoveThunk), false);
+            //EventManager.RegisterClassHandler(type, Mouse.MouseMoveEvent, new MouseEventHandler(UIElement.OnMouseMoveThunk), false);
+            //EventManager.RegisterClassHandler(type, Mouse.PreviewMouseWheelEvent, new MouseWheelEventHandler(UIElement.OnPreviewMouseWheelThunk), false);
+            //EventManager.RegisterClassHandler(type, Mouse.MouseWheelEvent, new MouseWheelEventHandler(UIElement.OnMouseWheelThunk), false);
+            //EventManager.RegisterClassHandler(type, Mouse.MouseEnterEvent, new MouseEventHandler(UIElement.OnMouseEnterThunk), false);
+            //EventManager.RegisterClassHandler(type, Mouse.MouseLeaveEvent, new MouseEventHandler(UIElement.OnMouseLeaveThunk), false);
+            //EventManager.RegisterClassHandler(type, Mouse.GotMouseCaptureEvent, new MouseEventHandler(UIElement.OnGotMouseCaptureThunk), false);
+            //EventManager.RegisterClassHandler(type, Mouse.LostMouseCaptureEvent, new MouseEventHandler(UIElement.OnLostMouseCaptureThunk), false);
+            //EventManager.RegisterClassHandler(type, Mouse.QueryCursorEvent, new QueryCursorEventHandler(UIElement.OnQueryCursorThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusDownEvent, new StylusDownEventHandler(UIElement.OnPreviewStylusDownThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.StylusDownEvent, new StylusDownEventHandler(UIElement.OnStylusDownThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusUpEvent, new StylusEventHandler(UIElement.OnPreviewStylusUpThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.StylusUpEvent, new StylusEventHandler(UIElement.OnStylusUpThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusMoveEvent, new StylusEventHandler(UIElement.OnPreviewStylusMoveThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.StylusMoveEvent, new StylusEventHandler(UIElement.OnStylusMoveThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusInAirMoveEvent, new StylusEventHandler(UIElement.OnPreviewStylusInAirMoveThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.StylusInAirMoveEvent, new StylusEventHandler(UIElement.OnStylusInAirMoveThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.StylusEnterEvent, new StylusEventHandler(UIElement.OnStylusEnterThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.StylusLeaveEvent, new StylusEventHandler(UIElement.OnStylusLeaveThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusInRangeEvent, new StylusEventHandler(UIElement.OnPreviewStylusInRangeThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.StylusInRangeEvent, new StylusEventHandler(UIElement.OnStylusInRangeThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusOutOfRangeEvent, new StylusEventHandler(UIElement.OnPreviewStylusOutOfRangeThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.StylusOutOfRangeEvent, new StylusEventHandler(UIElement.OnStylusOutOfRangeThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusSystemGestureEvent, new StylusSystemGestureEventHandler(UIElement.OnPreviewStylusSystemGestureThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.StylusSystemGestureEvent, new StylusSystemGestureEventHandler(UIElement.OnStylusSystemGestureThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.GotStylusCaptureEvent, new StylusEventHandler(UIElement.OnGotStylusCaptureThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.LostStylusCaptureEvent, new StylusEventHandler(UIElement.OnLostStylusCaptureThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.StylusButtonDownEvent, new StylusButtonEventHandler(UIElement.OnStylusButtonDownThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.StylusButtonUpEvent, new StylusButtonEventHandler(UIElement.OnStylusButtonUpThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusButtonDownEvent, new StylusButtonEventHandler(UIElement.OnPreviewStylusButtonDownThunk), false);
+            //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusButtonUpEvent, new StylusButtonEventHandler(UIElement.OnPreviewStylusButtonUpThunk), false);
+            EventManager.RegisterClassHandler(type, Keyboard.PreviewKeyDownEvent, new KeyEventHandler(UIElement.OnPreviewKeyDownThunk), false);
+            EventManager.RegisterClassHandler(type, Keyboard.KeyDownEvent, new KeyEventHandler(UIElement.OnKeyDownThunk), false);
+            EventManager.RegisterClassHandler(type, Keyboard.PreviewKeyUpEvent, new KeyEventHandler(UIElement.OnPreviewKeyUpThunk), false);
+            EventManager.RegisterClassHandler(type, Keyboard.KeyUpEvent, new KeyEventHandler(UIElement.OnKeyUpThunk), false);
+            //EventManager.RegisterClassHandler(type, Keyboard.PreviewGotKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(UIElement.OnPreviewGotKeyboardFocusThunk), false);
+            //EventManager.RegisterClassHandler(type, Keyboard.GotKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(UIElement.OnGotKeyboardFocusThunk), false);
+            //EventManager.RegisterClassHandler(type, Keyboard.PreviewLostKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(UIElement.OnPreviewLostKeyboardFocusThunk), false);
+            //EventManager.RegisterClassHandler(type, Keyboard.LostKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(UIElement.OnLostKeyboardFocusThunk), false);
+            //EventManager.RegisterClassHandler(type, TextCompositionManager.PreviewTextInputEvent, new TextCompositionEventHandler(UIElement.OnPreviewTextInputThunk), false);
+            //EventManager.RegisterClassHandler(type, TextCompositionManager.TextInputEvent, new TextCompositionEventHandler(UIElement.OnTextInputThunk), false);
+            //EventManager.RegisterClassHandler(type, CommandManager.PreviewExecutedEvent, new ExecutedRoutedEventHandler(UIElement.OnPreviewExecutedThunk), false);
+            //EventManager.RegisterClassHandler(type, CommandManager.ExecutedEvent, new ExecutedRoutedEventHandler(UIElement.OnExecutedThunk), false);
+            //EventManager.RegisterClassHandler(type, CommandManager.PreviewCanExecuteEvent, new CanExecuteRoutedEventHandler(UIElement.OnPreviewCanExecuteThunk), false);
+            //EventManager.RegisterClassHandler(type, CommandManager.CanExecuteEvent, new CanExecuteRoutedEventHandler(UIElement.OnCanExecuteThunk), false);
+            //EventManager.RegisterClassHandler(type, CommandDevice.CommandDeviceEvent, new CommandDeviceEventHandler(UIElement.OnCommandDeviceThunk), false);
+            //EventManager.RegisterClassHandler(type, DragDrop.PreviewQueryContinueDragEvent, new QueryContinueDragEventHandler(UIElement.OnPreviewQueryContinueDragThunk), false);
+            //EventManager.RegisterClassHandler(type, DragDrop.QueryContinueDragEvent, new QueryContinueDragEventHandler(UIElement.OnQueryContinueDragThunk), false);
+            //EventManager.RegisterClassHandler(type, DragDrop.PreviewGiveFeedbackEvent, new GiveFeedbackEventHandler(UIElement.OnPreviewGiveFeedbackThunk), false);
+            //EventManager.RegisterClassHandler(type, DragDrop.GiveFeedbackEvent, new GiveFeedbackEventHandler(UIElement.OnGiveFeedbackThunk), false);
+            //EventManager.RegisterClassHandler(type, DragDrop.PreviewDragEnterEvent, new DragEventHandler(UIElement.OnPreviewDragEnterThunk), false);
+            //EventManager.RegisterClassHandler(type, DragDrop.DragEnterEvent, new DragEventHandler(UIElement.OnDragEnterThunk), false);
+            //EventManager.RegisterClassHandler(type, DragDrop.PreviewDragOverEvent, new DragEventHandler(UIElement.OnPreviewDragOverThunk), false);
+            //EventManager.RegisterClassHandler(type, DragDrop.DragOverEvent, new DragEventHandler(UIElement.OnDragOverThunk), false);
+            //EventManager.RegisterClassHandler(type, DragDrop.PreviewDragLeaveEvent, new DragEventHandler(UIElement.OnPreviewDragLeaveThunk), false);
+            //EventManager.RegisterClassHandler(type, DragDrop.DragLeaveEvent, new DragEventHandler(UIElement.OnDragLeaveThunk), false);
+            //EventManager.RegisterClassHandler(type, DragDrop.PreviewDropEvent, new DragEventHandler(UIElement.OnPreviewDropThunk), false);
+            //EventManager.RegisterClassHandler(type, DragDrop.DropEvent, new DragEventHandler(UIElement.OnDropThunk), false);
+            //EventManager.RegisterClassHandler(type, Touch.PreviewTouchDownEvent, new EventHandler<TouchEventArgs>(UIElement.OnPreviewTouchDownThunk), false);
+            //EventManager.RegisterClassHandler(type, Touch.TouchDownEvent, new EventHandler<TouchEventArgs>(UIElement.OnTouchDownThunk), false);
+            //EventManager.RegisterClassHandler(type, Touch.PreviewTouchMoveEvent, new EventHandler<TouchEventArgs>(UIElement.OnPreviewTouchMoveThunk), false);
+            //EventManager.RegisterClassHandler(type, Touch.TouchMoveEvent, new EventHandler<TouchEventArgs>(UIElement.OnTouchMoveThunk), false);
+            //EventManager.RegisterClassHandler(type, Touch.PreviewTouchUpEvent, new EventHandler<TouchEventArgs>(UIElement.OnPreviewTouchUpThunk), false);
+            //EventManager.RegisterClassHandler(type, Touch.TouchUpEvent, new EventHandler<TouchEventArgs>(UIElement.OnTouchUpThunk), false);
+            //EventManager.RegisterClassHandler(type, Touch.GotTouchCaptureEvent, new EventHandler<TouchEventArgs>(UIElement.OnGotTouchCaptureThunk), false);
+            //EventManager.RegisterClassHandler(type, Touch.LostTouchCaptureEvent, new EventHandler<TouchEventArgs>(UIElement.OnLostTouchCaptureThunk), false);
+            //EventManager.RegisterClassHandler(type, Touch.TouchEnterEvent, new EventHandler<TouchEventArgs>(UIElement.OnTouchEnterThunk), false);
+            //EventManager.RegisterClassHandler(type, Touch.TouchLeaveEvent, new EventHandler<TouchEventArgs>(UIElement.OnTouchLeaveThunk), false);
         }
 
         /// <summary>

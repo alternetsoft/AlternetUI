@@ -8,6 +8,38 @@ namespace InputSample
         public MainWindow()
         {
             InitializeComponent();
+
+            InputManager.Current.PreProcessInput += InputManager_PreProcessInput;
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (e.Key == Key.F9 && Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
+            {
+                MessageBox.Show("You have just pressed Ctrl+Shift+F9.", "Key Combination Pressed");
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                InputManager.Current.PreProcessInput -= InputManager_PreProcessInput;
+            }
+
+            base.Dispose(disposing);
+        }
+
+        private void InputManager_PreProcessInput(object sender, PreProcessInputEventArgs e)
+        {
+            if (cancelF1KeyInputCheckBox.IsChecked)
+            {
+                if (e.Input is KeyEventArgs ke)
+                {
+                    if (ke.Key == Key.F1)
+                        e.Cancel();
+                }
+            }
         }
 
         int messageNumber;
@@ -37,7 +69,7 @@ namespace InputSample
         private void StackPanel_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             LogKey(e, "StackPanel", "PreviewKeyDown");
-            if (handlePreviewEvents.IsChecked)
+            if (handlePreviewEventsCheckBox.IsChecked)
                 e.Handled = true;
         }
 
@@ -48,7 +80,7 @@ namespace InputSample
         private void StackPanel_PreviewKeyUp(object sender, KeyEventArgs e)
         {
             LogKey(e, "StackPanel", "PreviewKeyUp");
-            if (handlePreviewEvents.IsChecked)
+            if (handlePreviewEventsCheckBox.IsChecked)
                 e.Handled = true;
         }
 

@@ -6,7 +6,9 @@
 		<Button Name="helloButton" Text="Say Hello" Margin="20"
 				KeyDown="HelloButton_KeyDown" KeyUp="HelloButton_KeyUp" PreviewKeyDown="HelloButton_PreviewKeyDown" PreviewKeyUp="HelloButton_PreviewKeyUp"/>
 		<Button Text="Button 1" />
-		<CheckBox Name="handlePreviewEvents" Text="Handle Preview Events at StackPanel" Margin="10"/>
+		<CheckBox Name="handlePreviewEventsCheckBox" Text="Handle Preview Events at StackPanel" Margin="10"/>
+		<CheckBox Name="cancelF1KeyInputCheckBox" Text="Cancel F1 Key Input" Margin="10"/>
+		<Label Text="Press Ctrl+Shift+F9 to see a message." />
 		<ListBox Name="lb" Height="200" />
 	</StackPanel>
 </Window>
