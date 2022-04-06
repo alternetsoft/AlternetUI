@@ -16,5 +16,9 @@ namespace Alternet::UI
         int IsAsciiKey(int value);
         Key WxAsciiKeyToKey(int value);
         Key WxKeyToKey(int value);
+
+        int KeyToWxKey(Key value);
+        std::vector<int> KeyToWxKeys(Key value);
+        bool KeyHasMultipleWxKeys(Key value);
     };
 }

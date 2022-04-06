@@ -23,6 +23,12 @@ namespace Alternet.UI.Native
         {
         }
         
+        public KeyStates GetKeyState(Key key)
+        {
+            CheckDisposed();
+            return NativeApi.Keyboard_GetKeyState_(NativePointer, key);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -75,6 +81,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Keyboard_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern KeyStates Keyboard_GetKeyState_(IntPtr obj, Key key);
             
         }
     }

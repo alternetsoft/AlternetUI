@@ -167,6 +167,13 @@ namespace Alternet::UI
         Menu = 132,
     };
     
+    enum class KeyStates
+    {
+        None = 0,
+        Down = 1,
+        Toggled = 2,
+    };
+    
     enum class ListBoxSelectionMode
     {
         Single = 0,
@@ -213,3 +220,4 @@ namespace Alternet::UI
     
 }
 template<> struct enable_bitmask_operators<Alternet::UI::FontStyle> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::KeyStates> { static const bool enable = true; };

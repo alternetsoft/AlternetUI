@@ -166,6 +166,13 @@ namespace Alternet.UI.Native
         Menu = 132,
     }
     
+    enum KeyStates
+    {
+        None = 0,
+        Down = 1,
+        Toggled = 2,
+    }
+    
     enum ListBoxSelectionMode
     {
         Single = 0,

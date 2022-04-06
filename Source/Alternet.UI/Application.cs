@@ -16,7 +16,7 @@ namespace Alternet.UI
         private volatile bool isDisposed;
 
         private Native.Application nativeApplication;
-
+        
         private VisualTheme visualTheme = StockVisualThemes.Native;
 
         private KeyboardInputProvider keyboardInputProvider;
@@ -34,6 +34,8 @@ namespace Alternet.UI
 
             keyboardInputProvider = new KeyboardInputProvider(nativeApplication.Keyboard);
         }
+
+        internal Native.Keyboard NativeKeyboard => nativeApplication.Keyboard;
 
         private void NativeApplication_Idle(object? sender, EventArgs e) => Idle?.Invoke(this, EventArgs.Empty);
 

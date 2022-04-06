@@ -10,6 +10,39 @@ namespace Alternet::UI
     {
     }
 
+    KeyStates Keyboard::GetKeyState(Key key)
+    {
+        std::vector<int> wxKeys;
+        if (KeyHasMultipleWxKeys(key))
+            wxKeys = KeyToWxKeys(key);
+        else
+            wxKeys.push_back(KeyToWxKey(key));
+
+        for (int wxKey : wxKeys)
+        {
+            if (wxKey == WXK_NONE)
+                continue;
+
+            if (wxGetKeyState((wxKeyCode)wxKey))
+            {
+                if (key == Key::CapsLock || key == Key::NumLock)
+                {
+                    /*
+                    https://groups.google.com/g/wx-dev/c/LZdkOSReRF0
+                    Caps Lock, Num Lock and Scroll Lock are "special" though. From the docs:
+                    >For togglable keys (Caps Lock, Num Lock and Scroll Lock), returns true
+                    >if the key is toggled such that its LED indicator is lit. There is
+                    >currently no way to test whether togglable keys are up or down.
+                    */
+                    return KeyStates::Toggled;
+                }
+                return KeyStates::Down;
+            }
+        }
+
+        return KeyStates::None;
+    }
+
     void Keyboard::OnKeyDown(wxKeyEvent& e)
     {
         KeyEventData data{ WxKeyToKey(e.GetKeyCode()), e.GetTimestamp(), e.IsAutoRepeat() };
@@ -20,13 +53,164 @@ namespace Alternet::UI
     {
         KeyEventData data{ WxKeyToKey(e.GetKeyCode()), e.GetTimestamp(), false };
         RaiseEvent(KeyboardEvent::KeyUp, &data);
-
-        //wxGetKeyState(wxkeyco)
     }
 
     int Keyboard::IsAsciiKey(int value)
     {
         return value >= 33 && value <= 126;
+    }
+
+    int Keyboard::KeyToWxKey(Key value)
+    {
+        switch (value)
+        {
+        case Key::None: return WXK_NONE;
+        case Key::Quote: return '\'';
+        case Key::Comma: return ',';
+        case Key::Minus: return '-';
+        case Key::Period: return '.';
+        case Key::Slash: return '/';
+        case Key::D0: return '0';
+        case Key::D1: return '1';
+        case Key::D2: return '2';
+        case Key::D3: return '3';
+        case Key::D4: return '4';
+        case Key::D5: return '5';
+        case Key::D6: return '6';
+        case Key::D7: return '7';
+        case Key::D8: return '8';
+        case Key::D9: return '9';
+        case Key::Semicolon: return ';';
+        case Key::Equals: return '=';
+        case Key::A: return 'A';
+        case Key::B: return 'B';
+        case Key::C: return 'C';
+        case Key::D: return 'D';
+        case Key::E: return 'E';
+        case Key::F: return 'F';
+        case Key::G: return 'G';
+        case Key::H: return 'H';
+        case Key::I: return 'I';
+        case Key::J: return 'J';
+        case Key::K: return 'K';
+        case Key::L: return 'L';
+        case Key::M: return 'M';
+        case Key::N: return 'N';
+        case Key::O: return 'O';
+        case Key::P: return 'P';
+        case Key::Q: return 'Q';
+        case Key::R: return 'R';
+        case Key::S: return 'S';
+        case Key::T: return 'T';
+        case Key::U: return 'U';
+        case Key::V: return 'V';
+        case Key::W: return 'W';
+        case Key::X: return 'X';
+        case Key::Y: return 'Y';
+        case Key::Z: return 'Z';
+        case Key::OpenBracket: return '[';
+        case Key::Backslash: return '\\';
+        case Key::CloseBracket: return ']';
+        case Key::Backtick: return '`';
+        case Key::Backspace: return WXK_BACK;
+        case Key::Tab: return WXK_TAB;
+        case Key::Enter: return WXK_RETURN;
+        case Key::Escape: return WXK_ESCAPE;
+        case Key::Space: return WXK_SPACE;
+        case Key::Delete: return WXK_DELETE;
+        case Key::Clear: return WXK_CLEAR;
+        case Key::Shift: return WXK_SHIFT;
+        case Key::Alt: return WXK_ALT;
+        case Key::Control: return WXK_CONTROL;
+        case Key::Pause: return WXK_PAUSE;
+        case Key::CapsLock: return WXK_CAPITAL;
+        case Key::End: return WXK_END;
+        case Key::Home: return WXK_HOME;
+        case Key::LeftArrow: return WXK_LEFT;
+        case Key::UpArrow: return WXK_UP;
+        case Key::RightArrow: return WXK_RIGHT;
+        case Key::DownArrow: return WXK_DOWN;
+        case Key::PrintScreen: return WXK_SNAPSHOT;
+        case Key::Insert: return WXK_INSERT;
+        case Key::NumPad0: return WXK_NUMPAD0;
+        case Key::NumPad1: return WXK_NUMPAD1;
+        case Key::NumPad2: return WXK_NUMPAD2;
+        case Key::NumPad3: return WXK_NUMPAD3;
+        case Key::NumPad4: return WXK_NUMPAD4;
+        case Key::NumPad5: return WXK_NUMPAD5;
+        case Key::NumPad6: return WXK_NUMPAD6;
+        case Key::NumPad7: return WXK_NUMPAD7;
+        case Key::NumPad8: return WXK_NUMPAD8;
+        case Key::NumPad9: return WXK_NUMPAD9;
+        case Key::NumPadStar: return WXK_MULTIPLY;
+        case Key::NumPadPlus: return WXK_ADD;
+        case Key::NumPadMinus: return WXK_SUBTRACT;
+        case Key::NumPadDot: return WXK_DECIMAL;
+        case Key::F1: return WXK_F1;
+        case Key::F2: return WXK_F2;
+        case Key::F3: return WXK_F3;
+        case Key::F4: return WXK_F4;
+        case Key::F5: return WXK_F5;
+        case Key::F6: return WXK_F6;
+        case Key::F7: return WXK_F7;
+        case Key::F8: return WXK_F8;
+        case Key::F9: return WXK_F9;
+        case Key::F10: return WXK_F10;
+        case Key::F11: return WXK_F11;
+        case Key::F12: return WXK_F12;
+        case Key::F13: return WXK_F13;
+        case Key::F14: return WXK_F14;
+        case Key::F15: return WXK_F15;
+        case Key::F16: return WXK_F16;
+        case Key::F17: return WXK_F17;
+        case Key::F18: return WXK_F18;
+        case Key::F19: return WXK_F19;
+        case Key::F20: return WXK_F20;
+        case Key::F21: return WXK_F21;
+        case Key::F22: return WXK_F22;
+        case Key::F23: return WXK_F23;
+        case Key::F24: return WXK_F24;
+        case Key::NumLock: return WXK_NUMLOCK;
+        case Key::ScrollLock: return WXK_SCROLL;
+        case Key::PageUp: return WXK_PAGEUP;
+        case Key::PageDown: return WXK_PAGEDOWN;
+        case Key::NumPadSlash: return WXK_NUMPAD_DIVIDE;
+        case Key::BrowserBack: return WXK_BROWSER_BACK;
+        case Key::BrowserForward: return WXK_BROWSER_FORWARD;
+        case Key::BrowserRefresh: return WXK_BROWSER_REFRESH;
+        case Key::BrowserStop: return WXK_BROWSER_STOP;
+        case Key::BrowserSearch: return WXK_BROWSER_SEARCH;
+        case Key::BrowserFavorites: return WXK_BROWSER_FAVORITES;
+        case Key::BrowserHome: return WXK_BROWSER_HOME;
+        case Key::VolumeMute: return WXK_VOLUME_MUTE;
+        case Key::VolumeDown: return WXK_VOLUME_DOWN;
+        case Key::VolumeUp: return WXK_VOLUME_UP;
+        case Key::MediaNextTrack: return WXK_MEDIA_NEXT_TRACK;
+        case Key::MediaPreviousTrack: return WXK_MEDIA_PREV_TRACK;
+        case Key::MediaStop: return WXK_MEDIA_STOP;
+        case Key::MediaPlayPause: return WXK_MEDIA_PLAY_PAUSE;
+        case Key::LaunchMail: return WXK_LAUNCH_MAIL;
+        case Key::LaunchApplication1: return WXK_LAUNCH_APP1;
+        case Key::LaunchApplication2: return WXK_LAUNCH_APP2;
+        default:
+            return WXK_NONE;
+        }
+    }
+
+    std::vector<int> Keyboard::KeyToWxKeys(Key value)
+    {
+        if (value == Key::Menu)
+            return { WXK_WINDOWS_MENU, WXK_MENU };
+        if (value == Key::Windows)
+            return { WXK_WINDOWS_LEFT, WXK_WINDOWS_RIGHT };
+
+        wxASSERT(false);
+        throw 0;
+    }
+
+    bool Keyboard::KeyHasMultipleWxKeys(Key value)
+    {
+        return value == Key::Menu || value == Key::Windows;
     }
 
     Key Keyboard::WxAsciiKeyToKey(int value)
@@ -290,7 +474,7 @@ namespace Alternet::UI
         case WXK_F15:
             return Key::F15;
         case WXK_F16:
-            return Key::F15;
+            return Key::F16;
         case WXK_F17:
             return Key::F17;
         case WXK_F18:
@@ -421,7 +605,7 @@ namespace Alternet::UI
         case WXK_MEDIA_PREV_TRACK:
             return Key::MediaPreviousTrack;
         case WXK_MEDIA_STOP:
-            return Key::BrowserStop;
+            return Key::MediaStop;
         case WXK_MEDIA_PLAY_PAUSE:
             return Key::MediaPlayPause;
         case WXK_LAUNCH_MAIL:
