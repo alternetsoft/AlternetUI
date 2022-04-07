@@ -16,12 +16,14 @@ namespace Alternet.UI
 
         private void NativeApplication_KeyDown(object? sender, Native.NativeEventArgs<Native.KeyEventData> e)
         {
-            InputManager.Current.ReportKeyDown(e.Data.timestamp, (Key)e.Data.key, e.Data.isRepeat);
+            InputManager.Current.ReportKeyDown(e.Data.timestamp, (Key)e.Data.key, e.Data.isRepeat, out var handled);
+            e.Handled = handled;
         }
 
         private void NativeApplication_KeyUp(object? sender, Native.NativeEventArgs<Native.KeyEventData> e)
         {
-            InputManager.Current.ReportKeyUp(e.Data.timestamp, (Key)e.Data.key, e.Data.isRepeat);
+            InputManager.Current.ReportKeyUp(e.Data.timestamp, (Key)e.Data.key, e.Data.isRepeat, out var handled);
+            e.Handled = handled;
         }
 
         protected virtual void Dispose(bool disposing)

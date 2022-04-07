@@ -43,16 +43,16 @@ namespace Alternet::UI
         return KeyStates::None;
     }
 
-    void Keyboard::OnKeyDown(wxKeyEvent& e)
+    void Keyboard::OnKeyDown(wxKeyEvent& e, bool& handled)
     {
         KeyEventData data{ WxKeyToKey(e.GetKeyCode()), e.GetTimestamp(), e.IsAutoRepeat() };
-        RaiseEvent(KeyboardEvent::KeyDown, &data);
+        handled = RaiseEvent(KeyboardEvent::KeyDown, &data);
     }
 
-    void Keyboard::OnKeyUp(wxKeyEvent& e)
+    void Keyboard::OnKeyUp(wxKeyEvent& e, bool& handled)
     {
         KeyEventData data{ WxKeyToKey(e.GetKeyCode()), e.GetTimestamp(), false };
-        RaiseEvent(KeyboardEvent::KeyUp, &data);
+        handled = RaiseEvent(KeyboardEvent::KeyUp, &data);
     }
 
     int Keyboard::IsAsciiKey(int value)

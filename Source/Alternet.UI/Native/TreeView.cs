@@ -147,13 +147,23 @@ namespace Alternet.UI.Native
             switch (e)
             {
                 case NativeApi.TreeViewEvent.SelectionChanged:
-                SelectionChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    SelectionChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 case NativeApi.TreeViewEvent.ControlRecreated:
-                ControlRecreated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    ControlRecreated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 case NativeApi.TreeViewEvent.ItemExpanded:
-                ItemExpanded?.Invoke(this, new NativeEventArgs<TreeViewItemEventData>(MarshalEx.PtrToStructure<TreeViewItemEventData>(parameter))); return IntPtr.Zero;
+                {
+                    var ea = new NativeEventArgs<TreeViewItemEventData>(MarshalEx.PtrToStructure<TreeViewItemEventData>(parameter));
+                    ItemExpanded?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                }
                 case NativeApi.TreeViewEvent.ItemCollapsed:
-                ItemCollapsed?.Invoke(this, new NativeEventArgs<TreeViewItemEventData>(MarshalEx.PtrToStructure<TreeViewItemEventData>(parameter))); return IntPtr.Zero;
+                {
+                    var ea = new NativeEventArgs<TreeViewItemEventData>(MarshalEx.PtrToStructure<TreeViewItemEventData>(parameter));
+                    ItemCollapsed?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected TreeViewEvent value: " + e);
             }
         }

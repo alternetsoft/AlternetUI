@@ -76,7 +76,9 @@ namespace Alternet.UI.Native
             switch (e)
             {
                 case NativeApi.CheckBoxEvent.CheckedChanged:
-                CheckedChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    CheckedChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected CheckBoxEvent value: " + e);
             }
         }

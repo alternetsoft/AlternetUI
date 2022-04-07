@@ -1,14 +1,20 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="InputSample.MainWindow"
+		Width="800" Height="800"
         Title="My First Application" PreviewKeyDown="Window_PreviewKeyDown" PreviewKeyUp="Window_PreviewKeyUp" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
 	<StackPanel Orientation="Vertical" KeyDown="StackPanel_KeyDown" KeyUp="StackPanel_KeyUp" PreviewKeyDown="StackPanel_PreviewKeyDown" PreviewKeyUp="StackPanel_PreviewKeyUp" Padding="5">
-		<Button Name="helloButton" Text="Say Hello" Margin="20"
+		<Button Name="helloButton" Text="Say Hello" Margin="20" Click="HelloButton_Click"
 				KeyDown="HelloButton_KeyDown" KeyUp="HelloButton_KeyUp" PreviewKeyDown="HelloButton_PreviewKeyDown" PreviewKeyUp="HelloButton_PreviewKeyUp"/>
 		<Button Text="Button 1" />
+		<TextBox />
 		<CheckBox Name="handlePreviewEventsCheckBox" Text="Handle Preview Events at StackPanel" Margin="10"/>
 		<CheckBox Name="cancelF1KeyInputCheckBox" Text="Cancel F1 Key Input" Margin="10"/>
-		<Label Text="Press Ctrl+Shift+F9 to see a message." />
+		
+		<StackPanel Orientation="Horizontal" Margin="5">
+			<Label Text="Press Ctrl+Shift+D to change the color of this message." Name="messageLabel" />
+		</StackPanel>
+		
 		<StackPanel Orientation="Horizontal" Margin="5">
 			<Label Text="Modifier keys:" />
 			<CheckBox Text="Control" Name="controlPressedCheckBox" Enabled="false" Margin="5,0,0,0"/>

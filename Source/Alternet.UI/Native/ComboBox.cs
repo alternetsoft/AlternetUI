@@ -119,9 +119,13 @@ namespace Alternet.UI.Native
             switch (e)
             {
                 case NativeApi.ComboBoxEvent.SelectedItemChanged:
-                SelectedItemChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    SelectedItemChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 case NativeApi.ComboBoxEvent.TextChanged:
-                TextChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    TextChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected ComboBoxEvent value: " + e);
             }
         }

@@ -285,21 +285,37 @@ namespace Alternet.UI.Native
             switch (e)
             {
                 case NativeApi.ControlEvent.Paint:
-                Paint?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    Paint?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 case NativeApi.ControlEvent.MouseEnter:
-                MouseEnter?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    MouseEnter?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 case NativeApi.ControlEvent.MouseLeave:
-                MouseLeave?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    MouseLeave?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 case NativeApi.ControlEvent.MouseMove:
-                MouseMove?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    MouseMove?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 case NativeApi.ControlEvent.MouseLeftButtonDown:
-                MouseLeftButtonDown?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    MouseLeftButtonDown?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 case NativeApi.ControlEvent.MouseLeftButtonUp:
-                MouseLeftButtonUp?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    MouseLeftButtonUp?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 case NativeApi.ControlEvent.MouseClick:
-                MouseClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    MouseClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 case NativeApi.ControlEvent.VisibleChanged:
-                VisibleChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    VisibleChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected ControlEvent value: " + e);
             }
         }

@@ -62,7 +62,9 @@ namespace Alternet.UI.Native
             switch (e)
             {
                 case NativeApi.ApplicationEvent.Idle:
-                Idle?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    Idle?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected ApplicationEvent value: " + e);
             }
         }

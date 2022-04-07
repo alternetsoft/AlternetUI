@@ -617,18 +617,19 @@ namespace Alternet.UI
             return input as StagingAreaInputItem;
         }
 
-        internal void ReportKeyDown(long timestamp, Key key, bool isRepeat)
+        internal void ReportKeyDown(long timestamp, Key key, bool isRepeat, out bool handled)
         {
-            ReportKeyEvent(UIElement.PreviewKeyDownEvent, UIElement.KeyDownEvent, timestamp, key, isRepeat);
+            ReportKeyEvent(UIElement.PreviewKeyDownEvent, UIElement.KeyDownEvent, timestamp, key, isRepeat, out handled);
         }
 
-        internal void ReportKeyUp(long timestamp, Key key, bool isRepeat)
+        internal void ReportKeyUp(long timestamp, Key key, bool isRepeat, out bool handled)
         {
-            ReportKeyEvent(UIElement.PreviewKeyUpEvent, UIElement.KeyUpEvent, timestamp, key, isRepeat);
+            ReportKeyEvent(UIElement.PreviewKeyUpEvent, UIElement.KeyUpEvent, timestamp, key, isRepeat, out handled);
         }
 
-        internal void ReportKeyEvent(RoutedEvent previewEvent, RoutedEvent @event, long timestamp, Key key, bool isRepeat)
+        internal void ReportKeyEvent(RoutedEvent previewEvent, RoutedEvent @event, long timestamp, Key key, bool isRepeat, out bool handled)
         {
+            handled = false;
             var keyEventArgs = new KeyEventArgs(Keyboard.PrimaryDevice, timestamp, key, isRepeat);
 
             InvokePreProcessInput(keyEventArgs, out var isCancelled);
@@ -650,6 +651,8 @@ namespace Alternet.UI
                 keyEventArgs.RoutedEvent = @event;
                 handler.Control.RaiseEvent(keyEventArgs);
             }
+
+            handled = keyEventArgs.Handled;
         }
 
         //        internal object ContinueProcessingStagingArea(object unused)

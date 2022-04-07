@@ -37,16 +37,24 @@ namespace Alternet::UI
             return Event_Skip;
 
         auto eventType = e.GetEventType();
-        if (eventType == wxEVT_KEY_DOWN)
-        {
-            _owner->GetKeyboard()->OnKeyDown((wxKeyEvent&)e);
-            return Event_Skip;
-        }
+        //if (eventType == wxEVT_KEY_DOWN)
+        //{
+        //    _owner->GetKeyboard()->OnKeyDown((wxKeyEvent&)e);
+        //    return Event_Skip;
+        //}
 
         if (eventType == wxEVT_KEY_UP)
         {
-            _owner->GetKeyboard()->OnKeyUp((wxKeyEvent&)e);
-            return Event_Skip;
+            bool handled = false;
+            _owner->GetKeyboard()->OnKeyUp((wxKeyEvent&)e, handled);
+            return handled ? Event_Processed : Event_Skip;
+        }
+
+        if (eventType == wxEVT_CHAR_HOOK)
+        {
+            bool handled = false;
+            _owner->GetKeyboard()->OnKeyDown((wxKeyEvent&)e, handled);
+            return handled ? Event_Processed : Event_Skip;
         }
 
         return Event_Skip;

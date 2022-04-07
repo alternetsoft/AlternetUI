@@ -183,7 +183,9 @@ namespace Alternet.UI.Native
             switch (e)
             {
                 case NativeApi.ListViewEvent.SelectionChanged:
-                SelectionChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    SelectionChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected ListViewEvent value: " + e);
             }
         }

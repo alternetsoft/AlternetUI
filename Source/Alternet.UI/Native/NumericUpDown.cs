@@ -91,7 +91,9 @@ namespace Alternet.UI.Native
             switch (e)
             {
                 case NativeApi.NumericUpDownEvent.ValueChanged:
-                ValueChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    ValueChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected NumericUpDownEvent value: " + e);
             }
         }

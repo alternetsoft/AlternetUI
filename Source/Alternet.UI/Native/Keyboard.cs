@@ -52,9 +52,15 @@ namespace Alternet.UI.Native
             switch (e)
             {
                 case NativeApi.KeyboardEvent.KeyDown:
-                KeyDown?.Invoke(this, new NativeEventArgs<KeyEventData>(MarshalEx.PtrToStructure<KeyEventData>(parameter))); return IntPtr.Zero;
+                {
+                    var ea = new NativeEventArgs<KeyEventData>(MarshalEx.PtrToStructure<KeyEventData>(parameter));
+                    KeyDown?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                }
                 case NativeApi.KeyboardEvent.KeyUp:
-                KeyUp?.Invoke(this, new NativeEventArgs<KeyEventData>(MarshalEx.PtrToStructure<KeyEventData>(parameter))); return IntPtr.Zero;
+                {
+                    var ea = new NativeEventArgs<KeyEventData>(MarshalEx.PtrToStructure<KeyEventData>(parameter));
+                    KeyUp?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected KeyboardEvent value: " + e);
             }
         }

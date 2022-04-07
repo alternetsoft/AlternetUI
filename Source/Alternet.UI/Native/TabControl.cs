@@ -89,7 +89,9 @@ namespace Alternet.UI.Native
             switch (e)
             {
                 case NativeApi.TabControlEvent.SelectedPageIndexChanged:
-                SelectedPageIndexChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    SelectedPageIndexChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected TabControlEvent value: " + e);
             }
         }

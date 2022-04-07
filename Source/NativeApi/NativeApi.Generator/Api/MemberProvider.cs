@@ -59,7 +59,7 @@ namespace ApiGenerator.Api
         public static NativeEventAttribute GetEventAttribute(EventInfo e) =>
             e.GetCustomAttribute<NativeEventAttribute>() ?? new NativeEventAttribute();
 
-        public static Type? TryGetNativEventDataType(EventInfo e)
+        public static Type? TryGetNativeEventDataType(EventInfo e)
         {
             Type? dataType = null;
             if (e.EventHandlerType!.GetGenericArguments().Length == 1)

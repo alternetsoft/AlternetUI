@@ -1,4 +1,5 @@
 using System;
+using Alternet.Drawing;
 using Alternet.UI;
 
 namespace InputSample
@@ -15,9 +16,10 @@ namespace InputSample
         protected override void OnKeyDown(KeyEventArgs e)
         {
             UpdateModifierKeys();
-            if (e.Key == Key.F9 && Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
+            if (e.Key == Key.D && Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
             {
-                MessageBox.Show("You have just pressed Ctrl+Shift+F9.", "Key Combination Pressed");
+                e.Handled = true;
+                messageLabel.Background = messageLabel.Background != Brushes.Red ? Brushes.Red : Brushes.Green;
             }
         }
 
@@ -43,6 +45,11 @@ namespace InputSample
             base.Dispose(disposing);
         }
 
+        private void HelloButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Hello!", "Button Clicked");
+        }
+
         private void InputManager_PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
             if (cancelF1KeyInputCheckBox.IsChecked)
@@ -63,7 +70,7 @@ namespace InputSample
             lb.SelectedIndex = lb.Items.Count - 1;
         }
 
-        private void LogKey(KeyEventArgs e, string objectName, string eventName) => LogMessage($"{++messageNumber} {objectName}_{eventName} [{e.Key}], Rep: {e.IsRepeat}");
+        private void LogKey(KeyEventArgs e, string objectName, string eventName) => LogMessage($"{++messageNumber} {objectName}_{eventName} [{e.Key}], Repeat: {e.IsRepeat}");
 
         private void HelloButton_KeyDown(object sender, KeyEventArgs e) => LogKey(e, "HelloButton", "KeyDown");
 

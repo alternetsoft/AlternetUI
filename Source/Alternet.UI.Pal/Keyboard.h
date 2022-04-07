@@ -9,8 +9,8 @@ namespace Alternet::UI
     {
 #include "Api/Keyboard.inc"
     public:
-        void OnKeyDown(wxKeyEvent& e);
-        void OnKeyUp(wxKeyEvent& e);
+        void OnKeyDown(wxKeyEvent& e, bool& handled);
+        void OnKeyUp(wxKeyEvent& e, bool& handled);
 
     private:
         int IsAsciiKey(int value);

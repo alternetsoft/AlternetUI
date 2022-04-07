@@ -76,7 +76,9 @@ namespace Alternet.UI.Native
             switch (e)
             {
                 case NativeApi.TextBoxEvent.TextChanged:
-                TextChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    TextChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected TextBoxEvent value: " + e);
             }
         }

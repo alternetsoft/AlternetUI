@@ -77,12 +77,16 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.WindowEvent.Closing:
                 {
-                    var cea = new CancelEventArgs();
-                    Closing?.Invoke(this, cea);
-                    return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                    {
+                        var cea = new CancelEventArgs();
+                        Closing?.Invoke(this, cea);
+                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                    }
                 }
                 case NativeApi.WindowEvent.SizeChanged:
-                SizeChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                {
+                    SizeChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected WindowEvent value: " + e);
             }
         }

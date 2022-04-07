@@ -333,25 +333,29 @@ using System.Security;");
                     {
                         w.WriteLine($"case NativeApi.{declaringTypeName}Event.{e.Name}:");
 
-                        var dataType = MemberProvider.TryGetNativEventDataType(e);
-                        if (dataType != null)
+                        using (new BlockIndent(w))
                         {
-                            w.WriteLine($"{e.Name}?.Invoke(this, new NativeEventArgs<{dataType.Name}>(MarshalEx.PtrToStructure<{dataType.Name}>(parameter))); return IntPtr.Zero;");
-                        }
-                        else
-                        {
-                            var attribute = MemberProvider.GetEventAttribute(e);
-                            if (attribute.Cancellable)
+                            var dataType = MemberProvider.TryGetNativeEventDataType(e);
+                            if (dataType != null)
                             {
-                                using (new BlockIndent(w))
-                                {
-                                    w.WriteLine($"var cea = new CancelEventArgs();");
-                                    w.WriteLine($"{e.Name}?.Invoke(this, cea);");
-                                    w.WriteLine($"return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;");
-                                }
+                                w.WriteLine($"var ea = new NativeEventArgs<{dataType.Name}>(MarshalEx.PtrToStructure<{dataType.Name}>(parameter));");
+                                w.WriteLine($"{e.Name}?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;");
                             }
                             else
-                                w.WriteLine($"{e.Name}?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;");
+                            {
+                                var attribute = MemberProvider.GetEventAttribute(e);
+                                if (attribute.Cancellable)
+                                {
+                                    using (new BlockIndent(w))
+                                    {
+                                        w.WriteLine($"var cea = new CancelEventArgs();");
+                                        w.WriteLine($"{e.Name}?.Invoke(this, cea);");
+                                        w.WriteLine($"return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;");
+                                    }
+                                }
+                                else
+                                    w.WriteLine($"{e.Name}?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;");
+                            }
                         }
                     }
 
@@ -364,7 +368,7 @@ using System.Security;");
             foreach (var e in events)
             {
                 string? argsType;
-                var dataType = MemberProvider.TryGetNativEventDataType(e);
+                var dataType = MemberProvider.TryGetNativeEventDataType(e);
                 if (dataType != null)
                     argsType = "NativeEventHandler<" + dataType.Name + ">";
                 else
