@@ -45,7 +45,7 @@ namespace Alternet::UI
 
     void Keyboard::OnChar(wxKeyEvent& e, bool& handled)
     {
-        TextInputEventData textInputdata{ e.GetUnicodeKey(), e.GetTimestamp() };
+        TextInputEventData textInputdata{ wcharToChar16(e.GetUnicodeKey()), e.GetTimestamp() };
         handled = RaiseEvent(KeyboardEvent::TextInput, &textInputdata);
     }
 

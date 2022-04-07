@@ -75,6 +75,27 @@ namespace Alternet::UI
 
 #endif
 
+    inline char16_t wcharToChar16(wchar_t value)
+    {
+        char16_t value16;
+        if (sizeof(wchar_t) != sizeof(char16_t))
+        {
+#if !defined(__WXMSW__)
+            std::wstring s(1, value);
+            auto str = make_u16string(s);
+            value16 = str[0];
+#else
+            throw 0;
+#endif
+        }
+        else
+        {
+            value16 = value;
+        }
+
+        return value16;
+    }
+
     inline wxString wxStr(const string& value)
     {
 #if defined(__WXMSW__)
