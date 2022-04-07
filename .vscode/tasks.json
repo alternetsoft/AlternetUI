@@ -94,6 +94,34 @@
             "problemMatcher": []
         },
         {
+            "label": "Input: Build",
+            "type": "shell",
+            "command": "${workspaceFolder}/Source/Samples/InputSample/build/Build.sh",
+            "options": {
+                "cwd": "${workspaceFolder}/Source/Samples/InputSample/build/"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Input: Run",
+            "type": "shell",
+            "command": "${workspaceFolder}/Source/Samples/InputSample/build/BuildAndRun.sh",
+            "options": {
+                "cwd": "${workspaceFolder}/Source/Samples/InputSample/build/"
+            },
+            "presentation": {
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Layout: Build",
             "type": "shell",
             "command": "${workspaceFolder}/Source/Samples/LayoutSample/build/Build.sh",

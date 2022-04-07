@@ -138,8 +138,13 @@ namespace Alternet.UI
             return inputManager;
         }
 
-        private InputManager()
+        private void CheckSTARequirement()
         {
+#if NETCOREAPP
+            if (!System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(System.Runtime.InteropServices.OSPlatform.Windows))
+                return;
+#endif
+
             // STA Requirement
             //
             // Avalon doesn't necessarily require STA, but many components do.  Examples
@@ -149,6 +154,11 @@ namespace Alternet.UI
             {
                 throw new InvalidOperationException(SR.Get(SRID.RequiresSTA));
             }
+        }
+
+        private InputManager()
+        {
+            CheckSTARequirement();
 
             //            _stagingArea = new Stack();
 

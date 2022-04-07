@@ -553,10 +553,10 @@ namespace Alternet::UI
             return Key::Windows;
         case WXK_WINDOWS_MENU:
             return Key::Menu;
-            // case WXK_RAW_CONTROL: same as WXK_CONTROL
-                //return Key::None;
-            // case WXK_COMMAND: same as WXK_CONTROL
-                //return Key::None;
+#ifdef __WXOSX__
+        case WXK_RAW_CONTROL:
+            return Key::Alt;
+#endif
         case WXK_SPECIAL1:
         case WXK_SPECIAL2:
         case WXK_SPECIAL3:

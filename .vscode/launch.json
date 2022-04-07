@@ -135,5 +135,34 @@
             },
             "args": ["${workspaceFolder}/Source/Samples/LayoutSample/bin/Debug/netcoreapp3.1/LayoutSample.dll"],
         },
+        {
+            "name": "Input: CLR Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "Input: Build",
+            // "logging": {"engineLogging": true},
+            "program": "${workspaceFolder}/Source/Samples/InputSample/bin/Debug/netcoreapp3.1/InputSample.dll",
+            "cwd": "${workspaceFolder}/Source/Samples/InputSample/bin/Debug/netcoreapp3.1/",
+            "args": [],
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "Input: Native Debug",
+            "request": "launch",
+            "internalConsoleOptions": "openOnSessionStart",
+            "preLaunchTask": "Input: Build",
+            "type": "cppdbg",
+            "cwd": "${workspaceFolder}/Source/Samples/InputSample/bin/Debug/netcoreapp3.1",
+            "osx": {
+                "program": "/usr/local/share/dotnet/dotnet"
+                "MIMode": "lldb",
+            },
+            "linux": {
+                "MIMode": "gdb",
+                "program": "/usr/bin/dotnet"
+            },
+            "args": ["${workspaceFolder}/Source/Samples/InputSample/bin/Debug/netcoreapp3.1/InputSample.dll"],
+        },
     ]
 }
