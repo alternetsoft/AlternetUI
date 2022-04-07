@@ -15,6 +15,9 @@ namespace InputSample
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
+            if (!e.IsDown || e.IsUp)
+                throw new InvalidOperationException();
+
             UpdateModifierKeys();
             if (e.Key == Key.D && e.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift))
             {
@@ -25,6 +28,9 @@ namespace InputSample
 
         protected override void OnKeyUp(KeyEventArgs e)
         {
+            if (!e.IsUp || e.IsDown)
+                throw new InvalidOperationException();
+
             UpdateModifierKeys();
         }
 
