@@ -6,7 +6,7 @@ namespace Alternet.UI
     internal static partial class SRID
     {
         private static global::System.Resources.ResourceManager s_resourceManager;
-        internal static global::System.Resources.ResourceManager ResourceManager => s_resourceManager ?? (s_resourceManager = new global::System.Resources.ResourceManager(typeof(SR)));
+        internal static global::System.Resources.ResourceManager ResourceManager => s_resourceManager ?? (s_resourceManager = new global::System.Resources.ResourceManager("Alternet.UI.Resources.Strings", typeof(SR).Assembly));
         internal static global::System.Globalization.CultureInfo Culture { get; set; }
 #if !NET20
         [global::System.Runtime.CompilerServices.MethodImpl(global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]

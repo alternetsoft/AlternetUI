@@ -53,7 +53,7 @@ namespace Alternet.UI
         //{
         //    get 
         //    {
-                
+
         //        return UnsafeInputSource;
         //    }
         //}
@@ -64,7 +64,15 @@ namespace Alternet.UI
         /// </summary>
         public Key Key
         {
-            get {return _key;}
+            get { return _key; }
+        }
+
+        /// <summary>
+        /// Returns the set of modifier keys currently pressed.
+        /// </summary>
+        public ModifierKeys Modifiers
+        {
+            get { return KeyboardDevice.Modifiers; }
         }
 
         ///// <summary>
