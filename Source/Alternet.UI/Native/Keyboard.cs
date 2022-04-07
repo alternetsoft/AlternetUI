@@ -61,12 +61,18 @@ namespace Alternet.UI.Native
                     var ea = new NativeEventArgs<KeyEventData>(MarshalEx.PtrToStructure<KeyEventData>(parameter));
                     KeyUp?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
                 }
+                case NativeApi.KeyboardEvent.TextInput:
+                {
+                    var ea = new NativeEventArgs<TextInputEventData>(MarshalEx.PtrToStructure<TextInputEventData>(parameter));
+                    TextInput?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected KeyboardEvent value: " + e);
             }
         }
         
         public event NativeEventHandler<KeyEventData>? KeyDown;
         public event NativeEventHandler<KeyEventData>? KeyUp;
+        public event NativeEventHandler<TextInputEventData>? TextInput;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -80,6 +86,7 @@ namespace Alternet.UI.Native
             {
                 KeyDown,
                 KeyUp,
+                TextInput,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]

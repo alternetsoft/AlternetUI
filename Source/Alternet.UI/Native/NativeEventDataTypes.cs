@@ -4,6 +4,13 @@ using System.Runtime.InteropServices;
 namespace Alternet.UI.Native
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class TextInputEventData
+    {
+        public char keyChar;
+        public long timestamp;
+    }
+    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class KeyEventData
     {
         public Key key;

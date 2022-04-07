@@ -43,6 +43,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        ///     PreviewTextInput
+        /// </summary>
+        public static readonly RoutedEvent PreviewTextInputEvent = EventManager.RegisterRoutedEvent("PreviewTextInput", RoutingStrategy.Tunnel, typeof(TextInputEventHandler), typeof(Keyboard));
+
+        /// <summary>
+        ///     Adds a handler for the PreviewTextInput attached event
+        /// </summary>
+        /// <param name="element">UIElement or ContentElement that listens to this event</param>
+        /// <param name="handler">Event Handler to be added</param>
+        public static void AddPreviewTextInputHandler(DependencyObject element, TextInputEventHandler handler)
+        {
+            UIElement.AddHandler(element, PreviewTextInputEvent, handler);
+        }
+
+        /// <summary>
+        ///     Removes a handler for the PreviewTextInput attached event
+        /// </summary>
+        /// <param name="element">UIElement or ContentElement that listens to this event</param>
+        /// <param name="handler">Event Handler to be removed</param>
+        public static void RemovePreviewTextInputHandler(DependencyObject element, TextInputEventHandler handler)
+        {
+            UIElement.RemoveHandler(element, PreviewTextInputEvent, handler);
+        }
+
+        /// <summary>
         ///     KeyDown
         /// </summary>
         public static readonly RoutedEvent KeyDownEvent = EventManager.RegisterRoutedEvent("KeyDown", RoutingStrategy.Bubble, typeof(KeyEventHandler), typeof(Keyboard));
@@ -65,6 +90,31 @@ namespace Alternet.UI
         public static void RemoveKeyDownHandler(DependencyObject element, KeyEventHandler handler)
         {
             UIElement.RemoveHandler(element, KeyDownEvent, handler);
+        }
+
+        /// <summary>
+        ///     TextInput
+        /// </summary>
+        public static readonly RoutedEvent TextInputEvent = EventManager.RegisterRoutedEvent("TextInput", RoutingStrategy.Bubble, typeof(TextInputEventHandler), typeof(Keyboard));
+
+        /// <summary>
+        ///     Adds a handler for the TextInput attached event
+        /// </summary>
+        /// <param name="element">UIElement or ContentElement that listens to this event</param>
+        /// <param name="handler">Event Handler to be added</param>
+        public static void AddTextInputHandler(DependencyObject element, TextInputEventHandler handler)
+        {
+            UIElement.AddHandler(element, TextInputEvent, handler);
+        }
+
+        /// <summary>
+        ///     Removes a handler for the TextInput attached event
+        /// </summary>
+        /// <param name="element">UIElement or ContentElement that listens to this event</param>
+        /// <param name="handler">Event Handler to be removed</param>
+        public static void RemoveTextInputHandler(DependencyObject element, TextInputEventHandler handler)
+        {
+            UIElement.RemoveHandler(element, TextInputEvent, handler);
         }
 
         /// <summary>

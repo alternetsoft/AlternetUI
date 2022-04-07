@@ -629,20 +629,24 @@ namespace Alternet.UI
 
         internal void ReportKeyDown(long timestamp, Key key, bool isRepeat, out bool handled)
         {
-            ReportKeyEvent(UIElement.PreviewKeyDownEvent, UIElement.KeyDownEvent, timestamp, key, isRepeat, out handled);
+            ReportKeyEvent(UIElement.PreviewKeyDownEvent, UIElement.KeyDownEvent, new KeyEventArgs(Keyboard.PrimaryDevice, timestamp, key, isRepeat), out handled);
         }
 
         internal void ReportKeyUp(long timestamp, Key key, bool isRepeat, out bool handled)
         {
-            ReportKeyEvent(UIElement.PreviewKeyUpEvent, UIElement.KeyUpEvent, timestamp, key, isRepeat, out handled);
+            ReportKeyEvent(UIElement.PreviewKeyUpEvent, UIElement.KeyUpEvent, new KeyEventArgs(Keyboard.PrimaryDevice, timestamp, key, isRepeat), out handled);
         }
 
-        internal void ReportKeyEvent(RoutedEvent previewEvent, RoutedEvent @event, long timestamp, Key key, bool isRepeat, out bool handled)
+        internal void ReportTextInput(long timestamp, char keyChar, out bool handled)
+        {
+            ReportKeyEvent(UIElement.PreviewTextInputEvent, UIElement.TextInputEvent, new TextInputEventArgs(Keyboard.PrimaryDevice, timestamp, keyChar), out handled);
+        }
+
+        internal void ReportKeyEvent(RoutedEvent previewEvent, RoutedEvent @event, InputEventArgs eventArgs, out bool handled)
         {
             handled = false;
-            var keyEventArgs = new KeyEventArgs(Keyboard.PrimaryDevice, timestamp, key, isRepeat);
 
-            InvokePreProcessInput(keyEventArgs, out var isCancelled);
+            InvokePreProcessInput(eventArgs, out var isCancelled);
             if (isCancelled)
                 return;
 
@@ -654,15 +658,15 @@ namespace Alternet.UI
             if (handler == null)
                 return;
 
-            keyEventArgs.RoutedEvent = previewEvent;
-            handler.Control.RaiseEvent(keyEventArgs);
-            if (!keyEventArgs.Handled)
+            eventArgs.RoutedEvent = previewEvent;
+            handler.Control.RaiseEvent(eventArgs);
+            if (!eventArgs.Handled)
             {
-                keyEventArgs.RoutedEvent = @event;
-                handler.Control.RaiseEvent(keyEventArgs);
+                eventArgs.RoutedEvent = @event;
+                handler.Control.RaiseEvent(eventArgs);
             }
 
-            handled = keyEventArgs.Handled;
+            handled = eventArgs.Handled;
         }
 
         //        internal object ContinueProcessingStagingArea(object unused)

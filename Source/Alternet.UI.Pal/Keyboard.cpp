@@ -43,10 +43,16 @@ namespace Alternet::UI
         return KeyStates::None;
     }
 
+    void Keyboard::OnChar(wxKeyEvent& e, bool& handled)
+    {
+        TextInputEventData textInputdata{ e.GetUnicodeKey(), e.GetTimestamp() };
+        handled = RaiseEvent(KeyboardEvent::TextInput, &textInputdata);
+    }
+
     void Keyboard::OnKeyDown(wxKeyEvent& e, bool& handled)
     {
-        KeyEventData data{ WxKeyToKey(e.GetKeyCode()), e.GetTimestamp(), e.IsAutoRepeat() };
-        handled = RaiseEvent(KeyboardEvent::KeyDown, &data);
+        KeyEventData keyData{ WxKeyToKey(e.GetKeyCode()), e.GetTimestamp(), e.IsAutoRepeat() };
+        handled = RaiseEvent(KeyboardEvent::KeyDown, &keyData);
     }
 
     void Keyboard::OnKeyUp(wxKeyEvent& e, bool& handled)

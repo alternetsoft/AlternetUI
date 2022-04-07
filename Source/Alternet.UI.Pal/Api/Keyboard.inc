@@ -6,6 +6,7 @@ enum class KeyboardEvent
 {
     KeyDown,
     KeyUp,
+    TextInput,
 };
 typedef void* (*KeyboardEventCallbackType)(Keyboard* obj, KeyboardEvent event, void* param);
 static void SetEventCallback(KeyboardEventCallbackType value) { eventCallback = value; }

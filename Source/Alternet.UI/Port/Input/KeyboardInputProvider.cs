@@ -10,17 +10,24 @@ namespace Alternet.UI
         public KeyboardInputProvider(Native.Keyboard nativeKeyboard)
         {
             this.nativeKeyboard = nativeKeyboard;
-            nativeKeyboard.KeyDown += NativeApplication_KeyDown;
-            nativeKeyboard.KeyUp += NativeApplication_KeyUp;
+            nativeKeyboard.KeyDown += NativeKeyboard_KeyDown;
+            nativeKeyboard.KeyUp += NativeKeyboard_KeyUp;
+            nativeKeyboard.TextInput += NativeKeyboard_TextInput;
         }
 
-        private void NativeApplication_KeyDown(object? sender, Native.NativeEventArgs<Native.KeyEventData> e)
+        private void NativeKeyboard_TextInput(object? sender, Native.NativeEventArgs<Native.TextInputEventData> e)
+        {
+            InputManager.Current.ReportTextInput(e.Data.timestamp, e.Data.keyChar, out var handled);
+            e.Handled = handled;
+        }
+
+        private void NativeKeyboard_KeyDown(object? sender, Native.NativeEventArgs<Native.KeyEventData> e)
         {
             InputManager.Current.ReportKeyDown(e.Data.timestamp, (Key)e.Data.key, e.Data.isRepeat, out var handled);
             e.Handled = handled;
         }
 
-        private void NativeApplication_KeyUp(object? sender, Native.NativeEventArgs<Native.KeyEventData> e)
+        private void NativeKeyboard_KeyUp(object? sender, Native.NativeEventArgs<Native.KeyEventData> e)
         {
             InputManager.Current.ReportKeyUp(e.Data.timestamp, (Key)e.Data.key, e.Data.isRepeat, out var handled);
             e.Handled = handled;
@@ -32,8 +39,9 @@ namespace Alternet.UI
             {
                 if (disposing)
                 {
-                    nativeKeyboard.KeyDown -= NativeApplication_KeyDown;
-                    nativeKeyboard.KeyUp -= NativeApplication_KeyUp;
+                    nativeKeyboard.KeyDown -= NativeKeyboard_KeyDown;
+                    nativeKeyboard.KeyUp -= NativeKeyboard_KeyUp;
+                    nativeKeyboard.TextInput -= NativeKeyboard_TextInput;
                 }
 
                 isDisposed = true;

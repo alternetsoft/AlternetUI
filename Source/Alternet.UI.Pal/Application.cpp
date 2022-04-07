@@ -57,6 +57,13 @@ namespace Alternet::UI
             return handled ? Event_Processed : Event_Skip;
         }
 
+        if (eventType == wxEVT_CHAR)
+        {
+            bool handled = false;
+            _owner->GetKeyboard()->OnChar((wxKeyEvent&)e, handled);
+            return handled ? Event_Processed : Event_Skip;
+        }
+
         return Event_Skip;
     }
 

@@ -70,7 +70,10 @@ namespace InputSample
             lb.SelectedIndex = lb.Items.Count - 1;
         }
 
+        private void Window_TextInput(object sender, TextInputEventArgs e) => LogTextInput(e, "Window", "TextInput");
+
         private void LogKey(KeyEventArgs e, string objectName, string eventName) => LogMessage($"{++messageNumber} {objectName}_{eventName} [{e.Key}], Repeat: {e.IsRepeat}");
+        private void LogTextInput(TextInputEventArgs e, string objectName, string eventName) => LogMessage($"{++messageNumber} {objectName}_{eventName} '{e.KeyChar}'");
 
         private void HelloButton_KeyDown(object sender, KeyEventArgs e) => LogKey(e, "HelloButton", "KeyDown");
 

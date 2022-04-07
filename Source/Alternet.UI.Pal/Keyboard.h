@@ -11,6 +11,7 @@ namespace Alternet::UI
     public:
         void OnKeyDown(wxKeyEvent& e, bool& handled);
         void OnKeyUp(wxKeyEvent& e, bool& handled);
+        void OnChar(wxKeyEvent& e, bool& handled);
 
     private:
         int IsAsciiKey(int value);

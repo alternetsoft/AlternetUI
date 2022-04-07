@@ -4,9 +4,10 @@ using System;
 
 namespace NativeApi.Api
 {
-    public class TextInputEventData : NativeEventData
+    public class KeyEventData : NativeEventData
     {
-        public char keyChar;
+        public Key key;
         public long timestamp;
+        public bool isRepeat;
     }
 }

@@ -43,6 +43,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        ///     Alias to the Keyboard.PreviewTextInputEvent.
+        /// </summary>
+        public static readonly RoutedEvent PreviewTextInputEvent = Keyboard.PreviewTextInputEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting a key was pressed
+        /// </summary>
+        public event TextInputEventHandler PreviewTextInput
+        {
+            add { AddHandler(Keyboard.PreviewTextInputEvent, value, false); }
+            remove { RemoveHandler(Keyboard.PreviewTextInputEvent, value); }
+        }
+
+        /// <summary>
+        ///     Alias to the Keyboard.TextInputEvent.
+        /// </summary>
+        public static readonly RoutedEvent TextInputEvent = Keyboard.TextInputEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting a key was pressed
+        /// </summary>
+        public event TextInputEventHandler TextInput
+        {
+            add { AddHandler(Keyboard.TextInputEvent, value, false); }
+            remove { RemoveHandler(Keyboard.TextInputEvent, value); }
+        }
+
+        /// <summary>
         ///     Alias to the Keyboard.PreviewKeyUpEvent.
         /// </summary>
         public static readonly RoutedEvent PreviewKeyUpEvent = Keyboard.PreviewKeyUpEvent.AddOwner(typeof(UIElement));
@@ -81,6 +109,16 @@ namespace Alternet.UI
         protected virtual void OnPreviewKeyDown(KeyEventArgs e) { }
 
         /// <summary>
+        ///     Virtual method reporting a key was pressed
+        /// </summary>
+        protected virtual void OnTextInput(TextInputEventArgs e) { }
+
+        /// <summary>
+        ///     Virtual method reporting a key was pressed
+        /// </summary>
+        protected virtual void OnPreviewTextInput(TextInputEventArgs e) { }
+
+        /// <summary>
         ///     Virtual method reporting a key was released
         /// </summary>
         protected virtual void OnPreviewKeyUp(KeyEventArgs e) { }
@@ -104,6 +142,21 @@ namespace Alternet.UI
             {
                 if (sender is UIElement uie)
                     uie.OnKeyDown(e);
+            }
+        }
+
+        private static void OnPreviewTextInputThunk(object sender, TextInputEventArgs e)
+        {
+            if (sender is UIElement uie)
+                uie.OnPreviewTextInput(e);
+        }
+
+        private static void OnTextInputThunk(object sender, TextInputEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                if (sender is UIElement uie)
+                    uie.OnTextInput(e);
             }
         }
 
@@ -164,6 +217,8 @@ namespace Alternet.UI
             //EventManager.RegisterClassHandler(type, Stylus.StylusButtonUpEvent, new StylusButtonEventHandler(UIElement.OnStylusButtonUpThunk), false);
             //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusButtonDownEvent, new StylusButtonEventHandler(UIElement.OnPreviewStylusButtonDownThunk), false);
             //EventManager.RegisterClassHandler(type, Stylus.PreviewStylusButtonUpEvent, new StylusButtonEventHandler(UIElement.OnPreviewStylusButtonUpThunk), false);
+            EventManager.RegisterClassHandler(type, Keyboard.PreviewTextInputEvent, new TextInputEventHandler(UIElement.OnPreviewTextInputThunk), false);
+            EventManager.RegisterClassHandler(type, Keyboard.TextInputEvent, new TextInputEventHandler(UIElement.OnTextInputThunk), false);
             EventManager.RegisterClassHandler(type, Keyboard.PreviewKeyDownEvent, new KeyEventHandler(UIElement.OnPreviewKeyDownThunk), false);
             EventManager.RegisterClassHandler(type, Keyboard.KeyDownEvent, new KeyEventHandler(UIElement.OnKeyDownThunk), false);
             EventManager.RegisterClassHandler(type, Keyboard.PreviewKeyUpEvent, new KeyEventHandler(UIElement.OnPreviewKeyUpThunk), false);
