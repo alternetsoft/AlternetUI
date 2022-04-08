@@ -39,6 +39,7 @@ namespace InputSample
             controlPressedCheckBox.IsChecked = (Keyboard.Modifiers & ModifierKeys.Control) != 0;
             shiftPressedCheckBox.IsChecked = (Keyboard.Modifiers & ModifierKeys.Shift) != 0;
             altPressedCheckBox.IsChecked = (Keyboard.Modifiers & ModifierKeys.Alt) != 0;
+            windowsPressedCheckBox.IsChecked = (Keyboard.Modifiers & ModifierKeys.Windows) != 0;
         }
 
         protected override void Dispose(bool disposing)

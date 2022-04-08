@@ -208,7 +208,11 @@ namespace Alternet::UI
         if (value == Key::Menu)
             return { WXK_WINDOWS_MENU, WXK_MENU };
         if (value == Key::Windows)
+#ifdef __WXOSX__
+            return { WXK_WINDOWS_LEFT, WXK_WINDOWS_RIGHT, WXK_RAW_CONTROL };
+#else
             return { WXK_WINDOWS_LEFT, WXK_WINDOWS_RIGHT };
+#endif
 
         wxASSERT(false);
         throw 0;
@@ -385,6 +389,10 @@ namespace Alternet::UI
             return Key::Alt;
         case WXK_CONTROL:
             return Key::Control;
+        case WXK_WINDOWS_LEFT:
+            return Key::Windows;
+        case WXK_WINDOWS_RIGHT:
+            return Key::Windows;
         case WXK_MENU:
             return Key::Menu;
         case WXK_PAUSE:
@@ -553,15 +561,11 @@ namespace Alternet::UI
             return Key::NumPadDot;
         case WXK_NUMPAD_DIVIDE:
             return Key::NumPadSlash;
-        case WXK_WINDOWS_LEFT:
-            return Key::Windows;
-        case WXK_WINDOWS_RIGHT:
-            return Key::Windows;
         case WXK_WINDOWS_MENU:
             return Key::Menu;
 #ifdef __WXOSX__
         case WXK_RAW_CONTROL:
-            return Key::Alt;
+            return Key::Windows;
 #endif
         case WXK_SPECIAL1:
         case WXK_SPECIAL2:
