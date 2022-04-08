@@ -225,35 +225,36 @@ namespace Alternet.UI
         // and new FocusedElement elements
         private static void OnFocusedElementChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            IInputElement newFocusedElement = (IInputElement)e.NewValue;
-            DependencyObject oldVisual = (DependencyObject)e.OldValue;
-            DependencyObject newVisual = (DependencyObject)e.NewValue;
+            throw new Exception();
+            //IInputElement newFocusedElement = (IInputElement)e.NewValue;
+            //DependencyObject oldVisual = (DependencyObject)e.OldValue;
+            //DependencyObject newVisual = (DependencyObject)e.NewValue;
 
-            if (oldVisual != null)
-            {
-                oldVisual.ClearValue(UIElement.IsFocusedPropertyKey);
-            }
+            //if (oldVisual != null)
+            //{
+            //    oldVisual.ClearValue(UIElement.IsFocusedPropertyKey);
+            //}
 
-            if (newVisual != null)
-            {
-                // set IsFocused on the element.  The element may redirect Keyboard focus
-                // in response to this (e.g. Editable ComboBox redirects to the
-                // child TextBox), so detect whether this happens.
-                DependencyObject oldFocus = Keyboard.FocusedElement as DependencyObject;
-                newVisual.SetValue(UIElement.IsFocusedPropertyKey, BooleanBoxes.TrueBox);
-                DependencyObject newFocus = Keyboard.FocusedElement as DependencyObject;
+            //if (newVisual != null)
+            //{
+            //    // set IsFocused on the element.  The element may redirect Keyboard focus
+            //    // in response to this (e.g. Editable ComboBox redirects to the
+            //    // child TextBox), so detect whether this happens.
+            //    DependencyObject oldFocus = Keyboard.FocusedElement as DependencyObject;
+            //    newVisual.SetValue(UIElement.IsFocusedPropertyKey, BooleanBoxes.TrueBox);
+            //    DependencyObject newFocus = Keyboard.FocusedElement as DependencyObject;
 
-                // set the Keyboard focus to the new element, provided that
-                //  a) the element didn't already set Keyboard focus
-                //  b) Keyboard focus is not already on the new element
-                //  c) the new element is within the same focus scope as the current
-                //      holder (if any) of Keyboard focus
-                if (oldFocus == newFocus && newVisual != newFocus &&
-                        (newFocus == null || GetRoot(newVisual) == GetRoot(newFocus)))
-                {
-                    Keyboard.Focus(newFocusedElement);
-                }
-            }
+            //    // set the Keyboard focus to the new element, provided that
+            //    //  a) the element didn't already set Keyboard focus
+            //    //  b) Keyboard focus is not already on the new element
+            //    //  c) the new element is within the same focus scope as the current
+            //    //      holder (if any) of Keyboard focus
+            //    if (oldFocus == newFocus && newVisual != newFocus &&
+            //            (newFocus == null || GetRoot(newVisual) == GetRoot(newFocus)))
+            //    {
+            //        Keyboard.Focus(newFocusedElement);
+            //    }
+            //}
 
 /*
             if (!_currentlyUpdatingTree)

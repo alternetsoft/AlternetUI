@@ -9,8 +9,14 @@ using System.Security;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// This class is used in the <see cref="UIElement.TextInput"/> event as EventArgs.
+    /// </summary>
     public class TextInputEventArgs : KeyboardEventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextInputEventArgs"/> class.
+        /// </summary>
         public TextInputEventArgs(KeyboardDevice keyboard, /*PresentationSource inputSource,*/ long timestamp, char keyChar) : base(keyboard, timestamp)
         {
             //if (inputSource == null)

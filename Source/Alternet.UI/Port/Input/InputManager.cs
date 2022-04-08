@@ -313,14 +313,14 @@ namespace Alternet.UI
             get { return _primaryKeyboardDevice; }
         }
 
-        /// <summary>
-        ///     Read-only access to the primary mouse device.
-        /// </summary>
-        public MouseDevice PrimaryMouseDevice
-        {
-            // 
-            get { return _primaryMouseDevice; }
-        }
+        ///// <summary>
+        /////     Read-only access to the primary mouse device.
+        ///// </summary>
+        //public MouseDevice PrimaryMouseDevice
+        //{
+        //    // 
+        //    get { return _primaryMouseDevice; }
+        //}
 
         //        /// <summary>
         //        /// This property exists only due to the use of the private reflection hack as
@@ -581,19 +581,19 @@ namespace Alternet.UI
         //            return handled;
         //        }
 
-        internal StagingAreaInputItem PushInput(StagingAreaInputItem inputItem)
-        {
-            _stagingArea.Push(inputItem);
-            return inputItem;
-        }
+        //internal StagingAreaInputItem PushInput(StagingAreaInputItem inputItem)
+        //{
+        //    _stagingArea.Push(inputItem);
+        //    return inputItem;
+        //}
 
-        internal StagingAreaInputItem PushInput(InputEventArgs input, StagingAreaInputItem promote)
-        {
-            StagingAreaInputItem item = new StagingAreaInputItem(false);
-            item.Reset(input, promote);
+        //internal StagingAreaInputItem PushInput(InputEventArgs input, StagingAreaInputItem promote)
+        //{
+        //    StagingAreaInputItem item = new StagingAreaInputItem(false);
+        //    item.Reset(input, promote);
 
-            return PushInput(item);
-        }
+        //    return PushInput(item);
+        //}
 
         //        internal StagingAreaInputItem PushMarker()
         //        {
@@ -602,30 +602,30 @@ namespace Alternet.UI
         //            return PushInput(item);
         //        }
 
-        internal StagingAreaInputItem PopInput()
-        {
-            object input = null;
+        //internal StagingAreaInputItem PopInput()
+        //{
+        //    object input = null;
 
-            if (_stagingArea.Count > 0)
-            {
-                input = _stagingArea.Pop();
-            }
+        //    if (_stagingArea.Count > 0)
+        //    {
+        //        input = _stagingArea.Pop();
+        //    }
 
-            return input as StagingAreaInputItem;
-        }
+        //    return input as StagingAreaInputItem;
+        //}
 
 
-        internal StagingAreaInputItem PeekInput()
-        {
-            object input = null;
+        //internal StagingAreaInputItem PeekInput()
+        //{
+        //    object input = null;
 
-            if (_stagingArea.Count > 0)
-            {
-                input = _stagingArea.Peek();
-            }
+        //    if (_stagingArea.Count > 0)
+        //    {
+        //        input = _stagingArea.Peek();
+        //    }
 
-            return input as StagingAreaInputItem;
-        }
+        //    return input as StagingAreaInputItem;
+        //}
 
         internal void ReportKeyDown(long timestamp, Key key, bool isRepeat, out bool handled)
         {
@@ -1035,7 +1035,7 @@ namespace Alternet.UI
         //        private Hashtable _inputProviders = new Hashtable();
 
         private KeyboardDevice _primaryKeyboardDevice;
-        private MouseDevice    _primaryMouseDevice;
+        //private MouseDevice    _primaryMouseDevice;
         //        private CommandDevice  _primaryCommandDevice;
 
         //        private bool            _inDragDrop;
@@ -1044,7 +1044,7 @@ namespace Alternet.UI
         //        private DispatcherOperation _hitTestInvalidatedAsyncOperation;
         //        private EventHandler _layoutUpdatedCallback;
 
-        private Stack _stagingArea;
+        //private Stack _stagingArea;
 
         //        private InputDevice _mostRecentInputDevice;
 

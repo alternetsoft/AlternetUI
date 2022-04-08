@@ -39,6 +39,9 @@ namespace Alternet.UI
             _canceled = true;
         }
 
+        /// <summary>
+        /// The input event args to preprocess.
+        /// </summary>
         public InputEventArgs Input { get; }
 
         /// <summary>

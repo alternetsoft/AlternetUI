@@ -317,16 +317,16 @@ namespace Alternet.UI
             UIElement.RemoveHandler(element, LostKeyboardFocusEvent, handler);
         }
 
-        /// <summary>
-        ///     Returns the element that the keyboard is focused on.
-        /// </summary>
-        public static IInputElement FocusedElement
-        {
-            get
-            {
-                return Keyboard.PrimaryDevice.FocusedElement;
-            }
-        }
+        ///// <summary>
+        /////     Returns the element that the keyboard is focused on.
+        ///// </summary>
+        //public static IInputElement FocusedElement
+        //{
+        //    get
+        //    {
+        //        return Keyboard.PrimaryDevice.FocusedElement;
+        //    }
+        //}
 
         /// <summary>
         ///     Clears focus.
@@ -347,21 +347,21 @@ namespace Alternet.UI
             return Keyboard.PrimaryDevice.Focus(element);
         }
 
-        /// <summary>
-        ///     The default mode for restoring focus.
-        /// </summary>
-        public static RestoreFocusMode DefaultRestoreFocusMode
-        {
-            get
-            {
-                return Keyboard.PrimaryDevice.DefaultRestoreFocusMode;
-            }
+        ///// <summary>
+        /////     The default mode for restoring focus.
+        ///// </summary>
+        //public static RestoreFocusMode DefaultRestoreFocusMode
+        //{
+        //    get
+        //    {
+        //        return Keyboard.PrimaryDevice.DefaultRestoreFocusMode;
+        //    }
             
-            set
-            {
-                Keyboard.PrimaryDevice.DefaultRestoreFocusMode = value;
-            }
-        }
+        //    set
+        //    {
+        //        Keyboard.PrimaryDevice.DefaultRestoreFocusMode = value;
+        //    }
+        //}
 
         /// <summary>
         ///     The set of modifier keys currently pressed.

@@ -18,6 +18,9 @@ namespace Alternet.UI
     /// </summary>
     public abstract class KeyboardDevice : InputDevice
     {
+        /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
         protected KeyboardDevice(InputManager inputManager)
         {
         //            _inputManager = new SecurityCriticalDataClass<InputManager>(inputManager);
@@ -50,32 +53,32 @@ namespace Alternet.UI
         /// </returns>
         protected abstract KeyStates GetKeyStatesFromSystem(Key key);
 
-        /// <summary>
-        ///     Returns the element that input from this device is sent to.
-        /// </summary>
-        public override IInputElement Target
-        {
-            get
-            {
-                //VerifyAccess();
-                if (null != ForceTarget)
-                    return ForceTarget;
+        ///// <summary>
+        /////     Returns the element that input from this device is sent to.
+        ///// </summary>
+        //public override IInputElement Target
+        //{
+        //    get
+        //    {
+        //        //VerifyAccess();
+        //        if (null != ForceTarget)
+        //            return ForceTarget;
 
-                return FocusedElement;
-            }
-        }
+        //        return FocusedElement;
+        //    }
+        //}
 
-        internal IInputElement ForceTarget
-        {
-            get
-            {
-                return (IInputElement)_forceTarget;
-            }
-            set
-            {
-                _forceTarget = value as DependencyObject;
-            }
-        }
+        //internal IInputElement ForceTarget
+        //{
+        //    get
+        //    {
+        //        return (IInputElement)_forceTarget;
+        //    }
+        //    set
+        //    {
+        //        _forceTarget = value as DependencyObject;
+        //    }
+        //}
 
         //        /// <summary>
         //        ///     Returns the PresentationSource that is reporting input for this device.
@@ -95,22 +98,22 @@ namespace Alternet.UI
         //            }
         //        }
 
-        /// <summary>
-        ///     The default mode for restoring focus.
-        /// </summary>
-        public RestoreFocusMode DefaultRestoreFocusMode { get; set; }
+        ///// <summary>
+        /////     The default mode for restoring focus.
+        ///// </summary>
+        //public RestoreFocusMode DefaultRestoreFocusMode { get; set; }
 
-        /// <summary>
-        ///     Returns the element that the keyboard is focused on.
-        /// </summary>
-        public IInputElement FocusedElement
-        {
-            get
-            {
-                //                 VerifyAccess();
-                return (IInputElement)_focus;
-            }
-        }
+        ///// <summary>
+        /////     Returns the element that the keyboard is focused on.
+        ///// </summary>
+        //public IInputElement FocusedElement
+        //{
+        //    get
+        //    {
+        //        //                 VerifyAccess();
+        //        return (IInputElement)_focus;
+        //    }
+        //}
 
         /// <summary>
         ///     Clears focus.
@@ -1113,9 +1116,9 @@ namespace Alternet.UI
         //        private SecurityCriticalDataClass<InputManager> _inputManager;
         //        private SecurityCriticalDataClass<PresentationSource> _activeSource;
 
-        private DependencyObject _focus;
+        //private DependencyObject _focus;
         //        private DeferredElementTreeState _focusTreeState;
-        private DependencyObject _forceTarget;
+        //private DependencyObject _forceTarget;
         //        private DependencyObject _focusRootVisual;
         //        private Key _previousKey;
 

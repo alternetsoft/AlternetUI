@@ -23,10 +23,10 @@ namespace Alternet.UI
             // But perhaps HID devices can create these too? 
         }
 
-        /// <summary>
-        ///     Returns the element that input from this device is sent to.
-        /// </summary>
-        public abstract IInputElement Target{get;}
+        ///// <summary>
+        /////     Returns the element that input from this device is sent to.
+        ///// </summary>
+        //public abstract IInputElement Target{get;}
 
         ///// <summary>
         /////     Returns the PresentationSource that is reporting input for this device.
