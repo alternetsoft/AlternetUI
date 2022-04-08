@@ -15,6 +15,9 @@ namespace InputSample
 #if NETCOREAPP
             runningUnderMacOS = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
                 System.Runtime.InteropServices.OSPlatform.OSX);
+
+            if (runningUnderMacOS)
+                messageLabel.Text = messageLabel.Text.Replace("Ctrl", "Cmd");
 #endif
 
             macKeysPanel.Visible = runningUnderMacOS;

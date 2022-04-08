@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="InputSample.MainWindow"
 		Width="500" Height="600"
-        Title="My First Application" PreviewKeyDown="Window_PreviewKeyDown" PreviewKeyUp="Window_PreviewKeyUp" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"
+        Title="Input Sample" PreviewKeyDown="Window_PreviewKeyDown" PreviewKeyUp="Window_PreviewKeyUp" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp"
 		TextInput="Window_TextInput">
 	<StackPanel Orientation="Vertical" KeyDown="StackPanel_KeyDown" KeyUp="StackPanel_KeyUp" PreviewKeyDown="StackPanel_PreviewKeyDown" PreviewKeyUp="StackPanel_PreviewKeyUp" Padding="5">
 		<Button Name="helloButton" Text="Say Hello" Margin="10" Click="HelloButton_Click"
