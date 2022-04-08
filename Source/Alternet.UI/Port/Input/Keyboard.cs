@@ -375,6 +375,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        ///     The set of raw modifier keys currently pressed.
+        /// </summary>
+        public static RawModifierKeys RawModifiers
+        {
+            get
+            {
+                return Keyboard.PrimaryDevice.RawModifiers;
+            }
+        }
+
+        /// <summary>
         ///     Returns whether or not the specified key is down.
         /// </summary>
         public static bool IsKeyDown(Key key)

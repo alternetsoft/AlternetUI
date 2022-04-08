@@ -6,9 +6,18 @@ namespace InputSample
 {
     public partial class MainWindow : Window
     {
+        bool runningUnderMacOS;
+
         public MainWindow()
         {
             InitializeComponent();
+
+#if NETCOREAPP
+            runningUnderMacOS = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
+                System.Runtime.InteropServices.OSPlatform.OSX);
+#endif
+
+            macKeysPanel.Visible = runningUnderMacOS;
 
             InputManager.Current.PreProcessInput += InputManager_PreProcessInput;
         }
@@ -40,6 +49,13 @@ namespace InputSample
             shiftPressedCheckBox.IsChecked = (Keyboard.Modifiers & ModifierKeys.Shift) != 0;
             altPressedCheckBox.IsChecked = (Keyboard.Modifiers & ModifierKeys.Alt) != 0;
             windowsPressedCheckBox.IsChecked = (Keyboard.Modifiers & ModifierKeys.Windows) != 0;
+
+            if (runningUnderMacOS)
+            {
+                macControlPressedCheckBox.IsChecked = (Keyboard.RawModifiers & RawModifierKeys.MacControl) != 0;
+                macCommandPressedCheckBox.IsChecked = (Keyboard.RawModifiers & RawModifierKeys.MacCommand) != 0;
+                macOptionPressedCheckBox.IsChecked = (Keyboard.RawModifiers & RawModifierKeys.MacOption) != 0;
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -216,19 +216,50 @@ namespace Alternet.UI
                 {
                     modifiers |= ModifierKeys.Windows;
                 }
+
+                return modifiers;
+            }
+        }
+
+        /// <summary>
+        ///     Returns the set of raw modifier keys currently pressed as determined by querying our keyboard state cache
+        /// </summary>
+        public RawModifierKeys RawModifiers
+        {
+            get
+            {
+                //                 VerifyAccess();
+
+                RawModifierKeys modifiers = RawModifierKeys.None;
+                if (IsKeyDown_private(Key.Alt))
+                {
+                    modifiers |= RawModifierKeys.Alt;
+                }
+                if (IsKeyDown_private(Key.Control))
+                {
+                    modifiers |= RawModifierKeys.Control;
+                }
+                if (IsKeyDown_private(Key.Shift))
+                {
+                    modifiers |= RawModifierKeys.Shift;
+                }
+                if (IsKeyDown_private(Key.Windows))
+                {
+                    modifiers |= RawModifierKeys.Windows;
+                }
                 if (IsKeyDown_private(Key.MacCommand))
                 {
-                    modifiers |= ModifierKeys.MacCommand;
+                    modifiers |= RawModifierKeys.MacCommand;
                 }
 
                 if (IsKeyDown_private(Key.MacOption))
                 {
-                    modifiers |= ModifierKeys.MacOption;
+                    modifiers |= RawModifierKeys.MacOption;
                 }
 
                 if (IsKeyDown_private(Key.MacControl))
                 {
-                    modifiers |= ModifierKeys.MacControl;
+                    modifiers |= RawModifierKeys.MacControl;
                 }
 
                 return modifiers;

@@ -12,13 +12,13 @@ using System.ComponentModel;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     The ModifierKeys enumeration describes a set of common keys
-    ///     used to modify other input operations.
+    ///     The RawModifierKeys enumeration describes a set of keys
+    ///     used to modify other input operations, including macOS-specific keys.
     /// </summary>
     [TypeConverter(typeof(ModifierKeysConverter))]
     [ValueSerializer(typeof(ModifierKeysValueSerializer))]
     [Flags]
-    public enum ModifierKeys
+    public enum RawModifierKeys
     {
         /// <summary>
         /// No modifiers are pressed.
@@ -44,6 +44,21 @@ namespace Alternet.UI
         /// The Microsoft "Windows" key on Windows or "Control" key on macOS or "Meta" key on Linux.
         /// </summary>
         Windows = 1 << 3,
+
+        /// <summary>
+        /// The "Command" key on Apple keyboard.
+        /// </summary>
+        MacCommand = 1 << 4,
+
+        /// <summary>
+        /// The "Option" key on Apple keyboard.
+        /// </summary>
+        MacOption = 1 << 5,
+
+        /// <summary>
+        /// The "Control" key on Apple keyboard.
+        /// </summary>
+        MacControl = 1 << 6,
     }
 }
 

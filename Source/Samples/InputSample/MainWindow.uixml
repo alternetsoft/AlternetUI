@@ -23,6 +23,14 @@
 			<CheckBox Text="Alt" Name="altPressedCheckBox" Enabled="false" Margin="5,0,0,0"/>
 			<CheckBox Text="Windows" Name="windowsPressedCheckBox" Enabled="false" Margin="5,0,0,0"/>
 		</StackPanel>
+		
+		<StackPanel Orientation="Horizontal" Margin="5" Name="macKeysPanel" Visible="false">
+			<Label Text="macOS modifier keys:" />
+			<CheckBox Text="Control" Name="macControlPressedCheckBox" Enabled="false" Margin="5,0,0,0"/>
+			<CheckBox Text="Option" Name="macOptionPressedCheckBox" Enabled="false" Margin="5,0,0,0"/>
+			<CheckBox Text="Command" Name="macCommandPressedCheckBox" Enabled="false" Margin="5,0,0,0"/>
+		</StackPanel>
+
 		<ListBox Name="lb" Height="200" />
 	</StackPanel>
 </Window>

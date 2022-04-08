@@ -126,6 +126,13 @@ namespace Alternet::UI
         case Key::Delete: return WXK_DELETE;
         case Key::Clear: return WXK_CLEAR;
         case Key::Shift: return WXK_SHIFT;
+        case Key::MacCommand: return WXK_CONTROL;
+        case Key::MacOption: return WXK_ALT;
+#ifdef __WXOSX__
+        case Key::MacControl: return WXK_RAW_CONTROL;
+#else
+        case Key::MacControl: return WXK_CONTROL;
+#endif
         case Key::Alt: return WXK_ALT;
         case Key::Control: return WXK_CONTROL;
         case Key::Pause: return WXK_PAUSE;
