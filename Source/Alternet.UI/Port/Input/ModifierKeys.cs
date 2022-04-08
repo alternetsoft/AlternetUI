@@ -48,12 +48,17 @@ namespace Alternet.UI
         /// <summary>
         /// The "Command" key on Apple keyboard.
         /// </summary>
-        Command = 1 << 4,
+        MacCommand = 1 << 4,
 
         /// <summary>
         /// The "Option" key on Apple keyboard.
         /// </summary>
-        Option = 1 << 5,
+        MacOption = 1 << 5,
+
+        /// <summary>
+        /// The "Control" key on Apple keyboard.
+        /// </summary>
+        MacControl = 1 << 6,
     }
 }
 

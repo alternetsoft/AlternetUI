@@ -216,14 +216,19 @@ namespace Alternet.UI
                 {
                     modifiers |= ModifierKeys.Windows;
                 }
-                if (IsKeyDown_private(Key.Command))
+                if (IsKeyDown_private(Key.MacCommand))
                 {
-                    modifiers |= ModifierKeys.Command;
+                    modifiers |= ModifierKeys.MacCommand;
                 }
 
-                if (IsKeyDown_private(Key.Option))
+                if (IsKeyDown_private(Key.MacOption))
                 {
-                    modifiers |= ModifierKeys.Option;
+                    modifiers |= ModifierKeys.MacOption;
+                }
+
+                if (IsKeyDown_private(Key.MacControl))
+                {
+                    modifiers |= ModifierKeys.MacControl;
                 }
 
                 return modifiers;

@@ -665,12 +665,17 @@ namespace Alternet.UI
         /// <summary>
         ///  The "Command" key on Apple keyboard.
         /// </summary>
-        Command,
+        MacCommand,
 
         /// <summary>
         /// The "Option" key on Apple keyboard.
         /// </summary>
-        Option,
+        MacOption,
+
+        /// <summary>
+        /// The "Control" key on Apple keyboard.
+        /// </summary>
+        MacControl,
 
         /// <summary>
         /// The Microsoft "Windows Logo" key on Windows or "Command" key on macOS or "Meta" key on Linux.

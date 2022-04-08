@@ -160,10 +160,11 @@ namespace Alternet.UI.Native
         Shift = 126,
         Control = 127,
         Alt = 128,
-        Command = 129,
-        Option = 130,
-        Windows = 131,
-        Menu = 132,
+        MacCommand = 129,
+        MacOption = 130,
+        MacControl = 131,
+        Windows = 132,
+        Menu = 133,
     }
     
     enum KeyStates
