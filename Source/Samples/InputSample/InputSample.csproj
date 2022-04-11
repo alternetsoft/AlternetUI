@@ -27,6 +27,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="KeyboardInputWindow.uixml" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
     </ItemGroup>
 </Project>
