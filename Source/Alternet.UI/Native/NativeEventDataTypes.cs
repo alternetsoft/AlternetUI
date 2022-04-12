@@ -19,6 +19,12 @@ namespace Alternet.UI.Native
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class MouseEventData
+    {
+        public long timestamp;
+    }
+    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class TreeViewItemEventData
     {
         public System.IntPtr item;

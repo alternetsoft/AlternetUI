@@ -4,6 +4,7 @@
 
 #include "Application.h"
 #include "Keyboard.h"
+#include "Mouse.h"
 #include "Window.h"
 #include "ApiUtils.h"
 
@@ -17,6 +18,11 @@ ALTERNET_UI_API Application* Application_Create_()
 ALTERNET_UI_API Keyboard* Application_GetKeyboard_(Application* obj)
 {
     return obj->GetKeyboard();
+}
+
+ALTERNET_UI_API Mouse* Application_GetMouse_(Application* obj)
+{
+    return obj->GetMouse();
 }
 
 ALTERNET_UI_API void Application_Run_(Application* obj, Window* window)

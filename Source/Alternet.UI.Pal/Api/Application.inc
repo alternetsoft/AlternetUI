@@ -3,6 +3,9 @@ public:
 
 Keyboard* GetKeyboard();
 
+
+Mouse* GetMouse();
+
 void Run(Window* window);
 public:
 enum class ApplicationEvent

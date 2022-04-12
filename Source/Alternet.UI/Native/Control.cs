@@ -262,6 +262,23 @@ namespace Alternet.UI.Native
             return NativeObject.GetFromNativePointer<Control>(NativeApi.Control_GetFocusedControl_(), null);
         }
         
+        public static Control? HitTest(Alternet.Drawing.Point screenPoint)
+        {
+            return NativeObject.GetFromNativePointer<Control>(NativeApi.Control_HitTest_(screenPoint), null);
+        }
+        
+        public Alternet.Drawing.Point ClientToScreen(Alternet.Drawing.Point point)
+        {
+            CheckDisposed();
+            return NativeApi.Control_ClientToScreen_(NativePointer, point);
+        }
+        
+        public Alternet.Drawing.Point ScreenToClient(Alternet.Drawing.Point point)
+        {
+            CheckDisposed();
+            return NativeApi.Control_ScreenToClient_(NativePointer, point);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -450,6 +467,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_GetFocusedControl_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Control_HitTest_(NativeApiTypes.Point screenPoint);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Point Control_ClientToScreen_(IntPtr obj, NativeApiTypes.Point point);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Point Control_ScreenToClient_(IntPtr obj, NativeApiTypes.Point point);
             
         }
     }

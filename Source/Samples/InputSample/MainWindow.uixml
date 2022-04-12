@@ -4,5 +4,6 @@
         Title="Input Sample"  Padding="10">
 	<StackPanel>
 		<Button Text="Keyboard Input" Margin="0,0,0,10" Click="KeyboardInputButton_Click" />
+		<Button Text="Mouse Input" Margin="0,0,0,10" Click="MouseInputButton_Click" />
 	</StackPanel>
 </Window>

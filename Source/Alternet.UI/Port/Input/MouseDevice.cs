@@ -28,36 +28,36 @@ namespace Alternet.UI
     /// </summary>
     public abstract class MouseDevice : InputDevice
     {
-        //       internal MouseDevice(InputManager inputManager)
-        //       {
-        //            _inputManager = new SecurityCriticalData<InputManager>(inputManager);
-        //            _inputManager.Value.PreProcessInput += new PreProcessInputEventHandler(PreProcessInput);
-        //            _inputManager.Value.PreNotifyInput += new NotifyInputEventHandler(PreNotifyInput);
-        //            _inputManager.Value.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
+        internal MouseDevice(InputManager inputManager)
+        {
+            //_inputManager = new SecurityCriticalData<InputManager>(inputManager);
+            //_inputManager.Value.PreProcessInput += new PreProcessInputEventHandler(PreProcessInput);
+            //_inputManager.Value.PreNotifyInput += new NotifyInputEventHandler(PreNotifyInput);
+            //_inputManager.Value.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
 
-        //            // Get information about how far two clicks of a double click can be considered
-        //            // to be in the "same place and time".
-        //            //
-        //            // The call here goes into the safe helper calls, more of a consistency in approach
-        //            //
-        //            _doubleClickDeltaX = SafeSystemMetrics.DoubleClickDeltaX;
-        //            _doubleClickDeltaY = SafeSystemMetrics.DoubleClickDeltaY;
-        //            _doubleClickDeltaTime = SafeNativeMethods.GetDoubleClickTime();
+            //// Get information about how far two clicks of a double click can be considered
+            //// to be in the "same place and time".
+            ////
+            //// The call here goes into the safe helper calls, more of a consistency in approach
+            ////
+            //_doubleClickDeltaX = SafeSystemMetrics.DoubleClickDeltaX;
+            //_doubleClickDeltaY = SafeSystemMetrics.DoubleClickDeltaY;
+            //_doubleClickDeltaTime = SafeNativeMethods.GetDoubleClickTime();
 
-        //            _overIsEnabledChangedEventHandler = new DependencyPropertyChangedEventHandler(OnOverIsEnabledChanged);
-        //            _overIsVisibleChangedEventHandler = new DependencyPropertyChangedEventHandler(OnOverIsVisibleChanged);
-        //            _overIsHitTestVisibleChangedEventHandler  = new DependencyPropertyChangedEventHandler(OnOverIsHitTestVisibleChanged);
-        //            _reevaluateMouseOverDelegate = new DispatcherOperationCallback(ReevaluateMouseOverAsync);
-        //            _reevaluateMouseOverOperation = null;
+            //_overIsEnabledChangedEventHandler = new DependencyPropertyChangedEventHandler(OnOverIsEnabledChanged);
+            //_overIsVisibleChangedEventHandler = new DependencyPropertyChangedEventHandler(OnOverIsVisibleChanged);
+            //_overIsHitTestVisibleChangedEventHandler = new DependencyPropertyChangedEventHandler(OnOverIsHitTestVisibleChanged);
+            //_reevaluateMouseOverDelegate = new DispatcherOperationCallback(ReevaluateMouseOverAsync);
+            //_reevaluateMouseOverOperation = null;
 
-        //            _captureIsEnabledChangedEventHandler = new DependencyPropertyChangedEventHandler(OnCaptureIsEnabledChanged);
-        //            _captureIsVisibleChangedEventHandler = new DependencyPropertyChangedEventHandler(OnCaptureIsVisibleChanged);
-        //            _captureIsHitTestVisibleChangedEventHandler  = new DependencyPropertyChangedEventHandler(OnCaptureIsHitTestVisibleChanged);
-        //            _reevaluateCaptureDelegate = new DispatcherOperationCallback(ReevaluateCaptureAsync);
-        //            _reevaluateCaptureOperation = null;
+            //_captureIsEnabledChangedEventHandler = new DependencyPropertyChangedEventHandler(OnCaptureIsEnabledChanged);
+            //_captureIsVisibleChangedEventHandler = new DependencyPropertyChangedEventHandler(OnCaptureIsVisibleChanged);
+            //_captureIsHitTestVisibleChangedEventHandler = new DependencyPropertyChangedEventHandler(OnCaptureIsHitTestVisibleChanged);
+            //_reevaluateCaptureDelegate = new DispatcherOperationCallback(ReevaluateCaptureAsync);
+            //_reevaluateCaptureOperation = null;
 
-        //            _inputManager.Value.HitTestInvalidatedAsync += new EventHandler(OnHitTestInvalidatedAsync);
-        //        }
+            //_inputManager.Value.HitTestInvalidatedAsync += new EventHandler(OnHitTestInvalidatedAsync);
+        }
 
         /// <summary>
         ///     Gets the current state of the specified button from the device from either the underlying system or the StylusDevice
@@ -77,19 +77,19 @@ namespace Alternet.UI
                 return GetButtonStateFromSystem(mouseButton);
         }
 
-        //        /// <summary>
-        //        ///     Gets the current position of the mouse in screen co-ords from either the underlying system or the StylusDevice
-        //        /// </summary>
-        //        /// <returns>
-        //        ///     The current mouse location in screen co-ords
-        //        /// </returns>
-        //        protected Point GetScreenPosition()
-        //        {
-        //            if (_stylusDevice != null)
-        //                return _stylusDevice.GetMouseScreenPosition(this);
-        //            else
-        //                return GetScreenPositionFromSystem();
-        //        }
+        /// <summary>
+        ///     Gets the current position of the mouse in screen co-ords from either the underlying system or the StylusDevice
+        /// </summary>
+        /// <returns>
+        ///     The current mouse location in screen co-ords
+        /// </returns>
+        public Point GetScreenPosition()
+        {
+            //if (_stylusDevice != null)
+            //    return _stylusDevice.GetMouseScreenPosition(this);
+            //else
+            return GetScreenPositionFromSystem();
+        }
 
         /// <summary>
         ///     Gets the current state of the specified button from the device from the underlying system
@@ -102,39 +102,13 @@ namespace Alternet.UI
         /// </returns>
         internal abstract MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton);
 
-        //        /// <summary>
-        //        ///     Gets the current position of the mouse in screen co-ords from the underlying system
-        //        /// </summary>
-        //        /// <returns>
-        //        ///     The current mouse location in screen co-ords
-        //        /// </returns>
-        //        internal Point GetScreenPositionFromSystem()
-        //        {
-        //            // Win32 has issues reliably returning where the mouse is.  Until we figure
-        //            // out a better way, just return the last mouse position in screen coordinates.
-
-        //            Point ptScreen = new Point(0, 0);
-
-        //            // Security Mitigation: do not give out input state if the device is not active.
-        //            if (IsActive)
-        //            {
-        //                try
-        //                {
-        //                    PresentationSource activeSource = CriticalActiveSource;
-        //                    if (activeSource != null)
-        //                    {
-        //                        ptScreen = PointUtil.ClientToScreen(_lastPosition, activeSource);
-        //                    }
-        //                }
-        //                catch (System.ComponentModel.Win32Exception)
-        //                {
-        //                    // The window could be shutting down, so just return (0,0).
-        //                    ptScreen = new Point(0, 0);
-        //                }
-        //            }
-
-        //            return ptScreen;
-        //        }
+        /// <summary>
+        ///     Gets the current position of the mouse in screen co-ords from the underlying system
+        /// </summary>
+        /// <returns>
+        ///     The current mouse location in screen co-ords
+        /// </returns>
+        internal abstract Point GetScreenPositionFromSystem();
 
         //        /// <summary>
         //        ///     Gets the current position of the mouse in client co-ords of the current PresentationSource
@@ -568,7 +542,13 @@ namespace Alternet.UI
         /// </summary>
         public Point GetPosition(IInputElement relativeTo)
         {
-            throw new Exception();
+            if (relativeTo is Control control)
+            {
+                return control.ScreenToClient(GetScreenPosition());
+            }
+
+            throw new InvalidOperationException();
+
             ////             VerifyAccess();
 
             //// Validate that relativeTo is either a UIElement or a ContentElement

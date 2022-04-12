@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// <see cref="UIElement"/> is a base class for core level implementations building on elements and basic presentation characteristics.
     /// </summary>
-    public class UIElement : DependencyObject
+    public class UIElement : DependencyObject, IInputElement
     {
         static UIElement()
         {
@@ -172,6 +172,68 @@ namespace Alternet.UI
                 uie.OnKeyUp(e);
         }
 
+        /// <summary>
+        ///     Alias to the Mouse.PreviewMouseMoveEvent.
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseMoveEvent = Mouse.PreviewMouseMoveEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting a mouse move
+        /// </summary>
+        public event MouseEventHandler PreviewMouseMove
+        {
+            add { AddHandler(Mouse.PreviewMouseMoveEvent, value, false); }
+            remove { RemoveHandler(Mouse.PreviewMouseMoveEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting a mouse move
+        /// </summary>
+        protected virtual void OnPreviewMouseMove(MouseEventArgs e) { }
+
+        /// <summary>
+        ///     Alias to the Mouse.MouseMoveEvent.
+        /// </summary>
+        public static readonly RoutedEvent MouseMoveEvent = Mouse.MouseMoveEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting a mouse move
+        /// </summary>
+        public event MouseEventHandler MouseMove
+        {
+            add { AddHandler(Mouse.MouseMoveEvent, value, false); }
+            remove { RemoveHandler(Mouse.MouseMoveEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting a mouse move
+        /// </summary>
+        protected virtual void OnMouseMove(MouseEventArgs e) { }
+
+        private static void OnPreviewMouseMoveThunk(object sender, MouseEventArgs e)
+        {
+            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+
+            var uie = sender as UIElement;
+
+            if (uie != null)
+            {
+                uie.OnPreviewMouseMove(e);
+            }
+        }
+
+        private static void OnMouseMoveThunk(object sender, MouseEventArgs e)
+        {
+            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+
+            var uie = sender as UIElement;
+
+            if (uie != null)
+            {
+                uie.OnMouseMove(e);
+            }
+        }
+
         static void RegisterEvents(Type type)
         {
             //EventManager.RegisterClassHandler(type, Mouse.PreviewMouseDownEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseDownThunk), true);
@@ -186,8 +248,8 @@ namespace Alternet.UI
             //EventManager.RegisterClassHandler(type, UIElement.MouseRightButtonDownEvent, new MouseButtonEventHandler(UIElement.OnMouseRightButtonDownThunk), false);
             //EventManager.RegisterClassHandler(type, UIElement.PreviewMouseRightButtonUpEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseRightButtonUpThunk), false);
             //EventManager.RegisterClassHandler(type, UIElement.MouseRightButtonUpEvent, new MouseButtonEventHandler(UIElement.OnMouseRightButtonUpThunk), false);
-            //EventManager.RegisterClassHandler(type, Mouse.PreviewMouseMoveEvent, new MouseEventHandler(UIElement.OnPreviewMouseMoveThunk), false);
-            //EventManager.RegisterClassHandler(type, Mouse.MouseMoveEvent, new MouseEventHandler(UIElement.OnMouseMoveThunk), false);
+            EventManager.RegisterClassHandler(type, Mouse.PreviewMouseMoveEvent, new MouseEventHandler(UIElement.OnPreviewMouseMoveThunk), false);
+            EventManager.RegisterClassHandler(type, Mouse.MouseMoveEvent, new MouseEventHandler(UIElement.OnMouseMoveThunk), false);
             //EventManager.RegisterClassHandler(type, Mouse.PreviewMouseWheelEvent, new MouseWheelEventHandler(UIElement.OnPreviewMouseWheelThunk), false);
             //EventManager.RegisterClassHandler(type, Mouse.MouseWheelEvent, new MouseWheelEventHandler(UIElement.OnMouseWheelThunk), false);
             //EventManager.RegisterClassHandler(type, Mouse.MouseEnterEvent, new MouseEventHandler(UIElement.OnMouseEnterThunk), false);
@@ -1010,6 +1072,10 @@ namespace Alternet.UI
                 return EventHandlersStoreField.GetValue(this);
             }
         }
+
+        bool IInputElement.IsEnabled => GetIsEnabled();
+
+        private protected virtual bool GetIsEnabled() => false;
 
         internal static readonly UncommonField<EventHandlersStore> EventHandlersStoreField = new UncommonField<EventHandlersStore>();
     }

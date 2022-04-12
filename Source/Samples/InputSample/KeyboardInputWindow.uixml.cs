@@ -12,17 +12,24 @@ namespace InputSample
         {
             InitializeComponent();
 
+            PlatformSpecificInitialize();
+            
+            InputManager.Current.PreProcessInput += InputManager_PreProcessInput;
+        }
+
+        private void PlatformSpecificInitialize()
+        {
 #if NETCOREAPP
             runningUnderMacOS = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
                 System.Runtime.InteropServices.OSPlatform.OSX);
 
             if (runningUnderMacOS)
                 messageLabel.Text = messageLabel.Text.Replace("Ctrl", "Cmd");
+#else
+            runningUnderMacOS = false;
 #endif
 
             macKeysPanel.Visible = runningUnderMacOS;
-
-            InputManager.Current.PreProcessInput += InputManager_PreProcessInput;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)

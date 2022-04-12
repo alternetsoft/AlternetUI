@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "Window.h"
 #include "Keyboard.h"
+#include "Mouse.h"
 #include "Object.h"
 #include "WindowsVisualThemeSupport.h"
 
@@ -44,6 +45,7 @@ namespace Alternet::UI
         App* _app = nullptr;
 
         Keyboard* _keyboard = nullptr;
+        Mouse* _mouse = nullptr;
 
         inline static Application* s_current = nullptr;
 

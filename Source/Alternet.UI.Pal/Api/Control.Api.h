@@ -174,6 +174,21 @@ ALTERNET_UI_API Control* Control_GetFocusedControl_()
     return Control::GetFocusedControl();
 }
 
+ALTERNET_UI_API Control* Control_HitTest_(Point screenPoint)
+{
+    return Control::HitTest(screenPoint);
+}
+
+ALTERNET_UI_API Point_C Control_ClientToScreen_(Control* obj, Point point)
+{
+    return obj->ClientToScreen(point);
+}
+
+ALTERNET_UI_API Point_C Control_ScreenToClient_(Control* obj, Point point)
+{
+    return obj->ScreenToClient(point);
+}
+
 ALTERNET_UI_API void Control_SetEventCallback_(Control::ControlEventCallbackType callback)
 {
     Control::SetEventCallback(callback);

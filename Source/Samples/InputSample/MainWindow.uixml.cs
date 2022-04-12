@@ -16,5 +16,11 @@ namespace InputSample
             var window = new KeyboardInputWindow();
             window.Show();
         }
+
+        private void MouseInputButton_Click(object? sender, EventArgs e)
+        {
+            var window = new MouseInputWindow();
+            window.Show();
+        }
     }
 }

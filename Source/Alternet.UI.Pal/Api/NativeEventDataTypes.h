@@ -22,6 +22,13 @@ namespace Alternet::UI
     #pragma pack(pop)
     
     #pragma pack(push, 1)
+    struct MouseEventData
+    {
+        int64_t timestamp;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
     struct TreeViewItemEventData
     {
         void* item;

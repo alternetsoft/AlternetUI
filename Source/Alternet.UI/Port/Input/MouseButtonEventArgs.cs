@@ -4,6 +4,7 @@
 // See the LICENSE file in the project root for more information.
 
 
+using Alternet.Drawing;
 using System;
 
 namespace Alternet.UI

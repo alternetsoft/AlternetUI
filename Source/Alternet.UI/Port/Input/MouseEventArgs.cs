@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// <param name="timestamp">
         ///     The time when the input occurred.
         /// </param>
-        public MouseEventArgs(MouseDevice mouse, int timestamp) : base(mouse, timestamp)
+        public MouseEventArgs(MouseDevice mouse, long timestamp) : base(mouse, timestamp)
         {
             if( mouse == null )
             {
@@ -64,14 +64,6 @@ namespace Alternet.UI
             get {return (MouseDevice) this.Device;}
         }
 
-        ///// <summary>
-        /////     Read-only access to the stylus Mouse associated with this event.
-        ///// </summary>
-        //public StylusDevice StylusDevice
-        //{
-        //    get {return _stylusDevice;}
-        //}
-
         /// <summary>
         ///     Calculates the position of the mouse relative to
         ///     a particular element.
@@ -80,6 +72,14 @@ namespace Alternet.UI
         {
             return this.MouseDevice.GetPosition(relativeTo);
         }
+
+        ///// <summary>
+        /////     Read-only access to the stylus Mouse associated with this event.
+        ///// </summary>
+        //public StylusDevice StylusDevice
+        //{
+        //    get {return _stylusDevice;}
+        //}
 
         /// <summary>
         ///     The state of the left button.

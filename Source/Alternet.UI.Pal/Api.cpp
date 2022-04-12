@@ -16,6 +16,7 @@
 #include "Api/ListBox.Api.h"
 #include "Api/ListView.Api.h"
 #include "Api/MessageBox_.Api.h"
+#include "Api/Mouse.Api.h"
 #include "Api/NumericUpDown.Api.h"
 #include "Api/Panel.Api.h"
 #include "Api/Pen.Api.h"

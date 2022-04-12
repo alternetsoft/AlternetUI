@@ -202,6 +202,7 @@
     <ClCompile Include="ListView.cpp" />
     <ClCompile Include="ManagedServerApi.cpp" />
     <ClCompile Include="MessageBox_.cpp" />
+    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="NumericUpDown.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Panel.cpp" />
@@ -240,6 +241,7 @@
     <ClInclude Include="Api\ListBox.Api.h" />
     <ClInclude Include="Api\ListView.Api.h" />
     <ClInclude Include="Api\MessageBox_.Api.h" />
+    <ClInclude Include="Api\Mouse.Api.h" />
     <ClInclude Include="Api\NativeEventDataTypes.h" />
     <ClInclude Include="Api\NumericUpDown.Api.h" />
     <ClInclude Include="Api\Object.Api.h" />
@@ -274,6 +276,7 @@
     <ClInclude Include="ListBox.h" />
     <ClInclude Include="ListView.h" />
     <ClInclude Include="MessageBox_.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="NumericUpDown.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Panel.h" />
@@ -307,6 +310,7 @@
     <None Include="Api\ListBox.inc" />
     <None Include="Api\ListView.inc" />
     <None Include="Api\MessageBox_.inc" />
+    <None Include="Api\Mouse.inc" />
     <None Include="Api\NumericUpDown.inc" />
     <None Include="Api\Panel.inc" />
     <None Include="Api\Pen.inc" />

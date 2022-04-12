@@ -627,6 +627,29 @@ namespace Alternet::UI
         s_controlsByWxWindowsMap.erase(wxWindow);
     }
 
+    /*static*/ Control* Control::HitTest(const Point& screenPoint)
+    {
+        auto window = wxFindWindowAtPoint(fromDip(screenPoint, nullptr));
+        if (window == nullptr)
+            return nullptr;
+    
+        return TryFindControlByWxWindow(window);
+    }
+
+    Point Control::ClientToScreen(const Point& point)
+    {
+        auto window = GetWxWindow();
+        auto screenPixelPoint = window->ClientToScreen(fromDip(point, window));
+        return toDip(screenPixelPoint, window);
+    }
+
+    Point Control::ScreenToClient(const Point& point)
+    {
+        auto window = GetWxWindow();
+        auto screenClientPoint = window->ScreenToClient(fromDip(point, window));
+        return toDip(screenClientPoint, window);
+    }
+
     /*static*/ Control* Control::GetFocusedControl()
     {
         auto focusedWxWindow = wxWindow::FindFocus();

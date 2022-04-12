@@ -67,5 +67,10 @@ namespace NativeApi.Api
         public void EndUpdate() => throw new Exception();
 
         public static Control? GetFocusedControl() => throw new Exception();
+
+        public static Control? HitTest(Point screenPoint) => throw new Exception();
+
+        public Point ClientToScreen(Point point) => throw new Exception();
+        public Point ScreenToClient(Point point) => throw new Exception();
     }
 }

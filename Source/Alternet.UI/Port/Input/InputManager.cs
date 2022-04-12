@@ -10,6 +10,7 @@ using System.Security;
 using System;
 using System.Diagnostics;
 using Alternet.UI.Threading;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -163,7 +164,7 @@ namespace Alternet.UI
             //            _stagingArea = new Stack();
 
             _primaryKeyboardDevice = new NativeKeyboardDevice(this);
-        //            _primaryMouseDevice = new Win32MouseDevice(this);
+            _primaryMouseDevice = new NativeMouseDevice(this);
         //            _primaryCommandDevice = new CommandDevice(this);
 
         //            _continueProcessingStagingAreaCallback = new DispatcherOperationCallback(ContinueProcessingStagingArea);
@@ -313,14 +314,14 @@ namespace Alternet.UI
             get { return _primaryKeyboardDevice; }
         }
 
-        ///// <summary>
-        /////     Read-only access to the primary mouse device.
-        ///// </summary>
-        //public MouseDevice PrimaryMouseDevice
-        //{
-        //    // 
-        //    get { return _primaryMouseDevice; }
-        //}
+        /// <summary>
+        ///     Read-only access to the primary mouse device.
+        /// </summary>
+        public MouseDevice PrimaryMouseDevice
+        {
+            // 
+            get { return _primaryMouseDevice; }
+        }
 
         //        /// <summary>
         //        /// This property exists only due to the use of the private reflection hack as
@@ -627,6 +628,11 @@ namespace Alternet.UI
         //    return input as StagingAreaInputItem;
         //}
 
+        internal void ReportMouseMove(long timestamp, out bool handled)
+        {
+            ReportMouseEvent(UIElement.PreviewMouseMoveEvent, UIElement.MouseMoveEvent, new MouseEventArgs(Mouse.PrimaryDevice, timestamp), out handled);
+        }
+
         internal void ReportKeyDown(long timestamp, Key key, bool isRepeat, out bool handled)
         {
             ReportKeyEvent(UIElement.PreviewKeyDownEvent, UIElement.KeyDownEvent, new KeyEventArgs(Keyboard.PrimaryDevice, timestamp, key, isRepeat), out handled);
@@ -646,6 +652,7 @@ namespace Alternet.UI
         {
             handled = false;
 
+            eventArgs.RoutedEvent = @event;
             InvokePreProcessInput(eventArgs, out var isCancelled);
             if (isCancelled)
                 return;
@@ -655,6 +662,34 @@ namespace Alternet.UI
                 return;
 
             var handler = ControlHandler.TryGetHandlerByNativeControl(focusedNativeControl);
+            if (handler == null)
+                return;
+
+            eventArgs.RoutedEvent = previewEvent;
+            handler.Control.RaiseEvent(eventArgs);
+            if (!eventArgs.Handled)
+            {
+                eventArgs.RoutedEvent = @event;
+                handler.Control.RaiseEvent(eventArgs);
+            }
+
+            handled = eventArgs.Handled;
+        }
+
+        internal void ReportMouseEvent(RoutedEvent previewEvent, RoutedEvent @event, InputEventArgs eventArgs, out bool handled)
+        {
+            handled = false;
+
+            eventArgs.RoutedEvent = @event;
+            InvokePreProcessInput(eventArgs, out var isCancelled);
+            if (isCancelled)
+                return;
+
+            var controlUnderMouse = Native.Control.HitTest(PrimaryMouseDevice.GetScreenPosition());
+            if (controlUnderMouse == null)
+                return;
+
+            var handler = ControlHandler.TryGetHandlerByNativeControl(controlUnderMouse);
             if (handler == null)
                 return;
 
@@ -1035,7 +1070,7 @@ namespace Alternet.UI
         //        private Hashtable _inputProviders = new Hashtable();
 
         private KeyboardDevice _primaryKeyboardDevice;
-        //private MouseDevice    _primaryMouseDevice;
+        private MouseDevice    _primaryMouseDevice;
         //        private CommandDevice  _primaryCommandDevice;
 
         //        private bool            _inDragDrop;

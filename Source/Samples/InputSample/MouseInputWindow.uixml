@@ -1,0 +1,23 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="InputSample.MouseInputWindow"
+		Width="500" Height="600"
+        Title="Mouse Input" PreviewMouseMove="Window_PreviewMouseMove" MouseMove="Window_MouseMove">
+	<StackPanel Orientation="Vertical" PreviewMouseMove="StackPanel_PreviewMouseMove" MouseMove="StackPanel_MouseMove" Padding="5">
+		<Button Name="helloButton" Text="Say Hello" Margin="10" Click="HelloButton_Click"
+				PreviewMouseMove="HelloButton_PreviewMouseMove" MouseMove="HelloButton_MouseMove"/>
+		<Button Text="Button 1" Margin="10" />
+		<TextBox Text="Sample Text Box" Margin="10"/>
+		<CheckBox Name="handlePreviewEventsCheckBox" Text="Handle Preview Events at StackPanel" Margin="10"/>
+		<CheckBox Name="cancelMouseMoveInputCheckBox" Text="Cancel MouseMove Input" Margin="10"/>
+		
+		<StackPanel Orientation="Horizontal" Margin="5">
+			<Label Text="Mouse Buttons State:" />
+			<CheckBox Text="Left" Name="leftButtonDownCheckBox" Enabled="false" Margin="5,0,0,0"/>
+			<CheckBox Text="Middle" Name="middleButtonDownCheckBox" Enabled="false" Margin="5,0,0,0"/>
+			<CheckBox Text="Right" Name="rightButtonDownCheckBox" Enabled="false" Margin="5,0,0,0"/>
+		</StackPanel>
+
+		<ListBox Name="lb" Height="200" />
+	</StackPanel>
+</Window>

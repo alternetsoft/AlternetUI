@@ -20,6 +20,7 @@ namespace Alternet.UI
         private VisualTheme visualTheme = StockVisualThemes.Native;
 
         private KeyboardInputProvider keyboardInputProvider;
+        private MouseInputProvider mouseInputProvider;
 
         internal event EventHandler? Idle;
 
@@ -33,9 +34,11 @@ namespace Alternet.UI
             current = this;
 
             keyboardInputProvider = new KeyboardInputProvider(nativeApplication.Keyboard);
+            mouseInputProvider = new MouseInputProvider(nativeApplication.Mouse);
         }
 
         internal Native.Keyboard NativeKeyboard => nativeApplication.Keyboard;
+        internal Native.Mouse NativeMouse => nativeApplication.Mouse;
 
         private void NativeApplication_Idle(object? sender, EventArgs e) => Idle?.Invoke(this, EventArgs.Empty);
 
@@ -136,6 +139,7 @@ namespace Alternet.UI
 
                 nativeApplication.Idle -= NativeApplication_Idle;
                 keyboardInputProvider.Dispose();
+                mouseInputProvider.Dispose();
                 nativeApplication.Dispose();
                 nativeApplication = null!;
 

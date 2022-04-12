@@ -530,6 +530,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Converts the screen coordinates of a specified point on the screen to client-area coordinates.
+        /// </summary>
+        /// <param name="point">A <see cref="Point"/> that specifies the screen coordinates to be converted.</param>
+        /// <returns>The converted cooridnates.</returns>
+        public Point ScreenToClient(Point point)
+        {
+            return Handler.ScreenToClient(point);
+        }
+
+        /// <summary>
+        /// Converts the client-area coordinates of a specified point to screen coordinates.
+        /// </summary>
+        /// <param name="point">A <see cref="Point"/> that contains the client coordinates to be converted.</param>
+        /// <returns>The converted cooridnates.</returns>
+        public Point ClientToScreen(Point point)
+        {
+            return Handler.ClientToScreen(point);
+        }
+
+        /// <summary>
         /// Resumes the usual layout logic.
         /// </summary>
         /// <param name="performLayout"><c>true</c> to execute pending layout requests; otherwise, <c>false</c>.</param>
@@ -706,6 +726,8 @@ namespace Alternet.UI
         protected virtual void OnEnabledChanged(EventArgs e)
         {
         }
+
+        private protected override bool GetIsEnabled() => Enabled;
 
         /// <summary>
         /// Forces the re-creation of the handler for the control.

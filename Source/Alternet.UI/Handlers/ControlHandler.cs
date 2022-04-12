@@ -594,6 +594,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// The ScreenToClient function converts the screen coordinates of a specified point on the screen to client-area coordinates.
+        /// </summary>
+        /// <param name="point">A <see cref="Point"/> that specifies the screen coordinates to be converted.</param>
+        /// <returns>The converted cooridnates.</returns>
+        public Point ScreenToClient(Point point)
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            return NativeControl.ScreenToClient(point);
+        }
+
+        /// <summary>
+        /// Converts the client-area coordinates of a specified point to screen coordinates.
+        /// </summary>
+        /// <param name="point">A <see cref="Point"/> that contains the client coordinates to be converted.</param>
+        /// <returns>The converted cooridnates.</returns>
+        public Point ClientToScreen(Point point)
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            return NativeControl.ClientToScreen(point);
+        }
+
+        /// <summary>
         /// Called when the mouse cursor leaves the boundary of the control.
         /// </summary>
         protected virtual void OnMouseLeave()

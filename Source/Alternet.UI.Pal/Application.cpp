@@ -36,35 +36,28 @@ namespace Alternet::UI
         if (_owner == nullptr)
             return Event_Skip;
 
+        bool handled = false;
+
         auto eventType = e.GetEventType();
-        //if (eventType == wxEVT_KEY_DOWN)
-        //{
-        //    _owner->GetKeyboard()->OnKeyDown((wxKeyEvent&)e);
-        //    return Event_Skip;
-        //}
 
         if (eventType == wxEVT_KEY_UP)
         {
-            bool handled = false;
             _owner->GetKeyboard()->OnKeyUp((wxKeyEvent&)e, handled);
-            return handled ? Event_Processed : Event_Skip;
         }
-
-        if (eventType == wxEVT_CHAR_HOOK)
+        else if (eventType == wxEVT_CHAR_HOOK)
         {
-            bool handled = false;
             _owner->GetKeyboard()->OnKeyDown((wxKeyEvent&)e, handled);
-            return handled ? Event_Processed : Event_Skip;
         }
-
-        if (eventType == wxEVT_CHAR)
+        else if (eventType == wxEVT_CHAR)
         {
-            bool handled = false;
             _owner->GetKeyboard()->OnChar((wxKeyEvent&)e, handled);
-            return handled ? Event_Processed : Event_Skip;
+        }
+        else if (eventType == wxEVT_MOTION)
+        {
+            _owner->GetMouse()->OnMouseMove((wxMouseEvent&)e, handled);
         }
 
-        return Event_Skip;
+        return handled ? Event_Processed : Event_Skip;
     }
 
     void App::SetOwner(Application* value)
@@ -95,6 +88,7 @@ namespace Alternet::UI
         wxTheApp->CallOnInit();
 
         _keyboard = new Keyboard();
+        _mouse = new Mouse();
 
         _app = static_cast<App*>(wxTheApp);
         _app->SetOwner(this);
@@ -105,13 +99,22 @@ namespace Alternet::UI
     Application::~Application()
     {
         s_current = nullptr;
+
         _keyboard->Release();
         _keyboard = nullptr;
+
+        _mouse->Release();
+        _mouse = nullptr;
     }
 
     void Application::RaiseIdle()
     {
         RaiseEvent(ApplicationEvent::Idle);
+    }
+
+    Mouse* Application::GetMouse()
+    {
+        return _mouse;
     }
 
     /*static*/ Application* Application::GetCurrent()

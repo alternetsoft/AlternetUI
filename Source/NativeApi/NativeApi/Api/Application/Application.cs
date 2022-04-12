@@ -13,5 +13,6 @@ namespace NativeApi.Api
         public event EventHandler Idle { add => throw new Exception(); remove => throw new Exception(); }
 
         public Keyboard Keyboard { get; }
+        public Mouse Mouse { get; }
     }
 }

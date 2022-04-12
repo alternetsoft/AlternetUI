@@ -59,6 +59,9 @@ DrawingContext* OpenClientDrawingContext();
 void BeginUpdate();
 void EndUpdate();
 static Control* GetFocusedControl();
+static Control* HitTest(const Point& screenPoint);
+Point ClientToScreen(const Point& point);
+Point ScreenToClient(const Point& point);
 public:
 enum class ControlEvent
 {

@@ -42,50 +42,50 @@ namespace Alternet.UI
 
         // Mouse          
 
-        /// <summary>
-        ///     A property indicating if the mouse is over this element or its descendents.
-        /// </summary>
-        bool IsMouseOver { get; }
+        ///// <summary>
+        /////     A property indicating if the mouse is over this element or its descendents.
+        ///// </summary>
+        //bool IsMouseOver { get; }
 
-        /// <summary>
-        ///     An event reporting the left mouse button was pressed.
-        /// </summary>
-        event MouseButtonEventHandler PreviewMouseLeftButtonDown;
+        ///// <summary>
+        /////     An event reporting the left mouse button was pressed.
+        ///// </summary>
+        //event MouseButtonEventHandler PreviewMouseLeftButtonDown;
 
-        /// <summary>
-        ///     An event reporting the left mouse button was pressed.
-        /// </summary>
-        event MouseButtonEventHandler MouseLeftButtonDown;
+        ///// <summary>
+        /////     An event reporting the left mouse button was pressed.
+        ///// </summary>
+        //event MouseButtonEventHandler MouseLeftButtonDown;
 
-        /// <summary>
-        ///     An event reporting the left mouse button was released.
-        /// </summary>
-        event MouseButtonEventHandler PreviewMouseLeftButtonUp;
+        ///// <summary>
+        /////     An event reporting the left mouse button was released.
+        ///// </summary>
+        //event MouseButtonEventHandler PreviewMouseLeftButtonUp;
 
-        /// <summary>
-        ///     An event reporting the left mouse button was released.
-        /// </summary>
-        event MouseButtonEventHandler MouseLeftButtonUp;
+        ///// <summary>
+        /////     An event reporting the left mouse button was released.
+        ///// </summary>
+        //event MouseButtonEventHandler MouseLeftButtonUp;
 
-        /// <summary>
-        ///     An event reporting the right mouse button was pressed.
-        /// </summary>
-        event MouseButtonEventHandler PreviewMouseRightButtonDown;
+        ///// <summary>
+        /////     An event reporting the right mouse button was pressed.
+        ///// </summary>
+        //event MouseButtonEventHandler PreviewMouseRightButtonDown;
 
-        /// <summary>
-        ///     An event reporting the right mouse button was pressed.
-        /// </summary>
-        event MouseButtonEventHandler MouseRightButtonDown;
+        ///// <summary>
+        /////     An event reporting the right mouse button was pressed.
+        ///// </summary>
+        //event MouseButtonEventHandler MouseRightButtonDown;
 
-        /// <summary>
-        ///     An event reporting the right mouse button was released.
-        /// </summary>
-        event MouseButtonEventHandler PreviewMouseRightButtonUp;
+        ///// <summary>
+        /////     An event reporting the right mouse button was released.
+        ///// </summary>
+        //event MouseButtonEventHandler PreviewMouseRightButtonUp;
 
-        /// <summary>
-        ///     An event reporting the right mouse button was released.
-        /// </summary>
-        event MouseButtonEventHandler MouseRightButtonUp;
+        ///// <summary>
+        /////     An event reporting the right mouse button was released.
+        ///// </summary>
+        //event MouseButtonEventHandler MouseRightButtonUp;
 
         /// <summary>
         ///     An event reporting a mouse move.
@@ -97,56 +97,56 @@ namespace Alternet.UI
         /// </summary>
         event MouseEventHandler MouseMove;
 
-        /// <summary>
-        ///     An event reporting a mouse wheel rotation.
-        /// </summary>
-        event MouseWheelEventHandler PreviewMouseWheel;
+        ///// <summary>
+        /////     An event reporting a mouse wheel rotation.
+        ///// </summary>
+        //event MouseWheelEventHandler PreviewMouseWheel;
 
-        /// <summary>
-        ///     An event reporting a mouse wheel rotation.
-        /// </summary>
-        event MouseWheelEventHandler MouseWheel;
+        ///// <summary>
+        /////     An event reporting a mouse wheel rotation.
+        ///// </summary>
+        //event MouseWheelEventHandler MouseWheel;
 
-        /// <summary>
-        ///     A property indicating if the mouse is over this element or not.
-        /// </summary>
-        bool IsMouseDirectlyOver { get; }
+        ///// <summary>
+        /////     A property indicating if the mouse is over this element or not.
+        ///// </summary>
+        //bool IsMouseDirectlyOver { get; }
 
-        /// <summary>
-        ///     An event reporting the mouse entered this element.
-        /// </summary>
-        event MouseEventHandler MouseEnter;
+        ///// <summary>
+        /////     An event reporting the mouse entered this element.
+        ///// </summary>
+        //event MouseEventHandler MouseEnter;
 
-        /// <summary>
-        ///     An event reporting the mouse left this element.
-        /// </summary>
-        event MouseEventHandler MouseLeave;
+        ///// <summary>
+        /////     An event reporting the mouse left this element.
+        ///// </summary>
+        //event MouseEventHandler MouseLeave;
 
 
-        /// <summary>
-        ///     An event reporting that this element got the mouse capture.
-        /// </summary>
-        event MouseEventHandler GotMouseCapture;
+        ///// <summary>
+        /////     An event reporting that this element got the mouse capture.
+        ///// </summary>
+        //event MouseEventHandler GotMouseCapture;
 
-        /// <summary>
-        ///     An event reporting that this element lost the mouse capture.
-        /// </summary>
-        event MouseEventHandler LostMouseCapture;
+        ///// <summary>
+        /////     An event reporting that this element lost the mouse capture.
+        ///// </summary>
+        //event MouseEventHandler LostMouseCapture;
 
-        /// <summary>
-        ///     A property indicating if the mouse is captured to this element or not.
-        /// </summary>
-        bool IsMouseCaptured { get; }
+        ///// <summary>
+        /////     A property indicating if the mouse is captured to this element or not.
+        ///// </summary>
+        //bool IsMouseCaptured { get; }
 
-        /// <summary>
-        ///     Captures the mouse to this element.
-        /// </summary>
-        bool CaptureMouse();
+        ///// <summary>
+        /////     Captures the mouse to this element.
+        ///// </summary>
+        //bool CaptureMouse();
 
-        /// <summary>
-        ///     Releases the mouse capture.
-        /// </summary>
-        void ReleaseMouseCapture();
+        ///// <summary>
+        /////     Releases the mouse capture.
+        ///// </summary>
+        //void ReleaseMouseCapture();
 
         //// Stylus
         ///// <summary>
@@ -306,53 +306,53 @@ namespace Alternet.UI
         /// </summary>
         event KeyEventHandler KeyUp;
 
-        /// <summary>
-        ///     A property indicating if a Focus is over this element or its descendents.
-        /// </summary>
-        bool IsKeyboardFocusWithin { get; }
+        ///// <summary>
+        /////     A property indicating if a Focus is over this element or its descendents.
+        ///// </summary>
+        //bool IsKeyboardFocusWithin { get; }
 
-        /// <summary>
-        ///     A property indicating if the keyboard is focused on this
-        ///     element or not.
-        /// </summary>
-        bool IsKeyboardFocused { get; }
+        ///// <summary>
+        /////     A property indicating if the keyboard is focused on this
+        /////     element or not.
+        ///// </summary>
+        //bool IsKeyboardFocused { get; }
     
-        /// <summary>
-        ///     Focuses the keyboard on this element.
-        /// </summary>
-        bool Focus();
+        ///// <summary>
+        /////     Focuses the keyboard on this element.
+        ///// </summary>
+        //bool Focus();
 
-        /// <summary>
-        ///     An event announcing that the keyboard is focused on this element.
-        /// </summary>
-        event KeyboardFocusChangedEventHandler PreviewGotKeyboardFocus;
+        ///// <summary>
+        /////     An event announcing that the keyboard is focused on this element.
+        ///// </summary>
+        //event KeyboardFocusChangedEventHandler PreviewGotKeyboardFocus;
 
-        /// <summary>
-        ///     An event announcing that the keyboard is focused on this element.
-        /// </summary>
-        event KeyboardFocusChangedEventHandler GotKeyboardFocus;
+        ///// <summary>
+        /////     An event announcing that the keyboard is focused on this element.
+        ///// </summary>
+        //event KeyboardFocusChangedEventHandler GotKeyboardFocus;
 
-        /// <summary>
-        ///     An event announcing that the keyboard is no longer focused
-        ///     on this element.
-        /// </summary>
-        event KeyboardFocusChangedEventHandler PreviewLostKeyboardFocus;
+        ///// <summary>
+        /////     An event announcing that the keyboard is no longer focused
+        /////     on this element.
+        ///// </summary>
+        //event KeyboardFocusChangedEventHandler PreviewLostKeyboardFocus;
 
-        /// <summary>
-        ///     An event announcing that the keyboard is no longer focused
-        ///     on this element.
-        /// </summary>
-        event KeyboardFocusChangedEventHandler LostKeyboardFocus;
+        ///// <summary>
+        /////     An event announcing that the keyboard is no longer focused
+        /////     on this element.
+        ///// </summary>
+        //event KeyboardFocusChangedEventHandler LostKeyboardFocus;
 
         /// <summary>
         ///     A property indicating if the element is enabled or not.
         /// </summary>
         bool IsEnabled { get; }
 
-        /// <summary>
-        ///     Gettor and Settor for Focusable Property
-        /// </summary>
-        bool Focusable { get; set; }
+        ///// <summary>
+        /////     Gettor and Settor for Focusable Property
+        ///// </summary>
+        //bool Focusable { get; set; }
 
         ////// Text
 

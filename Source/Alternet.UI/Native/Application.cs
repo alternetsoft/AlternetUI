@@ -33,6 +33,16 @@ namespace Alternet.UI.Native
             
         }
         
+        public Mouse Mouse
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeObject.GetFromNativePointer<Mouse>(NativeApi.Application_GetMouse_(NativePointer), p => new Mouse(p))!;
+            }
+            
+        }
+        
         public void Run(Window window)
         {
             CheckDisposed();
@@ -92,6 +102,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Application_GetKeyboard_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Application_GetMouse_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_Run_(IntPtr obj, IntPtr window);
