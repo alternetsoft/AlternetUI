@@ -39,12 +39,12 @@ namespace Alternet.UI
         /// </returns>
         internal override MouseButtonState GetButtonStateFromSystem(MouseButton mouseButton)
         {
-            return MouseButtonState.Released;
+            return (MouseButtonState)Application.Current.NativeMouse.GetButtonState((Native.MouseButton)mouseButton);
         }
 
         internal override Point GetScreenPositionFromSystem()
         {
-            return Application.Current.NativeMouse.GetMousePosition();
+            return Application.Current.NativeMouse.GetPosition();
         }
     }
 }

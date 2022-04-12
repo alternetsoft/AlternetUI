@@ -23,10 +23,16 @@ namespace Alternet.UI.Native
         {
         }
         
-        public Alternet.Drawing.Point GetMousePosition()
+        public Alternet.Drawing.Point GetPosition()
         {
             CheckDisposed();
-            return NativeApi.Mouse_GetMousePosition_(NativePointer);
+            return NativeApi.Mouse_GetPosition_(NativePointer);
+        }
+        
+        public MouseButtonState GetButtonState(MouseButton button)
+        {
+            CheckDisposed();
+            return NativeApi.Mouse_GetButtonState_(NativePointer, button);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -82,7 +88,10 @@ namespace Alternet.UI.Native
             public static extern IntPtr Mouse_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Point Mouse_GetMousePosition_(IntPtr obj);
+            public static extern NativeApiTypes.Point Mouse_GetPosition_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern MouseButtonState Mouse_GetButtonState_(IntPtr obj, MouseButton button);
             
         }
     }

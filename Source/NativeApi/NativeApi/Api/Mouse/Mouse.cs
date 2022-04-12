@@ -9,6 +9,8 @@ namespace NativeApi.Api
     {
         public event NativeEventHandler<MouseEventData>? MouseMove { add => throw new Exception(); remove => throw new Exception(); }
 
-        public Point GetMousePosition() => throw new Exception();
+        public Point GetPosition() => throw new Exception();
+
+        public MouseButtonState GetButtonState(MouseButton button) => throw new Exception();
     }
 }

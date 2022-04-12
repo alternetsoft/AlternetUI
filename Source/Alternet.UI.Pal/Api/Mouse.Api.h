@@ -12,9 +12,14 @@ ALTERNET_UI_API Mouse* Mouse_Create_()
     return new Mouse();
 }
 
-ALTERNET_UI_API Point_C Mouse_GetMousePosition_(Mouse* obj)
+ALTERNET_UI_API Point_C Mouse_GetPosition_(Mouse* obj)
 {
-    return obj->GetMousePosition();
+    return obj->GetPosition();
+}
+
+ALTERNET_UI_API MouseButtonState Mouse_GetButtonState_(Mouse* obj, MouseButton button)
+{
+    return obj->GetButtonState(button);
 }
 
 ALTERNET_UI_API void Mouse_SetEventCallback_(Mouse::MouseEventCallbackType callback)

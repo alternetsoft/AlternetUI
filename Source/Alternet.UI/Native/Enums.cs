@@ -194,6 +194,21 @@ namespace Alternet.UI.Native
         LargeIcon = 3,
     }
     
+    enum MouseButton
+    {
+        Left = 0,
+        Middle = 1,
+        Right = 2,
+        XButton1 = 3,
+        XButton2 = 4,
+    }
+    
+    enum MouseButtonState
+    {
+        Released = 0,
+        Pressed = 1,
+    }
+    
     enum PenDashStyle
     {
         Solid = 0,

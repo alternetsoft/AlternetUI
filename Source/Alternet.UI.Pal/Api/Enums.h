@@ -195,6 +195,21 @@ namespace Alternet::UI
         LargeIcon = 3,
     };
     
+    enum class MouseButton
+    {
+        Left = 0,
+        Middle = 1,
+        Right = 2,
+        XButton1 = 3,
+        XButton2 = 4,
+    };
+    
+    enum class MouseButtonState
+    {
+        Released = 0,
+        Pressed = 1,
+    };
+    
     enum class PenDashStyle
     {
         Solid = 0,
