@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="InputSample.MouseInputWindow"
-		Width="500" Height="600"
+		Width="600" Height="600"
         Title="Mouse Input"
 		PreviewMouseMove="Window_PreviewMouseMove" MouseMove="Window_MouseMove"
 		PreviewMouseDown="Window_PreviewMouseDown" MouseDown="Window_MouseDown"
