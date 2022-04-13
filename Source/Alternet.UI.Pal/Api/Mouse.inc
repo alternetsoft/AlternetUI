@@ -8,6 +8,7 @@ enum class MouseEvent
     MouseMove,
     MouseDown,
     MouseUp,
+    MouseDoubleClick,
     MouseWheel,
 };
 typedef void* (*MouseEventCallbackType)(Mouse* obj, MouseEvent event, void* param);

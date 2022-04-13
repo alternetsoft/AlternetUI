@@ -72,6 +72,11 @@ namespace Alternet.UI.Native
                     var ea = new NativeEventArgs<MouseButtonEventData>(MarshalEx.PtrToStructure<MouseButtonEventData>(parameter));
                     MouseUp?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
                 }
+                case NativeApi.MouseEvent.MouseDoubleClick:
+                {
+                    var ea = new NativeEventArgs<MouseButtonEventData>(MarshalEx.PtrToStructure<MouseButtonEventData>(parameter));
+                    MouseDoubleClick?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                }
                 case NativeApi.MouseEvent.MouseWheel:
                 {
                     var ea = new NativeEventArgs<MouseWheelEventData>(MarshalEx.PtrToStructure<MouseWheelEventData>(parameter));
@@ -84,6 +89,7 @@ namespace Alternet.UI.Native
         public event NativeEventHandler<MouseEventData>? MouseMove;
         public event NativeEventHandler<MouseButtonEventData>? MouseDown;
         public event NativeEventHandler<MouseButtonEventData>? MouseUp;
+        public event NativeEventHandler<MouseButtonEventData>? MouseDoubleClick;
         public event NativeEventHandler<MouseWheelEventData>? MouseWheel;
         
         [SuppressUnmanagedCodeSecurity]
@@ -99,6 +105,7 @@ namespace Alternet.UI.Native
                 MouseMove,
                 MouseDown,
                 MouseUp,
+                MouseDoubleClick,
                 MouseWheel,
             }
             

@@ -171,6 +171,56 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        ///     PreviewMouseDoubleClick
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseDoubleClickEvent = EventManager.RegisterRoutedEvent("PreviewMouseDoubleClick", RoutingStrategy.Tunnel, typeof(MouseButtonEventHandler), typeof(Mouse));
+
+        /// <summary>
+        ///     Adds a handler for the PreviewMouseDoubleClick attached event
+        /// </summary>
+        /// <param name="element">UIElement or ContentElement that listens to this event</param>
+        /// <param name="handler">Event Handler to be added</param>
+        public static void AddPreviewMouseDoubleClickHandler(DependencyObject element, MouseButtonEventHandler handler)
+        {
+            UIElement.AddHandler(element, PreviewMouseDoubleClickEvent, handler);
+        }
+
+        /// <summary>
+        ///     Removes a handler for the PreviewMouseDoubleClick attached event
+        /// </summary>
+        /// <param name="element">UIElement or ContentElement that listens to this event</param>
+        /// <param name="handler">Event Handler to be removed</param>
+        public static void RemovePreviewMouseDoubleClickHandler(DependencyObject element, MouseButtonEventHandler handler)
+        {
+            UIElement.RemoveHandler(element, PreviewMouseDoubleClickEvent, handler);
+        }
+
+        /// <summary>
+        ///     MouseDoubleClick
+        /// </summary>
+        public static readonly RoutedEvent MouseDoubleClickEvent = EventManager.RegisterRoutedEvent("MouseDoubleClick", RoutingStrategy.Bubble, typeof(MouseButtonEventHandler), typeof(Mouse));
+
+        /// <summary>
+        ///     Adds a handler for the MouseDoubleClick attached event
+        /// </summary>
+        /// <param name="element">UIElement or ContentElement that listens to this event</param>
+        /// <param name="handler">Event Handler to be added</param>
+        public static void AddMouseDoubleClickHandler(DependencyObject element, MouseButtonEventHandler handler)
+        {
+            UIElement.AddHandler(element, MouseDoubleClickEvent, handler);
+        }
+
+        /// <summary>
+        ///     Removes a handler for the MouseDoubleClick attached event
+        /// </summary>
+        /// <param name="element">UIElement or ContentElement that listens to this event</param>
+        /// <param name="handler">Event Handler to be removed</param>
+        public static void RemoveMouseDoubleClickHandler(DependencyObject element, MouseButtonEventHandler handler)
+        {
+            UIElement.RemoveHandler(element, MouseDoubleClickEvent, handler);
+        }
+
+        /// <summary>
         ///     PreviewMouseUp
         /// </summary>
         public static readonly RoutedEvent PreviewMouseUpEvent = EventManager.RegisterRoutedEvent("PreviewMouseUp", RoutingStrategy.Tunnel, typeof(MouseButtonEventHandler), typeof(Mouse));

@@ -70,6 +70,16 @@ namespace Alternet::UI
             _owner->GetMouse()->OnMouseUp((wxMouseEvent&)e, MouseButton::XButton1, handled);
         else if (eventType == wxEVT_AUX2_UP)
             _owner->GetMouse()->OnMouseUp((wxMouseEvent&)e, MouseButton::XButton2, handled);
+        else if (eventType == wxEVT_LEFT_DCLICK)
+            _owner->GetMouse()->OnMouseDoubleClick((wxMouseEvent&)e, MouseButton::Left, handled);
+        else if (eventType == wxEVT_MIDDLE_DCLICK)
+            _owner->GetMouse()->OnMouseDoubleClick((wxMouseEvent&)e, MouseButton::Middle, handled);
+        else if (eventType == wxEVT_RIGHT_DCLICK)
+            _owner->GetMouse()->OnMouseDoubleClick((wxMouseEvent&)e, MouseButton::Right, handled);
+        else if (eventType == wxEVT_AUX1_DCLICK)
+            _owner->GetMouse()->OnMouseDoubleClick((wxMouseEvent&)e, MouseButton::XButton1, handled);
+        else if (eventType == wxEVT_AUX2_DCLICK)
+            _owner->GetMouse()->OnMouseDoubleClick((wxMouseEvent&)e, MouseButton::XButton2, handled);
 
         return handled ? Event_Processed : Event_Skip;
     }

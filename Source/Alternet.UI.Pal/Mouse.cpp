@@ -60,4 +60,10 @@ namespace Alternet::UI
         MouseWheelEventData data{ e.GetTimestamp(), e.GetWheelRotation()};
         handled = RaiseEvent(MouseEvent::MouseWheel, &data);
     }
+
+    void Mouse::OnMouseDoubleClick(wxMouseEvent& e, MouseButton changedButton, bool& handled)
+    {
+        MouseButtonEventData data{ e.GetTimestamp(), changedButton };
+        handled = RaiseEvent(MouseEvent::MouseDoubleClick, &data);
+    }
 }

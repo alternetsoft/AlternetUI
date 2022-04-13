@@ -11,7 +11,9 @@ namespace NativeApi.Api
 
         public event NativeEventHandler<MouseButtonEventData>? MouseDown { add => throw new Exception(); remove => throw new Exception(); }
         public event NativeEventHandler<MouseButtonEventData>? MouseUp { add => throw new Exception(); remove => throw new Exception(); }
-        
+
+        public event NativeEventHandler<MouseButtonEventData>? MouseDoubleClick { add => throw new Exception(); remove => throw new Exception(); }
+
         public event NativeEventHandler<MouseWheelEventData>? MouseWheel { add => throw new Exception(); remove => throw new Exception(); }
 
         public Point GetPosition() => throw new Exception();

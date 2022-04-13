@@ -104,8 +104,14 @@ namespace InputSample
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e) => LogMouseButton(e, "Window", "MouseDown", (IInputElement)sender);
         private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e) => LogMouseButton(e, "Window", "PreviewMouseDown", (IInputElement)sender);
-        
+
         private void Window_MouseUp(object sender, MouseButtonEventArgs e) => LogMouseButton(e, "Window", "MouseUp", (IInputElement)sender);
         private void Window_PreviewMouseUp(object sender, MouseButtonEventArgs e) => LogMouseButton(e, "Window", "PreviewMouseUp", (IInputElement)sender);
+
+        private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e) => LogMouseButton(e, "Window", "MouseDoubleClick", (IInputElement)sender);
+        private void Window_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e) => LogMouseButton(e, "Window", "PreviewMouseDoubleClick", (IInputElement)sender);
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => LogMouseButton(e, "Window", "MouseLeftButtonDown", (IInputElement)sender);
+        private void Window_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) => LogMouseButton(e, "Window", "PreviewMouseLeftButtonDown", (IInputElement)sender);
     }
 }

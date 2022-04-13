@@ -638,6 +638,11 @@ namespace Alternet.UI
             ReportMouseEvent(UIElement.PreviewMouseDownEvent, UIElement.MouseDownEvent, new MouseButtonEventArgs(Mouse.PrimaryDevice, timestamp, changedButton), out handled);
         }
 
+        internal void ReportMouseDoubleClick(long timestamp, MouseButton changedButton, out bool handled)
+        {
+            ReportMouseEvent(UIElement.PreviewMouseDoubleClickEvent, UIElement.MouseDoubleClickEvent, new MouseButtonEventArgs(Mouse.PrimaryDevice, timestamp, changedButton), out handled);
+        }
+
         internal void ReportMouseUp(long timestamp, MouseButton changedButton, out bool handled)
         {
             ReportMouseEvent(UIElement.PreviewMouseUpEvent, UIElement.MouseUpEvent, new MouseButtonEventArgs(Mouse.PrimaryDevice, timestamp, changedButton), out handled);

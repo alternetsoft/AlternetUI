@@ -167,6 +167,44 @@ namespace Alternet.UI
         protected virtual void OnMouseDown(MouseButtonEventArgs e) { }
 
         /// <summary>
+        ///     Alias to the Mouse.PreviewMouseDoubleClickEvent.
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseDoubleClickEvent = Mouse.PreviewMouseDoubleClickEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting the mouse button was pressed
+        /// </summary>
+        public event MouseButtonEventHandler PreviewMouseDoubleClick
+        {
+            add { AddHandler(Mouse.PreviewMouseDoubleClickEvent, value, false); }
+            remove { RemoveHandler(Mouse.PreviewMouseDoubleClickEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting the mouse button was pressed
+        /// </summary>
+        protected virtual void OnPreviewMouseDoubleClick(MouseButtonEventArgs e) { }
+
+        /// <summary>
+        ///     Alias to the Mouse.MouseDoubleClickEvent.
+        /// </summary>
+        public static readonly RoutedEvent MouseDoubleClickEvent = Mouse.MouseDoubleClickEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting the mouse button was pressed
+        /// </summary>
+        public event MouseButtonEventHandler MouseDoubleClick
+        {
+            add { AddHandler(Mouse.MouseDoubleClickEvent, value, false); }
+            remove { RemoveHandler(Mouse.MouseDoubleClickEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting the mouse button was pressed
+        /// </summary>
+        protected virtual void OnMouseDoubleClick(MouseButtonEventArgs e) { }
+
+        /// <summary>
         ///     Alias to the Mouse.PreviewMouseUpEvent.
         /// </summary>
         public static readonly RoutedEvent PreviewMouseUpEvent = Mouse.PreviewMouseUpEvent.AddOwner(typeof(UIElement));
@@ -578,6 +616,32 @@ namespace Alternet.UI
             UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
         }
 
+        private static void OnPreviewMouseDoubleClickThunk(object sender, MouseButtonEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                var uie = sender as UIElement;
+
+                if (uie != null)
+                {
+                    uie.OnPreviewMouseDoubleClick(e);
+                }
+            }
+        }
+
+        private static void OnMouseDoubleClickThunk(object sender, MouseButtonEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                var uie = sender as UIElement;
+
+                if (uie != null)
+                {
+                    uie.OnMouseDoubleClick(e);
+                }
+            }
+        }
+
         private static void OnPreviewMouseUpThunk(object sender, MouseButtonEventArgs e)
         {
             if (!e.Handled)
@@ -800,6 +864,8 @@ namespace Alternet.UI
 
         static void RegisterEvents(Type type)
         {
+            EventManager.RegisterClassHandler(type, Mouse.PreviewMouseDoubleClickEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseDoubleClickThunk), true);
+            EventManager.RegisterClassHandler(type, Mouse.MouseDoubleClickEvent, new MouseButtonEventHandler(UIElement.OnMouseDoubleClickThunk), true);
             EventManager.RegisterClassHandler(type, Mouse.PreviewMouseDownEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseDownThunk), true);
             EventManager.RegisterClassHandler(type, Mouse.MouseDownEvent, new MouseButtonEventHandler(UIElement.OnMouseDownThunk), true);
             EventManager.RegisterClassHandler(type, Mouse.PreviewMouseUpEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseUpThunk), true);

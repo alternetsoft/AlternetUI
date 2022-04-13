@@ -6,6 +6,8 @@
 		PreviewMouseMove="Window_PreviewMouseMove" MouseMove="Window_MouseMove"
 		PreviewMouseDown="Window_PreviewMouseDown" MouseDown="Window_MouseDown"
 		PreviewMouseUp="Window_PreviewMouseUp" MouseUp="Window_MouseUp"
+		PreviewMouseDoubleClick="Window_PreviewMouseDoubleClick" MouseDoubleClick="Window_MouseDoubleClick"
+		PreviewMouseLeftButtonDown="Window_PreviewMouseLeftButtonDown" MouseLeftButtonDown="Window_MouseLeftButtonDown"
 		>
 	<StackPanel Orientation="Vertical"
 				PreviewMouseMove="StackPanel_PreviewMouseMove" MouseMove="StackPanel_MouseMove"

@@ -13,6 +13,7 @@ namespace Alternet::UI
         void OnMouseDown(wxMouseEvent& e, MouseButton changedButton, bool& handled);
         void OnMouseUp(wxMouseEvent& e, MouseButton changedButton, bool& handled);
         void OnMouseWheel(wxMouseEvent& e, bool& handled);
+        void OnMouseDoubleClick(wxMouseEvent& e, MouseButton changedButton, bool& handled);
 
     private:
     

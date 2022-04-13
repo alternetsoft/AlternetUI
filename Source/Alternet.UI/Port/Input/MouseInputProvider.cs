@@ -16,6 +16,13 @@ namespace Alternet.UI
             nativeMouse.MouseDown += NativeMouse_MouseDown;
             nativeMouse.MouseUp += NativeMouse_MouseUp;
             nativeMouse.MouseWheel += NativeMouse_MouseWheel;
+            nativeMouse.MouseDoubleClick += NativeMouse_MouseDoubleClick;
+        }
+
+        private void NativeMouse_MouseDoubleClick(object? sender, NativeEventArgs<MouseButtonEventData> e)
+        {
+            InputManager.Current.ReportMouseDoubleClick(e.Data.timestamp, (MouseButton)e.Data.changedButton, out var handled);
+            e.Handled = handled;
         }
 
         private void NativeMouse_MouseWheel(object? sender, NativeEventArgs<MouseWheelEventData> e)
@@ -53,6 +60,7 @@ namespace Alternet.UI
                     nativeMouse.MouseDown -= NativeMouse_MouseDown;
                     nativeMouse.MouseUp -= NativeMouse_MouseUp;
                     nativeMouse.MouseWheel -= NativeMouse_MouseWheel;
+                    nativeMouse.MouseDoubleClick -= NativeMouse_MouseDoubleClick;
                 }
 
                 isDisposed = true;
