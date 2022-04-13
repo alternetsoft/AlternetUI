@@ -209,6 +209,11 @@ namespace Alternet::UI
         }
     }
 
+    bool Control::GetIsMouseCaptured()
+    {
+        return GetWxWindow()->HasCapture();
+    }
+
     bool Control::GetIsMouseOver()
     {
         auto wxWindow = GetWxWindow();
@@ -446,6 +451,7 @@ namespace Alternet::UI
 
     void Control::OnMouseCaptureLost(wxEvent& event)
     {
+        RaiseEvent(ControlEvent::MouseCaptureLost);
     }
 
     void Control::OnMouseMove(wxMouseEvent& event)

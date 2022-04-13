@@ -48,6 +48,9 @@ void SetForegroundColor(const Color& value);
 Font* GetFont();
 void SetFont(Font* value);
 
+
+bool GetIsMouseCaptured();
+
 void SetMouseCapture(bool value);
 void AddChild(Control* control);
 void RemoveChild(Control* control);
@@ -73,6 +76,7 @@ enum class ControlEvent
     MouseLeftButtonUp,
     MouseClick,
     VisibleChanged,
+    MouseCaptureLost,
 };
 typedef void* (*ControlEventCallbackType)(Control* obj, ControlEvent event, void* param);
 static void SetEventCallback(ControlEventCallbackType value) { eventCallback = value; }

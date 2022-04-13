@@ -119,6 +119,11 @@ ALTERNET_UI_API void Control_SetFont_(Control* obj, Font* value)
     obj->SetFont(value);
 }
 
+ALTERNET_UI_API c_bool Control_GetIsMouseCaptured_(Control* obj)
+{
+    return obj->GetIsMouseCaptured();
+}
+
 ALTERNET_UI_API void Control_SetMouseCapture_(Control* obj, c_bool value)
 {
     obj->SetMouseCapture(value);

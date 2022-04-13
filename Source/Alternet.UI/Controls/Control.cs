@@ -42,6 +42,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Captures the mouse to the control.
+        /// </summary>
+        public void CaptureMouse()
+        {
+            Handler.CaptureMouse();
+        }
+
+        /// <summary>
+        /// Releases the mouse capture, if the control held the capture.
+        /// </summary>
+        public void ReleaseMouseCapture()
+        {
+            Handler.ReleaseMouseCapture();
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the mouse is captured to this control.
+        /// </summary>
+        public bool IsMouseCaptured => Handler.IsMouseCaptured;
+
+        /// <summary>
         /// Occurs when the control is clicked.
         /// </summary>
         public event EventHandler? Click;
@@ -73,6 +94,21 @@ namespace Alternet.UI
         /// Occurs when the value of the <see cref="Visible"/> property changes.
         /// </summary>
         public event EventHandler? VisibleChanged;
+
+        /// <summary>
+        /// Occurs when the control loses mouse capture.
+        /// </summary>
+        /// <remarks>
+        /// In rare scenarios, you might need to detect unexpected input. For example, consider the following scenarios.
+        /// <list type="bullet">
+        /// <item>During a mouse operation, the user opens the Start menu by pressing the Windows key or CTRL+ESC.</item>
+        /// <item>During a mouse operation, the user switches to another program by pressing ALT+TAB.</item>
+        /// <item>During a mouse operation, another program displays a window or a message box that takes focus away from the current application.</item>
+        /// </list>
+        /// Mouse operations can include clicking and holding the mouse on a form or a control, or performing a mouse drag operation.
+        /// If you have to detect when a form or a control loses mouse capture for these and related unexpected scenarios, you can use the <see cref="MouseCaptureLost"/> event.
+        /// </remarks>
+        public event EventHandler? MouseCaptureLost;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Enabled"/> property changes.
@@ -529,6 +565,12 @@ namespace Alternet.UI
             Handler.SuspendLayout();
         }
 
+        internal void RaiseMouseCaptureLost()
+        {
+            OnMouseCaptureLost();
+            MouseCaptureLost?.Invoke(this, EventArgs.Empty);
+        }
+
         /// <summary>
         /// Converts the screen coordinates of a specified point on the screen to client-area coordinates.
         /// </summary>
@@ -716,6 +758,13 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnVisibleChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the control loses mouse capture.
+        /// </summary>
+        protected virtual void OnMouseCaptureLost()
         {
         }
 

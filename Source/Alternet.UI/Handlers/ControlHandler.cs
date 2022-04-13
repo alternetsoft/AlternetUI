@@ -419,6 +419,20 @@ namespace Alternet.UI
             NativeControl.SetMouseCapture(false);
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the mouse is captured to this control.
+        /// </summary>
+        public bool IsMouseCaptured
+        {
+            get
+            {
+                if (NativeControl == null)
+                    throw new InvalidOperationException();
+
+                return NativeControl.IsMouseCaptured;
+            }
+        }
+
         internal DrawingContext CreateDrawingContext()
         {
             var nativeControl = NativeControl;
@@ -555,6 +569,7 @@ namespace Alternet.UI
                 NativeControl.MouseMove -= NativeControl_MouseMove;
                 NativeControl.MouseLeftButtonDown -= NativeControl_MouseLeftButtonDown;
                 NativeControl.MouseLeftButtonUp -= NativeControl_MouseLeftButtonUp;
+                NativeControl.MouseCaptureLost -= NativeControl_MouseCaptureLost;
             }
         }
 
@@ -577,6 +592,12 @@ namespace Alternet.UI
             NativeControl.MouseMove += NativeControl_MouseMove;
             NativeControl.MouseLeftButtonDown += NativeControl_MouseLeftButtonDown;
             NativeControl.MouseLeftButtonUp += NativeControl_MouseLeftButtonUp;
+            NativeControl.MouseCaptureLost += NativeControl_MouseCaptureLost;
+        }
+
+        private void NativeControl_MouseCaptureLost(object? sender, EventArgs e)
+        {
+            Control.RaiseMouseCaptureLost();
         }
 
         /// <summary>

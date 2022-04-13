@@ -49,6 +49,18 @@ namespace InputSample
             MessageBox.Show("Hello!", "Button Clicked");
         }
 
+        private void CaptureMouseLabel_MouseDown(object sender, EventArgs e)
+        {
+            captureMouseLabel.CaptureMouse();
+            captureMouseLabel.Text = "Mouse is captured. Click again to release the capture.";
+        }
+
+        private void CaptureMouseLabel_MouseUp(object sender, EventArgs e)
+        {
+            captureMouseLabel.ReleaseMouseCapture();
+            captureMouseLabel.Text = "Click here to capture mouse.";
+        }
+
         private void InputManager_PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
             if (cancelMouseMoveInputCheckBox.IsChecked)
@@ -81,9 +93,6 @@ namespace InputSample
         private void HelloButton_MouseMove(object sender, MouseEventArgs e) => LogMouseMove(e, "HelloButton", "MouseMove", (IInputElement)sender);
         private void HelloButton_PreviewMouseMove(object sender, MouseEventArgs e) => LogMouseMove(e, "HelloButton", "PreviewMouseMove", (IInputElement)sender);
 
-        private void HelloButton_MouseWheel(object sender, MouseWheelEventArgs e) => LogMouseWheel(e, "HelloButton", "MouseWheel", (IInputElement)sender);
-        private void HelloButton_PreviewMouseWheel(object sender, MouseWheelEventArgs e) => LogMouseWheel(e, "HelloButton", "PreviewMouseWheel", (IInputElement)sender);
-
         private void HelloButton_MouseDown(object sender, MouseButtonEventArgs e) => LogMouseButton(e, "HelloButton", "MouseDown", (IInputElement)sender);
         private void HelloButton_PreviewMouseDown(object sender, MouseButtonEventArgs e) => LogMouseButton(e, "HelloButton", "PreviewMouseDown", (IInputElement)sender);
         
@@ -113,5 +122,8 @@ namespace InputSample
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => LogMouseButton(e, "Window", "MouseLeftButtonDown", (IInputElement)sender);
         private void Window_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e) => LogMouseButton(e, "Window", "PreviewMouseLeftButtonDown", (IInputElement)sender);
+
+        private void Window_MouseWheel(object sender, MouseWheelEventArgs e) => LogMouseWheel(e, "Window", "MouseWheel", (IInputElement)sender);
+        private void Window_PreviewMouseWheel(object sender, MouseWheelEventArgs e) => LogMouseWheel(e, "Window", "PreviewMouseWheel", (IInputElement)sender);
     }
 }

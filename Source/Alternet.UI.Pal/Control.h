@@ -24,6 +24,7 @@ namespace Alternet::UI
             wxPointerHash, wxPointerEqual,
             ControlsByWxWindowsMap);
 
+
     protected:
         void CreateWxWindow();
 

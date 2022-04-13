@@ -22,6 +22,8 @@ namespace NativeApi.Api
 
         public event EventHandler? VisibleChanged { add => throw new Exception(); remove => throw new Exception(); }
 
+        public event EventHandler? MouseCaptureLost { add => throw new Exception(); remove => throw new Exception(); }
+
         public void SetMouseCapture(bool value) => throw new Exception();
 
         public Control? Parent { get; }
@@ -72,5 +74,7 @@ namespace NativeApi.Api
 
         public Point ClientToScreen(Point point) => throw new Exception();
         public Point ScreenToClient(Point point) => throw new Exception();
+
+        public bool IsMouseCaptured { get; }
     }
 }

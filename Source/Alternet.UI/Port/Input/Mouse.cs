@@ -70,55 +70,55 @@ namespace Alternet.UI
             UIElement.RemoveHandler(element, MouseMoveEvent, handler);
         }
 
-        /// <summary>
-        ///     MouseDownOutsideCapturedElement
-        /// </summary>
-        public static readonly RoutedEvent PreviewMouseDownOutsideCapturedElementEvent = EventManager.RegisterRoutedEvent("PreviewMouseDownOutsideCapturedElement", RoutingStrategy.Tunnel, typeof(MouseButtonEventHandler), typeof(Mouse));
+        ///// <summary>
+        /////     MouseDownOutsideCapturedElement
+        ///// </summary>
+        //public static readonly RoutedEvent PreviewMouseDownOutsideCapturedElementEvent = EventManager.RegisterRoutedEvent("PreviewMouseDownOutsideCapturedElement", RoutingStrategy.Tunnel, typeof(MouseButtonEventHandler), typeof(Mouse));
 
-        /// <summary>
-        ///     Adds a handler for the PreviewMouseDownOutsideCapturedElement attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void AddPreviewMouseDownOutsideCapturedElementHandler(DependencyObject element, MouseButtonEventHandler handler)
-        {
-            UIElement.AddHandler(element, PreviewMouseDownOutsideCapturedElementEvent, handler);
-        }
+        ///// <summary>
+        /////     Adds a handler for the PreviewMouseDownOutsideCapturedElement attached event
+        ///// </summary>
+        ///// <param name="element">UIElement or ContentElement that listens to this event</param>
+        ///// <param name="handler">Event Handler to be added</param>
+        //public static void AddPreviewMouseDownOutsideCapturedElementHandler(DependencyObject element, MouseButtonEventHandler handler)
+        //{
+        //    UIElement.AddHandler(element, PreviewMouseDownOutsideCapturedElementEvent, handler);
+        //}
 
-        /// <summary>
-        ///     Removes a handler for the MouseDownOutsideCapturedElement attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be removed</param>
-        public static void RemovePreviewMouseDownOutsideCapturedElementHandler(DependencyObject element, MouseButtonEventHandler handler)
-        {
-            UIElement.RemoveHandler(element, PreviewMouseDownOutsideCapturedElementEvent, handler);
-        }
+        ///// <summary>
+        /////     Removes a handler for the MouseDownOutsideCapturedElement attached event
+        ///// </summary>
+        ///// <param name="element">UIElement or ContentElement that listens to this event</param>
+        ///// <param name="handler">Event Handler to be removed</param>
+        //public static void RemovePreviewMouseDownOutsideCapturedElementHandler(DependencyObject element, MouseButtonEventHandler handler)
+        //{
+        //    UIElement.RemoveHandler(element, PreviewMouseDownOutsideCapturedElementEvent, handler);
+        //}
 
-        /// <summary>
-        ///     MouseUpOutsideCapturedElement
-        /// </summary>
-        public static readonly RoutedEvent PreviewMouseUpOutsideCapturedElementEvent = EventManager.RegisterRoutedEvent("PreviewMouseUpOutsideCapturedElement", RoutingStrategy.Tunnel, typeof(MouseButtonEventHandler), typeof(Mouse));
+        ///// <summary>
+        /////     MouseUpOutsideCapturedElement
+        ///// </summary>
+        //public static readonly RoutedEvent PreviewMouseUpOutsideCapturedElementEvent = EventManager.RegisterRoutedEvent("PreviewMouseUpOutsideCapturedElement", RoutingStrategy.Tunnel, typeof(MouseButtonEventHandler), typeof(Mouse));
 
-        /// <summary>
-        ///     Adds a handler for the MouseUpOutsideCapturedElement attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void AddPreviewMouseUpOutsideCapturedElementHandler(DependencyObject element, MouseButtonEventHandler handler)
-        {
-            UIElement.AddHandler(element, PreviewMouseUpOutsideCapturedElementEvent, handler);
-        }
+        ///// <summary>
+        /////     Adds a handler for the MouseUpOutsideCapturedElement attached event
+        ///// </summary>
+        ///// <param name="element">UIElement or ContentElement that listens to this event</param>
+        ///// <param name="handler">Event Handler to be added</param>
+        //public static void AddPreviewMouseUpOutsideCapturedElementHandler(DependencyObject element, MouseButtonEventHandler handler)
+        //{
+        //    UIElement.AddHandler(element, PreviewMouseUpOutsideCapturedElementEvent, handler);
+        //}
 
-        /// <summary>
-        ///     Removes a handler for the MouseUpOutsideCapturedElement attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be removed</param>
-        public static void RemovePreviewMouseUpOutsideCapturedElementHandler(DependencyObject element, MouseButtonEventHandler handler)
-        {
-            UIElement.RemoveHandler(element, PreviewMouseUpOutsideCapturedElementEvent, handler);
-        }
+        ///// <summary>
+        /////     Removes a handler for the MouseUpOutsideCapturedElement attached event
+        ///// </summary>
+        ///// <param name="element">UIElement or ContentElement that listens to this event</param>
+        ///// <param name="handler">Event Handler to be removed</param>
+        //public static void RemovePreviewMouseUpOutsideCapturedElementHandler(DependencyObject element, MouseButtonEventHandler handler)
+        //{
+        //    UIElement.RemoveHandler(element, PreviewMouseUpOutsideCapturedElementEvent, handler);
+        //}
 
         /// <summary>
         ///     PreviewMouseDown
@@ -370,55 +370,55 @@ namespace Alternet.UI
             UIElement.RemoveHandler(element, MouseLeaveEvent, handler);
         }
 
-        /// <summary>
-        ///     GotMouseCapture
-        /// </summary>
-        public static readonly RoutedEvent GotMouseCaptureEvent = EventManager.RegisterRoutedEvent("GotMouseCapture", RoutingStrategy.Bubble, typeof(MouseEventHandler), typeof(Mouse));
+        ///// <summary>
+        /////     GotMouseCapture
+        ///// </summary>
+        //public static readonly RoutedEvent GotMouseCaptureEvent = EventManager.RegisterRoutedEvent("GotMouseCapture", RoutingStrategy.Bubble, typeof(MouseEventHandler), typeof(Mouse));
 
-        /// <summary>
-        ///     Adds a handler for the GotMouseCapture attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void AddGotMouseCaptureHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.AddHandler(element, GotMouseCaptureEvent, handler);
-        }
+        ///// <summary>
+        /////     Adds a handler for the GotMouseCapture attached event
+        ///// </summary>
+        ///// <param name="element">UIElement or ContentElement that listens to this event</param>
+        ///// <param name="handler">Event Handler to be added</param>
+        //public static void AddGotMouseCaptureHandler(DependencyObject element, MouseEventHandler handler)
+        //{
+        //    UIElement.AddHandler(element, GotMouseCaptureEvent, handler);
+        //}
 
-        /// <summary>
-        ///     Removes a handler for the GotMouseCapture attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be removed</param>
-        public static void RemoveGotMouseCaptureHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.RemoveHandler(element, GotMouseCaptureEvent, handler);
-        }
+        ///// <summary>
+        /////     Removes a handler for the GotMouseCapture attached event
+        ///// </summary>
+        ///// <param name="element">UIElement or ContentElement that listens to this event</param>
+        ///// <param name="handler">Event Handler to be removed</param>
+        //public static void RemoveGotMouseCaptureHandler(DependencyObject element, MouseEventHandler handler)
+        //{
+        //    UIElement.RemoveHandler(element, GotMouseCaptureEvent, handler);
+        //}
 
-        /// <summary>
-        ///     LostMouseCapture
-        /// </summary>
-        public static readonly RoutedEvent LostMouseCaptureEvent = EventManager.RegisterRoutedEvent("LostMouseCapture", RoutingStrategy.Bubble, typeof(MouseEventHandler), typeof(Mouse));
+        ///// <summary>
+        /////     LostMouseCapture
+        ///// </summary>
+        //public static readonly RoutedEvent LostMouseCaptureEvent = EventManager.RegisterRoutedEvent("LostMouseCapture", RoutingStrategy.Bubble, typeof(MouseEventHandler), typeof(Mouse));
 
-        /// <summary>
-        ///     Adds a handler for the LostMouseCapture attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be added</param>
-        public static void AddLostMouseCaptureHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.AddHandler(element, LostMouseCaptureEvent, handler);
-        }
+        ///// <summary>
+        /////     Adds a handler for the LostMouseCapture attached event
+        ///// </summary>
+        ///// <param name="element">UIElement or ContentElement that listens to this event</param>
+        ///// <param name="handler">Event Handler to be added</param>
+        //public static void AddLostMouseCaptureHandler(DependencyObject element, MouseEventHandler handler)
+        //{
+        //    UIElement.AddHandler(element, LostMouseCaptureEvent, handler);
+        //}
 
-        /// <summary>
-        ///     Removes a handler for the LostMouseCapture attached event
-        /// </summary>
-        /// <param name="element">UIElement or ContentElement that listens to this event</param>
-        /// <param name="handler">Event Handler to be removed</param>
-        public static void RemoveLostMouseCaptureHandler(DependencyObject element, MouseEventHandler handler)
-        {
-            UIElement.RemoveHandler(element, LostMouseCaptureEvent, handler);
-        }
+        ///// <summary>
+        /////     Removes a handler for the LostMouseCapture attached event
+        ///// </summary>
+        ///// <param name="element">UIElement or ContentElement that listens to this event</param>
+        ///// <param name="handler">Event Handler to be removed</param>
+        //public static void RemoveLostMouseCaptureHandler(DependencyObject element, MouseEventHandler handler)
+        //{
+        //    UIElement.RemoveHandler(element, LostMouseCaptureEvent, handler);
+        //}
 
         ///// <summary>
         /////     QueryCursor
@@ -468,17 +468,6 @@ namespace Alternet.UI
         //    {
         //        return Mouse.PrimaryDevice.Captured;
         //    }
-        //}
-
-        ///// <summary>
-        /////     Captures the mouse to a particular element.
-        ///// </summary>
-        ///// <param name="element">
-        /////     The element to capture the mouse to.
-        ///// </param>
-        //public static bool Capture(IInputElement element)
-        //{
-        //    return Mouse.PrimaryDevice.Capture(element);
         //}
 
         ///// <summary>

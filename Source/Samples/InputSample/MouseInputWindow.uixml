@@ -8,6 +8,7 @@
 		PreviewMouseUp="Window_PreviewMouseUp" MouseUp="Window_MouseUp"
 		PreviewMouseDoubleClick="Window_PreviewMouseDoubleClick" MouseDoubleClick="Window_MouseDoubleClick"
 		PreviewMouseLeftButtonDown="Window_PreviewMouseLeftButtonDown" MouseLeftButtonDown="Window_MouseLeftButtonDown"
+		PreviewMouseWheel="Window_PreviewMouseWheel" MouseWheel="Window_MouseWheel"
 		>
 	<StackPanel Orientation="Vertical"
 				PreviewMouseMove="StackPanel_PreviewMouseMove" MouseMove="StackPanel_MouseMove"
@@ -18,9 +19,8 @@
 				PreviewMouseMove="HelloButton_PreviewMouseMove" MouseMove="HelloButton_MouseMove"
 				PreviewMouseDown="HelloButton_PreviewMouseDown" MouseDown="HelloButton_MouseDown"
 				PreviewMouseUp="HelloButton_PreviewMouseUp" MouseUp="HelloButton_MouseUp"
-				PreviewMouseWheel="HelloButton_PreviewMouseWheel" MouseWheel="HelloButton_MouseWheel"
 				/>
-		<Button Text="Button 1" Margin="10" />
+		<Label Text="Click here to capture mouse" Margin="10" Name="captureMouseLabel" MouseDown="CaptureMouseLabel_MouseDown" MouseUp="CaptureMouseLabel_MouseUp" />
 		<TextBox Text="Sample Text Box" Margin="10"/>
 		<CheckBox Name="cancelMouseMoveInputCheckBox" Text="Cancel MouseMove Input" Margin="10"/>
 		
