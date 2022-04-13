@@ -61,6 +61,11 @@ namespace InputSample
             captureMouseLabel.Text = "Click here to capture mouse.";
         }
 
+        private void CaptureMouseLabel_MouseCaptureLost(object sender, EventArgs e)
+        {
+            MessageBox.Show("Mouse capture was lost.");
+        }
+
         private void InputManager_PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
             if (cancelMouseMoveInputCheckBox.IsChecked)
