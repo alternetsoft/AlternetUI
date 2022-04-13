@@ -27,7 +27,7 @@ namespace Alternet.UI
         ///     The mouse button whose state is being described.
         /// </param>
         public MouseButtonEventArgs(MouseDevice mouse,
-                                    int timestamp,
+                                    long timestamp,
                                     MouseButton button) : base(mouse, timestamp)
         {
             MouseButtonUtilities.Validate(button);

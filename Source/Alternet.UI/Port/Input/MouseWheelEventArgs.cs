@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// <param name="delta">
         ///     How much the mouse wheel turned.
         /// </param>
-        public MouseWheelEventArgs(MouseDevice mouse, int timestamp, int delta) : base(mouse, timestamp)
+        public MouseWheelEventArgs(MouseDevice mouse, long timestamp, int delta) : base(mouse, timestamp)
         {
             _delta = delta;
         }

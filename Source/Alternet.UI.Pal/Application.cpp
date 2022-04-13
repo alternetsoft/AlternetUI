@@ -41,21 +41,35 @@ namespace Alternet::UI
         auto eventType = e.GetEventType();
 
         if (eventType == wxEVT_KEY_UP)
-        {
             _owner->GetKeyboard()->OnKeyUp((wxKeyEvent&)e, handled);
-        }
         else if (eventType == wxEVT_CHAR_HOOK)
-        {
             _owner->GetKeyboard()->OnKeyDown((wxKeyEvent&)e, handled);
-        }
         else if (eventType == wxEVT_CHAR)
-        {
             _owner->GetKeyboard()->OnChar((wxKeyEvent&)e, handled);
-        }
         else if (eventType == wxEVT_MOTION)
-        {
             _owner->GetMouse()->OnMouseMove((wxMouseEvent&)e, handled);
-        }
+        else if (eventType == wxEVT_MOUSEWHEEL)
+            _owner->GetMouse()->OnMouseWheel((wxMouseEvent&)e, handled);
+        else if (eventType == wxEVT_LEFT_DOWN)
+            _owner->GetMouse()->OnMouseDown((wxMouseEvent&)e, MouseButton::Left, handled);
+        else if (eventType == wxEVT_MIDDLE_DOWN)
+            _owner->GetMouse()->OnMouseDown((wxMouseEvent&)e, MouseButton::Middle, handled);
+        else if (eventType == wxEVT_RIGHT_DOWN)
+            _owner->GetMouse()->OnMouseDown((wxMouseEvent&)e, MouseButton::Right, handled);
+        else if (eventType == wxEVT_AUX1_DOWN)
+            _owner->GetMouse()->OnMouseDown((wxMouseEvent&)e, MouseButton::XButton1, handled);
+        else if (eventType == wxEVT_AUX2_DOWN)
+            _owner->GetMouse()->OnMouseDown((wxMouseEvent&)e, MouseButton::XButton2, handled);
+        else if (eventType == wxEVT_LEFT_UP)
+            _owner->GetMouse()->OnMouseUp((wxMouseEvent&)e, MouseButton::Left, handled);
+        else if (eventType == wxEVT_MIDDLE_UP)
+            _owner->GetMouse()->OnMouseUp((wxMouseEvent&)e, MouseButton::Middle, handled);
+        else if (eventType == wxEVT_RIGHT_UP)
+            _owner->GetMouse()->OnMouseUp((wxMouseEvent&)e, MouseButton::Right, handled);
+        else if (eventType == wxEVT_AUX1_UP)
+            _owner->GetMouse()->OnMouseUp((wxMouseEvent&)e, MouseButton::XButton1, handled);
+        else if (eventType == wxEVT_AUX2_UP)
+            _owner->GetMouse()->OnMouseUp((wxMouseEvent&)e, MouseButton::XButton2, handled);
 
         return handled ? Event_Processed : Event_Skip;
     }

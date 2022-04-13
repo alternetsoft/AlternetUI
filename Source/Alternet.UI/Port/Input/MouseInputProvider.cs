@@ -1,3 +1,4 @@
+using Alternet.UI.Native;
 using System;
 
 namespace Alternet.UI
@@ -11,6 +12,28 @@ namespace Alternet.UI
         {
             this.nativeMouse = nativeMouse;
             nativeMouse.MouseMove += NativeMouse_MouseMove;
+            
+            nativeMouse.MouseDown += NativeMouse_MouseDown;
+            nativeMouse.MouseUp += NativeMouse_MouseUp;
+            nativeMouse.MouseWheel += NativeMouse_MouseWheel;
+        }
+
+        private void NativeMouse_MouseWheel(object? sender, NativeEventArgs<MouseWheelEventData> e)
+        {
+            InputManager.Current.ReportMouseWheel(e.Data.timestamp, e.Data.delta, out var handled);
+            e.Handled = handled;
+        }
+
+        private void NativeMouse_MouseUp(object? sender, NativeEventArgs<MouseButtonEventData> e)
+        {
+            InputManager.Current.ReportMouseUp(e.Data.timestamp, (MouseButton)e.Data.changedButton, out var handled);
+            e.Handled = handled;
+        }
+
+        private void NativeMouse_MouseDown(object? sender, NativeEventArgs<MouseButtonEventData> e)
+        {
+            InputManager.Current.ReportMouseDown(e.Data.timestamp, (MouseButton)e.Data.changedButton, out var handled);
+            e.Handled = handled;
         }
 
         private void NativeMouse_MouseMove(object? sender, Native.NativeEventArgs<Native.MouseEventData> e)
@@ -26,6 +49,10 @@ namespace Alternet.UI
                 if (disposing)
                 {
                     nativeMouse.MouseMove -= NativeMouse_MouseMove;
+                    
+                    nativeMouse.MouseDown -= NativeMouse_MouseDown;
+                    nativeMouse.MouseUp -= NativeMouse_MouseUp;
+                    nativeMouse.MouseWheel -= NativeMouse_MouseWheel;
                 }
 
                 isDisposed = true;

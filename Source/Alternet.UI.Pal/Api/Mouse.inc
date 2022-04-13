@@ -6,6 +6,9 @@ public:
 enum class MouseEvent
 {
     MouseMove,
+    MouseDown,
+    MouseUp,
+    MouseWheel,
 };
 typedef void* (*MouseEventCallbackType)(Mouse* obj, MouseEvent event, void* param);
 static void SetEventCallback(MouseEventCallbackType value) { eventCallback = value; }

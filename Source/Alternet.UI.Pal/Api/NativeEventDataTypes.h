@@ -22,9 +22,25 @@ namespace Alternet::UI
     #pragma pack(pop)
     
     #pragma pack(push, 1)
+    struct MouseButtonEventData
+    {
+        int64_t timestamp;
+        MouseButton changedButton;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
     struct MouseEventData
     {
         int64_t timestamp;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
+    struct MouseWheelEventData
+    {
+        int64_t timestamp;
+        int delta;
     };
     #pragma pack(pop)
     

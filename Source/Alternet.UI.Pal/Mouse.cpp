@@ -39,7 +39,25 @@ namespace Alternet::UI
 
     void Mouse::OnMouseMove(wxMouseEvent& e, bool& handled)
     {
-        MouseEventData data { };
+        MouseEventData data { e.GetTimestamp() };
         handled = RaiseEvent(MouseEvent::MouseMove, &data);
+    }
+    
+    void Mouse::OnMouseDown(wxMouseEvent& e, MouseButton changedButton, bool& handled)
+    {
+        MouseButtonEventData data { e.GetTimestamp(), changedButton };
+        handled = RaiseEvent(MouseEvent::MouseDown, &data);
+    }
+    
+    void Mouse::OnMouseUp(wxMouseEvent& e, MouseButton changedButton, bool& handled)
+    {
+        MouseButtonEventData data{ e.GetTimestamp(), changedButton };
+        handled = RaiseEvent(MouseEvent::MouseUp, &data);
+    }
+    
+    void Mouse::OnMouseWheel(wxMouseEvent& e, bool& handled)
+    {
+        MouseWheelEventData data{ e.GetTimestamp(), e.GetWheelRotation()};
+        handled = RaiseEvent(MouseEvent::MouseWheel, &data);
     }
 }

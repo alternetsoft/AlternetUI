@@ -128,6 +128,235 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnKeyUp(KeyEventArgs e) { }
 
+        /// <summary>
+        ///     Alias to the Mouse.PreviewMouseDownEvent.
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseDownEvent = Mouse.PreviewMouseDownEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting the mouse button was pressed
+        /// </summary>
+        public event MouseButtonEventHandler PreviewMouseDown
+        {
+            add { AddHandler(Mouse.PreviewMouseDownEvent, value, false); }
+            remove { RemoveHandler(Mouse.PreviewMouseDownEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting the mouse button was pressed
+        /// </summary>
+        protected virtual void OnPreviewMouseDown(MouseButtonEventArgs e) { }
+
+        /// <summary>
+        ///     Alias to the Mouse.MouseDownEvent.
+        /// </summary>
+        public static readonly RoutedEvent MouseDownEvent = Mouse.MouseDownEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting the mouse button was pressed
+        /// </summary>
+        public event MouseButtonEventHandler MouseDown
+        {
+            add { AddHandler(Mouse.MouseDownEvent, value, false); }
+            remove { RemoveHandler(Mouse.MouseDownEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting the mouse button was pressed
+        /// </summary>
+        protected virtual void OnMouseDown(MouseButtonEventArgs e) { }
+
+        /// <summary>
+        ///     Alias to the Mouse.PreviewMouseUpEvent.
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseUpEvent = Mouse.PreviewMouseUpEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting the mouse button was released
+        /// </summary>
+        public event MouseButtonEventHandler PreviewMouseUp
+        {
+            add { AddHandler(Mouse.PreviewMouseUpEvent, value, false); }
+            remove { RemoveHandler(Mouse.PreviewMouseUpEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting the mouse button was released
+        /// </summary>
+        protected virtual void OnPreviewMouseUp(MouseButtonEventArgs e) { }
+
+        /// <summary>
+        ///     Alias to the Mouse.MouseUpEvent.
+        /// </summary>
+        public static readonly RoutedEvent MouseUpEvent = Mouse.MouseUpEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting the mouse button was released
+        /// </summary>
+        public event MouseButtonEventHandler MouseUp
+        {
+            add { AddHandler(Mouse.MouseUpEvent, value, false); }
+            remove { RemoveHandler(Mouse.MouseUpEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting the mouse button was released
+        /// </summary>
+        protected virtual void OnMouseUp(MouseButtonEventArgs e) { }
+
+        /// <summary>
+        ///     Declaration of the routed event reporting the left mouse button was pressed
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseLeftButtonDownEvent = EventManager.RegisterRoutedEvent("PreviewMouseLeftButtonDown", RoutingStrategy.Direct, typeof(MouseButtonEventHandler), typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting the left mouse button was pressed
+        /// </summary>
+        public event MouseButtonEventHandler PreviewMouseLeftButtonDown
+        {
+            add { AddHandler(UIElement.PreviewMouseLeftButtonDownEvent, value, false); }
+            remove { RemoveHandler(UIElement.PreviewMouseLeftButtonDownEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting the left mouse button was pressed
+        /// </summary>
+        protected virtual void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e) { }
+
+        /// <summary>
+        ///     Declaration of the routed event reporting the left mouse button was pressed
+        /// </summary>
+        public static readonly RoutedEvent MouseLeftButtonDownEvent = EventManager.RegisterRoutedEvent("MouseLeftButtonDown", RoutingStrategy.Direct, typeof(MouseButtonEventHandler), typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting the left mouse button was pressed
+        /// </summary>
+        public event MouseButtonEventHandler MouseLeftButtonDown
+        {
+            add { AddHandler(UIElement.MouseLeftButtonDownEvent, value, false); }
+            remove { RemoveHandler(UIElement.MouseLeftButtonDownEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting the left mouse button was pressed
+        /// </summary>
+        protected virtual void OnMouseLeftButtonDown(MouseButtonEventArgs e) { }
+
+        /// <summary>
+        ///     Declaration of the routed event reporting the left mouse button was released
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseLeftButtonUpEvent = EventManager.RegisterRoutedEvent("PreviewMouseLeftButtonUp", RoutingStrategy.Direct, typeof(MouseButtonEventHandler), typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting the left mouse button was released
+        /// </summary>
+        public event MouseButtonEventHandler PreviewMouseLeftButtonUp
+        {
+            add { AddHandler(UIElement.PreviewMouseLeftButtonUpEvent, value, false); }
+            remove { RemoveHandler(UIElement.PreviewMouseLeftButtonUpEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting the left mouse button was released
+        /// </summary>
+        protected virtual void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e) { }
+
+        /// <summary>
+        ///     Declaration of the routed event reporting the left mouse button was released
+        /// </summary>
+        public static readonly RoutedEvent MouseLeftButtonUpEvent = EventManager.RegisterRoutedEvent("MouseLeftButtonUp", RoutingStrategy.Direct, typeof(MouseButtonEventHandler), typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting the left mouse button was released
+        /// </summary>
+        public event MouseButtonEventHandler MouseLeftButtonUp
+        {
+            add { AddHandler(UIElement.MouseLeftButtonUpEvent, value, false); }
+            remove { RemoveHandler(UIElement.MouseLeftButtonUpEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting the left mouse button was released
+        /// </summary>
+        protected virtual void OnMouseLeftButtonUp(MouseButtonEventArgs e) { }
+
+        /// <summary>
+        ///     Declaration of the routed event reporting the right mouse button was pressed
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseRightButtonDownEvent = EventManager.RegisterRoutedEvent("PreviewMouseRightButtonDown", RoutingStrategy.Direct, typeof(MouseButtonEventHandler), typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting the right mouse button was pressed
+        /// </summary>
+        public event MouseButtonEventHandler PreviewMouseRightButtonDown
+        {
+            add { AddHandler(UIElement.PreviewMouseRightButtonDownEvent, value, false); }
+            remove { RemoveHandler(UIElement.PreviewMouseRightButtonDownEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting the right mouse button was pressed
+        /// </summary>
+        protected virtual void OnPreviewMouseRightButtonDown(MouseButtonEventArgs e) { }
+
+        /// <summary>
+        ///     Declaration of the routed event reporting the right mouse button was pressed
+        /// </summary>
+        public static readonly RoutedEvent MouseRightButtonDownEvent = EventManager.RegisterRoutedEvent("MouseRightButtonDown", RoutingStrategy.Direct, typeof(MouseButtonEventHandler), typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting the right mouse button was pressed
+        /// </summary>
+        public event MouseButtonEventHandler MouseRightButtonDown
+        {
+            add { AddHandler(UIElement.MouseRightButtonDownEvent, value, false); }
+            remove { RemoveHandler(UIElement.MouseRightButtonDownEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting the right mouse button was pressed
+        /// </summary>
+        protected virtual void OnMouseRightButtonDown(MouseButtonEventArgs e) { }
+
+        /// <summary>
+        ///     Declaration of the routed event reporting the right mouse button was released
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseRightButtonUpEvent = EventManager.RegisterRoutedEvent("PreviewMouseRightButtonUp", RoutingStrategy.Direct, typeof(MouseButtonEventHandler), typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting the right mouse button was released
+        /// </summary>
+        public event MouseButtonEventHandler PreviewMouseRightButtonUp
+        {
+            add { AddHandler(UIElement.PreviewMouseRightButtonUpEvent, value, false); }
+            remove { RemoveHandler(UIElement.PreviewMouseRightButtonUpEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting the right mouse button was released
+        /// </summary>
+        protected virtual void OnPreviewMouseRightButtonUp(MouseButtonEventArgs e) { }
+
+        /// <summary>
+        ///     Declaration of the routed event reporting the right mouse button was released
+        /// </summary>
+        public static readonly RoutedEvent MouseRightButtonUpEvent = EventManager.RegisterRoutedEvent("MouseRightButtonUp", RoutingStrategy.Direct, typeof(MouseButtonEventHandler), typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting the right mouse button was released
+        /// </summary>
+        public event MouseButtonEventHandler MouseRightButtonUp
+        {
+            add { AddHandler(UIElement.MouseRightButtonUpEvent, value, false); }
+            remove { RemoveHandler(UIElement.MouseRightButtonUpEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting the right mouse button was released
+        /// </summary>
+        protected virtual void OnMouseRightButtonUp(MouseButtonEventArgs e) { }
+
+
         private static void OnPreviewKeyDownThunk(object sender, KeyEventArgs e)
         {
             if (sender is UIElement uie)
@@ -171,6 +400,341 @@ namespace Alternet.UI
             if (sender is UIElement uie)
                 uie.OnKeyUp(e);
         }
+
+        /// <summary>
+        ///     Alias to the Mouse.PreviewMouseWheelEvent.
+        /// </summary>
+        public static readonly RoutedEvent PreviewMouseWheelEvent = Mouse.PreviewMouseWheelEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting a mouse wheel rotation
+        /// </summary>
+        public event MouseWheelEventHandler PreviewMouseWheel
+        {
+            add { AddHandler(Mouse.PreviewMouseWheelEvent, value, false); }
+            remove { RemoveHandler(Mouse.PreviewMouseWheelEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting a mouse wheel rotation
+        /// </summary>
+        protected virtual void OnPreviewMouseWheel(MouseWheelEventArgs e) { }
+
+        /// <summary>
+        ///     Alias to the Mouse.MouseWheelEvent.
+        /// </summary>
+        public static readonly RoutedEvent MouseWheelEvent = Mouse.MouseWheelEvent.AddOwner(typeof(UIElement));
+
+        /// <summary>
+        ///     Event reporting a mouse wheel rotation
+        /// </summary>
+        public event MouseWheelEventHandler MouseWheel
+        {
+            add { AddHandler(Mouse.MouseWheelEvent, value, false); }
+            remove { RemoveHandler(Mouse.MouseWheelEvent, value); }
+        }
+
+        /// <summary>
+        ///     Virtual method reporting a mouse wheel rotation
+        /// </summary>
+        protected virtual void OnMouseWheel(MouseWheelEventArgs e) { }
+
+        private static void CrackMouseButtonEventAndReRaiseEvent(DependencyObject sender, MouseButtonEventArgs e)
+        {
+            var newEvent = CrackMouseButtonEvent(e);
+            if (newEvent != null)
+                ReRaiseEventAs(sender, e, newEvent);
+        }
+
+        /// <summary>
+        ///     Re-raises an event with as a different RoutedEvent.
+        /// </summary>
+        /// <remarks>
+        ///     Only used internally.  Added to support cracking generic MouseButtonDown/Up events
+        ///     into MouseLeft/RightButtonDown/Up events.
+        /// </remarks>
+        private static void ReRaiseEventAs(DependencyObject sender, RoutedEventArgs args, RoutedEvent newEvent)
+        {
+            // Preseve and change the RoutedEvent
+            RoutedEvent preservedRoutedEvent = args.RoutedEvent;
+            args.OverrideRoutedEvent(newEvent);
+
+            // Preserve Source
+            object preservedSource = args.Source;
+
+            EventRoute route = EventRouteFactory.FetchObject(args.RoutedEvent);
+
+            if (TraceRoutedEvent.IsEnabled)
+            {
+                TraceRoutedEvent.Trace(
+                    TraceEventType.Start,
+                    TraceRoutedEvent.ReRaiseEventAs,
+                    args.RoutedEvent,
+                    sender,
+                    args,
+                    args.Handled);
+            }
+
+            try
+            {
+                // Build the route and invoke the handlers
+                UIElement.BuildRouteHelper(sender, route, args);
+
+                route.ReInvokeHandlers(sender, args);
+
+                // Restore Source
+                args.OverrideSource(preservedSource);
+
+                // Restore RoutedEvent
+                args.OverrideRoutedEvent(preservedRoutedEvent);
+
+            }
+
+            finally
+            {
+                if (TraceRoutedEvent.IsEnabled)
+                {
+                    TraceRoutedEvent.Trace(
+                        TraceEventType.Stop,
+                        TraceRoutedEvent.ReRaiseEventAs,
+                        args.RoutedEvent,
+                        sender,
+                        args,
+                        args.Handled);
+                }
+            }
+
+            // Recycle the route object
+            EventRouteFactory.RecycleObject(route);
+        }
+
+        private static RoutedEvent? CrackMouseButtonEvent(MouseButtonEventArgs e)
+        {
+            RoutedEvent? newEvent = null;
+
+            switch (e.ChangedButton)
+            {
+                case MouseButton.Left:
+                    if (e.RoutedEvent == Mouse.PreviewMouseDownEvent)
+                        newEvent = UIElement.PreviewMouseLeftButtonDownEvent;
+                    else if (e.RoutedEvent == Mouse.MouseDownEvent)
+                        newEvent = UIElement.MouseLeftButtonDownEvent;
+                    else if (e.RoutedEvent == Mouse.PreviewMouseUpEvent)
+                        newEvent = UIElement.PreviewMouseLeftButtonUpEvent;
+                    else
+                        newEvent = UIElement.MouseLeftButtonUpEvent;
+                    break;
+                case MouseButton.Right:
+                    if (e.RoutedEvent == Mouse.PreviewMouseDownEvent)
+                        newEvent = UIElement.PreviewMouseRightButtonDownEvent;
+                    else if (e.RoutedEvent == Mouse.MouseDownEvent)
+                        newEvent = UIElement.MouseRightButtonDownEvent;
+                    else if (e.RoutedEvent == Mouse.PreviewMouseUpEvent)
+                        newEvent = UIElement.PreviewMouseRightButtonUpEvent;
+                    else
+                        newEvent = UIElement.MouseRightButtonUpEvent;
+                    break;
+                default:
+                    // No wrappers exposed for the other buttons.
+                    break;
+            }
+            return newEvent;
+        }
+
+        private static void OnPreviewMouseDownThunk(object sender, MouseButtonEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                var uie = sender as UIElement;
+
+                if (uie != null)
+                {
+                    uie.OnPreviewMouseDown(e);
+                }
+            }
+
+            // Always raise this "sub-event", but we pass along the handledness.
+            UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
+        }
+
+        private static void OnMouseDownThunk(object sender, MouseButtonEventArgs e)
+        {
+            //if (!e.Handled)
+            //{
+            //    CommandManager.TranslateInput((IInputElement)sender, e);
+            //}
+
+            if (!e.Handled)
+            {
+                var uie = sender as UIElement;
+
+                if (uie != null)
+                {
+                    uie.OnMouseDown(e);
+                }
+            }
+
+            // Always raise this "sub-event", but we pass along the handledness.
+            UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
+        }
+
+        private static void OnPreviewMouseUpThunk(object sender, MouseButtonEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                var uie = sender as UIElement;
+
+                if (uie != null)
+                {
+                    uie.OnPreviewMouseUp(e);
+                }
+            }
+
+            // Always raise this "sub-event", but we pass along the handledness.
+            UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
+        }
+
+        private static void OnMouseUpThunk(object sender, MouseButtonEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                var uie = sender as UIElement;
+
+                if (uie != null)
+                {
+                    uie.OnMouseUp(e);
+                }
+            }
+
+            // Always raise this "sub-event", but we pass along the handledness.
+            UIElement.CrackMouseButtonEventAndReRaiseEvent((DependencyObject)sender, e);
+        }
+
+        private static void OnPreviewMouseLeftButtonDownThunk(object sender, MouseButtonEventArgs e)
+        {
+            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+
+            var uie = sender as UIElement;
+
+            if (uie != null)
+            {
+                uie.OnPreviewMouseLeftButtonDown(e);
+            }
+        }
+
+        private static void OnMouseLeftButtonDownThunk(object sender, MouseButtonEventArgs e)
+        {
+            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+
+            var uie = sender as UIElement;
+
+            if (uie != null)
+            {
+                uie.OnMouseLeftButtonDown(e);
+            }
+        }
+
+        private static void OnPreviewMouseLeftButtonUpThunk(object sender, MouseButtonEventArgs e)
+        {
+            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+
+            var uie = sender as UIElement;
+
+            if (uie != null)
+            {
+                uie.OnPreviewMouseLeftButtonUp(e);
+            }
+        }
+
+        private static void OnMouseLeftButtonUpThunk(object sender, MouseButtonEventArgs e)
+        {
+            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+
+            var uie = sender as UIElement;
+
+            if (uie != null)
+            {
+                uie.OnMouseLeftButtonUp(e);
+            }
+        }
+
+        private static void OnPreviewMouseRightButtonDownThunk(object sender, MouseButtonEventArgs e)
+        {
+            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+
+            var uie = sender as UIElement;
+
+            if (uie != null)
+            {
+                uie.OnPreviewMouseRightButtonDown(e);
+            }
+        }
+
+        private static void OnMouseRightButtonDownThunk(object sender, MouseButtonEventArgs e)
+        {
+            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+
+            var uie = sender as UIElement;
+
+            if (uie != null)
+            {
+                uie.OnMouseRightButtonDown(e);
+            }
+        }
+
+        private static void OnPreviewMouseRightButtonUpThunk(object sender, MouseButtonEventArgs e)
+        {
+            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+
+            var uie = sender as UIElement;
+
+            if (uie != null)
+            {
+                uie.OnPreviewMouseRightButtonUp(e);
+            }
+        }
+
+        private static void OnMouseRightButtonUpThunk(object sender, MouseButtonEventArgs e)
+        {
+            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+
+            var uie = sender as UIElement;
+
+            if (uie != null)
+            {
+                uie.OnMouseRightButtonUp(e);
+            }
+        }
+
+        private static void OnPreviewMouseWheelThunk(object sender, MouseWheelEventArgs e)
+        {
+            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+
+            var uie = sender as UIElement;
+
+            if (uie != null)
+            {
+                uie.OnPreviewMouseWheel(e);
+            }
+        }
+
+        private static void OnMouseWheelThunk(object sender, MouseWheelEventArgs e)
+        {
+            Invariant.Assert(!e.Handled, "Unexpected: Event has already been handled.");
+
+            //CommandManager.TranslateInput((IInputElement)sender, e);
+
+            if (!e.Handled)
+            {
+                var uie = sender as UIElement;
+
+                if (uie != null)
+                {
+                    uie.OnMouseWheel(e);
+                }
+            }
+        }
+
 
         /// <summary>
         ///     Alias to the Mouse.PreviewMouseMoveEvent.
@@ -236,22 +800,22 @@ namespace Alternet.UI
 
         static void RegisterEvents(Type type)
         {
-            //EventManager.RegisterClassHandler(type, Mouse.PreviewMouseDownEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseDownThunk), true);
-            //EventManager.RegisterClassHandler(type, Mouse.MouseDownEvent, new MouseButtonEventHandler(UIElement.OnMouseDownThunk), true);
-            //EventManager.RegisterClassHandler(type, Mouse.PreviewMouseUpEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseUpThunk), true);
-            //EventManager.RegisterClassHandler(type, Mouse.MouseUpEvent, new MouseButtonEventHandler(UIElement.OnMouseUpThunk), true);
-            //EventManager.RegisterClassHandler(type, UIElement.PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseLeftButtonDownThunk), false);
-            //EventManager.RegisterClassHandler(type, UIElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(UIElement.OnMouseLeftButtonDownThunk), false);
-            //EventManager.RegisterClassHandler(type, UIElement.PreviewMouseLeftButtonUpEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseLeftButtonUpThunk), false);
-            //EventManager.RegisterClassHandler(type, UIElement.MouseLeftButtonUpEvent, new MouseButtonEventHandler(UIElement.OnMouseLeftButtonUpThunk), false);
-            //EventManager.RegisterClassHandler(type, UIElement.PreviewMouseRightButtonDownEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseRightButtonDownThunk), false);
-            //EventManager.RegisterClassHandler(type, UIElement.MouseRightButtonDownEvent, new MouseButtonEventHandler(UIElement.OnMouseRightButtonDownThunk), false);
-            //EventManager.RegisterClassHandler(type, UIElement.PreviewMouseRightButtonUpEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseRightButtonUpThunk), false);
-            //EventManager.RegisterClassHandler(type, UIElement.MouseRightButtonUpEvent, new MouseButtonEventHandler(UIElement.OnMouseRightButtonUpThunk), false);
+            EventManager.RegisterClassHandler(type, Mouse.PreviewMouseDownEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseDownThunk), true);
+            EventManager.RegisterClassHandler(type, Mouse.MouseDownEvent, new MouseButtonEventHandler(UIElement.OnMouseDownThunk), true);
+            EventManager.RegisterClassHandler(type, Mouse.PreviewMouseUpEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseUpThunk), true);
+            EventManager.RegisterClassHandler(type, Mouse.MouseUpEvent, new MouseButtonEventHandler(UIElement.OnMouseUpThunk), true);
+            EventManager.RegisterClassHandler(type, UIElement.PreviewMouseLeftButtonDownEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseLeftButtonDownThunk), false);
+            EventManager.RegisterClassHandler(type, UIElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(UIElement.OnMouseLeftButtonDownThunk), false);
+            EventManager.RegisterClassHandler(type, UIElement.PreviewMouseLeftButtonUpEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseLeftButtonUpThunk), false);
+            EventManager.RegisterClassHandler(type, UIElement.MouseLeftButtonUpEvent, new MouseButtonEventHandler(UIElement.OnMouseLeftButtonUpThunk), false);
+            EventManager.RegisterClassHandler(type, UIElement.PreviewMouseRightButtonDownEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseRightButtonDownThunk), false);
+            EventManager.RegisterClassHandler(type, UIElement.MouseRightButtonDownEvent, new MouseButtonEventHandler(UIElement.OnMouseRightButtonDownThunk), false);
+            EventManager.RegisterClassHandler(type, UIElement.PreviewMouseRightButtonUpEvent, new MouseButtonEventHandler(UIElement.OnPreviewMouseRightButtonUpThunk), false);
+            EventManager.RegisterClassHandler(type, UIElement.MouseRightButtonUpEvent, new MouseButtonEventHandler(UIElement.OnMouseRightButtonUpThunk), false);
             EventManager.RegisterClassHandler(type, Mouse.PreviewMouseMoveEvent, new MouseEventHandler(UIElement.OnPreviewMouseMoveThunk), false);
             EventManager.RegisterClassHandler(type, Mouse.MouseMoveEvent, new MouseEventHandler(UIElement.OnMouseMoveThunk), false);
-            //EventManager.RegisterClassHandler(type, Mouse.PreviewMouseWheelEvent, new MouseWheelEventHandler(UIElement.OnPreviewMouseWheelThunk), false);
-            //EventManager.RegisterClassHandler(type, Mouse.MouseWheelEvent, new MouseWheelEventHandler(UIElement.OnMouseWheelThunk), false);
+            EventManager.RegisterClassHandler(type, Mouse.PreviewMouseWheelEvent, new MouseWheelEventHandler(UIElement.OnPreviewMouseWheelThunk), false);
+            EventManager.RegisterClassHandler(type, Mouse.MouseWheelEvent, new MouseWheelEventHandler(UIElement.OnMouseWheelThunk), false);
             //EventManager.RegisterClassHandler(type, Mouse.MouseEnterEvent, new MouseEventHandler(UIElement.OnMouseEnterThunk), false);
             //EventManager.RegisterClassHandler(type, Mouse.MouseLeaveEvent, new MouseEventHandler(UIElement.OnMouseLeaveThunk), false);
             //EventManager.RegisterClassHandler(type, Mouse.GotMouseCaptureEvent, new MouseEventHandler(UIElement.OnGotMouseCaptureThunk), false);

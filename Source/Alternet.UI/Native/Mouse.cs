@@ -62,11 +62,29 @@ namespace Alternet.UI.Native
                     var ea = new NativeEventArgs<MouseEventData>(MarshalEx.PtrToStructure<MouseEventData>(parameter));
                     MouseMove?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
                 }
+                case NativeApi.MouseEvent.MouseDown:
+                {
+                    var ea = new NativeEventArgs<MouseButtonEventData>(MarshalEx.PtrToStructure<MouseButtonEventData>(parameter));
+                    MouseDown?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                }
+                case NativeApi.MouseEvent.MouseUp:
+                {
+                    var ea = new NativeEventArgs<MouseButtonEventData>(MarshalEx.PtrToStructure<MouseButtonEventData>(parameter));
+                    MouseUp?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                }
+                case NativeApi.MouseEvent.MouseWheel:
+                {
+                    var ea = new NativeEventArgs<MouseWheelEventData>(MarshalEx.PtrToStructure<MouseWheelEventData>(parameter));
+                    MouseWheel?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected MouseEvent value: " + e);
             }
         }
         
         public event NativeEventHandler<MouseEventData>? MouseMove;
+        public event NativeEventHandler<MouseButtonEventData>? MouseDown;
+        public event NativeEventHandler<MouseButtonEventData>? MouseUp;
+        public event NativeEventHandler<MouseWheelEventData>? MouseWheel;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -79,6 +97,9 @@ namespace Alternet.UI.Native
             public enum MouseEvent
             {
                 MouseMove,
+                MouseDown,
+                MouseUp,
+                MouseWheel,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]

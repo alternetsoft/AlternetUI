@@ -47,45 +47,45 @@ namespace Alternet.UI
         ///// </summary>
         //bool IsMouseOver { get; }
 
-        ///// <summary>
-        /////     An event reporting the left mouse button was pressed.
-        ///// </summary>
-        //event MouseButtonEventHandler PreviewMouseLeftButtonDown;
+        /// <summary>
+        ///     An event reporting the left mouse button was pressed.
+        /// </summary>
+        event MouseButtonEventHandler PreviewMouseLeftButtonDown;
 
-        ///// <summary>
-        /////     An event reporting the left mouse button was pressed.
-        ///// </summary>
-        //event MouseButtonEventHandler MouseLeftButtonDown;
+        /// <summary>
+        ///     An event reporting the left mouse button was pressed.
+        /// </summary>
+        event MouseButtonEventHandler MouseLeftButtonDown;
 
-        ///// <summary>
-        /////     An event reporting the left mouse button was released.
-        ///// </summary>
-        //event MouseButtonEventHandler PreviewMouseLeftButtonUp;
+        /// <summary>
+        ///     An event reporting the left mouse button was released.
+        /// </summary>
+        event MouseButtonEventHandler PreviewMouseLeftButtonUp;
 
-        ///// <summary>
-        /////     An event reporting the left mouse button was released.
-        ///// </summary>
-        //event MouseButtonEventHandler MouseLeftButtonUp;
+        /// <summary>
+        ///     An event reporting the left mouse button was released.
+        /// </summary>
+        event MouseButtonEventHandler MouseLeftButtonUp;
 
-        ///// <summary>
-        /////     An event reporting the right mouse button was pressed.
-        ///// </summary>
-        //event MouseButtonEventHandler PreviewMouseRightButtonDown;
+        /// <summary>
+        ///     An event reporting the right mouse button was pressed.
+        /// </summary>
+        event MouseButtonEventHandler PreviewMouseRightButtonDown;
 
-        ///// <summary>
-        /////     An event reporting the right mouse button was pressed.
-        ///// </summary>
-        //event MouseButtonEventHandler MouseRightButtonDown;
+        /// <summary>
+        ///     An event reporting the right mouse button was pressed.
+        /// </summary>
+        event MouseButtonEventHandler MouseRightButtonDown;
 
-        ///// <summary>
-        /////     An event reporting the right mouse button was released.
-        ///// </summary>
-        //event MouseButtonEventHandler PreviewMouseRightButtonUp;
+        /// <summary>
+        ///     An event reporting the right mouse button was released.
+        /// </summary>
+        event MouseButtonEventHandler PreviewMouseRightButtonUp;
 
-        ///// <summary>
-        /////     An event reporting the right mouse button was released.
-        ///// </summary>
-        //event MouseButtonEventHandler MouseRightButtonUp;
+        /// <summary>
+        ///     An event reporting the right mouse button was released.
+        /// </summary>
+        event MouseButtonEventHandler MouseRightButtonUp;
 
         /// <summary>
         ///     An event reporting a mouse move.
@@ -97,15 +97,15 @@ namespace Alternet.UI
         /// </summary>
         event MouseEventHandler MouseMove;
 
-        ///// <summary>
-        /////     An event reporting a mouse wheel rotation.
-        ///// </summary>
-        //event MouseWheelEventHandler PreviewMouseWheel;
+        /// <summary>
+        ///     An event reporting a mouse wheel rotation.
+        /// </summary>
+        event MouseWheelEventHandler PreviewMouseWheel;
 
-        ///// <summary>
-        /////     An event reporting a mouse wheel rotation.
-        ///// </summary>
-        //event MouseWheelEventHandler MouseWheel;
+        /// <summary>
+        ///     An event reporting a mouse wheel rotation.
+        /// </summary>
+        event MouseWheelEventHandler MouseWheel;
 
         ///// <summary>
         /////     A property indicating if the mouse is over this element or not.

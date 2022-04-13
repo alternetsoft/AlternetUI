@@ -633,6 +633,21 @@ namespace Alternet.UI
             ReportMouseEvent(UIElement.PreviewMouseMoveEvent, UIElement.MouseMoveEvent, new MouseEventArgs(Mouse.PrimaryDevice, timestamp), out handled);
         }
 
+        internal void ReportMouseDown(long timestamp, MouseButton changedButton, out bool handled)
+        {
+            ReportMouseEvent(UIElement.PreviewMouseDownEvent, UIElement.MouseDownEvent, new MouseButtonEventArgs(Mouse.PrimaryDevice, timestamp, changedButton), out handled);
+        }
+
+        internal void ReportMouseUp(long timestamp, MouseButton changedButton, out bool handled)
+        {
+            ReportMouseEvent(UIElement.PreviewMouseUpEvent, UIElement.MouseUpEvent, new MouseButtonEventArgs(Mouse.PrimaryDevice, timestamp, changedButton), out handled);
+        }
+
+        internal void ReportMouseWheel(long timestamp, int delta, out bool handled)
+        {
+            ReportMouseEvent(UIElement.PreviewMouseWheelEvent, UIElement.MouseWheelEvent, new MouseWheelEventArgs(Mouse.PrimaryDevice, timestamp, delta), out handled);
+        }
+
         internal void ReportKeyDown(long timestamp, Key key, bool isRepeat, out bool handled)
         {
             ReportKeyEvent(UIElement.PreviewKeyDownEvent, UIElement.KeyDownEvent, new KeyEventArgs(Keyboard.PrimaryDevice, timestamp, key, isRepeat), out handled);
