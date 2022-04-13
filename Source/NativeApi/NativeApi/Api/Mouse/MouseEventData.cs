@@ -8,5 +8,6 @@ namespace NativeApi.Api
     public class MouseEventData : NativeEventData
     {
         public long timestamp;
+        public IntPtr targetControl;
     }
 }

@@ -24,6 +24,7 @@ namespace Alternet::UI
             wxPointerHash, wxPointerEqual,
             ControlsByWxWindowsMap);
 
+        static Control* TryFindControlByWxWindow(wxWindow* wxWindow);
 
     protected:
         void CreateWxWindow();
@@ -117,7 +118,6 @@ namespace Alternet::UI
 
         static ControlsByWxWindowsMap s_controlsByWxWindowsMap;
 
-        static Control* TryFindControlByWxWindow(wxWindow* wxWindow);
         static void AssociateControlWithWxWindow(wxWindow* wxWindow, Control* control);
         static void RemoveWxWindowControlAssociation(wxWindow* wxWindow);
     };

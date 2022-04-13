@@ -25,6 +25,7 @@ namespace Alternet::UI
     struct MouseButtonEventData
     {
         int64_t timestamp;
+        void* targetControl;
         MouseButton changedButton;
     };
     #pragma pack(pop)
@@ -33,6 +34,7 @@ namespace Alternet::UI
     struct MouseEventData
     {
         int64_t timestamp;
+        void* targetControl;
     };
     #pragma pack(pop)
     
@@ -40,6 +42,7 @@ namespace Alternet::UI
     struct MouseWheelEventData
     {
         int64_t timestamp;
+        void* targetControl;
         int delta;
     };
     #pragma pack(pop)

@@ -628,29 +628,44 @@ namespace Alternet.UI
         //    return input as StagingAreaInputItem;
         //}
 
-        internal void ReportMouseMove(long timestamp, out bool handled)
+        internal void ReportMouseMove(Control targetControl, long timestamp, out bool handled)
         {
-            ReportMouseEvent(UIElement.PreviewMouseMoveEvent, UIElement.MouseMoveEvent, new MouseEventArgs(Mouse.PrimaryDevice, timestamp), out handled);
+            ReportMouseEvent(targetControl, UIElement.PreviewMouseMoveEvent, UIElement.MouseMoveEvent, new MouseEventArgs(Mouse.PrimaryDevice, timestamp), out handled);
         }
 
-        internal void ReportMouseDown(long timestamp, MouseButton changedButton, out bool handled)
+        internal void ReportMouseDown(Control targetControl, long timestamp, MouseButton changedButton, out bool handled)
         {
-            ReportMouseEvent(UIElement.PreviewMouseDownEvent, UIElement.MouseDownEvent, new MouseButtonEventArgs(Mouse.PrimaryDevice, timestamp, changedButton), out handled);
+            ReportMouseEvent(targetControl, UIElement.PreviewMouseDownEvent, UIElement.MouseDownEvent, new MouseButtonEventArgs(Mouse.PrimaryDevice, timestamp, changedButton), out handled);
         }
 
-        internal void ReportMouseDoubleClick(long timestamp, MouseButton changedButton, out bool handled)
+        internal void ReportMouseDoubleClick(Control targetControl, long timestamp, MouseButton changedButton, out bool handled)
         {
-            ReportMouseEvent(UIElement.PreviewMouseDoubleClickEvent, UIElement.MouseDoubleClickEvent, new MouseButtonEventArgs(Mouse.PrimaryDevice, timestamp, changedButton), out handled);
+            ReportMouseEvent(
+                targetControl,
+                UIElement.PreviewMouseDoubleClickEvent,
+                UIElement.MouseDoubleClickEvent,
+                new MouseButtonEventArgs(Mouse.PrimaryDevice, timestamp, changedButton),
+                out handled);
         }
 
-        internal void ReportMouseUp(long timestamp, MouseButton changedButton, out bool handled)
+        internal void ReportMouseUp(Control targetControl, long timestamp, MouseButton changedButton, out bool handled)
         {
-            ReportMouseEvent(UIElement.PreviewMouseUpEvent, UIElement.MouseUpEvent, new MouseButtonEventArgs(Mouse.PrimaryDevice, timestamp, changedButton), out handled);
+            ReportMouseEvent(
+                targetControl,
+                UIElement.PreviewMouseUpEvent,
+                UIElement.MouseUpEvent,
+                new MouseButtonEventArgs(Mouse.PrimaryDevice, timestamp, changedButton),
+                out handled);
         }
 
-        internal void ReportMouseWheel(long timestamp, int delta, out bool handled)
+        internal void ReportMouseWheel(Control targetControl, long timestamp, int delta, out bool handled)
         {
-            ReportMouseEvent(UIElement.PreviewMouseWheelEvent, UIElement.MouseWheelEvent, new MouseWheelEventArgs(Mouse.PrimaryDevice, timestamp, delta), out handled);
+            ReportMouseEvent(
+                targetControl,
+                UIElement.PreviewMouseWheelEvent,
+                UIElement.MouseWheelEvent,
+                new MouseWheelEventArgs(Mouse.PrimaryDevice, timestamp, delta),
+                out handled);
         }
 
         internal void ReportKeyDown(long timestamp, Key key, bool isRepeat, out bool handled)
@@ -696,7 +711,20 @@ namespace Alternet.UI
             handled = eventArgs.Handled;
         }
 
-        internal void ReportMouseEvent(RoutedEvent previewEvent, RoutedEvent @event, InputEventArgs eventArgs, out bool handled)
+        private Control GetControlUnderMouse()
+        {
+            var controlUnderMouse = Native.Control.HitTest(PrimaryMouseDevice.GetScreenPosition());
+            if (controlUnderMouse == null)
+                return null;
+
+            var handler = ControlHandler.TryGetHandlerByNativeControl(controlUnderMouse);
+            if (handler == null)
+                return null;
+
+            return handler.Control;
+        }
+
+        internal void ReportMouseEvent(Control targetControl, RoutedEvent previewEvent, RoutedEvent @event, InputEventArgs eventArgs, out bool handled)
         {
             handled = false;
 
@@ -705,20 +733,16 @@ namespace Alternet.UI
             if (isCancelled)
                 return;
 
-            var controlUnderMouse = Native.Control.HitTest(PrimaryMouseDevice.GetScreenPosition());
-            if (controlUnderMouse == null)
-                return;
-
-            var handler = ControlHandler.TryGetHandlerByNativeControl(controlUnderMouse);
-            if (handler == null)
+            var control = targetControl ?? GetControlUnderMouse();
+            if (control == null)
                 return;
 
             eventArgs.RoutedEvent = previewEvent;
-            handler.Control.RaiseEvent(eventArgs);
+            control.RaiseEvent(eventArgs);
             if (!eventArgs.Handled)
             {
                 eventArgs.RoutedEvent = @event;
-                handler.Control.RaiseEvent(eventArgs);
+                control.RaiseEvent(eventArgs);
             }
 
             handled = eventArgs.Handled;

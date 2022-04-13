@@ -2,6 +2,7 @@
 #include "Common.h"
 #include "ApiTypes.h"
 #include "Object.h"
+#include "Control.h"
 
 namespace Alternet::UI
 {
@@ -16,6 +17,6 @@ namespace Alternet::UI
         void OnMouseDoubleClick(wxMouseEvent& e, MouseButton changedButton, bool& handled);
 
     private:
-    
+        Control* GetEventTargetControl(wxEvent& e);
     };
 }

@@ -21,32 +21,69 @@ namespace Alternet.UI
 
         private void NativeMouse_MouseDoubleClick(object? sender, NativeEventArgs<MouseButtonEventData> e)
         {
-            InputManager.Current.ReportMouseDoubleClick(e.Data.timestamp, (MouseButton)e.Data.changedButton, out var handled);
+            InputManager.Current.ReportMouseDoubleClick(
+                GetTargetControl(e.Data.targetControl),
+                e.Data.timestamp,
+                (MouseButton)e.Data.changedButton,
+                out var handled);
+            
             e.Handled = handled;
         }
 
         private void NativeMouse_MouseWheel(object? sender, NativeEventArgs<MouseWheelEventData> e)
         {
-            InputManager.Current.ReportMouseWheel(e.Data.timestamp, e.Data.delta, out var handled);
+            InputManager.Current.ReportMouseWheel(
+                GetTargetControl(e.Data.targetControl),
+                e.Data.timestamp,
+                e.Data.delta,
+                out var handled);
             e.Handled = handled;
         }
 
         private void NativeMouse_MouseUp(object? sender, NativeEventArgs<MouseButtonEventData> e)
         {
-            InputManager.Current.ReportMouseUp(e.Data.timestamp, (MouseButton)e.Data.changedButton, out var handled);
+            InputManager.Current.ReportMouseUp(
+                GetTargetControl(e.Data.targetControl),
+                e.Data.timestamp,
+                (MouseButton)e.Data.changedButton,
+                out var handled);
+            
             e.Handled = handled;
         }
 
         private void NativeMouse_MouseDown(object? sender, NativeEventArgs<MouseButtonEventData> e)
         {
-            InputManager.Current.ReportMouseDown(e.Data.timestamp, (MouseButton)e.Data.changedButton, out var handled);
+            InputManager.Current.ReportMouseDown(GetTargetControl(e.Data.targetControl),
+                e.Data.timestamp,
+                (MouseButton)e.Data.changedButton,
+                out var handled);
+
             e.Handled = handled;
         }
 
         private void NativeMouse_MouseMove(object? sender, Native.NativeEventArgs<Native.MouseEventData> e)
         {
-            InputManager.Current.ReportMouseMove(e.Data.timestamp, out var handled);
+            InputManager.Current.ReportMouseMove(
+                GetTargetControl(e.Data.targetControl),
+                e.Data.timestamp,
+                out var handled);
+            
             e.Handled = handled;
+        }
+
+        static Control? GetTargetControl(IntPtr targetControlPointer)
+        {
+            if (targetControlPointer == IntPtr.Zero)
+                return null;
+
+            var c = NativeObject.GetFromNativePointer<NativeObject>(targetControlPointer, null) as Native.Control;
+            if (c == null)
+                return null;
+
+            if (!c.IsMouseCaptured)
+                return null;
+
+            return ControlHandler.TryGetHandlerByNativeControl(c)?.Control;
         }
 
         protected virtual void Dispose(bool disposing)

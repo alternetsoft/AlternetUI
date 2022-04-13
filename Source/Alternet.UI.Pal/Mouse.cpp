@@ -37,33 +37,43 @@ namespace Alternet::UI
         }
     }
 
+    Control* Mouse::GetEventTargetControl(wxEvent& e)
+    {
+        Control* targetControl = nullptr;
+        auto eventObject = e.GetEventObject();
+        auto window = dynamic_cast<wxWindow*>(eventObject);
+        if (window != nullptr)
+            targetControl = Control::TryFindControlByWxWindow(window);
+        return targetControl;
+    }
+
     void Mouse::OnMouseMove(wxMouseEvent& e, bool& handled)
     {
-        MouseEventData data { e.GetTimestamp() };
+        MouseEventData data { e.GetTimestamp(), GetEventTargetControl(e)};
         handled = RaiseEvent(MouseEvent::MouseMove, &data);
     }
     
     void Mouse::OnMouseDown(wxMouseEvent& e, MouseButton changedButton, bool& handled)
     {
-        MouseButtonEventData data { e.GetTimestamp(), changedButton };
+        MouseButtonEventData data { e.GetTimestamp(), GetEventTargetControl(e), changedButton };
         handled = RaiseEvent(MouseEvent::MouseDown, &data);
     }
     
     void Mouse::OnMouseUp(wxMouseEvent& e, MouseButton changedButton, bool& handled)
     {
-        MouseButtonEventData data{ e.GetTimestamp(), changedButton };
+        MouseButtonEventData data{ e.GetTimestamp(), GetEventTargetControl(e), changedButton };
         handled = RaiseEvent(MouseEvent::MouseUp, &data);
     }
     
     void Mouse::OnMouseWheel(wxMouseEvent& e, bool& handled)
     {
-        MouseWheelEventData data{ e.GetTimestamp(), e.GetWheelRotation()};
+        MouseWheelEventData data{ e.GetTimestamp(), GetEventTargetControl(e), e.GetWheelRotation()};
         handled = RaiseEvent(MouseEvent::MouseWheel, &data);
     }
 
     void Mouse::OnMouseDoubleClick(wxMouseEvent& e, MouseButton changedButton, bool& handled)
     {
-        MouseButtonEventData data{ e.GetTimestamp(), changedButton };
+        MouseButtonEventData data{ e.GetTimestamp(), GetEventTargetControl(e), changedButton };
         handled = RaiseEvent(MouseEvent::MouseDoubleClick, &data);
     }
 }

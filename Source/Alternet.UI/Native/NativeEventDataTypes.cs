@@ -22,6 +22,7 @@ namespace Alternet.UI.Native
     class MouseButtonEventData
     {
         public long timestamp;
+        public System.IntPtr targetControl;
         public MouseButton changedButton;
     }
     
@@ -29,12 +30,14 @@ namespace Alternet.UI.Native
     class MouseEventData
     {
         public long timestamp;
+        public System.IntPtr targetControl;
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class MouseWheelEventData
     {
         public long timestamp;
+        public System.IntPtr targetControl;
         public int delta;
     }
     
