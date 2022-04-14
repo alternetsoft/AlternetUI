@@ -11,7 +11,12 @@ namespace InputSample
             InitializeComponent();
 
             InputManager.Current.PreProcessInput += InputManager_PreProcessInput;
+
+            mouseCaptureLabel.Text = MouseUncapturedLabel;
         }
+
+        const string MouseUncapturedLabel = "Press mouse button here to capture mouse.";
+        const string MouseCapturedLabel = "Release mouse button anywhere to release the capture.";
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
@@ -49,19 +54,19 @@ namespace InputSample
             MessageBox.Show("Hello!", "Button Clicked");
         }
 
-        private void CaptureMouseLabel_MouseDown(object sender, EventArgs e)
+        private void MouseCaptureBorder_MouseDown(object sender, EventArgs e)
         {
-            captureMouseLabel.CaptureMouse();
-            captureMouseLabel.Text = "Mouse is captured. Click again to release the capture.";
+            mouseCaptureBorder.CaptureMouse();
+            mouseCaptureLabel.Text = MouseCapturedLabel;
         }
 
-        private void CaptureMouseLabel_MouseUp(object sender, EventArgs e)
+        private void MouseCaptureBorder_MouseUp(object sender, EventArgs e)
         {
-            captureMouseLabel.ReleaseMouseCapture();
-            captureMouseLabel.Text = "Click here to capture mouse.";
+            mouseCaptureBorder.ReleaseMouseCapture();
+            mouseCaptureLabel.Text = MouseUncapturedLabel;
         }
 
-        private void CaptureMouseLabel_MouseCaptureLost(object sender, EventArgs e)
+        private void MouseCaptureBorder_MouseCaptureLost(object sender, EventArgs e)
         {
             MessageBox.Show("Mouse capture was lost.");
         }

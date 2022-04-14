@@ -20,9 +20,11 @@
 				PreviewMouseDown="HelloButton_PreviewMouseDown" MouseDown="HelloButton_MouseDown"
 				PreviewMouseUp="HelloButton_PreviewMouseUp" MouseUp="HelloButton_MouseUp"
 				/>
-		<Label Text="Click here to capture mouse" Margin="10" Name="captureMouseLabel"
-			   MouseDown="CaptureMouseLabel_MouseDown" MouseUp="CaptureMouseLabel_MouseUp"
-			   MouseCaptureLost="CaptureMouseLabel_MouseCaptureLost"/>
+		<Border Margin="10"
+				Name="mouseCaptureBorder"
+				MouseDown="MouseCaptureBorder_MouseDown" MouseUp="MouseCaptureBorder_MouseUp" MouseCaptureLost="MouseCaptureBorder_MouseCaptureLost">
+			<Label Margin="10" Name="mouseCaptureLabel" />
+		</Border>
 		<TextBox Text="Sample Text Box" Margin="10"/>
 		<CheckBox Name="cancelMouseMoveInputCheckBox" Text="Cancel MouseMove Input" Margin="10"/>
 		
