@@ -384,7 +384,6 @@ namespace Alternet.UI
             inLayout = true;
             try
             {
-                // todo: we need a system to detect when parent relayout is needed?
                 var parent = Control.Parent;
                 if (parent != null)
                     parent.PerformLayout();
@@ -566,9 +565,6 @@ namespace Alternet.UI
                 NativeControl.VisibleChanged -= NativeControl_VisibleChanged;
                 NativeControl.MouseEnter -= NativeControl_MouseEnter;
                 NativeControl.MouseLeave -= NativeControl_MouseLeave;
-                NativeControl.MouseMove -= NativeControl_MouseMove;
-                NativeControl.MouseLeftButtonDown -= NativeControl_MouseLeftButtonDown;
-                NativeControl.MouseLeftButtonUp -= NativeControl_MouseLeftButtonUp;
                 NativeControl.MouseCaptureLost -= NativeControl_MouseCaptureLost;
             }
         }
@@ -589,29 +585,12 @@ namespace Alternet.UI
             NativeControl.VisibleChanged += NativeControl_VisibleChanged;
             NativeControl.MouseEnter += NativeControl_MouseEnter;
             NativeControl.MouseLeave += NativeControl_MouseLeave;
-            NativeControl.MouseMove += NativeControl_MouseMove;
-            NativeControl.MouseLeftButtonDown += NativeControl_MouseLeftButtonDown;
-            NativeControl.MouseLeftButtonUp += NativeControl_MouseLeftButtonUp;
             NativeControl.MouseCaptureLost += NativeControl_MouseCaptureLost;
         }
 
         private void NativeControl_MouseCaptureLost(object? sender, EventArgs e)
         {
             Control.RaiseMouseCaptureLost();
-        }
-
-        /// <summary>
-        /// Called when the mouse cursor changes position.
-        /// </summary>
-        protected virtual void OnMouseMove()
-        {
-        }
-
-        /// <summary>
-        /// Called when the mouse cursor enters the boundary of the control.
-        /// </summary>
-        protected virtual void OnMouseEnter()
-        {
         }
 
         /// <summary>
@@ -638,6 +617,20 @@ namespace Alternet.UI
                 throw new InvalidOperationException();
 
             return NativeControl.ClientToScreen(point);
+        }
+
+        /// <summary>
+        /// Called when the mouse cursor enters the boundary of the control.
+        /// </summary>
+        protected virtual void OnMouseEnter()
+        {
+        }
+
+        /// <summary>
+        /// Called when the mouse cursor moves.
+        /// </summary>
+        protected virtual void OnMouseMove()
+        {
         }
 
         /// <summary>
@@ -887,55 +880,12 @@ namespace Alternet.UI
 
         private void NativeControl_MouseEnter(object? sender, EventArgs? e)
         {
-            OnMouseEnter();
+            Control.RaiseMouseEnter();
         }
 
         private void NativeControl_MouseLeave(object? sender, EventArgs? e)
         {
-            OnMouseLeave();
-        }
-
-        private void NativeControl_MouseMove(object? sender, EventArgs? e)
-        {
-            var handler = this;
-            while (true)
-            {
-                handler.OnMouseMove();
-                var parent = handler.Control.Parent;
-                if (parent == null)
-                    break;
-                handler = parent.Handler;
-            }
-        }
-
-        private void NativeControl_MouseLeftButtonDown(object? sender, EventArgs? e)
-        {
-            var handler = this;
-            while (true)
-            {
-                handler.OnMouseLeftButtonDown();
-                if (!handler.IsAttached)
-                    break;
-                var parent = handler.Control.Parent;
-                if (parent == null)
-                    break;
-                handler = parent.Handler;
-            }
-        }
-
-        private void NativeControl_MouseLeftButtonUp(object? sender, EventArgs? e)
-        {
-            var handler = this;
-            while (true)
-            {
-                handler.OnMouseLeftButtonUp();
-                if (!handler.IsAttached)
-                    break;
-                var parent = handler.Control.Parent;
-                if (parent == null)
-                    break;
-                handler = parent.Handler;
-            }
+            Control.RaiseMouseLeave();
         }
 
         private void Control_MarginChanged(object? sender, EventArgs? e)

@@ -111,6 +111,16 @@ namespace Alternet.UI
         public event EventHandler? MouseCaptureLost;
 
         /// <summary>
+        /// Occurs when the mouse pointer enters the control.
+        /// </summary>
+        public event EventHandler? MouseEnter;
+
+        /// <summary>
+        /// Occurs when the mouse pointer leaves the control.
+        /// </summary>
+        public event EventHandler? MouseLeave;
+
+        /// <summary>
         /// Occurs when the value of the <see cref="Enabled"/> property changes.
         /// </summary>
         public event EventHandler? EnabledChanged;
@@ -571,6 +581,18 @@ namespace Alternet.UI
             MouseCaptureLost?.Invoke(this, EventArgs.Empty);
         }
 
+        internal void RaiseMouseEnter()
+        {
+            OnMouseEnter();
+            MouseEnter?.Invoke(this, EventArgs.Empty);
+        }
+
+        internal void RaiseMouseLeave()
+        {
+            OnMouseLeave();
+            MouseLeave?.Invoke(this, EventArgs.Empty);
+        }
+
         /// <summary>
         /// Converts the screen coordinates of a specified point on the screen to client-area coordinates.
         /// </summary>
@@ -765,6 +787,20 @@ namespace Alternet.UI
         /// Called when the control loses mouse capture.
         /// </summary>
         protected virtual void OnMouseCaptureLost()
+        {
+        }
+
+        /// <summary>
+        /// Called when the mouse pointer enters the control.
+        /// </summary>
+        protected virtual void OnMouseEnter()
+        {
+        }
+
+        /// <summary>
+        /// Called when the mouse pointer leaves the control.
+        /// </summary>
+        protected virtual void OnMouseLeave()
         {
         }
 

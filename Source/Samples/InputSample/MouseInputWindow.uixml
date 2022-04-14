@@ -22,7 +22,8 @@
 				/>
 		<Border Margin="10"
 				Name="mouseCaptureBorder"
-				MouseDown="MouseCaptureBorder_MouseDown" MouseUp="MouseCaptureBorder_MouseUp" MouseCaptureLost="MouseCaptureBorder_MouseCaptureLost">
+				MouseDown="MouseCaptureBorder_MouseDown" MouseUp="MouseCaptureBorder_MouseUp" MouseCaptureLost="MouseCaptureBorder_MouseCaptureLost"
+				MouseEnter="MouseCaptureBorder_MouseEnter" MouseLeave="MouseCaptureBorder_MouseLeave">
 			<Label Margin="10" Name="mouseCaptureLabel" />
 		</Border>
 		<TextBox Text="Sample Text Box" Margin="10"/>

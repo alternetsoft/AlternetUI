@@ -12,12 +12,6 @@ namespace NativeApi.Api
 
         public event EventHandler? MouseLeave { add => throw new Exception(); remove => throw new Exception(); }
 
-        public event EventHandler? MouseMove { add => throw new Exception(); remove => throw new Exception(); }
-
-        public event EventHandler? MouseLeftButtonDown { add => throw new Exception(); remove => throw new Exception(); }
-
-        public event EventHandler? MouseLeftButtonUp { add => throw new Exception(); remove => throw new Exception(); }
-
         public event EventHandler? MouseClick { add => throw new Exception(); remove => throw new Exception(); }
 
         public event EventHandler? VisibleChanged { add => throw new Exception(); remove => throw new Exception(); }

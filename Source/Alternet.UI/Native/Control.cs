@@ -323,18 +323,6 @@ namespace Alternet.UI.Native
                 {
                     MouseLeave?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
-                case NativeApi.ControlEvent.MouseMove:
-                {
-                    MouseMove?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
-                }
-                case NativeApi.ControlEvent.MouseLeftButtonDown:
-                {
-                    MouseLeftButtonDown?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
-                }
-                case NativeApi.ControlEvent.MouseLeftButtonUp:
-                {
-                    MouseLeftButtonUp?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
-                }
                 case NativeApi.ControlEvent.MouseClick:
                 {
                     MouseClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
@@ -354,9 +342,6 @@ namespace Alternet.UI.Native
         public event EventHandler? Paint;
         public event EventHandler? MouseEnter;
         public event EventHandler? MouseLeave;
-        public event EventHandler? MouseMove;
-        public event EventHandler? MouseLeftButtonDown;
-        public event EventHandler? MouseLeftButtonUp;
         public event EventHandler? MouseClick;
         public event EventHandler? VisibleChanged;
         public event EventHandler? MouseCaptureLost;
@@ -374,9 +359,6 @@ namespace Alternet.UI.Native
                 Paint,
                 MouseEnter,
                 MouseLeave,
-                MouseMove,
-                MouseLeftButtonDown,
-                MouseLeftButtonUp,
                 MouseClick,
                 VisibleChanged,
                 MouseCaptureLost,

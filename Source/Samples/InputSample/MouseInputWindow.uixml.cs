@@ -71,6 +71,16 @@ namespace InputSample
             MessageBox.Show("Mouse capture was lost.");
         }
 
+        private void MouseCaptureBorder_MouseEnter(object sender, EventArgs e)
+        {
+            LogMessage("MouseCaptureBorder_MouseEnter");
+        }
+
+        private void MouseCaptureBorder_MouseLeave(object sender, EventArgs e)
+        {
+            LogMessage("MouseCaptureBorder_MouseLeave");
+        }
+
         private void InputManager_PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
             if (cancelMouseMoveInputCheckBox.IsChecked)
@@ -87,18 +97,18 @@ namespace InputSample
 
         private void LogMessage(string m)
         {
-            lb.Items.Add(m);
+            lb.Items.Add($"{++messageNumber} {m}");
             lb.SelectedIndex = lb.Items.Count - 1;
         }
 
         private void LogMouseMove(MouseEventArgs e, string objectName, string eventName, IInputElement element) =>
-            LogMessage($"{++messageNumber} {objectName}_{eventName} [{e.GetPosition(element)}]");
+            LogMessage($"{objectName}_{eventName} [{e.GetPosition(element)}]");
 
         private void LogMouseButton(MouseButtonEventArgs e, string objectName, string eventName, IInputElement element) =>
-            LogMessage($"{++messageNumber} {objectName}_{eventName} [{e.ChangedButton}, {e.GetPosition(element)}]");
+            LogMessage($"{objectName}_{eventName} [{e.ChangedButton}, {e.GetPosition(element)}]");
 
         private void LogMouseWheel(MouseWheelEventArgs e, string objectName, string eventName, IInputElement element) =>
-            LogMessage($"{++messageNumber} {objectName}_{eventName} [{e.Delta}, {e.GetPosition(element)}]");
+            LogMessage($"{objectName}_{eventName} [{e.Delta}, {e.GetPosition(element)}]");
 
         private void HelloButton_MouseMove(object sender, MouseEventArgs e) => LogMouseMove(e, "HelloButton", "MouseMove", (IInputElement)sender);
         private void HelloButton_PreviewMouseMove(object sender, MouseEventArgs e) => LogMouseMove(e, "HelloButton", "PreviewMouseMove", (IInputElement)sender);

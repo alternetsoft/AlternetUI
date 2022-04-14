@@ -38,12 +38,9 @@ namespace Alternet::UI
             _wxWindow->Unbind(wxEVT_PAINT, &Control::OnPaint, this);
             //_wxWindow->Unbind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
             _wxWindow->Unbind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
-            _wxWindow->Unbind(wxEVT_MOTION, &Control::OnMouseMove, this);
             _wxWindow->Unbind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
             _wxWindow->Unbind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
             _wxWindow->Unbind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
-            _wxWindow->Unbind(wxEVT_LEFT_DOWN, &Control::OnMouseLeftButtonDown, this);
-            _wxWindow->Unbind(wxEVT_LEFT_UP, &Control::OnMouseLeftButtonUp, this);
             _wxWindow->Unbind(wxEVT_SIZE, &Control::OnSizeChanged, this);
 
             RemoveWxWindowControlAssociation(_wxWindow);
@@ -124,12 +121,9 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
         //_wxWindow->Bind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
         _wxWindow->Bind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
-        _wxWindow->Bind(wxEVT_MOTION, &Control::OnMouseMove, this);
         _wxWindow->Bind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
         _wxWindow->Bind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
         _wxWindow->Bind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
-        _wxWindow->Bind(wxEVT_LEFT_DOWN, &Control::OnMouseLeftButtonDown, this);
-        _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftButtonUp, this);
         _wxWindow->Bind(wxEVT_SIZE, &Control::OnSizeChanged, this);
 
         AssociateControlWithWxWindow(_wxWindow, this);
@@ -454,12 +448,6 @@ namespace Alternet::UI
         RaiseEvent(ControlEvent::MouseCaptureLost);
     }
 
-    void Control::OnMouseMove(wxMouseEvent& event)
-    {
-        event.Skip();
-        RaiseEvent(ControlEvent::MouseMove);
-    }
-
     void Control::OnMouseEnter(wxMouseEvent& event)
     {
         RaiseEvent(ControlEvent::MouseEnter);
@@ -486,19 +474,6 @@ namespace Alternet::UI
 
             window = window->GetParent();
         }
-    }
-
-    void Control::OnMouseLeftButtonDown(wxMouseEvent& event)
-    {
-        event.Skip();
-        RaiseEvent(ControlEvent::MouseLeftButtonDown);
-    }
-
-    void Control::OnMouseLeftButtonUp(wxMouseEvent& event)
-    {
-        event.Skip();
-        RaiseEvent(ControlEvent::MouseLeftButtonUp);
-        GetWxWindow()->CallAfter([=]() {RaiseEvent(ControlEvent::MouseClick); });
     }
 
     void Control::OnVisibleChanged(wxShowEvent& event)
