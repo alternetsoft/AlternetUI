@@ -28,7 +28,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ComboBox_GetItemsCount_(NativePointer);
+                var n = NativeApi.ComboBox_GetItemsCount_(NativePointer);
+                var m = n;
+                return m;
             }
             
         }
@@ -38,7 +40,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ComboBox_GetIsEditable_(NativePointer);
+                var n = NativeApi.ComboBox_GetIsEditable_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -53,7 +57,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ComboBox_GetSelectedIndex_(NativePointer);
+                var n = NativeApi.ComboBox_GetSelectedIndex_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -68,7 +74,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ComboBox_GetText_(NativePointer);
+                var n = NativeApi.ComboBox_GetText_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set

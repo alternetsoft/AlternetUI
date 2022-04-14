@@ -28,7 +28,10 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeObject.GetFromNativePointer<Keyboard>(NativeApi.Application_GetKeyboard_(NativePointer), p => new Keyboard(p))!;
+                var n = NativeApi.Application_GetKeyboard_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<Keyboard>(n, p => new Keyboard(p))!;
+                ReleaseNativeObjectPointer(n);
+                return m;
             }
             
         }
@@ -38,7 +41,10 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeObject.GetFromNativePointer<Mouse>(NativeApi.Application_GetMouse_(NativePointer), p => new Mouse(p))!;
+                var n = NativeApi.Application_GetMouse_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<Mouse>(n, p => new Mouse(p))!;
+                ReleaseNativeObjectPointer(n);
+                return m;
             }
             
         }

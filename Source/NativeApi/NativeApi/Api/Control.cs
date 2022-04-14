@@ -20,7 +20,7 @@ namespace NativeApi.Api
 
         public void SetMouseCapture(bool value) => throw new Exception();
 
-        public Control? Parent { get; }
+        public Control? ParentRefCounted { get; }
 
         public Size Size { get; set; }
 

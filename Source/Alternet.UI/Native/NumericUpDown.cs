@@ -28,7 +28,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.NumericUpDown_GetMinimum_(NativePointer);
+                var n = NativeApi.NumericUpDown_GetMinimum_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -43,7 +45,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.NumericUpDown_GetMaximum_(NativePointer);
+                var n = NativeApi.NumericUpDown_GetMaximum_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -58,7 +62,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.NumericUpDown_GetValue_(NativePointer);
+                var n = NativeApi.NumericUpDown_GetValue_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set

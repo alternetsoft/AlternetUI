@@ -9,9 +9,9 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API Control* Control_GetParent_(Control* obj)
+ALTERNET_UI_API Control* Control_GetParentRefCounted_(Control* obj)
 {
-    return obj->GetParent();
+    return obj->GetParentRefCounted();
 }
 
 ALTERNET_UI_API Size_C Control_GetSize_(Control* obj)

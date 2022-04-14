@@ -138,6 +138,7 @@ namespace Alternet::UI
 
     Mouse* Application::GetMouse()
     {
+        _mouse->AddRef();
         return _mouse;
     }
 
@@ -148,6 +149,7 @@ namespace Alternet::UI
 
     Keyboard* Application::GetKeyboard()
     {
+        _keyboard->AddRef();
         return _keyboard;
     }
 

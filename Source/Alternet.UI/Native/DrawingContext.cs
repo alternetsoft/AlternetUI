@@ -60,7 +60,9 @@ namespace Alternet.UI.Native
         public Alternet.Drawing.Size MeasureText(string text, Font font)
         {
             CheckDisposed();
-            return NativeApi.DrawingContext_MeasureText_(NativePointer, text, font.NativePointer);
+            var n = NativeApi.DrawingContext_MeasureText_(NativePointer, text, font.NativePointer);
+            var m = n;
+            return m;
         }
         
         public void PushTransform(Alternet.Drawing.Size translation)

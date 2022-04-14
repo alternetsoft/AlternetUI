@@ -28,7 +28,10 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeObject.GetFromNativePointer<ImageList>(NativeApi.TreeView_GetImageList_(NativePointer), p => new ImageList(p));
+                var n = NativeApi.TreeView_GetImageList_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<ImageList>(n, p => new ImageList(p));
+                ReleaseNativeObjectPointer(n);
+                return m;
             }
             
             set
@@ -43,7 +46,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.TreeView_GetRootItem_(NativePointer);
+                var n = NativeApi.TreeView_GetRootItem_(NativePointer);
+                var m = n;
+                return m;
             }
             
         }
@@ -53,7 +58,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.TreeView_GetSelectionMode_(NativePointer);
+                var n = NativeApi.TreeView_GetSelectionMode_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -75,7 +82,8 @@ namespace Alternet.UI.Native
                     var result = new System.Collections.Generic.List<System.IntPtr>(count);
                     for (int i = 0; i < count; i++)
                     {
-                        var item = NativeApi.TreeView_GetSelectedItemsItemAt_(NativePointer, array, i);
+                        var n = NativeApi.TreeView_GetSelectedItemsItemAt_(NativePointer, array, i);
+                        var item = n;
                         result.Add(item);
                     }
                     return result.ToArray();
@@ -91,13 +99,17 @@ namespace Alternet.UI.Native
         public int GetItemCount(System.IntPtr parentItem)
         {
             CheckDisposed();
-            return NativeApi.TreeView_GetItemCount_(NativePointer, parentItem);
+            var n = NativeApi.TreeView_GetItemCount_(NativePointer, parentItem);
+            var m = n;
+            return m;
         }
         
         public System.IntPtr InsertItem(System.IntPtr parentItem, System.IntPtr insertAfter, string text, int imageIndex, bool parentIsExpanded)
         {
             CheckDisposed();
-            return NativeApi.TreeView_InsertItem_(NativePointer, parentItem, insertAfter, text, imageIndex, parentIsExpanded);
+            var n = NativeApi.TreeView_InsertItem_(NativePointer, parentItem, insertAfter, text, imageIndex, parentIsExpanded);
+            var m = n;
+            return m;
         }
         
         public void RemoveItem(System.IntPtr item)

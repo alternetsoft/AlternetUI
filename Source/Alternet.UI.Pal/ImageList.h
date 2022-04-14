@@ -2,10 +2,11 @@
 #include "Common.h"
 #include "ApiTypes.h"
 #include "Image.h"
+#include "Object.h"
 
 namespace Alternet::UI
 {
-    class ImageList
+    class ImageList : public Object
     {
 #include "Api/ImageList.inc"
     public:

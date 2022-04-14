@@ -18,6 +18,18 @@ namespace Alternet::UI
             window->Unbind(wxEVT_LIST_ITEM_SELECTED, &ListView::OnItemSelected, this);
             window->Unbind(wxEVT_LIST_ITEM_DESELECTED, &ListView::OnItemDeselected, this);
         }
+
+        if (_smallImageList != nullptr)
+        {
+            _smallImageList->Release();
+            _smallImageList = nullptr;
+        }
+
+        if (_largeImageList != nullptr)
+        {
+            _largeImageList->Release();
+            _largeImageList = nullptr;
+        }
     }
 
     void ListView::InsertColumnAt(int index, const string& header)
@@ -114,26 +126,36 @@ namespace Alternet::UI
 
     ImageList* ListView::GetSmallImageList()
     {
+        if (_smallImageList != nullptr)
+            _smallImageList->AddRef();
         return _smallImageList;
     }
 
     void ListView::SetSmallImageList(ImageList* value)
     {
-        // todo: memory management.
+        if (_smallImageList != nullptr)
+            _smallImageList->Release();
         _smallImageList = value;
+        if (_smallImageList != nullptr)
+            _smallImageList->AddRef();
         if (IsWxWindowCreated())
             ApplySmallImageList(GetListView());
     }
 
     ImageList* ListView::GetLargeImageList()
     {
+        if (_largeImageList != nullptr)
+            _largeImageList->AddRef();
         return _largeImageList;
     }
 
     void ListView::SetLargeImageList(ImageList* value)
     {
-        // todo: memory management.
+        if (_largeImageList != nullptr)
+            _largeImageList->Release();
         _largeImageList = value;
+        if (_largeImageList != nullptr)
+            _largeImageList->AddRef();
         if (IsWxWindowCreated())
             ApplyLargeImageList(GetListView());
     }

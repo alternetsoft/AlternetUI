@@ -28,7 +28,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.RadioButton_GetText_(NativePointer);
+                var n = NativeApi.RadioButton_GetText_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -43,7 +45,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.RadioButton_GetIsChecked_(NativePointer);
+                var n = NativeApi.RadioButton_GetIsChecked_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set

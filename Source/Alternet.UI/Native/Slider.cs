@@ -28,7 +28,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Slider_GetMinimum_(NativePointer);
+                var n = NativeApi.Slider_GetMinimum_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -43,7 +45,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Slider_GetMaximum_(NativePointer);
+                var n = NativeApi.Slider_GetMaximum_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -58,7 +62,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Slider_GetValue_(NativePointer);
+                var n = NativeApi.Slider_GetValue_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -73,7 +79,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Slider_GetSmallChange_(NativePointer);
+                var n = NativeApi.Slider_GetSmallChange_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -88,7 +96,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Slider_GetLargeChange_(NativePointer);
+                var n = NativeApi.Slider_GetLargeChange_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -103,7 +113,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Slider_GetTickFrequency_(NativePointer);
+                var n = NativeApi.Slider_GetTickFrequency_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set

@@ -27,7 +27,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Label_GetText_(NativePointer);
+                var n = NativeApi.Label_GetText_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set

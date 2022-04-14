@@ -26,7 +26,9 @@ namespace Alternet.UI.Native
         public KeyStates GetKeyState(Key key)
         {
             CheckDisposed();
-            return NativeApi.Keyboard_GetKeyState_(NativePointer, key);
+            var n = NativeApi.Keyboard_GetKeyState_(NativePointer, key);
+            var m = n;
+            return m;
         }
         
         static GCHandle eventCallbackGCHandle;

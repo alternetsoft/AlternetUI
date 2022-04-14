@@ -28,7 +28,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ListView_GetItemsCount_(NativePointer);
+                var n = NativeApi.ListView_GetItemsCount_(NativePointer);
+                var m = n;
+                return m;
             }
             
         }
@@ -38,7 +40,10 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeObject.GetFromNativePointer<ImageList>(NativeApi.ListView_GetSmallImageList_(NativePointer), p => new ImageList(p));
+                var n = NativeApi.ListView_GetSmallImageList_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<ImageList>(n, p => new ImageList(p));
+                ReleaseNativeObjectPointer(n);
+                return m;
             }
             
             set
@@ -53,7 +58,10 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeObject.GetFromNativePointer<ImageList>(NativeApi.ListView_GetLargeImageList_(NativePointer), p => new ImageList(p));
+                var n = NativeApi.ListView_GetLargeImageList_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<ImageList>(n, p => new ImageList(p));
+                ReleaseNativeObjectPointer(n);
+                return m;
             }
             
             set
@@ -68,7 +76,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ListView_GetCurrentView_(NativePointer);
+                var n = NativeApi.ListView_GetCurrentView_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -83,7 +93,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ListView_GetSelectionMode_(NativePointer);
+                var n = NativeApi.ListView_GetSelectionMode_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -105,7 +117,8 @@ namespace Alternet.UI.Native
                     var result = new System.Collections.Generic.List<int>(count);
                     for (int i = 0; i < count; i++)
                     {
-                        var item = NativeApi.ListView_GetSelectedIndicesItemAt_(NativePointer, array, i);
+                        var n = NativeApi.ListView_GetSelectedIndicesItemAt_(NativePointer, array, i);
+                        var item = n;
                         result.Add(item);
                     }
                     return result.ToArray();

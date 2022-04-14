@@ -167,12 +167,16 @@ using System.Security;");
                             WriteArrayAccessorPropertyGetterBody(w, apiProperty, types);
                         else
                         {
-                            w.Write("return ");
-                            w.Write(
-                            string.Format(
-                                GetNativeToManagedFormatString(contextualProperty),
-                                $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}_({(isStatic ? "" : "NativePointer")})"));
+                            w.WriteLine($"var n = NativeApi.{nativeDeclaringTypeName}_Get{propertyName}_({(isStatic ? "" : "NativePointer")});");
+
+                            w.Write("var m = ");
+                            w.Write(string.Format(GetNativeToManagedFormatString(contextualProperty, out var isComplexType), "n"));
                             w.WriteLine(";");
+
+                            if (isComplexType)
+                                w.WriteLine("ReleaseNativeObjectPointer(n);");
+
+                            w.WriteLine("return m;");
                         }
 
                     }
@@ -214,12 +218,14 @@ using System.Security;");
                 w.WriteLine($"for (int i = 0; i < count; i++)");
                 using (new BlockIndent(w))
                 {
+                    w.WriteLine($"var n = NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemAt_({(isStatic ? "" : "NativePointer, ")}array, i);");
+
                     w.Write("var item = ");
-                    w.Write(
-                    string.Format(
-                        GetNativeToManagedFormatString(arrayElementType),
-                        $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}ItemAt_({(isStatic ? "" : "NativePointer, ")}array, i)"));
+                    w.Write(string.Format(GetNativeToManagedFormatString(arrayElementType, out var isComplexType), "n"));
                     w.WriteLine(";");
+
+                    if (isComplexType)
+                        w.WriteLine("ReleaseNativeObjectPointer(n);");
 
                     w.WriteLine($"result.Add(item);");
                 }
@@ -273,15 +279,25 @@ using System.Security;");
             if (!method.IsStatic)
                 w.WriteLine("CheckDisposed();");
 
-            if (method.ReturnType != typeof(void))
-                w.Write("return ");
+            var callString = $"NativeApi.{TypeProvider.GetNativeName(method.DeclaringType!)}_{methodName}_({callParametersString})";
 
-            w.Write(
-                string.Format(
-                    GetNativeToManagedFormatString(method.ReturnParameter.ToContextualParameter()),
-                    $"NativeApi.{TypeProvider.GetNativeName(method.DeclaringType!)}_{methodName}_({callParametersString})"));
-            w.WriteLine(";");
+            if (method.ReturnType == typeof(void))
+            {
+                w.WriteLine(callString + ";");
+            }
+            else
+            {
+                w.WriteLine($"var n = {callString};");
 
+                w.Write("var m = ");
+                w.Write(string.Format(GetNativeToManagedFormatString(method.ReturnParameter.ToContextualParameter(), out var isComplexType), "n"));
+                w.WriteLine(";");
+
+                if (isComplexType)
+                    w.WriteLine("ReleaseNativeObjectPointer(n);");
+
+                w.WriteLine("return m;");
+            }
 
             w.Indent--;
             w.WriteLine("}");
@@ -310,7 +326,7 @@ using System.Security;");
                     w.WriteLine($"var sink = new NativeApi.{declaringTypeName}EventCallbackType((obj, e, parameter) =>");
                     using (new BlockIndent(w))
                     {
-                        w.WriteLine($"var w = {string.Format(GetNativeToManagedFormatString(declaringType.ToContextualType()), "obj")};");
+                        w.WriteLine($"var w = {string.Format(GetNativeToManagedFormatString(declaringType.ToContextualType(), out _), "obj")};");
                         w.WriteLine("if (w == null) return IntPtr.Zero;");
                         w.WriteLine("return w.OnEvent(e, parameter);");
                     }
@@ -393,12 +409,12 @@ using System.Security;");
             return name;
         }
 
-        static string GetNativeToManagedFormatString(ContextualType type)
+        static string GetNativeToManagedFormatString(ContextualType type, out bool isComplexType)
         {
-
             var factory = type.OriginalType.IsAbstract ? "null" : $"p => new {type.OriginalType.Name}(p)";
 
-            if (TypeProvider.IsComplexType(type))
+            isComplexType = TypeProvider.IsComplexType(type);
+            if (isComplexType)
                 return $"NativeObject.GetFromNativePointer<{type.OriginalType.Name}>({{0}}, {factory})" + (type.Nullability == Nullability.NotNullable ? "!" : "");
 
             return "{0}";

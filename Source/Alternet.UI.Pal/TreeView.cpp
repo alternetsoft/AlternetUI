@@ -16,17 +16,25 @@ namespace Alternet::UI
             window->Unbind(wxEVT_TREE_ITEM_EXPANDED, &TreeView::OnItemExpanded, this);
             window->Unbind(wxEVT_TREE_ITEM_COLLAPSED, &TreeView::OnItemCollapsed, this);
         }
+
+        if (_imageList != nullptr)
+            _imageList->Release();
     }
 
     ImageList* TreeView::GetImageList()
     {
+        if (_imageList != nullptr)
+            _imageList->AddRef();
         return _imageList;
     }
 
     void TreeView::SetImageList(ImageList* value)
     {
-        // todo: memory management.
+        if (_imageList != nullptr)
+            _imageList->Release();
         _imageList = value;
+        if (_imageList != nullptr)
+            _imageList->AddRef();
         if (IsWxWindowCreated())
             ApplyImageList(GetTreeCtrl());
     }

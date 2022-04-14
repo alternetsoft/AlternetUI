@@ -27,7 +27,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.GroupBox_GetTitle_(NativePointer);
+                var n = NativeApi.GroupBox_GetTitle_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set

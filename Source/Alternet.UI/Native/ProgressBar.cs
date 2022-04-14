@@ -27,7 +27,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ProgressBar_GetMinimum_(NativePointer);
+                var n = NativeApi.ProgressBar_GetMinimum_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -42,7 +44,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ProgressBar_GetMaximum_(NativePointer);
+                var n = NativeApi.ProgressBar_GetMaximum_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -57,7 +61,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ProgressBar_GetValue_(NativePointer);
+                var n = NativeApi.ProgressBar_GetValue_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -72,7 +78,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ProgressBar_GetIsIndeterminate_(NativePointer);
+                var n = NativeApi.ProgressBar_GetIsIndeterminate_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set

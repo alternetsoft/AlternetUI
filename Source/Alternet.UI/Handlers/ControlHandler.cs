@@ -819,7 +819,7 @@ namespace Alternet.UI
             if (childNativeControl == null)
                 return;
 
-            if (childNativeControl.Parent != null)
+            if (childNativeControl.ParentRefCounted != null)
                 return;
 
             var parentNativeControl = NativeControl;

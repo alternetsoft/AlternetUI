@@ -28,7 +28,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ListBox_GetItemsCount_(NativePointer);
+                var n = NativeApi.ListBox_GetItemsCount_(NativePointer);
+                var m = n;
+                return m;
             }
             
         }
@@ -38,7 +40,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.ListBox_GetSelectionMode_(NativePointer);
+                var n = NativeApi.ListBox_GetSelectionMode_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -60,7 +64,8 @@ namespace Alternet.UI.Native
                     var result = new System.Collections.Generic.List<int>(count);
                     for (int i = 0; i < count; i++)
                     {
-                        var item = NativeApi.ListBox_GetSelectedIndicesItemAt_(NativePointer, array, i);
+                        var n = NativeApi.ListBox_GetSelectedIndicesItemAt_(NativePointer, array, i);
+                        var item = n;
                         result.Add(item);
                     }
                     return result.ToArray();

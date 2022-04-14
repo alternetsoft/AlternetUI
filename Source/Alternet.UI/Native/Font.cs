@@ -33,7 +33,8 @@ namespace Alternet.UI.Native
                     var result = new System.Collections.Generic.List<string>(count);
                     for (int i = 0; i < count; i++)
                     {
-                        var item = NativeApi.Font_GetFamiliesItemAt_(array, i);
+                        var n = NativeApi.Font_GetFamiliesItemAt_(array, i);
+                        var item = n;
                         result.Add(item);
                     }
                     return result.ToArray();
@@ -51,7 +52,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Font_GetName_(NativePointer);
+                var n = NativeApi.Font_GetName_(NativePointer);
+                var m = n;
+                return m;
             }
             
         }
@@ -61,7 +64,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Font_GetSizeInPoints_(NativePointer);
+                var n = NativeApi.Font_GetSizeInPoints_(NativePointer);
+                var m = n;
+                return m;
             }
             
         }
@@ -71,7 +76,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Font_GetStyle_(NativePointer);
+                var n = NativeApi.Font_GetStyle_(NativePointer);
+                var m = n;
+                return m;
             }
             
         }
@@ -81,7 +88,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Font_GetDescription_(NativePointer);
+                var n = NativeApi.Font_GetDescription_(NativePointer);
+                var m = n;
+                return m;
             }
             
         }
@@ -100,24 +109,32 @@ namespace Alternet.UI.Native
         
         public static bool IsFamilyValid(string fontFamily)
         {
-            return NativeApi.Font_IsFamilyValid_(fontFamily);
+            var n = NativeApi.Font_IsFamilyValid_(fontFamily);
+            var m = n;
+            return m;
         }
         
         public static string GetGenericFamilyName(GenericFontFamily genericFamily)
         {
-            return NativeApi.Font_GetGenericFamilyName_(genericFamily);
+            var n = NativeApi.Font_GetGenericFamilyName_(genericFamily);
+            var m = n;
+            return m;
         }
         
         public bool IsEqualTo(Font other)
         {
             CheckDisposed();
-            return NativeApi.Font_IsEqualTo_(NativePointer, other.NativePointer);
+            var n = NativeApi.Font_IsEqualTo_(NativePointer, other.NativePointer);
+            var m = n;
+            return m;
         }
         
         public string Serialize()
         {
             CheckDisposed();
-            return NativeApi.Font_Serialize_(NativePointer);
+            var n = NativeApi.Font_Serialize_(NativePointer);
+            var m = n;
+            return m;
         }
         
         

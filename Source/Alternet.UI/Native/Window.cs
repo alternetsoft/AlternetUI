@@ -28,7 +28,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Window_GetTitle_(NativePointer);
+                var n = NativeApi.Window_GetTitle_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -43,7 +45,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.Window_GetWindowStartPosition_(NativePointer);
+                var n = NativeApi.Window_GetWindowStartPosition_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set

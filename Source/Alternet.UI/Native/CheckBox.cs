@@ -28,7 +28,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.CheckBox_GetText_(NativePointer);
+                var n = NativeApi.CheckBox_GetText_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set
@@ -43,7 +45,9 @@ namespace Alternet.UI.Native
             get
             {
                 CheckDisposed();
-                return NativeApi.CheckBox_GetIsChecked_(NativePointer);
+                var n = NativeApi.CheckBox_GetIsChecked_(NativePointer);
+                var m = n;
+                return m;
             }
             
             set

@@ -78,6 +78,13 @@ namespace Alternet::UI
         return _parent;
     }
 
+    Control* Control::GetParentRefCounted()
+    {
+        if (_parent != nullptr)
+            _parent->AddRef();
+        return _parent;
+    }
+
     wxWindow* Control::GetWxWindow()
     {
         if (_wxWindow == nullptr)
@@ -614,7 +621,11 @@ namespace Alternet::UI
         if (window == nullptr)
             return nullptr;
     
-        return TryFindControlByWxWindow(window);
+        auto control = TryFindControlByWxWindow(window);
+        if (control != nullptr)
+            control->AddRef();
+
+        return control;
     }
 
     Point Control::ClientToScreen(const Point& point)
@@ -637,6 +648,10 @@ namespace Alternet::UI
         if (focusedWxWindow == nullptr)
             return nullptr;
 
-        return TryFindControlByWxWindow(focusedWxWindow);
+        auto control = TryFindControlByWxWindow(focusedWxWindow);
+        if (control != nullptr)
+            control->AddRef();
+
+        return control;
     }
 }

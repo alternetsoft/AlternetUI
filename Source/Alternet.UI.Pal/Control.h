@@ -24,6 +24,8 @@ namespace Alternet::UI
             wxPointerHash, wxPointerEqual,
             ControlsByWxWindowsMap);
 
+        Control* GetParent();
+
         static Control* TryFindControlByWxWindow(wxWindow* wxWindow);
 
     protected:
