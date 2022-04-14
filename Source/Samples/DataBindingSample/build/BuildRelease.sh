@@ -3,5 +3,5 @@ pushd ../../../Alternet.UI.Pal/build
 ./release.sh
 popd
 pushd ..
-dotnet build HelloWorldSample.csproj -c Release
+dotnet build DataBindingSample.csproj -c Release
 popd

@@ -3,6 +3,6 @@ pushd ../../../Alternet.UI.Pal/build
 ./debug.sh
 popd
 pushd ..
-dotnet build HelloWorldSample.csproj
+dotnet build DataBindingSample.csproj
 popd
 
