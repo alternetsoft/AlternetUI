@@ -54,13 +54,13 @@ namespace InputSample
             MessageBox.Show("Hello!", "Button Clicked");
         }
 
-        private void MouseCaptureBorder_MouseDown(object sender, EventArgs e)
+        private void MouseCaptureBorder_MouseDown(object sender, MouseButtonEventArgs e)
         {
             mouseCaptureBorder.CaptureMouse();
             mouseCaptureLabel.Text = MouseCapturedLabel;
         }
 
-        private void MouseCaptureBorder_MouseUp(object sender, EventArgs e)
+        private void MouseCaptureBorder_MouseUp(object sender, MouseButtonEventArgs e)
         {
             mouseCaptureBorder.ReleaseMouseCapture();
             mouseCaptureLabel.Text = MouseUncapturedLabel;
