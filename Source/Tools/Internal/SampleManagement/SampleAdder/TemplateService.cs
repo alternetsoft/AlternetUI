@@ -1,4 +1,5 @@
 using Microsoft.VisualBasic.FileIO;
+using SampleManagement.Common;
 using System;
 using System.IO;
 
@@ -29,11 +30,10 @@ namespace SampleAdder
 
         private static void ReplacePlaceholders(string sampleName, string targetDirectory)
         {
-            void ReplaceInFile(string fileName, string searchString, string replacementString) =>
-                File.WriteAllText(fileName, File.ReadAllText(fileName).Replace(searchString, replacementString));
+            var values = new[] { ("##SampleName##", sampleName) };
 
             foreach (var fileName in Directory.GetFiles(targetDirectory, "*.*", System.IO.SearchOption.AllDirectories))
-                ReplaceInFile(fileName, "##SampleName##", sampleName);
+                TemplateUtility.ReplacePlaceholdersInFile(fileName, values);
         }
 
         private static void RenameFiles(string sampleName, string targetDirectory)

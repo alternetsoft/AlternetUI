@@ -1,0 +1,28 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "##SampleName##: Native Debug",
+            "type": "lldb",
+            "request": "launch",
+            "initCommands": [
+                "setting set target.max-string-summary-length 10000"
+            ],
+            "internalConsoleOptions": "openOnSessionStart",
+            "program": "dotnet",
+            "args": ["${workspaceFolder}/Source/Samples/##SampleName##/bin/Debug/netcoreapp3.1/##SampleName##.dll"],
+            "preLaunchTask": "##SampleName##: Build"
+        },
+        {
+            "name": "##SampleName##: CLR Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "##SampleName##: Build",
+            "program": "${workspaceFolder}/Source/Samples/##SampleName##/bin/Debug/netcoreapp3.1/##SampleName##.dll",
+            "cwd": "${workspaceFolder}/Source/Samples/##SampleName##/bin/Debug/netcoreapp3.1/",
+            "args": [],
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+    ]
+}

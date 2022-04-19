@@ -48,30 +48,14 @@ namespace SampleManagement.Common
             }
         }
 
-        public static string VSCodeLaunchConfigPath
+        public static string GetVSCodeFilePath(string fileName)
         {
-            get
-            {
-                var fileName = Path.Combine(VSCodeDirectory, "launch.json");
+            var filePath = Path.Combine(VSCodeDirectory, fileName);
 
-                if (!File.Exists(fileName))
-                    throw new FileNotFoundException("launch.json does not exist: " + fileName);
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException("VSCode config file does not exist: " + filePath);
 
-                return fileName;
-            }
-        }
-
-        public static string VSCodeTasksConfigPath
-        {
-            get
-            {
-                var fileName = Path.Combine(VSCodeDirectory, "tasks.json");
-
-                if (!File.Exists(fileName))
-                    throw new FileNotFoundException("tasks.json does not exist: " + fileName);
-
-                return fileName;
-            }
+            return filePath;
         }
     }
 }
