@@ -12,8 +12,6 @@ namespace VSCodeSampleSwitcher
             InitializeComponent();
 
             InitializeSamples();
-
-            UpdateControls();
         }
 
         private void InitializeSamples()
@@ -23,25 +21,17 @@ namespace VSCodeSampleSwitcher
                 samplesListBox.Items.Add(sample);
             samplesListBox.EndInit();
 
-            samplesListBox.SelectedItem = ActiveSampleService.GetActiveSample();
-        }
-
-        private void UpdateControls()
-        {
-            switchButton.Enabled = samplesListBox.SelectedItem != null;
+            var activeSample = ActiveSampleService.GetActiveSample();
+            if (activeSample != null)
+                samplesListBox.SelectedItem = activeSample;
         }
 
         private void SwitchButton_Click(object sender, System.EventArgs e)
         {
             if (samplesListBox.SelectedItem == null)
-                throw new Exception();
+                return;
 
             ActiveSampleService.SetActiveSample((Sample)samplesListBox.SelectedItem);
-        }
-
-        private void SamplesListBox_SelectionChanged(object sender, System.EventArgs e)
-        {
-            UpdateControls();
         }
     }
 }

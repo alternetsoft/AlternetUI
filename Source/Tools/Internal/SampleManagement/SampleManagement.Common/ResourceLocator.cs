@@ -50,12 +50,7 @@ namespace SampleManagement.Common
 
         public static string GetVSCodeFilePath(string fileName)
         {
-            var filePath = Path.Combine(VSCodeDirectory, fileName);
-
-            if (!File.Exists(filePath))
-                throw new FileNotFoundException("VSCode config file does not exist: " + filePath);
-
-            return filePath;
+            return Path.Combine(VSCodeDirectory, fileName);
         }
     }
 }

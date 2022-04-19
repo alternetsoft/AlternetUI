@@ -17,3 +17,5 @@ Source/Samples/HelloWorldSample/HelloWorldSample.csproj.user
 Source/**/AlternetUI.ico
 Documentation/Alternet.UI.Documentation/log.txt
 .DS_Store
+.vscode/launch.json
+.vscode/tasks.json

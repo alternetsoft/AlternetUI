@@ -12,7 +12,7 @@
 		</Grid.RowDefinitions>
 
 		<GroupBox Grid.Column="0" Grid.Row="0" Title="Active Project" Margin="0,0,10,0">
-			<ListBox Name="samplesListBox" SelectionChanged="SamplesListBox_SelectionChanged"/>
+			<ListBox Name="samplesListBox"/>
 		</GroupBox>
 
 		<Button Text="Switch" Name="switchButton" Click="SwitchButton_Click" Grid.Column="1" Grid.Row="1" Margin="0,10,0,0"/>

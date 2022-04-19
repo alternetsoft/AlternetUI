@@ -18,7 +18,9 @@ namespace VSCodeSampleSwitcher
                 string targetFileName = ResourceLocator.GetVSCodeFilePath(fileName);
                 string templateFileName = GetTemplateFilePath(fileName);
 
-                File.Delete(targetFileName);
+                if (File.Exists(targetFileName))
+                    File.Delete(targetFileName);
+                
                 File.Copy(templateFileName, targetFileName);
                 TemplateUtility.ReplacePlaceholdersInFile(targetFileName, new[] { ("##SampleName##", sample.Name) });
             }
@@ -29,8 +31,12 @@ namespace VSCodeSampleSwitcher
 
         public static Sample? GetActiveSample()
         {
+            var launchConfigFilePath = ResourceLocator.GetVSCodeFilePath(LaunchConfigFileName);
+            if (!File.Exists(launchConfigFilePath))
+                return null;
+
             var match = new Regex("\\\"preLaunchTask\\\": \\\"(?<Name>.*): Build\\\"").Match(
-                File.ReadAllText(ResourceLocator.GetVSCodeFilePath(LaunchConfigFileName)));
+                File.ReadAllText(launchConfigFilePath));
 
             if (!match.Success)
                 return null;
