@@ -1,0 +1,12 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="SampleAdder.MainWindow"
+        Title="Sample Adder Tool" Width="400" Height="150">
+	<StackPanel Orientation="Vertical" Padding="10">
+		<Label Text="Sample Name:" Margin="0,0,0,5"/>
+		<TextBox Name="sampleNameTextBox" TextChanged="SampleNameTextBox_TextChanged" Margin="0,0,0,5"/>
+		<Label Name="validationLabel" />
+
+		<Button Text="Add Sample" Name="addSampleButton" Click="AddSampleButton_Click" Margin="0,10,0,0"/>
+	</StackPanel>
+</Window>
