@@ -34,6 +34,10 @@ bool GetEnabled();
 void SetEnabled(bool value);
 
 
+bool GetUserPaint();
+void SetUserPaint(bool value);
+
+
 bool GetIsMouseOver();
 
 

@@ -41,7 +41,7 @@ namespace DrawingSample
             //e.DrawingContext.FillRectangle(e.Bounds, Color.White);
             var b = e.Bounds;
 //            b.Width -= 1;
-            b.Height -= 30;
+            //b.Height -= 30;
             e.DrawingContext.DrawRectangle(Pens.Gray, b);
             Draw(e.DrawingContext, e.Bounds);
         }

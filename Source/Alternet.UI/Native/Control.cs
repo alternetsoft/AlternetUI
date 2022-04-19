@@ -161,6 +161,23 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool UserPaint
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetUserPaint_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetUserPaint_(NativePointer, value);
+            }
+        }
+        
         public bool IsMouseOver
         {
             get
@@ -459,6 +476,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetEnabled_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetUserPaint_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetUserPaint_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_GetIsMouseOver_(IntPtr obj);

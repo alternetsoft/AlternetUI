@@ -84,6 +84,16 @@ ALTERNET_UI_API void Control_SetEnabled_(Control* obj, c_bool value)
     obj->SetEnabled(value);
 }
 
+ALTERNET_UI_API c_bool Control_GetUserPaint_(Control* obj)
+{
+    return obj->GetUserPaint();
+}
+
+ALTERNET_UI_API void Control_SetUserPaint_(Control* obj, c_bool value)
+{
+    obj->SetUserPaint(value);
+}
+
 ALTERNET_UI_API c_bool Control_GetIsMouseOver_(Control* obj)
 {
     return obj->GetIsMouseOver();

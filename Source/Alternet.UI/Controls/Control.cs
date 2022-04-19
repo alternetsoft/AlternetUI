@@ -355,7 +355,11 @@ namespace Alternet.UI
         /// </summary>
         /// <value>If <c>true</c>, the control paints itself rather than the operating system doing so.
         /// If <c>false</c>, the <see cref="Paint"/> event is not raised.</value>
-        public bool UserPaint { get; set; } // todo: rethink design of this
+        public bool UserPaint
+        {
+            get => Handler.UserPaint;
+            set => Handler.UserPaint = value;
+        }
 
         /// <summary>
         /// Gets or sets the outer margin of an control.

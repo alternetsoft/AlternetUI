@@ -122,8 +122,12 @@ namespace Alternet::UI
             parentingWxWindow = ParkingWindow::GetWindow();
         
         _wxWindow = CreateWxWindowCore(parentingWxWindow);
-        //_wxWindow->SetDoubleBuffered(true); // todo: this removes flicker on TextBoxes, but causes it on custom composite controls
-        //_wxWindow->SetBackgroundStyle(wxBG_STYLE_PAINT);
+
+        if (GetUserPaint())
+        {
+            _wxWindow->SetDoubleBuffered(true);
+            _wxWindow->SetBackgroundStyle(wxBG_STYLE_PAINT);
+        }
 
         _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
         //_wxWindow->Bind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
@@ -443,6 +447,22 @@ namespace Alternet::UI
     void Control::OnPaint(wxPaintEvent& event)
     {
         event.Skip();
+
+        if (GetUserPaint())
+        {
+            wxPaintDC dc(GetWxWindow());
+            
+            auto background = GetBackgroundColor();
+            wxColor color;
+            if (background.IsEmpty())
+                color = wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_BTNFACE);
+            else
+                color = background;
+            
+            dc.SetBackground(wxBrush(color));
+            dc.Clear();
+        }
+
         RaiseEvent(ControlEvent::Paint);
     }
 
@@ -603,6 +623,17 @@ namespace Alternet::UI
     {
         ControlsByWxWindowsMap::const_iterator i = s_controlsByWxWindowsMap.find(wxWindow);
         return i == s_controlsByWxWindowsMap.end() ? NULL : i->second;
+    }
+
+    bool Control::GetUserPaint()
+    {
+        return GetFlag(ControlFlags::UserPaint);
+    }
+
+    void Control::SetUserPaint(bool value)
+    {
+        SetFlag(ControlFlags::UserPaint, value);
+        RecreateWxWindowIfNeeded();
     }
 
     /*static*/ void Control::AssociateControlWithWxWindow(wxWindow* wxWindow, Control* control)

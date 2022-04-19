@@ -69,6 +69,7 @@ namespace Alternet::UI
             DoNotDestroyWxWindow = 1 << 0,
             CreatingWxWindow = 1 << 1,
             ClientSizeCacheValid = 1 << 2,
+            UserPaint = 1 << 3,
         };
 
         wxWindow* _wxWindow = nullptr;

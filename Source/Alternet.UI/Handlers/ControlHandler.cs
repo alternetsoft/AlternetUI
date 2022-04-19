@@ -53,7 +53,7 @@ namespace Alternet.UI
             set
             {
                 var oldBounds = Bounds;
-                
+
                 if (NativeControl != null)
                     NativeControl.Bounds = value;
                 else
@@ -761,6 +761,17 @@ namespace Alternet.UI
 
         private protected virtual bool NeedRelayoutParentOnVisibleChanged => !(Control.Parent is TabControl); // todo
 
+        /// <summary>
+        /// Gets or set a value indicating whether the control paints itself rather than the operating system doing so.
+        /// </summary>
+        /// <value>If <c>true</c>, the control paints itself rather than the operating system doing so.
+        /// If <c>false</c>, the <see cref="Control.Paint"/> event is not raised.</value>
+        public bool UserPaint
+        {
+            get => NativeControl!.UserPaint;
+            set => NativeControl!.UserPaint = value;
+        }
+
         private Color GetBrushColor(Brush? brush)
         {
             var solidBrush = brush as SolidBrush;
@@ -916,6 +927,18 @@ namespace Alternet.UI
                 throw new InvalidOperationException();
 
             bool hasVisualChildren = VisualChildren.Count > 0;
+
+            //using (var dc = new DrawingContext(NativeControl.OpenPaintDrawingContext()))
+            //{
+            //    if (Control.UserPaint)
+            //    {
+            //        Control.RaisePaint(new PaintEventArgs(dc, ClientRectangle));
+            //    }
+            //    else if (NeedsPaint || hasVisualChildren)
+            //    {
+            //        PaintSelfAndVisualChildren(dc);
+            //    }
+            //}
 
             if (Control.UserPaint)
             {

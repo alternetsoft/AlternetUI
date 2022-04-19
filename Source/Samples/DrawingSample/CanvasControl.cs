@@ -1,4 +1,5 @@
-﻿using Alternet.UI;
+﻿using Alternet.Drawing;
+using Alternet.UI;
 
 namespace DrawingSample
 {
@@ -7,6 +8,7 @@ namespace DrawingSample
         public CanvasControl()
         {
             UserPaint = true;
+            Background = Brushes.White;
         }
     }
 }

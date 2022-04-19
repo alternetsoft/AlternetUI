@@ -12,6 +12,7 @@ namespace Alternet::UI
 
     wxWindow* Panel::CreateWxWindowCore(wxWindow* parent)
     {
-        return new wxPanel(parent, -1, wxDefaultPosition, wxDefaultSize, /*wxSUNKEN_BORDER*/wxNO_BORDER);
+        auto p = new wxPanel(parent, -1, wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+        return p;
     }
 }

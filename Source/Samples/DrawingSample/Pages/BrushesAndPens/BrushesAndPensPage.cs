@@ -157,6 +157,9 @@ namespace DrawingSample
             if (Canvas == null)
                 throw new Exception();
 
+            if (bounds.IsEmpty)
+                return;
+
             if (shapes == null)
             {
                 var random = new Random(0);
