@@ -1,0 +1,7 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="PaintSample.MainWindow"
+		Title="AlterNET UI Paint Sample"
+		xmlns:local="clr-namespace:PaintSample">
+	<local:CanvasControl />
+</Window>
