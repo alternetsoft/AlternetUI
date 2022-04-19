@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Template\**" />
+    <EmbeddedResource Remove="Template\**" />
+    <None Remove="Template\**" />
+    <UIXml Remove="Template\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Alternet.UI" Version="0.1.89-beta" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SampleManagement.Common\SampleManagement.Common.csproj" />
+  </ItemGroup>
+</Project>

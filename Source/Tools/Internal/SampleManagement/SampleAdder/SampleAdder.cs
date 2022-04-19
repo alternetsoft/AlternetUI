@@ -1,3 +1,4 @@
+using SampleManagement.Common;
 using System;
 using System.IO;
 
@@ -11,7 +12,7 @@ namespace SampleAdder
             if (!validationResult.Ok)
                 throw new ArgumentException(validationResult.Message, nameof(sampleName));
 
-            var samplesDirectory = SampleLocator.GetSamplesDirectory();
+            var samplesDirectory = ResourceLocator.SamplesDirectory;
             var sampleDirectory = Path.Combine(samplesDirectory, sampleName);
             Directory.CreateDirectory(sampleDirectory);
 

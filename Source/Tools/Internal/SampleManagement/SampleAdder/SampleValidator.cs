@@ -1,3 +1,4 @@
+using SampleManagement.Common;
 using System;
 using System.IO;
 
@@ -14,7 +15,7 @@ namespace SampleAdder
             if (!validFileName)
                 return (false, "The name contains invalid file name characters.");
 
-            if (SampleLocator.SampleExists(name))
+            if (SamplesProvider.SampleExists(name))
                 return (false, "Sample with this name already exists.");
 
             if (!name.EndsWith("Sample", StringComparison.OrdinalIgnoreCase))
