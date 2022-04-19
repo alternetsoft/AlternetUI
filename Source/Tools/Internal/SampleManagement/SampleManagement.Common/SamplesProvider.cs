@@ -17,6 +17,6 @@ namespace SampleManagement.Common
             return AllSamples.First(x => name.Equals(x.Name, StringComparison.OrdinalIgnoreCase));
         }
 
-        public static IEnumerable<Sample> AllSamples => Directory.GetDirectories(ResourceLocator.SamplesDirectory, "*Sample").Select(x => new Sample(x));
+        public static IEnumerable<Sample> AllSamples => Directory.GetDirectories(ResourceLocator.SamplesDirectory, "*Sample").Select(x => new Sample(x)).OrderBy(x => x.Name);
     }
 }

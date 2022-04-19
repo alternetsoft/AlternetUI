@@ -29,5 +29,17 @@
             },
             "problemMatcher": []
         },
+        {
+            "label": "Run Sample Switcher",
+            "type": "shell",
+            "command": "dotnet run",
+            "options": {
+                "cwd": "${workspaceFolder}/Source/Tools/Internal/SampleManagement/VSCodeSampleSwitcher"
+            },
+            "presentation": {
+                "clear": true
+            },
+            "problemMatcher": []
+        },
     ]
 }
