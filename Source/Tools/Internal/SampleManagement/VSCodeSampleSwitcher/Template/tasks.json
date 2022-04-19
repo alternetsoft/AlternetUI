@@ -37,7 +37,8 @@
                 "cwd": "${workspaceFolder}/Source/Tools/Internal/SampleManagement/VSCodeSampleSwitcher"
             },
             "presentation": {
-                "clear": true
+                "clear": true,
+                "reveal": "never"
             },
             "problemMatcher": []
         },
