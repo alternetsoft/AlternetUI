@@ -11,17 +11,18 @@ namespace PaintSample
         public CanvasControl()
         {
             UserPaint = true;
+            Background = Brushes.White;
         }
 
         List<Point> points = new List<Point>();
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.DrawingContext.FillRectangle(Brushes.White, e.Bounds);
+            var dc = e.DrawingContext;
 
             const double Radius = 5;
             foreach (var point in points)
-                e.DrawingContext.FillEllipse(Brushes.Blue, new Rect(point.X - Radius, point.Y - Radius, Radius * 2, Radius * 2));
+                dc.FillEllipse(Brushes.Blue, new Rect(point.X - Radius, point.Y - Radius, Radius * 2, Radius * 2));
         }
 
         bool isPressed;

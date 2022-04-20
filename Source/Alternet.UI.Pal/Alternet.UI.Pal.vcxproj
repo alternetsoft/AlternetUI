@@ -192,6 +192,7 @@
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="DrawingContext.cpp" />
     <ClCompile Include="Font.cpp" />
+    <ClCompile Include="GraphicsPath.cpp" />
     <ClCompile Include="GroupBox.cpp" />
     <ClCompile Include="HatchBrush.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -267,6 +268,7 @@
     <ClInclude Include="DelayedValue.h" />
     <ClInclude Include="DrawingContext.h" />
     <ClInclude Include="Font.h" />
+    <ClInclude Include="GraphicsPath.h" />
     <ClInclude Include="GroupBox.h" />
     <ClInclude Include="HatchBrush.h" />
     <ClInclude Include="Image.h" />
