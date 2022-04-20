@@ -19,7 +19,7 @@ namespace Alternet::UI
     {
         auto bitmap = image->GetBitmap();
         auto dc = new wxMemoryDC(bitmap);
-        image->SetBitmap(bitmap); // wxMemoryDC seems to be changing bitmap under the hood. So need to reassign it back.
+        image->SetBitmap(bitmap); // wxMemoryDC "unshares" bitmap under the hood. So need to reassign it back.
         return new DrawingContext(dc);
     }
 
