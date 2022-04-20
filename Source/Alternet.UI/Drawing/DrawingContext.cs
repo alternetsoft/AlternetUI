@@ -82,6 +82,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the line segments.</param>
         /// <param name="points">Array of <see cref="Point"/> structures that represent the points to connect.</param>
+        /// <remarks>
+        /// This method draws a series of lines connecting an array of ending points.
+        /// The first two points in the array specify the first line.
+        /// Each additional point specifies the end of a line segment whose starting point is the ending point of the previous line segment.
+        /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="pen"/> is <see langword="null"/>.</exception>
         public void DrawLines(Pen pen, Point[] points)
         {
