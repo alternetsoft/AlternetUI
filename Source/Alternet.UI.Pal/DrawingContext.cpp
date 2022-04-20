@@ -101,6 +101,9 @@ namespace Alternet::UI
 
     void DrawingContext::DrawLines(Point* points, int pointsCount, Pen* pen)
     {
+        if (pointsCount <= 2)
+            return;
+
         auto oldPen = _dc->GetPen();
 
         _dc->SetPen(pen->GetWxPen());
