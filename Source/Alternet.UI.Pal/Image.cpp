@@ -22,26 +22,31 @@ namespace Alternet::UI
             imageHandlersInitialized = true;
         }
 
-        _image = wxImage(managedInputStream);
+        _bitmap = wxBitmap(managedInputStream);
     }
 
     void Image::Initialize(const Size& size)
     {
-        _image = wxImage(fromDip(size, nullptr));
+        _bitmap = wxBitmap(fromDip(size, nullptr));
     }
 
-    wxImage Image::GetImage()
+    wxBitmap Image::GetBitmap()
     {
-        return _image;
+        return _bitmap;
+    }
+
+    void Image::SetBitmap(const wxBitmap& value)
+    {
+        _bitmap = value;
     }
     
     Size Image::GetSize()
     {
-        return toDip(_image.GetSize(), nullptr);
+        return toDip(_bitmap.GetSize(), nullptr);
     }
     
     Int32Size Image::GetPixelSize()
     {
-        return _image.GetSize();
+        return _bitmap.GetSize();
     }
 }

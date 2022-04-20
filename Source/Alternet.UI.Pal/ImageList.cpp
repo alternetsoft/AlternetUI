@@ -39,7 +39,7 @@ namespace Alternet::UI
 
     void ImageList::AddImage(Image* image)
     {
-        AddImageCore(image->GetImage());
+        AddImageCore(image->GetBitmap().ConvertToImage());
     }
 
     void ImageList::AddImageCore(const wxImage& image)

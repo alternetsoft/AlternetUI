@@ -17,14 +17,15 @@ namespace Alternet::UI
 
     /*static*/ DrawingContext* DrawingContext::FromImage(Image* image)
     {
-        wxBitmap bitmap(image->GetImage());
+        auto bitmap = image->GetBitmap();
         auto dc = new wxMemoryDC(bitmap);
+        image->SetBitmap(bitmap); // wxMemoryDC seems to be changing bitmap under the hood. So need to reassign it back.
         return new DrawingContext(dc);
     }
 
     void DrawingContext::DrawImage(Image* image, const Point& origin)
     {
-        wxBitmap bitmap(image->GetImage());
+        wxBitmap bitmap = image->GetBitmap();
         _dc->DrawBitmap(bitmap, fromDip(origin, _dc->GetWindow()));
     }
 

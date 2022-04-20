@@ -10,10 +10,11 @@ namespace Alternet::UI
     {
 #include "Api/Image.inc"
     public:
-        wxImage GetImage();
+        wxBitmap GetBitmap();
+        void SetBitmap(const wxBitmap& value);
 
     private:
-        wxImage _image; // wxImage is reference-counted, so use copy-by-value.
+        wxBitmap _bitmap; // reference-counted, so use copy-by-value.
 
         class ManagedInputStream : public wxInputStream
         {
