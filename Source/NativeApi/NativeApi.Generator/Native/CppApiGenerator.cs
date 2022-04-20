@@ -84,6 +84,14 @@ namespace ApiGenerator.Native
                 var parameterType = types.GetTypeName(parameter.ToContextualParameter(), TypeUsage.Argument);
                 signatureParameters.Append(parameterType + " " + parameter.Name);
 
+                if (parameter.ParameterType.IsArray)
+                {
+                    signatureParameters.Append(", ");
+
+                    var sizeParameterName = MemberProvider.GetArraySizeParameterName(parameter.Name!);
+                    signatureParameters.Append("int " + sizeParameterName);
+                }
+
                 if (i < parameters.Length - 1)
                     signatureParameters.Append(", ");
             }

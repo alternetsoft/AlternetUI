@@ -113,6 +113,14 @@ namespace ApiGenerator.Managed
                 var parameterType = types.GetTypeName(parameter.ToContextualParameter());
                 signatureParametersString.Append(parameterType + " " + parameter.Name);
 
+                if (parameter.ParameterType.IsArray)
+                {
+                    signatureParametersString.Append(", ");
+
+                    var sizeParameterName = MemberProvider.GetArraySizeParameterName(parameter.Name!);
+                    signatureParametersString.Append("int " + sizeParameterName);
+                }
+
                 if (i < parameters.Length - 1)
                     signatureParametersString.Append(", ");
             }

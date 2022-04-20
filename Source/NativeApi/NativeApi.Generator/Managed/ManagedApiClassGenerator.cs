@@ -18,6 +18,7 @@ namespace ApiGenerator.Managed
             var w = new IndentedTextWriter(codeWriter);
 
             var types = new CSharpTypes();
+            var pinvokeTypes = new PInvokeTypes();
 
             var typeName = type.Name;
 
@@ -51,10 +52,10 @@ using System.Security;");
             //    WriteDestructor(w, types, type);
 
             foreach (var property in managedApiType.Properties)
-                WriteProperty(w, property, types);
+                WriteProperty(w, property, types, pinvokeTypes);
 
             foreach (var method in managedApiType.Methods)
-                WriteMethod(w, method, types);
+                WriteMethod(w, method, types, pinvokeTypes);
 
             WriteEvents(w, types, events);
 
@@ -143,7 +144,7 @@ using System.Security;");
             return types.GetTypeName(baseType.ToContextualType());
         }
 
-        private static void WriteProperty(IndentedTextWriter w, ApiProperty apiProperty, Types types)
+        private static void WriteProperty(IndentedTextWriter w, ApiProperty apiProperty, Types types, Types pinvokeTypes)
         {
             var property = apiProperty.Property;
             var propertyName = property.Name;
@@ -190,8 +191,9 @@ using System.Security;");
                     using (new BlockIndent(w))
                     {
                         w.WriteLine("CheckDisposed();");
+                        var argument = GetManagedToNativeArgument(contextualProperty, "value", types, pinvokeTypes);
                         w.WriteLine(
-                            $"NativeApi.{nativeDeclaringTypeName}_Set{propertyName}_({(isStatic ? "" : "NativePointer, ")}{GetManagedToNativeArgument(contextualProperty, "value")});");
+                            $"NativeApi.{nativeDeclaringTypeName}_Set{propertyName}_({(isStatic ? "" : "NativePointer, ")}{argument});");
                     }
             
                 }
@@ -239,7 +241,7 @@ using System.Security;");
             }
         }
 
-        private static void WriteMethod(IndentedTextWriter w, ApiMethod apiMethod, Types types)
+        private static void WriteMethod(IndentedTextWriter w, ApiMethod apiMethod, Types types, Types pinvokeTypes)
         {
             var method = apiMethod.Method;
             var methodName = method.Name;
@@ -263,7 +265,12 @@ using System.Security;");
                 var contextualParameter = parameter.ToContextualParameter();
                 var parameterType = types.GetTypeName(contextualParameter);
                 signatureParametersString.Append(parameterType + " " + parameter.Name);
-                callParametersString.Append(GetManagedToNativeArgument(contextualParameter, parameter.Name!));
+                callParametersString.Append(GetManagedToNativeArgument(contextualParameter, parameter.Name!, types, pinvokeTypes));
+
+                if (parameter.ParameterType.IsArray)
+                {
+                    callParametersString.Append(", " + parameter.Name + ".Length");
+                }
 
                 if (i < parameters.Length - 1)
                 {
@@ -396,8 +403,14 @@ using System.Security;");
             }
         }
 
-        static string GetManagedToNativeArgument(ContextualType type, string name)
+        static string GetManagedToNativeArgument(ContextualType type, string name, Types types, Types pinvokeTypes)
         {
+            if (type.OriginalType.IsArray)
+            {
+                var elementType = type.OriginalType.GetElementType().ToContextualType();
+                return $"Array.ConvertAll<{types.GetTypeName(elementType)}, {pinvokeTypes.GetTypeName(elementType)}>({name}, x => x)";
+            }
+
             if (TypeProvider.IsComplexType(type))
             {
                 if (type.Nullability == Nullability.Nullable)

@@ -87,6 +87,37 @@ namespace Alternet::UI
         _dc->SetBrush(oldBrush);
     }
 
+    void DrawingContext::DrawLine(const Point& a, const Point& b, Pen* pen)
+    {
+        auto oldPen = _dc->GetPen();
+
+        _dc->SetPen(pen->GetWxPen());
+
+        auto window = _dc->GetWindow();
+        _dc->DrawLine(fromDip(a + _translation, window), fromDip(b + _translation, window));
+
+        _dc->SetPen(oldPen);
+    }
+
+    void DrawingContext::DrawLines(Point* points, int pointsCount, Pen* pen)
+    {
+        auto oldPen = _dc->GetPen();
+
+        _dc->SetPen(pen->GetWxPen());
+
+        auto window = _dc->GetWindow();
+
+        std::vector<wxPoint> wxPoints(pointsCount);
+        for (int i = 0; i < pointsCount; i++)
+            wxPoints[i] = fromDip(points[i], window);
+
+        wxSize wxTranslation = fromDip(_translation, window);
+
+        _dc->DrawLines(pointsCount, &wxPoints[0], wxTranslation.x, wxTranslation.y);
+
+        _dc->SetPen(oldPen);
+    }
+
     void DrawingContext::DrawEllipse(const Rect& bounds, Pen* pen)
     {
         auto oldPen = _dc->GetPen();

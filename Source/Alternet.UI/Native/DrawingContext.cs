@@ -77,6 +77,18 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_Pop_(NativePointer);
         }
         
+        public void DrawLine(Alternet.Drawing.Point a, Alternet.Drawing.Point b, Pen pen)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_DrawLine_(NativePointer, a, b, pen.NativePointer);
+        }
+        
+        public void DrawLines(Alternet.Drawing.Point[] points, Pen pen)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_DrawLines_(NativePointer, Array.ConvertAll<Alternet.Drawing.Point, NativeApiTypes.Point>(points, x => x), points.Length, pen.NativePointer);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -109,6 +121,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_Pop_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DrawLine_(IntPtr obj, NativeApiTypes.Point a, NativeApiTypes.Point b, IntPtr pen);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DrawLines_(IntPtr obj, NativeApiTypes.Point[] points, int pointsCount, IntPtr pen);
             
         }
     }

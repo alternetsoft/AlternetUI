@@ -2,4 +2,11 @@
 
 namespace Alternet::UI
 {
+    GraphicsPath::GraphicsPath()
+    {
+    }
+
+    GraphicsPath::~GraphicsPath()
+    {
+    }
 }

@@ -24,5 +24,9 @@ namespace NativeApi.Api
         public void PushTransform(Size translation) => throw new Exception();
 
         public void Pop() => throw new Exception();
+
+        public void DrawLine(Point a, Point b, Pen pen) => throw new Exception();
+
+        public void DrawLines(Point[] points, Pen pen) => throw new Exception();
     }
 }

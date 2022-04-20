@@ -63,6 +63,35 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Draws a line connecting two <see cref="Point"/> structures.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the line.</param>
+        /// <param name="a"><see cref="Point"/> structure that represents the first point to connect.</param>
+        /// <param name="b"><see cref="Point"/> structure that represents the second point to connect.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="pen"/> is <see langword="null"/>.</exception>
+        public void DrawLine(Pen pen, Point a, Point b)
+        {
+            if (pen is null)
+                throw new ArgumentNullException(nameof(pen));
+
+            dc.DrawLine(a, b, pen.NativePen);
+        }
+
+        /// <summary>
+        /// Draws a series of line segments that connect an array of <see cref="Point"/> structures.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the line segments.</param>
+        /// <param name="points">Array of <see cref="Point"/> structures that represent the points to connect.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="pen"/> is <see langword="null"/>.</exception>
+        public void DrawLines(Pen pen, Point[] points)
+        {
+            if (pen is null)
+                throw new ArgumentNullException(nameof(pen));
+
+            dc.DrawLines(points, pen.NativePen);
+        }
+
+        /// <summary>
         /// Draws an ellipse defined by a bounding <see cref="Rect"/>.
         /// </summary>
         /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the ellipse.</param>

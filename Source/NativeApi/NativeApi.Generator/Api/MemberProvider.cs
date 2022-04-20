@@ -88,6 +88,7 @@ namespace ApiGenerator.Api
         public static string GetPInvokeAttributes(ParameterInfo p) =>
             (p.GetCustomAttribute<PInvokeAttributesAttribute>() ?? new PInvokeAttributesAttribute("")).AttributesString;
 
+        public static string GetArraySizeParameterName(string arrayParameterName) => arrayParameterName + "Count";
 
     }
 }

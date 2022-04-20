@@ -38,6 +38,13 @@ namespace ApiGenerator.Managed
             if (aliases.TryGetValue(type, out var aliasName))
                 return GetNullableDecoratedName(type, aliasName);
 
+            if (type.Type.IsArray)
+            {
+                var elementType = type.Type.GetElementType() ?? throw new Exception();
+                if (TypeProvider.IsMarshaledStruct(elementType))
+                    return GetMarshaledStructTypeName(elementType.ToContextualType()) + "[]";
+            }
+
             if (type.OriginalType.IsEnum)
                 return type.OriginalType.Name;
 

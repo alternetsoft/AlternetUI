@@ -56,3 +56,13 @@ ALTERNET_UI_API void DrawingContext_Pop_(DrawingContext* obj)
     obj->Pop();
 }
 
+ALTERNET_UI_API void DrawingContext_DrawLine_(DrawingContext* obj, Point a, Point b, Pen* pen)
+{
+    obj->DrawLine(a, b, pen);
+}
+
+ALTERNET_UI_API void DrawingContext_DrawLines_(DrawingContext* obj, Point* points, int pointsCount, Pen* pen)
+{
+    obj->DrawLines(points, pointsCount, pen);
+}
+

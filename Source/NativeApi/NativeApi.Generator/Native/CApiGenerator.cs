@@ -127,6 +127,16 @@ namespace ApiGenerator.Native
                 signatureParametersString.Append(parameterType + " " + parameter.Name);
                 callParametersString.Append(GetCToCppArgument(parameter.ToContextualParameter(), parameter.Name!));
 
+                if (parameter.ParameterType.IsArray)
+                {
+                    signatureParametersString.Append(", ");
+                    callParametersString.Append(", ");
+
+                    var sizeParameterName = MemberProvider.GetArraySizeParameterName(parameter.Name!);
+                    signatureParametersString.Append("int " + sizeParameterName);
+                    callParametersString.Append(sizeParameterName);
+                }
+
                 if (i < parameters.Length - 1)
                 {
                     signatureParametersString.Append(", ");

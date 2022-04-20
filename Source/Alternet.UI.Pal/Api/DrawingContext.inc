@@ -9,6 +9,8 @@ void DrawImage(Image* image, const Point& origin);
 Size MeasureText(const string& text, Font* font);
 void PushTransform(const Size& translation);
 void Pop();
+void DrawLine(const Point& a, const Point& b, Pen* pen);
+void DrawLines(Point* points, int pointsCount, Pen* pen);
 private:
 DrawingContext() {}
 protected:

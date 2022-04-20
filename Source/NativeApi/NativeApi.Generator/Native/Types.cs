@@ -92,6 +92,13 @@ namespace ApiGenerator.Native
         {
             var name = TypeProvider.GetNativeName(type);
 
+            if (type.Type.IsArray)
+            {
+                var elementType = type.Type.GetElementType() ?? throw new Exception();
+                if (TypeProvider.IsStruct(elementType) && !usage.HasFlag(TypeUsage.Return))
+                    return TypeProvider.GetNativeName(elementType) + "*";
+            }
+
             if (type.Type.IsEnum)
                 return name;
 
@@ -133,6 +140,13 @@ namespace ApiGenerator.Native
         protected virtual string GetComplexTypeName(ContextualType type, TypeUsage usage)
         {
             var name = TypeProvider.GetNativeName(type);
+
+            if (type.Type.IsArray)
+            {
+                var elementType = type.Type.GetElementType() ?? throw new Exception();
+                if (TypeProvider.IsStruct(elementType) && !usage.HasFlag(TypeUsage.Return))
+                    return TypeProvider.GetNativeName(elementType) + "*";
+            }
 
             if (TypeProvider.IsStruct(type))
             {
