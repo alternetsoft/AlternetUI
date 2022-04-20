@@ -8,6 +8,7 @@ Int32Size GetPixelSize();
 
 void LoadFromStream(void* stream);
 void Initialize(const Size& size);
+void CopyFrom(Image* otherImage);
 public:
 Image();
 protected:

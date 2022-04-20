@@ -33,3 +33,8 @@ ALTERNET_UI_API void Image_Initialize_(Image* obj, Size size)
     obj->Initialize(size);
 }
 
+ALTERNET_UI_API void Image_CopyFrom_(Image* obj, Image* otherImage)
+{
+    obj->CopyFrom(otherImage);
+}
+

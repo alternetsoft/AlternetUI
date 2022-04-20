@@ -31,6 +31,7 @@ namespace PaintSample
             canvas.MouseDown += Canvas_MouseDown;
             canvas.MouseUp += Canvas_MouseUp;
             canvas.MouseMove += Canvas_MouseMove;
+            canvas.MouseCaptureLost += Canvas_MouseCaptureLost;
         }
 
         public void Deactivate()
@@ -41,8 +42,13 @@ namespace PaintSample
             canvas.MouseDown -= Canvas_MouseDown;
             canvas.MouseUp -= Canvas_MouseUp;
             canvas.MouseMove -= Canvas_MouseMove;
+            canvas.MouseCaptureLost -= Canvas_MouseCaptureLost;
 
             canvas = null;
+        }
+
+        protected virtual void OnMouseCaptureLost()
+        {
         }
 
         protected virtual void OnMouseMove(MouseEventArgs e)
@@ -55,6 +61,11 @@ namespace PaintSample
 
         protected virtual void OnMouseDown(MouseButtonEventArgs e)
         {
+        }
+
+        private void Canvas_MouseCaptureLost(object? sender, EventArgs e)
+        {
+            OnMouseCaptureLost();
         }
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e)

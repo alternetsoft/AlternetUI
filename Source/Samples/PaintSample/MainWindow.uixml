@@ -4,5 +4,18 @@
 		Title="AlterNET UI Paint Sample"
 		xmlns:local="clr-namespace:PaintSample"
 		Width="800" Height="800">
-	<local:CanvasControl Name="canvasControl"/>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+		<StackPanel Padding="10" Grid.Row="0" Orientation="Horizontal">
+			<Button Text="Undo" Name="undoButton" Click="UndoButton_Click" Margin="0,0,10,0"/>
+			<Button Text="Redo" Name="redoButton" Click="RedoButton_Click" />
+		</StackPanel>
+		<local:CanvasControl Name="canvasControl" Grid.Row="1"/>
+	</Grid>
+
+
 </Window>

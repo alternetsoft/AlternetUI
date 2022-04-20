@@ -30,6 +30,12 @@ namespace Alternet::UI
         _bitmap = wxBitmap(fromDip(size, nullptr));
     }
 
+    void Image::CopyFrom(Image* otherImage)
+    {
+        auto otherBitmap = otherImage->GetBitmap();
+        _bitmap = otherImage->GetBitmap().GetSubBitmap(wxRect(0, 0, otherBitmap.GetWidth(), otherBitmap.GetHeight()));
+    }
+
     wxBitmap Image::GetBitmap()
     {
         return _bitmap;
@@ -39,7 +45,7 @@ namespace Alternet::UI
     {
         _bitmap = value;
     }
-    
+
     Size Image::GetSize()
     {
         return toDip(_bitmap.GetSize(), nullptr);

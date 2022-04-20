@@ -22,12 +22,38 @@ namespace PaintSample
             document = new Document();
 
             colorSelector = new ColorSelector();
-            undoService = new UndoService();
+            
+            undoService = new UndoService(document);
+            undoService.Changed += UndoService_Changed;
+
             tools = new Tools(document, colorSelector, undoService);
 
             canvasControl.Document = document;
 
             CurrentTool = tools.Pen;
+
+            UpdateControls();
+        }
+
+        private void UndoService_Changed(object? sender, EventArgs e)
+        {
+            UpdateControls();
+        }
+
+        private void UpdateControls()
+        {
+            undoButton.Enabled = undoService.CanUndo;
+            redoButton.Enabled = undoService.CanRedo;
+        }
+
+        void UndoButton_Click(object? sender, EventArgs e)
+        {
+            undoService.Undo();
+        }
+
+        void RedoButton_Click(object? sender, EventArgs e)
+        {
+            undoService.Redo();
         }
 
         private Tool CurrentTool

@@ -41,8 +41,8 @@ namespace PaintSample
 
             if (Document == null)
                 return;
-
-            e.DrawingContext.DrawImage(Document.Image, new Point());
+            
+            Document.Paint(e.DrawingContext);
         }
     }
 }

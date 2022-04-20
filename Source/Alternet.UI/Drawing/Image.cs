@@ -9,6 +9,7 @@ namespace Alternet.Drawing
     public class Image : IDisposable
     {
         private bool isDisposed;
+        private UI.Native.Image nativeImage;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class from the specified data stream.
@@ -19,7 +20,7 @@ namespace Alternet.Drawing
             using (var inputStream = new UI.Native.InputStream(stream))
                 NativeImage.LoadFromStream(inputStream);
         }
-        
+
         private protected Image()
         {
             NativeImage = new UI.Native.Image();
@@ -35,7 +36,22 @@ namespace Alternet.Drawing
         /// </summary>
         public Int32Size PixelSize => NativeImage.PixelSize;
 
-        internal UI.Native.Image NativeImage { get; private set; }
+        internal UI.Native.Image NativeImage
+        {
+            get
+            {
+                CheckDisposed();
+                return nativeImage;
+            }
+
+            private set => nativeImage = value;
+        }
+
+        private void CheckDisposed()
+        {
+            if (isDisposed)
+                throw new ObjectDisposedException(null);
+        }
 
         /// <summary>
         /// Releases all resources used by the <see cref="Image"/> object.

@@ -14,5 +14,14 @@ namespace Alternet.Drawing
         {
             NativeImage.Initialize(size);
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bitmap"/> class from the specified existing image.
+        /// </summary>
+        /// <param name="image">The <see cref="Image"/> from which to create the new <see cref="Bitmap"/>.</param>
+        public Bitmap(Image image) : base()
+        {
+            NativeImage.CopyFrom(image.NativeImage);
+        }
     }
 }

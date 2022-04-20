@@ -58,6 +58,12 @@ namespace Alternet.UI.Native
             NativeApi.Image_Initialize_(NativePointer, size);
         }
         
+        public void CopyFrom(Image otherImage)
+        {
+            CheckDisposed();
+            NativeApi.Image_CopyFrom_(NativePointer, otherImage.NativePointer);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -78,6 +84,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Image_Initialize_(IntPtr obj, NativeApiTypes.Size size);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Image_CopyFrom_(IntPtr obj, IntPtr otherImage);
             
         }
     }
