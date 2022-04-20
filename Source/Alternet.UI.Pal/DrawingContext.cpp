@@ -15,6 +15,13 @@ namespace Alternet::UI
         wxDELETE(_dc);
     }
 
+    /*static*/ DrawingContext* DrawingContext::FromImage(Image* image)
+    {
+        wxBitmap bitmap(image->GetImage());
+        auto dc = new wxMemoryDC(bitmap);
+        return new DrawingContext(dc);
+    }
+
     void DrawingContext::DrawImage(Image* image, const Point& origin)
     {
         wxBitmap bitmap(image->GetImage());

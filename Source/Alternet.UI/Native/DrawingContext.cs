@@ -21,6 +21,14 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static DrawingContext FromImage(Image image)
+        {
+            var n = NativeApi.DrawingContext_FromImage_(image.NativePointer);
+            var m = NativeObject.GetFromNativePointer<DrawingContext>(n, p => new DrawingContext(p))!;
+            ReleaseNativeObjectPointer(n);
+            return m;
+        }
+        
         public void FillRectangle(Alternet.Drawing.Rect rectangle, Brush brush)
         {
             CheckDisposed();
@@ -94,6 +102,9 @@ namespace Alternet.UI.Native
         private class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr DrawingContext_FromImage_(IntPtr image);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_FillRectangle_(IntPtr obj, NativeApiTypes.Rect rectangle, IntPtr brush);

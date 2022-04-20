@@ -7,6 +7,7 @@ Size GetSize();
 Int32Size GetPixelSize();
 
 void LoadFromStream(void* stream);
+void Initialize(const Size& size);
 public:
 Image();
 protected:

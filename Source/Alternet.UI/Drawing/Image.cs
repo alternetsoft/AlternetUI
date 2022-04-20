@@ -14,11 +14,15 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Image"/> class from the specified data stream.
         /// </summary>
         /// <param name="stream">The data stream used to load the image.</param>
-        public Image(Stream stream) // todo: stream lifetime
+        public Image(Stream stream) : this()
         {
-            NativeImage = new UI.Native.Image();
             using (var inputStream = new UI.Native.InputStream(stream))
                 NativeImage.LoadFromStream(inputStream);
+        }
+        
+        private protected Image()
+        {
+            NativeImage = new UI.Native.Image();
         }
 
         /// <summary>

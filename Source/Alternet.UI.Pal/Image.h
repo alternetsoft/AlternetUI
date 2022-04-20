@@ -1,11 +1,12 @@
 #pragma once
 #include "Common.h"
 #include "ApiTypes.h"
+#include "Object.h"
 #include "Api/InputStream.h"
 
 namespace Alternet::UI
 {
-    class Image
+    class Image : public Object
     {
 #include "Api/Image.inc"
     public:

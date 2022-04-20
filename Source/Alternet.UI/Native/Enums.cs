@@ -29,6 +29,15 @@ namespace Alternet.UI.Native
         Monospace = 3,
     }
     
+    enum PenDashStyle
+    {
+        Solid = 0,
+        Dot = 1,
+        Dash = 2,
+        DashDot = 3,
+        Custom = 4,
+    }
+    
     enum Key
     {
         None = 0,
@@ -207,15 +216,6 @@ namespace Alternet.UI.Native
     {
         Released = 0,
         Pressed = 1,
-    }
-    
-    enum PenDashStyle
-    {
-        Solid = 0,
-        Dot = 1,
-        Dash = 2,
-        DashDot = 3,
-        Custom = 4,
     }
     
     enum TreeViewSelectionMode

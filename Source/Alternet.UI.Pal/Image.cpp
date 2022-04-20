@@ -25,6 +25,11 @@ namespace Alternet::UI
         _image = wxImage(managedInputStream);
     }
 
+    void Image::Initialize(const Size& size)
+    {
+        _image = wxImage(fromDip(size, nullptr));
+    }
+
     wxImage Image::GetImage()
     {
         return _image;

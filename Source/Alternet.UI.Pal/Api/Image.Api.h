@@ -28,3 +28,8 @@ ALTERNET_UI_API void Image_LoadFromStream_(Image* obj, void* stream)
     obj->LoadFromStream(stream);
 }
 
+ALTERNET_UI_API void Image_Initialize_(Image* obj, Size size)
+{
+    obj->Initialize(size);
+}
+

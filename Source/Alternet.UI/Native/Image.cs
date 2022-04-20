@@ -52,6 +52,12 @@ namespace Alternet.UI.Native
             NativeApi.Image_LoadFromStream_(NativePointer, stream.NativePointer);
         }
         
+        public void Initialize(Alternet.Drawing.Size size)
+        {
+            CheckDisposed();
+            NativeApi.Image_Initialize_(NativePointer, size);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -69,6 +75,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Image_LoadFromStream_(IntPtr obj, IntPtr stream);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Image_Initialize_(IntPtr obj, NativeApiTypes.Size size);
             
         }
     }

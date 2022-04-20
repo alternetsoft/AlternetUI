@@ -5,7 +5,9 @@ namespace NativeApi.Api
 {
     public class DrawingContext
     {
-        private DrawingContext() => throw new Exception();
+        protected DrawingContext() => throw new Exception();
+
+        public static DrawingContext FromImage(Image image) => throw new Exception();
 
         public void FillRectangle(Rect rectangle, Brush brush) => throw new Exception();
 

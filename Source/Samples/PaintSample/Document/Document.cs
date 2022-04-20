@@ -4,7 +4,7 @@ using System;
 
 namespace PaintSample
 {
-    internal class Document
+    internal class Document : IDisposable
     {
         private Collection<Shape> shapes = new Collection<Shape>();
         private Brush background = Brushes.White;
@@ -31,6 +31,20 @@ namespace PaintSample
             }
         }
 
+        Image? image;
+        public Image Image
+        {
+            get
+            {
+                if (image == null)
+                    Render();
+
+                return image ?? throw new InvalidOperationException();
+            }
+        }
+
+        private bool isDisposed;
+
         public void AddShape(Shape shape)
         {
             shapes.Add(shape);
@@ -41,9 +55,13 @@ namespace PaintSample
             shapes.Remove(shape);
         }
 
-        public void Paint(DrawingContext dc, Rect bounds)
+        void Render()
         {
-            dc.FillRectangle(Background, bounds);
+            image?.Dispose();
+            image = new Bitmap(new Size(600, 600));
+            using var dc = DrawingContext.FromImage(image);
+
+            dc.FillRectangle(Brushes.White, new Rect(new Point(), image.Size));
 
             foreach (var shape in shapes)
                 shape.Paint(dc);
@@ -65,6 +83,32 @@ namespace PaintSample
             e.Item.Changed -= Shape_Changed;
         }
 
-        private void RaiseChanged() => Changed?.Invoke(this, EventArgs.Empty);
+        private void RaiseChanged()
+        {
+            Render();
+            Changed?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!isDisposed)
+            {
+                if (disposing)
+                {
+                    image?.Dispose();
+                    image = null;
+                }
+
+                isDisposed = true;
+            }
+        }
+
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
     }
 }

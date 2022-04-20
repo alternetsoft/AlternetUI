@@ -20,18 +20,14 @@ namespace PaintSample
             InitializeComponent();
 
             document = new Document();
-            document.Changed += Document_Changed;
 
             colorSelector = new ColorSelector();
             undoService = new UndoService();
             tools = new Tools(document, colorSelector, undoService);
 
-            CurrentTool = tools.Pen;
-        }
+            canvasControl.Document = document;
 
-        private void Document_Changed(object? sender, EventArgs e)
-        {
-            canvasControl.Invalidate();
+            CurrentTool = tools.Pen;
         }
 
         private Tool CurrentTool
@@ -51,11 +47,6 @@ namespace PaintSample
                 if (currentTool != null)
                     currentTool.Activate(canvasControl);
             }
-        }
-
-        private void CanvasControl_Paint(object? sender, PaintEventArgs e)
-        {
-            document.Paint(e.DrawingContext, e.Bounds);
         }
     }
 }

@@ -16,6 +16,25 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates a new <see cref="DrawingContext"/> from the specified <see cref="Image"/>.
+        /// </summary>
+        /// <param name="image"><see cref="Image"/> from which to create the new <see cref="DrawingContext"/>.</param>
+        /// <returns>A new <see cref="DrawingContext"/> for the specified <see cref="Image"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="image"/> is <see langword="null"/>.</exception>
+        /// <remarks>
+        /// Use this method to draw on the specified image.
+        /// You should always call the <see cref="Dispose()"/> method to release the <see cref="DrawingContext"/> and
+        /// related resources created by the <see cref="FromImage"/> method.
+        /// </remarks>
+        public static DrawingContext FromImage(Image image)
+        {
+            if (image is null)
+                throw new ArgumentNullException(nameof(image));
+
+            return new DrawingContext(UI.Native.DrawingContext.FromImage(image.NativeImage));
+        }
+
+        /// <summary>
         /// Fills the interior of a rectangle specified by a <see cref="Rect"/> structure.
         /// </summary>
         /// <param name="brush"><see cref="Brush"/> that determines the characteristics of the fill.</param>

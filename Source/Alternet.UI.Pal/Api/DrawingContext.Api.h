@@ -3,13 +3,18 @@
 #pragma once
 
 #include "DrawingContext.h"
+#include "Image.h"
 #include "Brush.h"
 #include "Pen.h"
 #include "Font.h"
-#include "Image.h"
 #include "ApiUtils.h"
 
 using namespace Alternet::UI;
+
+ALTERNET_UI_API DrawingContext* DrawingContext_FromImage_(Image* image)
+{
+    return DrawingContext::FromImage(image);
+}
 
 ALTERNET_UI_API void DrawingContext_FillRectangle_(DrawingContext* obj, Rect rectangle, Brush* brush)
 {

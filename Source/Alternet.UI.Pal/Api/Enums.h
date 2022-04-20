@@ -30,6 +30,15 @@ namespace Alternet::UI
         Monospace = 3,
     };
     
+    enum class PenDashStyle
+    {
+        Solid = 0,
+        Dot = 1,
+        Dash = 2,
+        DashDot = 3,
+        Custom = 4,
+    };
+    
     enum class Key
     {
         None = 0,
@@ -208,15 +217,6 @@ namespace Alternet::UI
     {
         Released = 0,
         Pressed = 1,
-    };
-    
-    enum class PenDashStyle
-    {
-        Solid = 0,
-        Dot = 1,
-        Dash = 2,
-        DashDot = 3,
-        Custom = 4,
     };
     
     enum class TreeViewSelectionMode
