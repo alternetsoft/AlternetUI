@@ -88,6 +88,26 @@ namespace Alternet.UI
         event MouseButtonEventHandler MouseRightButtonUp;
 
         /// <summary>
+        ///     A preview event reporting a mouse button was pressed.
+        /// </summary>
+        event MouseButtonEventHandler PreviewMouseDown;
+
+        /// <summary>
+        ///     An event reporting a mouse button was pressed.
+        /// </summary>
+        event MouseButtonEventHandler MouseDown;
+
+        /// <summary>
+        ///     A preview event reporting a mouse button was released.
+        /// </summary>
+        event MouseButtonEventHandler PreviewMouseUp;
+
+        /// <summary>
+        ///     An event reporting a mouse button was released.
+        /// </summary>
+        event MouseButtonEventHandler MouseUp;
+
+        /// <summary>
         ///     An event reporting a mouse move.
         /// </summary>
         event MouseEventHandler PreviewMouseMove;

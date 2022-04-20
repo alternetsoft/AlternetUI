@@ -3,5 +3,5 @@
         x:Class="PaintSample.MainWindow"
 		Title="AlterNET UI Paint Sample"
 		xmlns:local="clr-namespace:PaintSample">
-	<local:CanvasControl />
+	<Control Name="canvasControl" UserPaint="true" Paint="CanvasControl_Paint" />
 </Window>
