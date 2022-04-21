@@ -2,6 +2,7 @@ using Alternet.Drawing;
 using Alternet.UI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PaintSample
 {
@@ -52,12 +53,31 @@ namespace PaintSample
             }
         }
 
+        void DrawSinglePoint(DrawingContext dc)
+        {
+            var width = state.Pen.Width;
+            Rect rect;
+            var point = state.Points.Single();
+            if (width == 1)
+                rect = new Rect(point, new Size(width, width));
+            else
+            {
+                double halfWidth = width / 2;
+                rect = new Rect(point - new Size(halfWidth, halfWidth), new Size(width, width));
+            }
+
+            dc.FillEllipse(new SolidBrush(state.Pen.Color), rect);
+        }
+
         private void Draw(DrawingContext dc)
         {
             if (state == null)
                 throw new InvalidOperationException();
 
-            dc.DrawLines(state.Pen, state.Points.ToArray());
+            if (state.Points.Count == 1)
+                DrawSinglePoint(dc);
+            else
+                dc.DrawLines(state.Pen, state.Points.ToArray());
         }
 
         private void Cancel()
