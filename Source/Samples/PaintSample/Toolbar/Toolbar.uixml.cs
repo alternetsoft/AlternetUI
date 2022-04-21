@@ -69,6 +69,12 @@ namespace PaintSample
             toolButtons.First(x => x.Tool == tools.CurrentTool).IsToggled = true;
             
             skipToggledEvent = false;
+
+            optionsPlaceholder.Children.Clear();
+
+            var optionsControl = tools.CurrentTool.OptionsControl;
+            if (optionsControl != null)
+                optionsPlaceholder.Children.Add(optionsControl);
         }
 
         bool skipToggledEvent;

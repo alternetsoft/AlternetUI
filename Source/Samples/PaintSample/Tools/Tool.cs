@@ -7,12 +7,16 @@ namespace PaintSample
     {
         private Control? canvas;
 
+        private Control? optionsControl;
+
         protected Tool(Document document, ISelectedColors selectedColors, UndoService undoService)
         {
             Document = document;
             SelectedColors = selectedColors;
             UndoService = undoService;
         }
+
+        public Control? OptionsControl => optionsControl ??= CreateOptionsControl();
 
         protected Document Document { get; }
 
@@ -48,6 +52,8 @@ namespace PaintSample
 
             canvas = null;
         }
+
+        protected virtual Control? CreateOptionsControl() => null;
 
         protected virtual void OnKeyDown(KeyEventArgs e)
         {

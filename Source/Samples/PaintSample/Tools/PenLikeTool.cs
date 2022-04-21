@@ -15,9 +15,16 @@ namespace PaintSample
         {
         }
 
-        public double Thickness { get; set; } = 1;
+        public double Thickness { get; set; } = 5;
         
         public abstract Color PenColor { get; }
+
+        protected override Control? CreateOptionsControl()
+        {
+            var control = new PenLikeToolOptionsControl();
+            control.Tool = this;
+            return control;
+        }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {

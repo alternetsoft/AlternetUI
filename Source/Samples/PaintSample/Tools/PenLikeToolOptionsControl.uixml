@@ -1,0 +1,11 @@
+<Control xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="PaintSample.PenLikeToolOptionsControl"
+		xmlns:local="clr-namespace:PaintSample">
+
+	<StackPanel Orientation="Vertical">
+		<Label Text="Thickness:" Margin="0,0,0,5" />
+		<NumericUpDown Name="thicknessNumericUpDown" Minimum="1" Maximum="20" ValueChanged="ThicknessNumericUpDown_ValueChanged"/>
+	</StackPanel>
+	
+</Control>
