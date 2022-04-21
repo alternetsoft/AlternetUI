@@ -5,6 +5,7 @@ void FillRectangle(const Rect& rectangle, Brush* brush);
 void DrawRectangle(const Rect& rectangle, Pen* pen);
 void FillEllipse(const Rect& bounds, Brush* brush);
 void DrawEllipse(const Rect& bounds, Pen* pen);
+void FloodFill(const Point& point, Brush* brush);
 void DrawText(const string& text, const Point& origin, Font* font, Brush* brush);
 void DrawImage(Image* image, const Point& origin);
 Size MeasureText(const string& text, Font* font);

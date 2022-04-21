@@ -29,6 +29,30 @@ namespace Alternet::UI
         _dc->DrawBitmap(bitmap, fromDip(origin, _dc->GetWindow()));
     }
 
+    void DrawingContext::FloodFill(const Point& point, Brush* brush)
+    {
+        auto solidBrush = dynamic_cast<SolidBrush*>(brush);
+        if (solidBrush == nullptr)
+        {
+            // Only SolidBrush is supported.
+            wxASSERT(false);
+            throw 0;
+        }
+
+        auto oldBrush = _dc->GetBrush();
+        _dc->SetBrush(solidBrush->GetWxBrush());
+
+        auto pixelPoint = fromDip(point, _dc->GetWindow());
+
+        wxColor color;
+        if (!_dc->GetPixel(pixelPoint, &color))
+            return;
+
+        _dc->FloodFill(pixelPoint, color, wxFLOOD_SURFACE);
+
+        _dc->SetBrush(oldBrush);
+    }
+
     void DrawingContext::PushTransform(const Size& translation)
     {
         _translationStack.push(_translation);

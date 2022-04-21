@@ -73,6 +73,7 @@ namespace PaintSample
             optionsPlaceholder.Children.Clear();
 
             var optionsControl = tools.CurrentTool.OptionsControl;
+
             if (optionsControl != null)
                 optionsPlaceholder.Children.Add(optionsControl);
         }

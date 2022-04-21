@@ -36,6 +36,11 @@ ALTERNET_UI_API void DrawingContext_DrawEllipse_(DrawingContext* obj, Rect bound
     obj->DrawEllipse(bounds, pen);
 }
 
+ALTERNET_UI_API void DrawingContext_FloodFill_(DrawingContext* obj, Point point, Brush* brush)
+{
+    obj->FloodFill(point, brush);
+}
+
 ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_t* text, Point origin, Font* font, Brush* brush)
 {
     obj->DrawText(text, origin, font, brush);

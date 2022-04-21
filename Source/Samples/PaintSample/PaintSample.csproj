@@ -29,12 +29,14 @@
     <ItemGroup>
       <None Remove="ColorSelector\ColorSelector.uixml" />
       <None Remove="Resources\ToolIcons\Eraser.png" />
+      <None Remove="Resources\ToolIcons\FloodFill.png" />
       <None Remove="Resources\ToolIcons\Pen.png" />
       <None Remove="Toolbar\Toolbar.uixml" />
       <None Remove="Tools\PenLikeToolOptionsControl.uixml" />
     </ItemGroup>
 
     <ItemGroup>
+      <EmbeddedResource Include="Resources\ToolIcons\FloodFill.png" />
       <EmbeddedResource Include="Resources\ToolIcons\Eraser.png" />
       <EmbeddedResource Include="Resources\ToolIcons\Pen.png" />
     </ItemGroup>

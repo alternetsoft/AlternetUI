@@ -17,6 +17,8 @@ namespace NativeApi.Api
 
         public void DrawEllipse(Rect bounds, Pen pen) => throw new Exception();
 
+        public void FloodFill(Point point, Brush brush) => throw new Exception();
+
         public void DrawText(string text, Point origin, Font font, Brush brush) => throw new Exception();
 
         public void DrawImage(Image image, Point origin) => throw new Exception();

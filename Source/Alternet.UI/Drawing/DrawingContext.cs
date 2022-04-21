@@ -69,6 +69,24 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Flood fills the drawing surface starting from the given point, using the given brush.
+        /// </summary>
+        /// <param name="brush">Brush to fill the surface with. Only <see cref="SolidBrush"/> objects are supported at the moment.</param>
+        /// <param name="point">The point to start filling from.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="brush"/> is <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentException"><paramref name="brush"/> is not <see cref="SolidBrush"/></exception>
+        public void FloodFill(Brush brush, Point point)
+        {
+            if (brush is null)
+                throw new ArgumentNullException(nameof(brush));
+
+            if (brush is not SolidBrush)
+                throw new ArgumentException("Only SolidBrush objects are supported.", nameof(brush));
+
+            dc.FloodFill(point, brush.NativeBrush);
+        }
+
+        /// <summary>
         /// Draws a rectangle specified by a <see cref="Rect"/> structure.
         /// </summary>
         /// <param name="pen">A <see cref="Pen"/> that determines the color, width, and style of the rectangle.</param>

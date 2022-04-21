@@ -53,6 +53,12 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DrawEllipse_(NativePointer, bounds, pen.NativePointer);
         }
         
+        public void FloodFill(Alternet.Drawing.Point point, Brush brush)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_FloodFill_(NativePointer, point, brush.NativePointer);
+        }
+        
         public void DrawText(string text, Alternet.Drawing.Point origin, Font font, Brush brush)
         {
             CheckDisposed();
@@ -117,6 +123,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawEllipse_(IntPtr obj, NativeApiTypes.Rect bounds, IntPtr pen);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_FloodFill_(IntPtr obj, NativeApiTypes.Point point, IntPtr brush);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawText_(IntPtr obj, string text, NativeApiTypes.Point origin, IntPtr font, IntPtr brush);
