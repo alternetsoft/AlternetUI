@@ -26,10 +26,20 @@ namespace PaintSample
         {
             InitializeComponent();
 
+            UserPaint = true;
+
             CreateSwatches();
 
             selectedColorDisplay.SelectedColor = Color.Blue;
         }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            var dc = e.DrawingContext;
+
+            dc.DrawLine(Pens.Black, e.Bounds.TopLeft, e.Bounds.TopRight);
+        }
+
 
         Color ISelectedColors.Stroke => selectedColorDisplay.SelectedColor;
 
@@ -43,9 +53,16 @@ namespace PaintSample
                     Margin = new Thickness(0, 0, 5, 0)
                 };
 
+                swatch.Click += Swatch_Click;
+
                 swatches.Add(swatch);
                 container.Children.Add(swatch);
             }
+        }
+
+        private void Swatch_Click(object? sender, System.EventArgs e)
+        {
+            selectedColorDisplay.SelectedColor = ((ColorSwatch)sender!).SwatchColor;
         }
     }
 }

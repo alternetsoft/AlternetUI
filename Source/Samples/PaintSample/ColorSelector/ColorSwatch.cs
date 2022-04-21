@@ -71,7 +71,7 @@ namespace PaintSample
             var innerRect = e.Bounds;
             innerRect.Inflate(-2, -2);
 
-            if (IsPressed)
+            if (IsPressed) 
             {
                 innerRect.Offset(1, 1);
             }

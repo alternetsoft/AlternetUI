@@ -42,6 +42,9 @@ namespace PaintSample
 
             dc.FillRectangle(new SolidBrush(SelectedColor), innerRect);
             dc.DrawRectangle(Pens.Black, innerRect);
+
+            dc.DrawLine(Pens.Black, innerRect.TopLeft + new Size(1, 1), innerRect.TopRight + new Size(-1, 1));
+            dc.DrawLine(Pens.Black, innerRect.TopLeft + new Size(1, 1), innerRect.BottomLeft + new Size(1, -1));
         }
     }
 }
