@@ -20,8 +20,6 @@ namespace PaintSample
             CommandButtons = new Collection<CommandButton>();
             CommandButtons.ItemInserted += CommandButtons_ItemInserted;
             CommandButtons.ItemRemoved += CommandButtons_ItemRemoved;
-
-            UserPaint = true;
         }
 
         private void CommandButtons_ItemRemoved(object? sender, CollectionChangeEventArgs<CommandButton> e)
@@ -31,7 +29,7 @@ namespace PaintSample
 
         private void CommandButtons_ItemInserted(object? sender, CollectionChangeEventArgs<CommandButton> e)
         {
-            e.Item.Margin = new Thickness(0, 0, 0, 5);
+            e.Item.Margin = new Thickness(0, 0, 5, 0);
             e.Item.HorizontalAlignment = HorizontalAlignment.Center;
             commandButtonsContainer.Children.Add(e.Item);
         }
@@ -48,7 +46,7 @@ namespace PaintSample
                 var button = new ToolButton(tool)
                 {
                     HorizontalAlignment = HorizontalAlignment.Center,
-                    Margin = new Thickness(0, 0, 0, 5)
+                    Margin = new Thickness(0, 0, 5, 0)
                 };
 
                 button.ToggledChanged += Button_ToggledChanged;
@@ -62,13 +60,6 @@ namespace PaintSample
         }
 
         public Collection<CommandButton> CommandButtons { get; }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            var dc = e.DrawingContext;
-
-            dc.DrawLine(Pens.Black, e.Bounds.TopRight + new Size(-1, 0), e.Bounds.BottomRight + new Size(-1, 0));
-        }
 
         private void Tools_CurrentToolChanged(object? sender, EventArgs e)
         {

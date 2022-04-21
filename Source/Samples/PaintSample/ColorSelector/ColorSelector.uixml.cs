@@ -26,20 +26,10 @@ namespace PaintSample
         {
             InitializeComponent();
 
-            UserPaint = true;
-
             CreateSwatches();
 
             selectedColorDisplay.SelectedColor = Color.Blue;
         }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            var dc = e.DrawingContext;
-
-            dc.DrawLine(Pens.Black, e.Bounds.TopLeft, e.Bounds.TopRight);
-        }
-
 
         Color ISelectedColors.Stroke => selectedColorDisplay.SelectedColor;
 

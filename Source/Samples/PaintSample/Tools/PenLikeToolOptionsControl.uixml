@@ -3,9 +3,9 @@
         x:Class="PaintSample.PenLikeToolOptionsControl"
 		xmlns:local="clr-namespace:PaintSample">
 
-	<StackPanel Orientation="Vertical">
-		<Label Text="Thickness:" Margin="0,0,0,5" />
-		<NumericUpDown Name="thicknessNumericUpDown" Minimum="1" Maximum="20" ValueChanged="ThicknessNumericUpDown_ValueChanged"/>
+	<StackPanel Orientation="Horizontal">
+		<Label Text="Thickness:" Margin="0,0,5,0" VerticalAlignment="Center"/>
+		<NumericUpDown Name="thicknessNumericUpDown" Minimum="1" Maximum="20" VerticalAlignment="Center" ValueChanged="ThicknessNumericUpDown_ValueChanged"/>
 	</StackPanel>
 	
 </Control>

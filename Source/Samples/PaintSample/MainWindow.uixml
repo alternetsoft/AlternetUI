@@ -4,20 +4,16 @@
 		Title="AlterNET UI Paint Sample"
 		xmlns:local="clr-namespace:PaintSample"
 		Width="800" Height="800">
-	<Border Name="border">
 		<Grid>
 			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
 				<RowDefinition Height="*" />
 				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
-
 			<local:Toolbar Name="toolbar" Grid.Row="0" Grid.Column="0"/>
-			<local:CanvasControl Name="canvasControl" Grid.Row="0" Grid.Column="1"/>
-			<local:ColorSelector Name="colorSelector" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+			<Border Name="border" Grid.Row="1" Grid.Column="0">
+				<local:CanvasControl Name="canvasControl" />
+			</Border>
+			<local:ColorSelector Name="colorSelector" Grid.Row="2" Grid.Column="0"/>
 		</Grid>
-	</Border>
-</Window>
+	</Window>
