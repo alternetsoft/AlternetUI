@@ -4,17 +4,30 @@ using System;
 
 namespace PaintSample
 {
-    internal class ColorSwatch : Control
+    internal class ToolButton : Control
     {
         private bool isPressed;
+        private bool isToggled;
 
-        public ColorSwatch(Color swatchColor)
+        public ToolButton(Tool tool)
         {
             UserPaint = true;
-            SwatchColor = swatchColor;
+            Tool = tool;
+
+            image = LoadImage();
         }
 
-        public Color SwatchColor { get; }
+        private Image LoadImage()
+        {
+            var stream = GetType().Assembly.GetManifestResourceStream(
+                "PaintSample.Resources.ToolIcons." + Tool.GetType().Name.Replace("Tool", "") + ".png");
+            if (stream == null)
+                throw new InvalidOperationException();
+
+            return new Image(stream);
+        }
+
+        Image image;
 
         private bool IsPressed
         {
@@ -29,9 +42,29 @@ namespace PaintSample
             }
         }
 
+        public bool IsToggled
+        {
+            get => isToggled;
+
+            set
+            {
+                if (isToggled == value)
+                    return;
+
+                isToggled = value;
+
+                ToggledChanged?.Invoke(this, EventArgs.Empty);
+                Invalidate();
+            }
+        }
+
+        public event EventHandler? ToggledChanged;
+
+        public Tool Tool { get; }
+
         public override Size GetPreferredSize(Size availableSize)
         {
-            return new Size(20, 20);
+            return new Size(30, 30);
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -46,7 +79,12 @@ namespace PaintSample
             IsPressed = false;
 
             if (Handler.IsMouseOver)
+            {
                 RaiseClick(EventArgs.Empty);
+                
+                if (!IsToggled)
+                    IsToggled = true;
+            }
         }
 
         protected override void OnMouseEnter()
@@ -71,7 +109,7 @@ namespace PaintSample
             var innerRect = e.Bounds;
             innerRect.Inflate(-2, -2);
 
-            if (IsPressed) 
+            if (IsPressed || IsToggled) 
             {
                 innerRect.Offset(1, 1);
             }
@@ -82,8 +120,20 @@ namespace PaintSample
                 dc.FillRectangle(Brushes.Black, shadowRect);
             }
 
-            dc.FillRectangle(new SolidBrush(SwatchColor), innerRect);
+            dc.FillRectangle(IsToggled ? Brushes.White : Brushes.WhiteSmoke, innerRect);
             dc.DrawRectangle(Pens.Black, innerRect);
+
+            var imageOrigin = new Point(
+                innerRect.X + (innerRect.Width - image.Size.Width) / 2,
+                innerRect.Y + (innerRect.Height - image.Size.Height) / 2);
+
+            dc.DrawImage(image, imageOrigin);
+
+            if (IsToggled)
+            {
+                innerRect.Inflate(-1, -1);
+                dc.DrawRectangle(Pens.Gold, innerRect);
+            }
         }
     }
 }

@@ -11,7 +11,6 @@ namespace PaintSample
 
         private UndoService undoService;
 
-        private Tool? currentTool;
 
         public MainWindow()
         {
@@ -22,11 +21,13 @@ namespace PaintSample
             undoService = new UndoService(document);
             undoService.Changed += UndoService_Changed;
 
-            tools = new Tools(document, colorSelector, undoService);
-
             canvasControl.Document = document;
 
-            CurrentTool = tools.Pen;
+            tools = new Tools(document, colorSelector, undoService, canvasControl);
+
+            tools.CurrentTool = tools.Pen;
+
+            toolbar.SetTools(tools);
 
             UpdateControls();
         }
@@ -50,25 +51,6 @@ namespace PaintSample
         void RedoButton_Click(object? sender, EventArgs e)
         {
             undoService.Redo();
-        }
-
-        private Tool CurrentTool
-        {
-            get => currentTool ?? throw new InvalidOperationException();
-
-            set
-            {
-                if (currentTool == value)
-                    return;
-
-                if (currentTool != null)
-                    currentTool.Deactivate();
-
-                currentTool = value;
-
-                if (currentTool != null)
-                    currentTool.Activate(canvasControl);
-            }
         }
     }
 }

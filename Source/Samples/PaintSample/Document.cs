@@ -16,6 +16,8 @@ namespace PaintSample
             Bitmap = CreateBitmap();
         }
 
+        public Color BackgroundColor => Color.White;
+
         public event EventHandler? Changed;
 
         public Bitmap Bitmap
@@ -88,7 +90,7 @@ namespace PaintSample
         {
             var bitmap = new Bitmap(new Size(600, 600));
             using var dc = DrawingContext.FromImage(bitmap);
-            dc.FillRectangle(Brushes.White, new Rect(new Point(), bitmap.Size));
+            dc.FillRectangle(new SolidBrush(BackgroundColor), new Rect(new Point(), bitmap.Size));
             return bitmap;
         }
 

@@ -6,13 +6,13 @@ using System.Linq;
 
 namespace PaintSample
 {
-    internal sealed class PenTool : PenLikeTool
+    internal sealed class EraserTool : PenLikeTool
     {
-        public PenTool(Document document, ISelectedColors selectedColors, UndoService undoService) :
+        public EraserTool(Document document, ISelectedColors selectedColors, UndoService undoService) :
             base(document, selectedColors, undoService)
         {
         }
 
-        public override Color PenColor => SelectedColors.Stroke;
+        public override Color PenColor => Document.BackgroundColor;
     }
 }
