@@ -26,6 +26,14 @@ namespace Alternet::UI
         DestroyWxWindow(/*finalDestroy:*/ true);
     }
 
+    void Control::DestroyWxWindowAndAllChildren()
+    {
+        for (auto child : _children)
+            child->DestroyWxWindowAndAllChildren();
+
+        DestroyWxWindow();
+    }
+
     void Control::DestroyWxWindow(bool finalDestroy/* = false*/)
     {
         if (_wxWindow != nullptr)
@@ -153,7 +161,9 @@ namespace Alternet::UI
         if (!IsWxWindowCreated())
             return;
 
-        DestroyWxWindow();
+        // Explicitly destroy all child windows here to so that our _wxWindow pointers are valid.
+        // Otherwise wxWidgets will destroy the children for us, and we are left with broken pointers.
+        DestroyWxWindowAndAllChildren();
         CreateWxWindow();
     }
 

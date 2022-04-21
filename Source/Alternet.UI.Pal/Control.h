@@ -114,6 +114,8 @@ namespace Alternet::UI
         void UpdateWxWindowParent();
         void DestroyWxWindow(bool finalDestroy = false);
 
+        void DestroyWxWindowAndAllChildren();
+
         Size GetClientSizeCore();
 
         static ControlsByWxWindowsMap s_controlsByWxWindowsMap;
