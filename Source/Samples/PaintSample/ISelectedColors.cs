@@ -5,7 +5,5 @@ namespace PaintSample
     internal interface ISelectedColors
     {
         Color Stroke { get; }
-
-        Color Fill { get; }
     }
 }

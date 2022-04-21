@@ -9,8 +9,6 @@ namespace PaintSample
 
         private Document document;
 
-        private ColorSelector colorSelector;
-
         private UndoService undoService;
 
         private Tool? currentTool;

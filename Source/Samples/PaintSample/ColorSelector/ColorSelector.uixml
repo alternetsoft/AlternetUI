@@ -1,0 +1,10 @@
+<Control xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="PaintSample.ColorSelector"
+		xmlns:local="clr-namespace:PaintSample">
+
+	<StackPanel Orientation="Horizontal" Name="container">
+		<local:SelectedColorDisplay Name="selectedColorDisplay" Margin="0,0,5,0" VerticalAlignment="Center"/>
+	</StackPanel>
+	
+</Control>
