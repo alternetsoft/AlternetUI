@@ -1,3 +1,4 @@
+using Alternet.Drawing;
 using Alternet.UI;
 using System;
 
@@ -11,10 +12,15 @@ namespace PaintSample
 
         private UndoService undoService;
 
+        CommandButton? undoButton;
+        CommandButton? redoButton;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            border.BorderBrush = Brushes.Black;
+            border.Padding = new Thickness();
 
             document = new Document();
 
@@ -29,7 +35,20 @@ namespace PaintSample
 
             toolbar.SetTools(tools);
 
+            InitializeCommandButtons();
+
             UpdateControls();
+        }
+
+        private void InitializeCommandButtons()
+        {
+            undoButton = new CommandButton("Undo");
+            undoButton.Click += UndoButton_Click;
+            toolbar.CommandButtons.Add(undoButton);
+
+            redoButton = new CommandButton("Redo");
+            redoButton.Click += RedoButton_Click;
+            toolbar.CommandButtons.Add(redoButton);
         }
 
         private void UndoService_Changed(object? sender, EventArgs e)

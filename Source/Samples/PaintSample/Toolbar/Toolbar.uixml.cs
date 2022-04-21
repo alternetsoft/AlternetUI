@@ -1,3 +1,4 @@
+using Alternet.Base.Collections;
 using Alternet.Drawing;
 using Alternet.UI;
 using System;
@@ -16,7 +17,23 @@ namespace PaintSample
         {
             InitializeComponent();
 
+            CommandButtons = new Collection<CommandButton>();
+            CommandButtons.ItemInserted += CommandButtons_ItemInserted;
+            CommandButtons.ItemRemoved += CommandButtons_ItemRemoved;
+
             UserPaint = true;
+        }
+
+        private void CommandButtons_ItemRemoved(object? sender, CollectionChangeEventArgs<CommandButton> e)
+        {
+            commandButtonsContainer.Children.Remove(e.Item);
+        }
+
+        private void CommandButtons_ItemInserted(object? sender, CollectionChangeEventArgs<CommandButton> e)
+        {
+            e.Item.Margin = new Thickness(0, 0, 0, 5);
+            e.Item.HorizontalAlignment = HorizontalAlignment.Center;
+            commandButtonsContainer.Children.Add(e.Item);
         }
 
         public void SetTools(Tools tools)
@@ -37,12 +54,14 @@ namespace PaintSample
                 button.ToggledChanged += Button_ToggledChanged;
 
                 toolButtons.Add(button);
-                container.Children.Add(button);
+                toolButtonsContainer.Children.Add(button);
             }
 
             UpdateCurrentTool();
             tools.CurrentToolChanged += Tools_CurrentToolChanged;
         }
+
+        public Collection<CommandButton> CommandButtons { get; }
 
         protected override void OnPaint(PaintEventArgs e)
         {
