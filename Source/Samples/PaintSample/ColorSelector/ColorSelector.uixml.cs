@@ -30,7 +30,7 @@ namespace PaintSample
 
             CreateSwatches();
 
-            selectedColorDisplay.SelectedColor = Color.Blue;
+            selectedColorDisplay.SelectedColor = Color.Red;
         }
 
         protected override void OnPaint(PaintEventArgs e)

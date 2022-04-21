@@ -35,7 +35,7 @@ namespace PaintSample
 
             dc.FillRectangle(Brushes.LightGray, e.Bounds);
             dc.FillRectangle(backgroundHatchBrush, e.Bounds);
-            dc.DrawRectangle(Pens.Black, e.Bounds);
+            dc.DrawLine(Pens.Black, e.Bounds.TopRight + new Size(-1, 0), e.Bounds.BottomRight + new Size(-1, 0));
 
             var innerRect = e.Bounds;
             innerRect.Inflate(-10, -10);

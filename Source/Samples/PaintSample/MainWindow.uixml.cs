@@ -19,8 +19,6 @@ namespace PaintSample
 
             document = new Document();
 
-            colorSelector = new ColorSelector();
-            
             undoService = new UndoService(document);
             undoService.Changed += UndoService_Changed;
 
