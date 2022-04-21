@@ -96,8 +96,8 @@ namespace Alternet::UI
         // maybe we will need to make platform-specific DC implementations?
 
 #ifdef __WXOSX_COCOA__
-        auto locationOffset = penThickness;
-        auto sizeOffset = penThickness;
+        auto locationOffset = 0;
+        auto sizeOffset = -penThickness;
 #elif __WXMSW__
         auto locationOffset = penThickness / 2;
         auto sizeOffset = penThickness / 2;
