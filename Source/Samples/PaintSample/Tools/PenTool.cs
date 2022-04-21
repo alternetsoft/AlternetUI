@@ -19,6 +19,9 @@ namespace PaintSample
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
+            if (e.ChangedButton != MouseButton.Left)
+                return;
+
             Canvas.CaptureMouse();
 
             if (state != null)
@@ -42,8 +45,17 @@ namespace PaintSample
             Cancel();
         }
 
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape && state != null)
+                Cancel();
+        }
+
         protected override void OnMouseUp(MouseButtonEventArgs e)
         {
+            if (e.ChangedButton != MouseButton.Left)
+                return;
+
             if (state != null)
             {
                 Canvas.ReleaseMouseCapture();
@@ -55,6 +67,9 @@ namespace PaintSample
 
         void DrawSinglePoint(DrawingContext dc)
         {
+            if (state == null)
+                throw new InvalidOperationException();
+
             var width = state.Pen.Width;
             Rect rect;
             var point = state.Points.Single();

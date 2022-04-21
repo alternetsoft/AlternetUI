@@ -42,6 +42,12 @@ namespace Alternet::UI
 
         if (eventType == wxEVT_KEY_UP)
             _owner->GetKeyboard()->OnKeyUp((wxKeyEvent&)e, handled);
+        else if (eventType == wxEVT_KEY_DOWN)
+        {
+            // For some reason, wxEVT_CHAR_HOOK are not sent on send when mouse capture is active.
+            if (wxWindow::GetCapture() != nullptr)
+                _owner->GetKeyboard()->OnKeyDown((wxKeyEvent&)e, handled);
+        }
         else if (eventType == wxEVT_CHAR_HOOK)
             _owner->GetKeyboard()->OnKeyDown((wxKeyEvent&)e, handled);
         else if (eventType == wxEVT_CHAR)
