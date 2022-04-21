@@ -9,7 +9,7 @@
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 		<StackPanel Orientation="Horizontal" Name="toolButtonsContainer" Grid.Column="0" Margin="0,0,0,0"/>
-		<Control Name="optionsPlaceholder" Margin="10,0,0,0" VerticalAlignment="Center" Grid.Column="1"/>
+		<Control Name="optionsPlaceholder" Margin="20,0,0,0" VerticalAlignment="Center" Grid.Column="1"/>
 		<StackPanel Orientation="Horizontal" Name="commandButtonsContainer" Grid.Column="2" HorizontalAlignment="Right" Margin="20,0,0,0"/>
 	</Grid>
 </Control>
