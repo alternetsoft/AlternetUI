@@ -53,7 +53,7 @@ namespace PaintSample
             RaiseChanged();
         }
 
-        public void PreviewUpdated()
+        public void UpdatePreview()
         {
             RaiseChanged();
         }

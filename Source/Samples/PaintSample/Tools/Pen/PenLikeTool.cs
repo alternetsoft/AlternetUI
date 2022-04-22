@@ -45,7 +45,7 @@ namespace PaintSample
             if (state != null)
             {
                 state.Points.Add(e.GetPosition(Canvas));
-                Document.PreviewUpdated();
+                Document.UpdatePreview();
             }
         }
 

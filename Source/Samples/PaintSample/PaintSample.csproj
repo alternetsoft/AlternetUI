@@ -30,10 +30,12 @@
       <None Remove="ColorSelector\ColorSelector.uixml" />
       <None Remove="Resources\CommandIcons\Redo.png" />
       <None Remove="Resources\CommandIcons\Undo.png" />
+      <None Remove="Resources\ToolIcons\Airbrush.png" />
       <None Remove="Resources\ToolIcons\Eraser.png" />
       <None Remove="Resources\ToolIcons\FloodFill.png" />
       <None Remove="Resources\ToolIcons\Pen.png" />
       <None Remove="Toolbar\Toolbar.uixml" />
+      <None Remove="Tools\AirbrushToolOptionsControl.uixml" />
       <None Remove="Tools\PenLikeToolOptionsControl.uixml" />
     </ItemGroup>
 
@@ -42,6 +44,7 @@
       <EmbeddedResource Include="Resources\CommandIcons\Undo.png" />
       <EmbeddedResource Include="Resources\ToolIcons\FloodFill.png" />
       <EmbeddedResource Include="Resources\ToolIcons\Eraser.png" />
+      <EmbeddedResource Include="Resources\ToolIcons\Airbrush.png" />
       <EmbeddedResource Include="Resources\ToolIcons\Pen.png" />
     </ItemGroup>
 

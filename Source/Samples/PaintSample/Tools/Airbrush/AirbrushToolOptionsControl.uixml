@@ -1,0 +1,14 @@
+<Control xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="PaintSample.AirbrushToolOptionsControl"
+		xmlns:local="clr-namespace:PaintSample">
+
+	<StackPanel Orientation="Horizontal">
+		<Label Text="Size:" Margin="0,0,5,0" VerticalAlignment="Center"/>
+		<NumericUpDown Name="sizeNumericUpDown" Minimum="1" Maximum="100" VerticalAlignment="Center" ValueChanged="SizeNumericUpDown_ValueChanged"/>
+
+		<Label Text="Flow:" Margin="10,0,5,0" VerticalAlignment="Center"/>
+		<NumericUpDown Name="flowNumericUpDown" Minimum="1" Maximum="100" VerticalAlignment="Center" ValueChanged="FlowNumericUpDown_ValueChanged"/>
+	</StackPanel>
+	
+</Control>

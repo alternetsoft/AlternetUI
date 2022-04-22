@@ -23,7 +23,7 @@ namespace Alternet.Drawing
 
         private protected Image()
         {
-            NativeImage = new UI.Native.Image();
+            nativeImage = new UI.Native.Image();
         }
 
         /// <summary>
@@ -43,8 +43,6 @@ namespace Alternet.Drawing
                 CheckDisposed();
                 return nativeImage;
             }
-
-            private set => nativeImage = value;
         }
 
         private void CheckDisposed()
@@ -73,7 +71,7 @@ namespace Alternet.Drawing
                 if (disposing)
                 {
                     NativeImage.Dispose();
-                    NativeImage = null!;
+                    nativeImage = null!;
                 }
 
                 isDisposed = true;

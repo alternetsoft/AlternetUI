@@ -99,7 +99,7 @@ namespace Alternet.UI
                         System.Threading.Thread.CurrentThread.ManagedThreadId + ": " +
                         "PackWebResponse() starting timeout timer " + innerRequest.Timeout + " ms");
 #endif
-                _timeoutTimer = new Timer(new TimerCallback(TimeoutCallback), null, innerRequest.Timeout, Timeout.Infinite);
+                _timeoutTimer = new System.Threading.Timer(new TimerCallback(TimeoutCallback), null, innerRequest.Timeout, Timeout.Infinite);
             }
 
 #if DEBUG
@@ -954,7 +954,7 @@ namespace Alternet.UI
                                                             // one and only one stream
         private bool            _responseError;         // will be true if exception occurs calling EndGetResponse()
         private Exception       _responseException;     // actual exception to throw (if any)
-        private Timer           _timeoutTimer;          // used if Timeout specified
+        private System.Threading.Timer           _timeoutTimer;          // used if Timeout specified
 
         // OS event used to signal that the response is available
         private ManualResetEvent _responseAvailable;    // protects access to _fullResponse object

@@ -16,6 +16,8 @@ AlterNET UI Roadmap
     - ensure native exceptions marshalled to .NET properly
     - basic unit tests (UI automation)
     - basic stress and memory tests
+    + additional drawing functionality
+    + timer support
     + use data binding and UIXML used controls in the existing samples
 
 0.3-beta (common features release):

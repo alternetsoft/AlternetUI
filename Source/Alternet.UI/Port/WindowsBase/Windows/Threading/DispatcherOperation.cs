@@ -574,7 +574,7 @@ namespace Alternet.UI.Threading
                 // the requested timeout.
                 if(timeout.TotalMilliseconds > 0)
                 {
-                    _waitTimer = new Timer(new TimerCallback(OnTimeout),
+                    _waitTimer = new System.Threading.Timer(new TimerCallback(OnTimeout),
                                            null,
                                            timeout,
                                            TimeSpan.FromMilliseconds(-1));
@@ -613,7 +613,7 @@ namespace Alternet.UI.Threading
             }
 
             private DispatcherOperation _operation;
-            private Timer _waitTimer;
+            private System.Threading.Timer _waitTimer;
         }
         
         private class DispatcherOperationEvent

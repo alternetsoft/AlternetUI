@@ -214,6 +214,7 @@
     <ClCompile Include="SolidBrush.cpp" />
     <ClCompile Include="TabControl.cpp" />
     <ClCompile Include="TextBox.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TreeView.cpp" />
     <ClCompile Include="WindowsVisualThemeSupport.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -255,6 +256,7 @@
     <ClInclude Include="Api\TabControl.Api.h" />
     <ClInclude Include="Api\TabPage.Api.h" />
     <ClInclude Include="Api\TextBox.Api.h" />
+    <ClInclude Include="Api\Timer.Api.h" />
     <ClInclude Include="Api\TreeView.Api.h" />
     <ClInclude Include="Api\Window.Api.h" />
     <ClInclude Include="Application.h" />
@@ -289,6 +291,7 @@
     <ClInclude Include="SolidBrush.h" />
     <ClInclude Include="TabControl.h" />
     <ClInclude Include="TextBox.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="TreeView.h" />
     <ClInclude Include="TypedEnumFlags.h" />
     <ClInclude Include="WindowsVisualThemeSupport.h" />
@@ -323,6 +326,7 @@
     <None Include="Api\TabControl.inc" />
     <None Include="Api\TabPage.inc" />
     <None Include="Api\TextBox.inc" />
+    <None Include="Api\Timer.inc" />
     <None Include="Api\TreeView.inc" />
     <None Include="Api\Window.inc" />
   </ItemGroup>

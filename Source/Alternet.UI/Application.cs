@@ -135,15 +135,14 @@ namespace Alternet.UI
             {
                 if (disposing)
                 {
+                    nativeApplication.Idle -= NativeApplication_Idle;
+                    keyboardInputProvider.Dispose();
+                    mouseInputProvider.Dispose();
+                    nativeApplication.Dispose();
+                    nativeApplication = null!;
+
+                    current = null;
                 }
-
-                nativeApplication.Idle -= NativeApplication_Idle;
-                keyboardInputProvider.Dispose();
-                mouseInputProvider.Dispose();
-                nativeApplication.Dispose();
-                nativeApplication = null!;
-
-                current = null;
 
                 IsDisposed = true;
             }

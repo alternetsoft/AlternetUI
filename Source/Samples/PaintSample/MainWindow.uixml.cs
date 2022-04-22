@@ -58,8 +58,8 @@ namespace PaintSample
 
         private void UpdateControls()
         {
-            undoButton.Enabled = undoService.CanUndo;
-            redoButton.Enabled = undoService.CanRedo;
+            undoButton!.Enabled = undoService.CanUndo;
+            redoButton!.Enabled = undoService.CanRedo;
         }
 
         void UndoButton_Click(object? sender, EventArgs e)
