@@ -1,7 +1,6 @@
 using Alternet.Drawing;
 using Alternet.UI;
 using System;
-using System.Collections.Generic;
 
 namespace PaintSample
 {
@@ -16,7 +15,7 @@ namespace PaintSample
 
         public double Size { get; set; } = 20;
 
-        public double Flow { get; set; } = 10;
+        public double Flow { get; set; } = 40;
 
         protected override Control? CreateOptionsControl()
         {
@@ -38,7 +37,8 @@ namespace PaintSample
             state = new State(
                 new SolidBrush(SelectedColors.Stroke),
                 e.GetPosition(Canvas),
-                GetPointsPerTick());
+                GetPointsPerTick(),
+                new Bitmap(Document.Bitmap));
 
             state.Timer.Tick += Timer_Tick;
             state.Timer.Start();
@@ -77,7 +77,8 @@ namespace PaintSample
 
         private int GetPointsPerTick()
         {
-            return (int)(Flow / Size * 15);
+            var radius = Size / 2;
+            return (int)(Flow * radius * radius / 200);
         }
 
         private void Timer_Tick(object? sender, EventArgs e)
@@ -85,18 +86,13 @@ namespace PaintSample
             if (state == null)
                 throw new InvalidOperationException();
 
-            for (int i = 0; i < state.PointsPerTick; i++)
-                AddNextPoint();
+            using (var dc = DrawingContext.FromImage(state.PreviewBitmap))
+            {
+                for (int i = 0; i < state.PointsPerTick; i++)
+                    DrawSinglePoint(dc, state.Brush, GetNextPoint());
+            }
 
             Document.UpdatePreview();
-        }
-
-        private void AddNextPoint()
-        {
-            if (state == null)
-                throw new InvalidOperationException();
-
-            state.Points.Add(GetNextPoint());
         }
 
         private Point GetNextPoint()
@@ -137,8 +133,7 @@ namespace PaintSample
             if (state == null)
                 throw new InvalidOperationException();
 
-            foreach (var point in state.Points)
-                DrawSinglePoint(dc, state.Brush, point);
+            dc.DrawImage(state.PreviewBitmap, new Point());
         }
 
         private void Cancel()
@@ -154,21 +149,22 @@ namespace PaintSample
 
         private class State : IDisposable
         {
-            public State(Brush brush, Point center, int pointsPerTick)
+            public State(Brush brush, Point center, int pointsPerTick, Bitmap previewBitmap)
             {
                 Brush = brush;
                 Center = center;
                 Timer = new Timer(TimeSpan.FromMilliseconds(10));
                 PointsPerTick = pointsPerTick;
+                PreviewBitmap = previewBitmap;
             }
+
+            public Bitmap PreviewBitmap { get; private set; }
 
             public Brush Brush { get; }
 
             public int PointsPerTick { get; }
 
             public Point Center { get; set; }
-
-            public List<Point> Points { get; } = new List<Point>();
 
             public Random Random { get; } = new Random();
 
@@ -178,6 +174,9 @@ namespace PaintSample
             {
                 Timer.Dispose();
                 Timer = null!;
+
+                PreviewBitmap.Dispose();
+                PreviewBitmap = null!;
             }
         }
     }
