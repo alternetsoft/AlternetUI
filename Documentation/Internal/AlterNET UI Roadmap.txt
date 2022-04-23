@@ -9,7 +9,7 @@ AlterNET UI Roadmap
         ? styles
         - resource URI support (pack://)
         
-    - keyboard and mouse input support
+    + keyboard and mouse input support
     - establish API to create custom controls abd layouts
     - scrollable controls support
     + user controls defined in UIXML support
