@@ -29,10 +29,10 @@ namespace Alternet::UI
         _dc->DrawBitmap(bitmap, fromDip(origin, _dc->GetWindow()));
     }
 
-    void DrawingContext::FloodFill(const Point& point, Brush* brush)
+    void DrawingContext::FloodFill(const Point& point, Brush* fillBrush)
     {
-        auto solidBrush = dynamic_cast<SolidBrush*>(brush);
-        if (solidBrush == nullptr)
+        auto fillSolidBrush = dynamic_cast<SolidBrush*>(fillBrush);
+        if (fillSolidBrush == nullptr)
         {
             // Only SolidBrush is supported.
             wxASSERT(false);
@@ -40,17 +40,72 @@ namespace Alternet::UI
         }
 
         auto oldBrush = _dc->GetBrush();
-        _dc->SetBrush(solidBrush->GetWxBrush());
+        _dc->SetBrush(fillSolidBrush->GetWxBrush());
 
         auto pixelPoint = fromDip(point, _dc->GetWindow());
 
-        wxColor color;
-        if (!_dc->GetPixel(pixelPoint, &color))
+        wxColor seedColor;
+        if (!_dc->GetPixel(pixelPoint, &seedColor))
             return;
 
-        _dc->FloodFill(pixelPoint, color, wxFLOOD_SURFACE);
+#ifdef __WXOSX_COCOA__
+        // wxDC::FloodFill is not implemented on macOS.
+        ManualFloodFill(pixelPoint, seedColor, fillSolidBrush->GetWxBrush().GetColour());
+#else
+        _dc->FloodFill(pixelPoint, seedColor, wxFLOOD_SURFACE);
+#endif
 
         _dc->SetBrush(oldBrush);
+    }
+
+    void DrawingContext::ManualFloodFill(wxPoint point, wxColor seedColor, wxColor fillColor)
+    {
+        // See https://stackoverflow.com/a/1257195/71689
+
+        int w, h;
+        _dc->GetSize(&w, &h);
+
+        if (point.y < 0 || point.y > h - 1 || point.x < 0 || point.x > w - 1)
+            return;
+
+        auto stack = std::make_unique<std::stack<wxPoint>>();
+        wxBitmap dcBitmap(w, h, *_dc);
+        
+        wxMemoryDC memDC(dcBitmap);
+        memDC.Blit(wxPoint(), wxSize(w, h), _dc, wxPoint());
+        memDC.SelectObject(wxNullBitmap);
+
+        auto image = dcBitmap.ConvertToImage();
+
+        auto fillRed = fillColor.Red();
+        auto fillGreen = fillColor.Green();
+        auto fillBlue = fillColor.Blue();
+
+        stack->push(point);
+        while (!stack->empty())
+        {
+            auto p = stack->top();
+            stack->pop();
+
+            int x = p.x;
+            int y = p.y;
+            if (y < 0 || y > h - 1 || x < 0 || x > w - 1)
+                continue;
+
+            wxColor val(image.GetRed(x, y), image.GetGreen(x, y), image.GetBlue(x, y));
+            
+            if (val == seedColor)
+            {
+                image.SetRGB(x, y, fillRed, fillGreen, fillBlue);
+                stack->push(wxPoint(x + 1, y));
+                stack->push(wxPoint(x - 1, y));
+                stack->push(wxPoint(x, y + 1));
+                stack->push(wxPoint(x, y - 1));
+            }
+        }
+
+        wxBitmap outputBitmap(image, *_dc);
+        _dc->DrawBitmap(outputBitmap, wxPoint());
     }
 
     void DrawingContext::PushTransform(const Size& translation)
