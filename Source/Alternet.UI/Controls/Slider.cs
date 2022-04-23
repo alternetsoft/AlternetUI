@@ -41,45 +41,6 @@ namespace Alternet.UI
                             //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
                             ));
 
-        /// <summary>
-        /// Callback for changes to the Value property
-        /// </summary>
-        private static void OnValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            Slider textBox = (Slider)d;
-            textBox.OnValuePropertyChanged((int)e.OldValue, (int)e.NewValue);
-        }
-
-        private void OnValuePropertyChanged(int oldValue, int newValue)
-        {
-            RaiseValueChanged(EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Gets or sets a numeric value that represents the current position of the scroll box on the slider.
-        /// </summary>
-        /// <value>A numeric value that is within the <see cref="Minimum"/> and <see cref="Maximum"/> range. The default value is 0.</value>
-        /// <remarks>The <see cref="Value"/> property contains the number that represents the current position of the scroll box on the slider.</remarks>
-        public int Value
-        {
-            get { return (int)GetValue(ValueProperty); }
-            set { SetValue(ValueProperty, value); }
-        }
-
-        private static object CoerceValue(DependencyObject d, object value)
-        {
-            var o = (Slider)d;
-
-            var intValue = (int)value;
-            if (intValue < o.Minimum)
-                return o.Minimum;
-
-            if (intValue > o.Maximum)
-                return o.Maximum;
-
-            return value;
-        }
-
         private int minimum;
 
         private int maximum = 10;
@@ -121,6 +82,17 @@ namespace Alternet.UI
         /// Occurs when the value of the <see cref="TickFrequency"/> property changes.
         /// </summary>
         public event EventHandler? TickFrequencyChanged;
+
+        /// <summary>
+        /// Gets or sets a numeric value that represents the current position of the scroll box on the slider.
+        /// </summary>
+        /// <value>A numeric value that is within the <see cref="Minimum"/> and <see cref="Maximum"/> range. The default value is 0.</value>
+        /// <remarks>The <see cref="Value"/> property contains the number that represents the current position of the scroll box on the slider.</remarks>
+        public int Value
+        {
+            get { return (int)GetValue(ValueProperty); }
+            set { SetValue(ValueProperty, value); }
+        }
 
         /// <summary>
         /// Gets or sets the lower limit of the range this <see cref="Slider"/> is working with.
@@ -294,6 +266,34 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnValueChanged(EventArgs e)
         {
+        }
+
+        /// <summary>
+        /// Callback for changes to the Value property
+        /// </summary>
+        private static void OnValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            Slider control = (Slider)d;
+            control.OnValuePropertyChanged((int)e.OldValue, (int)e.NewValue);
+        }
+
+        private static object CoerceValue(DependencyObject d, object value)
+        {
+            var o = (Slider)d;
+
+            var intValue = (int)value;
+            if (intValue < o.Minimum)
+                return o.Minimum;
+
+            if (intValue > o.Maximum)
+                return o.Maximum;
+
+            return value;
+        }
+
+        private void OnValuePropertyChanged(int oldValue, int newValue)
+        {
+            RaiseValueChanged(EventArgs.Empty);
         }
     }
 }

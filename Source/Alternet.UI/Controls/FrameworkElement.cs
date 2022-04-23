@@ -796,7 +796,7 @@ namespace Alternet.UI
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Localizability(LocalizationCategory.NeverLocalize)]
-        public object DataContext
+        public object? DataContext
         {
             get { return GetValue(DataContextProperty); }
             set { SetValue(DataContextProperty, value); }

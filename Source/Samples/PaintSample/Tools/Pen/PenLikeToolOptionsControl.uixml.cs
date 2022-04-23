@@ -12,27 +12,10 @@ namespace PaintSample
             InitializeComponent();
         }
 
-        private PenLikeTool? tool;
-
         public PenLikeTool? Tool
         {
-            get => tool;
-            set
-            {
-                if (tool == value)
-                    return;
-
-                tool = value;
-
-                if (tool != null)
-                    thicknessNumericUpDown.Value = (decimal)tool.Thickness;
-            }
-        }
-
-        void ThicknessNumericUpDown_ValueChanged(object? sender, EventArgs e)
-        {
-            if (tool != null)
-                tool.Thickness = (double)thicknessNumericUpDown.Value;
+            get => (PenLikeTool?)DataContext;
+            set => DataContext = value;
         }
     }
 }

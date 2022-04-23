@@ -12,7 +12,24 @@ namespace Alternet.UI
     /// </remarks>
     public class NumericUpDown : Control
     {
-        private decimal value;
+        /// <summary>
+        /// Identifies the <see cref="Value"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ValueProperty =
+            DependencyProperty.Register(
+                    "Value", // Property name
+                    typeof(decimal), // Property type
+                    typeof(NumericUpDown), // Property owner
+                    new FrameworkPropertyMetadata( // Property metadata
+                            0m, // default value
+                            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | // Flags
+                                FrameworkPropertyMetadataOptions.AffectsPaint,
+                            new PropertyChangedCallback(OnValuePropertyChanged),    // property changed callback
+                            new CoerceValueCallback(CoerceValue),
+                            true, // IsAnimationProhibited
+                            UpdateSourceTrigger.PropertyChanged
+                            //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
+                            ));
 
         private decimal minimum;
 
@@ -46,25 +63,8 @@ namespace Alternet.UI
         /// </exception>
         public decimal Value
         {
-            get
-            {
-                CheckDisposed();
-                return value;
-            }
-
-            set
-            {
-                CheckDisposed();
-
-                if (value < Minimum || value > Maximum)
-                    throw new ArgumentOutOfRangeException(nameof(value));
-
-                if (this.value == value)
-                    return;
-
-                this.value = value;
-                RaiseValueChanged(EventArgs.Empty);
-            }
+            get { return (decimal)GetValue(ValueProperty); }
+            set { SetValue(ValueProperty, value); }
         }
 
         /// <summary>
@@ -157,6 +157,34 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnValueChanged(EventArgs e)
         {
+        }
+
+        /// <summary>
+        /// Callback for changes to the Value property
+        /// </summary>
+        private static void OnValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            NumericUpDown control = (NumericUpDown)d;
+            control.OnValuePropertyChanged((decimal)e.OldValue, (decimal)e.NewValue);
+        }
+
+        private static object CoerceValue(DependencyObject d, object value)
+        {
+            var o = (NumericUpDown)d;
+
+            var intValue = (decimal)value;
+            if (intValue < o.Minimum)
+                return o.Minimum;
+
+            if (intValue > o.Maximum)
+                return o.Maximum;
+
+            return value;
+        }
+
+        private void OnValuePropertyChanged(decimal oldValue, decimal newValue)
+        {
+            RaiseValueChanged(EventArgs.Empty);
         }
     }
 }
