@@ -44,21 +44,21 @@ namespace Alternet::UI
 
         auto pixelPoint = fromDip(point, _dc->GetWindow());
 
+#ifdef __WXOSX_COCOA__
+        // wxDC::FloodFill is not implemented on macOS.
+        ManualFloodFill(pixelPoint, fillSolidBrush->GetWxBrush().GetColour());
+#else
         wxColor seedColor;
         if (!_dc->GetPixel(pixelPoint, &seedColor))
             return;
 
-#ifdef __WXOSX_COCOA__
-        // wxDC::FloodFill is not implemented on macOS.
-        ManualFloodFill(pixelPoint, seedColor, fillSolidBrush->GetWxBrush().GetColour());
-#else
         _dc->FloodFill(pixelPoint, seedColor, wxFLOOD_SURFACE);
 #endif
 
         _dc->SetBrush(oldBrush);
     }
 
-    void DrawingContext::ManualFloodFill(wxPoint point, wxColor seedColor, wxColor fillColor)
+    void DrawingContext::ManualFloodFill(wxPoint point, wxColor fillColor)
     {
         // See https://stackoverflow.com/a/1257195/71689
 
@@ -76,6 +76,11 @@ namespace Alternet::UI
         memDC.SelectObject(wxNullBitmap);
 
         auto image = dcBitmap.ConvertToImage();
+
+        wxColor seedColor(
+            image.GetRed(point.x, point.y),
+            image.GetGreen(point.x, point.y),
+            image.GetBlue(point.x, point.y));
 
         auto fillRed = fillColor.Red();
         auto fillGreen = fillColor.Green();
@@ -104,7 +109,8 @@ namespace Alternet::UI
             }
         }
 
-        wxBitmap outputBitmap(image, *_dc);
+//        wxBitmap outputBitmap(image, *_dc);
+        wxBitmap outputBitmap(image);
         _dc->DrawBitmap(outputBitmap, wxPoint());
     }
 

@@ -30,6 +30,6 @@ namespace Alternet::UI
 
         bool _useDCForText = true;
 
-        void ManualFloodFill(wxPoint point, wxColor seedColor, wxColor color);
+        void ManualFloodFill(wxPoint point, wxColor color);
     };
 }
