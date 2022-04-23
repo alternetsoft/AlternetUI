@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// </summary>
     [TypeConverter("System.Windows.Markup.DependencyPropertyConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
     [ValueSerializer(typeof(DependencyPropertyValueSerializer))]
-    public sealed class DependencyProperty
+    public sealed class DependencyProperty : IPropertyInfo
     {
         /// <summary>
         ///     Register a Dependency Property
@@ -1177,6 +1177,16 @@ namespace Alternet.UI
             return GlobalIndexCount++;
         }
 
+        object IPropertyInfo.Get(object target)
+        {
+            throw new NotImplementedException();
+        }
+
+        void IPropertyInfo.Set(object target, object value)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// This is the callback designers use to participate in the computation of property
         /// values at design time. Eg. Even if the author sets Visibility to Hidden, the designer
@@ -1268,6 +1278,10 @@ namespace Alternet.UI
                 }
             }
         }
-}
+
+        bool IPropertyInfo.CanSet => !ReadOnly;
+
+        bool IPropertyInfo.CanGet => true;
+    }
 }
 

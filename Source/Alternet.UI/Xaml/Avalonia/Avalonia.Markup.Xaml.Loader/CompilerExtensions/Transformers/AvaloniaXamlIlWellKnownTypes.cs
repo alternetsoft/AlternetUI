@@ -136,8 +136,8 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             //{ IsStatic = true });
             //AvaloniaObjectSetValueMethod = AvaloniaObject.FindMethod("SetValue", XamlIlTypes.Void,
             //    false, AvaloniaProperty, XamlIlTypes.Object, BindingPriority);
-            //IPropertyInfo = cfg.TypeSystem.GetType("Avalonia.Data.Core.IPropertyInfo");
-            //ClrPropertyInfo = cfg.TypeSystem.GetType("Avalonia.Data.Core.ClrPropertyInfo");
+            IPropertyInfo = cfg.TypeSystem.GetType("Alternet.UI.IPropertyInfo");
+            ClrPropertyInfo = cfg.TypeSystem.GetType("Alternet.UI.ClrPropertyInfo");
             //PropertyPath = cfg.TypeSystem.GetType("Avalonia.Data.Core.PropertyPath");
             //PropertyPathBuilder = cfg.TypeSystem.GetType("Avalonia.Data.Core.PropertyPathBuilder");
             //IPropertyAccessor = cfg.TypeSystem.GetType("Avalonia.Data.Core.Plugins.IPropertyAccessor");
