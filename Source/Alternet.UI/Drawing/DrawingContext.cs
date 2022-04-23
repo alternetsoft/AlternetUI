@@ -156,7 +156,20 @@ namespace Alternet.Drawing
             if (image is null)
                 throw new ArgumentNullException(nameof(image));
 
-            dc.DrawImage(image.NativeImage, origin);
+            dc.DrawImageAtPoint(image.NativeImage, origin);
+        }
+
+        /// <summary>
+        /// Draws an image into the region defined by the specified <see cref="Rect"/>.
+        /// </summary>
+        /// <param name="image"><see cref="Image"/> to draw.</param>
+        /// <param name="rect">The region in which to draw <paramref name="image"/>.</param>
+        public void DrawImage(Image image, Rect rect)
+        {
+            if (image is null)
+                throw new ArgumentNullException(nameof(image));
+
+            dc.DrawImageAtRect(image.NativeImage, rect);
         }
 
         /// <summary>

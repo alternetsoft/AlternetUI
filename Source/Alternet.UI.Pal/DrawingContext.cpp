@@ -24,10 +24,20 @@ namespace Alternet::UI
         return new DrawingContext(dc);
     }
 
-    void DrawingContext::DrawImage(Image* image, const Point& origin)
+    void DrawingContext::DrawImageAtPoint(Image* image, const Point& origin)
     {
         wxBitmap bitmap = image->GetBitmap();
+
+        auto window = _dc->GetWindow();
+
         _dc->DrawBitmap(bitmap, fromDip(origin, _dc->GetWindow()));
+    }
+
+    void DrawingContext::DrawImageAtRect(Image* image, const Rect& rect)
+    {
+        wxBitmap bitmap = image->GetBitmap();
+        auto destRect = fromDip(rect, _dc->GetWindow());
+        _graphicsContext->DrawBitmap(bitmap, destRect.x, destRect.y, destRect.width, destRect.height);
     }
 
     void DrawingContext::FloodFill(const Point& point, Brush* fillBrush)

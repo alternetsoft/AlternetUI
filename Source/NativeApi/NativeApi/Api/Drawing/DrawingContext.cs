@@ -21,7 +21,9 @@ namespace NativeApi.Api
 
         public void DrawText(string text, Point origin, Font font, Brush brush) => throw new Exception();
 
-        public void DrawImage(Image image, Point origin) => throw new Exception();
+        public void DrawImageAtPoint(Image image, Point origin) => throw new Exception();
+
+        public void DrawImageAtRect(Image image, Rect rect) => throw new Exception();
 
         public Size MeasureText(string text, Font font) => throw new Exception();
 

@@ -123,11 +123,13 @@ namespace PaintSample
             dc.FillRectangle(IsToggled ? Brushes.White : Brushes.WhiteSmoke, innerRect);
             dc.DrawRectangle(Pens.Black, innerRect);
 
-            var imageOrigin = new Point(
-                innerRect.X + (innerRect.Width - image.Size.Width) / 2,
-                innerRect.Y + (innerRect.Height - image.Size.Height) / 2);
+            var imageSize = new Size(image.PixelSize.Width, image.PixelSize.Height);
 
-            dc.DrawImage(image, imageOrigin);
+            var imageOrigin = new Point(
+                innerRect.X + (innerRect.Width - imageSize.Width) / 2,
+                innerRect.Y + (innerRect.Height - imageSize.Height) / 2);
+
+            dc.DrawImage(image, new Rect(imageOrigin, imageSize));
 
             if (IsToggled)
             {

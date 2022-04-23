@@ -46,9 +46,14 @@ ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_
     obj->DrawText(text, origin, font, brush);
 }
 
-ALTERNET_UI_API void DrawingContext_DrawImage_(DrawingContext* obj, Image* image, Point origin)
+ALTERNET_UI_API void DrawingContext_DrawImageAtPoint_(DrawingContext* obj, Image* image, Point origin)
 {
-    obj->DrawImage(image, origin);
+    obj->DrawImageAtPoint(image, origin);
+}
+
+ALTERNET_UI_API void DrawingContext_DrawImageAtRect_(DrawingContext* obj, Image* image, Rect rect)
+{
+    obj->DrawImageAtRect(image, rect);
 }
 
 ALTERNET_UI_API Size_C DrawingContext_MeasureText_(DrawingContext* obj, const char16_t* text, Font* font)

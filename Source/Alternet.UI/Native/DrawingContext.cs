@@ -65,10 +65,16 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DrawText_(NativePointer, text, origin, font.NativePointer, brush.NativePointer);
         }
         
-        public void DrawImage(Image image, Alternet.Drawing.Point origin)
+        public void DrawImageAtPoint(Image image, Alternet.Drawing.Point origin)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_DrawImage_(NativePointer, image.NativePointer, origin);
+            NativeApi.DrawingContext_DrawImageAtPoint_(NativePointer, image.NativePointer, origin);
+        }
+        
+        public void DrawImageAtRect(Image image, Alternet.Drawing.Rect rect)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_DrawImageAtRect_(NativePointer, image.NativePointer, rect);
         }
         
         public Alternet.Drawing.Size MeasureText(string text, Font font)
@@ -131,7 +137,10 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_DrawText_(IntPtr obj, string text, NativeApiTypes.Point origin, IntPtr font, IntPtr brush);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawImage_(IntPtr obj, IntPtr image, NativeApiTypes.Point origin);
+            public static extern void DrawingContext_DrawImageAtPoint_(IntPtr obj, IntPtr image, NativeApiTypes.Point origin);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DrawImageAtRect_(IntPtr obj, IntPtr image, NativeApiTypes.Rect rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Size DrawingContext_MeasureText_(IntPtr obj, string text, IntPtr font);
