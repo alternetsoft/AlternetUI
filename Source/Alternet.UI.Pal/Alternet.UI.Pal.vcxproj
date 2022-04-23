@@ -269,6 +269,7 @@
     <ClInclude Include="Control.h" />
     <ClInclude Include="DelayedValue.h" />
     <ClInclude Include="DrawingContext.h" />
+    <ClInclude Include="FloodFill.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GraphicsPath.h" />
     <ClInclude Include="GroupBox.h" />

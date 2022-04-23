@@ -29,7 +29,5 @@ namespace Alternet::UI
         wxGraphicsPen GetGraphicsPen(Pen* pen);
 
         bool _useDCForText = true;
-
-        void ManualFloodFill(wxPoint point, wxColor color);
     };
 }
