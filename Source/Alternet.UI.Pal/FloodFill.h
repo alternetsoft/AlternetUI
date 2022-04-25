@@ -128,7 +128,11 @@ namespace Alternet::UI
             return;
 
         auto stack = std::make_unique<std::stack<wxPoint>>();
+#ifdef __WXGTK__
+        wxBitmap dcBitmap(w, h);
+#else
         wxBitmap dcBitmap(w, h, *dc);
+#endif
 
         wxMemoryDC memDC(dcBitmap);
         memDC.Blit(wxPoint(), wxSize(w, h), dc, wxPoint());
