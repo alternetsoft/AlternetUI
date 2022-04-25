@@ -12,6 +12,7 @@ namespace EmployeeFormSample
             InitializeComponent();
 
             prefixComboBox.Items.AddRange(Enum.GetValues(typeof(EmployeePrefix)).Cast<object>());
+            stateComboBox.Items.AddRange(Enum.GetValues(typeof(State)).Cast<object>());
 
             DataContext = new Employee
             {
@@ -20,7 +21,11 @@ namespace EmployeeFormSample
                 LastName = "Jameson",
                 BirthDate = new DateTime(1993, 10, 2).ToShortDateString(),
                 Title = "Customer Success Manager",
-                Prefix = EmployeePrefix.Mrs
+                Prefix = EmployeePrefix.Mrs,
+                Address = "143 Coolidge St.",
+                City = "Phoenix",
+                State = State.AZ,
+                ZipCode = "85001"
             };
         }
 

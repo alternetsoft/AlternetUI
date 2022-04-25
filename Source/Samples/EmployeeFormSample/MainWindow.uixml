@@ -9,6 +9,9 @@
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto"/>
@@ -18,7 +21,7 @@
 			<ColumnDefinition Width="Auto"/>
 		</Grid.ColumnDefinitions>
 
-		<Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="5" Margin="20,0,0,0" VerticalAlignment="Top">
+		<Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="5" Margin="20,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
 			<PictureBox Image="{Binding Image}" Width="92" Height="92" />
 		</Border>
 
@@ -34,8 +37,34 @@
 		<Label Text="Title" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
 		<TextBox Text="{Binding Title}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Width="200" Margin="0,0,0,5"/>
 
-		<Label Text="Prefix" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+		<Label Text="Prefix" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,20"/>
 		<ComboBox SelectedItem="{Binding Prefix}" Name="prefixComboBox" Grid.Row="4" Grid.Column="1" IsEditable="false"
-				  VerticalAlignment="Center" Width="200" Margin="0,0,0,5"/>
+				  VerticalAlignment="Center" Width="200" Margin="0,0,0,20"/>
+
+		<Label Text="Address" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+		<TextBox Text="{Binding Address}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="0,0,0,5"/>
+
+		<Label Text="City" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+		<TextBox Text="{Binding City}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="0,0,0,5"/>
+
+		<Label Text="State" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+
+		<Grid Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5" Grid.ColumnSpan="2">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+
+			<ComboBox SelectedItem="{Binding State}" Name="stateComboBox" Grid.Column="0" IsEditable="false"
+					  VerticalAlignment="Center" />
+			<Label Text="ZIP Code" Grid.Column="1" VerticalAlignment="Center" Margin="15,0,10,0"/>
+			<TextBox Text="{Binding ZipCode}" Grid.Column="2" VerticalAlignment="Center" />
+
+		</Grid>
+		
 	</Grid>
 </Window>
