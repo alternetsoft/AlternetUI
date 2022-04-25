@@ -1,70 +1,115 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="EmployeeFormSample.MainWindow"
-		Title="Employee Details Form" Padding="10" Width="600" Height="600">
+		Title="Employee Details Form" Padding="10" Width="1000" Height="500">
 	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto"/>
-			<ColumnDefinition Width="Auto"/>
-			<ColumnDefinition Width="Auto"/>
-			<ColumnDefinition Width="Auto"/>
-			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
 
-		<Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="5" Margin="20,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-			<PictureBox Image="{Binding Image}" Width="92" Height="92" />
-		</Border>
-
-		<Label Text="First Name" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
-		<TextBox Text="{Binding FirstName}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Width="200" Margin="0,0,0,5"/>
-
-		<Label Text="Last Name" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
-		<TextBox Text="{Binding LastName}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Width="200" Margin="0,0,0,5"/>
-
-		<Label Text="Birth Date" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
-		<TextBox Text="{Binding BirthDate}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Width="200" Margin="0,0,0,5"/>
-
-		<Label Text="Title" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
-		<TextBox Text="{Binding Title}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Width="200" Margin="0,0,0,5"/>
-
-		<Label Text="Prefix" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,20"/>
-		<ComboBox SelectedItem="{Binding Prefix}" Name="prefixComboBox" Grid.Row="4" Grid.Column="1" IsEditable="false"
-				  VerticalAlignment="Center" Width="200" Margin="0,0,0,20"/>
-
-		<Label Text="Address" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
-		<TextBox Text="{Binding Address}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="0,0,0,5"/>
-
-		<Label Text="City" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
-		<TextBox Text="{Binding City}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="0,0,0,5"/>
-
-		<Label Text="State" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
-
-		<Grid Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5" Grid.ColumnSpan="2">
+		<Grid>
 			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
+
+			<Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="5" Margin="20,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+				<PictureBox Image="{Binding Image}" Width="92" Height="92" />
+			</Border>
+
+			<Label Text="First Name" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+			<TextBox Text="{Binding FirstName}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5"/>
+
+			<Label Text="Last Name" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+			<TextBox Text="{Binding LastName}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5"/>
+
+			<Label Text="Birth Date" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+			<TextBox Text="{Binding BirthDate}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5"/>
+
+			<Label Text="Title" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+			<TextBox Text="{Binding Title}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5"/>
+
+			<Label Text="Prefix" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,20"/>
+			<ComboBox SelectedItem="{Binding Prefix}" Name="prefixComboBox" Grid.Row="4" Grid.Column="1" IsEditable="false"
+					  VerticalAlignment="Center" Margin="0,0,0,20"/>
+
+			<Label Text="Address" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+			<TextBox Text="{Binding Address}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="0,0,0,5"/>
+
+			<Label Text="City" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+			<TextBox Text="{Binding City}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="0,0,0,5"/>
+
+			<Label Text="State" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+
+			<Grid Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5" Grid.ColumnSpan="2">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+
+				<ComboBox SelectedItem="{Binding State}" Name="stateComboBox" Grid.Column="0" IsEditable="false"
+						  VerticalAlignment="Center" />
+				<Label Text="ZIP Code" Grid.Column="1" VerticalAlignment="Center" Margin="15,0,10,0"/>
+				<TextBox Text="{Binding ZipCode}" Grid.Column="2" VerticalAlignment="Center" />
+
+			</Grid>
+
+			<Label Text="Home Phone" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+			<TextBox Text="{Binding HomePhone}" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="0,0,0,5"/>
+
+			<Label Text="Mobile Phone" Grid.Row="9" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+			<TextBox Text="{Binding MobilePhone}" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="0,0,0,5"/>
+
+			<Label Text="E-Mail" Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+			<TextBox Text="{Binding Email}" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="0,0,0,5"/>
+
+			<Label Text="Skype" Grid.Row="11" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+			<TextBox Text="{Binding Skype}" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="0,0,0,5"/>
+		</Grid>
+
+		<Grid Margin="20,0,0,0" Grid.Column="1">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto"/>
 				<ColumnDefinition Width="*"/>
 			</Grid.ColumnDefinitions>
 
-			<ComboBox SelectedItem="{Binding State}" Name="stateComboBox" Grid.Column="0" IsEditable="false"
-					  VerticalAlignment="Center" />
-			<Label Text="ZIP Code" Grid.Column="1" VerticalAlignment="Center" Margin="15,0,10,0"/>
-			<TextBox Text="{Binding ZipCode}" Grid.Column="2" VerticalAlignment="Center" />
+			<Label Text="Department" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+			<ComboBox SelectedItem="{Binding Department}" Name="departmentComboBox" Grid.Row="0" Grid.Column="1" IsEditable="false"
+					  VerticalAlignment="Center" Margin="0,0,0,5"/>
 
+			<Label Text="Hire Date" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+			<TextBox Text="{Binding HireDate}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5"/>
+
+			<Label Text="Status" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+			<TextBox Text="{Binding Status}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5"/>
 		</Grid>
-		
 	</Grid>
+
 </Window>
