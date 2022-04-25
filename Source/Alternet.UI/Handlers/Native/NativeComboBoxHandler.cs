@@ -19,6 +19,7 @@ namespace Alternet.UI
             ApplySelectedItem();
             ApplyText();
 
+            Control.Items.ItemRangeAdditionFinished += Items_ItemRangeAdditionFinished;
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
             Control.IsEditableChanged += Control_IsEditableChanged;
@@ -27,6 +28,14 @@ namespace Alternet.UI
 
             NativeControl.SelectedItemChanged += NativeControl_SelectedItemChanged;
             NativeControl.TextChanged += NativeControl_TextChanged;
+        }
+
+        protected internal override void BeginInit()
+        {
+        }
+
+        protected internal override void EndInit()
+        {
         }
 
         private void Control_IsEditableChanged(object? sender, EventArgs e)
@@ -39,6 +48,7 @@ namespace Alternet.UI
 
         protected override void OnDetach()
         {
+            Control.Items.ItemRangeAdditionFinished -= Items_ItemRangeAdditionFinished;
             Control.Items.ItemInserted -= Items_ItemInserted;
             Control.Items.ItemRemoved -= Items_ItemRemoved;
             Control.IsEditableChanged -= Control_IsEditableChanged;
@@ -87,8 +97,10 @@ namespace Alternet.UI
             var control = Control;
             var items = control.Items;
 
+            var insertion = NativeControl.CreateItemsInsertion();
             for (var i = 0; i < items.Count; i++)
-                NativeControl.InsertItem(i, Control.GetItemText(control.Items[i]));
+                NativeControl.AddItemToInsertion(insertion, Control.GetItemText(control.Items[i]));
+            NativeControl.CommitItemsInsertion(insertion, 0);
         }
 
         private void ApplySelectedItem()
@@ -114,12 +126,21 @@ namespace Alternet.UI
 
         private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<object> e)
         {
-            NativeControl.InsertItem(e.Index, Control.GetItemText(e.Item));
+            if (!Control.Items.RangeOperationInProgress)
+                NativeControl.InsertItem(e.Index, Control.GetItemText(e.Item));
         }
 
         private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<object> e)
         {
             NativeControl.RemoveItemAt(e.Index);
+        }
+
+        private void Items_ItemRangeAdditionFinished(object sender, RangeAdditionFinishedEventArgs<object> e)
+        {
+            var insertion = NativeControl.CreateItemsInsertion();
+            foreach (var item in e.Items)
+                NativeControl.AddItemToInsertion(insertion, Control.GetItemText(item));
+            NativeControl.CommitItemsInsertion(insertion, e.InsertionIndex);
         }
     }
 }

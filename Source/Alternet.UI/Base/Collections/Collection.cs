@@ -24,6 +24,16 @@ namespace Alternet.Base.Collections
         public event EventHandler<CollectionChangeEventArgs<T>>? ItemRemoved;
 
         /// <summary>
+        /// Occurs when an item range addition is finished in the collection.
+        /// </summary>
+        public event EventHandler<RangeAdditionFinishedEventArgs<T>>? ItemRangeAdditionFinished;
+
+        /// <summary>
+        /// Returns <see langword="true"/> if <see cref="AddRange"/> is being executed at the moment.
+        /// </summary>
+        public bool RangeOperationInProgress { get; private set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether an <see cref="ArgumentNullException"/> should be thrown
         /// on an attempt to add a <c>null</c> value to the collection.
         /// </summary>
@@ -62,8 +72,19 @@ namespace Alternet.Base.Collections
             if (collection is null)
                 throw new ArgumentNullException(nameof(collection));
 
-            foreach (var item in collection)
-                Add(item);
+            RangeOperationInProgress = true;
+
+            int index = Count;
+            try
+            {
+                foreach (var item in collection)
+                    Add(item);
+            }
+            finally
+            {
+                RangeOperationInProgress = false;
+                OnItemRangeAdditionFinished(new RangeAdditionFinishedEventArgs<T>(index, collection));
+            }
         }
 
         /// <summary>
@@ -89,6 +110,12 @@ namespace Alternet.Base.Collections
 
             base.ClearItems();
         }
+
+        /// <summary>
+        /// Raises the <see cref="ItemRangeAdditionFinished"/> event with the provided arguments.
+        /// </summary>
+        /// <param name="e">Arguments of the event being raised.</param>
+        protected virtual void OnItemRangeAdditionFinished(RangeAdditionFinishedEventArgs<T> e) => ItemRangeAdditionFinished?.Invoke(this, e);
 
         /// <summary>
         /// Raises the <see cref="ItemInserted"/> event with the provided arguments.

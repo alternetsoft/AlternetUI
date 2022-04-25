@@ -18,6 +18,10 @@ namespace NativeApi.Api
 
         public void InsertItem(int index, string value) => throw new Exception();
 
+        public IntPtr CreateItemsInsertion() => throw new Exception();
+        public void AddItemToInsertion(IntPtr insertion, string item) => throw new Exception();
+        public void CommitItemsInsertion(IntPtr insertion, int index) => throw new Exception();
+
         public void RemoveItemAt(int index) => throw new Exception();
 
         public void ClearItems() => throw new Exception();

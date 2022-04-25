@@ -45,6 +45,35 @@ namespace Alternet::UI
             _items.emplace(_items.begin() + index, value);
     }
 
+
+    void* ComboBox::CreateItemsInsertion()
+    {
+        return new wxArrayString();
+    }
+
+    void ComboBox::AddItemToInsertion(void* insertion, const string& item)
+    {
+        auto strings = (wxArrayString*)insertion;
+        strings->Add(wxStr(item));
+    }
+
+    void ComboBox::CommitItemsInsertion(void* insertion, int index)
+    {
+        auto strings = (wxArrayString*)insertion;
+
+        if (IsWxWindowCreated())
+        {
+            GetItemContainer()->Insert(*strings, index);
+        }
+        else
+        {
+            for (int i = 0; i < strings->GetCount(); i++)
+                _items.emplace(_items.begin() + index + i, wxStr((*strings)[i]));
+        }
+
+        delete strings;
+    }
+
     void ComboBox::RemoveItemAt(int index)
     {
         if (IsWxWindowCreated())
@@ -164,8 +193,11 @@ namespace Alternet::UI
         auto itemContainer = GetItemContainer();
         itemContainer->Clear();
 
+        wxArrayString wxStrings;
         for (auto item : _items)
-            itemContainer->Append(wxStr(item));
+            wxStrings.Add(wxStr(item));
+
+        itemContainer->Append(wxStrings);
 
         _items.clear();
         

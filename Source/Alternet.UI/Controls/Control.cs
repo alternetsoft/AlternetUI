@@ -721,6 +721,7 @@ namespace Alternet.UI
         public virtual void BeginInit()
         {
             SuspendLayout();
+            Handler.BeginInit();
         }
 
         /// <summary>
@@ -733,6 +734,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void EndInit()
         {
+            Handler.EndInit();
             ResumeLayout();
         }
 

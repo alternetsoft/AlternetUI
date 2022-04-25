@@ -815,6 +815,20 @@ namespace Alternet.UI
             Invalidate();
         }
 
+        /// <summary>
+        /// Starts the initialization process for this control.
+        /// </summary>
+        protected internal virtual void BeginInit()
+        {
+        }
+
+        /// <summary>
+        /// Ends the initialization process for this control.
+        /// </summary>
+        protected internal virtual void EndInit()
+        {
+        }
+
         private void ApplyBorderColor()
         {
             //if (NativeControl != null)

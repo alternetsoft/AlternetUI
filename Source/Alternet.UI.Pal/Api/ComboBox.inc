@@ -16,6 +16,9 @@ string GetText();
 void SetText(const string& value);
 
 void InsertItem(int index, const string& value);
+void* CreateItemsInsertion();
+void AddItemToInsertion(void* insertion, const string& item);
+void CommitItemsInsertion(void* insertion, int index);
 void RemoveItemAt(int index);
 void ClearItems();
 public:

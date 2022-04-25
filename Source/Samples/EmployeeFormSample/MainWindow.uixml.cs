@@ -11,9 +11,7 @@ namespace EmployeeFormSample
         {
             InitializeComponent();
 
-            prefixComboBox.Items.AddRange(Enum.GetValues(typeof(EmployeePrefix)).Cast<object>());
-            stateComboBox.Items.AddRange(Enum.GetValues(typeof(State)).Cast<object>());
-            departmentComboBox.Items.AddRange(Enum.GetValues(typeof(Department)).Cast<object>());
+            PopuplateComboBoxes();
 
             DataContext = new Employee
             {
@@ -43,6 +41,19 @@ namespace EmployeeFormSample
             evaluationsListView.Items.Add(new ListViewItem(new[] { "2022-12-5", "2022 Employee Review", "James Smith" }));
         }
 
+        private void PopuplateComboBoxes()
+        {
+            prefixComboBox.BeginUpdate();
+            prefixComboBox.Items.AddRange(Enum.GetValues(typeof(EmployeePrefix)).Cast<object>());
+            prefixComboBox.EndUpdate();
 
+            stateComboBox.BeginUpdate();
+            stateComboBox.Items.AddRange(Enum.GetValues(typeof(State)).Cast<object>());
+            stateComboBox.EndUpdate();
+
+            departmentComboBox.BeginUpdate();
+            departmentComboBox.Items.AddRange(Enum.GetValues(typeof(Department)).Cast<object>());
+            departmentComboBox.EndUpdate();
+        }
     }
 }

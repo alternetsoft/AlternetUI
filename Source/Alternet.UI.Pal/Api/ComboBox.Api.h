@@ -52,6 +52,21 @@ ALTERNET_UI_API void ComboBox_InsertItem_(ComboBox* obj, int index, const char16
     obj->InsertItem(index, value);
 }
 
+ALTERNET_UI_API void* ComboBox_CreateItemsInsertion_(ComboBox* obj)
+{
+    return obj->CreateItemsInsertion();
+}
+
+ALTERNET_UI_API void ComboBox_AddItemToInsertion_(ComboBox* obj, void* insertion, const char16_t* item)
+{
+    obj->AddItemToInsertion(insertion, item);
+}
+
+ALTERNET_UI_API void ComboBox_CommitItemsInsertion_(ComboBox* obj, void* insertion, int index)
+{
+    obj->CommitItemsInsertion(insertion, index);
+}
+
 ALTERNET_UI_API void ComboBox_RemoveItemAt_(ComboBox* obj, int index)
 {
     obj->RemoveItemAt(index);
