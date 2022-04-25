@@ -35,6 +35,12 @@ namespace EmployeeFormSample
                 HireDate = new DateTime(2018, 3, 5).ToShortDateString(),
                 Status = Status.Salaried
             };
+
+            evaluationsListView.Items.Add(new ListViewItem(new[] { "2018-12-4", "2018 Employee Review", "James Smith" }));
+            evaluationsListView.Items.Add(new ListViewItem(new[] { "2019-12-10", "2019 Employee Review", "James Smith" }));
+            evaluationsListView.Items.Add(new ListViewItem(new[] { "2020-12-1", "2020 Employee Review", "James Smith" }));
+            evaluationsListView.Items.Add(new ListViewItem(new[] { "2021-12-20", "2021 Employee Review", "James Smith" }));
+            evaluationsListView.Items.Add(new ListViewItem(new[] { "2022-12-5", "2022 Employee Review", "James Smith" }));
         }
 
 

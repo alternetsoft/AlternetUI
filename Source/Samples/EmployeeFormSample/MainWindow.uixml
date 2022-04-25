@@ -93,7 +93,7 @@
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto"/>
@@ -109,6 +109,16 @@
 
 			<Label Text="Status" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
 			<TextBox Text="{Binding Status}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5"/>
+
+			<Label Text="Evaluations" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,20,0,5"/>
+			<ListView Name="evaluationsListView" Grid.Row="4" Grid.ColumnSpan="2" View="Details">
+				<ListView.Columns>
+					<ListViewColumn Title="Date" />
+					<ListViewColumn Title="Description" />
+					<ListViewColumn Title="Manager" />
+				</ListView.Columns>
+			</ListView>
+
 		</Grid>
 	</Grid>
 
