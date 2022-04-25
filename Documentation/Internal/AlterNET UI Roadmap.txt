@@ -18,6 +18,7 @@ AlterNET UI Roadmap
     - basic stress and memory tests
     + additional drawing functionality
     + timer support
+    + added PictureBox control
     + use data binding and UIXML used controls in the existing samples
 
 0.3-beta (common features release):
