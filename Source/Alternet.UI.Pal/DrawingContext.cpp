@@ -37,7 +37,13 @@ namespace Alternet::UI
     {
         wxBitmap bitmap = image->GetBitmap();
         auto destRect = fromDip(rect, _dc->GetWindow());
+        
+        auto oldInterpolationQuality = _graphicsContext->GetInterpolationQuality();
+        _graphicsContext->SetInterpolationQuality(wxInterpolationQuality::wxINTERPOLATION_BEST);
+        
         _graphicsContext->DrawBitmap(bitmap, destRect.x, destRect.y, destRect.width, destRect.height);
+
+        _graphicsContext->SetInterpolationQuality(oldInterpolationQuality);
     }
 
     void DrawingContext::FloodFill(const Point& point, Brush* fillBrush)

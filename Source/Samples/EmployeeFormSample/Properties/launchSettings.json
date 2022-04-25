@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "EmployeeFormSample": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

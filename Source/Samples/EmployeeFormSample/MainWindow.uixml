@@ -1,0 +1,19 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="EmployeeFormSample.MainWindow"
+		Title="Employee Details Form">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+		<Border>
+			<PictureBox Image="{Binding Image}" Width="128" Height="128" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+		</Border>
+	</Grid>
+</Window>
