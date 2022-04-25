@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Alternet.Drawing;
 using Alternet.UI;
 
@@ -10,9 +11,16 @@ namespace EmployeeFormSample
         {
             InitializeComponent();
 
+            prefixComboBox.Items.AddRange(Enum.GetValues(typeof(EmployeePrefix)).Cast<object>());
+
             DataContext = new Employee
             {
-                Image = new Image(GetType().Assembly.GetManifestResourceStream("EmployeeFormSample.Resources.EmployeePhoto.jpg") ?? throw new Exception())
+                Image = new Image(GetType().Assembly.GetManifestResourceStream("EmployeeFormSample.Resources.EmployeePhoto.jpg") ?? throw new Exception()),
+                FirstName = "Alice",
+                LastName = "Jameson",
+                BirthDate = new DateTime(1993, 10, 2).ToShortDateString(),
+                Title = "Customer Success Manager",
+                Prefix = EmployeePrefix.Mrs
             };
         }
 

@@ -1,19 +1,41 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="EmployeeFormSample.MainWindow"
-		Title="Employee Details Form">
+		Title="Employee Details Form" Padding="10" Width="600" Height="600">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto"/>
-			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="Auto"/>
 		</Grid.ColumnDefinitions>
 
-		<Border>
-			<PictureBox Image="{Binding Image}" Width="128" Height="128" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+		<Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="5" Margin="20,0,0,0" VerticalAlignment="Top">
+			<PictureBox Image="{Binding Image}" Width="92" Height="92" />
 		</Border>
+
+		<Label Text="First Name" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+		<TextBox Text="{Binding FirstName}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Width="200" Margin="0,0,0,5"/>
+
+		<Label Text="Last Name" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+		<TextBox Text="{Binding LastName}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Width="200" Margin="0,0,0,5"/>
+
+		<Label Text="Birth Date" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+		<TextBox Text="{Binding BirthDate}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Width="200" Margin="0,0,0,5"/>
+
+		<Label Text="Title" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+		<TextBox Text="{Binding Title}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Width="200" Margin="0,0,0,5"/>
+
+		<Label Text="Prefix" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
+		<ComboBox SelectedItem="{Binding Prefix}" Name="prefixComboBox" Grid.Row="4" Grid.Column="1" IsEditable="false"
+				  VerticalAlignment="Center" Width="200" Margin="0,0,0,5"/>
 	</Grid>
 </Window>
