@@ -135,7 +135,7 @@ namespace Alternet.UI
             NativeControl.RemoveItemAt(e.Index);
         }
 
-        private void Items_ItemRangeAdditionFinished(object sender, RangeAdditionFinishedEventArgs<object> e)
+        private void Items_ItemRangeAdditionFinished(object? sender, RangeAdditionFinishedEventArgs<object> e)
         {
             var insertion = NativeControl.CreateItemsInsertion();
             foreach (var item in e.Items)

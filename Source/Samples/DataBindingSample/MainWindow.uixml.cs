@@ -18,7 +18,7 @@ namespace HelloWorldSample
 
         private void ShowDataButton_Click(object? sender, EventArgs e)
         {
-            MessageBox.Show("MyDataProperty: " + ((MyData)DataContext).MyDataProperty);
+            MessageBox.Show("MyDataProperty: " + ((MyData)DataContext!).MyDataProperty);
         }
 
         public class MyData : INotifyPropertyChanged

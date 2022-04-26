@@ -32,9 +32,6 @@ namespace Alternet.UI.Markup
         }
 #endif
 
-#if PRESENTATION_CORE || PRESENTATIONFRAMEWORK ||REACHFRAMEWORK || DEBUG
-
-#if !WINDOWS_BASE && !SYSTEM_XAML
         /// <summary>
         ///     Given an assembly, returns the partial name of the assembly.
         /// </summary>
@@ -44,9 +41,6 @@ namespace Alternet.UI.Markup
             string partialName = name.Name;
             return (partialName != null) ? partialName : string.Empty;
         }
-#endif
-
-#endif
 
 #if PRESENTATIONFRAMEWORK
 
@@ -211,13 +205,7 @@ namespace Alternet.UI.Markup
         //
         // Determine if two Public Key Tokens are the same.
         //
-#if !REACHFRAMEWORK
-#if PRESENTATIONFRAMEWORK || SYSTEM_XAML || PRESENTATION_CORE
-        internal
-#else
-        private
-#endif
-        static bool IsSameKeyToken(byte[] reqKeyToken, byte[] curKeyToken)
+        internal static bool IsSameKeyToken(byte[] reqKeyToken, byte[] curKeyToken)
         {
            bool isSame = false;
 
@@ -246,7 +234,6 @@ namespace Alternet.UI.Markup
 
            return isSame;
         }
-#endif //!REACHFRAMEWORK
 
 #if PRESENTATION_CORE || PRESENTATIONFRAMEWORK
         // enum to choose between the various keys
