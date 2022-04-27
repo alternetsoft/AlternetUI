@@ -1,0 +1,49 @@
+using System;
+using System.Runtime.InteropServices;
+using System.Threading;
+
+namespace Alternet.UI.Native
+{
+    class NativeExceptionsMarshal
+    {
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
+        public delegate void NativeExceptionCallbackType(
+            ExceptionType exceptionType,
+            [MarshalAs(UnmanagedType.LPWStr)]
+            string message,
+            int errorCode);
+
+        public enum ExceptionType
+        {
+            ExternalException,
+            InvalidOperationException,
+            FormatException,
+            ArgumentNullException,
+            ThreadStateException,
+        }
+
+        public static void OnUnhandledNativeException(ExceptionType exceptionType, string message, int errorCode) =>
+            throw GetException(exceptionType, message, errorCode);
+
+        public static ExceptionType GetExceptionType(Exception exception) =>
+            exception switch
+            {
+                InvalidOperationException _ => ExceptionType.InvalidOperationException,
+                FormatException _ => ExceptionType.FormatException,
+                ArgumentNullException _ => ExceptionType.ArgumentNullException,
+                ThreadStateException _ => ExceptionType.ThreadStateException,
+                _ => ExceptionType.ExternalException
+            };
+
+        static Exception GetException(ExceptionType exceptionType, string message, int errorCode) =>
+            exceptionType switch
+            {
+                ExceptionType.ExternalException => new ExternalException(message, errorCode),
+                ExceptionType.InvalidOperationException => new InvalidOperationException(message),
+                ExceptionType.FormatException => new FormatException(message),
+                ExceptionType.ArgumentNullException => new ArgumentNullException(message),
+                ExceptionType.ThreadStateException => new ThreadStateException(message),
+                _ => new ExternalException(message, errorCode),
+            };
+    }
+}

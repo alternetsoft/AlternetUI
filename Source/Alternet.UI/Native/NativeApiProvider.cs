@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -24,9 +25,22 @@ namespace Alternet.UI.Native
             if (!initialized)
             {
                 WindowsNativeModulesLocator.SetNativeModulesDirectory();
+
+                Debug.Assert(!unhandledExceptionCallbackHandle.IsAllocated);
+
+                var unhandledExceptionCallbackSink = new NativeExceptionsMarshal.NativeExceptionCallbackType(NativeExceptionsMarshal.OnUnhandledNativeException);
+                unhandledExceptionCallbackHandle = GCHandle.Alloc(unhandledExceptionCallbackSink);
+
+                SetExceptionCallback(unhandledExceptionCallbackSink);
+
                 initialized = true;
             }
         }
+
+        [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+        static extern void SetExceptionCallback(NativeExceptionsMarshal.NativeExceptionCallbackType unhandledExceptionCallback);
+
+        static GCHandle unhandledExceptionCallbackHandle;
 
         private class WindowsNativeModulesLocator
         {

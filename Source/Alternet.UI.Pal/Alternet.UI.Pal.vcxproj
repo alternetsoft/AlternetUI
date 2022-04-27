@@ -191,6 +191,7 @@
     <ClCompile Include="ComboBox.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="DrawingContext.cpp" />
+    <ClCompile Include="Exceptions.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="GraphicsPath.cpp" />
     <ClCompile Include="GroupBox.cpp" />
@@ -227,11 +228,13 @@
     <ClInclude Include="Api\Button.Api.h" />
     <ClInclude Include="Api\CheckBox.Api.h" />
     <ClInclude Include="Api\ComboBox.Api.h" />
+    <ClInclude Include="Api\Exceptions.Api.h" />
     <ClInclude Include="Api\Control.Api.h" />
     <ClInclude Include="Api\DrawingContext.Api.h" />
     <ClInclude Include="Api\DrawingTypes.h" />
     <ClInclude Include="Api\Enums.h" />
     <ClInclude Include="Api\Font.Api.h" />
+    <ClInclude Include="Api\GraphicsPath.Api.h" />
     <ClInclude Include="Api\GroupBox.Api.h" />
     <ClInclude Include="Api\HatchBrush.Api.h" />
     <ClInclude Include="Api\Image.Api.h" />
@@ -265,10 +268,15 @@
     <ClInclude Include="CheckBox.h" />
     <ClInclude Include="ComboBox.h" />
     <ClInclude Include="Common.h" />
-    <ClInclude Include="CommonBase.h" />
+    <ClInclude Include="Common.Strings.h" />
+    <ClInclude Include="Common.Base.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="DelayedValue.h" />
     <ClInclude Include="DrawingContext.h" />
+    <ClInclude Include="ErrorDiagnostics.h" />
+    <ClInclude Include="Exception.h" />
+    <ClInclude Include="Exceptions.h" />
+    <ClInclude Include="ExceptionsMarshal.h" />
     <ClInclude Include="FloodFill.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GraphicsPath.h" />
@@ -307,6 +315,7 @@
     <None Include="Api\Control.inc" />
     <None Include="Api\DrawingContext.inc" />
     <None Include="Api\Font.inc" />
+    <None Include="Api\GraphicsPath.inc" />
     <None Include="Api\GroupBox.inc" />
     <None Include="Api\HatchBrush.inc" />
     <None Include="Api\Image.inc" />
