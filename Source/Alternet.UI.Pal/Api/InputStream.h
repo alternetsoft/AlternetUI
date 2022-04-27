@@ -11,7 +11,7 @@ namespace Alternet::UI
             
             int64_t GetLength()
             {
-                wxASSERT(trampolineLocatorCallback);
+                if (trampolineLocatorCallback == nullptr) throwExInvalidOp;
                 auto trampoline = (TGetLength)trampolineLocatorCallback(Trampoline::GetLength);
                 return trampoline(objectHandle);
             }
@@ -20,7 +20,7 @@ namespace Alternet::UI
             
             bool GetIsOK()
             {
-                wxASSERT(trampolineLocatorCallback);
+                if (trampolineLocatorCallback == nullptr) throwExInvalidOp;
                 auto trampoline = (TGetIsOK)trampolineLocatorCallback(Trampoline::GetIsOK);
                 return trampoline(objectHandle);
             }
@@ -29,7 +29,7 @@ namespace Alternet::UI
             
             bool GetIsSeekable()
             {
-                wxASSERT(trampolineLocatorCallback);
+                if (trampolineLocatorCallback == nullptr) throwExInvalidOp;
                 auto trampoline = (TGetIsSeekable)trampolineLocatorCallback(Trampoline::GetIsSeekable);
                 return trampoline(objectHandle);
             }
@@ -38,14 +38,14 @@ namespace Alternet::UI
             
             int64_t GetPosition()
             {
-                wxASSERT(trampolineLocatorCallback);
+                if (trampolineLocatorCallback == nullptr) throwExInvalidOp;
                 auto trampoline = (TGetPosition)trampolineLocatorCallback(Trampoline::GetPosition);
                 return trampoline(objectHandle);
             }
             typedef int64_t (*TGetPosition)(void* objectHandle);
             void SetPosition(int64_t value)
             {
-                wxASSERT(trampolineLocatorCallback);
+                if (trampolineLocatorCallback == nullptr) throwExInvalidOp;
                 auto trampoline = (TSetPosition)trampolineLocatorCallback(Trampoline::SetPosition);
                 trampoline(objectHandle, value);
             }
@@ -53,7 +53,7 @@ namespace Alternet::UI
             
             void* Read(void* buffer, void* length)
             {
-                wxASSERT(trampolineLocatorCallback);
+                if (trampolineLocatorCallback == nullptr) throwExInvalidOp;
                 auto trampoline = (TRead)trampolineLocatorCallback(Trampoline::Read);
                 return trampoline(objectHandle, buffer, length);
             }

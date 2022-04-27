@@ -40,8 +40,7 @@ namespace Alternet::UI
         case PenDashStyle::Custom:
             return wxPenStyle::wxPENSTYLE_USER_DASH;
         default:
-            wxASSERT(false);
-            throw 0;
+            throwExInvalidOp;
         }
     }
 }

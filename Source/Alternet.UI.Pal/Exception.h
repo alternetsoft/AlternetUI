@@ -72,6 +72,12 @@ namespace Alternet::UI
     public:
         ArgumentNullException(const string& message_, int errorCode_, const optional<Origin>& origin_) : Exception(message_, errorCode_, origin_) {}
     };
+
+    class ArgumentException : public Exception
+    {
+    public:
+        ArgumentException(const string& message_, int errorCode_, const optional<Origin>& origin_) : Exception(message_, errorCode_, origin_) {}
+    };
 }
 
 namespace _PreprocessorDetail
@@ -106,7 +112,9 @@ namespace _PreprocessorDetail
 #define throwEx(message) throw Alternet::UI::Exception((message), 0, ExceptionOrigin)
 #define throwExTyped(exceptionType, message) throw exceptionType((message), 0, ExceptionOrigin)
 #define throwExNoInfo throw Alternet::UI::Exception(u"", 0, ExceptionOrigin)
-#define throwExInvalidArg(argument) throw Alternet::UI::Exception(string(u"Invalid argument: ") + (u###argument), 0, ExceptionOrigin)
+#define throwExInvalidArgNoInfo(argument) throw Alternet::UI::ArgumentException(string(u"Invalid argument: ") + (u###argument), 0, ExceptionOrigin)
+#define throwExInvalidArg(argument, message) throw Alternet::UI::ArgumentException(string(message) + string(u". Argument name: ") + (u###argument), 0, ExceptionOrigin)
+#define throwExInvalidOp throw Alternet::UI::InvalidOperationException(u"", 0, ExceptionOrigin)
 
 #ifdef PLATFORM_WINDOWS
 #define ThrowOnFail(hr) \

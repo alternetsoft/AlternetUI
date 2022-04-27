@@ -56,7 +56,9 @@ namespace Alternet::UI
 
         void Apply() override
         {
-            wxASSERT(IsNotDelayed());
+            if (!IsNotDelayed())
+                throwExInvalidOp;
+
             ApplyValue(GetDelayed());
         }
 
@@ -141,7 +143,9 @@ namespace Alternet::UI
 
         void Apply() override
         {
-            wxASSERT(IsNotDelayed());
+            if (!IsNotDelayed())
+                throwExInvalidOp;
+
             for (auto& it : _applicators)
                 ApplyValue(it.first, GetDelayed(it.first));
         }

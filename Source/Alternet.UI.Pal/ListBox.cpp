@@ -189,8 +189,7 @@ namespace Alternet::UI
         case ListBoxSelectionMode::Multiple:
             return wxLB_EXTENDED;
         default:
-            wxASSERT(false);
-            throw 0;
+            throwExInvalidOp;
         }
     }
 

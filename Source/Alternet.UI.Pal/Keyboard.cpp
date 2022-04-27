@@ -221,8 +221,7 @@ namespace Alternet::UI
             return { WXK_WINDOWS_LEFT, WXK_WINDOWS_RIGHT };
 #endif
 
-        wxASSERT(false);
-        throw 0;
+        throwExInvalidOp;
     }
 
     bool Keyboard::KeyHasMultipleWxKeys(Key value)
@@ -332,8 +331,7 @@ namespace Alternet::UI
         case '}': return Key::None;
         case '~': return Key::None;
         default:
-            wxASSERT(false);
-            throw 0;
+            throwExInvalidOp;
         }
     }
 
@@ -630,8 +628,7 @@ namespace Alternet::UI
         case WXK_LAUNCH_APP2:
             return Key::LaunchApplication2;
         default:
-            wxASSERT(false);
-            throw 0;
+            throwExInvalidOp;
         }
     }
 }

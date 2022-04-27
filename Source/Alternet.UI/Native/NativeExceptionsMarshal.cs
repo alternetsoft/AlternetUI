@@ -20,6 +20,7 @@ namespace Alternet.UI.Native
             FormatException,
             ArgumentNullException,
             ThreadStateException,
+            ArgumentException,
         }
 
         public static void OnUnhandledNativeException(ExceptionType exceptionType, string message, int errorCode) =>
@@ -32,6 +33,7 @@ namespace Alternet.UI.Native
                 FormatException _ => ExceptionType.FormatException,
                 ArgumentNullException _ => ExceptionType.ArgumentNullException,
                 ThreadStateException _ => ExceptionType.ThreadStateException,
+                ArgumentException _ => ExceptionType.ArgumentException,
                 _ => ExceptionType.ExternalException
             };
 
@@ -43,6 +45,7 @@ namespace Alternet.UI.Native
                 ExceptionType.FormatException => new FormatException(message),
                 ExceptionType.ArgumentNullException => new ArgumentNullException(message),
                 ExceptionType.ThreadStateException => new ThreadStateException(message),
+                ExceptionType.ArgumentException => new ArgumentException(message),
                 _ => new ExternalException(message, errorCode),
             };
     }

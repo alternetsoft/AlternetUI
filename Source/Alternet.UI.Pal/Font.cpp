@@ -104,8 +104,7 @@ namespace Alternet::UI
         case GenericFontFamily::Monospace:
             return wxFontFamily::wxFONTFAMILY_TELETYPE;
         default:
-            wxASSERT(false);
-            return wxFontFamily::wxFONTFAMILY_DEFAULT;
+            throwExInvalidOp;
         }
     }
 
@@ -142,7 +141,8 @@ namespace Alternet::UI
 
     /*static*/ string Font::GetGenericFamilyName(GenericFontFamily genericFamily)
     {
-        wxASSERT(genericFamily != GenericFontFamily::None);
+        if (genericFamily == GenericFontFamily::None)
+            throwExInvalidArg(genericFamily, u"genericFamily cannot be None");
 
         wxFontInfo fontInfo;
         fontInfo.Family(GetWxFontFamily(genericFamily));

@@ -399,8 +399,7 @@ namespace Alternet::UI
             case ListViewView::LargeIcon:
                 return wxLC_ICON | wxLC_AUTOARRANGE;
             default:
-                wxASSERT(false);
-                throw 0;
+                throwExInvalidOp;
             }
         };
 
@@ -413,8 +412,7 @@ namespace Alternet::UI
             case ListViewSelectionMode::Multiple:
                 return 0;
             default:
-                wxASSERT(false);
-                throw 0;
+                throwExInvalidOp;
             }
         };
 

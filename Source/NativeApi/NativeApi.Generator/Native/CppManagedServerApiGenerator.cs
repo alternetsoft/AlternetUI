@@ -72,7 +72,7 @@ namespace ApiGenerator.Native
                 w.WriteLine($"{modifiers}{returnType} Get{name}()");
                 using (new BlockIndent(w))
                 {
-                    w.WriteLine($"wxASSERT(trampolineLocatorCallback);");
+                    w.WriteLine($"if (trampolineLocatorCallback == nullptr) throwExInvalidOp;");
                     w.WriteLine($"auto trampoline = (TGet{name})trampolineLocatorCallback(Trampoline::Get{name});");
                     w.Write($"return trampoline(");
                     if (!MemberProvider.IsStatic(property))
@@ -92,7 +92,7 @@ namespace ApiGenerator.Native
                 {
                     using (new BlockIndent(w))
                     {
-                        w.WriteLine($"wxASSERT(trampolineLocatorCallback);");
+                        w.WriteLine($"if (trampolineLocatorCallback == nullptr) throwExInvalidOp;");
                         w.WriteLine($"auto trampoline = (TSet{name})trampolineLocatorCallback(Trampoline::Set{name});");
                         w.Write($"trampoline(");
                         if (!MemberProvider.IsStatic(property))
@@ -154,7 +154,7 @@ namespace ApiGenerator.Native
             
             using (new BlockIndent(w))
             {
-                w.WriteLine($"wxASSERT(trampolineLocatorCallback);");
+                w.WriteLine($"if (trampolineLocatorCallback == nullptr) throwExInvalidOp;");
                 w.WriteLine($"auto trampoline = (T{name})trampolineLocatorCallback(Trampoline::{name});");
                 if (returnTypeName != "void")
                     w.Write($"return ");

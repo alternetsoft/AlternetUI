@@ -17,14 +17,19 @@ namespace Alternet::UI
 
         void AddRef()
         {
-            wxASSERT(_referenceCount >= 0);
+            if (_referenceCount < 0)
+                throwEx(u"Reference count cannot be less than 0");
+
             _referenceCount++;
         }
 
         void Release()
         {
             _referenceCount--;
-            wxASSERT(_referenceCount >= 0);
+
+            if (_referenceCount < 0)
+                throwEx(u"Reference count cannot be less than 0");
+
             if (_referenceCount == 0)
                 delete this;
         }

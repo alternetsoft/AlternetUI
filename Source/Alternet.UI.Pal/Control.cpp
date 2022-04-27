@@ -98,7 +98,9 @@ namespace Alternet::UI
         if (_wxWindow == nullptr)
             CreateWxWindow();
 
-        wxASSERT(_wxWindow);
+        if (_wxWindow == nullptr)
+            throwExInvalidOp;
+
         return _wxWindow;
     }
 
@@ -366,7 +368,9 @@ namespace Alternet::UI
 
     void Control::EndUpdate()
     {
-        wxASSERT_MSG(_beginUpdateCount > 0, "EndUpdate() without matching BeginUpdate()");
+        if (_beginUpdateCount <= 0)
+            throwEx(u"EndUpdate() without matching BeginUpdate()");
+
         _beginUpdateCount--;
         if (_beginUpdateCount == 0)
         {

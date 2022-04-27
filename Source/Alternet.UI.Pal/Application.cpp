@@ -107,7 +107,8 @@ namespace Alternet::UI
 
     Application::Application()
     {
-        wxASSERT(s_current == nullptr);
+        if (s_current != nullptr)
+            throwExInvalidOp;
         s_current = this;
 
 #ifdef __WXMSW__

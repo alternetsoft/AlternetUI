@@ -12,6 +12,7 @@ enum class ExceptionType
     FormatException,
     ArgumentNullException,
     ThreadStateException,
+    ArgumentException,
 };
 
 typedef void(*NativeExceptionCallbackType)(ExceptionType exceptionType, const char16_t* message, int errorCode);
@@ -49,6 +50,11 @@ template<typename TResult> TResult MarshalExceptions(
     catch (Alternet::UI::ArgumentNullException & e)
     {
         reportException(ExceptionType::ArgumentNullException, e.ToString().c_str(), e.GetErrorCode());
+        return TResult();
+    }
+    catch (Alternet::UI::ArgumentException& e)
+    {
+        reportException(ExceptionType::ArgumentException, e.ToString().c_str(), e.GetErrorCode());
         return TResult();
     }
     catch (Alternet::UI::Exception& e)

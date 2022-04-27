@@ -51,9 +51,7 @@ namespace Alternet::UI
         auto fillSolidBrush = dynamic_cast<SolidBrush*>(fillBrush);
         if (fillSolidBrush == nullptr)
         {
-            // Only SolidBrush is supported.
-            wxASSERT(false);
-            throw 0;
+            throwExInvalidArg(fillBrush, u"Only SolidBrush objects are supported");
         }
 
         auto oldBrush = _dc->GetBrush();
@@ -203,8 +201,7 @@ namespace Alternet::UI
             auto solidBrush = dynamic_cast<SolidBrush*>(brush);
             if (solidBrush == nullptr)
             {
-                wxASSERT(false);
-                throw 0;
+                throwExInvalidArg(solidBrush, u"Only SolidBrush objects are supported");
             }
 
             auto oldTextForeground = _dc->GetTextForeground();
@@ -248,9 +245,7 @@ namespace Alternet::UI
         }
         else
         {
-            // todo
-            wxASSERT(false);
-            throw 0;
+            throwEx(u"todo");
         }
     }
 }

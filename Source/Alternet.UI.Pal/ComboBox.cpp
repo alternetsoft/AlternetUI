@@ -248,21 +248,24 @@ namespace Alternet::UI
     wxComboBox* ComboBox::GetComboBox()
     {
         auto value = dynamic_cast<wxComboBox*>(GetWxWindow());
-        wxASSERT(value);
+        if (value == nullptr)
+            throwExInvalidOp;
         return value;
     }
 
     wxChoice* ComboBox::GetChoice()
     {
         auto value = dynamic_cast<wxChoice*>(GetWxWindow());
-        wxASSERT(value);
+        if (value == nullptr)
+            throwExInvalidOp;
         return value;
     }
 
     wxItemContainer* ComboBox::GetItemContainer()
     {
         auto value = dynamic_cast<wxItemContainer*>(GetWxWindow());
-        wxASSERT(value);
+        if (value == nullptr)
+            throwExInvalidOp;
         return value;
     }
 
