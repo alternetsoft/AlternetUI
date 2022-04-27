@@ -13,7 +13,7 @@ AlterNET UI Roadmap
     - establish API to create custom controls abd layouts
     - scrollable controls support
     + user controls defined in UIXML support
-    - ensure native exceptions marshalled to .NET properly
+    + ensure native exceptions marshalled to .NET properly
     - basic unit tests (UI automation)
     - basic stress and memory tests
     + additional drawing functionality
