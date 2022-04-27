@@ -7,27 +7,36 @@
 #include "Mouse.h"
 #include "Window.h"
 #include "ApiUtils.h"
+#include "Exceptions.h"
 
 using namespace Alternet::UI;
 
 ALTERNET_UI_API Application* Application_Create_()
 {
-    return new Application();
+    return MarshalExceptions<Application*>([&](){
+            return new Application();
+        });
 }
 
 ALTERNET_UI_API Keyboard* Application_GetKeyboard_(Application* obj)
 {
-    return obj->GetKeyboard();
+    return MarshalExceptions<Keyboard*>([&](){
+            return obj->GetKeyboard();
+        });
 }
 
 ALTERNET_UI_API Mouse* Application_GetMouse_(Application* obj)
 {
-    return obj->GetMouse();
+    return MarshalExceptions<Mouse*>([&](){
+            return obj->GetMouse();
+        });
 }
 
 ALTERNET_UI_API void Application_Run_(Application* obj, Window* window)
 {
-    obj->Run(window);
+    MarshalExceptions<void>([&](){
+            obj->Run(window);
+        });
 }
 
 ALTERNET_UI_API void Application_SetEventCallback_(Application::ApplicationEventCallbackType callback)

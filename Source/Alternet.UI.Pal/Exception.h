@@ -74,10 +74,37 @@ namespace Alternet::UI
     };
 }
 
+namespace _PreprocessorDetail
+{
+    constexpr bool IsPathSeparator(char c)
+    {
+        return c == '/' || c == '\\';
+    }
+
+    constexpr const char* GetFileNameImpl(const char* path)
+    {
+        const char* fileName = path;
+
+        while (*path != '\0')
+        {
+            if (IsPathSeparator(*path))
+            {
+                fileName = path + 1;
+            }
+
+            path++;
+        }
+
+        return fileName;
+    }
+}
+
+#define CURRENT_FILE_WITHOUT_PATH _PreprocessorDetail::GetFileNameImpl(__FILE__)
+
 #define ExceptionOrigin Alternet::UI::Exception::Origin { __func__, CURRENT_FILE_WITHOUT_PATH, __LINE__ }
 
 #define throwEx(message) throw Alternet::UI::Exception((message), 0, ExceptionOrigin)
-#define throwExTyped(exceptionType, message) throw exceptionType((message), 0, Alternet::UI::nullopt)
+#define throwExTyped(exceptionType, message) throw exceptionType((message), 0, ExceptionOrigin)
 #define throwExNoInfo throw Alternet::UI::Exception(u"", 0, ExceptionOrigin)
 #define throwExInvalidArg(argument) throw Alternet::UI::Exception(string(u"Invalid argument: ") + (u###argument), 0, ExceptionOrigin)
 

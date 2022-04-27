@@ -4,21 +4,28 @@
 
 #include "Label.h"
 #include "ApiUtils.h"
+#include "Exceptions.h"
 
 using namespace Alternet::UI;
 
 ALTERNET_UI_API Label* Label_Create_()
 {
-    return new Label();
+    return MarshalExceptions<Label*>([&](){
+            return new Label();
+        });
 }
 
 ALTERNET_UI_API char16_t* Label_GetText_(Label* obj)
 {
-    return AllocPInvokeReturnString(obj->GetText());
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetText());
+        });
 }
 
 ALTERNET_UI_API void Label_SetText_(Label* obj, const char16_t* value)
 {
-    obj->SetText(value);
+    MarshalExceptions<void>([&](){
+            obj->SetText(value);
+        });
 }
 

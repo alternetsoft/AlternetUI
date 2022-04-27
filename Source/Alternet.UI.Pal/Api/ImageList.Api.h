@@ -5,36 +5,49 @@
 #include "ImageList.h"
 #include "Image.h"
 #include "ApiUtils.h"
+#include "Exceptions.h"
 
 using namespace Alternet::UI;
 
 ALTERNET_UI_API ImageList* ImageList_Create_()
 {
-    return new ImageList();
+    return MarshalExceptions<ImageList*>([&](){
+            return new ImageList();
+        });
 }
 
 ALTERNET_UI_API Int32Size_C ImageList_GetPixelImageSize_(ImageList* obj)
 {
-    return obj->GetPixelImageSize();
+    return MarshalExceptions<Int32Size_C>([&](){
+            return obj->GetPixelImageSize();
+        });
 }
 
 ALTERNET_UI_API void ImageList_SetPixelImageSize_(ImageList* obj, Int32Size value)
 {
-    obj->SetPixelImageSize(value);
+    MarshalExceptions<void>([&](){
+            obj->SetPixelImageSize(value);
+        });
 }
 
 ALTERNET_UI_API Size_C ImageList_GetImageSize_(ImageList* obj)
 {
-    return obj->GetImageSize();
+    return MarshalExceptions<Size_C>([&](){
+            return obj->GetImageSize();
+        });
 }
 
 ALTERNET_UI_API void ImageList_SetImageSize_(ImageList* obj, Size value)
 {
-    obj->SetImageSize(value);
+    MarshalExceptions<void>([&](){
+            obj->SetImageSize(value);
+        });
 }
 
 ALTERNET_UI_API void ImageList_AddImage_(ImageList* obj, Image* image)
 {
-    obj->AddImage(image);
+    MarshalExceptions<void>([&](){
+            obj->AddImage(image);
+        });
 }
 

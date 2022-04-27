@@ -4,22 +4,29 @@
 
 #include "Mouse.h"
 #include "ApiUtils.h"
+#include "Exceptions.h"
 
 using namespace Alternet::UI;
 
 ALTERNET_UI_API Mouse* Mouse_Create_()
 {
-    return new Mouse();
+    return MarshalExceptions<Mouse*>([&](){
+            return new Mouse();
+        });
 }
 
 ALTERNET_UI_API Point_C Mouse_GetPosition_(Mouse* obj)
 {
-    return obj->GetPosition();
+    return MarshalExceptions<Point_C>([&](){
+            return obj->GetPosition();
+        });
 }
 
 ALTERNET_UI_API MouseButtonState Mouse_GetButtonState_(Mouse* obj, MouseButton button)
 {
-    return obj->GetButtonState(button);
+    return MarshalExceptions<MouseButtonState>([&](){
+            return obj->GetButtonState(button);
+        });
 }
 
 ALTERNET_UI_API void Mouse_SetEventCallback_(Mouse::MouseEventCallbackType callback)

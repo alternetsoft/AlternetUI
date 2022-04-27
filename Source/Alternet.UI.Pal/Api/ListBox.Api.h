@@ -4,72 +4,99 @@
 
 #include "ListBox.h"
 #include "ApiUtils.h"
+#include "Exceptions.h"
 
 using namespace Alternet::UI;
 
 ALTERNET_UI_API ListBox* ListBox_Create_()
 {
-    return new ListBox();
+    return MarshalExceptions<ListBox*>([&](){
+            return new ListBox();
+        });
 }
 
 ALTERNET_UI_API int ListBox_GetItemsCount_(ListBox* obj)
 {
-    return obj->GetItemsCount();
+    return MarshalExceptions<int>([&](){
+            return obj->GetItemsCount();
+        });
 }
 
 ALTERNET_UI_API ListBoxSelectionMode ListBox_GetSelectionMode_(ListBox* obj)
 {
-    return obj->GetSelectionMode();
+    return MarshalExceptions<ListBoxSelectionMode>([&](){
+            return obj->GetSelectionMode();
+        });
 }
 
 ALTERNET_UI_API void ListBox_SetSelectionMode_(ListBox* obj, ListBoxSelectionMode value)
 {
-    obj->SetSelectionMode(value);
+    MarshalExceptions<void>([&](){
+            obj->SetSelectionMode(value);
+        });
 }
 
 ALTERNET_UI_API void* ListBox_OpenSelectedIndicesArray_(ListBox* obj)
 {
-    return obj->OpenSelectedIndicesArray();
+    return MarshalExceptions<void*>([&](){
+            return obj->OpenSelectedIndicesArray();
+        });
 }
 
 ALTERNET_UI_API int ListBox_GetSelectedIndicesItemCount_(ListBox* obj, void* array)
 {
-    return obj->GetSelectedIndicesItemCount(array);
+    return MarshalExceptions<int>([&](){
+            return obj->GetSelectedIndicesItemCount(array);
+        });
 }
 
 ALTERNET_UI_API int ListBox_GetSelectedIndicesItemAt_(ListBox* obj, void* array, int index)
 {
-    return obj->GetSelectedIndicesItemAt(array, index);
+    return MarshalExceptions<int>([&](){
+            return obj->GetSelectedIndicesItemAt(array, index);
+        });
 }
 
 ALTERNET_UI_API void ListBox_CloseSelectedIndicesArray_(ListBox* obj, void* array)
 {
-    obj->CloseSelectedIndicesArray(array);
+    MarshalExceptions<void>([&](){
+            obj->CloseSelectedIndicesArray(array);
+        });
 }
 
 ALTERNET_UI_API void ListBox_InsertItem_(ListBox* obj, int index, const char16_t* value)
 {
-    obj->InsertItem(index, value);
+    MarshalExceptions<void>([&](){
+            obj->InsertItem(index, value);
+        });
 }
 
 ALTERNET_UI_API void ListBox_RemoveItemAt_(ListBox* obj, int index)
 {
-    obj->RemoveItemAt(index);
+    MarshalExceptions<void>([&](){
+            obj->RemoveItemAt(index);
+        });
 }
 
 ALTERNET_UI_API void ListBox_ClearItems_(ListBox* obj)
 {
-    obj->ClearItems();
+    MarshalExceptions<void>([&](){
+            obj->ClearItems();
+        });
 }
 
 ALTERNET_UI_API void ListBox_ClearSelected_(ListBox* obj)
 {
-    obj->ClearSelected();
+    MarshalExceptions<void>([&](){
+            obj->ClearSelected();
+        });
 }
 
 ALTERNET_UI_API void ListBox_SetSelected_(ListBox* obj, int index, c_bool value)
 {
-    obj->SetSelected(index, value);
+    MarshalExceptions<void>([&](){
+            obj->SetSelected(index, value);
+        });
 }
 
 ALTERNET_UI_API void ListBox_SetEventCallback_(ListBox::ListBoxEventCallbackType callback)

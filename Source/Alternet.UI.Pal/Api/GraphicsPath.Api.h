@@ -4,11 +4,14 @@
 
 #include "GraphicsPath.h"
 #include "ApiUtils.h"
+#include "Exceptions.h"
 
 using namespace Alternet::UI;
 
 ALTERNET_UI_API GraphicsPath* GraphicsPath_Create_()
 {
-    return new GraphicsPath();
+    return MarshalExceptions<GraphicsPath*>([&](){
+            return new GraphicsPath();
+        });
 }
 

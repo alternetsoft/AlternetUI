@@ -4,32 +4,43 @@
 
 #include "Timer.h"
 #include "ApiUtils.h"
+#include "Exceptions.h"
 
 using namespace Alternet::UI;
 
 ALTERNET_UI_API Timer* Timer_Create_()
 {
-    return new Timer();
+    return MarshalExceptions<Timer*>([&](){
+            return new Timer();
+        });
 }
 
 ALTERNET_UI_API c_bool Timer_GetEnabled_(Timer* obj)
 {
-    return obj->GetEnabled();
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetEnabled();
+        });
 }
 
 ALTERNET_UI_API void Timer_SetEnabled_(Timer* obj, c_bool value)
 {
-    obj->SetEnabled(value);
+    MarshalExceptions<void>([&](){
+            obj->SetEnabled(value);
+        });
 }
 
 ALTERNET_UI_API int Timer_GetInterval_(Timer* obj)
 {
-    return obj->GetInterval();
+    return MarshalExceptions<int>([&](){
+            return obj->GetInterval();
+        });
 }
 
 ALTERNET_UI_API void Timer_SetInterval_(Timer* obj, int value)
 {
-    obj->SetInterval(value);
+    MarshalExceptions<void>([&](){
+            obj->SetInterval(value);
+        });
 }
 
 ALTERNET_UI_API void Timer_SetEventCallback_(Timer::TimerEventCallbackType callback)

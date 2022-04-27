@@ -4,32 +4,43 @@
 
 #include "Window.h"
 #include "ApiUtils.h"
+#include "Exceptions.h"
 
 using namespace Alternet::UI;
 
 ALTERNET_UI_API Window* Window_Create_()
 {
-    return new Window();
+    return MarshalExceptions<Window*>([&](){
+            return new Window();
+        });
 }
 
 ALTERNET_UI_API char16_t* Window_GetTitle_(Window* obj)
 {
-    return AllocPInvokeReturnString(obj->GetTitle());
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetTitle());
+        });
 }
 
 ALTERNET_UI_API void Window_SetTitle_(Window* obj, const char16_t* value)
 {
-    obj->SetTitle(value);
+    MarshalExceptions<void>([&](){
+            obj->SetTitle(value);
+        });
 }
 
 ALTERNET_UI_API WindowStartPosition Window_GetWindowStartPosition_(Window* obj)
 {
-    return obj->GetWindowStartPosition();
+    return MarshalExceptions<WindowStartPosition>([&](){
+            return obj->GetWindowStartPosition();
+        });
 }
 
 ALTERNET_UI_API void Window_SetWindowStartPosition_(Window* obj, WindowStartPosition value)
 {
-    obj->SetWindowStartPosition(value);
+    MarshalExceptions<void>([&](){
+            obj->SetWindowStartPosition(value);
+        });
 }
 
 ALTERNET_UI_API void Window_SetEventCallback_(Window::WindowEventCallbackType callback)

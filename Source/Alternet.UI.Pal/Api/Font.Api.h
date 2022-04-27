@@ -4,81 +4,112 @@
 
 #include "Font.h"
 #include "ApiUtils.h"
+#include "Exceptions.h"
 
 using namespace Alternet::UI;
 
 ALTERNET_UI_API Font* Font_Create_()
 {
-    return new Font();
+    return MarshalExceptions<Font*>([&](){
+            return new Font();
+        });
 }
 
 ALTERNET_UI_API char16_t* Font_GetName_(Font* obj)
 {
-    return AllocPInvokeReturnString(obj->GetName());
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetName());
+        });
 }
 
 ALTERNET_UI_API double Font_GetSizeInPoints_(Font* obj)
 {
-    return obj->GetSizeInPoints();
+    return MarshalExceptions<double>([&](){
+            return obj->GetSizeInPoints();
+        });
 }
 
 ALTERNET_UI_API FontStyle Font_GetStyle_(Font* obj)
 {
-    return obj->GetStyle();
+    return MarshalExceptions<FontStyle>([&](){
+            return obj->GetStyle();
+        });
 }
 
 ALTERNET_UI_API char16_t* Font_GetDescription_(Font* obj)
 {
-    return AllocPInvokeReturnString(obj->GetDescription());
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetDescription());
+        });
 }
 
 ALTERNET_UI_API void* Font_OpenFamiliesArray_()
 {
-    return Font::OpenFamiliesArray();
+    return MarshalExceptions<void*>([&](){
+            return Font::OpenFamiliesArray();
+        });
 }
 
 ALTERNET_UI_API int Font_GetFamiliesItemCount_(void* array)
 {
-    return Font::GetFamiliesItemCount(array);
+    return MarshalExceptions<int>([&](){
+            return Font::GetFamiliesItemCount(array);
+        });
 }
 
 ALTERNET_UI_API char16_t* Font_GetFamiliesItemAt_(void* array, int index)
 {
-    return AllocPInvokeReturnString(Font::GetFamiliesItemAt(array, index));
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(Font::GetFamiliesItemAt(array, index));
+        });
 }
 
 ALTERNET_UI_API void Font_CloseFamiliesArray_(void* array)
 {
-    Font::CloseFamiliesArray(array);
+    MarshalExceptions<void>([&](){
+            Font::CloseFamiliesArray(array);
+        });
 }
 
 ALTERNET_UI_API void Font_Initialize_(Font* obj, GenericFontFamily genericFamily, const char16_t* familyName, double emSizeInPoints, FontStyle style)
 {
-    obj->Initialize(genericFamily, ToOptional(familyName), emSizeInPoints, style);
+    MarshalExceptions<void>([&](){
+            obj->Initialize(genericFamily, ToOptional(familyName), emSizeInPoints, style);
+        });
 }
 
 ALTERNET_UI_API void Font_InitializeWithDefaultFont_(Font* obj)
 {
-    obj->InitializeWithDefaultFont();
+    MarshalExceptions<void>([&](){
+            obj->InitializeWithDefaultFont();
+        });
 }
 
 ALTERNET_UI_API c_bool Font_IsFamilyValid_(const char16_t* fontFamily)
 {
-    return Font::IsFamilyValid(fontFamily);
+    return MarshalExceptions<c_bool>([&](){
+            return Font::IsFamilyValid(fontFamily);
+        });
 }
 
 ALTERNET_UI_API char16_t* Font_GetGenericFamilyName_(GenericFontFamily genericFamily)
 {
-    return AllocPInvokeReturnString(Font::GetGenericFamilyName(genericFamily));
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(Font::GetGenericFamilyName(genericFamily));
+        });
 }
 
 ALTERNET_UI_API c_bool Font_IsEqualTo_(Font* obj, Font* other)
 {
-    return obj->IsEqualTo(other);
+    return MarshalExceptions<c_bool>([&](){
+            return obj->IsEqualTo(other);
+        });
 }
 
 ALTERNET_UI_API char16_t* Font_Serialize_(Font* obj)
 {
-    return AllocPInvokeReturnString(obj->Serialize());
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->Serialize());
+        });
 }
 

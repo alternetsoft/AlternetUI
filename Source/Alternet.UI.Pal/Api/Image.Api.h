@@ -5,36 +5,49 @@
 #include "Image.h"
 #include "InputStream.h"
 #include "ApiUtils.h"
+#include "Exceptions.h"
 
 using namespace Alternet::UI;
 
 ALTERNET_UI_API Image* Image_Create_()
 {
-    return new Image();
+    return MarshalExceptions<Image*>([&](){
+            return new Image();
+        });
 }
 
 ALTERNET_UI_API Size_C Image_GetSize_(Image* obj)
 {
-    return obj->GetSize();
+    return MarshalExceptions<Size_C>([&](){
+            return obj->GetSize();
+        });
 }
 
 ALTERNET_UI_API Int32Size_C Image_GetPixelSize_(Image* obj)
 {
-    return obj->GetPixelSize();
+    return MarshalExceptions<Int32Size_C>([&](){
+            return obj->GetPixelSize();
+        });
 }
 
 ALTERNET_UI_API void Image_LoadFromStream_(Image* obj, void* stream)
 {
-    obj->LoadFromStream(stream);
+    MarshalExceptions<void>([&](){
+            obj->LoadFromStream(stream);
+        });
 }
 
 ALTERNET_UI_API void Image_Initialize_(Image* obj, Size size)
 {
-    obj->Initialize(size);
+    MarshalExceptions<void>([&](){
+            obj->Initialize(size);
+        });
 }
 
 ALTERNET_UI_API void Image_CopyFrom_(Image* obj, Image* otherImage)
 {
-    obj->CopyFrom(otherImage);
+    MarshalExceptions<void>([&](){
+            obj->CopyFrom(otherImage);
+        });
 }
 

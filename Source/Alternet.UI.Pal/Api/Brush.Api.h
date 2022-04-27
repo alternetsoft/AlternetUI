@@ -4,6 +4,7 @@
 
 
 #include "ApiUtils.h"
+#include "Exceptions.h"
 
 using namespace Alternet::UI;
 

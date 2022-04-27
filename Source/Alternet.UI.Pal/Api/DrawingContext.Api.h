@@ -8,76 +8,105 @@
 #include "Pen.h"
 #include "Font.h"
 #include "ApiUtils.h"
+#include "Exceptions.h"
 
 using namespace Alternet::UI;
 
 ALTERNET_UI_API DrawingContext* DrawingContext_FromImage_(Image* image)
 {
-    return DrawingContext::FromImage(image);
+    return MarshalExceptions<DrawingContext*>([&](){
+            return DrawingContext::FromImage(image);
+        });
 }
 
 ALTERNET_UI_API void DrawingContext_FillRectangle_(DrawingContext* obj, Rect rectangle, Brush* brush)
 {
-    obj->FillRectangle(rectangle, brush);
+    MarshalExceptions<void>([&](){
+            obj->FillRectangle(rectangle, brush);
+        });
 }
 
 ALTERNET_UI_API void DrawingContext_DrawRectangle_(DrawingContext* obj, Rect rectangle, Pen* pen)
 {
-    obj->DrawRectangle(rectangle, pen);
+    MarshalExceptions<void>([&](){
+            obj->DrawRectangle(rectangle, pen);
+        });
 }
 
 ALTERNET_UI_API void DrawingContext_FillEllipse_(DrawingContext* obj, Rect bounds, Brush* brush)
 {
-    obj->FillEllipse(bounds, brush);
+    MarshalExceptions<void>([&](){
+            obj->FillEllipse(bounds, brush);
+        });
 }
 
 ALTERNET_UI_API void DrawingContext_DrawEllipse_(DrawingContext* obj, Rect bounds, Pen* pen)
 {
-    obj->DrawEllipse(bounds, pen);
+    MarshalExceptions<void>([&](){
+            obj->DrawEllipse(bounds, pen);
+        });
 }
 
 ALTERNET_UI_API void DrawingContext_FloodFill_(DrawingContext* obj, Point point, Brush* brush)
 {
-    obj->FloodFill(point, brush);
+    MarshalExceptions<void>([&](){
+            obj->FloodFill(point, brush);
+        });
 }
 
 ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, const char16_t* text, Point origin, Font* font, Brush* brush)
 {
-    obj->DrawText(text, origin, font, brush);
+    MarshalExceptions<void>([&](){
+            obj->DrawText(text, origin, font, brush);
+        });
 }
 
 ALTERNET_UI_API void DrawingContext_DrawImageAtPoint_(DrawingContext* obj, Image* image, Point origin)
 {
-    obj->DrawImageAtPoint(image, origin);
+    MarshalExceptions<void>([&](){
+            obj->DrawImageAtPoint(image, origin);
+        });
 }
 
 ALTERNET_UI_API void DrawingContext_DrawImageAtRect_(DrawingContext* obj, Image* image, Rect rect)
 {
-    obj->DrawImageAtRect(image, rect);
+    MarshalExceptions<void>([&](){
+            obj->DrawImageAtRect(image, rect);
+        });
 }
 
 ALTERNET_UI_API Size_C DrawingContext_MeasureText_(DrawingContext* obj, const char16_t* text, Font* font)
 {
-    return obj->MeasureText(text, font);
+    return MarshalExceptions<Size_C>([&](){
+            return obj->MeasureText(text, font);
+        });
 }
 
 ALTERNET_UI_API void DrawingContext_PushTransform_(DrawingContext* obj, Size translation)
 {
-    obj->PushTransform(translation);
+    MarshalExceptions<void>([&](){
+            obj->PushTransform(translation);
+        });
 }
 
 ALTERNET_UI_API void DrawingContext_Pop_(DrawingContext* obj)
 {
-    obj->Pop();
+    MarshalExceptions<void>([&](){
+            obj->Pop();
+        });
 }
 
 ALTERNET_UI_API void DrawingContext_DrawLine_(DrawingContext* obj, Point a, Point b, Pen* pen)
 {
-    obj->DrawLine(a, b, pen);
+    MarshalExceptions<void>([&](){
+            obj->DrawLine(a, b, pen);
+        });
 }
 
 ALTERNET_UI_API void DrawingContext_DrawLines_(DrawingContext* obj, Point* points, int pointsCount, Pen* pen)
 {
-    obj->DrawLines(points, pointsCount, pen);
+    MarshalExceptions<void>([&](){
+            obj->DrawLines(points, pointsCount, pen);
+        });
 }
 

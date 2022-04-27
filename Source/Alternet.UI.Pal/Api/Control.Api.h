@@ -6,202 +6,281 @@
 #include "Font.h"
 #include "DrawingContext.h"
 #include "ApiUtils.h"
+#include "Exceptions.h"
 
 using namespace Alternet::UI;
 
 ALTERNET_UI_API Control* Control_GetParentRefCounted_(Control* obj)
 {
-    return obj->GetParentRefCounted();
+    return MarshalExceptions<Control*>([&](){
+            return obj->GetParentRefCounted();
+        });
 }
 
 ALTERNET_UI_API Size_C Control_GetSize_(Control* obj)
 {
-    return obj->GetSize();
+    return MarshalExceptions<Size_C>([&](){
+            return obj->GetSize();
+        });
 }
 
 ALTERNET_UI_API void Control_SetSize_(Control* obj, Size value)
 {
-    obj->SetSize(value);
+    MarshalExceptions<void>([&](){
+            obj->SetSize(value);
+        });
 }
 
 ALTERNET_UI_API Point_C Control_GetLocation_(Control* obj)
 {
-    return obj->GetLocation();
+    return MarshalExceptions<Point_C>([&](){
+            return obj->GetLocation();
+        });
 }
 
 ALTERNET_UI_API void Control_SetLocation_(Control* obj, Point value)
 {
-    obj->SetLocation(value);
+    MarshalExceptions<void>([&](){
+            obj->SetLocation(value);
+        });
 }
 
 ALTERNET_UI_API Rect_C Control_GetBounds_(Control* obj)
 {
-    return obj->GetBounds();
+    return MarshalExceptions<Rect_C>([&](){
+            return obj->GetBounds();
+        });
 }
 
 ALTERNET_UI_API void Control_SetBounds_(Control* obj, Rect value)
 {
-    obj->SetBounds(value);
+    MarshalExceptions<void>([&](){
+            obj->SetBounds(value);
+        });
 }
 
 ALTERNET_UI_API Size_C Control_GetClientSize_(Control* obj)
 {
-    return obj->GetClientSize();
+    return MarshalExceptions<Size_C>([&](){
+            return obj->GetClientSize();
+        });
 }
 
 ALTERNET_UI_API void Control_SetClientSize_(Control* obj, Size value)
 {
-    obj->SetClientSize(value);
+    MarshalExceptions<void>([&](){
+            obj->SetClientSize(value);
+        });
 }
 
 ALTERNET_UI_API Thickness_C Control_GetIntrinsicLayoutPadding_(Control* obj)
 {
-    return obj->GetIntrinsicLayoutPadding();
+    return MarshalExceptions<Thickness_C>([&](){
+            return obj->GetIntrinsicLayoutPadding();
+        });
 }
 
 ALTERNET_UI_API Thickness_C Control_GetIntrinsicPreferredSizePadding_(Control* obj)
 {
-    return obj->GetIntrinsicPreferredSizePadding();
+    return MarshalExceptions<Thickness_C>([&](){
+            return obj->GetIntrinsicPreferredSizePadding();
+        });
 }
 
 ALTERNET_UI_API c_bool Control_GetVisible_(Control* obj)
 {
-    return obj->GetVisible();
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetVisible();
+        });
 }
 
 ALTERNET_UI_API void Control_SetVisible_(Control* obj, c_bool value)
 {
-    obj->SetVisible(value);
+    MarshalExceptions<void>([&](){
+            obj->SetVisible(value);
+        });
 }
 
 ALTERNET_UI_API c_bool Control_GetEnabled_(Control* obj)
 {
-    return obj->GetEnabled();
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetEnabled();
+        });
 }
 
 ALTERNET_UI_API void Control_SetEnabled_(Control* obj, c_bool value)
 {
-    obj->SetEnabled(value);
+    MarshalExceptions<void>([&](){
+            obj->SetEnabled(value);
+        });
 }
 
 ALTERNET_UI_API c_bool Control_GetUserPaint_(Control* obj)
 {
-    return obj->GetUserPaint();
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetUserPaint();
+        });
 }
 
 ALTERNET_UI_API void Control_SetUserPaint_(Control* obj, c_bool value)
 {
-    obj->SetUserPaint(value);
+    MarshalExceptions<void>([&](){
+            obj->SetUserPaint(value);
+        });
 }
 
 ALTERNET_UI_API c_bool Control_GetIsMouseOver_(Control* obj)
 {
-    return obj->GetIsMouseOver();
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsMouseOver();
+        });
 }
 
 ALTERNET_UI_API Color_C Control_GetBackgroundColor_(Control* obj)
 {
-    return obj->GetBackgroundColor();
+    return MarshalExceptions<Color_C>([&](){
+            return obj->GetBackgroundColor();
+        });
 }
 
 ALTERNET_UI_API void Control_SetBackgroundColor_(Control* obj, Color value)
 {
-    obj->SetBackgroundColor(value);
+    MarshalExceptions<void>([&](){
+            obj->SetBackgroundColor(value);
+        });
 }
 
 ALTERNET_UI_API Color_C Control_GetForegroundColor_(Control* obj)
 {
-    return obj->GetForegroundColor();
+    return MarshalExceptions<Color_C>([&](){
+            return obj->GetForegroundColor();
+        });
 }
 
 ALTERNET_UI_API void Control_SetForegroundColor_(Control* obj, Color value)
 {
-    obj->SetForegroundColor(value);
+    MarshalExceptions<void>([&](){
+            obj->SetForegroundColor(value);
+        });
 }
 
 ALTERNET_UI_API Font* Control_GetFont_(Control* obj)
 {
-    return obj->GetFont();
+    return MarshalExceptions<Font*>([&](){
+            return obj->GetFont();
+        });
 }
 
 ALTERNET_UI_API void Control_SetFont_(Control* obj, Font* value)
 {
-    obj->SetFont(value);
+    MarshalExceptions<void>([&](){
+            obj->SetFont(value);
+        });
 }
 
 ALTERNET_UI_API c_bool Control_GetIsMouseCaptured_(Control* obj)
 {
-    return obj->GetIsMouseCaptured();
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsMouseCaptured();
+        });
 }
 
 ALTERNET_UI_API void Control_SetMouseCapture_(Control* obj, c_bool value)
 {
-    obj->SetMouseCapture(value);
+    MarshalExceptions<void>([&](){
+            obj->SetMouseCapture(value);
+        });
 }
 
 ALTERNET_UI_API void Control_AddChild_(Control* obj, Control* control)
 {
-    obj->AddChild(control);
+    MarshalExceptions<void>([&](){
+            obj->AddChild(control);
+        });
 }
 
 ALTERNET_UI_API void Control_RemoveChild_(Control* obj, Control* control)
 {
-    obj->RemoveChild(control);
+    MarshalExceptions<void>([&](){
+            obj->RemoveChild(control);
+        });
 }
 
 ALTERNET_UI_API void Control_Invalidate_(Control* obj)
 {
-    obj->Invalidate();
+    MarshalExceptions<void>([&](){
+            obj->Invalidate();
+        });
 }
 
 ALTERNET_UI_API void Control_Update_(Control* obj)
 {
-    obj->Update();
+    MarshalExceptions<void>([&](){
+            obj->Update();
+        });
 }
 
 ALTERNET_UI_API Size_C Control_GetPreferredSize_(Control* obj, Size availableSize)
 {
-    return obj->GetPreferredSize(availableSize);
+    return MarshalExceptions<Size_C>([&](){
+            return obj->GetPreferredSize(availableSize);
+        });
 }
 
 ALTERNET_UI_API DrawingContext* Control_OpenPaintDrawingContext_(Control* obj)
 {
-    return obj->OpenPaintDrawingContext();
+    return MarshalExceptions<DrawingContext*>([&](){
+            return obj->OpenPaintDrawingContext();
+        });
 }
 
 ALTERNET_UI_API DrawingContext* Control_OpenClientDrawingContext_(Control* obj)
 {
-    return obj->OpenClientDrawingContext();
+    return MarshalExceptions<DrawingContext*>([&](){
+            return obj->OpenClientDrawingContext();
+        });
 }
 
 ALTERNET_UI_API void Control_BeginUpdate_(Control* obj)
 {
-    obj->BeginUpdate();
+    MarshalExceptions<void>([&](){
+            obj->BeginUpdate();
+        });
 }
 
 ALTERNET_UI_API void Control_EndUpdate_(Control* obj)
 {
-    obj->EndUpdate();
+    MarshalExceptions<void>([&](){
+            obj->EndUpdate();
+        });
 }
 
 ALTERNET_UI_API Control* Control_GetFocusedControl_()
 {
-    return Control::GetFocusedControl();
+    return MarshalExceptions<Control*>([&](){
+            return Control::GetFocusedControl();
+        });
 }
 
 ALTERNET_UI_API Control* Control_HitTest_(Point screenPoint)
 {
-    return Control::HitTest(screenPoint);
+    return MarshalExceptions<Control*>([&](){
+            return Control::HitTest(screenPoint);
+        });
 }
 
 ALTERNET_UI_API Point_C Control_ClientToScreen_(Control* obj, Point point)
 {
-    return obj->ClientToScreen(point);
+    return MarshalExceptions<Point_C>([&](){
+            return obj->ClientToScreen(point);
+        });
 }
 
 ALTERNET_UI_API Point_C Control_ScreenToClient_(Control* obj, Point point)
 {
-    return obj->ScreenToClient(point);
+    return MarshalExceptions<Point_C>([&](){
+            return obj->ScreenToClient(point);
+        });
 }
 
 ALTERNET_UI_API void Control_SetEventCallback_(Control::ControlEventCallbackType callback)

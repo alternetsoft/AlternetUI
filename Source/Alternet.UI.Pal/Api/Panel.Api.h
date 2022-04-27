@@ -4,11 +4,14 @@
 
 #include "Panel.h"
 #include "ApiUtils.h"
+#include "Exceptions.h"
 
 using namespace Alternet::UI;
 
 ALTERNET_UI_API Panel* Panel_Create_()
 {
-    return new Panel();
+    return MarshalExceptions<Panel*>([&](){
+            return new Panel();
+        });
 }
 

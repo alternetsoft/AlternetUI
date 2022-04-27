@@ -4,16 +4,21 @@
 
 #include "Pen.h"
 #include "ApiUtils.h"
+#include "Exceptions.h"
 
 using namespace Alternet::UI;
 
 ALTERNET_UI_API Pen* Pen_Create_()
 {
-    return new Pen();
+    return MarshalExceptions<Pen*>([&](){
+            return new Pen();
+        });
 }
 
 ALTERNET_UI_API void Pen_Initialize_(Pen* obj, PenDashStyle style, Color color, double width)
 {
-    obj->Initialize(style, color, width);
+    MarshalExceptions<void>([&](){
+            obj->Initialize(style, color, width);
+        });
 }
 

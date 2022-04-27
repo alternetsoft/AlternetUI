@@ -4,22 +4,29 @@
 
 #include "Button.h"
 #include "ApiUtils.h"
+#include "Exceptions.h"
 
 using namespace Alternet::UI;
 
 ALTERNET_UI_API Button* Button_Create_()
 {
-    return new Button();
+    return MarshalExceptions<Button*>([&](){
+            return new Button();
+        });
 }
 
 ALTERNET_UI_API char16_t* Button_GetText_(Button* obj)
 {
-    return AllocPInvokeReturnString(obj->GetText());
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetText());
+        });
 }
 
 ALTERNET_UI_API void Button_SetText_(Button* obj, const char16_t* value)
 {
-    obj->SetText(value);
+    MarshalExceptions<void>([&](){
+            obj->SetText(value);
+        });
 }
 
 ALTERNET_UI_API void Button_SetEventCallback_(Button::ButtonEventCallbackType callback)

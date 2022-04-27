@@ -21,6 +21,7 @@ namespace ApiGenerator.Native
             var types = new CTypes();
 
             w.WriteLine("#include \"ApiUtils.h\"");
+            w.WriteLine("#include \"Exceptions.h\"");
 
             w.WriteLine();
             w.WriteLine("using namespace Alternet::UI;");
@@ -69,16 +70,20 @@ namespace ApiGenerator.Native
 
             if (property.GetMethod != null)
             {
-                w.WriteLine($"{ExportMacro} {types.GetTypeName(property.ToContextualProperty(), TypeUsage.Return)} {declaringTypeName}_Get{propertyName}_({instanceParameterSignaturePart})");
+                var propertyTypeName = types.GetTypeName(property.ToContextualProperty(), TypeUsage.Return);
+                w.WriteLine($"{ExportMacro} {propertyTypeName} {declaringTypeName}_Get{propertyName}_({instanceParameterSignaturePart})");
                 w.WriteLine("{");
                 w.Indent++;
 
-                w.Write("return ");
-                w.Write(
-                    string.Format(
-                        GetCppToCReturnValueFormatString(property.PropertyType),
-                        $"obj->Get{propertyName}()"));
-                w.WriteLine(";");
+                using (new MarshalExceptionsScope(w, propertyTypeName))
+                {
+                    w.Write("return ");
+                    w.Write(
+                        string.Format(
+                            GetCppToCReturnValueFormatString(property.PropertyType),
+                            $"obj->Get{propertyName}()"));
+                    w.WriteLine(";");
+                }
 
                 w.Indent--;
                 w.WriteLine("}");
@@ -90,10 +95,36 @@ namespace ApiGenerator.Native
                 w.WriteLine($"{ExportMacro} void {declaringTypeName}_Set{propertyName}_({instanceParameterSignaturePart}, {types.GetTypeName(property.ToContextualProperty(), TypeUsage.Argument)} value)");
                 w.WriteLine("{");
                 w.Indent++;
-                w.WriteLine($"obj->Set{propertyName}({GetCToCppArgument(property.ToContextualProperty(), "value")});");
+                using (new MarshalExceptionsScope(w, "void"))
+                    w.WriteLine($"obj->Set{propertyName}({GetCToCppArgument(property.ToContextualProperty(), "value")});");
                 w.Indent--;
                 w.WriteLine("}");
                 w.WriteLine();
+            }
+        }
+
+        class MarshalExceptionsScope : IDisposable
+        {
+            private readonly IndentedTextWriter writer;
+
+            public MarshalExceptionsScope(IndentedTextWriter writer, string returnTypeName)
+            {
+                this.writer = writer;
+
+                if (returnTypeName != "void")
+                    writer.Write("return ");
+
+                writer.Write($"MarshalExceptions<{returnTypeName}>([&]()");
+                writer.Indent++;
+                writer.WriteLine("{");
+                writer.Indent++;
+            }
+
+            public void Dispose()
+            {
+                writer.Indent--;
+                writer.WriteLine("});");
+                writer.Indent--;
             }
         }
 
@@ -148,15 +179,18 @@ namespace ApiGenerator.Native
             w.WriteLine("{");
             w.Indent++;
 
-            if (method.ReturnType != typeof(void))
-                w.Write("return ");
+            using (new MarshalExceptionsScope(w, returnTypeName))
+            {
+                if (method.ReturnType != typeof(void))
+                    w.Write("return ");
 
-            w.Write(
-                string.Format(
-                    GetCppToCReturnValueFormatString(method.ReturnType),
-                    $"{(isStatic ? declaringTypeName + "::" : "obj->")}{methodName}({callParametersString})"));
+                w.Write(
+                    string.Format(
+                        GetCppToCReturnValueFormatString(method.ReturnType),
+                        $"{(isStatic ? declaringTypeName + "::" : "obj->")}{methodName}({callParametersString})"));
 
-            w.WriteLine(";");
+                w.WriteLine(";");
+            }
 
             w.Indent--;
             w.WriteLine("}");
@@ -190,7 +224,8 @@ namespace ApiGenerator.Native
             w.WriteLine("{");
             w.Indent++;
 
-            w.WriteLine($"return new {declaringTypeName}();");
+            using (new MarshalExceptionsScope(w, returnTypeName))
+                w.WriteLine($"return new {declaringTypeName}();");
 
             w.Indent--;
             w.WriteLine("}");
@@ -222,7 +257,8 @@ namespace ApiGenerator.Native
             w.WriteLine("{");
             w.Indent++;
 
-            w.WriteLine("delete obj;");
+            using (new MarshalExceptionsScope(w, "void"))
+                w.WriteLine("delete obj;");
 
             w.Indent--;
             w.WriteLine("}");
