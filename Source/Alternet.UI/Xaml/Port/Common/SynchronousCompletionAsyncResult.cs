@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace Alternet.UI.Utilities
+namespace Alternet.UI
 {
     /// <summary>
     /// A task-like operation that is guaranteed to finish continuations synchronously,

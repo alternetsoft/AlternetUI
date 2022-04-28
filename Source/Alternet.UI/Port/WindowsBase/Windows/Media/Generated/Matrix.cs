@@ -15,10 +15,9 @@ using System;
 using System.ComponentModel;
 
 // These types are aliased to match the unamanaged names used in interop
-using Alternet.UI.Media.Converters;
 using Alternet.UI.Markup;
 
-namespace Alternet.UI.Media
+namespace Alternet.UI
 {
     [Serializable]
     [TypeConverter(typeof(MatrixConverter))]

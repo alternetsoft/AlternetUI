@@ -1,12 +1,12 @@
 #nullable disable
 using System;
 
-namespace Alternet.UI.Markup.Xaml
+namespace Alternet.UI.Markup
 {
     /// <summary>
     /// This item supports the framework infrastructure and is not intended to be used directly from your code.
     /// </summary>
-    public interface IProvideValueTarget
+    public interface IUixmlProvideValueTarget
     {
         /// <summary>
         /// This item supports the framework infrastructure and is not intended to be used directly from your code.
@@ -21,7 +21,7 @@ namespace Alternet.UI.Markup.Xaml
     /// <summary>
     /// This item supports the framework infrastructure and is not intended to be used directly from your code.
     /// </summary>
-    public interface IRootObjectProvider
+    public interface IUixmlRootObjectProvider
     {
         /// <summary>
         /// The root object of the xaml file
@@ -37,7 +37,7 @@ namespace Alternet.UI.Markup.Xaml
     /// <summary>
     /// This item supports the framework infrastructure and is not intended to be used directly from your code.
     /// </summary>
-    public interface IUriContext
+    public interface IUixmlUriContext
     {
         /// <summary>
         /// This item supports the framework infrastructure and is not intended to be used directly from your code.
@@ -45,17 +45,17 @@ namespace Alternet.UI.Markup.Xaml
         Uri BaseUri { get; set; }
     }
     
-    internal interface IXamlTypeResolver
-    {
-        Type Resolve (string qualifiedTypeName);
-    }
+    //internal interface IXamlTypeResolver
+    //{
+    //    Type Resolve (string qualifiedTypeName);
+    //}
 
     
-    internal class ConstructorArgumentAttribute : Attribute
-    {
-        public ConstructorArgumentAttribute(string name)
-        {
+    //internal class ConstructorArgumentAttribute : Attribute
+    //{
+    //    public ConstructorArgumentAttribute(string name)
+    //    {
             
-        }
-    }
+    //    }
+    //}
 }

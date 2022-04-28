@@ -3,16 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Alternet.UI;
-using Alternet.UI.Markup.Xaml.XamlIl.Runtime;
+using Alternet.UI.Markup;
 
-namespace Alternet.UI.Markup.Xaml
+namespace Alternet.UI.Markup
 {
     internal static class Extensions
     {
         public static T GetService<T>(this IServiceProvider sp) => (T)sp?.GetService(typeof(T));
         
         
-        public static Uri GetContextBaseUri(this IServiceProvider ctx) => ctx.GetService<IUriContext>().BaseUri;
+        public static Uri GetContextBaseUri(this IServiceProvider ctx) => ctx.GetService<IUixmlUriContext>().BaseUri;
 
         public static T GetFirstParent<T>(this IServiceProvider ctx) where T : class 
             => ctx.GetService<IUixmlPortXamlIlParentStackProvider>().Parents.OfType<T>().FirstOrDefault();

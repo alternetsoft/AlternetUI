@@ -18,7 +18,7 @@ using System.Globalization;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
-namespace Alternet.UI.Media
+namespace Alternet.UI
 {
     /// <summary>
     /// MatrixConverter - Converter class for converting instances of other types to and from Matrix instances

@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions;
-using Alternet.UI.Markup.Xaml.XamlIl.Runtime;
+using Alternet.UI.Markup;
 using XamlX.Transform;
 using XamlX.TypeSystem;
 using XamlX.IL;

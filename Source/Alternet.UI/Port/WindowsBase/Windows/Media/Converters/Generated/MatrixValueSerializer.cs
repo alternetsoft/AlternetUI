@@ -15,7 +15,7 @@ using Alternet.UI.Markup;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
-namespace Alternet.UI.Media.Converters
+namespace Alternet.UI
 {
     /// <summary>
     /// MatrixValueSerializer - ValueSerializer class for converting instances of strings to and from Matrix instances

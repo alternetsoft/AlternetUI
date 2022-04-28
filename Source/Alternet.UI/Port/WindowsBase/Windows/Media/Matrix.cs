@@ -42,7 +42,7 @@ using Alternet.Drawing;
 // windows/wcp/DevTest/Drts/MediaApi/MediaPerf.cs includes the
 // simple test of matrix multiplication speed used for these results.
 
-namespace Alternet.UI.Media
+namespace Alternet.UI
 {
     ///<summary>
     /// Matrix

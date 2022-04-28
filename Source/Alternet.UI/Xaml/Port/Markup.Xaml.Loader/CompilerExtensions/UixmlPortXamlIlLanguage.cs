@@ -20,7 +20,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
     {
         public static (XamlLanguageTypeMappings language, XamlLanguageEmitMappings<IXamlILEmitter, XamlILNodeEmitResult> emit) Configure(IXamlTypeSystem typeSystem)
         {
-            var runtimeHelpers = typeSystem.GetType("Alternet.UI.Markup.Xaml.XamlIl.Runtime.XamlIlRuntimeHelpers");
+            var runtimeHelpers = typeSystem.GetType("Alternet.UI.Markup.XamlIlRuntimeHelpers");
             //var assignBindingAttribute = typeSystem.GetType("Alternet.UI.Data.AssignBindingAttribute");
             //var bindingType = typeSystem.GetType("Alternet.UI.Data.IBinding");
             var rv = new XamlLanguageTypeMappings(typeSystem)
@@ -36,15 +36,15 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
                     //typeSystem.GetType("Alternet.UI.Metadata.ContentAttribute")
                     typeSystem.GetType("Alternet.UI.ContentAttribute")
                 },
-                ProvideValueTarget = typeSystem.GetType("Alternet.UI.Markup.Xaml.IProvideValueTarget"),
-                RootObjectProvider = typeSystem.GetType("Alternet.UI.Markup.Xaml.IRootObjectProvider"),
+                ProvideValueTarget = typeSystem.GetType("Alternet.UI.Markup.IUixmlProvideValueTarget"),
+                RootObjectProvider = typeSystem.GetType("Alternet.UI.Markup.IUixmlRootObjectProvider"),
                 RootObjectProviderIntermediateRootPropertyName = "IntermediateRootObject",
-                UriContextProvider = typeSystem.GetType("Alternet.UI.Markup.Xaml.IUriContext"),
+                UriContextProvider = typeSystem.GetType("Alternet.UI.Markup.IUixmlUriContext"),
                 ParentStackProvider =
-                    typeSystem.GetType("Alternet.UI.Markup.Xaml.XamlIl.Runtime.IUixmlPortXamlIlParentStackProvider"),
+                    typeSystem.GetType("Alternet.UI.Markup.IUixmlPortXamlIlParentStackProvider"),
 
                 XmlNamespaceInfoProvider =
-                    typeSystem.GetType("Alternet.UI.Markup.Xaml.XamlIl.Runtime.IUixmlPortXamlIlXmlNamespaceInfoProvider"),
+                    typeSystem.GetType("Alternet.UI.Markup.IUixmlPortXamlIlXmlNamespaceInfoProvider"),
                 //DeferredContentPropertyAttributes = {typeSystem.GetType("Alternet.UI.Metadata.TemplateContentAttribute")},
                 DeferredContentExecutorCustomizationDefaultTypeParameter = typeSystem.GetType("Alternet.UI.Control"),
                 DeferredContentExecutorCustomizationTypeParameterDeferredContentAttributePropertyNames = new List<string>

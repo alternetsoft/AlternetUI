@@ -9,7 +9,7 @@ using Alternet.UI.Controls;
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedParameter.Global
 
-namespace Alternet.UI.Markup.Xaml.XamlIl.Runtime
+namespace Alternet.UI.Markup
 {
     /// <summary>
     /// This item supports the framework infrastructure and is not intended to be used directly from your code.
@@ -33,7 +33,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.Runtime
         {
             var resourceNodes = provider.GetService<IUixmlPortXamlIlParentStackProvider>().Parents
                 .OfType<IResourceNode>().ToList();
-            var rootObject = provider.GetService<IRootObjectProvider>().RootObject;
+            var rootObject = provider.GetService<IUixmlRootObjectProvider>().RootObject;
             var parentScope = provider.GetService<INameScope>();
             return sp =>
             {
@@ -52,7 +52,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.Runtime
         class DeferredParentServiceProvider :
             IUixmlPortXamlIlParentStackProvider,
             IServiceProvider,
-            IRootObjectProvider
+            IUixmlRootObjectProvider
         {
             private readonly IServiceProvider _parentProvider;
             private readonly List<IResourceNode> _parentResourceNodes;
@@ -83,7 +83,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.Runtime
                     return _nameScope;
                 if (serviceType == typeof(IUixmlPortXamlIlParentStackProvider))
                     return this;
-                if (serviceType == typeof(IRootObjectProvider))
+                if (serviceType == typeof(IUixmlRootObjectProvider))
                     return this;
                 return _parentProvider?.GetService(serviceType);
             }
