@@ -15,7 +15,7 @@ namespace Alternet.UI
     ///     matches (logical or).  The type may also be an interface.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public sealed class AttachedPropertyBrowsableForTypeAttribute : AttachedPropertyBrowsableAttribute 
+    internal sealed class AttachedPropertyBrowsableForTypeAttribute : AttachedPropertyBrowsableAttribute 
     {
         //------------------------------------------------------
         //

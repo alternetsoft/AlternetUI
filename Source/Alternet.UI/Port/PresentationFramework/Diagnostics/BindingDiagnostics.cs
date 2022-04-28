@@ -20,7 +20,7 @@ namespace Alternet.UI
     /// This type supports the .NET Framework infrastructure and is not intended to be used directly
     /// from application code.
     /// </remarks>
-    public static class BindingDiagnostics
+    internal static class BindingDiagnostics
     {
         internal static bool IsEnabled { get; private set; }
 

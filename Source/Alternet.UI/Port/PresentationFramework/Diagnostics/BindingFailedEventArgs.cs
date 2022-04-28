@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides data for <see cref="BindingDiagnostics.BindingFailed"/> 
     /// </summary>
-    public class BindingFailedEventArgs : EventArgs
+    internal class BindingFailedEventArgs : EventArgs
     {
         /// <summary>
         /// For filtering failures (warnings, errors, etc).

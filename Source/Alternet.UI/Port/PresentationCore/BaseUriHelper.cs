@@ -28,7 +28,7 @@ namespace Alternet.UI
     /// <summary>
     /// BaseUriHelper class provides BaseUri related property, methods.
     /// </summary>
-    public static class BaseUriHelper
+    internal static class BaseUriHelper
     {
         private const string SOOBASE = "SiteOfOrigin://";
         private static readonly Uri _siteOfOriginBaseUri = PackUriHelper.Create(new Uri(SOOBASE));

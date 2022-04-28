@@ -17,7 +17,7 @@ namespace Alternet.UI
     ///     considered a "direct" property, not an attached property, and no search 
     ///     for a matching method will be performed.
     /// </summary>
-    public abstract class AttachedPropertyBrowsableAttribute : Attribute
+    internal abstract class AttachedPropertyBrowsableAttribute : Attribute
     {
         //------------------------------------------------------
         //

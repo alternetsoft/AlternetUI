@@ -18,7 +18,7 @@ namespace Alternet.Base.Collections.Specialized
     /// <summary>
     /// Manager for the INotifyCollectionChanged.CollectionChanged event.
     /// </summary>
-    public class CollectionChangedEventManager : WeakEventManager
+    internal class CollectionChangedEventManager : WeakEventManager
     {
         #region Constructors
 

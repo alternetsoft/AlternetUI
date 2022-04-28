@@ -14,7 +14,7 @@ namespace Alternet.UI
     ///     to an object that defines the given attribute on its class. 
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-    public sealed class AttachedPropertyBrowsableWhenAttributePresentAttribute : AttachedPropertyBrowsableAttribute 
+    internal sealed class AttachedPropertyBrowsableWhenAttributePresentAttribute : AttachedPropertyBrowsableAttribute 
     {
         //------------------------------------------------------
         //
