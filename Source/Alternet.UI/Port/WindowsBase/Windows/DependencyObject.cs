@@ -35,10 +35,10 @@ namespace Alternet.UI
     ///     DependencyObject services include the following:
     ///     <para/>
     ///     <list type="bullet">
-    ///         <item>Dependency-based property value evaluation through Expressions</item>
-    ///         <item>Property invalidation dependent traversal through Expressions</item>
-    ///         <item>Attached property support</item>
-    ///         <item>Invalidation notification services</item>
+    ///         <item><description>Dependency-based property value evaluation through Expressions</description></item>
+    ///         <item><description>Property invalidation dependent traversal through Expressions</description></item>
+    ///         <item><description>Attached property support</description></item>
+    ///         <item><description>Invalidation notification services</description></item>
     ///     </list>
     /// </remarks>
     /// This attribute allows designers looking at metadata through TypeDescriptor to see dependency properties

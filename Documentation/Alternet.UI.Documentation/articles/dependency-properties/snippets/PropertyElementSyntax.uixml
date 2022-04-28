@@ -1,0 +1,5 @@
+<Button Content="I have an image background">
+	<Button.Background>
+		<ImageBrush ImageSource="stripes.jpg"/>
+	</Button.Background>
+</Button>

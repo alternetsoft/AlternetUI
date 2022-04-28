@@ -1,0 +1,3 @@
+<StackPanel Canvas.Top="50" DataContext="{Binding Source=MyData}">
+	<Button Content="{Binding MyButtonTitle}"/>
+</StackPanel>

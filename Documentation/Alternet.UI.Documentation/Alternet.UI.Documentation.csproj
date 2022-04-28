@@ -7,8 +7,9 @@
       <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="utils\**" />
-    <EmbeddedResource Remove="utils\**" />
+	  <Compile Remove="utils\**" />
+	  <Compile Remove="**\*.cs" />
+	  <EmbeddedResource Remove="utils\**" />
     <None Remove="utils\**" />
   </ItemGroup>
   <PropertyGroup>
@@ -25,7 +26,6 @@
     <PackageReference Include="memberpage" Version="2.58.4" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="articles\" />
     <Folder Include="how-to-guides\debugging-with-alternet-ui-sources\images\" />
     <None Include="**\*.cs; **\*.uixml; apidoc\**\*.csproj" />
     <None Remove="site\**" />
