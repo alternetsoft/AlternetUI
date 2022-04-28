@@ -6,8 +6,8 @@
 //
 //
 //
-//  By default, WPF application is Dpi-Aware when the UI layout is calculated.
-//  But if in any case, an application wants to host WPF control and doesn't 
+//  By default, Alternet UI application is Dpi-Aware when the UI layout is calculated.
+//  But if in any case, an application wants to host Alternet UI control and doesn't 
 //  want to support Dpi aware,  the way to achieve it is to add below attribute
 //  value in its application assembly.
 //
@@ -21,7 +21,7 @@ namespace Alternet.UI.Media
 {
     /// <summary>
     /// DisableDpiAwarenessAttribute tells to disable DpiAwareness in this 
-    /// application for WPF UI elements.
+    /// application for Alternet UI UI elements.
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple=false)]
     public sealed class DisableDpiAwarenessAttribute: Attribute

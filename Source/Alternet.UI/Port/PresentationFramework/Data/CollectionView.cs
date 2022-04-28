@@ -86,7 +86,7 @@ namespace Alternet.UI
             }
             else
             {
-                // WPF doesn't really support doing anything on a thread whose dispatcher
+                // Alternet UI doesn't really support doing anything on a thread whose dispatcher
                 // has been shut down.  But for app-compat we should limp along
                 // as well as we did in 4.0.  This means avoiding anything that
                 // touches the ViewManager.

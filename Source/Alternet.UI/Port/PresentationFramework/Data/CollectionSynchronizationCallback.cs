@@ -15,9 +15,9 @@ using System.Collections;
 namespace Alternet.UI
 {
     ///<summary>
-    /// An application that wishes to allow WPF to participate in synchronized
+    /// An application that wishes to allow Alternet UI to participate in synchronized
     /// (multi-threaded) access to a collection can register a callback matching
-    /// the CollectionSynchronizationCallback delegate.   WPF will then invoke
+    /// the CollectionSynchronizationCallback delegate.   Alternet UI will then invoke
     /// the callback to access the collection.
     ///</summary>
     ///<param name="collection"> The collection that the caller intends to access. </param>

@@ -90,7 +90,7 @@ namespace Alternet.UI
                 // ADO returns a newly-created object (of type DataView or RelatedView)
                 // for each call to the getter of a "DataSet collection property".
                 // These objects are not referenced by any other ADO objects,
-                // so it is up to the caller to keep them alive.  But WPF tries
+                // so it is up to the caller to keep them alive.  But Alternet UI tries
                 // hard not to add strong references to these objects.  There
                 // are only three ways:
                 //  1. Creating a BindingListCollectionView over the object
@@ -109,7 +109,7 @@ namespace Alternet.UI
                 //
                 // To fix this, we add a reference from a suitable ADO object to
                 // the new DataView/RelatedView.  This reference can't involve
-                // any WPF objects - that would bring back the memory leak.
+                // any Alternet UI objects - that would bring back the memory leak.
                 // Instead, we use an ephemeral object created just for this purpose.
                 // The ephemeral object subscribes to an event on the "suitable
                 // ADO object", intentionally *not* using the WeakEvent pattern

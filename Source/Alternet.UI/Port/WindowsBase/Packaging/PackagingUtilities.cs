@@ -402,13 +402,13 @@ namespace Alternet.UI
         ///     1. It depends on knowing how the problematic methods are used.
         ///         They are internal, and outside our control.   The workaround
         ///         is based on the state of the CLR code as of July 2014.  If
-        ///         CLR changes it, WPF may have to change as well.   However, it
+        ///         CLR changes it, Alternet UI may have to change as well.   However, it
         ///         looks like the CLR code hasn't changed (in ways that would
         ///         affect us) in many many years, and it seems unlikely it would.
-        ///     2. It only touches WPF's direct usage of IsolatedStorage.  An app
+        ///     2. It only touches Alternet UI's direct usage of IsolatedStorage.  An app
         ///         could use IsolatedStorage directly - such usage risks
         ///         deadlock, independent of the workaround.
-        /// There's nothing WPF can do about either of these;  the only way to
+        /// There's nothing Alternet UI can do about either of these;  the only way to
         /// address them is by fixing 992845 at the CLR level.  Fortunately, they
         /// both seem unlikely to matter in practice.
         /// </summary>

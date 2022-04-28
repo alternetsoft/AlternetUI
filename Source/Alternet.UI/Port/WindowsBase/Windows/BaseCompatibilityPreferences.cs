@@ -38,7 +38,7 @@ namespace Alternet.UI
 
         #region ReuseDispatcherSynchronizationContextInstance
         /// <summary>
-        ///     WPF 4.0 had a performance optimization where it would
+        ///     Alternet UI 4.0 had a performance optimization where it would
         ///     frequently reuse the same instance of the
         ///     DispatcherSynchronizationContext when preparing the
         ///     ExecutionContext for invoking a DispatcherOperation.  This
@@ -111,7 +111,7 @@ namespace Alternet.UI
 
         #region FlowDispatcherSynchronizationContextPriority
         /// <summary>
-        ///     WPF &lt;= 4.0 a DispatcherSynchronizationContext always used
+        ///     Alternet UI &lt;= 4.0 a DispatcherSynchronizationContext always used
         ///     DispatcherPriority.Normal to satisfy
         ///     SynchronizationContext.Post and SynchronizationContext.Send
         ///     calls.
@@ -162,14 +162,14 @@ namespace Alternet.UI
 
         #region InlineDispatcherSynchronizationContextSend
         /// <summary>
-        ///     WPF &lt;= 4.0 a DispatcherSynchronizationContext always used
+        ///     Alternet UI &lt;= 4.0 a DispatcherSynchronizationContext always used
         ///     DispatcherPriority.Normal to satisfy
         ///     SynchronizationContext.Post and SynchronizationContext.Send
         ///     calls.  This can result in unexpected re-entrancy when calling
         ///     SynchronizationContext.Send on the same thread, since it still
         ///     posts through the Dispatcher queue.
         ///
-        ///     In WPF 4.5 we are changing the behavior such that calling
+        ///     In Alternet UI 4.5 we are changing the behavior such that calling
         ///     SynchronizationContext.Send on the same thread, will not post
         ///     through the Dispatcher queue, but rather invoke the delegate
         ///     more directly.  The cross-thread behavior does not change.
@@ -215,7 +215,7 @@ namespace Alternet.UI
 
         /// <summary>
         ///
-        /// Instructs WPF to not attempt to set an equivalent XML package signature method for a given digest hash algorithm.
+        /// Instructs Alternet UI to not attempt to set an equivalent XML package signature method for a given digest hash algorithm.
         /// This affects the signing and digest methods used in the packaging APIs.  With this set to false, signature methods
         /// will always be SHA1.
         /// </summary>
@@ -291,7 +291,7 @@ namespace Alternet.UI
         /// <summary>
         /// The key location for the registry switch to configure the Packaging API
         /// </summary>
-        private const string WpfPackagingSubKeyPath = @"Software\Microsoft\Avalon.Packaging\";
+        private const string WpfPackagingSubKeyPath = @"Software\Microsoft\Alternet UI.Packaging\";
 
         /// <summary>
         /// The value of the switch for system wide signature method lookup
@@ -335,7 +335,7 @@ namespace Alternet.UI
             /// <summary>
             ///     Continue after the failure.
             ///     The Dispatcher may become unresponsive.
-            ///     This is the default, and the behavior of WPF prior to version 4.7.1.
+            ///     This is the default, and the behavior of Alternet UI prior to version 4.7.1.
             /// </summary>
             Continue = 0,
 

@@ -6,7 +6,7 @@
 //
 // Description: Implementation of ObjectDataProvider object.
 //
-// Specs:       Avalon DataProviders.mht
+// Specs:       Alternet UI DataProviders.mht
 //
 
 using Alternet.UI.Markup;

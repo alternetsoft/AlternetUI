@@ -110,7 +110,7 @@ namespace Alternet.UI
 #endif
 
         /// <summary>
-        /// In WPF 4.0, a TextBox can reach a state where its Text property
+        /// In Alternet UI 4.0, a TextBox can reach a state where its Text property
         /// has some value X, but a different value Y is displayed.   Setting
         /// FrameworkCompatibilityPreferences.KeepTextBoxDisplaySynchronizedWithTextProperty=true
         /// ensures that the displayed value always agrees with the value of the Text property.
@@ -356,7 +356,7 @@ namespace Alternet.UI
         /// to call CloseClipboard, it results in all other applications running the same session 
         /// being unable to access clipboard functions. 
         /// 
-        /// In WPF, such a denial of access to clipboard is 
+        /// In Alternet UI, such a denial of access to clipboard is 
         /// normally ignored silently. Applications can opt into receiving an ExternalException upon
         /// failure by setting this flag. Opting to receive exceptions requires that 
         /// the application would take control of handling System.Windows.Input.ApplicationCommands.Cut

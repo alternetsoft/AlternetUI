@@ -578,7 +578,7 @@ namespace Alternet.UI
                     // that changing a collection without raising a notification
                     // is not supported, and let the chips fall where they may.
                     //
-                    // For WPF 3.5 (SP1), use TraceData to warn the user that
+                    // For Alternet UI 3.5 (SP1), use TraceData to warn the user that
                     // this scenario is not really supported.
                     if (TraceData.IsEnabled && !_warningHasBeenRaised)
                     {

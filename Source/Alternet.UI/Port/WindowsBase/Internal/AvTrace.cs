@@ -207,7 +207,7 @@ namespace Alternet.UI.Internal
 
 
         ///
-        ///  Read the registry to see if WPF tracing is allowed
+        ///  Read the registry to see if Alternet UI tracing is allowed
         ///
 
         [FriendAccessAllowed]
@@ -222,7 +222,7 @@ namespace Alternet.UI.Internal
 
                 object keyValue = SecurityHelper.ReadRegistryValue(
                                                             Registry.CurrentUser,
-                                                            @"Software\Microsoft\Tracing\WPF",
+                                                            @"Software\Microsoft\Tracing\Alternet UI",
                                                             "ManagedTracing");
 
                 if( keyValue is int && ((int) keyValue) == 1 )

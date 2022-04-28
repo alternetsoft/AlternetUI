@@ -29,7 +29,7 @@ namespace Alternet.UI
         /// <summary>
         /// Initialize a new instance of ValidationRule.
         /// </summary>
-        // the step defaults to RawProposedValue for compat with WPF 3.0/3.5.
+        // the step defaults to RawProposedValue for compat with Alternet UI 3.0/3.5.
         // A more useful default would be ConvertedProposedValue.  Usually people
         // want to validate the value about to be set into the source property,
         // not the UI representation of that value.

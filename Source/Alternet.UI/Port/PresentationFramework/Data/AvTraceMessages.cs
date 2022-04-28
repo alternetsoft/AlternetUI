@@ -675,7 +675,7 @@ namespace Alternet.UI
         {
             if ( _CollectionChangedWithoutNotification == null )
             {
-                _CollectionChangedWithoutNotification = new AvTraceDetails(54, new string[] { "Collection of type '{0}' has been changed without raising a CollectionChanged event. Support for this is incomplete and inconsistent, and will be removed completely in a future version of WPF. Consider either (a) implementing INotifyCollectionChanged, or (b) avoiding changes to this type of collection." } );
+                _CollectionChangedWithoutNotification = new AvTraceDetails(54, new string[] { "Collection of type '{0}' has been changed without raising a CollectionChanged event. Support for this is incomplete and inconsistent, and will be removed completely in a future version of Alternet UI. Consider either (a) implementing INotifyCollectionChanged, or (b) avoiding changes to this type of collection." } );
             }
             return new AvTraceFormat(_CollectionChangedWithoutNotification, args);
         }

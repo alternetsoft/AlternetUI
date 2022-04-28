@@ -29,7 +29,7 @@ namespace Alternet.UI
         //------------------------------------------------------
 
         /// <summary>
-        /// A sentinel object.  WPF assigns this as the DataContext of elements
+        /// A sentinel object.  Alternet UI assigns this as the DataContext of elements
         /// that leave an ItemsControl because (a) the corresponding item is
         /// removed from the ItemsSource collection, or (b) the element is
         /// scrolled out of view and re-virtualized.   Bindings that use DataContext

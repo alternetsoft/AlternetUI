@@ -6,7 +6,7 @@
 //
 // Description: Implementation of XmlDataProvider object.
 //
-// Specs:       Avalon DataProviders.mht
+// Specs:       Alternet UI DataProviders.mht
 //              XmlDataSource.mht
 //
 

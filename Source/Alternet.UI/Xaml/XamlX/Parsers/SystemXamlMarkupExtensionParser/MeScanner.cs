@@ -40,7 +40,7 @@ namespace XamlX.Parsers.SystemXamlMarkupExtensionParser
         QuotedMarkupExtension // String - must be recursivly parsed as a MarkupExtension.
     };
 
-    // 1) Value and (propertynames for compatibility with WPF 3.0) can also have
+    // 1) Value and (propertynames for compatibility with Alternet UI 3.0) can also have
     // escaped character with '\' to include '{' '}' ',' '=', and '\'.
     // 2) Value strings can also be quoted (w/ ' or ") in their entirity to escape all
     // uses of the above characters.

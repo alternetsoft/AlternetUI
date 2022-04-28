@@ -10,7 +10,7 @@
 //      A helper class for access to HTTP cookies and attaching cookies to HttpWebRequests and storing
 //      cookies from HttpWebResponses.
 //
-//      In standalone WPF applications, the WinInet cookie store is used. PresentationHost intercepts calls
+//      In standalone Alternet UI applications, the WinInet cookie store is used. PresentationHost intercepts calls
 //      to the WinInet cookie functions and delegates them to the browser. See host\DLL\CookieShim.hxx.
 //
 //

@@ -5,7 +5,7 @@
 
 // A Managed wrapper for Event Tracing for Windows
 // Based on TraceEvent.cs found in nt\base\wmi\trace.net
-// Provides an internal Avalon API to replace Microsoft.Windows.EventTracing.dll
+// Provides an internal Alternet UI API to replace Microsoft.Windows.EventTracing.dll
 
 #if !SILVERLIGHTXAML
 using System;

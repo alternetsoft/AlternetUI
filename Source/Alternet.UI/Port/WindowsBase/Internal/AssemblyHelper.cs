@@ -9,10 +9,10 @@
 //
 
 /*
-    Most of the WPF codebase uses types from WPF's own assemblies or from certain
+    Most of the Alternet UI codebase uses types from Alternet UI's own assemblies or from certain
     standard .Net assemblies (System, mscorlib, etc.).   However, some code uses
     types from other assemblies (System.Xml, System.Data, etc.) - we'll refer to
-    these as "uncommon" assemblies.   We don't want WPF to load an uncommon assembly
+    these as "uncommon" assemblies.   We don't want Alternet UI to load an uncommon assembly
     unless the app itself needs to.
 
     The AssemblyHelper class helps to solve this problem by keeping track of which
@@ -75,7 +75,7 @@ namespace Alternet.UI.Internal
         [FriendAccessAllowed]
         internal static bool IsLoaded(UncommonAssembly assemblyEnum)
         {
-            // this method is typically called by WPF code on a UI thread.
+            // this method is typically called by Alternet UI code on a UI thread.
             // Although assemblies can load on any thread, there's no need to lock.
             // If the object of interest came from the given assembly, the
             // AssemblyLoad event has already been raised and the bit has already

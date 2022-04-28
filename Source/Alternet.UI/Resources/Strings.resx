@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="WPF_UILanguage" xml:space="preserve">
+  <data name="Alternet UI_UILanguage" xml:space="preserve">
     <value>en</value>
   </data>
   <data name="Rect_CannotModifyEmptyRect" xml:space="preserve">
@@ -1810,7 +1810,7 @@
     <value>DLL Name: {0} DLL Location: {1}</value>
   </data>
   <data name="WpfDllConsistencyErrorHeader" xml:space="preserve">
-    <value>Failed WPF DLL consistency checks. Expected location: {0}.</value>
+    <value>Failed Alternet UI DLL consistency checks. Expected location: {0}.</value>
   </data>
   <data name="RoutedEventArgsMustHaveRoutedEvent" xml:space="preserve">
     <value>Every RoutedEventArgs must have a non-null RoutedEvent associated with it.</value>
@@ -2098,7 +2098,7 @@
     <value>The binding expression already belongs to a BindingGroup;  it cannot be added to a different BindingGroup.</value>
   </data>
   <data name="BindingExpressionStatusChanged" xml:space="preserve">
-    <value>Internal error: internal WPF code tried to reactivate a BindingExpression that was already marked as detached.</value>
+    <value>Internal error: internal Alternet UI code tried to reactivate a BindingExpression that was already marked as detached.</value>
   </data>
   <data name="BindingConflict" xml:space="preserve">
     <value>Binding.{0} cannot be set while using Binding.{1}.</value>

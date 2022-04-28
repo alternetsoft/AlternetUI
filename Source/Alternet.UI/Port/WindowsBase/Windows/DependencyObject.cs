@@ -2380,7 +2380,7 @@ namespace Alternet.UI
 
         // internal DP used for direct dependencies (should never appear in an effective value table)
         //
-        // A direct dependency can arise from WPF data binding in a situation like this:
+        // A direct dependency can arise from Alternet UI data binding in a situation like this:
         //      <Border Background="{Binding Path=Brush}"/>
         // when the Brush property on the source object is not a DP, but just a regular CLR property.
         // If a property on the brush changes, the border should be notified so that

@@ -13,7 +13,7 @@ namespace Alternet.UI
 {
     // These classes implement a frugal storage model for key/value pair data
     // structures. The keys are integers, and the values objects.
-    // Performance measurements show that Avalon has many maps that contain a
+    // Performance measurements show that Alternet UI has many maps that contain a
     // single key/value pair. Therefore these classes are structured to prefer
     // a map that contains a single key/value pair and uses a conservative
     // growth strategy to minimize the steady state memory footprint. To enforce
@@ -1109,7 +1109,7 @@ namespace Alternet.UI
     /// <summary>
     /// A simple class to handle an array of between 6 and 12 key/value pairs.  It is unsorted
     /// and uses a linear search.  Perf analysis showed that this was the optimal size for both
-    /// memory and perf.  The values may need to be adjusted as the CLR and Avalon evolve.
+    /// memory and perf.  The values may need to be adjusted as the CLR and Alternet UI evolve.
     /// </summary>
     internal sealed class ArrayObjectMap : FrugalMapBase
     {

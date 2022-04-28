@@ -41,7 +41,7 @@ namespace Alternet.UI
             //
             // Let the user override the inital value of the Strict property from the registry.
             //
-            RegistryKey key = Registry.LocalMachine.OpenSubKey(RegistryKeys.WPF);
+            RegistryKey key = Registry.LocalMachine.OpenSubKey(RegistryKeys.Alternet UI);
 
             if (key != null)
             {
@@ -143,7 +143,7 @@ namespace Alternet.UI
         /// Default value is false on FRE builds, true on CHK builds.
         ///
         /// On any build flavor the user may override this by setting
-        /// [HKLM\Software\Microsoft\Avalon] InvariantStrict in the registry.
+        /// [HKLM\Software\Microsoft\Alternet UI] InvariantStrict in the registry.
         /// (0 to disable strict asserts, 1 to enable them.)
         ///
         /// Example:

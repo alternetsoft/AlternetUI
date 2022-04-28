@@ -255,7 +255,7 @@ namespace Alternet.UI
     /// <summary>
     /// Tries hard to obtain the content type of the given WebResponse. Special cases:
     /// - The ContentType property may throw if not implemented. 
-    /// - Unconfigured web servers don't return the right type for WPF content. This method does lookup based on
+    /// - Unconfigured web servers don't return the right type for Alternet UI content. This method does lookup based on
     ///   file extension.
     /// </summary>
     [FriendAccessAllowed]

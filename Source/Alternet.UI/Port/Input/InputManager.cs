@@ -16,7 +16,7 @@ namespace Alternet.UI
 {
     /// <summary>
     ///     The InputManager class is responsible for coordinating all of the
-    ///     input system in Avalon.
+    ///     input system in Alternet UI.
     /// </summary>
     public sealed class InputManager : DispatcherObject
     {
@@ -148,7 +148,7 @@ namespace Alternet.UI
 
             // STA Requirement
             //
-            // Avalon doesn't necessarily require STA, but many components do.  Examples
+            // Alternet UI doesn't necessarily require STA, but many components do.  Examples
             // include Cicero, OLE, COM, etc.  So we throw an exception here if the
             // thread is not STA.
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)

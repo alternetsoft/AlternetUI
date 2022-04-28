@@ -47,7 +47,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Handlers of this event should return control to WPF quickly, and not cache BindingFailedEventArgs for future use.
+        /// Handlers of this event should return control to Alternet UI quickly, and not cache BindingFailedEventArgs for future use.
         /// </summary>
         public static event EventHandler<BindingFailedEventArgs> BindingFailed
         {

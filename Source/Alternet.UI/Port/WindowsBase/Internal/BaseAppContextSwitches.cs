@@ -31,7 +31,7 @@ namespace Alternet.UI.Internal
         /// Dispatcher - various dispatcher operations can run user code that can in turn set Thread.CurrentCulture or
         /// Thread.CurrentUICulture, and we do not want those values to be overwritten with their respective previous values.
         /// To work around the new ExecutionContext behavior, we introduce CulturePreservingExecutionContext for use within
-        /// Dispatcher and DispatcherOperation. WPF in .NET 4.6 &amp; 4.6.1 shipped with buggy behavior - each DispatcherOperation
+        /// Dispatcher and DispatcherOperation. Alternet UI in .NET 4.6 &amp; 4.6.1 shipped with buggy behavior - each DispatcherOperation
         /// ends with all modificaitons to culture infos being reverted.Though unlikely, if some applications targeting 4.6 or
         /// above might have taken a dependence on this bug, we provide this compatiblity switch that can be enabled by the application.
         /// </summary>

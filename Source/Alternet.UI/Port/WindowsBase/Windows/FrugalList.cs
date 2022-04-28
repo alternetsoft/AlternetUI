@@ -13,7 +13,7 @@ using System.Collections.Generic;
 //using SRID=MS.Internal.WindowsBase.SRID;
 
 // These classes implement a frugal storage model for lists of type <T>.
-// Performance measurements show that Avalon has many lists that contain
+// Performance measurements show that Alternet UI has many lists that contain
 // a limited number of entries, and frequently zero or a single entry.
 // Therefore these classes are structured to prefer a storage model that
 // starts at zero, and employs a conservative growth strategy to minimize

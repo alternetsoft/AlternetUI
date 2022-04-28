@@ -281,7 +281,7 @@ namespace Alternet.UI.Markup
             object obj = null;
             bool keyValue = false;
             // open the key and read the value
-            featureKey = Registry.LocalMachine.OpenSubKey(RegistryKeys.WPF_Features);
+            featureKey = Registry.LocalMachine.OpenSubKey(RegistryKeys.Alternet UI_Features);
             if (featureKey != null)
             {
                 // If key exists and value is 1 return true else false

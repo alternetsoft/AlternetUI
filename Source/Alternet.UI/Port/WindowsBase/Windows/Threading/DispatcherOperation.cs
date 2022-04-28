@@ -514,7 +514,7 @@ namespace Alternet.UI.Threading
                 SynchronizationContext.SetSynchronizationContext(newSynchronizationContext);
 
 
-                // Win32 considers timers to be low priority.  Avalon does not, since different timers
+                // Win32 considers timers to be low priority.  Alternet UI does not, since different timers
                 // are associated with different priorities.  So we promote the timers before we
                 // invoke any work items.
                 _dispatcher.PromoteTimers(Environment.TickCount);

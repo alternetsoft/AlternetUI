@@ -2598,7 +2598,7 @@ namespace Alternet.UI
                 // each being allocated a large number of pixels (~50 or greater), and
                 // people don't even notice the kind of 1-pixel anomolies that are
                 // theoretically inevitable, or don't care if they do.  At least they shouldn't
-                // care - no one should be using the results WPF's grid layout to make
+                // care - no one should be using the results Alternet UI's grid layout to make
                 // quantitative decisions; its job is to produce a reasonable display, not
                 // to allocate seats in Congress.
                 //

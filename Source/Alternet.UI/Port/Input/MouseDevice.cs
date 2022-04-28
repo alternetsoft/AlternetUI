@@ -1218,7 +1218,7 @@ namespace Alternet.UI
         //                                && StylusLogic.IsPromotedMouseEvent(rawMouseInputReport))
         //                            {
 
-        //                                // Due to the WPF pointer stack not promoting mouse internally, we must first
+        //                                // Due to the Alternet UI pointer stack not promoting mouse internally, we must first
         //                                // detect a promoted mouse messages and then fill the stylus device
         //                                // from the promoted device used.  This comes from the extra information
         //                                // on the mouse message.
@@ -1680,10 +1680,10 @@ namespace Alternet.UI
         //                                actions |= RawMouseActions.AbsoluteMove;
 
         //                                // In most cases the sequence of messages received from the system are HitTest, SetCursor & MouseMove.
-        //                                // The SetCursor message in this case will be traslated into an Avalon MouseMove & QueryCursor.
+        //                                // The SetCursor message in this case will be traslated into an Alternet UI MouseMove & QueryCursor.
         //                                // The MouseMove message to follow is redundant and is thrown away.
         //                                // But imagine a case where Capture is taken. Here the system produces only two messages HitTest & MouseMove.
-        //                                // Hence we translate the MouseMove into an Avalon MouseMove & QueryCursor.
+        //                                // Hence we translate the MouseMove into an Alternet UI MouseMove & QueryCursor.
         //                                // Logically MouseMove and QueryCursor go as a pair.
         //                                actions |= RawMouseActions.QueryCursor;
         //                            }

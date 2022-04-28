@@ -8,7 +8,7 @@
 //
 
 /***************************************************************************\
-    Avalon data binding supports multiple views over a data collection.
+    Alternet UI data binding supports multiple views over a data collection.
     Each view (CollectionView) is identified by a key (CollectionViewSource), and
     can be sorted and filtered independently of other views.
 
@@ -374,7 +374,7 @@ namespace Alternet.UI
             {
                 // General case: invoke the callback to gain access.
                 // In this case, both the context and the callback's target
-                // belong to the app and should not be kept alive by WPF.
+                // belong to the app and should not be kept alive by Alternet UI.
                 _context = new WeakReference(context);
                 _callbackMethod = callback.Method;
 

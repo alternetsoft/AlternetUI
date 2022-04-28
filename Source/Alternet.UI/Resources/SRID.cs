@@ -1142,7 +1142,7 @@ namespace Alternet.UI
         internal const string @Cryptography_InvalidHandle = "Cryptography_InvalidHandle";
         /// <summary>DLL Name: {0} DLL Location: {1}</summary>
         internal const string @WpfDllConsistencyErrorData = "WpfDllConsistencyErrorData";
-        /// <summary>Failed WPF DLL consistency checks. Expected location: {0}.</summary>
+        /// <summary>Failed Alternet UI DLL consistency checks. Expected location: {0}.</summary>
         internal const string @WpfDllConsistencyErrorHeader = "WpfDllConsistencyErrorHeader";
         /// <summary>Every RoutedEventArgs must have a non-null RoutedEvent associated with it.</summary>
         internal const string @RoutedEventArgsMustHaveRoutedEvent = "RoutedEventArgsMustHaveRoutedEvent";
@@ -1334,7 +1334,7 @@ namespace Alternet.UI
         internal const string @NoUpdateSourceTriggerForInnerBindingOfMultiBinding = "NoUpdateSourceTriggerForInnerBindingOfMultiBinding";
         /// <summary>The binding expression already belongs to a BindingGroup;  it cannot be added to a different BindingGroup.</summary>
         internal const string @BindingGroup_CannotChangeGroups = "BindingGroup_CannotChangeGroups";
-        /// <summary>Internal error: internal WPF code tried to reactivate a BindingExpression that was already marked as detached.</summary>
+        /// <summary>Internal error: internal Alternet UI code tried to reactivate a BindingExpression that was already marked as detached.</summary>
         internal const string @BindingExpressionStatusChanged = "BindingExpressionStatusChanged";
         /// <summary>Binding.{0} cannot be set while using Binding.{1}.</summary>
         internal const string @BindingConflict = "BindingConflict";

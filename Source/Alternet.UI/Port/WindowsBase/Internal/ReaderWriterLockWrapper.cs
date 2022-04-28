@@ -49,7 +49,7 @@ namespace Alternet.UI
             // recursion so we allow recursion for compat.  It's needed for at least
             // one pattern - a weak event manager for an event A that delegates to
             // a second event B via a second weak event manager.  There's at least
-            // one instance of this within WPF (CanExecuteChanged delegates to
+            // one instance of this within Alternet UI (CanExecuteChanged delegates to
             // RequerySuggested), and it could also happen in user code.
             _rwLock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
             _defaultSynchronizationContext = new NonPumpingSynchronizationContext();

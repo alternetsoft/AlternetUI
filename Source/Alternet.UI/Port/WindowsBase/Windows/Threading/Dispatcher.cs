@@ -1845,7 +1845,7 @@ namespace Alternet.UI.Threading
                 //
                 // This call to PostQuitMessage is commented out because PostQuitMessage
                 // not only shuts down the message pump associated with the Dispatcher, but also
-                // shuts down any process that might be hosting WPF content (like IE).
+                // shuts down any process that might be hosting Alternet UI content (like IE).
                 // UnsafeNativeMethods.PostQuitMessage(0);
                 if(_frameDepth > 0)
                 {
@@ -2250,7 +2250,7 @@ namespace Alternet.UI.Threading
         /// </summary>
         /// <remarks>
         /// PresentationCore's TextServicesManager sets this property false when
-        /// no WPF element has focus.  This is important to ensure that native
+        /// no Alternet UI element has focus.  This is important to ensure that native
         /// controls receive unfiltered input.
         /// </remarks>
         [FriendAccessAllowed] // Used by TextServicesManager in PresentationCore.
@@ -2348,7 +2348,7 @@ namespace Alternet.UI.Threading
             int retVal = 0;
 
             // We need to know if there is any pending input in the Win32
-            // queue because we want to only process Avalon "background"
+            // queue because we want to only process Alternet UI "background"
             // items after Win32 input has been processed.
             //
             // Win32 provides the GetQueueStatus API -- but it has a major
@@ -2512,7 +2512,7 @@ namespace Alternet.UI.Threading
         // underlying OS method.  We cannot recover from these failures - they are
         // typically due to the application flooding the message queue, or starving
         // the dispatcher's message pump until the queue floods, and thus outside
-        // the control of WPF.  WPF ignores the failures, but that can leave the
+        // the control of Alternet UI.  Alternet UI ignores the failures, but that can leave the
         // dispatcher in a non-responsive state, waiting for a message that will
         // never arrive.  It's difficult or impossible to determine whether
         // this has happened from a crash dump.

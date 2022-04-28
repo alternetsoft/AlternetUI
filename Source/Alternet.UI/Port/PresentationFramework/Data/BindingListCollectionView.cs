@@ -1319,7 +1319,7 @@ namespace Alternet.UI
 
             if ((_sort != null) && (_sort.Count > 0) && (CollectionProxy != null) && (CollectionProxy.Count > 0))
             {
-                // convert Avalon SortDescription collection to .Net
+                // convert Alternet UI SortDescription collection to .Net
                 // (i.e. string property names become PropertyDescriptors)
                 ListSortDescriptionCollection sorts = ConvertSortDescriptionCollection(_sort);
 
@@ -2192,7 +2192,7 @@ namespace Alternet.UI
             RefreshOrDefer();
         }
 
-        // convert from Avalon SortDescriptions to the corresponding .NET collection
+        // convert from Alternet UI SortDescriptions to the corresponding .NET collection
         private ListSortDescriptionCollection ConvertSortDescriptionCollection(SortDescriptionCollection sorts)
         {
             PropertyDescriptorCollection pdc;

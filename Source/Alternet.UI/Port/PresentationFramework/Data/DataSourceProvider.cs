@@ -7,7 +7,7 @@
 //
 // Description: common base class and contract for data source provider objects
 //
-// Specs:       http://avalon/connecteddata/Specs/Avalon%20DataProviders.mht
+// Specs:       http://avalon/connecteddata/Specs/Alternet UI%20DataProviders.mht
 //
 
 using System;
@@ -19,9 +19,9 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Common base class and contract for data source providers.
-    /// A DataProvider in Avalon is the factory that executes some query
+    /// A DataProvider in Alternet UI is the factory that executes some query
     /// to produce a single object or a list of objects that can be used
-    /// as sources for Avalon data bindings.
+    /// as sources for Alternet UI data bindings.
     /// It is a convenience wrapper around existing data model, it does not replace any data model.
     /// A data provider does not attempt to condense the complexity and versatility of a data model
     /// like ADO into one single object with a few properties.
@@ -29,7 +29,7 @@ namespace Alternet.UI
     /// <remarks>
     /// DataSourceProvider is an abstract class and cannot directly be used as a data provider.
     /// Use one of the derived concrete provider, e.g. XmlDataProvider, ObjectDataProvider.
-    /// The DataProvider aware of Avalon's threading and dispatcher model. The data provider assumes
+    /// The DataProvider aware of Alternet UI's threading and dispatcher model. The data provider assumes
     /// the thread at creation time to be the UI thread. Events will get marshalled from a worker thread
     /// to the app's UI thread.
     /// </remarks>
@@ -208,7 +208,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// The current Dispatcher to the Avalon UI thread to use.
+        /// The current Dispatcher to the Alternet UI UI thread to use.
         /// </summary>
         /// <remarks>
         /// By default, this is the Dispatcher associated with the thread

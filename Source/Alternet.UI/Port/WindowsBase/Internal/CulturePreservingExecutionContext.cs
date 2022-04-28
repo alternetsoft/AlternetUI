@@ -131,7 +131,7 @@ namespace Alternet.UI
         /// on 4.6 and above. 
         /// 
         /// On 4.5.2 and earlier frameworks, ExecutionContext does not include culture infos 
-        /// in its state, nor does it restore them after ExecutionContext.Run. Thus WPF 
+        /// in its state, nor does it restore them after ExecutionContext.Run. Thus Alternet UI 
         /// does not have to do extra work to propagate culture infos modified within a 
         /// call to ExecutionContext.Run (typically, this happens within a DispatcherOperation). In this
         /// case, we can simply defer all the work to ExecutionContext.Run directly. 
