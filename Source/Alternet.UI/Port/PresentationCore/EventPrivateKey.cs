@@ -16,7 +16,7 @@ namespace Alternet.UI
     ///     event keys of this type must be private static 
     ///     fields on the declaring class.
     /// </remarks>
-    public class EventPrivateKey
+    internal class EventPrivateKey
     {
         /// <summary>
         ///     Constructor for EventPrivateKey

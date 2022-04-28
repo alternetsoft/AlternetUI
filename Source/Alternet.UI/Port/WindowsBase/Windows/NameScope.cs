@@ -26,7 +26,7 @@ namespace Alternet.UI
     /// Used to store mapping information for names occuring 
     /// within the logical tree section.
     /// </summary>
-    public class NameScope : INameScopeDictionary
+    internal class NameScope : INameScopeDictionary
     {        
         #region INameScope
         

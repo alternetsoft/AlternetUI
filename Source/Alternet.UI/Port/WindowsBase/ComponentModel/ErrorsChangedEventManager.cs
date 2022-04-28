@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// <summary>
     /// Manager for the INotifyDataErrorInfo.ErrorsChanged event.
     /// </summary>
-    public class ErrorsChangedEventManager : WeakEventManager
+    internal class ErrorsChangedEventManager : WeakEventManager
     {
         #region Constructors
 

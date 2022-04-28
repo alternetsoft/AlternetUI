@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides a set of static methods for creating <see cref="IDisposable"/> objects.
     /// </summary>
-    public static partial class Disposable
+    internal static partial class Disposable
     {
         /// <summary>
         /// Represents a disposable that does nothing on disposal.
