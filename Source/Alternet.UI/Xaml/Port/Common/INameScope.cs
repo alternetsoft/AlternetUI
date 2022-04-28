@@ -1,6 +1,6 @@
 using Alternet.UI.Utilities;
 
-namespace Alternet.UI.Controls
+namespace Alternet.UI.Markup
 {
     /// <summary>
     /// Defines a name scope.

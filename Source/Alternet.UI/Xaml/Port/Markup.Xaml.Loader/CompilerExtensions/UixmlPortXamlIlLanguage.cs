@@ -77,7 +77,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
             IXamlTypeBuilder<IXamlILEmitter> typebuilder, IXamlILEmitter constructor)
         {
 
-            var nameScopeType = typeSystem.FindType("Alternet.UI.Controls.INameScope");
+            var nameScopeType = typeSystem.FindType("Alternet.UI.Markup.INameScope");
             var field = typebuilder.DefineField(nameScopeType, 
                 ContextNameScopeFieldName, true, false);
             constructor

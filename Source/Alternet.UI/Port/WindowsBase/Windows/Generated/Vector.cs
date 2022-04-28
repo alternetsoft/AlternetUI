@@ -14,7 +14,6 @@
 using System;
 using System.ComponentModel;
 // These types are aliased to match the unamanaged names used in interop
-using Alternet.UI.Converters;
 using Alternet.UI.Markup;
 
 namespace Alternet.UI

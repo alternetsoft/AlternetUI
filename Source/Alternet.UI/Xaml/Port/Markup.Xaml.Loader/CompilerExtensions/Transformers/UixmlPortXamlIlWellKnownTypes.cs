@@ -114,7 +114,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             UnsetValueType = cfg.TypeSystem.GetType("Alternet.UI.UnsetValueType");
             //StyledElement = cfg.TypeSystem.GetType("Alternet.UI.StyledElement");
             //IStyledElement = cfg.TypeSystem.GetType("Alternet.UI.IStyledElement");
-            //INameScope = cfg.TypeSystem.GetType("Alternet.UI.Controls.INameScope");
+            //INameScope = cfg.TypeSystem.GetType("Alternet.UI.Markup.INameScope");
             //INameScopeRegister = INameScope.GetMethod(
             //    new FindMethodMethodSignature("Register", XamlIlTypes.Void,
             //         XamlIlTypes.String, XamlIlTypes.Object)

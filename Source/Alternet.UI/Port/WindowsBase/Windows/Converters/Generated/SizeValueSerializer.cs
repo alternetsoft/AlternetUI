@@ -16,7 +16,7 @@ using Alternet.Drawing;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
-namespace Alternet.UI.Converters
+namespace Alternet.UI
 {
     /// <summary>
     /// SizeValueSerializer - ValueSerializer class for converting instances of strings to and from Size instances

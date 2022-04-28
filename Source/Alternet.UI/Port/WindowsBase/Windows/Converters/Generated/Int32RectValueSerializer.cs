@@ -16,7 +16,7 @@ using Alternet.Drawing;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
-namespace Alternet.UI.Converters
+namespace Alternet.UI
 {
     /// <summary>
     /// Int32RectValueSerializer - ValueSerializer class for converting instances of strings to and from Int32Rect instances

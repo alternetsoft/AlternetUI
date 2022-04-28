@@ -15,7 +15,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections;
 
-namespace Alternet.UI.Markup.Primitives
+namespace Alternet.UI.Markup
 {
     /// <summary>
     /// A property description used by serialiation to encapsulate access to properties and their values. A property is 
