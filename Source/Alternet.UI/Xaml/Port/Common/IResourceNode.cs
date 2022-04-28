@@ -1,7 +1,7 @@
 #nullable disable
 #nullable enable
 
-namespace Avalonia.Controls
+namespace Alternet.UI.Controls
 {
     /// <summary>
     /// Represents an object that can be queried for resources.

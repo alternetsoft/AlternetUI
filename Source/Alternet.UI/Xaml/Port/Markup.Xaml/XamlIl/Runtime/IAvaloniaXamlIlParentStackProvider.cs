@@ -1,12 +1,12 @@
 #nullable disable
 using System.Collections.Generic;
 
-namespace Avalonia.Markup.Xaml.XamlIl.Runtime
+namespace Alternet.UI.Markup.Xaml.XamlIl.Runtime
 {
     /// <summary>
     /// This item supports the framework infrastructure and is not intended to be used directly from your code.
     /// </summary>
-    public interface IAvaloniaXamlIlParentStackProvider
+    public interface IUixmlPortXamlIlParentStackProvider
     {
         /// <summary>
         /// This item supports the framework infrastructure and is not intended to be used directly from your code.

@@ -2,9 +2,9 @@
 using XamlX.Ast;
 using XamlX.Transform;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
-    class AvaloniaXamlIlReorderClassesPropertiesTransformer : IXamlAstTransformer
+    class UixmlPortXamlIlReorderClassesPropertiesTransformer : IXamlAstTransformer
     {
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)
         {
@@ -12,7 +12,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             {
                 IXamlAstNode classesNode = null;
                 IXamlAstNode firstSingleClassNode = null;
-                var types = context.GetAvaloniaTypes();
+                var types = context.GetUixmlPortTypes();
                 foreach (var child in obj.Children)
                 {
                     if (child is XamlAstXamlPropertyValueNode propValue

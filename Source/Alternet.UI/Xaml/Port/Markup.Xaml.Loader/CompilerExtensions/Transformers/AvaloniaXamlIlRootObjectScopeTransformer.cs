@@ -5,9 +5,9 @@ using XamlX.Transform;
 using XamlX.IL;
 using XamlX.Emit;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
-    class AvaloniaXamlIlRootObjectScope : IXamlAstTransformer
+    class UixmlPortXamlIlRootObjectScope : IXamlAstTransformer
     {
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)
         {
@@ -18,17 +18,17 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                     new[]
                     {
                         mnode.Manipulation,
-                        new HandleRootObjectScopeNode(mnode, context.GetAvaloniaTypes())
+                        new HandleRootObjectScopeNode(mnode, context.GetUixmlPortTypes())
                     });
             }
             return node;
         }
         class HandleRootObjectScopeNode : XamlAstNode, IXamlAstManipulationNode
         {
-            private readonly AvaloniaXamlIlWellKnownTypes _types;
+            private readonly UixmlPortXamlIlWellKnownTypes _types;
 
             public HandleRootObjectScopeNode(IXamlLineInfo lineInfo,
-                AvaloniaXamlIlWellKnownTypes types) : base(lineInfo)
+                UixmlPortXamlIlWellKnownTypes types) : base(lineInfo)
             {
                 _types = types;
             }
@@ -41,11 +41,11 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                 {
                     return null;
                 }
-                var types = context.GetAvaloniaTypes();
+                var types = context.GetUixmlPortTypes();
                 
                 var next = codeGen.DefineLabel();
                 var scopeField = context.RuntimeContext.ContextType.Fields.First(f =>
-                    f.Name == AvaloniaXamlIlLanguage.ContextNameScopeFieldName);
+                    f.Name == UixmlPortXamlIlLanguage.ContextNameScopeFieldName);
                 using (var local = codeGen.LocalsPool.GetLocal(types.StyledElement))
                 {
                     codeGen

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Avalonia.Markup.Parsers;
+using Alternet.UI.Markup.Parsers;
 using XamlX.Ast;
 using XamlX.Transform;
 using XamlX.Transform.Transformers;
@@ -10,9 +10,9 @@ using XamlX.TypeSystem;
 using XamlX.Emit;
 using XamlX.IL;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
-    class AvaloniaXamlIlPropertyPathTransformer : IXamlAstTransformer
+    class UixmlPortXamlIlPropertyPathTransformer : IXamlAstTransformer
     {
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)
         {
@@ -20,14 +20,14 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                 && pv.Values.Count == 1
                 && pv.Values[0] is XamlAstTextNode text
                 && pv.Property.GetClrProperty().Getter?.ReturnType
-                    .Equals(context.GetAvaloniaTypes().PropertyPath) == true
+                    .Equals(context.GetUixmlPortTypes().PropertyPath) == true
             )
             {
-                var parentScope = context.ParentNodes().OfType<AvaloniaXamlIlTargetTypeMetadataNode>()
+                var parentScope = context.ParentNodes().OfType<UixmlPortXamlIlTargetTypeMetadataNode>()
                     .FirstOrDefault();
                 if(parentScope == null)
                     throw new XamlX.XamlParseException("No target type scope found for property path", text);
-                if (parentScope.ScopeType != AvaloniaXamlIlTargetTypeMetadataNode.ScopeTypes.Style)
+                if (parentScope.ScopeType != UixmlPortXamlIlTargetTypeMetadataNode.ScopeTypes.Style)
                     throw new XamlX.XamlParseException("PropertyPath is currently only valid for styles", pv);
 
 
@@ -48,7 +48,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                 var expectProperty = true;
                 var expectCast = true;
                 var expectTraversal = false;
-                var types = context.GetAvaloniaTypes();
+                var types = context.GetUixmlPortTypes();
                 
                 IXamlType GetType(string ns, string name)
                 {
@@ -65,13 +65,13 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                         typeName != null ? GetType(typeNamespace, typeName) : currentType;
 
                     IXamlIlPropertyPathElementNode prop = null;
-                    var avaloniaPropertyFieldName = name + "Property";
-                    var avaloniaPropertyField = propertySearchType.GetAllFields().FirstOrDefault(f =>
-                        f.IsStatic && f.IsPublic && f.Name == avaloniaPropertyFieldName);
-                    if (avaloniaPropertyField != null)
+                    var uixmlPortPropertyFieldName = name + "Property";
+                    var uixmlPortPropertyField = propertySearchType.GetAllFields().FirstOrDefault(f =>
+                        f.IsStatic && f.IsPublic && f.Name == uixmlPortPropertyFieldName);
+                    if (uixmlPortPropertyField != null)
                     {
-                        prop = new XamlIlAvaloniaPropertyPropertyPathElementNode(avaloniaPropertyField,
-                            XamlIlAvaloniaPropertyHelper.GetAvaloniaPropertyType(avaloniaPropertyField, types, text));
+                        prop = new XamlIlUixmlPortPropertyPropertyPathElementNode(uixmlPortPropertyField,
+                            XamlIlUixmlPortPropertyHelper.GetUixmlPortPropertyType(uixmlPortPropertyField, types, text));
                     }
                     else
                     {
@@ -150,17 +150,17 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
         {
             public void Emit(XamlEmitContext<IXamlILEmitter, XamlILNodeEmitResult> context, IXamlILEmitter codeGen)
                 => codeGen.EmitCall(
-                    context.GetAvaloniaTypes()
+                    context.GetUixmlPortTypes()
                         .PropertyPathBuilder.FindMethod(m => m.Name == "ChildTraversal"));
 
             public IXamlType Type => null;
         }
         
-        class XamlIlAvaloniaPropertyPropertyPathElementNode : IXamlIlPropertyPathElementNode
+        class XamlIlUixmlPortPropertyPropertyPathElementNode : IXamlIlPropertyPathElementNode
         {
             private readonly IXamlField _field;
 
-            public XamlIlAvaloniaPropertyPropertyPathElementNode(IXamlField field, IXamlType propertyType)
+            public XamlIlUixmlPortPropertyPropertyPathElementNode(IXamlField field, IXamlType propertyType)
             {
                 _field = field;
                 Type = propertyType;
@@ -169,7 +169,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             public void Emit(XamlEmitContext<IXamlILEmitter, XamlILNodeEmitResult> context, IXamlILEmitter codeGen)
                 => codeGen
                     .Ldsfld(_field)
-                    .EmitCall(context.GetAvaloniaTypes()
+                    .EmitCall(context.GetUixmlPortTypes()
                         .PropertyPathBuilder.FindMethod(m => m.Name == "Property"));
 
             public IXamlType Type { get; }
@@ -189,7 +189,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                 context.Configuration.GetExtra<XamlIlClrPropertyInfoEmitter>()
                     .Emit(context, codeGen, _property);
 
-                codeGen.EmitCall(context.GetAvaloniaTypes()
+                codeGen.EmitCall(context.GetUixmlPortTypes()
                     .PropertyPathBuilder.FindMethod(m => m.Name == "Property"));
             }
 
@@ -211,7 +211,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             {
                 codeGen
                     .Ldtype(_type)
-                    .EmitCall(context.GetAvaloniaTypes()
+                    .EmitCall(context.GetUixmlPortTypes()
                         .PropertyPathBuilder.FindMethod(m => m.Name == (_ensureType ? "EnsureType" : "Cast")));
             }
 
@@ -221,11 +221,11 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
         class XamlIlPropertyPathNode : XamlAstNode, IXamlIlPropertyPathNode, IXamlAstEmitableNode<IXamlILEmitter, XamlILNodeEmitResult>
         {
             private readonly List<IXamlIlPropertyPathElementNode> _elements;
-            private readonly AvaloniaXamlIlWellKnownTypes _types;
+            private readonly UixmlPortXamlIlWellKnownTypes _types;
 
             public XamlIlPropertyPathNode(IXamlLineInfo lineInfo,
                 List<IXamlIlPropertyPathElementNode> elements,
-                AvaloniaXamlIlWellKnownTypes types) : base(lineInfo)
+                UixmlPortXamlIlWellKnownTypes types) : base(lineInfo)
             {
                 _elements = elements;
                 _types = types;

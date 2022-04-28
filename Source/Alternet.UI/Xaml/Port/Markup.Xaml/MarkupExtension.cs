@@ -1,7 +1,7 @@
 #nullable disable
 using System;
 
-namespace Avalonia.Markup.Xaml
+namespace Alternet.UI.Markup.Xaml
 {
     internal abstract class MarkupExtension
     {

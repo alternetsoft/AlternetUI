@@ -1,5 +1,5 @@
 #nullable disable
-namespace Avalonia.Logging
+namespace Alternet.UI.Logging
 {
     /// <summary>
     /// Specifies the area in which a log event occurred.

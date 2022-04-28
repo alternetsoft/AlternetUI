@@ -6,9 +6,9 @@ using XamlX.IL;
 using XamlX.Transform;
 using XamlX.TypeSystem;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
-    class AvaloniaXamlIlResolveClassesPropertiesTransformer : IXamlAstTransformer
+    class UixmlPortXamlIlResolveClassesPropertiesTransformer : IXamlAstTransformer
     {
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)
         {
@@ -16,7 +16,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                 && prop.TargetType is XamlAstClrTypeReference targetRef
                 && prop.DeclaringType is XamlAstClrTypeReference declaringRef)
             {
-                var types = context.GetAvaloniaTypes();
+                var types = context.GetUixmlPortTypes();
                 if (types.StyledElement.IsAssignableFrom(targetRef.Type)
                     && types.Classes.Equals(declaringRef.Type))
                 {
@@ -33,10 +33,10 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
        
         class ClassValueSetter :  IXamlEmitablePropertySetter<IXamlILEmitter>
         {
-            private readonly AvaloniaXamlIlWellKnownTypes _types;
+            private readonly UixmlPortXamlIlWellKnownTypes _types;
             private readonly string _className;
 
-            public ClassValueSetter(AvaloniaXamlIlWellKnownTypes types, string className)
+            public ClassValueSetter(UixmlPortXamlIlWellKnownTypes types, string className)
             {
                 _types = types;
                 _className = className;
@@ -66,10 +66,10 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 
         class ClassBindingSetter : IXamlEmitablePropertySetter<IXamlILEmitter>
         {
-            private readonly AvaloniaXamlIlWellKnownTypes _types;
+            private readonly UixmlPortXamlIlWellKnownTypes _types;
             private readonly string _className;
 
-            public ClassBindingSetter(AvaloniaXamlIlWellKnownTypes types, string className)
+            public ClassBindingSetter(UixmlPortXamlIlWellKnownTypes types, string className)
             {
                 _types = types;
                 _className = className;

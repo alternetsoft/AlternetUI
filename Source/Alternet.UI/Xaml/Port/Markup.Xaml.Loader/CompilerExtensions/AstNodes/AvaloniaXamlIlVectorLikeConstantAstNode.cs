@@ -1,19 +1,19 @@
 #nullable disable
-using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
+using Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
 using XamlX;
 using XamlX.Ast;
 using XamlX.Emit;
 using XamlX.IL;
 using XamlX.TypeSystem;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.AstNodes
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.AstNodes
 {
-    class AvaloniaXamlIlVectorLikeConstantAstNode : XamlAstNode, IXamlAstValueNode, IXamlAstILEmitableNode
+    class UixmlPortXamlIlVectorLikeConstantAstNode : XamlAstNode, IXamlAstValueNode, IXamlAstILEmitableNode
     {
         private readonly IXamlConstructor _constructor;
         private readonly double[] _values;
 
-        public AvaloniaXamlIlVectorLikeConstantAstNode(IXamlLineInfo lineInfo, AvaloniaXamlIlWellKnownTypes types, IXamlType type, IXamlConstructor constructor, double[] values) : base(lineInfo)
+        public UixmlPortXamlIlVectorLikeConstantAstNode(IXamlLineInfo lineInfo, UixmlPortXamlIlWellKnownTypes types, IXamlType type, IXamlConstructor constructor, double[] values) : base(lineInfo)
         {
             var parameters = constructor.Parameters;
 

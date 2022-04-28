@@ -1,45 +1,45 @@
 #nullable disable
-namespace Avalonia
+namespace Alternet.UI
 {
     /// <summary>
-    /// Tracks registered AvaloniaProperty instances.
+    /// Tracks registered UixmlPortProperty instances.
     /// </summary>
-    internal class AvaloniaPropertyRegistry
+    internal class UixmlPortPropertyRegistry
     {
-        //private readonly Dictionary<int, AvaloniaProperty> _properties =
-        //    new Dictionary<int, AvaloniaProperty>();
-        //private readonly Dictionary<Type, Dictionary<int, AvaloniaProperty>> _registered =
-        //    new Dictionary<Type, Dictionary<int, AvaloniaProperty>>();
-        //private readonly Dictionary<Type, Dictionary<int, AvaloniaProperty>> _attached =
-        //    new Dictionary<Type, Dictionary<int, AvaloniaProperty>>();
-        //private readonly Dictionary<Type, Dictionary<int, AvaloniaProperty>> _direct =
-        //    new Dictionary<Type, Dictionary<int, AvaloniaProperty>>();
-        //private readonly Dictionary<Type, List<AvaloniaProperty>> _registeredCache =
-        //    new Dictionary<Type, List<AvaloniaProperty>>();
-        //private readonly Dictionary<Type, List<AvaloniaProperty>> _attachedCache =
-        //    new Dictionary<Type, List<AvaloniaProperty>>();
-        //private readonly Dictionary<Type, List<AvaloniaProperty>> _directCache =
-        //    new Dictionary<Type, List<AvaloniaProperty>>();
-        //private readonly Dictionary<Type, List<AvaloniaProperty>> _inheritedCache =
-        //    new Dictionary<Type, List<AvaloniaProperty>>();
+        //private readonly Dictionary<int, UixmlPortProperty> _properties =
+        //    new Dictionary<int, UixmlPortProperty>();
+        //private readonly Dictionary<Type, Dictionary<int, UixmlPortProperty>> _registered =
+        //    new Dictionary<Type, Dictionary<int, UixmlPortProperty>>();
+        //private readonly Dictionary<Type, Dictionary<int, UixmlPortProperty>> _attached =
+        //    new Dictionary<Type, Dictionary<int, UixmlPortProperty>>();
+        //private readonly Dictionary<Type, Dictionary<int, UixmlPortProperty>> _direct =
+        //    new Dictionary<Type, Dictionary<int, UixmlPortProperty>>();
+        //private readonly Dictionary<Type, List<UixmlPortProperty>> _registeredCache =
+        //    new Dictionary<Type, List<UixmlPortProperty>>();
+        //private readonly Dictionary<Type, List<UixmlPortProperty>> _attachedCache =
+        //    new Dictionary<Type, List<UixmlPortProperty>>();
+        //private readonly Dictionary<Type, List<UixmlPortProperty>> _directCache =
+        //    new Dictionary<Type, List<UixmlPortProperty>>();
+        //private readonly Dictionary<Type, List<UixmlPortProperty>> _inheritedCache =
+        //    new Dictionary<Type, List<UixmlPortProperty>>();
 
         ///// <summary>
-        ///// Gets the <see cref="AvaloniaPropertyRegistry"/> instance
+        ///// Gets the <see cref="UixmlPortPropertyRegistry"/> instance
         ///// </summary>
-        //public static AvaloniaPropertyRegistry Instance { get; }
-        //    = new AvaloniaPropertyRegistry();
+        //public static UixmlPortPropertyRegistry Instance { get; }
+        //    = new UixmlPortPropertyRegistry();
 
         ///// <summary>
         ///// Gets a list of all registered properties.
         ///// </summary>
-        //internal IReadOnlyCollection<AvaloniaProperty> Properties => _properties.Values;
+        //internal IReadOnlyCollection<UixmlPortProperty> Properties => _properties.Values;
 
         ///// <summary>
-        ///// Gets all non-attached <see cref="AvaloniaProperty"/>s registered on a type.
+        ///// Gets all non-attached <see cref="UixmlPortProperty"/>s registered on a type.
         ///// </summary>
         ///// <param name="type">The type.</param>
-        ///// <returns>A collection of <see cref="AvaloniaProperty"/> definitions.</returns>
-        //public IReadOnlyList<AvaloniaProperty> GetRegistered(Type type)
+        ///// <returns>A collection of <see cref="UixmlPortProperty"/> definitions.</returns>
+        //public IReadOnlyList<UixmlPortProperty> GetRegistered(Type type)
         //{
         //    _ = type ?? throw new ArgumentNullException(nameof(type));
 
@@ -49,7 +49,7 @@ namespace Avalonia
         //    }
 
         //    var t = type;
-        //    result = new List<AvaloniaProperty>();
+        //    result = new List<UixmlPortProperty>();
 
         //    while (t != null)
         //    {
@@ -69,11 +69,11 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Gets all attached <see cref="AvaloniaProperty"/>s registered on a type.
+        ///// Gets all attached <see cref="UixmlPortProperty"/>s registered on a type.
         ///// </summary>
         ///// <param name="type">The type.</param>
-        ///// <returns>A collection of <see cref="AvaloniaProperty"/> definitions.</returns>
-        //public IReadOnlyList<AvaloniaProperty> GetRegisteredAttached(Type type)
+        ///// <returns>A collection of <see cref="UixmlPortProperty"/> definitions.</returns>
+        //public IReadOnlyList<UixmlPortProperty> GetRegisteredAttached(Type type)
         //{
         //    _ = type ?? throw new ArgumentNullException(nameof(type));
 
@@ -83,7 +83,7 @@ namespace Avalonia
         //    }
 
         //    var t = type;
-        //    result = new List<AvaloniaProperty>();
+        //    result = new List<UixmlPortProperty>();
 
         //    while (t != null)
         //    {
@@ -100,11 +100,11 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Gets all direct <see cref="AvaloniaProperty"/>s registered on a type.
+        ///// Gets all direct <see cref="UixmlPortProperty"/>s registered on a type.
         ///// </summary>
         ///// <param name="type">The type.</param>
-        ///// <returns>A collection of <see cref="AvaloniaProperty"/> definitions.</returns>
-        //public IReadOnlyList<AvaloniaProperty> GetRegisteredDirect(Type type)
+        ///// <returns>A collection of <see cref="UixmlPortProperty"/> definitions.</returns>
+        //public IReadOnlyList<UixmlPortProperty> GetRegisteredDirect(Type type)
         //{
         //    _ = type ?? throw new ArgumentNullException(nameof(type));
 
@@ -114,7 +114,7 @@ namespace Avalonia
         //    }
 
         //    var t = type;
-        //    result = new List<AvaloniaProperty>();
+        //    result = new List<UixmlPortProperty>();
 
         //    while (t != null)
         //    {
@@ -131,11 +131,11 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Gets all inherited <see cref="AvaloniaProperty"/>s registered on a type.
+        ///// Gets all inherited <see cref="UixmlPortProperty"/>s registered on a type.
         ///// </summary>
         ///// <param name="type">The type.</param>
-        ///// <returns>A collection of <see cref="AvaloniaProperty"/> definitions.</returns>
-        //public IReadOnlyList<AvaloniaProperty> GetRegisteredInherited(Type type)
+        ///// <returns>A collection of <see cref="UixmlPortProperty"/> definitions.</returns>
+        //public IReadOnlyList<UixmlPortProperty> GetRegisteredInherited(Type type)
         //{
         //    _ = type ?? throw new ArgumentNullException(nameof(type));
 
@@ -144,8 +144,8 @@ namespace Avalonia
         //        return result;
         //    }
 
-        //    result = new List<AvaloniaProperty>();
-        //    var visited = new HashSet<AvaloniaProperty>();
+        //    result = new List<UixmlPortProperty>();
+        //    var visited = new HashSet<UixmlPortProperty>();
 
         //    var registered = GetRegistered(type);
         //    var registeredCount = registered.Count;
@@ -182,11 +182,11 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Gets all <see cref="AvaloniaProperty"/>s registered on a object.
+        ///// Gets all <see cref="UixmlPortProperty"/>s registered on a object.
         ///// </summary>
         ///// <param name="o">The object.</param>
-        ///// <returns>A collection of <see cref="AvaloniaProperty"/> definitions.</returns>
-        //public IReadOnlyList<AvaloniaProperty> GetRegistered(IAvaloniaObject o)
+        ///// <returns>A collection of <see cref="UixmlPortProperty"/> definitions.</returns>
+        //public IReadOnlyList<UixmlPortProperty> GetRegistered(IUixmlPortObject o)
         //{
         //    _ = o ?? throw new ArgumentNullException(nameof(o));
 
@@ -202,7 +202,7 @@ namespace Avalonia
         ///// The registered.
         ///// </returns>
         //public DirectPropertyBase<T> GetRegisteredDirect<T>(
-        //    IAvaloniaObject o,
+        //    IUixmlPortObject o,
         //    DirectPropertyBase<T> property)
         //{
         //    return FindRegisteredDirect(o, property) ??
@@ -220,7 +220,7 @@ namespace Avalonia
         ///// <exception cref="InvalidOperationException">
         ///// The property name contains a '.'.
         ///// </exception>
-        //public AvaloniaProperty? FindRegistered(Type type, string name)
+        //public UixmlPortProperty? FindRegistered(Type type, string name)
         //{
         //    _ = type ?? throw new ArgumentNullException(nameof(type));
         //    _ = name ?? throw new ArgumentNullException(nameof(name));
@@ -235,7 +235,7 @@ namespace Avalonia
 
         //    for (var i = 0; i < registeredCount; i++)
         //    {
-        //        AvaloniaProperty x = registered[i];
+        //        UixmlPortProperty x = registered[i];
 
         //        if (x.Name == name)
         //        {
@@ -257,7 +257,7 @@ namespace Avalonia
         ///// <exception cref="InvalidOperationException">
         ///// The property name contains a '.'.
         ///// </exception>
-        //public AvaloniaProperty? FindRegistered(IAvaloniaObject o, string name)
+        //public UixmlPortProperty? FindRegistered(IUixmlPortObject o, string name)
         //{
         //    _ = o ?? throw new ArgumentNullException(nameof(o));
         //    _ = name ?? throw new ArgumentNullException(nameof(name));
@@ -274,7 +274,7 @@ namespace Avalonia
         ///// The registered property or null if no matching property found.
         ///// </returns>
         //public DirectPropertyBase<T>? FindRegisteredDirect<T>(
-        //    IAvaloniaObject o,
+        //    IUixmlPortObject o,
         //    DirectPropertyBase<T> property)
         //{
         //    if (property.Owner == o.GetType())
@@ -303,23 +303,23 @@ namespace Avalonia
         ///// </summary>
         ///// <param name="id">The property Id.</param>
         ///// <returns>The registered property or null if no matching property found.</returns>
-        //internal AvaloniaProperty? FindRegistered(int id)
+        //internal UixmlPortProperty? FindRegistered(int id)
         //{
         //    return id < _properties.Count ? _properties[id] : null;
         //}
 
         ///// <summary>
-        ///// Checks whether a <see cref="AvaloniaProperty"/> is registered on a type.
+        ///// Checks whether a <see cref="UixmlPortProperty"/> is registered on a type.
         ///// </summary>
         ///// <param name="type">The type.</param>
         ///// <param name="property">The property.</param>
         ///// <returns>True if the property is registered, otherwise false.</returns>
-        //public bool IsRegistered(Type type, AvaloniaProperty property)
+        //public bool IsRegistered(Type type, UixmlPortProperty property)
         //{
         //    _ = type ?? throw new ArgumentNullException(nameof(type));
         //    _ = property ?? throw new ArgumentNullException(nameof(property));
 
-        //    static bool ContainsProperty(IReadOnlyList<AvaloniaProperty> properties, AvaloniaProperty property)
+        //    static bool ContainsProperty(IReadOnlyList<UixmlPortProperty> properties, UixmlPortProperty property)
         //    {
         //        var propertiesCount = properties.Count;
 
@@ -339,12 +339,12 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Checks whether a <see cref="AvaloniaProperty"/> is registered on a object.
+        ///// Checks whether a <see cref="UixmlPortProperty"/> is registered on a object.
         ///// </summary>
         ///// <param name="o">The object.</param>
         ///// <param name="property">The property.</param>
         ///// <returns>True if the property is registered, otherwise false.</returns>
-        //public bool IsRegistered(object o, AvaloniaProperty property)
+        //public bool IsRegistered(object o, UixmlPortProperty property)
         //{
         //    _ = o ?? throw new ArgumentNullException(nameof(o));
         //    _ = property ?? throw new ArgumentNullException(nameof(property));
@@ -353,23 +353,23 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Registers a <see cref="AvaloniaProperty"/> on a type.
+        ///// Registers a <see cref="UixmlPortProperty"/> on a type.
         ///// </summary>
         ///// <param name="type">The type.</param>
         ///// <param name="property">The property.</param>
         ///// <remarks>
         ///// You won't usually want to call this method directly, instead use the
-        ///// <see cref="AvaloniaProperty.Register{TOwner, TValue}(string, TValue, bool, Data.BindingMode, Func{TValue, bool}, Func{IAvaloniaObject, TValue, TValue}, Action{IAvaloniaObject, bool})"/>
+        ///// <see cref="UixmlPortProperty.Register{TOwner, TValue}(string, TValue, bool, Data.BindingMode, Func{TValue, bool}, Func{IUixmlPortObject, TValue, TValue}, Action{IUixmlPortObject, bool})"/>
         ///// method.
         ///// </remarks>
-        //public void Register(Type type, AvaloniaProperty property)
+        //public void Register(Type type, UixmlPortProperty property)
         //{
         //    _ = type ?? throw new ArgumentNullException(nameof(type));
         //    _ = property ?? throw new ArgumentNullException(nameof(property));
 
         //    if (!_registered.TryGetValue(type, out var inner))
         //    {
-        //        inner = new Dictionary<int, AvaloniaProperty>();
+        //        inner = new Dictionary<int, UixmlPortProperty>();
         //        inner.Add(property.Id, property);
         //        _registered.Add(type, inner);
         //    }
@@ -382,7 +382,7 @@ namespace Avalonia
         //    {
         //        if (!_direct.TryGetValue(type, out inner))
         //        {
-        //            inner = new Dictionary<int, AvaloniaProperty>();
+        //            inner = new Dictionary<int, UixmlPortProperty>();
         //            inner.Add(property.Id, property);
         //            _direct.Add(type, inner);
         //        }
@@ -404,16 +404,16 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Registers an attached <see cref="AvaloniaProperty"/> on a type.
+        ///// Registers an attached <see cref="UixmlPortProperty"/> on a type.
         ///// </summary>
         ///// <param name="type">The type.</param>
         ///// <param name="property">The property.</param>
         ///// <remarks>
         ///// You won't usually want to call this method directly, instead use the
-        ///// <see cref="AvaloniaProperty.RegisterAttached{THost, TValue}(string, Type, TValue, bool, Data.BindingMode, Func{TValue, bool}, Func{IAvaloniaObject, TValue, TValue})"/>
+        ///// <see cref="UixmlPortProperty.RegisterAttached{THost, TValue}(string, Type, TValue, bool, Data.BindingMode, Func{TValue, bool}, Func{IUixmlPortObject, TValue, TValue})"/>
         ///// method.
         ///// </remarks>
-        //public void RegisterAttached(Type type, AvaloniaProperty property)
+        //public void RegisterAttached(Type type, UixmlPortProperty property)
         //{
         //    _ = type ?? throw new ArgumentNullException(nameof(type));
         //    _ = property ?? throw new ArgumentNullException(nameof(property));
@@ -426,7 +426,7 @@ namespace Avalonia
 
         //    if (!_attached.TryGetValue(type, out var inner))
         //    {
-        //        inner = new Dictionary<int, AvaloniaProperty>();
+        //        inner = new Dictionary<int, UixmlPortProperty>();
         //        inner.Add(property.Id, property);
         //        _attached.Add(type, inner);
         //    }

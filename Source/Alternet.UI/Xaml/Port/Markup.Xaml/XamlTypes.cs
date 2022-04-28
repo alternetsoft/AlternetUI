@@ -1,7 +1,7 @@
 #nullable disable
 using System;
 
-namespace Avalonia.Markup.Xaml
+namespace Alternet.UI.Markup.Xaml
 {
     /// <summary>
     /// This item supports the framework infrastructure and is not intended to be used directly from your code.

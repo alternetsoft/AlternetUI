@@ -2,7 +2,7 @@
 using System;
 using System.Globalization;
 
-namespace Avalonia.Utilities
+namespace Alternet.UI.Utilities
 {
     static class IdentifierParser
     {

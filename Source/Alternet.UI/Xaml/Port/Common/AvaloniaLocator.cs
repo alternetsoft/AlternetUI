@@ -3,26 +3,26 @@ using System.Collections.Generic;
 
 #pragma warning disable CS1591 // Enable me later
 
-namespace Avalonia
+namespace Alternet.UI
 {
-    internal class AvaloniaLocator : IAvaloniaDependencyResolver
+    internal class UixmlPortLocator : IUixmlPortDependencyResolver
     {
-        private readonly IAvaloniaDependencyResolver? _parentScope;
-        public static IAvaloniaDependencyResolver Current { get; set; }
-        public static AvaloniaLocator CurrentMutable { get; set; }
+        private readonly IUixmlPortDependencyResolver? _parentScope;
+        public static IUixmlPortDependencyResolver Current { get; set; }
+        public static UixmlPortLocator CurrentMutable { get; set; }
         private readonly Dictionary<Type, Func<object?>> _registry = new Dictionary<Type, Func<object?>>();
 
-        static AvaloniaLocator()
+        static UixmlPortLocator()
         {
-            Current = CurrentMutable = new AvaloniaLocator();
+            Current = CurrentMutable = new UixmlPortLocator();
         }
 
-        public AvaloniaLocator()
+        public UixmlPortLocator()
         {
             
         }
 
-        public AvaloniaLocator(IAvaloniaDependencyResolver parentScope)
+        public UixmlPortLocator(IUixmlPortDependencyResolver parentScope)
         {
             _parentScope = parentScope;
         }
@@ -34,26 +34,26 @@ namespace Avalonia
 
         internal class RegistrationHelper<TService>
         {
-            private readonly AvaloniaLocator _locator;
+            private readonly UixmlPortLocator _locator;
 
-            public RegistrationHelper(AvaloniaLocator locator)
+            public RegistrationHelper(UixmlPortLocator locator)
             {
                 _locator = locator;
             }
 
-            public AvaloniaLocator ToConstant<TImpl>(TImpl constant) where TImpl : TService
+            public UixmlPortLocator ToConstant<TImpl>(TImpl constant) where TImpl : TService
             {
                 _locator._registry[typeof (TService)] = () => constant;
                 return _locator;
             }
 
-            public AvaloniaLocator ToFunc<TImlp>(Func<TImlp> func) where TImlp : TService
+            public UixmlPortLocator ToFunc<TImlp>(Func<TImlp> func) where TImlp : TService
             {
                 _locator._registry[typeof (TService)] = () => func();
                 return _locator;
             }
 
-            public AvaloniaLocator ToLazy<TImlp>(Func<TImlp> func) where TImlp : TService
+            public UixmlPortLocator ToLazy<TImlp>(Func<TImlp> func) where TImlp : TService
             {
                 var constructed = false;
                 TImlp? instance = default;
@@ -70,29 +70,29 @@ namespace Avalonia
                 return _locator;
             }
             
-            public AvaloniaLocator ToSingleton<TImpl>() where TImpl : class, TService, new()
+            public UixmlPortLocator ToSingleton<TImpl>() where TImpl : class, TService, new()
             {
                 TImpl? instance = null;
                 return ToFunc(() => instance ?? (instance = new TImpl()));
             }
 
-            public AvaloniaLocator ToTransient<TImpl>() where TImpl : class, TService, new() => ToFunc(() => new TImpl());
+            public UixmlPortLocator ToTransient<TImpl>() where TImpl : class, TService, new() => ToFunc(() => new TImpl());
         }
 
         public RegistrationHelper<T> Bind<T>() => new RegistrationHelper<T>(this);
 
 
-        public AvaloniaLocator BindToSelf<T>(T constant)
+        public UixmlPortLocator BindToSelf<T>(T constant)
             => Bind<T>().ToConstant(constant);
 
-        public AvaloniaLocator BindToSelfSingleton<T>() where T : class, new() => Bind<T>().ToSingleton<T>();
+        public UixmlPortLocator BindToSelfSingleton<T>() where T : class, new() => Bind<T>().ToSingleton<T>();
 
         class ResolverDisposable : IDisposable
         {
-            private readonly IAvaloniaDependencyResolver _resolver;
-            private readonly AvaloniaLocator _mutable;
+            private readonly IUixmlPortDependencyResolver _resolver;
+            private readonly UixmlPortLocator _mutable;
 
-            public ResolverDisposable(IAvaloniaDependencyResolver resolver, AvaloniaLocator mutable)
+            public ResolverDisposable(IUixmlPortDependencyResolver resolver, UixmlPortLocator mutable)
             {
                 _resolver = resolver;
                 _mutable = mutable;
@@ -109,29 +109,29 @@ namespace Avalonia
         public static IDisposable EnterScope()
         {
             var d = new ResolverDisposable(Current, CurrentMutable);
-            Current = CurrentMutable =  new AvaloniaLocator(Current);
+            Current = CurrentMutable =  new UixmlPortLocator(Current);
             return d;
         }
     }
 
-    internal interface IAvaloniaDependencyResolver
+    internal interface IUixmlPortDependencyResolver
     {
         object? GetService(Type t);
     }
 
     internal static class LocatorExtensions
     {
-        public static T? GetService<T>(this IAvaloniaDependencyResolver resolver)
+        public static T? GetService<T>(this IUixmlPortDependencyResolver resolver)
         {
             return (T?) resolver.GetService(typeof (T));
         }
 
-        public static object GetRequiredService(this IAvaloniaDependencyResolver resolver, Type t)
+        public static object GetRequiredService(this IUixmlPortDependencyResolver resolver, Type t)
         {
             return resolver.GetService(t) ?? throw new InvalidOperationException($"Unable to locate '{t}'.");
         }
 
-        public static T GetRequiredService<T>(this IAvaloniaDependencyResolver resolver)
+        public static T GetRequiredService<T>(this IUixmlPortDependencyResolver resolver)
         {
             return (T?)resolver.GetService(typeof(T)) ?? throw new InvalidOperationException($"Unable to locate '{typeof(T)}'.");
         }

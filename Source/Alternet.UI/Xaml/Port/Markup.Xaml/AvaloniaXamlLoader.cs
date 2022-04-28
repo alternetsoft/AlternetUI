@@ -2,14 +2,14 @@
 using System;
 using System.IO;
 using System.Reflection;
-using Avalonia.Platform;
+using Alternet.UI.Platform;
 
-namespace Avalonia.Markup.Xaml
+namespace Alternet.UI.Markup.Xaml
 {
     /// <summary>
-    /// Loads XAML for a avalonia application.
+    /// Loads XAML for a uixmlPort application.
     /// </summary>
-    internal static class AvaloniaXamlLoader
+    internal static class UixmlPortXamlLoader
     {
         internal interface IRuntimeXamlLoader
         {
@@ -17,13 +17,13 @@ namespace Avalonia.Markup.Xaml
         }
         
         /// <summary>
-        /// Loads the XAML into a Avalonia component.
+        /// Loads the XAML into a UixmlPort component.
         /// </summary>
         /// <param name="obj">The object to load the XAML into.</param>
         public static void Load(object obj)
         {
             throw new XamlLoadException(
-                $"No precompiled XAML found for {obj.GetType()}, make sure to specify x:Class and include your XAML file as AvaloniaResource");
+                $"No precompiled XAML found for {obj.GetType()}, make sure to specify x:Class and include your XAML file as UixmlPortResource");
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Avalonia.Markup.Xaml
         {
             Contract.Requires<ArgumentNullException>(uri != null);
 
-            var assetLocator = AvaloniaLocator.Current.GetService<IAssetLoader>();
+            var assetLocator = UixmlPortLocator.Current.GetService<IAssetLoader>();
 
             if (assetLocator == null)
             {
@@ -47,7 +47,7 @@ namespace Avalonia.Markup.Xaml
             }
 
             var compiledLoader = assetLocator.GetAssembly(uri, baseUri)
-                ?.GetType("CompiledAvaloniaXaml.!XamlLoader")
+                ?.GetType("CompiledUixmlPortXaml.!XamlLoader")
                 ?.GetMethod("TryLoad", new[] {typeof(string)});
             if (compiledLoader != null)
             {
@@ -59,7 +59,7 @@ namespace Avalonia.Markup.Xaml
             }
 
             // This is intended for unit-tests only
-            var runtimeLoader = AvaloniaLocator.Current.GetService<IRuntimeXamlLoader>();
+            var runtimeLoader = UixmlPortLocator.Current.GetService<IRuntimeXamlLoader>();
             if (runtimeLoader != null)
             {
                 var asset = assetLocator.OpenAndGetAssembly(uri, baseUri);
@@ -71,7 +71,7 @@ namespace Avalonia.Markup.Xaml
             }
 
             throw new XamlLoadException(
-                $"No precompiled XAML found for {uri} (baseUri: {baseUri}), make sure to specify x:Class and include your XAML file as AvaloniaResource");
+                $"No precompiled XAML found for {uri} (baseUri: {baseUri}), make sure to specify x:Class and include your XAML file as UixmlPortResource");
         }
         
     }

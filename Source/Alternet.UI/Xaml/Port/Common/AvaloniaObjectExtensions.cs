@@ -1,11 +1,11 @@
 using System;
 
-namespace Avalonia
+namespace Alternet.UI
 {
     /// <summary>
-    /// Provides extension methods for AvaloniaObject and related classes.
+    /// Provides extension methods for UixmlPortObject and related classes.
     /// </summary>
-    public static class AvaloniaObjectExtensions
+    public static class UixmlPortObjectExtensions
     {
         ///// <summary>
         ///// Converts an <see cref="IObservable{T}"/> to an <see cref="IBinding"/>.
@@ -19,7 +19,7 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Gets an observable for a <see cref="AvaloniaProperty"/>.
+        ///// Gets an observable for a <see cref="UixmlPortProperty"/>.
         ///// </summary>
         ///// <param name="o">The object.</param>
         ///// <param name="property">The property.</param>
@@ -30,15 +30,15 @@ namespace Avalonia
         ///// <remarks>
         ///// The subscription to <paramref name="o"/> is created using a weak reference.
         ///// </remarks>
-        //public static IObservable<object?> GetObservable(this IAvaloniaObject o, AvaloniaProperty property)
+        //public static IObservable<object?> GetObservable(this IUixmlPortObject o, UixmlPortProperty property)
         //{
-        //    return new AvaloniaPropertyObservable<object?>(
+        //    return new UixmlPortPropertyObservable<object?>(
         //        o ?? throw new ArgumentNullException(nameof(o)), 
         //        property ?? throw new ArgumentNullException(nameof(property)));
         //}
 
         ///// <summary>
-        ///// Gets an observable for a <see cref="AvaloniaProperty"/>.
+        ///// Gets an observable for a <see cref="UixmlPortProperty"/>.
         ///// </summary>
         ///// <param name="o">The object.</param>
         ///// <typeparam name="T">The property type.</typeparam>
@@ -50,15 +50,15 @@ namespace Avalonia
         ///// <remarks>
         ///// The subscription to <paramref name="o"/> is created using a weak reference.
         ///// </remarks>
-        //public static IObservable<T> GetObservable<T>(this IAvaloniaObject o, AvaloniaProperty<T> property)
+        //public static IObservable<T> GetObservable<T>(this IUixmlPortObject o, UixmlPortProperty<T> property)
         //{
-        //    return new AvaloniaPropertyObservable<T>(
+        //    return new UixmlPortPropertyObservable<T>(
         //        o ?? throw new ArgumentNullException(nameof(o)),
         //        property ?? throw new ArgumentNullException(nameof(property)));
         //}
 
         ///// <summary>
-        ///// Gets an observable for a <see cref="AvaloniaProperty"/>.
+        ///// Gets an observable for a <see cref="UixmlPortProperty"/>.
         ///// </summary>
         ///// <param name="o">The object.</param>
         ///// <param name="property">The property.</param>
@@ -70,16 +70,16 @@ namespace Avalonia
         ///// The subscription to <paramref name="o"/> is created using a weak reference.
         ///// </remarks>
         //public static IObservable<BindingValue<object?>> GetBindingObservable(
-        //    this IAvaloniaObject o,
-        //    AvaloniaProperty property)
+        //    this IUixmlPortObject o,
+        //    UixmlPortProperty property)
         //{
-        //    return new AvaloniaPropertyBindingObservable<object?>(
+        //    return new UixmlPortPropertyBindingObservable<object?>(
         //        o ?? throw new ArgumentNullException(nameof(o)),
         //        property ?? throw new ArgumentNullException(nameof(property)));
         //}
 
         ///// <summary>
-        ///// Gets an observable for a <see cref="AvaloniaProperty"/>.
+        ///// Gets an observable for a <see cref="UixmlPortProperty"/>.
         ///// </summary>
         ///// <param name="o">The object.</param>
         ///// <typeparam name="T">The property type.</typeparam>
@@ -92,10 +92,10 @@ namespace Avalonia
         ///// The subscription to <paramref name="o"/> is created using a weak reference.
         ///// </remarks>
         //public static IObservable<BindingValue<T>> GetBindingObservable<T>(
-        //    this IAvaloniaObject o,
-        //    AvaloniaProperty<T> property)
+        //    this IUixmlPortObject o,
+        //    UixmlPortProperty<T> property)
         //{
-        //    return new AvaloniaPropertyBindingObservable<T>(
+        //    return new UixmlPortPropertyBindingObservable<T>(
         //        o ?? throw new ArgumentNullException(nameof(o)),
         //        property ?? throw new ArgumentNullException(nameof(property)));
 
@@ -103,26 +103,26 @@ namespace Avalonia
 
         ///// <summary>
         ///// Gets an observable that listens for property changed events for an
-        ///// <see cref="AvaloniaProperty"/>.
+        ///// <see cref="UixmlPortProperty"/>.
         ///// </summary>
         ///// <param name="o">The object.</param>
         ///// <param name="property">The property.</param>
         ///// <returns>
         ///// An observable which when subscribed pushes the property changed event args
-        ///// each time a <see cref="IAvaloniaObject.PropertyChanged"/> event is raised
+        ///// each time a <see cref="IUixmlPortObject.PropertyChanged"/> event is raised
         ///// for the specified property.
         ///// </returns>
-        //public static IObservable<AvaloniaPropertyChangedEventArgs> GetPropertyChangedObservable(
-        //    this IAvaloniaObject o,
-        //    AvaloniaProperty property)
+        //public static IObservable<UixmlPortPropertyChangedEventArgs> GetPropertyChangedObservable(
+        //    this IUixmlPortObject o,
+        //    UixmlPortProperty property)
         //{
-        //    return new AvaloniaPropertyChangedObservable(
+        //    return new UixmlPortPropertyChangedObservable(
         //        o ?? throw new ArgumentNullException(nameof(o)),
         //        property ?? throw new ArgumentNullException(nameof(property)));
         //}
 
         ///// <summary>
-        ///// Gets a subject for a <see cref="AvaloniaProperty"/>.
+        ///// Gets a subject for a <see cref="UixmlPortProperty"/>.
         ///// </summary>
         ///// <param name="o">The object.</param>
         ///// <param name="property">The property.</param>
@@ -134,8 +134,8 @@ namespace Avalonia
         ///// property.
         ///// </returns>
         //public static ISubject<object?> GetSubject(
-        //    this IAvaloniaObject o,
-        //    AvaloniaProperty property,
+        //    this IUixmlPortObject o,
+        //    UixmlPortProperty property,
         //    BindingPriority priority = BindingPriority.LocalValue)
         //{
         //    return Subject.Create<object?>(
@@ -144,7 +144,7 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Gets a subject for a <see cref="AvaloniaProperty"/>.
+        ///// Gets a subject for a <see cref="UixmlPortProperty"/>.
         ///// </summary>
         ///// <typeparam name="T">The property type.</typeparam>
         ///// <param name="o">The object.</param>
@@ -157,8 +157,8 @@ namespace Avalonia
         ///// property.
         ///// </returns>
         //public static ISubject<T> GetSubject<T>(
-        //    this IAvaloniaObject o,
-        //    AvaloniaProperty<T> property,
+        //    this IUixmlPortObject o,
+        //    UixmlPortProperty<T> property,
         //    BindingPriority priority = BindingPriority.LocalValue)
         //{
         //    return Subject.Create<T>(
@@ -167,7 +167,7 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Gets a subject for a <see cref="AvaloniaProperty"/>.
+        ///// Gets a subject for a <see cref="UixmlPortProperty"/>.
         ///// </summary>
         ///// <param name="o">The object.</param>
         ///// <param name="property">The property.</param>
@@ -179,8 +179,8 @@ namespace Avalonia
         ///// property.
         ///// </returns>
         //public static ISubject<BindingValue<object?>> GetBindingSubject(
-        //    this IAvaloniaObject o,
-        //    AvaloniaProperty property,
+        //    this IUixmlPortObject o,
+        //    UixmlPortProperty property,
         //    BindingPriority priority = BindingPriority.LocalValue)
         //{
         //    return Subject.Create<BindingValue<object?>>(
@@ -195,7 +195,7 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Gets a subject for a <see cref="AvaloniaProperty"/>.
+        ///// Gets a subject for a <see cref="UixmlPortProperty"/>.
         ///// </summary>
         ///// <typeparam name="T">The property type.</typeparam>
         ///// <param name="o">The object.</param>
@@ -208,8 +208,8 @@ namespace Avalonia
         ///// property.
         ///// </returns>
         //public static ISubject<BindingValue<T>> GetBindingSubject<T>(
-        //    this IAvaloniaObject o,
-        //    AvaloniaProperty<T> property,
+        //    this IUixmlPortObject o,
+        //    UixmlPortProperty<T> property,
         //    BindingPriority priority = BindingPriority.LocalValue)
         //{
         //    return Subject.Create<BindingValue<T>>(
@@ -224,7 +224,7 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Binds a <see cref="AvaloniaProperty"/> to an observable.
+        ///// Binds a <see cref="UixmlPortProperty"/> to an observable.
         ///// </summary>
         ///// <param name="target">The object.</param>
         ///// <param name="property">The property.</param>
@@ -234,8 +234,8 @@ namespace Avalonia
         ///// A disposable which can be used to terminate the binding.
         ///// </returns>
         //public static IDisposable Bind(
-        //    this IAvaloniaObject target,
-        //    AvaloniaProperty property,
+        //    this IUixmlPortObject target,
+        //    UixmlPortProperty property,
         //    IObservable<BindingValue<object?>> source,
         //    BindingPriority priority = BindingPriority.LocalValue)
         //{
@@ -247,7 +247,7 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Binds a <see cref="AvaloniaProperty"/> to an observable.
+        ///// Binds a <see cref="UixmlPortProperty"/> to an observable.
         ///// </summary>
         ///// <typeparam name="T">The type of the property.</typeparam>
         ///// <param name="target">The object.</param>
@@ -258,8 +258,8 @@ namespace Avalonia
         ///// A disposable which can be used to terminate the binding.
         ///// </returns>
         //public static IDisposable Bind<T>(
-        //    this IAvaloniaObject target,
-        //    AvaloniaProperty<T> property,
+        //    this IUixmlPortObject target,
+        //    UixmlPortProperty<T> property,
         //    IObservable<BindingValue<T>> source,
         //    BindingPriority priority = BindingPriority.LocalValue)
         //{
@@ -271,12 +271,12 @@ namespace Avalonia
         //    {
         //        StyledPropertyBase<T> styled => target.Bind(styled, source, priority),
         //        DirectPropertyBase<T> direct => target.Bind(direct, source),
-        //        _ => throw new NotSupportedException("Unsupported AvaloniaProperty type."),
+        //        _ => throw new NotSupportedException("Unsupported UixmlPortProperty type."),
         //    };
         //}
 
         ///// <summary>
-        ///// Binds a <see cref="AvaloniaProperty"/> to an observable.
+        ///// Binds a <see cref="UixmlPortProperty"/> to an observable.
         ///// </summary>
         ///// <param name="target">The object.</param>
         ///// <param name="property">The property.</param>
@@ -286,8 +286,8 @@ namespace Avalonia
         ///// A disposable which can be used to terminate the binding.
         ///// </returns>
         //public static IDisposable Bind(
-        //    this IAvaloniaObject target,
-        //    AvaloniaProperty property,
+        //    this IUixmlPortObject target,
+        //    UixmlPortProperty property,
         //    IObservable<object?> source,
         //    BindingPriority priority = BindingPriority.LocalValue)
         //{
@@ -302,7 +302,7 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Binds a <see cref="AvaloniaProperty"/> to an observable.
+        ///// Binds a <see cref="UixmlPortProperty"/> to an observable.
         ///// </summary>
         ///// <param name="target">The object.</param>
         ///// <param name="property">The property.</param>
@@ -312,8 +312,8 @@ namespace Avalonia
         ///// A disposable which can be used to terminate the binding.
         ///// </returns>
         //public static IDisposable Bind<T>(
-        //    this IAvaloniaObject target,
-        //    AvaloniaProperty<T> property,
+        //    this IUixmlPortObject target,
+        //    UixmlPortProperty<T> property,
         //    IObservable<T> source,
         //    BindingPriority priority = BindingPriority.LocalValue)
         //{
@@ -328,7 +328,7 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Binds a property on an <see cref="IAvaloniaObject"/> to an <see cref="IBinding"/>.
+        ///// Binds a property on an <see cref="IUixmlPortObject"/> to an <see cref="IBinding"/>.
         ///// </summary>
         ///// <param name="target">The object.</param>
         ///// <param name="property">The property to bind.</param>
@@ -341,8 +341,8 @@ namespace Avalonia
         ///// </param>
         ///// <returns>An <see cref="IDisposable"/> which can be used to cancel the binding.</returns>
         //public static IDisposable Bind(
-        //    this IAvaloniaObject target,
-        //    AvaloniaProperty property,
+        //    this IUixmlPortObject target,
+        //    UixmlPortProperty property,
         //    IBinding binding,
         //    object? anchor = null)
         //{
@@ -387,11 +387,11 @@ namespace Avalonia
         }
 
         ///// <summary>
-        ///// Clears a <see cref="AvaloniaProperty"/>'s local value.
+        ///// Clears a <see cref="UixmlPortProperty"/>'s local value.
         ///// </summary>
         ///// <param name="target">The object.</param>
         ///// <param name="property">The property.</param>
-        //public static void ClearValue(this IAvaloniaObject target, AvaloniaProperty property)
+        //public static void ClearValue(this IUixmlPortObject target, UixmlPortProperty property)
         //{
         //    target = target ?? throw new ArgumentNullException(nameof(target));
         //    property = property ?? throw new ArgumentNullException(nameof(property));
@@ -400,11 +400,11 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Clears a <see cref="AvaloniaProperty"/>'s local value.
+        ///// Clears a <see cref="UixmlPortProperty"/>'s local value.
         ///// </summary>
         ///// <param name="target">The object.</param>
         ///// <param name="property">The property.</param>
-        //public static void ClearValue<T>(this IAvaloniaObject target, AvaloniaProperty<T> property)
+        //public static void ClearValue<T>(this IUixmlPortObject target, UixmlPortProperty<T> property)
         //{
         //    target = target ?? throw new ArgumentNullException(nameof(target));
         //    property = property ?? throw new ArgumentNullException(nameof(property));
@@ -418,17 +418,17 @@ namespace Avalonia
         //            target.ClearValue(direct);
         //            break;
         //        default:
-        //            throw new NotSupportedException("Unsupported AvaloniaProperty type.");
+        //            throw new NotSupportedException("Unsupported UixmlPortProperty type.");
         //    }
         //}
 
         ///// <summary>
-        ///// Gets a <see cref="AvaloniaProperty"/> value.
+        ///// Gets a <see cref="UixmlPortProperty"/> value.
         ///// </summary>
         ///// <param name="target">The object.</param>
         ///// <param name="property">The property.</param>
         ///// <returns>The value.</returns>
-        //public static object? GetValue(this IAvaloniaObject target, AvaloniaProperty property)
+        //public static object? GetValue(this IUixmlPortObject target, UixmlPortProperty property)
         //{
         //    target = target ?? throw new ArgumentNullException(nameof(target));
         //    property = property ?? throw new ArgumentNullException(nameof(property));
@@ -437,13 +437,13 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Gets a <see cref="AvaloniaProperty"/> value.
+        ///// Gets a <see cref="UixmlPortProperty"/> value.
         ///// </summary>
         ///// <typeparam name="T">The type of the property.</typeparam>
         ///// <param name="target">The object.</param>
         ///// <param name="property">The property.</param>
         ///// <returns>The value.</returns>
-        //public static T GetValue<T>(this IAvaloniaObject target, AvaloniaProperty<T> property)
+        //public static T GetValue<T>(this IUixmlPortObject target, UixmlPortProperty<T> property)
         //{
         //    target = target ?? throw new ArgumentNullException(nameof(target));
         //    property = property ?? throw new ArgumentNullException(nameof(property));
@@ -452,12 +452,12 @@ namespace Avalonia
         //    {
         //        StyledPropertyBase<T> styled => target.GetValue(styled),
         //        DirectPropertyBase<T> direct => target.GetValue(direct),
-        //        _ => throw new NotSupportedException("Unsupported AvaloniaProperty type.")
+        //        _ => throw new NotSupportedException("Unsupported UixmlPortProperty type.")
         //    };
         //}
 
         ///// <summary>
-        ///// Gets an <see cref="AvaloniaProperty"/> base value.
+        ///// Gets an <see cref="UixmlPortProperty"/> base value.
         ///// </summary>
         ///// <param name="target">The object.</param>
         ///// <param name="property">The property.</param>
@@ -465,14 +465,14 @@ namespace Avalonia
         ///// <remarks>
         ///// For styled properties, gets the value of the property if set on the object with a
         ///// priority equal or lower to <paramref name="maxPriority"/>, otherwise
-        ///// <see cref="AvaloniaProperty.UnsetValue"/>. Note that this method does not return
+        ///// <see cref="UixmlPortProperty.UnsetValue"/>. Note that this method does not return
         ///// property values that come from inherited or default values.
         ///// 
-        ///// For direct properties returns <see cref="GetValue(IAvaloniaObject, AvaloniaProperty)"/>.
+        ///// For direct properties returns <see cref="GetValue(IUixmlPortObject, UixmlPortProperty)"/>.
         ///// </remarks>
         //public static object? GetBaseValue(
-        //    this IAvaloniaObject target,
-        //    AvaloniaProperty property,
+        //    this IUixmlPortObject target,
+        //    UixmlPortProperty property,
         //    BindingPriority maxPriority)
         //{
         //    target = target ?? throw new ArgumentNullException(nameof(target));
@@ -482,7 +482,7 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Gets an <see cref="AvaloniaProperty"/> base value.
+        ///// Gets an <see cref="UixmlPortProperty"/> base value.
         ///// </summary>
         ///// <param name="target">The object.</param>
         ///// <param name="property">The property.</param>
@@ -494,11 +494,11 @@ namespace Avalonia
         ///// that come from inherited or default values.
         ///// 
         ///// For direct properties returns
-        ///// <see cref="IAvaloniaObject.GetValue{T}(DirectPropertyBase{T})"/>.
+        ///// <see cref="IUixmlPortObject.GetValue{T}(DirectPropertyBase{T})"/>.
         ///// </remarks>
         //public static Optional<T> GetBaseValue<T>(
-        //    this IAvaloniaObject target,
-        //    AvaloniaProperty<T> property,
+        //    this IUixmlPortObject target,
+        //    UixmlPortProperty<T> property,
         //    BindingPriority maxPriority)
         //{
         //    target = target ?? throw new ArgumentNullException(nameof(target));
@@ -511,12 +511,12 @@ namespace Avalonia
         //    {
         //        StyledPropertyBase<T> styled => target.GetBaseValue(styled, maxPriority),
         //        DirectPropertyBase<T> direct => target.GetValue(direct),
-        //        _ => throw new NotSupportedException("Unsupported AvaloniaProperty type.")
+        //        _ => throw new NotSupportedException("Unsupported UixmlPortProperty type.")
         //    };
         //}
 
         ///// <summary>
-        ///// Sets a <see cref="AvaloniaProperty"/> value.
+        ///// Sets a <see cref="UixmlPortProperty"/> value.
         ///// </summary>
         ///// <param name="target">The object.</param>
         ///// <param name="property">The property.</param>
@@ -526,8 +526,8 @@ namespace Avalonia
         ///// An <see cref="IDisposable"/> if setting the property can be undone, otherwise null.
         ///// </returns>
         //public static IDisposable? SetValue(
-        //    this IAvaloniaObject target,
-        //    AvaloniaProperty property,
+        //    this IUixmlPortObject target,
+        //    UixmlPortProperty property,
         //    object? value,
         //    BindingPriority priority = BindingPriority.LocalValue)
         //{
@@ -538,7 +538,7 @@ namespace Avalonia
         //}
 
         ///// <summary>
-        ///// Sets a <see cref="AvaloniaProperty"/> value.
+        ///// Sets a <see cref="UixmlPortProperty"/> value.
         ///// </summary>
         ///// <typeparam name="T">The type of the property.</typeparam>
         ///// <param name="target">The object.</param>
@@ -549,8 +549,8 @@ namespace Avalonia
         ///// An <see cref="IDisposable"/> if setting the property can be undone, otherwise null.
         ///// </returns>
         //public static IDisposable? SetValue<T>(
-        //    this IAvaloniaObject target,
-        //    AvaloniaProperty<T> property,
+        //    this IUixmlPortObject target,
+        //    UixmlPortProperty<T> property,
         //    T value,
         //    BindingPriority priority = BindingPriority.LocalValue)
         //{
@@ -565,7 +565,7 @@ namespace Avalonia
         //            target.SetValue(direct, value);
         //            return null;
         //        default:
-        //            throw new NotSupportedException("Unsupported AvaloniaProperty type.");
+        //            throw new NotSupportedException("Unsupported UixmlPortProperty type.");
         //    }
         //}
 
@@ -580,9 +580,9 @@ namespace Avalonia
         ///// </param>
         ///// <returns>A disposable that can be used to terminate the subscription.</returns>
         //public static IDisposable AddClassHandler<TTarget>(
-        //    this IObservable<AvaloniaPropertyChangedEventArgs> observable,
-        //    Action<TTarget, AvaloniaPropertyChangedEventArgs> action)
-        //    where TTarget : AvaloniaObject
+        //    this IObservable<UixmlPortPropertyChangedEventArgs> observable,
+        //    Action<TTarget, UixmlPortPropertyChangedEventArgs> action)
+        //    where TTarget : UixmlPortObject
         //{
         //    return observable.Subscribe(e =>
         //    {
@@ -605,8 +605,8 @@ namespace Avalonia
         ///// </param>
         ///// <returns>A disposable that can be used to terminate the subscription.</returns>
         //public static IDisposable AddClassHandler<TTarget, TValue>(
-        //    this IObservable<AvaloniaPropertyChangedEventArgs<TValue>> observable,
-        //    Action<TTarget, AvaloniaPropertyChangedEventArgs<TValue>> action) where TTarget : AvaloniaObject
+        //    this IObservable<UixmlPortPropertyChangedEventArgs<TValue>> observable,
+        //    Action<TTarget, UixmlPortPropertyChangedEventArgs<TValue>> action) where TTarget : UixmlPortObject
         //{
         //    return observable.Subscribe(e =>
         //    {
@@ -625,10 +625,10 @@ namespace Avalonia
         ///// <param name="observable">The property changed observable.</param>
         ///// <param name="handler">Given a TTarget, returns the handler.</param>
         ///// <returns>A disposable that can be used to terminate the subscription.</returns>
-        //[Obsolete("Use overload taking Action<TTarget, AvaloniaPropertyChangedEventArgs>.")]
+        //[Obsolete("Use overload taking Action<TTarget, UixmlPortPropertyChangedEventArgs>.")]
         //public static IDisposable AddClassHandler<TTarget>(
-        //    this IObservable<AvaloniaPropertyChangedEventArgs> observable,
-        //    Func<TTarget, Action<AvaloniaPropertyChangedEventArgs>> handler)
+        //    this IObservable<UixmlPortPropertyChangedEventArgs> observable,
+        //    Func<TTarget, Action<UixmlPortPropertyChangedEventArgs>> handler)
         //    where TTarget : class
         //{
         //    return observable.Subscribe(e => SubscribeAdapter(e, handler));
@@ -640,21 +640,21 @@ namespace Avalonia
         ///// <param name="o">The object.</param>
         ///// <param name="property">The property</param>
         ///// <returns>The description.</returns>
-        //private static string GetDescription(IAvaloniaObject o, AvaloniaProperty property)
+        //private static string GetDescription(IUixmlPortObject o, UixmlPortProperty property)
         //{
         //    return $"{o.GetType().Name}.{property.Name}";
         //}
 
         ///// <summary>
-        ///// Observer method for <see cref="AddClassHandler{TTarget}(IObservable{AvaloniaPropertyChangedEventArgs},
-        ///// Func{TTarget, Action{AvaloniaPropertyChangedEventArgs}})"/>.
+        ///// Observer method for <see cref="AddClassHandler{TTarget}(IObservable{UixmlPortPropertyChangedEventArgs},
+        ///// Func{TTarget, Action{UixmlPortPropertyChangedEventArgs}})"/>.
         ///// </summary>
         ///// <typeparam name="TTarget">The sender type to accept.</typeparam>
         ///// <param name="e">The event args.</param>
         ///// <param name="handler">Given a TTarget, returns the handler.</param>
         //private static void SubscribeAdapter<TTarget>(
-        //    AvaloniaPropertyChangedEventArgs e,
-        //    Func<TTarget, Action<AvaloniaPropertyChangedEventArgs>> handler)
+        //    UixmlPortPropertyChangedEventArgs e,
+        //    Func<TTarget, Action<UixmlPortPropertyChangedEventArgs>> handler)
         //    where TTarget : class
         //{
         //    if (e.Sender is TTarget target)
@@ -673,8 +673,8 @@ namespace Avalonia
         //    }
 
         //    public InstancedBinding? Initiate(
-        //        IAvaloniaObject target,
-        //        AvaloniaProperty? targetProperty,
+        //        IUixmlPortObject target,
+        //        UixmlPortProperty? targetProperty,
         //        object? anchor = null,
         //        bool enableDataValidation = false)
         //    {

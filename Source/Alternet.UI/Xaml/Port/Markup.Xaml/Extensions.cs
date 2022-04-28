@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Alternet.UI;
-using Avalonia.Markup.Xaml.XamlIl.Runtime;
+using Alternet.UI.Markup.Xaml.XamlIl.Runtime;
 
-namespace Avalonia.Markup.Xaml
+namespace Alternet.UI.Markup.Xaml
 {
     internal static class Extensions
     {
@@ -15,14 +15,14 @@ namespace Avalonia.Markup.Xaml
         public static Uri GetContextBaseUri(this IServiceProvider ctx) => ctx.GetService<IUriContext>().BaseUri;
 
         public static T GetFirstParent<T>(this IServiceProvider ctx) where T : class 
-            => ctx.GetService<IAvaloniaXamlIlParentStackProvider>().Parents.OfType<T>().FirstOrDefault();
+            => ctx.GetService<IUixmlPortXamlIlParentStackProvider>().Parents.OfType<T>().FirstOrDefault();
 
         public static T GetLastParent<T>(this IServiceProvider ctx) where T : class 
-            => ctx.GetService<IAvaloniaXamlIlParentStackProvider>().Parents.OfType<T>().LastOrDefault();
+            => ctx.GetService<IUixmlPortXamlIlParentStackProvider>().Parents.OfType<T>().LastOrDefault();
 
         public static IEnumerable<T> GetParents<T>(this IServiceProvider sp)
         {
-            return sp.GetService<IAvaloniaXamlIlParentStackProvider>().Parents.OfType<T>();
+            return sp.GetService<IUixmlPortXamlIlParentStackProvider>().Parents.OfType<T>();
             
             
         }

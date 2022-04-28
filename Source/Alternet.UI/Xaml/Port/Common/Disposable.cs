@@ -3,7 +3,7 @@ using System;
 
 #pragma warning disable CS1591 // Enable me later
 
-namespace Avalonia
+namespace Alternet.UI
 {
     /// <summary>
     /// Provides a set of static methods for creating <see cref="IDisposable"/> objects.

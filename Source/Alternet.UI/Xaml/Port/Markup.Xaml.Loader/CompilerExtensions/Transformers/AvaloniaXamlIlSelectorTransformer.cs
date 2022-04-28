@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Avalonia.Markup.Parsers;
+using Alternet.UI.Markup.Parsers;
 using XamlX.Ast;
 using XamlX.Emit;
 using XamlX.IL;
@@ -10,15 +10,15 @@ using XamlX.Transform;
 using XamlX.Transform.Transformers;
 using XamlX.TypeSystem;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
     using XamlParseException = XamlX.XamlParseException;
     using XamlLoadException = XamlX.XamlLoadException;
-    class AvaloniaXamlIlSelectorTransformer : IXamlAstTransformer
+    class UixmlPortXamlIlSelectorTransformer : IXamlAstTransformer
     {
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)
         {
-            if (!(node is XamlAstObjectNode on && on.Type.GetClrType().FullName == "Avalonia.Styling.Style"))
+            if (!(node is XamlAstObjectNode on && on.Type.GetClrType().FullName == "Alternet.UI.Styling.Style"))
                 return node;
 
             var pn = on.Children.OfType<XamlAstXamlPropertyValueNode>()
@@ -39,7 +39,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 
             var selectorType = pn.Property.GetClrProperty().Getter.ReturnType;
             var initialNode = new XamlIlSelectorInitialNode(node, selectorType);
-            var avaloniaAttachedPropertyT = context.GetAvaloniaTypes().AvaloniaAttachedPropertyT;
+            var uixmlPortAttachedPropertyT = context.GetUixmlPortTypes().UixmlPortAttachedPropertyT;
             XamlIlSelectorNode Create(IEnumerable<SelectorGrammar.ISyntax> syntax,
                 Func<string, string, XamlAstClrTypeReference> typeResolver)
             {
@@ -105,7 +105,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                                     .FirstOrDefault(f => f.IsStatic
                                         && f.IsPublic
                                         && f.Name == attachedPropertyName
-                                        && f.FieldType.GenericTypeDefinition == avaloniaAttachedPropertyT
+                                        && f.FieldType.GenericTypeDefinition == uixmlPortAttachedPropertyT
                                         );
 
                                 if (targetPropertyField is null)
@@ -113,8 +113,8 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                                     throw new XamlParseException($"Cannot find '{attachedProperty.Property}' on '{attachedPropertyOwnerType.GetFqn()}", node);
                                 }
 
-                                var targetPropertyType = XamlIlAvaloniaPropertyHelper
-                                    .GetAvaloniaPropertyType(targetPropertyField, context.GetAvaloniaTypes(), node);
+                                var targetPropertyType = XamlIlUixmlPortPropertyHelper
+                                    .GetUixmlPortPropertyType(targetPropertyField, context.GetUixmlPortTypes(), node);
 
                                 if (!XamlTransformHelpers.TryGetCorrectlyTypedValue(context,
                                     new XamlAstTextNode(node, attachedProperty.Value, context.Configuration.WellKnownTypes.String),
@@ -177,9 +177,9 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                 => TypeReferenceResolver.ResolveType(context, $"{p}:{n}", true, node, true));
             pn.Values[0] = selector;
 
-            return new AvaloniaXamlIlTargetTypeMetadataNode(on,
+            return new UixmlPortXamlIlTargetTypeMetadataNode(on,
                 new XamlAstClrTypeReference(selector, selector.TargetType, false),
-                AvaloniaXamlIlTargetTypeMetadataNode.ScopeTypes.Style);
+                UixmlPortXamlIlTargetTypeMetadataNode.ScopeTypes.Style);
         }
 
     }
@@ -213,7 +213,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 
         protected void EmitCall(XamlEmitContext<IXamlILEmitter, XamlILNodeEmitResult> context, IXamlILEmitter codeGen, Func<IXamlMethod, bool> method)
         {
-            var selectors = context.Configuration.TypeSystem.GetType("Avalonia.Styling.Selectors");
+            var selectors = context.Configuration.TypeSystem.GetType("Alternet.UI.Styling.Selectors");
             var found = selectors.FindMethod(m => m.IsStatic && m.Parameters.Count > 0 && method(m));
             codeGen.EmitCall(found);
         }
@@ -366,15 +366,15 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
         public override IXamlType TargetType => Previous?.TargetType;
         protected override void DoEmit(XamlEmitContext<IXamlILEmitter, XamlILNodeEmitResult> context, IXamlILEmitter codeGen)
         {
-            if (!XamlIlAvaloniaPropertyHelper.Emit(context, codeGen, Property))
+            if (!XamlIlUixmlPortPropertyHelper.Emit(context, codeGen, Property))
                 throw new XamlLoadException(
-                    $"{Property.Name} of {(Property.Setter ?? Property.Getter).DeclaringType.GetFqn()} doesn't seem to be an AvaloniaProperty",
+                    $"{Property.Name} of {(Property.Setter ?? Property.Getter).DeclaringType.GetFqn()} doesn't seem to be an UixmlPortProperty",
                     this);
             context.Emit(Value, codeGen, context.Configuration.WellKnownTypes.Object);
             EmitCall(context, codeGen,
                 m => m.Name == "PropertyEquals"
                      && m.Parameters.Count == 3
-                     && m.Parameters[1].FullName == "Avalonia.AvaloniaProperty"
+                     && m.Parameters[1].FullName == "Alternet.UI.UixmlPortProperty"
                      && m.Parameters[2].Equals(context.Configuration.WellKnownTypes.Object));
         }
     }
@@ -402,7 +402,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             EmitCall(context, codeGen,
                 m => m.Name == "PropertyEquals"
                      && m.Parameters.Count == 3
-                     && m.Parameters[1].FullName == "Avalonia.AvaloniaProperty"
+                     && m.Parameters[1].FullName == "Alternet.UI.UixmlPortProperty"
                      && m.Parameters[2].Equals(context.Configuration.WellKnownTypes.Object));
         }
     }

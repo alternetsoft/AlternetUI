@@ -1,7 +1,7 @@
-namespace Avalonia.Logging
+namespace Alternet.UI.Logging
 {
     /// <summary>
-    /// Defines a sink for Avalonia logging messages.
+    /// Defines a sink for UixmlPort logging messages.
     /// </summary>
     internal interface ILogSink
     {

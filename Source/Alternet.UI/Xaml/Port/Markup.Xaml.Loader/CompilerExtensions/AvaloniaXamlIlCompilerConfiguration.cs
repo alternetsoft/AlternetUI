@@ -2,14 +2,14 @@
 using XamlX.Transform;
 using XamlX.TypeSystem;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
 {
-    class AvaloniaXamlIlCompilerConfiguration : TransformerConfiguration
+    class UixmlPortXamlIlCompilerConfiguration : TransformerConfiguration
     {
         public XamlIlClrPropertyInfoEmitter ClrPropertyEmitter { get; }
         public XamlIlPropertyInfoAccessorFactoryEmitter AccessorFactoryEmitter { get; }
 
-        public AvaloniaXamlIlCompilerConfiguration(IXamlTypeSystem typeSystem, 
+        public UixmlPortXamlIlCompilerConfiguration(IXamlTypeSystem typeSystem, 
             IXamlAssembly defaultAssembly, 
             XamlLanguageTypeMappings typeMappings,
             XamlXmlnsMappings xmlnsMappings,

@@ -2,13 +2,13 @@
 using XamlX.Ast;
 using XamlX.Transform;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
-    class AvaloniaXamlIlMetadataRemover : IXamlAstTransformer
+    class UixmlPortXamlIlMetadataRemover : IXamlAstTransformer
     {
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)
         {
-            if (node is AvaloniaXamlIlTargetTypeMetadataNode targetType)
+            if (node is UixmlPortXamlIlTargetTypeMetadataNode targetType)
                 return targetType.Value;
 
             return node;

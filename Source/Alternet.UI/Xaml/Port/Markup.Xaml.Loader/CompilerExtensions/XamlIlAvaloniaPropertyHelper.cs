@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Avalonia.Markup.Xaml.Parsers;
-using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
-using Avalonia.Utilities;
+using Alternet.UI.Markup.Xaml.Parsers;
+using Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
+using Alternet.UI.Utilities;
 using XamlX.Ast;
 using XamlX.Transform;
 using XamlX.Transform.Transformers;
@@ -15,9 +15,9 @@ using XamlX.IL;
 using XamlIlEmitContext = XamlX.Emit.XamlEmitContext<XamlX.IL.IXamlILEmitter, XamlX.IL.XamlILNodeEmitResult>;
 using IXamlIlAstEmitableNode = XamlX.Emit.IXamlAstEmitableNode<XamlX.IL.IXamlILEmitter, XamlX.IL.XamlILNodeEmitResult>;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
 {
-    class XamlIlAvaloniaPropertyHelper
+    class XamlIlUixmlPortPropertyHelper
     {
         public static bool EmitProvideValueTarget(XamlIlEmitContext context, IXamlILEmitter emitter,
             XamlAstClrProperty property)
@@ -35,9 +35,9 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
         
         public static bool Emit(XamlIlEmitContext context, IXamlILEmitter emitter, XamlAstClrProperty property)
         {
-            if (property is IXamlIlAvaloniaProperty ap)
+            if (property is IXamlIlUixmlPortProperty ap)
             {
-                emitter.Ldsfld(ap.AvaloniaProperty);
+                emitter.Ldsfld(ap.UixmlPortProperty);
                 return true;
             }
             var type = property.DeclaringType;
@@ -62,7 +62,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
             return true;
         }
 
-        public static IXamlIlAvaloniaPropertyNode CreateNode(AstTransformationContext context,
+        public static IXamlIlUixmlPortPropertyNode CreateNode(AstTransformationContext context,
             string propertyName, IXamlAstTypeReference selectorTypeReference, IXamlLineInfo lineInfo)
         {
             XamlAstNamePropertyReference forgedReference;
@@ -88,50 +88,50 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                 if (found == null)
                     throw new XamlX.XamlParseException(
                         $"Unable to find {propertyFieldName} field on type {tref.Type.GetFullName()}", lineInfo);
-                return new XamlIlAvaloniaPropertyFieldNode(context.GetAvaloniaTypes(), lineInfo, found);
+                return new XamlIlUixmlPortPropertyFieldNode(context.GetUixmlPortTypes(), lineInfo, found);
             }
 
             var clrProperty =
                 ((XamlAstClrProperty)new PropertyReferenceResolver().Transform(context,
                     forgedReference));
-            return new XamlIlAvaloniaPropertyNode(lineInfo,
-                context.Configuration.TypeSystem.GetType("Avalonia.AvaloniaProperty"),
+            return new XamlIlUixmlPortPropertyNode(lineInfo,
+                context.Configuration.TypeSystem.GetType("Alternet.UI.UixmlPortProperty"),
                 clrProperty);
         }
 
-        public static IXamlType GetAvaloniaPropertyType(IXamlField field,
-            AvaloniaXamlIlWellKnownTypes types, IXamlLineInfo lineInfo)
+        public static IXamlType GetUixmlPortPropertyType(IXamlField field,
+            UixmlPortXamlIlWellKnownTypes types, IXamlLineInfo lineInfo)
         {
-            var avaloniaPropertyType = field.FieldType;
-            while (avaloniaPropertyType != null)
+            var uixmlPortPropertyType = field.FieldType;
+            while (uixmlPortPropertyType != null)
             {
-                if (avaloniaPropertyType.GenericTypeDefinition?.Equals(types.AvaloniaPropertyT) == true)
+                if (uixmlPortPropertyType.GenericTypeDefinition?.Equals(types.UixmlPortPropertyT) == true)
                 {
-                    return avaloniaPropertyType.GenericArguments[0];
+                    return uixmlPortPropertyType.GenericArguments[0];
                 }
 
-                avaloniaPropertyType = avaloniaPropertyType.BaseType;
+                uixmlPortPropertyType = uixmlPortPropertyType.BaseType;
             }
 
             throw new XamlX.XamlParseException(
-                $"{field.Name}'s type {field.FieldType} doesn't inherit from  AvaloniaProperty<T>, make sure to use typed properties",
+                $"{field.Name}'s type {field.FieldType} doesn't inherit from  UixmlPortProperty<T>, make sure to use typed properties",
                 lineInfo);
 
         }
     }
 
-    interface IXamlIlAvaloniaPropertyNode : IXamlAstValueNode
+    interface IXamlIlUixmlPortPropertyNode : IXamlAstValueNode
     {
-        IXamlType AvaloniaPropertyType { get; }
+        IXamlType UixmlPortPropertyType { get; }
     }
     
-    class XamlIlAvaloniaPropertyNode : XamlAstNode, IXamlAstValueNode, IXamlIlAstEmitableNode, IXamlIlAvaloniaPropertyNode
+    class XamlIlUixmlPortPropertyNode : XamlAstNode, IXamlAstValueNode, IXamlIlAstEmitableNode, IXamlIlUixmlPortPropertyNode
     {
-        public XamlIlAvaloniaPropertyNode(IXamlLineInfo lineInfo, IXamlType type, XamlAstClrProperty property) : base(lineInfo)
+        public XamlIlUixmlPortPropertyNode(IXamlLineInfo lineInfo, IXamlType type, XamlAstClrProperty property) : base(lineInfo)
         {
             Type = new XamlAstClrTypeReference(this, type, false);
             Property = property;
-            AvaloniaPropertyType = Property.Getter?.ReturnType
+            UixmlPortPropertyType = Property.Getter?.ReturnType
                                    ?? Property.Setters.First().Parameters[0];
         }
 
@@ -140,23 +140,23 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
         public IXamlAstTypeReference Type { get; }
         public XamlILNodeEmitResult Emit(XamlIlEmitContext context, IXamlILEmitter codeGen)
         {
-            if (!XamlIlAvaloniaPropertyHelper.Emit(context, codeGen, Property))
-                throw new XamlX.XamlLoadException(Property.Name + " is not an AvaloniaProperty", this);
+            if (!XamlIlUixmlPortPropertyHelper.Emit(context, codeGen, Property))
+                throw new XamlX.XamlLoadException(Property.Name + " is not an UixmlPortProperty", this);
             return XamlILNodeEmitResult.Type(0, Type.GetClrType());
         }
 
-        public IXamlType AvaloniaPropertyType { get; }
+        public IXamlType UixmlPortPropertyType { get; }
     }
 
-    class XamlIlAvaloniaPropertyFieldNode : XamlAstNode, IXamlAstValueNode, IXamlIlAstEmitableNode, IXamlIlAvaloniaPropertyNode
+    class XamlIlUixmlPortPropertyFieldNode : XamlAstNode, IXamlAstValueNode, IXamlIlAstEmitableNode, IXamlIlUixmlPortPropertyNode
     {
         private readonly IXamlField _field;
 
-        public XamlIlAvaloniaPropertyFieldNode(AvaloniaXamlIlWellKnownTypes types,
+        public XamlIlUixmlPortPropertyFieldNode(UixmlPortXamlIlWellKnownTypes types,
             IXamlLineInfo lineInfo, IXamlField field) : base(lineInfo)
         {
             _field = field;
-            AvaloniaPropertyType = XamlIlAvaloniaPropertyHelper.GetAvaloniaPropertyType(field,
+            UixmlPortPropertyType = XamlIlUixmlPortPropertyHelper.GetUixmlPortPropertyType(field,
                 types, lineInfo);
         }
         
@@ -169,22 +169,22 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
             return XamlILNodeEmitResult.Type(0, _field.FieldType);
         }
 
-        public IXamlType AvaloniaPropertyType { get; }
+        public IXamlType UixmlPortPropertyType { get; }
     }
 
-    interface IXamlIlAvaloniaProperty
+    interface IXamlIlUixmlPortProperty
     {
-        IXamlField AvaloniaProperty { get; }
+        IXamlField UixmlPortProperty { get; }
     }
     
-    class XamlIlAvaloniaProperty : XamlAstClrProperty, IXamlIlAvaloniaProperty
+    class XamlIlUixmlPortProperty : XamlAstClrProperty, IXamlIlUixmlPortProperty
     {
-        public IXamlField AvaloniaProperty { get; }
-        public XamlIlAvaloniaProperty(XamlAstClrProperty original, IXamlField field,
-            AvaloniaXamlIlWellKnownTypes types)
+        public IXamlField UixmlPortProperty { get; }
+        public XamlIlUixmlPortProperty(XamlAstClrProperty original, IXamlField field,
+            UixmlPortXamlIlWellKnownTypes types)
             :base(original, original.Name, original.DeclaringType, original.Getter, original.Setters)
         {
-            AvaloniaProperty = field;
+            UixmlPortProperty = field;
             CustomAttributes = original.CustomAttributes;
             if (!original.CustomAttributes.Any(ca => ca.Type.Equals(types.AssignBindingAttribute)))
                 Setters.Insert(0, new BindingSetter(types, original.DeclaringType, field));
@@ -192,17 +192,17 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
             //Setters.Insert(0, new UnsetValueSetter(types, original.DeclaringType, field));
         }
 
-        abstract class AvaloniaPropertyCustomSetter : IXamlPropertySetter, IXamlEmitablePropertySetter<IXamlILEmitter>
+        abstract class UixmlPortPropertyCustomSetter : IXamlPropertySetter, IXamlEmitablePropertySetter<IXamlILEmitter>
         {
-            protected AvaloniaXamlIlWellKnownTypes Types;
-            protected IXamlField AvaloniaProperty;
+            protected UixmlPortXamlIlWellKnownTypes Types;
+            protected IXamlField UixmlPortProperty;
 
-            public AvaloniaPropertyCustomSetter(AvaloniaXamlIlWellKnownTypes types,
+            public UixmlPortPropertyCustomSetter(UixmlPortXamlIlWellKnownTypes types,
                 IXamlType declaringType,
-                IXamlField avaloniaProperty)
+                IXamlField uixmlPortProperty)
             {
                 Types = types;
-                AvaloniaProperty = avaloniaProperty;
+                UixmlPortProperty = uixmlPortProperty;
                 TargetType = declaringType;
             }
 
@@ -217,11 +217,11 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
             public abstract void Emit(IXamlILEmitter codegen);
         }
 
-        class BindingSetter : AvaloniaPropertyCustomSetter
+        class BindingSetter : UixmlPortPropertyCustomSetter
         {
-            public BindingSetter(AvaloniaXamlIlWellKnownTypes types,
+            public BindingSetter(UixmlPortXamlIlWellKnownTypes types,
                 IXamlType declaringType,
-                IXamlField avaloniaProperty) : base(types, declaringType, avaloniaProperty)
+                IXamlField uixmlPortProperty) : base(types, declaringType, uixmlPortProperty)
             {
                 Parameters = new[] {types.Binding};
             }
@@ -231,32 +231,32 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                 using (var bloc = emitter.LocalsPool.GetLocal(Types.Binding))
                     emitter
                         .Stloc(bloc.Local)
-                        .Ldsfld(AvaloniaProperty)
+                        .Ldsfld(UixmlPortProperty)
                         .Ldloc(bloc.Local)
                         // TODO: provide anchor?
                         .Ldnull();
-                emitter.EmitCall(Types.AvaloniaObjectBindMethod, true);
+                emitter.EmitCall(Types.UixmlPortObjectBindMethod, true);
             }
         }
 
-        class UnsetValueSetter : AvaloniaPropertyCustomSetter
+        class UnsetValueSetter : UixmlPortPropertyCustomSetter
         {
-            public UnsetValueSetter(AvaloniaXamlIlWellKnownTypes types, IXamlType declaringType, IXamlField avaloniaProperty) 
-                : base(types, declaringType, avaloniaProperty)
+            public UnsetValueSetter(UixmlPortXamlIlWellKnownTypes types, IXamlType declaringType, IXamlField uixmlPortProperty) 
+                : base(types, declaringType, uixmlPortProperty)
             {
                 Parameters = new[] {types.UnsetValueType};
             }
 
             public override void Emit(IXamlILEmitter codegen)
             {
-                var unsetValue = Types.AvaloniaProperty.Fields.First(f => f.Name == "UnsetValue");
+                var unsetValue = Types.UixmlPortProperty.Fields.First(f => f.Name == "UnsetValue");
                 codegen
                     // Ignore the instance and load one from the static field to avoid extra local variable
                     .Pop()
-                    .Ldsfld(AvaloniaProperty)
+                    .Ldsfld(UixmlPortProperty)
                     .Ldsfld(unsetValue)
                     .Ldc_I4(0)
-                    .EmitCall(Types.AvaloniaObjectSetValueMethod, true);
+                    .EmitCall(Types.UixmlPortObjectSetValueMethod, true);
             }
         }
     }

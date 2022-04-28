@@ -2,8 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Avalonia.Data.Core;
-using Avalonia.Utilities;
+using Alternet.UI.Data.Core;
+using Alternet.UI.Utilities;
 
 #nullable enable
 
@@ -11,7 +11,7 @@ using Avalonia.Utilities;
 // only reason they have overridden Equals methods is for unit testing.
 #pragma warning disable 659
 
-namespace Avalonia.Markup.Parsers
+namespace Alternet.UI.Markup.Parsers
 {
     internal static class SelectorGrammar
     {

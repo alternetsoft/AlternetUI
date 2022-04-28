@@ -5,17 +5,17 @@ using System.Globalization;
 using System.Linq;
 using Alternet.Drawing;
 using Alternet.UI;
-using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.AstNodes;
-using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
+using Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.AstNodes;
+using Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
 using XamlX.Ast;
 using XamlX.Transform;
 using XamlX.TypeSystem;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
 {
-    class AvaloniaXamlIlLanguageParseIntrinsics
+    class UixmlPortXamlIlLanguageParseIntrinsics
     {
-        public static bool TryConvert(AstTransformationContext context, IXamlAstValueNode node, string text, IXamlType type, AvaloniaXamlIlWellKnownTypes types, out IXamlAstValueNode result)
+        public static bool TryConvert(AstTransformationContext context, IXamlAstValueNode node, string text, IXamlType type, UixmlPortXamlIlWellKnownTypes types, out IXamlAstValueNode result)
         {
             if (type.FullName == "System.TimeSpan")
             {
@@ -40,7 +40,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
 
             if (type.Equals(types.FontFamily))
             {
-                result = new AvaloniaXamlIlFontFamilyAstNode(types, text, node);
+                result = new UixmlPortXamlIlFontFamilyAstNode(types, text, node);
                 return true;
             }
 
@@ -50,7 +50,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                 {
                     var thickness = Thickness.Parse(text);
             
-                    result = new AvaloniaXamlIlVectorLikeConstantAstNode(node, types, types.Thickness, types.ThicknessFullConstructor,
+                    result = new UixmlPortXamlIlVectorLikeConstantAstNode(node, types, types.Thickness, types.ThicknessFullConstructor,
                         new[] { thickness.Left, thickness.Top, thickness.Right, thickness.Bottom });
                 
                     return true;
@@ -67,7 +67,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                 {
                     var point = Point.Parse(text);
             
-                    result = new AvaloniaXamlIlVectorLikeConstantAstNode(node, types, types.Point, types.PointFullConstructor,
+                    result = new UixmlPortXamlIlVectorLikeConstantAstNode(node, types, types.Point, types.PointFullConstructor,
                         new[] { point.X, point.Y });
                 
                     return true;
@@ -84,7 +84,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                 {
                     var vector = Vector.Parse(text);
             
-                    result = new AvaloniaXamlIlVectorLikeConstantAstNode(node, types, types.Vector, types.VectorFullConstructor,
+                    result = new UixmlPortXamlIlVectorLikeConstantAstNode(node, types, types.Vector, types.VectorFullConstructor,
                         new[] { vector.X, vector.Y });
                 
                     return true;
@@ -101,7 +101,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                 {
                     var size = Size.Parse(text);
                 
-                    result = new AvaloniaXamlIlVectorLikeConstantAstNode(node, types, types.Size, types.SizeFullConstructor,
+                    result = new UixmlPortXamlIlVectorLikeConstantAstNode(node, types, types.Size, types.SizeFullConstructor,
                         new[] { size.Width, size.Height });
                 
                     return true;
@@ -119,7 +119,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                 {
                     var matrix = Matrix.Parse(text);
                     
-                    result = new AvaloniaXamlIlVectorLikeConstantAstNode(node, types, types.Matrix, types.MatrixFullConstructor,
+                    result = new UixmlPortXamlIlVectorLikeConstantAstNode(node, types, types.Matrix, types.MatrixFullConstructor,
                         new[] { matrix.M11, matrix.M12, matrix.M21, matrix.M22, matrix.M31, matrix.M32 });
                 
                     return true;
@@ -136,7 +136,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                 {
                     var cornerRadius = CornerRadius.Parse(text);
             
-                    result = new AvaloniaXamlIlVectorLikeConstantAstNode(node, types, types.CornerRadius, types.CornerRadiusFullConstructor,
+                    result = new UixmlPortXamlIlVectorLikeConstantAstNode(node, types, types.CornerRadius, types.CornerRadiusFullConstructor,
                         new[] { cornerRadius.TopLeft, cornerRadius.TopRight, cornerRadius.BottomRight, cornerRadius.BottomLeft });
                 
                     return true;
@@ -168,7 +168,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                 {
                     var gridLength = GridLength.Parse(text);
                 
-                    result = new AvaloniaXamlIlGridLengthAstNode(node, types, gridLength);
+                    result = new UixmlPortXamlIlGridLengthAstNode(node, types, gridLength);
                     
                     return true;
                 }
@@ -206,7 +206,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                 var classes = text.Split(' ');
                 var classNodes = classes.Select(c => new XamlAstTextNode(node, c, types.XamlIlTypes.String)).ToArray();
 
-                result = new AvaloniaXamlIlAvaloniaListConstantAstNode(node, types, types.Classes, types.XamlIlTypes.String, classNodes);
+                result = new UixmlPortXamlIlUixmlPortListConstantAstNode(node, types, types.Classes, types.XamlIlTypes.String, classNodes);
                 return true;
             }
 
@@ -233,7 +233,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
         private static bool ConvertDefinitionList(
             IXamlAstValueNode node, 
             string text,
-            AvaloniaXamlIlWellKnownTypes types,
+            UixmlPortXamlIlWellKnownTypes types,
             IXamlType listType,
             IXamlType elementType,
             string errorDisplayName,
@@ -250,7 +250,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
 
             //    IXamlAstValueNode CreateDefinitionNode(GridLength length)
             //    {
-            //        var lengthNode = new AvaloniaXamlIlGridLengthAstNode(node, types, length);
+            //        var lengthNode = new UixmlPortXamlIlGridLengthAstNode(node, types, length);
 
             //        return new XamlAstNewClrObjectNode(node, definitionTypeRef,
             //            definitionConstructorGridLength, new List<IXamlAstValueNode> {lengthNode});
@@ -259,7 +259,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
             //    var definitionNodes =
             //        new List<IXamlAstValueNode>(lengths.Select(CreateDefinitionNode));
 
-            //    result = new AvaloniaXamlIlAvaloniaListConstantAstNode(node, types, listType, elementType, definitionNodes);
+            //    result = new UixmlPortXamlIlUixmlPortListConstantAstNode(node, types, listType, elementType, definitionNodes);
 
             //    return true;
             //}

@@ -2,24 +2,24 @@
 using XamlX.Ast;
 using XamlX.Transform;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
-    class AvaloniaXamlIlTransformSyntheticCompiledBindingMembers : IXamlAstTransformer
+    class UixmlPortXamlIlTransformSyntheticCompiledBindingMembers : IXamlAstTransformer
     {
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)
         {
             if (node is XamlAstNamePropertyReference prop
                && prop.TargetType is XamlAstClrTypeReference targetRef
-               && targetRef.GetClrType().Equals(context.GetAvaloniaTypes().CompiledBindingExtension))
+               && targetRef.GetClrType().Equals(context.GetUixmlPortTypes().CompiledBindingExtension))
             {
                 if (prop.Name == "ElementName")
                 {
-                    return new AvaloniaSyntheticCompiledBindingProperty(node,
+                    return new UixmlPortSyntheticCompiledBindingProperty(node,
                         SyntheticCompiledBindingPropertyName.ElementName);
                 }
                 else if (prop.Name == "RelativeSource")
                 {
-                    return new AvaloniaSyntheticCompiledBindingProperty(node,
+                    return new UixmlPortSyntheticCompiledBindingProperty(node,
                         SyntheticCompiledBindingPropertyName.RelativeSource);
                 }
             }
@@ -34,11 +34,11 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
         RelativeSource
     }
 
-    class AvaloniaSyntheticCompiledBindingProperty : XamlAstNode, IXamlAstPropertyReference
+    class UixmlPortSyntheticCompiledBindingProperty : XamlAstNode, IXamlAstPropertyReference
     {
         public SyntheticCompiledBindingPropertyName Name { get; }
 
-        public AvaloniaSyntheticCompiledBindingProperty(
+        public UixmlPortSyntheticCompiledBindingProperty(
             IXamlLineInfo lineInfo,
             SyntheticCompiledBindingPropertyName name)
             : base(lineInfo)

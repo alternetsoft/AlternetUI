@@ -5,23 +5,23 @@ using XamlX.IL;
 using XamlX.Transform;
 using XamlX.TypeSystem;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
-    class AvaloniaXamlIlWellKnownTypes
+    class UixmlPortXamlIlWellKnownTypes
     {
-        public IXamlType AvaloniaObject { get; }
+        public IXamlType UixmlPortObject { get; }
         public IXamlType DependencyObject { get; }
-        public IXamlType IAvaloniaObject { get; }
+        public IXamlType IUixmlPortObject { get; }
         public IXamlType BindingPriority { get; }
-        public IXamlType AvaloniaObjectExtensions { get; }
-        public IXamlType AvaloniaProperty { get; }
+        public IXamlType UixmlPortObjectExtensions { get; }
+        public IXamlType UixmlPortProperty { get; }
         public IXamlType DependencyProperty { get; }
-        public IXamlType AvaloniaPropertyT { get; }
-        public IXamlType AvaloniaAttachedPropertyT { get; }
+        public IXamlType UixmlPortPropertyT { get; }
+        public IXamlType UixmlPortAttachedPropertyT { get; }
         //public IXamlType IBinding { get; }
         public IXamlType Binding { get; }
-        public IXamlMethod AvaloniaObjectBindMethod { get; }
-        public IXamlMethod AvaloniaObjectSetValueMethod { get; }
+        public IXamlMethod UixmlPortObjectBindMethod { get; }
+        public IXamlMethod UixmlPortObjectSetValueMethod { get; }
         public IXamlType IDisposable { get; }
         public XamlTypeWellKnownTypes XamlIlTypes { get; }
         public XamlLanguageTypeMappings XamlIlMappings { get; }
@@ -89,32 +89,32 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
         public IXamlType ImmutableSolidColorBrush { get; }
         public IXamlConstructor ImmutableSolidColorBrushConstructorColor { get; }
 
-        public AvaloniaXamlIlWellKnownTypes(TransformerConfiguration cfg)
+        public UixmlPortXamlIlWellKnownTypes(TransformerConfiguration cfg)
         {
             XamlIlTypes = cfg.WellKnownTypes;
-            //AvaloniaObject = cfg.TypeSystem.GetType("Avalonia.AvaloniaObject");
-            //IAvaloniaObject = cfg.TypeSystem.GetType("Avalonia.IAvaloniaObject");
-            AvaloniaObjectExtensions = cfg.TypeSystem.GetType("Avalonia.AvaloniaObjectExtensions");
-            //AvaloniaProperty = cfg.TypeSystem.GetType("Avalonia.AvaloniaProperty");
+            //UixmlPortObject = cfg.TypeSystem.GetType("Alternet.UI.UixmlPortObject");
+            //IUixmlPortObject = cfg.TypeSystem.GetType("Alternet.UI.IUixmlPortObject");
+            UixmlPortObjectExtensions = cfg.TypeSystem.GetType("Alternet.UI.UixmlPortObjectExtensions");
+            //UixmlPortProperty = cfg.TypeSystem.GetType("Alternet.UI.UixmlPortProperty");
             DependencyObject = cfg.TypeSystem.GetType("Alternet.UI.DependencyObject");
             DependencyProperty = cfg.TypeSystem.GetType("Alternet.UI.DependencyProperty");
-            //AvaloniaPropertyT = cfg.TypeSystem.GetType("Avalonia.AvaloniaProperty`1");
-            //AvaloniaAttachedPropertyT = cfg.TypeSystem.GetType("Avalonia.AttachedProperty`1");
-            //BindingPriority = cfg.TypeSystem.GetType("Avalonia.Data.BindingPriority");
+            //UixmlPortPropertyT = cfg.TypeSystem.GetType("Alternet.UI.UixmlPortProperty`1");
+            //UixmlPortAttachedPropertyT = cfg.TypeSystem.GetType("Alternet.UI.AttachedProperty`1");
+            //BindingPriority = cfg.TypeSystem.GetType("Alternet.UI.Data.BindingPriority");
             Binding = cfg.TypeSystem.GetType("Alternet.UI.Binding");
             IDisposable = cfg.TypeSystem.GetType("System.IDisposable");
-            //Transitions = cfg.TypeSystem.GetType("Avalonia.Animation.Transitions");
-            //AssignBindingAttribute = cfg.TypeSystem.GetType("Avalonia.Data.AssignBindingAttribute");
-            //AvaloniaObjectBindMethod = AvaloniaObjectExtensions.FindMethod("Bind", IDisposable, false, IAvaloniaObject,
-            //    AvaloniaProperty,
+            //Transitions = cfg.TypeSystem.GetType("Alternet.UI.Animation.Transitions");
+            //AssignBindingAttribute = cfg.TypeSystem.GetType("Alternet.UI.Data.AssignBindingAttribute");
+            //UixmlPortObjectBindMethod = UixmlPortObjectExtensions.FindMethod("Bind", IDisposable, false, IUixmlPortObject,
+            //    UixmlPortProperty,
             //    IBinding, cfg.WellKnownTypes.Object);
-            AvaloniaObjectBindMethod = AvaloniaObjectExtensions.FindMethod("Bind", IDisposable, false, DependencyObject,
+            UixmlPortObjectBindMethod = UixmlPortObjectExtensions.FindMethod("Bind", IDisposable, false, DependencyObject,
                 DependencyProperty,
                 Binding, cfg.WellKnownTypes.Object);
-            UnsetValueType = cfg.TypeSystem.GetType("Avalonia.UnsetValueType");
-            //StyledElement = cfg.TypeSystem.GetType("Avalonia.StyledElement");
-            //IStyledElement = cfg.TypeSystem.GetType("Avalonia.IStyledElement");
-            //INameScope = cfg.TypeSystem.GetType("Avalonia.Controls.INameScope");
+            UnsetValueType = cfg.TypeSystem.GetType("Alternet.UI.UnsetValueType");
+            //StyledElement = cfg.TypeSystem.GetType("Alternet.UI.StyledElement");
+            //IStyledElement = cfg.TypeSystem.GetType("Alternet.UI.IStyledElement");
+            //INameScope = cfg.TypeSystem.GetType("Alternet.UI.Controls.INameScope");
             //INameScopeRegister = INameScope.GetMethod(
             //    new FindMethodMethodSignature("Register", XamlIlTypes.Void,
             //         XamlIlTypes.String, XamlIlTypes.Object)
@@ -130,33 +130,33 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             //        DeclaringOnly = true,
             //        IsExactMatch = true
             //    });
-            //NameScope = cfg.TypeSystem.GetType("Avalonia.Controls.NameScope");
+            //NameScope = cfg.TypeSystem.GetType("Alternet.UI.Controls.NameScope");
             //NameScopeSetNameScope = NameScope.GetMethod(new FindMethodMethodSignature("SetNameScope",
             //    XamlIlTypes.Void, StyledElement, INameScope)
             //{ IsStatic = true });
-            //AvaloniaObjectSetValueMethod = AvaloniaObject.FindMethod("SetValue", XamlIlTypes.Void,
-            //    false, AvaloniaProperty, XamlIlTypes.Object, BindingPriority);
+            //UixmlPortObjectSetValueMethod = UixmlPortObject.FindMethod("SetValue", XamlIlTypes.Void,
+            //    false, UixmlPortProperty, XamlIlTypes.Object, BindingPriority);
             IPropertyInfo = cfg.TypeSystem.GetType("Alternet.UI.IPropertyInfo");
             ClrPropertyInfo = cfg.TypeSystem.GetType("Alternet.UI.ClrPropertyInfo");
-            //PropertyPath = cfg.TypeSystem.GetType("Avalonia.Data.Core.PropertyPath");
-            //PropertyPathBuilder = cfg.TypeSystem.GetType("Avalonia.Data.Core.PropertyPathBuilder");
-            //IPropertyAccessor = cfg.TypeSystem.GetType("Avalonia.Data.Core.Plugins.IPropertyAccessor");
-            //PropertyInfoAccessorFactory = cfg.TypeSystem.GetType("Avalonia.Markup.Xaml.MarkupExtensions.CompiledBindings.PropertyInfoAccessorFactory");
-            //CompiledBindingPathBuilder = cfg.TypeSystem.GetType("Avalonia.Markup.Xaml.MarkupExtensions.CompiledBindings.CompiledBindingPathBuilder");
-            //CompiledBindingPath = cfg.TypeSystem.GetType("Avalonia.Markup.Xaml.MarkupExtensions.CompiledBindings.CompiledBindingPath");
-            //CompiledBindingExtension = cfg.TypeSystem.GetType("Avalonia.Markup.Xaml.MarkupExtensions.CompiledBindingExtension");
-            //ResolveByNameExtension = cfg.TypeSystem.GetType("Avalonia.Markup.Xaml.MarkupExtensions.ResolveByNameExtension");
-            //DataTemplate = cfg.TypeSystem.GetType("Avalonia.Markup.Xaml.Templates.DataTemplate");
-            //IDataTemplate = cfg.TypeSystem.GetType("Avalonia.Controls.Templates.IDataTemplate");
-            //IItemsPresenterHost = cfg.TypeSystem.GetType("Avalonia.Controls.Presenters.IItemsPresenterHost");
-            //ItemsRepeater = cfg.TypeSystem.GetType("Avalonia.Controls.ItemsRepeater");
-            //ReflectionBindingExtension = cfg.TypeSystem.GetType("Avalonia.Markup.Xaml.MarkupExtensions.ReflectionBindingExtension");
-            //RelativeSource = cfg.TypeSystem.GetType("Avalonia.Data.RelativeSource");
+            //PropertyPath = cfg.TypeSystem.GetType("Alternet.UI.Data.Core.PropertyPath");
+            //PropertyPathBuilder = cfg.TypeSystem.GetType("Alternet.UI.Data.Core.PropertyPathBuilder");
+            //IPropertyAccessor = cfg.TypeSystem.GetType("Alternet.UI.Data.Core.Plugins.IPropertyAccessor");
+            //PropertyInfoAccessorFactory = cfg.TypeSystem.GetType("Alternet.UI.Markup.Xaml.MarkupExtensions.CompiledBindings.PropertyInfoAccessorFactory");
+            //CompiledBindingPathBuilder = cfg.TypeSystem.GetType("Alternet.UI.Markup.Xaml.MarkupExtensions.CompiledBindings.CompiledBindingPathBuilder");
+            //CompiledBindingPath = cfg.TypeSystem.GetType("Alternet.UI.Markup.Xaml.MarkupExtensions.CompiledBindings.CompiledBindingPath");
+            //CompiledBindingExtension = cfg.TypeSystem.GetType("Alternet.UI.Markup.Xaml.MarkupExtensions.CompiledBindingExtension");
+            //ResolveByNameExtension = cfg.TypeSystem.GetType("Alternet.UI.Markup.Xaml.MarkupExtensions.ResolveByNameExtension");
+            //DataTemplate = cfg.TypeSystem.GetType("Alternet.UI.Markup.Xaml.Templates.DataTemplate");
+            //IDataTemplate = cfg.TypeSystem.GetType("Alternet.UI.Controls.Templates.IDataTemplate");
+            //IItemsPresenterHost = cfg.TypeSystem.GetType("Alternet.UI.Controls.Presenters.IItemsPresenterHost");
+            //ItemsRepeater = cfg.TypeSystem.GetType("Alternet.UI.Controls.ItemsRepeater");
+            //ReflectionBindingExtension = cfg.TypeSystem.GetType("Alternet.UI.Markup.Xaml.MarkupExtensions.ReflectionBindingExtension");
+            //RelativeSource = cfg.TypeSystem.GetType("Alternet.UI.Data.RelativeSource");
             UInt = cfg.TypeSystem.GetType("System.UInt32");
             Int = cfg.TypeSystem.GetType("System.Int32");
             Long = cfg.TypeSystem.GetType("System.Int64");
             Uri = cfg.TypeSystem.GetType("System.Uri");
-            //FontFamily = cfg.TypeSystem.GetType("Avalonia.Media.FontFamily");
+            //FontFamily = cfg.TypeSystem.GetType("Alternet.UI.Media.FontFamily");
             //FontFamilyConstructorUriName = FontFamily.GetConstructor(new List<IXamlType> { Uri, XamlIlTypes.String });
 
             //(IXamlType, IXamlConstructor) GetNumericTypeInfo(string name, IXamlType componentType, int componentCount)
@@ -167,52 +167,52 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             //    return (type, ctor);
             //}
 
-            //(Thickness, ThicknessFullConstructor) = GetNumericTypeInfo("Avalonia.Thickness", XamlIlTypes.Double, 4);
-            //(Point, PointFullConstructor) = GetNumericTypeInfo("Avalonia.Point", XamlIlTypes.Double, 2);
-            //(Vector, VectorFullConstructor) = GetNumericTypeInfo("Avalonia.Vector", XamlIlTypes.Double, 2);
-            //(Size, SizeFullConstructor) = GetNumericTypeInfo("Avalonia.Size", XamlIlTypes.Double, 2);
-            //(Matrix, MatrixFullConstructor) = GetNumericTypeInfo("Avalonia.Matrix", XamlIlTypes.Double, 6);
-            //(CornerRadius, CornerRadiusFullConstructor) = GetNumericTypeInfo("Avalonia.CornerRadius", XamlIlTypes.Double, 4);
+            //(Thickness, ThicknessFullConstructor) = GetNumericTypeInfo("Alternet.UI.Thickness", XamlIlTypes.Double, 4);
+            //(Point, PointFullConstructor) = GetNumericTypeInfo("Alternet.UI.Point", XamlIlTypes.Double, 2);
+            //(Vector, VectorFullConstructor) = GetNumericTypeInfo("Alternet.UI.Vector", XamlIlTypes.Double, 2);
+            //(Size, SizeFullConstructor) = GetNumericTypeInfo("Alternet.UI.Size", XamlIlTypes.Double, 2);
+            //(Matrix, MatrixFullConstructor) = GetNumericTypeInfo("Alternet.UI.Matrix", XamlIlTypes.Double, 6);
+            //(CornerRadius, CornerRadiusFullConstructor) = GetNumericTypeInfo("Alternet.UI.CornerRadius", XamlIlTypes.Double, 4);
 
-            //GridLength = cfg.TypeSystem.GetType("Avalonia.Controls.GridLength");
-            //GridLengthConstructorValueType = GridLength.GetConstructor(new List<IXamlType> { XamlIlTypes.Double, cfg.TypeSystem.GetType("Avalonia.Controls.GridUnitType") });
-            //Color = cfg.TypeSystem.GetType("Avalonia.Media.Color");
-            //StandardCursorType = cfg.TypeSystem.GetType("Avalonia.Input.StandardCursorType");
-            //Cursor = cfg.TypeSystem.GetType("Avalonia.Input.Cursor");
+            //GridLength = cfg.TypeSystem.GetType("Alternet.UI.Controls.GridLength");
+            //GridLengthConstructorValueType = GridLength.GetConstructor(new List<IXamlType> { XamlIlTypes.Double, cfg.TypeSystem.GetType("Alternet.UI.Controls.GridUnitType") });
+            //Color = cfg.TypeSystem.GetType("Alternet.UI.Media.Color");
+            //StandardCursorType = cfg.TypeSystem.GetType("Alternet.UI.Input.StandardCursorType");
+            //Cursor = cfg.TypeSystem.GetType("Alternet.UI.Input.Cursor");
             //CursorTypeConstructor = Cursor.GetConstructor(new List<IXamlType> { StandardCursorType });
-            //ColumnDefinition = cfg.TypeSystem.GetType("Avalonia.Controls.ColumnDefinition");
-            //ColumnDefinitions = cfg.TypeSystem.GetType("Avalonia.Controls.ColumnDefinitions");
-            //RowDefinition = cfg.TypeSystem.GetType("Avalonia.Controls.RowDefinition");
-            //RowDefinitions = cfg.TypeSystem.GetType("Avalonia.Controls.RowDefinitions");
-            //Classes = cfg.TypeSystem.GetType("Avalonia.Controls.Classes");
+            //ColumnDefinition = cfg.TypeSystem.GetType("Alternet.UI.Controls.ColumnDefinition");
+            //ColumnDefinitions = cfg.TypeSystem.GetType("Alternet.UI.Controls.ColumnDefinitions");
+            //RowDefinition = cfg.TypeSystem.GetType("Alternet.UI.Controls.RowDefinition");
+            //RowDefinitions = cfg.TypeSystem.GetType("Alternet.UI.Controls.RowDefinitions");
+            //Classes = cfg.TypeSystem.GetType("Alternet.UI.Controls.Classes");
             //StyledElementClassesProperty =
             //    StyledElement.Properties.First(x => x.Name == "Classes" && x.PropertyType.Equals(Classes));
-            //ClassesBindMethod = cfg.TypeSystem.GetType("Avalonia.StyledElementExtensions")
+            //ClassesBindMethod = cfg.TypeSystem.GetType("Alternet.UI.StyledElementExtensions")
             //    .FindMethod( "BindClass", IDisposable, false, IStyledElement,
             //    cfg.WellKnownTypes.String,
             //    IBinding, cfg.WellKnownTypes.Object);
 
-            //IBrush = cfg.TypeSystem.GetType("Avalonia.Media.IBrush");
-            //ImmutableSolidColorBrush = cfg.TypeSystem.GetType("Avalonia.Media.Immutable.ImmutableSolidColorBrush");
+            //IBrush = cfg.TypeSystem.GetType("Alternet.UI.Media.IBrush");
+            //ImmutableSolidColorBrush = cfg.TypeSystem.GetType("Alternet.UI.Media.Immutable.ImmutableSolidColorBrush");
             //ImmutableSolidColorBrushConstructorColor = ImmutableSolidColorBrush.GetConstructor(new List<IXamlType> { UInt });
         }
     }
 
-    static class AvaloniaXamlIlWellKnownTypesExtensions
+    static class UixmlPortXamlIlWellKnownTypesExtensions
     {
-        public static AvaloniaXamlIlWellKnownTypes GetAvaloniaTypes(this AstTransformationContext ctx)
+        public static UixmlPortXamlIlWellKnownTypes GetUixmlPortTypes(this AstTransformationContext ctx)
         {
-            if (ctx.TryGetItem<AvaloniaXamlIlWellKnownTypes>(out var rv))
+            if (ctx.TryGetItem<UixmlPortXamlIlWellKnownTypes>(out var rv))
                 return rv;
-            ctx.SetItem(rv = new AvaloniaXamlIlWellKnownTypes(ctx.Configuration));
+            ctx.SetItem(rv = new UixmlPortXamlIlWellKnownTypes(ctx.Configuration));
             return rv;
         }
         
-        public static AvaloniaXamlIlWellKnownTypes GetAvaloniaTypes(this XamlEmitContext<IXamlILEmitter, XamlILNodeEmitResult> ctx)
+        public static UixmlPortXamlIlWellKnownTypes GetUixmlPortTypes(this XamlEmitContext<IXamlILEmitter, XamlILNodeEmitResult> ctx)
         {
-            if (ctx.TryGetItem<AvaloniaXamlIlWellKnownTypes>(out var rv))
+            if (ctx.TryGetItem<UixmlPortXamlIlWellKnownTypes>(out var rv))
                 return rv;
-            ctx.SetItem(rv = new AvaloniaXamlIlWellKnownTypes(ctx.Configuration));
+            ctx.SetItem(rv = new UixmlPortXamlIlWellKnownTypes(ctx.Configuration));
             return rv;
         }
     }

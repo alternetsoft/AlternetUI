@@ -1,14 +1,14 @@
 #nullable disable
 using System.Collections.Generic;
-using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
+using Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
 using XamlX.Ast;
 using XamlX.Emit;
 using XamlX.IL;
 using XamlX.TypeSystem;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.AstNodes
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.AstNodes
 {
-    class AvaloniaXamlIlAvaloniaListConstantAstNode : XamlAstNode, IXamlAstValueNode, IXamlAstILEmitableNode
+    class UixmlPortXamlIlUixmlPortListConstantAstNode : XamlAstNode, IXamlAstValueNode, IXamlAstILEmitableNode
     {
         private readonly IXamlType _elementType;
         private readonly IReadOnlyList<IXamlAstValueNode> _values;
@@ -16,7 +16,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.AstNodes
         private readonly IXamlMethod _listAddMethod;
         private readonly IXamlMethod _listSetCapacityMethod;
 
-        public AvaloniaXamlIlAvaloniaListConstantAstNode(IXamlLineInfo lineInfo, AvaloniaXamlIlWellKnownTypes types, IXamlType listType, IXamlType elementType, IReadOnlyList<IXamlAstValueNode> values) : base(lineInfo)
+        public UixmlPortXamlIlUixmlPortListConstantAstNode(IXamlLineInfo lineInfo, UixmlPortXamlIlWellKnownTypes types, IXamlType listType, IXamlType elementType, IReadOnlyList<IXamlAstValueNode> values) : base(lineInfo)
         {
             _constructor = listType.GetConstructor();
             _listAddMethod = listType.GetMethod(new FindMethodMethodSignature("Add", types.XamlIlTypes.Void, elementType));

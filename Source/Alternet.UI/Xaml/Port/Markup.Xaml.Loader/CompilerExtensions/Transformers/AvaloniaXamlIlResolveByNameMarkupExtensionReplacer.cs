@@ -6,9 +6,9 @@ using XamlX.Transform;
 using XamlX.TypeSystem;
 
 #nullable  enable
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
-    class AvaloniaXamlIlResolveByNameMarkupExtensionReplacer : IXamlAstTransformer
+    class UixmlPortXamlIlResolveByNameMarkupExtensionReplacer : IXamlAstTransformer
     {
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)
         {
@@ -24,7 +24,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                 attributes = attributes.Concat(referenceNode.Getter.CustomAttributes);
             }
 
-            if (attributes.All(attribute => attribute.Type.FullName != "Avalonia.Controls.ResolveByNameAttribute"))
+            if (attributes.All(attribute => attribute.Type.FullName != "Alternet.UI.Controls.ResolveByNameAttribute"))
                 return node;
 
             if (propertyValueNode.Values.Count != 1 || !(propertyValueNode.Values.First() is XamlAstTextNode))
@@ -33,7 +33,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             var newNode = new XamlAstObjectNode(
                 propertyValueNode.Values[0],
                 new XamlAstClrTypeReference(propertyValueNode.Values[0],
-                    context.GetAvaloniaTypes().ResolveByNameExtension, true))
+                    context.GetUixmlPortTypes().ResolveByNameExtension, true))
             {
                 Arguments = new List<IXamlAstValueNode> { propertyValueNode.Values[0] }
             };

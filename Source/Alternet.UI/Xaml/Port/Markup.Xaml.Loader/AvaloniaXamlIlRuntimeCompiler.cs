@@ -6,21 +6,24 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
-using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions;
-using Avalonia.Markup.Xaml.XamlIl.Runtime;
+using Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions;
+using Alternet.UI.Markup.Xaml.XamlIl.Runtime;
 using XamlX.Transform;
 using XamlX.TypeSystem;
 using XamlX.IL;
 using XamlX.Emit;
+
 #if RUNTIME_XAML_CECIL
 using TypeAttributes = Mono.Cecil.TypeAttributes;
 using Mono.Cecil;
 using XamlX.Ast;
 using XamlX.IL.Cecil;
 #endif
-namespace Avalonia.Markup.Xaml.XamlIl
+namespace Alternet.UI.Markup.Xaml.XamlIl
 {
-    static class AvaloniaXamlIlRuntimeCompiler
+    using Expression = System.Linq.Expressions.Expression;
+
+    static class UixmlPortXamlIlRuntimeCompiler
     {
 #if !RUNTIME_XAML_CECIL
         private static SreTypeSystem _sreTypeSystem;
@@ -70,7 +73,7 @@ namespace Avalonia.Markup.Xaml.XamlIl
                         _sreAsm = (AssemblyBuilder)define.Invoke(AppDomain.CurrentDomain, new object[]
                         {
                             name, (AssemblyBuilderAccess)3,
-                            Path.GetDirectoryName(typeof(AvaloniaXamlIlRuntimeCompiler).Assembly.GetModules()[0]
+                            Path.GetDirectoryName(typeof(UixmlPortXamlIlRuntimeCompiler).Assembly.GetModules()[0]
                                 .FullyQualifiedName)
                         });
                     else
@@ -85,7 +88,7 @@ namespace Avalonia.Markup.Xaml.XamlIl
             }
 
             if (_sreMappings == null)
-                (_sreMappings, _sreEmitMappings) = AvaloniaXamlIlLanguage.Configure(_sreTypeSystem);
+                (_sreMappings, _sreEmitMappings) = UixmlPortXamlIlLanguage.Configure(_sreTypeSystem);
             if (_sreXmlns == null)
                 _sreXmlns = XamlXmlnsMappings.Resolve(_sreTypeSystem, _sreMappings);
             if (_sreContextType == null)
@@ -176,8 +179,8 @@ namespace Avalonia.Markup.Xaml.XamlIl
             var clrPropertyBuilder = tb.DefineNestedType("ClrProperties_" + Guid.NewGuid().ToString("N"));
             var indexerClosureType = _sreBuilder.DefineType("IndexerClosure_" + Guid.NewGuid().ToString("N"));
 
-            var compiler = new AvaloniaXamlIlCompiler(new AvaloniaXamlIlCompilerConfiguration(_sreTypeSystem, asm,
-                _sreMappings, _sreXmlns, AvaloniaXamlIlLanguage.CustomValueConverter,
+            var compiler = new UixmlPortXamlIlCompiler(new UixmlPortXamlIlCompilerConfiguration(_sreTypeSystem, asm,
+                _sreMappings, _sreXmlns, UixmlPortXamlIlLanguage.CustomValueConverter,
                 new XamlIlClrPropertyInfoEmitter(_sreTypeSystem.CreateTypeBuilder(clrPropertyBuilder)),
                 new XamlIlPropertyInfoAccessorFactoryEmitter(_sreTypeSystem.CreateTypeBuilder(indexerClosureType))), 
                 _sreEmitMappings,
@@ -201,11 +204,11 @@ namespace Avalonia.Markup.Xaml.XamlIl
         
         static object LoadOrPopulate(Type created, object rootInstance)
         {
-            var isp = Expression.Parameter(typeof(IServiceProvider));
+            var isp =  Expression.Parameter(typeof(IServiceProvider));
 
 
             var epar = Expression.Parameter(typeof(object));
-            var populate = created.GetMethod(AvaloniaXamlIlCompiler.PopulateName);
+            var populate = created.GetMethod(UixmlPortXamlIlCompiler.PopulateName);
             isp = Expression.Parameter(typeof(IServiceProvider));
             var populateCb = Expression.Lambda<Action<IServiceProvider, object>>(
                 Expression.Call(populate, isp, Expression.Convert(epar, populate.GetParameters()[1].ParameterType)),
@@ -234,7 +237,7 @@ namespace Avalonia.Markup.Xaml.XamlIl
                 
                 var createCb = Expression.Lambda<Func<IServiceProvider, object>>(
                     Expression.Convert(Expression.Call(
-                        created.GetMethod(AvaloniaXamlIlCompiler.BuildName), isp), typeof(object)), isp).Compile();
+                        created.GetMethod(UixmlPortXamlIlCompiler.BuildName), isp), typeof(object)), isp).Compile();
                 return createCb(XamlIlRuntimeHelpers.CreateRootServiceProviderV2());
             }
             else
@@ -281,7 +284,7 @@ namespace Avalonia.Markup.Xaml.XamlIl
             Directory.CreateDirectory(_cecilEmitDir);
             var refs = new[] {path}.Concat(File.ReadAllLines(path + ".refs"));
             _cecilTypeSystem = new CecilTypeSystem(refs);
-            (_cecilMappings, _cecilEmitMappings) = AvaloniaXamlIlLanguage.Configure(_cecilTypeSystem);
+            (_cecilMappings, _cecilEmitMappings) = UixmlPortXamlIlLanguage.Configure(_cecilTypeSystem);
             _cecilXmlns = XamlIlXmlnsMappings.Resolve(_cecilTypeSystem, _cecilMappings);
             _cecilInitialized = true;
         }
@@ -323,10 +326,10 @@ namespace Avalonia.Markup.Xaml.XamlIl
             
             var tb = _cecilTypeSystem.CreateTypeBuilder(def);
 
-            var compiler = new AvaloniaXamlIlCompiler(new XamlIlTransformerConfiguration(_cecilTypeSystem,
+            var compiler = new UixmlPortXamlIlCompiler(new XamlIlTransformerConfiguration(_cecilTypeSystem,
                     localAssembly == null ? null : _cecilTypeSystem.FindAssembly(localAssembly.GetName().Name),
                     _cecilMappings, XamlIlXmlnsMappings.Resolve(_cecilTypeSystem, _cecilMappings),
-                    AvaloniaXamlIlLanguage.CustomValueConverter),
+                    UixmlPortXamlIlLanguage.CustomValueConverter),
                 _cecilEmitMappings,
                 _cecilTypeSystem.CreateTypeBuilder(contextDef));
             compiler.ParseAndCompile(xaml, uri.ToString(), tb, overrideType);

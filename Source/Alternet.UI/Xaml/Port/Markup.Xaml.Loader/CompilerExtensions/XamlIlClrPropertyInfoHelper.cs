@@ -2,13 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
+using Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
 using XamlX.Ast;
 using XamlX.TypeSystem;
 using XamlX.IL;
 using XamlX.Emit;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
 {
     class XamlIlClrPropertyInfoEmitter
     {
@@ -37,7 +37,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
         public IXamlType Emit(XamlEmitContext<IXamlILEmitter, XamlILNodeEmitResult> context, IXamlILEmitter codeGen, IXamlProperty property, IEnumerable<IXamlAstValueNode> indexerArguments = null, string indexerArgumentsKey = null)
         {
             indexerArguments = indexerArguments ?? Enumerable.Empty<IXamlAstValueNode>();
-            var types = context.GetAvaloniaTypes();
+            var types = context.GetUixmlPortTypes();
             IXamlMethod Get()
             {
                 var key = GetKey(property, indexerArgumentsKey);

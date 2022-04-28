@@ -4,9 +4,9 @@ using XamlX;
 using XamlX.Ast;
 using XamlX.Transform;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
-    class AvaloniaXamlIlDesignPropertiesTransformer : IXamlAstTransformer
+    class UixmlPortXamlIlDesignPropertiesTransformer : IXamlAstTransformer
     {
         public bool IsDesignMode { get; set; }
 
@@ -16,7 +16,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             ["DesignWidth"] = "Width", ["DesignHeight"] = "Height", ["PreviewWith"] = "PreviewWith"
         };
 
-        private const string AvaloniaNs = "https://github.com/avaloniaui";
+        private const string UixmlPortNs = "https://github.com/uixmlPortui";
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)
         {
             if (node is XamlAstObjectNode on)
@@ -36,7 +36,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                             // Map to an actual property in `Design` class
                             on.Children[c] = new XamlAstXamlPropertyValueNode(ch,
                                 new XamlAstNamePropertyReference(ch,
-                                    new XamlAstXmlTypeReference(ch, AvaloniaNs, "Design"),
+                                    new XamlAstXmlTypeReference(ch, UixmlPortNs, "Design"),
                                     mapTo, on.Type), directive.Values);
                             c++;
                         }
@@ -47,7 +47,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                         && ch is XamlAstXamlPropertyValueNode pv
                         && pv.Property is XamlAstNamePropertyReference pref
                         && pref.DeclaringType is XamlAstXmlTypeReference dref
-                        && dref.XmlNamespace == AvaloniaNs && dref.Name == "Design"
+                        && dref.XmlNamespace == UixmlPortNs && dref.Name == "Design"
                     )
                     {
                         on.Children.RemoveAt(c);

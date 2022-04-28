@@ -1,6 +1,6 @@
-using Avalonia.Utilities;
+using Alternet.UI.Utilities;
 
-namespace Avalonia.Controls
+namespace Alternet.UI.Controls
 {
     /// <summary>
     /// Defines a name scope.

@@ -1,23 +1,23 @@
 #nullable disable
 using System.Collections.Generic;
 
-namespace Avalonia.Markup.Xaml.XamlIl.Runtime
+namespace Alternet.UI.Markup.Xaml.XamlIl.Runtime
 {
     /// <summary>
     /// This item supports the framework infrastructure and is not intended to be used directly from your code.
     /// </summary>
-    public interface IAvaloniaXamlIlXmlNamespaceInfoProvider
+    public interface IUixmlPortXamlIlXmlNamespaceInfoProvider
     {
         /// <summary>
         /// This item supports the framework infrastructure and is not intended to be used directly from your code.
         /// </summary>
-        IReadOnlyDictionary<string, IReadOnlyList<AvaloniaXamlIlXmlNamespaceInfo>> XmlNamespaces { get; }
+        IReadOnlyDictionary<string, IReadOnlyList<UixmlPortXamlIlXmlNamespaceInfo>> XmlNamespaces { get; }
     }
 
     /// <summary>
     /// This item supports the framework infrastructure and is not intended to be used directly from your code.
     /// </summary>
-    public class AvaloniaXamlIlXmlNamespaceInfo
+    public class UixmlPortXamlIlXmlNamespaceInfo
     {
         /// <summary>
         /// This item supports the framework infrastructure and is not intended to be used directly from your code.

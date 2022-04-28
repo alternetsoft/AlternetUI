@@ -1,5 +1,5 @@
 #nullable disable
-namespace Avalonia.Logging
+namespace Alternet.UI.Logging
 {
     /// <summary>
     /// Specifies the meaning and relative importance of a log event.

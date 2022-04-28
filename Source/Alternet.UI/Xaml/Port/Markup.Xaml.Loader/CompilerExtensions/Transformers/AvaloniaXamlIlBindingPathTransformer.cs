@@ -7,13 +7,13 @@ using XamlX.Transform;
 using XamlX.Transform.Transformers;
 using XamlX.TypeSystem;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
-    class AvaloniaXamlIlBindingPathTransformer : IXamlAstTransformer
+    class UixmlPortXamlIlBindingPathTransformer : IXamlAstTransformer
     {
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)
         {
-            if (node is XamlAstConstructableObjectNode binding && binding.Type.GetClrType().Equals(context.GetAvaloniaTypes().CompiledBindingExtension))
+            if (node is XamlAstConstructableObjectNode binding && binding.Type.GetClrType().Equals(context.GetUixmlPortTypes().CompiledBindingExtension))
             {
                 IXamlType startType = null;
                 var sourceProperty = binding.Children.OfType<XamlPropertyAssignmentNode>().FirstOrDefault(c => c.Property.Name == "Source");
@@ -31,7 +31,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                             startType = extension.Type?.GetClrType();
 
                             //let's try to infer StaticResource type from parent resources in xaml
-                            if (extension.Value.Type.GetClrType().FullName == "Avalonia.Markup.Xaml.MarkupExtensions.StaticResourceExtension" &&
+                            if (extension.Value.Type.GetClrType().FullName == "Alternet.UI.Markup.Xaml.MarkupExtensions.StaticResourceExtension" &&
                                 extension.Value is XamlAstConstructableObjectNode cn &&
                                 cn.Arguments.Count == 1 && cn.Arguments[0] is XamlAstTextNode keyNode)
                             {
@@ -57,7 +57,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                                     {
                                         if (propertyNode.Values.Count == 1 &&
                                             propertyNode.Values[0] is XamlAstConstructableObjectNode obj &&
-                                            obj.Type.GetClrType().FullName == "Avalonia.Controls.ResourceDictionary")
+                                            obj.Type.GetClrType().FullName == "Alternet.UI.Controls.ResourceDictionary")
                                         {
                                             foreach (var r in obj.Children.SelectMany(c => getResourceValues(c)))
                                             {
@@ -80,7 +80,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 
                                 string key = keyNode.Text;
 
-                                var styledElement = context.GetAvaloniaTypes().StyledElement;
+                                var styledElement = context.GetUixmlPortTypes().StyledElement;
                                 var resource = context.ParentNodes()
                                                         .OfType<XamlAstConstructableObjectNode>()
                                                         .Where(o => styledElement.IsAssignableFrom(o.Type.GetClrType()))
@@ -109,7 +109,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 
                 Func<IXamlType> startTypeResolver = startType is not null ? () => startType : () =>
                 {
-                    var parentDataContextNode = context.ParentNodes().OfType<AvaloniaXamlIlDataContextTypeMetadataNode>().FirstOrDefault();
+                    var parentDataContextNode = context.ParentNodes().OfType<UixmlPortXamlIlDataContextTypeMetadataNode>().FirstOrDefault();
                     if (parentDataContextNode is null)
                     {
                         throw new XamlX.XamlParseException("Cannot parse a compiled binding without an explicit x:DataType directive to give a starting data type for bindings.", binding);

@@ -6,7 +6,7 @@ using XamlX.TypeSystem;
 using XamlX.Emit;
 using XamlX.IL;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
     class AddNameScopeRegistration : IXamlAstTransformer
     {
@@ -15,10 +15,10 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             if (node is XamlPropertyAssignmentNode pa)
             {
                 if (pa.Property.Name == "Name"
-                    && pa.Property.DeclaringType.FullName == "Avalonia.StyledElement")
+                    && pa.Property.DeclaringType.FullName == "Alternet.UI.StyledElement")
                 {
                     if (context.ParentNodes().FirstOrDefault() is XamlManipulationGroupNode mg
-                        && mg.Children.OfType<AvaloniaNameScopeRegistrationXamlIlNode>().Any())
+                        && mg.Children.OfType<UixmlPortNameScopeRegistrationXamlIlNode>().Any())
                         return node;
 
                     IXamlAstValueNode value = null;
@@ -46,7 +46,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                             Children =
                             {
                                 pa,
-                                new AvaloniaNameScopeRegistrationXamlIlNode(value, objectType)
+                                new UixmlPortNameScopeRegistrationXamlIlNode(value, objectType)
                             }
                         };
                     }
@@ -69,12 +69,12 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
         }
     }
 
-    class AvaloniaNameScopeRegistrationXamlIlNode : XamlAstNode, IXamlAstManipulationNode
+    class UixmlPortNameScopeRegistrationXamlIlNode : XamlAstNode, IXamlAstManipulationNode
     {
         public IXamlAstValueNode Name { get; set; }
         public IXamlType TargetType { get; }
 
-        public AvaloniaNameScopeRegistrationXamlIlNode(IXamlAstValueNode name, IXamlType targetType) : base(name)
+        public UixmlPortNameScopeRegistrationXamlIlNode(IXamlAstValueNode name, IXamlType targetType) : base(name)
         {
             TargetType = targetType;
             Name = name;
@@ -84,15 +84,15 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             => Name = (IXamlAstValueNode)Name.Visit(visitor);
     }
 
-    class AvaloniaNameScopeRegistrationXamlIlNodeEmitter : IXamlAstLocalsNodeEmitter<IXamlILEmitter, XamlILNodeEmitResult>
+    class UixmlPortNameScopeRegistrationXamlIlNodeEmitter : IXamlAstLocalsNodeEmitter<IXamlILEmitter, XamlILNodeEmitResult>
     {
         public XamlILNodeEmitResult Emit(IXamlAstNode node, XamlEmitContextWithLocals<IXamlILEmitter, XamlILNodeEmitResult> context, IXamlILEmitter codeGen)
         {
-            if (node is AvaloniaNameScopeRegistrationXamlIlNode registration)
+            if (node is UixmlPortNameScopeRegistrationXamlIlNode registration)
             {
 
                 var scopeField = context.RuntimeContext.ContextType.Fields.First(f =>
-                    f.Name == AvaloniaXamlIlLanguage.ContextNameScopeFieldName);
+                    f.Name == UixmlPortXamlIlLanguage.ContextNameScopeFieldName);
 
                 using (var targetLoc = context.GetLocalOfType(context.Configuration.WellKnownTypes.Object))
                 {
@@ -108,7 +108,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 
                     codeGen
                         .Ldloc(targetLoc.Local)
-                        .EmitCall(context.GetAvaloniaTypes().INameScopeRegister, true);
+                        .EmitCall(context.GetUixmlPortTypes().INameScopeRegister, true);
                 }
 
                 return XamlILNodeEmitResult.Void(1);

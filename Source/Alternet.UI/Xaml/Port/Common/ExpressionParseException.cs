@@ -1,6 +1,6 @@
 using System;
 
-namespace Avalonia.Data.Core
+namespace Alternet.UI.Data.Core
 {
     /// <summary>
     /// Exception thrown when ExpressionObserver could not parse the provided

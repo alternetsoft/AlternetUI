@@ -4,25 +4,25 @@ using XamlX.Ast;
 using XamlX.Transform;
 using XamlX.TypeSystem;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
-    class AvaloniaXamlIlControlTemplateTargetTypeMetadataTransformer : IXamlAstTransformer
+    class UixmlPortXamlIlControlTemplateTargetTypeMetadataTransformer : IXamlAstTransformer
     {
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)
         {
             if (!(node is XamlAstObjectNode on
-                  && on.Type.GetClrType().FullName == "Avalonia.Markup.Xaml.Templates.ControlTemplate"))
+                  && on.Type.GetClrType().FullName == "Alternet.UI.Markup.Xaml.Templates.ControlTemplate"))
                 return node;
             var tt = on.Children.OfType<XamlAstXamlPropertyValueNode>().FirstOrDefault(ch =>
                                               ch.Property.GetClrProperty().Name == "TargetType");
 
-            if (context.ParentNodes().FirstOrDefault() is AvaloniaXamlIlTargetTypeMetadataNode)
+            if (context.ParentNodes().FirstOrDefault() is UixmlPortXamlIlTargetTypeMetadataNode)
                 // Deja vu. I've just been in this place before
                 return node;
 
             IXamlAstTypeReference targetType;
 
-            var templatableBaseType = context.Configuration.TypeSystem.GetType("Avalonia.Controls.Control");
+            var templatableBaseType = context.Configuration.TypeSystem.GetType("Alternet.UI.Controls.Control");
             
             if ((tt?.Values.FirstOrDefault() is XamlTypeExtensionNode tn))
             {
@@ -30,9 +30,9 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             }
             else
             {
-                var parentScope = context.ParentNodes().OfType<AvaloniaXamlIlTargetTypeMetadataNode>()
+                var parentScope = context.ParentNodes().OfType<UixmlPortXamlIlTargetTypeMetadataNode>()
                     .FirstOrDefault();
-                if (parentScope?.ScopeType == AvaloniaXamlIlTargetTypeMetadataNode.ScopeTypes.Style)
+                if (parentScope?.ScopeType == UixmlPortXamlIlTargetTypeMetadataNode.ScopeTypes.Style)
                     targetType = parentScope.TargetType;
                 else if (context.ParentNodes().Skip(1).FirstOrDefault() is XamlAstObjectNode directParentNode
                          && templatableBaseType.IsAssignableFrom(directParentNode.Type.GetClrType()))
@@ -44,12 +44,12 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                 
                 
 
-            return new AvaloniaXamlIlTargetTypeMetadataNode(on, targetType,
-                AvaloniaXamlIlTargetTypeMetadataNode.ScopeTypes.ControlTemplate);
+            return new UixmlPortXamlIlTargetTypeMetadataNode(on, targetType,
+                UixmlPortXamlIlTargetTypeMetadataNode.ScopeTypes.ControlTemplate);
         }
     }
 
-    class AvaloniaXamlIlTargetTypeMetadataNode : XamlValueWithSideEffectNodeBase
+    class UixmlPortXamlIlTargetTypeMetadataNode : XamlValueWithSideEffectNodeBase
     {
         public IXamlAstTypeReference TargetType { get; set; }
         public ScopeTypes ScopeType { get; }
@@ -61,7 +61,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             Transitions
         }
         
-        public AvaloniaXamlIlTargetTypeMetadataNode(IXamlAstValueNode value, IXamlAstTypeReference targetType,
+        public UixmlPortXamlIlTargetTypeMetadataNode(IXamlAstValueNode value, IXamlAstTypeReference targetType,
             ScopeTypes type)
             : base(value, value)
         {

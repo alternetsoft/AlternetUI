@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Avalonia.Markup.Xaml
+namespace Alternet.UI.Markup.Xaml
 {
     internal class XamlLoadException: Exception
     {

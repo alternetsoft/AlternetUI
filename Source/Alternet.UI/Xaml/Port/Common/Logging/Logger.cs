@@ -1,7 +1,7 @@
-namespace Avalonia.Logging
+namespace Alternet.UI.Logging
 {
     /// <summary>
-    /// Logs avalonia messages.
+    /// Logs uixmlPort messages.
     /// </summary>
     internal static class Logger
     {

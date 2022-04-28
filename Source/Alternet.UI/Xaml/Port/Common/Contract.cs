@@ -2,13 +2,13 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Avalonia
+namespace Alternet.UI
 {
     /// <summary>
     /// A stub of Code Contract's Contract class.
     /// </summary>
     /// <remarks>
-    /// It would be nice to use Code Contracts on Avalonia but last time I tried it slowed things
+    /// It would be nice to use Code Contracts on UixmlPort but last time I tried it slowed things
     /// to a crawl and often crashed. Instead use the same signature for checking preconditions
     /// in the hope that it might become usable at some point.
     /// </remarks>

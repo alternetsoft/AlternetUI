@@ -1,5 +1,5 @@
 #nullable disable
-namespace Avalonia.Data
+namespace Alternet.UI.Data
 {
     /// <summary>
     /// The priority of a binding.

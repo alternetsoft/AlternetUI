@@ -1,7 +1,7 @@
 #nullable disable
 using System.Collections.Generic;
 using System.Linq;
-using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
+using Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
 using XamlX;
 using XamlX.Ast;
 using XamlX.Emit;
@@ -11,15 +11,15 @@ using XamlX.Transform;
 using XamlX.Transform.Transformers;
 using XamlX.TypeSystem;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
 {
-    class AvaloniaXamlIlCompiler : XamlILCompiler
+    class UixmlPortXamlIlCompiler : XamlILCompiler
     {
         private readonly IXamlType _contextType;
-        private readonly AvaloniaXamlIlDesignPropertiesTransformer _designTransformer;
-        //private readonly AvaloniaBindingExtensionTransformer _bindingTransformer;
+        private readonly UixmlPortXamlIlDesignPropertiesTransformer _designTransformer;
+        //private readonly UixmlPortBindingExtensionTransformer _bindingTransformer;
 
-        private AvaloniaXamlIlCompiler(TransformerConfiguration configuration, XamlLanguageEmitMappings<IXamlILEmitter, XamlILNodeEmitResult> emitMappings)
+        private UixmlPortXamlIlCompiler(TransformerConfiguration configuration, XamlLanguageEmitMappings<IXamlILEmitter, XamlILNodeEmitResult> emitMappings)
             : base(configuration, emitMappings, true)
         {
             void InsertAfter<T>(params IXamlAstTransformer[] t) 
@@ -31,54 +31,54 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
 
             // Before everything else
 
-            _designTransformer = new AvaloniaXamlIlDesignPropertiesTransformer();
+            _designTransformer = new UixmlPortXamlIlDesignPropertiesTransformer();
 
             //Transformers.Insert(0, new XNameTransformer());
             //Transformers.Insert(1, new IgnoredDirectivesTransformer());
-            //Transformers.Insert(2, _designTransformer = new AvaloniaXamlIlDesignPropertiesTransformer());
-            //Transformers.Insert(3, _bindingTransformer = new AvaloniaBindingExtensionTransformer());
+            //Transformers.Insert(2, _designTransformer = new UixmlPortXamlIlDesignPropertiesTransformer());
+            //Transformers.Insert(3, _bindingTransformer = new UixmlPortBindingExtensionTransformer());
 
 
             //// Targeted
             //InsertBefore<PropertyReferenceResolver>(
-            //    new AvaloniaXamlIlResolveClassesPropertiesTransformer(),
-            //    new AvaloniaXamlIlTransformInstanceAttachedProperties(),
-            //    new AvaloniaXamlIlTransformSyntheticCompiledBindingMembers());
+            //    new UixmlPortXamlIlResolveClassesPropertiesTransformer(),
+            //    new UixmlPortXamlIlTransformInstanceAttachedProperties(),
+            //    new UixmlPortXamlIlTransformSyntheticCompiledBindingMembers());
             //InsertAfter<PropertyReferenceResolver>(
-            //    new AvaloniaXamlIlAvaloniaPropertyResolver(),
-            //    new AvaloniaXamlIlReorderClassesPropertiesTransformer()
+            //    new UixmlPortXamlIlUixmlPortPropertyResolver(),
+            //    new UixmlPortXamlIlReorderClassesPropertiesTransformer()
             //);
 
             InsertAfter<PropertyReferenceResolver>(
-                new AvaloniaXamlIlAvaloniaPropertyResolver()
+                new UixmlPortXamlIlUixmlPortPropertyResolver()
             );
 
             //InsertBefore<ContentConvertTransformer>(                
-            //    new AvaloniaXamlIlBindingPathParser(),
-            //    new AvaloniaXamlIlSelectorTransformer(),
-            //    new AvaloniaXamlIlControlTemplateTargetTypeMetadataTransformer(),
-            //    new AvaloniaXamlIlPropertyPathTransformer(),
-            //    new AvaloniaXamlIlSetterTransformer(),
-            //    new AvaloniaXamlIlConstructorServiceProviderTransformer(),
-            //    new AvaloniaXamlIlTransitionsTypeMetadataTransformer(),
-            //    new AvaloniaXamlIlResolveByNameMarkupExtensionReplacer()
+            //    new UixmlPortXamlIlBindingPathParser(),
+            //    new UixmlPortXamlIlSelectorTransformer(),
+            //    new UixmlPortXamlIlControlTemplateTargetTypeMetadataTransformer(),
+            //    new UixmlPortXamlIlPropertyPathTransformer(),
+            //    new UixmlPortXamlIlSetterTransformer(),
+            //    new UixmlPortXamlIlConstructorServiceProviderTransformer(),
+            //    new UixmlPortXamlIlTransitionsTypeMetadataTransformer(),
+            //    new UixmlPortXamlIlResolveByNameMarkupExtensionReplacer()
             //);
 
             //// After everything else
             //InsertBefore<NewObjectTransformer>(
             //    new AddNameScopeRegistration(),
-            //    new AvaloniaXamlIlDataContextTypeTransformer(),
-            //    new AvaloniaXamlIlBindingPathTransformer(),
-            //    new AvaloniaXamlIlCompiledBindingsMetadataRemover()
+            //    new UixmlPortXamlIlDataContextTypeTransformer(),
+            //    new UixmlPortXamlIlBindingPathTransformer(),
+            //    new UixmlPortXamlIlCompiledBindingsMetadataRemover()
             //    );
 
-            //Transformers.Add(new AvaloniaXamlIlMetadataRemover());
-            //Transformers.Add(new AvaloniaXamlIlRootObjectScope());
+            //Transformers.Add(new UixmlPortXamlIlMetadataRemover());
+            //Transformers.Add(new UixmlPortXamlIlRootObjectScope());
 
-            //Emitters.Add(new AvaloniaNameScopeRegistrationXamlIlNodeEmitter());
-            //Emitters.Add(new AvaloniaXamlIlRootObjectScope.Emitter());
+            //Emitters.Add(new UixmlPortNameScopeRegistrationXamlIlNodeEmitter());
+            //Emitters.Add(new UixmlPortXamlIlRootObjectScope.Emitter());
         }
-        public AvaloniaXamlIlCompiler(TransformerConfiguration configuration,
+        public UixmlPortXamlIlCompiler(TransformerConfiguration configuration,
             XamlLanguageEmitMappings<IXamlILEmitter, XamlILNodeEmitResult> emitMappings,
             IXamlTypeBuilder<IXamlILEmitter> contextTypeBuilder)
             : this(configuration, emitMappings)
@@ -87,15 +87,15 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
         }
 
         
-        public AvaloniaXamlIlCompiler(TransformerConfiguration configuration,
+        public UixmlPortXamlIlCompiler(TransformerConfiguration configuration,
             XamlLanguageEmitMappings<IXamlILEmitter, XamlILNodeEmitResult> emitMappings,
             IXamlType contextType) : this(configuration, emitMappings)
         {
             _contextType = contextType;
         }
         
-        public const string PopulateName = "__AvaloniaXamlIlPopulate";
-        public const string BuildName = "__AvaloniaXamlIlBuild";
+        public const string PopulateName = "__UixmlPortXamlIlPopulate";
+        public const string BuildName = "__UixmlPortXamlIlBuild";
 
         public bool IsDesignMode
         {
@@ -145,7 +145,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
             OverrideRootType(parsed, rootType);
 
             Transform(parsed);
-            Compile(parsed, tb, _contextType, PopulateName, BuildName, "__AvaloniaXamlIlNsInfo", baseUri, fileSource);
+            Compile(parsed, tb, _contextType, PopulateName, BuildName, "__UixmlPortXamlIlNsInfo", baseUri, fileSource);
             
         }
 

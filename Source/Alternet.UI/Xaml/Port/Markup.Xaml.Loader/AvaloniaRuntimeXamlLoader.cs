@@ -3,14 +3,14 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using Avalonia.Markup.Xaml.XamlIl;
+using Alternet.UI.Markup.Xaml.XamlIl;
 
-namespace Avalonia.Markup.Xaml
+namespace Alternet.UI.Markup.Xaml
 {
     /// <summary>
     /// Loads XAML at runtime.
     /// </summary>
-    internal static class AvaloniaRuntimeXamlLoader
+    internal static class UixmlPortRuntimeXamlLoader
     {
         /// <summary>
         /// Loads XAML from a string.
@@ -42,7 +42,7 @@ namespace Avalonia.Markup.Xaml
         /// <returns>The loaded object.</returns>
         public static object Load(Stream stream, Assembly localAssembly, object rootInstance = null, Uri uri = null,
             bool designMode = false)
-            => AvaloniaXamlIlRuntimeCompiler.Load(stream, localAssembly, rootInstance, uri, designMode);
+            => UixmlPortXamlIlRuntimeCompiler.Load(stream, localAssembly, rootInstance, uri, designMode);
 
         /// <summary>
         /// Parse XAML from a string.

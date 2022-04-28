@@ -1,51 +1,51 @@
 #nullable disable
 using System.Collections.Generic;
 using System.Linq;
-using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
+using Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
 using XamlX.Ast;
 using XamlX.Emit;
 using XamlX.IL;
 using XamlX.Transform;
 using XamlX.TypeSystem;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
 {
     /*
         This file is used in the build task.
-        ONLY use types from netstandard and XamlIl. NO dependencies on Avalonia are allowed. Only strings.
+        ONLY use types from netstandard and XamlIl. NO dependencies on UixmlPort are allowed. Only strings.
         No, nameof isn't welcome here either
      */
 
-    class AvaloniaXamlIlLanguage
+    class UixmlPortXamlIlLanguage
     {
         public static (XamlLanguageTypeMappings language, XamlLanguageEmitMappings<IXamlILEmitter, XamlILNodeEmitResult> emit) Configure(IXamlTypeSystem typeSystem)
         {
-            var runtimeHelpers = typeSystem.GetType("Avalonia.Markup.Xaml.XamlIl.Runtime.XamlIlRuntimeHelpers");
-            //var assignBindingAttribute = typeSystem.GetType("Avalonia.Data.AssignBindingAttribute");
-            //var bindingType = typeSystem.GetType("Avalonia.Data.IBinding");
+            var runtimeHelpers = typeSystem.GetType("Alternet.UI.Markup.Xaml.XamlIl.Runtime.XamlIlRuntimeHelpers");
+            //var assignBindingAttribute = typeSystem.GetType("Alternet.UI.Data.AssignBindingAttribute");
+            //var bindingType = typeSystem.GetType("Alternet.UI.Data.IBinding");
             var rv = new XamlLanguageTypeMappings(typeSystem)
             {
                 SupportInitialize = typeSystem.GetType("System.ComponentModel.ISupportInitialize"),
                 XmlnsAttributes =
                 {
                     typeSystem.GetType("Alternet.UI.XmlnsDefinitionAttribute"),
-                    //typeSystem.GetType("Avalonia.Metadata.XmlnsDefinitionAttribute"),
+                    //typeSystem.GetType("Alternet.UI.Metadata.XmlnsDefinitionAttribute"),
                 },
                 ContentAttributes =
                 {
-                    //typeSystem.GetType("Avalonia.Metadata.ContentAttribute")
+                    //typeSystem.GetType("Alternet.UI.Metadata.ContentAttribute")
                     typeSystem.GetType("Alternet.UI.ContentAttribute")
                 },
-                ProvideValueTarget = typeSystem.GetType("Avalonia.Markup.Xaml.IProvideValueTarget"),
-                RootObjectProvider = typeSystem.GetType("Avalonia.Markup.Xaml.IRootObjectProvider"),
+                ProvideValueTarget = typeSystem.GetType("Alternet.UI.Markup.Xaml.IProvideValueTarget"),
+                RootObjectProvider = typeSystem.GetType("Alternet.UI.Markup.Xaml.IRootObjectProvider"),
                 RootObjectProviderIntermediateRootPropertyName = "IntermediateRootObject",
-                UriContextProvider = typeSystem.GetType("Avalonia.Markup.Xaml.IUriContext"),
+                UriContextProvider = typeSystem.GetType("Alternet.UI.Markup.Xaml.IUriContext"),
                 ParentStackProvider =
-                    typeSystem.GetType("Avalonia.Markup.Xaml.XamlIl.Runtime.IAvaloniaXamlIlParentStackProvider"),
+                    typeSystem.GetType("Alternet.UI.Markup.Xaml.XamlIl.Runtime.IUixmlPortXamlIlParentStackProvider"),
 
                 XmlNamespaceInfoProvider =
-                    typeSystem.GetType("Avalonia.Markup.Xaml.XamlIl.Runtime.IAvaloniaXamlIlXmlNamespaceInfoProvider"),
-                //DeferredContentPropertyAttributes = {typeSystem.GetType("Avalonia.Metadata.TemplateContentAttribute")},
+                    typeSystem.GetType("Alternet.UI.Markup.Xaml.XamlIl.Runtime.IUixmlPortXamlIlXmlNamespaceInfoProvider"),
+                //DeferredContentPropertyAttributes = {typeSystem.GetType("Alternet.UI.Metadata.TemplateContentAttribute")},
                 DeferredContentExecutorCustomizationDefaultTypeParameter = typeSystem.GetType("Alternet.UI.Control"),
                 DeferredContentExecutorCustomizationTypeParameterDeferredContentAttributePropertyNames = new List<string>
                 {
@@ -55,7 +55,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                     runtimeHelpers.FindMethod(m => m.Name == "DeferredTransformationFactoryV2"),
                 UsableDuringInitializationAttributes =
                 {
-//                    typeSystem.GetType("Avalonia.Metadata.UsableDuringInitializationAttribute"),
+//                    typeSystem.GetType("Alternet.UI.Metadata.UsableDuringInitializationAttribute"),
                 },
                 InnerServiceProviderFactoryMethod =
                     runtimeHelpers.FindMethod(m => m.Name == "CreateInnerServiceProviderV1"),
@@ -64,20 +64,20 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
 
             var emit = new XamlLanguageEmitMappings<IXamlILEmitter, XamlILNodeEmitResult>
             {
-                ProvideValueTargetPropertyEmitter = XamlIlAvaloniaPropertyHelper.EmitProvideValueTarget,
+                ProvideValueTargetPropertyEmitter = XamlIlUixmlPortPropertyHelper.EmitProvideValueTarget,
                 ContextTypeBuilderCallback = (b, c) => EmitNameScopeField(rv, typeSystem, b, c)
             };
             return (rv, emit);
         }
 
-        public const string ContextNameScopeFieldName = "AvaloniaNameScope";
+        public const string ContextNameScopeFieldName = "UixmlPortNameScope";
 
         private static void EmitNameScopeField(XamlLanguageTypeMappings mappings,
             IXamlTypeSystem typeSystem,
             IXamlTypeBuilder<IXamlILEmitter> typebuilder, IXamlILEmitter constructor)
         {
 
-            var nameScopeType = typeSystem.FindType("Avalonia.Controls.INameScope");
+            var nameScopeType = typeSystem.FindType("Alternet.UI.Controls.INameScope");
             var field = typebuilder.DefineField(nameScopeType, 
                 ContextNameScopeFieldName, true, false);
             constructor
@@ -97,8 +97,8 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
             private readonly List<KeyValuePair<IXamlType, IXamlType>> _converters =
                 new List<KeyValuePair<IXamlType, IXamlType>>();
 
-            //private readonly IXamlType _avaloniaList;
-            //private readonly IXamlType _avaloniaListConverter;
+            //private readonly IXamlType _uixmlPortList;
+            //private readonly IXamlType _uixmlPortListConverter;
 
 
             public AttributeResolver(IXamlTypeSystem typeSystem, XamlLanguageTypeMappings mappings)
@@ -111,18 +111,18 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                 //void Add(string type, string conv)
                 //    => AddType(typeSystem.GetType(type), typeSystem.GetType(conv));
                 
-                //Add("Avalonia.Media.IImage","Avalonia.Markup.Xaml.Converters.BitmapTypeConverter");
-                //Add("Avalonia.Media.Imaging.IBitmap","Avalonia.Markup.Xaml.Converters.BitmapTypeConverter");
+                //Add("Alternet.UI.Media.IImage","Alternet.UI.Markup.Xaml.Converters.BitmapTypeConverter");
+                //Add("Alternet.UI.Media.Imaging.IBitmap","Alternet.UI.Markup.Xaml.Converters.BitmapTypeConverter");
                 var ilist = typeSystem.GetType("System.Collections.Generic.IList`1");
-               // AddType(ilist.MakeGenericType(typeSystem.GetType("Avalonia.Point")),
-               //     typeSystem.GetType("Avalonia.Markup.Xaml.Converters.PointsListTypeConverter"));
-                //Add("Avalonia.Controls.WindowIcon","Avalonia.Markup.Xaml.Converters.IconTypeConverter");
+               // AddType(ilist.MakeGenericType(typeSystem.GetType("Alternet.UI.Point")),
+               //     typeSystem.GetType("Alternet.UI.Markup.Xaml.Converters.PointsListTypeConverter"));
+                //Add("Alternet.UI.Controls.WindowIcon","Alternet.UI.Markup.Xaml.Converters.IconTypeConverter");
                 //Add("System.Globalization.CultureInfo", "System.ComponentModel.CultureInfoConverter");
-               // Add("System.Uri", "Avalonia.Markup.Xaml.Converters.AvaloniaUriTypeConverter");
-                //Add("System.TimeSpan", "Avalonia.Markup.Xaml.Converters.TimeSpanTypeConverter");
-               // Add("Avalonia.Media.FontFamily","Avalonia.Markup.Xaml.Converters.FontFamilyTypeConverter");
-                //_avaloniaList = typeSystem.GetType("Avalonia.Collections.AvaloniaList`1");
-                //_avaloniaListConverter = typeSystem.GetType("Avalonia.Collections.AvaloniaListConverter`1");
+               // Add("System.Uri", "Alternet.UI.Markup.Xaml.Converters.UixmlPortUriTypeConverter");
+                //Add("System.TimeSpan", "Alternet.UI.Markup.Xaml.Converters.TimeSpanTypeConverter");
+               // Add("Alternet.UI.Media.FontFamily","Alternet.UI.Markup.Xaml.Converters.FontFamilyTypeConverter");
+                //_uixmlPortList = typeSystem.GetType("Alternet.UI.Collections.UixmlPortList`1");
+                //_uixmlPortListConverter = typeSystem.GetType("Alternet.UI.Collections.UixmlPortListConverter`1");
             }
 
             IXamlType LookupConverter(IXamlType type)
@@ -130,8 +130,8 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                 foreach(var p in _converters)
                     if (p.Key.Equals(type))
                         return p.Value;
-                //if (type.GenericTypeDefinition?.Equals(_avaloniaList) == true)
-                //    return _avaloniaListConverter.MakeGenericType(type.GenericArguments[0]);
+                //if (type.GenericTypeDefinition?.Equals(_uixmlPortList) == true)
+                //    return _uixmlPortListConverter.MakeGenericType(type.GenericArguments[0]);
                 return null;
             }
 
@@ -179,20 +179,20 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
             }
 
             var text = textNode.Text;
-            var types = context.GetAvaloniaTypes();
+            var types = context.GetUixmlPortTypes();
 
-            if (AvaloniaXamlIlLanguageParseIntrinsics.TryConvert(context, node, text, type, types, out result))
+            if (UixmlPortXamlIlLanguageParseIntrinsics.TryConvert(context, node, text, type, types, out result))
             {
                 return true;
             }
             
-            if (type.FullName == "Avalonia.AvaloniaProperty")
+            if (type.FullName == "Alternet.UI.UixmlPortProperty")
             {
-                var scope = context.ParentNodes().OfType<AvaloniaXamlIlTargetTypeMetadataNode>().FirstOrDefault();
+                var scope = context.ParentNodes().OfType<UixmlPortXamlIlTargetTypeMetadataNode>().FirstOrDefault();
                 if (scope == null)
-                    throw new XamlX.XamlLoadException("Unable to find the parent scope for AvaloniaProperty lookup", node);
+                    throw new XamlX.XamlLoadException("Unable to find the parent scope for UixmlPortProperty lookup", node);
 
-                result = XamlIlAvaloniaPropertyHelper.CreateNode(context, text, scope.TargetType, node );
+                result = XamlIlUixmlPortPropertyHelper.CreateNode(context, text, scope.TargetType, node );
                 return true;
             }
 

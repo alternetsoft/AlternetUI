@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using Avalonia.Data;
-using Avalonia.Controls;
+using Alternet.UI.Data;
+using Alternet.UI.Controls;
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedParameter.Global
 
-namespace Avalonia.Markup.Xaml.XamlIl.Runtime
+namespace Alternet.UI.Markup.Xaml.XamlIl.Runtime
 {
     /// <summary>
     /// This item supports the framework infrastructure and is not intended to be used directly from your code.
@@ -31,7 +31,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.Runtime
         public static Func<IServiceProvider, object> DeferredTransformationFactoryV2<T>(Func<IServiceProvider, object> builder,
             IServiceProvider provider)
         {
-            var resourceNodes = provider.GetService<IAvaloniaXamlIlParentStackProvider>().Parents
+            var resourceNodes = provider.GetService<IUixmlPortXamlIlParentStackProvider>().Parents
                 .OfType<IResourceNode>().ToList();
             var rootObject = provider.GetService<IRootObjectProvider>().RootObject;
             var parentScope = provider.GetService<INameScope>();
@@ -50,7 +50,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.Runtime
         }
 
         class DeferredParentServiceProvider :
-            IAvaloniaXamlIlParentStackProvider,
+            IUixmlPortXamlIlParentStackProvider,
             IServiceProvider,
             IRootObjectProvider
         {
@@ -81,7 +81,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.Runtime
             {
                 if (serviceType == typeof(INameScope))
                     return _nameScope;
-                if (serviceType == typeof(IAvaloniaXamlIlParentStackProvider))
+                if (serviceType == typeof(IUixmlPortXamlIlParentStackProvider))
                     return this;
                 if (serviceType == typeof(IRootObjectProvider))
                     return this;
@@ -105,14 +105,14 @@ namespace Avalonia.Markup.Xaml.XamlIl.Runtime
                     throw new Exception();
                 //((Alternet.UI.DependencyObject)target).Bind(p, b);
                 else
-                    throw new ArgumentException("Attempt to apply binding to non-avalonia property " + property);
+                    throw new ArgumentException("Attempt to apply binding to non-uixmlPort property " + property);
             }
             //else if (value is UnsetValueType unset)
             //{
-            //    if (property is AvaloniaProperty p)
-            //        ((AvaloniaObject)target).SetValue(p, unset);
+            //    if (property is UixmlPortProperty p)
+            //        ((UixmlPortObject)target).SetValue(p, unset);
             //    //TODO: Investigate
-            //    //throw new ArgumentException("Attempt to apply UnsetValue to non-avalonia property " + property);
+            //    //throw new ArgumentException("Attempt to apply UnsetValue to non-uixmlPort property " + property);
             //}
             else
                 throw new ArgumentException("Don't know what to do with " + value.GetType());
@@ -137,16 +137,16 @@ namespace Avalonia.Markup.Xaml.XamlIl.Runtime
             {
                 if (serviceType == typeof(IXamlTypeResolver))
                     return _resolver ?? (_resolver = new XamlTypeResolver(
-                               _compiledProvider.GetService<IAvaloniaXamlIlXmlNamespaceInfoProvider>()));
+                               _compiledProvider.GetService<IUixmlPortXamlIlXmlNamespaceInfoProvider>()));
                 return null;
             }
         }
 
         class XamlTypeResolver : IXamlTypeResolver
         {
-            private readonly IAvaloniaXamlIlXmlNamespaceInfoProvider _nsInfo;
+            private readonly IUixmlPortXamlIlXmlNamespaceInfoProvider _nsInfo;
 
-            public XamlTypeResolver(IAvaloniaXamlIlXmlNamespaceInfoProvider nsInfo)
+            public XamlTypeResolver(IUixmlPortXamlIlXmlNamespaceInfoProvider nsInfo)
             {
                 _nsInfo = nsInfo;
             }
@@ -156,7 +156,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.Runtime
                 var sp = qualifiedTypeName.Split(new[] {':'}, 2);
                 var (ns, name) = sp.Length == 1 ? ("", qualifiedTypeName) : (sp[0], sp[1]);
                 var namespaces = _nsInfo.XmlNamespaces;
-                var dic = (Dictionary<string, IReadOnlyList<AvaloniaXamlIlXmlNamespaceInfo>>)namespaces;
+                var dic = (Dictionary<string, IReadOnlyList<UixmlPortXamlIlXmlNamespaceInfo>>)namespaces;
                 if (!namespaces.TryGetValue(ns, out var lst))
                     throw new ArgumentException("Unable to resolve namespace for type " + qualifiedTypeName);
                 foreach (var entry in lst)
@@ -190,7 +190,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.Runtime
         }
         #line default
         
-        class RootServiceProvider : IServiceProvider, IAvaloniaXamlIlParentStackProvider
+        class RootServiceProvider : IServiceProvider, IUixmlPortXamlIlParentStackProvider
         {
             //private readonly INameScope _nameScope;
 
@@ -205,7 +205,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.Runtime
                     return null;
                     //throw new Exception();
                     //return _nameScope;
-                if (serviceType == typeof(IAvaloniaXamlIlParentStackProvider))
+                if (serviceType == typeof(IUixmlPortXamlIlParentStackProvider))
                     return this;
                 return null;
             }

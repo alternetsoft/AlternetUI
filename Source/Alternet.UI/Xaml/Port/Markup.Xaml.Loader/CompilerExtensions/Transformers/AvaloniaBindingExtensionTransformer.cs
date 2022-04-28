@@ -7,15 +7,15 @@ using XamlX.Transform;
 
 using XamlParseException = XamlX.XamlParseException;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
-    class AvaloniaBindingExtensionTransformer : IXamlAstTransformer
+    class UixmlPortBindingExtensionTransformer : IXamlAstTransformer
     {
         public bool CompileBindingsByDefault { get; set; }
 
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)
         {
-            if (context.ParentNodes().FirstOrDefault() is AvaloniaXamlIlCompileBindingsNode)
+            if (context.ParentNodes().FirstOrDefault() is UixmlPortXamlIlCompileBindingsNode)
             {
                 return node;
             }
@@ -38,7 +38,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 
                             obj.Children.Remove(directive);
 
-                            return new AvaloniaXamlIlCompileBindingsNode(obj, compileBindings);
+                            return new UixmlPortXamlIlCompileBindingsNode(obj, compileBindings);
                         }
                     }
                 }
@@ -48,12 +48,12 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 
             if (node is XamlAstXmlTypeReference tref
                 && tref.Name == "Binding"
-                && tref.XmlNamespace == "https://github.com/avaloniaui")
+                && tref.XmlNamespace == "https://github.com/uixmlPortui")
             {
                 tref.IsMarkupExtension = true;
 
                 var compileBindings = context.ParentNodes()
-                    .OfType<AvaloniaXamlIlCompileBindingsNode>()
+                    .OfType<UixmlPortXamlIlCompileBindingsNode>()
                     .FirstOrDefault()
                     ?.CompileBindings ?? CompileBindingsByDefault;
 
@@ -63,9 +63,9 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
         }
     }
 
-    internal class AvaloniaXamlIlCompileBindingsNode : XamlValueWithSideEffectNodeBase
+    internal class UixmlPortXamlIlCompileBindingsNode : XamlValueWithSideEffectNodeBase
     {
-        public AvaloniaXamlIlCompileBindingsNode(IXamlAstValueNode value, bool compileBindings)
+        public UixmlPortXamlIlCompileBindingsNode(IXamlAstValueNode value, bool compileBindings)
             : base(value, value)
         {
             CompileBindings = compileBindings;

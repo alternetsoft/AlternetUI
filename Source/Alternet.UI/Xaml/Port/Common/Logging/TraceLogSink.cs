@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using Avalonia.Utilities;
+using Alternet.UI.Utilities;
 
-namespace Avalonia.Logging
+namespace Alternet.UI.Logging
 {
     internal class TraceLogSink : ILogSink
     {

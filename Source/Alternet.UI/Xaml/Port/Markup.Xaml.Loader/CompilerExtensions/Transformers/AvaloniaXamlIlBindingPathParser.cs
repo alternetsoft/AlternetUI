@@ -1,6 +1,6 @@
 #nullable disable
-using Avalonia.Markup.Parsers;
-using Avalonia.Utilities;
+using Alternet.UI.Markup.Parsers;
+using Alternet.UI.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +10,13 @@ using XamlX.Transform.Transformers;
 using XamlX.TypeSystem;
 using XamlParseException = XamlX.XamlParseException;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
-    class AvaloniaXamlIlBindingPathParser : IXamlAstTransformer
+    class UixmlPortXamlIlBindingPathParser : IXamlAstTransformer
     {
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)
         {
-            if (node is XamlAstObjectNode binding && binding.Type.GetClrType().Equals(context.GetAvaloniaTypes().CompiledBindingExtension))
+            if (node is XamlAstObjectNode binding && binding.Type.GetClrType().Equals(context.GetUixmlPortTypes().CompiledBindingExtension))
             {
                 var convertedNode = ConvertLongFormPropertiesToBindingExpressionNode(context, binding);
                 var foundPath = false;
@@ -37,7 +37,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                     }
                     else
                     {
-                        binding.Arguments[0] = new ParsedBindingPathNode(bindingPathText, context.GetAvaloniaTypes().CompiledBindingPath, nodes);
+                        binding.Arguments[0] = new ParsedBindingPathNode(bindingPathText, context.GetUixmlPortTypes().CompiledBindingPath, nodes);
                         foundPath = true;
                     }
                 }
@@ -63,7 +63,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                                 nodes.Insert(nodes.TakeWhile(x => x is BindingExpressionGrammar.ITransformNode).Count(), convertedNode);
                             }
 
-                            bindingPathAssignment.Values[0] = new ParsedBindingPathNode(pathValue, context.GetAvaloniaTypes().CompiledBindingPath, nodes);
+                            bindingPathAssignment.Values[0] = new ParsedBindingPathNode(pathValue, context.GetUixmlPortTypes().CompiledBindingPath, nodes);
                         }
                     }
                 }
@@ -79,17 +79,17 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             BindingExpressionGrammar.INode convertedNode = null;
 
             var syntheticCompiledBindingProperties = binding.Children.OfType<XamlAstXamlPropertyValueNode>()
-                .Where(v => v.Property is AvaloniaSyntheticCompiledBindingProperty)
+                .Where(v => v.Property is UixmlPortSyntheticCompiledBindingProperty)
                 .ToList();
 
             var elementNameProperty = syntheticCompiledBindingProperties
                 .FirstOrDefault(v =>
-                    v.Property is AvaloniaSyntheticCompiledBindingProperty prop
+                    v.Property is UixmlPortSyntheticCompiledBindingProperty prop
                     && prop.Name == SyntheticCompiledBindingPropertyName.ElementName);
 
             var relativeSourceProperty = syntheticCompiledBindingProperties
                 .FirstOrDefault(v =>
-                    v.Property is AvaloniaSyntheticCompiledBindingProperty prop
+                    v.Property is UixmlPortSyntheticCompiledBindingProperty prop
                     && prop.Name == SyntheticCompiledBindingPropertyName.RelativeSource);
 
             var sourceProperty = binding.Children.OfType<XamlAstXamlPropertyValueNode>()
@@ -156,7 +156,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                         }
                         else if (treeType == "Logical")
                         {
-                            var styledElementType = context.GetAvaloniaTypes().StyledElement;
+                            var styledElementType = context.GetUixmlPortTypes().StyledElement;
                             ancestorType = context
                                 .ParentNodes()
                                 .OfType<XamlAstObjectNode>()
@@ -211,9 +211,9 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                 }
                 else if (mode == "TemplatedParent")
                 {
-                    var parentType = context.ParentNodes().OfType<AvaloniaXamlIlTargetTypeMetadataNode>()
+                    var parentType = context.ParentNodes().OfType<UixmlPortXamlIlTargetTypeMetadataNode>()
                         .FirstOrDefault(x =>
-                            x.ScopeType == AvaloniaXamlIlTargetTypeMetadataNode.ScopeTypes.ControlTemplate)
+                            x.ScopeType == UixmlPortXamlIlTargetTypeMetadataNode.ScopeTypes.ControlTemplate)
                         ?.TargetType.GetClrType();
 
                     if (parentType is null)
@@ -254,9 +254,9 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 
             if (relativeSourceProperty.Values[0] is XamlMarkupExtensionNode me)
             {
-                if (me.Type.GetClrType() != context.GetAvaloniaTypes().RelativeSource)
+                if (me.Type.GetClrType() != context.GetUixmlPortTypes().RelativeSource)
                 {
-                    throw new XamlParseException($"Expected an object of type 'Avalonia.Data.RelativeSource'. Found a object of type '{me.Type.GetClrType().GetFqn()}'", me);
+                    throw new XamlParseException($"Expected an object of type 'UixmlPort.Data.RelativeSource'. Found a object of type '{me.Type.GetClrType().GetFqn()}'", me);
                 }
 
                 relativeSourceObject = (XamlAstObjectNode)me.Value;
@@ -265,9 +265,9 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 
             if (relativeSourceProperty.Values[0] is XamlAstObjectNode on)
             {
-                if (on.Type.GetClrType() != context.GetAvaloniaTypes().RelativeSource)
+                if (on.Type.GetClrType() != context.GetUixmlPortTypes().RelativeSource)
                 {
-                    throw new XamlParseException($"Expected an object of type 'Avalonia.Data.RelativeSource'. Found a object of type '{on.Type.GetClrType().GetFqn()}'", on);
+                    throw new XamlParseException($"Expected an object of type 'UixmlPort.Data.RelativeSource'. Found a object of type '{on.Type.GetClrType().GetFqn()}'", on);
                 }
 
                 relativeSourceObject = on;

@@ -3,7 +3,7 @@ using XamlX;
 using XamlX.Ast;
 using XamlX.Transform;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
     class XNameTransformer : IXamlAstTransformer
     {

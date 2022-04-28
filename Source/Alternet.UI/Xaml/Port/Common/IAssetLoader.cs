@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-namespace Avalonia.Platform
+namespace Alternet.UI.Platform
 {
     /// <summary>
     /// Loads assets compiled into the application binary.

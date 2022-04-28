@@ -1,14 +1,14 @@
 #nullable disable
 using System.Collections.Generic;
 using System.Linq;
-using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
+using Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
 using XamlX.Ast;
 using XamlX.TypeSystem;
 using XamlX.IL;
 
 using XamlIlEmitContext = XamlX.Emit.XamlEmitContext<XamlX.IL.IXamlILEmitter, XamlX.IL.XamlILNodeEmitResult>;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
 {
     class XamlIlPropertyInfoAccessorFactoryEmitter
     {
@@ -23,20 +23,20 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
         public IXamlType EmitLoadInpcPropertyAccessorFactory(XamlIlEmitContext context, IXamlILEmitter codeGen)
         {
             codeGen.Ldnull();
-            EmitLoadPropertyAccessorFactory(context, codeGen, context.GetAvaloniaTypes().PropertyInfoAccessorFactory, "CreateInpcPropertyAccessor");
+            EmitLoadPropertyAccessorFactory(context, codeGen, context.GetUixmlPortTypes().PropertyInfoAccessorFactory, "CreateInpcPropertyAccessor");
             return EmitCreateAccessorFactoryDelegate(context, codeGen);
         }
 
-        public IXamlType EmitLoadAvaloniaPropertyAccessorFactory(XamlIlEmitContext context, IXamlILEmitter codeGen)
+        public IXamlType EmitLoadUixmlPortPropertyAccessorFactory(XamlIlEmitContext context, IXamlILEmitter codeGen)
         {
             codeGen.Ldnull();
-            EmitLoadPropertyAccessorFactory(context, codeGen, context.GetAvaloniaTypes().PropertyInfoAccessorFactory, "CreateAvaloniaPropertyAccessor");
+            EmitLoadPropertyAccessorFactory(context, codeGen, context.GetUixmlPortTypes().PropertyInfoAccessorFactory, "CreateUixmlPortPropertyAccessor");
             return EmitCreateAccessorFactoryDelegate(context, codeGen);
         }
 
         private void EmitLoadPropertyAccessorFactory(XamlIlEmitContext context, IXamlILEmitter codeGen, IXamlType type, string accessorFactoryName, bool isStatic = true)
         {
-            var types = context.GetAvaloniaTypes();
+            var types = context.GetUixmlPortTypes();
             var weakReferenceType = context.Configuration.TypeSystem.GetType("System.WeakReference`1").MakeGenericType(context.Configuration.WellKnownTypes.Object);
             FindMethodMethodSignature accessorFactorySignature = new FindMethodMethodSignature(accessorFactoryName, types.IPropertyAccessor, weakReferenceType, types.IPropertyInfo)
             {
@@ -61,10 +61,10 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
 
         private IXamlType InitializeClosureType(XamlIlEmitContext context)
         {
-            var types = context.GetAvaloniaTypes();
+            var types = context.GetUixmlPortTypes();
             var intType = context.Configuration.TypeSystem.GetType("System.Int32");
             var weakReferenceType = context.Configuration.TypeSystem.GetType("System.WeakReference`1").MakeGenericType(context.Configuration.WellKnownTypes.Object);
-            var indexAccessorFactoryMethod = context.GetAvaloniaTypes().PropertyInfoAccessorFactory.GetMethod(
+            var indexAccessorFactoryMethod = context.GetUixmlPortTypes().PropertyInfoAccessorFactory.GetMethod(
                     new FindMethodMethodSignature(
                         "CreateIndexerPropertyAccessor",
                         types.IPropertyAccessor,
@@ -100,7 +100,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
 
         private IXamlType EmitCreateAccessorFactoryDelegate(XamlIlEmitContext context, IXamlILEmitter codeGen)
         {
-            var types = context.GetAvaloniaTypes();
+            var types = context.GetUixmlPortTypes();
             var weakReferenceType = context.Configuration.TypeSystem.GetType("System.WeakReference`1").MakeGenericType(context.Configuration.WellKnownTypes.Object);
             var funcType = context.Configuration.TypeSystem.GetType("System.Func`3").MakeGenericType(
                             weakReferenceType,

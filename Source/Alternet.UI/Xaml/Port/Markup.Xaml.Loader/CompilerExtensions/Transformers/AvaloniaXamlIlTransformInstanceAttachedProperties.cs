@@ -8,9 +8,9 @@ using XamlX.IL;
 using XamlX.Transform;
 using XamlX.TypeSystem;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
-    class AvaloniaXamlIlTransformInstanceAttachedProperties : IXamlAstTransformer
+    class UixmlPortXamlIlTransformInstanceAttachedProperties : IXamlAstTransformer
     {
 
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)
@@ -19,10 +19,10 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                 && prop.TargetType is XamlAstClrTypeReference targetRef 
                 && prop.DeclaringType is XamlAstClrTypeReference declaringRef)
             {
-                // Target and declared type aren't assignable but both inherit from AvaloniaObject
-                var avaloniaObject = context.Configuration.TypeSystem.FindType("Avalonia.AvaloniaObject");
-                if (avaloniaObject.IsAssignableFrom(targetRef.Type)
-                    && avaloniaObject.IsAssignableFrom(declaringRef.Type)
+                // Target and declared type aren't assignable but both inherit from UixmlPortObject
+                var uixmlPortObject = context.Configuration.TypeSystem.FindType("Alternet.UI.UixmlPortObject");
+                if (uixmlPortObject.IsAssignableFrom(targetRef.Type)
+                    && uixmlPortObject.IsAssignableFrom(declaringRef.Type)
                     && !declaringRef.Type.IsAssignableFrom(targetRef.Type))
                 {
                     // Instance property
@@ -31,37 +31,37 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                         && (clrProp.Getter?.IsStatic == false || clrProp.Setter?.IsStatic == false))
                     {
                         var declaringType = (clrProp.Getter ?? clrProp.Setter)?.DeclaringType;
-                        var avaloniaPropertyFieldName = prop.Name + "Property";
-                        var avaloniaPropertyField = declaringType.Fields.FirstOrDefault(f => f.IsStatic && f.Name == avaloniaPropertyFieldName);
-                        if (avaloniaPropertyField != null)
+                        var uixmlPortPropertyFieldName = prop.Name + "Property";
+                        var uixmlPortPropertyField = declaringType.Fields.FirstOrDefault(f => f.IsStatic && f.Name == uixmlPortPropertyFieldName);
+                        if (uixmlPortPropertyField != null)
                         {
-                            var avaloniaPropertyType = avaloniaPropertyField.FieldType;
-                            while (avaloniaPropertyType != null
-                                   && !(avaloniaPropertyType.Namespace == "Avalonia"
-                                        && (avaloniaPropertyType.Name == "AvaloniaProperty"
-                                            || avaloniaPropertyType.Name == "AvaloniaProperty`1"
+                            var uixmlPortPropertyType = uixmlPortPropertyField.FieldType;
+                            while (uixmlPortPropertyType != null
+                                   && !(uixmlPortPropertyType.Namespace == "UixmlPort"
+                                        && (uixmlPortPropertyType.Name == "UixmlPortProperty"
+                                            || uixmlPortPropertyType.Name == "UixmlPortProperty`1"
                                         )))
                             {
                                 // Attached properties are handled by vanilla XamlIl
-                                if (avaloniaPropertyType.Name.StartsWith("AttachedProperty"))
+                                if (uixmlPortPropertyType.Name.StartsWith("AttachedProperty"))
                                     return node;
                                 
-                                avaloniaPropertyType = avaloniaPropertyType.BaseType;
+                                uixmlPortPropertyType = uixmlPortPropertyType.BaseType;
                             }
 
-                            if (avaloniaPropertyType == null)
+                            if (uixmlPortPropertyType == null)
                                 return node;
 
-                            if (avaloniaPropertyType.GenericArguments?.Count > 1)
+                            if (uixmlPortPropertyType.GenericArguments?.Count > 1)
                                 return node;
 
-                            var propertyType = avaloniaPropertyType.GenericArguments?.Count == 1 ?
-                                avaloniaPropertyType.GenericArguments[0] :
+                            var propertyType = uixmlPortPropertyType.GenericArguments?.Count == 1 ?
+                                uixmlPortPropertyType.GenericArguments[0] :
                                 context.Configuration.WellKnownTypes.Object;
 
-                            return new AvaloniaAttachedInstanceProperty(prop, context.Configuration,
-                                    declaringType, propertyType, avaloniaPropertyType, avaloniaObject,
-                                    avaloniaPropertyField);
+                            return new UixmlPortAttachedInstanceProperty(prop, context.Configuration,
+                                    declaringType, propertyType, uixmlPortPropertyType, uixmlPortObject,
+                                    uixmlPortPropertyField);
                         }
 
                     }
@@ -73,20 +73,20 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             return node;
         }
 
-        class AvaloniaAttachedInstanceProperty : XamlAstClrProperty, IXamlIlAvaloniaProperty
+        class UixmlPortAttachedInstanceProperty : XamlAstClrProperty, IXamlIlUixmlPortProperty
         {
             private readonly TransformerConfiguration _config;
             private readonly IXamlType _declaringType;
-            private readonly IXamlType _avaloniaPropertyType;
-            private readonly IXamlType _avaloniaObject;
+            private readonly IXamlType _uixmlPortPropertyType;
+            private readonly IXamlType _uixmlPortObject;
             private readonly IXamlField _field;
 
-            public AvaloniaAttachedInstanceProperty(XamlAstNamePropertyReference prop,
+            public UixmlPortAttachedInstanceProperty(XamlAstNamePropertyReference prop,
                 TransformerConfiguration config,
                 IXamlType declaringType,
                 IXamlType type,
-                IXamlType avaloniaPropertyType,
-                IXamlType avaloniaObject,
+                IXamlType uixmlPortPropertyType,
+                IXamlType uixmlPortObject,
                 IXamlField field) : base(prop, prop.Name,
                 declaringType, null)
             
@@ -94,13 +94,13 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             {
                 _config = config;
                 _declaringType = declaringType;
-                _avaloniaPropertyType = avaloniaPropertyType;
+                _uixmlPortPropertyType = uixmlPortPropertyType;
                 
                 // XamlIl doesn't support generic methods yet
-                if (_avaloniaPropertyType.GenericArguments?.Count > 0)
-                    _avaloniaPropertyType = _avaloniaPropertyType.BaseType;
+                if (_uixmlPortPropertyType.GenericArguments?.Count > 0)
+                    _uixmlPortPropertyType = _uixmlPortPropertyType.BaseType;
                 
-                _avaloniaObject = avaloniaObject;
+                _uixmlPortObject = uixmlPortObject;
                 _field = field;
                 PropertyType = type;
                 Setters.Add(new SetterMethod(this));
@@ -109,16 +109,16 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 
             public IXamlType PropertyType { get;  }
 
-            public IXamlField AvaloniaProperty => _field;
+            public IXamlField UixmlPortProperty => _field;
             
             class SetterMethod : IXamlPropertySetter, IXamlEmitablePropertySetter<IXamlILEmitter>
             {
-                private readonly AvaloniaAttachedInstanceProperty _parent;
+                private readonly UixmlPortAttachedInstanceProperty _parent;
 
-                public SetterMethod(AvaloniaAttachedInstanceProperty parent)
+                public SetterMethod(UixmlPortAttachedInstanceProperty parent)
                 {
                     _parent = parent;
-                    Parameters = new[] {_parent._avaloniaObject, _parent.PropertyType};
+                    Parameters = new[] {_parent._uixmlPortObject, _parent.PropertyType};
                 }
 
                 public IXamlType TargetType => _parent.DeclaringType;
@@ -127,17 +127,17 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                 public void Emit(IXamlILEmitter emitter)
                 {
                     var so = _parent._config.WellKnownTypes.Object;
-                    var method = _parent._avaloniaObject
+                    var method = _parent._uixmlPortObject
                         .FindMethod(m => m.IsPublic && !m.IsStatic && m.Name == "SetValue"
                                          &&
                                          m.Parameters.Count == 3
-                                         && m.Parameters[0].Equals(_parent._avaloniaPropertyType)
+                                         && m.Parameters[0].Equals(_parent._uixmlPortPropertyType)
                                          && m.Parameters[1].Equals(so)
                                          && m.Parameters[2].IsEnum
                         );
                     if (method == null)
                         throw new XamlTypeSystemException(
-                            "Unable to find SetValue(AvaloniaProperty, object, BindingPriority) on AvaloniaObject");
+                            "Unable to find SetValue(UixmlPortProperty, object, BindingPriority) on UixmlPortObject");
                     using (var loc = emitter.LocalsPool.GetLocal(_parent.PropertyType))
                         emitter
                             .Stloc(loc.Local)
@@ -155,14 +155,14 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 
             class GetterMethod :  IXamlCustomEmitMethod<IXamlILEmitter>
             {
-                public GetterMethod(AvaloniaAttachedInstanceProperty parent) 
+                public GetterMethod(UixmlPortAttachedInstanceProperty parent) 
                 {
                     Parent = parent;
                     DeclaringType = parent._declaringType;
-                    Name = "AvaloniaObject:GetValue_" + Parent.Name;
-                    Parameters = new[] {parent._avaloniaObject};
+                    Name = "UixmlPortObject:GetValue_" + Parent.Name;
+                    Parameters = new[] {parent._uixmlPortObject};
                 }
-                public AvaloniaAttachedInstanceProperty Parent { get; }
+                public UixmlPortAttachedInstanceProperty Parent { get; }
                 public bool IsPublic => true;
                 public bool IsStatic => true;
                 public string Name { get; protected set; }
@@ -180,14 +180,14 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 
                 public void EmitCall(IXamlILEmitter emitter)
                 {
-                    var method = Parent._avaloniaObject
+                    var method = Parent._uixmlPortObject
                         .FindMethod(m => m.IsPublic && !m.IsStatic && m.Name == "GetValue"
                                          &&
                                          m.Parameters.Count == 1
-                                         && m.Parameters[0].Equals(Parent._avaloniaPropertyType));
+                                         && m.Parameters[0].Equals(Parent._uixmlPortPropertyType));
                     if (method == null)
                         throw new XamlTypeSystemException(
-                            "Unable to find T GetValue<T>(AvaloniaProperty<T>) on AvaloniaObject");
+                            "Unable to find T GetValue<T>(UixmlPortProperty<T>) on UixmlPortObject");
                     emitter
                         .Ldsfld(Parent._field)
                         .EmitCall(method);

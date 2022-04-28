@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
-using Avalonia.Markup.Parsers;
-using Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
+using Alternet.UI.Markup.Parsers;
+using Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers;
 using XamlX.Ast;
 using XamlX.Transform;
 using XamlX.Transform.Transformers;
@@ -14,7 +14,7 @@ using XamlX.IL;
 
 using XamlIlEmitContext = XamlX.Emit.XamlEmitContext<XamlX.IL.IXamlILEmitter, XamlX.IL.XamlILNodeEmitResult>;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
 {
     static class XamlIlBindingPathHelper
     {
@@ -115,14 +115,14 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                     case BindingExpressionGrammar.PropertyNameNode propName:
                         {
                             IXamlType targetType = targetTypeResolver();
-                            var avaloniaPropertyFieldNameMaybe = propName.PropertyName + "Property";
-                            var avaloniaPropertyFieldMaybe = targetType.GetAllFields().FirstOrDefault(f =>
-                                f.IsStatic && f.IsPublic && f.Name == avaloniaPropertyFieldNameMaybe);
+                            var uixmlPortPropertyFieldNameMaybe = propName.PropertyName + "Property";
+                            var uixmlPortPropertyFieldMaybe = targetType.GetAllFields().FirstOrDefault(f =>
+                                f.IsStatic && f.IsPublic && f.Name == uixmlPortPropertyFieldNameMaybe);
 
-                            if (avaloniaPropertyFieldMaybe != null)
+                            if (uixmlPortPropertyFieldMaybe != null)
                             {
-                                nodes.Add(new XamlIlAvaloniaPropertyPropertyPathElementNode(avaloniaPropertyFieldMaybe,
-                                    XamlIlAvaloniaPropertyHelper.GetAvaloniaPropertyType(avaloniaPropertyFieldMaybe, context.GetAvaloniaTypes(), lineInfo)));
+                                nodes.Add(new XamlIlUixmlPortPropertyPropertyPathElementNode(uixmlPortPropertyFieldMaybe,
+                                    XamlIlUixmlPortPropertyHelper.GetUixmlPortPropertyType(uixmlPortPropertyFieldMaybe, context.GetUixmlPortTypes(), lineInfo)));
                             }
                             else
                             {
@@ -183,11 +183,11 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                             break;
                         }
                     case BindingExpressionGrammar.AttachedPropertyNameNode attachedProp:
-                        var avaloniaPropertyFieldName = attachedProp.PropertyName + "Property";
-                        var avaloniaPropertyField = GetType(attachedProp.Namespace, attachedProp.TypeName).GetAllFields().FirstOrDefault(f =>
-                            f.IsStatic && f.IsPublic && f.Name == avaloniaPropertyFieldName);
-                        nodes.Add(new XamlIlAvaloniaPropertyPropertyPathElementNode(avaloniaPropertyField,
-                            XamlIlAvaloniaPropertyHelper.GetAvaloniaPropertyType(avaloniaPropertyField, context.GetAvaloniaTypes(), lineInfo)));
+                        var uixmlPortPropertyFieldName = attachedProp.PropertyName + "Property";
+                        var uixmlPortPropertyField = GetType(attachedProp.Namespace, attachedProp.TypeName).GetAllFields().FirstOrDefault(f =>
+                            f.IsStatic && f.IsPublic && f.Name == uixmlPortPropertyFieldName);
+                        nodes.Add(new XamlIlUixmlPortPropertyPropertyPathElementNode(uixmlPortPropertyField,
+                            XamlIlUixmlPortPropertyHelper.GetUixmlPortPropertyType(uixmlPortPropertyField, context.GetUixmlPortTypes(), lineInfo)));
                         break;
                     case BindingExpressionGrammar.SelfNode _:
                         nodes.Add(new SelfPathElementNode(selfType));
@@ -196,16 +196,16 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                         nodes.Add(new FindVisualAncestorPathElementNode(visualAncestor.Type, visualAncestor.Level));
                         break;
                     case TemplatedParentBindingExpressionNode templatedParent:
-                        var templatedParentField = context.GetAvaloniaTypes().StyledElement.GetAllFields()
+                        var templatedParentField = context.GetUixmlPortTypes().StyledElement.GetAllFields()
                             .FirstOrDefault(f => f.IsStatic && f.IsPublic && f.Name == "TemplatedParentProperty");
-                        nodes.Add(new XamlIlAvaloniaPropertyPropertyPathElementNode(
+                        nodes.Add(new XamlIlUixmlPortPropertyPropertyPathElementNode(
                             templatedParentField,
                             templatedParent.Type));
                         break;
                     case BindingExpressionGrammar.AncestorNode ancestor:
                         if (ancestor.Namespace is null && ancestor.TypeName is null)
                         {
-                            var styledElementType = context.GetAvaloniaTypes().StyledElement;
+                            var styledElementType = context.GetUixmlPortTypes().StyledElement;
                             var ancestorType = context
                                 .ParentNodes()
                                 .OfType<XamlAstConstructableObjectNode>()
@@ -263,7 +263,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                 }
             }
 
-            return new XamlIlBindingPathNode(lineInfo, context.GetAvaloniaTypes().CompiledBindingPath, transformNodes, nodes);
+            return new XamlIlBindingPathNode(lineInfo, context.GetUixmlPortTypes().CompiledBindingPath, transformNodes, nodes);
 
             IXamlType GetType(string ns, string name)
             {
@@ -346,7 +346,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
 
             IXamlAstNode IXamlAstVisitor.Visit(IXamlAstNode node)
             {
-                if (_childScopesStack.Count == 0 && node is AvaloniaNameScopeRegistrationXamlIlNode registration)
+                if (_childScopesStack.Count == 0 && node is UixmlPortNameScopeRegistrationXamlIlNode registration)
                 {
                     if (registration.Name is XamlAstTextNode text && text.Text == Name)
                     {
@@ -375,7 +375,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
 
             public void Emit(XamlIlEmitContext context, IXamlILEmitter codeGen)
             {
-                codeGen.EmitCall(context.GetAvaloniaTypes().CompiledBindingPathBuilder.FindMethod(m => m.Name == "Not"));
+                codeGen.EmitCall(context.GetUixmlPortTypes().CompiledBindingPathBuilder.FindMethod(m => m.Name == "Not"));
             }
         }
 
@@ -390,7 +390,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
 
             public void Emit(XamlIlEmitContext context, IXamlILEmitter codeGen)
             {
-                codeGen.EmitCall(context.GetAvaloniaTypes().CompiledBindingPathBuilder.FindMethod(m => m.Name == "StreamObservable").MakeGenericMethod(new[] { Type }));
+                codeGen.EmitCall(context.GetUixmlPortTypes().CompiledBindingPathBuilder.FindMethod(m => m.Name == "StreamObservable").MakeGenericMethod(new[] { Type }));
             }
         }
 
@@ -405,7 +405,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
 
             public void Emit(XamlIlEmitContext context, IXamlILEmitter codeGen)
             {
-                codeGen.EmitCall(context.GetAvaloniaTypes().CompiledBindingPathBuilder.FindMethod(m => m.Name == "StreamTask").MakeGenericMethod(new[] { Type }));
+                codeGen.EmitCall(context.GetUixmlPortTypes().CompiledBindingPathBuilder.FindMethod(m => m.Name == "StreamTask").MakeGenericMethod(new[] { Type }));
             }
         }
 
@@ -420,7 +420,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
 
             public void Emit(XamlIlEmitContext context, IXamlILEmitter codeGen)
             {
-                codeGen.EmitCall(context.GetAvaloniaTypes().CompiledBindingPathBuilder.FindMethod(m => m.Name == "Self"));
+                codeGen.EmitCall(context.GetUixmlPortTypes().CompiledBindingPathBuilder.FindMethod(m => m.Name == "Self"));
             }
         }
 
@@ -440,7 +440,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
             {
                 codeGen.Ldtype(Type)
                     .Ldc_I4(_level)
-                    .EmitCall(context.GetAvaloniaTypes().CompiledBindingPathBuilder.FindMethod(m => m.Name == "Ancestor"));
+                    .EmitCall(context.GetUixmlPortTypes().CompiledBindingPathBuilder.FindMethod(m => m.Name == "Ancestor"));
             }
         }
 
@@ -460,7 +460,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
             {
                 codeGen.Ldtype(Type)
                     .Ldc_I4(_level)
-                    .EmitCall(context.GetAvaloniaTypes().CompiledBindingPathBuilder.FindMethod(m => m.Name == "VisualAncestor"));
+                    .EmitCall(context.GetUixmlPortTypes().CompiledBindingPathBuilder.FindMethod(m => m.Name == "VisualAncestor"));
             }
         }
 
@@ -479,21 +479,21 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
             public void Emit(XamlIlEmitContext context, IXamlILEmitter codeGen)
             {
                 var scopeField = context.RuntimeContext.ContextType.Fields.First(f =>
-                    f.Name == AvaloniaXamlIlLanguage.ContextNameScopeFieldName);
+                    f.Name == UixmlPortXamlIlLanguage.ContextNameScopeFieldName);
 
                 codeGen
                     .Ldloc(context.ContextLocal)
                     .Ldfld(scopeField)
                     .Ldstr(_name)
-                    .EmitCall(context.GetAvaloniaTypes().CompiledBindingPathBuilder.FindMethod(m => m.Name == "ElementName"));
+                    .EmitCall(context.GetUixmlPortTypes().CompiledBindingPathBuilder.FindMethod(m => m.Name == "ElementName"));
             }
         }
 
-        class XamlIlAvaloniaPropertyPropertyPathElementNode : IXamlIlBindingPathElementNode
+        class XamlIlUixmlPortPropertyPropertyPathElementNode : IXamlIlBindingPathElementNode
         {
             private readonly IXamlField _field;
 
-            public XamlIlAvaloniaPropertyPropertyPathElementNode(IXamlField field, IXamlType propertyType)
+            public XamlIlUixmlPortPropertyPropertyPathElementNode(IXamlField field, IXamlType propertyType)
             {
                 _field = field;
                 Type = propertyType;
@@ -503,8 +503,8 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
             {
                 codeGen.Ldsfld(_field);
                 context.Configuration.GetExtra<XamlIlPropertyInfoAccessorFactoryEmitter>()
-                    .EmitLoadAvaloniaPropertyAccessorFactory(context, codeGen);
-                codeGen.EmitCall(context.GetAvaloniaTypes()
+                    .EmitLoadUixmlPortPropertyAccessorFactory(context, codeGen);
+                codeGen.EmitCall(context.GetUixmlPortTypes()
                     .CompiledBindingPathBuilder.FindMethod(m => m.Name == "Property"));
             }
 
@@ -529,7 +529,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                     .EmitLoadInpcPropertyAccessorFactory(context, codeGen);
 
                 codeGen
-                    .EmitCall(context.GetAvaloniaTypes()
+                    .EmitCall(context.GetUixmlPortTypes()
                         .CompiledBindingPathBuilder.FindMethod(m => m.Name == "Property"));
             }
 
@@ -571,7 +571,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
                         .EmitLoadInpcPropertyAccessorFactory(context, codeGen);
                 }
 
-                codeGen.EmitCall(context.GetAvaloniaTypes()
+                codeGen.EmitCall(context.GetUixmlPortTypes()
                     .CompiledBindingPathBuilder.FindMethod(m => m.Name == "Property"));
             }
 
@@ -614,7 +614,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
 
                 codeGen.Ldloc(indices)
                     .Ldtype(Type)
-                    .EmitCall(context.GetAvaloniaTypes()
+                    .EmitCall(context.GetUixmlPortTypes()
                     .CompiledBindingPathBuilder.FindMethod(m => m.Name == "ArrayElement"));
             }
 
@@ -638,7 +638,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
             {
                 context.Emit(_rawSource, codeGen, Type);
                 codeGen
-                    .EmitCall(context.GetAvaloniaTypes()
+                    .EmitCall(context.GetUixmlPortTypes()
                     .CompiledBindingPathBuilder.FindMethod(m => m.Name == "SetRawSource"));
             }
         }
@@ -654,7 +654,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
 
             public void Emit(XamlIlEmitContext context, IXamlILEmitter codeGen)
             {
-                codeGen.EmitCall(context.GetAvaloniaTypes().CompiledBindingPathBuilder.FindMethod(m => m.Name == "TypeCast").MakeGenericMethod(new[] { Type }));
+                codeGen.EmitCall(context.GetUixmlPortTypes().CompiledBindingPathBuilder.FindMethod(m => m.Name == "TypeCast").MakeGenericMethod(new[] { Type }));
             }
         }
 
@@ -682,7 +682,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions
 
             public XamlILNodeEmitResult Emit(XamlIlEmitContext context, IXamlILEmitter codeGen)
             {
-                var types = context.GetAvaloniaTypes();
+                var types = context.GetUixmlPortTypes();
                 codeGen.Newobj(types.CompiledBindingPathBuilder.FindConstructor());
 
                 foreach (var transform in _transformElements)

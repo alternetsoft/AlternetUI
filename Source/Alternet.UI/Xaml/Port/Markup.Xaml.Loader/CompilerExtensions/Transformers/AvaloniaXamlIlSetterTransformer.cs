@@ -7,23 +7,23 @@ using XamlX.IL;
 using XamlX.Transform;
 using XamlX.TypeSystem;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
     using XamlParseException = XamlX.XamlParseException;
-    class AvaloniaXamlIlSetterTransformer : IXamlAstTransformer
+    class UixmlPortXamlIlSetterTransformer : IXamlAstTransformer
     {
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)
         {
             if (!(node is XamlAstObjectNode on
-                  && on.Type.GetClrType().FullName == "Avalonia.Styling.Setter"))
+                  && on.Type.GetClrType().FullName == "Alternet.UI.Styling.Setter"))
                 return node;
 
             var parent = context.ParentNodes().OfType<XamlAstObjectNode>()
-                .FirstOrDefault(p => p.Type.GetClrType().FullName == "Avalonia.Styling.Style");
+                .FirstOrDefault(p => p.Type.GetClrType().FullName == "Alternet.UI.Styling.Style");
             
             if (parent == null)
                 throw new XamlParseException(
-                    "Avalonia.Styling.Setter is only valid inside Avalonia.Styling.Style", node);
+                    "Alternet.UI.Styling.Setter is only valid inside UixmlPort.Styling.Style", node);
             var selectorProperty = parent.Children.OfType<XamlAstXamlPropertyValueNode>()
                 .FirstOrDefault(p => p.Property.GetClrProperty().Name == "Selector");
             if (selectorProperty == null)
@@ -45,10 +45,10 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                     throw new XamlParseException("Setter.Property must be a string", node);
 
 
-                var avaloniaPropertyNode = XamlIlAvaloniaPropertyHelper.CreateNode(context, propertyName,
+                var uixmlPortPropertyNode = XamlIlUixmlPortPropertyHelper.CreateNode(context, propertyName,
                     new XamlAstClrTypeReference(selector, selector.TargetType, false), property.Values[0]);
-                property.Values = new List<IXamlAstValueNode> {avaloniaPropertyNode};
-                propType = avaloniaPropertyNode.AvaloniaPropertyType;
+                property.Values = new List<IXamlAstValueNode> {uixmlPortPropertyNode};
+                propType = uixmlPortPropertyNode.UixmlPortPropertyType;
             }
             else
             {
@@ -74,7 +74,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
                         valueProperty.Values[0]);
 
                 valueProperty.Property = new SetterValueProperty(valueProperty.Property,
-                    on.Type.GetClrType(), propType, context.GetAvaloniaTypes());
+                    on.Type.GetClrType(), propType, context.GetUixmlPortTypes());
             }
 
             return node;
@@ -83,7 +83,7 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
         class SetterValueProperty : XamlAstClrProperty
         {
             public SetterValueProperty(IXamlLineInfo line, IXamlType setterType, IXamlType targetType,
-                AvaloniaXamlIlWellKnownTypes types)
+                UixmlPortXamlIlWellKnownTypes types)
                 : base(line, "Value", setterType, null)
             {
                 Getter = setterType.Methods.First(m => m.Name == "get_Value");

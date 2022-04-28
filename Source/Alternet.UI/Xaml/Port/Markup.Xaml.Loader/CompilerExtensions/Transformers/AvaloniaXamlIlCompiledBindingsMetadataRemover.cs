@@ -2,9 +2,9 @@
 using XamlX.Ast;
 using XamlX.Transform;
 
-namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
+namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
 {
-    class AvaloniaXamlIlCompiledBindingsMetadataRemover : IXamlAstTransformer
+    class UixmlPortXamlIlCompiledBindingsMetadataRemover : IXamlAstTransformer
     {
         public IXamlAstNode Transform(AstTransformationContext context, IXamlAstNode node)
         {
@@ -12,9 +12,9 @@ namespace Avalonia.Markup.Xaml.XamlIl.CompilerExtensions.Transformers
             {
                 if (node is NestedScopeMetadataNode nestedScope)
                     node = nestedScope.Value;
-                else if (node is AvaloniaXamlIlDataContextTypeMetadataNode dataContextType)
+                else if (node is UixmlPortXamlIlDataContextTypeMetadataNode dataContextType)
                     node = dataContextType.Value;
-                else if (node is AvaloniaXamlIlCompileBindingsNode compileBindings)
+                else if (node is UixmlPortXamlIlCompileBindingsNode compileBindings)
                     node = compileBindings.Value;
                 else
                     return node;

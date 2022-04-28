@@ -1,7 +1,7 @@
 #nullable disable
 using System;
 
-namespace Avalonia.Utilities
+namespace Alternet.UI.Utilities
 {
     static class KeywordParser
     {

@@ -1,8 +1,8 @@
 #nullable disable
-using Avalonia.Data.Core;
-using Avalonia.Utilities;
+using Alternet.UI.Data.Core;
+using Alternet.UI.Utilities;
 
-namespace Avalonia.Markup.Xaml.Parsers
+namespace Alternet.UI.Markup.Xaml.Parsers
 {
     internal class PropertyParser
     {

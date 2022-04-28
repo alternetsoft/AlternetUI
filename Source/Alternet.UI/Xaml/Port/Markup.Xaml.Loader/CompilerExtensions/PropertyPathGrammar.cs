@@ -1,12 +1,12 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using Avalonia.Data.Core;
-using Avalonia.Utilities;
+using Alternet.UI.Data.Core;
+using Alternet.UI.Utilities;
 
 #nullable enable
 
-namespace Avalonia.Markup.Parsers
+namespace Alternet.UI.Markup.Parsers
 {
     class PropertyPathGrammar
     {

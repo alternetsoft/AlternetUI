@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace Avalonia.Logging
+namespace Alternet.UI.Logging
 {
     /// <summary>
     /// Logger sink parametrized for given logging level.
