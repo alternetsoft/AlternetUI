@@ -30,8 +30,8 @@ remarks: *content
  attached property regardless of whether the type inherits from the type that
  defines the property. An attached property is a feature of the UIXML language.
  To set an attached property in UIXML, use the *ownerType*.*propertyName* syntax.
- An example of an attached property is the
- <xref:Alternet.UI.Grid.GetColumn*>/<xref:Alternet.UI.Grid.SetColumn*>
+ An example of an attached property is the Grid.Column attached property implemented by the
+ <xref:Alternet.UI.Grid.GetColumn*>/<xref:Alternet.UI.Grid.SetColumn*> methods.
  property. If you want to create a property that can be used on all
  <xref:Alternet.UI.DependencyObject> types, then you should create an
  attached property.
