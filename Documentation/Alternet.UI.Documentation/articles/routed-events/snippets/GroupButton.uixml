@@ -1,0 +1,7 @@
+<Border Height="50" Width="300">
+	<StackPanel Orientation="Horizontal">
+		<Button Name="YesButton" Click="ClickHandler" Text="Yes" />
+		<Button Name="NoButton" Text="No" />
+		<Button Name="CancelButton" Text="Cancel" />
+	</StackPanel>
+</Border>
