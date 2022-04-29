@@ -1,0 +1,7 @@
+<StackPanel>
+	<Button Background="AliceBlue"
+			MouseEnter="OnMouseExampleMouseEnter"
+			MouseLeave="OnMosueExampleMouseLeave"
+			Text="Button">
+	</Button>
+</StackPanel>

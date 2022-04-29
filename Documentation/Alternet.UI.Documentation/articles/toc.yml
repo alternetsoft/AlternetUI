@@ -4,3 +4,5 @@
   href: dependency-properties/dependency-properties.md
 - name: Routed Events
   href: routed-events/routed-events.md
+- name: Input
+  href: input/input.md

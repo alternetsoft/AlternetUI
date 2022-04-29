@@ -1,0 +1,5 @@
+<StackPanel>
+	<Button Background="AliceBlue"
+			KeyDown="OnButtonKeyDown"
+			Text="Button1"/>
+</StackPanel>
