@@ -40,7 +40,6 @@ And the UIXML below consumes such a property:
 
 ```
 <MyObject IsSpinning="True" />
-
 ```
 
 ## Data Binding
