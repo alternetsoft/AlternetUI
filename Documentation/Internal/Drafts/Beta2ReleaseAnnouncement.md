@@ -73,7 +73,7 @@ public MainWindow()
 ```
 
 In the sample above, the text boxes defined in UIXML get filled from the `Employee` object automatically.
-Also, when user edits value of one of the text boxes, the corresponding `Employee` object properties get updated automatically.
+Also, when the user edits value of one of the text boxes, the corresponding `Employee` object properties get updated automatically.
 
 ## Keyboard and Mouse Input, Routed Events
 
