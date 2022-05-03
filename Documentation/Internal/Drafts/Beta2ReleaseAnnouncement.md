@@ -44,7 +44,7 @@ And the UIXML below consumes such a property:
 
 ## Data Binding
 
-Data binding is also a concept taken from WPF world and is built on top of dependency properties and is used in UIXML.
+Data binding is also a concept taken from WPF world and is built on top of dependency properties.
 Data binding is the process that establishes a connection between the app UI and the data it displays.
 If the binding has the correct settings and the data provides the proper notifications, when the data changes its value,
 the elements that are bound to the data reflect changes automatically. Data binding can also mean that if an outer representation
