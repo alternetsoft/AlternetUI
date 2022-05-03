@@ -57,12 +57,10 @@
 
 			<Label Text="State" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
 
-			<StackPanel Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5" Grid.ColumnSpan="2"
-						Orientation="Horizontal">
-				<ComboBox SelectedItem="{Binding State}" Name="stateComboBox" IsEditable="false"
-						  VerticalAlignment="Center" HorizontalAlignment="Left"/>
-				<Label Text="ZIP Code" VerticalAlignment="Center" Margin="15,0,10,0" HorizontalAlignment="Left"/>
-				<TextBox Text="{Binding ZipCode}" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+			<StackPanel Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5" Grid.ColumnSpan="2" Orientation="Horizontal">
+				<ComboBox SelectedItem="{Binding State}" Name="stateComboBox" IsEditable="false" VerticalAlignment="Center" />
+				<Label Text="ZIP Code" VerticalAlignment="Center" Margin="15,0,10,0" />
+				<TextBox Text="{Binding ZipCode}" VerticalAlignment="Center" />
 			</StackPanel>
 
 			<Label Text="Home Phone" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
