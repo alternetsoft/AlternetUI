@@ -180,24 +180,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets or sets the size and location of the window.
-        /// </summary>
-        /// <value>A <see cref="Rect"/> that represents the bounds of the form on
-        /// the desktop, in logical units (1/96th of an inch).</value>
-        public Rect Bounds
-        {
-            get
-            {
-                return Handler.Bounds;
-            }
-
-            set
-            {
-                Handler.Bounds = value;
-            }
-        }
-
         internal void RaiseClosing(WindowClosingEventArgs e) => OnClosing(e);
 
         internal void RaiseClosed(WindowClosedEventArgs e) => OnClosed(e);

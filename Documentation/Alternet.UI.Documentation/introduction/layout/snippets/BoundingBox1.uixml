@@ -1,0 +1,15 @@
+<Grid Name="myGrid" Height="150">
+	<Grid.ColumnDefinitions>
+		<ColumnDefinition Width="250"/>
+	</Grid.ColumnDefinitions>
+	<Grid.RowDefinitions>
+		<RowDefinition />
+		<RowDefinition />
+		<RowDefinition />
+	</Grid.RowDefinitions>
+	<Border Name="border1" Grid.Column="0" Grid.Row="0" BorderBrush="{x:Null}">
+		<Label Margin="5" Text="Hello World!" />
+	</Border>
+	<Button Width="125" Height="25" Grid.Column="0" Grid.Row="1" Text="Show Bounding Box" Click="ShowBoundingBoxButton_Click" />
+	<Label Name="txt2" Grid.Column="1" Grid.Row="2"/>
+</Grid>

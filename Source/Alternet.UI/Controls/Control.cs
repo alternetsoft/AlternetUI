@@ -170,6 +170,15 @@ namespace Alternet.UI
         public object? Tag { get; set; }
 
         /// <summary>
+        /// Gets or sets the <see cref="Control"/> bounds relative to the parent, in device-independent units (1/96th inch per unit).
+        /// </summary>
+        public virtual Rect Bounds
+        {
+            get => Handler.Bounds;
+            set => Handler.Bounds = value;
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the control and all its child controls are displayed.
         /// </summary>
         /// <value><c>true</c> if the control and all its child controls are displayed; otherwise, <c>false</c>. The default is <c>true</c>.</value>

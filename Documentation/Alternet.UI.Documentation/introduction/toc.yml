@@ -2,8 +2,10 @@
   href: getting-started.md
 - name: Programming With AlterNET UI
   href: programming-with-alternet-ui.md
-- name: Layout and Controls
-  href: layout-and-controls.md
+- name: Controls
+  href: controls.md
+- name: Layout
+  href: layout/layout.md
 - name: Data Binding
   href: data-binding/data-binding.md
 - name: Dependency Properties

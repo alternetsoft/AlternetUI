@@ -1,4 +1,4 @@
-# Layout and Controls
+# Controls
 
 > [!NOTE]
 > Warning: AlterNET UI is still in early beta, and the API is subject to change in the next beta releases.
