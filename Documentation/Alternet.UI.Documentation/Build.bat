@@ -1,1 +1,1 @@
-dotnet build
+dotnet build Alternet.UI.Documentation.csproj
