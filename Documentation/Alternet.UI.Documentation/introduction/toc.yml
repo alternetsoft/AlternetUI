@@ -4,6 +4,14 @@
   href: programming-with-alternet-ui.md
 - name: Layout and Controls
   href: layout-and-controls.md
+- name: Data Binding
+  href: data-binding/data-binding.md
+- name: Dependency Properties
+  href: dependency-properties/dependency-properties.md
+- name: Routed Events
+  href: routed-events/routed-events.md
+- name: Input
+  href: input/input.md
 - name: Rendering Graphics
   href: rendering-graphics.md
 - name: System Requirements
