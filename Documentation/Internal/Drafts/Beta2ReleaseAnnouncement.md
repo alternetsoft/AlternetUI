@@ -1,6 +1,6 @@
 # AlterNET UI Beta 2
 
-AlterNET UI Beta 2 represents a significant milestone towards releasing production-ready cross-platform
+AlterNET UI Beta 2 represents a significant milestone towards releasing a production-ready cross-platform
 .NET UI framework for developing desktop applications on Windows, macOS and Linux.
 
 In this release we have implemented some major features, primarily adopted from WPF framework.
