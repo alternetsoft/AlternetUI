@@ -43,17 +43,18 @@ namespace EmployeeFormSample
 
         private void PopuplateComboBoxes()
         {
-            prefixComboBox.BeginUpdate();
-            prefixComboBox.Items.AddRange(Enum.GetValues(typeof(EmployeePrefix)).Cast<object>());
-            prefixComboBox.EndUpdate();
+            void FillComboBoxWithEnumValues(ComboBox cb, Type enumType)
+            {
+                cb.BeginInit();
+                cb.BeginUpdate();
+                cb.Items.AddRange(Enum.GetValues(enumType).Cast<object>());
+                cb.EndUpdate();
+                cb.EndInit();
+            }
 
-            stateComboBox.BeginUpdate();
-            stateComboBox.Items.AddRange(Enum.GetValues(typeof(State)).Cast<object>());
-            stateComboBox.EndUpdate();
-
-            departmentComboBox.BeginUpdate();
-            departmentComboBox.Items.AddRange(Enum.GetValues(typeof(Department)).Cast<object>());
-            departmentComboBox.EndUpdate();
+            FillComboBoxWithEnumValues(prefixComboBox, typeof(EmployeePrefix));
+            FillComboBoxWithEnumValues(stateComboBox, typeof(State));
+            FillComboBoxWithEnumValues(departmentComboBox, typeof(Department));
         }
     }
 }
