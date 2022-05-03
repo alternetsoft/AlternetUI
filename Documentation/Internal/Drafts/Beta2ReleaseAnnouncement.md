@@ -66,8 +66,10 @@ public MainWindow()
 ```
 
 ```
-<TextBox Text="{Binding FirstName}" />
-<TextBox Text="{Binding LastName}" />
+<Window>
+    <TextBox Text="{Binding FirstName}" />
+    <TextBox Text="{Binding LastName}" />
+</Window>
 ```
 
 In the sample above, the text boxes defined in UIXML get filled from the `Employee` object automatically.
