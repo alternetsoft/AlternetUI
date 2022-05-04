@@ -687,6 +687,16 @@ namespace Alternet::UI
         return toDip(screenClientPoint, window);
     }
 
+    bool Control::Focus()
+    {
+        auto window = GetWxWindow();
+        if (!window->AcceptsFocus() || !window->CanAcceptFocus() || !window->CanBeFocused())
+            return false;
+
+        window->SetFocus();
+        return window->HasFocus();
+    }
+
     /*static*/ Control* Control::GetFocusedControl()
     {
         auto focusedWxWindow = wxWindow::FindFocus();

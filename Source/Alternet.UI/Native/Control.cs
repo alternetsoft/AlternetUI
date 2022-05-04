@@ -354,6 +354,14 @@ namespace Alternet.UI.Native
             return m;
         }
         
+        public bool Focus()
+        {
+            CheckDisposed();
+            var n = NativeApi.Control_Focus_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -548,6 +556,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Point Control_ScreenToClient_(IntPtr obj, NativeApiTypes.Point point);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_Focus_(IntPtr obj);
             
         }
     }

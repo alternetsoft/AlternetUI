@@ -747,6 +747,16 @@ namespace Alternet.UI
             ResumeLayout();
         }
 
+        /// <summary>
+        /// Sets input focus to the control.
+        /// </summary>
+        /// <returns><see langword="true"/> if the input focus request was successful; otherwise, <see langword="false"/>.</returns>
+        /// <remarks>The <see cref="Focus"/> method returns true if the control successfully received input focus.</remarks>
+        public bool Focus()
+        {
+            return Handler.Focus();
+        }
+
         internal void RaisePaint(PaintEventArgs e)
         {
             if (e == null)

@@ -283,6 +283,13 @@ ALTERNET_UI_API Point_C Control_ScreenToClient_(Control* obj, Point point)
         });
 }
 
+ALTERNET_UI_API c_bool Control_Focus_(Control* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->Focus();
+        });
+}
+
 ALTERNET_UI_API void Control_SetEventCallback_(Control::ControlEventCallbackType callback)
 {
     Control::SetEventCallback(callback);

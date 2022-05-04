@@ -861,6 +861,19 @@ namespace Alternet.UI
                 nativeControl?.RemoveChild(childControl.Handler.nativeControl);
         }
 
+        /// <summary>
+        /// Sets input focus to the control.
+        /// </summary>
+        /// <returns><see langword="true"/> if the input focus request was successful; otherwise, <see langword="false"/>.</returns>
+        /// <remarks>The <see cref="Focus"/> method returns true if the control successfully received input focus.</remarks>
+        public bool Focus()
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            return NativeControl.Focus();
+        }
+
         private Control? TryFindClosestParentWithNativeControl()
         {
             var control = Control;
