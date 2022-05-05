@@ -4,6 +4,6 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Alternet.UI" Version="0.1.0-beta" />
+    <PackageReference Include="Alternet.UI" Version="0.2.0-beta" />
   </ItemGroup>
 </Project>
