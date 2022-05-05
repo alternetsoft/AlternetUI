@@ -1,0 +1,8 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="WindowPropertiesSample.MainWindow"
+		Title="Window Properties Sample">
+	<StackPanel>
+		<Button Text="Create and show window" Name="createAndShowWindowButton" Click="CreateAndShowWindowButton_Click" />
+	</StackPanel>
+</Window>

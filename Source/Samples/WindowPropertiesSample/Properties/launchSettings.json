@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WindowPropertiesSample": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
