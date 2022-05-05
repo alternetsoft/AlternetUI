@@ -2,9 +2,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="HelloWorldSample.MainWindow"
         Title="My First Application">
-  <StackPanel Orientation="Horizontal">
-	  <!--<Button Name="helloButton" Text="Say Hello" Margin="20" Click="HelloButton_Click" />-->
-	  <Label Text="HI" Name="hiL" />
+  <StackPanel Orientation="Vertical">
 	  <Button Name="helloButton" Text="Say Hello" Margin="20" Click="HelloButton_Click" />
   </StackPanel>
 
