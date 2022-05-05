@@ -13,9 +13,13 @@ The framework includes a platform-independent graphic device interface for rende
 
 For increased developer productivity, [AlterNET UI extension for Visual Studio](https://marketplace.visualstudio.com/items?itemName=AlternetSoftwarePTYLTD.AlternetUIForVS2022) is available.
 
+AlterNET UI Beta 2 represents a significant milestone towards releasing a production-ready cross-platform .NET UI framework for developing desktop applications on Windows, macOS and Linux.
+In this release we have implemented some major features, primarily adopted from WPF framework: Layout Engine, Dependency Properties, Data Binding, Keyboard and Mouse Input, Routed Events, and more.
+
 For more info, see [alternet-ui.com](https://alternet-ui.com).
 
 An example of an application made with AlterNET UI running on different operating systems:
 
-![Running on macOS](https://raw.githubusercontent.com/alternetsoft/alternet-ui/master/Alternet.UI/Package/message-box-on-click-macos-window.png)
-![Running on Windows](https://raw.githubusercontent.com/alternetsoft/alternet-ui/master/Alternet.UI/Package/message-box-on-click-windows.png)
+![Running on macOS](https://raw.githubusercontent.com/alternetsoft/alternet-ui/master/Alternet.UI/Package/EmployeeFormSample-macOS.png)
+![Running on Windows](https://raw.githubusercontent.com/alternetsoft/alternet-ui/master/Alternet.UI/Package/EmployeeFormSample-Windows.png)
+![Running on Linux](https://raw.githubusercontent.com/alternetsoft/alternet-ui/master/Alternet.UI/Package/EmployeeFormSample-Linux.png)
