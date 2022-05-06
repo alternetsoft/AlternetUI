@@ -31,6 +31,7 @@ namespace Alternet.UI
 
         private string title = "";
         private WindowStartLocation startLocation = WindowStartLocation.SystemDefault;
+        private bool showInTaskbar = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
@@ -41,6 +42,36 @@ namespace Alternet.UI
             SetVisibleValue(false);
             Bounds = new Rect(100, 100, 400, 400);
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the form is displayed in the Windows or Linux taskbar.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> to display the form in the Windows taskbar at run time;
+        /// otherwise, <see langword="false"/>. The default is <see langword="true"/>.
+        /// </value>
+        /// <remarks>
+        /// You can use this property to prevent users from selecting your form through the taskbar.
+        /// For example, if you display a Find and Replace tool window in your application,
+        /// you might want to prevent that window from being selected through the taskbar
+        /// because you would need both the application's main window and the Find and Replace
+        /// tool window displayed in order to process searches appropriately.
+        /// </remarks>
+        public bool ShowInTaskbar
+        {
+            get => showInTaskbar;
+            
+            set
+            {
+                showInTaskbar = value;
+                ShowInTaskbarChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="ShowInTaskbar"/> property changes.
+        /// </summary>
+        public event EventHandler? ShowInTaskbarChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Title"/> property changes.

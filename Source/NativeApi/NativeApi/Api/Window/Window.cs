@@ -13,5 +13,7 @@ namespace NativeApi.Api
         public event EventHandler? Closing { add => throw new Exception(); remove => throw new Exception(); }
 
         public event EventHandler SizeChanged { add => throw new Exception(); remove => throw new Exception(); }
+
+        public bool ShowInTaskbar { get => throw new Exception(); set => throw new Exception(); }
     }
 }

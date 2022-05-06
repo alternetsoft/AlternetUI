@@ -1,8 +1,20 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="WindowPropertiesSample.MainWindow"
-		Title="Window Properties Sample">
-	<StackPanel>
-		<Button Text="Create and show window" Name="createAndShowWindowButton" Click="CreateAndShowWindowButton_Click" />
+		Title="Window Properties Sample"
+		Padding="10">
+	<StackPanel Orientation="Horizontal">
+		<GroupBox Title="Create">
+			<StackPanel>
+				<Button Text="Create and show window" Name="createAndShowWindowButton" Click="CreateAndShowWindowButton_Click" />
+			</StackPanel>
+		</GroupBox>
+
+		<GroupBox Title="Properties">
+			<StackPanel>
+				<CheckBox Text="ShowInTaskbar" Name="showInTaskBarCheckBox" CheckedChanged="ShowInTaskBarCheckBox_CheckedChanged" IsChecked="True"/>
+			</StackPanel>
+		</GroupBox>
+
 	</StackPanel>
 </Window>

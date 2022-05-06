@@ -75,7 +75,8 @@ namespace Alternet::UI
         wxWindow* _wxWindow = nullptr;
         Control* _parent = nullptr;
         std::vector<Control*> _children;
-        ControlFlags _flags = ControlFlags::None;
+        FlagsAccessor<ControlFlags> _flags;
+
         int _beginUpdateCount = 0;
         Size _clientSizeCache;
 
@@ -97,9 +98,6 @@ namespace Alternet::UI
 
         virtual Size ClientSizeToSize(const Size& clientSize);
         virtual Size SizeToClientSize(const Size& size);
-
-        bool GetFlag(ControlFlags flag);
-        void SetFlag(ControlFlags flag, bool value);
 
         void OnPaint(wxPaintEvent& event);
         void OnEraseBackground(wxEraseEvent& event);

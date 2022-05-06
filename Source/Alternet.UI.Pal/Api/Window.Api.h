@@ -43,6 +43,20 @@ ALTERNET_UI_API void Window_SetWindowStartPosition_(Window* obj, WindowStartPosi
         });
 }
 
+ALTERNET_UI_API c_bool Window_GetShowInTaskbar_(Window* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetShowInTaskbar();
+        });
+}
+
+ALTERNET_UI_API void Window_SetShowInTaskbar_(Window* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetShowInTaskbar(value);
+        });
+}
+
 ALTERNET_UI_API void Window_SetEventCallback_(Window::WindowEventCallbackType callback)
 {
     Window::SetEventCallback(callback);

@@ -57,6 +57,23 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool ShowInTaskbar
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetShowInTaskbar_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetShowInTaskbar_(NativePointer, value);
+            }
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -129,6 +146,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetWindowStartPosition_(IntPtr obj, WindowStartPosition value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Window_GetShowInTaskbar_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetShowInTaskbar_(IntPtr obj, bool value);
             
         }
     }

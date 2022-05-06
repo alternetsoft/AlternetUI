@@ -8,6 +8,10 @@ void SetTitle(const string& value);
 WindowStartPosition GetWindowStartPosition();
 void SetWindowStartPosition(WindowStartPosition value);
 
+
+bool GetShowInTaskbar();
+void SetShowInTaskbar(bool value);
+
 public:
 enum class WindowEvent
 {

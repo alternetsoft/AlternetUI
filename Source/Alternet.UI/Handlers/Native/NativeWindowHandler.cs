@@ -13,9 +13,27 @@ namespace Alternet.UI
         protected override void OnAttach()
         {
             base.OnAttach();
+
+            ApplyTitle();
+            ApplyShowInTaskbar();
+
             Control.TitleChanged += Control_TitleChanged;
+            Control.ShowInTaskbarChanged += Control_ShowInTaskbarChanged;
             NativeControl.Closing += Control_Closing;
             NativeControl.SizeChanged += NativeControl_SizeChanged;
+        }
+
+        private void Control_ShowInTaskbarChanged(object sender, EventArgs e)
+        {
+            if (e is null)
+                throw new System.ArgumentNullException(nameof(e));
+
+            ApplyShowInTaskbar();
+        }
+
+        private void ApplyShowInTaskbar()
+        {
+            NativeControl.ShowInTaskbar = Control.ShowInTaskbar;
         }
 
         private void NativeControl_SizeChanged(object? sender, EventArgs e)
@@ -52,6 +70,11 @@ namespace Alternet.UI
             if (e is null)
                 throw new System.ArgumentNullException(nameof(e));
 
+            ApplyTitle();
+        }
+
+        private void ApplyTitle()
+        {
             NativeControl.Title = Control.Title;
         }
     }

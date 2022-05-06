@@ -14,32 +14,31 @@ namespace WindowPropertiesSample
 
         TestWindow? testWindow;
 
-        public TestWindow? TestWindow
-        {
-            get => testWindow;
-            set
-            {
-                testWindow = value;
-                UpdateControls();
-            }
-        }
-
         private void CreateAndShowWindowButton_Click(object sender, System.EventArgs e)
         {
-            TestWindow = new TestWindow();
-            TestWindow.Show();
-            TestWindow.Closed += TestWindow_Closed;
+            testWindow = new TestWindow();
+            testWindow.ShowInTaskbar = showInTaskBarCheckBox.IsChecked;
+            testWindow.Show();
+            testWindow.Closed += TestWindow_Closed;
+            UpdateControls();
         }
 
         void UpdateControls()
         {
-            createAndShowWindowButton.Enabled = TestWindow == null;
+            createAndShowWindowButton.Enabled = testWindow == null;
         }
 
 
         private void TestWindow_Closed(object? sender, WindowClosedEventArgs e)
         {
-            TestWindow = null;
+            testWindow = null;
+            UpdateControls();
+        }
+
+        private void ShowInTaskBarCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.ShowInTaskbar = showInTaskBarCheckBox.IsChecked;
         }
     }
 }

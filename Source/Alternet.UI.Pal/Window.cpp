@@ -2,14 +2,23 @@
 
 namespace Alternet::UI
 {
-    Frame::Frame() : wxFrame(NULL, wxID_ANY, "")
+    Frame::Frame(long style) : wxFrame(NULL, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, style)
     {
     }
 
     // ------------
 
-    Window::Window()
+    Window::Window():
+        _flags(WindowFlags::ShowInTaskbar),
+        _delayedFlags(
+            *this,
+            DelayedWindowFlags::None,
+            &Control::IsWxWindowCreated,
+            {
+                //{DelayedWindowFlags::ShowInTaskbar, std::make_tuple(&Window::RetrieveShowInTaskbar, &Window::ApplyShowInTaskbar)},
+            })
     {
+        GetDelayedValues().Add(&_delayedFlags);
         SetVisible(false);
         CreateWxWindow();
     }
@@ -47,7 +56,7 @@ namespace Alternet::UI
 
     wxWindow* Window::CreateWxWindowCore(wxWindow* parent)
     {
-        _frame = new Frame();
+        _frame = new Frame(wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX | wxCLIP_CHILDREN | (GetShowInTaskbar() ? 0 : wxFRAME_NO_TASKBAR));
 
         _frame->Bind(wxEVT_SIZE, &Window::OnSizeChanged, this);
         _frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
@@ -56,6 +65,20 @@ namespace Alternet::UI
         _panel = new wxPanel(_frame);
 
         return _frame;
+    }
+
+    bool Window::GetShowInTaskbar()
+    {
+        return _flags.IsSet(WindowFlags::ShowInTaskbar);
+    }
+
+    void Window::SetShowInTaskbar(bool value)
+    {
+        if (GetShowInTaskbar() == value)
+            return;
+
+        _flags.Set(WindowFlags::ShowInTaskbar, value);
+        RecreateWxWindowIfNeeded();
     }
 
     wxWindow* Window::GetParentingWxWindow()

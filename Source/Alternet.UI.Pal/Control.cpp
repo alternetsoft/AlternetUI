@@ -5,6 +5,7 @@ namespace Alternet::UI
     /*static*/ Control::ControlsByWxWindowsMap Control::s_controlsByWxWindowsMap;
 
     Control::Control() :
+        _flags(ControlFlags::None),
         _delayedFlags(
             *this,
             DelayedControlFlags::Visible,
@@ -124,7 +125,7 @@ namespace Alternet::UI
 
     void Control::CreateWxWindow()
     {
-        SetFlag(ControlFlags::CreatingWxWindow, true);
+        _flags.Set(ControlFlags::CreatingWxWindow, true);
         wxWindow* parentingWxWindow = nullptr;
         if (_parent != nullptr)
             parentingWxWindow = _parent->GetParentingWxWindow();
@@ -152,7 +153,7 @@ namespace Alternet::UI
         OnWxWindowCreated();
         _delayedValues.ApplyIfPossible();
 
-        SetFlag(ControlFlags::CreatingWxWindow, false);
+        _flags.Set(ControlFlags::CreatingWxWindow, false);
 
         for (auto child : _children)
             child->UpdateWxWindowParent();
@@ -340,12 +341,12 @@ namespace Alternet::UI
 
     bool Control::GetDoNotDestroyWxWindow()
     {
-        return GetFlag(ControlFlags::DoNotDestroyWxWindow);
+        return _flags.IsSet(ControlFlags::DoNotDestroyWxWindow);
     }
 
     void Control::SetDoNotDestroyWxWindow(bool value)
     {
-        SetFlag(ControlFlags::DoNotDestroyWxWindow, value);
+        _flags.Set(ControlFlags::DoNotDestroyWxWindow, value);
     }
 
     Font* Control::GetFont()
@@ -380,10 +381,10 @@ namespace Alternet::UI
 
     Size Control::GetClientSize()
     {
-        if (!GetFlag(ControlFlags::ClientSizeCacheValid))
+        if (!_flags.IsSet(ControlFlags::ClientSizeCacheValid))
         {
             _clientSizeCache = GetClientSizeCore();
-            SetFlag(ControlFlags::ClientSizeCacheValid, true);
+            _flags.Set(ControlFlags::ClientSizeCacheValid, true);
         }
 
         return _clientSizeCache;
@@ -426,19 +427,6 @@ namespace Alternet::UI
         return Thickness();
     }
 
-    bool Control::GetFlag(ControlFlags flag)
-    {
-        return (_flags & flag) != ControlFlags::None;
-    }
-
-    void Control::SetFlag(ControlFlags flag, bool value)
-    {
-        if (value)
-            _flags |= flag;
-        else
-            _flags &= ~flag;
-    }
-
     Rect Control::RetrieveBounds()
     {
         auto wxWindow = GetWxWindow();
@@ -455,7 +443,7 @@ namespace Alternet::UI
 
     bool Control::EventsSuspended()
     {
-        return GetFlag(ControlFlags::CreatingWxWindow);
+        return _flags.IsSet(ControlFlags::CreatingWxWindow);
     }
 
     void Control::OnPaint(wxPaintEvent& event)
@@ -533,7 +521,7 @@ namespace Alternet::UI
     {
         event.Skip();
 
-        SetFlag(ControlFlags::ClientSizeCacheValid, false);
+        _flags.Set(ControlFlags::ClientSizeCacheValid, false);
     }
 
     void Control::UpdateWxWindowParent()
@@ -641,12 +629,12 @@ namespace Alternet::UI
 
     bool Control::GetUserPaint()
     {
-        return GetFlag(ControlFlags::UserPaint);
+        return _flags.IsSet(ControlFlags::UserPaint);
     }
 
     void Control::SetUserPaint(bool value)
     {
-        SetFlag(ControlFlags::UserPaint, value);
+        _flags.Set(ControlFlags::UserPaint, value);
         RecreateWxWindowIfNeeded();
     }
 

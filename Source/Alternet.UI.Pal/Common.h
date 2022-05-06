@@ -27,4 +27,29 @@ namespace Alternet::UI
             throw std::overflow_error("size_t to int conversion overflow.");
         return static_cast<int>(value);
     }
+
+    template<typename TFlagsEnum>
+    class FlagsAccessor
+    {
+    public:
+        FlagsAccessor(TFlagsEnum defaultValue) : _value(defaultValue)
+        {
+        }
+
+        inline bool IsSet(TFlagsEnum flag)
+        {
+            return (_value & flag) != (TFlagsEnum)0;
+        }
+
+        inline void Set(TFlagsEnum flag, bool value)
+        {
+            if (value)
+                _value |= flag;
+            else
+                _value &= ~flag;
+        }
+
+    private:
+        TFlagsEnum _value;
+    };
 }
