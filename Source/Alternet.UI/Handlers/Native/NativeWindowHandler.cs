@@ -23,7 +23,7 @@ namespace Alternet.UI
             NativeControl.SizeChanged += NativeControl_SizeChanged;
         }
 
-        private void Control_ShowInTaskbarChanged(object sender, EventArgs e)
+        private void Control_ShowInTaskbarChanged(object? sender, EventArgs e)
         {
             if (e is null)
                 throw new System.ArgumentNullException(nameof(e));

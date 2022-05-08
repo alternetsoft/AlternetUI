@@ -1,18 +1,17 @@
-using System;
 using Alternet.UI;
 
 namespace WindowPropertiesSample
 {
     public partial class MainWindow : Window
     {
+        private TestWindow? testWindow;
+
         public MainWindow()
         {
             InitializeComponent();
 
             UpdateControls();
         }
-
-        TestWindow? testWindow;
 
         private void CreateAndShowWindowButton_Click(object sender, System.EventArgs e)
         {
@@ -23,11 +22,10 @@ namespace WindowPropertiesSample
             UpdateControls();
         }
 
-        void UpdateControls()
+        private void UpdateControls()
         {
             createAndShowWindowButton.Enabled = testWindow == null;
         }
-
 
         private void TestWindow_Closed(object? sender, WindowClosedEventArgs e)
         {

@@ -54,6 +54,9 @@ namespace Alternet::UI
 
         virtual void SetWxWindowParent(wxWindow* parent);
 
+        virtual void ShowCore();
+        virtual void HideCore();
+
     private:
         enum class DelayedControlFlags
         {

@@ -1,3 +1,4 @@
+using Alternet.Drawing;
 using Alternet.UI;
 
 namespace WindowPropertiesSample

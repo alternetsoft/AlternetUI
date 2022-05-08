@@ -34,9 +34,12 @@ namespace Alternet::UI
         void OnClose(wxCloseEvent& event);
         void OnSizeChanged(wxSizeEvent& event);
         void OnDestroy(wxWindowDestroyEvent& event);
+        void OnActivate(wxActivateEvent& event);
 
         int GetTopLevelWindowsCount();
         wxWindow* GetNextTopLevelWindow();
+
+        Frame* GetFrame();
 
         enum class DelayedWindowFlags
         {

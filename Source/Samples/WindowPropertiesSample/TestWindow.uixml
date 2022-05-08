@@ -1,5 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="WindowPropertiesSample.TestWindow"
-        Title="TestWindow">
+        Title="TestWindow"
+        xmlns:local="clr-namespace:WindowPropertiesSample;assembly=WindowPropertiesSample">
+	<local:SizeGridLinesControl />
 </Window>

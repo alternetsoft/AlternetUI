@@ -30,6 +30,7 @@ namespace Alternet::UI
 
         _frame->Unbind(wxEVT_SIZE, &Window::OnSizeChanged, this);
         _frame->Unbind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
+        _frame->Unbind(wxEVT_ACTIVATE, &Window::OnActivate, this);
 
         _frame->Destroy();
         _frame = nullptr;
@@ -61,6 +62,7 @@ namespace Alternet::UI
         _frame->Bind(wxEVT_SIZE, &Window::OnSizeChanged, this);
         _frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
         _frame->Bind(wxEVT_DESTROY, &Window::OnDestroy, this);
+        _frame->Bind(wxEVT_ACTIVATE, &Window::OnActivate, this);
 
         _panel = new wxPanel(_frame);
 
@@ -95,7 +97,7 @@ namespace Alternet::UI
     {
         _panel->SetBackgroundColour(value);
     }
-    
+
     void Window::OnClose(wxCloseEvent& event)
     {
         if (RaiseEvent(WindowEvent::Closing))
@@ -140,6 +142,10 @@ namespace Alternet::UI
         }
     }
 
+    void Window::OnActivate(wxActivateEvent& event)
+    {
+    }
+
     wxWindow* Window::GetNextTopLevelWindow()
     {
         wxWindowList::compatibility_iterator node = wxTopLevelWindows.GetFirst();
@@ -154,5 +160,10 @@ namespace Alternet::UI
         }
 
         return nullptr;
+    }
+    
+    Frame* Window::GetFrame()
+    {
+        return dynamic_cast<Frame*>(GetWxWindow());
     }
 }

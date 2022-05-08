@@ -260,11 +260,20 @@ namespace Alternet::UI
 
     void Control::ApplyVisible(bool value)
     {
-        auto wxWindow = GetWxWindow();
         if (value)
-            wxWindow->Show();
+            ShowCore();
         else
-            wxWindow->Hide();
+            HideCore();
+    }
+
+    void Control::ShowCore()
+    {
+        GetWxWindow()->Show();
+    }
+
+    void Control::HideCore()
+    {
+        GetWxWindow()->Hide();
     }
 
     bool Control::RetrieveEnabled()
