@@ -16,11 +16,34 @@ namespace Alternet.UI
 
             ApplyTitle();
             ApplyShowInTaskbar();
+            ApplyOwner();
 
             Control.TitleChanged += Control_TitleChanged;
             Control.ShowInTaskbarChanged += Control_ShowInTaskbarChanged;
+            Control.OwnerChanged += Control_OwnerChanged;
             NativeControl.Closing += Control_Closing;
             NativeControl.SizeChanged += NativeControl_SizeChanged;
+        }
+
+        private void ApplyOwner()
+        {
+            var newOwner = Control.Owner?.Handler?.NativeControl;
+            var oldOwner = NativeControl.ParentRefCounted;
+            if (newOwner == oldOwner)
+                return;
+
+            if (oldOwner != null)
+                oldOwner.RemoveChild(NativeControl);
+
+            if (newOwner == null)
+                return;
+
+            newOwner.AddChild(NativeControl);
+        }
+
+        private void Control_OwnerChanged(object sender, EventArgs e)
+        {
+            ApplyOwner();
         }
 
         private void Control_ShowInTaskbarChanged(object? sender, EventArgs e)
@@ -60,7 +83,10 @@ namespace Alternet.UI
         {
             NativeControl.SizeChanged -= NativeControl_SizeChanged;
             NativeControl.Closing -= Control_Closing;
+            
+            Control.OwnerChanged -= Control_OwnerChanged;
             Control.TitleChanged -= Control_TitleChanged;
+            Control.ShowInTaskbarChanged -= Control_ShowInTaskbarChanged;
 
             base.OnDetach();
         }

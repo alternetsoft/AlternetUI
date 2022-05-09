@@ -31,7 +31,6 @@ namespace Alternet.UI
 
         private string title = "";
         private WindowStartLocation startLocation = WindowStartLocation.SystemDefault;
-        private bool showInTaskbar = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
@@ -42,6 +41,8 @@ namespace Alternet.UI
             SetVisibleValue(false);
             Bounds = new Rect(100, 100, 400, 400);
         }
+
+        private bool showInTaskbar = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether the form is displayed in the Windows or Linux taskbar.
@@ -64,9 +65,54 @@ namespace Alternet.UI
             set
             {
                 showInTaskbar = value;
+                OnShowInTaskbarChanged(EventArgs.Empty);
                 ShowInTaskbarChanged?.Invoke(this, EventArgs.Empty);
             }
         }
+
+        /// <summary>
+        /// Called when the value of the <see cref="ShowInTaskbar"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnShowInTaskbarChanged(EventArgs e)
+        {
+        }
+
+        private Window? owner;
+
+        /// <summary>
+        /// Gets or sets the window that owns this window.
+        /// </summary>
+        /// <value>
+        /// A <see cref="Window"/> that represents the window that is the owner of this window.
+        /// </value>
+        /// <remarks>
+        /// </remarks>
+        public Window? Owner
+        {
+            get => owner;
+
+            set
+            {
+                owner = value;
+                OnOwnerChanged(EventArgs.Empty);
+                OwnerChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="Owner"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnOwnerChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="Owner"/> property changes.
+        /// </summary>
+        public event EventHandler? OwnerChanged;
+
 
         /// <summary>
         /// Occurs when the value of the <see cref="ShowInTaskbar"/> property changes.
@@ -256,7 +302,9 @@ namespace Alternet.UI
             base.Dispose(disposing);
 
             if (disposing)
+            {
                 Application.Current.UnregisterWindow(this);
+            }
         }
 
         /// <inheritdoc/>

@@ -16,6 +16,7 @@ namespace WindowPropertiesSample
         private void CreateAndShowWindowButton_Click(object sender, System.EventArgs e)
         {
             testWindow = new TestWindow();
+            testWindow.Owner = this;
             testWindow.ShowInTaskbar = showInTaskBarCheckBox.IsChecked;
             testWindow.Show();
             testWindow.Closed += TestWindow_Closed;

@@ -2,8 +2,31 @@
 
 namespace Alternet::UI
 {
-    Frame::Frame(long style) : wxFrame(NULL, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, style)
+    Frame::Frame(Window* window, long style) : wxFrame(NULL, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, style), _window(window)
     {
+        _allFrames.push_back(this);
+    }
+
+    Frame::~Frame()
+    {
+        // Ensure the parking window is closed after all regular windows have been closed.
+        _allFrames.erase(std::find(_allFrames.begin(), _allFrames.end(), this));
+
+        if (!ParkingWindow::IsCreated())
+            return;
+
+        if (wxTheApp->GetTopWindow() == ParkingWindow::GetWindow())
+        {
+            if (_allFrames.size() == 0)
+                ParkingWindow::Destroy();
+            else
+                _allFrames[0]->SetFocus();
+        }
+    }
+
+    Window* Frame::GetWindow()
+    {
+        return _window;
     }
 
     // ------------
@@ -57,7 +80,7 @@ namespace Alternet::UI
 
     wxWindow* Window::CreateWxWindowCore(wxWindow* parent)
     {
-        _frame = new Frame(wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX | wxCLIP_CHILDREN | (GetShowInTaskbar() ? 0 : wxFRAME_NO_TASKBAR));
+        _frame = new Frame(this, wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX | wxCLIP_CHILDREN | (GetShowInTaskbar() ? 0 : wxFRAME_NO_TASKBAR));
 
         _frame->Bind(wxEVT_SIZE, &Window::OnSizeChanged, this);
         _frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
@@ -110,36 +133,8 @@ namespace Alternet::UI
         RaiseEvent(WindowEvent::SizeChanged);
     }
 
-    int Window::GetTopLevelWindowsCount()
-    {
-        int count = 0;
-        wxWindowList::compatibility_iterator node = wxTopLevelWindows.GetFirst();
-        while (node)
-        {
-            count++;
-            node = node->GetNext();
-        }
-
-        return count;
-    }
-
     void Window::OnDestroy(wxWindowDestroyEvent& event)
     {
-        // Ensure the parking window is closed after all regular windows have been closed.
-
-        if (dynamic_cast<wxFrameBase*>(event.GetWindow()) == nullptr)
-            return;
-        
-        if (!ParkingWindow::IsCreated())
-            return;
-
-        if (wxTheApp->GetTopWindow() == ParkingWindow::GetWindow())
-        {
-            if (GetTopLevelWindowsCount() == 2)
-                ParkingWindow::Destroy();
-            else
-                GetNextTopLevelWindow()->SetFocus();
-        }
     }
 
     void Window::OnActivate(wxActivateEvent& event)

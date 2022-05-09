@@ -5,12 +5,21 @@
 
 namespace Alternet::UI
 {
+    class Window;
+
     class Frame : public wxFrame
     {
     public:
-        Frame(long style);
+        Frame(Window* window, long style);
+        virtual ~Frame();
+
+        Window* GetWindow();
 
     private:
+        Window* _window;
+
+        inline static std::vector<Frame*> _allFrames;
+
         BYREF_ONLY(Frame);
     };
 
@@ -36,7 +45,6 @@ namespace Alternet::UI
         void OnDestroy(wxWindowDestroyEvent& event);
         void OnActivate(wxActivateEvent& event);
 
-        int GetTopLevelWindowsCount();
         wxWindow* GetNextTopLevelWindow();
 
         Frame* GetFrame();
