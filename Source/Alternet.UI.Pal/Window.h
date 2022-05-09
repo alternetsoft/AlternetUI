@@ -30,7 +30,7 @@ namespace Alternet::UI
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
     protected:
-        wxWindow* GetParentingWxWindow() override;
+        wxWindow* GetParentingWxWindow(Control* child) override;
 
         Color RetrieveBackgroundColor() override;
         void ApplyBackgroundColor(const Color& value) override;
@@ -45,9 +45,10 @@ namespace Alternet::UI
         void OnDestroy(wxWindowDestroyEvent& event);
         void OnActivate(wxActivateEvent& event);
 
-        wxWindow* GetNextTopLevelWindow();
-
         Frame* GetFrame();
+
+        string RetrieveTitle();
+        void ApplyTitle(const string& value);
 
         enum class DelayedWindowFlags
         {
@@ -64,6 +65,8 @@ namespace Alternet::UI
         DelayedFlags<Window, DelayedWindowFlags> _delayedFlags;
 
         FlagsAccessor<WindowFlags> _flags;
+
+        DelayedValue<Window, string> _title;
     };
 }
 

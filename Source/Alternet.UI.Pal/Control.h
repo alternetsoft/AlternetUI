@@ -39,7 +39,7 @@ namespace Alternet::UI
 
         DelayedValues& GetDelayedValues();
 
-        virtual wxWindow* GetParentingWxWindow();
+        virtual wxWindow* GetParentingWxWindow(Control* child);
 
         virtual Color RetrieveBackgroundColor();
         virtual void ApplyBackgroundColor(const Color& value);

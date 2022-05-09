@@ -39,8 +39,10 @@ namespace Alternet::UI
             &Control::IsWxWindowCreated,
             {
                 //{DelayedWindowFlags::ShowInTaskbar, std::make_tuple(&Window::RetrieveShowInTaskbar, &Window::ApplyShowInTaskbar)},
-            })
+            }),
+        _title(*this, u"", &Control::IsWxWindowCreated, &Window::RetrieveTitle, &Window::ApplyTitle)
     {
+        GetDelayedValues().Add(&_title);
         GetDelayedValues().Add(&_delayedFlags);
         SetVisible(false);
         CreateWxWindow();
@@ -61,10 +63,20 @@ namespace Alternet::UI
 
     string Window::GetTitle()
     {
-        return wxStr(_frame->GetTitle());
+        return _title.Get();
     }
 
     void Window::SetTitle(const string& value)
+    {
+        _title.Set(value);
+    }
+
+    string Window::RetrieveTitle()
+    {
+        return wxStr(_frame->GetTitle());
+    }
+
+    void Window::ApplyTitle(const string& value)
     {
         _frame->SetTitle(wxStr(value));
     }
@@ -80,7 +92,12 @@ namespace Alternet::UI
 
     wxWindow* Window::CreateWxWindowCore(wxWindow* parent)
     {
-        _frame = new Frame(this, wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX | wxCLIP_CHILDREN | (GetShowInTaskbar() ? 0 : wxFRAME_NO_TASKBAR));
+        auto style = wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX | wxCLIP_CHILDREN;
+
+        if (!GetShowInTaskbar())
+            style |= wxFRAME_NO_TASKBAR;
+
+        _frame = new Frame(this, style);
 
         _frame->Bind(wxEVT_SIZE, &Window::OnSizeChanged, this);
         _frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
@@ -106,8 +123,11 @@ namespace Alternet::UI
         RecreateWxWindowIfNeeded();
     }
 
-    wxWindow* Window::GetParentingWxWindow()
+    wxWindow* Window::GetParentingWxWindow(Control* child)
     {
+        if (dynamic_cast<Window*>(child) != nullptr)
+            return _frame;
+
         return _panel;
     }
 
@@ -141,22 +161,6 @@ namespace Alternet::UI
     {
     }
 
-    wxWindow* Window::GetNextTopLevelWindow()
-    {
-        wxWindowList::compatibility_iterator node = wxTopLevelWindows.GetFirst();
-        while (node)
-        {
-            auto window = node->GetData();
-
-            if (!ParkingWindow::IsCreated() || window != ParkingWindow::GetWindow())
-                return window;
-
-            node = node->GetNext();
-        }
-
-        return nullptr;
-    }
-    
     Frame* Window::GetFrame()
     {
         return dynamic_cast<Frame*>(GetWxWindow());

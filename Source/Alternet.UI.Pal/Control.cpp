@@ -128,7 +128,7 @@ namespace Alternet::UI
         _flags.Set(ControlFlags::CreatingWxWindow, true);
         wxWindow* parentingWxWindow = nullptr;
         if (_parent != nullptr)
-            parentingWxWindow = _parent->GetParentingWxWindow();
+            parentingWxWindow = _parent->GetParentingWxWindow(this);
         else
             parentingWxWindow = ParkingWindow::GetWindow();
         
@@ -248,7 +248,7 @@ namespace Alternet::UI
         return false;
     }
 
-    wxWindow* Control::GetParentingWxWindow()
+    wxWindow* Control::GetParentingWxWindow(Control* child)
     {
         return GetWxWindow();
     }
@@ -546,7 +546,7 @@ namespace Alternet::UI
         }
         else
         {
-            auto parentWxWindow = parent->GetParentingWxWindow();
+            auto parentWxWindow = parent->GetParentingWxWindow(this);
             auto oldParent = wxWindow->GetParent();
             if (oldParent != parentWxWindow)
                 SetWxWindowParent(parentWxWindow);
