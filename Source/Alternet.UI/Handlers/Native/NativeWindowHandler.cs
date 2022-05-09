@@ -17,12 +17,34 @@ namespace Alternet.UI
             ApplyTitle();
             ApplyShowInTaskbar();
             ApplyOwner();
+            ApplyMaximizeEnabled();
+            ApplyMinimizeEnabled();
+            ApplyCloseEnabled();
 
             Control.TitleChanged += Control_TitleChanged;
             Control.ShowInTaskbarChanged += Control_ShowInTaskbarChanged;
             Control.OwnerChanged += Control_OwnerChanged;
+            Control.MinimizeEnabledChanged += Control_MinimizeEnabledChanged;
+            Control.MaximizeEnabledChanged += Control_MaximizeEnabledChanged;
+            Control.CloseEnabledChanged += Control_CloseEnabledChanged;
+            
             NativeControl.Closing += Control_Closing;
             NativeControl.SizeChanged += NativeControl_SizeChanged;
+        }
+
+        private void Control_CloseEnabledChanged(object sender, EventArgs e)
+        {
+            ApplyCloseEnabled();
+        }
+
+        private void Control_MaximizeEnabledChanged(object sender, EventArgs e)
+        {
+            ApplyMaximizeEnabled();
+        }
+
+        private void Control_MinimizeEnabledChanged(object sender, EventArgs e)
+        {
+            ApplyMinimizeEnabled();
         }
 
         private void ApplyOwner()
@@ -59,6 +81,21 @@ namespace Alternet.UI
             NativeControl.ShowInTaskbar = Control.ShowInTaskbar;
         }
 
+        private void ApplyMinimizeEnabled()
+        {
+            NativeControl.MinimizeEnabled = Control.MinimizeEnabled;
+        }
+
+        private void ApplyMaximizeEnabled()
+        {
+            NativeControl.MaximizeEnabled = Control.MaximizeEnabled;
+        }
+
+        private void ApplyCloseEnabled()
+        {
+            NativeControl.CloseEnabled = Control.CloseEnabled;
+        }
+
         private void NativeControl_SizeChanged(object? sender, EventArgs e)
         {
             PerformLayout();
@@ -87,6 +124,9 @@ namespace Alternet.UI
             Control.OwnerChanged -= Control_OwnerChanged;
             Control.TitleChanged -= Control_TitleChanged;
             Control.ShowInTaskbarChanged -= Control_ShowInTaskbarChanged;
+            Control.MinimizeEnabledChanged -= Control_MinimizeEnabledChanged;
+            Control.MaximizeEnabledChanged -= Control_MaximizeEnabledChanged;
+            Control.CloseEnabledChanged -= Control_CloseEnabledChanged;
 
             base.OnDetach();
         }

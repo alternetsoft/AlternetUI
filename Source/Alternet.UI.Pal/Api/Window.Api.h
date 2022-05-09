@@ -57,6 +57,48 @@ ALTERNET_UI_API void Window_SetShowInTaskbar_(Window* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API c_bool Window_GetMinimizeEnabled_(Window* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetMinimizeEnabled();
+        });
+}
+
+ALTERNET_UI_API void Window_SetMinimizeEnabled_(Window* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetMinimizeEnabled(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Window_GetMaximizeEnabled_(Window* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetMaximizeEnabled();
+        });
+}
+
+ALTERNET_UI_API void Window_SetMaximizeEnabled_(Window* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetMaximizeEnabled(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Window_GetCloseEnabled_(Window* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetCloseEnabled();
+        });
+}
+
+ALTERNET_UI_API void Window_SetCloseEnabled_(Window* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetCloseEnabled(value);
+        });
+}
+
 ALTERNET_UI_API void Window_SetEventCallback_(Window::WindowEventCallbackType callback)
 {
     Window::SetEventCallback(callback);

@@ -50,6 +50,8 @@ namespace Alternet::UI
         string RetrieveTitle();
         void ApplyTitle(const string& value);
 
+        long GetWindowStyle();
+
         enum class DelayedWindowFlags
         {
             None = 0,
@@ -59,7 +61,10 @@ namespace Alternet::UI
         enum class WindowFlags
         {
             None = 0,
-            ShowInTaskbar = 1 << 0
+            ShowInTaskbar = 1 << 0,
+            MinimizeEnabled = 1 << 1,
+            MaximizeEnabled = 1 << 2,
+            CloseEnabled = 1 << 3,
         };
 
         DelayedFlags<Window, DelayedWindowFlags> _delayedFlags;

@@ -42,6 +42,102 @@ namespace Alternet.UI
             Bounds = new Rect(100, 100, 400, 400);
         }
 
+        private bool closeEnabled = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the window has an enabled close button.
+        /// </summary>
+        public bool CloseEnabled
+        {
+            get => closeEnabled;
+
+            set
+            {
+                closeEnabled = value;
+                OnCloseEnabledChanged(EventArgs.Empty);
+                CloseEnabledChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="CloseEnabled"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnCloseEnabledChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="CloseEnabled"/> property changes.
+        /// </summary>
+        public event EventHandler? CloseEnabledChanged;
+
+        private bool maximizeEnabled = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the window has an enabled maximize button.
+        /// </summary>
+        /// <value>
+        /// </value>
+        /// <remarks>
+        /// </remarks>
+        public bool MaximizeEnabled
+        {
+            get => maximizeEnabled;
+
+            set
+            {
+                maximizeEnabled = value;
+                OnMaximizeEnabledChanged(EventArgs.Empty);
+                MaximizeEnabledChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="MaximizeEnabled"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnMaximizeEnabledChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="MaximizeEnabled"/> property changes.
+        /// </summary>
+        public event EventHandler? MaximizeEnabledChanged;
+
+
+        private bool minimizeEnabled = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the window has an enabled minimize button.
+        /// </summary>
+        public bool MinimizeEnabled
+        {
+            get => minimizeEnabled;
+
+            set
+            {
+                minimizeEnabled = value;
+                OnMinimizeEnabledChanged(EventArgs.Empty);
+                MinimizeEnabledChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="MinimizeEnabled"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnMinimizeEnabledChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="MinimizeEnabled"/> property changes.
+        /// </summary>
+        public event EventHandler? MinimizeEnabledChanged;
+
+
         private bool showInTaskbar = true;
 
         /// <summary>

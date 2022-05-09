@@ -14,6 +14,9 @@
 		<GroupBox Title="Properties">
 			<StackPanel>
 				<CheckBox Text="ShowInTaskbar" Name="showInTaskBarCheckBox" CheckedChanged="ShowInTaskBarCheckBox_CheckedChanged" IsChecked="True"/>
+				<CheckBox Text="Minimize Enabled" Name="minimizeEnabledCheckBox" CheckedChanged="MinimizeEnabledCheckBox_CheckedChanged" IsChecked="True"/>
+				<CheckBox Text="Maximize Enabled" Name="maximizeEnabledCheckBox" CheckedChanged="MaximizeEnabledCheckBox_CheckedChanged" IsChecked="True"/>
+				<CheckBox Text="Close Enabled" Name="closeEnabledCheckBox" CheckedChanged="CloseEnabledCheckBox_CheckedChanged" IsChecked="True"/>
 			</StackPanel>
 		</GroupBox>
 

@@ -90,13 +90,28 @@ namespace Alternet::UI
     {
     }
 
-    wxWindow* Window::CreateWxWindowCore(wxWindow* parent)
+    long Window::GetWindowStyle()
     {
-        auto style = wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX | wxCLIP_CHILDREN;
+        long style = wxRESIZE_BORDER | wxSYSTEM_MENU | wxCAPTION | wxCLIP_CHILDREN;
+
+        if (GetMinimizeEnabled())
+            style |= wxMINIMIZE_BOX;
+
+        if (GetMaximizeEnabled())
+            style |= wxMAXIMIZE_BOX;
+
+        if (GetCloseEnabled())
+            style |= wxCLOSE_BOX;
 
         if (!GetShowInTaskbar())
             style |= wxFRAME_NO_TASKBAR;
 
+        return style;
+    }
+
+    wxWindow* Window::CreateWxWindowCore(wxWindow* parent)
+    {
+        auto style = GetWindowStyle();
         _frame = new Frame(this, style);
 
         _frame->Bind(wxEVT_SIZE, &Window::OnSizeChanged, this);
@@ -120,6 +135,48 @@ namespace Alternet::UI
             return;
 
         _flags.Set(WindowFlags::ShowInTaskbar, value);
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool Window::GetMinimizeEnabled()
+    {
+        return _flags.IsSet(WindowFlags::MinimizeEnabled);
+    }
+
+    void Window::SetMinimizeEnabled(bool value)
+    {
+        if (GetMinimizeEnabled() == value)
+            return;
+
+        _flags.Set(WindowFlags::MinimizeEnabled, value);
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool Window::GetMaximizeEnabled()
+    {
+        return _flags.IsSet(WindowFlags::MaximizeEnabled);
+    }
+
+    void Window::SetMaximizeEnabled(bool value)
+    {
+        if (GetMaximizeEnabled() == value)
+            return;
+
+        _flags.Set(WindowFlags::MaximizeEnabled, value);
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool Window::GetCloseEnabled()
+    {
+        return _flags.IsSet(WindowFlags::CloseEnabled);
+    }
+
+    void Window::SetCloseEnabled(bool value)
+    {
+        if (GetCloseEnabled() == value)
+            return;
+
+        _flags.Set(WindowFlags::CloseEnabled, value);
         RecreateWxWindowIfNeeded();
     }
 

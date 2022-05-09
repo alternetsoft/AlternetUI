@@ -21,6 +21,11 @@ namespace WindowPropertiesSample
                 testWindow.Owner = this;
 
             testWindow.ShowInTaskbar = showInTaskBarCheckBox.IsChecked;
+
+            testWindow.MinimizeEnabled = minimizeEnabledCheckBox.IsChecked;
+            testWindow.MaximizeEnabled = maximizeEnabledCheckBox.IsChecked;
+            testWindow.CloseEnabled = closeEnabledCheckBox.IsChecked;
+
             testWindow.Show();
             testWindow.Closed += TestWindow_Closed;
             UpdateControls();
@@ -41,6 +46,24 @@ namespace WindowPropertiesSample
         {
             if (testWindow != null)
                 testWindow.ShowInTaskbar = showInTaskBarCheckBox.IsChecked;
+        }
+
+        private void MinimizeEnabledCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.MinimizeEnabled = minimizeEnabledCheckBox.IsChecked;
+        }
+
+        private void MaximizeEnabledCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.MaximizeEnabled = maximizeEnabledCheckBox.IsChecked;
+        }
+
+        private void CloseEnabledCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.CloseEnabled = closeEnabledCheckBox.IsChecked;
         }
     }
 }

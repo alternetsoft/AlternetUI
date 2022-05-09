@@ -12,6 +12,18 @@ void SetWindowStartPosition(WindowStartPosition value);
 bool GetShowInTaskbar();
 void SetShowInTaskbar(bool value);
 
+
+bool GetMinimizeEnabled();
+void SetMinimizeEnabled(bool value);
+
+
+bool GetMaximizeEnabled();
+void SetMaximizeEnabled(bool value);
+
+
+bool GetCloseEnabled();
+void SetCloseEnabled(bool value);
+
 public:
 enum class WindowEvent
 {

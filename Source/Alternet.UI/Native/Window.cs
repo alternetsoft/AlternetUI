@@ -74,6 +74,57 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool MinimizeEnabled
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetMinimizeEnabled_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetMinimizeEnabled_(NativePointer, value);
+            }
+        }
+        
+        public bool MaximizeEnabled
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetMaximizeEnabled_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetMaximizeEnabled_(NativePointer, value);
+            }
+        }
+        
+        public bool CloseEnabled
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetCloseEnabled_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetCloseEnabled_(NativePointer, value);
+            }
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -152,6 +203,24 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetShowInTaskbar_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Window_GetMinimizeEnabled_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetMinimizeEnabled_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Window_GetMaximizeEnabled_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetMaximizeEnabled_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Window_GetCloseEnabled_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetCloseEnabled_(IntPtr obj, bool value);
             
         }
     }
