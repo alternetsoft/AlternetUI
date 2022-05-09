@@ -42,6 +42,166 @@ namespace Alternet.UI
             Bounds = new Rect(100, 100, 400, 400);
         }
 
+        private bool hasTitleBar = true;
+
+        /// <summary>
+        /// Gets or sets
+        /// </summary>
+        /// <value>
+        /// </value>
+        /// <remarks>
+        /// </remarks>
+        public bool HasTitleBar
+        {
+            get => hasTitleBar;
+
+            set
+            {
+                hasTitleBar = value;
+                OnHasTitleBarChanged(EventArgs.Empty);
+                HasTitleBarChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="HasTitleBar"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnHasTitleBarChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="HasTitleBar"/> property changes.
+        /// </summary>
+        public event EventHandler? HasTitleBarChanged;
+
+
+        private bool hasBorder = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the window has a border.
+        /// </summary>
+        public bool HasBorder
+        {
+            get => hasBorder;
+
+            set
+            {
+                hasBorder = value;
+                OnHasBorderChanged(EventArgs.Empty);
+                HasBorderChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="HasBorder"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnHasBorderChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="HasBorder"/> property changes.
+        /// </summary>
+        public event EventHandler? HasBorderChanged;
+
+
+        private bool resizable = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the window can be resized by user.
+        /// </summary>
+        public bool Resizable
+        {
+            get => resizable;
+
+            set
+            {
+                resizable = value;
+                OnResizableChanged(EventArgs.Empty);
+                ResizableChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="Resizable"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnResizableChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="Resizable"/> property changes.
+        /// </summary>
+        public event EventHandler? ResizableChanged;
+
+
+        private bool isToolWindow = false;
+
+        /// <summary>
+        /// A tool window does not appear in the Windows taskbar or in the window that appears when the user presses ALT+TAB.
+        /// On Windows, a tool window doesn't have minimize and maximize buttons.
+        /// </summary>
+        public bool IsToolWindow
+        {
+            get => isToolWindow;
+
+            set
+            {
+                isToolWindow = value;
+                OnIsToolWindowChanged(EventArgs.Empty);
+                IsToolWindowChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="IsToolWindow"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnIsToolWindowChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="IsToolWindow"/> property changes.
+        /// </summary>
+        public event EventHandler? IsToolWindowChanged;
+
+
+        private bool alwaysOnTop = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the window should be placed above all non-topmost windows and
+        /// should stay above them, even when the window is deactivated.
+        /// </summary>
+        public bool AlwaysOnTop
+        {
+            get => alwaysOnTop;
+
+            set
+            {
+                alwaysOnTop = value;
+                OnAlwaysOnTopChanged(EventArgs.Empty);
+                AlwaysOnTopChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="AlwaysOnTop"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnAlwaysOnTopChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="AlwaysOnTop"/> property changes.
+        /// </summary>
+        public event EventHandler? AlwaysOnTopChanged;
+
         private bool closeEnabled = true;
 
         /// <summary>

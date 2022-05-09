@@ -17,6 +17,12 @@
 				<CheckBox Text="Minimize Enabled" Name="minimizeEnabledCheckBox" CheckedChanged="MinimizeEnabledCheckBox_CheckedChanged" IsChecked="True"/>
 				<CheckBox Text="Maximize Enabled" Name="maximizeEnabledCheckBox" CheckedChanged="MaximizeEnabledCheckBox_CheckedChanged" IsChecked="True"/>
 				<CheckBox Text="Close Enabled" Name="closeEnabledCheckBox" CheckedChanged="CloseEnabledCheckBox_CheckedChanged" IsChecked="True"/>
+
+				<CheckBox Text="Always On Top" Name="alwaysOnTopCheckBox" CheckedChanged="AlwaysOnTopCheckBox_CheckedChanged" IsChecked="False"/>
+				<CheckBox Text="Is Tool Window" Name="isToolWindowCheckBox" CheckedChanged="IsToolWindowCheckBox_CheckedChanged" IsChecked="False"/>
+				<CheckBox Text="Resizable" Name="resizableCheckBox" CheckedChanged="ResizableCheckBox_CheckedChanged" IsChecked="True"/>
+				<CheckBox Text="Has Border" Name="hasBorderCheckBox" CheckedChanged="HasBorderCheckBox_CheckedChanged" IsChecked="True"/>
+				<CheckBox Text="Has Title Bar" Name="hasTitleBarCheckBox" CheckedChanged="HasTitleBarCheckBox_CheckedChanged" IsChecked="True"/>
 			</StackPanel>
 		</GroupBox>
 

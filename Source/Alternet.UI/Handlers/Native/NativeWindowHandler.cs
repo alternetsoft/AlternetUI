@@ -20,6 +20,11 @@ namespace Alternet.UI
             ApplyMaximizeEnabled();
             ApplyMinimizeEnabled();
             ApplyCloseEnabled();
+            ApplyAlwaysOnTop();
+            ApplyIsToolWindow();
+            ApplyResizable();
+            ApplyHasBorder();
+            ApplyHasTitleBar();
 
             Control.TitleChanged += Control_TitleChanged;
             Control.ShowInTaskbarChanged += Control_ShowInTaskbarChanged;
@@ -27,22 +32,54 @@ namespace Alternet.UI
             Control.MinimizeEnabledChanged += Control_MinimizeEnabledChanged;
             Control.MaximizeEnabledChanged += Control_MaximizeEnabledChanged;
             Control.CloseEnabledChanged += Control_CloseEnabledChanged;
-            
+
+            Control.AlwaysOnTopChanged += Control_AlwaysOnTopChanged;
+            Control.IsToolWindowChanged += Control_IsToolWindowChanged;
+            Control.ResizableChanged += Control_ResizableChanged;
+            Control.HasBorderChanged += Control_HasBorderChanged;
+            Control.HasTitleBarChanged += Control_HasTitleBarChanged;
+
+
             NativeControl.Closing += Control_Closing;
             NativeControl.SizeChanged += NativeControl_SizeChanged;
         }
 
-        private void Control_CloseEnabledChanged(object sender, EventArgs e)
+        private void Control_AlwaysOnTopChanged(object? sender, EventArgs e)
+        {
+            ApplyAlwaysOnTop();
+        }
+        
+        private void Control_IsToolWindowChanged(object? sender, EventArgs e)
+        {
+            ApplyIsToolWindow();
+        }
+        
+        private void Control_ResizableChanged(object? sender, EventArgs e)
+        {
+            ApplyResizable();
+        }
+        
+        private void Control_HasBorderChanged(object? sender, EventArgs e)
+        {
+            ApplyHasBorder();
+        }
+
+        private void Control_HasTitleBarChanged(object? sender, EventArgs e)
+        {
+            ApplyHasTitleBar();
+        }
+
+        private void Control_CloseEnabledChanged(object? sender, EventArgs e)
         {
             ApplyCloseEnabled();
         }
 
-        private void Control_MaximizeEnabledChanged(object sender, EventArgs e)
+        private void Control_MaximizeEnabledChanged(object? sender, EventArgs e)
         {
             ApplyMaximizeEnabled();
         }
 
-        private void Control_MinimizeEnabledChanged(object sender, EventArgs e)
+        private void Control_MinimizeEnabledChanged(object? sender, EventArgs e)
         {
             ApplyMinimizeEnabled();
         }
@@ -63,7 +100,7 @@ namespace Alternet.UI
             newOwner.AddChild(NativeControl);
         }
 
-        private void Control_OwnerChanged(object sender, EventArgs e)
+        private void Control_OwnerChanged(object? sender, EventArgs e)
         {
             ApplyOwner();
         }
@@ -94,6 +131,27 @@ namespace Alternet.UI
         private void ApplyCloseEnabled()
         {
             NativeControl.CloseEnabled = Control.CloseEnabled;
+        }
+
+        private void ApplyAlwaysOnTop()
+        {
+            NativeControl.AlwaysOnTop = Control.AlwaysOnTop;
+        }
+        private void ApplyIsToolWindow()
+        {
+            NativeControl.IsToolWindow = Control.IsToolWindow;
+        }
+        private void ApplyResizable()
+        {
+            NativeControl.Resizable = Control.Resizable;
+        }
+        private void ApplyHasBorder()
+        {
+            NativeControl.HasBorder = Control.HasBorder;
+        }
+        private void ApplyHasTitleBar()
+        {
+            NativeControl.HasTitleBar = Control.HasTitleBar;
         }
 
         private void NativeControl_SizeChanged(object? sender, EventArgs e)
@@ -127,6 +185,11 @@ namespace Alternet.UI
             Control.MinimizeEnabledChanged -= Control_MinimizeEnabledChanged;
             Control.MaximizeEnabledChanged -= Control_MaximizeEnabledChanged;
             Control.CloseEnabledChanged -= Control_CloseEnabledChanged;
+            Control.AlwaysOnTopChanged -= Control_AlwaysOnTopChanged;
+            Control.IsToolWindowChanged -= Control_IsToolWindowChanged;
+            Control.ResizableChanged -= Control_ResizableChanged;
+            Control.HasBorderChanged -= Control_HasBorderChanged;
+            Control.HasTitleBarChanged -= Control_HasTitleBarChanged;
 
             base.OnDetach();
         }

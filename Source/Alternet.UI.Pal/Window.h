@@ -65,6 +65,11 @@ namespace Alternet::UI
             MinimizeEnabled = 1 << 1,
             MaximizeEnabled = 1 << 2,
             CloseEnabled = 1 << 3,
+            AlwaysOnTop = 1 << 4,
+            IsToolWindow = 1 << 5,
+            Resizable = 1 << 6,
+            HasBorder = 1 << 7,
+            HasTitleBar = 1 << 8,
         };
 
         DelayedFlags<Window, DelayedWindowFlags> _delayedFlags;

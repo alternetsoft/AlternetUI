@@ -26,6 +26,12 @@ namespace WindowPropertiesSample
             testWindow.MaximizeEnabled = maximizeEnabledCheckBox.IsChecked;
             testWindow.CloseEnabled = closeEnabledCheckBox.IsChecked;
 
+            testWindow.AlwaysOnTop = alwaysOnTopCheckBox.IsChecked;
+            testWindow.IsToolWindow = isToolWindowCheckBox.IsChecked;
+            testWindow.Resizable = resizableCheckBox.IsChecked;
+            testWindow.HasBorder = hasBorderCheckBox.IsChecked;
+            testWindow.HasTitleBar = hasTitleBarCheckBox.IsChecked;
+
             testWindow.Show();
             testWindow.Closed += TestWindow_Closed;
             UpdateControls();
@@ -64,6 +70,36 @@ namespace WindowPropertiesSample
         {
             if (testWindow != null)
                 testWindow.CloseEnabled = closeEnabledCheckBox.IsChecked;
+        }
+
+        private void AlwaysOnTopCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.AlwaysOnTop = alwaysOnTopCheckBox.IsChecked;
+        }
+
+        private void IsToolWindowCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.IsToolWindow = isToolWindowCheckBox.IsChecked;
+        }
+
+        private void ResizableCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.Resizable = resizableCheckBox.IsChecked;
+        }
+
+        private void HasBorderCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.HasBorder = hasBorderCheckBox.IsChecked;
+        }
+
+        private void HasTitleBarCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.HasTitleBar = hasTitleBarCheckBox.IsChecked;
         }
     }
 }

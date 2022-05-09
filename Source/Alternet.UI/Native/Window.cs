@@ -125,6 +125,91 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool AlwaysOnTop
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetAlwaysOnTop_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetAlwaysOnTop_(NativePointer, value);
+            }
+        }
+        
+        public bool IsToolWindow
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetIsToolWindow_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetIsToolWindow_(NativePointer, value);
+            }
+        }
+        
+        public bool Resizable
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetResizable_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetResizable_(NativePointer, value);
+            }
+        }
+        
+        public bool HasBorder
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetHasBorder_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetHasBorder_(NativePointer, value);
+            }
+        }
+        
+        public bool HasTitleBar
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetHasTitleBar_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetHasTitleBar_(NativePointer, value);
+            }
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -221,6 +306,36 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetCloseEnabled_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Window_GetAlwaysOnTop_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetAlwaysOnTop_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Window_GetIsToolWindow_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetIsToolWindow_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Window_GetResizable_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetResizable_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Window_GetHasBorder_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetHasBorder_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Window_GetHasTitleBar_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetHasTitleBar_(IntPtr obj, bool value);
             
         }
     }

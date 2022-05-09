@@ -24,6 +24,26 @@ void SetMaximizeEnabled(bool value);
 bool GetCloseEnabled();
 void SetCloseEnabled(bool value);
 
+
+bool GetAlwaysOnTop();
+void SetAlwaysOnTop(bool value);
+
+
+bool GetIsToolWindow();
+void SetIsToolWindow(bool value);
+
+
+bool GetResizable();
+void SetResizable(bool value);
+
+
+bool GetHasBorder();
+void SetHasBorder(bool value);
+
+
+bool GetHasTitleBar();
+void SetHasTitleBar(bool value);
+
 public:
 enum class WindowEvent
 {

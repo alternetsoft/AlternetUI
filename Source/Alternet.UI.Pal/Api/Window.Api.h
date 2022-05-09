@@ -99,6 +99,76 @@ ALTERNET_UI_API void Window_SetCloseEnabled_(Window* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API c_bool Window_GetAlwaysOnTop_(Window* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetAlwaysOnTop();
+        });
+}
+
+ALTERNET_UI_API void Window_SetAlwaysOnTop_(Window* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetAlwaysOnTop(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Window_GetIsToolWindow_(Window* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsToolWindow();
+        });
+}
+
+ALTERNET_UI_API void Window_SetIsToolWindow_(Window* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetIsToolWindow(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Window_GetResizable_(Window* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetResizable();
+        });
+}
+
+ALTERNET_UI_API void Window_SetResizable_(Window* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetResizable(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Window_GetHasBorder_(Window* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetHasBorder();
+        });
+}
+
+ALTERNET_UI_API void Window_SetHasBorder_(Window* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetHasBorder(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Window_GetHasTitleBar_(Window* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetHasTitleBar();
+        });
+}
+
+ALTERNET_UI_API void Window_SetHasTitleBar_(Window* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetHasTitleBar(value);
+        });
+}
+
 ALTERNET_UI_API void Window_SetEventCallback_(Window::WindowEventCallbackType callback)
 {
     Window::SetEventCallback(callback);

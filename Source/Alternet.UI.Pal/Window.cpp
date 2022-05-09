@@ -32,7 +32,14 @@ namespace Alternet::UI
     // ------------
 
     Window::Window():
-        _flags(WindowFlags::ShowInTaskbar),
+        _flags(
+            WindowFlags::ShowInTaskbar |
+            WindowFlags::CloseEnabled |
+            WindowFlags::HasBorder |
+            WindowFlags::HasTitleBar |
+            WindowFlags::MaximizeEnabled |
+            WindowFlags::MinimizeEnabled |
+            WindowFlags::Resizable),
         _delayedFlags(
             *this,
             DelayedWindowFlags::None,
@@ -92,7 +99,7 @@ namespace Alternet::UI
 
     long Window::GetWindowStyle()
     {
-        long style = wxRESIZE_BORDER | wxSYSTEM_MENU | wxCAPTION | wxCLIP_CHILDREN;
+        long style = wxSYSTEM_MENU | wxCLIP_CHILDREN;
 
         if (GetMinimizeEnabled())
             style |= wxMINIMIZE_BOX;
@@ -102,6 +109,21 @@ namespace Alternet::UI
 
         if (GetCloseEnabled())
             style |= wxCLOSE_BOX;
+
+        if (GetAlwaysOnTop())
+            style |= wxSTAY_ON_TOP;
+
+        if (GetIsToolWindow())
+            style |= wxFRAME_TOOL_WINDOW;
+
+        if (GetResizable())
+            style |= wxRESIZE_BORDER;
+
+        if (!GetHasBorder())
+            style |= wxBORDER_NONE;
+
+        if (GetHasTitleBar())
+            style |= wxCAPTION;
 
         if (!GetShowInTaskbar())
             style |= wxFRAME_NO_TASKBAR;
@@ -198,16 +220,58 @@ namespace Alternet::UI
         _panel->SetBackgroundColour(value);
     }
 
+    bool Window::GetAlwaysOnTop()
+    {
+        return _flags.IsSet(WindowFlags::AlwaysOnTop);
+    }
+
+    void Window::SetAlwaysOnTop(bool value)
+    {
+        if (GetAlwaysOnTop() == value)
+            return;
+
+        _flags.Set(WindowFlags::AlwaysOnTop, value);
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool Window::GetIsToolWindow()
+    {
+        return _flags.IsSet(WindowFlags::IsToolWindow);
+    }
+
+    void Window::SetIsToolWindow(bool value)
+    {
+        if (GetIsToolWindow() == value)
+            return;
+
+        _flags.Set(WindowFlags::IsToolWindow, value);
+        RecreateWxWindowIfNeeded();
+    }
+
     void Window::OnClose(wxCloseEvent& event)
     {
         if (RaiseEvent(WindowEvent::Closing))
             event.Veto();
     }
 
+    bool Window::GetResizable()
+    {
+        return _flags.IsSet(WindowFlags::Resizable);
+    }
+
     void Window::OnSizeChanged(wxSizeEvent& event)
     {
         event.Skip();
         RaiseEvent(WindowEvent::SizeChanged);
+    }
+
+    void Window::SetResizable(bool value)
+    {
+        if (GetResizable() == value)
+            return;
+
+        _flags.Set(WindowFlags::Resizable, value);
+        RecreateWxWindowIfNeeded();
     }
 
     void Window::OnDestroy(wxWindowDestroyEvent& event)
@@ -218,8 +282,36 @@ namespace Alternet::UI
     {
     }
 
+    bool Window::GetHasBorder()
+    {
+        return _flags.IsSet(WindowFlags::HasBorder);
+    }
+
+    void Window::SetHasBorder(bool value)
+    {
+        if (GetHasBorder() == value)
+            return;
+
+        _flags.Set(WindowFlags::HasBorder, value);
+        RecreateWxWindowIfNeeded();
+    }
+
     Frame* Window::GetFrame()
     {
         return dynamic_cast<Frame*>(GetWxWindow());
+    }
+    
+    bool Window::GetHasTitleBar()
+    {
+        return _flags.IsSet(WindowFlags::HasTitleBar);
+    }
+    
+    void Window::SetHasTitleBar(bool value)
+    {
+        if (GetHasTitleBar() == value)
+            return;
+
+        _flags.Set(WindowFlags::HasTitleBar, value);
+        RecreateWxWindowIfNeeded();
     }
 }
