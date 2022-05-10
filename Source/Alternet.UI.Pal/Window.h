@@ -72,6 +72,7 @@ namespace Alternet::UI
             HasBorder = 1 << 7,
             HasTitleBar = 1 << 8,
             DestroyingWindow = 1 << 9,
+            Active = 1 << 10
         };
 
         DelayedFlags<Window, DelayedWindowFlags> _delayedFlags;

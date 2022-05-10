@@ -229,7 +229,7 @@ namespace Alternet::UI
 
     bool Window::GetIsActive()
     {
-        return GetFrame()->IsActive();
+        return _flags.IsSet(WindowFlags::Active);
     }
 
     /*static*/ Window* Window::GetActiveWindow()
@@ -237,9 +237,9 @@ namespace Alternet::UI
         auto allFrames = Frame::GetAllFrames();
         for (auto frame : allFrames)
         {
-            if (frame->IsActive())
+            auto window = frame->GetWindow();
+            if (window->GetIsActive())
             {
-                auto window = frame->GetWindow();
                 if (window->_flags.IsSet(WindowFlags::DestroyingWindow))
                     return nullptr;
                 
@@ -316,7 +316,10 @@ namespace Alternet::UI
 
     void Window::OnActivate(wxActivateEvent& event)
     {
-        if (event.GetActive())
+        bool active = event.GetActive();
+        _flags.Set(WindowFlags::Active, active);
+        
+        if (active)
             RaiseEvent(WindowEvent::Activated);
         else
             RaiseEvent(WindowEvent::Deactivated);

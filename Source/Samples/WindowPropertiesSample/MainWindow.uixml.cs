@@ -7,6 +7,8 @@ namespace WindowPropertiesSample
     {
         private TestWindow? testWindow;
 
+        private int lastEventNumber = 1;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -17,7 +19,7 @@ namespace WindowPropertiesSample
         private void CreateAndShowWindowButton_Click(object sender, System.EventArgs e)
         {
             testWindow = new TestWindow();
-            
+
             if (setOwnerCheckBox.IsChecked)
                 testWindow.Owner = this;
 
@@ -40,7 +42,7 @@ namespace WindowPropertiesSample
             UpdateControls();
         }
 
-        void UpdateActiveWindowInfoLabel()
+        private void UpdateActiveWindowInfoLabel()
         {
             var title = ActiveWindow?.Title ?? "N/A";
             activeWindowTitleLabel.Text = "Active window title: " + title;
@@ -63,11 +65,9 @@ namespace WindowPropertiesSample
             UpdateActiveWindowInfoLabel();
         }
 
-        private int lastEventNumber = 1;
-
-        void LogEvent(string message)
+        private void LogEvent(string message)
         {
-            if (IsDisposed)
+            if (eventsListBox.IsDisposed)
                 return;
 
             eventsListBox.Items.Add($"{lastEventNumber++}. {message}");
@@ -77,7 +77,7 @@ namespace WindowPropertiesSample
         private void UpdateControls()
         {
             var haveTestWindow = testWindow != null;
-            
+
             createAndShowWindowButton.Enabled = !haveTestWindow;
             activateButton.Enabled = haveTestWindow;
 
