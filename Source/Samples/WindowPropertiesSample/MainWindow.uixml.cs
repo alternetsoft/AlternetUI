@@ -42,7 +42,7 @@ namespace WindowPropertiesSample
 
         void UpdateActiveWindowInfoLabel()
         {
-            var title = Window.ActiveWindow?.Title ?? "N/A";
+            var title = ActiveWindow?.Title ?? "N/A";
             activeWindowTitleLabel.Text = "Active window title: " + title;
 
             if (testWindow != null)
@@ -67,15 +67,18 @@ namespace WindowPropertiesSample
 
         void LogEvent(string message)
         {
+            if (IsDisposed)
+                return;
+
             eventsListBox.Items.Add($"{lastEventNumber++}. {message}");
             eventsListBox.SelectedIndex = eventsListBox.Items.Count - 1;
         }
 
         private void UpdateControls()
         {
-            var haveTestWindow = testWindow == null;
+            var haveTestWindow = testWindow != null;
             
-            createAndShowWindowButton.Enabled = haveTestWindow;
+            createAndShowWindowButton.Enabled = !haveTestWindow;
             activateButton.Enabled = haveTestWindow;
 
             UpdateActiveWindowInfoLabel();

@@ -71,6 +71,7 @@ namespace Alternet::UI
             Resizable = 1 << 6,
             HasBorder = 1 << 7,
             HasTitleBar = 1 << 8,
+            DestroyingWindow = 1 << 9,
         };
 
         DelayedFlags<Window, DelayedWindowFlags> _delayedFlags;

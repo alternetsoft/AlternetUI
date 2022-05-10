@@ -62,6 +62,8 @@ namespace Alternet::UI
 
     Window::~Window()
     {
+        _flags.Set(WindowFlags::DestroyingWindow, true);
+
         _panel->Destroy();
         _panel = nullptr;
 
@@ -238,6 +240,9 @@ namespace Alternet::UI
             if (frame->IsActive())
             {
                 auto window = frame->GetWindow();
+                if (window->_flags.IsSet(WindowFlags::DestroyingWindow))
+                    return nullptr;
+                
                 window->AddRef();
                 return window;
             }
