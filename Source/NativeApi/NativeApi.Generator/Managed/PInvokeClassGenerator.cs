@@ -70,17 +70,21 @@ namespace ApiGenerator.Managed
             var propertyName = property.Name;
             var propertyTypeName = types.GetTypeName(property.ToContextualProperty());
 
+            bool isStatic = MemberProvider.IsStatic(property);
+
             if (property.GetMethod != null)
             {
                 WriteDllImport(w);
-                w.WriteLine($"public static extern {propertyTypeName} {declaringTypeName}_Get{propertyName}_(IntPtr obj);");
+                var argument = isStatic ? "" : "IntPtr obj";
+                w.WriteLine($"public static extern {propertyTypeName} {declaringTypeName}_Get{propertyName}_({argument});");
                 w.WriteLine();
             }
 
             if (property.SetMethod != null)
             {
                 WriteDllImport(w);
-                w.WriteLine($"public static extern void {declaringTypeName}_Set{propertyName}_(IntPtr obj, {propertyTypeName} value);");
+                var thisArgument = isStatic ? "" : "IntPtr obj, ";
+                w.WriteLine($"public static extern void {declaringTypeName}_Set{propertyName}_({thisArgument}{propertyTypeName} value);");
                 w.WriteLine();
             }
         }

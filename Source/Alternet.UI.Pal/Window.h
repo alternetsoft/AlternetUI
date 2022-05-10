@@ -13,8 +13,9 @@ namespace Alternet::UI
         Frame(Window* window, long style);
         virtual ~Frame();
 
-        Window* GetWindow();
+        static std::vector<Frame*> GetAllFrames();
 
+        Window* GetWindow();
     private:
         Window* _window;
 

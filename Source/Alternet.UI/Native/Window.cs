@@ -383,7 +383,7 @@ namespace Alternet.UI.Native
             public static extern bool Window_GetIsActive_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Window_GetActiveWindow_(IntPtr obj);
+            public static extern IntPtr Window_GetActiveWindow_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_Activate_(IntPtr obj);

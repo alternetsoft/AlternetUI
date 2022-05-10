@@ -45,12 +45,12 @@ namespace Alternet.UI
             NativeControl.Deactivated += NativeControl_Deactivated;
         }
 
-        private void NativeControl_Deactivated(object sender, EventArgs e)
+        private void NativeControl_Deactivated(object? sender, EventArgs e)
         {
             Control.RaiseDeactivated();
         }
 
-        private void NativeControl_Activated(object sender, EventArgs e)
+        private void NativeControl_Activated(object? sender, EventArgs e)
         {
             Control.RaiseActivated();
         }
@@ -62,11 +62,15 @@ namespace Alternet.UI
 
         public bool IsActive => NativeControl.IsActive;
 
-        public static Window ActiveWindow
+        public static Window? ActiveWindow
         {
             get
             {
-                var handler = TryGetHandlerByNativeControl(Native.Window.ActiveWindow) ?? throw new InvalidOperationException();
+                var activeWindow = Native.Window.ActiveWindow;
+                if (activeWindow == null)
+                    return null;
+
+                var handler = TryGetHandlerByNativeControl(activeWindow) ?? throw new InvalidOperationException();
                 return ((NativeWindowHandler)handler).Control;
             }
         }

@@ -66,22 +66,26 @@ namespace ApiGenerator.Native
             var propertyName = property.Name;
             var declaringTypeName = types.GetTypeName(property.DeclaringType!.ToContextualType(), TypeUsage.Static);
 
+            bool isStatic = MemberProvider.IsStatic(property);
             var instanceParameterSignaturePart = types.GetTypeName(property.DeclaringType!.ToContextualType(), TypeUsage.Argument) + " obj";
 
             if (property.GetMethod != null)
             {
                 var propertyTypeName = types.GetTypeName(property.ToContextualProperty(), TypeUsage.Return);
-                w.WriteLine($"{ExportMacro} {propertyTypeName} {declaringTypeName}_Get{propertyName}_({instanceParameterSignaturePart})");
+                var instanceArgument = isStatic ? "" : instanceParameterSignaturePart;
+                w.WriteLine($"{ExportMacro} {propertyTypeName} {declaringTypeName}_Get{propertyName}_({instanceArgument})");
                 w.WriteLine("{");
                 w.Indent++;
 
                 using (new MarshalExceptionsScope(w, propertyTypeName))
                 {
+                    var callPrefix = isStatic ? declaringTypeName + "::" : "obj->";
+
                     w.Write("return ");
                     w.Write(
                         string.Format(
                             GetCppToCReturnValueFormatString(property.PropertyType),
-                            $"obj->Get{propertyName}()"));
+                            $"{callPrefix}Get{propertyName}()"));
                     w.WriteLine(";");
                 }
 
@@ -92,11 +96,13 @@ namespace ApiGenerator.Native
 
             if (property.SetMethod != null)
             {
-                w.WriteLine($"{ExportMacro} void {declaringTypeName}_Set{propertyName}_({instanceParameterSignaturePart}, {types.GetTypeName(property.ToContextualProperty(), TypeUsage.Argument)} value)");
+                var callPrefix = isStatic ? declaringTypeName + "::" : "obj->";
+                var instanceArgument = isStatic ? "" : instanceParameterSignaturePart + ", ";
+                w.WriteLine($"{ExportMacro} void {declaringTypeName}_Set{propertyName}_({instanceArgument}{types.GetTypeName(property.ToContextualProperty(), TypeUsage.Argument)} value)");
                 w.WriteLine("{");
                 w.Indent++;
                 using (new MarshalExceptionsScope(w, "void"))
-                    w.WriteLine($"obj->Set{propertyName}({GetCToCppArgument(property.ToContextualProperty(), "value")});");
+                    w.WriteLine($"{callPrefix}Set{propertyName}({GetCToCppArgument(property.ToContextualProperty(), "value")});");
                 w.Indent--;
                 w.WriteLine("}");
                 w.WriteLine();

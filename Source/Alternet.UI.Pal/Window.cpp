@@ -24,6 +24,11 @@ namespace Alternet::UI
         }
     }
 
+    /*static*/ std::vector<Frame*> Frame::GetAllFrames()
+    {
+        return _allFrames;
+    }
+
     Window* Frame::GetWindow()
     {
         return _window;
@@ -227,14 +232,18 @@ namespace Alternet::UI
 
     /*static*/ Window* Window::GetActiveWindow()
     {
-        auto topWindow = wxTheApp->GetTopWindow();
-        if (topWindow == nullptr)
-            return nullptr;
+        auto allFrames = Frame::GetAllFrames();
+        for (auto frame : allFrames)
+        {
+            if (frame->IsActive())
+            {
+                auto window = frame->GetWindow();
+                window->AddRef();
+                return window;
+            }
+        }
 
-        auto window = dynamic_cast<Window*>(TryFindControlByWxWindow(topWindow));
-        if (window != nullptr)
-            window->AddRef();
-        return window;
+        return nullptr;
     }
 
     void Window::Activate()

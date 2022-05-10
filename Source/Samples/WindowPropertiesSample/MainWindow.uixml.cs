@@ -1,4 +1,5 @@
 using Alternet.UI;
+using System;
 
 namespace WindowPropertiesSample
 {
@@ -34,16 +35,61 @@ namespace WindowPropertiesSample
 
             testWindow.Show();
             testWindow.Closed += TestWindow_Closed;
+            testWindow.Activated += TestWindow_Activated;
+            testWindow.Deactivated += TestWindow_Deactivated;
             UpdateControls();
+        }
+
+        void UpdateActiveWindowInfoLabel()
+        {
+            var title = Window.ActiveWindow?.Title ?? "N/A";
+            activeWindowTitleLabel.Text = "Active window title: " + title;
+
+            if (testWindow != null)
+                isWindowActiveLabel.Text = "Test window active: " + (testWindow.IsActive ? "Yes" : "No");
+            else
+                isWindowActiveLabel.Text = string.Empty;
+        }
+
+        private void TestWindow_Deactivated(object? sender, System.EventArgs e)
+        {
+            LogEvent("Deactivated");
+            UpdateActiveWindowInfoLabel();
+        }
+
+        private void TestWindow_Activated(object? sender, System.EventArgs e)
+        {
+            LogEvent("Activated");
+            UpdateActiveWindowInfoLabel();
+        }
+
+        private int lastEventNumber = 1;
+
+        void LogEvent(string message)
+        {
+            eventsListBox.Items.Add($"{lastEventNumber++}. {message}");
+            eventsListBox.SelectedIndex = eventsListBox.Items.Count - 1;
         }
 
         private void UpdateControls()
         {
-            createAndShowWindowButton.Enabled = testWindow == null;
+            var haveTestWindow = testWindow == null;
+            
+            createAndShowWindowButton.Enabled = haveTestWindow;
+            activateButton.Enabled = haveTestWindow;
+
+            UpdateActiveWindowInfoLabel();
         }
 
         private void TestWindow_Closed(object? sender, WindowClosedEventArgs e)
         {
+            if (testWindow == null)
+                throw new InvalidOperationException();
+
+            testWindow.Activated -= TestWindow_Activated;
+            testWindow.Deactivated -= TestWindow_Deactivated;
+            testWindow.Closed -= TestWindow_Closed;
+
             testWindow = null;
             UpdateControls();
         }
@@ -100,6 +146,22 @@ namespace WindowPropertiesSample
         {
             if (testWindow != null)
                 testWindow.HasTitleBar = hasTitleBarCheckBox.IsChecked;
+        }
+
+        private void ActivateButton_Click(object sender, System.EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.Activate();
+        }
+
+        private void Window_Activated(object sender, System.EventArgs e)
+        {
+            UpdateActiveWindowInfoLabel();
+        }
+
+        private void Window_Deactivated(object sender, System.EventArgs e)
+        {
+            UpdateActiveWindowInfoLabel();
         }
     }
 }

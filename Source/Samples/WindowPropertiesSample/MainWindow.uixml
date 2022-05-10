@@ -2,29 +2,41 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="WindowPropertiesSample.MainWindow"
 		Title="Window Properties Sample"
-		Padding="10">
-	<StackPanel Orientation="Horizontal">
-		<GroupBox Title="Create">
-			<StackPanel>
-				<Button Text="Create and show window" Name="createAndShowWindowButton" Click="CreateAndShowWindowButton_Click" />
-				<CheckBox Text="Set Owner" Name="setOwnerCheckBox" IsChecked="True"/>
-			</StackPanel>
-		</GroupBox>
+		Width="1000"
+		Padding="10"
+		Activated="Window_Activated"
+		Deactivated="Window_Deactivated">
+	<StackPanel Orientation="Vertical">
+		<StackPanel Orientation="Horizontal">
+			<GroupBox Title="Create">
+				<StackPanel>
+					<Button Text="Create and show window" Name="createAndShowWindowButton" Click="CreateAndShowWindowButton_Click" />
+					<CheckBox Text="Set Owner" Name="setOwnerCheckBox" IsChecked="True"/>
+				</StackPanel>
+			</GroupBox>
 
-		<GroupBox Title="Properties">
-			<StackPanel>
-				<CheckBox Text="ShowInTaskbar" Name="showInTaskBarCheckBox" CheckedChanged="ShowInTaskBarCheckBox_CheckedChanged" IsChecked="True"/>
-				<CheckBox Text="Minimize Enabled" Name="minimizeEnabledCheckBox" CheckedChanged="MinimizeEnabledCheckBox_CheckedChanged" IsChecked="True"/>
-				<CheckBox Text="Maximize Enabled" Name="maximizeEnabledCheckBox" CheckedChanged="MaximizeEnabledCheckBox_CheckedChanged" IsChecked="True"/>
-				<CheckBox Text="Close Enabled" Name="closeEnabledCheckBox" CheckedChanged="CloseEnabledCheckBox_CheckedChanged" IsChecked="True"/>
+			<GroupBox Title="Properties">
+				<StackPanel>
+					<CheckBox Text="ShowInTaskbar" Name="showInTaskBarCheckBox" CheckedChanged="ShowInTaskBarCheckBox_CheckedChanged" IsChecked="True"/>
+					<CheckBox Text="Minimize Enabled" Name="minimizeEnabledCheckBox" CheckedChanged="MinimizeEnabledCheckBox_CheckedChanged" IsChecked="True"/>
+					<CheckBox Text="Maximize Enabled" Name="maximizeEnabledCheckBox" CheckedChanged="MaximizeEnabledCheckBox_CheckedChanged" IsChecked="True"/>
+					<CheckBox Text="Close Enabled" Name="closeEnabledCheckBox" CheckedChanged="CloseEnabledCheckBox_CheckedChanged" IsChecked="True"/>
 
-				<CheckBox Text="Always On Top" Name="alwaysOnTopCheckBox" CheckedChanged="AlwaysOnTopCheckBox_CheckedChanged" IsChecked="False"/>
-				<CheckBox Text="Is Tool Window" Name="isToolWindowCheckBox" CheckedChanged="IsToolWindowCheckBox_CheckedChanged" IsChecked="False"/>
-				<CheckBox Text="Resizable" Name="resizableCheckBox" CheckedChanged="ResizableCheckBox_CheckedChanged" IsChecked="True"/>
-				<CheckBox Text="Has Border" Name="hasBorderCheckBox" CheckedChanged="HasBorderCheckBox_CheckedChanged" IsChecked="True"/>
-				<CheckBox Text="Has Title Bar" Name="hasTitleBarCheckBox" CheckedChanged="HasTitleBarCheckBox_CheckedChanged" IsChecked="True"/>
-			</StackPanel>
-		</GroupBox>
-
+					<CheckBox Text="Always On Top" Name="alwaysOnTopCheckBox" CheckedChanged="AlwaysOnTopCheckBox_CheckedChanged" IsChecked="False"/>
+					<CheckBox Text="Is Tool Window" Name="isToolWindowCheckBox" CheckedChanged="IsToolWindowCheckBox_CheckedChanged" IsChecked="False"/>
+					<CheckBox Text="Resizable" Name="resizableCheckBox" CheckedChanged="ResizableCheckBox_CheckedChanged" IsChecked="True"/>
+					<CheckBox Text="Has Border" Name="hasBorderCheckBox" CheckedChanged="HasBorderCheckBox_CheckedChanged" IsChecked="True"/>
+					<CheckBox Text="Has Title Bar" Name="hasTitleBarCheckBox" CheckedChanged="HasTitleBarCheckBox_CheckedChanged" IsChecked="True"/>
+				</StackPanel>
+			</GroupBox>
+			<GroupBox Title="Activation">
+				<StackPanel>
+					<Label Name="activeWindowTitleLabel" />
+					<Label Name="isWindowActiveLabel" />
+					<Button Name="activateButton" Click="ActivateButton_Click" Text="Activate" />
+				</StackPanel>
+			</GroupBox>
+		</StackPanel>
+		<ListBox Name="eventsListBox" />
 	</StackPanel>
 </Window>

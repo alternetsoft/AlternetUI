@@ -176,10 +176,10 @@ ALTERNET_UI_API c_bool Window_GetIsActive_(Window* obj)
         });
 }
 
-ALTERNET_UI_API Window* Window_GetActiveWindow_(Window* obj)
+ALTERNET_UI_API Window* Window_GetActiveWindow_()
 {
     return MarshalExceptions<Window*>([&](){
-            return obj->GetActiveWindow();
+            return Window::GetActiveWindow();
         });
 }
 
