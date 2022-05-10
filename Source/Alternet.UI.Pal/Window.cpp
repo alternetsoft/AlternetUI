@@ -220,6 +220,28 @@ namespace Alternet::UI
         _panel->SetBackgroundColour(value);
     }
 
+    bool Window::GetIsActive()
+    {
+        return GetFrame()->IsActive();
+    }
+
+    /*static*/ Window* Window::GetActiveWindow()
+    {
+        auto topWindow = wxTheApp->GetTopWindow();
+        if (topWindow == nullptr)
+            return nullptr;
+
+        auto window = dynamic_cast<Window*>(TryFindControlByWxWindow(topWindow));
+        if (window != nullptr)
+            window->AddRef();
+        return window;
+    }
+
+    void Window::Activate()
+    {
+        GetFrame()->SetFocus();
+    }
+
     bool Window::GetAlwaysOnTop()
     {
         return _flags.IsSet(WindowFlags::AlwaysOnTop);
@@ -280,6 +302,10 @@ namespace Alternet::UI
 
     void Window::OnActivate(wxActivateEvent& event)
     {
+        if (event.GetActive())
+            RaiseEvent(WindowEvent::Activated);
+        else
+            RaiseEvent(WindowEvent::Deactivated);
     }
 
     bool Window::GetHasBorder()

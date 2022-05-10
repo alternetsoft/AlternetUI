@@ -169,6 +169,27 @@ ALTERNET_UI_API void Window_SetHasTitleBar_(Window* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API c_bool Window_GetIsActive_(Window* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsActive();
+        });
+}
+
+ALTERNET_UI_API Window* Window_GetActiveWindow_(Window* obj)
+{
+    return MarshalExceptions<Window*>([&](){
+            return obj->GetActiveWindow();
+        });
+}
+
+ALTERNET_UI_API void Window_Activate_(Window* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->Activate();
+        });
+}
+
 ALTERNET_UI_API void Window_SetEventCallback_(Window::WindowEventCallbackType callback)
 {
     Window::SetEventCallback(callback);

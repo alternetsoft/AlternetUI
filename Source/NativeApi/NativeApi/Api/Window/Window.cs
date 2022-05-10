@@ -13,6 +13,8 @@ namespace NativeApi.Api
         public event EventHandler? Closing { add => throw new Exception(); remove => throw new Exception(); }
 
         public event EventHandler SizeChanged { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler Activated { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler Deactivated { add => throw new Exception(); remove => throw new Exception(); }
 
         public bool ShowInTaskbar { get => throw new Exception(); set => throw new Exception(); }
 
@@ -25,5 +27,9 @@ namespace NativeApi.Api
         public bool Resizable { get => throw new Exception(); set => throw new Exception(); }
         public bool HasBorder { get => throw new Exception(); set => throw new Exception(); }
         public bool HasTitleBar { get => throw new Exception(); set => throw new Exception(); }
+
+        public bool IsActive { get => throw new Exception(); }
+        public void Activate() => throw new Exception();
+        public static Window ActiveWindow { get => throw new Exception(); }
     }
 }

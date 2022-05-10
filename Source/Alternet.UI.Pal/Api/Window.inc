@@ -44,11 +44,20 @@ void SetHasBorder(bool value);
 bool GetHasTitleBar();
 void SetHasTitleBar(bool value);
 
+
+bool GetIsActive();
+
+
+static Window* GetActiveWindow();
+
+void Activate();
 public:
 enum class WindowEvent
 {
     Closing,
     SizeChanged,
+    Activated,
+    Deactivated,
 };
 typedef void* (*WindowEventCallbackType)(Window* obj, WindowEvent event, void* param);
 static void SetEventCallback(WindowEventCallbackType value) { eventCallback = value; }

@@ -39,9 +39,36 @@ namespace Alternet.UI
             Control.HasBorderChanged += Control_HasBorderChanged;
             Control.HasTitleBarChanged += Control_HasTitleBarChanged;
 
-
             NativeControl.Closing += Control_Closing;
             NativeControl.SizeChanged += NativeControl_SizeChanged;
+            NativeControl.Activated += NativeControl_Activated;
+            NativeControl.Deactivated += NativeControl_Deactivated;
+        }
+
+        private void NativeControl_Deactivated(object sender, EventArgs e)
+        {
+            Control.RaiseDeactivated();
+        }
+
+        private void NativeControl_Activated(object sender, EventArgs e)
+        {
+            Control.RaiseActivated();
+        }
+
+        public void Activate()
+        {
+            NativeControl.Activate();
+        }
+
+        public bool IsActive => NativeControl.IsActive;
+
+        public static Window ActiveWindow
+        {
+            get
+            {
+                var handler = TryGetHandlerByNativeControl(Native.Window.ActiveWindow) ?? throw new InvalidOperationException();
+                return ((NativeWindowHandler)handler).Control;
+            }
         }
 
         private void Control_AlwaysOnTopChanged(object? sender, EventArgs e)
@@ -178,7 +205,9 @@ namespace Alternet.UI
         {
             NativeControl.SizeChanged -= NativeControl_SizeChanged;
             NativeControl.Closing -= Control_Closing;
-            
+            NativeControl.Activated -= NativeControl_Activated;
+            NativeControl.Deactivated -= NativeControl_Deactivated;
+
             Control.OwnerChanged -= Control_OwnerChanged;
             Control.TitleChanged -= Control_TitleChanged;
             Control.ShowInTaskbarChanged -= Control_ShowInTaskbarChanged;

@@ -42,6 +42,49 @@ namespace Alternet.UI
             Bounds = new Rect(100, 100, 400, 400);
         }
 
+        private new NativeWindowHandler Handler => (NativeWindowHandler)base.Handler;
+
+        /// <summary>
+        /// Gets a value indicating whether the window is the currently active window for this application.
+        /// </summary>
+        public bool IsActive => Handler.IsActive;
+
+        /// <summary>
+        /// Activates the window.
+        /// </summary>
+        /// <remarks>
+        /// Activating a window brings it to the front if this is the active application,
+        /// or it flashes the window caption if this is not the active application.
+        /// </remarks>
+        public void Activate() => Handler.Activate();
+
+        /// <summary>
+        /// Gets the currently active window for this application.
+        /// </summary>
+        /// <value>A <see cref="Window"/> that represents the currently active window, or <see langword="null"/> if there is no active window.</value>
+        public static Window ActiveWindow => NativeWindowHandler.ActiveWindow;
+
+        /// <summary>
+        /// Occurs when the window is activated in code or by the user.
+        /// </summary>
+        /// <remarks>
+        /// To activate a window at run time using code, call the <see cref="Activate"/> method. You can use this event for
+        /// tasks such as updating the contents of the window based on changes made to the window's data when the window was not activated.
+        /// </remarks>
+        public event EventHandler? Activated;
+
+        internal void RaiseActivated() => Activated?.Invoke(this, EventArgs.Empty);
+
+        /// <summary>
+        /// Occurs when the window loses focus and is no longer the active window.
+        /// </summary>
+        /// <remarks>
+        /// You can use this event to perform tasks such as updating another window in your application with data from the deactivated window.
+        /// </remarks>
+        public event EventHandler? Deactivated;
+
+        internal void RaiseDeactivated() => Deactivated?.Invoke(this, EventArgs.Empty);
+
         private bool hasTitleBar = true;
 
         /// <summary>

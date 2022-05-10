@@ -210,6 +210,36 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool IsActive
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetIsActive_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public static Window ActiveWindow
+        {
+            get
+            {
+                var n = NativeApi.Window_GetActiveWindow_();
+                var m = NativeObject.GetFromNativePointer<Window>(n, p => new Window(p))!;
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+        }
+        
+        public void Activate()
+        {
+            CheckDisposed();
+            NativeApi.Window_Activate_(NativePointer);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -244,12 +274,22 @@ namespace Alternet.UI.Native
                 {
                     SizeChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.WindowEvent.Activated:
+                {
+                    Activated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.WindowEvent.Deactivated:
+                {
+                    Deactivated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected WindowEvent value: " + e);
             }
         }
         
         public event EventHandler<CancelEventArgs>? Closing;
         public event EventHandler? SizeChanged;
+        public event EventHandler? Activated;
+        public event EventHandler? Deactivated;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -263,6 +303,8 @@ namespace Alternet.UI.Native
             {
                 Closing,
                 SizeChanged,
+                Activated,
+                Deactivated,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -336,6 +378,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetHasTitleBar_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Window_GetIsActive_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Window_GetActiveWindow_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_Activate_(IntPtr obj);
             
         }
     }
