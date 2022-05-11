@@ -40,6 +40,7 @@ namespace WindowPropertiesSample
             testWindow.EndInit();
 
             testWindow.Closed += TestWindow_Closed;
+            testWindow.Closing += TestWindow_Closing;
             testWindow.Activated += TestWindow_Activated;
             testWindow.Deactivated += TestWindow_Deactivated;
 
@@ -92,15 +93,24 @@ namespace WindowPropertiesSample
 
         private void TestWindow_Closed(object? sender, WindowClosedEventArgs e)
         {
+            LogEvent("Closed");
+
             if (testWindow == null)
                 throw new InvalidOperationException();
 
             testWindow.Activated -= TestWindow_Activated;
             testWindow.Deactivated -= TestWindow_Deactivated;
             testWindow.Closed -= TestWindow_Closed;
+            testWindow.Closing -= TestWindow_Closing;
 
             testWindow = null;
             UpdateControls();
+        }
+
+        private void TestWindow_Closing(object? sender, WindowClosingEventArgs e)
+        {
+            LogEvent("Closing");
+            e.Cancel = cancelClosingCheckBox.IsChecked;
         }
 
         private void ShowInTaskBarCheckBox_CheckedChanged(object sender, System.EventArgs e)

@@ -12,6 +12,7 @@
 				<StackPanel>
 					<Button Text="Create and show window" Name="createAndShowWindowButton" Click="CreateAndShowWindowButton_Click" />
 					<CheckBox Text="Set Owner" Name="setOwnerCheckBox" IsChecked="True"/>
+					<CheckBox Text="Cancel Closing" Name="cancelClosingCheckBox" />
 				</StackPanel>
 			</GroupBox>
 
