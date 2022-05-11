@@ -85,6 +85,7 @@ namespace WindowPropertiesSample
 
             createAndShowWindowButton.Enabled = !haveTestWindow;
             activateButton.Enabled = haveTestWindow;
+            addOwnedWindow.Enabled = haveTestWindow;
 
             UpdateActiveWindowInfoLabel();
         }
@@ -170,6 +171,18 @@ namespace WindowPropertiesSample
         private void Window_Deactivated(object sender, System.EventArgs e)
         {
             UpdateActiveWindowInfoLabel();
+        }
+
+        private void AddOwnedWindow_Click(object sender, System.EventArgs e)
+        {
+            if (testWindow == null)
+                return;
+
+            var ownedWindow = new OwnedWindow();
+            ownedWindow.Owner = testWindow;
+
+            ownedWindow.SetLabel("Owned Window #" + testWindow.OwnedWindows.Length);
+            ownedWindow.Show();
         }
     }
 }

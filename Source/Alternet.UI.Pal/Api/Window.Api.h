@@ -183,6 +183,34 @@ ALTERNET_UI_API Window* Window_GetActiveWindow_()
         });
 }
 
+ALTERNET_UI_API void* Window_OpenOwnedWindowsArray_(Window* obj)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->OpenOwnedWindowsArray();
+        });
+}
+
+ALTERNET_UI_API int Window_GetOwnedWindowsItemCount_(Window* obj, void* array)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetOwnedWindowsItemCount(array);
+        });
+}
+
+ALTERNET_UI_API Window* Window_GetOwnedWindowsItemAt_(Window* obj, void* array, int index)
+{
+    return MarshalExceptions<Window*>([&](){
+            return obj->GetOwnedWindowsItemAt(array, index);
+        });
+}
+
+ALTERNET_UI_API void Window_CloseOwnedWindowsArray_(Window* obj, void* array)
+{
+    MarshalExceptions<void>([&](){
+            obj->CloseOwnedWindowsArray(array);
+        });
+}
+
 ALTERNET_UI_API void Window_Activate_(Window* obj)
 {
     MarshalExceptions<void>([&](){

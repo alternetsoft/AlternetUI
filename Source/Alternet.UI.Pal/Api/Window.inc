@@ -50,6 +50,10 @@ bool GetIsActive();
 
 static Window* GetActiveWindow();
 
+void* OpenOwnedWindowsArray();
+int GetOwnedWindowsItemCount(void* array);
+Window* GetOwnedWindowsItemAt(void* array, int index);
+void CloseOwnedWindowsArray(void* array);
 void Activate();
 public:
 enum class WindowEvent

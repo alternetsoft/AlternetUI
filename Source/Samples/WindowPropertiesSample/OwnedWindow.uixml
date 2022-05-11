@@ -1,0 +1,10 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="WindowPropertiesSample.OwnedWindow"
+        Title="OwnedWindow"
+		Width="100"
+		Height="100"
+		IsToolWindow="True"
+        xmlns:local="clr-namespace:WindowPropertiesSample;assembly=WindowPropertiesSample">
+	<Label Name="label"/>
+</Window>

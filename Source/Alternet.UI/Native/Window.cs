@@ -234,6 +234,33 @@ namespace Alternet.UI.Native
             
         }
         
+        public Window[] OwnedWindows
+        {
+            get
+            {
+                CheckDisposed();
+                var array = NativeApi.Window_OpenOwnedWindowsArray_(NativePointer);
+                try
+                {
+                    var count = NativeApi.Window_GetOwnedWindowsItemCount_(NativePointer, array);
+                    var result = new System.Collections.Generic.List<Window>(count);
+                    for (int i = 0; i < count; i++)
+                    {
+                        var n = NativeApi.Window_GetOwnedWindowsItemAt_(NativePointer, array, i);
+                        var item = NativeObject.GetFromNativePointer<Window>(n, p => new Window(p));
+                        ReleaseNativeObjectPointer(n);
+                        result.Add(item);
+                    }
+                    return result.ToArray();
+                }
+                finally
+                {
+                    NativeApi.Window_CloseOwnedWindowsArray_(NativePointer, array);
+                }
+            }
+            
+        }
+        
         public void Activate()
         {
             CheckDisposed();
@@ -384,6 +411,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Window_GetActiveWindow_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Window_OpenOwnedWindowsArray_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Window_GetOwnedWindowsItemCount_(IntPtr obj, System.IntPtr array);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Window_GetOwnedWindowsItemAt_(IntPtr obj, System.IntPtr array, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_CloseOwnedWindowsArray_(IntPtr obj, System.IntPtr array);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_Activate_(IntPtr obj);

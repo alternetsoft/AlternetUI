@@ -36,6 +36,11 @@
 					<Button Name="activateButton" Click="ActivateButton_Click" Text="Activate" />
 				</StackPanel>
 			</GroupBox>
+			<GroupBox Title="Owned Windows">
+				<StackPanel>
+					<Button Name="addOwnedWindow" Click="AddOwnedWindow_Click" Text="Add Owned Window" />
+				</StackPanel>
+			</GroupBox>
 		</StackPanel>
 		<ListBox Name="eventsListBox" />
 	</StackPanel>

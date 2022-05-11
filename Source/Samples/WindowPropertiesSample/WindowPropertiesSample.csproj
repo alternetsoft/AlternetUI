@@ -27,6 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="OwnedWindow.uixml" />
       <None Remove="TestWindow.uixml" />
     </ItemGroup>
 

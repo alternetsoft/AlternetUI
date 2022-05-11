@@ -29,6 +29,17 @@ namespace Alternet.UI
             return GetParentWindow(c.Parent);
         }
 
+        /// <summary>
+        /// Gets an array of <see cref="Window"/> objects that represent all windows that are owned by this window.
+        /// </summary>
+        /// <value>
+        /// A <see cref="Window"/> array that represents the owned windows for this window.
+        /// </value>
+        /// <remarks>
+        /// This property returns an array that contains all windows that are owned by this window. To make a window owned by another window, set the <see cref="Owner"/> property.
+        /// </remarks>
+        public Window[] OwnedWindows { get => Handler.OwnedWindows; }
+
         private string title = "";
         private WindowStartLocation startLocation = WindowStartLocation.SystemDefault;
 

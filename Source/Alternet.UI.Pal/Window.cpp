@@ -227,6 +227,38 @@ namespace Alternet::UI
         _panel->SetBackgroundColour(value);
     }
 
+    void* Window::OpenOwnedWindowsArray()
+    {
+        auto frame = GetFrame();
+        auto children = frame->GetChildren();
+        auto items = new std::vector<Window*>();
+        for (int i = 0; i < children.GetCount(); i++)
+        {
+            auto childFrame = dynamic_cast<Frame*>(children[i]);
+            if (childFrame != nullptr)
+                items->push_back(childFrame->GetWindow());
+        }
+
+        return items;
+    }
+
+    int Window::GetOwnedWindowsItemCount(void* array)
+    {
+        return ((std::vector<Window*>*)array)->size();
+    }
+
+    Window* Window::GetOwnedWindowsItemAt(void* array, int index)
+    {
+        auto window = (*((std::vector<Window*>*)array))[index];
+        window->AddRef();
+        return window;
+    }
+
+    void Window::CloseOwnedWindowsArray(void* array)
+    {
+        delete (std::vector<Window*>*)array;
+    }
+
     bool Window::GetIsActive()
     {
         return _flags.IsSet(WindowFlags::Active);

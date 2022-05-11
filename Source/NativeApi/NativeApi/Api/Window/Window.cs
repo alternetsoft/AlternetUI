@@ -31,5 +31,7 @@ namespace NativeApi.Api
         public bool IsActive { get => throw new Exception(); }
         public void Activate() => throw new Exception();
         public static Window ActiveWindow { get => throw new Exception(); }
+
+        public Window[] OwnedWindows { get => throw new Exception(); }
     }
 }
