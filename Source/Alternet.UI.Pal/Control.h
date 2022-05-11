@@ -32,6 +32,8 @@ namespace Alternet::UI
         void CreateWxWindow();
 
         void RecreateWxWindowIfNeeded();
+        void ScheduleRecreateWxWindow(std::function<void()> postRecreateAction);
+        void ScheduleRecreateWxWindow();
 
         virtual void OnWxWindowCreated();
         virtual void OnWxWindowDestroying();
@@ -73,7 +75,11 @@ namespace Alternet::UI
             CreatingWxWindow = 1 << 1,
             ClientSizeCacheValid = 1 << 2,
             UserPaint = 1 << 3,
+            InitInProgress = 1 << 4,
+            PostInitWxWindowRecreationPending = 1 << 5,
         };
+
+        std::vector<std::function<void()>> _postInitActions;
 
         wxWindow* _wxWindow = nullptr;
         Control* _parent = nullptr;

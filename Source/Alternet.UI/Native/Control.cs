@@ -362,6 +362,18 @@ namespace Alternet.UI.Native
             return m;
         }
         
+        public void BeginInit()
+        {
+            CheckDisposed();
+            NativeApi.Control_BeginInit_(NativePointer);
+        }
+        
+        public void EndInit()
+        {
+            CheckDisposed();
+            NativeApi.Control_EndInit_(NativePointer);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -559,6 +571,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_Focus_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_BeginInit_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_EndInit_(IntPtr obj);
             
         }
     }

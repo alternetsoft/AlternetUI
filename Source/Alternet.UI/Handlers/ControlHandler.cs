@@ -820,6 +820,8 @@ namespace Alternet.UI
         /// </summary>
         protected internal virtual void BeginInit()
         {
+            if (NativeControl != null)
+                NativeControl.BeginInit();
         }
 
         /// <summary>
@@ -827,6 +829,8 @@ namespace Alternet.UI
         /// </summary>
         protected internal virtual void EndInit()
         {
+            if (NativeControl != null)
+                NativeControl.EndInit();
         }
 
         private void ApplyBorderColor()

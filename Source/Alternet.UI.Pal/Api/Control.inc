@@ -70,6 +70,8 @@ static Control* HitTest(const Point& screenPoint);
 Point ClientToScreen(const Point& point);
 Point ScreenToClient(const Point& point);
 bool Focus();
+void BeginInit();
+void EndInit();
 public:
 enum class ControlEvent
 {

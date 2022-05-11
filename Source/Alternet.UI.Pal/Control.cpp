@@ -94,6 +94,35 @@ namespace Alternet::UI
         return _parent;
     }
 
+    void Control::BeginInit()
+    {
+        if (_flags.IsSet(ControlFlags::InitInProgress))
+            throwExInvalidOp;
+
+        _flags.Set(ControlFlags::InitInProgress, true);
+    }
+
+    void Control::EndInit()
+    {
+        if (!_flags.IsSet(ControlFlags::InitInProgress))
+            throwExInvalidOp;
+
+        _flags.Set(ControlFlags::InitInProgress, false);
+
+        if (_flags.IsSet(ControlFlags::PostInitWxWindowRecreationPending))
+        {
+            RecreateWxWindowIfNeeded();
+            _flags.Set(ControlFlags::PostInitWxWindowRecreationPending, false);
+        }
+
+        for (auto action : _postInitActions)
+        {
+            action();
+        }
+
+        _postInitActions.clear();
+    }
+
     wxWindow* Control::GetWxWindow()
     {
         if (_wxWindow == nullptr)
@@ -251,6 +280,28 @@ namespace Alternet::UI
     wxWindow* Control::GetParentingWxWindow(Control* child)
     {
         return GetWxWindow();
+    }
+
+    void Control::ScheduleRecreateWxWindow(std::function<void()> postRecreateAction)
+    {
+        if (!_flags.IsSet(ControlFlags::InitInProgress))
+        {
+            RecreateWxWindowIfNeeded();
+            postRecreateAction();
+            return;
+        }
+
+        _flags.Set(ControlFlags::PostInitWxWindowRecreationPending, true);
+
+        _postInitActions.push_back([postRecreateAction]
+            {
+                postRecreateAction();
+            });
+    }
+
+    void Control::ScheduleRecreateWxWindow()
+    {
+        ScheduleRecreateWxWindow([] {});
     }
 
     bool Control::RetrieveVisible()

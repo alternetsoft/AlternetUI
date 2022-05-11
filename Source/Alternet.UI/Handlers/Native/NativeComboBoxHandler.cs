@@ -30,14 +30,6 @@ namespace Alternet.UI
             NativeControl.TextChanged += NativeControl_TextChanged;
         }
 
-        protected internal override void BeginInit()
-        {
-        }
-
-        protected internal override void EndInit()
-        {
-        }
-
         private void Control_IsEditableChanged(object? sender, EventArgs e)
         {
             ApplyIsEditable();

@@ -74,5 +74,8 @@ namespace NativeApi.Api
         public bool IsMouseCaptured { get; }
 
         public bool Focus() => throw new Exception();
+
+        public void BeginInit() => throw new Exception();
+        public void EndInit() => throw new Exception();
     }
 }

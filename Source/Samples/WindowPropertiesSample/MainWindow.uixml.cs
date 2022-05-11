@@ -23,6 +23,8 @@ namespace WindowPropertiesSample
             if (setOwnerCheckBox.IsChecked)
                 testWindow.Owner = this;
 
+            testWindow.BeginInit();
+            
             testWindow.ShowInTaskbar = showInTaskBarCheckBox.IsChecked;
 
             testWindow.MinimizeEnabled = minimizeEnabledCheckBox.IsChecked;
@@ -35,10 +37,13 @@ namespace WindowPropertiesSample
             testWindow.HasBorder = hasBorderCheckBox.IsChecked;
             testWindow.HasTitleBar = hasTitleBarCheckBox.IsChecked;
 
-            testWindow.Show();
+            testWindow.EndInit();
+
             testWindow.Closed += TestWindow_Closed;
             testWindow.Activated += TestWindow_Activated;
             testWindow.Deactivated += TestWindow_Deactivated;
+
+            testWindow.Show();
             UpdateControls();
         }
 

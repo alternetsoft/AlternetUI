@@ -290,6 +290,20 @@ ALTERNET_UI_API c_bool Control_Focus_(Control* obj)
         });
 }
 
+ALTERNET_UI_API void Control_BeginInit_(Control* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->BeginInit();
+        });
+}
+
+ALTERNET_UI_API void Control_EndInit_(Control* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->EndInit();
+        });
+}
+
 ALTERNET_UI_API void Control_SetEventCallback_(Control::ControlEventCallbackType callback)
 {
     Control::SetEventCallback(callback);

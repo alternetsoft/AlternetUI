@@ -164,7 +164,7 @@ namespace Alternet::UI
             return;
 
         _flags.Set(WindowFlags::ShowInTaskbar, value);
-        RecreateWxWindowIfNeeded();
+        ScheduleRecreateWxWindow();
     }
 
     bool Window::GetMinimizeEnabled()
@@ -178,7 +178,7 @@ namespace Alternet::UI
             return;
 
         _flags.Set(WindowFlags::MinimizeEnabled, value);
-        RecreateWxWindowIfNeeded();
+        ScheduleRecreateWxWindow();
     }
 
     bool Window::GetMaximizeEnabled()
@@ -192,7 +192,7 @@ namespace Alternet::UI
             return;
 
         _flags.Set(WindowFlags::MaximizeEnabled, value);
-        RecreateWxWindowIfNeeded();
+        ScheduleRecreateWxWindow();
     }
 
     bool Window::GetCloseEnabled()
@@ -206,7 +206,7 @@ namespace Alternet::UI
             return;
 
         _flags.Set(WindowFlags::CloseEnabled, value);
-        RecreateWxWindowIfNeeded();
+        ScheduleRecreateWxWindow();
     }
 
     wxWindow* Window::GetParentingWxWindow(Control* child)
@@ -267,7 +267,7 @@ namespace Alternet::UI
             return;
 
         _flags.Set(WindowFlags::AlwaysOnTop, value);
-        RecreateWxWindowIfNeeded();
+        ScheduleRecreateWxWindow();
     }
 
     bool Window::GetIsToolWindow()
@@ -281,7 +281,7 @@ namespace Alternet::UI
             return;
 
         _flags.Set(WindowFlags::IsToolWindow, value);
-        RecreateWxWindowIfNeeded();
+        ScheduleRecreateWxWindow();
     }
 
     void Window::OnClose(wxCloseEvent& event)
@@ -307,7 +307,7 @@ namespace Alternet::UI
             return;
 
         _flags.Set(WindowFlags::Resizable, value);
-        RecreateWxWindowIfNeeded();
+        ScheduleRecreateWxWindow();
     }
 
     void Window::OnDestroy(wxWindowDestroyEvent& event)
@@ -336,7 +336,7 @@ namespace Alternet::UI
             return;
 
         _flags.Set(WindowFlags::HasBorder, value);
-        RecreateWxWindowIfNeeded();
+        ScheduleRecreateWxWindow();
     }
 
     Frame* Window::GetFrame()
@@ -355,6 +355,6 @@ namespace Alternet::UI
             return;
 
         _flags.Set(WindowFlags::HasTitleBar, value);
-        RecreateWxWindowIfNeeded();
+        ScheduleRecreateWxWindow();
     }
 }
