@@ -72,6 +72,8 @@ namespace Alternet::UI
         _frame->Unbind(wxEVT_SIZE, &Window::OnSizeChanged, this);
         _frame->Unbind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
         _frame->Unbind(wxEVT_ACTIVATE, &Window::OnActivate, this);
+        _frame->Unbind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
+        _frame->Unbind(wxEVT_ICONIZE, &Window::OnIconize, this);
 
         _frame->Destroy();
         _frame = nullptr;
@@ -374,9 +376,10 @@ namespace Alternet::UI
         event.Skip();
         RaiseEvent(WindowEvent::SizeChanged);
 
-        if (_state.Get() != RetrieveState())
+        auto newState = RetrieveState();
+        if (_lastState != newState)
         {
-            _state.Receive();
+            _lastState = newState;
             RaiseEvent(WindowEvent::StateChanged);
         }
     }
@@ -407,11 +410,13 @@ namespace Alternet::UI
 
     void Window::OnMaximize(wxMaximizeEvent& event)
     {
+        _lastState = RetrieveState();
         RaiseEvent(WindowEvent::StateChanged);
     }
 
     void Window::OnIconize(wxIconizeEvent& event)
     {
+        _lastState = RetrieveState();
         RaiseEvent(WindowEvent::StateChanged);
     }
 

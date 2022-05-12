@@ -86,6 +86,7 @@ namespace Alternet::UI
 
         DelayedValue<Window, string> _title;
         DelayedValue<Window, WindowState> _state;
+        WindowState _lastState = WindowState::Normal;
     };
 }
 
