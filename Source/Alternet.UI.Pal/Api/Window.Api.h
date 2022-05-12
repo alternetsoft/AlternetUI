@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Window.h"
+#include "ImageSet.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -194,6 +195,20 @@ ALTERNET_UI_API void Window_SetState_(Window* obj, WindowState value)
 {
     MarshalExceptions<void>([&](){
             obj->SetState(value);
+        });
+}
+
+ALTERNET_UI_API ImageSet* Window_GetIcon_(Window* obj)
+{
+    return MarshalExceptions<ImageSet*>([&](){
+            return obj->GetIcon();
+        });
+}
+
+ALTERNET_UI_API void Window_SetIcon_(Window* obj, ImageSet* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetIcon(value);
         });
 }
 

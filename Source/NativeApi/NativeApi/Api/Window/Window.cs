@@ -37,5 +37,7 @@ namespace NativeApi.Api
         public WindowState State { get => throw new Exception(); set => throw new Exception(); }
 
         public event EventHandler StateChanged { add => throw new Exception(); remove => throw new Exception(); }
+
+        public ImageSet? Icon { get => throw new Exception(); set => throw new Exception(); }
     }
 }

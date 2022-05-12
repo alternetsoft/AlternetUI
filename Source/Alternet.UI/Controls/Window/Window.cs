@@ -29,6 +29,47 @@ namespace Alternet.UI
             return GetParentWindow(c.Parent);
         }
 
+        private ImageSet? icon = null;
+
+        /// <summary>
+        /// Gets or sets the icon for the window.
+        /// </summary>
+        /// <value>
+        /// An <see cref="ImageSet"/> that represents the icon for the window.
+        /// </value>
+        /// <remarks>
+        /// A window's icon designates the picture that represents the window in the taskbar as well as the icon that is displayed for the control box of the window.
+        /// If images of several sizes are contained within the <see cref="ImageSet"/>, the most fitting size is selected automatically.
+        /// </remarks>
+        public ImageSet? Icon
+        {
+            get => icon;
+
+            set
+            {
+                if (icon == value)
+                    return;
+
+                icon = value;
+                OnIconChanged(EventArgs.Empty);
+                IconChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="Icon"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnIconChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="Icon"/> property changes.
+        /// </summary>
+        public event EventHandler? IconChanged;
+
+
         /// <summary>
         /// Gets an array of <see cref="Window"/> objects that represent all windows that are owned by this window.
         /// </summary>

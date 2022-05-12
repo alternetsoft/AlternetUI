@@ -278,6 +278,24 @@ namespace Alternet.UI.Native
             }
         }
         
+        public ImageSet? Icon
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetIcon_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<ImageSet>(n, p => new ImageSet(p));
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetIcon_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+            }
+        }
+        
         public void Activate()
         {
             CheckDisposed();
@@ -440,6 +458,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetState_(IntPtr obj, WindowState value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Window_GetIcon_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetIcon_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Window_OpenOwnedWindowsArray_(IntPtr obj);

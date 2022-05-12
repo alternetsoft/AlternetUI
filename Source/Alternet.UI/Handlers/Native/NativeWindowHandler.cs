@@ -27,6 +27,7 @@ namespace Alternet.UI
             ApplyHasBorder();
             ApplyHasTitleBar();
             ApplyState();
+            ApplyIcon();
 
             Control.TitleChanged += Control_TitleChanged;
 
@@ -42,12 +43,18 @@ namespace Alternet.UI
             Control.HasTitleBarChanged += Control_HasTitleBarChanged;
 
             Control.StateChanged += Control_StateChanged;
+            Control.IconChanged += Control_IconChanged;
 
             NativeControl.Closing += Control_Closing;
             NativeControl.SizeChanged += NativeControl_SizeChanged;
             NativeControl.Activated += NativeControl_Activated;
             NativeControl.Deactivated += NativeControl_Deactivated;
             NativeControl.StateChanged += NativeControl_StateChanged;
+        }
+
+        private void Control_IconChanged(object sender, EventArgs e)
+        {
+            ApplyIcon();
         }
 
         private void NativeControl_StateChanged(object? sender, EventArgs e)
@@ -63,6 +70,11 @@ namespace Alternet.UI
         private void ApplyState()
         {
             NativeControl.State = (Native.WindowState)Control.State;
+        }
+
+        private void ApplyIcon()
+        {
+            NativeControl.Icon = Control.Icon?.NativeImageSet ?? null;
         }
 
         private void NativeControl_Deactivated(object? sender, EventArgs e)
@@ -262,6 +274,7 @@ namespace Alternet.UI
             Control.HasBorderChanged -= Control_HasBorderChanged;
             Control.HasTitleBarChanged -= Control_HasTitleBarChanged;
             Control.StateChanged -= Control_StateChanged;
+            Control.IconChanged -= Control_IconChanged;
 
             base.OnDetach();
         }

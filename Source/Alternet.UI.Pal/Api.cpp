@@ -11,6 +11,7 @@
 #include "Api/GraphicsPath.Api.h"
 #include "Api/Image.Api.h"
 #include "Api/ImageList.Api.h"
+#include "Api/ImageSet.Api.h"
 #include "Api/Pen.Api.h"
 #include "Api/GroupBox.Api.h"
 #include "Api/Keyboard.Api.h"

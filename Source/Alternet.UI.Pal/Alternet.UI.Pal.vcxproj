@@ -198,6 +198,7 @@
     <ClCompile Include="HatchBrush.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageList.cpp" />
+    <ClCompile Include="ImageSet.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="ListBox.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="Api\HatchBrush.Api.h" />
     <ClInclude Include="Api\Image.Api.h" />
     <ClInclude Include="Api\ImageList.Api.h" />
+    <ClInclude Include="Api\ImageSet.Api.h" />
     <ClInclude Include="Api\InputStream.Api.h" />
     <ClInclude Include="Api\InputStream.h" />
     <ClInclude Include="Api\Keyboard.Api.h" />
@@ -284,6 +286,7 @@
     <ClInclude Include="HatchBrush.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageList.h" />
+    <ClInclude Include="ImageSet.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Label.h" />
     <ClInclude Include="ListBox.h" />
@@ -320,6 +323,7 @@
     <None Include="Api\HatchBrush.inc" />
     <None Include="Api\Image.inc" />
     <None Include="Api\ImageList.inc" />
+    <None Include="Api\ImageSet.inc" />
     <None Include="Api\Keyboard.inc" />
     <None Include="Api\Label.inc" />
     <None Include="Api\ListBox.inc" />

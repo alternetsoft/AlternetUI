@@ -54,6 +54,10 @@ static Window* GetActiveWindow();
 WindowState GetState();
 void SetState(WindowState value);
 
+
+ImageSet* GetIcon();
+void SetIcon(ImageSet* value);
+
 void* OpenOwnedWindowsArray();
 int GetOwnedWindowsItemCount(void* array);
 Window* GetOwnedWindowsItemAt(void* array, int index);

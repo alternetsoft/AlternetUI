@@ -2,6 +2,7 @@
 
 #include "Common.h"
 #include "Control.h"
+#include "ImageSet.h"
 
 namespace Alternet::UI
 {
@@ -58,6 +59,8 @@ namespace Alternet::UI
 
         long GetWindowStyle();
 
+        void ApplyIcon(Frame* value);
+
         enum class DelayedWindowFlags
         {
             None = 0,
@@ -86,6 +89,9 @@ namespace Alternet::UI
 
         DelayedValue<Window, string> _title;
         DelayedValue<Window, WindowState> _state;
+
+        ImageSet* _icon = nullptr;
+        
         WindowState _lastState = WindowState::Normal;
     };
 }

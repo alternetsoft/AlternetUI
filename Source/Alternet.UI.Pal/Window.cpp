@@ -77,6 +77,9 @@ namespace Alternet::UI
 
         _frame->Destroy();
         _frame = nullptr;
+
+        if (_icon != nullptr)
+            _icon->Release();
     }
 
     WindowState Window::RetrieveState()
@@ -105,6 +108,11 @@ namespace Alternet::UI
         }
         else
             throwExInvalidArgEnumValue(value);
+    }
+
+    void Window::ApplyIcon(Frame* value)
+    {
+        value->SetIcons(_icon == nullptr ? wxIconBundle() : *(_icon->GetIconBundle()));
     }
 
     string Window::GetTitle()
@@ -174,6 +182,8 @@ namespace Alternet::UI
     {
         auto style = GetWindowStyle();
         _frame = new Frame(this, style);
+
+        ApplyIcon(_frame);
 
         _frame->Bind(wxEVT_SIZE, &Window::OnSizeChanged, this);
         _frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
@@ -259,6 +269,24 @@ namespace Alternet::UI
     void Window::ApplyBackgroundColor(const Color& value)
     {
         _panel->SetBackgroundColour(value);
+    }
+
+    ImageSet* Window::GetIcon()
+    {
+        if (_icon != nullptr)
+            _icon->AddRef();
+        return _icon;
+    }
+
+    void Window::SetIcon(ImageSet* value)
+    {
+        if (_icon != nullptr)
+            _icon->Release();
+        _icon = value;
+        if (_icon != nullptr)
+            _icon->AddRef();
+        if (IsWxWindowCreated())
+            ApplyIcon(GetFrame());
     }
 
     WindowState Window::GetState()
