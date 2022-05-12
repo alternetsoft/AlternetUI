@@ -234,6 +234,13 @@ namespace Alternet::UI
         CenterOwner = 4,
     };
     
+    enum class WindowState
+    {
+        Normal = 0,
+        Minimized = 1,
+        Maximized = 2,
+    };
+    
 }
 template<> struct enable_bitmask_operators<Alternet::UI::FontStyle> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::KeyStates> { static const bool enable = true; };

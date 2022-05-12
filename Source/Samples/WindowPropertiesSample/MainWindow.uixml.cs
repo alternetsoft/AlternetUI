@@ -13,6 +13,9 @@ namespace WindowPropertiesSample
         {
             InitializeComponent();
 
+            foreach (var brushType in Enum.GetValues(typeof(WindowState)))
+                stateComboBox.Items.Add(brushType!);
+
             UpdateControls();
         }
 
@@ -43,9 +46,23 @@ namespace WindowPropertiesSample
             testWindow.Closing += TestWindow_Closing;
             testWindow.Activated += TestWindow_Activated;
             testWindow.Deactivated += TestWindow_Deactivated;
+            testWindow.StateChanged += TestWindow_StateChanged;
 
             testWindow.Show();
+
+            UpdateWindowState();
             UpdateControls();
+        }
+
+        private void TestWindow_StateChanged(object? sender, EventArgs e)
+        {
+            LogEvent("StateChanged");
+            UpdateWindowState();
+        }
+
+        private void UpdateWindowState()
+        {
+            stateComboBox.SelectedItem = (testWindow ?? throw new Exception()).State;
         }
 
         private void UpdateActiveWindowInfoLabel()
@@ -87,6 +104,7 @@ namespace WindowPropertiesSample
             createAndShowWindowButton.Enabled = !haveTestWindow;
             activateButton.Enabled = haveTestWindow;
             addOwnedWindow.Enabled = haveTestWindow;
+            stateComboBox.Enabled = haveTestWindow;
 
             UpdateActiveWindowInfoLabel();
         }
@@ -102,6 +120,7 @@ namespace WindowPropertiesSample
             testWindow.Deactivated -= TestWindow_Deactivated;
             testWindow.Closed -= TestWindow_Closed;
             testWindow.Closing -= TestWindow_Closing;
+            testWindow.StateChanged -= TestWindow_StateChanged;
 
             testWindow = null;
             UpdateControls();
@@ -193,6 +212,12 @@ namespace WindowPropertiesSample
 
             ownedWindow.SetLabel("Owned Window #" + testWindow.OwnedWindows.Length);
             ownedWindow.Show();
+        }
+
+        private void StateComboBox_SelectedItemChanged(object sender, System.EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.State = (WindowState)(stateComboBox.SelectedItem ?? throw new Exception());
         }
     }
 }

@@ -33,5 +33,9 @@ namespace NativeApi.Api
         public static Window ActiveWindow { get => throw new Exception(); }
 
         public Window[] OwnedWindows { get => throw new Exception(); }
+
+        public WindowState State { get => throw new Exception(); set => throw new Exception(); }
+
+        public event EventHandler StateChanged { add => throw new Exception(); remove => throw new Exception(); }
     }
 }

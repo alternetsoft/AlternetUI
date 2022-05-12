@@ -114,6 +114,7 @@ namespace _PreprocessorDetail
 #define throwExNoInfo throw Alternet::UI::Exception(u"", 0, ExceptionOrigin)
 #define throwExInvalidArgNoInfo(argument) throw Alternet::UI::ArgumentException(string(u"Invalid argument: ") + (u###argument), 0, ExceptionOrigin)
 #define throwExInvalidArg(argument, message) throw Alternet::UI::ArgumentException(string(message) + string(u". Argument name: ") + (u###argument), 0, ExceptionOrigin)
+#define throwExInvalidArgEnumValue(argument) throw Alternet::UI::ArgumentException(string(u"Unexpected enum value. Argument name: ") + (u###argument), 0, ExceptionOrigin)
 #define throwExInvalidOp throw Alternet::UI::InvalidOperationException(u"", 0, ExceptionOrigin)
 
 #ifdef PLATFORM_WINDOWS

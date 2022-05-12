@@ -227,9 +227,12 @@ using System.Security;");
                     w.WriteLine(";");
 
                     if (isComplexType)
+                    {
                         w.WriteLine("ReleaseNativeObjectPointer(n);");
-
-                    w.WriteLine($"result.Add(item);");
+                        w.WriteLine($"result.Add(item ?? throw new System.Exception());");
+                    }
+                    else
+                        w.WriteLine($"result.Add(item);");
                 }
 
                 w.WriteLine("return result.ToArray();");

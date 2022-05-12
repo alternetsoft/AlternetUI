@@ -26,24 +26,43 @@ namespace Alternet.UI
             ApplyResizable();
             ApplyHasBorder();
             ApplyHasTitleBar();
+            ApplyState();
 
             Control.TitleChanged += Control_TitleChanged;
+
             Control.ShowInTaskbarChanged += Control_ShowInTaskbarChanged;
             Control.OwnerChanged += Control_OwnerChanged;
             Control.MinimizeEnabledChanged += Control_MinimizeEnabledChanged;
             Control.MaximizeEnabledChanged += Control_MaximizeEnabledChanged;
             Control.CloseEnabledChanged += Control_CloseEnabledChanged;
-
             Control.AlwaysOnTopChanged += Control_AlwaysOnTopChanged;
             Control.IsToolWindowChanged += Control_IsToolWindowChanged;
             Control.ResizableChanged += Control_ResizableChanged;
             Control.HasBorderChanged += Control_HasBorderChanged;
             Control.HasTitleBarChanged += Control_HasTitleBarChanged;
 
+            Control.StateChanged += Control_StateChanged;
+
             NativeControl.Closing += Control_Closing;
             NativeControl.SizeChanged += NativeControl_SizeChanged;
             NativeControl.Activated += NativeControl_Activated;
             NativeControl.Deactivated += NativeControl_Deactivated;
+            NativeControl.StateChanged += NativeControl_StateChanged;
+        }
+
+        private void NativeControl_StateChanged(object? sender, EventArgs e)
+        {
+            Control.State = (WindowState)NativeControl.State;
+        }
+
+        private void Control_StateChanged(object? sender, EventArgs e)
+        {
+            ApplyState();
+        }
+
+        private void ApplyState()
+        {
+            NativeControl.State = (Native.WindowState)Control.State;
         }
 
         private void NativeControl_Deactivated(object? sender, EventArgs e)
@@ -242,6 +261,7 @@ namespace Alternet.UI
             Control.ResizableChanged -= Control_ResizableChanged;
             Control.HasBorderChanged -= Control_HasBorderChanged;
             Control.HasTitleBarChanged -= Control_HasTitleBarChanged;
+            Control.StateChanged -= Control_StateChanged;
 
             base.OnDetach();
         }

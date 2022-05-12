@@ -45,11 +45,16 @@ namespace Alternet::UI
         void OnSizeChanged(wxSizeEvent& event);
         void OnDestroy(wxWindowDestroyEvent& event);
         void OnActivate(wxActivateEvent& event);
+        void OnMaximize(wxMaximizeEvent& event);
+        void OnIconize(wxIconizeEvent& event);
 
         Frame* GetFrame();
 
         string RetrieveTitle();
         void ApplyTitle(const string& value);
+
+        WindowState RetrieveState();
+        void ApplyState(const WindowState& value);
 
         long GetWindowStyle();
 
@@ -80,6 +85,7 @@ namespace Alternet::UI
         FlagsAccessor<WindowFlags> _flags;
 
         DelayedValue<Window, string> _title;
+        DelayedValue<Window, WindowState> _state;
     };
 }
 

@@ -52,9 +52,11 @@ namespace Alternet::UI
             {
                 //{DelayedWindowFlags::ShowInTaskbar, std::make_tuple(&Window::RetrieveShowInTaskbar, &Window::ApplyShowInTaskbar)},
             }),
-        _title(*this, u"", &Control::IsWxWindowCreated, &Window::RetrieveTitle, &Window::ApplyTitle)
+        _title(*this, u"", &Control::IsWxWindowCreated, &Window::RetrieveTitle, &Window::ApplyTitle),
+        _state(*this, WindowState::Normal, &Control::IsWxWindowCreated, &Window::RetrieveState, &Window::ApplyState)
     {
         GetDelayedValues().Add(&_title);
+        GetDelayedValues().Add(&_state);
         GetDelayedValues().Add(&_delayedFlags);
         SetVisible(false);
         CreateWxWindow();
@@ -73,6 +75,34 @@ namespace Alternet::UI
 
         _frame->Destroy();
         _frame = nullptr;
+    }
+
+    WindowState Window::RetrieveState()
+    {
+        if (_frame->IsMaximized())
+            return WindowState::Maximized;
+
+        if (_frame->IsIconized())
+            return WindowState::Minimized;
+
+        return WindowState::Normal;
+    }
+
+    void Window::ApplyState(const WindowState& value)
+    {
+        if (value == WindowState::Maximized)
+            _frame->Maximize();
+        else if (value == WindowState::Minimized)
+            _frame->Iconize();
+        else if (value == WindowState::Normal)
+        {
+            if (_frame->IsMaximized())
+                _frame->Maximize(false);
+            else if (_frame->IsIconized())
+                _frame->Iconize(false);
+        }
+        else
+            throwExInvalidArgEnumValue(value);
     }
 
     string Window::GetTitle()
@@ -147,6 +177,8 @@ namespace Alternet::UI
         _frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
         _frame->Bind(wxEVT_DESTROY, &Window::OnDestroy, this);
         _frame->Bind(wxEVT_ACTIVATE, &Window::OnActivate, this);
+        _frame->Bind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
+        _frame->Bind(wxEVT_ICONIZE, &Window::OnIconize, this);
 
         _panel = new wxPanel(_frame);
 
@@ -225,6 +257,16 @@ namespace Alternet::UI
     void Window::ApplyBackgroundColor(const Color& value)
     {
         _panel->SetBackgroundColour(value);
+    }
+
+    WindowState Window::GetState()
+    {
+        return _state.Get();
+    }
+
+    void Window::SetState(WindowState value)
+    {
+        _state.Set(value);
     }
 
     void* Window::OpenOwnedWindowsArray()
@@ -331,6 +373,12 @@ namespace Alternet::UI
     {
         event.Skip();
         RaiseEvent(WindowEvent::SizeChanged);
+
+        if (_state.Get() != RetrieveState())
+        {
+            _state.Receive();
+            RaiseEvent(WindowEvent::StateChanged);
+        }
     }
 
     void Window::SetResizable(bool value)
@@ -355,6 +403,16 @@ namespace Alternet::UI
             RaiseEvent(WindowEvent::Activated);
         else
             RaiseEvent(WindowEvent::Deactivated);
+    }
+
+    void Window::OnMaximize(wxMaximizeEvent& event)
+    {
+        RaiseEvent(WindowEvent::StateChanged);
+    }
+
+    void Window::OnIconize(wxIconizeEvent& event)
+    {
+        RaiseEvent(WindowEvent::StateChanged);
     }
 
     bool Window::GetHasBorder()

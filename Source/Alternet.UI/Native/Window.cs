@@ -249,7 +249,7 @@ namespace Alternet.UI.Native
                         var n = NativeApi.Window_GetOwnedWindowsItemAt_(NativePointer, array, i);
                         var item = NativeObject.GetFromNativePointer<Window>(n, p => new Window(p));
                         ReleaseNativeObjectPointer(n);
-                        result.Add(item);
+                        result.Add(item ?? throw new System.Exception());
                     }
                     return result.ToArray();
                 }
@@ -259,6 +259,23 @@ namespace Alternet.UI.Native
                 }
             }
             
+        }
+        
+        public WindowState State
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetState_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetState_(NativePointer, value);
+            }
         }
         
         public void Activate()
@@ -309,6 +326,10 @@ namespace Alternet.UI.Native
                 {
                     Deactivated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.WindowEvent.StateChanged:
+                {
+                    StateChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected WindowEvent value: " + e);
             }
         }
@@ -317,6 +338,7 @@ namespace Alternet.UI.Native
         public event EventHandler? SizeChanged;
         public event EventHandler? Activated;
         public event EventHandler? Deactivated;
+        public event EventHandler? StateChanged;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -332,6 +354,7 @@ namespace Alternet.UI.Native
                 SizeChanged,
                 Activated,
                 Deactivated,
+                StateChanged,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -411,6 +434,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Window_GetActiveWindow_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern WindowState Window_GetState_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetState_(IntPtr obj, WindowState value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Window_OpenOwnedWindowsArray_(IntPtr obj);

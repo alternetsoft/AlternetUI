@@ -183,6 +183,20 @@ ALTERNET_UI_API Window* Window_GetActiveWindow_()
         });
 }
 
+ALTERNET_UI_API WindowState Window_GetState_(Window* obj)
+{
+    return MarshalExceptions<WindowState>([&](){
+            return obj->GetState();
+        });
+}
+
+ALTERNET_UI_API void Window_SetState_(Window* obj, WindowState value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetState(value);
+        });
+}
+
 ALTERNET_UI_API void* Window_OpenOwnedWindowsArray_(Window* obj)
 {
     return MarshalExceptions<void*>([&](){

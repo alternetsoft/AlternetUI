@@ -53,6 +53,40 @@ namespace Alternet.UI
             Bounds = new Rect(100, 100, 400, 400);
         }
 
+        private WindowState state = WindowState.Normal;
+
+        /// <summary>
+        /// Gets or sets a value that indicates whether window is minimized, maximized, or normal.
+        /// </summary>
+        public WindowState State
+        {
+            get => state;
+
+            set
+            {
+                if (state == value)
+                    return;
+
+                state = value;
+                OnStateChanged(EventArgs.Empty);
+                StateChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="State"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnStateChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="State"/> property changes.
+        /// </summary>
+        public event EventHandler? StateChanged;
+
+
         private new NativeWindowHandler Handler => (NativeWindowHandler)base.Handler;
 
         /// <summary>
@@ -73,7 +107,7 @@ namespace Alternet.UI
         /// Gets the currently active window for this application.
         /// </summary>
         /// <value>A <see cref="Window"/> that represents the currently active window, or <see langword="null"/> if there is no active window.</value>
-        public static Window ActiveWindow => NativeWindowHandler.ActiveWindow;
+        public static Window? ActiveWindow => NativeWindowHandler.ActiveWindow;
 
         /// <summary>
         /// Occurs when the window is activated in code or by the user.

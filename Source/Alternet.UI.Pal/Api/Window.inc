@@ -50,6 +50,10 @@ bool GetIsActive();
 
 static Window* GetActiveWindow();
 
+
+WindowState GetState();
+void SetState(WindowState value);
+
 void* OpenOwnedWindowsArray();
 int GetOwnedWindowsItemCount(void* array);
 Window* GetOwnedWindowsItemAt(void* array, int index);
@@ -62,6 +66,7 @@ enum class WindowEvent
     SizeChanged,
     Activated,
     Deactivated,
+    StateChanged,
 };
 typedef void* (*WindowEventCallbackType)(Window* obj, WindowEvent event, void* param);
 static void SetEventCallback(WindowEventCallbackType value) { eventCallback = value; }

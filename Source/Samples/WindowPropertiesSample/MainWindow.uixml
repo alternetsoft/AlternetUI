@@ -42,6 +42,12 @@
 					<Button Name="addOwnedWindow" Click="AddOwnedWindow_Click" Text="Add Owned Window" />
 				</StackPanel>
 			</GroupBox>
+			<GroupBox Title="State">
+				<StackPanel>
+					<Label Text="Window State:" />
+					<ComboBox IsEditable="false" Name="stateComboBox" SelectedItemChanged="StateComboBox_SelectedItemChanged"/>
+				</StackPanel>
+			</GroupBox>
 		</StackPanel>
 		<ListBox Name="eventsListBox" />
 	</StackPanel>
