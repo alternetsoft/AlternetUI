@@ -112,7 +112,11 @@ namespace Alternet::UI
 
     void Window::ApplyIcon(Frame* value)
     {
-        value->SetIcons(_icon == nullptr ? wxIconBundle() : *(_icon->GetIconBundle()));
+        // From wxWidgets code:
+        // FIXME: SetIcons(wxNullIconBundle) should unset existing icons,
+        //        but we currently don't do that
+
+        value->SetIcons(_icon == nullptr ? wxNullIconBundle : *(_icon->GetIconBundle()));
     }
 
     string Window::GetTitle()

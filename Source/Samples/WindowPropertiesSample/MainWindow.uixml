@@ -48,6 +48,12 @@
 					<ComboBox IsEditable="false" Name="stateComboBox" SelectedItemChanged="StateComboBox_SelectedItemChanged"/>
 				</StackPanel>
 			</GroupBox>
+			<GroupBox Title="Icon">
+				<StackPanel>
+					<Button Text="Set Icon 1" Name="setIcon1Button" Click="SetIcon1Button_Click" />
+					<Button Text="Set Icon 2" Name="setIcon2Button" Click="SetIcon2Button_Click" />
+				</StackPanel>
+			</GroupBox>
 		</StackPanel>
 		<ListBox Name="eventsListBox" />
 	</StackPanel>

@@ -106,6 +106,9 @@ namespace WindowPropertiesSample
             addOwnedWindow.Enabled = haveTestWindow;
             stateComboBox.Enabled = haveTestWindow;
 
+            setIcon1Button.Enabled = haveTestWindow;
+            setIcon2Button.Enabled = haveTestWindow;
+
             UpdateActiveWindowInfoLabel();
         }
 
@@ -218,6 +221,18 @@ namespace WindowPropertiesSample
         {
             if (testWindow != null)
                 testWindow.State = (WindowState)(stateComboBox.SelectedItem ?? throw new Exception());
+        }
+
+        private void SetIcon1Button_Click(object sender, System.EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.Icon = Icons.Icon1;
+        }
+
+        private void SetIcon2Button_Click(object sender, System.EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.Icon = Icons.Icon2;
         }
     }
 }

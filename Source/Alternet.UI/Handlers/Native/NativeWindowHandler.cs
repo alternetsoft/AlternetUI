@@ -52,7 +52,7 @@ namespace Alternet.UI
             NativeControl.StateChanged += NativeControl_StateChanged;
         }
 
-        private void Control_IconChanged(object sender, EventArgs e)
+        private void Control_IconChanged(object? sender, EventArgs e)
         {
             ApplyIcon();
         }

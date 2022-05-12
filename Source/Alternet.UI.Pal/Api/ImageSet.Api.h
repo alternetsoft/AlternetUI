@@ -3,6 +3,7 @@
 #pragma once
 
 #include "ImageSet.h"
+#include "InputStream.h"
 #include "Image.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
@@ -13,6 +14,13 @@ ALTERNET_UI_API ImageSet* ImageSet_Create_()
 {
     return MarshalExceptions<ImageSet*>([&](){
             return new ImageSet();
+        });
+}
+
+ALTERNET_UI_API void ImageSet_LoadFromStream_(ImageSet* obj, void* stream)
+{
+    MarshalExceptions<void>([&](){
+            obj->LoadFromStream(stream);
         });
 }
 

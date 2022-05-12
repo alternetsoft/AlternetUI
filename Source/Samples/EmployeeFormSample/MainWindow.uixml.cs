@@ -23,7 +23,7 @@ namespace EmployeeFormSample
                 Prefix = EmployeePrefix.Mrs,
                 Address = "143 Coolidge St.",
                 City = "Phoenix",
-                State = State.AZ,
+                State = EmployeeFormSample.State.AZ,
                 ZipCode = "85001",
                 HomePhone = "(341) 433-4377",
                 MobilePhone = "(341) 232-6535",

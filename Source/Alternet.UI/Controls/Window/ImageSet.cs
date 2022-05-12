@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 
@@ -21,6 +22,16 @@ namespace Alternet.UI
 
             Images.ItemInserted += Images_ItemInserted;
             Images.ItemRemoved += Images_ItemRemoved;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageSet"/> class from the specified data stream.
+        /// </summary>
+        /// <param name="stream">The data stream used to load the image.</param>
+        public ImageSet(Stream stream) : this()
+        {
+            using (var inputStream = new UI.Native.InputStream(stream))
+                NativeImageSet.LoadFromStream(inputStream);
         }
 
         private void Images_ItemInserted(object? sender, CollectionChangeEventArgs<Image> e)

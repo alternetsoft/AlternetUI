@@ -1,4 +1,6 @@
 #include "ImageSet.h"
+#include "Api/InputStream.h"
+#include "ManagedInputStream.h"
 
 namespace Alternet::UI
 {
@@ -17,6 +19,21 @@ namespace Alternet::UI
 		_bundle.AddIcon(icon);
 	}
 	
+	void ImageSet::LoadFromStream(void* stream)
+	{
+		InputStream inputStream(stream);
+		ManagedInputStream managedInputStream(&inputStream);
+
+		static bool imageHandlersInitialized = false;
+		if (!imageHandlersInitialized)
+		{
+			wxInitAllImageHandlers();
+			imageHandlersInitialized = true;
+		}
+
+		_bundle.AddIcon(managedInputStream);
+	}
+
 	wxIconBundle* ImageSet::GetIconBundle()
 	{
 		return &_bundle;

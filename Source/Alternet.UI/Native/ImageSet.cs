@@ -22,6 +22,12 @@ namespace Alternet.UI.Native
         {
         }
         
+        public void LoadFromStream(InputStream stream)
+        {
+            CheckDisposed();
+            NativeApi.ImageSet_LoadFromStream_(NativePointer, stream.NativePointer);
+        }
+        
         public void AddImage(Image image)
         {
             CheckDisposed();
@@ -36,6 +42,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr ImageSet_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ImageSet_LoadFromStream_(IntPtr obj, IntPtr stream);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ImageSet_AddImage_(IntPtr obj, IntPtr image);

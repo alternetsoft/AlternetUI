@@ -1,4 +1,6 @@
 #include "Image.h"
+#include "Api/InputStream.h"
+#include "ManagedInputStream.h"
 
 namespace Alternet::UI
 {
