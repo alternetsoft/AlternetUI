@@ -57,6 +57,15 @@ namespace Alternet.UI
             ApplyIcon();
         }
 
+        /// <summary>
+        /// Opens a window and returns only when the newly opened window is closed.
+        /// User interaction with all other windows in the application is disabled until the modal window is closed.
+        /// </summary>
+        public void ShowModal()
+        {
+            NativeControl.ShowModal();
+        }
+
         private void NativeControl_StateChanged(object? sender, EventArgs e)
         {
             Control.State = (WindowState)NativeControl.State;
@@ -122,6 +131,27 @@ namespace Alternet.UI
             {
                 return NativeControl.OwnedWindows.Select(
                     x => ((NativeWindowHandler)(TryGetHandlerByNativeControl(x) ?? throw new Exception())).Control).ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this window is displayed modally.
+        /// </summary>
+        public bool Modal => NativeControl.Modal;
+
+        /// <summary>
+        /// Gets or sets the modal result value, which is the value that is returned from the <see cref="ShowModal()"/> method.
+        /// </summary>
+        public ModalResult ModalResult
+        {
+            get
+            {
+                return (ModalResult)NativeControl.ModalResult;
+            }
+
+            set
+            {
+                NativeControl.ModalResult = (Native.ModalResult)value;
             }
         }
 
@@ -252,7 +282,8 @@ namespace Alternet.UI
                 return;
 
             Control.RaiseClosed(new WindowClosedEventArgs());
-            Control.Dispose();
+            if (!Modal)
+                Control.Dispose();
         }
 
         protected override void OnDetach()
@@ -290,6 +321,28 @@ namespace Alternet.UI
         private void ApplyTitle()
         {
             NativeControl.Title = Control.Title;
+        }
+
+        /// <summary>
+        /// Closes the window.
+        /// </summary>
+        /// <remarks>
+        /// When a window is closed, all resources created within the object are closed and the window is disposed.
+        /// You can prevent the closing of a window at run time by handling the <see cref="Window.Closing"/> event and
+        /// setting the <c>Cancel</c> property of the <see cref="CancelEventArgs"/> passed as a parameter to your event handler.
+        /// If the window you are closing is the last open window of your application, your application ends.
+        /// The window is not disposed on <see cref="Close"/> is when you have displayed the window using <see cref="ShowModal()"/>.
+        /// In this case, you will need to call <see cref="IDisposable.Dispose"/> manually.
+        /// </remarks>
+        public void Close()
+        {
+            if (NativeControlCreated)
+                NativeControl.Close();
+            else
+            {
+                if (!Modal)
+                    Control.Dispose();
+            }
         }
     }
 }

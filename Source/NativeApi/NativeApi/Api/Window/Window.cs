@@ -27,6 +27,14 @@ namespace NativeApi.Api
         public bool Resizable { get => throw new Exception(); set => throw new Exception(); }
         public bool HasBorder { get => throw new Exception(); set => throw new Exception(); }
         public bool HasTitleBar { get => throw new Exception(); set => throw new Exception(); }
+        
+        public ModalResult ModalResult { get => throw new Exception(); set => throw new Exception(); }
+
+        public void ShowModal() => throw new Exception();
+
+        public bool Modal => throw new Exception();
+
+        public void Close() => throw new Exception();
 
         public bool IsActive { get => throw new Exception(); }
         public void Activate() => throw new Exception();

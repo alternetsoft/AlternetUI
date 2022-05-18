@@ -224,6 +224,13 @@ namespace Alternet.UI.Native
         Multiple = 1,
     }
     
+    enum ModalResult
+    {
+        None = 0,
+        Canceled = 1,
+        Accepted = 2,
+    }
+    
     enum WindowStartPosition
     {
         SystemDefaultLocation = 0,

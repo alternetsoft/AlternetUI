@@ -39,6 +39,8 @@ namespace Alternet::UI
 
     private:
 
+        ModalResult _modalResult = ModalResult::None;
+
         Frame* _frame = nullptr;
         wxPanel* _panel = nullptr;
 
@@ -80,7 +82,8 @@ namespace Alternet::UI
             HasBorder = 1 << 7,
             HasTitleBar = 1 << 8,
             DestroyingWindow = 1 << 9,
-            Active = 1 << 10
+            Active = 1 << 10,
+            Modal = 1 << 11
         };
 
         DelayedFlags<Window, DelayedWindowFlags> _delayedFlags;
@@ -93,6 +96,8 @@ namespace Alternet::UI
         ImageSet* _icon = nullptr;
         
         WindowState _lastState = WindowState::Normal;
+
+        wxWindowDisabler* _modalWindowDisabler = nullptr;
     };
 }
 

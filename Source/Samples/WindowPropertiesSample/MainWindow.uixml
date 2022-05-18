@@ -10,8 +10,9 @@
 		<StackPanel Orientation="Horizontal">
 			<GroupBox Title="Create">
 				<StackPanel>
-					<Button Text="Create and show window" Name="createAndShowWindowButton" Click="CreateAndShowWindowButton_Click" />
-					<CheckBox Text="Set Owner" Name="setOwnerCheckBox" IsChecked="True"/>
+          <Button Text="Create and show window" Name="createAndShowWindowButton" Click="CreateAndShowWindowButton_Click" />
+          <Button Text="Create and show modal window" Name="createAndShowModalWindowButton" Click="CreateAndShowModalWindowButton_Click" />
+          <CheckBox Text="Set Owner" Name="setOwnerCheckBox" IsChecked="True"/>
 					<CheckBox Text="Cancel Closing" Name="cancelClosingCheckBox" />
 				</StackPanel>
 			</GroupBox>
@@ -55,6 +56,8 @@
 				</StackPanel>
 			</GroupBox>
 		</StackPanel>
-		<ListBox Name="eventsListBox" />
+    <StackPanel Orientation="Horizontal">
+		</StackPanel>
+    <ListBox Name="eventsListBox" />
 	</StackPanel>
 </Window>

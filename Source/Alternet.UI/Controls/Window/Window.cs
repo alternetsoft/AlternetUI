@@ -29,6 +29,70 @@ namespace Alternet.UI
             return GetParentWindow(c.Parent);
         }
 
+        /// <summary>
+        /// Opens a window and returns only when the newly opened window is closed.
+        /// User interaction with all other windows in the application is disabled until the modal window is closed.
+        /// </summary>
+        /// <returns>
+        /// The return value is the value of the <see cref="ModalResult"/> property before window closes.
+        /// </returns>
+        public ModalResult ShowModal()
+        {
+            return ShowModal(Owner);
+        }
+
+        /// <summary>
+        /// Opens a window and returns only when the newly opened window is closed.
+        /// User interaction with all other windows in the application is disabled until the modal window is closed.
+        /// </summary>
+        /// <param name="owner">
+        /// A window that will own this window.
+        /// </param>
+        /// <returns>
+        /// The return value is the value of the <see cref="ModalResult"/> property before window closes.
+        /// </returns>
+        public ModalResult ShowModal(Window? owner)
+        {
+            CheckDisposed();
+
+            ModalResult = ModalResult.None;
+            Owner = owner;
+            Handler.ShowModal();
+
+            return ModalResult;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this window is displayed modally.
+        /// </summary>
+        public bool Modal
+        {
+            get
+            {
+                CheckDisposed();
+                return Handler.Modal;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the modal result value, which is the value that is returned from the <see cref="ShowModal()"/> method.
+        /// This property is set to <see cref="ModalResult.None"/> at the moment <see cref="ShowModal()"/> is called.
+        /// </summary>
+        public ModalResult ModalResult
+        {
+            get
+            {
+                CheckDisposed();
+                return Handler.ModalResult;
+            }
+
+            set
+            {
+                CheckDisposed();
+                Handler.ModalResult = value;
+            }
+        }
+
         private ImageSet? icon = null;
 
         /// <summary>
@@ -690,6 +754,24 @@ namespace Alternet.UI
             {
                 Application.Current.UnregisterWindow(this);
             }
+        }
+
+        /// <summary>
+        /// Closes the window.
+        /// </summary>
+        /// <remarks>
+        /// When a window is closed, all resources created within the object are closed and the window is disposed.
+        /// You can prevent the closing of a window at run time by handling the <see cref="Window.Closing"/> event and
+        /// setting the <c>Cancel</c> property of the <see cref="CancelEventArgs"/> passed as a parameter to your event handler.
+        /// If the window you are closing is the last open window of your application, your application ends.
+        /// The window is not disposed on <see cref="Close"/> is when you have displayed the window using <see cref="ShowModal()"/>.
+        /// In this case, you will need to call <see cref="IDisposable.Dispose"/> manually.
+        /// </remarks>
+        public void Close()
+        {
+            CheckDisposed();
+
+            Handler.Close();
         }
 
         /// <inheritdoc/>

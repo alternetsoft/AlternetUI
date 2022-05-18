@@ -210,6 +210,35 @@ namespace Alternet.UI.Native
             }
         }
         
+        public ModalResult ModalResult
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetModalResult_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetModalResult_(NativePointer, value);
+            }
+        }
+        
+        public bool Modal
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetModal_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
         public bool IsActive
         {
             get
@@ -294,6 +323,18 @@ namespace Alternet.UI.Native
                 CheckDisposed();
                 NativeApi.Window_SetIcon_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
             }
+        }
+        
+        public void ShowModal()
+        {
+            CheckDisposed();
+            NativeApi.Window_ShowModal_(NativePointer);
+        }
+        
+        public void Close()
+        {
+            CheckDisposed();
+            NativeApi.Window_Close_(NativePointer);
         }
         
         public void Activate()
@@ -448,6 +489,15 @@ namespace Alternet.UI.Native
             public static extern void Window_SetHasTitleBar_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern ModalResult Window_GetModalResult_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetModalResult_(IntPtr obj, ModalResult value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Window_GetModal_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Window_GetIsActive_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -476,6 +526,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_CloseOwnedWindowsArray_(IntPtr obj, System.IntPtr array);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_ShowModal_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_Close_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_Activate_(IntPtr obj);

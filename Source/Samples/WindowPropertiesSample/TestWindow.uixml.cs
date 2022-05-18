@@ -9,5 +9,17 @@ namespace WindowPropertiesSample
         {
             InitializeComponent();
         }
+
+        private void OkButton_Click(object sender, System.EventArgs e)
+        {
+            ModalResult = ModalResult.Accepted;
+            Close();
+        }
+
+        private void CancelButton_Click(object sender, System.EventArgs e)
+        {
+            ModalResult = ModalResult.Canceled;
+            Close();
+        }
     }
 }

@@ -66,6 +66,12 @@ namespace Alternet::UI
     {
         _flags.Set(WindowFlags::DestroyingWindow, true);
 
+        if (_modalWindowDisabler != nullptr)
+        {
+            delete _modalWindowDisabler;
+            _modalWindowDisabler = nullptr;
+        }
+
         _panel->Destroy();
         _panel = nullptr;
 
@@ -199,6 +205,38 @@ namespace Alternet::UI
         _panel = new wxPanel(_frame);
 
         return _frame;
+    }
+
+    ModalResult Window::GetModalResult()
+    {
+        return _modalResult;
+    }
+
+    void Window::SetModalResult(ModalResult value)
+    {
+        _modalResult = value;
+    }
+
+    bool Window::GetModal()
+    {
+        return _flags.IsSet(WindowFlags::Modal);
+    }
+
+    void Window::ShowModal()
+    {
+        if (_modalWindowDisabler != nullptr)
+            throwExInvalidOp;
+
+        _flags.Set(WindowFlags::Modal, true);
+        
+        _modalWindowDisabler = new wxWindowDisabler(_frame);
+        SetVisible(true);
+        _flags.Set(WindowFlags::Modal, false);
+    }
+
+    void Window::Close()
+    {
+        _frame->Close();
     }
 
     bool Window::GetShowInTaskbar()

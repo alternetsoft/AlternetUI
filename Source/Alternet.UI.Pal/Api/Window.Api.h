@@ -170,6 +170,27 @@ ALTERNET_UI_API void Window_SetHasTitleBar_(Window* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API ModalResult Window_GetModalResult_(Window* obj)
+{
+    return MarshalExceptions<ModalResult>([&](){
+            return obj->GetModalResult();
+        });
+}
+
+ALTERNET_UI_API void Window_SetModalResult_(Window* obj, ModalResult value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetModalResult(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Window_GetModal_(Window* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetModal();
+        });
+}
+
 ALTERNET_UI_API c_bool Window_GetIsActive_(Window* obj)
 {
     return MarshalExceptions<c_bool>([&](){
@@ -237,6 +258,20 @@ ALTERNET_UI_API void Window_CloseOwnedWindowsArray_(Window* obj, void* array)
 {
     MarshalExceptions<void>([&](){
             obj->CloseOwnedWindowsArray(array);
+        });
+}
+
+ALTERNET_UI_API void Window_ShowModal_(Window* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->ShowModal();
+        });
+}
+
+ALTERNET_UI_API void Window_Close_(Window* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->Close();
         });
 }
 

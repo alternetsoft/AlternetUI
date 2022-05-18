@@ -175,6 +175,8 @@ namespace Alternet.UI
             }
         }
 
+        internal bool NativeControlCreated => nativeControl != null;
+
         internal static ControlHandler? TryGetHandlerByNativeControl(Native.Control control) =>
             handlersByNativeControls.TryGetValue(control, out var handler) ? handler : null;
 

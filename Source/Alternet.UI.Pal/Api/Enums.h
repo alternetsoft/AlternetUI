@@ -225,6 +225,13 @@ namespace Alternet::UI
         Multiple = 1,
     };
     
+    enum class ModalResult
+    {
+        None = 0,
+        Canceled = 1,
+        Accepted = 2,
+    };
+    
     enum class WindowStartPosition
     {
         SystemDefaultLocation = 0,

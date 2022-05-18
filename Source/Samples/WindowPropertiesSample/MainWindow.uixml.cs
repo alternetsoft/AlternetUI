@@ -21,13 +21,42 @@ namespace WindowPropertiesSample
 
         private void CreateAndShowWindowButton_Click(object sender, System.EventArgs e)
         {
+            CreateWindowAndSetProperties();
+
+            if (testWindow == null)
+                throw new InvalidOperationException();
+
+            testWindow.Show();
+
+            UpdateWindowState();
+            UpdateControls();
+        }
+
+        private void CreateAndShowModalWindowButton_Click(object sender, System.EventArgs e)
+        {
+            CreateWindowAndSetProperties();
+
+            if (testWindow == null)
+                throw new InvalidOperationException();
+
+            testWindow.ShowModal();
+
+            UpdateWindowState();
+            UpdateControls();
+
+            MessageBox.Show("ModalResult: " + testWindow.ModalResult);
+            testWindow.Dispose();
+        }
+
+        private void CreateWindowAndSetProperties()
+        {
             testWindow = new TestWindow();
 
             if (setOwnerCheckBox.IsChecked)
                 testWindow.Owner = this;
 
             testWindow.BeginInit();
-            
+
             testWindow.ShowInTaskbar = showInTaskBarCheckBox.IsChecked;
 
             testWindow.MinimizeEnabled = minimizeEnabledCheckBox.IsChecked;
@@ -47,11 +76,6 @@ namespace WindowPropertiesSample
             testWindow.Activated += TestWindow_Activated;
             testWindow.Deactivated += TestWindow_Deactivated;
             testWindow.StateChanged += TestWindow_StateChanged;
-
-            testWindow.Show();
-
-            UpdateWindowState();
-            UpdateControls();
         }
 
         private void TestWindow_StateChanged(object? sender, EventArgs e)

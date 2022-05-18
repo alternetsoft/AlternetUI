@@ -45,6 +45,13 @@ bool GetHasTitleBar();
 void SetHasTitleBar(bool value);
 
 
+ModalResult GetModalResult();
+void SetModalResult(ModalResult value);
+
+
+bool GetModal();
+
+
 bool GetIsActive();
 
 
@@ -62,6 +69,8 @@ void* OpenOwnedWindowsArray();
 int GetOwnedWindowsItemCount(void* array);
 Window* GetOwnedWindowsItemAt(void* array, int index);
 void CloseOwnedWindowsArray(void* array);
+void ShowModal();
+void Close();
 void Activate();
 public:
 enum class WindowEvent
