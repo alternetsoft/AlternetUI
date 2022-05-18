@@ -83,7 +83,8 @@ namespace Alternet::UI
             HasTitleBar = 1 << 8,
             DestroyingWindow = 1 << 9,
             Active = 1 << 10,
-            Modal = 1 << 11
+            Modal = 1 << 11,
+            ModalLoopStopRequested = 1 << 12
         };
 
         DelayedFlags<Window, DelayedWindowFlags> _delayedFlags;

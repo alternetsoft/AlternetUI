@@ -231,12 +231,23 @@ namespace Alternet::UI
         
         _modalWindowDisabler = new wxWindowDisabler(_frame);
         SetVisible(true);
+
+        while (!_flags.IsSet(WindowFlags::ModalLoopStopRequested))
+        {
+            wxTheApp->GetMainLoop()->Yield();
+        }
+
+        _flags.Set(WindowFlags::ModalLoopStopRequested, false);
         _flags.Set(WindowFlags::Modal, false);
+        Close();
     }
 
     void Window::Close()
     {
-        _frame->Close();
+        if (GetModal())
+            _flags.Set(WindowFlags::ModalLoopStopRequested, true);
+        else
+            _frame->Close();
     }
 
     bool Window::GetShowInTaskbar()

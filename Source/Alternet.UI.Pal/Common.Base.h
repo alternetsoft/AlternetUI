@@ -40,6 +40,7 @@
 #include <wx/treectrl.h>
 #include <wx/fontenum.h>
 #include <wx/graphics.h>
+#include <wx/evtloop.h>
 
 #define DELELTE_COPY_CONSTRUCTOR(TypeName) \
   TypeName(const TypeName&) = delete
