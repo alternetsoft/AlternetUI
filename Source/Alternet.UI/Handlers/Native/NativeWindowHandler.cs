@@ -155,6 +155,27 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the position of the window when first shown.
+        /// </summary>
+        /// <value>A <see cref="WindowStartLocation"/> that represents the starting position of the window.</value>
+        /// <remarks>
+        /// This property enables you to set the starting position of the window when it is first shown.
+        /// This property should be set before the window is shown.
+        /// </remarks>
+        public WindowStartLocation StartLocation
+        {
+            get
+            {
+                return (WindowStartLocation)NativeControl.WindowStartLocation;
+            }
+
+            set
+            {
+                NativeControl.WindowStartLocation = (Native.WindowStartLocation)value;
+            }
+        }
+
         private void Control_AlwaysOnTopChanged(object? sender, EventArgs e)
         {
             ApplyAlwaysOnTop();

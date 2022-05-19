@@ -1,3 +1,4 @@
+using Alternet.Drawing;
 using Alternet.UI;
 using System;
 
@@ -72,6 +73,7 @@ namespace WindowPropertiesSample
             testWindow.HasTitleBar = hasTitleBarCheckBox.IsChecked;
 
             testWindow.StartLocation = (WindowStartLocation)startLocationComboBox.SelectedItem!;
+            testWindow.Location = new Point();
 
             testWindow.EndInit();
 

@@ -146,7 +146,6 @@ namespace Alternet.UI
         public Window[] OwnedWindows { get => Handler.OwnedWindows; }
 
         private string title = "";
-        private WindowStartLocation startLocation = WindowStartLocation.Default;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
@@ -628,11 +627,8 @@ namespace Alternet.UI
         /// </remarks>
         public WindowStartLocation StartLocation
         {
-            get => startLocation;
-            set
-            {
-                startLocation = value;
-            }
+            get => Handler.StartLocation;
+            set => Handler.StartLocation = value;
         }
 
         /// <summary>

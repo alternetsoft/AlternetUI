@@ -50,7 +50,11 @@ namespace Alternet::UI
         Color RetrieveBackgroundColor() override;
         void ApplyBackgroundColor(const Color& value) override;
 
+        void ApplyBounds(const Rect& value) override;
+
         void OnWxWindowDestroying() override;
+
+        void ShowCore() override;
 
     private:
 
@@ -77,6 +81,8 @@ namespace Alternet::UI
 
         void ApplyIcon(Frame* value);
 
+        void ApplyDefaultLocation();
+
         enum class DelayedWindowFlags
         {
             None = 0,
@@ -98,7 +104,8 @@ namespace Alternet::UI
             DestroyingWindow = 1 << 9,
             Active = 1 << 10,
             Modal = 1 << 11,
-            ModalLoopStopRequested = 1 << 12
+            ModalLoopStopRequested = 1 << 12,
+            ShownOnce = 1 << 13
         };
 
         DelayedFlags<Window, DelayedWindowFlags> _delayedFlags;

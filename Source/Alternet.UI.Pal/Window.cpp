@@ -151,6 +151,55 @@ namespace Alternet::UI
         _frame = nullptr;
     }
 
+    void Window::ApplyBounds(const Rect& value)
+    {
+        auto wxWindow = GetWxWindow();
+        wxRect rect(fromDip(value, wxWindow));
+
+        if (_startLocation == WindowStartLocation::Manual || _flags.IsSet(WindowFlags::ShownOnce))
+        {
+            wxWindow->SetSize(rect);
+        }
+        else if (_startLocation == WindowStartLocation::Default)
+        {
+            wxWindow->SetSize(rect.width, rect.height);
+        }
+
+        wxWindow->Refresh();
+    }
+
+    void Window::ApplyDefaultLocation()
+    {
+        auto wxWindow = GetWxWindow();
+
+        switch (_startLocation)
+        {
+        case WindowStartLocation::Default:
+            break;
+        case WindowStartLocation::Manual:
+            break;
+        case WindowStartLocation::CenterScreen:
+            wxWindow->Center();
+            break;
+        case WindowStartLocation::CenterOwner:
+            wxWindow->CenterOnParent();
+            break;
+        default:
+            throwExInvalidOp;
+        }
+    }
+
+    void Window::ShowCore()
+    {
+        if (!_flags.IsSet(WindowFlags::ShownOnce))
+        {
+            _flags.Set(WindowFlags::ShownOnce, true);
+            ApplyDefaultLocation();
+        }
+
+        Control::ShowCore();
+    }
+
     void Window::ApplyIcon(Frame* value)
     {
         // From wxWidgets code:
