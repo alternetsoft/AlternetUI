@@ -9,6 +9,10 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
     <!--<local:SizeGridLinesControl Grid.RowSpan="2" Grid.Row="0"/>-->
+    <StackPanel Grid.Row="0" Margin="10">
+      <TextBox />
+      <Button Text="Show Modal" Name="showModalButton" Click="ShowModalButton_Click"/>
+    </StackPanel>
     <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10" >
       <Button Name="okButton" Text="OK" Click="OkButton_Click" Margin="0,0,10,0"/>
       <Button Name="cancelButton" Text="Cancel" Click="CancelButton_Click" />

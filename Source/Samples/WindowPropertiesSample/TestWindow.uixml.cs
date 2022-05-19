@@ -21,5 +21,14 @@ namespace WindowPropertiesSample
             ModalResult = ModalResult.Canceled;
             Close();
         }
+
+        private void ShowModalButton_Click(object sender, System.EventArgs e)
+        {
+            var testWindow = new TestWindow();
+
+            testWindow.ShowModal();
+            MessageBox.Show("ModalResult: " + testWindow.ModalResult);
+            testWindow.Dispose();
+        }
     }
 }

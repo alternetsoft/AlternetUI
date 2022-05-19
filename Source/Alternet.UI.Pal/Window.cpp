@@ -238,9 +238,20 @@ namespace Alternet::UI
         _modalWindowDisabler = new wxWindowDisabler(_frame);
         SetVisible(true);
 
+        // HACK: because wxWidgets doesnt support modal windows with menu,
+        // we have to simulate modal loop but processing messages and sleeping.
+        // Will need to implement this properly somehow.
+        
         while (!_flags.IsSet(WindowFlags::ModalLoopStopRequested))
         {
-            wxMilliSleep(1);
+
+#ifdef __WXOSX_COCOA__
+            unsigned long delay = 20;
+#else
+            unsigned long delay = 1;
+#endif
+
+            wxMilliSleep(delay);
             wxTheApp->GetMainLoop()->Yield();
         }
 
