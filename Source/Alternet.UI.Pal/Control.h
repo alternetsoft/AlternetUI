@@ -117,9 +117,10 @@ namespace Alternet::UI
         void OnMouseLeave(wxMouseEvent& event);
         void OnVisibleChanged(wxShowEvent& event);
         void OnSizeChanged(wxSizeEvent& event);
+        void OnDestroy(wxWindowDestroyEvent& event);
 
         void UpdateWxWindowParent();
-        void DestroyWxWindow(bool finalDestroy = false);
+        void DestroyWxWindow();
 
         void DestroyWxWindowAndAllChildren();
 

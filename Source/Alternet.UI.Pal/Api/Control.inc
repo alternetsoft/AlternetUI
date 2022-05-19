@@ -41,6 +41,9 @@ void SetUserPaint(bool value);
 bool GetIsMouseOver();
 
 
+bool GetHasWindowCreated();
+
+
 Color GetBackgroundColor();
 void SetBackgroundColor(const Color& value);
 
@@ -72,6 +75,7 @@ Point ScreenToClient(const Point& point);
 bool Focus();
 void BeginInit();
 void EndInit();
+void Destroy();
 public:
 enum class ControlEvent
 {
@@ -81,6 +85,7 @@ enum class ControlEvent
     MouseClick,
     VisibleChanged,
     MouseCaptureLost,
+    Destroyed,
 };
 typedef void* (*ControlEventCallbackType)(Control* obj, ControlEvent event, void* param);
 static void SetEventCallback(ControlEventCallbackType value) { eventCallback = value; }

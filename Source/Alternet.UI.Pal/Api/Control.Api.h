@@ -136,6 +136,13 @@ ALTERNET_UI_API c_bool Control_GetIsMouseOver_(Control* obj)
         });
 }
 
+ALTERNET_UI_API c_bool Control_GetHasWindowCreated_(Control* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetHasWindowCreated();
+        });
+}
+
 ALTERNET_UI_API Color_C Control_GetBackgroundColor_(Control* obj)
 {
     return MarshalExceptions<Color_C>([&](){
@@ -301,6 +308,13 @@ ALTERNET_UI_API void Control_EndInit_(Control* obj)
 {
     MarshalExceptions<void>([&](){
             obj->EndInit();
+        });
+}
+
+ALTERNET_UI_API void Control_Destroy_(Control* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->Destroy();
         });
 }
 

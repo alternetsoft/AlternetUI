@@ -37,6 +37,8 @@ namespace Alternet::UI
         Color RetrieveBackgroundColor() override;
         void ApplyBackgroundColor(const Color& value) override;
 
+        void OnWxWindowDestroying() override;
+
     private:
 
         ModalResult _modalResult = ModalResult::None;
@@ -46,7 +48,6 @@ namespace Alternet::UI
 
         void OnClose(wxCloseEvent& event);
         void OnSizeChanged(wxSizeEvent& event);
-        void OnDestroy(wxWindowDestroyEvent& event);
         void OnActivate(wxActivateEvent& event);
         void OnMaximize(wxMaximizeEvent& event);
         void OnIconize(wxIconizeEvent& event);

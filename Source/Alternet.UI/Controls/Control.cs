@@ -894,8 +894,9 @@ namespace Alternet.UI
                     Handler.VisualChildren.Clear();
                     ResumeLayout(performLayout: false);
 
-                    foreach (var child in children)
-                        child.Dispose();
+                    // TODO
+                    //foreach (var child in children)
+                    //    child.Dispose();
 
                     DetachHandler();
                 }

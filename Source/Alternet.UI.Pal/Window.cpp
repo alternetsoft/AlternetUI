@@ -64,26 +64,6 @@ namespace Alternet::UI
 
     Window::~Window()
     {
-        _flags.Set(WindowFlags::DestroyingWindow, true);
-
-        if (_modalWindowDisabler != nullptr)
-        {
-            delete _modalWindowDisabler;
-            _modalWindowDisabler = nullptr;
-        }
-
-        _panel->Destroy();
-        _panel = nullptr;
-
-        _frame->Unbind(wxEVT_SIZE, &Window::OnSizeChanged, this);
-        _frame->Unbind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
-        _frame->Unbind(wxEVT_ACTIVATE, &Window::OnActivate, this);
-        _frame->Unbind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
-        _frame->Unbind(wxEVT_ICONIZE, &Window::OnIconize, this);
-
-        _frame->Destroy();
-        _frame = nullptr;
-
         if (_icon != nullptr)
             _icon->Release();
     }
@@ -114,6 +94,33 @@ namespace Alternet::UI
         }
         else
             throwExInvalidArgEnumValue(value);
+    }
+
+    void Window::OnWxWindowDestroying()
+    {
+        if (GetModal())
+            _flags.Set(WindowFlags::ModalLoopStopRequested, true);
+
+        if (_flags.IsSet(WindowFlags::Modal))
+            _flags.Set(WindowFlags::Modal, false);
+
+        _flags.Set(WindowFlags::DestroyingWindow, true);
+
+        if (_modalWindowDisabler != nullptr)
+        {
+            delete _modalWindowDisabler;
+            _modalWindowDisabler = nullptr;
+        }
+
+        _panel = nullptr;
+
+        _frame->Unbind(wxEVT_SIZE, &Window::OnSizeChanged, this);
+        _frame->Unbind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
+        _frame->Unbind(wxEVT_ACTIVATE, &Window::OnActivate, this);
+        _frame->Unbind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
+        _frame->Unbind(wxEVT_ICONIZE, &Window::OnIconize, this);
+
+        _frame = nullptr;
     }
 
     void Window::ApplyIcon(Frame* value)
@@ -197,7 +204,6 @@ namespace Alternet::UI
 
         _frame->Bind(wxEVT_SIZE, &Window::OnSizeChanged, this);
         _frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
-        _frame->Bind(wxEVT_DESTROY, &Window::OnDestroy, this);
         _frame->Bind(wxEVT_ACTIVATE, &Window::OnActivate, this);
         _frame->Bind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
         _frame->Bind(wxEVT_ICONIZE, &Window::OnIconize, this);
@@ -234,20 +240,16 @@ namespace Alternet::UI
 
         while (!_flags.IsSet(WindowFlags::ModalLoopStopRequested))
         {
+            wxMilliSleep(1);
             wxTheApp->GetMainLoop()->Yield();
         }
 
         _flags.Set(WindowFlags::ModalLoopStopRequested, false);
-        _flags.Set(WindowFlags::Modal, false);
-        Close();
     }
 
     void Window::Close()
     {
-        if (GetModal())
-            _flags.Set(WindowFlags::ModalLoopStopRequested, true);
-        else
-            _frame->Close();
+        _frame->Close();
     }
 
     bool Window::GetShowInTaskbar()
@@ -445,6 +447,8 @@ namespace Alternet::UI
     {
         if (RaiseEvent(WindowEvent::Closing))
             event.Veto();
+        else
+            event.Skip();
     }
 
     bool Window::GetResizable()
@@ -473,11 +477,6 @@ namespace Alternet::UI
         _flags.Set(WindowFlags::Resizable, value);
         ScheduleRecreateWxWindow();
     }
-
-    void Window::OnDestroy(wxWindowDestroyEvent& event)
-    {
-    }
-
     void Window::OnActivate(wxActivateEvent& event)
     {
         bool active = event.GetActive();

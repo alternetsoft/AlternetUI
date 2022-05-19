@@ -41,11 +41,9 @@ namespace WindowPropertiesSample
 
             testWindow.ShowModal();
 
-            UpdateWindowState();
-            UpdateControls();
-
             MessageBox.Show("ModalResult: " + testWindow.ModalResult);
             testWindow.Dispose();
+            OnWindowClosed();
         }
 
         private void CreateWindowAndSetProperties()
@@ -140,6 +138,16 @@ namespace WindowPropertiesSample
         {
             LogEvent("Closed");
 
+            if (testWindow == null)
+                throw new InvalidOperationException();
+            if (testWindow.Modal)
+                return;
+
+            OnWindowClosed();
+        }
+
+        private void OnWindowClosed()
+        {
             if (testWindow == null)
                 throw new InvalidOperationException();
 

@@ -728,10 +728,29 @@ namespace Alternet.UI
         {
             if (nativeControl != null)
             {
-                handlersByNativeControls.Remove(nativeControl);
-                nativeControl.Dispose();
+                if (nativeControl.HasWindowCreated)
+                {
+                    nativeControl.Destroyed += NativeControl_Destroyed;
+                    nativeControl.Destroy();
+                }
+                else
+                    DisposeNativeControlCore(nativeControl);
+
                 nativeControl = null;
             }
+        }
+
+        private void NativeControl_Destroyed(object sender, EventArgs e)
+        {
+            var nativeControl = (Native.Control)sender;
+            nativeControl.Destroyed -= NativeControl_Destroyed;
+            DisposeNativeControlCore(nativeControl);
+        }
+
+        private static void DisposeNativeControlCore(Native.Control nativeControl)
+        {
+            handlersByNativeControls.Remove(nativeControl);
+            nativeControl.Dispose();
         }
 
         private void Control_BorderBrushChanged(object? sender, EventArgs? e)

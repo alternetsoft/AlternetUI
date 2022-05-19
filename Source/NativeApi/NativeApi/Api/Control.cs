@@ -18,6 +18,8 @@ namespace NativeApi.Api
 
         public event EventHandler? MouseCaptureLost { add => throw new Exception(); remove => throw new Exception(); }
 
+        public event EventHandler? Destroyed { add => throw new Exception(); remove => throw new Exception(); }
+
         public void SetMouseCapture(bool value) => throw new Exception();
 
         public Control? ParentRefCounted { get; }
@@ -41,6 +43,8 @@ namespace NativeApi.Api
         public bool UserPaint { get; set; }
 
         public bool IsMouseOver { get; }
+
+        public bool HasWindowCreated { get; }
 
         public void AddChild(Control control) => throw new Exception();
 
@@ -77,5 +81,7 @@ namespace NativeApi.Api
 
         public void BeginInit() => throw new Exception();
         public void EndInit() => throw new Exception();
+
+        public void Destroy() => throw new Exception();
     }
 }
