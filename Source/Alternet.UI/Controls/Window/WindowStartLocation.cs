@@ -8,7 +8,7 @@ namespace Alternet.UI
         /// <summary>
         /// The window is positioned at the operating system default location.
         /// </summary>
-        SystemDefault,
+        Default,
 
         /// <summary>
         /// The position of the window is determined by the <see cref="Window.Location"/> property.
@@ -21,8 +21,9 @@ namespace Alternet.UI
         CenterScreen,
 
         /// <summary>
-        /// The startup location of a <see cref="Window"/> is the center of the <see cref="Window"/> that owns it.
+        /// The startup location of a <see cref="Window"/> is the center of the <see cref="Window"/> that owns it,
+        /// as specified by the <see cref="Window.Owner"/> property.
         /// </summary>
-        CenterOwner // todo: add window.owner, add xmldoc: "as specified by the <see cref="Window.Owner"/> property."
+        CenterOwner
     }
 }

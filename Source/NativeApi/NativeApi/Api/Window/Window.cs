@@ -7,7 +7,7 @@ namespace NativeApi.Api
     {
         public string Title { get => throw new Exception(); set => throw new Exception(); }
 
-        public WindowStartPosition WindowStartPosition { get => throw new Exception(); set => throw new Exception(); }
+        public WindowStartLocation WindowStartLocation { get => throw new Exception(); set => throw new Exception(); }
 
         [NativeEvent(cancellable: true)]
         public event EventHandler? Closing { add => throw new Exception(); remove => throw new Exception(); }

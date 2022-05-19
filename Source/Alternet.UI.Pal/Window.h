@@ -114,6 +114,8 @@ namespace Alternet::UI
 
         inline static FrameDisabler* _modalWindowDisabler = nullptr;
         inline static std::stack<Window*> _modalWindows;
+
+        WindowStartLocation _startLocation = WindowStartLocation::Default;
     };
 }
 

@@ -4,10 +4,9 @@ using ApiCommon;
 
 namespace NativeApi.Api
 {
-    public enum WindowStartPosition
+    public enum WindowStartLocation
     {
-        SystemDefaultLocation,
-        SystemDefaultBounds,
+        Default,
         Manual,
         CenterScreen,
         CenterOwner

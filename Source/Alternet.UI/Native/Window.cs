@@ -40,12 +40,12 @@ namespace Alternet.UI.Native
             }
         }
         
-        public WindowStartPosition WindowStartPosition
+        public WindowStartLocation WindowStartLocation
         {
             get
             {
                 CheckDisposed();
-                var n = NativeApi.Window_GetWindowStartPosition_(NativePointer);
+                var n = NativeApi.Window_GetWindowStartLocation_(NativePointer);
                 var m = n;
                 return m;
             }
@@ -53,7 +53,7 @@ namespace Alternet.UI.Native
             set
             {
                 CheckDisposed();
-                NativeApi.Window_SetWindowStartPosition_(NativePointer, value);
+                NativeApi.Window_SetWindowStartLocation_(NativePointer, value);
             }
         }
         
@@ -429,10 +429,10 @@ namespace Alternet.UI.Native
             public static extern void Window_SetTitle_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern WindowStartPosition Window_GetWindowStartPosition_(IntPtr obj);
+            public static extern WindowStartLocation Window_GetWindowStartLocation_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetWindowStartPosition_(IntPtr obj, WindowStartPosition value);
+            public static extern void Window_SetWindowStartLocation_(IntPtr obj, WindowStartLocation value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Window_GetShowInTaskbar_(IntPtr obj);

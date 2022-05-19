@@ -180,13 +180,14 @@ namespace Alternet::UI
         _frame->SetTitle(wxStr(value));
     }
 
-    WindowStartPosition Window::GetWindowStartPosition()
+    WindowStartLocation Window::GetWindowStartLocation()
     {
-        return WindowStartPosition();
+        return _startLocation;
     }
 
-    void Window::SetWindowStartPosition(WindowStartPosition value)
+    void Window::SetWindowStartLocation(WindowStartLocation value)
     {
+        _startLocation = value;
     }
 
     long Window::GetWindowStyle()

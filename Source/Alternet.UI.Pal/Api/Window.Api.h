@@ -30,17 +30,17 @@ ALTERNET_UI_API void Window_SetTitle_(Window* obj, const char16_t* value)
         });
 }
 
-ALTERNET_UI_API WindowStartPosition Window_GetWindowStartPosition_(Window* obj)
+ALTERNET_UI_API WindowStartLocation Window_GetWindowStartLocation_(Window* obj)
 {
-    return MarshalExceptions<WindowStartPosition>([&](){
-            return obj->GetWindowStartPosition();
+    return MarshalExceptions<WindowStartLocation>([&](){
+            return obj->GetWindowStartLocation();
         });
 }
 
-ALTERNET_UI_API void Window_SetWindowStartPosition_(Window* obj, WindowStartPosition value)
+ALTERNET_UI_API void Window_SetWindowStartLocation_(Window* obj, WindowStartLocation value)
 {
     MarshalExceptions<void>([&](){
-            obj->SetWindowStartPosition(value);
+            obj->SetWindowStartLocation(value);
         });
 }
 

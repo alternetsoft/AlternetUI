@@ -231,13 +231,12 @@ namespace Alternet.UI.Native
         Accepted = 2,
     }
     
-    enum WindowStartPosition
+    enum WindowStartLocation
     {
-        SystemDefaultLocation = 0,
-        SystemDefaultBounds = 1,
-        Manual = 2,
-        CenterScreen = 3,
-        CenterOwner = 4,
+        Default = 0,
+        Manual = 1,
+        CenterScreen = 2,
+        CenterOwner = 3,
     }
     
     enum WindowState

@@ -232,13 +232,12 @@ namespace Alternet::UI
         Accepted = 2,
     };
     
-    enum class WindowStartPosition
+    enum class WindowStartLocation
     {
-        SystemDefaultLocation = 0,
-        SystemDefaultBounds = 1,
-        Manual = 2,
-        CenterScreen = 3,
-        CenterOwner = 4,
+        Default = 0,
+        Manual = 1,
+        CenterScreen = 2,
+        CenterOwner = 3,
     };
     
     enum class WindowState

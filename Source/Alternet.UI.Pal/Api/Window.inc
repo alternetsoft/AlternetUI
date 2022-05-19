@@ -5,8 +5,8 @@ string GetTitle();
 void SetTitle(const string& value);
 
 
-WindowStartPosition GetWindowStartPosition();
-void SetWindowStartPosition(WindowStartPosition value);
+WindowStartLocation GetWindowStartLocation();
+void SetWindowStartLocation(WindowStartLocation value);
 
 
 bool GetShowInTaskbar();

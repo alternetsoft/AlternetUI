@@ -740,9 +740,9 @@ namespace Alternet.UI
             }
         }
 
-        private void NativeControl_Destroyed(object sender, EventArgs e)
+        private void NativeControl_Destroyed(object? sender, EventArgs e)
         {
-            var nativeControl = (Native.Control)sender;
+            var nativeControl = (Native.Control)sender!;
             nativeControl.Destroyed -= NativeControl_Destroyed;
             DisposeNativeControlCore(nativeControl);
         }
