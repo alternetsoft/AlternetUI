@@ -6,18 +6,23 @@
 		Padding="10"
 		Activated="Window_Activated"
 		Deactivated="Window_Deactivated">
-	<StackPanel Orientation="Vertical">
-		<StackPanel Orientation="Horizontal">
-			<GroupBox Title="Create">
+	<Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+		<StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="0">
+			<GroupBox Title="Create" Margin="0,0,5,0">
 				<StackPanel>
-          <Button Text="Create and show window" Name="createAndShowWindowButton" Click="CreateAndShowWindowButton_Click" />
-          <Button Text="Create and show modal window" Name="createAndShowModalWindowButton" Click="CreateAndShowModalWindowButton_Click" />
-          <CheckBox Text="Set Owner" Name="setOwnerCheckBox" IsChecked="True"/>
-					<CheckBox Text="Cancel Closing" Name="cancelClosingCheckBox" />
+          <Button Text="Create and show window" Name="createAndShowWindowButton" Click="CreateAndShowWindowButton_Click" Margin="0,0,0,5" />
+          <Button Text="Create and show modal window" Name="createAndShowModalWindowButton" Click="CreateAndShowModalWindowButton_Click" Margin="0,0,0,5"/>
+          <CheckBox Text="Set Owner" Name="setOwnerCheckBox" IsChecked="True" Margin="0,0,0,5"/>
+					<CheckBox Text="Cancel Closing" Name="cancelClosingCheckBox" Margin="0,0,0,5"/>
 				</StackPanel>
 			</GroupBox>
 
-			<GroupBox Title="Properties">
+			<GroupBox Title="Properties" Margin="0,0,5,0">
 				<StackPanel>
 					<CheckBox Text="ShowInTaskbar" Name="showInTaskBarCheckBox" CheckedChanged="ShowInTaskBarCheckBox_CheckedChanged" IsChecked="True"/>
 					<CheckBox Text="Minimize Enabled" Name="minimizeEnabledCheckBox" CheckedChanged="MinimizeEnabledCheckBox_CheckedChanged" IsChecked="True"/>
@@ -31,33 +36,33 @@
 					<CheckBox Text="Has Title Bar" Name="hasTitleBarCheckBox" CheckedChanged="HasTitleBarCheckBox_CheckedChanged" IsChecked="True"/>
 				</StackPanel>
 			</GroupBox>
-			<GroupBox Title="Activation">
-				<StackPanel>
-					<Label Name="activeWindowTitleLabel" />
-					<Label Name="isWindowActiveLabel" />
-					<Button Name="activateButton" Click="ActivateButton_Click" Text="Activate" />
-				</StackPanel>
-			</GroupBox>
-			<GroupBox Title="Owned Windows">
+			<GroupBox Title="Owned Windows" Margin="0,0,5,0">
 				<StackPanel>
 					<Button Name="addOwnedWindow" Click="AddOwnedWindow_Click" Text="Add Owned Window" />
 				</StackPanel>
 			</GroupBox>
-			<GroupBox Title="State">
+			<GroupBox Title="State" Margin="0,0,5,0">
 				<StackPanel>
 					<Label Text="Window State:" />
 					<ComboBox IsEditable="false" Name="stateComboBox" SelectedItemChanged="StateComboBox_SelectedItemChanged"/>
 				</StackPanel>
 			</GroupBox>
-			<GroupBox Title="Icon">
+			<GroupBox Title="Icon" Margin="0,0,5,0">
 				<StackPanel>
 					<Button Text="Set Icon 1" Name="setIcon1Button" Click="SetIcon1Button_Click" />
 					<Button Text="Set Icon 2" Name="setIcon2Button" Click="SetIcon2Button_Click" />
 				</StackPanel>
 			</GroupBox>
 		</StackPanel>
-    <StackPanel Orientation="Horizontal">
-		</StackPanel>
-    <ListBox Name="eventsListBox" />
-	</StackPanel>
+    <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="1">
+      <GroupBox Title="Activation" Margin="0,0,5,0">
+        <StackPanel>
+          <Label Name="activeWindowTitleLabel" />
+          <Label Name="isWindowActiveLabel" />
+          <Button Name="activateButton" Click="ActivateButton_Click" Text="Activate" />
+        </StackPanel>
+      </GroupBox>
+    </StackPanel>
+    <ListBox Name="eventsListBox"  Grid.Row="2"/>
+	</Grid>
 </Window>
