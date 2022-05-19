@@ -19,7 +19,12 @@
           <Button Text="Create and show modal window" Name="createAndShowModalWindowButton" Click="CreateAndShowModalWindowButton_Click" Margin="0,0,0,5"/>
           <CheckBox Text="Set Owner" Name="setOwnerCheckBox" IsChecked="True" Margin="0,0,0,5"/>
 					<CheckBox Text="Cancel Closing" Name="cancelClosingCheckBox" Margin="0,0,0,5"/>
-				</StackPanel>
+          <StackPanel Margin="0,0,0,5">
+            <Label Text="Start Location:" />
+            <ComboBox IsEditable="false" Name="startLocationComboBox" />
+          </StackPanel>
+
+        </StackPanel>
 			</GroupBox>
 
 			<GroupBox Title="Properties" Margin="0,0,5,0">

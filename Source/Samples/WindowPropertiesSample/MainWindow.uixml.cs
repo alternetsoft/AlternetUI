@@ -13,8 +13,12 @@ namespace WindowPropertiesSample
         {
             InitializeComponent();
 
-            foreach (var brushType in Enum.GetValues(typeof(WindowState)))
-                stateComboBox.Items.Add(brushType!);
+            foreach (var value in Enum.GetValues(typeof(WindowState)))
+                stateComboBox.Items.Add(value!);
+
+            foreach (var value in Enum.GetValues(typeof(WindowStartLocation)))
+                startLocationComboBox.Items.Add(value!);
+            startLocationComboBox.SelectedItem = WindowStartLocation.Default;
 
             UpdateControls();
         }
@@ -66,6 +70,8 @@ namespace WindowPropertiesSample
             testWindow.Resizable = resizableCheckBox.IsChecked;
             testWindow.HasBorder = hasBorderCheckBox.IsChecked;
             testWindow.HasTitleBar = hasTitleBarCheckBox.IsChecked;
+
+            testWindow.StartLocation = (WindowStartLocation)startLocationComboBox.SelectedItem!;
 
             testWindow.EndInit();
 
@@ -124,6 +130,9 @@ namespace WindowPropertiesSample
             var haveTestWindow = testWindow != null;
 
             createAndShowWindowButton.Enabled = !haveTestWindow;
+            createAndShowModalWindowButton.Enabled = !haveTestWindow;
+            startLocationComboBox.Enabled = !haveTestWindow;
+
             activateButton.Enabled = haveTestWindow;
             addOwnedWindow.Enabled = haveTestWindow;
             stateComboBox.Enabled = haveTestWindow;
