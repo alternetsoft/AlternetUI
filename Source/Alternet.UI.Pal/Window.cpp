@@ -36,6 +36,28 @@ namespace Alternet::UI
 
     // ------------
 
+    FrameDisabler::FrameDisabler(wxFrame* frameToSkip)
+    {
+        for (auto frame : Frame::GetAllFrames())
+        {
+            if (frame != frameToSkip && frame->IsEnabled())
+            {
+                frame->Enable(false);
+                _disabledFrames.push_back(frame);
+            }
+        }
+    }
+
+    FrameDisabler::~FrameDisabler()
+    {
+        for (auto frame : _disabledFrames)
+        {
+            frame->Enable(true);
+        }
+    }
+
+    // ------------
+
     Window::Window():
         _flags(
             WindowFlags::ShowInTaskbar |
@@ -99,18 +121,24 @@ namespace Alternet::UI
     void Window::OnWxWindowDestroying()
     {
         if (GetModal())
+        {
             _flags.Set(WindowFlags::ModalLoopStopRequested, true);
+
+            if (_modalWindowDisabler != nullptr)
+            {
+                delete _modalWindowDisabler;
+                _modalWindowDisabler = nullptr;
+
+                _modalWindows.pop();
+                if (!_modalWindows.empty())
+                    _modalWindowDisabler = new FrameDisabler(_modalWindows.top()->_frame);
+            }
+        }
 
         if (_flags.IsSet(WindowFlags::Modal))
             _flags.Set(WindowFlags::Modal, false);
 
         _flags.Set(WindowFlags::DestroyingWindow, true);
-
-        if (_modalWindowDisabler != nullptr)
-        {
-            delete _modalWindowDisabler;
-            _modalWindowDisabler = nullptr;
-        }
 
         _panel = nullptr;
 
@@ -230,12 +258,14 @@ namespace Alternet::UI
 
     void Window::ShowModal()
     {
-        if (_modalWindowDisabler != nullptr)
-            throwExInvalidOp;
-
         _flags.Set(WindowFlags::Modal, true);
-        
-        _modalWindowDisabler = new wxWindowDisabler(_frame);
+
+        if (_modalWindowDisabler != nullptr)
+            delete _modalWindowDisabler;
+
+        _modalWindowDisabler = new FrameDisabler(_frame);
+        _modalWindows.push(this);
+
         SetVisible(true);
 
         // HACK: because wxWidgets doesnt support modal windows with menu,

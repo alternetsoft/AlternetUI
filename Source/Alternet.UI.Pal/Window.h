@@ -25,6 +25,19 @@ namespace Alternet::UI
         BYREF_ONLY(Frame);
     };
 
+    class FrameDisabler
+    {
+    public:
+        FrameDisabler(wxFrame* frameToSkip);
+        virtual ~FrameDisabler();
+
+    private:
+
+        std::vector<wxFrame*> _disabledFrames;
+
+        BYREF_ONLY(FrameDisabler);
+    };
+
     class Window : public Control
     {
 #include "Api/Window.inc"
@@ -99,7 +112,8 @@ namespace Alternet::UI
         
         WindowState _lastState = WindowState::Normal;
 
-        wxWindowDisabler* _modalWindowDisabler = nullptr;
+        inline static FrameDisabler* _modalWindowDisabler = nullptr;
+        inline static std::stack<Window*> _modalWindows;
     };
 }
 
