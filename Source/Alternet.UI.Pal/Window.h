@@ -72,11 +72,19 @@ namespace Alternet::UI
 
         Frame* GetFrame();
 
+        optional<Size> CoerceSize(const Size& value);
+
         string RetrieveTitle();
         void ApplyTitle(const string& value);
 
         WindowState RetrieveState();
         void ApplyState(const WindowState& value);
+
+        Size RetrieveMinimumSize();
+        void ApplyMinimumSize(const Size& value);
+
+        Size RetrieveMaximumSize();
+        void ApplyMaximumSize(const Size& value);
 
         long GetWindowStyle();
 
@@ -115,6 +123,12 @@ namespace Alternet::UI
 
         DelayedValue<Window, string> _title;
         DelayedValue<Window, WindowState> _state;
+
+        DelayedValue<Window, Size> _minimumSize;
+        DelayedValue<Window, Size> _maximumSize;
+
+        Size _appliedMinimumSize;
+        Size _appliedMaximumSize;
 
         ImageSet* _icon = nullptr;
         

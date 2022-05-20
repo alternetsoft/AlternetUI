@@ -227,6 +227,40 @@ namespace Alternet.UI.Native
             }
         }
         
+        public Alternet.Drawing.Size MinimumSize
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetMinimumSize_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetMinimumSize_(NativePointer, value);
+            }
+        }
+        
+        public Alternet.Drawing.Size MaximumSize
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetMaximumSize_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetMaximumSize_(NativePointer, value);
+            }
+        }
+        
         public bool Modal
         {
             get
@@ -499,6 +533,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetModalResult_(IntPtr obj, ModalResult value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Size Window_GetMinimumSize_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetMinimumSize_(IntPtr obj, NativeApiTypes.Size value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Size Window_GetMaximumSize_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetMaximumSize_(IntPtr obj, NativeApiTypes.Size value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Window_GetModal_(IntPtr obj);

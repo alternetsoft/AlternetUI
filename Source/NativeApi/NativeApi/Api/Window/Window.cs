@@ -1,4 +1,5 @@
 ﻿using System;
+using Alternet.Drawing;
 using ApiCommon;
 
 namespace NativeApi.Api
@@ -32,6 +33,9 @@ namespace NativeApi.Api
         public ModalResult ModalResult { get => throw new Exception(); set => throw new Exception(); }
 
         public void ShowModal() => throw new Exception();
+
+        public Size MinimumSize { get => throw new Exception(); set => throw new Exception(); }
+        public Size MaximumSize { get => throw new Exception(); set => throw new Exception(); }
 
         public bool Modal => throw new Exception();
 

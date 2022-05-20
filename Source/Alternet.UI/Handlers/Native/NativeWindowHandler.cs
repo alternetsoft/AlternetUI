@@ -1,3 +1,4 @@
+using Alternet.Drawing;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -175,6 +176,24 @@ namespace Alternet.UI
             {
                 NativeControl.WindowStartLocation = (Native.WindowStartLocation)value;
             }
+        }
+
+        /// <summary>
+        /// Gets the minimum size the window can be resized to.
+        /// </summary>
+        public Size MinimumSize
+        {
+            get => NativeControl.MinimumSize;
+            set => NativeControl.MinimumSize = value;
+        }
+
+        /// <summary>
+        /// Gets the maximum size the window can be resized to.
+        /// </summary>
+        public Size MaximumSize
+        {
+            get => NativeControl.MaximumSize;
+            set => NativeControl.MaximumSize = value;
         }
 
         private void Control_AlwaysOnTopChanged(object? sender, EventArgs e)

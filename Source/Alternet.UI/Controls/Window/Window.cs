@@ -178,6 +178,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the minimum size the window can be resized to.
+        /// </summary>
+        public Size MinimumSize
+        {
+            get => Handler.MinimumSize;
+            set => Handler.MinimumSize = value;
+        }
+
+        /// <summary>
+        /// Gets the maximum size the window can be resized to.
+        /// </summary>
+        public Size MaximumSize
+        {
+            get => Handler.MaximumSize;
+            set => Handler.MaximumSize = value;
+        }
+
+        /// <summary>
         /// Called when the value of the <see cref="State"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>

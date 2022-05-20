@@ -49,6 +49,14 @@ ModalResult GetModalResult();
 void SetModalResult(ModalResult value);
 
 
+Size GetMinimumSize();
+void SetMinimumSize(const Size& value);
+
+
+Size GetMaximumSize();
+void SetMaximumSize(const Size& value);
+
+
 bool GetModal();
 
 

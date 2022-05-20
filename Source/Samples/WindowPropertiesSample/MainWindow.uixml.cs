@@ -162,6 +162,7 @@ namespace WindowPropertiesSample
             setClientSizeButton.Enabled = haveTestWindow;
             setBoundsButton.Enabled = haveTestWindow;
             increaseLocationButton.Enabled = haveTestWindow;
+            setMinMaxSizeButton.Enabled = haveTestWindow;
             if (!haveTestWindow)
                 currentBoundsLabel.Text = string.Empty;
 
@@ -328,6 +329,15 @@ namespace WindowPropertiesSample
         {
             if (testWindow != null)
                 testWindow.Bounds = new Rect(0, 0, 400, 400);
+        }
+
+        private void SetMinMaxSizeButton_Click(object sender, System.EventArgs e)
+        {
+            if (testWindow != null)
+            {
+                testWindow.MinimumSize = new Size(100, 100);
+                testWindow.MaximumSize = new Size(300, 300);
+            }
         }
     }
 }

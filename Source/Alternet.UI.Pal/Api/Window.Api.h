@@ -184,6 +184,34 @@ ALTERNET_UI_API void Window_SetModalResult_(Window* obj, ModalResult value)
         });
 }
 
+ALTERNET_UI_API Size_C Window_GetMinimumSize_(Window* obj)
+{
+    return MarshalExceptions<Size_C>([&](){
+            return obj->GetMinimumSize();
+        });
+}
+
+ALTERNET_UI_API void Window_SetMinimumSize_(Window* obj, Size value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetMinimumSize(value);
+        });
+}
+
+ALTERNET_UI_API Size_C Window_GetMaximumSize_(Window* obj)
+{
+    return MarshalExceptions<Size_C>([&](){
+            return obj->GetMaximumSize();
+        });
+}
+
+ALTERNET_UI_API void Window_SetMaximumSize_(Window* obj, Size value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetMaximumSize(value);
+        });
+}
+
 ALTERNET_UI_API c_bool Window_GetModal_(Window* obj)
 {
     return MarshalExceptions<c_bool>([&](){

@@ -75,6 +75,7 @@
           <Button Name="setClientSizeButton" Click="SetClientSizeButton_Click" Text="Set Client Size to (300, 300)" Margin="0,0,0,5"/>
           <Button Name="increaseLocationButton" Click="IncreaseLocationButton_Click" Text="Increase Location by (10, 10)" Margin="0,0,0,5"/>
           <Button Name="setBoundsButton" Click="SetBoundsButton_Click" Text="Set Bounds (0, 0, 400, 400)" Margin="0,0,0,5"/>
+          <Button Name="setMinMaxSizeButton" Click="SetMinMaxSizeButton_Click" Text="Set Minimum and Maximum size" Margin="0,0,0,5"/>
         </StackPanel>
       </GroupBox>
     </StackPanel>

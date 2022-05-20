@@ -75,11 +75,15 @@ namespace Alternet::UI
                 //{DelayedWindowFlags::ShowInTaskbar, std::make_tuple(&Window::RetrieveShowInTaskbar, &Window::ApplyShowInTaskbar)},
             }),
         _title(*this, u"", &Control::IsWxWindowCreated, &Window::RetrieveTitle, &Window::ApplyTitle),
-        _state(*this, WindowState::Normal, &Control::IsWxWindowCreated, &Window::RetrieveState, &Window::ApplyState)
+        _state(*this, WindowState::Normal, &Control::IsWxWindowCreated, &Window::RetrieveState, &Window::ApplyState),
+        _minimumSize(*this, Size(), &Control::IsWxWindowCreated, &Window::RetrieveMinimumSize, &Window::ApplyMinimumSize),
+        _maximumSize(*this, Size(), &Control::IsWxWindowCreated, &Window::RetrieveMaximumSize, &Window::ApplyMaximumSize)
     {
         GetDelayedValues().Add(&_title);
         GetDelayedValues().Add(&_state);
         GetDelayedValues().Add(&_delayedFlags);
+        GetDelayedValues().Add(&_minimumSize);
+        GetDelayedValues().Add(&_maximumSize);
         SetVisible(false);
         CreateWxWindow();
     }
@@ -116,6 +120,30 @@ namespace Alternet::UI
         }
         else
             throwExInvalidArgEnumValue(value);
+    }
+
+    Size Window::RetrieveMinimumSize()
+    {
+        return _appliedMinimumSize;
+    }
+
+    void Window::ApplyMinimumSize(const Size& value)
+    {
+        auto window = GetWxWindow();
+        auto size = fromDip(value, window);
+        window->SetMinSize(size == wxSize() ? wxDefaultSize : size);
+    }
+
+    Size Window::RetrieveMaximumSize()
+    {
+        return _appliedMaximumSize;
+    }
+
+    void Window::ApplyMaximumSize(const Size& value)
+    {
+        auto window = GetWxWindow();
+        auto size = fromDip(value, window);
+        window->SetMaxSize(size == wxSize() ? wxDefaultSize : size);
     }
 
     void Window::OnWxWindowDestroying()
@@ -291,6 +319,34 @@ namespace Alternet::UI
         _panel = new wxPanel(_frame);
 
         return _frame;
+    }
+
+    Size Window::GetMinimumSize()
+    {
+        return _minimumSize.Get();
+    }
+
+    void Window::SetMinimumSize(const Size& value)
+    {
+        _minimumSize.Set(value);
+        _appliedMinimumSize = value;
+        auto limited = CoerceSize(GetSize());
+        if (limited.has_value())
+            SetSize(limited.value());
+    }
+
+    Size Window::GetMaximumSize()
+    {
+        return _maximumSize.Get();
+    }
+
+    void Window::SetMaximumSize(const Size& value)
+    {
+        _maximumSize.Set(value);
+        _appliedMaximumSize = value;
+        auto limited = CoerceSize(GetSize());
+        if (limited.has_value())
+            SetSize(limited.value());
     }
 
     ModalResult Window::GetModalResult()
@@ -616,6 +672,44 @@ namespace Alternet::UI
     Frame* Window::GetFrame()
     {
         return dynamic_cast<Frame*>(GetWxWindow());
+    }
+
+    optional<Size> Window::CoerceSize(const Size& value)
+    {
+        auto minSize = GetMinimumSize();
+        auto maxSize = GetMaximumSize();
+
+        bool limitNeeded = false;
+        Size limitedSize = value;
+
+        if (minSize.Width != 0 && minSize.Width > value.Width)
+        {
+            limitedSize.Width = minSize.Width;
+            limitNeeded = true;
+        }
+
+        if (minSize.Height != 0 && minSize.Height > value.Height)
+        {
+            limitedSize.Height = minSize.Height;
+            limitNeeded = true;
+        }
+
+        if (maxSize.Width != 0 && maxSize.Width < value.Width)
+        {
+            limitedSize.Width = maxSize.Width;
+            limitNeeded = true;
+        }
+
+        if (maxSize.Height != 0 && maxSize.Height < value.Height)
+        {
+            limitedSize.Height = maxSize.Height;
+            limitNeeded = true;
+        }
+
+        if (limitNeeded)
+            return limitedSize;
+        else
+            return nullopt;
     }
     
     bool Window::GetHasTitleBar()
