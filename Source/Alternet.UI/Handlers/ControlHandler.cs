@@ -59,8 +59,14 @@ namespace Alternet.UI
                 else
                     bounds = value;
 
+                if (oldBounds.Location != value.Location)
+                    Control.RaiseLocationChanged(EventArgs.Empty);
+
+                if (oldBounds.Size != value.Size)
+                    Control.RaiseSizeChanged(EventArgs.Empty);
+
                 if (oldBounds != Bounds)
-                    PerformLayout(); // todo: use event
+                    PerformLayout();
             }
         }
 

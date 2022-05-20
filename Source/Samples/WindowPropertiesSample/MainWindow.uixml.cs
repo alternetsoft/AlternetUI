@@ -82,6 +82,20 @@ namespace WindowPropertiesSample
             testWindow.Activated += TestWindow_Activated;
             testWindow.Deactivated += TestWindow_Deactivated;
             testWindow.StateChanged += TestWindow_StateChanged;
+            testWindow.SizeChanged += TestWindow_SizeChanged;
+            testWindow.LocationChanged += TestWindow_LocationChanged;
+        }
+
+        private void TestWindow_LocationChanged(object? sender, EventArgs e)
+        {
+            LogEvent("LocationChanged");
+            UpdateWindowBounds();
+        }
+
+        private void TestWindow_SizeChanged(object? sender, EventArgs e)
+        {
+            LogEvent("SizeChanged");
+            UpdateWindowBounds();
         }
 
         private void TestWindow_StateChanged(object? sender, EventArgs e)
@@ -93,6 +107,11 @@ namespace WindowPropertiesSample
         private void UpdateWindowState()
         {
             stateComboBox.SelectedItem = (testWindow ?? throw new Exception()).State;
+        }
+
+        private void UpdateWindowBounds()
+        {
+            currentBoundsLabel.Text = (testWindow ?? throw new Exception()).Bounds.ToString();
         }
 
         private void UpdateActiveWindowInfoLabel()
@@ -174,6 +193,8 @@ namespace WindowPropertiesSample
             testWindow.Closed -= TestWindow_Closed;
             testWindow.Closing -= TestWindow_Closing;
             testWindow.StateChanged -= TestWindow_StateChanged;
+            testWindow.SizeChanged -= TestWindow_SizeChanged;
+            testWindow.LocationChanged -= TestWindow_LocationChanged;
 
             testWindow = null;
             UpdateControls();

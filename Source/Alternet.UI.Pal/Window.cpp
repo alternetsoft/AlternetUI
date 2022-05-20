@@ -143,6 +143,7 @@ namespace Alternet::UI
         _panel = nullptr;
 
         _frame->Unbind(wxEVT_SIZE, &Window::OnSizeChanged, this);
+        _frame->Unbind(wxEVT_MOVE, &Window::OnMove, this);
         _frame->Unbind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
         _frame->Unbind(wxEVT_ACTIVATE, &Window::OnActivate, this);
         _frame->Unbind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
@@ -281,6 +282,7 @@ namespace Alternet::UI
         ApplyIcon(_frame);
 
         _frame->Bind(wxEVT_SIZE, &Window::OnSizeChanged, this);
+        _frame->Bind(wxEVT_MOVE, &Window::OnMove, this);
         _frame->Bind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
         _frame->Bind(wxEVT_ACTIVATE, &Window::OnActivate, this);
         _frame->Bind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
@@ -558,6 +560,12 @@ namespace Alternet::UI
             _lastState = newState;
             RaiseEvent(WindowEvent::StateChanged);
         }
+    }
+
+    void Window::OnMove(wxMoveEvent& event)
+    {
+        event.Skip();
+        RaiseEvent(WindowEvent::LocationChanged);
     }
 
     void Window::SetResizable(bool value)

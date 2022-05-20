@@ -77,6 +77,7 @@ enum class WindowEvent
 {
     Closing,
     SizeChanged,
+    LocationChanged,
     Activated,
     Deactivated,
     StateChanged,

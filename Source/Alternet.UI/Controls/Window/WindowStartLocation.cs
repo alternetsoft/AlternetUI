@@ -11,7 +11,7 @@ namespace Alternet.UI
         Default,
 
         /// <summary>
-        /// The position of the window is determined by the <see cref="Window.Location"/> property.
+        /// The position of the window is determined by the <see cref="Control.Location"/> property.
         /// </summary>
         Manual,
 

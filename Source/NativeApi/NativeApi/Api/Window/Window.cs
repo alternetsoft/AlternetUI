@@ -13,6 +13,7 @@ namespace NativeApi.Api
         public event EventHandler? Closing { add => throw new Exception(); remove => throw new Exception(); }
 
         public event EventHandler SizeChanged { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler LocationChanged { add => throw new Exception(); remove => throw new Exception(); }
         public event EventHandler Activated { add => throw new Exception(); remove => throw new Exception(); }
         public event EventHandler Deactivated { add => throw new Exception(); remove => throw new Exception(); }
 

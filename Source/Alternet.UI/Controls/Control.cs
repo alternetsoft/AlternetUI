@@ -188,6 +188,49 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when the control's size is changed.
+        /// </summary>
+        public event EventHandler? SizeChanged;
+
+        /// <summary>
+        /// Occurs when the control's location is changed.
+        /// </summary>
+        public event EventHandler? LocationChanged;
+
+        internal void RaiseSizeChanged(EventArgs e) => OnSizeChanged(e);
+
+        /// <summary>
+        /// Raises the <see cref="SizeChanged"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnSizeChanged(EventArgs e) => SizeChanged?.Invoke(this, e);
+
+        internal void RaiseLocationChanged(EventArgs e) => OnLocationChanged(e);
+
+        /// <summary>
+        /// Raises the <see cref="LocationChanged"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnLocationChanged(EventArgs e) => LocationChanged?.Invoke(this, e);
+
+        /// <summary>
+        /// Gets or sets the location of upper-left corner of the control, in device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <value>The position of the control's upper-left corner, in logical units (1/96th of an inch).</value>
+        public Point Location
+        {
+            get
+            {
+                return Bounds.Location;
+            }
+
+            set
+            {
+                Bounds = new Rect(value, Bounds.Size);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the control and all its child controls are displayed.
         /// </summary>
         /// <value><c>true</c> if the control and all its child controls are displayed; otherwise, <c>false</c>. The default is <c>true</c>.</value>

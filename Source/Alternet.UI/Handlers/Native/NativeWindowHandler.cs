@@ -47,6 +47,7 @@ namespace Alternet.UI
 
             NativeControl.Closing += Control_Closing;
             NativeControl.SizeChanged += NativeControl_SizeChanged;
+            NativeControl.LocationChanged += NativeControl_LocationChanged;
             NativeControl.Activated += NativeControl_Activated;
             NativeControl.Deactivated += NativeControl_Deactivated;
             NativeControl.StateChanged += NativeControl_StateChanged;
@@ -288,7 +289,13 @@ namespace Alternet.UI
 
         private void NativeControl_SizeChanged(object? sender, EventArgs e)
         {
+            Control.RaiseSizeChanged(EventArgs.Empty);
             PerformLayout();
+        }
+
+        private void NativeControl_LocationChanged(object? sender, EventArgs e)
+        {
+            Control.RaiseLocationChanged(EventArgs.Empty);
         }
 
         private void Control_Closing(object? sender, CancelEventArgs? e)
@@ -310,6 +317,7 @@ namespace Alternet.UI
         protected override void OnDetach()
         {
             NativeControl.SizeChanged -= NativeControl_SizeChanged;
+            NativeControl.LocationChanged -= NativeControl_LocationChanged;
             NativeControl.Closing -= Control_Closing;
             NativeControl.Activated -= NativeControl_Activated;
             NativeControl.Deactivated -= NativeControl_Deactivated;

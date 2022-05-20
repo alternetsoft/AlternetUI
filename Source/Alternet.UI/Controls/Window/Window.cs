@@ -681,27 +681,6 @@ namespace Alternet.UI
         /// </remarks>
         public override double Height { get => Size.Height; set => Size = new Size(Width, value); }
 
-        /// <summary>
-        /// Gets or sets the location of upper-left corner of the window, in device-independent units (1/96th inch per unit).
-        /// </summary>
-        /// <value>The position of the window's upper-left corner, in logical units (1/96th of an inch).</value>
-        /// <remarks>
-        /// To specify the window positioning behavior when it is being shown for the first time,
-        /// use <see cref="StartLocation"/> property.
-        /// </remarks>
-        public Point Location
-        {
-            get
-            {
-                return Bounds.Location;
-            }
-
-            set
-            {
-                Bounds = new Rect(value, Bounds.Size);
-            }
-        }
-
         internal void RaiseClosing(WindowClosingEventArgs e) => OnClosing(e);
 
         internal void RaiseClosed(WindowClosedEventArgs e) => OnClosed(e);

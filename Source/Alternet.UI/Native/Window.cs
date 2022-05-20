@@ -377,6 +377,10 @@ namespace Alternet.UI.Native
                 {
                     SizeChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.WindowEvent.LocationChanged:
+                {
+                    LocationChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 case NativeApi.WindowEvent.Activated:
                 {
                     Activated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
@@ -395,6 +399,7 @@ namespace Alternet.UI.Native
         
         public event EventHandler<CancelEventArgs>? Closing;
         public event EventHandler? SizeChanged;
+        public event EventHandler? LocationChanged;
         public event EventHandler? Activated;
         public event EventHandler? Deactivated;
         public event EventHandler? StateChanged;
@@ -411,6 +416,7 @@ namespace Alternet.UI.Native
             {
                 Closing,
                 SizeChanged,
+                LocationChanged,
                 Activated,
                 Deactivated,
                 StateChanged,
