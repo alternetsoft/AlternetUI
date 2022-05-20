@@ -3,7 +3,9 @@
         x:Class="WindowPropertiesSample.MainWindow"
 		Title="Window Properties Sample"
 		Width="1000"
+		Height="500"
 		Padding="10"
+    StartLocation="CenterScreen"
 		Activated="Window_Activated"
 		Deactivated="Window_Deactivated">
 	<Grid>
@@ -17,13 +19,12 @@
 				<StackPanel>
           <Button Text="Create and show window" Name="createAndShowWindowButton" Click="CreateAndShowWindowButton_Click" Margin="0,0,0,5" />
           <Button Text="Create and show modal window" Name="createAndShowModalWindowButton" Click="CreateAndShowModalWindowButton_Click" Margin="0,0,0,5"/>
-          <CheckBox Text="Set Owner" Name="setOwnerCheckBox" IsChecked="True" Margin="0,0,0,5"/>
+          <CheckBox Text="Set Owner" Name="setOwnerCheckBox" Margin="0,0,0,5"/>
 					<CheckBox Text="Cancel Closing" Name="cancelClosingCheckBox" Margin="0,0,0,5"/>
           <StackPanel Margin="0,0,0,5">
             <Label Text="Start Location:" />
             <ComboBox IsEditable="false" Name="startLocationComboBox" />
           </StackPanel>
-
         </StackPanel>
 			</GroupBox>
 
@@ -65,6 +66,15 @@
           <Label Name="activeWindowTitleLabel" />
           <Label Name="isWindowActiveLabel" />
           <Button Name="activateButton" Click="ActivateButton_Click" Text="Activate" />
+        </StackPanel>
+      </GroupBox>
+      <GroupBox Title="Bounds" Margin="0,0,5,0">
+        <StackPanel>
+          <Label Name="currentBoundsLabel" />
+          <Button Name="setSizeButton" Click="SetSizeButton_Click" Text="Set Size to (300, 300)" Margin="0,0,0,5"/>
+          <Button Name="setClientSizeButton" Click="SetClientSizeButton_Click" Text="Set Client Size to (300, 300)" Margin="0,0,0,5"/>
+          <Button Name="increaseLocationButton" Click="IncreaseLocationButton_Click" Text="Increase Location by (10, 10)" Margin="0,0,0,5"/>
+          <Button Name="setBoundsButton" Click="SetBoundsButton_Click" Text="Set Bounds (0, 0, 400, 400)" Margin="0,0,0,5"/>
         </StackPanel>
       </GroupBox>
     </StackPanel>

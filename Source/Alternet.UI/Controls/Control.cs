@@ -42,6 +42,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets size of the <see cref="Control"/>'s client area, in device-independent units (1/96th inch per unit).
+        /// </summary>
+        public Size ClientSize
+        {
+            get => Handler.ClientSize;
+            set => Handler.ClientSize = value;
+        }
+
+        /// <summary>
         /// Captures the mouse to the control.
         /// </summary>
         public void CaptureMouse()

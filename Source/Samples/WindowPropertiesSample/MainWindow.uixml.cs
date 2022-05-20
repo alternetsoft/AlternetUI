@@ -24,7 +24,7 @@ namespace WindowPropertiesSample
             UpdateControls();
         }
 
-        private void CreateAndShowWindowButton_Click(object sender, System.EventArgs e)
+        private void CreateAndShowWindowButton_Click(object sender, EventArgs e)
         {
             CreateWindowAndSetProperties();
 
@@ -37,7 +37,7 @@ namespace WindowPropertiesSample
             UpdateControls();
         }
 
-        private void CreateAndShowModalWindowButton_Click(object sender, System.EventArgs e)
+        private void CreateAndShowModalWindowButton_Click(object sender, EventArgs e)
         {
             CreateWindowAndSetProperties();
 
@@ -106,13 +106,13 @@ namespace WindowPropertiesSample
                 isWindowActiveLabel.Text = string.Empty;
         }
 
-        private void TestWindow_Deactivated(object? sender, System.EventArgs e)
+        private void TestWindow_Deactivated(object? sender, EventArgs e)
         {
             LogEvent("Deactivated");
             UpdateActiveWindowInfoLabel();
         }
 
-        private void TestWindow_Activated(object? sender, System.EventArgs e)
+        private void TestWindow_Activated(object? sender, EventArgs e)
         {
             LogEvent("Activated");
             UpdateActiveWindowInfoLabel();
@@ -138,6 +138,13 @@ namespace WindowPropertiesSample
             activateButton.Enabled = haveTestWindow;
             addOwnedWindow.Enabled = haveTestWindow;
             stateComboBox.Enabled = haveTestWindow;
+
+            setSizeButton.Enabled = haveTestWindow;
+            setClientSizeButton.Enabled = haveTestWindow;
+            setBoundsButton.Enabled = haveTestWindow;
+            increaseLocationButton.Enabled = haveTestWindow;
+            if (!haveTestWindow)
+                currentBoundsLabel.Text = string.Empty;
 
             setIcon1Button.Enabled = haveTestWindow;
             setIcon2Button.Enabled = haveTestWindow;
@@ -178,77 +185,77 @@ namespace WindowPropertiesSample
             e.Cancel = cancelClosingCheckBox.IsChecked;
         }
 
-        private void ShowInTaskBarCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void ShowInTaskBarCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (testWindow != null)
                 testWindow.ShowInTaskbar = showInTaskBarCheckBox.IsChecked;
         }
 
-        private void MinimizeEnabledCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void MinimizeEnabledCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (testWindow != null)
                 testWindow.MinimizeEnabled = minimizeEnabledCheckBox.IsChecked;
         }
 
-        private void MaximizeEnabledCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void MaximizeEnabledCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (testWindow != null)
                 testWindow.MaximizeEnabled = maximizeEnabledCheckBox.IsChecked;
         }
 
-        private void CloseEnabledCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void CloseEnabledCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (testWindow != null)
                 testWindow.CloseEnabled = closeEnabledCheckBox.IsChecked;
         }
 
-        private void AlwaysOnTopCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void AlwaysOnTopCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (testWindow != null)
                 testWindow.AlwaysOnTop = alwaysOnTopCheckBox.IsChecked;
         }
 
-        private void IsToolWindowCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void IsToolWindowCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (testWindow != null)
                 testWindow.IsToolWindow = isToolWindowCheckBox.IsChecked;
         }
 
-        private void ResizableCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void ResizableCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (testWindow != null)
                 testWindow.Resizable = resizableCheckBox.IsChecked;
         }
 
-        private void HasBorderCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void HasBorderCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (testWindow != null)
                 testWindow.HasBorder = hasBorderCheckBox.IsChecked;
         }
 
-        private void HasTitleBarCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void HasTitleBarCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (testWindow != null)
                 testWindow.HasTitleBar = hasTitleBarCheckBox.IsChecked;
         }
 
-        private void ActivateButton_Click(object sender, System.EventArgs e)
+        private void ActivateButton_Click(object sender, EventArgs e)
         {
             if (testWindow != null)
                 testWindow.Activate();
         }
 
-        private void Window_Activated(object sender, System.EventArgs e)
+        private void Window_Activated(object sender, EventArgs e)
         {
             UpdateActiveWindowInfoLabel();
         }
 
-        private void Window_Deactivated(object sender, System.EventArgs e)
+        private void Window_Deactivated(object sender, EventArgs e)
         {
             UpdateActiveWindowInfoLabel();
         }
 
-        private void AddOwnedWindow_Click(object sender, System.EventArgs e)
+        private void AddOwnedWindow_Click(object sender, EventArgs e)
         {
             if (testWindow == null)
                 return;
@@ -260,22 +267,46 @@ namespace WindowPropertiesSample
             ownedWindow.Show();
         }
 
-        private void StateComboBox_SelectedItemChanged(object sender, System.EventArgs e)
+        private void StateComboBox_SelectedItemChanged(object sender, EventArgs e)
         {
             if (testWindow != null)
                 testWindow.State = (WindowState)(stateComboBox.SelectedItem ?? throw new Exception());
         }
 
-        private void SetIcon1Button_Click(object sender, System.EventArgs e)
+        private void SetIcon1Button_Click(object sender, EventArgs e)
         {
             if (testWindow != null)
                 testWindow.Icon = Icons.Icon1;
         }
 
-        private void SetIcon2Button_Click(object sender, System.EventArgs e)
+        private void SetIcon2Button_Click(object sender, EventArgs e)
         {
             if (testWindow != null)
                 testWindow.Icon = Icons.Icon2;
+        }
+
+        private void SetSizeButton_Click(object sender, EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.Size = new Size(300, 300);
+        }
+
+        private void SetClientSizeButton_Click(object sender, EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.ClientSize = new Size(300, 300);
+        }
+
+        private void IncreaseLocationButton_Click(object sender, EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.Location += new Size(10, 10);
+        }
+
+        private void SetBoundsButton_Click(object sender, System.EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.Bounds = new Rect(0, 0, 400, 400);
         }
     }
 }
