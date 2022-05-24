@@ -3,7 +3,7 @@
         x:Class="WindowPropertiesSample.MainWindow"
 		Title="Window Properties Sample"
 		Width="1000"
-		Height="500"
+		Height="800"
 		Padding="10"
     StartLocation="CenterScreen"
 		Activated="Window_Activated"
