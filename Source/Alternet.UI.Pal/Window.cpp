@@ -641,6 +641,7 @@ namespace Alternet::UI
         _flags.Set(WindowFlags::Resizable, value);
         ScheduleRecreateWxWindow();
     }
+
     void Window::OnActivate(wxActivateEvent& event)
     {
         bool active = event.GetActive();
