@@ -146,11 +146,16 @@ namespace Alternet::UI
         window->SetMaxSize(size == wxSize() ? wxDefaultSize : size);
     }
 
-    void Window::OnWxWindowDestroying()
+    void Window::OnWxWindowDestroyed(wxWindow* window)
     {
+        Control::OnWxWindowDestroyed(window);
+
+        bool recreatingWxWindow = IsRecreatingWxWindow();
+
         if (GetModal())
         {
-            _flags.Set(WindowFlags::ModalLoopStopRequested, true);
+            if (!recreatingWxWindow)
+                _flags.Set(WindowFlags::ModalLoopStopRequested, true);
 
             if (_modalWindowDisabler != nullptr)
             {
@@ -163,21 +168,25 @@ namespace Alternet::UI
             }
         }
 
-        if (_flags.IsSet(WindowFlags::Modal))
+        if (_flags.IsSet(WindowFlags::Modal) && !recreatingWxWindow)
             _flags.Set(WindowFlags::Modal, false);
+    }
 
-        _flags.Set(WindowFlags::DestroyingWindow, true);
+    void Window::OnBeforeDestroyWxWindow()
+    {
+        Control::OnBeforeDestroyWxWindow();
 
-        _panel = nullptr;
+        auto wxWindow = GetWxWindow();
 
-        _frame->Unbind(wxEVT_SIZE, &Window::OnSizeChanged, this);
-        _frame->Unbind(wxEVT_MOVE, &Window::OnMove, this);
-        _frame->Unbind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
-        _frame->Unbind(wxEVT_ACTIVATE, &Window::OnActivate, this);
-        _frame->Unbind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
-        _frame->Unbind(wxEVT_ICONIZE, &Window::OnIconize, this);
+        wxWindow->Unbind(wxEVT_SIZE, &Window::OnSizeChanged, this);
+        wxWindow->Unbind(wxEVT_MOVE, &Window::OnMove, this);
+        wxWindow->Unbind(wxEVT_CLOSE_WINDOW, &Window::OnClose, this);
+        wxWindow->Unbind(wxEVT_ACTIVATE, &Window::OnActivate, this);
+        wxWindow->Unbind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
+        wxWindow->Unbind(wxEVT_ICONIZE, &Window::OnIconize, this);
 
         _frame = nullptr;
+        _panel = nullptr;
     }
 
     void Window::ApplyBounds(const Rect& value)
@@ -548,7 +557,7 @@ namespace Alternet::UI
             auto window = frame->GetWindow();
             if (window->GetIsActive())
             {
-                if (window->_flags.IsSet(WindowFlags::DestroyingWindow))
+                if (window->IsDestroyingWxWindow())
                     return nullptr;
                 
                 window->AddRef();

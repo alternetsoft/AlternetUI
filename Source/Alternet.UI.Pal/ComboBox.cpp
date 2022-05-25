@@ -172,9 +172,9 @@ namespace Alternet::UI
         ApplyItems();
     }
 
-    void ComboBox::OnWxWindowDestroying()
+    void ComboBox::OnBeforeDestroyWxWindow()
     {
-        Control::OnWxWindowDestroying();
+        Control::OnBeforeDestroyWxWindow();
         ReceiveItems();
     }
 

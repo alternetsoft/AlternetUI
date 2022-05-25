@@ -27,14 +27,6 @@ namespace Alternet::UI
         DestroyWxWindow();
     }
 
-    void Control::DestroyWxWindowAndAllChildren()
-    {
-        for (auto child : _children)
-            child->DestroyWxWindowAndAllChildren();
-
-        DestroyWxWindow();
-    }
-
     void Control::Destroy()
     {
         DestroyWxWindow();
@@ -47,35 +39,36 @@ namespace Alternet::UI
 
     void Control::OnDestroy(wxWindowDestroyEvent& event)
     {
-        if (_wxWindow == nullptr)
-            throwExInvalidOp;
+        if (!_flags.IsSet(ControlFlags::RecreatingWxWindow))
+            _wxWindow = nullptr;
 
-        _delayedValues.ReceiveIfPossible();
+        auto wxWindow = event.GetWindow();
 
-        OnWxWindowDestroying();
+        wxWindow->Unbind(wxEVT_PAINT, &Control::OnPaint, this);
+        //wxWindow->Unbind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
+        wxWindow->Unbind(wxEVT_DESTROY, &Control::OnDestroy, this);
+        wxWindow->Unbind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
+        wxWindow->Unbind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
+        wxWindow->Unbind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
+        wxWindow->Unbind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
+        wxWindow->Unbind(wxEVT_SIZE, &Control::OnSizeChanged, this);
 
-        _wxWindow->Unbind(wxEVT_PAINT, &Control::OnPaint, this);
-        //_wxWindow->Unbind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
-        _wxWindow->Unbind(wxEVT_DESTROY, &Control::OnDestroy, this);
-        _wxWindow->Unbind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
-        _wxWindow->Unbind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
-        _wxWindow->Unbind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
-        _wxWindow->Unbind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
-        _wxWindow->Unbind(wxEVT_SIZE, &Control::OnSizeChanged, this);
+        RemoveWxWindowControlAssociation(wxWindow);
 
-        RemoveWxWindowControlAssociation(_wxWindow);
-
-        _wxWindow = nullptr;
-
-        OnWxWindowDestroyed();
+        OnWxWindowDestroyed(wxWindow);
         RaiseEvent(ControlEvent::Destroyed);
+
+        if (_flags.IsSet(ControlFlags::RecreatingWxWindow))
+            _flags.Set(ControlFlags::RecreatingWxWindow, false);
     }
 
     void Control::DestroyWxWindow()
     {
         if (_wxWindow != nullptr)
         {
+            OnBeforeDestroyWxWindow();
             _wxWindow->Destroy();
+            _wxWindow = nullptr;
         }
     }
 
@@ -171,6 +164,7 @@ namespace Alternet::UI
     void Control::CreateWxWindow()
     {
         _flags.Set(ControlFlags::CreatingWxWindow, true);
+        _flags.Set(ControlFlags::DestroyingWxWindow, false);
         wxWindow* parentingWxWindow = nullptr;
         if (_parent != nullptr)
             parentingWxWindow = _parent->GetParentingWxWindow(this);
@@ -210,6 +204,7 @@ namespace Alternet::UI
         if (!IsWxWindowCreated())
             return;
 
+        _flags.Set(ControlFlags::RecreatingWxWindow, true);
         DestroyWxWindow();
         CreateWxWindow();
     }
@@ -218,11 +213,13 @@ namespace Alternet::UI
     {
     }
 
-    void Control::OnWxWindowDestroying()
+    void Control::OnBeforeDestroyWxWindow()
     {
+        _flags.Set(ControlFlags::DestroyingWxWindow, true);
+        _delayedValues.ReceiveIfPossible();
     }
 
-    void Control::OnWxWindowDestroyed()
+    void Control::OnWxWindowDestroyed(wxWindow* window)
     {
     }
 
@@ -340,6 +337,16 @@ namespace Alternet::UI
     void Control::HideCore()
     {
         GetWxWindow()->Hide();
+    }
+
+    bool Control::IsDestroyingWxWindow()
+    {
+        return _flags.IsSet(ControlFlags::DestroyingWxWindow);
+    }
+
+    bool Control::IsRecreatingWxWindow()
+    {
+        return _flags.IsSet(ControlFlags::RecreatingWxWindow);
     }
 
     bool Control::RetrieveEnabled()

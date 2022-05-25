@@ -36,8 +36,8 @@ namespace Alternet::UI
         void ScheduleRecreateWxWindow();
 
         virtual void OnWxWindowCreated();
-        virtual void OnWxWindowDestroying();
-        virtual void OnWxWindowDestroyed();
+        virtual void OnBeforeDestroyWxWindow();
+        virtual void OnWxWindowDestroyed(wxWindow* window);
 
         DelayedValues& GetDelayedValues();
 
@@ -59,6 +59,9 @@ namespace Alternet::UI
         virtual void ShowCore();
         virtual void HideCore();
 
+        bool IsDestroyingWxWindow();
+        bool IsRecreatingWxWindow();
+
     private:
         enum class DelayedControlFlags
         {
@@ -77,6 +80,8 @@ namespace Alternet::UI
             UserPaint = 1 << 3,
             InitInProgress = 1 << 4,
             PostInitWxWindowRecreationPending = 1 << 5,
+            DestroyingWxWindow = 1 << 6,
+            RecreatingWxWindow = 1 << 7,
         };
 
         std::vector<std::function<void()>> _postInitActions;
@@ -121,8 +126,6 @@ namespace Alternet::UI
 
         void UpdateWxWindowParent();
         void DestroyWxWindow();
-
-        void DestroyWxWindowAndAllChildren();
 
         Size GetClientSizeCore();
 

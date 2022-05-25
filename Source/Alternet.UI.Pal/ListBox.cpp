@@ -166,9 +166,9 @@ namespace Alternet::UI
         ApplyItems();
     }
 
-    void ListBox::OnWxWindowDestroying()
+    void ListBox::OnBeforeDestroyWxWindow()
     {
-        Control::OnWxWindowDestroying();
+        Control::OnBeforeDestroyWxWindow();
         ReceiveItems();
     }
 

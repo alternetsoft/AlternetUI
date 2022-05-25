@@ -52,7 +52,8 @@ namespace Alternet::UI
 
         void ApplyBounds(const Rect& value) override;
 
-        void OnWxWindowDestroying() override;
+        void OnBeforeDestroyWxWindow() override;
+        void OnWxWindowDestroyed(wxWindow* window) override;
 
         void ShowCore() override;
 
@@ -110,11 +111,10 @@ namespace Alternet::UI
             Resizable = 1 << 6,
             HasBorder = 1 << 7,
             HasTitleBar = 1 << 8,
-            DestroyingWindow = 1 << 9,
-            Active = 1 << 10,
-            Modal = 1 << 11,
-            ModalLoopStopRequested = 1 << 12,
-            ShownOnce = 1 << 13
+            Active = 1 << 9,
+            Modal = 1 << 10,
+            ModalLoopStopRequested = 1 << 11,
+            ShownOnce = 1 << 12
         };
 
         DelayedFlags<Window, DelayedWindowFlags> _delayedFlags;

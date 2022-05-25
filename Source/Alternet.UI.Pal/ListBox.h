@@ -16,7 +16,7 @@ namespace Alternet::UI
 
     protected:
         void OnWxWindowCreated() override;
-        void OnWxWindowDestroying() override;
+        void OnBeforeDestroyWxWindow() override;
 
     private:
 
