@@ -198,7 +198,7 @@ namespace Alternet::UI
         {
             wxWindow->SetSize(rect);
         }
-        else if (_startLocation == WindowStartLocation::Default)
+        else
         {
             wxWindow->SetSize(rect.width, rect.height);
         }
