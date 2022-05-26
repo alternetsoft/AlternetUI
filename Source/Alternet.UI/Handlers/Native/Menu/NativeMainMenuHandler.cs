@@ -31,9 +31,7 @@ namespace Alternet.UI
             if (handler == null)
                 throw new InvalidOperationException();
 
-            handler.EnsureNativeSubmenuCreated();
-
-            var submenu = handler.NativeControl.Submenu ?? throw new Exception();
+            var submenu = handler.EnsureNativeSubmenuCreated() ?? throw new Exception();
 
             NativeControl.InsertItemAt(index, submenu, item.Text);
 
