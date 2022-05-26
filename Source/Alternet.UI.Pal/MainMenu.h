@@ -12,9 +12,9 @@ namespace Alternet::UI
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
+        wxMenuBar* GetWxMenuBar();
     protected:
 
     private:
-    
     };
 }

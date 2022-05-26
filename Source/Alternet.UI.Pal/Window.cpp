@@ -77,7 +77,8 @@ namespace Alternet::UI
         _title(*this, u"", &Control::IsWxWindowCreated, &Window::RetrieveTitle, &Window::ApplyTitle),
         _state(*this, WindowState::Normal, &Control::IsWxWindowCreated, &Window::RetrieveState, &Window::ApplyState),
         _minimumSize(*this, Size(), &Control::IsWxWindowCreated, &Window::RetrieveMinimumSize, &Window::ApplyMinimumSize),
-        _maximumSize(*this, Size(), &Control::IsWxWindowCreated, &Window::RetrieveMaximumSize, &Window::ApplyMaximumSize)
+        _maximumSize(*this, Size(), &Control::IsWxWindowCreated, &Window::RetrieveMaximumSize, &Window::ApplyMaximumSize),
+        _menu(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveMenu, &Window::ApplyMenu)
     {
         GetDelayedValues().Add(&_title);
         GetDelayedValues().Add(&_state);
@@ -96,11 +97,13 @@ namespace Alternet::UI
 
     MainMenu* Window::GetMenu()
     {
-        return nullptr;
+        return _menu.Get();
     }
 
     void Window::SetMenu(MainMenu* value)
     {
+        _storedMenu = value;
+        _menu.Set(value);
     }
 
     WindowState Window::RetrieveState()
@@ -153,6 +156,16 @@ namespace Alternet::UI
         auto window = GetWxWindow();
         auto size = fromDip(value, window);
         window->SetMaxSize(size == wxSize() ? wxDefaultSize : size);
+    }
+
+    MainMenu* Window::RetrieveMenu()
+    {
+        return _storedMenu;
+    }
+
+    void Window::ApplyMenu(MainMenu* const& value)
+    {
+        _frame->SetMenuBar(value == nullptr ? nullptr : value->GetWxMenuBar());
     }
 
     void Window::OnWxWindowDestroyed(wxWindow* window)

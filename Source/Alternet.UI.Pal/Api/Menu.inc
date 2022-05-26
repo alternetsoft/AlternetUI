@@ -5,7 +5,6 @@ int GetItemsCount();
 
 void InsertItemAt(int index, MenuItem* item);
 void RemoveItemAt(int index);
-void ClearItems();
 public:
 Menu();
 protected:

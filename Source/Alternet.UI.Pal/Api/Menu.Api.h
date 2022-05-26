@@ -37,10 +37,3 @@ ALTERNET_UI_API void Menu_RemoveItemAt_(Menu* obj, int index)
         });
 }
 
-ALTERNET_UI_API void Menu_ClearItems_(Menu* obj)
-{
-    MarshalExceptions<void>([&](){
-            obj->ClearItems();
-        });
-}
-

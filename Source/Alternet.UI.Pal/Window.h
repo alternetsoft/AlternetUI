@@ -88,6 +88,9 @@ namespace Alternet::UI
         Size RetrieveMaximumSize();
         void ApplyMaximumSize(const Size& value);
 
+        MainMenu* RetrieveMenu();
+        void ApplyMenu(MainMenu* const& value);
+
         long GetWindowStyle();
 
         void ApplyIcon(Frame* value);
@@ -127,6 +130,10 @@ namespace Alternet::UI
 
         DelayedValue<Window, Size> _minimumSize;
         DelayedValue<Window, Size> _maximumSize;
+        
+        DelayedValue<Window, MainMenu*> _menu;
+
+        MainMenu* _storedMenu = nullptr;
 
         Size _appliedMinimumSize;
         Size _appliedMaximumSize;

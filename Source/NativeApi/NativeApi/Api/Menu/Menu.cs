@@ -9,7 +9,5 @@ namespace NativeApi.Api
         public void InsertItemAt(int index, MenuItem item) => throw new Exception();
 
         public void RemoveItemAt(int index) => throw new Exception();
-
-        public void ClearItems() => throw new Exception();
     }
 }

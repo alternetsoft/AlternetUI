@@ -13,7 +13,27 @@ namespace Alternet::UI
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
+        wxMenu* GetWxMenu();
+
+        static Menu* TryFindMenuByWxMenu(wxMenu* wxMenu);
+
+        WX_DECLARE_HASH_MAP(wxMenu*, Menu*,
+            wxPointerHash, wxPointerEqual,
+            MenusByWxMenusMap);
+
     protected:
+
+        void ShowCore() override;
+
     private:
+
+        wxMenu* _menu;
+
+
+        static MenusByWxMenusMap s_menusByWxMenusMap;
+
+        static void AssociateMenuWithWxMenu(wxMenu* wxMenu, Menu* menu);
+        static void RemoveWxMenuAssociation(wxMenu* wxMenu);
+
     };
 }

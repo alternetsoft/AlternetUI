@@ -5,7 +5,6 @@ int GetItemsCount();
 
 void InsertItemAt(int index, Menu* menu, const string& text);
 void RemoveItemAt(int index);
-void ClearItems();
 void SetItemText(int index, const string& text);
 public:
 MainMenu();

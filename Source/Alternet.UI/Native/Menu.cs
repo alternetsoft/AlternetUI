@@ -46,12 +46,6 @@ namespace Alternet.UI.Native
             NativeApi.Menu_RemoveItemAt_(NativePointer, index);
         }
         
-        public void ClearItems()
-        {
-            CheckDisposed();
-            NativeApi.Menu_ClearItems_(NativePointer);
-        }
-        
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -69,9 +63,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_RemoveItemAt_(IntPtr obj, int index);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_ClearItems_(IntPtr obj);
             
         }
     }

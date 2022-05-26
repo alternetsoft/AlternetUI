@@ -10,8 +10,6 @@ namespace NativeApi.Api
 
         public void RemoveItemAt(int index) => throw new Exception();
 
-        public void ClearItems() => throw new Exception();
-
         public void SetItemText(int index, string text) => throw new Exception();
     }
 }

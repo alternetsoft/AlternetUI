@@ -11,27 +11,31 @@ namespace Alternet::UI
 
     int MainMenu::GetItemsCount()
     {
-        return 0;
+        return GetWxMenuBar()->GetMenuCount();
     }
 
     void MainMenu::InsertItemAt(int index, Menu* menu, const string& text)
     {
+        GetWxMenuBar()->Insert(index, menu->GetWxMenu(), wxStr(text));
     }
 
     void MainMenu::RemoveItemAt(int index)
     {
-    }
-
-    void MainMenu::ClearItems()
-    {
+        GetWxMenuBar()->Remove(index);
     }
 
     void MainMenu::SetItemText(int index, const string& text)
     {
+        GetWxMenuBar()->SetMenuLabel(index, wxStr(text));
     }
 
     wxWindow* MainMenu::CreateWxWindowCore(wxWindow* parent)
     {
-        return nullptr;
+        return new wxMenuBar();
+    }
+    
+    wxMenuBar* MainMenu::GetWxMenuBar()
+    {
+        return dynamic_cast<wxMenuBar*>(GetWxWindow());
     }
 }
