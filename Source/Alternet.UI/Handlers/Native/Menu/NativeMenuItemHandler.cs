@@ -1,10 +1,12 @@
+using System;
+
 namespace Alternet.UI
 {
-    internal class NativeMainMenuHandler : NativeControlHandler<MainMenu, Native.MainMenu>
+    internal class NativeMenuItemHandler : NativeControlHandler<MenuItem, Native.MenuItem>
     {
         internal override Native.Control CreateNativeControl()
         {
-            return new Native.MainMenu();
+            return new Native.MenuItem();
         }
 
         protected override void OnAttach()
@@ -23,6 +25,11 @@ namespace Alternet.UI
 
             //Control.TextChanged -= Control_TextChanged;
             //NativeControl.Click -= NativeControl_Click;
+        }
+
+        internal void EnsureNativeSubmenuCreated()
+        {
+            throw new NotImplementedException();
         }
 
         //private void NativeControl_Click(object? sender, System.EventArgs? e)
