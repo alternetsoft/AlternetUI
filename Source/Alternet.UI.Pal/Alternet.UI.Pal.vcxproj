@@ -203,7 +203,10 @@
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="ListBox.cpp" />
     <ClCompile Include="ListView.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="ManagedServerApi.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="MenuItem.cpp" />
     <ClCompile Include="MessageBox_.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="NumericUpDown.cpp" />
@@ -247,6 +250,9 @@
     <ClInclude Include="Api\Label.Api.h" />
     <ClInclude Include="Api\ListBox.Api.h" />
     <ClInclude Include="Api\ListView.Api.h" />
+    <ClInclude Include="Api\MainMenu.Api.h" />
+    <ClInclude Include="Api\Menu.Api.h" />
+    <ClInclude Include="Api\MenuItem.Api.h" />
     <ClInclude Include="Api\MessageBox_.Api.h" />
     <ClInclude Include="Api\Mouse.Api.h" />
     <ClInclude Include="Api\NativeEventDataTypes.h" />
@@ -291,7 +297,10 @@
     <ClInclude Include="Label.h" />
     <ClInclude Include="ListBox.h" />
     <ClInclude Include="ListView.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="ManagedInputStream.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="MenuItem.h" />
     <ClInclude Include="MessageBox_.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="NumericUpDown.h" />
@@ -329,6 +338,9 @@
     <None Include="Api\Label.inc" />
     <None Include="Api\ListBox.inc" />
     <None Include="Api\ListView.inc" />
+    <None Include="Api\MainMenu.inc" />
+    <None Include="Api\Menu.inc" />
+    <None Include="Api\MenuItem.inc" />
     <None Include="Api\MessageBox_.inc" />
     <None Include="Api\Mouse.inc" />
     <None Include="Api\NumericUpDown.inc" />
