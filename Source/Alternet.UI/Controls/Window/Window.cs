@@ -133,6 +133,44 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? IconChanged;
 
+        private MainMenu? menu = null;
+
+        /// <summary>
+        /// Gets or sets the <see cref="MainMenu"/> that is displayed in the window.
+        /// </summary>
+        /// <value>
+        /// A <see cref="MainMenu"/> that represents the menu to display in the window.
+        /// </value>
+        /// <remarks>
+        /// You can use this property to switch between complete menu sets at run time.
+        /// </remarks>
+        public MainMenu? Menu
+        {
+            get => menu;
+
+            set
+            {
+                if (menu == value)
+                    return;
+
+                menu = value;
+                OnMenuChanged(EventArgs.Empty);
+                MenuChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="Menu"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnMenuChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="Menu"/> property changes.
+        /// </summary>
+        public event EventHandler? MenuChanged;
 
         /// <summary>
         /// Gets an array of <see cref="Window"/> objects that represent all windows that are owned by this window.

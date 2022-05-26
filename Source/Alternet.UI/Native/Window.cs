@@ -359,6 +359,24 @@ namespace Alternet.UI.Native
             }
         }
         
+        public MainMenu? Menu
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetMenu_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<MainMenu>(n, p => new MainMenu(p));
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetMenu_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+            }
+        }
+        
         public void ShowModal()
         {
             CheckDisposed();
@@ -566,6 +584,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetIcon_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Window_GetMenu_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetMenu_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Window_OpenOwnedWindowsArray_(IntPtr obj);

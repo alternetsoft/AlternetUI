@@ -29,6 +29,7 @@ namespace Alternet.UI
             ApplyHasTitleBar();
             ApplyState();
             ApplyIcon();
+            ApplyMenu();
 
             Control.TitleChanged += Control_TitleChanged;
 
@@ -45,6 +46,7 @@ namespace Alternet.UI
 
             Control.StateChanged += Control_StateChanged;
             Control.IconChanged += Control_IconChanged;
+            Control.MenuChanged += Control_MenuChanged;
 
             NativeControl.Closing += Control_Closing;
             NativeControl.SizeChanged += NativeControl_SizeChanged;
@@ -57,6 +59,11 @@ namespace Alternet.UI
         private void Control_IconChanged(object? sender, EventArgs e)
         {
             ApplyIcon();
+        }
+
+        private void Control_MenuChanged(object? sender, EventArgs e)
+        {
+            ApplyMenu();
         }
 
         /// <summary>
@@ -86,6 +93,11 @@ namespace Alternet.UI
         private void ApplyIcon()
         {
             NativeControl.Icon = Control.Icon?.NativeImageSet ?? null;
+        }
+
+        private void ApplyMenu()
+        {
+            NativeControl.Menu = (Control.Menu?.Handler as NativeMainMenuHandler)?.NativeControl ?? null;
         }
 
         private void NativeControl_Deactivated(object? sender, EventArgs e)
@@ -354,6 +366,7 @@ namespace Alternet.UI
             Control.HasTitleBarChanged -= Control_HasTitleBarChanged;
             Control.StateChanged -= Control_StateChanged;
             Control.IconChanged -= Control_IconChanged;
+            Control.MenuChanged -= Control_MenuChanged;
 
             base.OnDetach();
         }

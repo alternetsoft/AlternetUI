@@ -73,6 +73,10 @@ void SetState(WindowState value);
 ImageSet* GetIcon();
 void SetIcon(ImageSet* value);
 
+
+MainMenu* GetMenu();
+void SetMenu(MainMenu* value);
+
 void* OpenOwnedWindowsArray();
 int GetOwnedWindowsItemCount(void* array);
 Window* GetOwnedWindowsItemAt(void* array, int index);

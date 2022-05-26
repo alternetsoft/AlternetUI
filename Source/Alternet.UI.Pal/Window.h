@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "Control.h"
 #include "ImageSet.h"
+#include "MainMenu.h"
 
 namespace Alternet::UI
 {

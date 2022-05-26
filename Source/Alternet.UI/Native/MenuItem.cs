@@ -74,13 +74,13 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Menu Submenu
+        public Menu? Submenu
         {
             get
             {
                 CheckDisposed();
                 var n = NativeApi.MenuItem_GetSubmenu_(NativePointer);
-                var m = NativeObject.GetFromNativePointer<Menu>(n, p => new Menu(p))!;
+                var m = NativeObject.GetFromNativePointer<Menu>(n, p => new Menu(p));
                 ReleaseNativeObjectPointer(n);
                 return m;
             }
@@ -88,7 +88,7 @@ namespace Alternet.UI.Native
             set
             {
                 CheckDisposed();
-                NativeApi.MenuItem_SetSubmenu_(NativePointer, value.NativePointer);
+                NativeApi.MenuItem_SetSubmenu_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
             }
         }
         

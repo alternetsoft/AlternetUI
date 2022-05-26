@@ -94,6 +94,15 @@ namespace Alternet::UI
             _icon->Release();
     }
 
+    MainMenu* Window::GetMenu()
+    {
+        return nullptr;
+    }
+
+    void Window::SetMenu(MainMenu* value)
+    {
+    }
+
     WindowState Window::RetrieveState()
     {
         if (_frame->IsMaximized())

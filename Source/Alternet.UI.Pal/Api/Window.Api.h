@@ -4,6 +4,7 @@
 
 #include "Window.h"
 #include "ImageSet.h"
+#include "MainMenu.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -258,6 +259,20 @@ ALTERNET_UI_API void Window_SetIcon_(Window* obj, ImageSet* value)
 {
     MarshalExceptions<void>([&](){
             obj->SetIcon(value);
+        });
+}
+
+ALTERNET_UI_API MainMenu* Window_GetMenu_(Window* obj)
+{
+    return MarshalExceptions<MainMenu*>([&](){
+            return obj->GetMenu();
+        });
+}
+
+ALTERNET_UI_API void Window_SetMenu_(Window* obj, MainMenu* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetMenu(value);
         });
 }
 

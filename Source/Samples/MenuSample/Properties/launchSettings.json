@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MenuSample": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
