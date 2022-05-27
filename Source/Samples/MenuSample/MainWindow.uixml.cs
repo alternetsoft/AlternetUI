@@ -24,6 +24,10 @@ namespace MenuSample
 
             fileItem.Items.Add(new MenuItem("E&xit", (o, e) => Close()));
             Menu.Items.Add(fileItem);
+
+            var helpItem = new MenuItem("&Help");
+            helpItem.Items.Add(new MenuItem("&About...", (o, e) => MessageBox.Show("About")));
+            Menu.Items.Add(helpItem);
         }
     }
 }
