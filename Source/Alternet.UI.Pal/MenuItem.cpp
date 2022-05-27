@@ -21,7 +21,7 @@ namespace Alternet::UI
 
         // Have to pass space because the validation check does not allow for empty string.
         auto text = _text;
-        auto title = text.empty() ? " " : wxStr(text);
+        auto title = text.empty() ? wxString(" ") : wxStr(text);
 
         _menuItem = new wxMenuItem(
                 nullptr,
