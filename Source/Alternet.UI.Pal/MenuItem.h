@@ -19,14 +19,25 @@ namespace Alternet::UI
 
         void RaiseClick();
 
+        void SetParentMenu(Menu* value, optional<int> index);
+
     protected:
 
         void ShowCore() override;
 
     private:
 
-        wxMenuItem* _menuItem;
+        wxMenuItem* _menuItem = nullptr;
+        string _text;
+
+        Menu* _parentMenu = nullptr;
+        optional<int> _indexInParentMenu;
 
         inline static std::map<int, MenuItem*> s_itemsByIdsMap;
+
+        void CreateWxMenuItem();
+        void DestroyWxMenuItem();
+        void RecreateWxMenuItem();
+        void RecreateWxMenuItemIfNeeded();
     };
 }

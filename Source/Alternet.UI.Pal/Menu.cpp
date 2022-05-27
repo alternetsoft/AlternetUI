@@ -34,12 +34,18 @@ namespace Alternet::UI
 
     void Menu::InsertItemAt(int index, MenuItem* item)
     {
+        _items.insert(_items.begin() + index, item);
         _menu->Insert(index, item->GetWxMenuItem());
+        item->SetParentMenu(this, index);
     }
 
     void Menu::RemoveItemAt(int index)
     {
-        _menu->Remove(_menu->GetMenuItems()[index]);
+        auto it = _items.begin() + index;
+        auto item = *it;
+        _items.erase(it);
+        _menu->Remove(item->GetWxMenuItem());
+        item->SetParentMenu(nullptr, nullopt);
     }
 
     wxWindow* Menu::CreateWxWindowCore(wxWindow* parent)

@@ -4,18 +4,37 @@
 
 namespace Alternet::UI
 {
-    MenuItem::MenuItem() :
-        _menuItem(
-            new wxMenuItem(
-                nullptr,
-                IdManager::AllocateId(),
-                " ")) // have to pass space because the validation check does not allow for empty string.
+    MenuItem::MenuItem()
     {
-        s_itemsByIdsMap[_menuItem->GetId()] = this;
+        CreateWxMenuItem();
     }
 
     MenuItem::~MenuItem()
     {
+        DestroyWxMenuItem();
+    }
+
+    void MenuItem::CreateWxMenuItem()
+    {
+        if (_menuItem != nullptr)
+            throwExInvalidOp;
+
+        // Have to pass space because the validation check does not allow for empty string.
+        auto text = _text;
+        auto title = text.empty() ? " " : wxStr(text);
+
+        _menuItem = new wxMenuItem(
+                nullptr,
+                IdManager::AllocateId(),
+                title);
+        s_itemsByIdsMap[_menuItem->GetId()] = this;
+    }
+
+    void MenuItem::DestroyWxMenuItem()
+    {
+        if (_menuItem == nullptr)
+            throwExInvalidOp;
+
         auto id = _menuItem->GetId();
         s_itemsByIdsMap.erase(id);
         IdManager::FreeId(id);
@@ -24,14 +43,52 @@ namespace Alternet::UI
         _menuItem = nullptr;
     }
 
+    void MenuItem::RecreateWxMenuItem()
+    {
+        bool wasCreated = _menuItem != nullptr;
+
+        if (wasCreated)
+            DestroyWxMenuItem();
+        
+        CreateWxMenuItem();
+
+        if (wasCreated)
+        {
+            auto parent = _parentMenu;
+            if (parent != nullptr)
+            {
+                if (!_indexInParentMenu.has_value())
+                    throwExInvalidOp;
+                auto index = _indexInParentMenu.value();
+                parent->RemoveItemAt(index);
+                parent->InsertItemAt(index, this);
+            }
+        }
+    }
+
+    void MenuItem::RecreateWxMenuItemIfNeeded()
+    {
+#ifdef __WXOSX_COCOA__
+        RecreateWxMenuItem();
+#endif
+    }
+
     string MenuItem::GetText()
     {
-        return wxStr(_menuItem->GetItemLabel());
+        return _text;
     }
 
     void MenuItem::SetText(const string& value)
     {
+        _text = value;
         _menuItem->SetItemLabel(wxStr(value));
+        RecreateWxMenuItemIfNeeded();
+    }
+
+    void MenuItem::SetParentMenu(Menu* value, optional<int> index)
+    {
+        _parentMenu = value;
+        _indexInParentMenu = index;
     }
 
     bool MenuItem::GetChecked()

@@ -31,6 +31,7 @@ namespace Alternet::UI
 
         wxMenu* _menu;
 
+        std::vector<MenuItem*> _items;
 
         static MenusByWxMenusMap s_menusByWxMenusMap;
 
