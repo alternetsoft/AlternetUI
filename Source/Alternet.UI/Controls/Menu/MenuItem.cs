@@ -53,8 +53,12 @@ namespace Alternet.UI
         string text = string.Empty;
 
         /// <summary>
-        /// Gets or sets a value indicating the caption of the menu item. Setting this property to "-" makes the item a separator.
+        /// Gets or sets a value indicating the caption of the menu item.
         /// </summary>
+        /// <remarks>
+        /// Setting this property to "-" makes the item a separator.
+        /// Use underscore (<c>_</c>) symbol before a character to make it an access key.
+        /// </remarks>
         public string Text
         {
             get

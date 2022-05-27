@@ -29,6 +29,19 @@ namespace Alternet.UI
             return GetParentWindow(c.Parent);
         }
 
+        /// <inheritdoc />
+        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection
+        {
+            get
+            {
+                foreach (var item in base.LogicalChildrenCollection)
+                    yield return item;
+
+                if (Menu != null)
+                    yield return Menu;
+            }
+        }
+
         /// <summary>
         /// Opens a window and returns only when the newly opened window is closed.
         /// User interaction with all other windows in the application is disabled until the modal window is closed.

@@ -21,6 +21,8 @@ namespace Alternet::UI
 
         void SetParentMenu(Menu* value, optional<int> index);
 
+        static wxString CoerceWxItemText(string value);
+
     protected:
 
         void ShowCore() override;

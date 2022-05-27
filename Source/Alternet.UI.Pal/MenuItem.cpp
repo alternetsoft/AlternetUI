@@ -19,14 +19,10 @@ namespace Alternet::UI
         if (_menuItem != nullptr)
             throwExInvalidOp;
 
-        // Have to pass space because the validation check does not allow for empty string.
-        auto text = _text;
-        auto title = text.empty() ? wxString(" ") : wxStr(text);
-
         _menuItem = new wxMenuItem(
                 nullptr,
                 IdManager::AllocateId(),
-                title);
+                CoerceWxItemText(_text));
         s_itemsByIdsMap[_menuItem->GetId()] = this;
     }
 
@@ -73,6 +69,14 @@ namespace Alternet::UI
 #endif
     }
 
+    /*static*/ wxString MenuItem::CoerceWxItemText(string value)
+    {
+        // Have to pass space because the validation check does not allow for empty string.
+        auto text = value.empty() ? wxString(" ") : wxStr(value);
+        text.Replace("_", "&");
+        return text;
+    }
+
     string MenuItem::GetText()
     {
         return _text;
@@ -81,7 +85,7 @@ namespace Alternet::UI
     void MenuItem::SetText(const string& value)
     {
         _text = value;
-        _menuItem->SetItemLabel(wxStr(value));
+        _menuItem->SetItemLabel(CoerceWxItemText(value));
         RecreateWxMenuItemIfNeeded();
     }
 

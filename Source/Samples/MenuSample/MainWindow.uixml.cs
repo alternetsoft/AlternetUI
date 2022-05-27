@@ -1,4 +1,3 @@
-using System;
 using Alternet.UI;
 
 namespace MenuSample
@@ -8,26 +7,16 @@ namespace MenuSample
         public MainWindow()
         {
             InitializeComponent();
-
-            Menu = new MainMenu();
-
-            var fileItem = new MenuItem("&File");
-
-            fileItem.Items.Add(new MenuItem("&Open...", (o, e) => MessageBox.Show("Open")));
-
-
-            var exportItem = new MenuItem("&Export");
-            exportItem.Items.Add(new MenuItem("To &PDF", (o, e) => MessageBox.Show("PDF")));
-            exportItem.Items.Add(new MenuItem("To &PNG", (o, e) => MessageBox.Show("PNG")));
-            fileItem.Items.Add(exportItem);
-
-
-            fileItem.Items.Add(new MenuItem("E&xit", (o, e) => Close()));
-            Menu.Items.Add(fileItem);
-
-            var helpItem = new MenuItem("&Help");
-            helpItem.Items.Add(new MenuItem("&About...", (o, e) => MessageBox.Show("About")));
-            Menu.Items.Add(helpItem);
         }
+
+        private void OpenMenuItem_Click(object sender, System.EventArgs e) => MessageBox.Show("Open");
+
+        private void ExportToPdfMenuItem_Click(object sender, System.EventArgs e) => MessageBox.Show("Export to PDF");
+
+        private void ExportToPngMenuItem_Click(object sender, System.EventArgs e) => MessageBox.Show("Export to PNG");
+
+        private void ExitMenuItem_Click(object sender, System.EventArgs e) => Close();
+
+        private void AboutMenuItem_Click(object sender, System.EventArgs e) => MessageBox.Show("AlterNET UI Menu Sample Application.", "About");
     }
 }

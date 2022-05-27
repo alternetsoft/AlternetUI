@@ -2,4 +2,19 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="MenuSample.MainWindow"
         Title="Menu Sample">
+  <Window.Menu>
+    <MainMenu>
+      <MenuItem Text="_File">
+        <MenuItem Text="_Open..." Name="openMenuItem" Click="OpenMenuItem_Click" />
+        <MenuItem Text="_Export">
+          <MenuItem Text="Export to P_DF" Name="exportToPdfMenuItem" Click="ExportToPdfMenuItem_Click" />
+          <MenuItem Text="Export to P_NG" Name="exportToPngMenuItem" Click="ExportToPngMenuItem_Click" />
+        </MenuItem>
+        <MenuItem Text="E_xit" Name="exitMenuItem" Click="ExitMenuItem_Click" />
+      </MenuItem>
+      <MenuItem Text="_Help">
+        <MenuItem Text="_About" Name="aboutMenuItem" Click="AboutMenuItem_Click" />
+      </MenuItem>
+    </MainMenu>
+  </Window.Menu>
 </Window>

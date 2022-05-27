@@ -1,4 +1,5 @@
 #include "MainMenu.h"
+#include "MenuItem.h"
 
 namespace Alternet::UI
 {
@@ -24,7 +25,7 @@ namespace Alternet::UI
 
     void MainMenu::InsertItemAt(int index, Menu* menu, const string& text)
     {
-        GetWxMenuBar()->Insert(index, menu->GetWxMenu(), wxStr(text));
+        GetWxMenuBar()->Insert(index, menu->GetWxMenu(), MenuItem::CoerceWxItemText(text));
     }
 
     void MainMenu::RemoveItemAt(int index)
@@ -34,7 +35,7 @@ namespace Alternet::UI
 
     void MainMenu::SetItemText(int index, const string& text)
     {
-        GetWxMenuBar()->SetMenuLabel(index, wxStr(text));
+        GetWxMenuBar()->SetMenuLabel(index, MenuItem::CoerceWxItemText(text));
     }
 
     wxWindow* MainMenu::CreateWxWindowCore(wxWindow* parent)
