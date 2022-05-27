@@ -14,6 +14,8 @@ namespace Alternet::UI
 
         wxMenuBar* GetWxMenuBar();
     protected:
+        void ApplyEnabled(bool value) override;
+        void ApplyBounds(const Rect& value) override;
 
     private:
     };

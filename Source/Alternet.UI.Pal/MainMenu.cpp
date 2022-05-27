@@ -9,6 +9,14 @@ namespace Alternet::UI
     {
     }
 
+    void MainMenu::ApplyEnabled(bool value)
+    {
+    }
+
+    void MainMenu::ApplyBounds(const Rect& value)
+    {
+    }
+
     int MainMenu::GetItemsCount()
     {
         return GetWxMenuBar()->GetMenuCount();

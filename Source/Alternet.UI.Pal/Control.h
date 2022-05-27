@@ -62,6 +62,7 @@ namespace Alternet::UI
         bool IsDestroyingWxWindow();
         bool IsRecreatingWxWindow();
 
+        virtual void ApplyEnabled(bool value);
     private:
         enum class DelayedControlFlags
         {
@@ -105,7 +106,6 @@ namespace Alternet::UI
         void ApplyVisible(bool value);
 
         bool RetrieveEnabled();
-        void ApplyEnabled(bool value);
 
         bool RetrieveFrozen();
         void ApplyFrozen(bool value);
