@@ -15,6 +15,10 @@ namespace Alternet::UI
 
         wxMenuItem* GetWxMenuItem();
 
+        static MenuItem* GetMenuItemById(int id);
+
+        void RaiseClick();
+
     protected:
 
         void ShowCore() override;
@@ -22,5 +26,7 @@ namespace Alternet::UI
     private:
 
         wxMenuItem* _menuItem;
+
+        inline static std::map<int, MenuItem*> s_itemsByIdsMap;
     };
 }

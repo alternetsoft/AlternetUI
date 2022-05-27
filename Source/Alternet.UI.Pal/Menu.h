@@ -21,6 +21,8 @@ namespace Alternet::UI
             wxPointerHash, wxPointerEqual,
             MenusByWxMenusMap);
 
+        void OnMenuCommand(wxCommandEvent& evt);
+
     protected:
 
         void ShowCore() override;

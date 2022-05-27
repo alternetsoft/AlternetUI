@@ -8,13 +8,23 @@ namespace Alternet::UI
     Menu::Menu() : _menu(new wxMenu())
     {
         AssociateMenuWithWxMenu(_menu, this);
+
+        _menu->Bind(wxEVT_MENU, &Menu::OnMenuCommand, this);
     }
 
     Menu::~Menu()
     {
+        _menu->Unbind(wxEVT_MENU, &Menu::OnMenuCommand, this);
+
         RemoveWxMenuAssociation(_menu);
         delete _menu;
         _menu = nullptr;
+    }
+
+    void Menu::OnMenuCommand(wxCommandEvent& evt)
+    {
+        auto item = MenuItem::GetMenuItemById(evt.GetId());
+        item->RaiseClick();
     }
 
     int Menu::GetItemsCount()

@@ -290,6 +290,7 @@
     <ClInclude Include="GraphicsPath.h" />
     <ClInclude Include="GroupBox.h" />
     <ClInclude Include="HatchBrush.h" />
+    <ClInclude Include="IdManager.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageList.h" />
     <ClInclude Include="ImageSet.h" />
