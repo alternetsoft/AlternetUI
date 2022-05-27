@@ -1,4 +1,6 @@
 using Alternet.UI;
+using System;
+using System.Linq;
 
 namespace MenuSample
 {
@@ -18,5 +20,58 @@ namespace MenuSample
         private void ExitMenuItem_Click(object sender, System.EventArgs e) => Close();
 
         private void AboutMenuItem_Click(object sender, System.EventArgs e) => MessageBox.Show("AlterNET UI Menu Sample Application.", "About");
+
+        MenuItem? dynamicItemsMenuItem;
+
+        MenuItem EnsureDynamicItemsMenuItem()
+        {
+            if (dynamicItemsMenuItem == null)
+            {
+                dynamicItemsMenuItem = new MenuItem("Dynamic Items");
+                Menu!.Items.Add(dynamicItemsMenuItem);
+            }
+
+            return dynamicItemsMenuItem;
+        }
+
+        private void AddDynamicMenuItemMenuItem_Click(object sender, System.EventArgs e)
+        {
+            var parent = EnsureDynamicItemsMenuItem();
+
+            int GetNextItemNumber()
+            {
+                if (parent.Items.Count == 0)
+                    return 1;
+
+                return (int)parent.Items.Last().Tag! + 1;
+            }
+
+            var number = GetNextItemNumber();
+            parent.Items.Add(new MenuItem("Item " + number, DynamicMenuItem_Click) { Tag = number });
+        }
+
+        private void DynamicMenuItem_Click(object? sender, EventArgs e)
+        {
+            var item = (MenuItem)sender!;
+            MessageBox.Show("Dynamic item clicked: " + item.Text);
+        }
+
+        private void RemoveLastDynamicMenuItemMenuItem_Click(object sender, System.EventArgs e)
+        {
+            var parent = dynamicItemsMenuItem;
+            if (parent == null)
+                return;
+
+            if (parent.Items.Count > 0)
+            {
+                parent.Items.RemoveAt(parent.Items.Count - 1);
+            }
+
+            if (parent.Items.Count == 0)
+            {
+                Menu!.Items.Remove(parent);
+                dynamicItemsMenuItem = null;
+            }
+        }
     }
 }
