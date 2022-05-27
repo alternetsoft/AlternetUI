@@ -25,6 +25,7 @@ namespace Alternet::UI
 
     protected:
 
+        void ApplyBounds(const Rect& value) override;
         void ShowCore() override;
 
     private:

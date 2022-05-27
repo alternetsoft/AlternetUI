@@ -26,6 +26,8 @@ namespace Alternet::UI
     protected:
 
         void ShowCore() override;
+        void ApplyBounds(const Rect& value) override;
+        Size SizeToClientSize(const Size& size) override;
 
     private:
 

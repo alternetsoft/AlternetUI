@@ -62,7 +62,12 @@ namespace Alternet::UI
         bool IsDestroyingWxWindow();
         bool IsRecreatingWxWindow();
 
+        bool RetrieveEnabled();
         virtual void ApplyEnabled(bool value);
+
+        virtual Size ClientSizeToSize(const Size& clientSize);
+        virtual Size SizeToClientSize(const Size& size);
+
     private:
         enum class DelayedControlFlags
         {
@@ -105,13 +110,8 @@ namespace Alternet::UI
         bool RetrieveVisible();
         void ApplyVisible(bool value);
 
-        bool RetrieveEnabled();
-
         bool RetrieveFrozen();
         void ApplyFrozen(bool value);
-
-        virtual Size ClientSizeToSize(const Size& clientSize);
-        virtual Size SizeToClientSize(const Size& size);
 
         void OnPaint(wxPaintEvent& event);
         void OnEraseBackground(wxEraseEvent& event);

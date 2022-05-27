@@ -26,6 +26,15 @@ namespace Alternet::UI
         s_itemsByIdsMap[_menuItem->GetId()] = this;
     }
 
+    void MenuItem::ApplyBounds(const Rect& value)
+    {
+    }
+
+    Size MenuItem::SizeToClientSize(const Size& size)
+    {
+        return size;
+    }
+
     void MenuItem::DestroyWxMenuItem()
     {
         if (_menuItem == nullptr)

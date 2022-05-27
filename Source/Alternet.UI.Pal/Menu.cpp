@@ -27,6 +27,10 @@ namespace Alternet::UI
         item->RaiseClick();
     }
 
+    void Menu::ApplyBounds(const Rect& value)
+    {
+    }
+
     int Menu::GetItemsCount()
     {
         return _menu->GetMenuItemCount();
