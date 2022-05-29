@@ -1,3 +1,4 @@
+using Alternet.Base.Collections;
 using System;
 
 namespace Alternet.UI
@@ -14,13 +15,20 @@ namespace Alternet.UI
             base.OnAttach();
 
             ApplyText();
+            ApplyChecked();
             ApplyItems();
 
             Control.TextChanged += Control_TextChanged;
+            Control.CheckedChanged += Control_CheckedChanged;
             NativeControl.Click += NativeControl_Click;
 
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
+        }
+
+        private void Control_CheckedChanged(object sender, EventArgs e)
+        {
+            ApplyChecked();
         }
 
         private void ApplyItems()
@@ -34,10 +42,16 @@ namespace Alternet.UI
             NativeControl.Text = Control.Text;
         }
 
+        private void ApplyChecked()
+        {
+            NativeControl.Checked = Control.Checked;
+        }
+
         protected override void OnDetach()
         {
             base.OnDetach();
 
+            Control.CheckedChanged -= Control_CheckedChanged;
             Control.TextChanged -= Control_TextChanged;
             NativeControl.Click -= NativeControl_Click;
 
@@ -45,12 +59,12 @@ namespace Alternet.UI
             Control.Items.ItemRemoved -= Items_ItemRemoved;
         }
 
-        private void Items_ItemInserted(object sender, Base.Collections.CollectionChangeEventArgs<MenuItem> e)
+        private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<MenuItem> e)
         {
             InsertItem(e.Item, e.Index);
         }
 
-        private void Items_ItemRemoved(object sender, Base.Collections.CollectionChangeEventArgs<MenuItem> e)
+        private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<MenuItem> e)
         {
             (NativeControl.Submenu ?? throw new Exception()).RemoveItemAt(e.Index);
         }

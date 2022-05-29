@@ -13,15 +13,15 @@ namespace MenuSample
             UpdateControls();
         }
 
-        private void OpenMenuItem_Click(object sender, System.EventArgs e) => MessageBox.Show("Open");
+        private void OpenMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("Open");
 
-        private void ExportToPdfMenuItem_Click(object sender, System.EventArgs e) => MessageBox.Show("Export to PDF");
+        private void ExportToPdfMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("Export to PDF");
 
-        private void ExportToPngMenuItem_Click(object sender, System.EventArgs e) => MessageBox.Show("Export to PNG");
+        private void ExportToPngMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("Export to PNG");
 
-        private void ExitMenuItem_Click(object sender, System.EventArgs e) => Close();
+        private void ExitMenuItem_Click(object sender, EventArgs e) => Close();
 
-        private void AboutMenuItem_Click(object sender, System.EventArgs e) => MessageBox.Show("AlterNET UI Menu Sample Application.", "About");
+        private void AboutMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("AlterNET UI Menu Sample Application.", "About");
 
         MenuItem? dynamicItemsMenuItem;
 
@@ -36,7 +36,7 @@ namespace MenuSample
             return dynamicItemsMenuItem;
         }
 
-        private void AddDynamicMenuItemMenuItem_Click(object sender, System.EventArgs e)
+        private void AddDynamicMenuItemMenuItem_Click(object sender, EventArgs e)
         {
             var parent = EnsureDynamicItemsMenuItem();
 
@@ -58,7 +58,7 @@ namespace MenuSample
             MessageBox.Show("Dynamic item clicked: " + item.Text);
         }
 
-        private void RemoveLastDynamicMenuItemMenuItem_Click(object sender, System.EventArgs e)
+        private void RemoveLastDynamicMenuItemMenuItem_Click(object sender, EventArgs e)
         {
             var parent = dynamicItemsMenuItem;
             if (parent == null)
@@ -76,7 +76,7 @@ namespace MenuSample
             }
         }
 
-        private void ToggleExitEnabledMenuItem_Click(object sender, System.EventArgs e)
+        private void ToggleExitEnabledMenuItem_Click(object sender, EventArgs e)
         {
             exitMenuItem.Enabled = !exitMenuItem.Enabled;
             UpdateControls();
@@ -85,6 +85,18 @@ namespace MenuSample
         private void UpdateControls()
         {
             toggleExitEnabledMenuItem.Text = (exitMenuItem.Enabled ? "Disable" : "Enable") + " Exit Menu Item";
+        }
+
+        private void ContinousScrollingMenuItem_Click(object sender, EventArgs e)
+        {
+            continousScrollingMenuItem.Checked = true;
+            pageScrollingMenuItem.Checked = false;
+        }
+
+        private void PageScrollingMenuItem_Click(object sender, EventArgs e)
+        {
+            continousScrollingMenuItem.Checked = false;
+            pageScrollingMenuItem.Checked = true;
         }
     }
 }

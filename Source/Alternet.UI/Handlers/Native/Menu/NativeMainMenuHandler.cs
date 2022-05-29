@@ -1,3 +1,4 @@
+using Alternet.Base.Collections;
 using System;
 
 namespace Alternet.UI
@@ -38,18 +39,18 @@ namespace Alternet.UI
             item.TextChanged += Item_TextChanged;
         }
 
-        private void Item_TextChanged(object sender, EventArgs e)
+        private void Item_TextChanged(object? sender, EventArgs e)
         {
-            var item = (MenuItem)sender;
+            var item = (MenuItem)sender!;
             NativeControl.SetItemText(Control.Items.IndexOf(item), item.Text);
         }
 
-        private void Items_ItemInserted(object sender, Base.Collections.CollectionChangeEventArgs<MenuItem> e)
+        private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<MenuItem> e)
         {
             InsertItem(e.Item, e.Index);
         }
 
-        private void Items_ItemRemoved(object sender, Base.Collections.CollectionChangeEventArgs<MenuItem> e)
+        private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<MenuItem> e)
         {
             e.Item.TextChanged -= Item_TextChanged;
             NativeControl.RemoveItemAt(e.Index);

@@ -34,9 +34,17 @@ namespace Alternet::UI
 
     private:
 
+        enum class MenuItemFlags
+        {
+            None = 0,
+            Enabled = 1 << 0,
+            Checked = 1 << 1,
+        };
+
+        FlagsAccessor<MenuItemFlags> _flags;
+
         wxMenuItem* _menuItem = nullptr;
         string _text;
-        bool _enabled = true;
 
         Menu* _parentMenu = nullptr;
         optional<int> _indexInParentMenu;
@@ -46,6 +54,7 @@ namespace Alternet::UI
         void CreateWxMenuItem();
         void DestroyWxMenuItem();
         void RecreateWxMenuItem();
-        void RecreateWxMenuItemIfNeeded();
     };
+
+    template<> struct enable_bitmask_operators<Alternet::UI::MenuItem::MenuItemFlags> { static const bool enable = true; };
 }

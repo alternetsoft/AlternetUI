@@ -13,8 +13,15 @@
         </MenuItem>
         <MenuItem Text="E_xit" Name="exitMenuItem" Click="ExitMenuItem_Click" />
       </MenuItem>
+      <MenuItem Text="_View">
+        <MenuItem Text="_Scrolling">
+          <MenuItem Text="Continous" Name="continousScrollingMenuItem" Checked="True" Click="ContinousScrollingMenuItem_Click" />
+          <MenuItem Text="Page" Name="pageScrollingMenuItem" Click="PageScrollingMenuItem_Click" />
+        </MenuItem>
+      </MenuItem>
       <MenuItem Text="_Help">
         <MenuItem Text="Disabled Item" Enabled="false" />
+        <MenuItem Text="Checked Item" Checked="True" />
         <MenuItem Text="_About" Name="aboutMenuItem" Click="AboutMenuItem_Click" />
       </MenuItem>
     </MainMenu>

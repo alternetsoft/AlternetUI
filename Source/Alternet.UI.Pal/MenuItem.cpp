@@ -4,7 +4,7 @@
 
 namespace Alternet::UI
 {
-    MenuItem::MenuItem()
+    MenuItem::MenuItem() : _flags(MenuItemFlags::Enabled)
     {
         CreateWxMenuItem();
     }
@@ -19,11 +19,20 @@ namespace Alternet::UI
         if (_menuItem != nullptr)
             throwExInvalidOp;
 
+        bool checked = _flags.IsSet(MenuItemFlags::Checked);
+
         _menuItem = new wxMenuItem(
                 nullptr,
                 IdManager::AllocateId(),
-                CoerceWxItemText(_text));
-        _menuItem->Enable(_enabled);
+                CoerceWxItemText(_text),
+                wxEmptyString,
+                checked ? wxITEM_CHECK : wxITEM_NORMAL);
+
+        _menuItem->Enable(_flags.IsSet(MenuItemFlags::Enabled));
+        
+        if (checked)
+            _menuItem->Check(true);
+
         s_itemsByIdsMap[_menuItem->GetId()] = this;
     }
 
@@ -38,20 +47,45 @@ namespace Alternet::UI
 
     bool MenuItem::GetEnabled()
     {
-        return _enabled;
+        return _flags.IsSet(MenuItemFlags::Enabled);
     }
 
     void MenuItem::SetEnabled(bool value)
     {
-        _enabled = value;
+        _flags.Set(MenuItemFlags::Enabled, value);
         if (_menuItem != nullptr)
             _menuItem->Enable(value);
     }
+
+    bool MenuItem::GetChecked()
+    {
+        return _flags.IsSet(MenuItemFlags::Checked);
+    }
+
+    void MenuItem::SetChecked(bool value)
+    {
+        _flags.Set(MenuItemFlags::Checked, value);
+
+        if (value && !_menuItem->IsCheckable())
+        {
+            RecreateWxMenuItem();
+        }
+
+        if (_menuItem->IsCheckable())
+            _menuItem->Check(value);
+    }
+
 
     void MenuItem::DestroyWxMenuItem()
     {
         if (_menuItem == nullptr)
             throwExInvalidOp;
+
+        if (_parentMenu != nullptr)
+        {
+            _parentMenu->RemoveItemAt(_indexInParentMenu.value());
+            _parentMenu = nullptr;
+        }
 
         auto id = _menuItem->GetId();
         s_itemsByIdsMap.erase(id);
@@ -65,6 +99,8 @@ namespace Alternet::UI
     {
         bool wasCreated = _menuItem != nullptr;
 
+        auto parent = _parentMenu;
+        auto index = _indexInParentMenu;
         if (wasCreated)
             DestroyWxMenuItem();
         
@@ -72,23 +108,13 @@ namespace Alternet::UI
 
         if (wasCreated)
         {
-            auto parent = _parentMenu;
             if (parent != nullptr)
             {
-                if (!_indexInParentMenu.has_value())
+                if (!index.has_value())
                     throwExInvalidOp;
-                auto index = _indexInParentMenu.value();
-                parent->RemoveItemAt(index);
-                parent->InsertItemAt(index, this);
+                parent->InsertItemAt(index.value(), this);
             }
         }
-    }
-
-    void MenuItem::RecreateWxMenuItemIfNeeded()
-    {
-#ifdef __WXOSX_COCOA__
-        RecreateWxMenuItem();
-#endif
     }
 
     /*static*/ wxString MenuItem::CoerceWxItemText(string value)
@@ -108,29 +134,16 @@ namespace Alternet::UI
     {
         _text = value;
         _menuItem->SetItemLabel(CoerceWxItemText(value));
-        RecreateWxMenuItemIfNeeded();
+
+#ifdef __WXOSX_COCOA__
+        RecreateWxMenuItem();
+#endif
     }
 
     void MenuItem::SetParentMenu(Menu* value, optional<int> index)
     {
         _parentMenu = value;
         _indexInParentMenu = index;
-    }
-
-    bool MenuItem::GetChecked()
-    {
-        return _menuItem->IsChecked();
-    }
-
-    void MenuItem::SetChecked(bool value)
-    {
-        if (value)
-        {
-            if (!_menuItem->IsCheckable())
-                _menuItem->SetCheckable(true);
-        }
-
-        _menuItem->Check(value);
     }
 
     Key MenuItem::GetShortcut()
