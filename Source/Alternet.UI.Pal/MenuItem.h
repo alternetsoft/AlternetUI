@@ -55,6 +55,6 @@ namespace Alternet::UI
         void DestroyWxMenuItem();
         void RecreateWxMenuItem();
     };
-
-    template<> struct enable_bitmask_operators<Alternet::UI::MenuItem::MenuItemFlags> { static const bool enable = true; };
 }
+
+template<> struct enable_bitmask_operators<Alternet::UI::MenuItem::MenuItemFlags> { static const bool enable = true; };
