@@ -28,11 +28,6 @@ namespace Alternet::UI
                 wxEmptyString,
                 checked ? wxITEM_CHECK : wxITEM_NORMAL);
 
-        _menuItem->Enable(_flags.IsSet(MenuItemFlags::Enabled));
-        
-        if (checked)
-            _menuItem->Check(true);
-
         s_itemsByIdsMap[_menuItem->GetId()] = this;
     }
 
@@ -53,7 +48,7 @@ namespace Alternet::UI
     void MenuItem::SetEnabled(bool value)
     {
         _flags.Set(MenuItemFlags::Enabled, value);
-        if (_menuItem != nullptr)
+        if (_menuItem != nullptr && _parentMenu != nullptr)
             _menuItem->Enable(value);
     }
 
@@ -71,10 +66,10 @@ namespace Alternet::UI
             RecreateWxMenuItem();
         }
 
-        if (_menuItem->IsCheckable())
-            _menuItem->Check(value);
+        bool checked = _flags.IsSet(MenuItemFlags::Checked);
+        if (_menuItem != nullptr && _menuItem->IsCheckable() && _parentMenu != nullptr)
+            _menuItem->Check(checked);
     }
-
 
     void MenuItem::DestroyWxMenuItem()
     {
@@ -144,6 +139,15 @@ namespace Alternet::UI
     {
         _parentMenu = value;
         _indexInParentMenu = index;
+
+        if (value != nullptr)
+        {
+            _menuItem->Enable(_flags.IsSet(MenuItemFlags::Enabled));
+
+            bool checked = _flags.IsSet(MenuItemFlags::Checked);
+            if (_menuItem->IsCheckable())
+                _menuItem->Check(checked);
+        }
     }
 
     Key MenuItem::GetShortcut()
