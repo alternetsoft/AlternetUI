@@ -30,8 +30,8 @@ bool GetVisible();
 void SetVisible(bool value);
 
 
-bool GetEnabled();
-void SetEnabled(bool value);
+virtual bool GetEnabled();
+virtual void SetEnabled(bool value);
 
 
 bool GetUserPaint();

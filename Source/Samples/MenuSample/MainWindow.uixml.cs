@@ -9,6 +9,8 @@ namespace MenuSample
         public MainWindow()
         {
             InitializeComponent();
+
+            UpdateControls();
         }
 
         private void OpenMenuItem_Click(object sender, System.EventArgs e) => MessageBox.Show("Open");
@@ -72,6 +74,17 @@ namespace MenuSample
                 Menu!.Items.Remove(parent);
                 dynamicItemsMenuItem = null;
             }
+        }
+
+        private void ToggleExitEnabledMenuItem_Click(object sender, System.EventArgs e)
+        {
+            exitMenuItem.Enabled = !exitMenuItem.Enabled;
+            UpdateControls();
+        }
+
+        private void UpdateControls()
+        {
+            toggleExitEnabledMenuItem.Text = (exitMenuItem.Enabled ? "Disable" : "Enable") + " Exit Menu Item";
         }
     }
 }

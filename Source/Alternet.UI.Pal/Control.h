@@ -62,7 +62,7 @@ namespace Alternet::UI
         bool IsDestroyingWxWindow();
         bool IsRecreatingWxWindow();
 
-        bool RetrieveEnabled();
+        virtual bool RetrieveEnabled();
         virtual void ApplyEnabled(bool value);
 
         virtual Size ClientSizeToSize(const Size& clientSize);

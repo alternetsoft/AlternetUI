@@ -23,6 +23,9 @@ namespace Alternet::UI
 
         static wxString CoerceWxItemText(string value);
 
+        bool GetEnabled() override;
+        virtual void SetEnabled(bool value) override;
+
     protected:
 
         void ShowCore() override;
@@ -33,6 +36,7 @@ namespace Alternet::UI
 
         wxMenuItem* _menuItem = nullptr;
         string _text;
+        bool _enabled = true;
 
         Menu* _parentMenu = nullptr;
         optional<int> _indexInParentMenu;

@@ -23,6 +23,7 @@ namespace Alternet::UI
                 nullptr,
                 IdManager::AllocateId(),
                 CoerceWxItemText(_text));
+        _menuItem->Enable(_enabled);
         s_itemsByIdsMap[_menuItem->GetId()] = this;
     }
 
@@ -33,6 +34,18 @@ namespace Alternet::UI
     Size MenuItem::SizeToClientSize(const Size& size)
     {
         return size;
+    }
+
+    bool MenuItem::GetEnabled()
+    {
+        return _enabled;
+    }
+
+    void MenuItem::SetEnabled(bool value)
+    {
+        _enabled = value;
+        if (_menuItem != nullptr)
+            _menuItem->Enable(value);
     }
 
     void MenuItem::DestroyWxMenuItem()

@@ -38,7 +38,7 @@ namespace NativeApi.Api
 
         public bool Visible { get; set; }
 
-        public bool Enabled { get; set; }
+        public virtual bool Enabled { get; set; }
 
         public bool UserPaint { get; set; }
 

@@ -14,6 +14,7 @@
         <MenuItem Text="E_xit" Name="exitMenuItem" Click="ExitMenuItem_Click" />
       </MenuItem>
       <MenuItem Text="_Help">
+        <MenuItem Text="Disabled Item" Enabled="false" />
         <MenuItem Text="_About" Name="aboutMenuItem" Click="AboutMenuItem_Click" />
       </MenuItem>
     </MainMenu>
@@ -21,5 +22,6 @@
   <StackPanel>
     <Button Text="Add Dynamic Menu Item" Name="addDynamicMenuItemMenuItem" Click="AddDynamicMenuItemMenuItem_Click" Margin="0,0,0,10" />
     <Button Text="Remove Last Dynamic Menu Item" Name="removeLastDynamicMenuItemMenuItem" Click="RemoveLastDynamicMenuItemMenuItem_Click" Margin="0,0,0,10" />
+    <Button Name="toggleExitEnabledMenuItem" Click="ToggleExitEnabledMenuItem_Click" Margin="0,0,0,10" />
   </StackPanel>
 </Window>
