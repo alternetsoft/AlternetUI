@@ -8,7 +8,7 @@
       <MenuItem Text="_File">
         <MenuItem Text="_Open..." Name="openMenuItem" Click="OpenMenuItem_Click" />
         <MenuItem Text="_Save..." Name="saveMenuItem" Click="SaveMenuItem_Click" />
-        <MenuItem Text="-" />
+        <MenuItem Text="-" Name="separatorMenuItem" />
         <MenuItem Text="_Export">
           <MenuItem Text="Export to P_DF" Name="exportToPdfMenuItem" Click="ExportToPdfMenuItem_Click" />
           <MenuItem Text="Export to P_NG" Name="exportToPngMenuItem" Click="ExportToPngMenuItem_Click" />
@@ -32,5 +32,6 @@
     <Button Text="Add Dynamic Menu Item" Name="addDynamicMenuItemMenuItem" Click="AddDynamicMenuItemMenuItem_Click" Margin="0,0,0,10" />
     <Button Text="Remove Last Dynamic Menu Item" Name="removeLastDynamicMenuItemMenuItem" Click="RemoveLastDynamicMenuItemMenuItem_Click" Margin="0,0,0,10" />
     <Button Name="toggleExitEnabledMenuItem" Click="ToggleExitEnabledMenuItem_Click" Margin="0,0,0,10" />
+    <Button Name="toggleSeparatorMenuItem" Click="ToggleSeparatorMenuItem_Click" Margin="0,0,0,10" />
   </StackPanel>
 </Window>

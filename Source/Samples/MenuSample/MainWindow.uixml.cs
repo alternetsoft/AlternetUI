@@ -87,6 +87,7 @@ namespace MenuSample
         private void UpdateControls()
         {
             toggleExitEnabledMenuItem.Text = (exitMenuItem.Enabled ? "Disable" : "Enable") + " Exit Menu Item";
+            toggleSeparatorMenuItem.Text = separatorMenuItem.Text == "-" ? "Make separator item to be normal" : "Make normal item to be separator";
         }
 
         private void ContinousScrollingMenuItem_Click(object sender, EventArgs e)
@@ -99,6 +100,16 @@ namespace MenuSample
         {
             continousScrollingMenuItem.Checked = false;
             pageScrollingMenuItem.Checked = true;
+        }
+
+        private void ToggleSeparatorMenuItem_Click(object sender, System.EventArgs e)
+        {
+            if (separatorMenuItem.Text == "-")
+                separatorMenuItem.Text = "[Text instead of separator]";
+            else
+                separatorMenuItem.Text = "-";
+
+            UpdateControls();
         }
     }
 }

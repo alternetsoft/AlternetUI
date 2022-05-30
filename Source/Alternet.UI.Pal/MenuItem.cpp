@@ -138,12 +138,20 @@ namespace Alternet::UI
 
     void MenuItem::SetText(const string& value)
     {
+        bool wasSeparator = IsSeparator();
         _text = value;
         _menuItem->SetItemLabel(CoerceWxItemText(value));
 
+        if (wasSeparator != IsSeparator())
+        {
+            RecreateWxMenuItem();
+        }
+        else
+        {
 #ifdef __WXOSX_COCOA__
-        RecreateWxMenuItem();
+            RecreateWxMenuItem();
 #endif
+        }
     }
 
     void MenuItem::SetParentMenu(Menu* value, optional<int> index)
