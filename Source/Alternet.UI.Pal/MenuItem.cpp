@@ -21,14 +21,17 @@ namespace Alternet::UI
 
         bool checked = _flags.IsSet(MenuItemFlags::Checked);
 
+        bool separator = IsSeparator();
+
         _menuItem = new wxMenuItem(
                 nullptr,
-                IdManager::AllocateId(),
+                separator ? wxID_SEPARATOR : IdManager::AllocateId(),
                 CoerceWxItemText(_text),
                 wxEmptyString,
                 checked ? wxITEM_CHECK : wxITEM_NORMAL);
 
-        s_itemsByIdsMap[_menuItem->GetId()] = this;
+        if (!separator)
+            s_itemsByIdsMap[_menuItem->GetId()] = this;
     }
 
     void MenuItem::ApplyBounds(const Rect& value)
@@ -82,9 +85,12 @@ namespace Alternet::UI
             _parentMenu = nullptr;
         }
 
-        auto id = _menuItem->GetId();
-        s_itemsByIdsMap.erase(id);
-        IdManager::FreeId(id);
+        if (!IsSeparator())
+        {
+            auto id = _menuItem->GetId();
+            s_itemsByIdsMap.erase(id);
+            IdManager::FreeId(id);
+        }
 
         delete _menuItem;
         _menuItem = nullptr;
@@ -110,6 +116,11 @@ namespace Alternet::UI
                 parent->InsertItemAt(index.value(), this);
             }
         }
+    }
+
+    bool MenuItem::IsSeparator()
+    {
+        return _text == u"-";
     }
 
     /*static*/ wxString MenuItem::CoerceWxItemText(string value)

@@ -7,6 +7,8 @@
     <MainMenu>
       <MenuItem Text="_File">
         <MenuItem Text="_Open..." Name="openMenuItem" Click="OpenMenuItem_Click" />
+        <MenuItem Text="_Save..." Name="saveMenuItem" Click="SaveMenuItem_Click" />
+        <MenuItem Text="-" />
         <MenuItem Text="_Export">
           <MenuItem Text="Export to P_DF" Name="exportToPdfMenuItem" Click="ExportToPdfMenuItem_Click" />
           <MenuItem Text="Export to P_NG" Name="exportToPngMenuItem" Click="ExportToPngMenuItem_Click" />
@@ -18,10 +20,10 @@
           <MenuItem Text="Continous" Name="continousScrollingMenuItem" Checked="True" Click="ContinousScrollingMenuItem_Click" />
           <MenuItem Text="Page" Name="pageScrollingMenuItem" Click="PageScrollingMenuItem_Click" />
         </MenuItem>
+        <MenuItem Text="_Grid" Checked="True" />
       </MenuItem>
       <MenuItem Text="_Help">
-        <MenuItem Text="Disabled Item" Enabled="false" />
-        <MenuItem Text="Checked Item" Checked="True" />
+        <MenuItem Text="Index" Enabled="false" />
         <MenuItem Text="_About" Name="aboutMenuItem" Click="AboutMenuItem_Click" />
       </MenuItem>
     </MainMenu>

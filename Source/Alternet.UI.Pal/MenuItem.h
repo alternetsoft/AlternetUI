@@ -54,6 +54,8 @@ namespace Alternet::UI
         void CreateWxMenuItem();
         void DestroyWxMenuItem();
         void RecreateWxMenuItem();
+
+        bool IsSeparator();
     };
 }
 
