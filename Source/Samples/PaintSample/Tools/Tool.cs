@@ -18,6 +18,8 @@ namespace PaintSample
 
         public Control? OptionsControl => optionsControl ??= CreateOptionsControl();
 
+        public abstract string Name { get; }
+
         protected Document Document { get; }
 
         protected ISelectedColors SelectedColors { get; }

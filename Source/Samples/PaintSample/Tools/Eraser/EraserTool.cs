@@ -14,5 +14,7 @@ namespace PaintSample
         }
 
         public override Color PenColor => Document.BackgroundColor;
+
+        public override string Name => "Eraser";
     }
 }

@@ -17,6 +17,8 @@ namespace PaintSample
 
         public double Flow { get; set; } = 40;
 
+        public override string Name => "Airbrush";
+
         protected override Control? CreateOptionsControl()
         {
             var control = new AirbrushToolOptionsControl();

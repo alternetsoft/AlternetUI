@@ -4,7 +4,20 @@
 		Title="AlterNET UI Paint Sample"
 		xmlns:local="clr-namespace:PaintSample"
 		Width="800" Height="800">
-		<Grid>
+  <Window.Menu>
+    <MainMenu>
+      <MenuItem Text="_File">
+        <MenuItem Text="E_xit" Name="exitMenuItem" Click="ExitMenuItem_Click" />
+      </MenuItem>
+      <MenuItem Text="_Tools" Name="toolsMenu" />
+      <MenuItem Text="_Help">
+        <MenuItem Text="_About" Name="aboutMenuItem" Click="AboutMenuItem_Click" />
+      </MenuItem>
+    </MainMenu>
+  </Window.Menu>
+
+
+  <Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="*" />

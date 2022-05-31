@@ -22,5 +22,7 @@ namespace PaintSample
 
             UndoService.Do(() => Document.Modify(dc => dc.FloodFill(new SolidBrush(SelectedColors.Stroke), point)));
         }
+
+        public override string Name => "Flood Fill";
     }
 }

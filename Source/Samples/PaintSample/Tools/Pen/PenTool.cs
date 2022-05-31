@@ -14,5 +14,7 @@ namespace PaintSample
         }
 
         public override Color PenColor => SelectedColors.Stroke;
+
+        public override string Name => "Pen";
     }
 }
