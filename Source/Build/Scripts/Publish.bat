@@ -2,6 +2,9 @@ SETLOCAL EnableDelayedExpansion
 
 set SCRIPT_HOME=%~dp0.
 
+set VsixsigntoolPath="C:\Users\yezo\.nuget\packages\microsoft.vssdk.vsixsigntool\16.2.29116.78\tools\vssdk\vsixsigntool.exe"
+set SigntoolParameters=sign /v /f ..\..\Keys\Alternet.pfx /p Alternet! /sha1 "02c4f7817da47b568c3aa56dc3a3ebaf4ac59da0"
+
 :: Set up publish folder.
 
 set PublishRoot=%SCRIPT_HOME%\..\..\..\Publish\
@@ -68,11 +71,19 @@ copy "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.Visua
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
+%VsixsigntoolPath% %SigntoolParameters% "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.VS2019.vsix"
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
 dotnet run --project "%VersionToolProject%" -- append-version-suffix "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.VS2019.vsix"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
 copy "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\bin\VS2022\Release\*.vsix" "%PackagesPublishDirectory%"
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
+%VsixsigntoolPath% %SigntoolParameters% "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.VS2022.vsix"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 

@@ -1,0 +1,1 @@
+C:\Users\yezo\.nuget\packages\microsoft.vssdk.vsixsigntool\16.2.29116.78\tools\vssdk\vsixsigntool.exe sign /v /f C:\Work\UI\Source\Keys\Alternet.pfx /p Alternet! /sha1 "02c4f7817da47b568c3aa56dc3a3ebaf4ac59da0" C:\Downloads\Alternet.UI.Integration.VisualStudio.VS2022-0.2.106-beta.vsix
