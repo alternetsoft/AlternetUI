@@ -48,6 +48,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\Tools\Language\NullableAnnotations.cs" Link="NullableAnnotations.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\Keys\Key.snk" Link="Key.snk" />
   </ItemGroup>
 
@@ -63,10 +67,6 @@
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
 	  <PackageReference Include="System.ValueTuple" Version="4.5.0" />
 	  <PackageReference Include="System.IO.Packaging" Version="6.0.0" />
-	  <PackageReference Include="Nullable" Version="1.2.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(';NETCOREAPP'))">

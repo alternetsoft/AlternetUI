@@ -26,7 +26,7 @@ namespace Alternet.UI
             Control.Items.ItemRemoved += Items_ItemRemoved;
         }
 
-        private void Control_CheckedChanged(object sender, EventArgs e)
+        private void Control_CheckedChanged(object? sender, EventArgs e)
         {
             ApplyChecked();
         }
