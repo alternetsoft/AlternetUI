@@ -71,9 +71,9 @@ copy "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.Visua
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-%VsixsigntoolPath% %SigntoolParameters% "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.VS2019.vsix"
-if not !ERRORLEVEL! EQU 0 (
-    exit /b !ERRORLEVEL!)
+rem %VsixsigntoolPath% %SigntoolParameters% "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.VS2019.vsix"
+rem if not !ERRORLEVEL! EQU 0 (
+rem     exit /b !ERRORLEVEL!)
 
 dotnet run --project "%VersionToolProject%" -- append-version-suffix "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.VS2019.vsix"
 if not !ERRORLEVEL! EQU 0 (
@@ -83,9 +83,9 @@ copy "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.Visua
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-%VsixsigntoolPath% %SigntoolParameters% "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.VS2022.vsix"
-if not !ERRORLEVEL! EQU 0 (
-    exit /b !ERRORLEVEL!)
+rem %VsixsigntoolPath% %SigntoolParameters% "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.VS2022.vsix"
+rem if not !ERRORLEVEL! EQU 0 (
+rem     exit /b !ERRORLEVEL!)
 
 dotnet run --project "%VersionToolProject%" -- append-version-suffix "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.VS2022.vsix"
 if not !ERRORLEVEL! EQU 0 (
