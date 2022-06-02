@@ -3,7 +3,7 @@ SETLOCAL EnableDelayedExpansion
 set SCRIPT_HOME=%~dp0.
 
 set VsixsigntoolPath="C:\Users\yezo\.nuget\packages\microsoft.vssdk.vsixsigntool\16.2.29116.78\tools\vssdk\vsixsigntool.exe"
-set SigntoolParameters=sign /v /f ..\..\Keys\Alternet.pfx /p Alternet! /sha1 "02c4f7817da47b568c3aa56dc3a3ebaf4ac59da0"
+set SigntoolParameters=sign /v /f ..\..\Keys\Alternet.pfx /p Alternet^^! /sha1 "02c4f7817da47b568c3aa56dc3a3ebaf4ac59da0"
 
 :: Set up publish folder.
 
