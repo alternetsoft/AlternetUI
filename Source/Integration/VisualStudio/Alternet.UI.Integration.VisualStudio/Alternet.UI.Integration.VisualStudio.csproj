@@ -110,15 +110,15 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.VSSDK.Vsixsigntool" Version="16.2.29116.78" />
   </ItemGroup>
-  <Target Name="SignPackage" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+<!--  <Target Name="SignPackage" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
     <PropertyGroup>
-      <VsixSignTool>$(NuGetPackageRoot)Microsoft.VSSDK.Vsixsigntool\16.2.29116.78\tools\vssdk\vsixsigntool.exe</VsixSignTool>
+      <VsixSignTool>$(NuGetPackageRoot)Microsoft.VSSDK.Vsixsigntool\16.2.29116.78\tools\vssdk\vsixsigntool.exe</VsixSignTool> -->
       <!-- To get the hash, use 'certutil -p ****** -dump ./filename.pfx' -->
-      <VsixSignCommand>$(VsixSignTool) sign /f $(MSBuildThisFileDirectory)\..\..\..\Keys\Alternet.pfx  /p Alternet! /sha1 532cfa44e3785e093f21576e76bef47b5a289304 /fd sha256</VsixSignCommand>
+<!--      <VsixSignCommand>$(VsixSignTool) sign /f $(MSBuildThisFileDirectory)\..\..\..\Keys\Alternet.pfx  /p Alternet! /sha1 532cfa44e3785e093f21576e76bef47b5a289304 /fd sha256</VsixSignCommand>
     </PropertyGroup>
     <Message Text="Signing $(TargetVsixContainer)" Importance="High" />
     <Exec Command="$(VsixSignCommand) $(MSBuildProjectDirectory)\$(TargetVsixContainer)" />
-  </Target>
+  </Target> -->
   <PropertyGroup>
     <VsTargetVersion Condition="'$(VsTargetVersion)' == '' and '$(VisualStudioVersion)' == '17.0' ">VS2022</VsTargetVersion>
     <VsTargetVersion Condition="'$(VsTargetVersion)' == '' and '$(VisualStudioVersion)' == '16.0' ">VS2019</VsTargetVersion>
