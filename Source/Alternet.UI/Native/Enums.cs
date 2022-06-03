@@ -183,6 +183,15 @@ namespace Alternet.UI.Native
         Toggled = 2,
     }
     
+    enum ModifierKeys
+    {
+        None = 0,
+        Alt = 1,
+        Control = 2,
+        Shift = 4,
+        Windows = 8,
+    }
+    
     enum ListBoxSelectionMode
     {
         Single = 0,

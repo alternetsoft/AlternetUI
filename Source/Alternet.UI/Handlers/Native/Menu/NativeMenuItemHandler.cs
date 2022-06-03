@@ -17,13 +17,21 @@ namespace Alternet.UI
             ApplyText();
             ApplyChecked();
             ApplyItems();
+            ApplyShortcut();
 
             Control.TextChanged += Control_TextChanged;
             Control.CheckedChanged += Control_CheckedChanged;
+            Control.ShortcutChanged += Control_ShortcutChanged;
+            
             NativeControl.Click += NativeControl_Click;
 
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
+        }
+
+        private void Control_ShortcutChanged(object? sender, EventArgs e)
+        {
+            ApplyShortcut();
         }
 
         private void Control_CheckedChanged(object? sender, EventArgs e)
@@ -42,6 +50,27 @@ namespace Alternet.UI
             NativeControl.Text = Control.Text;
         }
 
+        private void ApplyShortcut()
+        {
+            var shortcut = Control.Shortcut;
+
+            Native.Key key;
+            Native.ModifierKeys modifierKeys;
+
+            if (shortcut == null)
+            {
+                key = Native.Key.None;
+                modifierKeys = Native.ModifierKeys.None;
+            }
+            else
+            {
+                key = (Native.Key)shortcut.Key;
+                modifierKeys = (Native.ModifierKeys)shortcut.Modifiers;
+            }
+
+            NativeControl.SetShortcut(key, modifierKeys);
+        }
+
         private void ApplyChecked()
         {
             NativeControl.Checked = Control.Checked;
@@ -53,6 +82,8 @@ namespace Alternet.UI
 
             Control.CheckedChanged -= Control_CheckedChanged;
             Control.TextChanged -= Control_TextChanged;
+            Control.ShortcutChanged -= Control_ShortcutChanged;
+
             NativeControl.Click -= NativeControl_Click;
 
             Control.Items.ItemInserted -= Items_ItemInserted;

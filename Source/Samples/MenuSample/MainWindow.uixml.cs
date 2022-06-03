@@ -10,12 +10,18 @@ namespace MenuSample
         {
             InitializeComponent();
 
+            DataContext = this;
+
+            SaveCommand = new Command(o => MessageBox.Show("Save"), o => saveEnabledMenuItem.Checked);
+
             UpdateControls();
         }
 
+        public Command SaveCommand { get; }
+
         private void OpenMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("Open");
 
-        private void SaveMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("Save");
+        private void SaveEnabledMenuItem_Click(object sender, EventArgs e) => SaveCommand.RaiseCanExecuteChanged();
 
         private void ExportToPdfMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("Export to PDF");
 

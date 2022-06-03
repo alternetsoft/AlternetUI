@@ -9,13 +9,16 @@ bool GetChecked();
 void SetChecked(bool value);
 
 
-Key GetShortcut();
-void SetShortcut(Key value);
+Key GetShortcutKey();
+
+
+ModifierKeys GetShortcutModifierKeys();
 
 
 Menu* GetSubmenu();
 void SetSubmenu(Menu* value);
 
+void SetShortcut(Key key, ModifierKeys modifierKeys);
 public:
 enum class MenuItemEvent
 {

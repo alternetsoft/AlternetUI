@@ -169,13 +169,18 @@ namespace Alternet::UI
         }
     }
 
-    Key MenuItem::GetShortcut()
+    Key MenuItem::GetShortcutKey()
     {
         return Key();
     }
 
-    void MenuItem::SetShortcut(Key value)
+    void MenuItem::SetShortcut(Key key, ModifierKeys modifierKeys)
     {
+    }
+
+    ModifierKeys MenuItem::GetShortcutModifierKeys()
+    {
+        return ModifierKeys();
     }
 
     Menu* MenuItem::GetSubmenu()

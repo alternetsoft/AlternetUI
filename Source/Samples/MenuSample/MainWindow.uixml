@@ -6,8 +6,9 @@
   <Window.Menu>
     <MainMenu>
       <MenuItem Text="_File">
-        <MenuItem Text="_Open..." Name="openMenuItem" Click="OpenMenuItem_Click" />
-        <MenuItem Text="_Save..." Name="saveMenuItem" Click="SaveMenuItem_Click" />
+        <MenuItem Text="_Open..." Name="openMenuItem" Click="OpenMenuItem_Click" Shortcut="Ctrl+O" />
+        <MenuItem Text="_Save..." Name="saveMenuItem" Command="{Binding SaveCommand}" />
+        <MenuItem Text="_Save Enabled" Name="saveEnabledMenuItem" Click="SaveEnabledMenuItem_Click" Checked="True" />
         <MenuItem Text="-" Name="separatorMenuItem" />
         <MenuItem Text="_Export">
           <MenuItem Text="Export to P_DF" Name="exportToPdfMenuItem" Click="ExportToPdfMenuItem_Click" />

@@ -57,21 +57,28 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Key Shortcut
+        public Key ShortcutKey
         {
             get
             {
                 CheckDisposed();
-                var n = NativeApi.MenuItem_GetShortcut_(NativePointer);
+                var n = NativeApi.MenuItem_GetShortcutKey_(NativePointer);
                 var m = n;
                 return m;
             }
             
-            set
+        }
+        
+        public ModifierKeys ShortcutModifierKeys
+        {
+            get
             {
                 CheckDisposed();
-                NativeApi.MenuItem_SetShortcut_(NativePointer, value);
+                var n = NativeApi.MenuItem_GetShortcutModifierKeys_(NativePointer);
+                var m = n;
+                return m;
             }
+            
         }
         
         public Menu? Submenu
@@ -90,6 +97,12 @@ namespace Alternet.UI.Native
                 CheckDisposed();
                 NativeApi.MenuItem_SetSubmenu_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
             }
+        }
+        
+        public void SetShortcut(Key key, ModifierKeys modifierKeys)
+        {
+            CheckDisposed();
+            NativeApi.MenuItem_SetShortcut_(NativePointer, key, modifierKeys);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -156,16 +169,19 @@ namespace Alternet.UI.Native
             public static extern void MenuItem_SetChecked_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Key MenuItem_GetShortcut_(IntPtr obj);
+            public static extern Key MenuItem_GetShortcutKey_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void MenuItem_SetShortcut_(IntPtr obj, Key value);
+            public static extern ModifierKeys MenuItem_GetShortcutModifierKeys_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr MenuItem_GetSubmenu_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void MenuItem_SetSubmenu_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void MenuItem_SetShortcut_(IntPtr obj, Key key, ModifierKeys modifierKeys);
             
         }
     }

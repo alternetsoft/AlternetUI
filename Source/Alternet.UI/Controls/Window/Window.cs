@@ -1,7 +1,8 @@
+using Alternet.Base.Collections;
+using Alternet.Drawing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Alternet.Drawing;
 using System.Linq;
 
 namespace Alternet.UI
@@ -13,6 +14,21 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public class Window : Control
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Window"/> class.
+        /// </summary>
+        public Window()
+        {
+            Application.Current.RegisterWindow(this);
+            SetVisibleValue(false);
+            Bounds = new Rect(100, 100, 400, 400);
+        }
+
+        /// <summary>
+        /// Gets the collection of input bindings associated with this window.
+        /// </summary>
+        public Collection<InputBinding> InputBindings { get; } = new Collection<InputBinding>();
+
         internal static Window? GetParentWindow(DependencyObject dp)
         {
             // For use instead of PresentationSource.CriticalFromVisual(focusScope).
@@ -197,16 +213,6 @@ namespace Alternet.UI
         public Window[] OwnedWindows { get => Handler.OwnedWindows; }
 
         private string title = "";
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Window"/> class.
-        /// </summary>
-        public Window()
-        {
-            Application.Current.RegisterWindow(this);
-            SetVisibleValue(false);
-            Bounds = new Rect(100, 100, 400, 400);
-        }
 
         private WindowState state = WindowState.Normal;
 
@@ -578,7 +584,7 @@ namespace Alternet.UI
         public bool ShowInTaskbar
         {
             get => showInTaskbar;
-            
+
             set
             {
                 showInTaskbar = value;

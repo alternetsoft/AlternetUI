@@ -44,17 +44,17 @@ ALTERNET_UI_API void MenuItem_SetChecked_(MenuItem* obj, c_bool value)
         });
 }
 
-ALTERNET_UI_API Key MenuItem_GetShortcut_(MenuItem* obj)
+ALTERNET_UI_API Key MenuItem_GetShortcutKey_(MenuItem* obj)
 {
     return MarshalExceptions<Key>([&](){
-            return obj->GetShortcut();
+            return obj->GetShortcutKey();
         });
 }
 
-ALTERNET_UI_API void MenuItem_SetShortcut_(MenuItem* obj, Key value)
+ALTERNET_UI_API ModifierKeys MenuItem_GetShortcutModifierKeys_(MenuItem* obj)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetShortcut(value);
+    return MarshalExceptions<ModifierKeys>([&](){
+            return obj->GetShortcutModifierKeys();
         });
 }
 
@@ -69,6 +69,13 @@ ALTERNET_UI_API void MenuItem_SetSubmenu_(MenuItem* obj, Menu* value)
 {
     MarshalExceptions<void>([&](){
             obj->SetSubmenu(value);
+        });
+}
+
+ALTERNET_UI_API void MenuItem_SetShortcut_(MenuItem* obj, Key key, ModifierKeys modifierKeys)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetShortcut(key, modifierKeys);
         });
 }
 

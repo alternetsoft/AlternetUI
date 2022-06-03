@@ -54,7 +54,7 @@ namespace Alternet.UI
         /// <value><c>true</c> if the <see cref="CheckBox"/> is in the checked state; otherwise, <c>false</c>.
         /// The default value is <c>false</c>.</value>
         /// <remarks>When the value is <c>true</c>, the <see cref="CheckBox"/> portion of the control displays a check mark.</remarks>
-        [DefaultValue("")]
+        [DefaultValue(false)]
         public bool IsChecked
         {
             get { return (bool)GetValue(IsCheckedProperty); }

@@ -184,6 +184,15 @@ namespace Alternet::UI
         Toggled = 2,
     };
     
+    enum class ModifierKeys
+    {
+        None = 0,
+        Alt = 1,
+        Control = 2,
+        Shift = 4,
+        Windows = 8,
+    };
+    
     enum class ListBoxSelectionMode
     {
         Single = 0,
@@ -250,3 +259,4 @@ namespace Alternet::UI
 }
 template<> struct enable_bitmask_operators<Alternet::UI::FontStyle> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::KeyStates> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::ModifierKeys> { static const bool enable = true; };
