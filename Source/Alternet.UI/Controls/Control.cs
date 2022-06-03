@@ -561,7 +561,7 @@ namespace Alternet.UI
         /// See <see cref="Click"/> event description for more details.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        public void RaiseClick(EventArgs e)
+        public virtual void RaiseClick(EventArgs e)
         {
             if (e == null)
                 throw new ArgumentNullException(nameof(e));

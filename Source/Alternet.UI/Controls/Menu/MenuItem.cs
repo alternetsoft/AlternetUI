@@ -5,7 +5,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents an individual item that is displayed within a menu.
     /// </summary>
-    public class MenuItem : Menu
+    public class MenuItem : Menu, ICommandSource
     {
         /// <summary>
         /// Initializes a new instance of the <see cref='MenuItem'/> class.
@@ -48,6 +48,13 @@ namespace Alternet.UI
             Shortcut = shortcut;
             if (onClick != null)
                 Click += onClick;
+        }
+
+        /// <inheritdoc />
+        public override void RaiseClick(EventArgs e)
+        {
+            base.RaiseClick(e);
+            CommandHelpers.ExecuteCommandSource(this);
         }
 
         string text = string.Empty;
@@ -134,6 +141,15 @@ namespace Alternet.UI
                 CheckedChanged?.Invoke(this, EventArgs.Empty);
             }
         }
+
+        /// <inheritdoc />
+        public ICommand? Command { get; set; }
+
+        /// <inheritdoc />
+        public object? CommandParameter { get; set; }
+
+        /// <inheritdoc />
+        public IInputElement? CommandTarget { get; set; }
 
         /// <summary>
         /// Occurs when the <see cref="Checked"/> property changes.

@@ -1414,6 +1414,14 @@ namespace Alternet.UI
         internal const string @TextCompositionManager_TextCompositionHasDone = "TextCompositionManager_TextCompositionHasDone";
         /// <summary>The calling thread must be STA, because many UI components require this.</summary>
         internal const string @RequiresSTA = "RequiresSTA";
+        /// <summary>'{0}+{1}' key and modifier combination is not supported for KeyGesture.</summary>
+        internal const string @KeyGesture_Invalid = "KeyGesture_Invalid";
+        /// <summary>Operation not supported on a read-only InputGestureCollection.</summary>
+        internal const string @ReadOnlyInputGesturesCollection = "ReadOnlyInputGesturesCollection";
+        /// <summary>Collection accepts only objects of type InputGesture.</summary>
+        internal const string @CollectionOnlyAcceptsInputGestures = "CollectionOnlyAcceptsInputGestures";
+        /// <summary>Gesture accepts only objects of type '{0}'.</summary>
+        internal const string @InputBinding_ExpectedInputGesture = "InputBinding_ExpectedInputGesture";
 
     }
 }

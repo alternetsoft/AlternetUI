@@ -2217,4 +2217,16 @@
   <data name="RequiresSTA" xml:space="preserve">
     <value>The calling thread must be STA, because many UI components require this.</value>
   </data>
+  <data name="KeyGesture_Invalid" xml:space="preserve">
+    <value>'{0}+{1}' key and modifier combination is not supported for KeyGesture.</value>
+  </data>
+  <data name="ReadOnlyInputGesturesCollection" xml:space="preserve">
+    <value>Operation not supported on a read-only InputGestureCollection.</value>
+  </data>
+  <data name="CollectionOnlyAcceptsInputGestures" xml:space="preserve">
+    <value>Collection accepts only objects of type InputGesture.</value>
+  </data>
+  <data name="InputBinding_ExpectedInputGesture" xml:space="preserve">
+    <value>Gesture accepts only objects of type '{0}'.</value>
+  </data>
 </root>
