@@ -20,6 +20,9 @@ namespace Alternet.UI
         /// <value>The name of the control. The default is <c>null</c>.</value>
         public string? Name { get; set; } // todo: maybe use Site.Name?
 
+        // Optimization, to avoid calling FromSystemType too often
+        internal new static DependencyObjectType DType = DependencyObjectType.FromSystemTypeInternal(typeof(FrameworkElement));
+
         /// <summary>
         /// Recursively searches all <see cref="LogicalChildrenCollection"/> for a control with the specified name, and returns that control if found.
         /// </summary>

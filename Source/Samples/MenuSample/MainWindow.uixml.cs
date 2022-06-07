@@ -11,12 +11,14 @@ namespace MenuSample
             InitializeComponent();
 
             SaveCommand = new Command(o => MessageBox.Show("Save"), o => saveEnabledMenuItem.Checked);
+            ExportToPngCommand = new Command(o => MessageBox.Show("Export to PNG"));
             DataContext = this;
 
             UpdateControls();
         }
 
         public Command SaveCommand { get; }
+        public Command ExportToPngCommand { get; }
 
         private void OpenMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("Open");
 
