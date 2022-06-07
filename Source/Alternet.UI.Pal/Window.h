@@ -18,6 +18,7 @@ namespace Alternet::UI
         static std::vector<Frame*> GetAllFrames();
 
         Window* GetWindow();
+
     private:
         Window* _window;
 
@@ -60,10 +61,14 @@ namespace Alternet::UI
 
     private:
 
+        std::map<string, wxAcceleratorEntry> _acceleratorsByCommandIds;
+
         ModalResult _modalResult = ModalResult::None;
 
         Frame* _frame = nullptr;
         wxPanel* _panel = nullptr;
+
+        void UpdateAcceleratorTable();
 
         void OnClose(wxCloseEvent& event);
         void OnSizeChanged(wxSizeEvent& event);
@@ -71,6 +76,7 @@ namespace Alternet::UI
         void OnActivate(wxActivateEvent& event);
         void OnMaximize(wxMaximizeEvent& event);
         void OnIconize(wxIconizeEvent& event);
+        void OnCommand(wxCommandEvent& event);
 
         Frame* GetFrame();
 

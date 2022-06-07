@@ -210,6 +210,22 @@ namespace Alternet::UI
         }
     }
 
+    wxAcceleratorEntryFlags Keyboard::ModifierKeysToAcceleratorFlags(ModifierKeys modifierKeys)
+    {
+        wxAcceleratorEntryFlags result = wxACCEL_NORMAL;
+
+        if ((modifierKeys & ModifierKeys::Alt) != ModifierKeys::None)
+            result = (wxAcceleratorEntryFlags)(result | wxACCEL_ALT);
+        if ((modifierKeys & ModifierKeys::Control) != ModifierKeys::None)
+            result = (wxAcceleratorEntryFlags)(result | wxACCEL_CTRL);
+        if ((modifierKeys & ModifierKeys::Shift) != ModifierKeys::None)
+            result = (wxAcceleratorEntryFlags)(result | wxACCEL_SHIFT);
+        if ((modifierKeys & ModifierKeys::Windows) != ModifierKeys::None)
+            result = (wxAcceleratorEntryFlags)(result | wxACCEL_RAW_CTRL);
+
+        return result;
+    }
+
     std::vector<int> Keyboard::KeyToWxKeys(Key value)
     {
         if (value == Key::Menu)

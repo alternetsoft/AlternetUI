@@ -325,6 +325,20 @@ ALTERNET_UI_API void Window_Activate_(Window* obj)
         });
 }
 
+ALTERNET_UI_API void Window_AddInputBinding_(Window* obj, const char16_t* managedCommandId, Key key, ModifierKeys modifiers)
+{
+    MarshalExceptions<void>([&](){
+            obj->AddInputBinding(managedCommandId, key, modifiers);
+        });
+}
+
+ALTERNET_UI_API void Window_RemoveInputBinding_(Window* obj, const char16_t* managedCommandId)
+{
+    MarshalExceptions<void>([&](){
+            obj->RemoveInputBinding(managedCommandId);
+        });
+}
+
 ALTERNET_UI_API void Window_SetEventCallback_(Window::WindowEventCallbackType callback)
 {
     Window::SetEventCallback(callback);

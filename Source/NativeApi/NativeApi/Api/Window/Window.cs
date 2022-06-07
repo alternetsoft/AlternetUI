@@ -54,5 +54,8 @@ namespace NativeApi.Api
         public ImageSet? Icon { get => throw new Exception(); set => throw new Exception(); }
 
         public MainMenu? Menu { get => throw new Exception(); set => throw new Exception(); }
+
+        public void AddInputBinding(string managedCommandId, Key key, ModifierKeys modifiers) => throw new Exception();
+        public void RemoveInputBinding(string managedCommandId) => throw new Exception();
     }
 }

@@ -4,6 +4,8 @@ namespace NativeApi.Api
 {
     public class MenuItem : Control
     {
+        public string ManagedCommandId { get => throw new Exception(); set => throw new Exception(); }
+
         public string Text { get => throw new Exception(); set => throw new Exception(); }
 
         public bool Checked { get => throw new Exception(); set => throw new Exception(); }

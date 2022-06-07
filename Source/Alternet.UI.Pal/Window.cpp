@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "Application.h"
 
 namespace Alternet::UI
 {
@@ -93,6 +94,54 @@ namespace Alternet::UI
     {
         if (_icon != nullptr)
             _icon->Release();
+    }
+
+    void Window::AddInputBinding(const string& managedCommandId, Key key, ModifierKeys modifiers)
+    {
+        if (managedCommandId.empty())
+            throwExInvalidArg(managedCommandId, u"Command ID must not be empty.");
+
+        if (_acceleratorsByCommandIds.find(managedCommandId) != _acceleratorsByCommandIds.end())
+            throwExInvalidArg(managedCommandId, u"Input binding with this command ID was already added to this window.");
+
+        auto keyboard = Application::GetCurrent()->GetKeyboardInternal();
+        auto wxKey = keyboard->KeyToWxKey(key);
+        auto acceleratorFlags = keyboard->ModifierKeysToAcceleratorFlags(modifiers);
+
+        _acceleratorsByCommandIds[managedCommandId] = wxAcceleratorEntry(acceleratorFlags, wxKey);
+
+        UpdateAcceleratorTable();
+    }
+
+    void Window::RemoveInputBinding(const string& managedCommandId)
+    {
+        if (managedCommandId.empty())
+            throwExInvalidArg(managedCommandId, u"Command ID must not be empty.");
+
+        auto it = _acceleratorsByCommandIds.find(managedCommandId);
+        if (it == _acceleratorsByCommandIds.end())
+            throwExInvalidArg(managedCommandId, u"Input binding with this command ID was not found in this window.");
+
+        _acceleratorsByCommandIds.erase(it);
+
+        UpdateAcceleratorTable();
+    }
+
+    void Window::UpdateAcceleratorTable()
+    {
+        auto frame = _frame;
+        if (frame == nullptr)
+            return;
+
+        std::vector<wxAcceleratorEntry> entries;
+        for (auto pair : _acceleratorsByCommandIds)
+            entries.push_back(pair.second);
+
+        frame->SetAcceleratorTable(entries.empty() ? wxNullAcceleratorTable : wxAcceleratorTable(entries.size(), &entries[0]));
+    }
+
+    void Window::OnCommand(wxCommandEvent& event)
+    {
     }
 
     MainMenu* Window::GetMenu()
@@ -206,6 +255,7 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_ACTIVATE, &Window::OnActivate, this);
         wxWindow->Unbind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
         wxWindow->Unbind(wxEVT_ICONIZE, &Window::OnIconize, this);
+        wxWindow->Unbind(wxEVT_MENU, &Window::OnCommand, this);
 
         _frame = nullptr;
         _panel = nullptr;
@@ -339,6 +389,7 @@ namespace Alternet::UI
         _frame = new Frame(this, style);
 
         ApplyIcon(_frame);
+        UpdateAcceleratorTable();
 
         _frame->Bind(wxEVT_SIZE, &Window::OnSizeChanged, this);
         _frame->Bind(wxEVT_MOVE, &Window::OnMove, this);
@@ -346,6 +397,8 @@ namespace Alternet::UI
         _frame->Bind(wxEVT_ACTIVATE, &Window::OnActivate, this);
         _frame->Bind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
         _frame->Bind(wxEVT_ICONIZE, &Window::OnIconize, this);
+        _frame->Bind(wxEVT_MENU, &Window::OnCommand, this);
+
 
         _panel = new wxPanel(_frame);
 

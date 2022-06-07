@@ -13,12 +13,15 @@ namespace Alternet::UI
         void OnKeyUp(wxKeyEvent& e, bool& handled);
         void OnChar(wxKeyEvent& e, bool& handled);
 
+        int KeyToWxKey(Key value);
+
+        wxAcceleratorEntryFlags ModifierKeysToAcceleratorFlags(ModifierKeys modifierKeys);
+
     private:
         int IsAsciiKey(int value);
         Key WxAsciiKeyToKey(int value);
         Key WxKeyToKey(int value);
 
-        int KeyToWxKey(Key value);
         std::vector<int> KeyToWxKeys(Key value);
         bool KeyHasMultipleWxKeys(Key value);
     };

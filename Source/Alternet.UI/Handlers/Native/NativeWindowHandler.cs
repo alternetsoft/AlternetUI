@@ -30,6 +30,7 @@ namespace Alternet.UI
             ApplyState();
             ApplyIcon();
             ApplyMenu();
+            ApplyInputBindings();
 
             Control.TitleChanged += Control_TitleChanged;
 
@@ -48,12 +49,37 @@ namespace Alternet.UI
             Control.IconChanged += Control_IconChanged;
             Control.MenuChanged += Control_MenuChanged;
 
+            Control.InputBindings.ItemInserted += InputBindings_ItemInserted;
+            Control.InputBindings.ItemRemoved += InputBindings_ItemRemoved;
+
             NativeControl.Closing += Control_Closing;
             NativeControl.SizeChanged += NativeControl_SizeChanged;
             NativeControl.LocationChanged += NativeControl_LocationChanged;
             NativeControl.Activated += NativeControl_Activated;
             NativeControl.Deactivated += NativeControl_Deactivated;
             NativeControl.StateChanged += NativeControl_StateChanged;
+        }
+
+        private void InputBindings_ItemInserted(object sender, Base.Collections.CollectionChangeEventArgs<InputBinding> e)
+        {
+            AddInputBinding(e.Item);
+        }
+
+        void ApplyInputBindings()
+        {
+            foreach (var binding in Control.InputBindings)
+                AddInputBinding(binding);
+        }
+
+        void AddInputBinding(InputBinding value)
+        {
+            var keyBinding = (KeyBinding)value;
+            NativeControl.AddInputBinding("test11", (Native.Key)keyBinding.Key, (Native.ModifierKeys)keyBinding.Modifiers);
+        }
+
+        private void InputBindings_ItemRemoved(object sender, Base.Collections.CollectionChangeEventArgs<InputBinding> e)
+        {
+            NativeControl.RemoveInputBinding("test11");
         }
 
         private void Control_IconChanged(object? sender, EventArgs e)

@@ -84,6 +84,8 @@ void CloseOwnedWindowsArray(void* array);
 void ShowModal();
 void Close();
 void Activate();
+void AddInputBinding(const string& managedCommandId, Key key, ModifierKeys modifiers);
+void RemoveInputBinding(const string& managedCommandId);
 public:
 enum class WindowEvent
 {

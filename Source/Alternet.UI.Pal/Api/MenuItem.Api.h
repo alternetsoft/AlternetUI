@@ -16,6 +16,20 @@ ALTERNET_UI_API MenuItem* MenuItem_Create_()
         });
 }
 
+ALTERNET_UI_API char16_t* MenuItem_GetManagedCommandId_(MenuItem* obj)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetManagedCommandId());
+        });
+}
+
+ALTERNET_UI_API void MenuItem_SetManagedCommandId_(MenuItem* obj, const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetManagedCommandId(value);
+        });
+}
+
 ALTERNET_UI_API char16_t* MenuItem_GetText_(MenuItem* obj)
 {
     return MarshalExceptions<char16_t*>([&](){

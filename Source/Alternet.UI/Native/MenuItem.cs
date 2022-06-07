@@ -23,6 +23,23 @@ namespace Alternet.UI.Native
         {
         }
         
+        public string ManagedCommandId
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.MenuItem_GetManagedCommandId_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.MenuItem_SetManagedCommandId_(NativePointer, value);
+            }
+        }
+        
         public string Text
         {
             get
@@ -155,6 +172,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr MenuItem_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string MenuItem_GetManagedCommandId_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void MenuItem_SetManagedCommandId_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string MenuItem_GetText_(IntPtr obj);

@@ -395,6 +395,18 @@ namespace Alternet.UI.Native
             NativeApi.Window_Activate_(NativePointer);
         }
         
+        public void AddInputBinding(string managedCommandId, Key key, ModifierKeys modifiers)
+        {
+            CheckDisposed();
+            NativeApi.Window_AddInputBinding_(NativePointer, managedCommandId, key, modifiers);
+        }
+        
+        public void RemoveInputBinding(string managedCommandId)
+        {
+            CheckDisposed();
+            NativeApi.Window_RemoveInputBinding_(NativePointer, managedCommandId);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -611,6 +623,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_Activate_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_AddInputBinding_(IntPtr obj, string managedCommandId, Key key, ModifierKeys modifiers);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_RemoveInputBinding_(IntPtr obj, string managedCommandId);
             
         }
     }

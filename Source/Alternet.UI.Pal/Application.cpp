@@ -41,54 +41,54 @@ namespace Alternet::UI
         auto eventType = e.GetEventType();
 
         if (eventType == wxEVT_KEY_UP)
-            _owner->GetKeyboard()->OnKeyUp((wxKeyEvent&)e, handled);
+            _owner->GetKeyboardInternal()->OnKeyUp((wxKeyEvent&)e, handled);
         else if (eventType == wxEVT_KEY_DOWN)
         {
 #ifndef __WXOSX_COCOA__            
             // For some reason, on Windows and Linux wxEVT_CHAR_HOOK are not sent
             // when mouse capture is active.
             if (wxWindow::GetCapture() != nullptr)
-                _owner->GetKeyboard()->OnKeyDown((wxKeyEvent&)e, handled);
+                _owner->GetKeyboardInternal()->OnKeyDown((wxKeyEvent&)e, handled);
 #endif                
         }
         else if (eventType == wxEVT_CHAR_HOOK)
-            _owner->GetKeyboard()->OnKeyDown((wxKeyEvent&)e, handled);
+            _owner->GetKeyboardInternal()->OnKeyDown((wxKeyEvent&)e, handled);
         else if (eventType == wxEVT_CHAR)
-            _owner->GetKeyboard()->OnChar((wxKeyEvent&)e, handled);
+            _owner->GetKeyboardInternal()->OnChar((wxKeyEvent&)e, handled);
         else if (eventType == wxEVT_MOTION)
-            _owner->GetMouse()->OnMouseMove((wxMouseEvent&)e, handled);
+            _owner->GetMouseInternal()->OnMouseMove((wxMouseEvent&)e, handled);
         else if (eventType == wxEVT_MOUSEWHEEL)
-            _owner->GetMouse()->OnMouseWheel((wxMouseEvent&)e, handled);
+            _owner->GetMouseInternal()->OnMouseWheel((wxMouseEvent&)e, handled);
         else if (eventType == wxEVT_LEFT_DOWN)
-            _owner->GetMouse()->OnMouseDown((wxMouseEvent&)e, MouseButton::Left, handled);
+            _owner->GetMouseInternal()->OnMouseDown((wxMouseEvent&)e, MouseButton::Left, handled);
         else if (eventType == wxEVT_MIDDLE_DOWN)
-            _owner->GetMouse()->OnMouseDown((wxMouseEvent&)e, MouseButton::Middle, handled);
+            _owner->GetMouseInternal()->OnMouseDown((wxMouseEvent&)e, MouseButton::Middle, handled);
         else if (eventType == wxEVT_RIGHT_DOWN)
-            _owner->GetMouse()->OnMouseDown((wxMouseEvent&)e, MouseButton::Right, handled);
+            _owner->GetMouseInternal()->OnMouseDown((wxMouseEvent&)e, MouseButton::Right, handled);
         else if (eventType == wxEVT_AUX1_DOWN)
-            _owner->GetMouse()->OnMouseDown((wxMouseEvent&)e, MouseButton::XButton1, handled);
+            _owner->GetMouseInternal()->OnMouseDown((wxMouseEvent&)e, MouseButton::XButton1, handled);
         else if (eventType == wxEVT_AUX2_DOWN)
-            _owner->GetMouse()->OnMouseDown((wxMouseEvent&)e, MouseButton::XButton2, handled);
+            _owner->GetMouseInternal()->OnMouseDown((wxMouseEvent&)e, MouseButton::XButton2, handled);
         else if (eventType == wxEVT_LEFT_UP)
-            _owner->GetMouse()->OnMouseUp((wxMouseEvent&)e, MouseButton::Left, handled);
+            _owner->GetMouseInternal()->OnMouseUp((wxMouseEvent&)e, MouseButton::Left, handled);
         else if (eventType == wxEVT_MIDDLE_UP)
-            _owner->GetMouse()->OnMouseUp((wxMouseEvent&)e, MouseButton::Middle, handled);
+            _owner->GetMouseInternal()->OnMouseUp((wxMouseEvent&)e, MouseButton::Middle, handled);
         else if (eventType == wxEVT_RIGHT_UP)
-            _owner->GetMouse()->OnMouseUp((wxMouseEvent&)e, MouseButton::Right, handled);
+            _owner->GetMouseInternal()->OnMouseUp((wxMouseEvent&)e, MouseButton::Right, handled);
         else if (eventType == wxEVT_AUX1_UP)
-            _owner->GetMouse()->OnMouseUp((wxMouseEvent&)e, MouseButton::XButton1, handled);
+            _owner->GetMouseInternal()->OnMouseUp((wxMouseEvent&)e, MouseButton::XButton1, handled);
         else if (eventType == wxEVT_AUX2_UP)
-            _owner->GetMouse()->OnMouseUp((wxMouseEvent&)e, MouseButton::XButton2, handled);
+            _owner->GetMouseInternal()->OnMouseUp((wxMouseEvent&)e, MouseButton::XButton2, handled);
         else if (eventType == wxEVT_LEFT_DCLICK)
-            _owner->GetMouse()->OnMouseDoubleClick((wxMouseEvent&)e, MouseButton::Left, handled);
+            _owner->GetMouseInternal()->OnMouseDoubleClick((wxMouseEvent&)e, MouseButton::Left, handled);
         else if (eventType == wxEVT_MIDDLE_DCLICK)
-            _owner->GetMouse()->OnMouseDoubleClick((wxMouseEvent&)e, MouseButton::Middle, handled);
+            _owner->GetMouseInternal()->OnMouseDoubleClick((wxMouseEvent&)e, MouseButton::Middle, handled);
         else if (eventType == wxEVT_RIGHT_DCLICK)
-            _owner->GetMouse()->OnMouseDoubleClick((wxMouseEvent&)e, MouseButton::Right, handled);
+            _owner->GetMouseInternal()->OnMouseDoubleClick((wxMouseEvent&)e, MouseButton::Right, handled);
         else if (eventType == wxEVT_AUX1_DCLICK)
-            _owner->GetMouse()->OnMouseDoubleClick((wxMouseEvent&)e, MouseButton::XButton1, handled);
+            _owner->GetMouseInternal()->OnMouseDoubleClick((wxMouseEvent&)e, MouseButton::XButton1, handled);
         else if (eventType == wxEVT_AUX2_DCLICK)
-            _owner->GetMouse()->OnMouseDoubleClick((wxMouseEvent&)e, MouseButton::XButton2, handled);
+            _owner->GetMouseInternal()->OnMouseDoubleClick((wxMouseEvent&)e, MouseButton::XButton2, handled);
 
         return handled ? Event_Processed : Event_Skip;
     }
@@ -152,15 +152,26 @@ namespace Alternet::UI
         return _mouse;
     }
 
-    /*static*/ Application* Application::GetCurrent()
-    {
-        return s_current;
-    }
-
     Keyboard* Application::GetKeyboard()
     {
         _keyboard->AddRef();
         return _keyboard;
+    }
+
+
+    Mouse* Application::GetMouseInternal()
+    {
+        return _mouse;
+    }
+
+    Keyboard* Application::GetKeyboardInternal()
+    {
+        return _keyboard;
+    }
+
+    /*static*/ Application* Application::GetCurrent()
+    {
+        return s_current;
     }
 
     void Application::Run(Window* window)

@@ -105,6 +105,16 @@ namespace Alternet::UI
         _menuItem = nullptr;
     }
 
+    string MenuItem::GetManagedCommandId()
+    {
+        return _managedCommandId;
+    }
+
+    void MenuItem::SetManagedCommandId(const string& value)
+    {
+        _managedCommandId = value;
+    }
+
     void MenuItem::RecreateWxMenuItem()
     {
         bool wasCreated = _menuItem != nullptr;
