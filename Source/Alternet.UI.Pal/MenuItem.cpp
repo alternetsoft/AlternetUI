@@ -233,6 +233,9 @@ namespace Alternet::UI
 
     void MenuItem::RaiseClick()
     {
+        if (_menuItem->IsCheckable())
+            _flags.Set(MenuItemFlags::Checked, !_flags.IsSet(MenuItemFlags::Checked));
+
         RaiseEvent(MenuItemEvent::Click);
     }
 

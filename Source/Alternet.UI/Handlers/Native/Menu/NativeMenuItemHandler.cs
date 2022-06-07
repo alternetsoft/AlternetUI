@@ -119,6 +119,7 @@ namespace Alternet.UI
 
         private void NativeControl_Click(object? sender, EventArgs? e)
         {
+            Control.Checked = NativeControl.Checked;
             Control.RaiseClick(e ?? throw new ArgumentNullException());
         }
 
