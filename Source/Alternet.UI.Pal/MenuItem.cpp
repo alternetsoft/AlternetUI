@@ -34,6 +34,10 @@ namespace Alternet::UI
             s_itemsByIdsMap[_menuItem->GetId()] = this;
     }
 
+    void MenuItem::UpdateWxWindowParent()
+    {
+    }
+
     void MenuItem::ApplyBounds(const Rect& value)
     {
     }

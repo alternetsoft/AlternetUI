@@ -32,6 +32,8 @@ namespace Alternet::UI
         void ApplyBounds(const Rect& value) override;
         Size SizeToClientSize(const Size& size) override;
 
+        void UpdateWxWindowParent() override;
+
     private:
 
         enum class MenuItemFlags

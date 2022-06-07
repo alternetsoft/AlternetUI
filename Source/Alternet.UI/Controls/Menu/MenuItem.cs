@@ -157,6 +157,7 @@ namespace Alternet.UI
 
         private static void OnCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            MessageBox.Show("OnCommandChanged");
             MenuItem b = (MenuItem)d;
             b.OnCommandChanged((ICommand)e.OldValue, (ICommand)e.NewValue);
         }
