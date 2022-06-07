@@ -42,6 +42,11 @@ namespace Alternet::UI
     {
     }
 
+    Rect MenuItem::RetrieveBounds()
+    {
+        return Rect();
+    }
+
     Size MenuItem::SizeToClientSize(const Size& size)
     {
         return size;
