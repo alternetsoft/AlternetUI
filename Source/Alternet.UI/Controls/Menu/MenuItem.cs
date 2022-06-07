@@ -196,7 +196,7 @@ namespace Alternet.UI
             UpdateCanExecute();
         }
 
-        private void OnCanExecuteChanged(object sender, EventArgs e)
+        private void OnCanExecuteChanged(object? sender, EventArgs e)
         {
             UpdateCanExecute();
         }

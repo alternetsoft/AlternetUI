@@ -132,7 +132,7 @@ namespace Alternet.UI
             FrameworkElement fe = current as FrameworkElement;
             if (fe != null)
             {
-                return fe.Parent;
+                return fe.LogicalParent;
             }
 
             //FrameworkContentElement fce = current as FrameworkContentElement;

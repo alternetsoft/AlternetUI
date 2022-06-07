@@ -86,7 +86,7 @@ namespace Alternet.UI
 				double result = 0;
 				if (base.InParentLogicalTree)
 				{
-					result = ((Grid)base.Parent).GetFinalRowDefinitionHeight(base.Index);
+					result = ((Grid)base.LogicalParent).GetFinalRowDefinitionHeight(base.Index);
 				}
 				return result;
 			}

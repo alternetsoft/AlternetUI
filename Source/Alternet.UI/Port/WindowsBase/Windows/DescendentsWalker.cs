@@ -372,7 +372,7 @@ namespace Alternet.UI
                     // remember this node, to avoid duplicate callback for it
 
                     //DependencyObject dependencyObjectParent = VisualTreeHelper.GetParent(fe);
-                    DependencyObject logicalParent = fe.Parent;
+                    DependencyObject logicalParent = fe.LogicalParent;
                     if (/*dependencyObjectParent != null &&*/ logicalParent != null/* && dependencyObjectParent != logicalParent*/)
                     {
                         _nodes.Add(fe);

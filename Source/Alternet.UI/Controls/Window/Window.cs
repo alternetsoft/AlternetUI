@@ -182,7 +182,15 @@ namespace Alternet.UI
                 if (menu == value)
                     return;
 
+                var oldValue = menu;
                 menu = value;
+
+                if (oldValue != null)
+                    oldValue.Parent = null;
+                
+                if (menu != null)
+                    menu.Parent = this;
+
                 OnMenuChanged(EventArgs.Empty);
                 MenuChanged?.Invoke(this, EventArgs.Empty);
             }

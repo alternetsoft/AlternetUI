@@ -122,7 +122,7 @@ namespace Alternet.UI
         public static DependencyObject GetParent(DependencyObject reference)
         {
             if (reference is FrameworkElement fe)
-                return fe.Parent;
+                return fe.LogicalParent;
 
             return null;
 

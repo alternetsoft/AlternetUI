@@ -498,7 +498,7 @@ namespace Alternet.UI
                     else*/
                     {
                         child = d as FrameworkElement;
-                        parent = ((child != null) ? child.Parent : null)/* yezo as System.Windows.Controls.Primitives.GridViewRowPresenterBase*/;
+                        parent = ((child != null) ? child.LogicalParent : null)/* yezo as System.Windows.Controls.Primitives.GridViewRowPresenterBase*/;
                     }
 
                     if (child != null && parent != null &&

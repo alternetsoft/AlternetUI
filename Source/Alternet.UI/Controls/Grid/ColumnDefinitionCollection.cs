@@ -111,7 +111,7 @@ namespace Alternet.UI
 		bool IList.Contains(object value)
 		{
 			ColumnDefinition columnDefinition = value as ColumnDefinition;
-			return columnDefinition != null && columnDefinition.Parent == this._owner;
+			return columnDefinition != null && columnDefinition.LogicalParent == this._owner;
 		}
 
 		/// <summary>Determines whether a given <see cref="ColumnDefinition" /> exists within a <see cref="ColumnDefinitionCollection" />.</summary>
@@ -120,7 +120,7 @@ namespace Alternet.UI
 		///     <see langword="true" /> if the <see cref="ColumnDefinition" /> exists within the collection; otherwise <see langword="false" />.</returns>
 		public bool Contains(ColumnDefinition value)
 		{
-			return value != null && value.Parent == this._owner;
+			return value != null && value.LogicalParent == this._owner;
 		}
 
 		/// <summary>For a description of this member, see <see cref="M:System.Collections.IList.IndexOf(System.Object)" />.</summary>
@@ -136,7 +136,7 @@ namespace Alternet.UI
 		/// <returns>The index of <paramref name="value" /> if found in the collection; otherwise, -1.</returns>
 		public int IndexOf(ColumnDefinition value)
 		{
-			if (value == null || value.Parent != this._owner)
+			if (value == null || value.LogicalParent != this._owner)
 			{
 				return -1;
 			}
@@ -407,7 +407,7 @@ namespace Alternet.UI
 			{
 				throw new ArgumentException();
 			}
-			if (columnDefinition.Parent != null)
+			if (columnDefinition.LogicalParent != null)
 			{
 				throw new ArgumentException();
 			}
@@ -424,14 +424,14 @@ namespace Alternet.UI
 			{
 				throw new ArgumentException();
 			}
-			return columnDefinition.Parent == this._owner;
+			return columnDefinition.LogicalParent == this._owner;
 		}
 
 		private void PrivateConnectChild(int index, DefinitionBase value)
 		{
 			this._items[index] = value;
 			value.Index = index;
-			value.Parent = _owner;
+			value.LogicalParent = _owner;
 			//this._owner.AddLogicalChild(value); //yezo
 			//value.OnEnterParentTree();
 		}
@@ -441,7 +441,7 @@ namespace Alternet.UI
 			value.OnExitParentTree();
 			this._items[value.Index] = null;
 			value.Index = -1;
-			value.Parent = null;
+			value.LogicalParent = null;
 			//this._owner.RemoveLogicalChild(value); yezo
 		}
 

@@ -10,9 +10,8 @@ namespace MenuSample
         {
             InitializeComponent();
 
-            DataContext = this;
-
             SaveCommand = new Command(o => MessageBox.Show("Save"), o => saveEnabledMenuItem.Checked);
+            DataContext = this;
 
             UpdateControls();
         }

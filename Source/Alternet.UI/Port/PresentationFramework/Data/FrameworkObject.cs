@@ -323,7 +323,7 @@ namespace Alternet.UI
             {
                 if (IsFE)
                 {
-                    return new FrameworkObject(_fe.Parent);
+                    return new FrameworkObject(_fe.LogicalParent);
                 }
                 else
                 {
@@ -932,7 +932,7 @@ namespace Alternet.UI
             DependencyObject logicalParent;
             if (IsFE)
             {
-                logicalParent = _fe.Parent;
+                logicalParent = _fe.LogicalParent;
             }
             /* yezo
             else if (IsFCE)

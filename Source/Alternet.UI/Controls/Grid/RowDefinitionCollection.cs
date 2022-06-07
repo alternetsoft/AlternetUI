@@ -111,7 +111,7 @@ namespace Alternet.UI
 		bool IList.Contains(object value)
 		{
 			RowDefinition rowDefinition = value as RowDefinition;
-			return rowDefinition != null && rowDefinition.Parent == this._owner;
+			return rowDefinition != null && rowDefinition.LogicalParent == this._owner;
 		}
 
 		/// <summary>Determines whether a given <see cref="RowDefinition" /> exists within a <see cref="RowDefinitionCollection" />.</summary>
@@ -120,7 +120,7 @@ namespace Alternet.UI
 		///     <see langword="true" /> if the <see cref="RowDefinition" /> exists within the collection; otherwise <see langword="false" />.</returns>
 		public bool Contains(RowDefinition value)
 		{
-			return value != null && value.Parent == this._owner;
+			return value != null && value.LogicalParent == this._owner;
 		}
 
 		/// <summary>Determines the index of a specific item in the collection.</summary>
@@ -136,7 +136,7 @@ namespace Alternet.UI
 		/// <returns>The index of <paramref name="value" /> if found in the collection; otherwise, -1.</returns>
 		public int IndexOf(RowDefinition value)
 		{
-			if (value == null || value.Parent != this._owner)
+			if (value == null || value.LogicalParent != this._owner)
 			{
 				return -1;
 			}
@@ -407,7 +407,7 @@ namespace Alternet.UI
 			{
 				throw new ArgumentException();
 			}
-			if (rowDefinition.Parent != null)
+			if (rowDefinition.LogicalParent != null)
 			{
 				throw new ArgumentException();
 			}
@@ -424,14 +424,14 @@ namespace Alternet.UI
 			{
 				throw new ArgumentException();
 			}
-			return rowDefinition.Parent == this._owner;
+			return rowDefinition.LogicalParent == this._owner;
 		}
 
 		private void PrivateConnectChild(int index, DefinitionBase value)
 		{
 			this._items[index] = value;
 			value.Index = index;
-			value.Parent = _owner;
+			value.LogicalParent = _owner;
 			//this._owner.AddLogicalChild(value); // yezo
 			//value.OnEnterParentTree();
 		}
@@ -441,7 +441,7 @@ namespace Alternet.UI
 			value.OnExitParentTree();
 			this._items[value.Index] = null;
 			value.Index = -1;
-			value.Parent = null;
+			value.LogicalParent = null;
 			//this._owner.RemoveLogicalChild(value); // yezo
 		}
 

@@ -330,15 +330,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the parent container of the control.
         /// </summary>
-        public new Control? Parent
+        public Control? Parent
         {
             get => parent;
             internal set
             {
-                var oldParent = parent;
                 parent = value;
-                base.Parent = value;
-                base.ChangeLogicalParent(oldParent, parent);
+                base.LogicalParent = value;
             }
         } // todo: allow users to set the Parent property?
 

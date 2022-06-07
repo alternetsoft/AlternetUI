@@ -116,7 +116,7 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    Grid parentGrid = (Grid)Parent;
+                    Grid parentGrid = (Grid)LogicalParent;
 
                     if (((GridLength)oldValue).GridUnitType != ((GridLength)newValue).GridUnitType)
                         parentGrid.InvalidateCells();
@@ -140,7 +140,7 @@ namespace Alternet.UI
         {
             if (InParentLogicalTree)
             {
-                Grid parentGrid = (Grid)Parent;
+                Grid parentGrid = (Grid)LogicalParent;
                 parentGrid.PerformLayout();
             }
         }
@@ -161,7 +161,7 @@ namespace Alternet.UI
         {
             if (InParentLogicalTree)
             {
-                Grid parentGrid = (Grid)Parent;
+                Grid parentGrid = (Grid)LogicalParent;
                 parentGrid.PerformLayout();
             }
         }
@@ -669,7 +669,7 @@ namespace Alternet.UI
                 {
                     for (int i = 0, count = _registry.Count; i < count; ++i)
                     {
-                        Grid parentGrid = (Grid)(_registry[i].Parent);
+                        Grid parentGrid = (Grid)(_registry[i].LogicalParent);
                         parentGrid.InvalidateCells();
                     }
                     _broadcastInvalidation = false;
@@ -808,7 +808,7 @@ namespace Alternet.UI
 
                     if (!measureIsValid)
                     {
-                        Grid parentGrid = (Grid)definitionBase.Parent;
+                        Grid parentGrid = (Grid)definitionBase.LogicalParent;
                         parentGrid.PerformLayout();
                     }
                     else if (!DoubleUtil.AreClose(sharedMinSize, definitionBase.SizeCache))
@@ -816,7 +816,7 @@ namespace Alternet.UI
                         //  if measure is valid then also need to check arrange.
                         //  Note: definitionBase.SizeCache is volatile but at this point
                         //  it contains up-to-date final size
-                        Grid parentGrid = (Grid)definitionBase.Parent;
+                        Grid parentGrid = (Grid)definitionBase.LogicalParent;
                         
                         parentGrid.PerformLayout();
                     }

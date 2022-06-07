@@ -35,7 +35,7 @@ namespace Alternet.UI
                 if (FrameworkElement.DType.IsInstanceOfType(ancestor))
                 {
                     FrameworkElement fe = ancestor as FrameworkElement;
-                    logicalParent = fe.Parent;
+                    logicalParent = fe.LogicalParent;
                     // FrameworkElement
                     //DependencyObject dependencyObjectParent = VisualTreeHelper.GetParent(fe);
                     if (/*dependencyObjectParent != null && */logicalParent != null/* && dependencyObjectParent != logicalParent*/)

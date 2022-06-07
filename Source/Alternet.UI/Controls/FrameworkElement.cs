@@ -89,14 +89,23 @@ namespace Alternet.UI
                                         FrameworkPropertyMetadataOptions.Inherits));
 
         internal bool IsInitialized { get; set; }
-        
-        internal FrameworkElement? Parent { get; set; }
-        
+
+        internal FrameworkElement? LogicalParent
+        {
+            get => logicalParent;
+            set
+            {
+                var oldParent = logicalParent;
+                logicalParent = value;
+                ChangeLogicalParent(oldParent, logicalParent);
+            }
+        }
+
         internal bool IsParentAnFE { get; set; }
 
         internal override DependencyObject? GetUIParentCore()
         {
-            return Parent;
+            return LogicalParent;
         }
 
         internal bool IsLogicalChildrenIterationInProgress
@@ -121,6 +130,7 @@ namespace Alternet.UI
                                         FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsLayout));
 
         private InternalFlags _flags = 0; // Stores Flags (see Flags enum)
+        private FrameworkElement? logicalParent;
 
         /// <summary>
         ///     Indicates the current mode of lookup for both inheritance and resources.
@@ -184,7 +194,7 @@ namespace Alternet.UI
 
                     _flags = (InternalFlags)((inheritanceBehavior & inheritanceBehaviorMask) | (((uint)_flags) & ~inheritanceBehaviorMask));
 
-                    if (Parent != null)
+                    if (LogicalParent != null)
                     {
                         // This means that we are in the process of xaml parsing:
                         // an instance of FE has been created and added to a parent,
@@ -194,7 +204,7 @@ namespace Alternet.UI
                         // inheritance behavior.
                         // This must have no performance effect as the subtree of this
                         // element is empty (no children yet added).
-                        TreeWalkHelper.InvalidateOnTreeChange(/*fe:*/this, /*fce:null,*/ Parent, true);
+                        TreeWalkHelper.InvalidateOnTreeChange(/*fe:*/this, /*fce:null,*/ LogicalParent, true);
                     }
                 }
                 else
@@ -416,7 +426,8 @@ namespace Alternet.UI
                 {
                     continuePastCoreTree = modelParent != null;
                 }
-                else */if (modelParent != null)
+                else */
+                if (modelParent != null)
                 {
                     //Visual visualParentAsVisual = visualParent as Visual;
                     //if (visualParentAsVisual != null)
@@ -440,7 +451,7 @@ namespace Alternet.UI
                     // The source is going to be the visual parent, which
                     // could live in a different logical tree.
                     //args.Source = visualParent;
-                    args.Source = Parent;
+                    args.Source = LogicalParent;
                 }
             }
 
@@ -506,7 +517,7 @@ namespace Alternet.UI
             //
             // BUGBUG: this misses "trees" that have only one logical node.  No parents, no children.
 
-            if (Parent != null || HasLogicalChildren)
+            if (LogicalParent != null || HasLogicalChildren)
             {
                 var logicalSource = args.Source as DependencyObject;
                 if (logicalSource == null || !IsLogicalDescendent(logicalSource))
