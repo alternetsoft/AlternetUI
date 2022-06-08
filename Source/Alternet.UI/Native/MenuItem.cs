@@ -74,30 +74,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Key ShortcutKey
-        {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.MenuItem_GetShortcutKey_(NativePointer);
-                var m = n;
-                return m;
-            }
-            
-        }
-        
-        public ModifierKeys ShortcutModifierKeys
-        {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.MenuItem_GetShortcutModifierKeys_(NativePointer);
-                var m = n;
-                return m;
-            }
-            
-        }
-        
         public Menu? Submenu
         {
             get
@@ -190,12 +166,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void MenuItem_SetChecked_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Key MenuItem_GetShortcutKey_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern ModifierKeys MenuItem_GetShortcutModifierKeys_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr MenuItem_GetSubmenu_(IntPtr obj);

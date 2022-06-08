@@ -1,6 +1,7 @@
 #include "MenuItem.h"
 #include "Menu.h"
 #include "IdManager.h"
+#include "Application.h"
 
 namespace Alternet::UI
 {
@@ -88,6 +89,8 @@ namespace Alternet::UI
         if (_menuItem == nullptr)
             throwExInvalidOp;
 
+        DestroyAcceleratorIfNeeded();
+
         if (_parentMenu != nullptr)
         {
             _parentMenu->RemoveItemAt(_indexInParentMenu.value());
@@ -135,6 +138,16 @@ namespace Alternet::UI
                 parent->InsertItemAt(index.value(), this);
             }
         }
+    }
+
+    void MenuItem::DestroyAcceleratorIfNeeded()
+    {
+        if (_accelerator == nullptr)
+            return;
+
+        IdManager::FreeId(_accelerator->GetCommand());
+        delete _accelerator;
+        _accelerator = nullptr;
     }
 
     bool MenuItem::IsSeparator()
@@ -188,18 +201,23 @@ namespace Alternet::UI
         }
     }
 
-    Key MenuItem::GetShortcutKey()
-    {
-        return Key();
-    }
-
     void MenuItem::SetShortcut(Key key, ModifierKeys modifierKeys)
     {
-    }
+        DestroyAcceleratorIfNeeded();
 
-    ModifierKeys MenuItem::GetShortcutModifierKeys()
-    {
-        return ModifierKeys();
+        if (key == Key::None)
+        {
+            _menuItem->SetAccel(nullptr);
+            return;
+        }
+
+        auto keyboard = Application::GetCurrent()->GetKeyboardInternal();
+        auto wxKey = keyboard->KeyToWxKey(key);
+        auto acceleratorFlags = keyboard->ModifierKeysToAcceleratorFlags(modifierKeys);
+
+        auto entry = new wxAcceleratorEntry(acceleratorFlags, wxKey, IdManager::AllocateId());
+
+        _menuItem->SetAccel(entry);
     }
 
     Menu* MenuItem::GetSubmenu()

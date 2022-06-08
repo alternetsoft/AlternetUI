@@ -53,12 +53,15 @@ namespace Alternet::UI
         Menu* _parentMenu = nullptr;
         optional<int> _indexInParentMenu;
         string _managedCommandId;
+        wxAcceleratorEntry* _accelerator = nullptr;
 
         inline static std::map<int, MenuItem*> s_itemsByIdsMap;
 
         void CreateWxMenuItem();
         void DestroyWxMenuItem();
         void RecreateWxMenuItem();
+
+        void DestroyAcceleratorIfNeeded();
 
         bool IsSeparator();
     };

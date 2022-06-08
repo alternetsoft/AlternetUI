@@ -58,20 +58,6 @@ ALTERNET_UI_API void MenuItem_SetChecked_(MenuItem* obj, c_bool value)
         });
 }
 
-ALTERNET_UI_API Key MenuItem_GetShortcutKey_(MenuItem* obj)
-{
-    return MarshalExceptions<Key>([&](){
-            return obj->GetShortcutKey();
-        });
-}
-
-ALTERNET_UI_API ModifierKeys MenuItem_GetShortcutModifierKeys_(MenuItem* obj)
-{
-    return MarshalExceptions<ModifierKeys>([&](){
-            return obj->GetShortcutModifierKeys();
-        });
-}
-
 ALTERNET_UI_API Menu* MenuItem_GetSubmenu_(MenuItem* obj)
 {
     return MarshalExceptions<Menu*>([&](){

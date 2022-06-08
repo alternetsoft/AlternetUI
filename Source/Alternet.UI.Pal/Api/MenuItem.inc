@@ -13,12 +13,6 @@ bool GetChecked();
 void SetChecked(bool value);
 
 
-Key GetShortcutKey();
-
-
-ModifierKeys GetShortcutModifierKeys();
-
-
 Menu* GetSubmenu();
 void SetSubmenu(Menu* value);
 
