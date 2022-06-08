@@ -58,9 +58,27 @@ namespace Alternet.UI
             NativeControl.Activated += NativeControl_Activated;
             NativeControl.Deactivated += NativeControl_Deactivated;
             NativeControl.StateChanged += NativeControl_StateChanged;
+            NativeControl.InputBindingCommandExecuted += NativeControl_InputBindingCommandExecuted;
         }
 
-        private void InputBindings_ItemInserted(object sender, Base.Collections.CollectionChangeEventArgs<InputBinding> e)
+        private void NativeControl_InputBindingCommandExecuted(object? sender, Native.NativeEventArgs<Native.CommandEventData> e)
+        {
+            var binding = Control.InputBindings.First(x => x.ManagedCommandId == e.Data.managedCommandId);
+
+            e.Handled = false;
+
+            var command = binding.Command;
+            if (command == null)
+                return;
+
+            if (!command.CanExecute(binding.CommandParameter))
+                return;
+
+            command.Execute(binding.CommandParameter);
+            e.Handled = true;
+        }
+
+        private void InputBindings_ItemInserted(object? sender, Base.Collections.CollectionChangeEventArgs<InputBinding> e)
         {
             AddInputBinding(e.Item);
         }
@@ -74,12 +92,12 @@ namespace Alternet.UI
         void AddInputBinding(InputBinding value)
         {
             var keyBinding = (KeyBinding)value;
-            NativeControl.AddInputBinding("test11", (Native.Key)keyBinding.Key, (Native.ModifierKeys)keyBinding.Modifiers);
+            NativeControl.AddInputBinding(keyBinding.ManagedCommandId, (Native.Key)keyBinding.Key, (Native.ModifierKeys)keyBinding.Modifiers);
         }
 
-        private void InputBindings_ItemRemoved(object sender, Base.Collections.CollectionChangeEventArgs<InputBinding> e)
+        private void InputBindings_ItemRemoved(object? sender, Base.Collections.CollectionChangeEventArgs<InputBinding> e)
         {
-            NativeControl.RemoveInputBinding("test11");
+            NativeControl.RemoveInputBinding(e.Item.ManagedCommandId);
         }
 
         private void Control_IconChanged(object? sender, EventArgs e)
@@ -378,6 +396,7 @@ namespace Alternet.UI
             NativeControl.Closing -= Control_Closing;
             NativeControl.Activated -= NativeControl_Activated;
             NativeControl.Deactivated -= NativeControl_Deactivated;
+            NativeControl.InputBindingCommandExecuted -= NativeControl_InputBindingCommandExecuted;
 
             Control.OwnerChanged -= Control_OwnerChanged;
             Control.TitleChanged -= Control_TitleChanged;

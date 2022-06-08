@@ -58,7 +58,6 @@ namespace NativeApi.Api
         public void AddInputBinding(string managedCommandId, Key key, ModifierKeys modifiers) => throw new Exception();
         public void RemoveInputBinding(string managedCommandId) => throw new Exception();
 
-        [NativeEvent(cancellable: true)]
         public event NativeEventHandler<CommandEventData>? InputBindingCommandExecuted { add => throw new Exception(); remove => throw new Exception(); }
     }
 }

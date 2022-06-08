@@ -17,13 +17,13 @@ namespace Alternet.UI
             Items.ItemRemoved += Items_ItemRemoved;
         }
 
-        private void Items_ItemInserted(object sender, CollectionChangeEventArgs<MenuItem> e)
+        private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<MenuItem> e)
         {
             // This is required for data binding inheritance.
             Children.Add(e.Item);
         }
 
-        private void Items_ItemRemoved(object sender, CollectionChangeEventArgs<MenuItem> e)
+        private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<MenuItem> e)
         {
             Children.Remove(e.Item);
         }

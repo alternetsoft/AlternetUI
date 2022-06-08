@@ -1,5 +1,6 @@
 #include "Window.h"
 #include "Application.h"
+#include "IdManager.h"
 
 namespace Alternet::UI
 {
@@ -108,7 +109,7 @@ namespace Alternet::UI
         auto wxKey = keyboard->KeyToWxKey(key);
         auto acceleratorFlags = keyboard->ModifierKeysToAcceleratorFlags(modifiers);
 
-        _acceleratorsByCommandIds[managedCommandId] = wxAcceleratorEntry(acceleratorFlags, wxKey);
+        _acceleratorsByCommandIds[managedCommandId] = wxAcceleratorEntry(acceleratorFlags, wxKey, IdManager::AllocateId());
 
         UpdateAcceleratorTable();
     }
@@ -121,6 +122,8 @@ namespace Alternet::UI
         auto it = _acceleratorsByCommandIds.find(managedCommandId);
         if (it == _acceleratorsByCommandIds.end())
             throwExInvalidArg(managedCommandId, u"Input binding with this command ID was not found in this window.");
+
+        IdManager::FreeId(it->second.GetCommand());
 
         _acceleratorsByCommandIds.erase(it);
 
@@ -142,8 +145,22 @@ namespace Alternet::UI
 
     void Window::OnCommand(wxCommandEvent& event)
     {
-        bool cancelled = RaiseEvent(WindowEvent::InputBindingCommandExecuted);
+        auto id = event.GetId();
 
+        optional<string> foundManagedCommandId;
+        for (auto pair : _acceleratorsByCommandIds)
+        {
+            if (pair.second.GetCommand() == id)
+                foundManagedCommandId = pair.first;
+        }
+
+        if (!foundManagedCommandId.has_value())
+            return;
+
+        CommandEventData data{ const_cast<char16_t*>(foundManagedCommandId.value().c_str()) };
+        bool cancelled = RaiseEvent(WindowEvent::InputBindingCommandExecuted, &data);
+        if (!cancelled)
+            event.Skip();
     }
 
     MainMenu* Window::GetMenu()

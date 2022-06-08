@@ -47,4 +47,10 @@ namespace Alternet.UI.Native
         public System.IntPtr item;
     }
     
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class CommandEventData
+    {
+        public string managedCommandId;
+    }
+    
 }
