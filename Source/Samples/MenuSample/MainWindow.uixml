@@ -15,7 +15,7 @@
         <MenuItem Text="-" Name="separatorMenuItem" />
         <MenuItem Text="_Export">
           <MenuItem Text="Export to P_DF" Name="exportToPdfMenuItem" Click="ExportToPdfMenuItem_Click" />
-          <MenuItem Text="Export to P_NG" Name="exportToPngMenuItem" Command="{Binding ExportToPngCommand}" />
+          <MenuItem Text="Export to P_NG" Name="exportToPngMenuItem" Command="{Binding ExportToPngCommand}" Shortcut="Ctrl+Shift+G"/>
         </MenuItem>
         <MenuItem Text="E_xit" Name="exitMenuItem" Click="ExitMenuItem_Click" />
       </MenuItem>
