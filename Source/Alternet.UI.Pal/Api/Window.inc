@@ -95,6 +95,7 @@ enum class WindowEvent
     Activated,
     Deactivated,
     StateChanged,
+    InputBindingCommandExecuted,
 };
 typedef void* (*WindowEventCallbackType)(Window* obj, WindowEvent event, void* param);
 static void SetEventCallback(WindowEventCallbackType value) { eventCallback = value; }

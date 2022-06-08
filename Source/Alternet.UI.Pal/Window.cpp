@@ -142,6 +142,8 @@ namespace Alternet::UI
 
     void Window::OnCommand(wxCommandEvent& event)
     {
+        bool cancelled = RaiseEvent(WindowEvent::InputBindingCommandExecuted);
+
     }
 
     MainMenu* Window::GetMenu()

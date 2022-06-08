@@ -457,6 +457,14 @@ namespace Alternet.UI.Native
                 {
                     StateChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.WindowEvent.InputBindingCommandExecuted:
+                {
+                    {
+                        var cea = new CancelEventArgs();
+                        InputBindingCommandExecuted?.Invoke(this, cea);
+                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                    }
+                }
                 default: throw new Exception("Unexpected WindowEvent value: " + e);
             }
         }
@@ -467,6 +475,7 @@ namespace Alternet.UI.Native
         public event EventHandler? Activated;
         public event EventHandler? Deactivated;
         public event EventHandler? StateChanged;
+        public event EventHandler<CancelEventArgs>? InputBindingCommandExecuted;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -484,6 +493,7 @@ namespace Alternet.UI.Native
                 Activated,
                 Deactivated,
                 StateChanged,
+                InputBindingCommandExecuted,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
