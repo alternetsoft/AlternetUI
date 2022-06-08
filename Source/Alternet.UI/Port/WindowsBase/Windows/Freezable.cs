@@ -24,7 +24,7 @@ namespace Alternet.UI
     /// values can potentially be frozen.  See the Freezable documentation for
     /// more details.
     /// </summary>
-    public /*yezo*/ abstract class Freezable : DependencyObject, ISealable
+    internal /*yezo*/ abstract class Freezable : DependencyObject, ISealable
     {
 #if DEBUG
 

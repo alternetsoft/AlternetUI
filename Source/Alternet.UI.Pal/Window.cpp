@@ -158,8 +158,8 @@ namespace Alternet::UI
             return;
 
         CommandEventData data{ const_cast<char16_t*>(foundManagedCommandId.value().c_str()) };
-        bool cancelled = RaiseEvent(WindowEvent::InputBindingCommandExecuted, &data);
-        if (!cancelled)
+        bool handled = RaiseEvent(WindowEvent::InputBindingCommandExecuted, &data);
+        if (handled)
             event.Skip();
     }
 

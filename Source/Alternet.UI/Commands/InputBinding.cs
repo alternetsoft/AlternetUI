@@ -16,57 +16,8 @@ namespace Alternet.UI
     /// InputBinding - InputGesture and ICommand combination
     ///                Used to specify the binding between Gesture and Command at Element level.
     /// </summary>
-    public class InputBinding : Freezable, ICommandSource
+    public class InputBinding : DependencyObject, ICommandSource
     {
-        #region Freezable
-
-        /// <summary>
-        ///     Freezable override to create the instance (used for cloning).
-        /// </summary>
-        protected override Freezable CreateInstanceCore()
-        {
-            return new InputBinding();
-        }
-
-        /// <summary>
-        ///     Freezable override to clone the non dependency properties
-        /// </summary>
-        protected override void CloneCore(Freezable sourceFreezable)
-        {
-            base.CloneCore(sourceFreezable);
-            _gesture = ((InputBinding)sourceFreezable).Gesture;
-        }
-
-        /// <summary>
-        ///     Freezable override to clone the non dependency properties
-        /// </summary>
-        protected override void CloneCurrentValueCore(Freezable sourceFreezable)
-        {
-            base.CloneCurrentValueCore(sourceFreezable);
-            _gesture = ((InputBinding)sourceFreezable).Gesture;
-        }
-
-        /// <summary>
-        ///     Freezable override of GetAsFrozenCore
-        /// </summary>
-        protected override void GetAsFrozenCore(Freezable sourceFreezable)
-        {
-            base.GetAsFrozenCore(sourceFreezable);
-            _gesture = ((InputBinding)sourceFreezable).Gesture;
-        }
-
-        /// <summary>
-        ///     Freezable override of GetCurrentValueAsFrozenCore
-        /// </summary>
-        protected override void GetCurrentValueAsFrozenCore(Freezable sourceFreezable)
-        {
-            base.GetCurrentValueAsFrozenCore(sourceFreezable);
-            _gesture = ((InputBinding)sourceFreezable).Gesture;
-        }
-
-        #endregion
-
-
         #region Constructor
 
         /// <summary>

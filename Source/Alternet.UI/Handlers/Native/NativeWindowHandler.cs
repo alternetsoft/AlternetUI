@@ -81,6 +81,8 @@ namespace Alternet.UI
         private void InputBindings_ItemInserted(object? sender, Base.Collections.CollectionChangeEventArgs<InputBinding> e)
         {
             AddInputBinding(e.Item);
+
+            Internal.InheritanceContextHelper.ProvideContextForObject(Control, e.Item);
         }
 
         void ApplyInputBindings()
@@ -97,6 +99,7 @@ namespace Alternet.UI
 
         private void InputBindings_ItemRemoved(object? sender, Base.Collections.CollectionChangeEventArgs<InputBinding> e)
         {
+            Internal.InheritanceContextHelper.RemoveContextFromObject(Control, e.Item);
             NativeControl.RemoveInputBinding(e.Item.ManagedCommandId);
         }
 
