@@ -21,7 +21,7 @@ namespace Alternet::UI
 
         void SetParentMenu(Menu* value, optional<int> index);
 
-        static wxString CoerceWxItemText(string value);
+        static wxString CoerceWxItemText(string value, MenuItem* menuItem);
 
         bool GetEnabled() override;
         virtual void SetEnabled(bool value) override;

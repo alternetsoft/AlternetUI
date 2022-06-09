@@ -12,6 +12,7 @@ namespace Alternet::UI
 
     MenuItem::~MenuItem()
     {
+        DestroyAcceleratorIfNeeded();
         DestroyWxMenuItem();
     }
 
@@ -27,12 +28,15 @@ namespace Alternet::UI
         _menuItem = new wxMenuItem(
                 nullptr,
                 separator ? wxID_SEPARATOR : IdManager::AllocateId(),
-                CoerceWxItemText(_text),
+                CoerceWxItemText(_text, this),
                 wxEmptyString,
                 checked ? wxITEM_CHECK : wxITEM_NORMAL);
 
         if (!separator)
             s_itemsByIdsMap[_menuItem->GetId()] = this;
+
+        if (_accelerator != nullptr)
+            _menuItem->SetAccel(_accelerator);
     }
 
     void MenuItem::UpdateWxWindowParent()
@@ -88,8 +92,6 @@ namespace Alternet::UI
     {
         if (_menuItem == nullptr)
             throwExInvalidOp;
-
-        DestroyAcceleratorIfNeeded();
 
         if (_parentMenu != nullptr)
         {
@@ -155,11 +157,19 @@ namespace Alternet::UI
         return _text == u"-";
     }
 
-    /*static*/ wxString MenuItem::CoerceWxItemText(string value)
+    /*static*/ wxString MenuItem::CoerceWxItemText(string value, MenuItem* menuItem)
     {
         // Have to pass space because the validation check does not allow for empty string.
         auto text = value.empty() ? wxString(" ") : wxStr(value);
         text.Replace("_", "&");
+        
+        if (menuItem != nullptr)
+        {
+            auto accelerator = menuItem->_accelerator;
+            if (accelerator != nullptr)
+                text += "\t" + accelerator->ToRawString();
+        }
+
         return text;
     }
 
@@ -172,7 +182,7 @@ namespace Alternet::UI
     {
         bool wasSeparator = IsSeparator();
         _text = value;
-        _menuItem->SetItemLabel(CoerceWxItemText(value));
+        _menuItem->SetItemLabel(CoerceWxItemText(value, this));
 
         if (wasSeparator != IsSeparator())
         {
@@ -208,16 +218,21 @@ namespace Alternet::UI
         if (key == Key::None)
         {
             _menuItem->SetAccel(nullptr);
-            return;
+        }
+        else
+        {
+            auto keyboard = Application::GetCurrent()->GetKeyboardInternal();
+            auto wxKey = keyboard->KeyToWxKey(key);
+            auto acceleratorFlags = keyboard->ModifierKeysToAcceleratorFlags(modifierKeys);
+
+            _accelerator = new wxAcceleratorEntry(acceleratorFlags, wxKey, IdManager::AllocateId());
+
+            _menuItem->SetAccel(_accelerator);
         }
 
-        auto keyboard = Application::GetCurrent()->GetKeyboardInternal();
-        auto wxKey = keyboard->KeyToWxKey(key);
-        auto acceleratorFlags = keyboard->ModifierKeysToAcceleratorFlags(modifierKeys);
-
-        auto entry = new wxAcceleratorEntry(acceleratorFlags, wxKey, IdManager::AllocateId());
-
-        _menuItem->SetAccel(entry);
+#ifdef __WXOSX_COCOA__
+            RecreateWxMenuItem();
+#endif
     }
 
     Menu* MenuItem::GetSubmenu()

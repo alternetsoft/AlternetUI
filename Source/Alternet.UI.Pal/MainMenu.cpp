@@ -25,7 +25,7 @@ namespace Alternet::UI
 
     void MainMenu::InsertItemAt(int index, Menu* menu, const string& text)
     {
-        GetWxMenuBar()->Insert(index, menu->GetWxMenu(), MenuItem::CoerceWxItemText(text));
+        GetWxMenuBar()->Insert(index, menu->GetWxMenu(), MenuItem::CoerceWxItemText(text, nullptr));
     }
 
     void MainMenu::RemoveItemAt(int index)
@@ -35,7 +35,7 @@ namespace Alternet::UI
 
     void MainMenu::SetItemText(int index, const string& text)
     {
-        GetWxMenuBar()->SetMenuLabel(index, MenuItem::CoerceWxItemText(text));
+        GetWxMenuBar()->SetMenuLabel(index, MenuItem::CoerceWxItemText(text, nullptr));
     }
 
     wxWindow* MainMenu::CreateWxWindowCore(wxWindow* parent)
