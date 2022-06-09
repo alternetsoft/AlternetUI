@@ -19,3 +19,4 @@ Documentation/Alternet.UI.Documentation/log.txt
 .DS_Store
 .vscode/launch.json
 .vscode/tasks.json
+.project

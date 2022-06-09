@@ -21,9 +21,9 @@ namespace Alternet::UI
         _menu = nullptr;
     }
 
-    void Menu::OnMenuCommand(wxCommandEvent& evt)
+    void Menu::OnMenuCommand(wxCommandEvent& event)
     {
-        auto item = MenuItem::GetMenuItemById(evt.GetId());
+        auto item = MenuItem::GetMenuItemById(event.GetId());
         item->RaiseClick();
     }
 
