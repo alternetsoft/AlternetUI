@@ -38,16 +38,35 @@
     <Target Name="BuildWxWidgets_Linux" Condition="$([MSBuild]::IsOsPlatform('Linux'))">
         <Exec WorkingDirectory="$(WxWidgetsDirectory)" Command="chmod +x configure" />
         <Exec WorkingDirectory="$(WxWidgetsDirectory)" Command="mkdir $(WxWidgetsGtkBuildDirectoryName)" />
-        <Exec WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" Command="../configure --disable-shared" />
+        <Exec WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" Command="../configure --enable-debug --disable-shared" Condition="'$(DebugWxWidgetsBuild)' == 'true'"/>
+        <Exec WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" Command="../configure --disable-shared" Condition="'$(DebugWxWidgetsBuild)' != 'true'"/>
         <Exec WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" Command="make -j20" />
     </Target>
     <Target Name="BuildWxWidgets_MacOS" Condition="$([MSBuild]::IsOsPlatform('OSX'))">
         <Exec WorkingDirectory="$(WxWidgetsDirectory)" Command="chmod +x configure" />
         <Exec WorkingDirectory="$(WxWidgetsDirectory)" Command="mkdir $(WxWidgetsMacOSBuildDirectoryName)" />
+
+        <PropertyGroup>
+            <ConfigureCommand>../configure</ConfigureCommand>
+            <DebugFlag>--enable-debug</DebugFlag>
+    
+            <!-- On macOS High Sierra (10.13.6, the minimum supported version), libtiff, expat, pcre fail to build. So have to exclude them. -->
+            <ConfigureCommandParameters>--disable-shared --disable-sys-libs --with-macosx-version-min=10.13 --without-libtiff --without-expat --without-regex</ConfigureCommandParameters>
+        </PropertyGroup>
         
-        <!-- On macOS High Sierra (10.13.6, the minimum supported version), libtiff, expat, pcre fail to build. So have to exclude them. -->
-        <Exec WorkingDirectory="$(WxWidgetsMacOSBuildDirectory)"
-            Command="../configure --disable-shared --disable-sys-libs --with-macosx-version-min=10.13 --without-libtiff --without-expat --without-regex" />
+        <CreateProperty
+            Condition="'$(DebugWxWidgetsBuild)' == 'true'"
+            Value="$(ConfigureCommand) $(DebugFlag) $(ConfigureCommandParameters)">
+            <Output TaskParameter="Value" PropertyName="ConfigureCommandLine" />  
+        </CreateProperty>  
+
+        <CreateProperty
+            Condition="'$(DebugWxWidgetsBuild)' != 'true'"
+            Value="$(ConfigureCommand) $(ConfigureCommandParameters)">
+            <Output TaskParameter="Value" PropertyName="ConfigureCommandLine" />  
+        </CreateProperty>  
+
+        <Exec WorkingDirectory="$(WxWidgetsMacOSBuildDirectory)" Command="$(ConfigureCommandLine)" />
         
         <Exec WorkingDirectory="$(WxWidgetsMacOSBuildDirectory)" Command="make -j20" />
     </Target>
