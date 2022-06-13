@@ -217,6 +217,7 @@ namespace Alternet.UI
         /// </value>
         /// <remarks>
         /// This property returns an array that contains all windows that are owned by this window. To make a window owned by another window, set the <see cref="Owner"/> property.
+        /// When a window is owned by another window, it is closed or hidden with the owner window.
         /// </remarks>
         public Window[] OwnedWindows { get => Handler.OwnedWindows; }
 
@@ -618,6 +619,7 @@ namespace Alternet.UI
         /// A <see cref="Window"/> that represents the window that is the owner of this window.
         /// </value>
         /// <remarks>
+        /// When a window is owned by another window, it is closed or hidden with the owner window.
         /// </remarks>
         public Window? Owner
         {

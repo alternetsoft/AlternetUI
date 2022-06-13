@@ -150,6 +150,7 @@ namespace WindowPropertiesSample
         {
             var haveTestWindow = testWindow != null;
 
+            hideWindowCheckBox.Enabled = haveTestWindow;
             createAndShowWindowButton.Enabled = !haveTestWindow;
             createAndShowModalWindowButton.Enabled = !haveTestWindow;
             startLocationComboBox.Enabled = !haveTestWindow;
@@ -198,6 +199,9 @@ namespace WindowPropertiesSample
             testWindow.LocationChanged -= TestWindow_LocationChanged;
 
             testWindow = null;
+
+            hideWindowCheckBox.IsChecked = false;
+
             UpdateControls();
         }
 
@@ -338,6 +342,12 @@ namespace WindowPropertiesSample
                 testWindow.MinimumSize = new Size(100, 100);
                 testWindow.MaximumSize = new Size(300, 300);
             }
+        }
+
+        private void HideWindowCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.Visible = !hideWindowCheckBox.IsChecked;
         }
     }
 }

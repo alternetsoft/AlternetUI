@@ -47,8 +47,6 @@ namespace Alternet::UI
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
     protected:
-        wxWindow* GetParentingWxWindow(Control* child) override;
-
         Color RetrieveBackgroundColor() override;
         void ApplyBackgroundColor(const Color& value) override;
 
@@ -58,7 +56,9 @@ namespace Alternet::UI
         void OnWxWindowDestroyed(wxWindow* window) override;
 
         void ShowCore() override;
+        void HideCore() override;
 
+        void UpdateWxWindowParent() override;
     private:
 
         std::map<string, wxAcceleratorEntry> _acceleratorsByCommandIds;
@@ -102,6 +102,8 @@ namespace Alternet::UI
         void ApplyIcon(Frame* value);
 
         void ApplyDefaultLocation();
+
+        std::vector<Window*> GetOwnedWindows();
 
         enum class DelayedWindowFlags
         {
@@ -152,6 +154,8 @@ namespace Alternet::UI
         inline static std::stack<Window*> _modalWindows;
 
         WindowStartLocation _startLocation = WindowStartLocation::Default;
+
+        std::set<Window*> _preservedHiddenOwnedWindows;
     };
 }
 

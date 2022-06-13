@@ -260,6 +260,10 @@ namespace Alternet::UI
 
         if (_flags.IsSet(WindowFlags::Modal) && !recreatingWxWindow)
             _flags.Set(WindowFlags::Modal, false);
+
+        auto parent = GetParent();
+        if (parent != nullptr && !recreatingWxWindow)
+            parent->RemoveChild(this);
     }
 
     void Window::OnBeforeDestroyWxWindow()
@@ -318,6 +322,20 @@ namespace Alternet::UI
         }
     }
 
+    std::vector<Window*> Window::GetOwnedWindows()
+    {
+        std::vector<Window*> result;
+
+        for (auto child : GetChildren())
+        {
+            auto childWindow = dynamic_cast<Window*>(child);
+            if (childWindow != nullptr)
+                result.push_back(childWindow);
+        }
+
+        return result;
+    }
+
     void Window::ShowCore()
     {
         if (!_flags.IsSet(WindowFlags::ShownOnce))
@@ -326,7 +344,32 @@ namespace Alternet::UI
             ApplyDefaultLocation();
         }
 
-        Control::ShowCore();
+        bool hasHiddenOwner = GetParent() != nullptr && !GetParent()->GetVisible();
+
+        if (!hasHiddenOwner)
+            Control::ShowCore();
+
+        for (auto child : GetOwnedWindows())
+        {
+            if (_preservedHiddenOwnedWindows.find(child) == _preservedHiddenOwnedWindows.end())
+                child->SetVisible(true);
+        }
+
+        _preservedHiddenOwnedWindows.clear();
+    }
+
+    void Window::HideCore()
+    {
+        Control::HideCore();
+        
+        _preservedHiddenOwnedWindows.clear();
+        for (auto child : GetOwnedWindows())
+        {
+            if (!child->GetVisible())
+                _preservedHiddenOwnedWindows.insert(child);
+
+            child->SetVisible(false);
+        }
     }
 
     void Window::ApplyIcon(Frame* value)
@@ -560,12 +603,8 @@ namespace Alternet::UI
         ScheduleRecreateWxWindow();
     }
 
-    wxWindow* Window::GetParentingWxWindow(Control* child)
+    void Window::UpdateWxWindowParent()
     {
-        if (dynamic_cast<Window*>(child) != nullptr)
-            return _frame;
-
-        return _panel;
     }
 
     Color Window::RetrieveBackgroundColor()
@@ -608,17 +647,7 @@ namespace Alternet::UI
 
     void* Window::OpenOwnedWindowsArray()
     {
-        auto frame = GetFrame();
-        auto children = frame->GetChildren();
-        auto items = new std::vector<Window*>();
-        for (int i = 0; i < children.GetCount(); i++)
-        {
-            auto childFrame = dynamic_cast<Frame*>(children[i]);
-            if (childFrame != nullptr)
-                items->push_back(childFrame->GetWindow());
-        }
-
-        return items;
+        return new std::vector<Window*>(GetOwnedWindows());
     }
 
     int Window::GetOwnedWindowsItemCount(void* array)
@@ -697,10 +726,20 @@ namespace Alternet::UI
 
     void Window::OnClose(wxCloseEvent& event)
     {
-        if (RaiseEvent(WindowEvent::Closing))
+        bool cancel = RaiseEvent(WindowEvent::Closing);
+
+        if (cancel)
             event.Veto();
         else
+        {
             event.Skip();
+
+            for (auto window : GetOwnedWindows())
+            {
+                RemoveChild(window);
+                window->Close();
+            }
+        }
     }
 
     bool Window::GetResizable()
