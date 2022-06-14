@@ -121,6 +121,47 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? ShortcutChanged;
 
+        MenuItemRole? role;
+
+        /// <summary>
+        /// Gets or sets this menu item's role, which is used to automate macOS-specific standard items layout.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Menu items roles provide a mechanism for automatically adjusting certain menu items to macOS conventions.
+        /// For example, "About", "Exit", and "Preferences" items should be placed in the application menu on macOS, and have a standard shortcuts.
+        /// For more information, see <see cref="MenuItemRoles"/> class members.
+        /// </para>
+        /// <para>
+        /// Setting <see cref="Role"/> to <see langword="null"/>
+        /// has the same effect as the <see cref="MenuItemRoles.Auto"/> value. The <see langword="null"/> is the default value of this property.
+        /// </para>
+        /// </remarks>
+        public MenuItemRole? Role
+        {
+            get
+            {
+                CheckDisposed();
+                return role;
+            }
+
+            set
+            {
+                CheckDisposed();
+
+                if (role == value)
+                    return;
+
+                role = value;
+                RoleChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Occurs when the <see cref="Role"/> property changes.
+        /// </summary>
+        public event EventHandler? RoleChanged;
+
         bool @checked;
 
         /// <summary>

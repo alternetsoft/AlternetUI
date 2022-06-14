@@ -18,15 +18,22 @@ namespace Alternet.UI
             ApplyChecked();
             ApplyItems();
             ApplyShortcut();
+            ApplyRole();
 
             Control.TextChanged += Control_TextChanged;
             Control.CheckedChanged += Control_CheckedChanged;
             Control.ShortcutChanged += Control_ShortcutChanged;
-            
+            Control.RoleChanged += Control_RoleChanged;
+
             NativeControl.Click += NativeControl_Click;
 
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
+        }
+
+        private void Control_RoleChanged(object? sender, EventArgs e)
+        {
+            ApplyRole();
         }
 
         private void Control_ShortcutChanged(object? sender, EventArgs e)
@@ -71,6 +78,11 @@ namespace Alternet.UI
             NativeControl.SetShortcut(key, modifierKeys);
         }
 
+        private void ApplyRole()
+        {
+            NativeControl.Role = Control.Role?.Name ?? string.Empty;
+        }
+
         private void ApplyChecked()
         {
             NativeControl.Checked = Control.Checked;
@@ -83,6 +95,7 @@ namespace Alternet.UI
             Control.CheckedChanged -= Control_CheckedChanged;
             Control.TextChanged -= Control_TextChanged;
             Control.ShortcutChanged -= Control_ShortcutChanged;
+            Control.RoleChanged -= Control_RoleChanged;
 
             NativeControl.Click -= NativeControl_Click;
 

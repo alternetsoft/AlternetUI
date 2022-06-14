@@ -9,7 +9,7 @@
   <Window.Menu>
     <MainMenu>
       <MenuItem Text="_File">
-        <MenuItem Text="_Open..." Name="openMenuItem" Click="OpenMenuItem_Click" Shortcut="Ctrl+O" />
+        <MenuItem Text="_Open..." Name="openMenuItem" Click="OpenMenuItem_Click" Shortcut="Ctrl+O" Role="About" />
         <MenuItem Text="_Save..." Name="saveMenuItem" Command="{Binding SaveCommand}" Shortcut="Ctrl+S"/>
         <MenuItem Text="_Save Enabled" Name="saveEnabledMenuItem" Click="SaveEnabledMenuItem_Click" Checked="True" />
         <MenuItem Text="-" Name="separatorMenuItem" />

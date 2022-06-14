@@ -57,6 +57,23 @@ namespace Alternet.UI.Native
             }
         }
         
+        public string Role
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.MenuItem_GetRole_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.MenuItem_SetRole_(NativePointer, value);
+            }
+        }
+        
         public bool Checked
         {
             get
@@ -160,6 +177,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void MenuItem_SetText_(IntPtr obj, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string MenuItem_GetRole_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void MenuItem_SetRole_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool MenuItem_GetChecked_(IntPtr obj);

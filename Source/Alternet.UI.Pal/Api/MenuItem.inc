@@ -9,6 +9,10 @@ string GetText();
 void SetText(const string& value);
 
 
+string GetRole();
+void SetRole(const string& value);
+
+
 bool GetChecked();
 void SetChecked(bool value);
 

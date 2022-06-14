@@ -44,6 +44,20 @@ ALTERNET_UI_API void MenuItem_SetText_(MenuItem* obj, const char16_t* value)
         });
 }
 
+ALTERNET_UI_API char16_t* MenuItem_GetRole_(MenuItem* obj)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetRole());
+        });
+}
+
+ALTERNET_UI_API void MenuItem_SetRole_(MenuItem* obj, const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetRole(value);
+        });
+}
+
 ALTERNET_UI_API c_bool MenuItem_GetChecked_(MenuItem* obj)
 {
     return MarshalExceptions<c_bool>([&](){

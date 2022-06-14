@@ -196,6 +196,15 @@ namespace Alternet::UI
         }
     }
 
+    string MenuItem::GetRole()
+    {
+        return u"";
+    }
+
+    void MenuItem::SetRole(const string& value)
+    {
+    }
+
     void MenuItem::SetParentMenu(Menu* value, optional<int> index)
     {
         _parentMenu = value;

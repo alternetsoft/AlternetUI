@@ -8,6 +8,8 @@ namespace NativeApi.Api
 
         public string Text { get => throw new Exception(); set => throw new Exception(); }
 
+        public string Role { get => throw new Exception(); set => throw new Exception(); }
+
         public bool Checked { get => throw new Exception(); set => throw new Exception(); }
 
         public void SetShortcut(Key key, ModifierKeys modifierKeys) => throw new Exception();
