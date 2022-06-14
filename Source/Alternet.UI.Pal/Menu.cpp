@@ -54,6 +54,11 @@ namespace Alternet::UI
     {
     }
 
+    std::vector<MenuItem*> Menu::GetItems()
+    {
+        return _items;
+    }
+
     int Menu::GetItemsCount()
     {
         return _menu->GetMenuItemCount();

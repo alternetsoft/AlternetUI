@@ -73,4 +73,9 @@ namespace Alternet::UI
     {
         ApplyItemRoles();
     }
+
+    std::vector<Menu*> MainMenu::GetItems()
+    {
+        return _items;
+    }
 }

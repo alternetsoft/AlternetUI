@@ -28,6 +28,8 @@ namespace Alternet::UI
         void SetParent(MenuItem* item);
 
         MainMenu* FindParentMainMenu();
+
+        std::vector<MenuItem*> GetItems();
     protected:
 
         void ApplyBounds(const Rect& value) override;

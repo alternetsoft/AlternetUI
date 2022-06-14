@@ -16,10 +16,12 @@ namespace Alternet::UI
 
         void OnItemRoleChanged(MenuItem* item);
 
-        void OnEndInit() override;
+        std::vector<Menu*> GetItems();
     protected:
         void ApplyEnabled(bool value) override;
         void ApplyBounds(const Rect& value) override;
+
+        void OnEndInit() override;
     private:
         void ApplyItemRoles();
 
