@@ -118,5 +118,10 @@ namespace MenuSample
 
             UpdateControls();
         }
+
+        private void SetAboutMenuItemRoleToNone_Click(object sender, System.EventArgs e)
+        {
+            aboutMenuItem.Role = MenuItemRoles.None;
+        }
     }
 }

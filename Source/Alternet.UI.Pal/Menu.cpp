@@ -27,6 +27,29 @@ namespace Alternet::UI
         item->RaiseClick();
     }
 
+    void Menu::SetParent(MainMenu* mainMenu)
+    {
+        _parentMainMenu = mainMenu;
+        _parentMenuItem = nullptr;
+    }
+
+    void Menu::SetParent(MenuItem* item)
+    {
+        _parentMenuItem = item;
+        _parentMainMenu = nullptr;
+    }
+
+    MainMenu* Menu::FindParentMainMenu()
+    {
+        if (_parentMainMenu != nullptr)
+            return _parentMainMenu;
+
+        if (_parentMenuItem == nullptr)
+            return nullptr;
+
+        return _parentMenuItem->FindParentMainMenu();
+    }
+
     void Menu::ApplyBounds(const Rect& value)
     {
     }

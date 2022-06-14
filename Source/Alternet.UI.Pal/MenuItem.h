@@ -6,6 +6,7 @@
 namespace Alternet::UI
 {
     class Menu;
+    class MainMenu;
 
     class MenuItem : public Control
     {
@@ -20,11 +21,14 @@ namespace Alternet::UI
         void RaiseClick();
 
         void SetParentMenu(Menu* value, optional<int> index);
+        Menu* GetParentMenu();
 
         static wxString CoerceWxItemText(string value, MenuItem* menuItem);
 
         bool GetEnabled() override;
         virtual void SetEnabled(bool value) override;
+
+        MainMenu* FindParentMainMenu();
 
     protected:
 
@@ -54,6 +58,7 @@ namespace Alternet::UI
         optional<int> _indexInParentMenu;
         string _managedCommandId;
         wxAcceleratorEntry* _accelerator = nullptr;
+        string _role;
 
         inline static std::map<int, MenuItem*> s_itemsByIdsMap;
 

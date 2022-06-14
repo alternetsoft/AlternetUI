@@ -298,6 +298,7 @@
     <ClInclude Include="Label.h" />
     <ClInclude Include="ListBox.h" />
     <ClInclude Include="ListView.h" />
+    <ClInclude Include="MacOSMenu.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="ManagedInputStream.h" />
     <ClInclude Include="Menu.h" />

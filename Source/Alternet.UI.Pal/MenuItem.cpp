@@ -1,4 +1,5 @@
 #include "MenuItem.h"
+#include "MainMenu.h"
 #include "Menu.h"
 #include "IdManager.h"
 #include "Application.h"
@@ -67,6 +68,14 @@ namespace Alternet::UI
         _flags.Set(MenuItemFlags::Enabled, value);
         if (_menuItem != nullptr && _parentMenu != nullptr)
             _menuItem->Enable(value);
+    }
+
+    MainMenu* MenuItem::FindParentMainMenu()
+    {
+        if (_parentMenu == nullptr)
+            return nullptr;
+
+        return _parentMenu->FindParentMainMenu();
     }
 
     bool MenuItem::GetChecked()
@@ -198,11 +207,24 @@ namespace Alternet::UI
 
     string MenuItem::GetRole()
     {
-        return u"";
+        return _role;
     }
 
     void MenuItem::SetRole(const string& value)
     {
+        if (_role == value)
+            return;
+
+        _role = value;
+
+        if (IsInitInProgress())
+            return;
+
+        auto mainMenu = FindParentMainMenu();
+        if (mainMenu == nullptr)
+            return;
+
+        mainMenu->OnItemRoleChanged(this);
     }
 
     void MenuItem::SetParentMenu(Menu* value, optional<int> index)
@@ -218,6 +240,11 @@ namespace Alternet::UI
             if (_menuItem->IsCheckable())
                 _menuItem->Check(checked);
         }
+    }
+
+    Menu* MenuItem::GetParentMenu()
+    {
+        return _parentMenu;
     }
 
     void MenuItem::SetShortcut(Key key, ModifierKeys modifierKeys)
@@ -261,6 +288,7 @@ namespace Alternet::UI
 
     void MenuItem::SetSubmenu(Menu* value)
     {
+        value->SetParent(this);
         _menuItem->SetSubMenu(value->GetWxMenu());
     }
 

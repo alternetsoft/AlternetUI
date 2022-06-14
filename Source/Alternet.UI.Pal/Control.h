@@ -73,6 +73,8 @@ namespace Alternet::UI
         virtual void OnBeginInit();
         virtual void OnEndInit();
 
+        bool IsInitInProgress();
+
     private:
         enum class DelayedControlFlags
         {

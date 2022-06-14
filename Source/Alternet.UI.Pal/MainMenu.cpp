@@ -1,5 +1,6 @@
 #include "MainMenu.h"
 #include "MenuItem.h"
+#include "MacOSMenu.h"
 
 namespace Alternet::UI
 {
@@ -18,6 +19,13 @@ namespace Alternet::UI
     {
     }
 
+    void MainMenu::ApplyItemRoles()
+    {
+#ifdef __WXOSX_COCOA__
+        MacOSMenu::ApplyItemRoles(this);
+#endif
+    }
+
     int MainMenu::GetItemsCount()
     {
         return GetWxMenuBar()->GetMenuCount();
@@ -25,12 +33,16 @@ namespace Alternet::UI
 
     void MainMenu::InsertItemAt(int index, Menu* menu, const string& text)
     {
+        _items.insert(_items.begin() + index, menu);
+        menu->SetParent(this);
         GetWxMenuBar()->Insert(index, menu->GetWxMenu(), MenuItem::CoerceWxItemText(text, nullptr));
     }
 
     void MainMenu::RemoveItemAt(int index)
     {
+        _items[index]->SetParent((MainMenu*)nullptr);
         GetWxMenuBar()->Remove(index);
+        _items.erase(_items.begin() + index);
     }
 
     void MainMenu::SetItemText(int index, const string& text)
@@ -42,7 +54,7 @@ namespace Alternet::UI
     {
         auto menuBar = new wxMenuBar();
 #ifdef __WXOSX_COCOA__
-        menuBar->CallAfter([=]() {AdjustItemsOrder(); });
+        menuBar->CallAfter([=]() {MacOSMenu::EnsureHelpItemIsLast(GetWxMenuBar()); });
 #endif
         return menuBar;
     }
@@ -52,28 +64,13 @@ namespace Alternet::UI
         return dynamic_cast<wxMenuBar*>(GetWxWindow());
     }
 
-    void MainMenu::AdjustItemsOrder()
+    void MainMenu::OnItemRoleChanged(MenuItem* item)
     {
-#ifdef __WXOSX_COCOA__
-        // macOS appends "Window" menu to the main menu automatically.
-        // If our menu has "Help" menu, move it to the end, after the "Window" menu.
-        // This only needs to be done when there is no "Window" menu explicitly added by the user.
+        ApplyItemRoles();
+    }
 
-        auto menuBar = GetWxMenuBar();
-
-        auto windowMenuIndex = menuBar->FindMenu("Window");
-        if (windowMenuIndex != wxNOT_FOUND)
-            return;
-        
-        auto helpMenuIndex = menuBar->FindMenu("Help");
-        if (helpMenuIndex == wxNOT_FOUND)
-            return;
-
-        auto helpMenu = menuBar->GetMenu(helpMenuIndex);
-        auto helpMenuLabel = menuBar->GetMenuLabel(helpMenuIndex);
-
-        menuBar->Remove(helpMenuIndex);
-        menuBar->Append(helpMenu, helpMenuLabel);
-#endif
+    void MainMenu::OnEndInit()
+    {
+        ApplyItemRoles();
     }
 }

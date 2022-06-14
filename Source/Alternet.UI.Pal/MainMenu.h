@@ -13,10 +13,16 @@ namespace Alternet::UI
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
         wxMenuBar* GetWxMenuBar();
+
+        void OnItemRoleChanged(MenuItem* item);
+
+        void OnEndInit() override;
     protected:
         void ApplyEnabled(bool value) override;
         void ApplyBounds(const Rect& value) override;
     private:
-        void AdjustItemsOrder();
+        void ApplyItemRoles();
+
+        std::vector<Menu*> _items;
     };
 }

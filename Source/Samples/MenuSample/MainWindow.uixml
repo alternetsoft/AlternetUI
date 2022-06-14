@@ -9,7 +9,7 @@
   <Window.Menu>
     <MainMenu>
       <MenuItem Text="_File">
-        <MenuItem Text="_Open..." Name="openMenuItem" Click="OpenMenuItem_Click" Shortcut="Ctrl+O" Role="About" />
+        <MenuItem Text="_Open..." Name="openMenuItem" Click="OpenMenuItem_Click" Shortcut="Ctrl+O" />
         <MenuItem Text="_Save..." Name="saveMenuItem" Command="{Binding SaveCommand}" Shortcut="Ctrl+S"/>
         <MenuItem Text="_Save Enabled" Name="saveEnabledMenuItem" Click="SaveEnabledMenuItem_Click" Checked="True" />
         <MenuItem Text="-" Name="separatorMenuItem" />
@@ -37,5 +37,6 @@
     <Button Text="Remove Last Dynamic Menu Item" Name="removeLastDynamicMenuItemMenuItem" Click="RemoveLastDynamicMenuItemMenuItem_Click" Margin="0,0,0,10" />
     <Button Name="toggleExitEnabledMenuItem" Click="ToggleExitEnabledMenuItem_Click" Margin="0,0,0,10" />
     <Button Name="toggleSeparatorMenuItem" Click="ToggleSeparatorMenuItem_Click" Margin="0,0,0,10" />
+    <Button Text="Set About Item Role to None" Name="setAboutMenuItemRoleToNone" Click="SetAboutMenuItemRoleToNone_Click" Margin="0,0,0,10" />
   </StackPanel>
 </Window>

@@ -6,6 +6,7 @@
 namespace Alternet::UI
 {
     class MenuItem;
+    class MainMenu;
 
     class Menu : public Control
     {
@@ -23,6 +24,10 @@ namespace Alternet::UI
 
         void OnMenuCommand(wxCommandEvent& evt);
 
+        void SetParent(MainMenu* mainMenu);
+        void SetParent(MenuItem* item);
+
+        MainMenu* FindParentMainMenu();
     protected:
 
         void ApplyBounds(const Rect& value) override;
@@ -31,6 +36,9 @@ namespace Alternet::UI
     private:
 
         wxMenu* _menu;
+        
+        MainMenu* _parentMainMenu = nullptr;
+        MenuItem* _parentMenuItem = nullptr;
 
         std::vector<MenuItem*> _items;
 

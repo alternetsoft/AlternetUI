@@ -144,6 +144,11 @@ namespace Alternet::UI
     {
     }
 
+    bool Control::IsInitInProgress()
+    {
+        return _flags.IsSet(ControlFlags::InitInProgress);
+    }
+
     wxWindow* Control::GetWxWindow()
     {
         if (_wxWindow == nullptr)
