@@ -69,6 +69,10 @@ namespace Alternet::UI
         virtual Size SizeToClientSize(const Size& size);
 
         virtual void UpdateWxWindowParent();
+
+        virtual void OnBeginInit();
+        virtual void OnEndInit();
+
     private:
         enum class DelayedControlFlags
         {

@@ -109,6 +109,8 @@ namespace Alternet::UI
             throwExInvalidOp;
 
         _flags.Set(ControlFlags::InitInProgress, true);
+
+        OnBeginInit();
     }
 
     void Control::EndInit()
@@ -130,6 +132,16 @@ namespace Alternet::UI
         }
 
         _postInitActions.clear();
+
+        OnEndInit();
+    }
+
+    void Control::OnBeginInit()
+    {
+    }
+
+    void Control::OnEndInit()
+    {
     }
 
     wxWindow* Control::GetWxWindow()
