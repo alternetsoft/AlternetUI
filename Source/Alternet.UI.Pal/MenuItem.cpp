@@ -104,7 +104,11 @@ namespace Alternet::UI
 
         if (_parentMenu != nullptr)
         {
-            _parentMenu->RemoveItemAt(_indexInParentMenu.value());
+            if (_parentMenuOverride != nullptr)
+                _parentMenuOverride->Remove(_menuItem);
+            else
+                _parentMenu->RemoveItemAt(_indexInParentMenu.value());
+
             _parentMenu = nullptr;
         }
 
@@ -240,6 +244,16 @@ namespace Alternet::UI
             if (_menuItem->IsCheckable())
                 _menuItem->Check(checked);
         }
+    }
+
+    void MenuItem::SetParentMenuOverride(wxMenu* value)
+    {
+        _parentMenuOverride = value;
+    }
+
+    wxMenu* MenuItem::GetParentMenuOverride()
+    {
+        return _parentMenuOverride;
     }
 
     Menu* MenuItem::GetParentMenu()

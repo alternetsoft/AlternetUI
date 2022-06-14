@@ -23,6 +23,9 @@ namespace Alternet::UI
         void SetParentMenu(Menu* value, optional<int> index);
         Menu* GetParentMenu();
 
+        void SetParentMenuOverride(wxMenu* value);
+        wxMenu* GetParentMenuOverride();
+
         static wxString CoerceWxItemText(string value, MenuItem* menuItem);
 
         bool GetEnabled() override;
@@ -56,6 +59,9 @@ namespace Alternet::UI
 
         Menu* _parentMenu = nullptr;
         optional<int> _indexInParentMenu;
+
+        wxMenu* _parentMenuOverride = nullptr;
+
         string _managedCommandId;
         wxAcceleratorEntry* _accelerator = nullptr;
         string _role;

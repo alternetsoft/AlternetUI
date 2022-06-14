@@ -7,8 +7,15 @@ namespace Alternet::UI
     MainMenu::MainMenu()
     {
     }
+
     MainMenu::~MainMenu()
     {
+    }
+
+    void MainMenu::OnMenuCommand(wxCommandEvent& event)
+    {
+        auto item = MenuItem::GetMenuItemById(event.GetId());
+        item->RaiseClick();
     }
 
     void MainMenu::ApplyEnabled(bool value)
@@ -55,10 +62,21 @@ namespace Alternet::UI
         auto menuBar = new wxMenuBar();
 #ifdef __WXOSX_COCOA__
         menuBar->CallAfter([=]() {MacOSMenu::EnsureHelpItemIsLast(GetWxMenuBar()); });
+
+        auto appMenu = menuBar->OSXGetAppleMenu();
+        appMenu->Bind(wxEVT_MENU, &MainMenu::OnMenuCommand, this);
 #endif
+
         return menuBar;
     }
     
+    void MainMenu::OnWxWindowDestroyed(wxWindow* window)
+    {
+#ifdef __WXOSX_COCOA__
+        window->Unbind(wxEVT_MENU, &MainMenu::OnMenuCommand, this);
+#endif
+    }
+
     wxMenuBar* MainMenu::GetWxMenuBar()
     {
         return dynamic_cast<wxMenuBar*>(GetWxWindow());

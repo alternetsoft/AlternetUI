@@ -11,6 +11,7 @@
             "name": "Mac",
             "intelliSenseMode": "clang-x64",
             "includePath": [
+                "${workspaceFolder}/External/WxWidgets/include"
             ],
             "macFrameworkPath": [
                 "/System/Library/Frameworks"

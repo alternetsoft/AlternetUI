@@ -21,9 +21,13 @@ namespace Alternet::UI
         void ApplyEnabled(bool value) override;
         void ApplyBounds(const Rect& value) override;
 
+        void OnWxWindowDestroyed(wxWindow* window) override;
+
         void OnEndInit() override;
     private:
         void ApplyItemRoles();
+
+        void OnMenuCommand(wxCommandEvent& event);
 
         std::vector<Menu*> _items;
     };

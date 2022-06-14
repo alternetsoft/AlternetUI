@@ -53,13 +53,35 @@ namespace Alternet::UI::MacOSMenu
             return result;
         }
 
+        bool DeduceAboutRole(MenuItem* item)
+        {
+            auto name = item->GetWxMenuItem()->GetItemLabelText();
+            return name == "About" || name == "About..." || name.StartsWith("About ");
+        }
+
         MenuItem* FindItemWithDeducedRole(const std::vector<MenuItem*>& items, const string& role)
         {
-            return nullptr;
+            MenuItem* foundItem = nullptr;
+            for (auto item : items)
+            {
+                if (role == RoleNames::About)
+                    foundItem = DeduceAboutRole(item) ? item : nullptr;
+                
+                if (foundItem != nullptr)
+                    break;
+            }
+
+            return foundItem;
         }
 
         MenuItem* FindItemWithExplicitRole(const std::vector<MenuItem*>& items, const string& role)
         {
+            for (auto item : items)
+            {
+                if (item->GetRole() == role)
+                    return item;
+            }
+
             return nullptr;
         }
 
@@ -79,9 +101,30 @@ namespace Alternet::UI::MacOSMenu
         }
     }
 
+    string GetApplicationName()
+    {
+        return u"";
+    }
+
     void ApplyItemRoles(MainMenu* mainMenu)
     {
-        auto item = FindItemWithRole(mainMenu, RoleNames::About);
+        auto appMenu = mainMenu->GetWxMenuBar()->OSXGetAppleMenu();
+
+        auto aboutItem = FindItemWithRole(mainMenu, RoleNames::About);
+        if (aboutItem != nullptr)
+        {
+            bool restore = aboutItem->GetRole() == RoleNames::None;
+
+            aboutItem->SetText(u"About " + GetApplicationName());
+
+            if (aboutItem->GetParentMenuOverride() != nullptr)
+                aboutItem->GetParentMenuOverride()->Remove(aboutItem->GetWxMenuItem());
+            else
+                aboutItem->GetParentMenu()->GetWxMenu()->Remove(aboutItem->GetWxMenuItem());
+
+            appMenu->Insert(0, aboutItem->GetWxMenuItem());
+            aboutItem->SetParentMenuOverride(appMenu);
+        }
     }
 
     void EnsureHelpItemIsLast(wxMenuBar* menuBar)
