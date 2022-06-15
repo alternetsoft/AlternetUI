@@ -59,6 +59,13 @@ namespace Alternet::UI::MacOSMenu
             return name == "About" || name == "About..." || name.StartsWith("About ");
         }
 
+        bool DeducePreferencesRole(MenuItem* item)
+        {
+            auto name = item->GetWxMenuItem()->GetItemLabelText();
+            return  name == "Preferences" || name == "Preferences..." ||
+                    name == "Options" || name == "Options...";
+        }
+
         MenuItem* FindItemWithDeducedRole(const std::vector<MenuItem*>& items, const string& role)
         {
             MenuItem* foundItem = nullptr;
@@ -70,6 +77,8 @@ namespace Alternet::UI::MacOSMenu
 
                 if (role == RoleNames::About)
                     foundItem = DeduceAboutRole(item) ? item : nullptr;
+                else if (role == RoleNames::Preferences)
+                    foundItem = DeducePreferencesRole(item) ? item : nullptr;
                 
                 if (foundItem != nullptr)
                     break;
@@ -116,8 +125,9 @@ namespace Alternet::UI::MacOSMenu
         
         data.parentMenuOverride->Remove(item->GetWxMenuItem());
         item->SetRoleBasedOverrideData(nullopt);
-        item->SetText(u"");
+        item->SetText(u""); // To force recreaction of the item.
         item->SetText(data.preservedText);
+        item->SetShortcut(data.preservedKey, data.preservedModifierKeys);
     }
 
     void RestoreAllOverrides(MainMenu* mainMenu)
@@ -130,21 +140,33 @@ namespace Alternet::UI::MacOSMenu
         }
     }
 
+    void MoveItemToAppMenu(MenuItem* item, wxMenu* appMenu, string newName, Key key, ModifierKeys modifierKeys)
+    {
+        auto oldText = item->GetText();
+        auto oldKey = item->GetShortcutKey();
+        auto oldModifierKeys = item->GetShortcutModifierKeys();
+
+        item->SetText(newName);
+        item->SetShortcut(key, modifierKeys);
+        item->GetParentMenu()->GetWxMenu()->Remove(item->GetWxMenuItem());
+        appMenu->Insert(0, item->GetWxMenuItem());
+        item->SetRoleBasedOverrideData(
+            MenuItem::RoleBasedOverrideData {appMenu, oldText, oldKey, oldModifierKeys});
+    }
+
     void ApplyItemRoles(MainMenu* mainMenu)
     {
         RestoreAllOverrides(mainMenu);
 
         auto appMenu = mainMenu->GetWxMenuBar()->OSXGetAppleMenu();
 
+        auto preferencesItem = FindItemWithRole(mainMenu, RoleNames::Preferences);
+        if (preferencesItem != nullptr)
+            MoveItemToAppMenu(preferencesItem, appMenu, u"Preferences...", Key::Comma, ModifierKeys::Control);
+
         auto aboutItem = FindItemWithRole(mainMenu, RoleNames::About);
         if (aboutItem != nullptr)
-        {
-            auto oldText = aboutItem->GetText();
-            aboutItem->SetText(u"About " + GetApplicationName());
-            aboutItem->GetParentMenu()->GetWxMenu()->Remove(aboutItem->GetWxMenuItem());
-            appMenu->Insert(0, aboutItem->GetWxMenuItem());
-            aboutItem->SetRoleBasedOverrideData(MenuItem::RoleBasedOverrideData {appMenu, oldText});
-        }
+            MoveItemToAppMenu(aboutItem, appMenu, u"About " + GetApplicationName(), Key::None, ModifierKeys::None);
     }
 
     void EnsureHelpItemIsLast(wxMenuBar* menuBar)

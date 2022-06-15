@@ -16,6 +16,8 @@ namespace Alternet::UI
         {
             wxMenu* parentMenuOverride = nullptr;
             string preservedText;
+            Key preservedKey;
+            ModifierKeys preservedModifierKeys;
         };
 
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
@@ -39,6 +41,8 @@ namespace Alternet::UI
 
         MainMenu* FindParentMainMenu();
 
+        Key GetShortcutKey();
+        ModifierKeys GetShortcutModifierKeys();
     protected:
 
         void ShowCore() override;
@@ -62,6 +66,9 @@ namespace Alternet::UI
 
         wxMenuItem* _menuItem = nullptr;
         string _text;
+
+        Key _shortcutKey = Key::None;
+        ModifierKeys _shortcutModifierKeys = ModifierKeys::None;
 
         Menu* _parentMenu = nullptr;
         optional<int> _indexInParentMenu;

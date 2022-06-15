@@ -28,6 +28,8 @@ namespace MenuSample
 
         private void ExportToPngMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("Export to PNG");
 
+        private void OptionsMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("Options");
+
         private void ExitMenuItem_Click(object sender, EventArgs e) => Close();
 
         private void AboutMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("AlterNET UI Menu Sample Application.", "About");
@@ -122,6 +124,16 @@ namespace MenuSample
         private void SetAboutMenuItemRoleToNone_Click(object sender, System.EventArgs e)
         {
             aboutMenuItem.Role = MenuItemRoles.None;
+        }
+
+        private void SetOptionsMenuItemRoleToNone_Click(object sender, System.EventArgs e)
+        {
+            optionsMenuItem.Role = MenuItemRoles.None;
+        }
+
+        private void SetOptionsMenuItemRoleToPreferences_Click(object sender, System.EventArgs e)
+        {
+            optionsMenuItem.Role = MenuItemRoles.Preferences;
         }
     }
 }

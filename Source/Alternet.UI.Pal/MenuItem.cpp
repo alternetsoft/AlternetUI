@@ -264,9 +264,22 @@ namespace Alternet::UI
         return _parentMenu;
     }
 
+    Key MenuItem::GetShortcutKey()
+    {
+        return _shortcutKey;
+    }
+
+    ModifierKeys MenuItem::GetShortcutModifierKeys()
+    {
+        return _shortcutModifierKeys;
+    }
+
     void MenuItem::SetShortcut(Key key, ModifierKeys modifierKeys)
     {
         DestroyAcceleratorIfNeeded();
+
+        _shortcutKey = key;
+        _shortcutModifierKeys = modifierKeys;
 
         if (key == Key::None)
         {

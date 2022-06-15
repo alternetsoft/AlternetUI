@@ -26,6 +26,9 @@
         </MenuItem>
         <MenuItem Text="_Grid" Checked="True" />
       </MenuItem>
+      <MenuItem Text="_Tools">
+        <MenuItem Text="_Options..." Name="optionsMenuItem" Click="OptionsMenuItem_Click" />
+      </MenuItem>
       <MenuItem Text="_Help">
         <MenuItem Text="Index" Enabled="false" />
         <MenuItem Text="_About" Name="aboutMenuItem" Click="AboutMenuItem_Click" />
@@ -38,5 +41,7 @@
     <Button Name="toggleExitEnabledMenuItem" Click="ToggleExitEnabledMenuItem_Click" Margin="0,0,0,10" />
     <Button Name="toggleSeparatorMenuItem" Click="ToggleSeparatorMenuItem_Click" Margin="0,0,0,10" />
     <Button Text="Set About Item Role to None" Name="setAboutMenuItemRoleToNone" Click="SetAboutMenuItemRoleToNone_Click" Margin="0,0,0,10" />
+    <Button Text="Set Options Item Role to None" Click="SetOptionsMenuItemRoleToNone_Click" Margin="0,0,0,10" />
+    <Button Text="Set Options Item Role to Preferences" Click="SetOptionsMenuItemRoleToPreferences_Click" Margin="0,0,0,10" />
   </StackPanel>
 </Window>
