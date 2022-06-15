@@ -66,6 +66,12 @@ namespace Alternet::UI::MacOSMenu
                     name == "Options" || name == "Options...";
         }
 
+        bool DeduceExitRole(MenuItem* item)
+        {
+            auto name = item->GetWxMenuItem()->GetItemLabelText();
+            return  name == "Exit" || name == "Quit";
+        }
+
         MenuItem* FindItemWithDeducedRole(const std::vector<MenuItem*>& items, const string& role)
         {
             MenuItem* foundItem = nullptr;
@@ -79,6 +85,8 @@ namespace Alternet::UI::MacOSMenu
                     foundItem = DeduceAboutRole(item) ? item : nullptr;
                 else if (role == RoleNames::Preferences)
                     foundItem = DeducePreferencesRole(item) ? item : nullptr;
+                else if (role == RoleNames::Exit)
+                    foundItem = DeduceExitRole(item) ? item : nullptr;
                 
                 if (foundItem != nullptr)
                     break;
@@ -119,6 +127,12 @@ namespace Alternet::UI::MacOSMenu
         return u"";
     }
 
+    string GetItemNameWithApplicationSuffix(const string& name)
+    {
+        auto applicationName = GetApplicationName();
+        return applicationName.empty() ? name : name + u" " + applicationName;
+    }
+
     void RestoreItemOverride(MainMenu* mainMenu, MenuItem* item)
     {
         auto data = item->GetRoleBasedOverrideData().value();
@@ -140,7 +154,7 @@ namespace Alternet::UI::MacOSMenu
         }
     }
 
-    void MoveItemToAppMenu(MenuItem* item, wxMenu* appMenu, string newName, Key key, ModifierKeys modifierKeys)
+    void MoveItemToAppMenu(MenuItem* item, wxMenu* appMenu, const string& newName, Key key, ModifierKeys modifierKeys, bool toEnd = false)
     {
         auto oldText = item->GetText();
         auto oldKey = item->GetShortcutKey();
@@ -149,9 +163,27 @@ namespace Alternet::UI::MacOSMenu
         item->SetText(newName);
         item->SetShortcut(key, modifierKeys);
         item->GetParentMenu()->GetWxMenu()->Remove(item->GetWxMenuItem());
-        appMenu->Insert(0, item->GetWxMenuItem());
+        appMenu->Insert(toEnd ? appMenu->GetMenuItemCount() : 0, item->GetWxMenuItem());
         item->SetRoleBasedOverrideData(
             MenuItem::RoleBasedOverrideData {appMenu, oldText, oldKey, oldModifierKeys});
+    }
+
+    wxMenuItem* FindItemByName(wxMenu* menu, const string& name)
+    {
+        for (auto item : menu->GetMenuItems())
+        {
+            if (item->GetItemLabelText() == wxStr(name))
+                return item;
+        }
+
+        return nullptr;
+    }
+
+    void RemoveItemFromMenuByName(wxMenu* menu, const string& name)
+    {
+        auto item = FindItemByName(menu, name);
+        if (item != nullptr)
+            menu->Remove(item);
     }
 
     void ApplyItemRoles(MainMenu* mainMenu)
@@ -166,7 +198,14 @@ namespace Alternet::UI::MacOSMenu
 
         auto aboutItem = FindItemWithRole(mainMenu, RoleNames::About);
         if (aboutItem != nullptr)
-            MoveItemToAppMenu(aboutItem, appMenu, u"About " + GetApplicationName(), Key::None, ModifierKeys::None);
+            MoveItemToAppMenu(aboutItem, appMenu, GetItemNameWithApplicationSuffix(u"About"), Key::None, ModifierKeys::None);
+
+        auto exitItem = FindItemWithRole(mainMenu, RoleNames::Exit);
+        if (exitItem != nullptr)
+        {
+            RemoveItemFromMenuByName(appMenu, u"Quit "); // Remove the system-generated "Quit" item first.
+            MoveItemToAppMenu(exitItem, appMenu, GetItemNameWithApplicationSuffix(u"Quit"), Key::Q, ModifierKeys::Control, true);
+        }
     }
 
     void EnsureHelpItemIsLast(wxMenuBar* menuBar)
