@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 
 namespace Alternet.UI
 {
@@ -31,6 +32,7 @@ namespace Alternet.UI
         {
             nativeApplication = new Native.Application();
             nativeApplication.Idle += NativeApplication_Idle;
+            nativeApplication.Name = Path.GetFileNameWithoutExtension(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             current = this;
 
             keyboardInputProvider = new KeyboardInputProvider(nativeApplication.Keyboard);

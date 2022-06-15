@@ -23,6 +23,23 @@ namespace Alternet.UI.Native
         {
         }
         
+        public string Name
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Application_GetName_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Application_SetName_(NativePointer, value);
+            }
+        }
+        
         public Keyboard Keyboard
         {
             get
@@ -105,6 +122,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Application_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string Application_GetName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetName_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Application_GetKeyboard_(IntPtr obj);

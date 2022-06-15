@@ -25,6 +25,7 @@ namespace Alternet::UI
         int FilterEvent(wxEvent& event) override;
 
         void SetOwner(Application* value);
+
     private:
 
         Application* _owner = nullptr;
@@ -46,6 +47,8 @@ namespace Alternet::UI
     private:
 
         App* _app = nullptr;
+
+        string _name;
 
         Keyboard* _keyboard = nullptr;
         Mouse* _mouse = nullptr;

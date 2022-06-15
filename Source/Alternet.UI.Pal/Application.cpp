@@ -141,6 +141,16 @@ namespace Alternet::UI
         _mouse = nullptr;
     }
 
+    string Application::GetName()
+    {
+        return _name;
+    }
+
+    void Application::SetName(const string& value)
+    {
+        _name = value;
+    }
+
     void Application::RaiseIdle()
     {
         RaiseEvent(ApplicationEvent::Idle);

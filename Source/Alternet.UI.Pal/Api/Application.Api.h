@@ -18,6 +18,20 @@ ALTERNET_UI_API Application* Application_Create_()
         });
 }
 
+ALTERNET_UI_API char16_t* Application_GetName_(Application* obj)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetName());
+        });
+}
+
+ALTERNET_UI_API void Application_SetName_(Application* obj, const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetName(value);
+        });
+}
+
 ALTERNET_UI_API Keyboard* Application_GetKeyboard_(Application* obj)
 {
     return MarshalExceptions<Keyboard*>([&](){
