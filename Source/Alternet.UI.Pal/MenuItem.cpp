@@ -104,10 +104,13 @@ namespace Alternet::UI
 
         if (_parentMenu != nullptr)
         {
-            if (_parentMenuOverride != nullptr)
-                _parentMenuOverride->Remove(_menuItem);
-            else
-                _parentMenu->RemoveItemAt(_indexInParentMenu.value());
+            if (!_roleBasedOverrideData.has_value())
+            {
+                auto parentWxMenu = _parentMenu->GetWxMenu();
+                if (parentWxMenu->GetMenuItemCount() > _indexInParentMenu.value() &&
+                    parentWxMenu->FindItemByPosition(_indexInParentMenu.value()) == _menuItem)
+                    _parentMenu->RemoveItemAt(_indexInParentMenu.value());
+            }
 
             _parentMenu = nullptr;
         }
@@ -246,14 +249,14 @@ namespace Alternet::UI
         }
     }
 
-    void MenuItem::SetParentMenuOverride(wxMenu* value)
+    void MenuItem::SetRoleBasedOverrideData(optional<MenuItem::RoleBasedOverrideData> value)
     {
-        _parentMenuOverride = value;
+        _roleBasedOverrideData = value;
     }
 
-    wxMenu* MenuItem::GetParentMenuOverride()
+    optional<MenuItem::RoleBasedOverrideData> MenuItem::GetRoleBasedOverrideData()
     {
-        return _parentMenuOverride;
+        return _roleBasedOverrideData;
     }
 
     Menu* MenuItem::GetParentMenu()

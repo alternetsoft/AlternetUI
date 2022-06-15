@@ -12,6 +12,12 @@ namespace Alternet::UI
     {
 #include "Api/MenuItem.inc"
     public:
+        struct RoleBasedOverrideData
+        {
+            wxMenu* parentMenuOverride = nullptr;
+            string preservedText;
+        };
+
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
         wxMenuItem* GetWxMenuItem();
@@ -23,8 +29,8 @@ namespace Alternet::UI
         void SetParentMenu(Menu* value, optional<int> index);
         Menu* GetParentMenu();
 
-        void SetParentMenuOverride(wxMenu* value);
-        wxMenu* GetParentMenuOverride();
+        void SetRoleBasedOverrideData(optional<RoleBasedOverrideData> value);
+        optional<RoleBasedOverrideData> GetRoleBasedOverrideData();
 
         static wxString CoerceWxItemText(string value, MenuItem* menuItem);
 
@@ -60,7 +66,7 @@ namespace Alternet::UI
         Menu* _parentMenu = nullptr;
         optional<int> _indexInParentMenu;
 
-        wxMenu* _parentMenuOverride = nullptr;
+        optional<RoleBasedOverrideData> _roleBasedOverrideData;
 
         string _managedCommandId;
         wxAcceleratorEntry* _accelerator = nullptr;

@@ -64,6 +64,10 @@ namespace Alternet::UI::MacOSMenu
             MenuItem* foundItem = nullptr;
             for (auto item : items)
             {
+                auto itemRole = item->GetRole();
+                if (itemRole != u"" && itemRole != RoleNames::Auto)
+                    continue;
+
                 if (role == RoleNames::About)
                     foundItem = DeduceAboutRole(item) ? item : nullptr;
                 
@@ -106,24 +110,40 @@ namespace Alternet::UI::MacOSMenu
         return u"";
     }
 
+    void RestoreItemOverride(MainMenu* mainMenu, MenuItem* item)
+    {
+        auto data = item->GetRoleBasedOverrideData().value();
+        
+        data.parentMenuOverride->Remove(item->GetWxMenuItem());
+        item->SetRoleBasedOverrideData(nullopt);
+        item->SetText(u"");
+        item->SetText(data.preservedText);
+    }
+
+    void RestoreAllOverrides(MainMenu* mainMenu)
+    {
+        auto items = GetAllMenuItems(mainMenu);
+        for (auto item : items)
+        {
+            if (item->GetRoleBasedOverrideData().has_value())
+                RestoreItemOverride(mainMenu, item);
+        }
+    }
+
     void ApplyItemRoles(MainMenu* mainMenu)
     {
+        RestoreAllOverrides(mainMenu);
+
         auto appMenu = mainMenu->GetWxMenuBar()->OSXGetAppleMenu();
 
         auto aboutItem = FindItemWithRole(mainMenu, RoleNames::About);
         if (aboutItem != nullptr)
         {
-            bool restore = aboutItem->GetRole() == RoleNames::None;
-
+            auto oldText = aboutItem->GetText();
             aboutItem->SetText(u"About " + GetApplicationName());
-
-            if (aboutItem->GetParentMenuOverride() != nullptr)
-                aboutItem->GetParentMenuOverride()->Remove(aboutItem->GetWxMenuItem());
-            else
-                aboutItem->GetParentMenu()->GetWxMenu()->Remove(aboutItem->GetWxMenuItem());
-
+            aboutItem->GetParentMenu()->GetWxMenu()->Remove(aboutItem->GetWxMenuItem());
             appMenu->Insert(0, aboutItem->GetWxMenuItem());
-            aboutItem->SetParentMenuOverride(appMenu);
+            aboutItem->SetRoleBasedOverrideData(MenuItem::RoleBasedOverrideData {appMenu, oldText});
         }
     }
 
