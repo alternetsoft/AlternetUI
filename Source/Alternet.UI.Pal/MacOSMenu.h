@@ -4,6 +4,7 @@
 #include "MainMenu.h"
 #include "MenuItem.h"
 #include "Menu.h"
+#include "Application.h"
 
 #ifdef __WXOSX_COCOA__
 
@@ -124,7 +125,8 @@ namespace Alternet::UI::MacOSMenu
 
     string GetApplicationName()
     {
-        return u"";
+        auto name = Application::GetCurrent()->GetName();
+        return name == u"dotnet" ? u"" : name;
     }
 
     string GetItemNameWithApplicationSuffix(const string& name)
