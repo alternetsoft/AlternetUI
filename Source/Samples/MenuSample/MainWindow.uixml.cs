@@ -14,7 +14,20 @@ namespace MenuSample
             ExportToPngCommand = new Command(o => MessageBox.Show("Export to PNG"));
             DataContext = this;
 
+            PlatformSpecificInitialize();
             UpdateControls();
+        }
+
+        private void PlatformSpecificInitialize()
+        {
+#if NETCOREAPP
+            bool runningUnderMacOS = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
+                System.Runtime.InteropServices.OSPlatform.OSX);
+#else
+            bool runningUnderMacOS = false;
+#endif
+
+            roleControlsPanel.Visible = runningUnderMacOS;
         }
 
         public Command SaveCommand { get; }

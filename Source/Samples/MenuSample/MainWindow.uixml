@@ -40,8 +40,10 @@
     <Button Text="Remove Last Dynamic Menu Item" Name="removeLastDynamicMenuItemMenuItem" Click="RemoveLastDynamicMenuItemMenuItem_Click" Margin="0,0,0,10" />
     <Button Name="toggleExitEnabledMenuItem" Click="ToggleExitEnabledMenuItem_Click" Margin="0,0,0,10" />
     <Button Name="toggleSeparatorMenuItem" Click="ToggleSeparatorMenuItem_Click" Margin="0,0,0,10" />
-    <Button Text="Set About Item Role to None" Name="setAboutMenuItemRoleToNone" Click="SetAboutMenuItemRoleToNone_Click" Margin="0,0,0,10" />
-    <Button Text="Set Options Item Role to None" Click="SetOptionsMenuItemRoleToNone_Click" Margin="0,0,0,10" />
-    <Button Text="Set Options Item Role to Preferences" Click="SetOptionsMenuItemRoleToPreferences_Click" Margin="0,0,0,10" />
+    <StackPanel Name="roleControlsPanel">
+      <Button Text="Set About Item Role to None" Name="setAboutMenuItemRoleToNone" Click="SetAboutMenuItemRoleToNone_Click" Margin="0,0,0,10" />
+      <Button Text="Set Options Item Role to None" Click="SetOptionsMenuItemRoleToNone_Click" Margin="0,0,0,10" />
+      <Button Text="Set Options Item Role to Preferences" Click="SetOptionsMenuItemRoleToPreferences_Click" Margin="0,0,0,10" />
+    </StackPanel>
   </StackPanel>
 </Window>
