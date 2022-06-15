@@ -27,6 +27,11 @@ namespace Alternet::UI
         item->RaiseClick();
     }
 
+    MainMenu* Menu::GetParentMainMenu()
+    {
+        return _parentMainMenu;
+    }
+
     void Menu::SetParent(MainMenu* mainMenu)
     {
         _parentMainMenu = mainMenu;

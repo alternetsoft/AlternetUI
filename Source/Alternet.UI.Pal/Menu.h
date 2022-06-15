@@ -27,6 +27,8 @@ namespace Alternet::UI
         void SetParent(MainMenu* mainMenu);
         void SetParent(MenuItem* item);
 
+        MainMenu* GetParentMainMenu();
+
         MainMenu* FindParentMainMenu();
 
         std::vector<MenuItem*> GetItems();

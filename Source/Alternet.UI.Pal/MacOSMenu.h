@@ -154,6 +154,9 @@ namespace Alternet::UI::MacOSMenu
             if (item->GetRoleBasedOverrideData().has_value())
                 RestoreItemOverride(mainMenu, item);
         }
+
+        for (auto item : mainMenu->GetItems())
+            mainMenu->SetItemHidden(item, false);
     }
 
     void MoveItemToAppMenu(MenuItem* item, wxMenu* appMenu, const string& newName, Key key, ModifierKeys modifierKeys, bool toEnd = false)
@@ -194,19 +197,38 @@ namespace Alternet::UI::MacOSMenu
 
         auto appMenu = mainMenu->GetWxMenuBar()->OSXGetAppleMenu();
 
+        std::vector<Menu*> parents;
+
         auto preferencesItem = FindItemWithRole(mainMenu, RoleNames::Preferences);
         if (preferencesItem != nullptr)
+        {
             MoveItemToAppMenu(preferencesItem, appMenu, u"Preferences...", Key::Comma, ModifierKeys::Control);
+            parents.push_back(preferencesItem->GetParentMenu());
+        }
 
         auto aboutItem = FindItemWithRole(mainMenu, RoleNames::About);
         if (aboutItem != nullptr)
+        {
             MoveItemToAppMenu(aboutItem, appMenu, GetItemNameWithApplicationSuffix(u"About"), Key::None, ModifierKeys::None);
+            parents.push_back(aboutItem->GetParentMenu());
+        }
 
         auto exitItem = FindItemWithRole(mainMenu, RoleNames::Exit);
         if (exitItem != nullptr)
         {
             RemoveItemFromMenuByName(appMenu, u"Quit "); // Remove the system-generated "Quit" item first.
             MoveItemToAppMenu(exitItem, appMenu, GetItemNameWithApplicationSuffix(u"Quit"), Key::Q, ModifierKeys::Control, true);
+            parents.push_back(exitItem->GetParentMenu());
+        }
+
+        // Hide empty top-level parents.
+        for (auto parent : parents)
+        {
+            if (parent->GetParentMainMenu() != mainMenu)
+                continue;
+
+            if (parent->GetItemsCount() == 0)
+                mainMenu->SetItemHidden(parent, true);
         }
     }
 

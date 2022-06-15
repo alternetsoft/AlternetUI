@@ -17,6 +17,9 @@ namespace Alternet::UI
         void OnItemRoleChanged(MenuItem* item);
 
         std::vector<Menu*> GetItems();
+
+        void SetItemHidden(Menu* item, bool hidden);
+        bool IsItemHidden(Menu* item);
     protected:
         void ApplyEnabled(bool value) override;
         void ApplyBounds(const Rect& value) override;
@@ -29,6 +32,17 @@ namespace Alternet::UI
 
         void OnMenuCommand(wxCommandEvent& event);
 
+        int GetItemLogicalIndex(Menu* item);
+        int LogicalIndexToWxIndex(int logicalIndex);
+
+        bool IsItemHidden(int index);
+
+        void InsertWxItem(int index);
+        void RemoveWxItem(int index);
+
         std::vector<Menu*> _items;
+
+        std::set<int> _hiddenItemIndices;
+        std::map<Menu*, string> _itemTextByMenu;
     };
 }
