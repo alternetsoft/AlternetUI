@@ -69,27 +69,37 @@ using System;
                     w.WriteLine($"{x.ObjectName}.{x.EventName} += {x.HandlerName};");
                     break;
                 case UIXmlDocument.IndexedObjectEventBinding x:
-                    w.WriteLine($"{GetIndexedObjectRetreivalExpression(x.ObjectTypeFullName, x.ObjectIndices)}.{x.EventName} += {x.HandlerName};");
+                    w.WriteLine($"{GetIndexedObjectRetreivalExpression(x.ObjectTypeFullName, x.Accessors)}.{x.EventName} += {x.HandlerName};");
                     break;
                 default:
                     throw new InvalidOperationException();
             }
         }
 
-        private static string GetIndexedObjectRetreivalExpression(string objectTypeFullName, IReadOnlyList<int> objectIndices)
+        private static string GetIndexedObjectRetreivalExpression(string objectTypeFullName, IReadOnlyList<UIXmlDocument.AccessorInfo> accessors)
         {
             var result = new StringBuilder();
             result.Append($"(({objectTypeFullName})(");
             
-            if (objectIndices.Count == 0)
+            if (accessors.Count == 0)
                 throw new InvalidOperationException();
 
-            for (int i = 0; i < objectIndices.Count; i++)
+            for (int i = 0; i < accessors.Count; i++)
             {
-                int index = objectIndices[i];
-                if (i > 0)
-                    result.Append(".");
-                result.Append($"Children[{index}]");
+                var accessor = accessors[i];
+                switch (accessor)
+                {
+                    case UIXmlDocument.IndexAccessorInfo indexAccessor:
+                        if (i > 0 && indexAccessor.CollectionName != "")
+                            result.Append(".");
+                        result.Append($"{indexAccessor.CollectionName}[{indexAccessor.Index}]");
+                        break;
+                    case UIXmlDocument.MemberAccessorInfo memberAccessor:
+                        result.Append(memberAccessor.Name);
+                        break;
+                    default:
+                        throw new Exception();
+                }
             }
 
             result.Append("))");

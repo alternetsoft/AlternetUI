@@ -82,6 +82,11 @@ namespace Alternet.UI
         protected virtual IEnumerable<FrameworkElement> LogicalChildrenCollection => emptyLogicalChildren;
 
         /// <summary>
+        /// Returns a collection of content elements which is used by the UIXML loader to find content items by index.
+        /// </summary>
+        public virtual IReadOnlyList<FrameworkElement> ContentElements => LogicalChildrenCollection.ToArray();
+
+        /// <summary>
         ///     BindingGroup DependencyProperty
         /// </summary>
         public static readonly DependencyProperty BindingGroupProperty =

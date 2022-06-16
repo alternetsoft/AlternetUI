@@ -17,6 +17,9 @@ namespace Alternet.UI
         [Content]
         public Collection<TabPage> Pages { get; } = new Collection<TabPage>();
 
+        /// <inheritdoc/>
+        public override IReadOnlyList<FrameworkElement> ContentElements => Pages;
+
         /// <summary>
         ///     SelectedItem DependencyProperty
         /// </summary>

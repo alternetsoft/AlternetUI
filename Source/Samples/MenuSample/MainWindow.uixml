@@ -24,7 +24,7 @@
           <MenuItem Text="Continous" Name="continousScrollingMenuItem" Checked="True" Click="ContinousScrollingMenuItem_Click" />
           <MenuItem Text="Page" Name="pageScrollingMenuItem" Click="PageScrollingMenuItem_Click" />
         </MenuItem>
-        <MenuItem Text="_Grid" Checked="True" />
+        <MenuItem Text="_Grid" Checked="True" Click="GridMenuItem_Click" />
       </MenuItem>
       <MenuItem Text="_Tools">
         <MenuItem Text="_Options..." Name="optionsMenuItem" Click="OptionsMenuItem_Click" />

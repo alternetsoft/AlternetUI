@@ -324,6 +324,9 @@ namespace Alternet.UI
         /// </remarks>
         [Content]
         public Collection<Control> Children { get; } = new Collection<Control>();
+        
+        /// <inheritdoc/>
+        public override IReadOnlyList<FrameworkElement> ContentElements => Children;
 
         /// <summary>
         /// Gets the parent container of the control.

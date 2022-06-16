@@ -65,9 +65,13 @@ namespace Alternet.UI.Build.Tasks
             return true;
         }
 
+        public abstract record AccessorInfo;
+        public record IndexAccessorInfo(int Index, string CollectionName) : AccessorInfo;
+        public record MemberAccessorInfo(string Name) : AccessorInfo;
+
         private static IEnumerable<(EventBinding Binding, XAttribute Attribute)> GetEventBindings(ApiInfoProvider apiInfoProvider, XDocument document)
         {
-            EventBinding? TryGetEventBinding(XElement element, string? objectName, Stack<int> indices, XAttribute attribute)
+            EventBinding? TryGetEventBinding(XElement element, string? objectName, Stack<AccessorInfo> accessors, XAttribute attribute)
             {
                 var assemblyName = GetTypeAssemblyName(element.Name);
                 var typeFullName = GetTypeFullName(element.Name);
@@ -80,23 +84,29 @@ namespace Alternet.UI.Build.Tasks
                 if (objectName != null)
                     return new NamedObjectEventBinding(eventName, handlerName, typeFullName, objectName);
 
-                return new IndexedObjectEventBinding(eventName, handlerName, typeFullName, indices.Reverse().ToArray());
+                return new IndexedObjectEventBinding(eventName, handlerName, typeFullName, accessors.Reverse().ToArray());
             }
 
-            var indices = new Stack<int>();
+            var accessors = new Stack<AccessorInfo>();
             var results = new List<(EventBinding, XAttribute)>();
+            const string DefaultCollectionName = "ContentElements";
 
-            void CollectBindings(IEnumerable<XElement> elements)
+            void CollectBindings(IEnumerable<XElement> elements, string collectionName)
             {
                 int index = 0;
                 for (int i = 0; i < elements.Count(); i++)
                 {
                     var element = elements.ElementAt(i);
-                    bool skipIndex = element.Name.LocalName.Contains("."); // cases like <Grid.RowDefinitions>
+                    var indexOfDot = element.Name.LocalName.IndexOf(".");
+                    bool propertyAccess = indexOfDot != -1; // cases like <Grid.RowDefinitions>
                     
-                    if (!skipIndex)
+                    if (propertyAccess)
                     {
-                        indices.Push(index);
+                        accessors.Push(new MemberAccessorInfo(element.Name.LocalName.Substring(indexOfDot + 1)));
+                    }
+                    else
+                    {
+                        accessors.Push(new IndexAccessorInfo(index, collectionName));
                         index++;
                     }
 
@@ -104,19 +114,29 @@ namespace Alternet.UI.Build.Tasks
 
                     foreach (var attribute in element.Attributes())
                     {
-                        var binding = TryGetEventBinding(element, objectName, indices, attribute);
+                        var binding = TryGetEventBinding(element, objectName, accessors, attribute);
                         if (binding != null)
                             results.Add(new(binding, attribute));
                     }
 
-                    CollectBindings(element.Elements());
+                    if (propertyAccess)
+                    {
+                        var childElements = element.Elements();
+                        if (childElements.Count() == 1)
+                            CollectBindings(childElements.Single().Elements(), DefaultCollectionName);
+                        else
+                            CollectBindings(childElements, "");
+                    }
+                    else
+                    {
+                        CollectBindings(element.Elements(), DefaultCollectionName);
+                    }
 
-                    if (!skipIndex)
-                        indices.Pop();
+                    accessors.Pop();
                 }
             }
 
-            CollectBindings(document.Root.Elements());
+            CollectBindings(document.Root.Elements(), DefaultCollectionName);
             return results;
         }
 
@@ -283,13 +303,13 @@ namespace Alternet.UI.Build.Tasks
 
         public sealed class IndexedObjectEventBinding : EventBinding
         {
-            public IndexedObjectEventBinding(string eventName, string handlerName, string objectTypeFullName, IReadOnlyList<int> objectIndices) :
+            public IndexedObjectEventBinding(string eventName, string handlerName, string objectTypeFullName, IReadOnlyList<AccessorInfo> accessors) :
                 base(eventName, handlerName, objectTypeFullName)
             {
-                ObjectIndices = objectIndices;
+                Accessors = accessors;
             }
 
-            public IReadOnlyList<int> ObjectIndices { get; }
+            public IReadOnlyList<AccessorInfo> Accessors { get; }
         }
     }
 }

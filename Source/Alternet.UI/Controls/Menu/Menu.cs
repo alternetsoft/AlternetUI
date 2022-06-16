@@ -34,6 +34,9 @@ namespace Alternet.UI
         [Content]
         public Collection<MenuItem> Items { get; } = new Collection<MenuItem>();
 
+        /// <inheritdoc/>
+        public override IReadOnlyList<FrameworkElement> ContentElements => Items;
+
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Items;
     }

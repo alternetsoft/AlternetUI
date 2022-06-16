@@ -124,6 +124,11 @@ namespace MenuSample
             pageScrollingMenuItem.Checked = true;
         }
 
+        private void GridMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Grid item is checked: " + ((MenuItem)sender).Checked);
+        }
+
         private void ToggleSeparatorMenuItem_Click(object sender, System.EventArgs e)
         {
             if (separatorMenuItem.Text == "-")
