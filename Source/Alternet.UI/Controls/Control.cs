@@ -30,8 +30,6 @@ namespace Alternet.UI
         private bool enabled = true;
         private Control? parent;
 
-        internal override bool HasLogicalChildren => Children.Count > 0;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Control"/> class.
         /// </summary>

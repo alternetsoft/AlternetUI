@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Alternet.UI
 {
@@ -816,7 +817,7 @@ namespace Alternet.UI
             set { SetValue(DataContextProperty, value); }
         }
 
-        internal virtual bool HasLogicalChildren => false;
+        internal virtual bool HasLogicalChildren => LogicalChildrenCollection.Any();
 
         // Helper method to retrieve and fire Clr Event handlers for DependencyPropertyChanged event
         private void RaiseDependencyPropertyChanged(EventPrivateKey key, DependencyPropertyChangedEventArgs args)
