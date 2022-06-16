@@ -14,6 +14,8 @@
   href: routed-events/routed-events.md
 - name: Input
   href: input/input.md
+- name: Menu
+  href: menu/menu.md
 - name: Rendering Graphics
   href: rendering-graphics.md
 - name: System Requirements

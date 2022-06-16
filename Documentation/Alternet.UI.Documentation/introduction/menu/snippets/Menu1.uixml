@@ -1,0 +1,13 @@
+<Window.Menu>
+  <MainMenu>
+    <MenuItem Text="_File">
+      <MenuItem Text="_Open..." Name="openMenuItem" Click="OpenMenuItem_Click" Shortcut="Ctrl+O"/>
+      <MenuItem Text="_Save..." Name="saveMenuItem" Command="{Binding SaveCommand}"/>
+      <MenuItem Text="-" Name="separatorMenuItem" />
+      <MenuItem Text="E_xit" Name="exitMenuItem" Click="ExitMenuItem_Click" />
+    </MenuItem>
+    <MenuItem Text="_View">
+      <MenuItem Text="_Grid" Checked="True" Name="gridMenuItem" Click="GridMenuItem_Click"/>
+    </MenuItem>
+  </MainMenu>
+</Window.Menu>
