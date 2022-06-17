@@ -5,5 +5,5 @@ popd
 pushd ..
 dotnet build ##SampleName##.csproj
 popd
-dotnet ../bin/Debug/netcoreapp3.1/##SampleName##.dll
+dotnet ../bin/Debug/net6.0/##SampleName##.dll
 

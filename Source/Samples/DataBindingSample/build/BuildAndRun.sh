@@ -5,5 +5,5 @@ popd
 pushd ..
 dotnet build DataBindingSample.csproj
 popd
-dotnet ../bin/Debug/netcoreapp3.1/DataBindingSample.dll
+dotnet ../bin/Debug/net6.0/DataBindingSample.dll
 

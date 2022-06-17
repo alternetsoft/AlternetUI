@@ -1,3 +1,3 @@
 #!/bin/bash
-dotnet ../bin/Debug/netcoreapp3.1/MenuSample.dll
+dotnet ../bin/Debug/net6.0/MenuSample.dll
 

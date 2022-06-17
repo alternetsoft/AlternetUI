@@ -1,3 +1,3 @@
 #!/bin/bash
-dotnet ../bin/Debug/netcoreapp3.1/ControlsSample.dll
+dotnet ../bin/Debug/net6.0/ControlsSample.dll
 

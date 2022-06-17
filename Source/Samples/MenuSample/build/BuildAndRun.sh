@@ -5,5 +5,5 @@ popd
 pushd ..
 dotnet build MenuSample.csproj
 popd
-dotnet ../bin/Debug/netcoreapp3.1/MenuSample.dll
+dotnet ../bin/Debug/net6.0/MenuSample.dll
 

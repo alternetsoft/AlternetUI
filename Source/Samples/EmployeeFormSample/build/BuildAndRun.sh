@@ -5,5 +5,5 @@ popd
 pushd ..
 dotnet build EmployeeFormSample.csproj
 popd
-dotnet ../bin/Debug/netcoreapp3.1/EmployeeFormSample.dll
+dotnet ../bin/Debug/net6.0/EmployeeFormSample.dll
 

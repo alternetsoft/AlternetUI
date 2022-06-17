@@ -5,5 +5,5 @@ popd
 pushd ..
 dotnet build CustomControlsSample.csproj
 popd
-dotnet ../bin/Debug/netcoreapp3.1/CustomControlsSample.dll
+dotnet ../bin/Debug/net6.0/CustomControlsSample.dll
 
