@@ -8,12 +8,12 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-        <TargetFrameworks>netcoreapp3.1;net461</TargetFrameworks>
+        <TargetFrameworks>net6.0;net461</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-        <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
-        <RuntimeFrameworkVersion>3.1.0</RuntimeFrameworkVersion>
+        <TargetFrameworks>net6.0</TargetFrameworks>
+        <RuntimeFrameworkVersion>6.0.0</RuntimeFrameworkVersion>
     </PropertyGroup>
 
     <ItemGroup>
