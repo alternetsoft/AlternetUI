@@ -16,6 +16,8 @@ For increased developer productivity, [AlterNET UI extension for Visual Studio](
 AlterNET UI Beta 2 represents a significant milestone towards releasing a production-ready cross-platform .NET UI framework for developing desktop applications on Windows, macOS and Linux.
 In this release we have implemented some major features, primarily adopted from WPF framework: Layout Engine, Dependency Properties, Data Binding, Keyboard and Mouse Input, Routed Events, and more.
 
+AlterNET UI Beta 3 adds important features like menus, keyboard shortcuts, commands, modal windows, advanced window management, and more.
+
 For more info, see [alternet-ui.com](https://alternet-ui.com).
 
 An example of an application made with AlterNET UI running on different operating systems:

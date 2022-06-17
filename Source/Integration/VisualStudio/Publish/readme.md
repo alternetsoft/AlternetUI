@@ -21,6 +21,8 @@ The extension adds a new project type - **AlterNET UI Application** and a new pr
 AlterNET UI Beta 2 represents a significant milestone towards releasing a production-ready cross-platform .NET UI framework for developing desktop applications on Windows, macOS and Linux.
 In this release we have implemented some major features, primarily adopted from WPF framework: Layout Engine, Dependency Properties, Data Binding, Keyboard and Mouse Input, Routed Events, and more.
 
+AlterNET UI Beta 3 adds important features like menus, keyboard shortcuts, commands, modal windows, advanced window management, and more.
+
 For more info, see [alternet-ui.com](https://alternet-ui.com).
 
 The AlterNET UI Project template added by the extension:
