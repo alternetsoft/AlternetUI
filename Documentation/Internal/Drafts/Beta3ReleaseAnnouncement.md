@@ -9,7 +9,7 @@ management, and more.
 macOS gets support of its system UI guidelines, including automatically moving items like **"About"** or **"Quit"** to
 the macOS application menu. Users can override this behavior by setting `MenuItem.Role` property.
 
-<Menu Screenshots/videos here>
+*-- Menu Screenshots/videos here --*
 
 The menu capabilities are demonstrated in the new **MenuSample** demo project.
 
