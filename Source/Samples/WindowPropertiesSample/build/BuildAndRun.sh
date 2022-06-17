@@ -5,5 +5,5 @@ popd
 pushd ..
 dotnet build WindowPropertiesSample.csproj
 popd
-dotnet ../bin/Debug/netcoreapp3.1/WindowPropertiesSample.dll
+dotnet ../bin/Debug/net6.0/WindowPropertiesSample.dll
 

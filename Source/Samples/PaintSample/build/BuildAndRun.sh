@@ -5,5 +5,5 @@ popd
 pushd ..
 dotnet build PaintSample.csproj
 popd
-dotnet ../bin/Debug/netcoreapp3.1/PaintSample.dll
+dotnet ../bin/Debug/net6.0/PaintSample.dll
 

@@ -5,5 +5,5 @@ popd
 pushd ..
 dotnet build LayoutSample.csproj
 popd
-dotnet ../bin/Debug/netcoreapp3.1/LayoutSample.dll
+dotnet ../bin/Debug/net6.0/LayoutSample.dll
 
