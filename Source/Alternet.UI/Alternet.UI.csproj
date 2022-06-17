@@ -48,10 +48,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\Tools\Language\NullableAnnotations.cs" Link="NullableAnnotations.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="..\Keys\Key.snk" Link="Key.snk" />
   </ItemGroup>
 
