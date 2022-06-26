@@ -599,11 +599,16 @@ body .toc{
   top: 10px;
   left: 5px;
 }
-.toc-filter > .clear-icon {
-  position: absolute;
-  top: 10px;
-  right: 5px;
-}
+    .toc-filter > .filter-ok-icon {
+        position: absolute;
+        top: 10px;
+        right: 5px;
+    }
+    .toc-filter > .clear-icon {
+        position: absolute;
+        top: 10px;
+        right: 30px;
+    }
 .article {
   margin-top: 120px;
   margin-bottom: 115px;
