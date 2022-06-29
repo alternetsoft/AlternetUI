@@ -604,11 +604,31 @@ body .toc{
         top: 10px;
         right: 5px;
     }
+
     .toc-filter > .clear-icon {
         position: absolute;
-        top: 10px;
+        top: 11px;
         right: 30px;
     }
+
+.search-controls {
+    position: relative;
+}
+
+    .search-controls > .ok-icon {
+        position: absolute;
+        top: 10px;
+        right: 5px;
+        color: rgb(102, 102, 102);
+    }
+
+    .search-controls > .clear-icon {
+        position: absolute;
+        top: 11px;
+        right: 30px;
+        color: rgb(102, 102, 102);
+    }
+
 .article {
   margin-top: 120px;
   margin-bottom: 115px;

@@ -244,19 +244,44 @@ $(function () {
     }
 
     function addSearchEvent() {
+      var clearButton = $('#search_clear');
+      var okButton = $('#search_ok');
+      var searchInput = $('#search-query');
+
+      clearButton.hide();
+      okButton.hide();
+
+      clearButton.on("click", function (e) {
+        searchInput.val("");
+        flipContents("show");
+        clearButton.fadeOut();
+        okButton.fadeOut();
+      });
+
+      okButton.on("click", function (e) {
+        var query = searchInput.val();
+        flipContents("hide");
+        $("body").trigger("queryReady");
+        $('#search-results>.search-list>span').text('"' + query + '"');
+      });
+
       $('body').bind("searchEvent", function () {
         $('#search-query').keypress(function (e) {
-          return e.which !== 13;
+          if (event.keyCode == 13) {
+            okButton.trigger("click");
+            return false;
+          }
         });
 
         $('#search-query').keyup(function () {
           query = $(this).val();
-          if (query.length < 3) {
+          if (query === '') {
             flipContents("show");
+            clearButton.fadeOut();
+            okButton.fadeOut();
           } else {
-            flipContents("hide");
-            $("body").trigger("queryReady");
-            $('#search-results>.search-list>span').text('"' + query + '"');
+            clearButton.fadeIn();
+            okButton.fadeIn();
           }
         }).off("keydown");
       });
