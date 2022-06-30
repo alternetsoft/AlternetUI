@@ -243,32 +243,19 @@ $(function () {
       }
     }
 
-    function addSearchEvent() {
-      var clearButton = $('#search_clear');
-      var okButton = $('#search_ok');
+    function onSearchInputEnterPressed() {
       var searchInput = $('#search-query');
+      var query = searchInput.val();
+      flipContents("hide");
+      $("body").trigger("queryReady");
+      $('#search-results>.search-list>span').text('"' + query + '"');
+    }
 
-      clearButton.hide();
-      okButton.hide();
-
-      clearButton.on("click", function (e) {
-        searchInput.val("");
-        flipContents("show");
-        clearButton.fadeOut();
-        okButton.fadeOut();
-      });
-
-      okButton.on("click", function (e) {
-        var query = searchInput.val();
-        flipContents("hide");
-        $("body").trigger("queryReady");
-        $('#search-results>.search-list>span').text('"' + query + '"');
-      });
-
+    function addSearchEvent() {
       $('body').bind("searchEvent", function () {
         $('#search-query').keypress(function (e) {
           if (event.keyCode == 13) {
-            okButton.trigger("click");
+            onSearchInputEnterPressed();
             return false;
           }
         });
@@ -277,11 +264,6 @@ $(function () {
           query = $(this).val();
           if (query === '') {
             flipContents("show");
-            clearButton.fadeOut();
-            okButton.fadeOut();
-          } else {
-            clearButton.fadeIn();
-            okButton.fadeIn();
           }
         }).off("keydown");
       });
@@ -469,10 +451,76 @@ $(function () {
       renderBreadcrumb();
     }
 
+    window.onFilterInputEnterPressed = function () {
+      var tocFilterInput = $('#toc_filter_input');
+
+      var val = tocFilterInput.val();
+      //Save filter string to local session storage
+      if (typeof (Storage) !== "undefined") {
+        try {
+          sessionStorage.filterString = val;
+        }
+        catch (e) { }
+      }
+      if (val === '') {
+        // Clear 'filtered' class
+        $('#toc li').removeClass(filtered).removeClass(hide);
+        return;
+      }
+
+      // set all parent nodes status
+      $('#toc li>a').filter(function (i, e) {
+        return $(e).siblings().length > 0
+      }).each(function (i, anchor) {
+        var parent = $(anchor).parent();
+        parent.addClass(hide);
+        parent.removeClass(show);
+        parent.removeClass(filtered);
+      })
+
+      // Get leaf nodes
+      $('#toc li>a').filter(function (i, e) {
+        return $(e).siblings().length === 0
+      }).each(function (i, anchor) {
+        var text = $(anchor).attr('title');
+        var parent = $(anchor).parent();
+        var parentNodes = parent.parents('ul>li');
+        for (var i = 0; i < parentNodes.length; i++) {
+          var parentText = $(parentNodes[i]).children('a').attr('title');
+          if (parentText) text = parentText + '.' + text;
+        };
+        if (filterNavItem(text, val)) {
+          parent.addClass(show);
+          parent.removeClass(hide);
+        } else {
+          parent.addClass(hide);
+          parent.removeClass(show);
+        }
+      });
+      $('#toc li>a').filter(function (i, e) {
+        return $(e).siblings().length > 0
+      }).each(function (i, anchor) {
+        var parent = $(anchor).parent();
+        if (parent.find('li.show').length > 0) {
+          parent.addClass(show);
+          parent.addClass(filtered);
+          parent.removeClass(hide);
+        } else {
+          parent.addClass(hide);
+          parent.removeClass(show);
+          parent.removeClass(filtered);
+        }
+      })
+
+      function filterNavItem(name, text) {
+        if (!text) return true;
+        if (name && name.toLowerCase().indexOf(text.toLowerCase()) > -1) return true;
+        return false;
+      }
+    }
+
     function registerTocEvents() {
       var tocFilterInput = $('#toc_filter_input');
-      var tocFilterClearButton = $('#toc_filter_clear');
-      var tocFilterOkButton = $('#toc_filter_ok');
         
       $('.toc .nav > li > .expand-stub').click(function (e) {
         $(e.target).parent().toggleClass(expanded);
@@ -484,95 +532,9 @@ $(function () {
         var val = this.value;
         if (val === '') {
             $('#toc li').removeClass(filtered).removeClass(hide);
-            tocFilterClearButton.fadeOut();
-            tocFilterOkButton.fadeOut();
           return;
         }
-          tocFilterClearButton.fadeIn();
-          tocFilterOkButton.fadeIn();
       });
-      
-        // toc filter clear button
-        tocFilterClearButton.hide();
-        tocFilterClearButton.on("click", function (e) {
-            tocFilterInput.val("");
-            $('#toc li').removeClass(filtered).removeClass(hide);
-            tocFilterInput.trigger('input');
-            if (typeof (Storage) !== "undefined") {
-                try {
-                    sessionStorage.filterString = "";
-                }
-                catch (e) { }
-            }
-        });
-
-        // toc filter OK button
-        tocFilterOkButton.hide();
-        tocFilterOkButton.on("click", function (e) {
-            var val = tocFilterInput.val();
-            //Save filter string to local session storage
-            if (typeof (Storage) !== "undefined") {
-                try {
-                    sessionStorage.filterString = val;
-                }
-                catch (e) { }
-            }
-            if (val === '') {
-                // Clear 'filtered' class
-                $('#toc li').removeClass(filtered).removeClass(hide);
-                return;
-            }
-
-            // set all parent nodes status
-            $('#toc li>a').filter(function (i, e) {
-                return $(e).siblings().length > 0
-            }).each(function (i, anchor) {
-                var parent = $(anchor).parent();
-                parent.addClass(hide);
-                parent.removeClass(show);
-                parent.removeClass(filtered);
-            })
-
-            // Get leaf nodes
-            $('#toc li>a').filter(function (i, e) {
-                return $(e).siblings().length === 0
-            }).each(function (i, anchor) {
-                var text = $(anchor).attr('title');
-                var parent = $(anchor).parent();
-                var parentNodes = parent.parents('ul>li');
-                for (var i = 0; i < parentNodes.length; i++) {
-                    var parentText = $(parentNodes[i]).children('a').attr('title');
-                    if (parentText) text = parentText + '.' + text;
-                };
-                if (filterNavItem(text, val)) {
-                    parent.addClass(show);
-                    parent.removeClass(hide);
-                } else {
-                    parent.addClass(hide);
-                    parent.removeClass(show);
-                }
-            });
-            $('#toc li>a').filter(function (i, e) {
-                return $(e).siblings().length > 0
-            }).each(function (i, anchor) {
-                var parent = $(anchor).parent();
-                if (parent.find('li.show').length > 0) {
-                    parent.addClass(show);
-                    parent.addClass(filtered);
-                    parent.removeClass(hide);
-                } else {
-                    parent.addClass(hide);
-                    parent.removeClass(show);
-                    parent.removeClass(filtered);
-                }
-            })
-
-            function filterNavItem(name, text) {
-                if (!text) return true;
-                if (name && name.toLowerCase().indexOf(text.toLowerCase()) > -1) return true;
-                return false;
-            }
-        });
 
       //Set toc filter from local session storage on page load
       if (typeof(Storage) !== "undefined") {

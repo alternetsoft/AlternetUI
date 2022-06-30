@@ -15,8 +15,6 @@
       {{>partials/menu}}
       <form class="navbar-form navbar-right" role="search" id="search">
         <div class="form-group search-controls">
-          <span class="glyphicon glyphicon-ok ok-icon" id="search_ok"></span>
-          <span class="glyphicon glyphicon-remove clear-icon" id="search_clear"></span>
           <input type="text" class="form-control" id="search-query" placeholder="{{__global.search}}" autocomplete="off">
         </div>
       </form>

@@ -6,9 +6,7 @@
     <div class="sidefilter">
       <form class="toc-filter">
         <span class="glyphicon glyphicon-filter filter-icon"></span>
-        <span class="glyphicon glyphicon-ok filter-ok-icon" id="toc_filter_ok"></span>
-        <span class="glyphicon glyphicon-remove clear-icon" id="toc_filter_clear"></span>
-        <input type="text" id="toc_filter_input" placeholder="{{__global.tocFilter}}" onkeypress="if(event.keyCode==13) {$('#toc_filter_ok').trigger('click'); return false;}">
+        <input type="text" id="toc_filter_input" placeholder="{{__global.tocFilter}}" onkeypress="if(event.keyCode==13) {onFilterInputEnterPressed(); return false;}">
       </form>
     </div>
     {{/_disableSideFilter}}
