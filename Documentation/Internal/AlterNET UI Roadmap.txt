@@ -22,16 +22,17 @@ AlterNET UI Roadmap
     + use data binding and UIXML used controls in the existing samples
 
 0.3-beta (common features release):
-    - window properties and management
-    - modal dialogs
+    + window properties and management
+    + modal dialogs
     - message box full API
-    - menus with keyboard shortcuts, context menus
-    - commands
+    + menus with keyboard shortcuts
+	- context menus
+    + commands
     - common dialogs (Open file etc)
     - tool tips
     - focus management
     - drag and drop, clipboard
-    - timers
+    + timers
     - unhandled exception dialog
     - SynchronizationContext, Invoke/BeginInvoke
     - tray icon
