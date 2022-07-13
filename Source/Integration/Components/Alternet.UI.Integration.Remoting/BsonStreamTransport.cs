@@ -31,6 +31,11 @@ namespace Alternet.UI.Integration.Remoting
             _cancel = _cancelSource.Token;
         }
 
+        public void Start()
+        {
+
+        }
+
         public void Dispose()
         {
             _cancelSource.Cancel();

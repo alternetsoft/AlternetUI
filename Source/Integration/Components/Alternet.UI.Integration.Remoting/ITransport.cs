@@ -8,5 +8,6 @@ namespace Alternet.UI.Integration.Remoting
         Task Send(object data);
         event Action<IAlternetUIRemoteTransportConnection, object> OnMessage;
         event Action<IAlternetUIRemoteTransportConnection, Exception> OnException;
+        void Start();
     }
 }

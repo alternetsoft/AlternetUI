@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net6.0;net461</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Alternet.UI\Alternet.UI.csproj" />
+    <ProjectReference Include="..\Alternet.UI.Integration.Remoting\Alternet.UI.Integration.Remoting.csproj" />
+  </ItemGroup>
+</Project>

@@ -24,6 +24,8 @@ namespace Alternet.UI.Integration.Remoting
 
         }
 
+        public void Start() => _conn.Start();
+
         class SendOperation
         {
             public object Message { get; set; }
