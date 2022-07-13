@@ -4,17 +4,25 @@
 // See the LICENSE file in the project root for more information.
 
 
+#if !ALTERNET_UI_INTEGRATION_REMOTING
 using Alternet.UI.Markup;
+#endif
+
 using System.ComponentModel;
 
-
+#if ALTERNET_UI_INTEGRATION_REMOTING
+namespace Alternet.UI.Integration.Remoting
+#else
 namespace Alternet.UI
+#endif
 {
     /// <summary>
     ///     An enumeration of all of the possible key values on a keyboard.
     /// </summary>
+#if !ALTERNET_UI_INTEGRATION_REMOTING
     [TypeConverter(typeof(KeyConverter))]
     [ValueSerializer(typeof(KeyValueSerializer))]
+#endif
     public enum Key
     {
         /// <summary>

@@ -4,9 +4,11 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-
+#if ALTERNET_UI_INTEGRATION_REMOTING
+namespace Alternet.UI.Integration.Remoting
+#else
 namespace Alternet.UI
+#endif
 {
     /// <summary>
     ///     The MouseButton enumeration describes the buttons available on
@@ -42,6 +44,8 @@ namespace Alternet.UI
         /// </summary>
         XButton2
     }
+
+#if !ALTERNET_UI_INTEGRATION_REMOTING
 
     /// <summary>
     ///     Utility class for MouseButton
@@ -81,6 +85,7 @@ namespace Alternet.UI
                     throw new  System.ComponentModel.InvalidEnumArgumentException("button", (int)button, typeof(MouseButton));
             }
         }
-}
+    }
+#endif
 }
 

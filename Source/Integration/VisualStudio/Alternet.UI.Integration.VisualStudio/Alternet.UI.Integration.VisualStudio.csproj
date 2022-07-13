@@ -74,6 +74,7 @@
     <Compile Include="Services\IAlternetUIVisualStudioSettings.cs" />
     <Compile Include="Services\IVsFindTarget3.cs" />
     <Compile Include="Services\OutputPaneEventSink.cs" />
+    <Compile Include="Services\PreviewerProcess.cs" />
     <Compile Include="Services\SolutionService.cs" />
     <Compile Include="Services\Throttle.cs" />
     <Compile Include="Guids.cs" />
@@ -91,6 +92,7 @@
     </Compile>
     <Compile Include="Views\DesignerPane.cs" />
     <Compile Include="Views\EditorHostPane.cs" />
+    <Compile Include="Views\GridLines.cs" />
     <Compile Include="Views\OptionsDialogPage.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -135,15 +137,15 @@
         <None Include="Manifests\VS2022\source.extension.vsixmanifest" Link="source.extension.vsixmanifest">
           <SubType>Designer</SubType>
         </None>
-        <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.0-previews-3-31605-261" ExcludeAssets="runtime">
+        <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.2.32505.173" ExcludeAssets="runtime">
           <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.0.4207-preview4">
+        <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.2.2186">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="System.ComponentModel.Composition" Version="5.0.0" />
-        <PackageReference Include="Microsoft.VisualStudio.ProjectSystem" Version="17.0.667-pre" />
+		<PackageReference Include="Microsoft.VisualStudio.Composition" Version="17.2.41" />
+        <PackageReference Include="Microsoft.VisualStudio.ProjectSystem" Version="17.2.402-pre" />
       </ItemGroup>
     </When>
     <Otherwise>
@@ -242,6 +244,10 @@
     <ProjectReference Include="..\..\Components\Alternet.UI.Integration.IntelliSense\Alternet.UI.Integration.IntelliSense.csproj">
       <Project>{8e7ad240-6c45-4ed3-a72c-51ed2b9762cb}</Project>
       <Name>Alternet.UI.Integration.IntelliSense</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Components\Alternet.UI.Integration.Remoting\Alternet.UI.Integration.Remoting.csproj">
+      <Project>{7d12ea9b-9c8b-4efb-b52f-8fa76e19845d}</Project>
+      <Name>Alternet.UI.Integration.Remoting</Name>
     </ProjectReference>
     <ProjectReference Include="..\Templates\AlternetUIApplicationTemplate\AlternetUIApplicationTemplate.csproj">
       <Project>{75104aa0-3b1b-47d4-9c4d-501aaaa5acfc}</Project>
