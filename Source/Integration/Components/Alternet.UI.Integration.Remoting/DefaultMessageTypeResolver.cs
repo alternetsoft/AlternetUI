@@ -13,11 +13,11 @@ namespace Alternet.UI.Integration.Remoting
         {
             foreach (var asm in
                 (assemblies ?? Array.Empty<Assembly>()).Concat(new[]
-                    {typeof(AvaloniaRemoteMessageGuidAttribute).GetTypeInfo().Assembly}))
+                    {typeof(AlternetUIRemoteMessageGuidAttribute).GetTypeInfo().Assembly}))
             {
                 foreach (var t in asm.ExportedTypes)
                 {
-                    var attr = t.GetTypeInfo().GetCustomAttribute<AvaloniaRemoteMessageGuidAttribute>();
+                    var attr = t.GetTypeInfo().GetCustomAttribute<AlternetUIRemoteMessageGuidAttribute>();
                     if (attr != null)
                     {
                         _guidsToTypes[attr.Guid] = t;

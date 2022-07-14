@@ -158,18 +158,18 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             var transport = CreateTransport(args);
             if (transport is ITransportWithEnforcedMethod enforcedMethod)
                 args.Method = enforcedMethod.PreviewerMethod;
-            var asm = Assembly.LoadFile(System.IO.Path.GetFullPath(args.AppPath));
-            var entryPoint = asm.EntryPoint;
-            if (entryPoint == null)
-                throw Die($"Assembly {args.AppPath} doesn't have an entry point");
-            var builderMethod = entryPoint.DeclaringType.GetMethod(BuilderMethodName,
-                BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic, null, Array.Empty<Type>(), null);
-            if (builderMethod == null)
-                throw Die($"{entryPoint.DeclaringType.FullName} doesn't have a method named {BuilderMethodName}");
+            //var asm = Assembly.LoadFile(System.IO.Path.GetFullPath(args.AppPath));
+            //var entryPoint = asm.EntryPoint;
+            //if (entryPoint == null)
+            //    throw Die($"Assembly {args.AppPath} doesn't have an entry point");
+            //var builderMethod = entryPoint.DeclaringType.GetMethod(BuilderMethodName,
+            //    BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic, null, Array.Empty<Type>(), null);
+            //if (builderMethod == null)
+            //    throw Die($"{entryPoint.DeclaringType.FullName} doesn't have a method named {BuilderMethodName}");
             //Design.IsDesignMode = true;
-            Log($"Obtaining AppBuilder instance from {builderMethod.DeclaringType.FullName}.{builderMethod.Name}");
-            var appBuilder = builderMethod.Invoke(null, null);
-            Log($"Initializing application in design mode");
+            //Log($"Obtaining AppBuilder instance from {builderMethod.DeclaringType.FullName}.{builderMethod.Name}");
+            //var appBuilder = builderMethod.Invoke(null, null);
+            //Log($"Initializing application in design mode");
             //var initializer =(IAppInitializer)Activator.CreateInstance(typeof(AppInitializer<>).MakeGenericType(appBuilder.GetType()));
             //transport = initializer.ConfigureApp(transport, args, appBuilder);
             s_transport = transport;

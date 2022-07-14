@@ -4,7 +4,7 @@ using System.Xml;
 
 namespace Alternet.UI.Integration.Remoting
 {
-    [AvaloniaRemoteMessageGuid("9AEC9A2E-6315-4066-B4BA-E9A9EFD0F8CC")]
+    [AlternetUIRemoteMessageGuid("41659480-1AC4-4445-9C35-CAD66C994648")]
     public class UpdateXamlMessage
     {
         public string Xaml { get; set; }
@@ -12,7 +12,7 @@ namespace Alternet.UI.Integration.Remoting
         public string XamlFileProjectPath { get; set; }
     }
 
-    [AvaloniaRemoteMessageGuid("B7A70093-0C5D-47FD-9261-22086D43A2E2")]
+    [AlternetUIRemoteMessageGuid("3427FD02-55AE-4309-B445-9FD70F11F3BB")]
     public class UpdateXamlResultMessage
     {
         public string Error { get; set; }
@@ -20,7 +20,7 @@ namespace Alternet.UI.Integration.Remoting
         public ExceptionDetails Exception { get; set; }
     }
 
-    [AvaloniaRemoteMessageGuid("854887CF-2694-4EB6-B499-7461B6FB96C7")]
+    [AlternetUIRemoteMessageGuid("3A848AC5-62D8-4382-882A-D69F9BC077F1")]
     public class StartDesignerSessionMessage
     {
         public string SessionId { get; set; }

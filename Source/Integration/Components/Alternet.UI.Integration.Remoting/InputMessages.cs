@@ -17,39 +17,39 @@ namespace Alternet.UI.Integration.Remoting
         public double Y { get; set; }
     }
 
-    [AvaloniaRemoteMessageGuid("6228F0B9-99F2-4F62-A621-414DA2881648")]
+    [AlternetUIRemoteMessageGuid("EBEB9CD7-3B43-4616-95BC-0EC4A037B73F")]
     public class PointerMovedEventMessage : PointerEventMessageBase
     {
         
     }
 
-    [AvaloniaRemoteMessageGuid("7E9E2818-F93F-411A-800E-6B1AEB11DA46")]
+    [AlternetUIRemoteMessageGuid("0F491075-E417-4AF4-84A0-68A48C01AC9E")]
     public class PointerPressedEventMessage : PointerEventMessageBase
     {
         public MouseButton Button { get; set; }
     }
     
-    [AvaloniaRemoteMessageGuid("4ADC84EE-E7C8-4BCF-986C-DE3A2F78EDE4")]
+    [AlternetUIRemoteMessageGuid("0BBC00B0-EF6E-41F5-A5E3-66A8C6EBFD9D")]
     public class PointerReleasedEventMessage : PointerEventMessageBase
     {
         public MouseButton Button { get; set; }
     }
 
-    [AvaloniaRemoteMessageGuid("79301A05-F02D-4B90-BB39-472563B504AE")]
+    [AlternetUIRemoteMessageGuid("5D05CF63-A444-4850-97CC-48DF8AE4940F")]
     public class ScrollEventMessage : PointerEventMessageBase
     {
         public double DeltaX { get; set; }
         public double DeltaY { get; set; }
     }
 
-    [AvaloniaRemoteMessageGuid("1C3B691E-3D54-4237-BFB0-9FEA83BC1DB8")]
+    [AlternetUIRemoteMessageGuid("7F0E860A-11FA-4FCF-AB77-C25A6110A1AD")]
     public class KeyEventMessage : InputEventMessageBase
     {
         public bool IsDown { get; set; }
         public Key Key { get; set; }
     }
 
-    [AvaloniaRemoteMessageGuid("C174102E-7405-4594-916F-B10B8248A17D")]
+    [AlternetUIRemoteMessageGuid("535982A1-8A9F-45AF-813D-138EC79AF022")]
     public class TextInputEventMessage : InputEventMessageBase
     {
         public string Text { get; set; }

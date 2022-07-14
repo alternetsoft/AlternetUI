@@ -3,11 +3,11 @@
 namespace Alternet.UI.Integration.Remoting
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class AvaloniaRemoteMessageGuidAttribute : Attribute
+    public class AlternetUIRemoteMessageGuidAttribute : Attribute
     {
         public Guid Guid { get; }
 
-        public AvaloniaRemoteMessageGuidAttribute(string guid)
+        public AlternetUIRemoteMessageGuidAttribute(string guid)
         {
             Guid = Guid.Parse(guid);
         }

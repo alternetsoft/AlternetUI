@@ -222,6 +222,8 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                         var tfi = GetFrameworkInfo(loaded, msbuildProperties, "TargetFrameworkIdentifier");
                         var hostApp = FrameworkInfoUtils.IsNetFramework(tfi) ? hostAppNetFx : hostAppNetCore;
 
+                        hostApp = @"C:\Work\UI\Source\Integration\Components\Alternet.UI.Integration.UIXmlHostApp\bin\Debug\net6.0\Alternet.UI.Integration.UIXmlHostApp.dll"; // todo: remove
+
                         alternatives[tf] = new ProjectOutputInfo(targetPath, tf, tfi, hostApp);
                     }
                 }

@@ -10,6 +10,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02. Visual Studio", "02. Visual Studio", "{28EAAF64-EB3C-4C76-91A9-04A9FB62F5DE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alternet.UI.Integration.VisualStudio", "VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj", "{2E6545DC-EF98-4C53-853B-C3307CB43A3F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C310E645-FE62-4D59-B125-0A07B1B86FA5} = {C310E645-FE62-4D59-B125-0A07B1B86FA5}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{1C97784E-A38A-4AD7-8B0E-E6F39A03AE4C}"
 EndProject
