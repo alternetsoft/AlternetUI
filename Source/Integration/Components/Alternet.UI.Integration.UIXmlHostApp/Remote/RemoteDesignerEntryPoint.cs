@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using Alternet.UI.Integration.Remoting;
 
@@ -151,7 +152,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
         //}
 
         private const string BuilderMethodName = "BuildAlternetUIApp";
-        
+
         public static void Main(string[] cmdline)
         {
             var args = ParseCommandLineArgs(cmdline);
@@ -178,7 +179,8 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             transport.Start();
             Log("Sending StartDesignerSessionMessage");
             transport.Send(new StartDesignerSessionMessage {SessionId = args.SessionId});
-            
+
+            DispatcherLoop.Current.Run();
             //Dispatcher.UIThread.MainLoop(CancellationToken.None);
         }
 
@@ -194,7 +196,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
         }
 
         private static Window s_currentWindow;
-        private static void OnTransportMessage(IAlternetUIRemoteTransportConnection transport, object obj) //=> Dispatcher.UIThread.Post(() =>
+        private static void OnTransportMessage(IAlternetUIRemoteTransportConnection transport, object obj) => DispatcherLoop.Current.BeginInvoke(new Task(() =>
         {
             if (obj is ClientSupportedPixelFormatsMessage formats)
             {
@@ -236,6 +238,6 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                     });
                 }
             }
-        }//);
+        }));
     }
 }

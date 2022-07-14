@@ -2,6 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFrameworks>net6.0;net461</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Alternet.UI\Alternet.UI.csproj" />
