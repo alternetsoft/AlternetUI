@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 using Alternet.UI.Integration.Remoting;
 
 namespace Alternet.UI.Integration.UIXmlHostApp.Remote
@@ -155,7 +158,9 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
         public static void Main(string[] cmdline)
         {
-            var args = ParseCommandLineArgs(cmdline);
+            //Test();
+
+            args = ParseCommandLineArgs(cmdline);
             var transport = CreateTransport(args);
             if (transport is ITransportWithEnforcedMethod enforcedMethod)
                 args.Method = enforcedMethod.PreviewerMethod;
@@ -180,10 +185,65 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             Log("Sending StartDesignerSessionMessage");
             transport.Send(new StartDesignerSessionMessage {SessionId = args.SessionId});
 
+#if NETCOREAPP
+            System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += AssemblyLoadContext_Resolving;
+#endif
+
+            EnsureApplicationCreated();
+
             DispatcherLoop.Current.Run();
             //Dispatcher.UIThread.MainLoop(CancellationToken.None);
         }
 
+        static string GetUixmlClassName(string uixml)
+        {
+            var document = XDocument.Parse(uixml);
+            return document.Root.Attribute((XNamespace)"http://schemas.alternetsoft.com/ui/2021/uixml" + "Class").Value;
+        }
+
+        private static void Test()
+        {
+            var appPath = @"C:\Users\yezo\source\repos\AlternetUIApplication3\AlternetUIApplication3\bin\Debug\net6.0\AlternetUIApplication3.dll";
+            var uixml = File.ReadAllText(@"C:\Users\yezo\source\repos\AlternetUIApplication3\AlternetUIApplication3\MainWindow.uixml");
+
+            var appAssembly = Assembly.LoadFrom(appPath);
+            using var stream = new MemoryStream(Encoding.Default.GetBytes(uixml));
+
+#if NETCOREAPP
+            System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += AssemblyLoadContext_Resolving;
+#endif
+
+            EnsureApplicationCreated();
+
+            var control = CreateControlForUixml(uixml, appAssembly);
+            new UixmlLoader().LoadExisting(stream, control);
+        }
+
+        static Application application;
+
+        private static void EnsureApplicationCreated()
+        {
+            if (application == null)
+                application = new Application();
+        }
+
+        private static Control CreateControlForUixml(string uixml, Assembly asm)
+        {
+            var controlType = asm.GetType(GetUixmlClassName(uixml));
+            var control = Activator.CreateInstance(controlType);
+
+            return (Control)control;
+        }
+
+#if NETCOREAPP
+        private static Assembly AssemblyLoadContext_Resolving(System.Runtime.Loader.AssemblyLoadContext context, AssemblyName name)
+        {
+            if (name.Name == "Alternet.UI")
+                return typeof(Alternet.UI.Window).Assembly;
+            
+            return context.LoadFromAssemblyName(name);
+        }
+#endif
 
         private static void RebuildPreFlight()
         {
@@ -195,7 +255,10 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             //};
         }
 
-        private static Window s_currentWindow;
+        //private static Window s_currentWindow;
+        static Control currentControl;
+        private static CommandLineArgs args;
+
         private static void OnTransportMessage(IAlternetUIRemoteTransportConnection transport, object obj) => DispatcherLoop.Current.BeginInvoke(new Task(() =>
         {
             if (obj is ClientSupportedPixelFormatsMessage formats)
@@ -217,26 +280,45 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             {
                 try
                 {
-                    s_currentWindow?.Close();
+                    if (currentControl != null)
+                    {
+                        currentControl.Dispose();
+                        currentControl = null;
+                    }
+
+                    var appAssembly = Assembly.LoadFrom(xaml.AssemblyPath);
+                    using var stream = new MemoryStream(Encoding.Default.GetBytes(xaml.Xaml));
+
+                    var control = CreateControlForUixml(xaml.Xaml, appAssembly);
+                    new UixmlLoader().LoadExisting(stream, control);
+
+                    currentControl = control;
                 }
                 catch
                 {
                     //Ignore
                 }
-                s_currentWindow = null;
-                try
+
+                s_transport.Send(new UpdateXamlResultMessage
                 {
-                    //s_currentWindow = DesignWindowLoader.LoadDesignerWindow(xaml.Xaml, xaml.AssemblyPath, xaml.XamlFileProjectPath);
-                    //s_transport.Send(new UpdateXamlResultMessage(){Handle = s_currentWindow.PlatformImpl?.Handle?.Handle.ToString()});
-                }
-                catch (Exception e)
-                {
-                    s_transport.Send(new UpdateXamlResultMessage
-                    {
-                        Error = e.ToString(),
-                        Exception = new ExceptionDetails(e),
-                    });
-                }
+                    Error = "Fail",
+                    Exception = new ExceptionDetails(),
+                });
+
+                //s_currentWindow = null;
+                //try
+                //{
+                //    //s_currentWindow = DesignWindowLoader.LoadDesignerWindow(xaml.Xaml, xaml.AssemblyPath, xaml.XamlFileProjectPath);
+                //    //s_transport.Send(new UpdateXamlResultMessage(){Handle = s_currentWindow.PlatformImpl?.Handle?.Handle.ToString()});
+                //}
+                //catch (Exception e)
+                //{
+                //    s_transport.Send(new UpdateXamlResultMessage
+                //    {
+                //        Error = e.ToString(),
+                //        Exception = new ExceptionDetails(e),
+                //    });
+                //}
             }
         }));
     }
