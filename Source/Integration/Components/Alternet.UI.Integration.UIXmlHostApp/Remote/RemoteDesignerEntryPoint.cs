@@ -159,6 +159,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
         public static void Main(string[] cmdline)
         {
             //Test();
+            //return;
 
             args = ParseCommandLineArgs(cmdline);
             var transport = CreateTransport(args);
@@ -189,6 +190,8 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += AssemblyLoadContext_Resolving;
 #endif
 
+            UixmlLoader.DisableComponentInitialization = true;
+
             EnsureApplicationCreated();
 
             DispatcherLoop.Current.Run();
@@ -203,10 +206,12 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
         private static void Test()
         {
-            var appPath = @"C:\Users\yezo\source\repos\AlternetUIApplication3\AlternetUIApplication3\bin\Debug\net6.0\AlternetUIApplication3.dll";
-            var uixml = File.ReadAllText(@"C:\Users\yezo\source\repos\AlternetUIApplication3\AlternetUIApplication3\MainWindow.uixml");
+            //var appPath = @"C:\Users\yezo\source\repos\AlternetUIApplication3\AlternetUIApplication3\bin\Debug\net6.0\AlternetUIApplication3.dll";
+            //var uixml = File.ReadAllText(@"C:\Users\yezo\source\repos\AlternetUIApplication3\AlternetUIApplication3\MainWindow.uixml");
 
-            var appAssembly = Assembly.LoadFrom(appPath);
+            var appPath = @"C:\Work\UI\Source\Samples\HelloWorldSample\bin\Debug\net6.0\HelloWorldSample.dll";
+            var uixml = File.ReadAllText(@"C:\Work\UI\Source\Samples\HelloWorldSample\MainWindow.uixml ");
+
             using var stream = new MemoryStream(Encoding.Default.GetBytes(uixml));
 
 #if NETCOREAPP
@@ -215,8 +220,14 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
             EnsureApplicationCreated();
 
-            var control = CreateControlForUixml(uixml, appAssembly);
-            new UixmlLoader().LoadExisting(stream, control);
+            var appAssembly = Assembly.LoadFrom(appPath);
+
+            //var control = CreateControlForUixml(uixml, appAssembly);
+            //new UixmlLoader().LoadExisting(stream, control);
+
+            UixmlLoader.DisableComponentInitialization = true;
+
+            var control = new UixmlLoader().Load(stream, appAssembly);
         }
 
         static Application application;
@@ -289,10 +300,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                     var appAssembly = Assembly.LoadFrom(xaml.AssemblyPath);
                     using var stream = new MemoryStream(Encoding.Default.GetBytes(xaml.Xaml));
 
-                    var control = CreateControlForUixml(xaml.Xaml, appAssembly);
-                    new UixmlLoader().LoadExisting(stream, control);
-
-                    currentControl = control;
+                    currentControl = (Control)new UixmlLoader().Load(stream, appAssembly);
                 }
                 catch
                 {

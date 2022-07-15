@@ -118,7 +118,8 @@ namespace XamlX.IL
 
             public void Init()
             {
-                var types = Assembly.GetExportedTypes().Select(t => _system.ResolveType(t)).ToList();
+                //                var types = Assembly.GetExportedTypes().Select(t => _system.ResolveType(t)).ToList();
+                var types = Assembly.GetTypes().Select(t => _system.ResolveType(t)).ToList(); // yezo: with using only exported types uixml cannot be loaded from outside of the assembly.
                 Types = types;
                 _typeDic = types.ToDictionary(t => t.Type.FullName);
             }

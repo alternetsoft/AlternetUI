@@ -33,6 +33,8 @@ namespace Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions
 
             _designTransformer = new UixmlPortXamlIlDesignPropertiesTransformer();
 
+            Transformers.Insert(0, new IgnoredDirectivesTransformer());
+
             //Transformers.Insert(0, new XNameTransformer());
             //Transformers.Insert(1, new IgnoredDirectivesTransformer());
             //Transformers.Insert(2, _designTransformer = new UixmlPortXamlIlDesignPropertiesTransformer());

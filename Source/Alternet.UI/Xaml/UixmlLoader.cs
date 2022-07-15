@@ -1,4 +1,5 @@
 using System.IO;
+using System.Reflection;
 
 namespace Alternet.UI
 {
@@ -8,23 +9,17 @@ namespace Alternet.UI
     public class UixmlLoader
     {
         /// <summary>
+        /// This flag supports internal infrastructure and is not supposed to be used from the user code.
+        /// </summary>
+        public static bool DisableComponentInitialization { get; set; }
+
+        /// <summary>
         /// Returns an object graph created from a source XAML.
         /// </summary>
-        public object Load(Stream xamlStream)
+        public object Load(Stream xamlStream, Assembly localAssembly)
         {
-            using (var reader = new StreamReader(xamlStream))
-            {
-                var compiler = new XamlCompiler();
-                var compilation = compiler.Compile(reader.ReadToEnd());
-                return compilation.create(null);
-            }
+            return Markup.Xaml.UixmlPortRuntimeXamlLoader.Load(xamlStream, localAssembly);
         }
-
-        //static int performanceLogNumber = 1;
-        //static System.TimeSpan totalCompilationTime = new System.TimeSpan();
-        //static System.TimeSpan totalInitializationTime = new System.TimeSpan();
-
-        //bool logPerformance = false;
 
         /// <summary>
         /// Populates an existing root object with the object property values created from a source XAML.
@@ -32,52 +27,6 @@ namespace Alternet.UI
         public void LoadExisting(Stream xamlStream, object existingObject)
         {
             Markup.Xaml.UixmlPortRuntimeXamlLoader.Load(xamlStream, existingObject.GetType().Assembly, existingObject);
-            //return;
-
-            //const string LogPath = @"c:\temp\UI\xaml-perf.log";
-            //System.Diagnostics.Stopwatch? performanceStopwatch = null;
-            //if (logPerformance)
-            //{
-            //    if (performanceLogNumber == 1)
-            //        File.AppendAllText(LogPath, System.Environment.CommandLine + "---------------\n");
-            //    performanceStopwatch = new System.Diagnostics.Stopwatch();
-            //    performanceStopwatch.Start();
-            //}
-
-            //using (var reader = new StreamReader(xamlStream))
-            //{
-            //    var compiler = new XamlCompiler();
-            //    var compilation = compiler.Compile(reader.ReadToEnd(), null);
-                
-            //    if (performanceStopwatch != null)
-            //    {
-            //        performanceStopwatch.Stop();
-            //        totalCompilationTime += performanceStopwatch.Elapsed;
-            //        File.AppendAllText(LogPath, $"XAML Load Compile #{performanceLogNumber}: {performanceStopwatch.Elapsed}, Total: {totalCompilationTime.TotalMilliseconds}\n");
-            //        performanceStopwatch.Restart();
-            //    }
-
-            //    compilation.populate(null, existingObject);
-            //}
-
-            //if (performanceStopwatch != null)
-            //{
-            //    performanceStopwatch.Stop();
-            //    totalInitializationTime += performanceStopwatch.Elapsed;
-            //    File.AppendAllText(LogPath, $"XAML Load Init #{performanceLogNumber++}: {performanceStopwatch.Elapsed}, Total Init: {totalInitializationTime.TotalMilliseconds}\n");
-            //}
         }
-
-        ///// <summary>
-        ///// Compiles xamlStream to initialization assembly.
-        ///// </summary>
-        //public Assembly Compile(Stream xamlStream, string targetDllFileName)
-        //{
-        //    using (var reader = new StreamReader(xamlStream))
-        //    {
-        //        var compiler = new XamlCompiler();
-        //        return compiler.Compile(reader.ReadToEnd(), targetDllFileName).assembly;
-        //    }
-        //}
     }
 }

@@ -36,6 +36,9 @@ using System;
                     w.WriteLine("public void InitializeComponent()");
                     using (new BlockIndent(w))
                     {
+                        w.WriteLine("if (Alternet.UI.UixmlLoader.DisableComponentInitialization)");
+                        using (new LineIndent(w))
+                            w.WriteLine("return;");
                         w.WriteLine("if (contentLoaded)");
                         using (new LineIndent(w))
                             w.WriteLine("return;");
