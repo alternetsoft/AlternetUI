@@ -13,6 +13,8 @@ namespace Alternet::UI
         void SetBitmap(const wxBitmap& value);
 
     private:
+        void EnsureImageHandlersInitialized();
+
         wxBitmap _bitmap; // reference-counted, so use copy-by-value.
     };
 }

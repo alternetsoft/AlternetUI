@@ -5,6 +5,7 @@
 #include "Control.h"
 #include "Font.h"
 #include "DrawingContext.h"
+#include "Image.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -315,6 +316,13 @@ ALTERNET_UI_API void Control_Destroy_(Control* obj)
 {
     MarshalExceptions<void>([&](){
             obj->Destroy();
+        });
+}
+
+ALTERNET_UI_API void Control_DrawToImage_(Control* obj, Image* image, Rect targetBounds)
+{
+    MarshalExceptions<void>([&](){
+            obj->DrawToImage(image, targetBounds);
         });
 }
 

@@ -392,6 +392,12 @@ namespace Alternet.UI.Native
             NativeApi.Control_Destroy_(NativePointer);
         }
         
+        public void DrawToImage(Image image, Alternet.Drawing.Rect targetBounds)
+        {
+            CheckDisposed();
+            NativeApi.Control_DrawToImage_(NativePointer, image.NativePointer, targetBounds);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -607,6 +613,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_Destroy_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_DrawToImage_(IntPtr obj, IntPtr image, NativeApiTypes.Rect targetBounds);
             
         }
     }

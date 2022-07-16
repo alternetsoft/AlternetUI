@@ -21,6 +21,15 @@ namespace Alternet.Drawing
                 NativeImage.LoadFromStream(inputStream);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class with the specified size.
+        /// </summary>
+        /// <param name="size">The size used to create the image.</param>
+        public Image(Size size) : this()
+        {
+            NativeImage.Initialize(size);
+        }
+
         private protected Image()
         {
             nativeImage = new UI.Native.Image();

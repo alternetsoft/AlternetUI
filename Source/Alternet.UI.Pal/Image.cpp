@@ -17,19 +17,24 @@ namespace Alternet::UI
         InputStream inputStream(stream);
         ManagedInputStream managedInputStream(&inputStream);
 
+        EnsureImageHandlersInitialized();
+        _bitmap = wxBitmap(managedInputStream);
+    }
+
+    void Image::Initialize(const Size& size)
+    {
+        EnsureImageHandlersInitialized();
+        _bitmap = wxBitmap(fromDip(size, nullptr));
+    }
+
+    void Image::EnsureImageHandlersInitialized()
+    {
         static bool imageHandlersInitialized = false;
         if (!imageHandlersInitialized)
         {
             wxInitAllImageHandlers();
             imageHandlersInitialized = true;
         }
-
-        _bitmap = wxBitmap(managedInputStream);
-    }
-
-    void Image::Initialize(const Size& size)
-    {
-        _bitmap = wxBitmap(fromDip(size, nullptr));
     }
 
     void Image::CopyFrom(Image* otherImage)

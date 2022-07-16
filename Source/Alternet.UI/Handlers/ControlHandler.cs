@@ -87,6 +87,14 @@ namespace Alternet.UI
             }
         }
 
+        internal void DrawToImage(Image image, Rect targetBounds)
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            NativeControl.DrawToImage(image.NativeImage, targetBounds);
+        }
+
         /// <summary>
         /// Gets a rectangle which describes an area inside of the <see cref="Control"/> available
         /// for positioning (layout) of its child controls, in device-independent units (1/96th inch per unit).

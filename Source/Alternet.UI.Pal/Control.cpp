@@ -37,6 +37,29 @@ namespace Alternet::UI
         return IsWxWindowCreated();
     }
 
+    void Control::DrawToImage(Image* image, const Rect& targetBounds)
+    {
+        auto window = GetWxWindow();
+        wxClientDC clientDC(window);
+        
+        wxMemoryDC memoryDC;
+        auto bitmap = image->GetBitmap();
+        memoryDC.SelectObject(bitmap);
+
+        auto deviceTargetBounds = fromDip(targetBounds, window);
+        auto windowSize = window->GetClientSize();
+
+        memoryDC.Blit(deviceTargetBounds.x, deviceTargetBounds.y, windowSize.x, windowSize.y, &clientDC, 0, 0);
+        memoryDC.SelectObject(wxNullBitmap);
+
+
+        wxImage img = bitmap.ConvertToImage();
+        img.ClearAlpha();
+        img.SaveFile("c:\\temp\\screenshot.png", wxBITMAP_TYPE_PNG);
+
+        //bitmap.SaveFile("c:\\temp\\screenshot.png", wxBITMAP_TYPE_PNG);
+    }
+
     void Control::OnDestroy(wxWindowDestroyEvent& event)
     {
         if (!_flags.IsSet(ControlFlags::RecreatingWxWindow))
