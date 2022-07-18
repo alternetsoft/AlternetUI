@@ -37,27 +37,25 @@ namespace Alternet::UI
         return IsWxWindowCreated();
     }
 
-    void Control::DrawToImage(Image* image, const Rect& targetBounds)
+    void Control::SaveScreenshot(const string& fileName)
     {
         auto window = GetWxWindow();
         wxClientDC clientDC(window);
-        
-        wxMemoryDC memoryDC;
-        auto bitmap = image->GetBitmap();
-        memoryDC.SelectObject(bitmap);
 
-        auto deviceTargetBounds = fromDip(targetBounds, window);
         auto windowSize = window->GetClientSize();
 
-        memoryDC.Blit(deviceTargetBounds.x, deviceTargetBounds.y, windowSize.x, windowSize.y, &clientDC, 0, 0);
+        wxMemoryDC memoryDC;
+        wxBitmap bitmap(windowSize);
+        memoryDC.SelectObject(bitmap);
+
+        memoryDC.Blit(0, 0, windowSize.x, windowSize.y, &clientDC, 0, 0);
         memoryDC.SelectObject(wxNullBitmap);
 
-
         wxImage img = bitmap.ConvertToImage();
-        img.ClearAlpha();
-        img.SaveFile("c:\\temp\\screenshot.png", wxBITMAP_TYPE_PNG);
+        if (img.HasAlpha())
+            img.ClearAlpha();
 
-        //bitmap.SaveFile("c:\\temp\\screenshot.png", wxBITMAP_TYPE_PNG);
+        img.SaveFile(wxStr(fileName), wxBITMAP_TYPE_PNG);
     }
 
     void Control::OnDestroy(wxWindowDestroyEvent& event)

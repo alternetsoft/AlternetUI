@@ -27,7 +27,7 @@ namespace Alternet::UI
         _bitmap = wxBitmap(fromDip(size, nullptr));
     }
 
-    void Image::EnsureImageHandlersInitialized()
+    /*static */void Image::EnsureImageHandlersInitialized()
     {
         static bool imageHandlersInitialized = false;
         if (!imageHandlersInitialized)

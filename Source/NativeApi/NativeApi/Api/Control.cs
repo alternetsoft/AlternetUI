@@ -84,6 +84,6 @@ namespace NativeApi.Api
 
         public void Destroy() => throw new Exception();
 
-        public void DrawToImage(Image image, Rect targetBounds) => throw new Exception();
+        public void SaveScreenshot(string fileName) => throw new Exception();
     }
 }

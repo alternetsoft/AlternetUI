@@ -65,16 +65,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Renders th control to the specified image.
-        /// </summary>
-        /// <param name="image">The image to be drawn to.</param>
-        /// <param name="targetBounds">The bounds within which the control is rendered.</param>
-        public void DrawToImage(Image image, Rect targetBounds)
-        {
-            Handler.DrawToImage(image, targetBounds);
-        }
-
-        /// <summary>
         /// Gets a value indicating whether the mouse is captured to this control.
         /// </summary>
         public bool IsMouseCaptured => Handler.IsMouseCaptured;

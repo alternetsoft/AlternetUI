@@ -76,7 +76,7 @@ bool Focus();
 void BeginInit();
 void EndInit();
 void Destroy();
-void DrawToImage(Image* image, const Rect& targetBounds);
+void SaveScreenshot(const string& fileName);
 public:
 enum class ControlEvent
 {

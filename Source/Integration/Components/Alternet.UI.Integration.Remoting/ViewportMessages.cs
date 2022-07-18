@@ -62,4 +62,17 @@
         public int Stride { get; set; }
     }
 
+    [AlternetUIRemoteMessageGuid("BBE3ABFB-E40C-432F-A9F7-7151796589B5")]
+    public class FrameFileMessage
+    {
+        public long SequenceId { get; set; }
+        public string FileName { get; set; }
+    }
+
+    [AlternetUIRemoteMessageGuid("ACA6224C-7888-4E14-9F55-759C49870EDC")]
+    public class FrameFileReceivedMessage
+    {
+        public long SequenceId { get; set; }
+        public string FileName { get; set; }
+    }
 }

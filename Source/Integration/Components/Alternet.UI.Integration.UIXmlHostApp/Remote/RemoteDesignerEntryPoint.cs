@@ -156,10 +156,11 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
         private const string BuilderMethodName = "BuildAlternetUIApp";
 
+        [STAThread]
         public static void Main(string[] cmdline)
         {
-            //Test();
-            //return;
+            Test();
+            return;
 
             args = ParseCommandLineArgs(cmdline);
             var transport = CreateTransport(args);
@@ -227,7 +228,51 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
             UixmlLoader.DisableComponentInitialization = true;
 
-            var control = new UixmlLoader().Load(stream, appAssembly);
+            var control = (Window)new UixmlLoader().Load(stream, appAssembly);
+            _c = control;
+
+            AttachEventHandler(application, "Idle", Application_Idle);
+
+            application.Run(control);
+
+        }
+
+        static void AttachEventHandler(object obj, string eventName, EventHandler handler)
+        {
+            static Delegate ConvertDelegate(Delegate originalDelegate, Type targetDelegateType)
+            {
+                return Delegate.CreateDelegate(
+                    targetDelegateType,
+                    originalDelegate.Target,
+                    originalDelegate.Method);
+            }
+
+            var eventInfo = obj.GetType().GetEvent(eventName, BindingFlags.NonPublic | BindingFlags.Instance);
+            var convertedHandler = ConvertDelegate(handler, eventInfo.EventHandlerType);
+            var addMethod = eventInfo.GetAddMethod(true);
+            addMethod.Invoke(obj, new[] { convertedHandler });
+        }
+
+        static bool _saved;
+        static Control _c;
+
+        private static void Application_Idle(object sender, EventArgs e)
+        {
+            if (!_saved)
+            {
+                SaveScreenshot(_c, @"c:\temp\1.png");
+                _saved = true;
+            }
+        }
+
+        static MethodInfo saveScreenshotMethod;
+
+        static void SaveScreenshot(Control control, string fileName)
+        {
+            if (saveScreenshotMethod == null)
+                saveScreenshotMethod = typeof(ControlHandler).GetMethod("SaveScreenshot", BindingFlags.Instance | BindingFlags.NonPublic);
+
+            saveScreenshotMethod.Invoke(control.Handler, new object[] { fileName });
         }
 
         static Application application;
@@ -252,6 +297,12 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             if (name.Name == "Alternet.UI")
                 return typeof(Alternet.UI.Window).Assembly;
             
+            if (name.Name.EndsWith(".resources", StringComparison.OrdinalIgnoreCase))
+            {
+                // See https://github.com/dotnet/runtime/issues/7077
+                return null;
+            }
+
             return context.LoadFromAssemblyName(name);
         }
 #endif

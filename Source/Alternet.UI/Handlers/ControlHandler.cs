@@ -87,12 +87,12 @@ namespace Alternet.UI
             }
         }
 
-        internal void DrawToImage(Image image, Rect targetBounds)
+        internal void SaveScreenshot(string fileName)
         {
             if (NativeControl == null)
                 throw new InvalidOperationException();
 
-            NativeControl.DrawToImage(image.NativeImage, targetBounds);
+            NativeControl.SaveScreenshot(fileName);
         }
 
         /// <summary>

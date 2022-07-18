@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "Common.h"
 #include "Window.h"
+#include "Image.h"
 
 IMPLEMENT_APP_NO_MAIN(Alternet::UI::App);
 IMPLEMENT_WX_THEME_SUPPORT;
@@ -107,6 +108,8 @@ namespace Alternet::UI
 
     Application::Application()
     {
+        Image::EnsureImageHandlersInitialized();
+
         if (s_current != nullptr)
             throwExInvalidOp;
         s_current = this;
