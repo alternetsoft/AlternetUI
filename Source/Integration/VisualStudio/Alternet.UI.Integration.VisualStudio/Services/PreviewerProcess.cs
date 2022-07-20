@@ -47,12 +47,19 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                 .CreateLogger();
         }
 
-        ///// <summary>
-        ///// Gets the current preview as a <see cref="BitmapSource"/>.
-        ///// </summary>
-        //public BitmapSource Bitmap => _bitmap;
+        public PreviewData PreviewData
+        {
+            get
+            {
+                return _previewData;
+            }
 
-        public PreviewData PreviewData => _previewData;
+            set
+            {
+                _previewData = value;
+                PreviewDataReceived?.Invoke(this, EventArgs.Empty);
+            }
+        }
 
         /// <summary>
         /// Gets the current error state as returned from the previewer process.
@@ -316,6 +323,8 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                 throw new InvalidOperationException("Process not finished initializing.");
             }
 
+            PreviewData = null;
+
             await SendAsync(new UpdateXamlMessage
             {
                 AssemblyPath = _assemblyPath,
@@ -434,9 +443,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                     {
                         await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
-                        _previewData = new PreviewData((IntPtr)frame.WindowHandle);
-
-                        PreviewDataReceived?.Invoke(this, EventArgs.Empty);
+                        PreviewData = new PreviewData((IntPtr)frame.WindowHandle);
 
                         await SendAsync(new PreviewDataReceivedMessage
                         {

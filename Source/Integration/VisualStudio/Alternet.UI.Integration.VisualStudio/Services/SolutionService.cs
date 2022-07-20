@@ -266,6 +266,9 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
+            if (props == null)
+                return null;
+
             try
             {
                 return props.Item(name).Value.ToString();

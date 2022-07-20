@@ -718,13 +718,17 @@ namespace Metsys.Bson
 
         public static TypeHelper GetHelperForType(Type type)
         {
-            TypeHelper helper;
-            if (!_cachedTypeLookup.TryGetValue(type, out helper))
+            lock (_cachedTypeLookup)
             {
-                helper = new TypeHelper(type);
-                _cachedTypeLookup[type] = helper;
+                TypeHelper helper;
+                if (!_cachedTypeLookup.TryGetValue(type, out helper))
+                {
+                    helper = new TypeHelper(type);
+                    _cachedTypeLookup[type] = helper;
+                }
+
+                return helper;
             }
-            return helper;
         }
 
         public static string FindProperty(LambdaExpression lambdaExpression)

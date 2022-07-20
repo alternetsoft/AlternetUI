@@ -30,6 +30,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
         //private Size _lastBitmapSize;
 
         private System.Windows.Forms.Panel hostPanel;
+        private IntPtr hostedWindowHandle;
 
         public AlternetUIPreviewer()
         {
@@ -147,17 +148,32 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
         private void Update(PreviewData preview)
         {
+            if (hostedWindowHandle != IntPtr.Zero)
+            {
+                User32.SetParent(hostedWindowHandle, IntPtr.Zero);
+                hostedWindowHandle = IntPtr.Zero;
+            }
+
             if (preview != null && preview.WindowHandle != IntPtr.Zero)
             {
+                loading.Visibility = Visibility.Collapsed;
+                previewScroller.Visibility = Visibility.Visible;
+
                 //var style = GetWindowLong(preview.WindowHandle, WindowLongIndexFlags.GWL_STYLE);
 
+                hostedWindowHandle = preview.WindowHandle;
                 User32.SetParent(preview.WindowHandle, hostPanel.Handle);
                 //SetWindowLong(appWin, WindowLongIndexFlags.GWL_STYLE, (SetWindowLongFlags)(WindowStyles.WS_VISIBLE/* | WindowStyles.WS_OVERLAPPEDWINDOW*/));
                 //            SetWindowLong(appWin, WindowLongIndexFlags.GWL_STYLE, (SetWindowLongFlags)style);
                 //System.Threading.Thread.Sleep(100);
-                User32.MoveWindow(preview.WindowHandle, 0, 0, hostPanel.ClientRectangle.Width, hostPanel.ClientRectangle.Height, true);
-                InvalidateRect(preview.WindowHandle, IntPtr.Zero, true);
-                User32.UpdateWindow(preview.WindowHandle);
+                User32.MoveWindow(hostedWindowHandle, 0, 0, hostPanel.ClientRectangle.Width, hostPanel.ClientRectangle.Height, true);
+                InvalidateRect(hostedWindowHandle, IntPtr.Zero, true);
+                User32.UpdateWindow(hostedWindowHandle);
+            }
+            else
+            {
+                loading.Visibility = Visibility.Visible;
+                previewScroller.Visibility = Visibility.Collapsed;
             }
         }
 
