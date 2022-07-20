@@ -198,10 +198,11 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
             AttachEventHandler(application, "Idle", Application_Idle);
 
-            application.Run(new Window());
+            application.Run(new Window { ShowInTaskbar = false, StartLocation = WindowStartLocation.Manual, Location = new Point(20000, 20000) });
+
+            RunApplication();
 
             //DispatcherLoop.Current.Run();
-            //Dispatcher.UIThread.MainLoop(CancellationToken.None);
         }
 
         static string GetUixmlClassName(string uixml)
@@ -287,6 +288,13 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                 getHandleMethod = typeof(ControlHandler).GetMethod("GetHandle", BindingFlags.Instance | BindingFlags.NonPublic);
 
             return (IntPtr)getHandleMethod.Invoke(control.Handler, new object[0]);
+        }
+
+        static void RunApplication()
+        {
+            var runMethod = typeof(Application).GetMethod("RunWithNoWindow", BindingFlags.Instance | BindingFlags.NonPublic);
+
+            runMethod.Invoke(application, new object[0]);
         }
 
         static Application application;
@@ -376,7 +384,13 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                     using var stream = new MemoryStream(Encoding.Default.GetBytes(xaml.Xaml));
 
                     currentControl = (Control)new UixmlLoader().Load(stream, appAssembly);
-                    currentControl.Show();
+                    
+                    if (currentControl is Window window)
+                    {
+                        window.ShowInTaskbar = false;
+                    }
+
+                    //currentControl.Show();
 
                     var handle = GetHandle(currentControl);
                     s_transport.Send(new PreviewDataMessage() { WindowHandle = (long)handle });

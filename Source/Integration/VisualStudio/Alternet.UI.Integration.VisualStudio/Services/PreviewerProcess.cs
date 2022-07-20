@@ -30,7 +30,6 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         private Process _process;
         private IAlternetUIRemoteTransportConnection _connection;
         private IDisposable _listener;
-        //private WriteableBitmap _bitmap;
         private PreviewData _previewData;
         private ExceptionDetails _error;
 
@@ -210,7 +209,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             var processInfo = new ProcessStartInfo
             {
                 Arguments = args,
-                //CreateNoWindow = true,
+                CreateNoWindow = true,
                 FileName = "dotnet",
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
@@ -407,38 +406,6 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
             switch (message)
             {
-                //case FrameMessage frame:
-                //{
-                //    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-
-                //    if (_bitmap == null || _bitmap.PixelWidth != frame.Width || _bitmap.PixelHeight != frame.Height)
-                //    {
-                //        _bitmap = new WriteableBitmap(
-                //            Math.Max(frame.Width, 1),
-                //            Math.Max(frame.Height, 1),
-                //            96,
-                //            96,
-                //            ToWpf(frame.Format),
-                //            null);
-                //    }
-
-                //    if (frame.Width > 0 && frame.Height > 0)
-                //    {
-                //        _bitmap.WritePixels(
-                //            new Int32Rect(0, 0, _bitmap.PixelWidth, _bitmap.PixelHeight),
-                //            frame.Data,
-                //            frame.Stride,
-                //            0);
-                //    }
-
-                //    FrameReceived?.Invoke(this, EventArgs.Empty);
-
-                //    await SendAsync(new FrameReceivedMessage
-                //    {
-                //        SequenceId = frame.SequenceId
-                //    });
-                //    break;
-                //}
                 case PreviewDataMessage frame:
                     {
                         await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
@@ -535,21 +502,6 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                 a?.Message == b?.Message &&
                 a?.LineNumber == b?.LineNumber &&
                 a?.LinePosition == b?.LinePosition;
-        }
-
-        private System.Windows.Media.PixelFormat ToWpf(Remoting.PixelFormat format)
-        {
-            switch (format)
-            {
-                case Remoting.PixelFormat.Bgra8888:
-                    return PixelFormats.Bgra32;
-                case Remoting.PixelFormat.Rgb565:
-                    return PixelFormats.Bgr565;
-                case Remoting.PixelFormat.Rgba8888:
-                    return PixelFormats.Pbgra32;
-                default:
-                    throw new NotSupportedException("Unsupported pixel format.");
-            }
         }
     }
 }

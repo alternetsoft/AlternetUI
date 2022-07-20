@@ -159,16 +159,15 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 loading.Visibility = Visibility.Collapsed;
                 previewScroller.Visibility = Visibility.Visible;
 
-                //var style = GetWindowLong(preview.WindowHandle, WindowLongIndexFlags.GWL_STYLE);
+                var style = User32.GetWindowLong(preview.WindowHandle, User32.WindowLongIndexFlags.GWL_STYLE);
 
                 hostedWindowHandle = preview.WindowHandle;
-                User32.SetParent(preview.WindowHandle, hostPanel.Handle);
-                //SetWindowLong(appWin, WindowLongIndexFlags.GWL_STYLE, (SetWindowLongFlags)(WindowStyles.WS_VISIBLE/* | WindowStyles.WS_OVERLAPPEDWINDOW*/));
-                //            SetWindowLong(appWin, WindowLongIndexFlags.GWL_STYLE, (SetWindowLongFlags)style);
-                //System.Threading.Thread.Sleep(100);
+                //User32.MoveWindow(hostedWindowHandle, 20000, 20000, hostPanel.ClientRectangle.Width, hostPanel.ClientRectangle.Height, true);
+                //User32.ShowWindow(hostedWindowHandle, User32.WindowShowStyle.SW_SHOWNOACTIVATE);
+                User32.SetParent(hostedWindowHandle, hostPanel.Handle);
+                User32.SetWindowLong(hostedWindowHandle, User32.WindowLongIndexFlags.GWL_STYLE, (User32.SetWindowLongFlags)((int)User32.WindowStyles.WS_VISIBLE | style));
                 User32.MoveWindow(hostedWindowHandle, 0, 0, hostPanel.ClientRectangle.Width, hostPanel.ClientRectangle.Height, true);
-                InvalidateRect(hostedWindowHandle, IntPtr.Zero, true);
-                User32.UpdateWindow(hostedWindowHandle);
+                Window.GetWindow(this).Activate();
             }
             else
             {
@@ -176,55 +175,6 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 previewScroller.Visibility = Visibility.Collapsed;
             }
         }
-
-        [DllImport("user32.dll")]
-        static extern bool InvalidateRect(IntPtr hWnd, IntPtr lpRect, bool bErase);
-
-        //private void Update(BitmapSource bitmap)
-        //{
-        //    preview.Source = bitmap;
-
-        //    if (bitmap != null)
-        //    {
-        //        var scaling = VisualTreeHelper.GetDpi(this).DpiScaleX;
-
-        //        // If an error in the Xaml is present, we get a bitmap with width/height = 1
-        //        // Which isn't ideal, but also messes up the scroll location since it will
-        //        // trigger it to re-center, so only change the size
-        //        // if the process shows we don't have an error
-        //        if (Process.Error == null)
-        //        {
-        //            preview.Width = bitmap.Width / scaling;
-        //            preview.Height = bitmap.Height / scaling;
-        //        }
-
-        //        loading.Visibility = Visibility.Collapsed;
-        //        previewScroller.Visibility = Visibility.Visible;
-
-        //        var fullScaling = scaling * Process.Scaling;
-        //        var hScale = preview.Width * 2 / fullScaling;
-        //        var vScale = preview.Height * 2 / fullScaling;
-        //        previewGrid.Margin = new Thickness(hScale, vScale, hScale, vScale);
-
-        //        // The bitmap size only changes if
-        //        // 1- The design size changes
-        //        // 2- The scaling changes from zoom factor
-        //        // 3- The DPI changes
-        //        // To ensure we don't have the ScrollViewer end up in a weird place,
-        //        // recenter the content if the size changes
-        //        if (preview.Width != _lastBitmapSize.Width ||
-        //            preview.Height != _lastBitmapSize.Height)
-        //        {
-        //            _centerPreviewer = true;
-        //            _lastBitmapSize = new Size(preview.Width, preview.Height);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        loading.Visibility = Visibility.Visible;
-        //        previewScroller.Visibility = Visibility.Collapsed;
-        //    }
-        //}
 
         private void PreviewScroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
