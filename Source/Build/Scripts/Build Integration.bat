@@ -42,7 +42,7 @@ if not !ERRORLEVEL! EQU 0 (
 
 :: VS 2019
 
-"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -prerelease -version [16.0,17.0) -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe > tmpFile 
+"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -version [16.0,17.0) -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe > tmpFile 
 set /p FOUND_MSBUILD_PATH_VS_2019= < tmpFile 
 del tmpFile 
 
@@ -54,7 +54,7 @@ if not !ERRORLEVEL! EQU 0 (
 
 :: VS 2022
 
-"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -prerelease -version [17.0,18.0) -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe > tmpFile 
+"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -version [17.0,18.0) -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe > tmpFile 
 set /p FOUND_MSBUILD_PATH_VS_2022= < tmpFile 
 del tmpFile 
 
