@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xaml;
 using Alternet.UI.Integration.Remoting;
+using Alternet.UI.Integration.VisualStudio.Models;
 using Microsoft.VisualStudio.Shell;
 using Serilog;
 using Serilog.Core;
@@ -29,7 +30,8 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         private Process _process;
         private IAlternetUIRemoteTransportConnection _connection;
         private IDisposable _listener;
-        private WriteableBitmap _bitmap;
+        //private WriteableBitmap _bitmap;
+        private PreviewData _previewData;
         private ExceptionDetails _error;
 
         /// <summary>
@@ -45,10 +47,12 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                 .CreateLogger();
         }
 
-        /// <summary>
-        /// Gets the current preview as a <see cref="BitmapSource"/>.
-        /// </summary>
-        public BitmapSource Bitmap => _bitmap;
+        ///// <summary>
+        ///// Gets the current preview as a <see cref="BitmapSource"/>.
+        ///// </summary>
+        //public BitmapSource Bitmap => _bitmap;
+
+        public PreviewData PreviewData => _previewData;
 
         /// <summary>
         /// Gets the current error state as returned from the previewer process.
@@ -89,7 +93,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         /// <summary>
         /// Raised when a new frame is available in <see cref="Bitmap"/>.
         /// </summary>
-        public event EventHandler FrameReceived;
+        public event EventHandler PreviewDataReceived;
 
         /// <summary>
         /// Raised when the underlying system process exits.
@@ -394,38 +398,52 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
             switch (message)
             {
-                case FrameMessage frame:
-                {
-                    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                //case FrameMessage frame:
+                //{
+                //    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
-                    if (_bitmap == null || _bitmap.PixelWidth != frame.Width || _bitmap.PixelHeight != frame.Height)
+                //    if (_bitmap == null || _bitmap.PixelWidth != frame.Width || _bitmap.PixelHeight != frame.Height)
+                //    {
+                //        _bitmap = new WriteableBitmap(
+                //            Math.Max(frame.Width, 1),
+                //            Math.Max(frame.Height, 1),
+                //            96,
+                //            96,
+                //            ToWpf(frame.Format),
+                //            null);
+                //    }
+
+                //    if (frame.Width > 0 && frame.Height > 0)
+                //    {
+                //        _bitmap.WritePixels(
+                //            new Int32Rect(0, 0, _bitmap.PixelWidth, _bitmap.PixelHeight),
+                //            frame.Data,
+                //            frame.Stride,
+                //            0);
+                //    }
+
+                //    FrameReceived?.Invoke(this, EventArgs.Empty);
+
+                //    await SendAsync(new FrameReceivedMessage
+                //    {
+                //        SequenceId = frame.SequenceId
+                //    });
+                //    break;
+                //}
+                case PreviewDataMessage frame:
                     {
-                        _bitmap = new WriteableBitmap(
-                            Math.Max(frame.Width, 1),
-                            Math.Max(frame.Height, 1),
-                            96,
-                            96,
-                            ToWpf(frame.Format),
-                            null);
+                        await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+                        _previewData = new PreviewData((IntPtr)frame.WindowHandle);
+
+                        PreviewDataReceived?.Invoke(this, EventArgs.Empty);
+
+                        await SendAsync(new PreviewDataReceivedMessage
+                        {
+                            SequenceId = frame.SequenceId
+                        });
+                        break;
                     }
-
-                    if (frame.Width > 0 && frame.Height > 0)
-                    {
-                        _bitmap.WritePixels(
-                            new Int32Rect(0, 0, _bitmap.PixelWidth, _bitmap.PixelHeight),
-                            frame.Data,
-                            frame.Stride,
-                            0);
-                    }
-
-                    FrameReceived?.Invoke(this, EventArgs.Empty);
-
-                    await SendAsync(new FrameReceivedMessage
-                    {
-                        SequenceId = frame.SequenceId
-                    });
-                    break;
-                }
                 case UpdateXamlResultMessage update:
                 {
                     var exception = update.Exception;

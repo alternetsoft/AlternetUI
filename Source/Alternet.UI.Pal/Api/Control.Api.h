@@ -192,6 +192,13 @@ ALTERNET_UI_API c_bool Control_GetIsMouseCaptured_(Control* obj)
         });
 }
 
+ALTERNET_UI_API void* Control_GetHandle_(Control* obj)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetHandle();
+        });
+}
+
 ALTERNET_UI_API void Control_SetMouseCapture_(Control* obj, c_bool value)
 {
     MarshalExceptions<void>([&](){
@@ -315,13 +322,6 @@ ALTERNET_UI_API void Control_Destroy_(Control* obj)
 {
     MarshalExceptions<void>([&](){
             obj->Destroy();
-        });
-}
-
-ALTERNET_UI_API void Control_SaveScreenshot_(Control* obj, const char16_t* fileName)
-{
-    MarshalExceptions<void>([&](){
-            obj->SaveScreenshot(fileName);
         });
 }
 

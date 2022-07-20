@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using Alternet.Drawing;
 using Alternet.UI.Integration.Remoting;
 
 namespace Alternet.UI.Integration.UIXmlHostApp.Remote
@@ -159,8 +160,8 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
         [STAThread]
         public static void Main(string[] cmdline)
         {
-            Test();
-            return;
+            //Test();
+            //return;
 
             args = ParseCommandLineArgs(cmdline);
             var transport = CreateTransport(args);
@@ -195,7 +196,11 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
             EnsureApplicationCreated();
 
-            DispatcherLoop.Current.Run();
+            AttachEventHandler(application, "Idle", Application_Idle);
+
+            application.Run(new Window());
+
+            //DispatcherLoop.Current.Run();
             //Dispatcher.UIThread.MainLoop(CancellationToken.None);
         }
 
@@ -229,11 +234,13 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             UixmlLoader.DisableComponentInitialization = true;
 
             var control = (Window)new UixmlLoader().Load(stream, appAssembly);
-            _c = control;
+            var handle = GetHandle(control);
 
-            AttachEventHandler(application, "Idle", Application_Idle);
+            //_c = control;
 
-            application.Run(control);
+            //AttachEventHandler(application, "Idle", Application_Idle);
+
+            //application.Run(control);
 
         }
 
@@ -253,26 +260,33 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             addMethod.Invoke(obj, new[] { convertedHandler });
         }
 
-        static bool _saved;
         static Control _c;
 
         private static void Application_Idle(object sender, EventArgs e)
         {
-            if (!_saved)
+            lock (actions)
             {
-                SaveScreenshot(_c, @"c:\temp\1.png");
-                _saved = true;
+                while (actions.Count > 0)
+                {
+                    actions.Dequeue()();
+                }
             }
+
+            //if (!_saved)
+            //{
+            //    GetHandle(_c, @"c:\temp\1.png");
+            //    _saved = true;
+            //}
         }
 
-        static MethodInfo saveScreenshotMethod;
+        static MethodInfo getHandleMethod;
 
-        static void SaveScreenshot(Control control, string fileName)
+        static IntPtr GetHandle(Control control)
         {
-            if (saveScreenshotMethod == null)
-                saveScreenshotMethod = typeof(ControlHandler).GetMethod("SaveScreenshot", BindingFlags.Instance | BindingFlags.NonPublic);
+            if (getHandleMethod == null)
+                getHandleMethod = typeof(ControlHandler).GetMethod("GetHandle", BindingFlags.Instance | BindingFlags.NonPublic);
 
-            saveScreenshotMethod.Invoke(control.Handler, new object[] { fileName });
+            return (IntPtr)getHandleMethod.Invoke(control.Handler, new object[0]);
         }
 
         static Application application;
@@ -321,9 +335,19 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
         static Control currentControl;
         private static CommandLineArgs args;
 
-        private static void OnTransportMessage(IAlternetUIRemoteTransportConnection transport, object obj) => DispatcherLoop.Current.BeginInvoke(new Task(() =>
+        static Queue<Action> actions = new Queue<Action>();
+
+        static void BeginInvoke(Action action)
         {
-            if (obj is ClientSupportedPixelFormatsMessage formats)
+            lock (actions)
+                actions.Enqueue(action);
+        }
+
+        private static void OnTransportMessage(IAlternetUIRemoteTransportConnection transport, object obj) =>
+//            DispatcherLoop.Current.BeginInvoke(new Task(() =>
+            BeginInvoke((() =>
+        {
+                if (obj is ClientSupportedPixelFormatsMessage formats)
             {
                 s_supportedPixelFormats = formats;
                 RebuildPreFlight();
@@ -352,32 +376,19 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                     using var stream = new MemoryStream(Encoding.Default.GetBytes(xaml.Xaml));
 
                     currentControl = (Control)new UixmlLoader().Load(stream, appAssembly);
-                }
-                catch
-                {
-                    //Ignore
-                }
+                    currentControl.Show();
 
-                s_transport.Send(new UpdateXamlResultMessage
+                    var handle = GetHandle(currentControl);
+                    s_transport.Send(new PreviewDataMessage() { WindowHandle = (long)handle });
+                }
+                catch(Exception e)
                 {
-                    Error = "Fail",
-                    Exception = new ExceptionDetails(),
-                });
-
-                //s_currentWindow = null;
-                //try
-                //{
-                //    //s_currentWindow = DesignWindowLoader.LoadDesignerWindow(xaml.Xaml, xaml.AssemblyPath, xaml.XamlFileProjectPath);
-                //    //s_transport.Send(new UpdateXamlResultMessage(){Handle = s_currentWindow.PlatformImpl?.Handle?.Handle.ToString()});
-                //}
-                //catch (Exception e)
-                //{
-                //    s_transport.Send(new UpdateXamlResultMessage
-                //    {
-                //        Error = e.ToString(),
-                //        Exception = new ExceptionDetails(e),
-                //    });
-                //}
+                    s_transport.Send(new UpdateXamlResultMessage
+                    {
+                        Error = "Fail",
+                        Exception = new ExceptionDetails(e),
+                    });
+                }
             }
         }));
     }

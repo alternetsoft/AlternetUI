@@ -266,6 +266,18 @@ namespace Alternet.UI.Native
             
         }
         
+        public System.IntPtr Handle
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetHandle_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
         public void SetMouseCapture(bool value)
         {
             CheckDisposed();
@@ -390,12 +402,6 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.Control_Destroy_(NativePointer);
-        }
-        
-        public void SaveScreenshot(string fileName)
-        {
-            CheckDisposed();
-            NativeApi.Control_SaveScreenshot_(NativePointer, fileName);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -561,6 +567,9 @@ namespace Alternet.UI.Native
             public static extern bool Control_GetIsMouseCaptured_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Control_GetHandle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetMouseCapture_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -613,9 +622,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_Destroy_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SaveScreenshot_(IntPtr obj, string fileName);
             
         }
     }

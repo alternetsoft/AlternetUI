@@ -15,6 +15,9 @@ using UIModifierKeys = Alternet.UI.Integration.Remoting.ModifierKeys;
 using WpfMouseButton = System.Windows.Input.MouseButton;
 using WpfModifierKeys = System.Windows.Input.ModifierKeys;
 using Alternet.UI.Integration.Remoting;
+using Alternet.UI.Integration.VisualStudio.Models;
+using PInvoke;
+using System.Runtime.InteropServices;
 
 #pragma warning disable VSTHRD100, VSTHRD010, VSTHRD110
 
@@ -24,16 +27,28 @@ namespace Alternet.UI.Integration.VisualStudio.Views
     {
         private PreviewerProcess _process;
         private bool _centerPreviewer;
-        private Size _lastBitmapSize;
+        //private Size _lastBitmapSize;
+
+        private System.Windows.Forms.Panel hostPanel;
 
         public AlternetUIPreviewer()
         {
             InitializeComponent();
+
+            InitializePreviewHost();
+
             Update(null);
 
             Loaded += AlternetUIPreviewer_Loaded;
 
             previewScroller.ScrollChanged += PreviewScroller_ScrollChanged;
+        }
+
+        private void InitializePreviewHost()
+        {
+            hostPanel = new System.Windows.Forms.Panel();
+            windowsFormsHost.Child = hostPanel;
+            hostPanel.Size = new System.Drawing.Size(300, 300);
         }
 
         private void AlternetUIPreviewer_Loaded(object sender, RoutedEventArgs e)
@@ -52,7 +67,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 if (_process != null)
                 {
                     _process.ErrorChanged -= Update;
-                    _process.FrameReceived -= Update;
+                    _process.PreviewDataReceived -= Update;
                 }
 
                 _process = value;
@@ -60,10 +75,10 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 if (_process != null)
                 {
                     _process.ErrorChanged += Update;
-                    _process.FrameReceived += Update;
+                    _process.PreviewDataReceived += Update;
                 }
 
-                Update(_process?.Bitmap);
+                Update(_process?.PreviewData);
             }
         }
 
@@ -73,7 +88,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             Update(null);
         }
 
-        protected override void OnDpiChanged(DpiScale oldDpi, DpiScale newDpi) => Update(_process?.Bitmap);
+        protected override void OnDpiChanged(DpiScale oldDpi, DpiScale newDpi) => Update(_process?.PreviewData);
 
         protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
         {
@@ -84,28 +99,28 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
                 e.Handled = true;
             }
-            else if (Keyboard.Modifiers == WpfModifierKeys.Control)
-            {
-                var designer = FindParent<AlternetUIDesigner>(this);
+            //else if (Keyboard.Modifiers == WpfModifierKeys.Control)
+            //{
+            //    var designer = FindParent<AlternetUIDesigner>(this);
 
-                if (designer.TryProcessZoomLevelValue(out var currentZoomLevel))
-                {
-                    currentZoomLevel += e.Delta > 0 ? 0.25 : -0.25;
+            //    if (designer.TryProcessZoomLevelValue(out var currentZoomLevel))
+            //    {
+            //        currentZoomLevel += e.Delta > 0 ? 0.25 : -0.25;
 
-                    if (currentZoomLevel < 0.125)
-                    {
-                        currentZoomLevel = 0.125;
-                    }
-                    else if (currentZoomLevel > 8)
-                    {
-                        currentZoomLevel = 8;
-                    }
+            //        if (currentZoomLevel < 0.125)
+            //        {
+            //            currentZoomLevel = 0.125;
+            //        }
+            //        else if (currentZoomLevel > 8)
+            //        {
+            //            currentZoomLevel = 8;
+            //        }
 
-                    designer.ZoomLevel = AlternetUIDesigner.FmtZoomLevel(currentZoomLevel * 100);
+            //        designer.ZoomLevel = AlternetUIDesigner.FmtZoomLevel(currentZoomLevel * 100);
 
-                    e.Handled = true;
-                }
-            }
+            //        e.Handled = true;
+            //    }
+            //}
 
             base.OnPreviewMouseWheel(e);
         }
@@ -122,7 +137,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
             try
             {
-                Update(_process.Bitmap);
+                Update(_process.PreviewData);
             }
             catch (Exception ex)
             {
@@ -130,51 +145,70 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             }
         }
 
-        private void Update(BitmapSource bitmap)
+        private void Update(PreviewData preview)
         {
-            preview.Source = bitmap;
-
-            if (bitmap != null)
+            if (preview != null && preview.WindowHandle != IntPtr.Zero)
             {
-                var scaling = VisualTreeHelper.GetDpi(this).DpiScaleX;
+                //var style = GetWindowLong(preview.WindowHandle, WindowLongIndexFlags.GWL_STYLE);
 
-                // If an error in the Xaml is present, we get a bitmap with width/height = 1
-                // Which isn't ideal, but also messes up the scroll location since it will
-                // trigger it to re-center, so only change the size
-                // if the process shows we don't have an error
-                if (Process.Error == null)
-                {
-                    preview.Width = bitmap.Width / scaling;
-                    preview.Height = bitmap.Height / scaling;
-                }
-
-                loading.Visibility = Visibility.Collapsed;
-                previewScroller.Visibility = Visibility.Visible;
-
-                var fullScaling = scaling * Process.Scaling;
-                var hScale = preview.Width * 2 / fullScaling;
-                var vScale = preview.Height * 2 / fullScaling;
-                previewGrid.Margin = new Thickness(hScale, vScale, hScale, vScale);
-
-                // The bitmap size only changes if
-                // 1- The design size changes
-                // 2- The scaling changes from zoom factor
-                // 3- The DPI changes
-                // To ensure we don't have the ScrollViewer end up in a weird place,
-                // recenter the content if the size changes
-                if (preview.Width != _lastBitmapSize.Width ||
-                    preview.Height != _lastBitmapSize.Height)
-                {
-                    _centerPreviewer = true;
-                    _lastBitmapSize = new Size(preview.Width, preview.Height);
-                }
-            }
-            else
-            {
-                loading.Visibility = Visibility.Visible;
-                previewScroller.Visibility = Visibility.Collapsed;
+                User32.SetParent(preview.WindowHandle, hostPanel.Handle);
+                //SetWindowLong(appWin, WindowLongIndexFlags.GWL_STYLE, (SetWindowLongFlags)(WindowStyles.WS_VISIBLE/* | WindowStyles.WS_OVERLAPPEDWINDOW*/));
+                //            SetWindowLong(appWin, WindowLongIndexFlags.GWL_STYLE, (SetWindowLongFlags)style);
+                //System.Threading.Thread.Sleep(100);
+                User32.MoveWindow(preview.WindowHandle, 0, 0, hostPanel.ClientRectangle.Width, hostPanel.ClientRectangle.Height, true);
+                InvalidateRect(preview.WindowHandle, IntPtr.Zero, true);
+                User32.UpdateWindow(preview.WindowHandle);
             }
         }
+
+        [DllImport("user32.dll")]
+        static extern bool InvalidateRect(IntPtr hWnd, IntPtr lpRect, bool bErase);
+
+        //private void Update(BitmapSource bitmap)
+        //{
+        //    preview.Source = bitmap;
+
+        //    if (bitmap != null)
+        //    {
+        //        var scaling = VisualTreeHelper.GetDpi(this).DpiScaleX;
+
+        //        // If an error in the Xaml is present, we get a bitmap with width/height = 1
+        //        // Which isn't ideal, but also messes up the scroll location since it will
+        //        // trigger it to re-center, so only change the size
+        //        // if the process shows we don't have an error
+        //        if (Process.Error == null)
+        //        {
+        //            preview.Width = bitmap.Width / scaling;
+        //            preview.Height = bitmap.Height / scaling;
+        //        }
+
+        //        loading.Visibility = Visibility.Collapsed;
+        //        previewScroller.Visibility = Visibility.Visible;
+
+        //        var fullScaling = scaling * Process.Scaling;
+        //        var hScale = preview.Width * 2 / fullScaling;
+        //        var vScale = preview.Height * 2 / fullScaling;
+        //        previewGrid.Margin = new Thickness(hScale, vScale, hScale, vScale);
+
+        //        // The bitmap size only changes if
+        //        // 1- The design size changes
+        //        // 2- The scaling changes from zoom factor
+        //        // 3- The DPI changes
+        //        // To ensure we don't have the ScrollViewer end up in a weird place,
+        //        // recenter the content if the size changes
+        //        if (preview.Width != _lastBitmapSize.Width ||
+        //            preview.Height != _lastBitmapSize.Height)
+        //        {
+        //            _centerPreviewer = true;
+        //            _lastBitmapSize = new Size(preview.Width, preview.Height);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        loading.Visibility = Visibility.Visible;
+        //        previewScroller.Visibility = Visibility.Collapsed;
+        //    }
+        //}
 
         private void PreviewScroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
@@ -188,46 +222,47 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             }
         }
 
-        private void Preview_MouseMove(object sender, MouseEventArgs e)
-        {
-            var p = e.GetPosition(preview);
-            var scaling = GetScaling();
+        //private void Preview_MouseMove(object sender, MouseEventArgs e)
+        //{
+        //    var p = e.GetPosition(preview);
+        //    var scaling = GetScaling();
 
-            Process?.SendInputAsync(new PointerMovedEventMessage
-            {
-                X = p.X / scaling,
-                Y = p.Y / scaling,
-                Modifiers = GetModifiers(e),
-            });
-        }
+        //    Process?.SendInputAsync(new PointerMovedEventMessage
+        //    {
+        //        X = p.X / scaling,
+        //        Y = p.Y / scaling,
+        //        Modifiers = GetModifiers(e),
+        //    });
+        //}
 
-        private void Preview_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            var p = e.GetPosition(preview);
-            var scaling = GetScaling();
+        //private void Preview_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    var p = e.GetPosition(preview);
+        //    var scaling = GetScaling();
 
-            Process?.SendInputAsync(new PointerPressedEventMessage
-            {
-                X = p.X / scaling,
-                Y = p.Y / scaling,
-                Button = GetButton(e.ChangedButton),
-                Modifiers = GetModifiers(e),
-            });
-        }
+        //    Process?.SendInputAsync(new PointerPressedEventMessage
+        //    {
+        //        X = p.X / scaling,
+        //        Y = p.Y / scaling,
+        //        Button = GetButton(e.ChangedButton),
+        //        Modifiers = GetModifiers(e),
+        //    });
+        //}
 
-        private void Preview_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            var p = e.GetPosition(preview);
-            var scaling = GetScaling();
+        //private void Preview_MouseUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    var p = e.GetPosition(preview);
+        //    var scaling = GetScaling();
 
-            Process?.SendInputAsync(new PointerReleasedEventMessage
-            {
-                X = p.X / scaling,
-                Y = p.Y / scaling,
-                Button = GetButton(e.ChangedButton),
-                Modifiers = GetModifiers(e),
-            });
-        }
+        //    Process?.SendInputAsync(new PointerReleasedEventMessage
+        //    {
+        //        X = p.X / scaling,
+        //        Y = p.Y / scaling,
+        //        Button = GetButton(e.ChangedButton),
+        //        Modifiers = GetModifiers(e),
+        //    });
+        //}
+
         private static T FindParent<T>(DependencyObject child) where T : DependencyObject
         {
             //get parent item

@@ -68,21 +68,21 @@ namespace Alternet.UI.Integration.VisualStudio.Views
         public static readonly DependencyProperty TargetsProperty =
             TargetsPropertyKey.DependencyProperty;
 
-        public static readonly DependencyProperty ZoomLevelProperty =
-            DependencyProperty.Register(
-                nameof(ZoomLevel),
-                typeof(string),
-                typeof(AlternetUIDesigner),
-                new PropertyMetadata("100%", HandleZoomLevelChanged));
+        //public static readonly DependencyProperty ZoomLevelProperty =
+        //    DependencyProperty.Register(
+        //        nameof(ZoomLevel),
+        //        typeof(string),
+        //        typeof(AlternetUIDesigner),
+        //        new PropertyMetadata("100%", HandleZoomLevelChanged));
 
-        public static string FmtZoomLevel(double v) => $"{v.ToString(CultureInfo.InvariantCulture)}%";
+        //public static string FmtZoomLevel(double v) => $"{v.ToString(CultureInfo.InvariantCulture)}%";
 
-        public static string[] ZoomLevels { get; } = new string[]
-        {
-            FmtZoomLevel(800), FmtZoomLevel(400), FmtZoomLevel(200), FmtZoomLevel(150), FmtZoomLevel(100),
-            FmtZoomLevel(66.67), FmtZoomLevel(50), FmtZoomLevel(33.33), FmtZoomLevel(25), FmtZoomLevel(12.5),
-            "Fit All"
-        };
+        //public static string[] ZoomLevels { get; } = new string[]
+        //{
+        //    FmtZoomLevel(800), FmtZoomLevel(400), FmtZoomLevel(200), FmtZoomLevel(150), FmtZoomLevel(100),
+        //    FmtZoomLevel(66.67), FmtZoomLevel(50), FmtZoomLevel(33.33), FmtZoomLevel(25), FmtZoomLevel(12.5),
+        //    "Fit All"
+        //};
 
 
         private static readonly GridLength ZeroStar = new GridLength(0, GridUnitType.Star);
@@ -111,7 +111,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             _throttle = new Throttle<string>(TimeSpan.FromMilliseconds(300), UpdateXaml);
             Process = new PreviewerProcess();
             Process.ErrorChanged += ErrorChanged;
-            Process.FrameReceived += FrameReceived;
+            Process.PreviewDataReceived += PreviewDataReceived;
             Process.ProcessExited += ProcessExited;
             previewer.Process = Process;
             pausedMessage.Visibility = Visibility.Collapsed;
@@ -194,14 +194,14 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             set => SetValue(ViewProperty, value);
         }
 
-        /// <summary>
-        /// Gets or sets the zoom level as a string.
-        /// </summary>
-        public string ZoomLevel
-        {
-            get => (string)GetValue(ZoomLevelProperty);
-            set => SetValue(ZoomLevelProperty, value);
-        }
+        ///// <summary>
+        ///// Gets or sets the zoom level as a string.
+        ///// </summary>
+        //public string ZoomLevel
+        //{
+        //    get => (string)GetValue(ZoomLevelProperty);
+        //    set => SetValue(ZoomLevelProperty, value);
+        //}
 
         /// <summary>
         /// Starts the designer.
@@ -264,7 +264,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 _editor.Close();
             }
 
-            Process.FrameReceived -= FrameReceived;
+            Process.PreviewDataReceived -= PreviewDataReceived;
 
             _throttle.Dispose();
             previewer.Dispose();
@@ -410,38 +410,38 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             }
         }
 
-        public bool TryProcessZoomLevelValue(out double scaling)
-        {
-            scaling = 1;
+        //public bool TryProcessZoomLevelValue(out double scaling)
+        //{
+        //    scaling = 1;
 
-            if (string.IsNullOrEmpty(ZoomLevel))
-                return false;
+        //    if (string.IsNullOrEmpty(ZoomLevel))
+        //        return false;
 
-            if (ZoomLevel.Equals("Fit All", StringComparison.OrdinalIgnoreCase))
-            {
-                if (Process.IsReady && Process.Bitmap != null)
-                {
-                    double x = previewer.ActualWidth / (Process.Bitmap.Width / Process.Scaling);
-                    double y = previewer.ActualHeight / (Process.Bitmap.Height / Process.Scaling);
+        //    if (ZoomLevel.Equals("Fit All", StringComparison.OrdinalIgnoreCase))
+        //    {
+        //        if (Process.IsReady && Process.Bitmap != null)
+        //        {
+        //            double x = previewer.ActualWidth / (Process.Bitmap.Width / Process.Scaling);
+        //            double y = previewer.ActualHeight / (Process.Bitmap.Height / Process.Scaling);
 
-                    ZoomLevel = string.Format(CultureInfo.InvariantCulture, "{0}%", Math.Round(Math.Min(x, y), 2, MidpointRounding.ToEven) * 100);
-                }
-                else
-                {
-                    ZoomLevel = "100%";
-                }
+        //            ZoomLevel = string.Format(CultureInfo.InvariantCulture, "{0}%", Math.Round(Math.Min(x, y), 2, MidpointRounding.ToEven) * 100);
+        //        }
+        //        else
+        //        {
+        //            ZoomLevel = "100%";
+        //        }
 
-                return false;
-            }
-            else if (double.TryParse(ZoomLevel.TrimEnd('%'), NumberStyles.Number, CultureInfo.InvariantCulture, out double zoomPercent)
-                     && zoomPercent > 0 && zoomPercent <= 1000)
-            {
-                scaling = zoomPercent / 100;
-                return true;
-            }
+        //        return false;
+        //    }
+        //    else if (double.TryParse(ZoomLevel.TrimEnd('%'), NumberStyles.Number, CultureInfo.InvariantCulture, out double zoomPercent)
+        //             && zoomPercent > 0 && zoomPercent <= 1000)
+        //    {
+        //        scaling = zoomPercent / 100;
+        //        return true;
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
 
         private async Task StartProcessAsync()
         {
@@ -576,7 +576,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
         private async void ErrorChanged(object sender, EventArgs e)
         {
-            if (Process.Bitmap == null || Process.Error != null)
+            if (Process.PreviewData == null || Process.Error != null)
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
@@ -590,9 +590,9 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             }
         }
 
-        private async void FrameReceived(object sender, EventArgs e)
+        private async void PreviewDataReceived(object sender, EventArgs e)
         {
-            if (Process.Bitmap != null && Process.Error == null)
+            if (Process.PreviewData != null && Process.Error == null)
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
@@ -754,13 +754,13 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             }
         }
 
-        private static void HandleZoomLevelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is AlternetUIDesigner designer && designer.TryProcessZoomLevelValue(out double scaling))
-            {
-                designer.UpdateScaling(scaling);
-            }
-        }
+        //private static void HandleZoomLevelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    if (d is AlternetUIDesigner designer && designer.TryProcessZoomLevelValue(out double scaling))
+        //    {
+        //        designer.UpdateScaling(scaling);
+        //    }
+        //}
 
         private static async Task<string> ReadAllTextAsync(string fileName)
         {

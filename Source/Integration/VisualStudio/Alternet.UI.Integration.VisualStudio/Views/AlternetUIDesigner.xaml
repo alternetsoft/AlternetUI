@@ -63,10 +63,10 @@
                       local:VsTheme.UseVsTheme="True" >
             </ComboBox>
 
-            <ComboBox DockPanel.Dock="Right"
+            <!--<ComboBox DockPanel.Dock="Right"
                       Text="{Binding ZoomLevel, ElementName=root, Mode=TwoWay}" IsEditable="True" 
                       ItemsSource="{x:Static local:AlternetUIDesigner.ZoomLevels}"
-                      Padding="2" Margin="0 0 10 0" local:VsTheme.UseVsTheme="True"/>
+                      Padding="2" Margin="0 0 10 0" local:VsTheme.UseVsTheme="True"/>-->
 
             <Grid DockPanel.Dock="Left" Name="errorIndicator">
                 <Grid.ToolTip>

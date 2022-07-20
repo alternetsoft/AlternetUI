@@ -87,12 +87,12 @@ namespace Alternet.UI
             }
         }
 
-        internal void SaveScreenshot(string fileName)
+        internal IntPtr GetHandle()
         {
             if (NativeControl == null)
                 throw new InvalidOperationException();
 
-            NativeControl.SaveScreenshot(fileName);
+            return NativeControl.Handle;
         }
 
         /// <summary>

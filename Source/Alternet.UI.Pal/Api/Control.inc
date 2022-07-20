@@ -58,6 +58,9 @@ void SetFont(Font* value);
 
 bool GetIsMouseCaptured();
 
+
+void* GetHandle();
+
 void SetMouseCapture(bool value);
 void AddChild(Control* control);
 void RemoveChild(Control* control);
@@ -76,7 +79,6 @@ bool Focus();
 void BeginInit();
 void EndInit();
 void Destroy();
-void SaveScreenshot(const string& fileName);
 public:
 enum class ControlEvent
 {

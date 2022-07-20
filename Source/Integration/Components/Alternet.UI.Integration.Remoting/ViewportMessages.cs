@@ -1,4 +1,6 @@
-﻿namespace Alternet.UI.Integration.Remoting
+﻿using System;
+
+namespace Alternet.UI.Integration.Remoting
 {
     public enum PixelFormat
     {
@@ -44,35 +46,16 @@
         public double DpiY { get; set; }
     }
 
-    [AlternetUIRemoteMessageGuid("5A7177B7-6076-4BFD-A68E-E5C174175F45")]
-    public class FrameReceivedMessage
-    {
-        public long SequenceId { get; set; }
-    }
-
-
-    [AlternetUIRemoteMessageGuid("864733E0-3694-4EB3-BF4F-16E1F7F8CEE3")]
-    public class FrameMessage
-    {
-        public long SequenceId { get; set; }
-        public PixelFormat Format { get; set; }
-        public byte[] Data { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public int Stride { get; set; }
-    }
-
     [AlternetUIRemoteMessageGuid("BBE3ABFB-E40C-432F-A9F7-7151796589B5")]
-    public class FrameFileMessage
+    public class PreviewDataMessage
     {
         public long SequenceId { get; set; }
-        public string FileName { get; set; }
+        public long WindowHandle { get; set; }
     }
 
     [AlternetUIRemoteMessageGuid("ACA6224C-7888-4E14-9F55-759C49870EDC")]
-    public class FrameFileReceivedMessage
+    public class PreviewDataReceivedMessage
     {
         public long SequenceId { get; set; }
-        public string FileName { get; set; }
     }
 }
