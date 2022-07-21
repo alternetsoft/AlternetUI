@@ -310,7 +310,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         /// </summary>
         /// <param name="xaml">The XAML.</param>
         /// <returns>A task tracking the operation.</returns>
-        public async Task UpdateXamlAsync(string xaml, IntPtr parentOverrideHandle)
+        public async Task UpdateXamlAsync(string xaml)
         {
             if (_process == null)
             {
@@ -328,7 +328,6 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             {
                 AssemblyPath = _assemblyPath,
                 Xaml = xaml,
-                ParentWindowHandle = (long)parentOverrideHandle
             });
         }
 

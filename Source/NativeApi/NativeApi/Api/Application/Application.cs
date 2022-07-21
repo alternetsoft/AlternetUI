@@ -19,8 +19,6 @@ namespace NativeApi.Api
 
         public bool InUixmlPreviewerMode { get; set; }
 
-        public IntPtr ParentOverrideHandle { get => throw new Exception(); set => throw new Exception(); }
-
         public void WakeUpIdle() => throw new Exception();
     }
 }

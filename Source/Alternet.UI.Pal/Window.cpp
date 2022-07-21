@@ -4,11 +4,8 @@
 
 namespace Alternet::UI
 {
-    Frame::Frame(Window* window, long style, void* parentOverrideHandle) :
-        _parentOverrideHandle(parentOverrideHandle),
-        wxFrame(/*NULL, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, style*/), _window(window)
+    Frame::Frame(Window* window, long style) : wxFrame(NULL, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, style), _window(window)
     {
-        Create(NULL, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, style);
         _allFrames.push_back(this);
     }
 
@@ -27,14 +24,6 @@ namespace Alternet::UI
             else
                 _allFrames[0]->SetFocus();
         }
-    }
-
-    WXHWND Frame::MSWGetParent() const
-    {
-        if (_parentOverrideHandle != nullptr)
-            return (WXHWND)_parentOverrideHandle;
-
-        return wxFrame::MSWGetParent();
     }
 
     /*static*/ std::vector<Frame*> Frame::GetAllFrames()
@@ -460,7 +449,7 @@ namespace Alternet::UI
     wxWindow* Window::CreateWxWindowCore(wxWindow* parent)
     {
         auto style = GetWindowStyle();
-        _frame = new Frame(this, style, Application::GetCurrent()->GetParentOverrideHandle());
+        _frame = new Frame(this, style);
 
         ApplyIcon(_frame);
         UpdateAcceleratorTable();

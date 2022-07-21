@@ -14,10 +14,6 @@ Mouse* GetMouse();
 bool GetInUixmlPreviewerMode();
 void SetInUixmlPreviewerMode(bool value);
 
-
-void* GetParentOverrideHandle();
-void SetParentOverrideHandle(void* value);
-
 void Run(Window* window);
 void WakeUpIdle();
 public:

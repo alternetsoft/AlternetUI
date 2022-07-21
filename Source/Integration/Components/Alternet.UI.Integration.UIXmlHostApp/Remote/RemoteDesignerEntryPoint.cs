@@ -384,15 +384,12 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                     var appAssembly = Assembly.LoadFrom(xaml.AssemblyPath);
                     using var stream = new MemoryStream(Encoding.Default.GetBytes(xaml.Xaml));
 
-                    SetParentOverrideHandle((IntPtr)xaml.ParentWindowHandle);
                     currentControl = (Control)new UixmlLoader().Load(stream, appAssembly);
                     
                     if (currentControl is Window window)
                     {
                         window.ShowInTaskbar = false;
                     }
-
-                    //currentControl.Show();
 
                     var handle = GetHandle(currentControl);
                     s_transport.Send(new PreviewDataMessage() { WindowHandle = (long)handle });

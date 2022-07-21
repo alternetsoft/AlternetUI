@@ -144,16 +144,6 @@ namespace Alternet::UI
         _mouse = nullptr;
     }
 
-    void* Application::GetParentOverrideHandle()
-    {
-        return _parentOverrideHandle;
-    }
-
-    void Application::SetParentOverrideHandle(void* value)
-    {
-        _parentOverrideHandle = value;
-    }
-
     void Application::WakeUpIdle()
     {
         _app->WakeUpIdle();

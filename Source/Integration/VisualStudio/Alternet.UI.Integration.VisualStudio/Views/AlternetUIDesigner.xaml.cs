@@ -465,7 +465,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                     {
                         await Process.SetScalingAsync(VisualTreeHelper.GetDpi(this).DpiScaleX * _scaling);
                         await Process.StartAsync(assemblyPath, executablePath, hostAppPath);
-                        await Process.UpdateXamlAsync(await ReadAllTextAsync(_xamlPath), previewer.HostPanelHandle);
+                        await Process.UpdateXamlAsync(await ReadAllTextAsync(_xamlPath));
                     }
                 }
                 catch (ApplicationException ex)
@@ -686,7 +686,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
         {
             if (Process.IsReady)
             {
-                Process.UpdateXamlAsync(xaml, previewer.HostPanelHandle).FireAndForget();
+                Process.UpdateXamlAsync(xaml).FireAndForget();
             }
         }
 

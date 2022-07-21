@@ -132,8 +132,6 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             return result > 0 ? result : 1;
         }
 
-        public IntPtr HostPanelHandle => hostPanel?.Handle ?? IntPtr.Zero;
-
         private async void Update(object sender, EventArgs e)
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
