@@ -66,6 +66,23 @@ namespace Alternet.UI.Native
             
         }
         
+        public bool InUixmlPreviewerMode
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Application_GetInUixmlPreviewerMode_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Application_SetInUixmlPreviewerMode_(NativePointer, value);
+            }
+        }
+        
         public void Run(Window window)
         {
             CheckDisposed();
@@ -134,6 +151,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Application_GetMouse_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Application_GetInUixmlPreviewerMode_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetInUixmlPreviewerMode_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_Run_(IntPtr obj, IntPtr window);

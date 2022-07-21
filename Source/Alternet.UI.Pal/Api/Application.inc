@@ -10,6 +10,10 @@ Keyboard* GetKeyboard();
 
 Mouse* GetMouse();
 
+
+bool GetInUixmlPreviewerMode();
+void SetInUixmlPreviewerMode(bool value);
+
 void Run(Window* window);
 public:
 enum class ApplicationEvent

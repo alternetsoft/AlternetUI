@@ -47,7 +47,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             return new Exception("APPEXIT");
         }
 
-        static void Log(string message) => Console.WriteLine(message);
+        static void Log(string message) => File.AppendAllText(@"c:\temp\UIXMLPreviewerProcess.log", message + "\n");
 
         static Exception PrintUsage()
         {
@@ -126,36 +126,6 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             PrintUsage();
             return null;
         }
-        
-        //interface IAppInitializer
-        //{
-        //   IAlternetUIRemoteTransportConnection ConfigureApp(IAlternetUIRemoteTransportConnection transport, CommandLineArgs args, object obj);
-        //}
-
-        //class AppInitializer<T> : IAppInitializer where T : AppBuilderBase<T>, new()
-        //{
-        //    public IAlternetUIRemoteTransportConnection ConfigureApp(IAlternetUIRemoteTransportConnection transport,
-        //        CommandLineArgs args, object obj)
-        //    {
-        //        var builder = (AppBuilderBase<T>)obj;
-        //        if (args.Method == Methods.AlternetUIRemote)
-        //            builder.UseWindowingSubsystem(() => PreviewerWindowingPlatform.Initialize(transport));
-        //        if (args.Method == Methods.Html)
-        //        {
-        //            transport = new HtmlWebSocketTransport(transport,
-        //                args.HtmlMethodListenUri ?? new Uri("http://localhost:5000"));
-        //            builder.UseWindowingSubsystem(() =>
-        //                PreviewerWindowingPlatform.Initialize(transport));
-        //        }
-
-        //        if (args.Method == Methods.Win32)
-        //            builder.UseWindowingSubsystem("AlternetUI.Win32");
-        //        builder.SetupWithoutStarting();
-        //        return transport;
-        //    }
-        //}
-
-        private const string BuilderMethodName = "BuildAlternetUIApp";
 
         [STAThread]
         public static void Main(string[] cmdline)
@@ -163,24 +133,22 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             //Test();
             //return;
 
+            //MessageBox.Show("Attach.");
+
+#if NETCOREAPP
+            System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += AssemblyLoadContext_Resolving;
+#endif
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
+            EnsureApplicationCreated();
+
+            UixmlLoader.DisableComponentInitialization = true;
+            SetUixmlPreviewerMode();
+
             args = ParseCommandLineArgs(cmdline);
             var transport = CreateTransport(args);
             if (transport is ITransportWithEnforcedMethod enforcedMethod)
                 args.Method = enforcedMethod.PreviewerMethod;
-            //var asm = Assembly.LoadFile(System.IO.Path.GetFullPath(args.AppPath));
-            //var entryPoint = asm.EntryPoint;
-            //if (entryPoint == null)
-            //    throw Die($"Assembly {args.AppPath} doesn't have an entry point");
-            //var builderMethod = entryPoint.DeclaringType.GetMethod(BuilderMethodName,
-            //    BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic, null, Array.Empty<Type>(), null);
-            //if (builderMethod == null)
-            //    throw Die($"{entryPoint.DeclaringType.FullName} doesn't have a method named {BuilderMethodName}");
-            //Design.IsDesignMode = true;
-            //Log($"Obtaining AppBuilder instance from {builderMethod.DeclaringType.FullName}.{builderMethod.Name}");
-            //var appBuilder = builderMethod.Invoke(null, null);
-            //Log($"Initializing application in design mode");
-            //var initializer =(IAppInitializer)Activator.CreateInstance(typeof(AppInitializer<>).MakeGenericType(appBuilder.GetType()));
-            //transport = initializer.ConfigureApp(transport, args, appBuilder);
             s_transport = transport;
             transport.OnMessage += OnTransportMessage;
             transport.OnException += (t, e) => Die(e.ToString());
@@ -188,21 +156,18 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             Log("Sending StartDesignerSessionMessage");
             transport.Send(new StartDesignerSessionMessage {SessionId = args.SessionId});
 
-#if NETCOREAPP
-            System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += AssemblyLoadContext_Resolving;
-#endif
-
-            UixmlLoader.DisableComponentInitialization = true;
-
-            EnsureApplicationCreated();
-
             AttachEventHandler(application, "Idle", Application_Idle);
 
             application.Run(new Window { ShowInTaskbar = false, StartLocation = WindowStartLocation.Manual, Location = new Point(20000, 20000) });
 
-            RunApplication();
+            //RunApplication();
 
             //DispatcherLoop.Current.Run();
+        }
+
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Log(e.ExceptionObject.ToString());
         }
 
         static string GetUixmlClassName(string uixml)
@@ -295,6 +260,12 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             var runMethod = typeof(Application).GetMethod("RunWithNoWindow", BindingFlags.Instance | BindingFlags.NonPublic);
 
             runMethod.Invoke(application, new object[0]);
+        }
+
+        static void SetUixmlPreviewerMode()
+        {
+            var property = typeof(Application).GetProperty("InUixmlPreviewerMode", BindingFlags.Instance | BindingFlags.NonPublic);
+            property.SetValue(application, true);
         }
 
         static Application application;

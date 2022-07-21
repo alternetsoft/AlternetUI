@@ -1,4 +1,5 @@
 #include "Control.h"
+#include "Application.h"
 
 namespace Alternet::UI
 {
@@ -48,6 +49,9 @@ namespace Alternet::UI
 
     void Control::OnDestroy(wxWindowDestroyEvent& event)
     {
+        if (Application::GetCurrent()->GetInUixmlPreviewerMode())
+            return; // HACK. This gets invoked by wxWidgets on a dead this pointer.
+
         if (!_flags.IsSet(ControlFlags::RecreatingWxWindow))
             _wxWindow = nullptr;
 

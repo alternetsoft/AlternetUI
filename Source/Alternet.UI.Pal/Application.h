@@ -53,6 +53,8 @@ namespace Alternet::UI
         Keyboard* _keyboard = nullptr;
         Mouse* _mouse = nullptr;
 
+        bool _inUixmlPreviewerMode = false;
+
         inline static Application* s_current = nullptr;
 
 #ifdef __WXMSW__

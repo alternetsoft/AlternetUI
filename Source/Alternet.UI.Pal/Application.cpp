@@ -144,6 +144,16 @@ namespace Alternet::UI
         _mouse = nullptr;
     }
 
+    bool Application::GetInUixmlPreviewerMode()
+    {
+        return _inUixmlPreviewerMode;
+    }
+
+    void Application::SetInUixmlPreviewerMode(bool value)
+    {
+        _inUixmlPreviewerMode = value;
+    }
+
     string Application::GetName()
     {
         return _name;

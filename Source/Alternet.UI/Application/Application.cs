@@ -62,6 +62,12 @@ namespace Alternet.UI
             }
         }
 
+        internal bool InUixmlPreviewerMode
+        {
+            get => nativeApplication.InUixmlPreviewerMode;
+            set => nativeApplication.InUixmlPreviewerMode = value;
+        }
+
         /// <summary>
         /// Gets the instantiated windows in an application.
         /// </summary>

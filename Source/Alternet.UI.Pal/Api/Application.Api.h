@@ -46,6 +46,20 @@ ALTERNET_UI_API Mouse* Application_GetMouse_(Application* obj)
         });
 }
 
+ALTERNET_UI_API c_bool Application_GetInUixmlPreviewerMode_(Application* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetInUixmlPreviewerMode();
+        });
+}
+
+ALTERNET_UI_API void Application_SetInUixmlPreviewerMode_(Application* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetInUixmlPreviewerMode(value);
+        });
+}
+
 ALTERNET_UI_API void Application_Run_(Application* obj, Window* window)
 {
     MarshalExceptions<void>([&](){

@@ -701,11 +701,13 @@ namespace Alternet.UI
                 return;
 
             eventArgs.RoutedEvent = previewEvent;
-            handler.Control.RaiseEvent(eventArgs);
+            if (handler.IsAttached)
+                handler.Control.RaiseEvent(eventArgs);
             if (!eventArgs.Handled)
             {
                 eventArgs.RoutedEvent = @event;
-                handler.Control.RaiseEvent(eventArgs);
+                if (handler.IsAttached)
+                    handler.Control.RaiseEvent(eventArgs);
             }
 
             handled = eventArgs.Handled;
@@ -721,7 +723,7 @@ namespace Alternet.UI
             if (handler == null)
                 return null;
 
-            return handler.Control;
+            return handler.IsAttached ? handler.Control : null;
         }
 
         internal void ReportMouseEvent(Control targetControl, RoutedEvent previewEvent, RoutedEvent @event, InputEventArgs eventArgs, out bool handled)
