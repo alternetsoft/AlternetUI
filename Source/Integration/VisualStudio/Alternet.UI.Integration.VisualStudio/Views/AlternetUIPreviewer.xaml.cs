@@ -193,8 +193,10 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
                 hostedWindowHandle = preview.WindowHandle;
                 desiredPreviewSize = preview.DesiredSize;
+                if (desiredPreviewSize.Width <= 0 || desiredPreviewSize.Height <= 0)
+                    desiredPreviewSize = defaultPreviewSize;
 
-                var size = preview.DesiredSize;
+                var size = desiredPreviewSize;
                 size = ConstrainPreviewSizeToFit(size);
                 windowsFormsHost.Width = size.Width;
                 windowsFormsHost.Height = size.Height;
@@ -216,18 +218,19 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             Window.GetWindow(this)?.InvalidateVisual();
         }
 
+        readonly System.Drawing.Size defaultPreviewSize = new System.Drawing.Size(300, 300);
+
         private System.Drawing.Size GetPreviewActualSize()
         {
-            var defaultSize = new System.Drawing.Size(300, 300);
             if (hostedWindowHandle == IntPtr.Zero)
-                return defaultSize;
+                return defaultPreviewSize;
 
             User32.GetWindowRect(hostedWindowHandle, out var rect);
 
             var size = new System.Drawing.Size(rect.right - rect.left, rect.bottom - rect.top);
 
             if (size.Width == 0 || size.Height == 0)
-                size = defaultSize;
+                size = defaultPreviewSize;
             return size;
         }
 
