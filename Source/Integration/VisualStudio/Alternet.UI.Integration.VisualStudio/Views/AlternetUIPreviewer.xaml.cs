@@ -49,7 +49,6 @@ namespace Alternet.UI.Integration.VisualStudio.Views
         {
             hostPanel = new System.Windows.Forms.Panel();
             windowsFormsHost.Child = hostPanel;
-            hostPanel.Size = new System.Drawing.Size(300, 300);
         }
 
         private void AlternetUIPreviewer_Loaded(object sender, RoutedEventArgs e)
@@ -160,21 +159,33 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 loading.Visibility = Visibility.Collapsed;
                 previewScroller.Visibility = Visibility.Visible;
 
+                hostedWindowHandle = preview.WindowHandle;
+                User32.GetWindowRect(hostedWindowHandle, out var rect);
+
+                var size = new System.Drawing.Size(rect.right - rect.left, rect.bottom - rect.top);
+
+                if (size.Width == 0 || size.Height == 0)
+                    size = new System.Drawing.Size(300, 300);
+
+                windowsFormsHost.Width = size.Width;
+                windowsFormsHost.Height = size.Height;
+                hostPanel.Size = size;
+
                 var style = User32.GetWindowLong(preview.WindowHandle, User32.WindowLongIndexFlags.GWL_STYLE);
 
-                hostedWindowHandle = preview.WindowHandle;
                 //User32.MoveWindow(hostedWindowHandle, 20000, 20000, hostPanel.ClientRectangle.Width, hostPanel.ClientRectangle.Height, true);
                 //User32.ShowWindow(hostedWindowHandle, User32.WindowShowStyle.SW_SHOWNOACTIVATE);
                 User32.SetParent(hostedWindowHandle, hostPanel.Handle);
                 User32.SetWindowLong(hostedWindowHandle, User32.WindowLongIndexFlags.GWL_STYLE, (User32.SetWindowLongFlags)((int)User32.WindowStyles.WS_VISIBLE | style));
                 User32.MoveWindow(hostedWindowHandle, 0, 0, hostPanel.ClientRectangle.Width, hostPanel.ClientRectangle.Height, true);
-                Window.GetWindow(this).Activate();
             }
             else
             {
                 loading.Visibility = Visibility.Visible;
                 previewScroller.Visibility = Visibility.Collapsed;
             }
+            
+            Window.GetWindow(this)?.Activate();
         }
 
         private void PreviewScroller_ScrollChanged(object sender, ScrollChangedEventArgs e)

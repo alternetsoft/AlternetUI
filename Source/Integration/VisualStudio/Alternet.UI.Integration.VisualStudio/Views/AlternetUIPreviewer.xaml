@@ -18,13 +18,7 @@
                     </Border.Effect>
                 </Border>
                 <Border>
-                    <!--<Image Name="preview" Width="100" Height="100"
-                           MouseMove="Preview_MouseMove"
-                           MouseDown="Preview_MouseDown"
-                           MouseUp="Preview_MouseUp"/>-->
-
-                    <interop:WindowsFormsHost Width="300" Height="300"  Name="windowsFormsHost"/>
-
+                    <interop:WindowsFormsHost Name="windowsFormsHost"/>
                 </Border>
             </Grid>
         </ScrollViewer>
@@ -33,7 +27,6 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Visibility="Collapsed">
-            The designer is loading...
         </TextBlock>
     </Grid>
 </UserControl>
