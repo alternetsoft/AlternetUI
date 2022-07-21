@@ -291,6 +291,13 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             wakeUpIdleMethod.Invoke(application, new object[0]);
         }
 
+
+        private static void SetParentOverrideHandle(IntPtr parentWindowHandle)
+        {
+            var property = typeof(Application).GetProperty("ParentOverrideHandle", BindingFlags.Instance | BindingFlags.NonPublic);
+            property.SetValue(application, parentWindowHandle);
+        }
+
         static Application application;
 
         private static void EnsureApplicationCreated()
@@ -377,6 +384,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                     var appAssembly = Assembly.LoadFrom(xaml.AssemblyPath);
                     using var stream = new MemoryStream(Encoding.Default.GetBytes(xaml.Xaml));
 
+                    SetParentOverrideHandle((IntPtr)xaml.ParentWindowHandle);
                     currentControl = (Control)new UixmlLoader().Load(stream, appAssembly);
                     
                     if (currentControl is Window window)

@@ -21,6 +21,7 @@ namespace Alternet.UI
         {
             Application.Current.RegisterWindow(this);
             SetVisibleValue(false);
+            
             Bounds = new Rect(100, 100, 400, 400);
         }
 

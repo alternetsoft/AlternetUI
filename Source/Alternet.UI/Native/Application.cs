@@ -83,6 +83,23 @@ namespace Alternet.UI.Native
             }
         }
         
+        public System.IntPtr ParentOverrideHandle
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Application_GetParentOverrideHandle_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Application_SetParentOverrideHandle_(NativePointer, value);
+            }
+        }
+        
         public void Run(Window window)
         {
             CheckDisposed();
@@ -163,6 +180,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_SetInUixmlPreviewerMode_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Application_GetParentOverrideHandle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetParentOverrideHandle_(IntPtr obj, System.IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_Run_(IntPtr obj, IntPtr window);

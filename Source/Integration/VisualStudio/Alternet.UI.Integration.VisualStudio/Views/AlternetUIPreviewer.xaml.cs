@@ -132,6 +132,8 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             return result > 0 ? result : 1;
         }
 
+        public IntPtr HostPanelHandle => hostPanel?.Handle ?? IntPtr.Zero;
+
         private async void Update(object sender, EventArgs e)
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
@@ -150,6 +152,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
         {
             if (hostedWindowHandle != IntPtr.Zero)
             {
+                User32.ShowWindow(hostedWindowHandle, User32.WindowShowStyle.SW_HIDE);
                 User32.SetParent(hostedWindowHandle, IntPtr.Zero);
                 hostedWindowHandle = IntPtr.Zero;
             }

@@ -60,6 +60,20 @@ ALTERNET_UI_API void Application_SetInUixmlPreviewerMode_(Application* obj, c_bo
         });
 }
 
+ALTERNET_UI_API void* Application_GetParentOverrideHandle_(Application* obj)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetParentOverrideHandle();
+        });
+}
+
+ALTERNET_UI_API void Application_SetParentOverrideHandle_(Application* obj, void* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetParentOverrideHandle(value);
+        });
+}
+
 ALTERNET_UI_API void Application_Run_(Application* obj, Window* window)
 {
     MarshalExceptions<void>([&](){

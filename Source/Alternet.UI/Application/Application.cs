@@ -39,6 +39,12 @@ namespace Alternet.UI
             mouseInputProvider = new MouseInputProvider(nativeApplication.Mouse);
         }
 
+        internal IntPtr ParentOverrideHandle
+        {
+            get => nativeApplication.ParentOverrideHandle;
+            set => nativeApplication.ParentOverrideHandle = value;
+        }
+
         internal Native.Keyboard NativeKeyboard => nativeApplication.Keyboard;
         internal Native.Mouse NativeMouse => nativeApplication.Mouse;
 

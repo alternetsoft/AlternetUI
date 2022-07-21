@@ -12,15 +12,19 @@ namespace Alternet::UI
     class Frame : public wxFrame
     {
     public:
-        Frame(Window* window, long style);
+        Frame(Window* window, long style, void* parentOverrideHandle);
         virtual ~Frame();
 
         static std::vector<Frame*> GetAllFrames();
 
         Window* GetWindow();
 
+        virtual WXHWND MSWGetParent() const wxOVERRIDE;
+
     private:
         Window* _window;
+
+        void* _parentOverrideHandle;
 
         inline static std::vector<Frame*> _allFrames;
 

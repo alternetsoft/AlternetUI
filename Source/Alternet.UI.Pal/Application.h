@@ -55,6 +55,8 @@ namespace Alternet::UI
 
         bool _inUixmlPreviewerMode = false;
 
+        void* _parentOverrideHandle = nullptr;
+
         inline static Application* s_current = nullptr;
 
 #ifdef __WXMSW__
