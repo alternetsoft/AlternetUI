@@ -158,11 +158,20 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
             AttachEventHandler(application, "Idle", Application_Idle);
 
+            var timer = new Timer(TimeSpan.FromMilliseconds(100), OnTimerTick);
+
+            new System.Threading.Timer(_ => WakeUpIdle(), null, 0, 200);
+
             application.Run(new Window { ShowInTaskbar = false, StartLocation = WindowStartLocation.Manual, Location = new Point(20000, 20000) });
 
             //RunApplication();
 
             //DispatcherLoop.Current.Run();
+        }
+
+        private static void OnTimerTick(object sender, EventArgs e)
+        {
+            ProcessQueue();
         }
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -230,6 +239,17 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
         private static void Application_Idle(object sender, EventArgs e)
         {
+            ProcessQueue();
+
+            //if (!_saved)
+            //{
+            //    GetHandle(_c, @"c:\temp\1.png");
+            //    _saved = true;
+            //}
+        }
+
+        private static void ProcessQueue()
+        {
             lock (actions)
             {
                 while (actions.Count > 0)
@@ -237,12 +257,6 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                     actions.Dequeue()();
                 }
             }
-
-            //if (!_saved)
-            //{
-            //    GetHandle(_c, @"c:\temp\1.png");
-            //    _saved = true;
-            //}
         }
 
         static MethodInfo getHandleMethod;
@@ -266,6 +280,15 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
         {
             var property = typeof(Application).GetProperty("InUixmlPreviewerMode", BindingFlags.Instance | BindingFlags.NonPublic);
             property.SetValue(application, true);
+        }
+
+        static MethodInfo wakeUpIdleMethod;
+
+        static void WakeUpIdle()
+        {
+            if (wakeUpIdleMethod == null)
+                wakeUpIdleMethod = typeof(Application).GetMethod("WakeUpIdle", BindingFlags.Instance | BindingFlags.NonPublic);
+            wakeUpIdleMethod.Invoke(application, new object[0]);
         }
 
         static Application application;

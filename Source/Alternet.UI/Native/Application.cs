@@ -89,6 +89,12 @@ namespace Alternet.UI.Native
             NativeApi.Application_Run_(NativePointer, window.NativePointer);
         }
         
+        public void WakeUpIdle()
+        {
+            CheckDisposed();
+            NativeApi.Application_WakeUpIdle_(NativePointer);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -160,6 +166,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_Run_(IntPtr obj, IntPtr window);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_WakeUpIdle_(IntPtr obj);
             
         }
     }

@@ -361,6 +361,9 @@ namespace Alternet::UI
 
     void Control::ShowCore()
     {
+        if (Application::GetCurrent()->GetInUixmlPreviewerMode())
+            return;
+
         GetWxWindow()->Show();
     }
 

@@ -67,6 +67,13 @@ ALTERNET_UI_API void Application_Run_(Application* obj, Window* window)
         });
 }
 
+ALTERNET_UI_API void Application_WakeUpIdle_(Application* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->WakeUpIdle();
+        });
+}
+
 ALTERNET_UI_API void Application_SetEventCallback_(Application::ApplicationEventCallbackType callback)
 {
     Application::SetEventCallback(callback);

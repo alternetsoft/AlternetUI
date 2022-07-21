@@ -144,6 +144,11 @@ namespace Alternet::UI
         _mouse = nullptr;
     }
 
+    void Application::WakeUpIdle()
+    {
+        _app->WakeUpIdle();
+    }
+
     bool Application::GetInUixmlPreviewerMode()
     {
         return _inUixmlPreviewerMode;

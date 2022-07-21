@@ -68,6 +68,11 @@ namespace Alternet.UI
             set => nativeApplication.InUixmlPreviewerMode = value;
         }
 
+        internal void WakeUpIdle()
+        {
+            nativeApplication.WakeUpIdle();
+        }
+
         /// <summary>
         /// Gets the instantiated windows in an application.
         /// </summary>

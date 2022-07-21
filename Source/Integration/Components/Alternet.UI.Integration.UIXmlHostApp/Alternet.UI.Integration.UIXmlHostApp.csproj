@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFrameworks>net6.0;net461</TargetFrameworks>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>

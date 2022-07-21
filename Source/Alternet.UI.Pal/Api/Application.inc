@@ -15,6 +15,7 @@ bool GetInUixmlPreviewerMode();
 void SetInUixmlPreviewerMode(bool value);
 
 void Run(Window* window);
+void WakeUpIdle();
 public:
 enum class ApplicationEvent
 {

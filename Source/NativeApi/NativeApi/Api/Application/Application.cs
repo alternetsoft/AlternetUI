@@ -18,5 +18,7 @@ namespace NativeApi.Api
         public Mouse Mouse { get; }
 
         public bool InUixmlPreviewerMode { get; set; }
+
+        public void WakeUpIdle() => throw new Exception();
     }
 }
