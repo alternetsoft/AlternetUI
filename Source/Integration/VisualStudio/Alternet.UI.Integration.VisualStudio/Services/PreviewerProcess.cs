@@ -410,7 +410,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                     {
                         await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
-                        PreviewData = new PreviewData((IntPtr)frame.WindowHandle);
+                        PreviewData = new PreviewData((IntPtr)frame.WindowHandle, new System.Drawing.Size(frame.DesiredWidth, frame.DesiredHeight));
 
                         await SendAsync(new PreviewDataReceivedMessage
                         {

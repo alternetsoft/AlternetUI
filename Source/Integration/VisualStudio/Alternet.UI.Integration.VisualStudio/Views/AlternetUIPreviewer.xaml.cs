@@ -43,6 +43,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             Loaded += AlternetUIPreviewer_Loaded;
 
             previewScroller.ScrollChanged += PreviewScroller_ScrollChanged;
+            previewScroller.SizeChanged += PreviewScroller_SizeChanged;
         }
 
         private void InitializePreviewHost()
@@ -145,6 +146,36 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             }
         }
 
+        private void PreviewScroller_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (desiredPreviewSize.Width == 0 || desiredPreviewSize.Height == 0)
+                return;
+
+            var newSize = desiredPreviewSize;
+            newSize = ConstrainPreviewSizeToFit(newSize);
+
+            var actualSize = GetPreviewActualSize();
+            if (actualSize == newSize)
+                return;
+
+            windowsFormsHost.Width = newSize.Width;
+            windowsFormsHost.Height = newSize.Height;
+            hostPanel.Size = newSize;
+            User32.MoveWindow(hostedWindowHandle, 0, 0, newSize.Width, newSize.Height, true);
+            Window.GetWindow(this)?.InvalidateVisual();
+        }
+
+        private System.Drawing.Size ConstrainPreviewSizeToFit(System.Drawing.Size newSize)
+        {
+            if ((int)previewScroller.ActualHeight < newSize.Height)
+                newSize.Height = (int)previewScroller.ActualHeight;
+            if ((int)previewScroller.ActualWidth < newSize.Width)
+                newSize.Width = (int)previewScroller.ActualWidth;
+            return newSize;
+        }
+
+        System.Drawing.Size desiredPreviewSize;
+
         private void Update(PreviewData preview)
         {
             if (hostedWindowHandle != IntPtr.Zero)
@@ -152,6 +183,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 User32.ShowWindow(hostedWindowHandle, User32.WindowShowStyle.SW_HIDE);
                 User32.SetParent(hostedWindowHandle, IntPtr.Zero);
                 hostedWindowHandle = IntPtr.Zero;
+                desiredPreviewSize = new System.Drawing.Size();
             }
 
             if (preview != null && preview.WindowHandle != IntPtr.Zero)
@@ -160,21 +192,16 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 previewScroller.Visibility = Visibility.Visible;
 
                 hostedWindowHandle = preview.WindowHandle;
-                User32.GetWindowRect(hostedWindowHandle, out var rect);
+                desiredPreviewSize = preview.DesiredSize;
 
-                var size = new System.Drawing.Size(rect.right - rect.left, rect.bottom - rect.top);
-
-                if (size.Width == 0 || size.Height == 0)
-                    size = new System.Drawing.Size(300, 300);
-
+                var size = preview.DesiredSize;
+                size = ConstrainPreviewSizeToFit(size);
                 windowsFormsHost.Width = size.Width;
                 windowsFormsHost.Height = size.Height;
                 hostPanel.Size = size;
 
-                var style = User32.GetWindowLong(preview.WindowHandle, User32.WindowLongIndexFlags.GWL_STYLE);
+                var style = User32.GetWindowLong(hostedWindowHandle, User32.WindowLongIndexFlags.GWL_STYLE);
 
-                //User32.MoveWindow(hostedWindowHandle, 20000, 20000, hostPanel.ClientRectangle.Width, hostPanel.ClientRectangle.Height, true);
-                //User32.ShowWindow(hostedWindowHandle, User32.WindowShowStyle.SW_SHOWNOACTIVATE);
                 User32.SetParent(hostedWindowHandle, hostPanel.Handle);
                 User32.SetWindowLong(hostedWindowHandle, User32.WindowLongIndexFlags.GWL_STYLE, (User32.SetWindowLongFlags)((int)User32.WindowStyles.WS_VISIBLE | style));
                 User32.MoveWindow(hostedWindowHandle, 0, 0, hostPanel.ClientRectangle.Width, hostPanel.ClientRectangle.Height, true);
@@ -184,8 +211,24 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 loading.Visibility = Visibility.Visible;
                 previewScroller.Visibility = Visibility.Collapsed;
             }
-            
+
             Window.GetWindow(this)?.Activate();
+            Window.GetWindow(this)?.InvalidateVisual();
+        }
+
+        private System.Drawing.Size GetPreviewActualSize()
+        {
+            var defaultSize = new System.Drawing.Size(300, 300);
+            if (hostedWindowHandle == IntPtr.Zero)
+                return defaultSize;
+
+            User32.GetWindowRect(hostedWindowHandle, out var rect);
+
+            var size = new System.Drawing.Size(rect.right - rect.left, rect.bottom - rect.top);
+
+            if (size.Width == 0 || size.Height == 0)
+                size = defaultSize;
+            return size;
         }
 
         private void PreviewScroller_ScrollChanged(object sender, ScrollChangedEventArgs e)

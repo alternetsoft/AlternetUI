@@ -392,7 +392,13 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                     }
 
                     var handle = GetHandle(currentControl);
-                    s_transport.Send(new PreviewDataMessage() { WindowHandle = (long)handle });
+                    s_transport.Send(
+                        new PreviewDataMessage()
+                        {
+                            WindowHandle = (long)handle,
+                            DesiredWidth = (int)currentControl.Width,
+                            DesiredHeight = (int)currentControl.Height
+                        });
                 }
                 catch(Exception e)
                 {
