@@ -324,8 +324,6 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                 throw new InvalidOperationException("Process not finished initializing.");
             }
 
-            PreviewData = null;
-
             await SendAsync(new UpdateXamlMessage
             {
                 AssemblyPath = _assemblyPath,
@@ -412,6 +410,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                     {
                         await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
+                        PreviewData = null;
                         PreviewData = new PreviewData((IntPtr)frame.WindowHandle, new System.Drawing.Size(frame.DesiredWidth, frame.DesiredHeight));
 
                         await SendAsync(new PreviewDataReceivedMessage

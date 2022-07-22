@@ -18,6 +18,7 @@ using Alternet.UI.Integration.Remoting;
 using Alternet.UI.Integration.VisualStudio.Models;
 using PInvoke;
 using System.Runtime.InteropServices;
+using System.Reflection;
 
 #pragma warning disable VSTHRD100, VSTHRD010, VSTHRD110
 
@@ -146,6 +147,38 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             }
         }
 
+        double GetDpiScale()
+        {
+            var source = PresentationSource.FromVisual(this);
+
+            if (source != null)
+                return 96.0 * source.CompositionTarget.TransformToDevice.M11;
+
+            return 1;
+        }
+
+        static double? cachedDpiScale;
+
+        static double DpiScale
+        {
+            get
+            {
+                if (cachedDpiScale == null)
+                {
+                    var dpiXProperty = typeof(SystemParameters).GetProperty("DpiX", BindingFlags.NonPublic | BindingFlags.Static);
+                    var dpiX = (int)dpiXProperty.GetValue(null, null);
+                    cachedDpiScale = dpiX / 96.0;
+                }
+
+                return cachedDpiScale.Value;
+            }
+        }
+
+        static int ScaleWithDpi(int value) => (int)(DpiScale * value);
+        static System.Drawing.Size ScaleWithDpi(System.Drawing.Size size) =>
+            new System.Drawing.Size(ScaleWithDpi(size.Width), ScaleWithDpi(size.Height));
+
+
         private void PreviewScroller_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (desiredPreviewSize.Width == 0 || desiredPreviewSize.Height == 0)
@@ -160,7 +193,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
             windowsFormsHost.Width = newSize.Width;
             windowsFormsHost.Height = newSize.Height;
-            hostPanel.Size = newSize;
+            hostPanel.Size = ScaleWithDpi(newSize);
             User32.MoveWindow(hostedWindowHandle, 0, 0, newSize.Width, newSize.Height, true);
             Window.GetWindow(this)?.InvalidateVisual();
         }
@@ -200,7 +233,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 size = ConstrainPreviewSizeToFit(size);
                 windowsFormsHost.Width = size.Width;
                 windowsFormsHost.Height = size.Height;
-                hostPanel.Size = size;
+                hostPanel.Size = ScaleWithDpi(size);
 
                 var style = User32.GetWindowLong(hostedWindowHandle, User32.WindowLongIndexFlags.GWL_STYLE);
 
