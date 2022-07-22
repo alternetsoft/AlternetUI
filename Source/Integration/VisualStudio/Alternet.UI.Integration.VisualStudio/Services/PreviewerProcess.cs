@@ -204,12 +204,14 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             EnsureExists(depsPath);
 
             //var args = $@"exec --runtimeconfig ""{runtimeConfigPath}"" --depsfile ""{depsPath}"" ""{hostAppPath}"" --transport tcp-bson://127.0.0.1:{port}/ ""{_executablePath}""";
+            //var args = $@" --transport tcp-bson://127.0.0.1:{port}/ ""{_executablePath}"""; // yezo
             var args = $@"exec ""{hostAppPath}"" --transport tcp-bson://127.0.0.1:{port}/ ""{_executablePath}"""; // yezo
 
             var processInfo = new ProcessStartInfo
             {
                 Arguments = args,
                 CreateNoWindow = true,
+                //FileName = hostAppPath,
                 FileName = "dotnet",
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
