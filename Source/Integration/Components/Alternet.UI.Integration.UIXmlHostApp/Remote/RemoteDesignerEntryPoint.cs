@@ -330,18 +330,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
         }
 #endif
 
-        private static void RebuildPreFlight()
-        {
-            //PreviewerWindowingPlatform.PreFlightMessages = new List<object>
-            //{
-            //    s_supportedPixelFormats,
-            //    s_viewportAllocatedMessage,
-            //    s_renderInfoMessage
-            //};
-        }
-
-        //private static Window s_currentWindow;
-        static Control currentControl;
+        static Window currentWindow;
         private static CommandLineArgs args;
 
         static Queue<Action> actions = new Queue<Action>();
@@ -353,51 +342,46 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
         }
 
         private static void OnTransportMessage(IAlternetUIRemoteTransportConnection transport, object obj) =>
-//            DispatcherLoop.Current.BeginInvoke(new Task(() =>
             BeginInvoke((() =>
         {
-                if (obj is ClientSupportedPixelFormatsMessage formats)
-            {
-                s_supportedPixelFormats = formats;
-                RebuildPreFlight();
-            }
-            if (obj is ClientRenderInfoMessage renderInfo)
-            {
-                s_renderInfoMessage = renderInfo;
-                RebuildPreFlight();
-            }
-            if (obj is ClientViewportAllocatedMessage viewport)
-            {
-                s_viewportAllocatedMessage = viewport;
-                RebuildPreFlight();
-            }
             if (obj is UpdateXamlMessage xaml)
             {
                 try
                 {
-                    if (currentControl != null)
+                    if (currentWindow != null)
                     {
-                        currentControl.Dispose();
-                        currentControl = null;
+                        currentWindow.Dispose();
+                        currentWindow = null;
                     }
 
                     var appAssembly = Assembly.LoadFrom(xaml.AssemblyPath);
                     using var stream = new MemoryStream(Encoding.Default.GetBytes(xaml.Xaml));
 
-                    currentControl = (Control)new UixmlLoader().Load(stream, appAssembly);
-                    
-                    if (currentControl is Window window)
+                    var control = (Control)new UixmlLoader().Load(stream, appAssembly);
+
+                    Window window;
+
+                    if (control is Window w)
                     {
+                        window = w;
                         window.ShowInTaskbar = false;
+                        window.Resizable = false;
+                    }
+                    else
+                    {
+                        window = new Window { ShowInTaskbar = false, HasBorder = false, HasTitleBar = false, Resizable = false };
+                        window.Children.Add(control);
                     }
 
-                    var handle = GetHandle(currentControl);
+                    currentWindow = window;
+
+                    var handle = GetHandle(currentWindow);
                     s_transport.Send(
                         new PreviewDataMessage()
                         {
                             WindowHandle = (long)handle,
-                            DesiredWidth = (int)currentControl.Width,
-                            DesiredHeight = (int)currentControl.Height
+                            DesiredWidth = (int)currentWindow.Width,
+                            DesiredHeight = (int)currentWindow.Height
                         });
                 }
                 catch(Exception e)
