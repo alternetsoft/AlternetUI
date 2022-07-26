@@ -2,6 +2,12 @@
 
 namespace Alternet.UI.Native
 {
+    enum FileDialogMode
+    {
+        Open = 0,
+        Save = 1,
+    }
+    
     enum BrushHatchStyle
     {
         BackwardDiagonal = 0,

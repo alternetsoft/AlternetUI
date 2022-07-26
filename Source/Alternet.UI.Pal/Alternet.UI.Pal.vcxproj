@@ -192,6 +192,7 @@
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="DrawingContext.cpp" />
     <ClCompile Include="Exceptions.cpp" />
+    <ClCompile Include="FileDialog.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="GraphicsPath.cpp" />
     <ClCompile Include="GroupBox.cpp" />
@@ -215,6 +216,7 @@
     <ClCompile Include="Pen.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="RadioButton.cpp" />
+    <ClCompile Include="SelectDirectoryDialog.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="SolidBrush.cpp" />
     <ClCompile Include="TabControl.cpp" />
@@ -237,6 +239,7 @@
     <ClInclude Include="Api\DrawingContext.Api.h" />
     <ClInclude Include="Api\DrawingTypes.h" />
     <ClInclude Include="Api\Enums.h" />
+    <ClInclude Include="Api\FileDialog.Api.h" />
     <ClInclude Include="Api\Font.Api.h" />
     <ClInclude Include="Api\GraphicsPath.Api.h" />
     <ClInclude Include="Api\GroupBox.Api.h" />
@@ -262,6 +265,7 @@
     <ClInclude Include="Api\Pen.Api.h" />
     <ClInclude Include="Api\ProgressBar.Api.h" />
     <ClInclude Include="Api\RadioButton.Api.h" />
+    <ClInclude Include="Api\SelectDirectoryDialog.Api.h" />
     <ClInclude Include="Api\Slider.Api.h" />
     <ClInclude Include="Api\SolidBrush.Api.h" />
     <ClInclude Include="Api\TabControl.Api.h" />
@@ -285,6 +289,7 @@
     <ClInclude Include="Exception.h" />
     <ClInclude Include="Exceptions.h" />
     <ClInclude Include="ExceptionsMarshal.h" />
+    <ClInclude Include="FileDialog.h" />
     <ClInclude Include="FloodFill.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GraphicsPath.h" />
@@ -311,6 +316,7 @@
     <ClInclude Include="Pen.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="RadioButton.h" />
+    <ClInclude Include="SelectDirectoryDialog.h" />
     <ClInclude Include="Slider.h" />
     <ClInclude Include="SolidBrush.h" />
     <ClInclude Include="TabControl.h" />
@@ -329,6 +335,7 @@
     <None Include="Api\ComboBox.inc" />
     <None Include="Api\Control.inc" />
     <None Include="Api\DrawingContext.inc" />
+    <None Include="Api\FileDialog.inc" />
     <None Include="Api\Font.inc" />
     <None Include="Api\GraphicsPath.inc" />
     <None Include="Api\GroupBox.inc" />
@@ -350,6 +357,7 @@
     <None Include="Api\Pen.inc" />
     <None Include="Api\ProgressBar.inc" />
     <None Include="Api\RadioButton.inc" />
+    <None Include="Api\SelectDirectoryDialog.inc" />
     <None Include="Api\Slider.inc" />
     <None Include="Api\SolidBrush.inc" />
     <None Include="Api\TabControl.inc" />

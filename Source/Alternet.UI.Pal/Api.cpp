@@ -2,6 +2,8 @@
 #include "Api/Button.Api.h"
 #include "Api/CheckBox.Api.h"
 #include "Api/ComboBox.Api.h"
+#include "Api/FileDialog.Api.h"
+#include "Api/SelectDirectoryDialog.Api.h"
 #include "Api/Control.Api.h"
 #include "Api/Brush.Api.h"
 #include "Api/HatchBrush.Api.h"

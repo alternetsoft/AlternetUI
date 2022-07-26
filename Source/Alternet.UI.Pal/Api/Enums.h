@@ -3,6 +3,12 @@
 
 namespace Alternet::UI
 {
+    enum class FileDialogMode
+    {
+        Open = 0,
+        Save = 1,
+    };
+    
     enum class BrushHatchStyle
     {
         BackwardDiagonal = 0,
