@@ -101,7 +101,8 @@ namespace Alternet::UI
 
     optional<string> FileDialog::GetFileName()
     {
-        return wxStr(GetDialog()->GetPath());
+        auto value = wxStr(GetDialog()->GetPath());
+        return value == u"" ? nullopt : optional<string>(value);
     }
 
     void FileDialog::SetFileName(optional<string> value)

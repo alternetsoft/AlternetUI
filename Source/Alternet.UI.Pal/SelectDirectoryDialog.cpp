@@ -54,7 +54,8 @@ namespace Alternet::UI
 
     optional<string> SelectDirectoryDialog::GetDirectoryName()
     {
-        return wxStr(GetDialog()->GetPath());
+        auto value = wxStr(GetDialog()->GetPath());
+        return value == u"" ? nullopt : optional<string>(value);
     }
 
     void SelectDirectoryDialog::SetDirectoryName(optional<string> value)

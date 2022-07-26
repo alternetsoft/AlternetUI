@@ -8,10 +8,24 @@ namespace Alternet.UI
     /// </summary>
     public abstract class FileDialog : CommonDialog
     {
+        private Native.FileDialog nativeDialog;
+
+        private protected Native.FileDialog NativeDialog => nativeDialog;
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="FileDialog"/>.
+        /// </summary>
+        public FileDialog()
+        {
+            nativeDialog = new Native.FileDialog();
+            nativeDialog.Mode = Mode;
+        }
+
         private protected override ModalResult ShowModalCore(Window? owner)
         {
             CheckDisposed();
-            return NativeApi.FileDialog_ShowModal(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
+            var nativeOwner = owner == null ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
+            return (ModalResult)nativeDialog.ShowModal(nativeOwner);
         }
 
         /// <summary>
@@ -22,28 +36,28 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return NativeApi.FileDialog_GetInitialDirectory(NativePointer);
+                return nativeDialog.InitialDirectory;
             }
 
             set
             {
                 CheckDisposed();
-                NativeApi.FileDialog_SetInitialDirectory(NativePointer, value);
+                nativeDialog.InitialDirectory = value;
             }
         }
 
-        private protected override string TitleCore
+        private protected override string? TitleCore
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.FileDialog_GetTitle(NativePointer);
+                return nativeDialog.Title;
             }
 
             set
             {
                 CheckDisposed();
-                NativeApi.FileDialog_SetTitle(NativePointer, value);
+                nativeDialog.Title = value;
             }
         }
 
@@ -54,34 +68,27 @@ namespace Alternet.UI
         /// <value>
         /// The file filtering options available in the dialog window.
         /// </value>
-        public string Filter
+        /// <remarks>
+        /// For each filtering option, the filter string contains a description of the filter,
+        /// followed by the vertical bar (|) and the filter pattern. The strings for different filtering options are separated by the vertical bar.
+        /// The following is an example of a filter string:
+        /// <code>Text files(*.txt)|*.txt|All files(*.*)|*.*</code>
+        /// You can add several filter patterns to a filter by separating the file types with semicolons, for example:
+        /// <code>Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF|All files(*.*)|*.*</code>
+        /// Use the <see cref="SelectedFilterIndex"/> property to set which filtering option is shown first to the user.
+        /// </remarks>
+        public string? Filter
         {
             get
             {
                 CheckDisposed();
-                NativeApi.FileDialog_GetFilters(
-                    NativePointer,
-                    out var filters,
-                    out _);
-
-                if (filters == null)
-                    return new FileDialogFilter[0];
-
-                return filters.Select(x => new FileDialogFilter(x.FileNamePattern, x.Description)).ToArray();
+                return nativeDialog.Filter;
             }
 
             set
             {
                 CheckDisposed();
-
-                var filters =
-                    value?.Select(x => new NativeApi.Filter { Description = x.Description, FileNamePattern = x.FileNamePattern }).ToArray() ??
-                    new NativeApi.Filter[0];
-
-                NativeApi.FileDialog_SetFilters(
-                    NativePointer,
-                    filters,
-                    filters.Length);
+                nativeDialog.Filter = value;
             }
         }
 
@@ -93,23 +100,14 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return NativeApi.FileDialog_GetSelectedFilterIndex(NativePointer);
+                return nativeDialog.SelectedFilterIndex;
             }
 
             set
             {
                 CheckDisposed();
-                NativeApi.FileDialog_SetSelectedFilterIndex(NativePointer, value);
+                nativeDialog.SelectedFilterIndex = value;
             }
-        }
-
-        void CheckFileNameAccessWithMultipleSelectionAllowed()
-        {
-            if (DialogMode != NativeApi.DialogMode.OpenFile)
-                return;
-
-            if (((OpenFileDialog)this).AllowMultipleSelection)
-                throw new InvalidOperationException("AllowMultipleSelection property is set to true. Please use FileNames property instead of FileName.");
         }
 
         /// <summary>
@@ -120,15 +118,16 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                CheckFileNameAccessWithMultipleSelectionAllowed();
-                return NativeApi.FileDialog_GetFileName(NativePointer);
+                return nativeDialog.FileName;
             }
 
             set
             {
                 CheckDisposed();
-                NativeApi.FileDialog_SetFileName(NativePointer, value);
+                nativeDialog.FileName = value;
             }
         }
+
+        private protected abstract Native.FileDialogMode Mode { get; }
     }
 }

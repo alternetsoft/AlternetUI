@@ -7,6 +7,6 @@ namespace Alternet.UI
     /// </summary>
     public sealed class SaveFileDialog : FileDialog
     {
-        private protected override NativeApi.DialogMode DialogMode => NativeApi.DialogMode.SaveFile;
+        private protected override Native.FileDialogMode Mode => Native.FileDialogMode.Save;
     }
 }
