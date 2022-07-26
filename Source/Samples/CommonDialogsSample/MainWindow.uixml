@@ -3,7 +3,15 @@
         x:Class="CommonDialogsSample.MainWindow"
         Title="Common Dialogs Sample">
   <StackPanel>
-    <Button Text="Show Open File Dialog" Name="showOpenFileDialogButton" Click="ShowOpenFileDialogButton_Click" Margin="10"/>
+    <CheckBox Text="Set Initial Directory to 'C:\Users'" Name="setInitialDirectoryCheckBox" Margin="10" />
+
+    <GroupBox Title="Open File Dialog">
+      <StackPanel>
+        <CheckBox Text="Allow Multiple Selection" Name="allowMultipleSelectionCheckBox" Margin="10" />
+        <Button Text="Show Open File Dialog" Name="showOpenFileDialogButton" Click="ShowOpenFileDialogButton_Click" Margin="10"/>
+      </StackPanel>
+    </GroupBox>
+
     <Button Text="Show Save File Dialog" Name="showSaveFileDialogButton" Click="ShowSaveFileDialogButton_Click" Margin="10"/>
     <Button Text="Show Select Directory Dialog" Name="showSelectDirectoryDialogButton" Click="ShowSelectDirectoryDialogButton_Click" Margin="10"/>
   </StackPanel>

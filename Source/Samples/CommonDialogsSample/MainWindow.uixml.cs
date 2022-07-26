@@ -5,6 +5,8 @@ namespace CommonDialogsSample
 {
     public partial class MainWindow : Window
     {
+        private const string InitialDirectory = @"C:\Users";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -13,10 +15,21 @@ namespace CommonDialogsSample
         private void ShowOpenFileDialogButton_Click(object sender, System.EventArgs e)
         {
             var dialog = new OpenFileDialog();
+
+            if (setInitialDirectoryCheckBox.IsChecked)
+                dialog.InitialDirectory = InitialDirectory;
+
+            dialog.AllowMultipleSelection = allowMultipleSelectionCheckBox.IsChecked;
+
             var result = dialog.ShowModal();
 
             if (result == ModalResult.Accepted)
-                MessageBox.Show("Accepted, FileName = " + dialog.FileName, "Dialog Result");
+            {
+                if (dialog.AllowMultipleSelection)
+                    MessageBox.Show("Accepted, FileNames = " + String.Join(", ", dialog.FileNames), "Dialog Result");
+                else
+                    MessageBox.Show("Accepted, FileName = " + dialog.FileName, "Dialog Result");
+            }
             else
                 MessageBox.Show(result.ToString(), "Dialog Result");
         }
@@ -24,6 +37,10 @@ namespace CommonDialogsSample
         private void ShowSaveFileDialogButton_Click(object sender, System.EventArgs e)
         {
             var dialog = new SaveFileDialog();
+
+            if (setInitialDirectoryCheckBox.IsChecked)
+                dialog.InitialDirectory = InitialDirectory;
+
             var result = dialog.ShowModal();
 
             if (result == ModalResult.Accepted)
@@ -35,6 +52,10 @@ namespace CommonDialogsSample
         private void ShowSelectDirectoryDialogButton_Click(object sender, System.EventArgs e)
         {
             var dialog = new SelectDirectoryDialog();
+
+            if (setInitialDirectoryCheckBox.IsChecked)
+                dialog.InitialDirectory = InitialDirectory;
+
             var result = dialog.ShowModal();
 
             if (result == ModalResult.Accepted)

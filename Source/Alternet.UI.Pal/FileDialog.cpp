@@ -101,7 +101,19 @@ namespace Alternet::UI
 
     optional<string> FileDialog::GetFileName()
     {
-        auto value = wxStr(GetDialog()->GetPath());
+        string value;
+
+        if (_allowMultipleSelection)
+        {
+            wxArrayString paths;
+            GetDialog()->GetPaths(paths);
+            value = paths.GetCount() == 0 ? u"" : wxStr(paths[0]);
+        }
+        else
+        {
+            value = wxStr(GetDialog()->GetPath());
+        }
+
         return value == u"" ? nullopt : optional<string>(value);
     }
 
