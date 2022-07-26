@@ -6,6 +6,7 @@ namespace CommonDialogsSample
     public partial class MainWindow : Window
     {
         private const string InitialDirectory = @"C:\Users";
+        private const string CustomTitle = @"Custom Title";
 
         public MainWindow()
         {
@@ -18,6 +19,9 @@ namespace CommonDialogsSample
 
             if (setInitialDirectoryCheckBox.IsChecked)
                 dialog.InitialDirectory = InitialDirectory;
+
+            if (setCustomTitleCheckBox.IsChecked)
+                dialog.Title = CustomTitle;
 
             dialog.AllowMultipleSelection = allowMultipleSelectionCheckBox.IsChecked;
 
@@ -41,6 +45,9 @@ namespace CommonDialogsSample
             if (setInitialDirectoryCheckBox.IsChecked)
                 dialog.InitialDirectory = InitialDirectory;
 
+            if (setCustomTitleCheckBox.IsChecked)
+                dialog.Title = CustomTitle;
+
             var result = dialog.ShowModal();
 
             if (result == ModalResult.Accepted)
@@ -55,6 +62,9 @@ namespace CommonDialogsSample
 
             if (setInitialDirectoryCheckBox.IsChecked)
                 dialog.InitialDirectory = InitialDirectory;
+
+            if (setCustomTitleCheckBox.IsChecked)
+                dialog.Title = CustomTitle;
 
             var result = dialog.ShowModal();
 

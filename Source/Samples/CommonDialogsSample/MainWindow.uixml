@@ -5,6 +5,8 @@
   <StackPanel>
     <CheckBox Text="Set Initial Directory to 'C:\Users'" Name="setInitialDirectoryCheckBox" Margin="10" />
 
+    <CheckBox Text="Set Title to 'Custom Title'" Name="setCustomTitleCheckBox" Margin="10" />
+
     <GroupBox Title="Open File Dialog">
       <StackPanel>
         <CheckBox Text="Allow Multiple Selection" Name="allowMultipleSelectionCheckBox" Margin="10" />
