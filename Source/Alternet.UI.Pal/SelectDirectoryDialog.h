@@ -2,6 +2,7 @@
 #include "Common.h"
 #include "ApiTypes.h"
 #include "Object.h"
+#include "Window.h"
 
 namespace Alternet::UI
 {
@@ -20,9 +21,11 @@ namespace Alternet::UI
 
         long GetStyle();
 
-        string _initialDirectory;
-        string _title;
-        string _directoryName;
+        optional<string> _initialDirectory;
+        optional<string> _title;
+        optional<string> _directoryName;
+
+        Window* _owner = nullptr;
 
         wxDirDialog* _dialog = nullptr;
     };

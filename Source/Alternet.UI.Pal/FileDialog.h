@@ -2,6 +2,7 @@
 #include "Common.h"
 #include "ApiTypes.h"
 #include "Object.h"
+#include "Window.h"
 
 namespace Alternet::UI
 {
@@ -22,12 +23,13 @@ namespace Alternet::UI
         long GetStyle();
 
         FileDialogMode _mode = FileDialogMode::Open;
-        string _initialDirectory;
-        string _title;
-        string _filter;
+        optional<string> _initialDirectory;
+        optional<string> _title;
+        optional<string> _filter;
         int _selectedFilterIndex = 0;
-        string _fileName;
+        optional<string> _fileName;
         bool _allowMultipleSelection = false;
+        Window* _owner = nullptr;
 
         wxFileDialog* _dialog = nullptr;
     };

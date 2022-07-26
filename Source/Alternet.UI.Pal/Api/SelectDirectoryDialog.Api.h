@@ -3,6 +3,7 @@
 #pragma once
 
 #include "SelectDirectoryDialog.h"
+#include "Window.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -25,7 +26,7 @@ ALTERNET_UI_API char16_t* SelectDirectoryDialog_GetInitialDirectory_(SelectDirec
 ALTERNET_UI_API void SelectDirectoryDialog_SetInitialDirectory_(SelectDirectoryDialog* obj, const char16_t* value)
 {
     MarshalExceptions<void>([&](){
-            obj->SetInitialDirectory(value);
+            obj->SetInitialDirectory(ToOptional(value));
         });
 }
 
@@ -39,7 +40,7 @@ ALTERNET_UI_API char16_t* SelectDirectoryDialog_GetTitle_(SelectDirectoryDialog*
 ALTERNET_UI_API void SelectDirectoryDialog_SetTitle_(SelectDirectoryDialog* obj, const char16_t* value)
 {
     MarshalExceptions<void>([&](){
-            obj->SetTitle(value);
+            obj->SetTitle(ToOptional(value));
         });
 }
 
@@ -53,14 +54,14 @@ ALTERNET_UI_API char16_t* SelectDirectoryDialog_GetDirectoryName_(SelectDirector
 ALTERNET_UI_API void SelectDirectoryDialog_SetDirectoryName_(SelectDirectoryDialog* obj, const char16_t* value)
 {
     MarshalExceptions<void>([&](){
-            obj->SetDirectoryName(value);
+            obj->SetDirectoryName(ToOptional(value));
         });
 }
 
-ALTERNET_UI_API ModalResult SelectDirectoryDialog_ShowModal_(SelectDirectoryDialog* obj)
+ALTERNET_UI_API ModalResult SelectDirectoryDialog_ShowModal_(SelectDirectoryDialog* obj, Window* owner)
 {
     return MarshalExceptions<ModalResult>([&](){
-            return obj->ShowModal();
+            return obj->ShowModal(owner);
         });
 }
 

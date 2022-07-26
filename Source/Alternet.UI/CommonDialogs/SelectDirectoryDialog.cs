@@ -5,10 +5,21 @@ namespace Alternet.UI
     /// </summary>
     public sealed class SelectDirectoryDialog : CommonDialog
     {
+        private Native.SelectDirectoryDialog nativeDialog;
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="SelectDirectoryDialog"/>.
+        /// </summary>
+        public SelectDirectoryDialog()
+        {
+            nativeDialog = new Native.SelectDirectoryDialog();
+        }
+
         private protected override ModalResult ShowModalCore(Window? owner)
         {
             CheckDisposed();
-            return NativeApi.FileDialog_ShowModal(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
+            var nativeOwner = owner == null ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
+            return (ModalResult)nativeDialog.ShowModal(nativeOwner);
         }
 
         /// <summary>
@@ -19,28 +30,28 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return NativeApi.FileDialog_GetInitialDirectory(NativePointer);
+                return nativeDialog.InitialDirectory;
             }
 
             set
             {
                 CheckDisposed();
-                NativeApi.FileDialog_SetInitialDirectory(NativePointer, value);
+                nativeDialog.InitialDirectory = value;
             }
         }
 
-        private protected override string TitleCore
+        private protected override string? TitleCore
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.FileDialog_GetTitle(NativePointer);
+                return nativeDialog.Title;
             }
 
             set
             {
                 CheckDisposed();
-                NativeApi.FileDialog_SetTitle(NativePointer, value);
+                nativeDialog.Title = value;
             }
         }
 
@@ -52,13 +63,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return NativeApi.FileDialog_GetFileName(NativePointer);
+                return nativeDialog.DirectoryName;
             }
 
             set
             {
                 CheckDisposed();
-                NativeApi.FileDialog_SetFileName(NativePointer, value);
+                nativeDialog.DirectoryName = value;
             }
         }
     }

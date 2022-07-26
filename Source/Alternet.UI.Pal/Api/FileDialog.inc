@@ -5,24 +5,24 @@ FileDialogMode GetMode();
 void SetMode(FileDialogMode value);
 
 
-string GetInitialDirectory();
-void SetInitialDirectory(const string& value);
+optional<string> GetInitialDirectory();
+void SetInitialDirectory(optional<string> value);
 
 
-string GetTitle();
-void SetTitle(const string& value);
+optional<string> GetTitle();
+void SetTitle(optional<string> value);
 
 
-string GetFilter();
-void SetFilter(const string& value);
+optional<string> GetFilter();
+void SetFilter(optional<string> value);
 
 
 int GetSelectedFilterIndex();
 void SetSelectedFilterIndex(int value);
 
 
-string GetFileName();
-void SetFileName(const string& value);
+optional<string> GetFileName();
+void SetFileName(optional<string> value);
 
 
 bool GetAllowMultipleSelection();
@@ -30,9 +30,9 @@ void SetAllowMultipleSelection(bool value);
 
 void* OpenFileNamesArray();
 int GetFileNamesItemCount(void* array);
-string GetFileNamesItemAt(void* array, int index);
+optional<string> GetFileNamesItemAt(void* array, int index);
 void CloseFileNamesArray(void* array);
-ModalResult ShowModal();
+ModalResult ShowModal(Window* owner);
 public:
 FileDialog();
 protected:

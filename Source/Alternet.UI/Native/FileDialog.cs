@@ -39,7 +39,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public string InitialDirectory
+        public string? InitialDirectory
         {
             get
             {
@@ -56,7 +56,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public string Title
+        public string? Title
         {
             get
             {
@@ -73,7 +73,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public string Filter
+        public string? Filter
         {
             get
             {
@@ -107,7 +107,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public string FileName
+        public string? FileName
         {
             get
             {
@@ -167,10 +167,10 @@ namespace Alternet.UI.Native
             
         }
         
-        public ModalResult ShowModal()
+        public ModalResult ShowModal(Window? owner)
         {
             CheckDisposed();
-            var n = NativeApi.FileDialog_ShowModal_(NativePointer);
+            var n = NativeApi.FileDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
             var m = n;
             return m;
         }
@@ -191,22 +191,22 @@ namespace Alternet.UI.Native
             public static extern void FileDialog_SetMode_(IntPtr obj, FileDialogMode value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string FileDialog_GetInitialDirectory_(IntPtr obj);
+            public static extern string? FileDialog_GetInitialDirectory_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void FileDialog_SetInitialDirectory_(IntPtr obj, string value);
+            public static extern void FileDialog_SetInitialDirectory_(IntPtr obj, string? value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string FileDialog_GetTitle_(IntPtr obj);
+            public static extern string? FileDialog_GetTitle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void FileDialog_SetTitle_(IntPtr obj, string value);
+            public static extern void FileDialog_SetTitle_(IntPtr obj, string? value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string FileDialog_GetFilter_(IntPtr obj);
+            public static extern string? FileDialog_GetFilter_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void FileDialog_SetFilter_(IntPtr obj, string value);
+            public static extern void FileDialog_SetFilter_(IntPtr obj, string? value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int FileDialog_GetSelectedFilterIndex_(IntPtr obj);
@@ -215,10 +215,10 @@ namespace Alternet.UI.Native
             public static extern void FileDialog_SetSelectedFilterIndex_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string FileDialog_GetFileName_(IntPtr obj);
+            public static extern string? FileDialog_GetFileName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void FileDialog_SetFileName_(IntPtr obj, string value);
+            public static extern void FileDialog_SetFileName_(IntPtr obj, string? value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool FileDialog_GetAllowMultipleSelection_(IntPtr obj);
@@ -233,13 +233,13 @@ namespace Alternet.UI.Native
             public static extern int FileDialog_GetFileNamesItemCount_(IntPtr obj, System.IntPtr array);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string FileDialog_GetFileNamesItemAt_(IntPtr obj, System.IntPtr array, int index);
+            public static extern string? FileDialog_GetFileNamesItemAt_(IntPtr obj, System.IntPtr array, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void FileDialog_CloseFileNamesArray_(IntPtr obj, System.IntPtr array);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern ModalResult FileDialog_ShowModal_(IntPtr obj);
+            public static extern ModalResult FileDialog_ShowModal_(IntPtr obj, IntPtr owner);
             
         }
     }

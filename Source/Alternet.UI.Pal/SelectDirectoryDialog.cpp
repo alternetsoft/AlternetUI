@@ -13,10 +13,12 @@ namespace Alternet::UI
 
     void SelectDirectoryDialog::CreateDialog()
     {
+        auto owner = _owner != nullptr ? _owner->GetWxWindow() : nullptr;
+
         _dialog = new wxDirDialog(
-            nullptr,
+            owner,
             wxASCII_STR(wxDirSelectorPromptStr),
-            wxStr(_initialDirectory),
+            wxStr(_initialDirectory.value_or(u"")),
             GetStyle(),
             wxDefaultPosition,
             wxDefaultSize,
@@ -28,41 +30,46 @@ namespace Alternet::UI
         return wxDD_DEFAULT_STYLE;
     }
 
-    string SelectDirectoryDialog::GetInitialDirectory()
+    optional<string> SelectDirectoryDialog::GetInitialDirectory()
     {
         return _initialDirectory;
     }
 
-    void SelectDirectoryDialog::SetInitialDirectory(const string& value)
+    void SelectDirectoryDialog::SetInitialDirectory(optional<string> value)
     {
         _initialDirectory = value;
         RecreateDialog();
     }
 
-    string SelectDirectoryDialog::GetTitle()
+    optional<string> SelectDirectoryDialog::GetTitle()
     {
         return _title;
     }
 
-    void SelectDirectoryDialog::SetTitle(const string& value)
+    void SelectDirectoryDialog::SetTitle(optional<string> value)
     {
         _title = value;
-        GetDialog()->SetTitle(wxStr(value));
+        GetDialog()->SetTitle(wxStr(value.value_or(u"")));
     }
 
-    string SelectDirectoryDialog::GetDirectoryName()
+    optional<string> SelectDirectoryDialog::GetDirectoryName()
     {
         return wxStr(GetDialog()->GetPath());
     }
 
-    void SelectDirectoryDialog::SetDirectoryName(const string& value)
+    void SelectDirectoryDialog::SetDirectoryName(optional<string> value)
     {
         _directoryName = value;
-        GetDialog()->SetPath(wxStr(value));
+        GetDialog()->SetPath(wxStr(value.value_or(u"")));
     }
 
-    ModalResult SelectDirectoryDialog::ShowModal()
+    ModalResult SelectDirectoryDialog::ShowModal(Window* owner)
     {
+        bool ownerChanged = _owner != owner;
+        _owner = owner;
+        if (ownerChanged)
+            RecreateDialog();
+
         auto result = GetDialog()->ShowModal();
 
         if (result == wxID_OK)

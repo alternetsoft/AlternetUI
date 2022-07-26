@@ -13,12 +13,14 @@ namespace Alternet::UI
 
     void FileDialog::CreateDialog()
     {
+        auto owner = _owner != nullptr ? _owner->GetWxWindow() : nullptr;
+
         _dialog = new wxFileDialog(
-            nullptr,
+            owner,
             wxASCII_STR(wxFileSelectorPromptStr),
-            wxStr(_initialDirectory),
+            wxStr(_initialDirectory.value_or(u"")),
             wxEmptyString,
-            wxStr(_filter),
+            wxStr(_filter.value_or(u"")),
             GetStyle(),
             wxDefaultPosition,
             wxDefaultSize,
@@ -53,37 +55,37 @@ namespace Alternet::UI
         RecreateDialog();
     }
 
-    string FileDialog::GetInitialDirectory()
+    optional<string> FileDialog::GetInitialDirectory()
     {
         return _initialDirectory;
     }
 
-    void FileDialog::SetInitialDirectory(const string& value)
+    void FileDialog::SetInitialDirectory(optional<string> value)
     {
         _initialDirectory = value;
-        GetDialog()->SetDirectory(wxStr(value));
+        GetDialog()->SetDirectory(wxStr(value.value_or(u"")));
     }
 
-    string FileDialog::GetTitle()
+    optional<string> FileDialog::GetTitle()
     {
         return _title;
     }
 
-    void FileDialog::SetTitle(const string& value)
+    void FileDialog::SetTitle(optional<string> value)
     {
         _title = value;
-        GetDialog()->SetTitle(wxStr(value));
+        GetDialog()->SetTitle(wxStr(value.value_or(u"")));
     }
 
-    string FileDialog::GetFilter()
+    optional<string> FileDialog::GetFilter()
     {
         return _filter;
     }
 
-    void FileDialog::SetFilter(const string& value)
+    void FileDialog::SetFilter(optional<string> value)
     {
         _filter = value;
-        GetDialog()->SetWildcard(wxStr(value));
+        GetDialog()->SetWildcard(wxStr(value.value_or(u"")));
     }
 
     int FileDialog::GetSelectedFilterIndex()
@@ -97,15 +99,15 @@ namespace Alternet::UI
         GetDialog()->SetFilterIndex(value);
     }
 
-    string FileDialog::GetFileName()
+    optional<string> FileDialog::GetFileName()
     {
         return wxStr(GetDialog()->GetPath());
     }
 
-    void FileDialog::SetFileName(const string& value)
+    void FileDialog::SetFileName(optional<string> value)
     {
         _fileName = value;
-        GetDialog()->SetPath(wxStr(value));
+        GetDialog()->SetPath(wxStr(value.value_or(u"")));
     }
 
     bool FileDialog::GetAllowMultipleSelection()
@@ -132,7 +134,7 @@ namespace Alternet::UI
         return paths->GetCount();
     }
 
-    string FileDialog::GetFileNamesItemAt(void* array, int index)
+    optional<string> FileDialog::GetFileNamesItemAt(void* array, int index)
     {
         auto paths = (wxArrayString*)array;
         return wxStr((*paths)[index]);
@@ -144,8 +146,13 @@ namespace Alternet::UI
         delete paths;
     }
 
-    ModalResult FileDialog::ShowModal()
+    ModalResult FileDialog::ShowModal(Window* owner)
     {
+        bool ownerChanged = _owner != owner;
+        _owner = owner;
+        if (ownerChanged)
+            RecreateDialog();
+
         auto result = GetDialog()->ShowModal();
         
         if (result == wxID_OK)

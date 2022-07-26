@@ -3,6 +3,7 @@
 #pragma once
 
 #include "FileDialog.h"
+#include "Window.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -39,7 +40,7 @@ ALTERNET_UI_API char16_t* FileDialog_GetInitialDirectory_(FileDialog* obj)
 ALTERNET_UI_API void FileDialog_SetInitialDirectory_(FileDialog* obj, const char16_t* value)
 {
     MarshalExceptions<void>([&](){
-            obj->SetInitialDirectory(value);
+            obj->SetInitialDirectory(ToOptional(value));
         });
 }
 
@@ -53,7 +54,7 @@ ALTERNET_UI_API char16_t* FileDialog_GetTitle_(FileDialog* obj)
 ALTERNET_UI_API void FileDialog_SetTitle_(FileDialog* obj, const char16_t* value)
 {
     MarshalExceptions<void>([&](){
-            obj->SetTitle(value);
+            obj->SetTitle(ToOptional(value));
         });
 }
 
@@ -67,7 +68,7 @@ ALTERNET_UI_API char16_t* FileDialog_GetFilter_(FileDialog* obj)
 ALTERNET_UI_API void FileDialog_SetFilter_(FileDialog* obj, const char16_t* value)
 {
     MarshalExceptions<void>([&](){
-            obj->SetFilter(value);
+            obj->SetFilter(ToOptional(value));
         });
 }
 
@@ -95,7 +96,7 @@ ALTERNET_UI_API char16_t* FileDialog_GetFileName_(FileDialog* obj)
 ALTERNET_UI_API void FileDialog_SetFileName_(FileDialog* obj, const char16_t* value)
 {
     MarshalExceptions<void>([&](){
-            obj->SetFileName(value);
+            obj->SetFileName(ToOptional(value));
         });
 }
 
@@ -141,10 +142,10 @@ ALTERNET_UI_API void FileDialog_CloseFileNamesArray_(FileDialog* obj, void* arra
         });
 }
 
-ALTERNET_UI_API ModalResult FileDialog_ShowModal_(FileDialog* obj)
+ALTERNET_UI_API ModalResult FileDialog_ShowModal_(FileDialog* obj, Window* owner)
 {
     return MarshalExceptions<ModalResult>([&](){
-            return obj->ShowModal();
+            return obj->ShowModal(owner);
         });
 }
 

@@ -12,7 +12,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the file dialog window title.
         /// </summary>
-        public string Title
+        public string? Title
         {
             get
             {
@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// </summary>
         public bool IsDisposed { get; private set; }
 
-        private protected abstract string TitleCore { get; set; }
+        private protected abstract string? TitleCore { get; set; }
 
         /// <summary>
         /// Runs a common dialog window with a default owner.
