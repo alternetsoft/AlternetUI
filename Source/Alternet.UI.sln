@@ -75,6 +75,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WindowPropertiesSample", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MenuSample", "Samples\MenuSample\MenuSample.csproj", "{4E2AB177-A9A7-4304-B248-9AED43C3E017}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonDialogsSample", "Samples\CommonDialogsSample\CommonDialogsSample.csproj", "{1371F596-35B5-48A1-9702-A43EF0460534}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -361,6 +363,18 @@ Global
 		{4E2AB177-A9A7-4304-B248-9AED43C3E017}.Release|x64.Build.0 = Release|x64
 		{4E2AB177-A9A7-4304-B248-9AED43C3E017}.Release|x86.ActiveCfg = Release|x86
 		{4E2AB177-A9A7-4304-B248-9AED43C3E017}.Release|x86.Build.0 = Release|x86
+		{1371F596-35B5-48A1-9702-A43EF0460534}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1371F596-35B5-48A1-9702-A43EF0460534}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1371F596-35B5-48A1-9702-A43EF0460534}.Debug|x64.ActiveCfg = Debug|x64
+		{1371F596-35B5-48A1-9702-A43EF0460534}.Debug|x64.Build.0 = Debug|x64
+		{1371F596-35B5-48A1-9702-A43EF0460534}.Debug|x86.ActiveCfg = Debug|x86
+		{1371F596-35B5-48A1-9702-A43EF0460534}.Debug|x86.Build.0 = Debug|x86
+		{1371F596-35B5-48A1-9702-A43EF0460534}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1371F596-35B5-48A1-9702-A43EF0460534}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1371F596-35B5-48A1-9702-A43EF0460534}.Release|x64.ActiveCfg = Release|x64
+		{1371F596-35B5-48A1-9702-A43EF0460534}.Release|x64.Build.0 = Release|x64
+		{1371F596-35B5-48A1-9702-A43EF0460534}.Release|x86.ActiveCfg = Release|x86
+		{1371F596-35B5-48A1-9702-A43EF0460534}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -392,6 +406,7 @@ Global
 		{A7EB8B2E-2463-499B-AA79-C9B357990631} = {B3B7BFD7-CEFB-46C2-BAF5-710D858DE73B}
 		{506CFBB8-EE48-450D-8EB9-5A335F97AED0} = {B3B7BFD7-CEFB-46C2-BAF5-710D858DE73B}
 		{4E2AB177-A9A7-4304-B248-9AED43C3E017} = {B3B7BFD7-CEFB-46C2-BAF5-710D858DE73B}
+		{1371F596-35B5-48A1-9702-A43EF0460534} = {B3B7BFD7-CEFB-46C2-BAF5-710D858DE73B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BD17D7DB-AEF9-418B-81F8-8E0920FC6FF7}

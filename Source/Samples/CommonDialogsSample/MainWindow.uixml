@@ -1,0 +1,8 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="CommonDialogsSample.MainWindow"
+        Title="Common Dialogs Sample">
+  <StackPanel>
+    <Button Text="Show Open File Dialog" Name="showOpenFileDialogButton" Click="ShowOpenFileDialogButton_Click" Margin="10"/>
+  </StackPanel>
+</Window>

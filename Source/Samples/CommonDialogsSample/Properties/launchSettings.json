@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CommonDialogsSample": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
