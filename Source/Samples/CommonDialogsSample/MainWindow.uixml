@@ -4,5 +4,7 @@
         Title="Common Dialogs Sample">
   <StackPanel>
     <Button Text="Show Open File Dialog" Name="showOpenFileDialogButton" Click="ShowOpenFileDialogButton_Click" Margin="10"/>
+    <Button Text="Show Save File Dialog" Name="showSaveFileDialogButton" Click="ShowSaveFileDialogButton_Click" Margin="10"/>
+    <Button Text="Show Select Directory Dialog" Name="showSelectDirectoryDialogButton" Click="ShowSelectDirectoryDialogButton_Click" Margin="10"/>
   </StackPanel>
 </Window>
