@@ -33,6 +33,8 @@ namespace Alternet.UI
             MessageBoxIcon icon = MessageBoxIcon.Information,
             MessageBoxDefaultButton defaultButton = MessageBoxDefaultButton.OK)
         {
+            ValidateButtons(buttons, defaultButton);
+
             var nativeOwner = owner == null ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
             return (MessageBoxResult)Native.MessageBox.Show(
                 nativeOwner,
@@ -41,6 +43,32 @@ namespace Alternet.UI
                 (Native.MessageBoxButtons)buttons,
                 (Native.MessageBoxIcon)icon,
                 (Native.MessageBoxDefaultButton)defaultButton);
+        }
+
+        private static void ValidateButtons(MessageBoxButtons buttons, MessageBoxDefaultButton defaultButton)
+        {
+            bool valid;
+
+            switch (defaultButton)
+            {
+                case MessageBoxDefaultButton.OK:
+                    valid = buttons == MessageBoxButtons.OK || buttons == MessageBoxButtons.OKCancel;
+                    break;
+                case MessageBoxDefaultButton.Cancel:
+                    valid = buttons == MessageBoxButtons.YesNoCancel || buttons == MessageBoxButtons.OKCancel;
+                    break;
+                case MessageBoxDefaultButton.Yes:
+                    valid = buttons == MessageBoxButtons.YesNoCancel || buttons == MessageBoxButtons.YesNo;
+                    break;
+                case MessageBoxDefaultButton.No:
+                    valid = buttons == MessageBoxButtons.YesNoCancel || buttons == MessageBoxButtons.YesNo;
+                    break;
+                default:
+                    throw new InvalidOperationException();
+            }
+
+            if (!valid)
+                throw new ArgumentException($"MessageBoxDefaultButton.{defaultButton} cannot be used together with MessageBoxButtons.{buttons}");
         }
 
         /// <summary>
@@ -153,11 +181,6 @@ namespace Alternet.UI
         /// The message box contains an Information icon.
         /// </summary>
         Information,
-
-        /// <summary>
-        /// The message box contains a Question icon.
-        /// </summary>
-        Question,
 
         /// <summary>
         /// The message box contains a Warning icon.

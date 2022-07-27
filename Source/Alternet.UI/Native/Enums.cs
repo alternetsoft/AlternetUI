@@ -246,9 +246,8 @@ namespace Alternet.UI.Native
     {
         None = 0,
         Information = 1,
-        Question = 2,
-        Warning = 3,
-        Error = 4,
+        Warning = 2,
+        Error = 3,
     }
     
     enum MouseButton

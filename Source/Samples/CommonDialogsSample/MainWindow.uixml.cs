@@ -101,14 +101,21 @@ namespace CommonDialogsSample
 
         private void ShowMessageBoxButton_Click(object sender, System.EventArgs e)
         {
-            var result = MessageBox.Show(
-                "Message Box Text",
-                "Message Box Caption",
-                (MessageBoxButtons)messageBoxButtonsComboBox.SelectedItem!,
-                (MessageBoxIcon)messageBoxIconComboBox.SelectedItem!,
-                (MessageBoxDefaultButton)messageBoxDefaultButtonComboBox.SelectedItem!);
+            try
+            {
+                var result = MessageBox.Show(
+                    "Message Box Text",
+                    "Message Box Caption",
+                    (MessageBoxButtons)messageBoxButtonsComboBox.SelectedItem!,
+                    (MessageBoxIcon)messageBoxIconComboBox.SelectedItem!,
+                    (MessageBoxDefaultButton)messageBoxDefaultButtonComboBox.SelectedItem!);
 
-            MessageBox.Show("Result: " + result, "Message Box Result");
+                MessageBox.Show("Result: " + result, "Message Box Result");
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "Message Box Argument Exception");
+            }
         }
     }
 }

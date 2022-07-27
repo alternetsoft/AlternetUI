@@ -54,9 +54,6 @@ namespace Alternet::UI
         case MessageBoxIcon::Information:
             style |= wxICON_INFORMATION;
             break;
-        case MessageBoxIcon::Question:
-            style |= wxICON_QUESTION;
-            break;
         case MessageBoxIcon::Warning:
             style |= wxICON_WARNING;
             break;
