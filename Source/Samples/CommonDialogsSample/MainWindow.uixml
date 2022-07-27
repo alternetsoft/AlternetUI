@@ -3,7 +3,7 @@
         x:Class="CommonDialogsSample.MainWindow"
         Title="Common Dialogs Sample">
   <StackPanel>
-    <CheckBox Text="Set Initial Directory to 'C:\Users'" Name="setInitialDirectoryCheckBox" Margin="10" />
+    <CheckBox Text="Set Initial Directory to User Home Directory" Name="setInitialDirectoryCheckBox" Margin="10" />
 
     <CheckBox Text="Set Title to 'Custom Title'" Name="setCustomTitleCheckBox" Margin="10" />
 
