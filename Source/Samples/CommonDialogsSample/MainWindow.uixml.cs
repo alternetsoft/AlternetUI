@@ -17,15 +17,11 @@ namespace CommonDialogsSample
         {
             var dialog = new OpenFileDialog();
 
-            if (setInitialDirectoryCheckBox.IsChecked)
-                dialog.InitialDirectory = InitialDirectory;
-
-            if (setCustomTitleCheckBox.IsChecked)
-                dialog.Title = CustomTitle;
+            SetFileDialogProperties(dialog);
 
             dialog.AllowMultipleSelection = allowMultipleSelectionCheckBox.IsChecked;
 
-            var result = dialog.ShowModal();
+            var result = dialog.ShowModal(this);
 
             if (result == ModalResult.Accepted)
             {
@@ -38,17 +34,28 @@ namespace CommonDialogsSample
                 MessageBox.Show(result.ToString(), "Dialog Result");
         }
 
-        private void ShowSaveFileDialogButton_Click(object sender, System.EventArgs e)
+        private void SetFileDialogProperties(FileDialog dialog)
         {
-            var dialog = new SaveFileDialog();
-
             if (setInitialDirectoryCheckBox.IsChecked)
                 dialog.InitialDirectory = InitialDirectory;
 
             if (setCustomTitleCheckBox.IsChecked)
                 dialog.Title = CustomTitle;
 
-            var result = dialog.ShowModal();
+            if (setFilterCheckBox.IsChecked)
+            {
+                dialog.Filter = "Text files(*.txt)|*.txt|All files(*.*)|*.*";
+                dialog.SelectedFilterIndex = 1;
+            }
+        }
+
+        private void ShowSaveFileDialogButton_Click(object sender, System.EventArgs e)
+        {
+            var dialog = new SaveFileDialog();
+
+            SetFileDialogProperties(dialog);
+
+            var result = dialog.ShowModal(this);
 
             if (result == ModalResult.Accepted)
                 MessageBox.Show("Accepted, FileName = " + dialog.FileName, "Dialog Result");
@@ -66,7 +73,7 @@ namespace CommonDialogsSample
             if (setCustomTitleCheckBox.IsChecked)
                 dialog.Title = CustomTitle;
 
-            var result = dialog.ShowModal();
+            var result = dialog.ShowModal(this);
 
             if (result == ModalResult.Accepted)
                 MessageBox.Show("Accepted, FileName = " + dialog.DirectoryName, "Dialog Result");
