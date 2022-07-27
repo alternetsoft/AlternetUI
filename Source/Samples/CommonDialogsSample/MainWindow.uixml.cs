@@ -10,6 +10,20 @@ namespace CommonDialogsSample
         public MainWindow()
         {
             InitializeComponent();
+
+            InitializeEnumComboBox<MessageBoxButtons>(messageBoxButtonsComboBox);
+            InitializeEnumComboBox<MessageBoxDefaultButton>(messageBoxDefaultButtonComboBox);
+            InitializeEnumComboBox<MessageBoxIcon>(messageBoxIconComboBox);
+        }
+
+        void InitializeEnumComboBox<TEnum>(ComboBox comboBox)
+        {
+            comboBox.Items.Clear();
+
+            foreach (var value in Enum.GetValues(typeof(TEnum)))
+                comboBox.Items.Add(value);
+
+            comboBox.SelectedIndex = 0;
         }
 
         string GetInitialDirectory()
@@ -83,6 +97,18 @@ namespace CommonDialogsSample
                 MessageBox.Show("Accepted, FileName = " + dialog.DirectoryName, "Dialog Result");
             else
                 MessageBox.Show(result.ToString(), "Dialog Result");
+        }
+
+        private void ShowMessageBoxButton_Click(object sender, System.EventArgs e)
+        {
+            var result = MessageBox.Show(
+                "Message Box Text",
+                "Message Box Caption",
+                (MessageBoxButtons)messageBoxButtonsComboBox.SelectedItem!,
+                (MessageBoxIcon)messageBoxIconComboBox.SelectedItem!,
+                (MessageBoxDefaultButton)messageBoxDefaultButtonComboBox.SelectedItem!);
+
+            MessageBox.Show("Result: " + result, "Message Box Result");
         }
     }
 }

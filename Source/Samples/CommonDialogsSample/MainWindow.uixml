@@ -1,22 +1,52 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="CommonDialogsSample.MainWindow"
-        Title="Common Dialogs Sample">
-  <StackPanel>
-    <CheckBox Text="Set Initial Directory to User Home Directory" Name="setInitialDirectoryCheckBox" Margin="10" />
-
-    <CheckBox Text="Set Title to 'Custom Title'" Name="setCustomTitleCheckBox" Margin="10" />
-
-    <CheckBox Text="Set Filter" Name="setFilterCheckBox" Margin="10" />
-
-    <GroupBox Title="Open File Dialog">
+        Title="Common Dialogs Sample"
+        Width="600" Height="400">
+  <StackPanel Orientation="Horizontal">
+    <GroupBox Title="File Dialogs" Margin="10">
       <StackPanel>
-        <CheckBox Text="Allow Multiple Selection" Name="allowMultipleSelectionCheckBox" Margin="10" />
-        <Button Text="Show Open File Dialog" Name="showOpenFileDialogButton" Click="ShowOpenFileDialogButton_Click" Margin="10"/>
+        <CheckBox Text="Set Initial Directory to User Home Directory" Name="setInitialDirectoryCheckBox" Margin="10" />
+
+        <CheckBox Text="Set Title to 'Custom Title'" Name="setCustomTitleCheckBox" Margin="10" />
+
+        <CheckBox Text="Set Filter" Name="setFilterCheckBox" Margin="10" />
+
+        <GroupBox Title="Open File Dialog">
+          <StackPanel>
+            <CheckBox Text="Allow Multiple Selection" Name="allowMultipleSelectionCheckBox" Margin="10" />
+            <Button Text="Show Open File Dialog" Name="showOpenFileDialogButton" Click="ShowOpenFileDialogButton_Click" Margin="10"/>
+          </StackPanel>
+        </GroupBox>
+
+        <Button Text="Show Save File Dialog" Name="showSaveFileDialogButton" Click="ShowSaveFileDialogButton_Click" Margin="10"/>
+        <Button Text="Show Select Directory Dialog" Name="showSelectDirectoryDialogButton" Click="ShowSelectDirectoryDialogButton_Click" Margin="10"/>
       </StackPanel>
     </GroupBox>
+    <GroupBox Title="Message Box" Margin="10">
+      <Grid Padding="10">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-    <Button Text="Show Save File Dialog" Name="showSaveFileDialogButton" Click="ShowSaveFileDialogButton_Click" Margin="10"/>
-    <Button Text="Show Select Directory Dialog" Name="showSelectDirectoryDialogButton" Click="ShowSelectDirectoryDialogButton_Click" Margin="10"/>
+        <Label Grid.Row="0" Text="Buttons:" Margin="0,0,5,10"/>
+        <ComboBox Grid.Row="0" Grid.Column="1" Name="messageBoxButtonsComboBox" IsEditable="false" Margin="0,0,0,10" />
+
+        <Label Grid.Row="1" Text="Icon:" Margin="0,0,5,10"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" Name="messageBoxIconComboBox" IsEditable="false" Margin="0,0,0,10" />
+
+        <Label Grid.Row="2" Text="Default Button:" Margin="0,0,5,10"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" Name="messageBoxDefaultButtonComboBox" IsEditable="false" Margin="0,0,0,10" />
+
+        <Button Grid.Row="3" Grid.ColumnSpan="2" Text="Show Message Box" Name="showMessageBoxButton" Click="ShowMessageBoxButton_Click" Margin="10"/>
+      </Grid>
+    </GroupBox>
   </StackPanel>
 </Window>
