@@ -17,7 +17,7 @@ namespace Alternet::UI
 
         _dialog = new wxFileDialog(
             owner,
-            wxASCII_STR(wxFileSelectorPromptStr),
+            wxStr(_title.value_or(u"")),
             wxStr(_initialDirectory.value_or(u"")),
             wxEmptyString,
             wxStr(_filter.value_or(u"")),
@@ -74,7 +74,7 @@ namespace Alternet::UI
     void FileDialog::SetTitle(optional<string> value)
     {
         _title = value;
-        GetDialog()->SetTitle(wxStr(value.value_or(u"")));
+        RecreateDialog();
     }
 
     optional<string> FileDialog::GetFilter()

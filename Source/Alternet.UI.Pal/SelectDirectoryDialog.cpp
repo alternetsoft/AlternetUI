@@ -17,7 +17,7 @@ namespace Alternet::UI
 
         _dialog = new wxDirDialog(
             owner,
-            wxASCII_STR(wxDirSelectorPromptStr),
+            wxStr(_title.value_or(u"")),
             wxStr(_initialDirectory.value_or(u"")),
             GetStyle(),
             wxDefaultPosition,
@@ -49,7 +49,7 @@ namespace Alternet::UI
     void SelectDirectoryDialog::SetTitle(optional<string> value)
     {
         _title = value;
-        GetDialog()->SetTitle(wxStr(value.value_or(u"")));
+        RecreateDialog();
     }
 
     optional<string> SelectDirectoryDialog::GetDirectoryName()
