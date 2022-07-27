@@ -5,7 +5,6 @@ namespace CommonDialogsSample
 {
     public partial class MainWindow : Window
     {
-        private const string InitialDirectory = @"C:\Users";
         private const string CustomTitle = @"Custom Title";
 
         public MainWindow()
@@ -13,7 +12,12 @@ namespace CommonDialogsSample
             InitializeComponent();
         }
 
-        private void ShowOpenFileDialogButton_Click(object sender, System.EventArgs e)
+        string GetInitialDirectory()
+        {
+            return Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        }
+
+        private void ShowOpenFileDialogButton_Click(object sender, EventArgs e)
         {
             var dialog = new OpenFileDialog();
 
@@ -37,7 +41,7 @@ namespace CommonDialogsSample
         private void SetFileDialogProperties(FileDialog dialog)
         {
             if (setInitialDirectoryCheckBox.IsChecked)
-                dialog.InitialDirectory = InitialDirectory;
+                dialog.InitialDirectory = GetInitialDirectory();
 
             if (setCustomTitleCheckBox.IsChecked)
                 dialog.Title = CustomTitle;
@@ -68,7 +72,7 @@ namespace CommonDialogsSample
             var dialog = new SelectDirectoryDialog();
 
             if (setInitialDirectoryCheckBox.IsChecked)
-                dialog.InitialDirectory = InitialDirectory;
+                dialog.InitialDirectory = GetInitialDirectory();
 
             if (setCustomTitleCheckBox.IsChecked)
                 dialog.Title = CustomTitle;
