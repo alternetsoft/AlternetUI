@@ -21,9 +21,11 @@ namespace Alternet.UI.Native
         {
         }
         
-        public static void Show(string text, string? caption)
+        public static MessageBoxResult Show(Window? owner, string text, string? caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
         {
-            NativeApi.MessageBox__Show_(text, caption);
+            var n = NativeApi.MessageBox__Show_(owner?.NativePointer ?? IntPtr.Zero, text, caption, buttons, icon, defaultButton);
+            var m = n;
+            return m;
         }
         
         
@@ -33,7 +35,7 @@ namespace Alternet.UI.Native
             static NativeApi() => Initialize();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void MessageBox__Show_(string text, string? caption);
+            public static extern MessageBoxResult MessageBox__Show_(IntPtr owner, string text, string? caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton);
             
         }
     }

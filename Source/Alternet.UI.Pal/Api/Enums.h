@@ -219,6 +219,39 @@ namespace Alternet::UI
         LargeIcon = 3,
     };
     
+    enum class MessageBoxResult
+    {
+        OK = 0,
+        Cancel = 1,
+        Yes = 2,
+        No = 3,
+    };
+    
+    enum class MessageBoxDefaultButton
+    {
+        OK = 0,
+        Cancel = 1,
+        Yes = 2,
+        No = 3,
+    };
+    
+    enum class MessageBoxButtons
+    {
+        OK = 0,
+        OKCancel = 1,
+        YesNoCancel = 2,
+        YesNo = 3,
+    };
+    
+    enum class MessageBoxIcon
+    {
+        None = 0,
+        Information = 1,
+        Question = 2,
+        Warning = 3,
+        Error = 4,
+    };
+    
     enum class MouseButton
     {
         Left = 0,

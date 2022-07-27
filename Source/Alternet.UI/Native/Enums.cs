@@ -218,6 +218,39 @@ namespace Alternet.UI.Native
         LargeIcon = 3,
     }
     
+    enum MessageBoxResult
+    {
+        OK = 0,
+        Cancel = 1,
+        Yes = 2,
+        No = 3,
+    }
+    
+    enum MessageBoxDefaultButton
+    {
+        OK = 0,
+        Cancel = 1,
+        Yes = 2,
+        No = 3,
+    }
+    
+    enum MessageBoxButtons
+    {
+        OK = 0,
+        OKCancel = 1,
+        YesNoCancel = 2,
+        YesNo = 3,
+    }
+    
+    enum MessageBoxIcon
+    {
+        None = 0,
+        Information = 1,
+        Question = 2,
+        Warning = 3,
+        Error = 4,
+    }
+    
     enum MouseButton
     {
         Left = 0,

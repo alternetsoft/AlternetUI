@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Common.h"
+#include "Window.h"
 
 namespace Alternet::UI
 {
@@ -10,5 +11,7 @@ namespace Alternet::UI
     public:
 
     private:
+        static long GetStyle(MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton);
+        static MessageBoxResult GetResult(int wxResult);
     };
 }

@@ -3,15 +3,16 @@
 #pragma once
 
 #include "MessageBox_.h"
+#include "Window.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API void MessageBox__Show_(const char16_t* text, const char16_t* caption)
+ALTERNET_UI_API MessageBoxResult MessageBox__Show_(Window* owner, const char16_t* text, const char16_t* caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
 {
-    MarshalExceptions<void>([&](){
-            MessageBox_::Show(text, ToOptional(caption));
+    return MarshalExceptions<MessageBoxResult>([&](){
+            return MessageBox_::Show(owner, text, ToOptional(caption), buttons, icon, defaultButton);
         });
 }
 
