@@ -134,6 +134,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             //Test();
             //return;
 
+            Thread.Sleep(500);
             //MessageBox.Show("Attach.");
 
 #if NETCOREAPP
@@ -408,7 +409,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                         window = w;
                         //window.ShowInTaskbar = false;
                         //window.Resizable = false;
-                        //window.IsToolWindow = true;
+                        window.IsToolWindow = true;
                     }
                     else
                     {
@@ -453,6 +454,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                 }
                 catch (Exception e)
                 {
+                    Log(e.ToString());
                     s_transport.Send(new UpdateXamlResultMessage
                     {
                         Error = "Fail",
