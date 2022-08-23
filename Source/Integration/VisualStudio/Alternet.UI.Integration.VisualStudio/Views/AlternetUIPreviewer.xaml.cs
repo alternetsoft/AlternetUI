@@ -19,6 +19,7 @@ using Alternet.UI.Integration.VisualStudio.Models;
 using PInvoke;
 using System.Runtime.InteropServices;
 using System.Reflection;
+using System.IO;
 
 #pragma warning disable VSTHRD100, VSTHRD010, VSTHRD110
 
@@ -30,7 +31,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
         private bool _centerPreviewer;
         //private Size _lastBitmapSize;
 
-        private BitmapSource windowImageSource;
+        private BitmapImage windowImageSource;
 
         public AlternetUIPreviewer()
         {
@@ -223,7 +224,20 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 loading.Visibility = Visibility.Collapsed;
                 previewScroller.Visibility = Visibility.Visible;
 
-                windowImageSource = new BitmapImage(new Uri(preview.ImageFileName));
+                windowImageSource = new BitmapImage();
+                windowImageSource.BeginInit();
+                windowImageSource.CacheOption = BitmapCacheOption.OnLoad;
+                windowImageSource.UriSource = new Uri(preview.ImageFileName);
+                windowImageSource.EndInit();
+
+                try
+                {
+                    File.Delete(preview.ImageFileName);
+                }
+                catch
+                {
+                }
+
                 desiredPreviewSize = preview.DesiredSize;
                 if (desiredPreviewSize.Width <= 0 || desiredPreviewSize.Height <= 0)
                     desiredPreviewSize = defaultPreviewSize;

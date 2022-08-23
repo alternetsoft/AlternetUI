@@ -429,7 +429,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
                         //var handle = GetHandle(window);
 
-                        var targetDirectoryPath = @"c:\temp\window-images";
+                        var targetDirectoryPath = Path.Combine(Path.GetTempPath(), "AlterNET.UIXMLPreviewer", "UIImages");
                         if (!Directory.Exists(targetDirectoryPath))
                             Directory.CreateDirectory(targetDirectoryPath);
 
@@ -448,7 +448,6 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                                 DesiredHeight = (int)window.Height
                             });
                     };
-
 
                     timer.Start();
                 }
