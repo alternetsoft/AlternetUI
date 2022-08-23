@@ -79,6 +79,7 @@ bool Focus();
 void BeginInit();
 void EndInit();
 void Destroy();
+void SaveScreenshot(const string& fileName);
 public:
 enum class ControlEvent
 {

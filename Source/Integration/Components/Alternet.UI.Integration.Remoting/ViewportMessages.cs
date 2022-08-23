@@ -50,7 +50,7 @@ namespace Alternet.UI.Integration.Remoting
     public class PreviewDataMessage
     {
         public long SequenceId { get; set; }
-        public long WindowHandle { get; set; }
+        public string ImageFileName { get; set; }
         
         public int DesiredWidth { get; set; }
         public int DesiredHeight { get; set; }

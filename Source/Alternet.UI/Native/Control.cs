@@ -404,6 +404,12 @@ namespace Alternet.UI.Native
             NativeApi.Control_Destroy_(NativePointer);
         }
         
+        public void SaveScreenshot(string fileName)
+        {
+            CheckDisposed();
+            NativeApi.Control_SaveScreenshot_(NativePointer, fileName);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -622,6 +628,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_Destroy_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SaveScreenshot_(IntPtr obj, string fileName);
             
         }
     }

@@ -201,7 +201,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\Debug\net6.0\**\*.*">
+    <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\Debug\net6.0-windows\**\*.*">
       <Link>UIXmlHostApp\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

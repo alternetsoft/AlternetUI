@@ -47,10 +47,31 @@ namespace Alternet::UI
 #endif
     }
 
+    void Control::SaveScreenshot(const string& fileName)
+    {
+        auto window = GetWxWindow();
+        wxClientDC clientDC(window);
+
+        auto windowSize = window->GetClientSize();
+
+        wxMemoryDC memoryDC;
+        wxBitmap bitmap(windowSize);
+        memoryDC.SelectObject(bitmap);
+
+        memoryDC.Blit(0, 0, windowSize.x, windowSize.y, &clientDC, 0, 0);
+        memoryDC.SelectObject(wxNullBitmap);
+
+        wxImage img = bitmap.ConvertToImage();
+        if (img.HasAlpha())
+            img.ClearAlpha();
+
+        img.SaveFile(wxStr(fileName), wxBITMAP_TYPE_PNG);
+    }
+
     void Control::OnDestroy(wxWindowDestroyEvent& event)
     {
-        if (Application::GetCurrent()->GetInUixmlPreviewerMode())
-            return; // HACK. This gets invoked by wxWidgets on a dead this pointer.
+        //if (Application::GetCurrent()->GetInUixmlPreviewerMode())
+        //    return; // HACK. This gets invoked by wxWidgets on a dead this pointer.
 
         if (!_flags.IsSet(ControlFlags::RecreatingWxWindow))
             _wxWindow = nullptr;
@@ -361,8 +382,8 @@ namespace Alternet::UI
 
     void Control::ShowCore()
     {
-        if (Application::GetCurrent()->GetInUixmlPreviewerMode())
-            return;
+        //if (Application::GetCurrent()->GetInUixmlPreviewerMode())
+        //    return;
 
         GetWxWindow()->Show();
     }

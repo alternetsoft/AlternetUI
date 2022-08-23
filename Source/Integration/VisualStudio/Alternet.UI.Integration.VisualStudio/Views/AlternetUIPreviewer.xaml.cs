@@ -30,8 +30,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
         private bool _centerPreviewer;
         //private Size _lastBitmapSize;
 
-        private System.Windows.Forms.Panel hostPanel;
-        private IntPtr hostedWindowHandle;
+        private BitmapSource windowImageSource;
 
         public AlternetUIPreviewer()
         {
@@ -49,8 +48,8 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
         private void InitializePreviewHost()
         {
-            hostPanel = new System.Windows.Forms.Panel();
-            windowsFormsHost.Child = hostPanel;
+            //hostPanel = new System.Windows.Forms.Panel();
+            //windowsFormsHost.Child = hostPanel;
         }
 
         private void AlternetUIPreviewer_Loaded(object sender, RoutedEventArgs e)
@@ -181,21 +180,21 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
         private void PreviewScroller_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (desiredPreviewSize.Width == 0 || desiredPreviewSize.Height == 0)
-                return;
+            //if (desiredPreviewSize.Width == 0 || desiredPreviewSize.Height == 0)
+            //    return;
 
-            var newSize = desiredPreviewSize;
-            newSize = ConstrainPreviewSizeToFit(newSize);
+            //var newSize = desiredPreviewSize;
+            //newSize = ConstrainPreviewSizeToFit(newSize);
 
-            var actualSize = GetPreviewActualSize();
-            if (actualSize == newSize)
-                return;
+            //var actualSize = GetPreviewActualSize();
+            //if (actualSize == newSize)
+            //    return;
 
-            windowsFormsHost.Width = newSize.Width;
-            windowsFormsHost.Height = newSize.Height;
-            hostPanel.Size = ScaleWithDpi(newSize);
-            User32.MoveWindow(hostedWindowHandle, 0, 0, newSize.Width, newSize.Height, true);
-            Window.GetWindow(this)?.InvalidateVisual();
+            //windowsFormsHost.Width = newSize.Width;
+            //windowsFormsHost.Height = newSize.Height;
+            //hostPanel.Size = ScaleWithDpi(newSize);
+            //User32.MoveWindow(hostedWindowHandle, 0, 0, newSize.Width, newSize.Height, true);
+            //Window.GetWindow(this)?.InvalidateVisual();
         }
 
         private System.Drawing.Size ConstrainPreviewSizeToFit(System.Drawing.Size newSize)
@@ -211,35 +210,36 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
         private void Update(PreviewData preview)
         {
-            if (hostedWindowHandle != IntPtr.Zero)
-            {
-                User32.ShowWindow(hostedWindowHandle, User32.WindowShowStyle.SW_HIDE);
-                User32.SetParent(hostedWindowHandle, IntPtr.Zero);
-                hostedWindowHandle = IntPtr.Zero;
-                desiredPreviewSize = new System.Drawing.Size();
-            }
+            //if (hostedWindowHandle != IntPtr.Zero)
+            //{
+            //    User32.ShowWindow(hostedWindowHandle, User32.WindowShowStyle.SW_HIDE);
+            //    User32.SetParent(hostedWindowHandle, IntPtr.Zero);
+            //    hostedWindowHandle = IntPtr.Zero;
+            //    desiredPreviewSize = new System.Drawing.Size();
+            //}
 
-            if (preview != null && preview.WindowHandle != IntPtr.Zero)
+            if (preview != null && preview.ImageFileName != null)
             {
                 loading.Visibility = Visibility.Collapsed;
                 previewScroller.Visibility = Visibility.Visible;
 
-                hostedWindowHandle = preview.WindowHandle;
+                windowImageSource = new BitmapImage(new Uri(preview.ImageFileName));
                 desiredPreviewSize = preview.DesiredSize;
                 if (desiredPreviewSize.Width <= 0 || desiredPreviewSize.Height <= 0)
                     desiredPreviewSize = defaultPreviewSize;
 
                 var size = desiredPreviewSize;
                 size = ConstrainPreviewSizeToFit(size);
-                windowsFormsHost.Width = size.Width;
-                windowsFormsHost.Height = size.Height;
-                hostPanel.Size = ScaleWithDpi(size);
+                //windowImage.Width = size.Width;
+                //windowImage.Height = size.Height;
 
-                var style = User32.GetWindowLong(hostedWindowHandle, User32.WindowLongIndexFlags.GWL_STYLE);
+                windowImage.Source = windowImageSource;
 
-                User32.SetParent(hostedWindowHandle, hostPanel.Handle);
-                User32.SetWindowLong(hostedWindowHandle, User32.WindowLongIndexFlags.GWL_STYLE, (User32.SetWindowLongFlags)((int)User32.WindowStyles.WS_VISIBLE | style));
-                User32.MoveWindow(hostedWindowHandle, 0, 0, hostPanel.ClientRectangle.Width, hostPanel.ClientRectangle.Height, true);
+                //var style = User32.GetWindowLong(hostedWindowHandle, User32.WindowLongIndexFlags.GWL_STYLE);
+
+                //User32.SetParent(hostedWindowHandle, hostPanel.Handle);
+                //User32.SetWindowLong(hostedWindowHandle, User32.WindowLongIndexFlags.GWL_STYLE, (User32.SetWindowLongFlags)((int)User32.WindowStyles.WS_VISIBLE | style));
+                //User32.MoveWindow(hostedWindowHandle, 0, 0, hostPanel.ClientRectangle.Width, hostPanel.ClientRectangle.Height, true);
             }
             else
             {
@@ -253,19 +253,19 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
         readonly System.Drawing.Size defaultPreviewSize = new System.Drawing.Size(300, 300);
 
-        private System.Drawing.Size GetPreviewActualSize()
-        {
-            if (hostedWindowHandle == IntPtr.Zero)
-                return defaultPreviewSize;
+        //private System.Drawing.Size GetPreviewActualSize()
+        //{
+        //    if (hostedWindowHandle == IntPtr.Zero)
+        //        return defaultPreviewSize;
 
-            User32.GetWindowRect(hostedWindowHandle, out var rect);
+        //    User32.GetWindowRect(hostedWindowHandle, out var rect);
 
-            var size = new System.Drawing.Size(rect.right - rect.left, rect.bottom - rect.top);
+        //    var size = new System.Drawing.Size(rect.right - rect.left, rect.bottom - rect.top);
 
-            if (size.Width == 0 || size.Height == 0)
-                size = defaultPreviewSize;
-            return size;
-        }
+        //    if (size.Width == 0 || size.Height == 0)
+        //        size = defaultPreviewSize;
+        //    return size;
+        //}
 
         private void PreviewScroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {

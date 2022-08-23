@@ -11,13 +11,13 @@ namespace Alternet.UI.Integration.VisualStudio.Models
 {
     public class PreviewData
     {
-        public PreviewData(IntPtr windowHandle, Size desiredSize)
+        public PreviewData(string imageFileName, Size desiredSize)
         {
-            WindowHandle = windowHandle;
+            ImageFileName = imageFileName;
             DesiredSize = desiredSize;
         }
 
-        public IntPtr WindowHandle { get; }
+        public string ImageFileName { get; }
 
         public System.Drawing.Size DesiredSize { get; }
     }

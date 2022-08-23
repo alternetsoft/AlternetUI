@@ -1,12 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFrameworks>net6.0;net461</TargetFrameworks>
+    <TargetFrameworks>net6.0-windows;net461</TargetFrameworks>
     <LangVersion>latest</LangVersion>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Alternet.UI\Alternet.UI.csproj" />
     <ProjectReference Include="..\Alternet.UI.Integration.Remoting\Alternet.UI.Integration.Remoting.csproj" />
+    <PackageReference Include="PInvoke.User32" Version="0.7.124" />
   </ItemGroup>
 
   <ItemGroup>

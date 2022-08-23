@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -260,6 +261,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
         }
 
         static MethodInfo getHandleMethod;
+        static MethodInfo saveScreenshotMethod;
 
         static IntPtr GetHandle(Control control)
         {
@@ -267,6 +269,14 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                 getHandleMethod = typeof(ControlHandler).GetMethod("GetHandle", BindingFlags.Instance | BindingFlags.NonPublic);
 
             return (IntPtr)getHandleMethod.Invoke(control.Handler, new object[0]);
+        }
+
+        static void SaveScreenshot(Control control, string fileName)
+        {
+            if (saveScreenshotMethod == null)
+                saveScreenshotMethod = typeof(ControlHandler).GetMethod("SaveScreenshot", BindingFlags.Instance | BindingFlags.NonPublic);
+
+            saveScreenshotMethod.Invoke(control.Handler, new object[] { fileName });
         }
 
         static void RunApplication()
@@ -330,7 +340,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
         }
 #endif
 
-        static Window currentWindow;
+        //static Window currentWindow;
         private static CommandLineArgs args;
 
         static Queue<Action> actions = new Queue<Action>();
@@ -341,6 +351,38 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                 actions.Enqueue(action);
         }
 
+        const int SRCCOPY = 0xCC0020;
+
+        [DllImport("gdi32.dll")]
+        static extern int BitBlt(IntPtr hdc, int x, int y, int cx, int cy, IntPtr hdcSrc, int x1, int y1, int rop);
+
+        static void SaveWindowToBitmap(IntPtr hwnd, string targetFilePath)
+        {
+            PInvoke.User32.GetWindowRect(hwnd, out var rect);
+            var size = new System.Drawing.Size(rect.right - rect.left, rect.bottom - rect.top);
+
+            //            PInvoke.User32.SetWindowPos(hwnd, new IntPtr(1), 0, 0, size.Width, size.Height, PInvoke.User32.SetWindowPosFlags.SWP_NOACTIVATE);
+            //            PInvoke.User32.UpdateWindow(hwnd);
+
+            var bmp = new System.Drawing.Bitmap(size.Width, size.Height);
+            using (var bmpGraphics = System.Drawing.Graphics.FromImage(bmp))
+            {
+                var bmpDC = bmpGraphics.GetHdc();
+                using (var formGraphics = System.Drawing.Graphics.FromHwnd(hwnd))
+                {
+                    var formDC = formGraphics.GetHdc();
+                    BitBlt(bmpDC, 0, 0, size.Width, size.Height, formDC, 0, 0, SRCCOPY);
+                    formGraphics.ReleaseHdc(formDC);
+                }
+
+                bmpGraphics.ReleaseHdc(bmpDC);
+            }
+
+            //PInvoke.User32.SetWindowPos(hwnd, IntPtr.Zero, rect.left, rect.top, size.Width, size.Height, PInvoke.User32.SetWindowPosFlags.SWP_NOACTIVATE);
+
+            bmp.Save(targetFilePath);
+        }
+
         private static void OnTransportMessage(IAlternetUIRemoteTransportConnection transport, object obj) =>
             BeginInvoke((() =>
         {
@@ -348,11 +390,11 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             {
                 try
                 {
-                    if (currentWindow != null)
-                    {
-                        currentWindow.Dispose();
-                        currentWindow = null;
-                    }
+                    //if (currentWindow != null)
+                    //{
+                    //    currentWindow.Dispose();
+                    //    currentWindow = null;
+                    //}
 
                     var appAssembly = Assembly.LoadFrom(xaml.AssemblyPath);
                     using var stream = new MemoryStream(Encoding.Default.GetBytes(xaml.Xaml));
@@ -364,27 +406,52 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                     if (control is Window w)
                     {
                         window = w;
-                        window.ShowInTaskbar = false;
-                        window.Resizable = false;
+                        //window.ShowInTaskbar = false;
+                        //window.Resizable = false;
+                        //window.IsToolWindow = true;
                     }
                     else
                     {
-                        window = new Window { ShowInTaskbar = false, HasBorder = false, HasTitleBar = false, Resizable = false };
+                        window = new Window { ShowInTaskbar = false, HasBorder = false, HasTitleBar = false, Resizable = false, IsToolWindow = true };
                         window.Children.Add(control);
                     }
 
-                    currentWindow = window;
+                    //currentWindow = window;
+                    window.Show();
 
-                    var handle = GetHandle(currentWindow);
-                    s_transport.Send(
-                        new PreviewDataMessage()
-                        {
-                            WindowHandle = (long)handle,
-                            DesiredWidth = (int)currentWindow.Width,
-                            DesiredHeight = (int)currentWindow.Height
-                        });
+                    var timer = new Timer(TimeSpan.FromMilliseconds(10));
+
+                    timer.Tick += (o, e) =>
+                    {
+                        timer.Stop();
+                        timer.Dispose();
+
+                        //var handle = GetHandle(window);
+
+                        var targetDirectoryPath = @"c:\temp\window-images";
+                        if (!Directory.Exists(targetDirectoryPath))
+                            Directory.CreateDirectory(targetDirectoryPath);
+
+                        var targetFilePath = Path.Combine(targetDirectoryPath, Guid.NewGuid().ToString("N") + ".png");
+                        SaveScreenshot(window, targetFilePath);
+                        //SaveWindowToBitmap(handle, targetFilePath);
+
+                        window.Close();
+                        window.Dispose();
+
+                        s_transport.Send(
+                            new PreviewDataMessage()
+                            {
+                                ImageFileName = targetFilePath,
+                                DesiredWidth = (int)window.Width,
+                                DesiredHeight = (int)window.Height
+                            });
+                    };
+
+
+                    timer.Start();
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     s_transport.Send(new UpdateXamlResultMessage
                     {

@@ -1030,5 +1030,13 @@ namespace Alternet.UI
                 dc.Pop();
             }
         }
+
+        internal void SaveScreenshot(string fileName)
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            NativeControl.SaveScreenshot(fileName);
+        }
     }
 }

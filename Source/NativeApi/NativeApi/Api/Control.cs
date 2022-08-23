@@ -85,5 +85,7 @@ namespace NativeApi.Api
         public void Destroy() => throw new Exception();
 
         public IntPtr Handle { get => throw new Exception(); }
+
+        public void SaveScreenshot(string fileName) => throw new Exception();
     }
 }

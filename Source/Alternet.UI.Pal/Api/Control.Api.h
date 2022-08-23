@@ -325,6 +325,13 @@ ALTERNET_UI_API void Control_Destroy_(Control* obj)
         });
 }
 
+ALTERNET_UI_API void Control_SaveScreenshot_(Control* obj, const char16_t* fileName)
+{
+    MarshalExceptions<void>([&](){
+            obj->SaveScreenshot(fileName);
+        });
+}
+
 ALTERNET_UI_API void Control_SetEventCallback_(Control::ControlEventCallbackType callback)
 {
     Control::SetEventCallback(callback);
