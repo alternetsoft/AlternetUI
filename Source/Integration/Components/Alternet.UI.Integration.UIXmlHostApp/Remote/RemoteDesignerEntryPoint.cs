@@ -131,10 +131,9 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
         [STAThread]
         public static void Main(string[] cmdline)
         {
-            //Test();
+            //Test1();
             //return;
 
-            Thread.Sleep(500);
             //MessageBox.Show("Attach.");
 
 #if NETCOREAPP
@@ -164,7 +163,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
             new System.Threading.Timer(_ => WakeUpIdle(), null, 0, 200);
 
-            application.Run(new Window { ShowInTaskbar = false, StartLocation = WindowStartLocation.Manual, Location = new Point(20000, 20000) });
+            application.Run(new Window { IsToolWindow = true, StartLocation = WindowStartLocation.Manual, Location = new Point(20000, 20000) });
 
             //RunApplication();
 
@@ -219,6 +218,78 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
             //application.Run(control);
 
+        }
+
+        private static void Test1()
+        {
+#if NETCOREAPP
+            System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += AssemblyLoadContext_Resolving;
+#endif
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
+            EnsureApplicationCreated();
+
+            UixmlLoader.DisableComponentInitialization = true;
+            SetUixmlPreviewerMode();
+
+            AttachEventHandler(application, "Idle", Application_IdleTest);
+
+            var timer = new Timer(TimeSpan.FromMilliseconds(100), OnTimerTick);
+
+            new System.Threading.Timer(_ => WakeUpIdle(), null, 0, 200);
+            new System.Threading.Timer(_ => testPulse = true, null, 0, 3000);
+
+            application.Run(new Window { IsToolWindow = true, StartLocation = WindowStartLocation.Manual, Location = new Point(20000, 20000) });
+        }
+
+        static volatile bool testPulse;
+
+        private static void Application_IdleTest(object sender, EventArgs e)
+        {
+            if (!testPulse)
+                return;
+
+            testPulse = false;
+
+            var appAssembly = Assembly.LoadFrom(@"C:\Users\yezo\source\repos\AlternetUIApplication3\AlternetUIApplication3\bin\Debug\net6.0\AlternetUIApplication3.dll");
+            using var stream = new MemoryStream(Encoding.Default.GetBytes(File.ReadAllText(@"C:\Users\yezo\source\repos\AlternetUIApplication3\AlternetUIApplication3\MainWindow.uixml")));
+
+            var control = (Control)new UixmlLoader().Load(stream, appAssembly);
+
+            //var control = new Window();
+
+            Window window = null;
+
+            if (control is Window w)
+            {
+                window = w;
+                //window.ShowInTaskbar = false;
+                //window.Resizable = false;
+                window.IsToolWindow = true;
+            }
+
+            //currentWindow = window;
+            window.Show();
+
+            var timer = new Timer(TimeSpan.FromMilliseconds(500));
+
+            timer.Tick += (o, e) =>
+            {
+                timer.Stop();
+                timer.Dispose();
+
+                //var targetDirectoryPath = Path.Combine(Path.GetTempPath(), "AlterNET.UIXMLPreviewer", "UIImages");
+                //if (!Directory.Exists(targetDirectoryPath))
+                //    Directory.CreateDirectory(targetDirectoryPath);
+
+                //var targetFilePath = Path.Combine(targetDirectoryPath, Guid.NewGuid().ToString("N") + ".png");
+                //SaveScreenshot(window, targetFilePath);
+
+                window.Close();
+                window.Dispose();
+            };
+
+            timer.Start();
         }
 
         static void AttachEventHandler(object obj, string eventName, EventHandler handler)
