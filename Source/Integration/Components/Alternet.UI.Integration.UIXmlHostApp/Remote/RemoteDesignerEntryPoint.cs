@@ -413,7 +413,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
                     }
                     else
                     {
-                        window = new Window { ShowInTaskbar = false, HasBorder = false, HasTitleBar = false, Resizable = false, IsToolWindow = true };
+                        window = new Window { /*ShowInTaskbar = false, HasBorder = false, HasTitleBar = false, Resizable = false,*/ IsToolWindow = true };
                         window.Children.Add(control);
                     }
 

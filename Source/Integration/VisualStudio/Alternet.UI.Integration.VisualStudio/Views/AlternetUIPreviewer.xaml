@@ -10,14 +10,22 @@
                       x:Name="previewScroller">
             <Grid HorizontalAlignment="Center"
                   VerticalAlignment="Center"
-                  x:Name="previewGrid">
+                  x:Name="previewGrid"
+                  UseLayoutRounding="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
                 <Border BorderBrush="Black" BorderThickness="2">
                     <Border.Effect>
                         <BlurEffect Radius="8" KernelType="Gaussian"/>
                     </Border.Effect>
                 </Border>
                 <Border>
-                    <Image x:Name="windowImage" />
+                    <Image x:Name="windowImage" SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased" />
                 </Border>
             </Grid>
         </ScrollViewer>

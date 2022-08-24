@@ -248,6 +248,8 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 //windowImage.Height = size.Height;
 
                 windowImage.Source = windowImageSource;
+                windowImage.Width = windowImageSource.Width;
+                windowImage.Height = windowImageSource.Height;
 
                 //var style = User32.GetWindowLong(hostedWindowHandle, User32.WindowLongIndexFlags.GWL_STYLE);
 
