@@ -178,7 +178,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
         private Control LoadControlFromUixml(UpdateXamlMessage xaml)
         {
-            var appAssembly = Assembly.LoadFrom(xaml.AssemblyPath);
+            var appAssembly = Assembly.Load(File.ReadAllBytes(xaml.AssemblyPath)); // Load bytes to avoid locking the file.
             Control control;
             using (var stream = new MemoryStream(Encoding.Default.GetBytes(xaml.Xaml)))
             {
