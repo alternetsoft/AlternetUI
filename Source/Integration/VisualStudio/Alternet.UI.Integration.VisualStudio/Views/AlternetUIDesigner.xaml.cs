@@ -3,6 +3,7 @@ using Alternet.UI.Integration.IntelliSense.AssemblyMetadata;
 using Alternet.UI.Integration.IntelliSense.Dnlib;
 using Alternet.UI.Integration.VisualStudio.Models;
 using Alternet.UI.Integration.VisualStudio.Services;
+using Alternet.UI.Integration.VisualStudio.Utils;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text;
@@ -14,11 +15,14 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Media;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Task = System.Threading.Tasks.Task;
 
 #pragma warning disable VSTHRD100, VSTHRD010
@@ -692,10 +696,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             }
         }
 
-        private System.Drawing.Point GetOwnerWindowLocation()
-        {
-            return new System.Drawing.Point();
-        }
+        private System.Drawing.Point GetOwnerWindowLocation() => WindowHelper.GetWindowLocation(Application.Current.MainWindow);
 
         private async Task SelectedTargetChangedAsync(object sender, DependencyPropertyChangedEventArgs e)
         {
