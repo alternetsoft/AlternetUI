@@ -150,8 +150,6 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             addMethod.Invoke(obj, new[] { convertedHandler });
         }
 
-        static Control _c;
-
         private static void Application_Idle(object sender, EventArgs e)
         {
             ProcessQueue();

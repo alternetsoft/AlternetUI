@@ -17,6 +17,8 @@ namespace Alternet.UI.Integration.VisualStudio.Services
     {
         private const string SettingsKey = nameof(AlternetUIVisualStudioSettings);
         private readonly WritableSettingsStore _settings;
+        private Orientation _designerSplitOrientation = Orientation.Horizontal;
+        private AlternetUIDesignerView _designerView = AlternetUIDesignerView.Source;
         private LogEventLevel _minimumLogVerbosity = LogEventLevel.Information;
 
         [ImportingConstructor]
@@ -25,6 +27,32 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             var shellSettingsManager = new ShellSettingsManager(vsServiceProvider);
             _settings = shellSettingsManager.GetWritableSettingsStore(SettingsScope.UserSettings);
             Load();
+        }
+
+        public Orientation DesignerSplitOrientation
+        {
+            get => _designerSplitOrientation;
+            set
+            {
+                if (_designerSplitOrientation != value)
+                {
+                    _designerSplitOrientation = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public AlternetUIDesignerView DesignerView
+        {
+            get => _designerView;
+            set
+            {
+                if (_designerView != value)
+                {
+                    _designerView = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         public LogEventLevel MinimumLogVerbosity
@@ -46,6 +74,14 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         {
             try
             {
+                DesignerSplitOrientation = (Orientation)_settings.GetInt32(
+                    SettingsKey,
+                    nameof(DesignerSplitOrientation),
+                    (int)Orientation.Horizontal);
+                DesignerView = (AlternetUIDesignerView)_settings.GetInt32(
+                    SettingsKey,
+                    nameof(DesignerView),
+                    (int)AlternetUIDesignerView.Source);
                 MinimumLogVerbosity = (LogEventLevel)_settings.GetInt32(
                     SettingsKey,
                     nameof(MinimumLogVerbosity),
@@ -66,6 +102,8 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                     _settings.CreateCollection(SettingsKey);
                 }
 
+                _settings.SetInt32(SettingsKey, nameof(DesignerSplitOrientation), (int)DesignerSplitOrientation);
+                _settings.SetInt32(SettingsKey, nameof(DesignerView), (int)DesignerView);
                 _settings.SetInt32(SettingsKey, nameof(MinimumLogVerbosity), (int)MinimumLogVerbosity);
             }
             catch (Exception ex)
@@ -74,7 +112,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             }
         }
 
-        private void RaisePropertyChanged([CallerMemberName]string propName = null)
+        private void RaisePropertyChanged([CallerMemberName] string propName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
     }
 }
