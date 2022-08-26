@@ -602,7 +602,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
         private async void ProcessExited(object sender, EventArgs e)
         {
-            if (!IsPaused)
+            if (!IsPaused && View != AlternetUIDesignerView.Source)
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
@@ -656,6 +656,8 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                     splitter.Height = double.NaN;
                 }
             }
+
+            orientationListBox.Visibility = View == AlternetUIDesignerView.Split ? Visibility.Visible : Visibility.Collapsed;
 
             if (View == AlternetUIDesignerView.Split)
             {

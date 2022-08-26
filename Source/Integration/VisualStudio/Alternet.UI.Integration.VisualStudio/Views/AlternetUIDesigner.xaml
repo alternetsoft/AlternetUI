@@ -59,8 +59,9 @@
                       SelectedItem="{Binding SelectedTarget, ElementName=root}"
                       DisplayMemberPath="Name"
                       Padding="2"
-                      Visibility="{Binding Targets, ElementName=root, Converter={StaticResource NotNullOrEmpty}}"
+                      Visibility="Collapsed"
                       local:VsTheme.UseVsTheme="True" >
+                <!--Visibility="{Binding Targets, ElementName=root, Converter={StaticResource NotNullOrEmpty}}"-->
             </ComboBox>
 
             <!--<ComboBox DockPanel.Dock="Right"
@@ -68,7 +69,7 @@
                       ItemsSource="{x:Static local:AlternetUIDesigner.ZoomLevels}"
                       Padding="2" Margin="0 0 10 0" local:VsTheme.UseVsTheme="True"/>-->
 
-            <Grid DockPanel.Dock="Left" Name="errorIndicator">
+            <Grid DockPanel.Dock="Left" Name="errorIndicator" Visibility="Collapsed">
                 <Grid.ToolTip>
                     <StackPanel Name="error"
                         HorizontalAlignment="Left"
@@ -88,12 +89,12 @@
                 <ListBoxItem ToolTip="Design View">
                     <imaging:CrispImage Moniker="{x:Static catalog:KnownMonikers.HTMLDesignView}"/>
                 </ListBoxItem>
-                <ListBoxItem ToolTip="XAML View">
+                <ListBoxItem ToolTip="UIXML View">
                     <imaging:CrispImage Moniker="{x:Static catalog:KnownMonikers.MarkupTag}"/>
                 </ListBoxItem>
             </ListBox>
 
-            <ListBox SelectedIndex="{Binding SplitOrientation, ElementName=root, Mode=TwoWay, Converter={StaticResource EnumToInt}}">
+            <ListBox SelectedIndex="{Binding SplitOrientation, ElementName=root, Mode=TwoWay, Converter={StaticResource EnumToInt}}" Name="orientationListBox">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"/>
