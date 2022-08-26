@@ -33,7 +33,7 @@
             The designer is paused waiting for a build to complete.
         </TextBlock>
         <DockPanel Name="toolbar"
-                   DockPanel.Dock="Top"
+                   DockPanel.Dock="Bottom"
                    Grid.Row="0"
                    Margin="4"
                    VerticalAlignment="Top">
