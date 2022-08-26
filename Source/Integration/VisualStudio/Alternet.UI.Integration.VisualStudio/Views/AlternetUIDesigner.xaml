@@ -77,8 +77,8 @@
                         <TextBlock Name="errorMessage" Margin="0,20,0,0"/>
                     </StackPanel>
                 </Grid.ToolTip>
-                <Ellipse Height="18" Width="18" Fill="#f55762" />
-                <TextBlock Text="!" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="ExtraBold" />
+
+                <imaging:CrispImage Moniker="{x:Static catalog:KnownMonikers.StatusError}"/>
             </Grid>
 
             <ListBox SelectedIndex="{Binding View, ElementName=root, Mode=TwoWay, Converter={StaticResource EnumToInt}}">
