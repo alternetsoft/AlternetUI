@@ -82,7 +82,16 @@
                 <imaging:CrispImage Moniker="{x:Static catalog:KnownMonikers.StatusError}"/>
             </Grid>
 
-            <ListBox SelectedIndex="{Binding View, ElementName=root, Mode=TwoWay, Converter={StaticResource EnumToInt}}">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                <Label Content="View: " Margin="0,0,2,0" VerticalAlignment="Center" local:VsTheme.UseVsTheme="True"/>
+                <ComboBox SelectedIndex="{Binding View, ElementName=root, Mode=TwoWay, Converter={StaticResource EnumToInt}}" VerticalAlignment="Center">
+                    <ComboBoxItem>Split</ComboBoxItem>
+                    <ComboBoxItem>Design</ComboBoxItem>
+                    <ComboBoxItem>UIXML</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+
+            <!--<ListBox SelectedIndex="{Binding View, ElementName=root, Mode=TwoWay, Converter={StaticResource EnumToInt}}" DockPanel.Dock="Left" >
                 <ListBoxItem ToolTip="Split View">
                     <imaging:CrispImage Moniker="{x:Static catalog:KnownMonikers.Splitter}"/>
                 </ListBoxItem>
@@ -92,9 +101,9 @@
                 <ListBoxItem ToolTip="UIXML View">
                     <imaging:CrispImage Moniker="{x:Static catalog:KnownMonikers.MarkupTag}"/>
                 </ListBoxItem>
-            </ListBox>
+            </ListBox>-->
 
-            <ListBox SelectedIndex="{Binding SplitOrientation, ElementName=root, Mode=TwoWay, Converter={StaticResource EnumToInt}}" Name="orientationListBox">
+            <ListBox SelectedIndex="{Binding SplitOrientation, ElementName=root, Mode=TwoWay, Converter={StaticResource EnumToInt}}" Name="orientationListBox" DockPanel.Dock="Left" >
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal"/>
@@ -132,5 +141,4 @@
             <Decorator Grid.Row="2" Grid.Column="0" Name="editorHost"/>
         </Grid>
     </DockPanel>
-
 </UserControl>
