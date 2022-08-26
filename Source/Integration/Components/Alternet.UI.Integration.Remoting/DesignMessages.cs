@@ -10,6 +10,9 @@ namespace Alternet.UI.Integration.Remoting
         public string Xaml { get; set; }
         public string AssemblyPath { get; set; }
         public string XamlFileProjectPath { get; set; }
+
+        public int OwnerWindowX { get; set; }
+        public int OwnerWindowY { get; set; }
     }
 
     [AlternetUIRemoteMessageGuid("3427FD02-55AE-4309-B445-9FD70F11F3BB")]

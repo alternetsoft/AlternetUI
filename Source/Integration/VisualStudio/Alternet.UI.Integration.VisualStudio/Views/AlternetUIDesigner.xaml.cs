@@ -465,7 +465,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                     {
                         await Process.SetScalingAsync(VisualTreeHelper.GetDpi(this).DpiScaleX * _scaling);
                         await Process.StartAsync(assemblyPath, executablePath, hostAppPath);
-                        await Process.UpdateXamlAsync(await ReadAllTextAsync(_xamlPath));
+                        await Process.UpdateXamlAsync(await ReadAllTextAsync(_xamlPath), GetOwnerWindowLocation());
                     }
                 }
                 catch (ApplicationException ex)
@@ -688,18 +688,13 @@ namespace Alternet.UI.Integration.VisualStudio.Views
         {
             if (Process.IsReady)
             {
-                Process.UpdateXamlAsync(xaml).FireAndForget();
+                Process.UpdateXamlAsync(xaml, GetOwnerWindowLocation()).FireAndForget();
             }
         }
 
-        private void UpdateScaling(double scaling)
+        private System.Drawing.Point GetOwnerWindowLocation()
         {
-            _scaling = scaling;
-
-            if (Process.IsReady)
-            {
-                Process.SetScalingAsync(VisualTreeHelper.GetDpi(this).DpiScaleX * _scaling).FireAndForget();
-            }
+            return new System.Drawing.Point();
         }
 
         private async Task SelectedTargetChangedAsync(object sender, DependencyPropertyChangedEventArgs e)

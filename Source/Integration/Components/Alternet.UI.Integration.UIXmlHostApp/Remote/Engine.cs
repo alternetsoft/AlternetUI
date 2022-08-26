@@ -120,7 +120,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
                 timer.Tick += (o, e) =>
                 {
-                    MoveWindowToScreenUnderneath(window);
+                    MoveWindowToScreenUnderneath(window, new System.Drawing.Point(uixml.OwnerWindowX, uixml.OwnerWindowY));
 
                     timer.Stop();
                     timer.Dispose();
@@ -166,13 +166,21 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             return targetFilePath;
         }
 
-        private void MoveWindowToScreenUnderneath(Window window)
+        private void MoveWindowToScreenUnderneath(Window window, System.Drawing.Point ownerWindowLocation)
         {
             var hwnd = InternalsAccessor.GetHandle(window);
             PInvoke.User32.GetWindowRect(hwnd, out var rect);
             var size = new System.Drawing.Size(rect.right - rect.left, rect.bottom - rect.top);
 
-            PInvoke.User32.SetWindowPos(hwnd, new IntPtr(1), 0, 0, size.Width, size.Height, PInvoke.User32.SetWindowPosFlags.SWP_NOACTIVATE);
+            PInvoke.User32.SetWindowPos(
+                hwnd,
+                new IntPtr(1),
+                ownerWindowLocation.X,
+                ownerWindowLocation.Y,
+                size.Width,
+                size.Height,
+                PInvoke.User32.SetWindowPosFlags.SWP_NOACTIVATE);
+
             PInvoke.User32.UpdateWindow(hwnd);
         }
 
