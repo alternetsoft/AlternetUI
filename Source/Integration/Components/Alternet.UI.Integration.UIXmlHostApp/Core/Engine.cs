@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 
 namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 {
@@ -114,8 +115,6 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             {
                 var control = LoadControlFromUixml(uixml);
                 var window = GetUixmlControlWindow(control);
-
-                throw new Exception("ttt");
 
                 window.Show();
 

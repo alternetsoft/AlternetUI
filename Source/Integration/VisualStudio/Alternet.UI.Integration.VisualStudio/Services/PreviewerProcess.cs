@@ -26,6 +26,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         private readonly ILogger _log;
         private string _assemblyPath;
         private string _executablePath;
+        private string _hostAppPath;
         private double _scaling;
         private Process _process;
         private IAlternetUIRemoteTransportConnection _connection;
@@ -169,6 +170,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
             _assemblyPath = assemblyPath;
             _executablePath = executablePath;
+            _hostAppPath = hostAppPath;
             Error = null;
 
             var port = FreeTcpPort();
@@ -284,6 +286,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             }
 
             _executablePath = null;
+            _hostAppPath = null;
 
             _log.Verbose("Finished PreviewerProcess.Stop()");
         }
@@ -307,6 +310,8 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             }
         }
 
+        public long MaxProcessMemoryBytes = 200 * 1024 * 1024;
+
         /// <summary>
         /// Updates the XAML to be previewed.
         /// </summary>
@@ -315,14 +320,12 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         public async Task UpdateXamlAsync(string xaml, System.Drawing.Point ownerWindowLocation)
         {
             if (_process == null)
-            {
                 throw new InvalidOperationException("Process not started.");
-            }
 
             if (_connection == null)
-            {
                 throw new InvalidOperationException("Process not finished initializing.");
-            }
+
+            await RestartIfMaxMemoryReachedAsync();
 
             await SendAsync(new UpdateXamlMessage
             {
@@ -331,6 +334,33 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                 OwnerWindowX = ownerWindowLocation.X,
                 OwnerWindowY = ownerWindowLocation.Y,
             });
+        }
+
+        private async Task RestartIfMaxMemoryReachedAsync()
+        {
+            _process.Refresh();
+            if (_process.PrivateMemorySize64 > MaxProcessMemoryBytes)
+            {
+                _log.Information("StopIfMaxMemoryReached: restarting process.");
+
+                await RestartAsync();
+            }
+        }
+
+        private async Task RestartAsync()
+        {
+            var assemblyPath = _assemblyPath;
+            var executablePath = _executablePath;
+            var hostAppPath = _hostAppPath;
+
+            Stop();
+            await StartAsync(assemblyPath, executablePath, hostAppPath);
+
+            if (_process == null)
+                throw new InvalidOperationException("Process not started.");
+
+            if (_connection == null)
+                throw new InvalidOperationException("Process not finished initializing.");
         }
 
         /// <summary>
