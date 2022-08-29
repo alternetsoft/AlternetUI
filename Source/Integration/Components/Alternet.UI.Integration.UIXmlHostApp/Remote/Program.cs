@@ -7,7 +7,6 @@ namespace Alternet.UI.Integration.UIXmlHostApp
 {
     public static class Program
     {
-        private static IAlternetUIRemoteTransportConnection transport;
         private static CommandLineArgs commandLineArgs;
 
         [STAThread]
@@ -20,7 +19,6 @@ namespace Alternet.UI.Integration.UIXmlHostApp
             var transport = CreateTransport(commandLineArgs);
             if (transport is ITransportWithEnforcedMethod enforcedMethod)
                 commandLineArgs.Method = enforcedMethod.PreviewerMethod;
-            Program.transport = transport;
             transport.OnException += (t, e) => Die(e.ToString());
 
             new Engine(transport, commandLineArgs.SessionId).Run();
