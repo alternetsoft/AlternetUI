@@ -232,7 +232,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
                 try
                 {
-                    File.Delete(preview.ImageFileName);
+                    //File.Delete(preview.ImageFileName);
                 }
                 catch
                 {

@@ -1,10 +1,11 @@
 ﻿using Alternet.UI.Integration.Remoting;
+using Alternet.UI.Integration.UIXmlHostApp.Remote;
 using System;
 using System.Net;
 
-namespace Alternet.UI.Integration.UIXmlHostApp.Remote
+namespace Alternet.UI.Integration.UIXmlHostApp
 {
-    public class RemoteDesignerEntryPoint
+    public static class Program
     {
         private static IAlternetUIRemoteTransportConnection transport;
         private static CommandLineArgs commandLineArgs;
@@ -19,7 +20,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             var transport = CreateTransport(commandLineArgs);
             if (transport is ITransportWithEnforcedMethod enforcedMethod)
                 commandLineArgs.Method = enforcedMethod.PreviewerMethod;
-            RemoteDesignerEntryPoint.transport = transport;
+            Program.transport = transport;
             transport.OnException += (t, e) => Die(e.ToString());
 
             new Engine(transport, commandLineArgs.SessionId).Run();

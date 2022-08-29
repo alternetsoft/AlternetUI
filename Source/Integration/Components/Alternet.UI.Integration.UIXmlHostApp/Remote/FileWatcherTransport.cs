@@ -84,7 +84,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             }
         }
 
-        public string PreviewerMethod => RemoteDesignerEntryPoint.Methods.Html;
+        public string PreviewerMethod => Program.Methods.Html;
     }
 
     interface ITransportWithEnforcedMethod
