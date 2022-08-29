@@ -36,7 +36,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
             transport.OnMessage += OnTransportMessage;
             transport.Start();
-            Logger.Log("Sending StartDesignerSessionMessage");
+            Logger.Instance.Information("Sending StartDesignerSessionMessage");
             transport.Send(new StartDesignerSessionMessage { SessionId = sessionId });
 
             InternalsAccessor.AttachEventHandler(application, "Idle", Application_Idle);
@@ -114,6 +114,9 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             {
                 var control = LoadControlFromUixml(uixml);
                 var window = GetUixmlControlWindow(control);
+
+                throw new Exception("ttt");
+
                 window.Show();
 
                 var timer = new Timer(TimeSpan.FromMilliseconds(10));
@@ -146,7 +149,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             }
             catch (Exception e)
             {
-                Logger.Log(e.ToString());
+                Logger.Instance.Error(e.ToString());
                 transport.Send(new UpdateXamlResultMessage
                 {
                     Error = "Fail",
@@ -157,10 +160,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
         private string SaveWindowScreenshotToFile(Window window)
         {
-            var targetDirectoryPath = Path.Combine(Path.GetTempPath(), "AlterNET.UIXMLPreviewer", "UIImages");
-            if (!Directory.Exists(targetDirectoryPath))
-                Directory.CreateDirectory(targetDirectoryPath);
-
+            var targetDirectoryPath = ResourceLocator.ScreenshotsDirectory;
             var targetFilePath = Path.Combine(targetDirectoryPath, Guid.NewGuid().ToString("N") + ".bmp");
             InternalsAccessor.SaveScreenshot(window, targetFilePath);
             return targetFilePath;

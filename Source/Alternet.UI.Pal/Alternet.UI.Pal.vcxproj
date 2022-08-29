@@ -316,6 +316,7 @@
     <ClInclude Include="Pen.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="RadioButton.h" />
+    <ClInclude Include="Screenshot.h" />
     <ClInclude Include="SelectDirectoryDialog.h" />
     <ClInclude Include="Slider.h" />
     <ClInclude Include="SolidBrush.h" />

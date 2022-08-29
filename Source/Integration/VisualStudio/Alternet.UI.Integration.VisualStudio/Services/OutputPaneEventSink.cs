@@ -31,7 +31,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             ThreadHelper.ThrowIfNotOnUIThread();
 
             _formatter = new MessageTemplateTextFormatter(outputTemplate, null);
-            ErrorHandler.ThrowOnFailure(output.CreatePane(paneGuid, "Alternet UI Diagnostics", 1, 1));
+            ErrorHandler.ThrowOnFailure(output.CreatePane(paneGuid, "AlterNET UI", 1, 1));
             output.GetPane(paneGuid, out _pane);
         }
 

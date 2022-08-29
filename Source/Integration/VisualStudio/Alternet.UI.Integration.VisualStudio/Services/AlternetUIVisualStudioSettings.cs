@@ -19,7 +19,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         private readonly WritableSettingsStore _settings;
         private Orientation _designerSplitOrientation = Orientation.Horizontal;
         private AlternetUIDesignerView _designerView = AlternetUIDesignerView.Source;
-        private LogEventLevel _minimumLogVerbosity = LogEventLevel.Information;
+        private LogEventLevel _minimumLogVerbosity = LogEventLevel.Warning;
 
         [ImportingConstructor]
         public AlternetUIVisualStudioSettings(SVsServiceProvider vsServiceProvider)
@@ -85,7 +85,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                 MinimumLogVerbosity = (LogEventLevel)_settings.GetInt32(
                     SettingsKey,
                     nameof(MinimumLogVerbosity),
-                    (int)LogEventLevel.Information);
+                    (int)LogEventLevel.Warning);
             }
             catch (Exception ex)
             {

@@ -12,7 +12,8 @@ namespace Alternet.UI.Integration.UIXmlHostApp
         [STAThread]
         public static void Main(string[] cmdline)
         {
-            //MessageBox.Show("Attach.");
+            // MessageBox.Show("Attach.");
+            
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             commandLineArgs = ParseCommandLineArgs(cmdline);
@@ -24,18 +25,15 @@ namespace Alternet.UI.Integration.UIXmlHostApp
             new Engine(transport, commandLineArgs.SessionId).Run();
         }
 
-        private static Exception Die(string error)
+        private static void Die(string error)
         {
             if (error != null)
-            {
-                Console.Error.WriteLine(error);
-                Console.Error.Flush();
-            }
+                Logger.Instance.Fatal(error);
+
             Environment.Exit(1);
-            return new Exception("APPEXIT");
         }
 
-        private static Exception PrintUsage()
+        private static void PrintUsage()
         {
             Console.Error.WriteLine("Usage: --transport transport_spec --session-id sid --method method app");
             Console.Error.WriteLine();
@@ -54,7 +52,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp
             Console.Error.WriteLine();
             Console.Error.WriteLine("Example: --transport tcp-bson://127.0.0.1:30243/ --session-id 123 --method alternet-ui-remote MyApp.exe");
             Console.Error.Flush();
-            return Die(null);
+            Die(null);
         }
 
         private static CommandLineArgs ParseCommandLineArgs(string[] args)
@@ -114,7 +112,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp
 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Logger.Log(e.ExceptionObject.ToString());
+            Logger.Instance.Fatal(e.ExceptionObject.ToString());
         }
 
         internal static class Methods

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Threading;
-using Alternet.UI.Integration.VisualStudio.Services;
+﻿using Alternet.UI.Integration.VisualStudio.Services;
 using Alternet.UI.Integration.VisualStudio.Views;
 using EnvDTE;
 using Microsoft.VisualStudio;
@@ -9,6 +6,9 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Serilog;
 using Serilog.Core;
+using System;
+using System.Runtime.InteropServices;
+using System.Threading;
 using Task = System.Threading.Tasks.Task;
 
 namespace Alternet.UI.Integration.VisualStudio
@@ -75,10 +75,10 @@ namespace Alternet.UI.Integration.VisualStudio
             var dte = (DTE)await GetServiceAsync(typeof(DTE));
             SolutionService = new SolutionService(dte);
 
-            //Log.Logger.Information("Alternet UI Package initialized");
+            Log.Logger.Information("AlterNET UI Package initialized");
         }
 
-        bool outputPaneLoggingEnabled = false;
+        bool outputPaneLoggingEnabled = true;
 
         private void InitializeLogging()
         {

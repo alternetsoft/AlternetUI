@@ -14,7 +14,7 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
     /// Registers a <see cref="XamlCompletionCommandHandler"/> with newly-created text views.
     /// </summary>
     [Export(typeof(IVsTextViewCreationListener))]
-    [Name("Alternet UIXML completion handler")]
+    [Name("AlterNET UIXML completion handler")]
     [ContentType("xml")]
     [TextViewRole(PredefinedTextViewRoles.Editable)]
     internal class XamlCompletionHandlerProvider : IVsTextViewCreationListener

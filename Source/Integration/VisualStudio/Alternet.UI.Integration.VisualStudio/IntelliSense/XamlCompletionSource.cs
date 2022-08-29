@@ -78,7 +78,7 @@ namespace Alternet.UI.Integration.VisualStudio.IntelliSense
 
                     completionSets.Insert(0, new CompletionSet(
                         "AlternetUI",
-                        "Alternet UI",
+                        "AlterNET UI",
                         applicableTo,
                         XamlCompletion.Create(completions.Completions, _imageService),
                         null));
