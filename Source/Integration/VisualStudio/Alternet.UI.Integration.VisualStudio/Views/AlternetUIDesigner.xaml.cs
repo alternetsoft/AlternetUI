@@ -580,36 +580,31 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
         private async void ErrorChanged(object sender, EventArgs e)
         {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             if (Process.PreviewData == null || Process.Error != null)
             {
-                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-
                 ShowError("Invalid Markup", "Check the Error List for more information.");
             }
             else if (Process.Error == null)
             {
-                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-
                 ShowPreview();
             }
         }
 
         private async void PreviewDataReceived(object sender, EventArgs e)
         {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             if (Process.PreviewData != null && Process.Error == null)
             {
-                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-
                 ShowPreview();
             }
         }
 
         private async void ProcessExited(object sender, EventArgs e)
         {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             if (!IsPaused && View != AlternetUIDesignerView.Source)
             {
-                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-
                 ShowError(
                     "Process Exited",
                     "The previewer process exited unexpectedly. See the output window for more information.");

@@ -161,7 +161,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             if (!Directory.Exists(targetDirectoryPath))
                 Directory.CreateDirectory(targetDirectoryPath);
 
-            var targetFilePath = Path.Combine(targetDirectoryPath, Guid.NewGuid().ToString("N") + ".png");
+            var targetFilePath = Path.Combine(targetDirectoryPath, Guid.NewGuid().ToString("N") + ".bmp");
             InternalsAccessor.SaveScreenshot(window, targetFilePath);
             return targetFilePath;
         }
