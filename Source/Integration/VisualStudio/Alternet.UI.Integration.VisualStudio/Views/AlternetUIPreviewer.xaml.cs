@@ -207,18 +207,8 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             return newSize;
         }
 
-        System.Drawing.Size desiredPreviewSize;
-
         private void Update(PreviewData preview)
         {
-            //if (hostedWindowHandle != IntPtr.Zero)
-            //{
-            //    User32.ShowWindow(hostedWindowHandle, User32.WindowShowStyle.SW_HIDE);
-            //    User32.SetParent(hostedWindowHandle, IntPtr.Zero);
-            //    hostedWindowHandle = IntPtr.Zero;
-            //    desiredPreviewSize = new System.Drawing.Size();
-            //}
-
             if (preview != null && preview.ImageFileName != null)
             {
                 loading.Visibility = Visibility.Collapsed;
@@ -232,30 +222,15 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
                 try
                 {
-                    //File.Delete(preview.ImageFileName);
+                    File.Delete(preview.ImageFileName);
                 }
                 catch
                 {
                 }
 
-                desiredPreviewSize = preview.DesiredSize;
-                if (desiredPreviewSize.Width <= 0 || desiredPreviewSize.Height <= 0)
-                    desiredPreviewSize = defaultPreviewSize;
-
-                var size = desiredPreviewSize;
-                size = ConstrainPreviewSizeToFit(size);
-                //windowImage.Width = size.Width;
-                //windowImage.Height = size.Height;
-
                 windowImage.Source = windowImageSource;
                 windowImage.Width = windowImageSource.Width;
                 windowImage.Height = windowImageSource.Height;
-
-                //var style = User32.GetWindowLong(hostedWindowHandle, User32.WindowLongIndexFlags.GWL_STYLE);
-
-                //User32.SetParent(hostedWindowHandle, hostPanel.Handle);
-                //User32.SetWindowLong(hostedWindowHandle, User32.WindowLongIndexFlags.GWL_STYLE, (User32.SetWindowLongFlags)((int)User32.WindowStyles.WS_VISIBLE | style));
-                //User32.MoveWindow(hostedWindowHandle, 0, 0, hostPanel.ClientRectangle.Width, hostPanel.ClientRectangle.Height, true);
             }
             else
             {
@@ -266,22 +241,6 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             Window.GetWindow(this)?.Activate();
             Window.GetWindow(this)?.InvalidateVisual();
         }
-
-        readonly System.Drawing.Size defaultPreviewSize = new System.Drawing.Size(300, 300);
-
-        //private System.Drawing.Size GetPreviewActualSize()
-        //{
-        //    if (hostedWindowHandle == IntPtr.Zero)
-        //        return defaultPreviewSize;
-
-        //    User32.GetWindowRect(hostedWindowHandle, out var rect);
-
-        //    var size = new System.Drawing.Size(rect.right - rect.left, rect.bottom - rect.top);
-
-        //    if (size.Width == 0 || size.Height == 0)
-        //        size = defaultPreviewSize;
-        //    return size;
-        //}
 
         private void PreviewScroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
@@ -294,48 +253,6 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 _centerPreviewer = false;
             }
         }
-
-        //private void Preview_MouseMove(object sender, MouseEventArgs e)
-        //{
-        //    var p = e.GetPosition(preview);
-        //    var scaling = GetScaling();
-
-        //    Process?.SendInputAsync(new PointerMovedEventMessage
-        //    {
-        //        X = p.X / scaling,
-        //        Y = p.Y / scaling,
-        //        Modifiers = GetModifiers(e),
-        //    });
-        //}
-
-        //private void Preview_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    var p = e.GetPosition(preview);
-        //    var scaling = GetScaling();
-
-        //    Process?.SendInputAsync(new PointerPressedEventMessage
-        //    {
-        //        X = p.X / scaling,
-        //        Y = p.Y / scaling,
-        //        Button = GetButton(e.ChangedButton),
-        //        Modifiers = GetModifiers(e),
-        //    });
-        //}
-
-        //private void Preview_MouseUp(object sender, MouseButtonEventArgs e)
-        //{
-        //    var p = e.GetPosition(preview);
-        //    var scaling = GetScaling();
-
-        //    Process?.SendInputAsync(new PointerReleasedEventMessage
-        //    {
-        //        X = p.X / scaling,
-        //        Y = p.Y / scaling,
-        //        Button = GetButton(e.ChangedButton),
-        //        Modifiers = GetModifiers(e),
-        //    });
-        //}
-
         private static T FindParent<T>(DependencyObject child) where T : DependencyObject
         {
             //get parent item

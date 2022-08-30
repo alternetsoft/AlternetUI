@@ -51,9 +51,6 @@ namespace Alternet.UI.Integration.Remoting
     {
         public long SequenceId { get; set; }
         public string ImageFileName { get; set; }
-        
-        public int DesiredWidth { get; set; }
-        public int DesiredHeight { get; set; }
     }
 
     [AlternetUIRemoteMessageGuid("ACA6224C-7888-4E14-9F55-759C49870EDC")]

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using XamlX.TypeSystem;
 
 namespace XamlX.Transform
@@ -19,7 +20,7 @@ namespace XamlX.Transform
         public static XamlXmlnsMappings Resolve(IXamlTypeSystem typeSystem, XamlLanguageTypeMappings typeMappings)
         {
             var rv = new XamlXmlnsMappings();
-            foreach (var asm in typeSystem.Assemblies)
+            foreach (var asm in typeSystem.Assemblies.ToArray())
             foreach (var attr in asm.CustomAttributes)
             foreach (var xmlnsType in typeMappings.XmlnsAttributes)
             {

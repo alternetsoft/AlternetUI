@@ -337,7 +337,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
                 bool IsValidOutput(ProjectOutputInfo output)
                 {
-                    return output.IsNetCore;
+                    return true;
                 }
 
                 string GetXamlAssembly(ProjectOutputInfo output)

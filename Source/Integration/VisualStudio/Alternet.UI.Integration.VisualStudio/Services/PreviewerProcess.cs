@@ -201,20 +201,25 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             var runtimeConfigPath = Path.Combine(executableDir, targetName + ".runtimeconfig.json");
             var depsPath = Path.Combine(executableDir, targetName + ".deps.json");
 
-            EnsureExists(runtimeConfigPath);
-            EnsureExists(depsPath);
-            EnsureExists(depsPath);
+            //EnsureExists(runtimeConfigPath);
+            //EnsureExists(depsPath);
+
+            bool isDotNetCore = hostAppPath.EndsWith(".dll", StringComparison.OrdinalIgnoreCase);
 
             //var args = $@"exec --runtimeconfig ""{runtimeConfigPath}"" --depsfile ""{depsPath}"" ""{hostAppPath}"" --transport tcp-bson://127.0.0.1:{port}/ ""{_executablePath}""";
-            //var args = $@" --transport tcp-bson://127.0.0.1:{port}/ ""{_executablePath}"""; // yezo
-            var args = $@"exec ""{hostAppPath}"" --transport tcp-bson://127.0.0.1:{port}/ ""{_executablePath}"""; // yezo
+
+            string args;
+
+            if (isDotNetCore)
+                args = $@"exec ""{hostAppPath}"" --transport tcp-bson://127.0.0.1:{port}/ ""{_executablePath}""";
+            else
+                args = $@" --transport tcp-bson://127.0.0.1:{port}/ ""{_executablePath}""";
 
             var processInfo = new ProcessStartInfo
             {
                 Arguments = args,
                 CreateNoWindow = true,
-                //FileName = hostAppPath,
-                FileName = "dotnet",
+                FileName = isDotNetCore ? "dotnet" : hostAppPath,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
@@ -443,7 +448,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                         await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
                         PreviewData = null;
-                        PreviewData = new PreviewData(frame.ImageFileName, new System.Drawing.Size(frame.DesiredWidth, frame.DesiredHeight));
+                        PreviewData = new PreviewData(frame.ImageFileName);
 
                         await SendAsync(new PreviewDataReceivedMessage
                         {

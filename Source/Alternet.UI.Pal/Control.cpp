@@ -55,7 +55,8 @@ namespace Alternet::UI
 
     void Control::OnDestroy(wxWindowDestroyEvent& event)
     {
-        if (Application::GetCurrent()->GetInUixmlPreviewerMode())
+        auto app = Application::GetCurrent();
+        if (app == nullptr || app->GetInUixmlPreviewerMode())
             return; // HACK. This gets invoked by wxWidgets on a dead this pointer.
 
         if (!_flags.IsSet(ControlFlags::RecreatingWxWindow))

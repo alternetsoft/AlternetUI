@@ -1,6 +1,7 @@
 ﻿using Alternet.UI.Integration.Remoting;
 using Alternet.UI.Integration.UIXmlHostApp.Remote;
 using System;
+using System.IO;
 using System.Net;
 
 namespace Alternet.UI.Integration.UIXmlHostApp
@@ -12,8 +13,8 @@ namespace Alternet.UI.Integration.UIXmlHostApp
         [STAThread]
         public static void Main(string[] cmdline)
         {
-            // MessageBox.Show("Attach.");
-            
+            //System.Windows.Forms.MessageBox.Show("Attach.");
+
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             commandLineArgs = ParseCommandLineArgs(cmdline);
@@ -22,7 +23,17 @@ namespace Alternet.UI.Integration.UIXmlHostApp
                 commandLineArgs.Method = enforcedMethod.PreviewerMethod;
             transport.OnException += (t, e) => Die(e.ToString());
 
-            new Engine(transport, commandLineArgs.SessionId).Run();
+            var uiAssemblyPath = GetUIAssemblyPath();
+
+            new Engine(transport, commandLineArgs.SessionId, uiAssemblyPath).Run();
+        }
+
+        private static string GetUIAssemblyPath()
+        {
+            var uiAssemblyPath = Path.Combine(Path.GetDirectoryName(commandLineArgs.AppPath), "Alternet.UI.dll");
+            if (!File.Exists(uiAssemblyPath))
+                Die("Alternet.UI.dll not found.");
+            return uiAssemblyPath;
         }
 
         private static void Die(string error)

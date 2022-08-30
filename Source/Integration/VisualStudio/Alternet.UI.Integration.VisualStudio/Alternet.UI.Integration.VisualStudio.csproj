@@ -202,8 +202,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\Debug\net461\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\Debug\net461\**\*.pdb">
+      <Link>UIXmlHostApp\DotNetFx\%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\Debug\net6.0-windows\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\Debug\net6.0-windows\**\*.pdb">
-      <Link>UIXmlHostApp\%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <Link>UIXmlHostApp\DotNetCore\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

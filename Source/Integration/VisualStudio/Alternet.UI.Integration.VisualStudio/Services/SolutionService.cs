@@ -215,16 +215,13 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
                     if (!string.IsNullOrWhiteSpace(targetPath))
                     {
-                        var hostAppNetCore = GetMsBuildProperty(msbuildProperties, "AvaloniaPreviewerNetCoreToolPath");
-                        var hostAppNetFx = GetMsBuildProperty(msbuildProperties, "AvaloniaPreviewerNetFullToolPath");
+                        var hostAppDirectory = Path.Combine(Path.GetDirectoryName(typeof(SolutionService).Assembly.Location), @"UIXmlHostApp");
+                        var hostAppDotNetCore = Path.Combine(hostAppDirectory, "DotNetCore", "Alternet.UI.Integration.UIXmlHostApp.dll");
+                        var hostAppDotNetFx = Path.Combine(hostAppDirectory, "DotNetFx", "Alternet.UI.Integration.UIXmlHostApp.exe");
 
                         var tf = GetFrameworkInfo(loaded, msbuildProperties, "TargetFramework");
                         var tfi = GetFrameworkInfo(loaded, msbuildProperties, "TargetFrameworkIdentifier");
-                        var hostApp = FrameworkInfoUtils.IsNetFramework(tfi) ? hostAppNetFx : hostAppNetCore;
-
-                        //hostApp = @"C:\Work\UI\Source\Integration\Components\Alternet.UI.Integration.UIXmlHostApp\bin\Debug\net6.0\Alternet.UI.Integration.UIXmlHostApp.dll"; // todo: remove
-                        //hostApp = @"C:\Work\UI\Source\Integration\Components\Alternet.UI.Integration.UIXmlHostApp\bin\Debug\net461\Alternet.UI.Integration.UIXmlHostApp.exe"; // todo: remove
-                        hostApp = Path.Combine(Path.GetDirectoryName(typeof(SolutionService).Assembly.Location), @"UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp.dll"); // todo: remove
+                        var hostApp = FrameworkInfoUtils.IsNetFramework(tfi) ? hostAppDotNetFx : hostAppDotNetCore;
 
                         alternatives[tf] = new ProjectOutputInfo(targetPath, tf, tfi, hostApp);
                     }
