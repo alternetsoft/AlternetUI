@@ -9,14 +9,12 @@ namespace Alternet::UI
         if (!wxStr(fileName).MakeLower().EndsWith(".bmp"))
             throwEx(u"Only .bmp file format is supported for screenshots.");
 
-        HWND hWnd = wxWindow->GetHWND();
-
 #ifndef __WXMSW__
         throwEx(u"Only Widows OS is supported for screenshots.");
 #else
-
         // Source: https://docs.microsoft.com/en-us/windows/win32/gdi/capturing-an-image?redirectedfrom=MSDN
 
+        HWND hWnd = wxWindow->GetHWND();
         HDC hdcScreen;
         HDC hdcWindow;
         HDC hdcMemDC = NULL;
