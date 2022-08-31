@@ -216,19 +216,37 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                     if (!string.IsNullOrWhiteSpace(targetPath))
                     {
                         var hostAppDirectory = Path.Combine(Path.GetDirectoryName(typeof(SolutionService).Assembly.Location), @"UIXmlHostApp");
-                        var hostAppDotNetCore = Path.Combine(hostAppDirectory, "DotNetCore", "Alternet.UI.Integration.UIXmlHostApp.dll");
                         var hostAppDotNetFx = Path.Combine(hostAppDirectory, "DotNetFx", "Alternet.UI.Integration.UIXmlHostApp.exe");
 
-                        var tf = GetFrameworkInfo(loaded, msbuildProperties, "TargetFramework");
-                        var tfi = GetFrameworkInfo(loaded, msbuildProperties, "TargetFrameworkIdentifier");
-                        var hostApp = FrameworkInfoUtils.IsNetFramework(tfi) ? hostAppDotNetFx : hostAppDotNetCore;
+                        var frameworkMoniker = GetFrameworkInfo(loaded, msbuildProperties, "TargetFramework");
+                        var frameworkID = GetFrameworkInfo(loaded, msbuildProperties, "TargetFrameworkIdentifier");
+                        var hostApp = FrameworkInfoUtils.IsNetFramework(frameworkID) ?
+                            hostAppDotNetFx :
+                            GetDotNetCoreHostAppPath(hostAppDirectory, frameworkMoniker);
 
-                        alternatives[tf] = new ProjectOutputInfo(targetPath, tf, tfi, hostApp);
+                        alternatives[frameworkMoniker] = new ProjectOutputInfo(targetPath, frameworkMoniker, frameworkID, hostApp);
                     }
                 }
             }
 
             return alternatives.Values.ToList();
+
+            static string GetDotNetCoreHostAppPath(string hostAppDirectory, string frameworkMoniker)
+            {
+                static string TryPath(string hostAppDirectory, string frameworkMoniker)
+                {
+                    var path = Path.Combine(hostAppDirectory, frameworkMoniker.Replace("-windows", ""), "Alternet.UI.Integration.UIXmlHostApp.dll");
+                    if (!File.Exists(path))
+                        return null;
+                    return path;
+                }
+
+                var path = TryPath(hostAppDirectory, frameworkMoniker);
+                if (path == null)
+                    return TryPath(hostAppDirectory, "net6.0") ?? throw new Exception();
+
+                return path;
+            }
         }
 
         private static IReadOnlyList<Project> FlattenProjectReferences(

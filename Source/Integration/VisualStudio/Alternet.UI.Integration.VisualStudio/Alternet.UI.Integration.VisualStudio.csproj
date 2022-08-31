@@ -142,7 +142,7 @@
         <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.2.32505.173" ExcludeAssets="runtime">
           <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.2.2186">
+        <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.3.2094">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
@@ -207,8 +207,13 @@
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\Debug\netcoreapp3.1\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\Debug\netcoreapp3.1\**\*.pdb">
+      <Link>UIXmlHostApp\netcoreapp3.1\%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\Debug\net6.0-windows\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\Debug\net6.0-windows\**\*.pdb">
-      <Link>UIXmlHostApp\DotNetCore\%(RecursiveDir)%(FileName)%(Extension)</Link>
+      <Link>UIXmlHostApp\net6.0\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

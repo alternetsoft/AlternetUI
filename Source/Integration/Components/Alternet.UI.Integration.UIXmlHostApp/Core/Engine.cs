@@ -53,9 +53,9 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
             previewerService = InternalsAccessor.CreateObject(
                 assembly,
                 "Alternet.UI.Integration.UIXmlPreviewerService",
-                (object)OnUixmlUpdateSuccess,
-                (object)OnUixmlUpdateFailure,
-                (object)OnTick,
+                (Action<IDictionary<string, object>>)OnUixmlUpdateSuccess,
+                (Action<IDictionary<string, object>>)OnUixmlUpdateFailure,
+                (Action)OnTick,
                 ResourceLocator.ScreenshotsDirectory);
 
             transport.OnMessage += OnTransportMessage;

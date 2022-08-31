@@ -95,12 +95,12 @@ namespace Alternet.UI.Integration
             }
         }
 
-        private void OnQueueTimerTick(object sender, EventArgs e)
+        private void OnQueueTimerTick(object? sender, EventArgs e)
         {
             onTick();
         }
 
-        private void Application_Idle(object sender, EventArgs e)
+        private void Application_Idle(object? sender, EventArgs e)
         {
             onTick();
         }
@@ -180,30 +180,54 @@ namespace Alternet.UI.Integration
 
 #if NETCOREAPP
 
-        private Assembly AssemblyLoadContext_Resolving(System.Runtime.Loader.AssemblyLoadContext context, AssemblyName name)
+        private Assembly? AssemblyLoadContext_Resolving(System.Runtime.Loader.AssemblyLoadContext context, AssemblyName name)
         {
-            if (name.Name == "Alternet.UI")
-                return typeof(Alternet.UI.Window).Assembly;
-
-            if (name.Name.EndsWith(".resources", StringComparison.OrdinalIgnoreCase))
+            try
             {
-                // See https://github.com/dotnet/runtime/issues/7077
-                return null;
-            }
+                // you need to unsubscribe here to avoid StackOverflowException,
+                // as LoadFromAssemblyName will go in recursion here otherwise
+                System.Runtime.Loader.AssemblyLoadContext.Default.Resolving -= AssemblyLoadContext_Resolving;
 
-            return context.LoadFromAssemblyName(name);
+                if (name.Name == "Alternet.UI")
+                    return typeof(Alternet.UI.Window).Assembly;
+
+                if (name.Name == null)
+                    throw new Exception();
+
+                if (name.Name.EndsWith(".resources", StringComparison.OrdinalIgnoreCase))
+                {
+                    // See https://github.com/dotnet/runtime/issues/7077
+                    return null;
+                }
+
+                var assemblyFromDirectory = TryLoadAssemblyFromApplicationDirectory(name);
+                if (assemblyFromDirectory != null)
+                    return assemblyFromDirectory;
+
+                return context.LoadFromAssemblyName(name);
+            }
+            finally
+            {
+                // don't forget to restore our load handler
+                System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += AssemblyLoadContext_Resolving;
+            }
         }
 #else
         private Assembly? CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
-            var directory = Path.GetDirectoryName(GetType().Assembly.Location);
-            var file = Path.Combine(directory, new AssemblyName(args.Name).Name + ".dll");
+            return TryLoadAssemblyFromApplicationDirectory(new AssemblyName(args.Name));
+        }
+#endif
+
+        Assembly? TryLoadAssemblyFromApplicationDirectory(AssemblyName name)
+        {
+            var directory = Path.GetDirectoryName(GetType().Assembly.Location) ?? throw new Exception();
+            var file = Path.Combine(directory, name.Name + ".dll");
             if (!File.Exists(file))
                 return null;
 
             return Assembly.LoadFile(file);
         }
-#endif
 
         private class PInvoke
         {

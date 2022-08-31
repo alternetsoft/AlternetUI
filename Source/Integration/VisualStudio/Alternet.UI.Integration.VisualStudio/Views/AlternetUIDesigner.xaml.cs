@@ -343,15 +343,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 string GetXamlAssembly(ProjectOutputInfo output)
                 {
                     var project = projects.FirstOrDefault(x => x.Project == _project);
-
-                    // Ideally we'd have the path to the `project` assembly that `output` uses, but
-                    // I'm not sure how to get that information, so instead look for a netcore output
-                    // or failing that a netstandard output, and pray.
-                    return project?.Outputs
-                        .OrderBy(x => !x.IsNetCore)
-                        .ThenBy(x => !x.IsNetStandard)
-                        .FirstOrDefault()?
-                        .TargetAssembly;
+                    return project?.Outputs.FirstOrDefault(x => x.TargetFramework == output.TargetFramework)?.TargetAssembly;
                 }
 
                 var oldSelectedTarget = SelectedTarget;
