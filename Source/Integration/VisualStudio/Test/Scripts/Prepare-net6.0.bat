@@ -8,6 +8,10 @@ set ContentRoot=%ScriptHome%\Content\
 set ProjectDirectory=%RefsRoot%\refs-net6.0\
 set OutputDirectory=%ProjectDirectory%\bin\Debug\net6.0\
 
+if not exist "%OutputDirectory%" (mkdir "%OutputDirectory%")
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
+
 copy "%SourceRoot%\Alternet.UI\bin\Debug\netcoreapp3.1\*.*" "%OutputDirectory%"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)

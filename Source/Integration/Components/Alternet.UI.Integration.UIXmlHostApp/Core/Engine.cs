@@ -7,18 +7,18 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 {
     public class Engine
     {
-        private readonly string uiAssemblyPath;
         private IAlternetUIRemoteTransportConnection transport;
         private string sessionId;
+        private readonly Assembly alternetUIAssembly;
         private dynamic previewerService;
 
         private Queue<Action> actions = new Queue<Action>();
 
-        public Engine(IAlternetUIRemoteTransportConnection transport, string sessionId, string uiAssemblyPath)
+        public Engine(IAlternetUIRemoteTransportConnection transport, string sessionId, Assembly alternetUIAssembly)
         {
             this.transport = transport;
             this.sessionId = sessionId;
-            this.uiAssemblyPath = uiAssemblyPath;
+            this.alternetUIAssembly = alternetUIAssembly;
         }
 
         public void OnUixmlUpdateSuccess(IDictionary<string, object> parameters)
@@ -48,10 +48,8 @@ namespace Alternet.UI.Integration.UIXmlHostApp.Remote
 
         public void Run()
         {
-            var assembly = Assembly.LoadFile(uiAssemblyPath);
-
             previewerService = InternalsAccessor.CreateObject(
-                assembly,
+                alternetUIAssembly,
                 "Alternet.UI.Integration.UIXmlPreviewerService",
                 (Action<IDictionary<string, object>>)OnUixmlUpdateSuccess,
                 (Action<IDictionary<string, object>>)OnUixmlUpdateFailure,

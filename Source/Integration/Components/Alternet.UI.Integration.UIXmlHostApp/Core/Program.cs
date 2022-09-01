@@ -3,6 +3,8 @@ using Alternet.UI.Integration.UIXmlHostApp.Remote;
 using System;
 using System.IO;
 using System.Net;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace Alternet.UI.Integration.UIXmlHostApp
 {
@@ -18,15 +20,40 @@ namespace Alternet.UI.Integration.UIXmlHostApp
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             commandLineArgs = ParseCommandLineArgs(cmdline);
+
             var transport = CreateTransport(commandLineArgs);
             if (transport is ITransportWithEnforcedMethod enforcedMethod)
                 commandLineArgs.Method = enforcedMethod.PreviewerMethod;
             transport.OnException += (t, e) => Die(e.ToString());
 
-            var uiAssemblyPath = GetUIAssemblyPath();
+            var alternetUIAssembly = Assembly.LoadFile(GetUIAssemblyPath());
+#if NETCOREAPP
+            SetDotNetCoreNativeDllImportResolver(alternetUIAssembly);
+#endif
 
-            new Engine(transport, commandLineArgs.SessionId, uiAssemblyPath).Run();
+            new Engine(transport, commandLineArgs.SessionId, alternetUIAssembly).Run();
         }
+
+#if NETCOREAPP
+        private static void SetDotNetCoreNativeDllImportResolver(Assembly alternetUIAssembly)
+        {
+            NativeLibrary.SetDllImportResolver(alternetUIAssembly,
+                (libraryName, assembly, searchPath) =>
+                {
+                    if (libraryName == "Alternet.UI.Pal")
+                    {
+                        var nativeDllFilePath = Path.Combine(
+                            Path.GetDirectoryName(commandLineArgs.AppPath),
+                            @"runtimes\win-x64\native\Alternet.UI.Pal.dll");
+
+                        if (File.Exists(nativeDllFilePath))
+                            return NativeLibrary.Load(nativeDllFilePath);
+                    }
+
+                    return IntPtr.Zero;
+                });
+        }
+#endif
 
         private static string GetUIAssemblyPath()
         {
