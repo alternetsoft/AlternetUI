@@ -4,6 +4,6 @@
     <TargetFramework>net461</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Alternet.UI" Version="0.3.126-beta" />
+    <PackageReference Include="Alternet.UI" Version="0.3.129-beta" />
   </ItemGroup>
 </Project>

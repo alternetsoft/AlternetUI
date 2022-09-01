@@ -16,6 +16,8 @@ namespace Alternet.UI.Integration
         private readonly string screenshotsDirectory;
 
         private Application? application;
+        private Timer queueTimer;
+        private System.Threading.Timer wakeUpIdleTimer;
 
         public UIXmlPreviewerService(
             Action<IDictionary<string, object>> onUixmlUpdateSuccess,
@@ -47,9 +49,9 @@ namespace Alternet.UI.Integration
 
             application.Idle += Application_Idle;
 
-            var timer = new Timer(TimeSpan.FromMilliseconds(100), OnQueueTimerTick);
+            queueTimer = new Timer(TimeSpan.FromMilliseconds(100), OnQueueTimerTick);
 
-            new System.Threading.Timer(_ => application.WakeUpIdle(), null, 0, 200);
+            wakeUpIdleTimer = new System.Threading.Timer(_ => application.WakeUpIdle(), null, 0, 200);
 
             application.Run(new Window { IsToolWindow = true, StartLocation = WindowStartLocation.Manual, Location = new Point(20000, 20000) });
         }

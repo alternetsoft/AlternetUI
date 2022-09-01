@@ -11,6 +11,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp
     public static class Program
     {
         private static CommandLineArgs commandLineArgs;
+        private static Engine engine;
 
         [STAThread]
         public static void Main(string[] cmdline)
@@ -31,7 +32,8 @@ namespace Alternet.UI.Integration.UIXmlHostApp
             SetDotNetCoreNativeDllImportResolver(alternetUIAssembly);
 #endif
 
-            new Engine(transport, commandLineArgs.SessionId, alternetUIAssembly).Run();
+            engine = new Engine(transport, commandLineArgs.SessionId, alternetUIAssembly);
+            engine.Run();
         }
 
 #if NETCOREAPP
