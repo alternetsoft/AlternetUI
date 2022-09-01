@@ -17,7 +17,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
     {
         private const string SettingsKey = nameof(AlternetUIVisualStudioSettings);
         private readonly WritableSettingsStore _settings;
-        private Orientation _designerSplitOrientation = Orientation.Horizontal;
+        private Orientation _designerSplitOrientation = Orientation.Vertical;
         private AlternetUIDesignerView _designerView = AlternetUIDesignerView.Source;
         private LogEventLevel _minimumLogVerbosity = LogEventLevel.Warning;
 
@@ -77,7 +77,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                 DesignerSplitOrientation = (Orientation)_settings.GetInt32(
                     SettingsKey,
                     nameof(DesignerSplitOrientation),
-                    (int)Orientation.Horizontal);
+                    (int)Orientation.Vertical);
                 DesignerView = (AlternetUIDesignerView)_settings.GetInt32(
                     SettingsKey,
                     nameof(DesignerView),

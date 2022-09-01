@@ -94,7 +94,6 @@
     <Compile Include="Models\PreviewData.cs" />
     <Compile Include="Views\DesignerPane.cs" />
     <Compile Include="Views\EditorHostPane.cs" />
-    <Compile Include="Views\GridLines.cs" />
     <Compile Include="Views\OptionsDialogPage.cs">
       <SubType>Component</SubType>
     </Compile>

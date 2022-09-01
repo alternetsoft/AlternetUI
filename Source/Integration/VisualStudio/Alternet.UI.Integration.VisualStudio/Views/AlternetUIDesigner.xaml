@@ -129,8 +129,6 @@
                 <RowDefinition x:Name="codeRow"/>
             </Grid.RowDefinitions>
 
-            <views:GridLines Grid.ColumnSpan="3" Margin="0,0,0,5" />
-
             <local:AlternetUIPreviewer x:Name="previewer" Grid.Column="2" />
 
             <GridSplitter x:Name="splitter"
