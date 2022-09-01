@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "nuget-net6.0", "NuGet\nuget
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "refs-netcoreapp3.1", "Refs\refs-netcoreapp3.1\refs-netcoreapp3.1.csproj", "{10EA512F-D400-4600-88D8-29F9B3A2F13F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "refs-net6.0", "Refs\refs-net6.0\refs-net6.0.csproj", "{D87893D1-3CEE-4B4F-8E53-3BF5ABE5BAC8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{10EA512F-D400-4600-88D8-29F9B3A2F13F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10EA512F-D400-4600-88D8-29F9B3A2F13F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10EA512F-D400-4600-88D8-29F9B3A2F13F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D87893D1-3CEE-4B4F-8E53-3BF5ABE5BAC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D87893D1-3CEE-4B4F-8E53-3BF5ABE5BAC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D87893D1-3CEE-4B4F-8E53-3BF5ABE5BAC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D87893D1-3CEE-4B4F-8E53-3BF5ABE5BAC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +59,7 @@ Global
 		{572AC21D-0BBA-4677-A191-CF1C2DB710A7} = {0538135A-DE21-40E3-8284-88E0510B8443}
 		{AD16DB05-7305-4EA9-A350-A045F792E165} = {0538135A-DE21-40E3-8284-88E0510B8443}
 		{10EA512F-D400-4600-88D8-29F9B3A2F13F} = {FC8DABD7-8ED2-4AD6-8939-5AED7C710F4B}
+		{D87893D1-3CEE-4B4F-8E53-3BF5ABE5BAC8} = {FC8DABD7-8ED2-4AD6-8939-5AED7C710F4B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8E53E4A0-19F6-404C-BD8C-49D341E28239}

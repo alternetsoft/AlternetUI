@@ -5,8 +5,8 @@ set ScriptHome=%~dp0.
 set SourceRoot=%ScriptHome%\..\..\..\..\
 set RefsRoot=%ScriptHome%\..\Refs\
 set ContentRoot=%ScriptHome%\Content\
-set ProjectDirectory=%RefsRoot%\refs-netcoreapp3.1\
-set OutputDirectory=%ProjectDirectory%\bin\Debug\netcoreapp3.1\
+set ProjectDirectory=%RefsRoot%\refs-net6.0\
+set OutputDirectory=%ProjectDirectory%\bin\Debug\net6.0\
 
 copy "%SourceRoot%\Alternet.UI\bin\Debug\netcoreapp3.1\*.*" "%OutputDirectory%"
 if not !ERRORLEVEL! EQU 0 (
@@ -21,11 +21,10 @@ copy "%SourceRoot%\Alternet.UI.Pal\bin\x64\Debug\*.*" "%targetPalDirectory%"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-dotnet build "%ProjectDirectory%\refs-netcoreapp3.1.csproj"
+dotnet build "%ProjectDirectory%\refs-net6.0.csproj"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-copy "%ContentRoot%\refs-netcoreapp3.1\*.*" "%OutputDirectory%"
+copy "%ContentRoot%\refs-net6.0\*.*" "%OutputDirectory%"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
-
