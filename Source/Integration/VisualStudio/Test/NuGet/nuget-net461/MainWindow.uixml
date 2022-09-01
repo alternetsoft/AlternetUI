@@ -1,0 +1,8 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="nuget_net461.MainWindow"
+        Title="nuget_net461">
+  <StackPanel Margin="10">
+    <Label Text="Hello!" />
+  </StackPanel>
+</Window>

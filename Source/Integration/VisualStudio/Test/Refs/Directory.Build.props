@@ -1,0 +1,3 @@
+﻿<Project>
+    <Import Project="$(MSBuildThisFileDirectory)..\..\..\..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.props" />
+</Project>

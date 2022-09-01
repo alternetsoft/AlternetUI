@@ -1,0 +1,7 @@
+﻿<Project>
+    <PropertyGroup Condition="'$(AlternetUIBuildTaskAllPlatformsPath)' == ''">
+        <AlternetUIBuildTaskAllPlatformsPath>$(MSBuildThisFileDirectory)..\..\..\..\Alternet.UI.Build.Tasks\bin\Debug\</AlternetUIBuildTaskAllPlatformsPath>
+    </PropertyGroup>
+
+    <Import Project="$(MSBuildThisFileDirectory)..\..\..\..\Alternet.UI.Build.Tasks\msbuild\Alternet.UI.Build.targets" />
+</Project>
