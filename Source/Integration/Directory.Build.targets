@@ -3,6 +3,6 @@
         <Nullable>disable</Nullable>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="$(MSBuildThisFileDirectory)\..\Tools\Language\IsExternalInit.cs" Visible="false" />
+        <Compile Include="$(MSBuildThisFileDirectory)\..\Tools\Language\IsExternalInit.cs" Visible="false"/>
     </ItemGroup>
 </Project>
