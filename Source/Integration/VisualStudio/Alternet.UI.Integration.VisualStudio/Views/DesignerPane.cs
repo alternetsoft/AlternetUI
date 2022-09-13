@@ -72,6 +72,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             var settings = this.GetMefService<IAlternetUIVisualStudioSettings>();
             var xamlEditorView = new AlternetUIDesigner();
             xamlEditorView.IsPaused = _isPaused;
+            xamlEditorView.Settings = settings;
             xamlEditorView.SplitOrientation = settings.DesignerSplitOrientation;
             xamlEditorView.View = settings.DesignerView;
             xamlEditorView.Start(_project, _xamlPath, _editorHost);

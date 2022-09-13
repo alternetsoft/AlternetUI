@@ -24,6 +24,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Task = System.Threading.Tasks.Task;
+using Alternet.UI.Integration.VisualStudio;
 
 #pragma warning disable VSTHRD100, VSTHRD010
 
@@ -126,6 +127,8 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 StartStopProcessAsync().FireAndForget();
             };
         }
+        
+        public IAlternetUIVisualStudioSettings Settings { get; set; }
 
         /// <summary>
         /// Gets or sets the paused state of the designer.
@@ -727,6 +730,13 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             if (d is AlternetUIDesigner designer)
             {
                 designer.UpdateLayoutForView();
+
+                var settings = designer.Settings;
+                if (settings != null)
+                {
+                    settings.DesignerSplitOrientation = (Orientation)e.NewValue;
+                    settings.Save();
+                }
             }
         }
 
@@ -736,6 +746,13 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             {
                 designer.UpdateLayoutForView();
                 designer.StartStopProcessAsync().FireAndForget();
+
+                var settings = designer.Settings;
+                if (settings != null)
+                {
+                    settings.DesignerView = (AlternetUIDesignerView)e.NewValue;
+                    settings.Save();
+                }
             }
         }
 

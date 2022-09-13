@@ -18,7 +18,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         private const string SettingsKey = nameof(AlternetUIVisualStudioSettings);
         private readonly WritableSettingsStore _settings;
         private Orientation _designerSplitOrientation = Orientation.Vertical;
-        private AlternetUIDesignerView _designerView = AlternetUIDesignerView.Source;
+        private AlternetUIDesignerView _designerView = AlternetUIDesignerView.Split;
         private LogEventLevel _minimumLogVerbosity = LogEventLevel.Warning;
 
         [ImportingConstructor]
@@ -81,7 +81,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                 DesignerView = (AlternetUIDesignerView)_settings.GetInt32(
                     SettingsKey,
                     nameof(DesignerView),
-                    (int)AlternetUIDesignerView.Source);
+                    (int)AlternetUIDesignerView.Split);
                 MinimumLogVerbosity = (LogEventLevel)_settings.GetInt32(
                     SettingsKey,
                     nameof(MinimumLogVerbosity),
