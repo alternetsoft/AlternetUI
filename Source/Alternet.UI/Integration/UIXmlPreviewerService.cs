@@ -124,8 +124,8 @@ namespace Alternet.UI.Integration
             PInvoke.User32.SetWindowPos(
                 hwnd,
                 new IntPtr(1),
-                ownerWindowLocation.X,
-                ownerWindowLocation.Y,
+                Math.Max(0, ownerWindowLocation.X),
+                Math.Max(0, ownerWindowLocation.Y),
                 size.Width,
                 size.Height,
                 PInvoke.User32.SetWindowPosFlags.SWP_NOACTIVATE);
