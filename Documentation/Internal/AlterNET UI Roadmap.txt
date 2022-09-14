@@ -24,11 +24,11 @@ AlterNET UI Roadmap
 0.3-beta (common features release):
     + window properties and management
     + modal dialogs
-    - message box full API
+    + message box full API
     + menus with keyboard shortcuts
 	- context menus
     + commands
-    - common dialogs (Open file etc)
+    + common dialogs (Open file etc)
     - tool tips
     - focus management
     - drag and drop, clipboard
