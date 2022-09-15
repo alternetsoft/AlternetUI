@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DragAndDropSample": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

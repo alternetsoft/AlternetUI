@@ -16,8 +16,8 @@ namespace Alternet.UI.Integration
         private readonly string screenshotsDirectory;
 
         private Application? application;
-        private Timer queueTimer;
-        private System.Threading.Timer wakeUpIdleTimer;
+        private Timer? queueTimer;
+        private System.Threading.Timer? wakeUpIdleTimer;
 
         public UIXmlPreviewerService(
             Action<IDictionary<string, object>> onUixmlUpdateSuccess,

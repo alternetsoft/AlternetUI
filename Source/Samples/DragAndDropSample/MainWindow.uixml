@@ -1,0 +1,19 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="DragAndDropSample.MainWindow">
+  <StackPanel Orientation="Horizontal" Margin="10">
+    <StackPanel Orientation="Vertical" Margin="10">
+      <Button Text="Copy" Name="copyButton" Click="CopyButton_Click" />
+      <Button Text="Paste" Name="pasteButton" Click="PasteButton_Click" />
+    </StackPanel>
+    <GroupBox Title="Included Data Formats">
+      <StackPanel Orientation="Vertical" Margin="10">
+        <CheckBox Text="Text" Name="textFormatCheckBox" IsChecked="true" />
+        <CheckBox Text="Files" Name="filesFormatCheckBox" IsChecked="true" />
+        <CheckBox Text="Bitmap" Name="bitmapFormatCheckBox" IsChecked="true" />
+        <CheckBox Text="Custom" Name="customFormatCheckBox" IsChecked="true" />
+      </StackPanel>
+    </GroupBox>
+  </StackPanel>
+  
+</Window>
