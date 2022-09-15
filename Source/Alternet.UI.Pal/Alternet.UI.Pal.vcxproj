@@ -188,6 +188,7 @@
     <ClCompile Include="Brush.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CheckBox.cpp" />
+    <ClCompile Include="Clipboard.cpp" />
     <ClCompile Include="ComboBox.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="DrawingContext.cpp" />
@@ -223,6 +224,8 @@
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TreeView.cpp" />
+    <ClCompile Include="UnmanagedDataObject.cpp" />
+    <ClCompile Include="UnmanagedStream.cpp" />
     <ClCompile Include="WindowsVisualThemeSupport.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -278,6 +281,7 @@
     <ClInclude Include="Brush.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CheckBox.h" />
+    <ClInclude Include="Clipboard.h" />
     <ClInclude Include="ComboBox.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Common.Strings.h" />
@@ -325,6 +329,8 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TreeView.h" />
     <ClInclude Include="TypedEnumFlags.h" />
+    <ClInclude Include="UnmanagedDataObject.h" />
+    <ClInclude Include="UnmanagedStream.h" />
     <ClInclude Include="WindowsVisualThemeSupport.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

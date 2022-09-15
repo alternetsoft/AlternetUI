@@ -126,6 +126,9 @@ namespace ApiGenerator.Native
                 if (type == typeof(string))
                     return usage.HasFlag(TypeUsage.Argument) ? "const char16_t*" : "char16_t*";
 
+                if (type == typeof(byte[]))
+                    return "void*";
+
                 var primitiveTypeName = TryGetPrimitiveType(type);
                 if (primitiveTypeName != null)
                     return primitiveTypeName;

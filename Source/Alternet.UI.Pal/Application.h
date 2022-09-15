@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "Window.h"
 #include "Keyboard.h"
+#include "Clipboard.h"
 #include "Mouse.h"
 #include "Object.h"
 #include "WindowsVisualThemeSupport.h"
@@ -52,6 +53,7 @@ namespace Alternet::UI
 
         Keyboard* _keyboard = nullptr;
         Mouse* _mouse = nullptr;
+        Clipboard* _clipboard = nullptr;
 
         bool _inUixmlPreviewerMode = false;
 

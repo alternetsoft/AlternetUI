@@ -5,6 +5,7 @@
 #include "Application.h"
 #include "Keyboard.h"
 #include "Mouse.h"
+#include "Clipboard.h"
 #include "Window.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
@@ -43,6 +44,13 @@ ALTERNET_UI_API Mouse* Application_GetMouse_(Application* obj)
 {
     return MarshalExceptions<Mouse*>([&](){
             return obj->GetMouse();
+        });
+}
+
+ALTERNET_UI_API Clipboard* Application_GetClipboard_(Application* obj)
+{
+    return MarshalExceptions<Clipboard*>([&](){
+            return obj->GetClipboard();
         });
 }
 

@@ -126,6 +126,7 @@ namespace Alternet::UI
 
         _keyboard = new Keyboard();
         _mouse = new Mouse();
+        _clipboard = new Clipboard();
 
         _app = static_cast<App*>(wxTheApp);
         _app->SetOwner(this);
@@ -142,6 +143,9 @@ namespace Alternet::UI
 
         _mouse->Release();
         _mouse = nullptr;
+
+        _clipboard->Release();
+        _clipboard = nullptr;
     }
 
     void Application::WakeUpIdle()
@@ -172,6 +176,12 @@ namespace Alternet::UI
     void Application::RaiseIdle()
     {
         RaiseEvent(ApplicationEvent::Idle);
+    }
+
+    Clipboard* Application::GetClipboard()
+    {
+        _clipboard->AddRef();
+        return _clipboard;
     }
 
     Mouse* Application::GetMouse()

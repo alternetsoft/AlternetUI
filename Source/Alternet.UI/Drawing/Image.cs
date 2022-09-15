@@ -86,5 +86,14 @@ namespace Alternet.Drawing
                 isDisposed = true;
             }
         }
+
+        /// <summary>
+        /// Saves this image to the specified stream.
+        /// </summary>
+        /// <param name="stream">The <see cref="Stream"/> where the image will be saved.</param>
+        public void Save(MemoryStream stream)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

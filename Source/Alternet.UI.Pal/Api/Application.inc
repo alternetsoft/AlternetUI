@@ -11,6 +11,9 @@ Keyboard* GetKeyboard();
 Mouse* GetMouse();
 
 
+Clipboard* GetClipboard();
+
+
 bool GetInUixmlPreviewerMode();
 void SetInUixmlPreviewerMode(bool value);
 

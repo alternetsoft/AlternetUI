@@ -66,6 +66,19 @@ namespace Alternet.UI.Native
             
         }
         
+        public Clipboard Clipboard
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Application_GetClipboard_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<Clipboard>(n, p => new Clipboard(p))!;
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+        }
+        
         public bool InUixmlPreviewerMode
         {
             get
@@ -157,6 +170,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Application_GetMouse_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Application_GetClipboard_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Application_GetInUixmlPreviewerMode_(IntPtr obj);

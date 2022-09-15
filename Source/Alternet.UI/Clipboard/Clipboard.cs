@@ -11,9 +11,17 @@ namespace Alternet.UI
     public static class Clipboard
     {
         /// <summary>
-        /// Retrieves the data that is currently on the system <see cref='Clipboard'/>.
+        /// Retrieves the data that is currently on the system <see cref='Clipboard'/>,
+        /// or <see langword="null"/> if there is no data on the Clipboard.
         /// </summary>
-        public static IDataObject GetDataObject() => throw new NotImplementedException();
+        public static IDataObject? GetDataObject()
+        {
+            var unmanagedDataObject = Application.Current.NativeClipboard.GetDataObject();
+            if (unmanagedDataObject == null)
+                return null;
+
+            return new UnmanagedDataObjectAdapter(unmanagedDataObject);
+        }
 
         /// <summary>
         /// Clears the Clipboard and then adds data to it.

@@ -115,7 +115,7 @@ namespace Alternet.UI
             if (data is null)
                 throw new ArgumentNullException(nameof(data));
 
-            SetData(AutoDetectFormatFromData(data), data);
+            SetData(DetectFormatFromData(data), data);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SetText(string value) => SetData(DataFormats.Text, value);
 
-        private static object SetDataTransform(string format, object data)
+        internal static object SetDataTransform(string format, object data)
         {
             if (format.Equals(DataFormats.Files, StringComparison.Ordinal))
             {
@@ -162,7 +162,7 @@ namespace Alternet.UI
             return data;
         }
 
-        private static string AutoDetectFormatFromData(object data) => data switch
+        internal static string DetectFormatFromData(object data) => data switch
         {
             string _ => DataFormats.Text,
             FileInfo[] _ => DataFormats.Files,

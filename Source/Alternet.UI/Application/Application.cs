@@ -39,6 +39,7 @@ namespace Alternet.UI
             mouseInputProvider = new MouseInputProvider(nativeApplication.Mouse);
         }
 
+        internal Native.Clipboard NativeClipboard => nativeApplication.Clipboard;
         internal Native.Keyboard NativeKeyboard => nativeApplication.Keyboard;
         internal Native.Mouse NativeMouse => nativeApplication.Mouse;
 
