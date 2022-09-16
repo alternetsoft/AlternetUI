@@ -9,8 +9,12 @@ namespace Alternet::UI
     {
 #include "Api/UnmanagedStream.inc"
     public:
+        UnmanagedStream(wxMemoryOutputStream* wxMemoryOutputStream);
 
     private:
-    
+
+        wxStreamBuffer* _buffer = nullptr;
+        wxMemoryOutputStream* _wxMemoryOutputStream = nullptr;
+        wxMemoryInputStream* _wxMemoryInputStream = nullptr;
     };
 }

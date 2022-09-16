@@ -61,6 +61,12 @@ namespace Alternet::UI
         else
             delete fileData;
 
+        auto bitmapData = new wxBitmapDataObject();
+        if (wxTheClipboard->GetData(*bitmapData))
+            result->Add(bitmapData);
+        else
+            delete bitmapData;
+
         return result;
     }
 }

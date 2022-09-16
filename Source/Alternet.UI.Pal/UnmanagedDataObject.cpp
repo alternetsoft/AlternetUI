@@ -60,7 +60,14 @@ namespace Alternet::UI
 
     optional<wxBitmap> UnmanagedDataObject::TryGetBitmap()
     {
-        return optional<wxBitmap>();
+        wxBitmapDataObject* object = nullptr;
+        if (_dataObject->IsSupportedFormat(wxDF_DIB))
+            object = static_cast<wxBitmapDataObject*>(_dataObject->GetObject(wxDF_DIB));
+
+        if (object == nullptr)
+            return nullopt;
+
+        return object->GetBitmap();
     }
 
     bool UnmanagedDataObject::GetDataPresent(const string& format)
@@ -72,6 +79,9 @@ namespace Alternet::UI
 
         if (format == DataFormats::Files)
             return _dataObject->IsSupportedFormat(wxDF_FILENAME);
+
+        if (format == DataFormats::Bitmap)
+            return _dataObject->IsSupportedFormat(wxDF_DIB);
 
         return false;
     }
@@ -85,6 +95,9 @@ namespace Alternet::UI
 
         if (GetDataPresent(DataFormats::Files))
             result->push_back(DataFormats::Files);
+
+        if (GetDataPresent(DataFormats::Bitmap))
+            result->push_back(DataFormats::Bitmap);
 
         return result;
     }
@@ -130,7 +143,20 @@ namespace Alternet::UI
 
     UnmanagedStream* UnmanagedDataObject::GetStreamData(const string& format)
     {
-        return nullptr;
+        if (!GetDataPresent(format))
+            throwExInvalidArg(format, FormatNotPresentErrorMessage);
+
+        auto bitmap = TryGetBitmap();
+        if (bitmap.has_value())
+        {
+            auto image = bitmap.value().ConvertToImage();
+            auto stream = new wxMemoryOutputStream();
+            image.SaveFile(*stream, wxBitmapType::wxBITMAP_TYPE_PNG);
+
+            return new UnmanagedStream(stream);
+        }
+
+        throwExNoInfo;
     }
 
     void UnmanagedDataObject::SetStringData(const string& format, const string& value)

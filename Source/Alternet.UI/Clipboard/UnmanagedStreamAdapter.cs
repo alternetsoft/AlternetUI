@@ -23,7 +23,7 @@ namespace Alternet.UI
 
         public override long Position
         {
-            get => stream.Length;
+            get => stream.Position;
             set => Seek(value, SeekOrigin.Begin);
         }
 
@@ -45,7 +45,7 @@ namespace Alternet.UI
             if (!stream.IsSeekable)
                 throw new NotSupportedException();
 
-            Position = origin switch
+            stream.Position = origin switch
             {
                 SeekOrigin.Begin => offset,
                 SeekOrigin.Current => Position + offset,
