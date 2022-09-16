@@ -78,7 +78,7 @@ namespace Alternet.UI.Native
         public System.IntPtr Read(System.Byte[] buffer, System.IntPtr length)
         {
             CheckDisposed();
-            var n = NativeApi.UnmanagedStream_Read_(NativePointer, Array.ConvertAll<byte, byte>(buffer, x => x), buffer.Length, length);
+            var n = NativeApi.UnmanagedStream_Read_(NativePointer, buffer, buffer.Length, length);
             var m = n;
             return m;
         }
@@ -108,7 +108,7 @@ namespace Alternet.UI.Native
             public static extern void UnmanagedStream_SetPosition_(IntPtr obj, long value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr UnmanagedStream_Read_(IntPtr obj, System.Byte[] buffer, int bufferCount, System.IntPtr length);
+            public static extern System.IntPtr UnmanagedStream_Read_(IntPtr obj, [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]System.Byte[] buffer, int bufferCount, System.IntPtr length);
             
         }
     }

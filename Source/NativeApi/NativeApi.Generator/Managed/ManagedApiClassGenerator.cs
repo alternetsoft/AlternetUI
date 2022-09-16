@@ -411,7 +411,14 @@ using System.Security;");
             if (type.OriginalType.IsArray)
             {
                 var elementType = type.OriginalType.GetElementType().ToContextualType();
-                return $"Array.ConvertAll<{types.GetTypeName(elementType)}, {pinvokeTypes.GetTypeName(elementType)}>({name}, x => x)";
+
+                var inputTypeName = types.GetTypeName(elementType);
+                var outputTypeName = pinvokeTypes.GetTypeName(elementType);
+
+                if (inputTypeName != outputTypeName)
+                    return $"Array.ConvertAll<{inputTypeName}, {outputTypeName}>({name}, x => x)";
+                else
+                    return name;
             }
 
             if (TypeProvider.IsComplexType(type))

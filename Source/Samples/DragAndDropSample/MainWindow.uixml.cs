@@ -79,7 +79,7 @@ namespace DragAndDropSample
                 result.AppendLine("Files: " + string.Join(";", (string[])value.GetData(DataFormats.Files)!));
             if (value.GetDataPresent(DataFormats.Bitmap))
             {
-                var bitmap = (Bitmap)value.GetData(DataFormats.Bitmap)!;
+                var bitmap = (Image)value.GetData(DataFormats.Bitmap)!;
                 result.AppendLine($"Bitmap: {bitmap.Size.Width}x{bitmap.Size.Height}");
             }
 
