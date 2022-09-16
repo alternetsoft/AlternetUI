@@ -12,6 +12,11 @@ namespace Alternet::UI
     public:
 
     private:
-    
+
+        optional<string> TryGetText();
+        optional<string> TryGetFiles();
+        optional<wxBitmap> TryGetBitmap();
+
+        wxDataObjectComposite* GetCompositeDataObject();
     };
 }

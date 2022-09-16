@@ -12,6 +12,49 @@ namespace Alternet::UI
     
     UnmanagedDataObject* Clipboard::GetDataObject()
     {
-        return nullptr;
+        if (!wxTheClipboard->Open())
+            throwEx(u"Error while opening the clipboard.");
+
+        auto compositeDataObject = GetCompositeDataObject();
+        if (compositeDataObject->GetFormatCount() == 0)
+        {
+            delete compositeDataObject;
+            return nullptr;
+        }
+
+        wxTheClipboard->Close();
+        return new UnmanagedDataObject(compositeDataObject);
+    }
+
+    optional<string> Clipboard::TryGetText()
+    {
+        wxTextDataObject data;
+        if (!wxTheClipboard->GetData(data))
+            return nullopt;
+
+        return wxStr(data.GetText());
+    }
+
+    optional<string> Clipboard::TryGetFiles()
+    {
+        return optional<string>();
+    }
+
+    optional<wxBitmap> Clipboard::TryGetBitmap()
+    {
+        return optional<wxBitmap>();
+    }
+
+    wxDataObjectComposite* Clipboard::GetCompositeDataObject()
+    {
+        auto result = new wxDataObjectComposite();
+
+        auto textData = new wxTextDataObject();
+        if (wxTheClipboard->GetData(*textData))
+            result->Add(textData);
+        else
+            delete textData;
+
+        return result;
     }
 }
