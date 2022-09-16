@@ -55,6 +55,12 @@ namespace Alternet::UI
         else
             delete textData;
 
+        auto fileData = new wxFileDataObject();
+        if (wxTheClipboard->GetData(*fileData))
+            result->Add(fileData);
+        else
+            delete fileData;
+
         return result;
     }
 }

@@ -37,7 +37,25 @@ namespace Alternet::UI
 
     optional<string> UnmanagedDataObject::TryGetFiles()
     {
-        return optional<string>();
+        wxFileDataObject* object = nullptr;
+        if (_dataObject->IsSupportedFormat(wxDF_FILENAME))
+            object = static_cast<wxFileDataObject*>(_dataObject->GetObject(wxDF_FILENAME));
+
+        if (object == nullptr)
+            return nullopt;
+
+        auto fileNames = object->GetFilenames();
+        wxString result;
+
+        int i = 0;
+        for (auto fileName : fileNames)
+        {
+            result.Append(fileName);
+            if (++i < fileNames.Count())
+                result.Append("|");
+        }
+
+        return wxStr(result);
     }
 
     optional<wxBitmap> UnmanagedDataObject::TryGetBitmap()
@@ -49,8 +67,11 @@ namespace Alternet::UI
     {
         if (format == DataFormats::Text)
             return _dataObject->IsSupportedFormat(wxDF_TEXT) ||
-                _dataObject->IsSupportedFormat(wxDF_OEMTEXT) ||
-                _dataObject->IsSupportedFormat(wxDF_UNICODETEXT);
+            _dataObject->IsSupportedFormat(wxDF_OEMTEXT) ||
+            _dataObject->IsSupportedFormat(wxDF_UNICODETEXT);
+
+        if (format == DataFormats::Files)
+            return _dataObject->IsSupportedFormat(wxDF_FILENAME);
 
         return false;
     }
@@ -61,6 +82,9 @@ namespace Alternet::UI
 
         if (GetDataPresent(DataFormats::Text))
             result->push_back(DataFormats::Text);
+
+        if (GetDataPresent(DataFormats::Files))
+            result->push_back(DataFormats::Files);
 
         return result;
     }
@@ -94,7 +118,14 @@ namespace Alternet::UI
 
     string UnmanagedDataObject::GetFileNamesData(const string& format)
     {
-        return string();
+        if (!GetDataPresent(format))
+            throwExInvalidArg(format, FormatNotPresentErrorMessage);
+
+        auto fileNames = TryGetFiles();
+        if (fileNames.has_value())
+            return fileNames.value();
+
+        throwExNoInfo;
     }
 
     UnmanagedStream* UnmanagedDataObject::GetStreamData(const string& format)
