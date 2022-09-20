@@ -35,6 +35,11 @@ namespace Alternet::UI
         return wxStr(object->GetText());
     }
 
+    wxDataObjectComposite* UnmanagedDataObject::GetDataObjectComposite()
+    {
+        return _dataObject;
+    }
+
     optional<string> UnmanagedDataObject::TryGetFiles()
     {
         wxFileDataObject* object = nullptr;
@@ -161,6 +166,11 @@ namespace Alternet::UI
 
     void UnmanagedDataObject::SetStringData(const string& format, const string& value)
     {
+        auto textData = new wxTextDataObject(wxStr(value));
+        if (format != DataFormats::Text)
+            textData->SetFormat(wxDataFormat(wxStr(format)));
+
+        _dataObject->Add(textData);
     }
 
     void UnmanagedDataObject::SetFileNamesData(const string& format, const string& value)

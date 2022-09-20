@@ -12,6 +12,8 @@ namespace Alternet::UI
     public:
         UnmanagedDataObject(wxDataObjectComposite* dataObject);
 
+        wxDataObjectComposite* GetDataObjectComposite();
+
     private:
         wxDataObjectComposite* _dataObject = nullptr;
 
@@ -19,7 +21,7 @@ namespace Alternet::UI
         optional<string> TryGetFiles();
         optional<wxBitmap> TryGetBitmap();
 
-        const string FormatNotPresentErrorMessage = u"The specified format is not present in this data object.";
+        const char16_t* FormatNotPresentErrorMessage = u"The specified format is not present in this data object.";
     };
 
     namespace DataFormats
