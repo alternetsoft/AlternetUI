@@ -31,6 +31,12 @@ namespace Alternet.UI.Native
             return m;
         }
         
+        public void SetDataObject(UnmanagedDataObject value)
+        {
+            CheckDisposed();
+            NativeApi.Clipboard_SetDataObject_(NativePointer, value.NativePointer);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -42,6 +48,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Clipboard_GetDataObject_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Clipboard_SetDataObject_(IntPtr obj, IntPtr value);
             
         }
     }

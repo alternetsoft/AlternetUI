@@ -106,7 +106,7 @@ namespace Alternet.UI
             if (data is null)
                 throw new ArgumentNullException(nameof(data));
 
-            this.data[format] = SetDataTransform(format, data);
+            this.data[format] = DataObjectHelpers.SetDataTransform(format, data);
         }
 
         /// <inheritdoc/>
@@ -115,7 +115,7 @@ namespace Alternet.UI
             if (data is null)
                 throw new ArgumentNullException(nameof(data));
 
-            SetData(DetectFormatFromData(data), data);
+            SetData(DataObjectHelpers.DetectFormatFromData(data), data);
         }
 
         /// <summary>
@@ -147,27 +147,5 @@ namespace Alternet.UI
         /// Adds a text string to the data object in the <see cref="DataFormats.Text"/> format.
         /// </summary>
         public virtual void SetText(string value) => SetData(DataFormats.Text, value);
-
-        internal static object SetDataTransform(string format, object data)
-        {
-            if (format.Equals(DataFormats.Files, StringComparison.Ordinal))
-            {
-                return data switch
-                {
-                    FileInfo[] x => x.Select(x => x.FullName).ToArray(),
-                    _ => data
-                };
-            }
-
-            return data;
-        }
-
-        internal static string DetectFormatFromData(object data) => data switch
-        {
-            string _ => DataFormats.Text,
-            FileInfo[] _ => DataFormats.Files,
-            Bitmap _ => DataFormats.Bitmap,
-            _ => data.GetType().FullName ?? throw new InvalidOperationException(),
-        };
     }
 }

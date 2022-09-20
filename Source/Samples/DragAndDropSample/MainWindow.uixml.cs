@@ -10,10 +10,8 @@ namespace DragAndDropSample
     {
         private const string CustomTextFormatName = "MyCustomTextFormat";
 
-        private const string CustomBytesFormatName = "MyCustomBytesFormat";
-
         private static readonly string[] SupportedFormats =
-            new[] { DataFormats.Text, DataFormats.Files, DataFormats.Bitmap, CustomTextFormatName, CustomBytesFormatName };
+            new[] { DataFormats.Text, DataFormats.Files, DataFormats.Bitmap, CustomTextFormatName };
 
         private Image testBitmap;
 
@@ -22,11 +20,6 @@ namespace DragAndDropSample
             InitializeComponent();
 
             testBitmap = new Image(new Size(64, 64));
-        }
-
-        private static string ByteArrayToString(byte[] ba)
-        {
-            return "0x" + BitConverter.ToString(ba).Replace("-", "");
         }
 
         private void CopyButton_Click(object sender, System.EventArgs e)
@@ -44,7 +37,6 @@ namespace DragAndDropSample
             if (customFormatCheckBox!.IsChecked)
             {
                 result.SetData(CustomTextFormatName, "Custom data string.");
-                result.SetData(CustomBytesFormatName, new byte[] { 0xDE, 0xAD, 0xBE, 0xEF });
             }
 
             if (filesFormatCheckBox!.IsChecked)
@@ -73,8 +65,6 @@ namespace DragAndDropSample
                 result.AppendLine("Text: " + value.GetData(DataFormats.Text));
             if (value.GetDataPresent(CustomTextFormatName))
                 result.AppendLine("Custom text: " + value.GetData(CustomTextFormatName));
-            if (value.GetDataPresent(CustomBytesFormatName))
-                result.AppendLine("Custom bytes: " + ByteArrayToString((byte[])value.GetData(CustomBytesFormatName)!));
             if (value.GetDataPresent(DataFormats.Files))
                 result.AppendLine("Files: " + string.Join(";", (string[])value.GetData(DataFormats.Files)!));
             if (value.GetDataPresent(DataFormats.Bitmap))

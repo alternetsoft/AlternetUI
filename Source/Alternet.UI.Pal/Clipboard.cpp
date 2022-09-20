@@ -1,4 +1,5 @@
 #include "Clipboard.h"
+#include "Clipboard.h"
 
 namespace Alternet::UI
 {
@@ -24,6 +25,10 @@ namespace Alternet::UI
 
         wxTheClipboard->Close();
         return new UnmanagedDataObject(compositeDataObject);
+    }
+
+    void Clipboard::SetDataObject(UnmanagedDataObject* value)
+    {
     }
 
     optional<string> Clipboard::TryGetText()

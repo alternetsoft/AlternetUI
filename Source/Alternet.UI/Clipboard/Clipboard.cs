@@ -27,7 +27,10 @@ namespace Alternet.UI
         /// Clears the Clipboard and then adds data to it.
         /// </summary>
         /// <param name="value">The data to place on the Clipboard.</param>
-        public static void SetDataObject(IDataObject value) => throw new NotImplementedException();
+        public static void SetDataObject(IDataObject value)
+        {
+            Application.Current.NativeClipboard.SetDataObject(UnmanagedDataObjectService.GetUnmanagedDataObject(value));
+        }
 
         /// <summary>
         /// Removes all data from the <see cref='Clipboard'/>.

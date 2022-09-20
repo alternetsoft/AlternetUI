@@ -40,28 +40,12 @@ namespace Alternet.UI
 
         public void SetData(string format, object data)
         {
-            if (format == DataFormats.Text)
-                dataObject.SetStringData(format, (string)DataObject.SetDataTransform(format, data));
-
-            if (format == DataFormats.Files)
-                dataObject.SetFileNamesData(format, string.Join("|", (string)DataObject.SetDataTransform(format, data)));
-
-            if (format == DataFormats.Bitmap)
-            {
-                var image = (Image)DataObject.SetDataTransform(format, data);
-                using (var stream = new MemoryStream())
-                {
-                    image.Save(stream);
-                    dataObject.SetStreamData(format, new InputStream(stream));
-                }
-            }
-
-            throw new NotSupportedException();
+            UnmanagedDataObjectService.SetData(dataObject, format, data);
         }
 
         public void SetData(object data)
         {
-            SetData(DataObject.DetectFormatFromData(data), data);
+            SetData(DataObjectHelpers.DetectFormatFromData(data), data);
         }
     }
 }

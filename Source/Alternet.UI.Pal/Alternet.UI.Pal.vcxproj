@@ -236,6 +236,7 @@
     <ClInclude Include="Api\Brush.Api.h" />
     <ClInclude Include="Api\Button.Api.h" />
     <ClInclude Include="Api\CheckBox.Api.h" />
+    <ClInclude Include="Api\Clipboard.Api.h" />
     <ClInclude Include="Api\ComboBox.Api.h" />
     <ClInclude Include="Api\Exceptions.Api.h" />
     <ClInclude Include="Api\Control.Api.h" />
@@ -276,6 +277,8 @@
     <ClInclude Include="Api\TextBox.Api.h" />
     <ClInclude Include="Api\Timer.Api.h" />
     <ClInclude Include="Api\TreeView.Api.h" />
+    <ClInclude Include="Api\UnmanagedDataObject.Api.h" />
+    <ClInclude Include="Api\UnmanagedStream.Api.h" />
     <ClInclude Include="Api\Window.Api.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Brush.h" />
@@ -339,6 +342,7 @@
     <None Include="Api\Brush.inc" />
     <None Include="Api\Button.inc" />
     <None Include="Api\CheckBox.inc" />
+    <None Include="Api\Clipboard.inc" />
     <None Include="Api\ComboBox.inc" />
     <None Include="Api\Control.inc" />
     <None Include="Api\DrawingContext.inc" />
@@ -372,6 +376,8 @@
     <None Include="Api\TextBox.inc" />
     <None Include="Api\Timer.inc" />
     <None Include="Api\TreeView.inc" />
+    <None Include="Api\UnmanagedDataObject.inc" />
+    <None Include="Api\UnmanagedStream.inc" />
     <None Include="Api\Window.inc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

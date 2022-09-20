@@ -23,3 +23,10 @@ ALTERNET_UI_API UnmanagedDataObject* Clipboard_GetDataObject_(Clipboard* obj)
         });
 }
 
+ALTERNET_UI_API void Clipboard_SetDataObject_(Clipboard* obj, UnmanagedDataObject* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetDataObject(value);
+        });
+}
+
