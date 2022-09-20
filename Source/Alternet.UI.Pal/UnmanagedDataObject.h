@@ -21,6 +21,9 @@ namespace Alternet::UI
         optional<string> TryGetFiles();
         optional<wxBitmap> TryGetBitmap();
 
+        wxDataFormat GetBitmapDataFormat();
+        std::vector<wxDataFormat> GetTextDataFormats();
+
         const char16_t* FormatNotPresentErrorMessage = u"The specified format is not present in this data object.";
     };
 

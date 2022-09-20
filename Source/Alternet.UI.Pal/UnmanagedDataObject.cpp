@@ -24,17 +24,34 @@ namespace Alternet::UI
     optional<string> UnmanagedDataObject::TryGetText()
     {
         wxTextDataObject* object = nullptr;
-        if (_dataObject->IsSupportedFormat(wxDF_TEXT))
-            object = static_cast<wxTextDataObject*>(_dataObject->GetObject(wxDF_TEXT));
-        else if (_dataObject->IsSupportedFormat(wxDF_UNICODETEXT))
-            object = static_cast<wxTextDataObject*>(_dataObject->GetObject(wxDF_UNICODETEXT));
-        else if (_dataObject->IsSupportedFormat(wxDF_OEMTEXT))
-            object = static_cast<wxTextDataObject*>(_dataObject->GetObject(wxDF_OEMTEXT));
+
+        for(auto format : GetTextDataFormats())
+        {
+            if (_dataObject->IsSupportedFormat(format))
+            {
+                object = static_cast<wxTextDataObject*>(_dataObject->GetObject(wxDF_TEXT));
+                break;
+            }
+        }
 
         if (object == nullptr)
             return nullopt;
 
         return wxStr(object->GetText());
+    }
+
+    std::vector<wxDataFormat> UnmanagedDataObject::GetTextDataFormats()
+    {
+        std::vector<wxDataFormat> formats =
+        {
+            wxDF_TEXT,
+            wxDF_UNICODETEXT,
+#ifdef __WXMSW__
+            wxDF_OEMTEXT
+#endif
+        };
+        
+        return formats;
     }
 
     wxDataObjectComposite* UnmanagedDataObject::GetDataObjectComposite()
@@ -68,8 +85,9 @@ namespace Alternet::UI
     optional<wxBitmap> UnmanagedDataObject::TryGetBitmap()
     {
         wxBitmapDataObject* object = nullptr;
-        if (_dataObject->IsSupportedFormat(wxDF_DIB))
-            object = static_cast<wxBitmapDataObject*>(_dataObject->GetObject(wxDF_DIB));
+        auto format = GetBitmapDataFormat();
+        if (_dataObject->IsSupportedFormat(format))
+            object = static_cast<wxBitmapDataObject*>(_dataObject->GetObject(format));
 
         if (object == nullptr)
             return nullopt;
@@ -77,18 +95,29 @@ namespace Alternet::UI
         return object->GetBitmap();
     }
 
+    wxDataFormat UnmanagedDataObject::GetBitmapDataFormat()
+    {
+#ifdef __WXMSW__
+        return wxDF_DIB;
+#else
+        return wxDF_BITMAP;
+#endif
+    }
+
     bool UnmanagedDataObject::GetDataPresent(const string& format)
     {
         if (format == DataFormats::Text)
-            return _dataObject->IsSupportedFormat(wxDF_TEXT) ||
-            _dataObject->IsSupportedFormat(wxDF_OEMTEXT) ||
-            _dataObject->IsSupportedFormat(wxDF_UNICODETEXT);
+        {
+            for(auto format : GetTextDataFormats())
+                if (_dataObject->IsSupportedFormat(format))
+                    return true;
+        }
 
         if (format == DataFormats::Files)
             return _dataObject->IsSupportedFormat(wxDF_FILENAME);
 
         if (format == DataFormats::Bitmap)
-            return _dataObject->IsSupportedFormat(wxDF_DIB);
+            return _dataObject->IsSupportedFormat(GetBitmapDataFormat());
 
         return false;
     }
