@@ -10,6 +10,8 @@ namespace NativeApi.Api
         public void Initialize(Size size) => throw new Exception();
         public void CopyFrom(Image otherImage) => throw new Exception();
 
+        public void SaveToStream(OutputStream stream, string format) => throw new Exception();
+
         public Size Size { get; }
         public Int32Size PixelSize { get; }
     }

@@ -88,12 +88,20 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Saves this image to the specified stream.
+        /// Saves this image to the specified stream in the specified format.
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> where the image will be saved.</param>
-        public void Save(MemoryStream stream)
+        /// <param name="format">An <see cref="ImageFormat"/> that specifies the format of the saved image.</param>
+        public void Save(MemoryStream stream, ImageFormat format)
         {
-            throw new NotImplementedException();
+            if (stream is null)
+                throw new ArgumentNullException(nameof(stream));
+
+            if (format is null)
+                throw new ArgumentNullException(nameof(format));
+
+            using (var outputStream = new UI.Native.OutputStream(stream))
+                NativeImage.SaveToStream(outputStream, format.ToString());
         }
     }
 }

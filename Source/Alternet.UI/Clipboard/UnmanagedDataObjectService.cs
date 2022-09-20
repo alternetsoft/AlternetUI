@@ -30,7 +30,7 @@ namespace Alternet.UI
                 var image = (Image)data;
                 using (var stream = new MemoryStream())
                 {
-                    image.Save(stream);
+                    image.Save(stream, ImageFormat.Png);
                     dataObject.SetStreamData(format, new Native.InputStream(stream));
                 }
             }

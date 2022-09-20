@@ -265,6 +265,8 @@
     <ClInclude Include="Api\NativeEventDataTypes.h" />
     <ClInclude Include="Api\NumericUpDown.Api.h" />
     <ClInclude Include="Api\Object.Api.h" />
+    <ClInclude Include="Api\OutputStream.Api.h" />
+    <ClInclude Include="Api\OutputStream.h" />
     <ClInclude Include="Api\Panel.Api.h" />
     <ClInclude Include="Api\Pen.Api.h" />
     <ClInclude Include="Api\ProgressBar.Api.h" />
@@ -313,6 +315,7 @@
     <ClInclude Include="MacOSMenu.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="ManagedInputStream.h" />
+    <ClInclude Include="ManagedOutputStream.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuItem.h" />
     <ClInclude Include="MessageBox_.h" />

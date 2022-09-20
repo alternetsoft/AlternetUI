@@ -4,6 +4,7 @@
 
 #include "Image.h"
 #include "InputStream.h"
+#include "OutputStream.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -48,6 +49,13 @@ ALTERNET_UI_API void Image_CopyFrom_(Image* obj, Image* otherImage)
 {
     MarshalExceptions<void>([&](){
             obj->CopyFrom(otherImage);
+        });
+}
+
+ALTERNET_UI_API void Image_SaveToStream_(Image* obj, void* stream, const char16_t* format)
+{
+    MarshalExceptions<void>([&](){
+            obj->SaveToStream(stream, format);
         });
 }
 

@@ -64,6 +64,12 @@ namespace Alternet.UI.Native
             NativeApi.Image_CopyFrom_(NativePointer, otherImage.NativePointer);
         }
         
+        public void SaveToStream(OutputStream stream, string format)
+        {
+            CheckDisposed();
+            NativeApi.Image_SaveToStream_(NativePointer, stream.NativePointer, format);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -87,6 +93,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Image_CopyFrom_(IntPtr obj, IntPtr otherImage);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Image_SaveToStream_(IntPtr obj, IntPtr stream, string format);
             
         }
     }
