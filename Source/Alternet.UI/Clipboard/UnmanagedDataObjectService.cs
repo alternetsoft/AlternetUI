@@ -31,6 +31,7 @@ namespace Alternet.UI
                 using (var stream = new MemoryStream())
                 {
                     image.Save(stream, ImageFormat.Png);
+                    stream.Position = 0;
                     dataObject.SetStreamData(format, new Native.InputStream(stream));
                 }
             }

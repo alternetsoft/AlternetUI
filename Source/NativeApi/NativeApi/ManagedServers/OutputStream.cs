@@ -10,7 +10,7 @@ namespace NativeApi.Api.ManagedServers
         public bool IsSeekable => throw new Exception();
         
         public IntPtr Write(
-            [PInvokeAttributes("[Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]")]byte[] buffer,
+            [PInvokeAttributes("[In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]")]byte[] buffer,
             IntPtr length) => throw new Exception();
 
         public long Position { get; set; }

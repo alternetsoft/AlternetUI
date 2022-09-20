@@ -43,6 +43,7 @@
 #include <wx/evtloop.h>
 #include <wx/clipbrd.h>
 #include <wx/mstream.h>
+#include <wx/tokenzr.h>
 
 #define DELELTE_COPY_CONSTRUCTOR(TypeName) \
   TypeName(const TypeName&) = delete

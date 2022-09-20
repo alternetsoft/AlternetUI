@@ -100,8 +100,8 @@ namespace Alternet.Drawing
             if (format is null)
                 throw new ArgumentNullException(nameof(format));
 
-            using (var outputStream = new UI.Native.OutputStream(stream))
-                NativeImage.SaveToStream(outputStream, format.ToString());
+            var outputStream = new UI.Native.OutputStream(stream);
+            NativeImage.SaveToStream(outputStream, format.ToString());
         }
     }
 }

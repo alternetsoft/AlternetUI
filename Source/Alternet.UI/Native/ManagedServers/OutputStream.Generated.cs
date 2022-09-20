@@ -158,7 +158,7 @@ namespace Alternet.UI.Native
             public delegate void TSetPosition(IntPtr obj, long value);
             
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
-            public delegate System.IntPtr TWrite(IntPtr obj, [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]System.Byte[] buffer, System.IntPtr length);
+            public delegate System.IntPtr TWrite(IntPtr obj, [In, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]System.Byte[] buffer, System.IntPtr length);
             
         }
     }

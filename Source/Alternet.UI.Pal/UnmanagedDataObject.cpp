@@ -1,4 +1,6 @@
 #include "UnmanagedDataObject.h"
+#include "Api/InputStream.h"
+#include "ManagedInputStream.h"
 
 namespace Alternet::UI
 {
@@ -175,9 +177,32 @@ namespace Alternet::UI
 
     void UnmanagedDataObject::SetFileNamesData(const string& format, const string& value)
     {
+        auto fileData = new wxFileDataObject();
+
+        wxStringTokenizer tokenizer(wxStr(value), "|");
+        while (tokenizer.HasMoreTokens())
+        {
+            auto fileName = tokenizer.GetNextToken();
+            fileData->AddFile(fileName);
+        }
+
+        if (format != DataFormats::Files)
+            fileData->SetFormat(wxDataFormat(wxStr(format)));
+
+        _dataObject->Add(fileData);
     }
 
     void UnmanagedDataObject::SetStreamData(const string& format, void* value)
     {
+        if (format != DataFormats::Bitmap)
+            throwEx(u"Data format not supported: " + format);
+
+        InputStream inputStream(value);
+        ManagedInputStream managedInputStream(&inputStream);
+
+        auto bitmap = wxBitmap(managedInputStream);
+
+        auto bitmapData = new wxBitmapDataObject(bitmap);
+        _dataObject->Add(bitmapData);
     }
 }

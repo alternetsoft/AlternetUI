@@ -11,7 +11,6 @@
         <CheckBox Text="Text" Name="textFormatCheckBox" IsChecked="true" />
         <CheckBox Text="Files" Name="filesFormatCheckBox" IsChecked="true" />
         <CheckBox Text="Bitmap" Name="bitmapFormatCheckBox" IsChecked="true" />
-        <CheckBox Text="Custom" Name="customFormatCheckBox" IsChecked="true" />
       </StackPanel>
     </GroupBox>
   </StackPanel>
