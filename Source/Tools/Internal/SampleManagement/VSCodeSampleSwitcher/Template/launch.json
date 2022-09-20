@@ -10,7 +10,7 @@
             ],
             "internalConsoleOptions": "openOnSessionStart",
             "program": "dotnet",
-            "args": ["${workspaceFolder}/Source/Samples/##SampleName##/bin/Debug/netcoreapp3.1/##SampleName##.dll"],
+            "args": ["${workspaceFolder}/Source/Samples/##SampleName##/bin/Debug/net6.0/##SampleName##.dll"],
             "preLaunchTask": "##SampleName##: Build"
         },
         {
@@ -18,8 +18,8 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "##SampleName##: Build",
-            "program": "${workspaceFolder}/Source/Samples/##SampleName##/bin/Debug/netcoreapp3.1/##SampleName##.dll",
-            "cwd": "${workspaceFolder}/Source/Samples/##SampleName##/bin/Debug/netcoreapp3.1/",
+            "program": "${workspaceFolder}/Source/Samples/##SampleName##/bin/Debug/net6.0/##SampleName##.dll",
+            "cwd": "${workspaceFolder}/Source/Samples/##SampleName##/bin/Debug/net6.0/",
             "args": [],
             "stopAtEntry": false,
             "console": "internalConsole"
