@@ -10,17 +10,11 @@ namespace Alternet.UI
         /// <summary>
         ///  Initializes a new instance of the <see cref='QueryContinueDragEventArgs'/> class.
         /// </summary>
-        public QueryContinueDragEventArgs(DragInputState keyState, bool escapePressed, DragAction action)
+        public QueryContinueDragEventArgs(bool escapePressed, DragAction action)
         {
-            InputState = keyState;
             EscapePressed = escapePressed;
             Action = action;
         }
-
-        /// <summary>
-        ///  Gets a value indicating the current state of the SHIFT, CTRL, and ALT keys, and the mouse buttons.
-        /// </summary>
-        public DragInputState InputState { get; }
 
         /// <summary>
         ///  Gets a value indicating whether the user pressed the ESC key.

@@ -789,6 +789,42 @@ namespace Alternet::UI
         return i == s_controlsByWxWindowsMap.end() ? NULL : i->second;
     }
 
+    /*static*/ DragDropEffects Control::GetDragDropEffects(wxDragResult input)
+    {
+        switch (input)
+        {
+        case wxDragError:
+        case wxDragNone:
+        case wxDragCancel:
+            return DragDropEffects::None;
+        case wxDragCopy:
+            return DragDropEffects::Copy;
+        case wxDragMove:
+            return DragDropEffects::Move;
+        case wxDragLink:
+            return DragDropEffects::Link;
+        default:
+            throwExNoInfo;
+        }
+    }
+
+    wxDragResult Control::RaiseDragOver(const wxPoint& location, wxDragResult defaultDragResult)
+    {
+        auto clientPoint = toDip(location, GetWxWindow());
+
+        DragEventData data =
+        {
+            nullptr /*data*/,
+            clientPoint.X /*mouseClientLocationX*/,
+            clientPoint.Y /*mouseClientLocationY*/,
+            GetDragDropEffects(defaultDragResult) /*effect*/,
+        };
+
+        RaiseEvent(ControlEvent::DragOver, &data);
+
+        return defaultDragResult;
+    }
+
     bool Control::GetUserPaint()
     {
         return _flags.IsSet(ControlFlags::UserPaint);

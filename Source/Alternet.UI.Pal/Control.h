@@ -30,6 +30,8 @@ namespace Alternet::UI
 
         static Control* TryFindControlByWxWindow(wxWindow* wxWindow);
 
+        wxDragResult RaiseDragOver(const wxPoint& location, wxDragResult defaultDragResult);
+
     protected:
         void CreateWxWindow();
 
@@ -117,6 +119,8 @@ namespace Alternet::UI
         DelayedValues _delayedValues;
 
         DropTarget* _dropTarget = nullptr;
+
+        static DragDropEffects GetDragDropEffects(wxDragResult input);
 
         void CreateDropTarget();
         void DestroyDropTarget();

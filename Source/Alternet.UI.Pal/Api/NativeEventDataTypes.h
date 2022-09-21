@@ -8,11 +8,8 @@ namespace Alternet::UI
     struct DragEventData
     {
         void* data;
-        DragInputState inputState;
-        MouseButton changedButton;
         double mouseClientLocationX;
         double mouseClientLocationY;
-        DragDropEffects allowedEffect;
         DragDropEffects effect;
     };
     #pragma pack(pop)
@@ -20,7 +17,6 @@ namespace Alternet::UI
     #pragma pack(push, 1)
     struct QueryContinueDragEventData
     {
-        DragInputState inputState;
         c_bool escapePressed;
         DragAction action;
     };

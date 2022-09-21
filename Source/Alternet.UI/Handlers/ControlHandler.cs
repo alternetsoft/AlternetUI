@@ -546,6 +546,7 @@ namespace Alternet.UI
 
             Control.Children.ItemRemoved += Children_ItemRemoved;
             VisualChildren.ItemRemoved += Children_ItemRemoved;
+
         }
 
         private void Control_FontChanged(object? sender, EventArgs e)
@@ -582,6 +583,7 @@ namespace Alternet.UI
                 NativeControl.MouseEnter -= NativeControl_MouseEnter;
                 NativeControl.MouseLeave -= NativeControl_MouseLeave;
                 NativeControl.MouseCaptureLost -= NativeControl_MouseCaptureLost;
+                NativeControl.DragOver -= NativeControl_DragOver;
             }
         }
 
@@ -602,6 +604,18 @@ namespace Alternet.UI
             NativeControl.MouseEnter += NativeControl_MouseEnter;
             NativeControl.MouseLeave += NativeControl_MouseLeave;
             NativeControl.MouseCaptureLost += NativeControl_MouseCaptureLost;
+            NativeControl.DragOver += NativeControl_DragOver;
+        }
+
+        private void NativeControl_DragOver(object? sender, Native.NativeEventArgs<Native.DragEventData> e)
+        {
+            var data = e.Data;
+            var ea = new DragEventArgs(
+                null!,
+                new Point(data.mouseClientLocationX, data.mouseClientLocationY),
+                (DragDropEffects)data.effect);
+
+            Control.RaiseDragOver(ea);
         }
 
         private void NativeControl_MouseCaptureLost(object? sender, EventArgs e)

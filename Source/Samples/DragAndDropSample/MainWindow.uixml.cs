@@ -33,7 +33,7 @@ namespace DragAndDropSample
 
         private void DropTarget_DragOver(object sender, DragEventArgs e)
         {
-            LogEvent("DragOver");
+            LogEvent($"DragOver: {e.MouseClientLocation}, {e.Effect}");
         }
 
         private void DropTarget_DragEnter(object sender, DragEventArgs e)

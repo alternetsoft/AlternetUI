@@ -7,18 +7,14 @@ namespace Alternet.UI.Native
     class DragEventData
     {
         public System.IntPtr data;
-        public DragInputState inputState;
-        public MouseButton changedButton;
         public double mouseClientLocationX;
         public double mouseClientLocationY;
-        public DragDropEffects allowedEffect;
         public DragDropEffects effect;
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class QueryContinueDragEventData
     {
-        public DragInputState inputState;
         public bool escapePressed;
         public DragAction action;
     }

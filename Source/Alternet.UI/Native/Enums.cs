@@ -23,19 +23,6 @@ namespace Alternet.UI.Native
         Link = 4,
     }
     
-    enum DragInputState
-    {
-        None = 0,
-        LeftMouseButtonPressed = 1,
-        RightMouseButtonPressed = 2,
-        ShiftKeyPressed = 4,
-        ControlKeyPressed = 8,
-        MiddleMouseButtonPressed = 16,
-        AltKeyPressed = 32,
-        OptionKeyPressed = 64,
-        CommandKeyPressed = 128,
-    }
-    
     enum BrushHatchStyle
     {
         BackwardDiagonal = 0,

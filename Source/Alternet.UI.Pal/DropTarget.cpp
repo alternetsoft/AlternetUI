@@ -11,8 +11,6 @@ namespace Alternet::UI
         composite->Add(new wxFileDataObject());
         composite->Add(new wxImageDataObject());
         SetDataObject(composite);
-
-        SetDefaultAction(wxDragResult::wxDragMove);
     }
     
     DropTarget::~DropTarget()
@@ -38,7 +36,7 @@ namespace Alternet::UI
 
     wxDragResult DropTarget::OnDragOver(wxCoord x, wxCoord y, wxDragResult def)
     {
-        return wxDropTarget::OnDragOver(x, y, def);
+        return _control->RaiseDragOver(wxPoint(x, y), def);
     }
     
     bool DropTarget::OnDrop(wxCoord x, wxCoord y)
