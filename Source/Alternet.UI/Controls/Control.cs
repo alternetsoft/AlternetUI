@@ -4,6 +4,7 @@ using System.ComponentModel;
 using Alternet.Drawing;
 using Alternet.Base.Collections;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Alternet.UI
 {
@@ -1022,5 +1023,94 @@ namespace Alternet.UI
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Occurs when a drag-and-drop operation is completed.
+        /// </summary>
+        public event EventHandler<DragEventArgs>? DragDrop;
+
+        /// <summary>
+        /// Occurs when an object is dragged over the control's bounds.
+        /// </summary>
+        public event EventHandler<DragEventArgs>? DragOver;
+
+        /// <summary>
+        /// Occurs when an object is dragged into the control's bounds.
+        /// </summary>
+        public event EventHandler<DragEventArgs>? DragEnter;
+
+        /// <summary>
+        /// Occurs when an object is dragged out of the control's bounds.
+        /// </summary>
+        public event EventHandler? DragLeave;
+
+        /// <summary>
+        /// Occurs during a drag-and-drop operation and enables the drag source to determine whether the drag-and-drop operation should be canceled.
+        /// </summary>
+        public event EventHandler<QueryContinueDragEventArgs>? QueryContinueDrag;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control can accept data that the user drags onto it.
+        /// </summary>
+        /// <value><c>true</c> if drag-and-drop operations are allowed in the control; otherwise, <c>false</c>. The default is <c>false</c>.</value>
+        public bool AllowDrop
+        {
+            get
+            {
+                return Handler.AllowDrop;
+            }
+
+            set
+            {
+                Handler.AllowDrop = value;
+            }
+        }
+
+        /// <summary>
+        /// Begins a drag-and-drop operation.
+        /// </summary>
+        /// <remarks>
+        /// Begins a drag operation. The <paramref name="allowedEffects"/> determine which drag operations can occur.
+        /// </remarks>
+        /// <param name="data">The data to drag.</param>
+        /// <param name="allowedEffects">One of the <see cref="DragDropEffects"/> values.</param>
+        /// <returns>
+        /// A value from the <see cref="DragDropEffects"/> enumeration that represents the final effect that was
+        /// performed during the drag-and-drop operation.
+        /// </returns>
+        public DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
+        {
+            return Handler.DoDragDrop(data, allowedEffects);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="DragDrop"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="DragEventArgs"/> that contains the event data.</param>
+        protected virtual void OnDragDrop(DragEventArgs e) => DragDrop?.Invoke(this, e);
+
+        /// <summary>
+        /// Raises the <see cref="DragOver"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="DragEventArgs"/> that contains the event data.</param>
+        protected virtual void OnDragOver(DragEventArgs e) => DragOver?.Invoke(this, e);
+
+        /// <summary>
+        /// Raises the <see cref="DragEnter"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="DragEventArgs"/> that contains the event data.</param>
+        protected virtual void OnDragEnter(DragEventArgs e) => DragEnter?.Invoke(this, e);
+
+        /// <summary>
+        /// Raises the <see cref="DragLeave"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnDragLeave(EventArgs e) => DragLeave?.Invoke(this, e);
+
+        /// <summary>
+        /// Raises the <see cref="QueryContinueDrag"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="QueryContinueDragEventArgs"/> that contains the event data.</param>
+        protected virtual void OnQueryContinueDrag(QueryContinueDragEventArgs e) => QueryContinueDrag?.Invoke(this, e);
     }
 }

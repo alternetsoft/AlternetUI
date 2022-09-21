@@ -7,6 +7,12 @@ namespace Alternet.UI
 {
     internal static class UnmanagedDataObjectService
     {
+        public static Native.UnmanagedDataObject GetUnmanagedDataObject(object input)
+        {
+            var output = new Native.UnmanagedDataObject();
+            return output;
+        }
+
         public static Native.UnmanagedDataObject GetUnmanagedDataObject(IDataObject input)
         {
             var output = new Native.UnmanagedDataObject();

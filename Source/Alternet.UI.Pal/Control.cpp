@@ -169,6 +169,20 @@ namespace Alternet::UI
         return _flags.IsSet(ControlFlags::InitInProgress);
     }
 
+    DragDropEffects Control::DoDragDrop(UnmanagedDataObject* data, DragDropEffects allowedEffects)
+    {
+        return DragDropEffects();
+    }
+
+    bool Control::GetAllowDrop()
+    {
+        return false;
+    }
+
+    void Control::SetAllowDrop(bool value)
+    {
+    }
+
     wxWindow* Control::GetWxWindow()
     {
         if (_wxWindow == nullptr)

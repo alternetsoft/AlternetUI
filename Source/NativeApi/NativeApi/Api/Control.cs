@@ -24,6 +24,8 @@ namespace NativeApi.Api
 
         public Control? ParentRefCounted { get; }
 
+        public bool AllowDrop { get; set; }
+
         public Size Size { get; set; }
 
         public Point Location { get; set; }
@@ -61,6 +63,8 @@ namespace NativeApi.Api
         public Font? Font { get; set; }
 
         public virtual Size GetPreferredSize(Size availableSize) => throw new Exception();
+
+        public DragDropEffects DoDragDrop(UnmanagedDataObject data, DragDropEffects allowedEffects) => throw new Exception();
 
         public DrawingContext OpenPaintDrawingContext() => throw new Exception();
         public DrawingContext OpenClientDrawingContext() => throw new Exception();

@@ -35,6 +35,23 @@ namespace Alternet.UI.Native
             
         }
         
+        public bool AllowDrop
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetAllowDrop_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetAllowDrop_(NativePointer, value);
+            }
+        }
+        
         public Alternet.Drawing.Size Size
         {
             get
@@ -316,6 +333,14 @@ namespace Alternet.UI.Native
             return m;
         }
         
+        public DragDropEffects DoDragDrop(UnmanagedDataObject data, DragDropEffects allowedEffects)
+        {
+            CheckDisposed();
+            var n = NativeApi.Control_DoDragDrop_(NativePointer, data.NativePointer, allowedEffects);
+            var m = n;
+            return m;
+        }
+        
         public DrawingContext OpenPaintDrawingContext()
         {
             CheckDisposed();
@@ -498,6 +523,12 @@ namespace Alternet.UI.Native
             public static extern IntPtr Control_GetParentRefCounted_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetAllowDrop_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetAllowDrop_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Size Control_GetSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -592,6 +623,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Size Control_GetPreferredSize_(IntPtr obj, NativeApiTypes.Size availableSize);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern DragDropEffects Control_DoDragDrop_(IntPtr obj, IntPtr data, DragDropEffects allowedEffects);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_OpenPaintDrawingContext_(IntPtr obj);

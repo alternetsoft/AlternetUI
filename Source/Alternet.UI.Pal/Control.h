@@ -3,6 +3,7 @@
 #include "Common.h"
 #include "DrawingContext.h"
 #include "Object.h"
+#include "UnmanagedDataObject.h"
 
 namespace Alternet::UI
 {

@@ -4,6 +4,7 @@
 
 #include "Control.h"
 #include "Font.h"
+#include "UnmanagedDataObject.h"
 #include "DrawingContext.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
@@ -14,6 +15,20 @@ ALTERNET_UI_API Control* Control_GetParentRefCounted_(Control* obj)
 {
     return MarshalExceptions<Control*>([&](){
             return obj->GetParentRefCounted();
+        });
+}
+
+ALTERNET_UI_API c_bool Control_GetAllowDrop_(Control* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetAllowDrop();
+        });
+}
+
+ALTERNET_UI_API void Control_SetAllowDrop_(Control* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetAllowDrop(value);
         });
 }
 
@@ -238,6 +253,13 @@ ALTERNET_UI_API Size_C Control_GetPreferredSize_(Control* obj, Size availableSiz
 {
     return MarshalExceptions<Size_C>([&](){
             return obj->GetPreferredSize(availableSize);
+        });
+}
+
+ALTERNET_UI_API DragDropEffects Control_DoDragDrop_(Control* obj, UnmanagedDataObject* data, DragDropEffects allowedEffects)
+{
+    return MarshalExceptions<DragDropEffects>([&](){
+            return obj->DoDragDrop(data, allowedEffects);
         });
 }
 

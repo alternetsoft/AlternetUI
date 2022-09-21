@@ -4,6 +4,10 @@ public:
 Control* GetParentRefCounted();
 
 
+bool GetAllowDrop();
+void SetAllowDrop(bool value);
+
+
 Size GetSize();
 void SetSize(const Size& value);
 
@@ -67,6 +71,7 @@ void RemoveChild(Control* control);
 void Invalidate();
 void Update();
 virtual Size GetPreferredSize(const Size& availableSize);
+DragDropEffects DoDragDrop(UnmanagedDataObject* data, DragDropEffects allowedEffects);
 DrawingContext* OpenPaintDrawingContext();
 DrawingContext* OpenClientDrawingContext();
 void BeginUpdate();
