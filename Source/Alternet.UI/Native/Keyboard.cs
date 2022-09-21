@@ -56,17 +56,17 @@ namespace Alternet.UI.Native
                 case NativeApi.KeyboardEvent.KeyDown:
                 {
                     var ea = new NativeEventArgs<KeyEventData>(MarshalEx.PtrToStructure<KeyEventData>(parameter));
-                    KeyDown?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                    KeyDown?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.KeyboardEvent.KeyUp:
                 {
                     var ea = new NativeEventArgs<KeyEventData>(MarshalEx.PtrToStructure<KeyEventData>(parameter));
-                    KeyUp?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                    KeyUp?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.KeyboardEvent.TextInput:
                 {
                     var ea = new NativeEventArgs<TextInputEventData>(MarshalEx.PtrToStructure<TextInputEventData>(parameter));
-                    TextInput?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                    TextInput?.Invoke(this, ea); return ea.Result;
                 }
                 default: throw new Exception("Unexpected KeyboardEvent value: " + e);
             }

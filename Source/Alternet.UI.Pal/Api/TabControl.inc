@@ -19,6 +19,7 @@ typedef void* (*TabControlEventCallbackType)(TabControl* obj, TabControlEvent ev
 static void SetEventCallback(TabControlEventCallbackType value) { eventCallback = value; }
 protected:
 bool RaiseEvent(TabControlEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(TabControlEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
 private:
 inline static TabControlEventCallbackType eventCallback = nullptr;
 public:

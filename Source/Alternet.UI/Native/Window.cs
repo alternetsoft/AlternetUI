@@ -460,7 +460,7 @@ namespace Alternet.UI.Native
                 case NativeApi.WindowEvent.InputBindingCommandExecuted:
                 {
                     var ea = new NativeEventArgs<CommandEventData>(MarshalEx.PtrToStructure<CommandEventData>(parameter));
-                    InputBindingCommandExecuted?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                    InputBindingCommandExecuted?.Invoke(this, ea); return ea.Result;
                 }
                 default: throw new Exception("Unexpected WindowEvent value: " + e);
             }

@@ -169,12 +169,12 @@ namespace Alternet.UI.Native
                 case NativeApi.TreeViewEvent.ItemExpanded:
                 {
                     var ea = new NativeEventArgs<TreeViewItemEventData>(MarshalEx.PtrToStructure<TreeViewItemEventData>(parameter));
-                    ItemExpanded?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                    ItemExpanded?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.TreeViewEvent.ItemCollapsed:
                 {
                     var ea = new NativeEventArgs<TreeViewItemEventData>(MarshalEx.PtrToStructure<TreeViewItemEventData>(parameter));
-                    ItemCollapsed?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                    ItemCollapsed?.Invoke(this, ea); return ea.Result;
                 }
                 default: throw new Exception("Unexpected TreeViewEvent value: " + e);
             }

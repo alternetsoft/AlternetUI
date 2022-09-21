@@ -105,6 +105,7 @@ typedef void* (*ControlEventCallbackType)(Control* obj, ControlEvent event, void
 static void SetEventCallback(ControlEventCallbackType value) { eventCallback = value; }
 protected:
 bool RaiseEvent(ControlEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(ControlEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
 private:
 inline static ControlEventCallbackType eventCallback = nullptr;
 protected:

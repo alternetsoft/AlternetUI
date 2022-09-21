@@ -39,6 +39,7 @@ typedef void* (*ListViewEventCallbackType)(ListView* obj, ListViewEvent event, v
 static void SetEventCallback(ListViewEventCallbackType value) { eventCallback = value; }
 protected:
 bool RaiseEvent(ListViewEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(ListViewEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
 private:
 inline static ListViewEventCallbackType eventCallback = nullptr;
 public:

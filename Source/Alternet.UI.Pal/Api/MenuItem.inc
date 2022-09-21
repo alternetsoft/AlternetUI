@@ -30,6 +30,7 @@ typedef void* (*MenuItemEventCallbackType)(MenuItem* obj, MenuItemEvent event, v
 static void SetEventCallback(MenuItemEventCallbackType value) { eventCallback = value; }
 protected:
 bool RaiseEvent(MenuItemEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(MenuItemEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
 private:
 inline static MenuItemEventCallbackType eventCallback = nullptr;
 public:

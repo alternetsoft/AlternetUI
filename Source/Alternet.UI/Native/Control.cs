@@ -488,17 +488,17 @@ namespace Alternet.UI.Native
                 case NativeApi.ControlEvent.DragDrop:
                 {
                     var ea = new NativeEventArgs<DragEventData>(MarshalEx.PtrToStructure<DragEventData>(parameter));
-                    DragDrop?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                    DragDrop?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.ControlEvent.DragOver:
                 {
                     var ea = new NativeEventArgs<DragEventData>(MarshalEx.PtrToStructure<DragEventData>(parameter));
-                    DragOver?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                    DragOver?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.ControlEvent.DragEnter:
                 {
                     var ea = new NativeEventArgs<DragEventData>(MarshalEx.PtrToStructure<DragEventData>(parameter));
-                    DragEnter?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                    DragEnter?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.ControlEvent.DragLeave:
                 {
@@ -507,7 +507,7 @@ namespace Alternet.UI.Native
                 case NativeApi.ControlEvent.QueryContinueDrag:
                 {
                     var ea = new NativeEventArgs<QueryContinueDragEventData>(MarshalEx.PtrToStructure<QueryContinueDragEventData>(parameter));
-                    QueryContinueDrag?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                    QueryContinueDrag?.Invoke(this, ea); return ea.Result;
                 }
                 default: throw new Exception("Unexpected ControlEvent value: " + e);
             }

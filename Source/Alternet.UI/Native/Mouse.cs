@@ -64,27 +64,27 @@ namespace Alternet.UI.Native
                 case NativeApi.MouseEvent.MouseMove:
                 {
                     var ea = new NativeEventArgs<MouseEventData>(MarshalEx.PtrToStructure<MouseEventData>(parameter));
-                    MouseMove?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                    MouseMove?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.MouseEvent.MouseDown:
                 {
                     var ea = new NativeEventArgs<MouseButtonEventData>(MarshalEx.PtrToStructure<MouseButtonEventData>(parameter));
-                    MouseDown?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                    MouseDown?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.MouseEvent.MouseUp:
                 {
                     var ea = new NativeEventArgs<MouseButtonEventData>(MarshalEx.PtrToStructure<MouseButtonEventData>(parameter));
-                    MouseUp?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                    MouseUp?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.MouseEvent.MouseDoubleClick:
                 {
                     var ea = new NativeEventArgs<MouseButtonEventData>(MarshalEx.PtrToStructure<MouseButtonEventData>(parameter));
-                    MouseDoubleClick?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                    MouseDoubleClick?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.MouseEvent.MouseWheel:
                 {
                     var ea = new NativeEventArgs<MouseWheelEventData>(MarshalEx.PtrToStructure<MouseWheelEventData>(parameter));
-                    MouseWheel?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                    MouseWheel?.Invoke(this, ea); return ea.Result;
                 }
                 default: throw new Exception("Unexpected MouseEvent value: " + e);
             }

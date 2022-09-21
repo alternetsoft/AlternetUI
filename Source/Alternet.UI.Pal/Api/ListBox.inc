@@ -25,6 +25,7 @@ typedef void* (*ListBoxEventCallbackType)(ListBox* obj, ListBoxEvent event, void
 static void SetEventCallback(ListBoxEventCallbackType value) { eventCallback = value; }
 protected:
 bool RaiseEvent(ListBoxEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(ListBoxEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
 private:
 inline static ListBoxEventCallbackType eventCallback = nullptr;
 public:

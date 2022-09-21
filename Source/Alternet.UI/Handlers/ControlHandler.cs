@@ -616,6 +616,8 @@ namespace Alternet.UI
                 (DragDropEffects)data.effect);
 
             Control.RaiseDragOver(ea);
+
+            e.Result = new IntPtr((int)ea.Effect);
         }
 
         private void NativeControl_MouseCaptureLost(object? sender, EventArgs e)

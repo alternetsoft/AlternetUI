@@ -12,6 +12,7 @@ typedef void* (*KeyboardEventCallbackType)(Keyboard* obj, KeyboardEvent event, v
 static void SetEventCallback(KeyboardEventCallbackType value) { eventCallback = value; }
 protected:
 bool RaiseEvent(KeyboardEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(KeyboardEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
 private:
 inline static KeyboardEventCallbackType eventCallback = nullptr;
 public:

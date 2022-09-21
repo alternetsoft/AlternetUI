@@ -121,6 +121,7 @@ namespace Alternet::UI
         DropTarget* _dropTarget = nullptr;
 
         static DragDropEffects GetDragDropEffects(wxDragResult input);
+        static wxDragResult GetDragResult(DragDropEffects input);
 
         void CreateDropTarget();
         void DestroyDropTarget();

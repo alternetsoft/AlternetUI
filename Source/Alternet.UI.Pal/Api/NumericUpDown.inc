@@ -21,6 +21,7 @@ typedef void* (*NumericUpDownEventCallbackType)(NumericUpDown* obj, NumericUpDow
 static void SetEventCallback(NumericUpDownEventCallbackType value) { eventCallback = value; }
 protected:
 bool RaiseEvent(NumericUpDownEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(NumericUpDownEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
 private:
 inline static NumericUpDownEventCallbackType eventCallback = nullptr;
 public:

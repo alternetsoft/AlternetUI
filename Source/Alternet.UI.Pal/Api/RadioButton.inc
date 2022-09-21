@@ -17,6 +17,7 @@ typedef void* (*RadioButtonEventCallbackType)(RadioButton* obj, RadioButtonEvent
 static void SetEventCallback(RadioButtonEventCallbackType value) { eventCallback = value; }
 protected:
 bool RaiseEvent(RadioButtonEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(RadioButtonEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
 private:
 inline static RadioButtonEventCallbackType eventCallback = nullptr;
 public:

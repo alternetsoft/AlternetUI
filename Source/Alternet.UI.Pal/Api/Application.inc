@@ -28,6 +28,7 @@ typedef void* (*ApplicationEventCallbackType)(Application* obj, ApplicationEvent
 static void SetEventCallback(ApplicationEventCallbackType value) { eventCallback = value; }
 protected:
 bool RaiseEvent(ApplicationEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(ApplicationEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
 private:
 inline static ApplicationEventCallbackType eventCallback = nullptr;
 public:

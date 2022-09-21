@@ -13,6 +13,7 @@ typedef void* (*ButtonEventCallbackType)(Button* obj, ButtonEvent event, void* p
 static void SetEventCallback(ButtonEventCallbackType value) { eventCallback = value; }
 protected:
 bool RaiseEvent(ButtonEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(ButtonEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
 private:
 inline static ButtonEventCallbackType eventCallback = nullptr;
 public:

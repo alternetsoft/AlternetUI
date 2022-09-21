@@ -31,6 +31,7 @@ typedef void* (*ComboBoxEventCallbackType)(ComboBox* obj, ComboBoxEvent event, v
 static void SetEventCallback(ComboBoxEventCallbackType value) { eventCallback = value; }
 protected:
 bool RaiseEvent(ComboBoxEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(ComboBoxEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
 private:
 inline static ComboBoxEventCallbackType eventCallback = nullptr;
 public:

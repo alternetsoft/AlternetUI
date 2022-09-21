@@ -17,6 +17,7 @@ typedef void* (*CheckBoxEventCallbackType)(CheckBox* obj, CheckBoxEvent event, v
 static void SetEventCallback(CheckBoxEventCallbackType value) { eventCallback = value; }
 protected:
 bool RaiseEvent(CheckBoxEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(CheckBoxEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
 private:
 inline static CheckBoxEventCallbackType eventCallback = nullptr;
 public:

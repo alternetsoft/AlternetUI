@@ -101,6 +101,7 @@ typedef void* (*WindowEventCallbackType)(Window* obj, WindowEvent event, void* p
 static void SetEventCallback(WindowEventCallbackType value) { eventCallback = value; }
 protected:
 bool RaiseEvent(WindowEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(WindowEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
 private:
 inline static WindowEventCallbackType eventCallback = nullptr;
 public:

@@ -808,6 +808,23 @@ namespace Alternet::UI
         }
     }
 
+    wxDragResult Control::GetDragResult(DragDropEffects input)
+    {
+        switch (input)
+        {
+        case DragDropEffects::None:
+            return wxDragResult::wxDragNone;
+        case DragDropEffects::Copy:
+            return wxDragResult::wxDragCopy;
+        case DragDropEffects::Move:
+            return wxDragResult::wxDragMove;
+        case DragDropEffects::Link:
+            return wxDragResult::wxDragLink;
+        default:
+            throwExNoInfo;
+        }
+    }
+
     wxDragResult Control::RaiseDragOver(const wxPoint& location, wxDragResult defaultDragResult)
     {
         auto clientPoint = toDip(location, GetWxWindow());
@@ -820,9 +837,7 @@ namespace Alternet::UI
             GetDragDropEffects(defaultDragResult) /*effect*/,
         };
 
-        RaiseEvent(ControlEvent::DragOver, &data);
-
-        return defaultDragResult;
+        return GetDragResult((DragDropEffects)(size_t)RaiseEventWithPointerResult(ControlEvent::DragOver, &data));
     }
 
     bool Control::GetUserPaint()

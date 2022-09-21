@@ -365,7 +365,7 @@ using System.Security;");
                             if (dataType != null)
                             {
                                 w.WriteLine($"var ea = new NativeEventArgs<{dataType.Name}>(MarshalEx.PtrToStructure<{dataType.Name}>(parameter));");
-                                w.WriteLine($"{e.Name}?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;");
+                                w.WriteLine($"{e.Name}?.Invoke(this, ea); return ea.Result;");
                             }
                             else
                             {

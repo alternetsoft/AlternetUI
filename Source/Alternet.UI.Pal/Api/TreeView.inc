@@ -33,6 +33,7 @@ typedef void* (*TreeViewEventCallbackType)(TreeView* obj, TreeViewEvent event, v
 static void SetEventCallback(TreeViewEventCallbackType value) { eventCallback = value; }
 protected:
 bool RaiseEvent(TreeViewEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(TreeViewEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
 private:
 inline static TreeViewEventCallbackType eventCallback = nullptr;
 public:
