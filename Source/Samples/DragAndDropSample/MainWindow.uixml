@@ -1,21 +1,33 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="DragAndDropSample.MainWindow">
-  <StackPanel Orientation="Horizontal" Margin="10">
-    <StackPanel Orientation="Vertical" Margin="10">
-      <Button Text="Copy" Name="copyButton" Click="CopyButton_Click" />
-      <Button Text="Paste" Name="pasteButton" Click="PasteButton_Click" />
-    </StackPanel>
-    <GroupBox Title="Included Data Formats" VerticalAlignment="Top">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="100" />
+    </Grid.RowDefinitions>
+
+    <StackPanel Orientation="Horizontal" Margin="10">
       <StackPanel Orientation="Vertical" Margin="10">
-        <CheckBox Text="Text" Name="textFormatCheckBox" IsChecked="true" />
-        <CheckBox Text="Files" Name="filesFormatCheckBox" IsChecked="true" />
-        <CheckBox Text="Bitmap" Name="bitmapFormatCheckBox" IsChecked="true" />
+        <Button Text="Copy" Name="copyButton" Click="CopyButton_Click" />
+        <Button Text="Paste" Name="pasteButton" Click="PasteButton_Click" />
       </StackPanel>
-    </GroupBox>
-    <Border Width="100" Height="100"  VerticalAlignment="Top" Margin="10" AllowDrop="True">
-      <Label Text="Drop Here" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-    </Border>
-  </StackPanel>
-  
+      <GroupBox Title="Included Data Formats" VerticalAlignment="Top">
+        <StackPanel Orientation="Vertical" Margin="10">
+          <CheckBox Text="Text" Name="textFormatCheckBox" IsChecked="true" />
+          <CheckBox Text="Files" Name="filesFormatCheckBox" IsChecked="true" />
+          <CheckBox Text="Bitmap" Name="bitmapFormatCheckBox" IsChecked="true" />
+        </StackPanel>
+      </GroupBox>
+      <Border Width="100" Height="100"  VerticalAlignment="Top" Margin="10" AllowDrop="True" Name="dropTarget"
+              DragDrop="DropTarget_DragDrop"
+              DragOver="DropTarget_DragOver"
+              DragEnter="DropTarget_DragEnter"
+              DragLeave="DropTarget_DragLeave">
+        <!--<Label Text="Drop Here" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
+      </Border>
+    </StackPanel>
+
+    <ListBox Name="eventsListBox" Grid.Row="1"/>
+  </Grid>
 </Window>

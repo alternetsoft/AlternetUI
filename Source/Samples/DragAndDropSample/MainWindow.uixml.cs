@@ -26,6 +26,38 @@ namespace DragAndDropSample
             Clipboard.SetDataObject(GetDataObject());
         }
 
+        private void DropTarget_DragDrop(object sender, DragEventArgs e)
+        {
+            LogEvent("DragDrop");
+        }
+
+        private void DropTarget_DragOver(object sender, DragEventArgs e)
+        {
+            LogEvent("DragOver");
+        }
+
+        private void DropTarget_DragEnter(object sender, DragEventArgs e)
+        {
+            LogEvent("DragEnter");
+        }
+
+        private void DropTarget_DragLeave(object sender, EventArgs e)
+        {
+            LogEvent("DragLeave");
+        }
+
+        private int lastEventNumber = 1;
+
+        void LogEvent(string message)
+        {
+            eventsListBox.Items.Add($"{lastEventNumber++}. {message}");
+            eventsListBox.SelectedIndex = eventsListBox.Items.Count - 1;
+        }
+
+        private void DragSource_QueryContinueDrag(object sender, QueryContinueDragEventArgs e)
+        {
+        }
+
         private IDataObject GetDataObject()
         {
             var result = new DataObject();

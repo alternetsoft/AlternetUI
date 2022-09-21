@@ -4,6 +4,26 @@ using System.Runtime.InteropServices;
 namespace Alternet.UI.Native
 {
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class DragEventData
+    {
+        public System.IntPtr data;
+        public DragInputState inputState;
+        public MouseButton changedButton;
+        public double mouseClientLocationX;
+        public double mouseClientLocationY;
+        public DragDropEffects allowedEffect;
+        public DragDropEffects effect;
+    }
+    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class QueryContinueDragEventData
+    {
+        public DragInputState inputState;
+        public bool escapePressed;
+        public DragAction action;
+    }
+    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class TextInputEventData
     {
         public char keyChar;

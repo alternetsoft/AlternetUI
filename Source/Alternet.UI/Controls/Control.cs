@@ -1112,5 +1112,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">The <see cref="QueryContinueDragEventArgs"/> that contains the event data.</param>
         protected virtual void OnQueryContinueDrag(QueryContinueDragEventArgs e) => QueryContinueDrag?.Invoke(this, e);
+
+        internal void RaiseDragDrop(DragEventArgs e) => OnDragDrop(e);
+        internal void RaiseDragOver(DragEventArgs e) => OnDragOver(e);
+        internal void RaiseDragEnter(DragEventArgs e) => OnDragEnter(e);
+        internal void RaiseDragLeave(EventArgs e) => OnDragLeave(e);
+        internal void RaiseQueryContinueDrag(QueryContinueDragEventArgs e) => OnQueryContinueDrag(e);
     }
 }

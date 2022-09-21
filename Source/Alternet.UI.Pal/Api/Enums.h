@@ -9,12 +9,32 @@ namespace Alternet::UI
         Save = 1,
     };
     
+    enum class DragAction
+    {
+        Continue = 0,
+        Drop = 1,
+        Cancel = 2,
+    };
+    
     enum class DragDropEffects
     {
         None = 0,
         Copy = 1,
         Move = 2,
         Link = 4,
+    };
+    
+    enum class DragInputState
+    {
+        None = 0,
+        LeftMouseButtonPressed = 1,
+        RightMouseButtonPressed = 2,
+        ShiftKeyPressed = 4,
+        ControlKeyPressed = 8,
+        MiddleMouseButtonPressed = 16,
+        AltKeyPressed = 32,
+        OptionKeyPressed = 64,
+        CommandKeyPressed = 128,
     };
     
     enum class BrushHatchStyle
@@ -304,6 +324,7 @@ namespace Alternet::UI
     
 }
 template<> struct enable_bitmask_operators<Alternet::UI::DragDropEffects> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::DragInputState> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::FontStyle> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::KeyStates> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ModifierKeys> { static const bool enable = true; };

@@ -3,7 +3,7 @@ using System;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for the <see cref="Window.QueryContinueDrag"/> event.
+    /// Provides data for the <see cref="Control.QueryContinueDrag"/> event.
     /// </summary>
     public class QueryContinueDragEventArgs : EventArgs
     {

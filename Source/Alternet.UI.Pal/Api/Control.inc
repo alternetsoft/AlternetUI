@@ -95,6 +95,11 @@ enum class ControlEvent
     VisibleChanged,
     MouseCaptureLost,
     Destroyed,
+    DragDrop,
+    DragOver,
+    DragEnter,
+    DragLeave,
+    QueryContinueDrag,
 };
 typedef void* (*ControlEventCallbackType)(Control* obj, ControlEvent event, void* param);
 static void SetEventCallback(ControlEventCallbackType value) { eventCallback = value; }

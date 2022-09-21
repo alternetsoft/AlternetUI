@@ -5,6 +5,28 @@
 namespace Alternet::UI
 {
     #pragma pack(push, 1)
+    struct DragEventData
+    {
+        void* data;
+        DragInputState inputState;
+        MouseButton changedButton;
+        double mouseClientLocationX;
+        double mouseClientLocationY;
+        DragDropEffects allowedEffect;
+        DragDropEffects effect;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
+    struct QueryContinueDragEventData
+    {
+        DragInputState inputState;
+        c_bool escapePressed;
+        DragAction action;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
     struct TextInputEventData
     {
         char16_t keyChar;

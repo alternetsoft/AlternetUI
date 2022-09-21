@@ -1,10 +1,10 @@
+using Alternet.Drawing;
 using System;
-using System.Drawing;
 
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides data for the <see cref="Window.DragDrop"/>, <see cref="Window.DragEnter"/>, or <see cref="Window.DragOver"/> events.
+    /// Provides data for the <see cref="Control.DragDrop"/>, <see cref="Control.DragEnter"/>, or <see cref="Control.DragOver"/> events.
     /// </summary>
     public class DragEventArgs : EventArgs
     {
@@ -19,7 +19,7 @@ namespace Alternet.UI
         public DragEventArgs(
             IDataObject data,
             DragInputState inputState,
-            PointF mouseClientLocation,
+            Point mouseClientLocation,
             DragDropEffects allowedEffect,
             DragDropEffects effect)
         {
@@ -43,7 +43,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the client coordinates of the mouse pointer in logical units (1/96th of an inch).
         /// </summary>
-        public PointF MouseClientLocation { get; }
+        public Point MouseClientLocation { get; }
 
         /// <summary>
         /// Gets which drag-and-drop operations are allowed by the originator (or source) of the drag event.

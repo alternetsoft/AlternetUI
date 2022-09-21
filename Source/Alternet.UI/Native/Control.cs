@@ -485,6 +485,30 @@ namespace Alternet.UI.Native
                 {
                     Destroyed?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.ControlEvent.DragDrop:
+                {
+                    var ea = new NativeEventArgs<DragEventData>(MarshalEx.PtrToStructure<DragEventData>(parameter));
+                    DragDrop?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                }
+                case NativeApi.ControlEvent.DragOver:
+                {
+                    var ea = new NativeEventArgs<DragEventData>(MarshalEx.PtrToStructure<DragEventData>(parameter));
+                    DragOver?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                }
+                case NativeApi.ControlEvent.DragEnter:
+                {
+                    var ea = new NativeEventArgs<DragEventData>(MarshalEx.PtrToStructure<DragEventData>(parameter));
+                    DragEnter?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                }
+                case NativeApi.ControlEvent.DragLeave:
+                {
+                    DragLeave?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ControlEvent.QueryContinueDrag:
+                {
+                    var ea = new NativeEventArgs<QueryContinueDragEventData>(MarshalEx.PtrToStructure<QueryContinueDragEventData>(parameter));
+                    QueryContinueDrag?.Invoke(this, ea); return ea.Handled ? new IntPtr(1) : IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected ControlEvent value: " + e);
             }
         }
@@ -496,6 +520,11 @@ namespace Alternet.UI.Native
         public event EventHandler? VisibleChanged;
         public event EventHandler? MouseCaptureLost;
         public event EventHandler? Destroyed;
+        public event NativeEventHandler<DragEventData>? DragDrop;
+        public event NativeEventHandler<DragEventData>? DragOver;
+        public event NativeEventHandler<DragEventData>? DragEnter;
+        public event EventHandler? DragLeave;
+        public event NativeEventHandler<QueryContinueDragEventData>? QueryContinueDrag;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -514,6 +543,11 @@ namespace Alternet.UI.Native
                 VisibleChanged,
                 MouseCaptureLost,
                 Destroyed,
+                DragDrop,
+                DragOver,
+                DragEnter,
+                DragLeave,
+                QueryContinueDrag,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]

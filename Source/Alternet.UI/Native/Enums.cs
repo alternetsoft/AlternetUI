@@ -8,12 +8,32 @@ namespace Alternet.UI.Native
         Save = 1,
     }
     
+    enum DragAction
+    {
+        Continue = 0,
+        Drop = 1,
+        Cancel = 2,
+    }
+    
     enum DragDropEffects
     {
         None = 0,
         Copy = 1,
         Move = 2,
         Link = 4,
+    }
+    
+    enum DragInputState
+    {
+        None = 0,
+        LeftMouseButtonPressed = 1,
+        RightMouseButtonPressed = 2,
+        ShiftKeyPressed = 4,
+        ControlKeyPressed = 8,
+        MiddleMouseButtonPressed = 16,
+        AltKeyPressed = 32,
+        OptionKeyPressed = 64,
+        CommandKeyPressed = 128,
     }
     
     enum BrushHatchStyle
