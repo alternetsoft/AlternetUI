@@ -1,5 +1,4 @@
 #include "Clipboard.h"
-#include "Clipboard.h"
 
 namespace Alternet::UI
 {

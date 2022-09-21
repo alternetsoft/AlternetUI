@@ -4,6 +4,7 @@
 #include "DrawingContext.h"
 #include "Object.h"
 #include "UnmanagedDataObject.h"
+#include "DropTarget.h"
 
 namespace Alternet::UI
 {
@@ -114,6 +115,11 @@ namespace Alternet::UI
         DelayedValue<Control, Color> _foregroundColor;
 
         DelayedValues _delayedValues;
+
+        DropTarget* _dropTarget = nullptr;
+
+        void CreateDropTarget();
+        void DestroyDropTarget();
 
         bool RetrieveVisible();
         void ApplyVisible(bool value);

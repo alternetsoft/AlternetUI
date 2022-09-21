@@ -44,6 +44,7 @@
 #include <wx/clipbrd.h>
 #include <wx/mstream.h>
 #include <wx/tokenzr.h>
+#include <wx/dnd.h>
 
 #define DELELTE_COPY_CONSTRUCTOR(TypeName) \
   TypeName(const TypeName&) = delete

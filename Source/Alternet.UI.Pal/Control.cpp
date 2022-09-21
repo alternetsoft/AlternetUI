@@ -26,6 +26,7 @@ namespace Alternet::UI
 
     Control::~Control()
     {
+        DestroyDropTarget();
         DestroyWxWindow();
     }
 
@@ -176,11 +177,34 @@ namespace Alternet::UI
 
     bool Control::GetAllowDrop()
     {
-        return false;
+        return _dropTarget != nullptr;
     }
 
     void Control::SetAllowDrop(bool value)
     {
+        if (value)
+            CreateDropTarget();
+        else
+            DestroyDropTarget();
+    }
+
+    void Control::CreateDropTarget()
+    {
+        if (_dropTarget != nullptr)
+            throwExNoInfo;
+
+        _dropTarget = new DropTarget(this);
+        GetWxWindow()->SetDropTarget(_dropTarget);
+    }
+
+    void Control::DestroyDropTarget()
+    {
+        if (_dropTarget != nullptr)
+        {
+            GetWxWindow()->SetDropTarget(nullptr);
+            delete _dropTarget;
+            _dropTarget = nullptr;
+        }
     }
 
     wxWindow* Control::GetWxWindow()

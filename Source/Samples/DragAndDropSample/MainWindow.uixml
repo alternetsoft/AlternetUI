@@ -6,13 +6,16 @@
       <Button Text="Copy" Name="copyButton" Click="CopyButton_Click" />
       <Button Text="Paste" Name="pasteButton" Click="PasteButton_Click" />
     </StackPanel>
-    <GroupBox Title="Included Data Formats">
+    <GroupBox Title="Included Data Formats" VerticalAlignment="Top">
       <StackPanel Orientation="Vertical" Margin="10">
         <CheckBox Text="Text" Name="textFormatCheckBox" IsChecked="true" />
         <CheckBox Text="Files" Name="filesFormatCheckBox" IsChecked="true" />
         <CheckBox Text="Bitmap" Name="bitmapFormatCheckBox" IsChecked="true" />
       </StackPanel>
     </GroupBox>
+    <Border Width="100" Height="100"  VerticalAlignment="Top" Margin="10" AllowDrop="True">
+      <Label Text="Drop Here" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+    </Border>
   </StackPanel>
   
 </Window>

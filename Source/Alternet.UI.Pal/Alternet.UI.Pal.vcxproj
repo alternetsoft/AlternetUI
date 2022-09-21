@@ -192,6 +192,7 @@
     <ClCompile Include="ComboBox.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="DrawingContext.cpp" />
+    <ClCompile Include="DropTarget.cpp" />
     <ClCompile Include="Exceptions.cpp" />
     <ClCompile Include="FileDialog.cpp" />
     <ClCompile Include="Font.cpp" />
@@ -294,6 +295,7 @@
     <ClInclude Include="Control.h" />
     <ClInclude Include="DelayedValue.h" />
     <ClInclude Include="DrawingContext.h" />
+    <ClInclude Include="DropTarget.h" />
     <ClInclude Include="ErrorDiagnostics.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="Exceptions.h" />
