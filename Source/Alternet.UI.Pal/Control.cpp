@@ -825,13 +825,13 @@ namespace Alternet::UI
         }
     }
 
-    wxDragResult Control::RaiseDragOver(const wxPoint& location, wxDragResult defaultDragResult)
+    wxDragResult Control::RaiseDragOver(const wxPoint& location, wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite)
     {
         auto clientPoint = toDip(location, GetWxWindow());
 
         DragEventData data =
         {
-            nullptr /*data*/,
+            new UnmanagedDataObject(dataObjectComposite) /*data*/,
             clientPoint.X /*mouseClientLocationX*/,
             clientPoint.Y /*mouseClientLocationY*/,
             GetDragDropEffects(defaultDragResult) /*effect*/,

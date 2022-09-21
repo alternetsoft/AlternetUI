@@ -611,7 +611,7 @@ namespace Alternet.UI
         {
             var data = e.Data;
             var ea = new DragEventArgs(
-                null!,
+                new UnmanagedDataObjectAdapter(new Native.UnmanagedDataObject(data.data)),
                 new Point(data.mouseClientLocationX, data.mouseClientLocationY),
                 (DragDropEffects)data.effect);
 

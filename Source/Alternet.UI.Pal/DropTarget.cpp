@@ -36,7 +36,8 @@ namespace Alternet::UI
 
     wxDragResult DropTarget::OnDragOver(wxCoord x, wxCoord y, wxDragResult def)
     {
-        return _control->RaiseDragOver(wxPoint(x, y), def);
+        GetData();
+        return _control->RaiseDragOver(wxPoint(x, y), def, (wxDataObjectComposite*)GetDataObject());
     }
     
     bool DropTarget::OnDrop(wxCoord x, wxCoord y)

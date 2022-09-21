@@ -30,7 +30,7 @@ namespace Alternet::UI
 
         static Control* TryFindControlByWxWindow(wxWindow* wxWindow);
 
-        wxDragResult RaiseDragOver(const wxPoint& location, wxDragResult defaultDragResult);
+        wxDragResult RaiseDragOver(const wxPoint& location, wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite);
 
     protected:
         void CreateWxWindow();
