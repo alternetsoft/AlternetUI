@@ -31,6 +31,9 @@ namespace Alternet::UI
         static Control* TryFindControlByWxWindow(wxWindow* wxWindow);
 
         wxDragResult RaiseDragOver(const wxPoint& location, wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite);
+        wxDragResult RaiseDragEnter(const wxPoint& location, wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite);
+        wxDragResult RaiseDragDrop(const wxPoint& location, wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite);
+        void RaiseDragLeave();
 
     protected:
         void CreateWxWindow();
@@ -122,6 +125,12 @@ namespace Alternet::UI
 
         static DragDropEffects GetDragDropEffects(wxDragResult input);
         static wxDragResult GetDragResult(DragDropEffects input);
+
+        wxDragResult RaiseDragAndDropEvent(
+            const wxPoint& location,
+            wxDragResult defaultDragResult,
+            wxDataObjectComposite* dataObjectComposite,
+            ControlEvent event);
 
         void CreateDropTarget();
         void DestroyDropTarget();

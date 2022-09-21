@@ -825,7 +825,11 @@ namespace Alternet::UI
         }
     }
 
-    wxDragResult Control::RaiseDragOver(const wxPoint& location, wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite)
+    wxDragResult Control::RaiseDragAndDropEvent(
+        const wxPoint& location,
+        wxDragResult defaultDragResult,
+        wxDataObjectComposite* dataObjectComposite,
+        ControlEvent event)
     {
         auto clientPoint = toDip(location, GetWxWindow());
 
@@ -837,7 +841,28 @@ namespace Alternet::UI
             GetDragDropEffects(defaultDragResult) /*effect*/,
         };
 
-        return GetDragResult((DragDropEffects)(size_t)RaiseEventWithPointerResult(ControlEvent::DragOver, &data));
+        return GetDragResult((DragDropEffects)(size_t)RaiseEventWithPointerResult(event, &data));
+    }
+
+
+    wxDragResult Control::RaiseDragOver(const wxPoint& location, wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite)
+    {
+        return RaiseDragAndDropEvent(location, defaultDragResult, dataObjectComposite, ControlEvent::DragOver);
+    }
+
+    wxDragResult Control::RaiseDragEnter(const wxPoint& location, wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite)
+    {
+        return RaiseDragAndDropEvent(location, defaultDragResult, dataObjectComposite, ControlEvent::DragEnter);
+    }
+
+    wxDragResult Control::RaiseDragDrop(const wxPoint& location, wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite)
+    {
+        return RaiseDragAndDropEvent(location, defaultDragResult, dataObjectComposite, ControlEvent::DragDrop);
+    }
+
+    void Control::RaiseDragLeave()
+    {
+        RaiseEvent(ControlEvent::DragLeave);
     }
 
     bool Control::GetUserPaint()

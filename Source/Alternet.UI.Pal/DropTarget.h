@@ -18,8 +18,6 @@ namespace Alternet::UI
 
         virtual wxDragResult OnDragOver(wxCoord x, wxCoord y, wxDragResult def) override;
 
-        virtual bool OnDrop(wxCoord x, wxCoord y) override;
-
     private:
 
         Control* _control;

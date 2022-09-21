@@ -19,29 +19,24 @@ namespace Alternet::UI
 
     wxDragResult DropTarget::OnEnter(wxCoord x, wxCoord y, wxDragResult def)
     {
-        return wxDropTarget::OnEnter(x, y, def);
+        GetData();
+        return _control->RaiseDragEnter(wxPoint(x, y), def, (wxDataObjectComposite*)GetDataObject());
     }
     
     void DropTarget::OnLeave()
     {
-        return wxDropTarget::OnLeave();
+        _control->RaiseDragLeave();
     }
     
     wxDragResult DropTarget::OnData(wxCoord x, wxCoord y, wxDragResult def)
     {
-        bool r = GetData();
-        //auto fn = ((wxFileDataObject*)GetDataObject())->GetFilenames();
-        return wxDragResult::wxDragMove;
+        GetData();
+        return _control->RaiseDragDrop(wxPoint(x, y), def, (wxDataObjectComposite*)GetDataObject());
     }
 
     wxDragResult DropTarget::OnDragOver(wxCoord x, wxCoord y, wxDragResult def)
     {
         GetData();
         return _control->RaiseDragOver(wxPoint(x, y), def, (wxDataObjectComposite*)GetDataObject());
-    }
-    
-    bool DropTarget::OnDrop(wxCoord x, wxCoord y)
-    {
-        return wxDropTarget::OnDrop(x, y);
     }
 }

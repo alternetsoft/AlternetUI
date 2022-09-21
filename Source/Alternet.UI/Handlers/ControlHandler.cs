@@ -584,6 +584,9 @@ namespace Alternet.UI
                 NativeControl.MouseLeave -= NativeControl_MouseLeave;
                 NativeControl.MouseCaptureLost -= NativeControl_MouseCaptureLost;
                 NativeControl.DragOver -= NativeControl_DragOver;
+                NativeControl.DragEnter -= NativeControl_DragEnter;
+                NativeControl.DragLeave -= NativeControl_DragLeave;
+                NativeControl.DragDrop -= NativeControl_DragDrop;
             }
         }
 
@@ -605,9 +608,12 @@ namespace Alternet.UI
             NativeControl.MouseLeave += NativeControl_MouseLeave;
             NativeControl.MouseCaptureLost += NativeControl_MouseCaptureLost;
             NativeControl.DragOver += NativeControl_DragOver;
+            NativeControl.DragEnter += NativeControl_DragEnter;
+            NativeControl.DragLeave += NativeControl_DragLeave;
+            NativeControl.DragDrop += NativeControl_DragDrop;
         }
 
-        private void NativeControl_DragOver(object? sender, Native.NativeEventArgs<Native.DragEventData> e)
+        void RaiseDragAndDropEvent(Native.NativeEventArgs<Native.DragEventData> e, Action<DragEventArgs> raiseAction)
         {
             var data = e.Data;
             var ea = new DragEventArgs(
@@ -615,10 +621,21 @@ namespace Alternet.UI
                 new Point(data.mouseClientLocationX, data.mouseClientLocationY),
                 (DragDropEffects)data.effect);
 
-            Control.RaiseDragOver(ea);
+            raiseAction(ea);
 
             e.Result = new IntPtr((int)ea.Effect);
         }
+
+        private void NativeControl_DragOver(object? sender, Native.NativeEventArgs<Native.DragEventData> e) =>
+            RaiseDragAndDropEvent(e, ea => Control.RaiseDragOver(ea));
+
+        private void NativeControl_DragEnter(object? sender, Native.NativeEventArgs<Native.DragEventData> e) =>
+            RaiseDragAndDropEvent(e, ea => Control.RaiseDragEnter(ea));
+
+        private void NativeControl_DragDrop(object? sender, Native.NativeEventArgs<Native.DragEventData> e) =>
+            RaiseDragAndDropEvent(e, ea => Control.RaiseDragDrop(ea));
+
+        private void NativeControl_DragLeave(object? sender, EventArgs e) => Control.RaiseDragLeave(e);
 
         private void NativeControl_MouseCaptureLost(object? sender, EventArgs e)
         {
