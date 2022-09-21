@@ -1,6 +1,7 @@
 using Alternet.Drawing;
 using Alternet.UI;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -26,19 +27,57 @@ namespace DragAndDropSample
             Clipboard.SetDataObject(GetDataObject());
         }
 
+        private DragDropEffects GetDropEffect(DragDropEffects defaultEffect)
+        {
+            var allowedEffects = GetAllowedEffects();
+            if (allowedEffects.Count == 0)
+                return DragDropEffects.None;
+
+            if (allowedEffects.Count == 1)
+                return allowedEffects.Single();
+
+            if ((Keyboard.Modifiers & ModifierKeys.Alt) != 0 && allowedEffects.Contains(DragDropEffects.Link))
+                return DragDropEffects.Link;
+
+            if ((Keyboard.Modifiers & ModifierKeys.Control) != 0 && allowedEffects.Contains(DragDropEffects.Copy))
+                return DragDropEffects.Copy;
+
+            if (allowedEffects.Contains(defaultEffect))
+                return defaultEffect;
+
+            return allowedEffects.First();
+        }
+
+        private IReadOnlyList<DragDropEffects> GetAllowedEffects()
+        {
+            var output = new List<DragDropEffects>();
+            if (moveDropEffectCheckBox.IsChecked)
+                output.Add(DragDropEffects.Move);
+            if (copyDropEffectCheckBox.IsChecked)
+                output.Add(DragDropEffects.Copy);
+            if (linkDropEffectCheckBox.IsChecked)
+                output.Add(DragDropEffects.Link);
+
+            return output;
+        }
+
         private void DropTarget_DragDrop(object sender, DragEventArgs e)
         {
-            LogEvent("DragDrop");
+            e.Effect = GetDropEffect(e.Effect);
+            LogEvent($"DragDrop: {e.MouseClientLocation}, {e.Effect}");
+            MessageBox.Show(this, GetStringFromDropResultObject(e.Data), "Dropped Data");
         }
 
         private void DropTarget_DragOver(object sender, DragEventArgs e)
         {
+            e.Effect = GetDropEffect(e.Effect);
             LogEvent($"DragOver: {e.MouseClientLocation}, {e.Effect}");
         }
 
         private void DropTarget_DragEnter(object sender, DragEventArgs e)
         {
-            LogEvent("DragEnter");
+            e.Effect = GetDropEffect(e.Effect);
+            LogEvent($"DragEnter: {e.MouseClientLocation}, {e.Effect}");
         }
 
         private void DropTarget_DragLeave(object sender, EventArgs e)
@@ -97,14 +136,14 @@ namespace DragAndDropSample
             return result.ToString();
         }
 
-        private string GetDragDropDataString(object value) => value switch
+        private string GetStringFromDropResultObject(object? value) => value switch
         {
             string x => x,
             IDataObject x => GetDataObjectString(x),
             _ => throw new Exception()
         };
 
-        private bool IsDataObjectSupported(object value)
+        private bool IsDataObjectSupported(object? value)
         {
             return value switch
             {
@@ -118,7 +157,7 @@ namespace DragAndDropSample
         {
             var value = Clipboard.GetDataObject();
             if (IsDataObjectSupported(value))
-                MessageBox.Show(this, GetDragDropDataString(value), "Pasted Data");
+                MessageBox.Show(this, GetStringFromDropResultObject((object?)value), "Pasted Data");
             else
                 MessageBox.Show(this, "Clipboard doesn't contain data in a supported format.");
         }

@@ -21,15 +21,15 @@ namespace Alternet::UI
         }
     }
 
-    optional<string> UnmanagedDataObject::TryGetText()
+    /*static*/ optional<string> UnmanagedDataObject::TryGetText(wxDataObjectComposite* dataObject)
     {
         wxTextDataObject* object = nullptr;
 
         for(auto format : GetTextDataFormats())
         {
-            if (_dataObject->IsSupportedFormat(format))
+            if (dataObject->IsSupportedFormat(format))
             {
-                object = static_cast<wxTextDataObject*>(_dataObject->GetObject(format));
+                object = static_cast<wxTextDataObject*>(dataObject->GetObject(format));
                 break;
             }
         }
@@ -40,7 +40,7 @@ namespace Alternet::UI
         return wxStr(object->GetText());
     }
 
-    std::vector<wxDataFormat> UnmanagedDataObject::GetTextDataFormats()
+    /*static*/ std::vector<wxDataFormat> UnmanagedDataObject::GetTextDataFormats()
     {
         std::vector<wxDataFormat> formats =
         {
@@ -59,35 +59,44 @@ namespace Alternet::UI
         return _dataObject;
     }
 
-    optional<string> UnmanagedDataObject::TryGetFiles()
+    /*static*/ optional<wxArrayString> UnmanagedDataObject::TryGetFiles(wxDataObjectComposite* dataObject)
     {
         wxFileDataObject* object = nullptr;
-        if (_dataObject->IsSupportedFormat(wxDF_FILENAME))
-            object = static_cast<wxFileDataObject*>(_dataObject->GetObject(wxDF_FILENAME));
+        if (dataObject->IsSupportedFormat(wxDF_FILENAME))
+            object = static_cast<wxFileDataObject*>(dataObject->GetObject(wxDF_FILENAME));
 
         if (object == nullptr)
             return nullopt;
 
-        auto fileNames = object->GetFilenames();
+        return object->GetFilenames();
+    }
+
+    /*static*/ optional<string> UnmanagedDataObject::TryGetFilesString(wxDataObjectComposite* dataObject)
+    {
+        auto fileNames = TryGetFiles(dataObject);
+
+        if (!fileNames.has_value())
+            return nullopt;
+
         wxString result;
 
         int i = 0;
-        for (auto fileName : fileNames)
+        for (auto fileName : fileNames.value())
         {
             result.Append(fileName);
-            if (++i < fileNames.Count())
+            if (++i < fileNames.value().Count())
                 result.Append("|");
         }
 
         return wxStr(result);
     }
 
-    optional<wxBitmap> UnmanagedDataObject::TryGetBitmap()
+    /*static*/ optional<wxBitmap> UnmanagedDataObject::TryGetBitmap(wxDataObjectComposite* dataObject)
     {
         wxBitmapDataObject* object = nullptr;
         auto format = GetBitmapDataFormat();
-        if (_dataObject->IsSupportedFormat(format))
-            object = static_cast<wxBitmapDataObject*>(_dataObject->GetObject(format));
+        if (dataObject->IsSupportedFormat(format))
+            object = static_cast<wxBitmapDataObject*>(dataObject->GetObject(format));
 
         if (object == nullptr)
             return nullopt;
@@ -95,7 +104,7 @@ namespace Alternet::UI
         return object->GetBitmap();
     }
 
-    wxDataFormat UnmanagedDataObject::GetBitmapDataFormat()
+    /*static*/ wxDataFormat UnmanagedDataObject::GetBitmapDataFormat()
     {
 #ifdef __WXMSW__
         return wxDF_DIB;
@@ -158,7 +167,7 @@ namespace Alternet::UI
         if (!GetDataPresent(format))
             throwExInvalidArg(format, FormatNotPresentErrorMessage);
 
-        auto text = TryGetText();
+        auto text = TryGetText(_dataObject);
         if (text.has_value())
             return text.value();
 
@@ -170,7 +179,7 @@ namespace Alternet::UI
         if (!GetDataPresent(format))
             throwExInvalidArg(format, FormatNotPresentErrorMessage);
 
-        auto fileNames = TryGetFiles();
+        auto fileNames = TryGetFilesString(_dataObject);
         if (fileNames.has_value())
             return fileNames.value();
 
@@ -182,7 +191,7 @@ namespace Alternet::UI
         if (!GetDataPresent(format))
             throwExInvalidArg(format, FormatNotPresentErrorMessage);
 
-        auto bitmap = TryGetBitmap();
+        auto bitmap = TryGetBitmap(_dataObject);
         if (bitmap.has_value())
         {
             auto image = bitmap.value().ConvertToImage();

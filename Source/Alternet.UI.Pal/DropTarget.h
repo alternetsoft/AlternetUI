@@ -20,6 +20,11 @@ namespace Alternet::UI
 
     private:
 
+        void RecreateDataObject();
+        wxDataObjectComposite* GetDataObjectComposite();
+        void UpdateData();
+        wxDataObjectComposite* GetDataObjectWithoutEmptyData();
+
         Control* _control;
 
         BYREF_ONLY(DropTarget);

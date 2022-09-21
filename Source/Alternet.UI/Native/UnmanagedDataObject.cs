@@ -21,7 +21,7 @@ namespace Alternet.UI.Native
         public UnmanagedDataObject(IntPtr nativePointer) : base(nativePointer)
         {
         }
-        
+
         public System.String[] Formats
         {
             get
