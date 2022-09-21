@@ -29,7 +29,7 @@ namespace Alternet::UI
         {
             if (_dataObject->IsSupportedFormat(format))
             {
-                object = static_cast<wxTextDataObject*>(_dataObject->GetObject(wxDF_TEXT));
+                object = static_cast<wxTextDataObject*>(_dataObject->GetObject(format));
                 break;
             }
         }
