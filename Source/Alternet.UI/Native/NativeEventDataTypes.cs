@@ -13,13 +13,6 @@ namespace Alternet.UI.Native
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    class QueryContinueDragEventData
-    {
-        public bool escapePressed;
-        public DragAction action;
-    }
-    
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class TextInputEventData
     {
         public char keyChar;

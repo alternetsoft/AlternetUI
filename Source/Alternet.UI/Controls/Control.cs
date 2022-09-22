@@ -1045,11 +1045,6 @@ namespace Alternet.UI
         public event EventHandler? DragLeave;
 
         /// <summary>
-        /// Occurs during a drag-and-drop operation and enables the drag source to determine whether the drag-and-drop operation should be canceled.
-        /// </summary>
-        public event EventHandler<QueryContinueDragEventArgs>? QueryContinueDrag;
-
-        /// <summary>
         /// Gets or sets a value indicating whether the control can accept data that the user drags onto it.
         /// </summary>
         /// <value><c>true</c> if drag-and-drop operations are allowed in the control; otherwise, <c>false</c>. The default is <c>false</c>.</value>
@@ -1107,16 +1102,9 @@ namespace Alternet.UI
         /// <param name="e">The <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnDragLeave(EventArgs e) => DragLeave?.Invoke(this, e);
 
-        /// <summary>
-        /// Raises the <see cref="QueryContinueDrag"/> event.
-        /// </summary>
-        /// <param name="e">The <see cref="QueryContinueDragEventArgs"/> that contains the event data.</param>
-        protected virtual void OnQueryContinueDrag(QueryContinueDragEventArgs e) => QueryContinueDrag?.Invoke(this, e);
-
         internal void RaiseDragDrop(DragEventArgs e) => OnDragDrop(e);
         internal void RaiseDragOver(DragEventArgs e) => OnDragOver(e);
         internal void RaiseDragEnter(DragEventArgs e) => OnDragEnter(e);
         internal void RaiseDragLeave(EventArgs e) => OnDragLeave(e);
-        internal void RaiseQueryContinueDrag(QueryContinueDragEventArgs e) => OnQueryContinueDrag(e);
     }
 }

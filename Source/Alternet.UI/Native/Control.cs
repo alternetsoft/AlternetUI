@@ -504,11 +504,6 @@ namespace Alternet.UI.Native
                 {
                     DragLeave?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
-                case NativeApi.ControlEvent.QueryContinueDrag:
-                {
-                    var ea = new NativeEventArgs<QueryContinueDragEventData>(MarshalEx.PtrToStructure<QueryContinueDragEventData>(parameter));
-                    QueryContinueDrag?.Invoke(this, ea); return ea.Result;
-                }
                 default: throw new Exception("Unexpected ControlEvent value: " + e);
             }
         }
@@ -524,7 +519,6 @@ namespace Alternet.UI.Native
         public event NativeEventHandler<DragEventData>? DragOver;
         public event NativeEventHandler<DragEventData>? DragEnter;
         public event EventHandler? DragLeave;
-        public event NativeEventHandler<QueryContinueDragEventData>? QueryContinueDrag;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -547,7 +541,6 @@ namespace Alternet.UI.Native
                 DragOver,
                 DragEnter,
                 DragLeave,
-                QueryContinueDrag,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]

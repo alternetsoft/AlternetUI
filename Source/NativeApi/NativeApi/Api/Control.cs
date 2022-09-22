@@ -25,7 +25,6 @@ namespace NativeApi.Api
         public event NativeEventHandler<DragEventData>? DragOver { add => throw new Exception(); remove => throw new Exception(); }
         public event NativeEventHandler<DragEventData>? DragEnter { add => throw new Exception(); remove => throw new Exception(); }
         public event EventHandler? DragLeave { add => throw new Exception(); remove => throw new Exception(); }
-        public event NativeEventHandler<QueryContinueDragEventData>? QueryContinueDrag { add => throw new Exception(); remove => throw new Exception(); }
 
         public void SetMouseCapture(bool value) => throw new Exception();
 

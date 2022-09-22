@@ -95,10 +95,6 @@ namespace DragAndDropSample
             eventsListBox.SelectedIndex = eventsListBox.Items.Count - 1;
         }
 
-        private void DragSource_QueryContinueDrag(object sender, QueryContinueDragEventArgs e)
-        {
-        }
-
         private IDataObject GetDataObject()
         {
             var result = new DataObject();

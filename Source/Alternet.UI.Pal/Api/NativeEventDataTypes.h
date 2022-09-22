@@ -15,14 +15,6 @@ namespace Alternet::UI
     #pragma pack(pop)
     
     #pragma pack(push, 1)
-    struct QueryContinueDragEventData
-    {
-        c_bool escapePressed;
-        DragAction action;
-    };
-    #pragma pack(pop)
-    
-    #pragma pack(push, 1)
     struct TextInputEventData
     {
         char16_t keyChar;
