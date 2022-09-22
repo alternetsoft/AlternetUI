@@ -4,16 +4,16 @@
         Title="Drag and Drop Sample">
   <Grid Margin="10">
     <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />
-      <RowDefinition Height="*" />
-      <RowDefinition Height="100" />
     </Grid.RowDefinitions>
 
     <StackPanel Orientation="Horizontal">
       <GroupBox Title="Clipboard" VerticalAlignment="Top">
         <StackPanel Orientation="Vertical" Margin="10">
           <Button Text="Copy" Name="copyButton" Click="CopyButton_Click" />
-          <Button Text="Paste" Name="pasteButton" Click="PasteButton_Click" Margin="0,5,0,0" />
+          <Button Text="Paste" Name="pasteButton" Click="PasteButton_Click" Margin="0,5,0,5" />
         </StackPanel>
       </GroupBox>
       <Border Width="100" Height="100"  VerticalAlignment="Top" Margin="10" AllowDrop="True" Name="dragSource"
@@ -31,16 +31,16 @@
       </Border>
     </StackPanel>
 
-    <StackPanel Orientation="Horizontal" Margin="0,10,0,0" Grid.Row="1">
+    <StackPanel Orientation="Horizontal" Margin="0,10,0,10" Grid.Row="1">
       <GroupBox Title="Included Data Formats" VerticalAlignment="Top">
-        <StackPanel Orientation="Vertical" Margin="10">
+        <StackPanel Orientation="Vertical" Margin="10,10,100,10">
           <CheckBox Text="Text" Name="textFormatCheckBox" IsChecked="true" />
           <CheckBox Text="Files" Name="filesFormatCheckBox" IsChecked="true" />
           <CheckBox Text="Bitmap" Name="bitmapFormatCheckBox" IsChecked="true" />
         </StackPanel>
       </GroupBox>
       <GroupBox Title="Drop Effects" VerticalAlignment="Top" Margin="10,0,0,0">
-        <StackPanel Orientation="Vertical" Margin="10">
+        <StackPanel Orientation="Vertical" Margin="10,10,50,10">
           <CheckBox Text="Move" Name="moveDropEffectCheckBox" IsChecked="true" />
           <CheckBox Text="Copy" Name="copyDropEffectCheckBox" IsChecked="true" />
           <CheckBox Text="Link" Name="linkDropEffectCheckBox" IsChecked="true" />
