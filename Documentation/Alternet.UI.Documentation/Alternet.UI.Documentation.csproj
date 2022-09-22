@@ -23,7 +23,7 @@
     <None Remove="log.txt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="memberpage" Version="2.58.4" />
+    <PackageReference Include="memberpage" Version="2.59.4" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="how-to-guides\debugging-with-alternet-ui-sources\images\" />
@@ -33,13 +33,13 @@
     <None Remove="obj\**" />
   </ItemGroup>
   <Target Name="CopyMemberpage" AfterTargets="Build" Condition="!Exists('$(ProjectDir)\templates\memberpage')">
-    <Exec Command="xcopy $(USERPROFILE)\.nuget\packages\memberpage\2.58.4\content $(ProjectDir)\templates\memberpage /E /H /C /I /Y" />
+    <Exec Command="xcopy $(USERPROFILE)\.nuget\packages\memberpage\2.59.4\content $(ProjectDir)\templates\memberpage /E /H /C /I /Y" />
   </Target>
-  <Target Name="RestoreDocFx" AfterTargets="Build" Condition="!Exists('$(USERPROFILE)\.nuget\packages\docfx.console\2.58.4')">
+  <Target Name="RestoreDocFx" AfterTargets="Build" Condition="!Exists('$(USERPROFILE)\.nuget\packages\docfx.console\2.59.4')">
     <Exec Command="dotnet restore $(ProjectDir)\utils\DocFXInstaller\DocFXInstaller.csproj" />
   </Target>
   <Target Name="BuildDocumentation" AfterTargets="Build">
-    <Exec Command="$(USERPROFILE)\.nuget\packages\docfx.console\2.58.4\tools\docfx.exe" />
+    <Exec Command="$(USERPROFILE)\.nuget\packages\docfx.console\2.59.4\tools\docfx.exe" />
   </Target>
 
 </Project>
