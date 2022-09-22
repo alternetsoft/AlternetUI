@@ -61,6 +61,8 @@ namespace DragAndDropSample
             return output;
         }
 
+        private DragDropEffects GetAllowedEffectsFlags() => GetAllowedEffects().Aggregate((a, b) => a | b);
+
         private void DropTarget_DragDrop(object sender, DragEventArgs e)
         {
             e.Effect = GetDropEffect(e.Effect);
@@ -160,6 +162,29 @@ namespace DragAndDropSample
                 MessageBox.Show(this, GetStringFromDropResultObject((object?)value), "Pasted Data");
             else
                 MessageBox.Show(this, "Clipboard doesn't contain data in a supported format.");
+        }
+
+        bool isDragging = false;
+
+        private void DragSource_MouseDown(object sender, Alternet.UI.MouseButtonEventArgs e)
+        {
+            isDragging = true;
+        }
+
+        private void DragSource_MouseMove(object sender, Alternet.UI.MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                //dragStopwatch.Restart();
+                var result = DoDragDrop(GetDataObject(), GetAllowedEffectsFlags());
+                MessageBox.Show(this, result.ToString(), "DoDragDrop Result");
+                isDragging = false;
+            }
+        }
+
+        private void DragSource_MouseUp(object sender, Alternet.UI.MouseButtonEventArgs e)
+        {
+            isDragging = false;
         }
     }
 }

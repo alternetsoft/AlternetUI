@@ -13,6 +13,12 @@
         <Button Text="Copy" Name="copyButton" Click="CopyButton_Click" />
         <Button Text="Paste" Name="pasteButton" Click="PasteButton_Click" />
       </StackPanel>
+      <Border Width="100" Height="100"  VerticalAlignment="Top" Margin="10" AllowDrop="True" Name="dragSource"
+              MouseDown="DragSource_MouseDown"
+              MouseMove="DragSource_MouseMove"
+              MouseUp="DragSource_MouseUp">
+        <Label Text="Drag Me" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+      </Border>
       <Border Width="100" Height="100"  VerticalAlignment="Top" Margin="10" AllowDrop="True" Name="dropTarget"
               DragDrop="DropTarget_DragDrop"
               DragOver="DropTarget_DragOver"

@@ -125,6 +125,7 @@ namespace Alternet::UI
 
         static DragDropEffects GetDragDropEffects(wxDragResult input);
         static wxDragResult GetDragResult(DragDropEffects input);
+        static int GetDoDragDropFlags(DragDropEffects allowedEffects);
 
         wxDragResult RaiseDragAndDropEvent(
             const wxPoint& location,

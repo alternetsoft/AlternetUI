@@ -170,9 +170,24 @@ namespace Alternet::UI
         return _flags.IsSet(ControlFlags::InitInProgress);
     }
 
+    /*static*/ int Control::GetDoDragDropFlags(DragDropEffects allowedEffects)
+    {
+        if (allowedEffects == DragDropEffects::Copy)
+            return wxDrag_CopyOnly; // allow only copying
+
+        if ((allowedEffects & DragDropEffects::Move) != DragDropEffects::None)
+            return wxDrag_AllowMove; // allow moving (copying is always allowed)
+
+        return wxDrag_DefaultMove; // the default operation is move, not copy
+    }
+
     DragDropEffects Control::DoDragDrop(UnmanagedDataObject* data, DragDropEffects allowedEffects)
     {
-        return DragDropEffects();
+        wxDropSource dragSource(GetWxWindow());
+        auto dataObjectComposite = data->GetDataObjectComposite();
+        dragSource.SetData(*dataObjectComposite);
+        auto result = dragSource.DoDragDrop(GetDoDragDropFlags(allowedEffects));
+        return GetDragDropEffects(result);
     }
 
     bool Control::GetAllowDrop()
