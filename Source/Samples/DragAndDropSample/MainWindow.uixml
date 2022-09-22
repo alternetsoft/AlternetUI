@@ -1,6 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        x:Class="DragAndDropSample.MainWindow">
+        x:Class="DragAndDropSample.MainWindow"
+        Title="Drag and Drop Sample">
   <Grid Margin="10">
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />
@@ -9,10 +10,12 @@
     </Grid.RowDefinitions>
 
     <StackPanel Orientation="Horizontal">
-      <StackPanel Orientation="Vertical" Margin="10">
-        <Button Text="Copy" Name="copyButton" Click="CopyButton_Click" />
-        <Button Text="Paste" Name="pasteButton" Click="PasteButton_Click" />
-      </StackPanel>
+      <GroupBox Title="Clipboard" VerticalAlignment="Top">
+        <StackPanel Orientation="Vertical" Margin="10">
+          <Button Text="Copy" Name="copyButton" Click="CopyButton_Click" />
+          <Button Text="Paste" Name="pasteButton" Click="PasteButton_Click" Margin="0,5,0,0" />
+        </StackPanel>
+      </GroupBox>
       <Border Width="100" Height="100"  VerticalAlignment="Top" Margin="10" AllowDrop="True" Name="dragSource"
               MouseDown="DragSource_MouseDown"
               MouseMove="DragSource_MouseMove"
