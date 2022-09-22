@@ -31,7 +31,7 @@ AlterNET UI Roadmap
     + common dialogs (Open file etc)
     - tool tips
     - focus management
-    - drag and drop, clipboard
+    + drag and drop, clipboard
     + timers
     - unhandled exception dialog
     - SynchronizationContext, Invoke/BeginInvoke
