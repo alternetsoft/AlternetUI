@@ -52,9 +52,11 @@ namespace Alternet::UI
             newComposite->Add(fileObject);
         }
 
+#ifdef __WXMSW__ // The code below crashes on macOS/Linux for unknown reason.
         auto bitmap = UnmanagedDataObject::TryGetBitmap(composite);
         if (bitmap.has_value())
             newComposite->Add(new wxImageDataObject(bitmap.value().ConvertToImage()));
+#endif
 
         return newComposite;
     }
