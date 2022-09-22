@@ -9,7 +9,16 @@ namespace Alternet.UI
     {
         public static Native.UnmanagedDataObject GetUnmanagedDataObject(object input)
         {
+            if (input is null)
+                throw new ArgumentNullException(nameof(input));
+
+            if (input is IDataObject)
+                return GetUnmanagedDataObject((IDataObject)input);
+
             var output = new Native.UnmanagedDataObject();
+            var adatpter = new UnmanagedDataObjectAdapter(output);
+            adatpter.SetData(input);
+        
             return output;
         }
 
