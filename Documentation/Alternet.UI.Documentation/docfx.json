@@ -88,6 +88,9 @@
       "_enableNewTab": false,
       "_appFooter": "Copyright AlterNET Software",
       "_enableSearch": true
+    },
+    "sitemap": {
+      "baseUrl": "https://docs.alternet-ui.com/"
     }
   }
 }
