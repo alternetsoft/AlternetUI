@@ -45,5 +45,8 @@
       <Button Text="Set Options Item Role to None" Click="SetOptionsMenuItemRoleToNone_Click" Margin="0,0,0,10" />
       <Button Text="Set Options Item Role to Preferences" Click="SetOptionsMenuItemRoleToPreferences_Click" Margin="0,0,0,10" />
     </StackPanel>
+    <Border Name="contextMenuBorder" MouseRightButtonUp="ContextMenuBorder_MouseRightButtonUp" Margin="0,20,0,10">
+      <Label Text="Right-click here to show the context menu." Margin="10" HorizontalAlignment="Center" />
+    </Border>
   </StackPanel>
 </Window>

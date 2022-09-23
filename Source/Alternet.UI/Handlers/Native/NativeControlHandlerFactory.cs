@@ -27,6 +27,7 @@ namespace Alternet.UI
             TreeView => new NativeTreeViewHandler(),
             MainMenu => new NativeMainMenuHandler(),
             MenuItem => new NativeMenuItemHandler(),
+            ContextMenu => new NativeContextMenuHandler(),
             _ => new GenericControlHandler()
         };
     }
