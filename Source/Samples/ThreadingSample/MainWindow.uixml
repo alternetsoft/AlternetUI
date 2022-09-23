@@ -29,7 +29,7 @@
           Text="Start long-running operation"
           Name="startLongOperationButton"
           Click="StartLongOperationButton_Click" Margin="0,0,0,5"/>
-        <ProgressBar Grid.Row="1" Name="longOperationProgressBar" HorizontalAlignment="Stretch" />
+        <ProgressBar Grid.Row="1" Name="longOperationProgressBar" HorizontalAlignment="Stretch" Margin="0,0,0,10" />
       </Grid>
     </GroupBox>
   </StackPanel>
