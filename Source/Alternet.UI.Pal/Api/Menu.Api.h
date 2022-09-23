@@ -4,6 +4,7 @@
 
 #include "Menu.h"
 #include "MenuItem.h"
+#include "Control.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -34,6 +35,13 @@ ALTERNET_UI_API void Menu_RemoveItemAt_(Menu* obj, int index)
 {
     MarshalExceptions<void>([&](){
             obj->RemoveItemAt(index);
+        });
+}
+
+ALTERNET_UI_API void Menu_ShowContextMenu_(Menu* obj, Control* control, Point position)
+{
+    MarshalExceptions<void>([&](){
+            obj->ShowContextMenu(control, position);
         });
 }
 

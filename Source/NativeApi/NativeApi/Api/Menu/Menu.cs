@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Alternet.Drawing;
+using System;
 
 namespace NativeApi.Api
 {
@@ -9,5 +10,7 @@ namespace NativeApi.Api
         public void InsertItemAt(int index, MenuItem item) => throw new Exception();
 
         public void RemoveItemAt(int index) => throw new Exception();
+
+        public void ShowContextMenu(Control control, Point position) => throw new Exception();
     }
 }

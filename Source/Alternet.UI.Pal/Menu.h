@@ -12,6 +12,7 @@ namespace Alternet::UI
     {
 #include "Api/Menu.inc"
     public:
+
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
         wxMenu* GetWxMenu();

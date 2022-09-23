@@ -85,6 +85,12 @@ namespace Alternet::UI
         item->SetParentMenu(nullptr, nullopt);
     }
 
+    void Menu::ShowContextMenu(Control* control, const Point& position)
+    {
+        auto wxWindow = control->GetWxWindow();
+        wxWindow->PopupMenu(_menu, fromDip(position, wxWindow));
+    }
+
     wxWindow* Menu::CreateWxWindowCore(wxWindow* parent)
     {
         return new wxPanel();
