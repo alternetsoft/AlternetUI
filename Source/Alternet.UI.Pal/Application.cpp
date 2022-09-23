@@ -199,11 +199,12 @@ namespace Alternet::UI
 
     bool Application::GetInvokeRequired()
     {
-        return false;
+        return !wxThread::IsMain();
     }
 
     void Application::BeginInvoke(PInvokeCallbackActionType action)
     {
+        ParkingWindow::GetWindow()->CallAfter([=]() { action(); });
     }
 
     Mouse* Application::GetMouseInternal()

@@ -620,7 +620,7 @@ namespace Alternet.UI
         {
             if (method == null)
                 throw new ArgumentNullException(nameof(method));
-            return Dispatcher.Invoke(method, args);
+            return SynchronizationService.Invoke(method, args);
         }
 
         /// <summary>
@@ -1006,8 +1006,6 @@ namespace Alternet.UI
         {
         }
 
-        protected void SetVisibleValue(bool value) => visible = value;
-
         /// <summary>
         /// Called when the value of the <see cref="Visible"/> property changes.
         /// </summary>
@@ -1045,7 +1043,7 @@ namespace Alternet.UI
         {
         }
 
-        protected override bool GetIsEnabled() => Enabled;
+        private protected override bool GetIsEnabled() => Enabled;
 
         /// <summary>
         /// Forces the re-creation of the handler for the control.
@@ -1074,7 +1072,7 @@ namespace Alternet.UI
         /// Gets an <see cref="IControlHandlerFactory"/> to use when creating new control handlers for this control.
         /// </summary>
         protected IControlHandlerFactory GetEffectiveControlHandlerHactory() =>
-            ControlHandlerFactory ?? Application.Current.VisualTheme.ControlHandlerFactory; // todo: maybe reconsider naming?
+            ControlHandlerFactory ?? Application.Current.VisualTheme.ControlHandlerFactory;
 
         /// <summary>
         /// Creates a handler for the control.
@@ -1085,6 +1083,7 @@ namespace Alternet.UI
         /// </remarks>
         protected virtual ControlHandler CreateHandler() => GetEffectiveControlHandlerHactory().CreateControlHandler(this);
 
+        // todo: maybe reconsider naming?
         /// <summary>
         /// Releases the unmanaged resources used by the object and optionally releases the managed resources.
         /// </summary>
@@ -1177,6 +1176,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">The <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnDragLeave(EventArgs e) => DragLeave?.Invoke(this, e);
+
+        private protected void SetVisibleValue(bool value) => visible = value;
 
         private void CreateAndAttachHandler()
         {

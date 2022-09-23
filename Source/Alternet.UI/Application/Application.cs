@@ -31,6 +31,9 @@ namespace Alternet.UI
         public Application()
         {
             nativeApplication = new Native.Application();
+
+            SynchronizationContext.InstallIfNeeded();
+
             nativeApplication.Idle += NativeApplication_Idle;
             nativeApplication.Name = Path.GetFileNameWithoutExtension(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             current = this;
@@ -117,6 +120,7 @@ namespace Alternet.UI
             CheckDisposed();
             window.Show();
             nativeApplication.Run(((NativeWindowHandler)window.Handler).NativeControl);
+            SynchronizationContext.Uninstall();
         }
 
         internal void RegisterWindow(Window window)
