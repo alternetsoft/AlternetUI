@@ -589,7 +589,13 @@ namespace Alternet::UI
     Size Control::SizeToClientSize(const Size& size)
     {
         auto window = GetWxWindow();
-        return toDip(GetWxWindow()->WindowToClientSize(fromDip(size, window)), window);
+        if (window->GetHandle() == nullptr)
+        {
+            // On macOS, in case where the peer is not created, calling WindowToClientSize causes a crash.
+            return size;
+        }
+        
+        return toDip(window->WindowToClientSize(fromDip(size, window)), window);
     }
 
     Thickness Control::GetIntrinsicLayoutPadding()
