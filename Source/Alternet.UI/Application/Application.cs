@@ -103,6 +103,8 @@ namespace Alternet.UI
             }
         }
 
+        internal bool InvokeRequired => nativeApplication.InvokeRequired;
+
         /// <summary>
         /// Starts an application UI event loop and makes the specified window visible.
         /// Begins running a UI event processing loop on the current thread.
@@ -169,6 +171,11 @@ namespace Alternet.UI
         {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        internal void BeginInvoke(Action action)
+        {
+            nativeApplication.BeginInvoke(action);
         }
     }
 }

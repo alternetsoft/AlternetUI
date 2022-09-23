@@ -88,7 +88,20 @@ namespace ApiGenerator.Api
         public static string GetPInvokeAttributes(ParameterInfo p) =>
             (p.GetCustomAttribute<PInvokeAttributesAttribute>() ?? new PInvokeAttributesAttribute("")).AttributesString;
 
+        public static CallbackMarshalAttribute? TryGetCallbackMarshalAttribute(ParameterInfo p)
+        {
+            var attribute = p.GetCustomAttribute<CallbackMarshalAttribute>();
+            if (attribute != null)
+            {
+                if (!attribute.FreeAfterFirstCall)
+                    throw new NotSupportedException();
+            }
+
+            return attribute;
+        }
+
         public static string GetArraySizeParameterName(string arrayParameterName) => arrayParameterName + "Count";
 
+        public const string PInvokeCallbackActionTypeName = "PInvokeCallbackActionType";
     }
 }

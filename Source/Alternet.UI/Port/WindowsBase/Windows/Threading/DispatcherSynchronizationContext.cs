@@ -99,14 +99,14 @@ namespace Alternet.UI.Threading
             }
             else
             {
-                return SynchronizationContext.WaitHelper(waitHandles, waitAll, millisecondsTimeout);
+                return System.Threading.SynchronizationContext.WaitHelper(waitHandles, waitAll, millisecondsTimeout);
             }
         }
 
         /// <summary>
         ///     Create a copy of this SynchronizationContext.
         /// </summary>
-        public override SynchronizationContext CreateCopy()
+        public override System.Threading.SynchronizationContext CreateCopy()
         {
             DispatcherSynchronizationContext copy;
             

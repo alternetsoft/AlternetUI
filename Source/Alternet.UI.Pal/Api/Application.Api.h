@@ -68,6 +68,13 @@ ALTERNET_UI_API void Application_SetInUixmlPreviewerMode_(Application* obj, c_bo
         });
 }
 
+ALTERNET_UI_API c_bool Application_GetInvokeRequired_(Application* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetInvokeRequired();
+        });
+}
+
 ALTERNET_UI_API void Application_Run_(Application* obj, Window* window)
 {
     MarshalExceptions<void>([&](){
@@ -79,6 +86,13 @@ ALTERNET_UI_API void Application_WakeUpIdle_(Application* obj)
 {
     MarshalExceptions<void>([&](){
             obj->WakeUpIdle();
+        });
+}
+
+ALTERNET_UI_API void Application_BeginInvoke_(Application* obj, PInvokeCallbackActionType action)
+{
+    MarshalExceptions<void>([&](){
+            obj->BeginInvoke(action);
         });
 }
 

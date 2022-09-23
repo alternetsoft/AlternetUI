@@ -38,7 +38,6 @@ namespace Alternet::UI
     {
 #include "Api/Application.inc"
     public:
-
         Mouse* GetMouseInternal();
         Keyboard* GetKeyboardInternal();
 

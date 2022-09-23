@@ -17,8 +17,12 @@ Clipboard* GetClipboard();
 bool GetInUixmlPreviewerMode();
 void SetInUixmlPreviewerMode(bool value);
 
+
+bool GetInvokeRequired();
+
 void Run(Window* window);
 void WakeUpIdle();
+void BeginInvoke(PInvokeCallbackActionType action);
 public:
 enum class ApplicationEvent
 {

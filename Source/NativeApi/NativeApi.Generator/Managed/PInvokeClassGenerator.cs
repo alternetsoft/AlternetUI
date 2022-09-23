@@ -114,7 +114,7 @@ namespace ApiGenerator.Managed
             {
                 var parameter = parameters[i];
 
-                var parameterType = types.GetTypeName(parameter.ToContextualParameter());
+                var parameterType = types.GetParameterTypeName(parameter);
                 signatureParametersString.Append($"{MemberProvider.GetPInvokeAttributes(parameter)}{parameterType} {parameter.Name}");
 
                 if (parameter.ParameterType.IsArray)

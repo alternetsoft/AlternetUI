@@ -42,6 +42,9 @@ namespace Alternet.UI.Native
 
         static GCHandle unhandledExceptionCallbackHandle;
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
+        public delegate void PInvokeCallbackActionType();
+
         private class WindowsNativeModulesLocator
         {
             public static void SetNativeModulesDirectory()

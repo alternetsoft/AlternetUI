@@ -1,7 +1,9 @@
 ﻿using ApiGenerator.Api;
+using ApiGenerator.Native;
 using Namotion.Reflection;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace ApiGenerator.Managed
 {
@@ -32,6 +34,15 @@ namespace ApiGenerator.Managed
 
         protected string GetNullableDecoratedName(ContextualType type, string name) =>
             type.Nullability == Nullability.Nullable ? name + "?" : name;
+
+        public string GetParameterTypeName(ParameterInfo parameter)
+        {
+            var attribute = MemberProvider.TryGetCallbackMarshalAttribute(parameter);
+            if (attribute != null)
+                return MemberProvider.PInvokeCallbackActionTypeName;
+
+            return GetTypeName(parameter.ToContextualParameter());
+        }
 
         public string GetTypeName(ContextualType type)
         {

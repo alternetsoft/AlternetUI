@@ -488,7 +488,7 @@ namespace Alternet.UI.Threading
         // Invoke --> InvokeInSecurityContext --> InvokeImpl
         private void InvokeImpl()
         {
-            SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
+            System.Threading.SynchronizationContext oldSynchronizationContext = System.Threading.SynchronizationContext.Current;
 
             try
             {

@@ -155,7 +155,7 @@ namespace Alternet.UI
 
         private void CallWithNonPumpingWait(Action callback)
         {
-            SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
+            var oldSynchronizationContext = System.Threading.SynchronizationContext.Current;
             NonPumpingSynchronizationContext nonPumpingSynchronizationContext =
                 Interlocked.Exchange<NonPumpingSynchronizationContext>(ref _defaultSynchronizationContext, null);
 
@@ -292,7 +292,7 @@ namespace Alternet.UI
                 SetWaitNotificationRequired();
             }
 
-            public SynchronizationContext Parent { get; set; }
+            public System.Threading.SynchronizationContext Parent { get; set; }
 
             /// <summary>
             ///     Wait for a set of handles.
@@ -323,7 +323,7 @@ namespace Alternet.UI
             /// <summary>
             ///     Create a copy of this SynchronizationContext.
             /// </summary>
-            public override SynchronizationContext CreateCopy()
+            public override System.Threading.SynchronizationContext CreateCopy()
             {
                 return this;
             }

@@ -139,7 +139,7 @@ namespace ApiGenerator.Native
             {
                 var parameter = parameters[i];
 
-                var parameterType = types.GetTypeName(parameter.ToContextualParameter(), TypeUsage.Argument);
+                var parameterType = types.GetParameterTypeName(parameter);
                 signatureParameters.Append(parameterType + " " + parameter.Name);
                 callParameters.Append(parameter.Name);
 

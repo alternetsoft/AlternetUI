@@ -585,7 +585,7 @@ namespace Alternet.UI.Threading
             // call the callback directly.
             if(!cancellationToken.IsCancellationRequested && priority == DispatcherPriority.Send && CheckAccess())
             {
-                SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
+                var oldSynchronizationContext = System.Threading.SynchronizationContext.Current;
 
                 try
                 {
@@ -730,7 +730,7 @@ namespace Alternet.UI.Threading
             // call the callback directly.
             if(!cancellationToken.IsCancellationRequested && priority == DispatcherPriority.Send && CheckAccess())
             {
-                SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
+                System.Threading.SynchronizationContext oldSynchronizationContext = System.Threading.SynchronizationContext.Current;
 
                 try
                 {
@@ -1301,7 +1301,7 @@ namespace Alternet.UI.Threading
             // then just call the callback directly within the exception wrappers.
             if(priority == DispatcherPriority.Send && CheckAccess())
             {
-                SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
+                System.Threading.SynchronizationContext oldSynchronizationContext = System.Threading.SynchronizationContext.Current;
 
                 try
                 {
@@ -2114,15 +2114,15 @@ namespace Alternet.UI.Threading
 
         private void PushFrameImpl(DispatcherFrame frame)
         {
-            SynchronizationContext oldSyncContext = null;
-            SynchronizationContext newSyncContext = null;
+            System.Threading.SynchronizationContext oldSyncContext = null;
+            System.Threading.SynchronizationContext newSyncContext = null;
             // yezo MSG msg = new MSG();
 
             _frameDepth++;
             try
             {
                 // Change the CLR SynchronizationContext to be compatable with our Dispatcher.
-                oldSyncContext = SynchronizationContext.Current;
+                oldSyncContext = System.Threading.SynchronizationContext.Current;
                 newSyncContext = new DispatcherSynchronizationContext(this);
                 SynchronizationContext.SetSynchronizationContext(newSyncContext);
 

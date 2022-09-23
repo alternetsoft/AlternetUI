@@ -1,8 +1,11 @@
 ﻿using ApiGenerator.Api;
+using ApiGenerator.Managed;
 using Namotion.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Metadata;
 
 namespace ApiGenerator.Native
 {
@@ -40,6 +43,15 @@ namespace ApiGenerator.Native
         public string GetIncludes() => string.Join("\r\n", includes.ToArray());
 
         public abstract string GetTypeName(ContextualType type, TypeUsage usage);
+
+        public string GetParameterTypeName(ParameterInfo parameter)
+        {
+            var attribute = MemberProvider.TryGetCallbackMarshalAttribute(parameter);
+            if (attribute != null)
+                return MemberProvider.PInvokeCallbackActionTypeName;
+
+            return GetTypeName(parameter.ToContextualParameter(), TypeUsage.Argument);
+        }
 
         protected virtual string? TryGetPrimitiveType(ContextualType type) => primitiveTypes.TryGetValue(type, out var result) ? result : null;
 

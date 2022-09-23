@@ -2,10 +2,13 @@
 using Namotion.Reflection;
 using System;
 using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Text;
+using System.Xml.Linq;
 
 namespace ApiGenerator.Managed
 {
@@ -265,10 +268,9 @@ using System.Security;");
             {
                 var parameter = parameters[i];
 
-                var contextualParameter = parameter.ToContextualParameter();
-                var parameterType = types.GetTypeName(contextualParameter);
+                var parameterType = types.GetTypeName(parameter.ToContextualParameter());
                 signatureParametersString.Append(parameterType + " " + parameter.Name);
-                callParametersString.Append(GetManagedToNativeArgument(contextualParameter, parameter.Name!, types, pinvokeTypes));
+                callParametersString.Append(GetManagedToNativeArgument(parameter, types, pinvokeTypes));
 
                 if (parameter.ParameterType.IsArray)
                 {
@@ -288,6 +290,8 @@ using System.Security;");
 
             if (!method.IsStatic)
                 w.WriteLine("CheckDisposed();");
+
+            GenerateCallbackSinks(w, parameters);
 
             var callString = $"NativeApi.{TypeProvider.GetNativeName(method.DeclaringType!)}_{methodName}_({callParametersString})";
 
@@ -313,6 +317,36 @@ using System.Security;");
             w.WriteLine("}");
 
             w.WriteLine();
+        }
+
+        private static void GenerateCallbackSinks(IndentedTextWriter w, ParameterInfo[] parameters)
+        {
+            foreach (var parameter in parameters)
+            {
+                if (MemberProvider.TryGetCallbackMarshalAttribute(parameter) == null)
+                    continue;
+
+                var name = parameter.Name;
+                var handleName = name + "CallbackHandle";
+                var sinkName = name + "Sink";
+
+                w.WriteLine($"var {handleName} = new GCHandle();");
+                w.WriteLine($"var {sinkName} = new NativeApi.{MemberProvider.PInvokeCallbackActionTypeName}(");
+                w.Indent++;
+                {
+                    w.WriteLine("() =>");
+                    w.WriteLine("{");
+                    w.Indent++;
+                    {
+                        w.WriteLine($"{name}();");
+                        w.WriteLine($"{handleName}.Free();");
+                    }
+                    w.Indent--;
+                    w.WriteLine("});");
+                }
+                w.Indent--;
+                w.WriteLine($"{handleName} = GCHandle.Alloc({sinkName});");
+            }
         }
 
         private static void WriteEvents(IndentedTextWriter w, Types types, EventInfo[] events)
@@ -404,6 +438,16 @@ using System.Security;");
                 }
                 w.WriteLine($"public event {argsType}? {e.Name};");
             }
+        }
+
+        static string GetManagedToNativeArgument(ParameterInfo parameter, Types types, Types pinvokeTypes)
+        {
+            string name = parameter.Name!;
+            
+            if (MemberProvider.TryGetCallbackMarshalAttribute(parameter) != null)
+                return name + "Sink";
+
+            return GetManagedToNativeArgument(parameter.ToContextualParameter(), name, types, pinvokeTypes);
         }
 
         static string GetManagedToNativeArgument(ContextualType type, string name, Types types, Types pinvokeTypes)

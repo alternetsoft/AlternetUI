@@ -197,6 +197,15 @@ namespace Alternet::UI
     }
 
 
+    bool Application::GetInvokeRequired()
+    {
+        return false;
+    }
+
+    void Application::BeginInvoke(PInvokeCallbackActionType action)
+    {
+    }
+
     Mouse* Application::GetMouseInternal()
     {
         return _mouse;

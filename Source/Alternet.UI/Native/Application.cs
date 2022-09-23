@@ -96,6 +96,18 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool InvokeRequired
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Application_GetInvokeRequired_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
         public void Run(Window window)
         {
             CheckDisposed();
@@ -106,6 +118,20 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.Application_WakeUpIdle_(NativePointer);
+        }
+        
+        public void BeginInvoke(System.Action action)
+        {
+            CheckDisposed();
+            var actionCallbackHandle = new GCHandle();
+            var actionSink = new NativeApi.PInvokeCallbackActionType(
+                () =>
+                {
+                    action();
+                    actionCallbackHandle.Free();
+                });
+            actionCallbackHandle = GCHandle.Alloc(actionSink);
+            NativeApi.Application_BeginInvoke_(NativePointer, actionSink);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -181,10 +207,16 @@ namespace Alternet.UI.Native
             public static extern void Application_SetInUixmlPreviewerMode_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Application_GetInvokeRequired_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_Run_(IntPtr obj, IntPtr window);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_WakeUpIdle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_BeginInvoke_(IntPtr obj, PInvokeCallbackActionType action);
             
         }
     }

@@ -3,3 +3,6 @@
 #include "Api/Enums.h"
 #include "Api/NativeEventDataTypes.h"
 #include "Api/DrawingTypes.h"
+
+
+typedef void(*PInvokeCallbackActionType)();
