@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Alternet.UI;
 
 namespace ThreadingSample
@@ -34,6 +35,23 @@ namespace ThreadingSample
                 }
             })
             { IsBackground = true }.Start();
+        }
+
+        private async void StartLongOperationButton_Click(object sender, System.EventArgs e)
+        {
+            startLongOperationButton.Enabled = false;
+            await Task.Run(async () =>
+            {
+                const int Maximum = 50;
+                Invoke(() => longOperationProgressBar.Maximum = Maximum);
+
+                for (int i = 0; i <= Maximum; i++)
+                {
+                    await Task.Delay(100);
+                    BeginInvoke(() => longOperationProgressBar.Value = i);
+                }
+            });
+            startLongOperationButton.Enabled = true;
         }
     }
 }
