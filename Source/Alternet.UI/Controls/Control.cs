@@ -1,10 +1,9 @@
+using Alternet.Base.Collections;
+using Alternet.Drawing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Alternet.Drawing;
-using Alternet.Base.Collections;
 using System.Linq;
-using System.Diagnostics;
 
 namespace Alternet.UI
 {
@@ -16,6 +15,7 @@ namespace Alternet.UI
     {
         private static readonly Size DefaultSize = new Size(double.NaN, double.NaN);
         private static Font? defaultFont;
+        private static object?[] emptyArray = new object?[0];
         private Size size = DefaultSize;
         private Thickness margin;
         private Thickness padding;
@@ -39,36 +39,6 @@ namespace Alternet.UI
             Children.ItemInserted += Children_ItemInserted;
             Children.ItemRemoved += Children_ItemRemoved;
         }
-
-        /// <summary>
-        /// Gets or sets size of the <see cref="Control"/>'s client area, in device-independent units (1/96th inch per unit).
-        /// </summary>
-        public Size ClientSize
-        {
-            get => Handler.ClientSize;
-            set => Handler.ClientSize = value;
-        }
-
-        /// <summary>
-        /// Captures the mouse to the control.
-        /// </summary>
-        public void CaptureMouse()
-        {
-            Handler.CaptureMouse();
-        }
-
-        /// <summary>
-        /// Releases the mouse capture, if the control held the capture.
-        /// </summary>
-        public void ReleaseMouseCapture()
-        {
-            Handler.ReleaseMouseCapture();
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the mouse is captured to this control.
-        /// </summary>
-        public bool IsMouseCaptured => Handler.IsMouseCaptured;
 
         /// <summary>
         /// Occurs when the control is clicked.
@@ -159,6 +129,36 @@ namespace Alternet.UI
         public event EventHandler? HorizontalAlignmentChanged;
 
         /// <summary>
+        /// Occurs when the control's size is changed.
+        /// </summary>
+        public event EventHandler? SizeChanged;
+
+        /// <summary>
+        /// Occurs when the control's location is changed.
+        /// </summary>
+        public event EventHandler? LocationChanged;
+
+        /// <summary>
+        /// Occurs when a drag-and-drop operation is completed.
+        /// </summary>
+        public event EventHandler<DragEventArgs>? DragDrop;
+
+        /// <summary>
+        /// Occurs when an object is dragged over the control's bounds.
+        /// </summary>
+        public event EventHandler<DragEventArgs>? DragOver;
+
+        /// <summary>
+        /// Occurs when an object is dragged into the control's bounds.
+        /// </summary>
+        public event EventHandler<DragEventArgs>? DragEnter;
+
+        /// <summary>
+        /// Occurs when an object is dragged out of the control's bounds.
+        /// </summary>
+        public event EventHandler? DragLeave;
+
+        /// <summary>
         /// Gets the default font used for controls.
         /// </summary>
         /// <value>
@@ -166,6 +166,20 @@ namespace Alternet.UI
         /// vary depending on the user's operating system and the local settings of their system.
         /// </value>
         public static Font DefaultFont => defaultFont == null ? defaultFont = Font.CreateDefaultFont() : defaultFont;
+
+        /// <summary>
+        /// Gets or sets size of the <see cref="Control"/>'s client area, in device-independent units (1/96th inch per unit).
+        /// </summary>
+        public Size ClientSize
+        {
+            get => Handler.ClientSize;
+            set => Handler.ClientSize = value;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the mouse is captured to this control.
+        /// </summary>
+        public bool IsMouseCaptured => Handler.IsMouseCaptured;
 
         /// <summary>
         /// Gets or sets the object that contains data about the control.
@@ -185,32 +199,6 @@ namespace Alternet.UI
             get => Handler.Bounds;
             set => Handler.Bounds = value;
         }
-
-        /// <summary>
-        /// Occurs when the control's size is changed.
-        /// </summary>
-        public event EventHandler? SizeChanged;
-
-        /// <summary>
-        /// Occurs when the control's location is changed.
-        /// </summary>
-        public event EventHandler? LocationChanged;
-
-        internal void RaiseSizeChanged(EventArgs e) => OnSizeChanged(e);
-
-        /// <summary>
-        /// Raises the <see cref="SizeChanged"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnSizeChanged(EventArgs e) => SizeChanged?.Invoke(this, e);
-
-        internal void RaiseLocationChanged(EventArgs e) => OnLocationChanged(e);
-
-        /// <summary>
-        /// Raises the <see cref="LocationChanged"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnLocationChanged(EventArgs e) => LocationChanged?.Invoke(this, e);
 
         /// <summary>
         /// Gets or sets the location of upper-left corner of the control, in device-independent units (1/96th inch per unit).
@@ -288,11 +276,6 @@ namespace Alternet.UI
             }
         }
 
-        internal static void OnVisualStatePropertyChanged(Control control, DependencyPropertyChangedEventArgs e)
-        {
-            throw new NotImplementedException(); // yezo
-        }
-
         /// <summary>
         /// Gets a <see cref="ControlHandler"/> associated with this class.
         /// </summary>
@@ -325,7 +308,7 @@ namespace Alternet.UI
         /// </remarks>
         [Content]
         public Collection<Control> Children { get; } = new Collection<Control>();
-        
+
         /// <inheritdoc/>
         public override IReadOnlyList<FrameworkElement> ContentElements => Children;
 
@@ -340,7 +323,7 @@ namespace Alternet.UI
                 parent = value;
                 base.LogicalParent = value;
             }
-        } // todo: allow users to set the Parent property?
+        }
 
         /// <summary>
         /// Gets or sets the suggested size of the control.
@@ -369,6 +352,7 @@ namespace Alternet.UI
             }
         }
 
+        // todo: allow users to set the Parent property?
         /// <summary>
         /// Gets or sets the suggested width of the control.
         /// </summary>
@@ -502,7 +486,6 @@ namespace Alternet.UI
             }
         }
 
-
         /// <summary>
         /// Gets or sets the font of the text displayed by the control.
         /// </summary>
@@ -554,7 +537,130 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the control can accept data that the user drags onto it.
+        /// </summary>
+        /// <value><c>true</c> if drag-and-drop operations are allowed in the control; otherwise, <c>false</c>. The default is <c>false</c>.</value>
+        public bool AllowDrop
+        {
+            get
+            {
+                return Handler.AllowDrop;
+            }
+
+            set
+            {
+                Handler.AllowDrop = value;
+            }
+        }
+
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Children;
+
         private IControlHandlerFactory? ControlHandlerFactory { get; set; }
+
+        /// <summary>
+        /// Executes a delegate asynchronously on the thread that the control was created on.
+        /// </summary>
+        /// <param name="method">A delegate to a method that takes parameters of the same number and type that are contained in the args parameter.</param>
+        /// <param name="args">An array of objects to pass as arguments to the given method. This can be <c>null</c> if no arguments are needed.</param>
+        /// <returns>An <see cref="IAsyncResult"/> that represents the result of the operation.</returns>
+        public IAsyncResult BeginInvoke(Delegate method, object?[] args)
+        {
+            if (method == null)
+                throw new ArgumentNullException(nameof(method));
+            return SynchronizationService.BeginInvoke(method, args);
+        }
+
+        /// <summary>
+        /// Executes a delegate asynchronously on the thread that the control was created on.
+        /// </summary>
+        /// <param name="method">A delegate to a method that takes no parameters.</param>
+        /// <returns>An <see cref="IAsyncResult"/> that represents the result of the operation.</returns>
+        public IAsyncResult BeginInvoke(Delegate method)
+        {
+            if (method == null)
+                throw new ArgumentNullException(nameof(method));
+            return BeginInvoke(method, emptyArray);
+        }
+
+        /// <summary>
+        /// Executes an action asynchronously on the thread that the control was created on.
+        /// </summary>
+        /// <param name="action">An action to execute.</param>
+        /// <returns>An <see cref="IAsyncResult"/> that represents the result of the operation.</returns>
+        public IAsyncResult BeginInvoke(Action action)
+        {
+            if (action == null)
+                throw new ArgumentNullException(nameof(action));
+            return BeginInvoke(action, emptyArray);
+        }
+
+        /// <summary>
+        /// Retrieves the return value of the asynchronous operation represented by the <see cref="IAsyncResult"/> passed.
+        /// </summary>
+        /// <param name="result">The <see cref="IAsyncResult"/> that represents a specific invoke asynchronous operation, returned when calling <see cref="BeginInvoke(Delegate)"/>.</param>
+        /// <returns>The <see cref="Object"/> generated by the asynchronous operation.</returns>
+        public object? EndInvoke(IAsyncResult result)
+        {
+            if (result == null)
+                throw new ArgumentNullException(nameof(result));
+            return SynchronizationService.EndInvoke(result);
+        }
+
+        /// <summary>
+        /// Executes the specified delegate, on the thread that owns the control, with the specified list of arguments.
+        /// </summary>
+        /// <param name="method">A delegate to a method that takes parameters of the same number and type that are contained in the <c>args</c> parameter.</param>
+        /// <param name="args">An array of objects to pass as arguments to the specified method. This parameter can be <c>null</c> if the method takes no arguments.</param>
+        /// <returns>An <see cref="Object"/> that contains the return value from the delegate being invoked, or <c>null</c> if the delegate has no return value.</returns>
+        public object? Invoke(Delegate method, object?[] args)
+        {
+            if (method == null)
+                throw new ArgumentNullException(nameof(method));
+            return Dispatcher.Invoke(method, args);
+        }
+
+        /// <summary>
+        /// Executes the specified delegate on the thread that owns the control.
+        /// </summary>
+        /// <param name="method">A delegate that contains a method to be called in the control's thread context.</param>
+        /// <returns>An <see cref="Object"/> that contains the return value from the delegate being invoked, or <c>null</c> if the delegate has no return value.</returns>
+        public object? Invoke(Delegate method)
+        {
+            if (method == null)
+                throw new ArgumentNullException(nameof(method));
+            return Invoke(method, emptyArray);
+        }
+
+        /// <summary>
+        /// Executes the specified action on the thread that owns the control.
+        /// </summary>
+        /// <param name="action">An action to be called in the control's thread context.</param>
+        public void Invoke(Action action)
+        {
+            if (action == null)
+                throw new ArgumentNullException(nameof(action));
+            Invoke(action, emptyArray);
+        }
+
+        /// <summary>
+        /// Captures the mouse to the control.
+        /// </summary>
+        public void CaptureMouse()
+        {
+            Handler.CaptureMouse();
+        }
+
+        /// <summary>
+        /// Releases the mouse capture, if the control held the capture.
+        /// </summary>
+        public void ReleaseMouseCapture()
+        {
+            Handler.ReleaseMouseCapture();
+        }
 
         /// <summary>
         /// Raises the <see cref="Click"/> event and calls <see cref="OnClick(EventArgs)"/>.
@@ -603,11 +709,6 @@ namespace Alternet.UI
         public DrawingContext CreateDrawingContext() => Handler.CreateDrawingContext();
 
         /// <summary>
-        /// <inheritdoc />
-        /// </summary>
-        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Children;
-
-        /// <summary>
         /// Invalidates the control and causes a paint message to be sent to the control.
         /// </summary>
         public void Invalidate() => Handler.Invalidate();
@@ -638,24 +739,6 @@ namespace Alternet.UI
         public void SuspendLayout()
         {
             Handler.SuspendLayout();
-        }
-
-        internal void RaiseMouseCaptureLost()
-        {
-            OnMouseCaptureLost();
-            MouseCaptureLost?.Invoke(this, EventArgs.Empty);
-        }
-
-        internal void RaiseMouseEnter()
-        {
-            OnMouseEnter();
-            MouseEnter?.Invoke(this, EventArgs.Empty);
-        }
-
-        internal void RaiseMouseLeave()
-        {
-            OnMouseLeave();
-            MouseLeave?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -730,38 +813,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the control should reposition the child controls of the control.
-        /// </summary>
-        protected virtual void OnLayout()
-        {
-            Handler.OnLayout();
-            RaiseLayoutUpdated();
-        }
-
-        /// <summary>
-        /// Called when a <see cref="Control"/> is inserted into the <see cref="Control.Children"/> or <see cref="ControlHandler.VisualChildren"/> collection.
-        /// </summary>
-        protected virtual void OnChildInserted(int childIndex, Control childControl)
-        {
-        }
-
-        /// <summary>
-        /// Called when a <see cref="Control"/> is removed from the <see cref="Control.Children"/> or <see cref="ControlHandler.VisualChildren"/> collections.
-        /// </summary>
-        protected virtual void OnChildRemoved(int childIndex, Control childControl)
-        {
-        }
-
-        internal void RaiseChildInserted(int childIndex, Control childControl) => OnChildInserted(childIndex, childControl);
-
-        internal void RaiseChildRemoved(int childIndex, Control childControl) => OnChildInserted(childIndex, childControl);
-
-        internal void InvokeOnLayout()
-        {
-            OnLayout();
-        }
-
-        /// <summary>
         /// Retrieves the size of a rectangular area into which a control can be fitted, in device-independent units (1/96th inch per unit).
         /// </summary>
         /// <param name="availableSize">The available space that a parent element can allocate a child control.</param>
@@ -809,6 +860,68 @@ namespace Alternet.UI
             return Handler.Focus();
         }
 
+        /// <summary>
+        /// Releases all resources used by the object.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Begins a drag-and-drop operation.
+        /// </summary>
+        /// <remarks>
+        /// Begins a drag operation. The <paramref name="allowedEffects"/> determine which drag operations can occur.
+        /// </remarks>
+        /// <param name="data">The data to drag.</param>
+        /// <param name="allowedEffects">One of the <see cref="DragDropEffects"/> values.</param>
+        /// <returns>
+        /// A value from the <see cref="DragDropEffects"/> enumeration that represents the final effect that was
+        /// performed during the drag-and-drop operation.
+        /// </returns>
+        public DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
+        {
+            return Handler.DoDragDrop(data, allowedEffects);
+        }
+
+        internal static void OnVisualStatePropertyChanged(Control control, DependencyPropertyChangedEventArgs e)
+        {
+            throw new NotImplementedException(); // yezo
+        }
+
+        internal void RaiseSizeChanged(EventArgs e) => OnSizeChanged(e);
+
+        internal void RaiseLocationChanged(EventArgs e) => OnLocationChanged(e);
+
+        internal void RaiseMouseCaptureLost()
+        {
+            OnMouseCaptureLost();
+            MouseCaptureLost?.Invoke(this, EventArgs.Empty);
+        }
+
+        internal void RaiseMouseEnter()
+        {
+            OnMouseEnter();
+            MouseEnter?.Invoke(this, EventArgs.Empty);
+        }
+
+        internal void RaiseMouseLeave()
+        {
+            OnMouseLeave();
+            MouseLeave?.Invoke(this, EventArgs.Empty);
+        }
+
+        internal void RaiseChildInserted(int childIndex, Control childControl) => OnChildInserted(childIndex, childControl);
+
+        internal void RaiseChildRemoved(int childIndex, Control childControl) => OnChildInserted(childIndex, childControl);
+
+        internal void InvokeOnLayout()
+        {
+            OnLayout();
+        }
+
         internal void RaisePaint(PaintEventArgs e)
         {
             if (e == null)
@@ -817,6 +930,14 @@ namespace Alternet.UI
             OnPaint(e);
             Paint?.Invoke(this, e);
         }
+
+        internal void RaiseDragDrop(DragEventArgs e) => OnDragDrop(e);
+
+        internal void RaiseDragOver(DragEventArgs e) => OnDragOver(e);
+
+        internal void RaiseDragEnter(DragEventArgs e) => OnDragEnter(e);
+
+        internal void RaiseDragLeave(EventArgs e) => OnDragLeave(e);
 
         /// <summary>
         /// Ensures that the control <see cref="Handler"/> is created, creating and attaching it if necessary.
@@ -843,6 +964,41 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="SizeChanged"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnSizeChanged(EventArgs e) => SizeChanged?.Invoke(this, e);
+
+        /// <summary>
+        /// Raises the <see cref="LocationChanged"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnLocationChanged(EventArgs e) => LocationChanged?.Invoke(this, e);
+
+        /// <summary>
+        /// Called when the control should reposition the child controls of the control.
+        /// </summary>
+        protected virtual void OnLayout()
+        {
+            Handler.OnLayout();
+            RaiseLayoutUpdated();
+        }
+
+        /// <summary>
+        /// Called when a <see cref="Control"/> is inserted into the <see cref="Control.Children"/> or <see cref="ControlHandler.VisualChildren"/> collection.
+        /// </summary>
+        protected virtual void OnChildInserted(int childIndex, Control childControl)
+        {
+        }
+
+        /// <summary>
+        /// Called when a <see cref="Control"/> is removed from the <see cref="Control.Children"/> or <see cref="ControlHandler.VisualChildren"/> collections.
+        /// </summary>
+        protected virtual void OnChildRemoved(int childIndex, Control childControl)
+        {
+        }
+
+        /// <summary>
         /// Called when the control is clicked.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
@@ -850,7 +1006,7 @@ namespace Alternet.UI
         {
         }
 
-        private protected void SetVisibleValue(bool value) => visible = value;
+        protected void SetVisibleValue(bool value) => visible = value;
 
         /// <summary>
         /// Called when the value of the <see cref="Visible"/> property changes.
@@ -889,7 +1045,7 @@ namespace Alternet.UI
         {
         }
 
-        private protected override bool GetIsEnabled() => Enabled;
+        protected override bool GetIsEnabled() => Enabled;
 
         /// <summary>
         /// Forces the re-creation of the handler for the control.
@@ -998,86 +1154,6 @@ namespace Alternet.UI
         {
         }
 
-        private void CreateAndAttachHandler()
-        {
-            handler = CreateHandler();
-            handler.Attach(this);
-            OnHandlerAttached(EventArgs.Empty);
-        }
-
-        private void Children_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
-        {
-            e.Item.Parent = this;
-        }
-
-        private void Children_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
-        {
-            e.Item.Parent = null;
-        }
-
-        /// <summary>
-        /// Releases all resources used by the object.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Occurs when a drag-and-drop operation is completed.
-        /// </summary>
-        public event EventHandler<DragEventArgs>? DragDrop;
-
-        /// <summary>
-        /// Occurs when an object is dragged over the control's bounds.
-        /// </summary>
-        public event EventHandler<DragEventArgs>? DragOver;
-
-        /// <summary>
-        /// Occurs when an object is dragged into the control's bounds.
-        /// </summary>
-        public event EventHandler<DragEventArgs>? DragEnter;
-
-        /// <summary>
-        /// Occurs when an object is dragged out of the control's bounds.
-        /// </summary>
-        public event EventHandler? DragLeave;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the control can accept data that the user drags onto it.
-        /// </summary>
-        /// <value><c>true</c> if drag-and-drop operations are allowed in the control; otherwise, <c>false</c>. The default is <c>false</c>.</value>
-        public bool AllowDrop
-        {
-            get
-            {
-                return Handler.AllowDrop;
-            }
-
-            set
-            {
-                Handler.AllowDrop = value;
-            }
-        }
-
-        /// <summary>
-        /// Begins a drag-and-drop operation.
-        /// </summary>
-        /// <remarks>
-        /// Begins a drag operation. The <paramref name="allowedEffects"/> determine which drag operations can occur.
-        /// </remarks>
-        /// <param name="data">The data to drag.</param>
-        /// <param name="allowedEffects">One of the <see cref="DragDropEffects"/> values.</param>
-        /// <returns>
-        /// A value from the <see cref="DragDropEffects"/> enumeration that represents the final effect that was
-        /// performed during the drag-and-drop operation.
-        /// </returns>
-        public DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
-        {
-            return Handler.DoDragDrop(data, allowedEffects);
-        }
-
         /// <summary>
         /// Raises the <see cref="DragDrop"/> event.
         /// </summary>
@@ -1102,9 +1178,21 @@ namespace Alternet.UI
         /// <param name="e">The <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnDragLeave(EventArgs e) => DragLeave?.Invoke(this, e);
 
-        internal void RaiseDragDrop(DragEventArgs e) => OnDragDrop(e);
-        internal void RaiseDragOver(DragEventArgs e) => OnDragOver(e);
-        internal void RaiseDragEnter(DragEventArgs e) => OnDragEnter(e);
-        internal void RaiseDragLeave(EventArgs e) => OnDragLeave(e);
+        private void CreateAndAttachHandler()
+        {
+            handler = CreateHandler();
+            handler.Attach(this);
+            OnHandlerAttached(EventArgs.Empty);
+        }
+
+        private void Children_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
+        {
+            e.Item.Parent = this;
+        }
+
+        private void Children_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
+        {
+            e.Item.Parent = null;
+        }
     }
 }
