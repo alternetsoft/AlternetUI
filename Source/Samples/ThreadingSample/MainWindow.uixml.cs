@@ -45,13 +45,15 @@ namespace ThreadingSample
                 const int Maximum = 50;
                 Invoke(() => longOperationProgressBar.Maximum = Maximum);
 
-                for (int i = 0; i <= Maximum; i++)
+                for (int i = 0; i < Maximum; i++)
                 {
                     await Task.Delay(100);
                     BeginInvoke(() => longOperationProgressBar.Value = i);
                 }
             });
+            
             startLongOperationButton.Enabled = true;
+            longOperationProgressBar.Value = 0;
         }
     }
 }
