@@ -385,7 +385,10 @@ namespace Alternet.UI
             var closingEventArgs = new WindowClosingEventArgs(e.Cancel);
             Control.RaiseClosing(closingEventArgs);
             if (closingEventArgs.Cancel)
+            {
+                e.Cancel = true;
                 return;
+            }
 
             Control.RaiseClosed(new WindowClosedEventArgs());
             if (!Modal)
