@@ -34,7 +34,7 @@ AlterNET UI Roadmap
     + drag and drop, clipboard
     + timers
     - unhandled exception dialog
-    - SynchronizationContext, Invoke/BeginInvoke
+    + SynchronizationContext, Invoke/BeginInvoke
     - tray icon
     - application deployment and packaging documentation (on macOS, Linux)
     - full-featured document-based application sample
