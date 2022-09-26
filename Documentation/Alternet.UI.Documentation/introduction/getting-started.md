@@ -1,7 +1,7 @@
 # Getting Started
 
 > [!NOTE]
-> Warning: AlterNET UI is still in early beta, and the API is subject to change in the next beta releases.
+> Warning: AlterNET UI is still in beta, and the API is subject to change in the next beta releases.
 
 AlterNET UI allows you to develop light-footprint cross-platform .NET desktop applications.
 
