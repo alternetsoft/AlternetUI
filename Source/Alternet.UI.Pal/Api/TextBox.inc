@@ -8,6 +8,14 @@ void SetText(const string& value);
 bool GetEditControlOnly();
 void SetEditControlOnly(bool value);
 
+
+bool GetReadOnly();
+void SetReadOnly(bool value);
+
+
+bool GetMultiline();
+void SetMultiline(bool value);
+
 public:
 enum class TextBoxEvent
 {

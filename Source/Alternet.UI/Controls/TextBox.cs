@@ -137,6 +137,76 @@ namespace Alternet.UI
             }
         }
 
+        private bool readOnly = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether text in the text box is read-only.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the text box is read-only; otherwise, <see langword="false"/>. The default is <see
+        /// langword="false"/>.
+        /// </value>
+        /// <remarks>
+        /// When this property is set to <see langword="true"/>, the contents of the control cannot be changed by the user at runtime.
+        /// With this property set to <see langword="true"/>, you can still set the value of the <see cref="Text"/> property in code.
+        /// </remarks>
+        public bool ReadOnly
+        {
+            get
+            {
+                CheckDisposed();
+                return readOnly;
+            }
+
+            set
+            {
+                CheckDisposed();
+                if (readOnly == value)
+                    return;
+
+                readOnly = value;
+                ReadOnlyChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Occurs when <see cref="ReadOnly"/> property value changes.
+        /// </summary>
+        public event EventHandler? ReadOnlyChanged;
+
+
+        private bool multiline = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this is a multiline text box control.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the control is a multiline text box control; otherwise, <see langword="false"/>. The default is <see langword="false"/>.
+        /// </value>
+        public bool Multiline
+        {
+            get
+            {
+                CheckDisposed();
+                return multiline;
+            }
+
+            set
+            {
+                CheckDisposed();
+                if (multiline == value)
+                    return;
+
+                multiline = value;
+                MultilineChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Occurs when <see cref="Multiline"/> property value changes.
+        /// </summary>
+        public event EventHandler? MultilineChanged;
+
         /// <summary>
         /// Called when the value of the <see cref="Text"/> property changes.
         /// </summary>

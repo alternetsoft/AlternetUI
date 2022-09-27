@@ -30,7 +30,7 @@ namespace Alternet::UI
     wxWindow* TextBox::CreateWxWindowCore(wxWindow* parent)
     {
         auto textCtrl = new wxTextCtrl(
-            parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, _editControlOnly ? wxNO_BORDER : 0);
+            parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, GetStyle());
 
 #ifdef __WXOSX__
         // todo: port all platforms to the latest wx version, and then the ifdef can be removed.
@@ -41,6 +41,19 @@ namespace Alternet::UI
             
         textCtrl->Bind(wxEVT_TEXT, &TextBox::OnTextChanged, this);
         return textCtrl;
+    }
+
+    long TextBox::GetStyle()
+    {
+        long style = _editControlOnly ? wxNO_BORDER : 0;
+
+        if (_readOnly)
+            style |= wxTE_READONLY;
+
+        if (_multiline)
+            style |= wxTE_MULTILINE;
+
+        return style;
     }
 
     void TextBox::OnTextChanged(wxCommandEvent& event)
@@ -57,6 +70,34 @@ namespace Alternet::UI
     {
         _editControlOnly = value;
         assert(!IsWxWindowCreated()); // todo: recreate window
+    }
+
+    bool TextBox::GetReadOnly()
+    {
+        return _readOnly;
+    }
+
+    void TextBox::SetReadOnly(bool value)
+    {
+        if (_readOnly == value)
+            return;
+
+        _readOnly = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool TextBox::GetMultiline()
+    {
+        return _multiline;
+    }
+
+    void TextBox::SetMultiline(bool value)
+    {
+        if (_multiline == value)
+            return;
+
+        _multiline = value;
+        RecreateWxWindowIfNeeded();
     }
 
     wxTextCtrl* TextBox::GetTextCtrl()

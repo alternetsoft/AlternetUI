@@ -16,6 +16,8 @@ namespace Alternet::UI
 
     private:
         bool _editControlOnly = false;
+        bool _readOnly = false;
+        bool _multiline = false;
 
         DelayedValue<TextBox, string> _text;
 
@@ -23,5 +25,7 @@ namespace Alternet::UI
 
         string RetrieveText();
         void ApplyText(const string& value);
+
+        long GetStyle();
     };
 }

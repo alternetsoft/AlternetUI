@@ -10,5 +10,9 @@ namespace NativeApi.Api
         public string Text { get => throw new Exception(); set => throw new Exception(); }
 
         public bool EditControlOnly { get; set; }
+
+        public bool ReadOnly { get; set; }
+
+        public bool Multiline { get; set; }
     }
 }

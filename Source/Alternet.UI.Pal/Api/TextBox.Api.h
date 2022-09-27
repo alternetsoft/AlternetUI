@@ -43,6 +43,34 @@ ALTERNET_UI_API void TextBox_SetEditControlOnly_(TextBox* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API c_bool TextBox_GetReadOnly_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetReadOnly();
+        });
+}
+
+ALTERNET_UI_API void TextBox_SetReadOnly_(TextBox* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetReadOnly(value);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBox_GetMultiline_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetMultiline();
+        });
+}
+
+ALTERNET_UI_API void TextBox_SetMultiline_(TextBox* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetMultiline(value);
+        });
+}
+
 ALTERNET_UI_API void TextBox_SetEventCallback_(TextBox::TextBoxEventCallbackType callback)
 {
     TextBox::SetEventCallback(callback);
