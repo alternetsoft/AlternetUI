@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// </summary>
     public class ThreadExceptionWindow : Window
     {
-        private Label? messageLabel;
+        private TextBox? messageTextBox;
         private readonly Exception exception;
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Alternet.UI
             else
                 Title = activeWindow.Title;
 
-            messageLabel!.Text = GetMessageText(exception);
+            messageTextBox!.Text = GetMessageText(exception);
         }
 
         private static Image LoadImage(string name)
@@ -46,19 +46,28 @@ namespace Alternet.UI
 
             BeginInit();
 
+            Width = 450;
+            Height = 250;
+
             Padding = new Thickness(10);
             MinimizeEnabled = false;
             MaximizeEnabled = false;
             StartLocation = WindowStartLocation.CenterScreen;
             AlwaysOnTop = true;
 
-            var mainStackPanel = new StackPanel { Orientation = StackPanelOrientation.Vertical };
-            Children.Add(mainStackPanel);
+            var mainGrid = new Grid();
+            mainGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            mainGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            Children.Add(mainGrid);
 
             var messageGrid = CreateMessageGrid();
             messageGrid.Margin = new Thickness(0, 0, 0, 10);
-            mainStackPanel.Children.Add(messageGrid);
-            mainStackPanel.Children.Add(CreateButtonsGrid());
+            mainGrid.Children.Add(messageGrid);
+
+            var buttonsGrid = CreateButtonsGrid();
+            Grid.SetRow(buttonsGrid, 1);
+            buttonsGrid.VerticalAlignment = VerticalAlignment.Bottom;
+            mainGrid.Children.Add(buttonsGrid);
 
             EndInit();
 
@@ -68,13 +77,45 @@ namespace Alternet.UI
                 messageGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
                 messageGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-                var errorImagePictureBox = new PictureBox();
+                var errorImagePictureBox = new PictureBox
+                {
+                    VerticalAlignment = VerticalAlignment.Top,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    Margin = new Thickness(0, 0, 10, 0)
+                };
+
                 errorImagePictureBox.Image = LoadImage("Alternet.UI.Application.ThreadException.Resources.ErrorImage.png");
                 messageGrid.Children.Add(errorImagePictureBox);
 
-                messageLabel = new Label();
-                messageGrid.Children.Add(messageLabel);
-                Grid.SetColumn(messageLabel, 1);
+                var stackPanel = new StackPanel { Orientation = StackPanelOrientation.Vertical };
+                messageGrid.Children.Add(stackPanel);
+                Grid.SetColumn(stackPanel, 1);
+
+                var lines = new[]
+                {
+                    "Unhandled exception has occurred in your application.",
+                    "If you click Continue, the application will ignore this error",
+                    "and attempt to continue.",
+                    "If you click Quit, the application will close immediately."
+                };
+
+                foreach (var line in lines)
+                {
+                    var label = new Label { Text = line };
+                    stackPanel.Children.Add(label);
+                }
+
+                stackPanel.Children.Add(new Label { Text = "Exception message:", Margin = new Thickness(0, 15, 0, 5) });
+
+                messageTextBox = new TextBox
+                {
+                    Text = " ",
+                    ReadOnly = true,
+                    Multiline = true
+                };
+
+                stackPanel.Children.Add(messageTextBox);
+
                 return messageGrid;
             }
 
@@ -123,19 +164,14 @@ namespace Alternet.UI
         {
             var messageText = e.Message;
 
-            var messageFormat =
-                "Unhandled exception has occurred in your application. " +
-                "If you click Continue, the application will ignore this error and attempt to continue. " +
-                "If you click Quit, the application will close immediately.\r\n\r\n{0}.";
-
             if (messageText.Length == 0)
                 messageText = e.GetType().Name;
 
-            messageText = string.Format(messageFormat, Trim(messageText));
+            messageText = Trim(messageText);
 
             return messageText;
 
-            static string? Trim(string s)
+            static string Trim(string s)
             {
                 if (s is null)
                 {
