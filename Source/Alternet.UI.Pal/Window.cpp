@@ -464,6 +464,8 @@ namespace Alternet::UI
 
         _panel = new wxPanel(_frame);
 
+        _frame->SetBackgroundColour(wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_BTNFACE));
+
         return _frame;
     }
 

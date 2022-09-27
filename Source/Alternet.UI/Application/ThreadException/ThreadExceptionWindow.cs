@@ -1,5 +1,6 @@
 ﻿using Alternet.Drawing;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -43,6 +44,8 @@ namespace Alternet.UI
         {
             // Cannot use UIXML in the Alternet.UI assembly itself, so populate the controls from code.
 
+            BeginInit();
+
             Padding = new Thickness(10);
             MinimizeEnabled = false;
             MaximizeEnabled = false;
@@ -56,6 +59,8 @@ namespace Alternet.UI
             messageGrid.Margin = new Thickness(0, 0, 0, 10);
             mainStackPanel.Children.Add(messageGrid);
             mainStackPanel.Children.Add(CreateButtonsGrid());
+
+            EndInit();
 
             Grid CreateMessageGrid()
             {
