@@ -48,6 +48,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Application\ThreadException\Resources\ErrorImage.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Application\ThreadException\Resources\ErrorImage.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\Keys\Key.snk" Link="Key.snk" />
   </ItemGroup>
 
