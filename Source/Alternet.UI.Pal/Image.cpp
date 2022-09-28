@@ -33,7 +33,12 @@ namespace Alternet::UI
 
     void Image::SaveToFile(const string& fileName)
     {
-        _bitmap.ConvertToImage().SaveFile(wxStr(fileName));
+        auto image = _bitmap.ConvertToImage();
+        
+        if (image.HasAlpha())
+            image.ClearAlpha();
+
+        image.SaveFile(wxStr(fileName));
     }
 
     void Image::Initialize(const Size& size)

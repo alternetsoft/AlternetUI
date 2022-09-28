@@ -1,12 +1,15 @@
 using Alternet.Drawing;
 using Alternet.UI;
 using System;
+using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace PaintSample
 {
     public partial class MainWindow : Window
     {
+        private const string FileDialogImageFilesFilter = "Image files(*.png; *.jpg)|*.png;*.jpg|All files(*.*)|*.*";
         private Tools tools;
 
         private Document? document;
@@ -16,9 +19,13 @@ namespace PaintSample
         CommandButton? undoButton;
         CommandButton? redoButton;
 
+        string baseTitle;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            baseTitle = Title;
 
             border.BorderBrush = Brushes.Black;
             border.Padding = new Thickness();
@@ -39,6 +46,26 @@ namespace PaintSample
             UpdateControls();
         }
 
+        void UpdateTitle()
+        {
+            var title = new StringBuilder();
+
+
+            title.Append(baseTitle);
+
+            title.Append(" - ");
+
+            if (Document.FileName != null)
+                title.Append(Path.GetFileName(Document.FileName));
+            else
+                title.Append("Untitled");
+
+            if (Document.Dirty)
+                title.Append('*');
+
+            Title = title.ToString();
+        }
+
         private void CreateNewDocument()
         {
             Document = new Document();
@@ -53,10 +80,23 @@ namespace PaintSample
                 if (document == value)
                     return;
 
+                if (document != null)
+                    document.Changed -= Document_Changed;
+
                 document = value;
+
+                if (document != null)
+                    document.Changed += Document_Changed;
+
                 undoService.Document = value;
                 canvasControl.Document = value;
+                UpdateControls();
             }
+        }
+
+        private void Document_Changed(object? sender, EventArgs e)
+        {
+            UpdateControls();
         }
 
         private void InitializeToolsMenuItems()
@@ -103,6 +143,8 @@ namespace PaintSample
             undoMenuItem!.Enabled = undoButton!.Enabled = undoService.CanUndo;
             redoMenuItem!.Enabled = redoButton!.Enabled = undoService.CanRedo;
             saveMenuItem!.Enabled = Document.Dirty;
+
+            UpdateTitle();
         }
 
         void UndoButton_Click(object? sender, EventArgs e)
@@ -152,14 +194,49 @@ namespace PaintSample
 
         private void OpenMenuItem_Click(object sender, EventArgs e)
         {
+            using var dialog = new OpenFileDialog
+            {
+                Filter = FileDialogImageFilesFilter
+            };
+
+
+            if (dialog.ShowModal(this) != ModalResult.Accepted || dialog.FileName == null)
+                return;
+
+            Document = new Document(dialog.FileName);
+        }
+
+        string? PromptForSaveFileName()
+        {
+            using var dialog = new SaveFileDialog
+            {
+                Filter = FileDialogImageFilesFilter
+            };
+
+            if (dialog.ShowModal(this) != ModalResult.Accepted || dialog.FileName == null)
+                return null;
+
+            return dialog.FileName;
         }
 
         private void SaveMenuItem_Click(object sender, EventArgs e)
         {
+            var fileName = Document.FileName;
+            if (fileName == null)
+                fileName = PromptForSaveFileName();
+            if (fileName == null)
+                return;
+
+            Document.Save(fileName);
         }
 
         private void SaveAsMenuItem_Click(object sender, EventArgs e)
         {
+            var fileName = PromptForSaveFileName();
+            if (fileName == null)
+                return;
+
+            Document.Save(fileName);
         }
     }
 }

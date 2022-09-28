@@ -21,12 +21,14 @@ namespace PaintSample
         {
             Bitmap = LoadBitmap(fileName);
             FileName = fileName;
+            Dirty = false;
         }
 
         public void Save(string fileName)
         {
             Bitmap.Save(fileName);
             Dirty = false;
+            FileName = fileName;
             RaiseChanged();
         }
 
@@ -54,7 +56,7 @@ namespace PaintSample
 
         void OnChanged()
         {
-            Dirty = false;
+            Dirty = true;
             RaiseChanged();
         }
 
