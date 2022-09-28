@@ -110,8 +110,7 @@ namespace Alternet.UI
 
             BeginInit();
 
-            Width = 450;
-
+            Width = IsRunningUnderWindows() ? 450 : 500;
             Height = IsRunningUnderWindows() ? 250 : 300;
 
             Padding = new Thickness(10);
