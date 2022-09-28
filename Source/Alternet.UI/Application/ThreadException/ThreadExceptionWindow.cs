@@ -1,6 +1,5 @@
 ﻿using Alternet.Drawing;
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -13,10 +12,10 @@ namespace Alternet.UI
     ///  Implements a window that is displayed when an unhandled exception occurs in
     ///  a thread.
     /// </summary>
-    public class ThreadExceptionWindow : Window
+    internal class ThreadExceptionWindow : Window
     {
-        private TextBox? messageTextBox;
         private readonly Exception exception;
+        private TextBox? messageTextBox;
 
         /// <summary>
         ///  Initializes a new instance of the <see cref="ThreadExceptionWindow"/> class.
@@ -38,6 +37,79 @@ namespace Alternet.UI
         private static Image LoadImage(string name)
         {
             return new Image(typeof(ThreadExceptionWindow).Assembly.GetManifestResourceStream(name));
+        }
+
+        private static string GetMessageText(Exception e)
+        {
+            var messageText = e.Message;
+
+            if (messageText.Length == 0)
+                messageText = e.GetType().Name;
+
+            messageText = Trim(messageText);
+
+            return messageText;
+
+            static string Trim(string s)
+            {
+                if (s is null)
+                {
+                    return s;
+                }
+
+                int i = s.Length;
+                while (i > 0 && s[i - 1] == '.')
+                {
+                    i--;
+                }
+
+                return s.Substring(0, i);
+            }
+        }
+
+        private static string GetDetailsText(Exception e)
+        {
+            StringBuilder detailsTextBuilder = new StringBuilder();
+            string newline = "\r\n";
+            string separator = "----------------------------------------\r\n";
+            string sectionseparator = "\r\n************** {0} **************\r\n";
+
+            detailsTextBuilder.Append(string.Format(CultureInfo.CurrentCulture, sectionseparator, "Exception Text"));
+            detailsTextBuilder.Append(e.ToString());
+            detailsTextBuilder.Append(newline);
+            detailsTextBuilder.Append(newline);
+            detailsTextBuilder.Append(string.Format(CultureInfo.CurrentCulture, sectionseparator, "Loaded Assemblies"));
+
+            foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                AssemblyName name = asm.GetName();
+                string? fileVer = "n/a";
+
+                try
+                {
+                    if (name.EscapedCodeBase is not null && name.EscapedCodeBase.Length > 0)
+                    {
+                        Uri codeBase = new Uri(name.EscapedCodeBase);
+                        if (codeBase.Scheme == "file")
+                        {
+                            fileVer = FileVersionInfo.GetVersionInfo(new System.Uri(name.EscapedCodeBase).LocalPath).FileVersion;
+                        }
+                    }
+                }
+                catch (FileNotFoundException)
+                {
+                }
+
+                const string ExDlgMsgLoadedAssembliesEntry = "{0}\r\n    Assembly Version: {1}\r\n    Win32 Version: {2}\r\n    CodeBase: {3}\r\n";
+
+                detailsTextBuilder.Append(string.Format(ExDlgMsgLoadedAssembliesEntry, name.Name, name.Version, fileVer, name.EscapedCodeBase));
+                detailsTextBuilder.Append(separator);
+            }
+
+            detailsTextBuilder.Append(newline);
+            detailsTextBuilder.Append(newline);
+
+            return detailsTextBuilder.ToString();
         }
 
         private void InitializeControls()
@@ -148,89 +220,20 @@ namespace Alternet.UI
 
         private void QuitButton_Click(object sender, EventArgs e)
         {
+            ModalResult = ModalResult.Canceled;
+            Close();
         }
 
         private void ContinueButton_Click(object sender, EventArgs e)
         {
+            ModalResult = ModalResult.Accepted;
+            Close();
         }
 
         private void DetailsButton_Click(object sender, EventArgs e)
         {
             using (var detailsWindow = new ThreadExceptionDetailsWindow(GetDetailsText(exception)))
                 detailsWindow.ShowModal(this);
-        }
-
-        private static string GetMessageText(Exception e)
-        {
-            var messageText = e.Message;
-
-            if (messageText.Length == 0)
-                messageText = e.GetType().Name;
-
-            messageText = Trim(messageText);
-
-            return messageText;
-
-            static string Trim(string s)
-            {
-                if (s is null)
-                {
-                    return s;
-                }
-
-                int i = s.Length;
-                while (i > 0 && s[i - 1] == '.')
-                {
-                    i--;
-                }
-
-                return s.Substring(0, i);
-            }
-        }
-
-        private static string GetDetailsText(Exception e)
-        {
-            StringBuilder detailsTextBuilder = new StringBuilder();
-            string newline = "\r\n";
-            string separator = "----------------------------------------\r\n";
-            string sectionseparator = "\r\n************** {0} **************\r\n";
-
-            detailsTextBuilder.Append(string.Format(CultureInfo.CurrentCulture, sectionseparator, "Exception Text"));
-            detailsTextBuilder.Append(e.ToString());
-            detailsTextBuilder.Append(newline);
-            detailsTextBuilder.Append(newline);
-            detailsTextBuilder.Append(string.Format(CultureInfo.CurrentCulture, sectionseparator, "Loaded Assemblies"));
-
-            foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                AssemblyName name = asm.GetName();
-                string? fileVer = "n/a";
-
-                try
-                {
-                    if (name.EscapedCodeBase is not null && name.EscapedCodeBase.Length > 0)
-                    {
-                        Uri codeBase = new Uri(name.EscapedCodeBase);
-                        if (codeBase.Scheme == "file")
-                        {
-                            fileVer = FileVersionInfo.GetVersionInfo(new System.Uri(name.EscapedCodeBase).LocalPath).FileVersion;
-                        }
-                    }
-                }
-                catch (FileNotFoundException)
-                {
-                }
-
-                const string ExDlgMsgLoadedAssembliesEntry = "{0}\r\n    Assembly Version: {1}\r\n    Win32 Version: {2}\r\n    CodeBase: {3}\r\n";
-
-                detailsTextBuilder.Append(string.Format(ExDlgMsgLoadedAssembliesEntry, name.Name, name.Version, fileVer, name.EscapedCodeBase));
-                detailsTextBuilder.Append(separator);
-            }
-
-            detailsTextBuilder.Append(newline);
-            detailsTextBuilder.Append(newline);
-
-            return detailsTextBuilder.ToString();
         }
     }
 }

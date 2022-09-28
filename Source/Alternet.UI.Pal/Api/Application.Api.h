@@ -89,6 +89,13 @@ ALTERNET_UI_API void Application_WakeUpIdle_(Application* obj)
         });
 }
 
+ALTERNET_UI_API void Application_Exit_(Application* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->Exit();
+        });
+}
+
 ALTERNET_UI_API void Application_BeginInvoke_(Application* obj, PInvokeCallbackActionType action)
 {
     MarshalExceptions<void>([&](){

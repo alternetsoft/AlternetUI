@@ -120,6 +120,12 @@ namespace Alternet.UI.Native
             NativeApi.Application_WakeUpIdle_(NativePointer);
         }
         
+        public void Exit()
+        {
+            CheckDisposed();
+            NativeApi.Application_Exit_(NativePointer);
+        }
+        
         public void BeginInvoke(System.Action action)
         {
             CheckDisposed();
@@ -214,6 +220,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_WakeUpIdle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_Exit_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_BeginInvoke_(IntPtr obj, PInvokeCallbackActionType action);

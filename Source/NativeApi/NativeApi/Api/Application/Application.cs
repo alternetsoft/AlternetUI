@@ -22,6 +22,8 @@ namespace NativeApi.Api
 
         public void WakeUpIdle() => throw new Exception();
 
+        public void Exit() => throw new Exception();
+
         public bool InvokeRequired { get; }
 
         public void BeginInvoke([CallbackMarshal(freeAfterFirstCall: true)] Action action) => throw new Exception();

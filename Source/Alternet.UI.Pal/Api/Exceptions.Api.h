@@ -7,7 +7,7 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API void SetExceptionCallback(NativeExceptionCallbackType unhandledExceptionCallback_)
+ALTERNET_UI_API void SetExceptionCallback(NativeExceptionCallbackType unhandledExceptionCallback_, NativeExceptionCallbackType caughtExceptionCallback_)
 {
-    SetExceptionCallbackImpl(unhandledExceptionCallback_);
+    SetExceptionCallbackImpl(unhandledExceptionCallback_, caughtExceptionCallback_);
 }

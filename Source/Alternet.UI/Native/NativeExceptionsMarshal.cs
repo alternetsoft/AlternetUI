@@ -26,6 +26,9 @@ namespace Alternet.UI.Native
         public static void OnUnhandledNativeException(ExceptionType exceptionType, string message, int errorCode) =>
             throw GetException(exceptionType, message, errorCode);
 
+        public static void OnCaughtNativeException(ExceptionType exceptionType, string message, int errorCode) =>
+            UI.Application.Current.OnThreadException(GetException(exceptionType, message, errorCode));
+
         public static ExceptionType GetExceptionType(Exception exception) =>
             exception switch
             {

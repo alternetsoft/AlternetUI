@@ -27,6 +27,8 @@ namespace Alternet::UI
 
         void SetOwner(Application* value);
 
+        virtual bool OnExceptionInMainLoop() override;
+        virtual bool StoreCurrentException() override;
     private:
 
         Application* _owner = nullptr;

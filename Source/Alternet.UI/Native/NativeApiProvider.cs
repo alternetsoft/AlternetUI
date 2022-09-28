@@ -27,20 +27,27 @@ namespace Alternet.UI.Native
                 WindowsNativeModulesLocator.SetNativeModulesDirectory();
 
                 Debug.Assert(!unhandledExceptionCallbackHandle.IsAllocated);
+                Debug.Assert(!caughtExceptionCallbackHandle.IsAllocated);
 
                 var unhandledExceptionCallbackSink = new NativeExceptionsMarshal.NativeExceptionCallbackType(NativeExceptionsMarshal.OnUnhandledNativeException);
                 unhandledExceptionCallbackHandle = GCHandle.Alloc(unhandledExceptionCallbackSink);
 
-                SetExceptionCallback(unhandledExceptionCallbackSink);
+                var caughtExceptionCallbackSink = new NativeExceptionsMarshal.NativeExceptionCallbackType(NativeExceptionsMarshal.OnCaughtNativeException);
+                caughtExceptionCallbackHandle = GCHandle.Alloc(caughtExceptionCallbackSink);
+
+                SetExceptionCallback(unhandledExceptionCallbackSink, caughtExceptionCallbackSink);
 
                 initialized = true;
             }
         }
 
         [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-        static extern void SetExceptionCallback(NativeExceptionsMarshal.NativeExceptionCallbackType unhandledExceptionCallback);
+        static extern void SetExceptionCallback(
+            NativeExceptionsMarshal.NativeExceptionCallbackType unhandledExceptionCallback,
+            NativeExceptionsMarshal.NativeExceptionCallbackType caughtExceptionCallback);
 
         static GCHandle unhandledExceptionCallbackHandle;
+        static GCHandle caughtExceptionCallbackHandle;
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
         public delegate void PInvokeCallbackActionType();

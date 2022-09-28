@@ -22,6 +22,7 @@ bool GetInvokeRequired();
 
 void Run(Window* window);
 void WakeUpIdle();
+void Exit();
 void BeginInvoke(PInvokeCallbackActionType action);
 public:
 enum class ApplicationEvent

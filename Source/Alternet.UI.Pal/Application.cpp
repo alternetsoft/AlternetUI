@@ -2,6 +2,7 @@
 #include "Common.h"
 #include "Window.h"
 #include "Image.h"
+#include "Exceptions.h"
 
 IMPLEMENT_APP_NO_MAIN(Alternet::UI::App);
 IMPLEMENT_WX_THEME_SUPPORT;
@@ -99,6 +100,27 @@ namespace Alternet::UI
         _owner = value;
     }
 
+    bool App::StoreCurrentException()
+    {
+        CatchAndMarshalThreadExceptions<void>([&]()
+            {
+                throw;
+            });
+
+        return true;
+    }
+
+    bool App::OnExceptionInMainLoop()
+    {
+        //CatchAndMarshalThreadExceptions<void>([&]()
+        //    {
+        //        throw;
+        //    });
+
+        throw;
+        return true;
+    }
+
     //-----------------
 
     void IdleCallback()
@@ -151,6 +173,11 @@ namespace Alternet::UI
     void Application::WakeUpIdle()
     {
         _app->WakeUpIdle();
+    }
+
+    void Application::Exit()
+    {
+        _app->Exit();
     }
 
     bool Application::GetInUixmlPreviewerMode()
