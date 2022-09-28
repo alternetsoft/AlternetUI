@@ -189,16 +189,23 @@ namespace PaintSample
 
         private void NewMenuItem_Click(object sender, EventArgs e)
         {
+            PromptToSaveDocument(out var cancel);
+            if (cancel)
+                return;
+
             CreateNewDocument();
         }
 
         private void OpenMenuItem_Click(object sender, EventArgs e)
         {
+            PromptToSaveDocument(out var cancel);
+            if (cancel)
+                return;
+
             using var dialog = new OpenFileDialog
             {
                 Filter = FileDialogImageFilesFilter
             };
-
 
             if (dialog.ShowModal(this) != ModalResult.Accepted || dialog.FileName == null)
                 return;
@@ -221,6 +228,11 @@ namespace PaintSample
 
         private void SaveMenuItem_Click(object sender, EventArgs e)
         {
+            Save();
+        }
+
+        private void Save()
+        {
             var fileName = Document.FileName;
             if (fileName == null)
                 fileName = PromptForSaveFileName();
@@ -237,6 +249,37 @@ namespace PaintSample
                 return;
 
             Document.Save(fileName);
+        }
+
+        private void PromptToSaveDocument(out bool cancel)
+        {
+            cancel = false;
+
+            if (!Document.Dirty)
+                return;
+
+            var result = MessageBox.Show(
+                this,
+                "The document has been modified. Save?",
+                "Paint Sample",
+                MessageBoxButtons.YesNoCancel,
+                defaultButton: MessageBoxDefaultButton.Cancel);
+
+            if (result == MessageBoxResult.Cancel)
+            {
+                cancel = true;
+                return;
+            }
+
+            if (result == MessageBoxResult.Yes)
+                Save();
+        }
+
+        protected override void OnClosing(WindowClosingEventArgs e)
+        {
+            PromptToSaveDocument(out var cancel);
+            e.Cancel = cancel;
+            base.OnClosing(e);
         }
     }
 }

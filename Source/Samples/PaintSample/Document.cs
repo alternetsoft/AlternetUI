@@ -15,6 +15,7 @@ namespace PaintSample
         public Document()
         {
             Bitmap = CreateBitmap();
+            Dirty = false;
         }
 
         public Document(string fileName)
