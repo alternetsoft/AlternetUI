@@ -41,30 +41,12 @@ namespace Alternet.UI
 
         private static string GetMessageText(Exception e)
         {
-            var messageText = e.Message;
+            var text = "Type: " + e.GetType().FullName;
 
-            if (messageText.Length == 0)
-                messageText = e.GetType().Name;
+            if (e.Message != null)
+                text += "\r\n" + "Message: " + e.Message;
 
-            messageText = Trim(messageText);
-
-            return messageText;
-
-            static string Trim(string s)
-            {
-                if (s is null)
-                {
-                    return s;
-                }
-
-                int i = s.Length;
-                while (i > 0 && s[i - 1] == '.')
-                {
-                    i--;
-                }
-
-                return s.Substring(0, i);
-            }
+            return text;
         }
 
         private static string GetDetailsText(Exception e)
@@ -177,7 +159,7 @@ namespace Alternet.UI
                     stackPanel.Children.Add(label);
                 }
 
-                stackPanel.Children.Add(new Label { Text = "Exception message:", Margin = new Thickness(0, 15, 0, 5) });
+                stackPanel.Children.Add(new Label { Text = "Exception information:", Margin = new Thickness(0, 15, 0, 5) });
 
                 messageTextBox = new TextBox
                 {

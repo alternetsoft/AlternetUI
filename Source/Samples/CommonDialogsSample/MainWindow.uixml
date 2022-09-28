@@ -4,7 +4,7 @@
         Title="Common Dialogs Sample"
         Width="700" Height="500">
   <StackPanel Orientation="Horizontal">
-    <GroupBox Title="File Dialogs" Margin="10">
+    <GroupBox Title="File Dialogs" Margin="10" VerticalAlignment="Top">
       <StackPanel>
         <CheckBox Text="Set Initial Directory to User Home Directory" Name="setInitialDirectoryCheckBox" Margin="10" />
 
@@ -23,30 +23,49 @@
         <Button Text="Show Select Directory Dialog" Name="showSelectDirectoryDialogButton" Click="ShowSelectDirectoryDialogButton_Click" Margin="10"/>
       </StackPanel>
     </GroupBox>
-    <GroupBox Title="Message Box" Margin="10">
-      <Grid Padding="10">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto" />
-          <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-          <RowDefinition Height="Auto" />
-          <RowDefinition Height="Auto" />
-          <RowDefinition Height="Auto" />
-          <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <StackPanel Orientation="Vertical">
+      <GroupBox Title="Message Box" Margin="10" VerticalAlignment="Top">
+        <Grid Padding="10">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Text="Buttons:" Margin="0,0,5,10"/>
-        <ComboBox Grid.Row="0" Grid.Column="1" Name="messageBoxButtonsComboBox" IsEditable="false" Margin="0,0,0,10" />
+          <Label Grid.Row="0" Text="Buttons:" Margin="0,0,5,10"/>
+          <ComboBox Grid.Row="0" Grid.Column="1" Name="messageBoxButtonsComboBox" IsEditable="false" Margin="0,0,0,10" />
 
-        <Label Grid.Row="1" Text="Icon:" Margin="0,0,5,10"/>
-        <ComboBox Grid.Row="1" Grid.Column="1" Name="messageBoxIconComboBox" IsEditable="false" Margin="0,0,0,10" />
+          <Label Grid.Row="1" Text="Icon:" Margin="0,0,5,10"/>
+          <ComboBox Grid.Row="1" Grid.Column="1" Name="messageBoxIconComboBox" IsEditable="false" Margin="0,0,0,10" />
 
-        <Label Grid.Row="2" Text="Default Button:" Margin="0,0,5,10"/>
-        <ComboBox Grid.Row="2" Grid.Column="1" Name="messageBoxDefaultButtonComboBox" IsEditable="false" Margin="0,0,0,10" />
+          <Label Grid.Row="2" Text="Default Button:" Margin="0,0,5,10"/>
+          <ComboBox Grid.Row="2" Grid.Column="1" Name="messageBoxDefaultButtonComboBox" IsEditable="false" Margin="0,0,0,10" />
 
-        <Button Grid.Row="3" Grid.ColumnSpan="2" Text="Show Message Box" Name="showMessageBoxButton" Click="ShowMessageBoxButton_Click" Margin="10"/>
-      </Grid>
-    </GroupBox>
+          <Button Grid.Row="3" Grid.ColumnSpan="2" Text="Show Message Box" Name="showMessageBoxButton" Click="ShowMessageBoxButton_Click" Margin="10"/>
+        </Grid>
+      </GroupBox>
+      <GroupBox Title="Thread Exception Window:" Margin="10" VerticalAlignment="Top">
+        <Grid Padding="10">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="180" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+
+          <Label Grid.Row="0" Text="Exception Type:" Margin="0,0,5,10" VerticalAlignment="Center"/>
+          <ComboBox Grid.Row="0" Grid.Column="1" Name="exceptionTypeComboBox" IsEditable="false" Margin="0,0,0,10" />
+
+          <Button Grid.Row="1" Grid.ColumnSpan="2" Text="Throw Exception" Name="throwExceptionButton" Click="ThrowExceptionButton_Click" Margin="10"/>
+        </Grid>
+      </GroupBox>
+    </StackPanel>
   </StackPanel>
 </Window>

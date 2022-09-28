@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 
@@ -65,6 +66,49 @@ namespace Alternet.UI
             remove
             {
                 threadExceptionHandler -= value;
+            }
+        }
+
+        [return: MaybeNull]
+        internal static T HandleThreadExceptions<T>(Func<T> func)
+        {
+            if (Current == null)
+                return func();
+
+            return Current.HandleThreadExceptionsCore(func);
+        }
+
+        internal static void HandleThreadExceptions(Action action)
+        {
+            if (Current == null)
+                action();
+            else
+                Current.HandleThreadExceptionsCore(action);
+        }
+
+        [return: MaybeNull]
+        T HandleThreadExceptionsCore<T>(Func<T> func)
+        {
+            try
+            {
+                return func();
+            }
+            catch (Exception e)
+            {
+                OnThreadException(e);
+                return default!;
+            }
+        }
+
+        void HandleThreadExceptionsCore(Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception e)
+            {
+                OnThreadException(e);
             }
         }
 
@@ -181,7 +225,7 @@ namespace Alternet.UI
             inOnThreadException = true;
             try
             {
-                if (unhandledExceptionMode == UnhandledExceptionMode.ThrowException)
+                if (unhandledExceptionMode == UnhandledExceptionMode.ThrowException || System.Diagnostics.Debugger.IsAttached)
                     throw exception;
 
                 if (threadExceptionHandler is not null)

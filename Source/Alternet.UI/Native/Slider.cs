@@ -132,12 +132,13 @@ namespace Alternet.UI.Native
             if (!eventCallbackGCHandle.IsAllocated)
             {
                 var sink = new NativeApi.SliderEventCallbackType((obj, e, parameter) =>
+                UI.Application.HandleThreadExceptions(() =>
                 {
                     var w = NativeObject.GetFromNativePointer<Slider>(obj, p => new Slider(p));
                     if (w == null) return IntPtr.Zero;
                     return w.OnEvent(e, parameter);
                 }
-                );
+                ));
                 eventCallbackGCHandle = GCHandle.Alloc(sink);
                 NativeApi.Slider_SetEventCallback_(sink);
             }

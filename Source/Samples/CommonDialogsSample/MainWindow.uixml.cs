@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Alternet.UI;
 
 namespace CommonDialogsSample
@@ -14,6 +15,14 @@ namespace CommonDialogsSample
             InitializeEnumComboBox<MessageBoxButtons>(messageBoxButtonsComboBox);
             InitializeEnumComboBox<MessageBoxDefaultButton>(messageBoxDefaultButtonComboBox);
             InitializeEnumComboBox<MessageBoxIcon>(messageBoxIconComboBox);
+            InitializeEnumComboBox<TestExceptionType>(exceptionTypeComboBox);
+        }
+
+        enum TestExceptionType
+        {
+            InvalidOperationException,
+            FormatException,
+            FileNotFoundException,
         }
 
         void InitializeEnumComboBox<TEnum>(ComboBox comboBox)
@@ -116,6 +125,23 @@ namespace CommonDialogsSample
             {
                 MessageBox.Show(ex.Message, "Message Box Argument Exception");
             }
+        }
+
+        private void ThrowExceptionButton_Click(object sender, EventArgs e)
+        {
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                MessageBox.Show("Run this application without debugging to see the thread exception window.", "Common Dialogs Sample");
+                return;
+            }
+
+            throw (TestExceptionType)exceptionTypeComboBox.SelectedItem! switch
+            {
+                TestExceptionType.InvalidOperationException => new InvalidOperationException("Test message"),
+                TestExceptionType.FormatException => new FormatException("Test message"),
+                TestExceptionType.FileNotFoundException => new FileNotFoundException("Test message", "MyFileName.dat"),
+                _ => throw new Exception(),
+            };
         }
     }
 }
