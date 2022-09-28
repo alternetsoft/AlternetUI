@@ -44,7 +44,7 @@ namespace Alternet.UI
             var text = "Type: " + e.GetType().FullName;
 
             if (e.Message != null)
-                text += "\r\n" + "Message: " + e.Message;
+                text += "\n" + "Message: " + e.Message;
 
             return text;
         }
@@ -52,9 +52,9 @@ namespace Alternet.UI
         private static string GetDetailsText(Exception e)
         {
             StringBuilder detailsTextBuilder = new StringBuilder();
-            string newline = "\r\n";
-            string separator = "----------------------------------------\r\n";
-            string sectionseparator = "\r\n************** {0} **************\r\n";
+            string newline = "\n";
+            string separator = "----------------------------------------\n";
+            string sectionseparator = "\n************** {0} **************\n";
 
             detailsTextBuilder.Append(string.Format(CultureInfo.CurrentCulture, sectionseparator, "Exception Text"));
             detailsTextBuilder.Append(e.ToString());
@@ -82,7 +82,7 @@ namespace Alternet.UI
                 {
                 }
 
-                const string ExDlgMsgLoadedAssembliesEntry = "{0}\r\n    Assembly Version: {1}\r\n    Win32 Version: {2}\r\n    CodeBase: {3}\r\n";
+                const string ExDlgMsgLoadedAssembliesEntry = "{0}\n    Assembly Version: {1}\n    Win32 Version: {2}\n    CodeBase: {3}\n";
 
                 detailsTextBuilder.Append(string.Format(ExDlgMsgLoadedAssembliesEntry, name.Name, name.Version, fileVer, name.EscapedCodeBase));
                 detailsTextBuilder.Append(separator);
@@ -94,6 +94,16 @@ namespace Alternet.UI
             return detailsTextBuilder.ToString();
         }
 
+        bool IsRunningUnderWindows()
+        {
+#if NETCOREAPP
+            return System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
+                System.Runtime.InteropServices.OSPlatform.Windows);
+#else
+            return false;
+#endif
+        }
+
         private void InitializeControls()
         {
             // Cannot use UIXML in the Alternet.UI assembly itself, so populate the controls from code.
@@ -101,7 +111,8 @@ namespace Alternet.UI
             BeginInit();
 
             Width = 450;
-            Height = 250;
+
+            Height = IsRunningUnderWindows() ? 250 : 300;
 
             Padding = new Thickness(10);
             MinimizeEnabled = false;
