@@ -100,27 +100,6 @@ namespace Alternet::UI
         _owner = value;
     }
 
-    bool App::StoreCurrentException()
-    {
-        CatchAndMarshalThreadExceptions<void>([&]()
-            {
-                throw;
-            });
-
-        return true;
-    }
-
-    bool App::OnExceptionInMainLoop()
-    {
-        //CatchAndMarshalThreadExceptions<void>([&]()
-        //    {
-        //        throw;
-        //    });
-
-        throw;
-        return true;
-    }
-
     //-----------------
 
     void IdleCallback()

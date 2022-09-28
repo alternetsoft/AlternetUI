@@ -26,9 +26,6 @@ namespace Alternet::UI
         int FilterEvent(wxEvent& event) override;
 
         void SetOwner(Application* value);
-
-        virtual bool OnExceptionInMainLoop() override;
-        virtual bool StoreCurrentException() override;
     private:
 
         Application* _owner = nullptr;
