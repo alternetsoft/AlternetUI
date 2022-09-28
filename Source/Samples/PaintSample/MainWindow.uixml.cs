@@ -9,7 +9,7 @@ namespace PaintSample
     {
         private Tools tools;
 
-        private Document document;
+        private Document? document;
 
         private UndoService undoService;
 
@@ -23,22 +23,40 @@ namespace PaintSample
             border.BorderBrush = Brushes.Black;
             border.Padding = new Thickness();
 
-            document = new Document();
+            InitializeCommandButtons();
 
-            undoService = new UndoService(document);
+            undoService = new UndoService();
             undoService.Changed += UndoService_Changed;
 
-            canvasControl.Document = document;
+            CreateNewDocument();
 
-            tools = new Tools(document, colorSelector, undoService, canvasControl);
+            tools = new Tools(() => Document, colorSelector, undoService, canvasControl);
             tools.CurrentTool = tools.Pen;
             InitializeToolsMenuItems();
 
             toolbar.SetTools(tools);
 
-            InitializeCommandButtons();
-
             UpdateControls();
+        }
+
+        private void CreateNewDocument()
+        {
+            Document = new Document();
+        }
+
+        Document Document
+        {
+            get => document ?? throw new Exception();
+
+            set
+            {
+                if (document == value)
+                    return;
+
+                document = value;
+                undoService.Document = value;
+                canvasControl.Document = value;
+            }
         }
 
         private void InitializeToolsMenuItems()
@@ -82,28 +100,66 @@ namespace PaintSample
 
         private void UpdateControls()
         {
-            undoButton!.Enabled = undoService.CanUndo;
-            redoButton!.Enabled = undoService.CanRedo;
+            undoMenuItem!.Enabled = undoButton!.Enabled = undoService.CanUndo;
+            redoMenuItem!.Enabled = redoButton!.Enabled = undoService.CanRedo;
+            saveMenuItem!.Enabled = Document.Dirty;
         }
 
         void UndoButton_Click(object? sender, EventArgs e)
+        {
+            Undo();
+        }
+
+        private void Undo()
         {
             undoService.Undo();
         }
 
         void RedoButton_Click(object? sender, EventArgs e)
         {
+            Redo();
+        }
+
+        private void Redo()
+        {
             undoService.Redo();
         }
 
-        private void ExitMenuItem_Click(object sender, System.EventArgs e)
+        private void ExitMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void UndoMenuItem_Click(object sender, EventArgs e)
+        {
+            Undo();
+        }
+
+        private void RedoMenuItem_Click(object sender, EventArgs e)
+        {
+            Redo();
         }
 
         private void AboutMenuItem_Click(object sender, System.EventArgs e)
         {
             MessageBox.Show("AlterNET UI Paint Sample Application", "About");
+        }
+
+        private void NewMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateNewDocument();
+        }
+
+        private void OpenMenuItem_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void SaveMenuItem_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void SaveAsMenuItem_Click(object sender, EventArgs e)
+        {
         }
     }
 }

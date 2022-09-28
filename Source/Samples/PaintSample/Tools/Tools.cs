@@ -5,7 +5,7 @@ namespace PaintSample
 {
     internal class Tools
     {
-        private readonly Document document;
+        private readonly Func<Document> getDocument;
         private readonly ISelectedColors selectedColors;
         private readonly UndoService undoService;
         private readonly CanvasControl canvasControl;
@@ -15,18 +15,18 @@ namespace PaintSample
         FloodFillTool? floodFill;
         AirbrushTool? airbrush;
 
-        public Tools(Document document, ISelectedColors selectedColors, UndoService undoService, CanvasControl canvasControl)
+        public Tools(Func<Document> getDocument, ISelectedColors selectedColors, UndoService undoService, CanvasControl canvasControl)
         {
-            this.document = document;
+            this.getDocument = getDocument;
             this.selectedColors = selectedColors;
             this.undoService = undoService;
             this.canvasControl = canvasControl;
         }
 
-        public PenTool Pen => pen ??= new PenTool(document, selectedColors, undoService);
-        public EraserTool Eraser => eraser ??= new EraserTool(document, selectedColors, undoService);
-        public FloodFillTool FloodFill => floodFill ??= new FloodFillTool(document, selectedColors, undoService);
-        public AirbrushTool Airbrush => airbrush ??= new AirbrushTool(document, selectedColors, undoService);
+        public PenTool Pen => pen ??= new PenTool(getDocument, selectedColors, undoService);
+        public EraserTool Eraser => eraser ??= new EraserTool(getDocument, selectedColors, undoService);
+        public FloodFillTool FloodFill => floodFill ??= new FloodFillTool(getDocument, selectedColors, undoService);
+        public AirbrushTool Airbrush => airbrush ??= new AirbrushTool(getDocument, selectedColors, undoService);
 
         public IEnumerable<Tool> AllTools
         {

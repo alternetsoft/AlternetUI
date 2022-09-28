@@ -31,6 +31,11 @@ namespace Alternet::UI
         _bitmap.ConvertToImage().SaveFile(managedOutputStream, GetBitmapTypeFromFormat(format));
     }
 
+    void Image::SaveToFile(const string& fileName)
+    {
+        _bitmap.ConvertToImage().SaveFile(wxStr(fileName));
+    }
+
     void Image::Initialize(const Size& size)
     {
         _bitmap = wxBitmap(fromDip(size, nullptr));

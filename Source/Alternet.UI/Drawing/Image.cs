@@ -1,3 +1,4 @@
+using Microsoft.SqlServer.Server;
 using System;
 using System.IO;
 
@@ -92,7 +93,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> where the image will be saved.</param>
         /// <param name="format">An <see cref="ImageFormat"/> that specifies the format of the saved image.</param>
-        public void Save(MemoryStream stream, ImageFormat format)
+        public void Save(Stream stream, ImageFormat format)
         {
             if (stream is null)
                 throw new ArgumentNullException(nameof(stream));
@@ -102,6 +103,18 @@ namespace Alternet.Drawing
 
             var outputStream = new UI.Native.OutputStream(stream);
             NativeImage.SaveToStream(outputStream, format.ToString());
+        }
+
+        /// <summary>
+        /// Saves this <see cref="Image"/> to the specified file.
+        /// </summary>
+        /// <param name="fileName">A string that contains the name of the file to which to save this <see cref="Image"/>.</param>
+        public void Save(string fileName)
+        {
+            if (fileName is null)
+                throw new ArgumentNullException(nameof(fileName));
+
+            NativeImage.SaveToFile(fileName);
         }
     }
 }

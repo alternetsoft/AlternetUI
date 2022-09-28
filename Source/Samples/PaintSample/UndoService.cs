@@ -1,12 +1,11 @@
 using Alternet.Drawing;
 using System;
-using System.Collections.Generic;
 
 namespace PaintSample
 {
     internal class UndoService
     {
-        private Document document;
+        private Document? document;
 
         const int StackSize = 20;
 
@@ -14,19 +13,34 @@ namespace PaintSample
 
         private DropoutStack<Bitmap> redoStack = new DropoutStack<Bitmap>(StackSize);
 
-        public UndoService(Document document)
-        {
-            this.document = document;
-        }
-
         public event EventHandler? Changed;
 
         public bool CanUndo => undoStack.Count > 0;
 
         public bool CanRedo => redoStack.Count > 0;
 
+        public Document? Document
+        {
+            get => document;
+            set
+            {
+                if (document == value)
+                    return;
+
+                document = value;
+
+                undoStack.Clear();
+                redoStack.Clear();
+
+                RaiseChanged();
+            }
+        }
+
         public void Do(Action action)
         {
+            if (document == null)
+                throw new InvalidOperationException();
+
             var bitmapBeforeAction = new Bitmap(document.Bitmap);
             action();
             undoStack.Push(bitmapBeforeAction);
@@ -36,6 +50,9 @@ namespace PaintSample
 
         public void Undo()
         {
+            if (document == null)
+                throw new InvalidOperationException();
+
             if (!CanUndo)
                 throw new InvalidOperationException();
 
@@ -48,6 +65,9 @@ namespace PaintSample
 
         public void Redo()
         {
+            if (document == null)
+                throw new InvalidOperationException();
+
             if (!CanRedo)
                 throw new InvalidOperationException();
 

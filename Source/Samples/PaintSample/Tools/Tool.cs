@@ -8,10 +8,11 @@ namespace PaintSample
         private Control? canvas;
 
         private Control? optionsControl;
+        private readonly Func<Document> getDocument;
 
-        protected Tool(Document document, ISelectedColors selectedColors, UndoService undoService)
+        protected Tool(Func<Document> getDocument, ISelectedColors selectedColors, UndoService undoService)
         {
-            Document = document;
+            this.getDocument = getDocument;
             SelectedColors = selectedColors;
             UndoService = undoService;
         }
@@ -20,7 +21,7 @@ namespace PaintSample
 
         public abstract string Name { get; }
 
-        protected Document Document { get; }
+        protected Document Document => getDocument();
 
         protected ISelectedColors SelectedColors { get; }
 

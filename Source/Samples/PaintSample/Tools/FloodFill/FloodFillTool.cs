@@ -1,12 +1,13 @@
 using Alternet.Drawing;
 using Alternet.UI;
+using System;
 
 namespace PaintSample
 {
     internal class FloodFillTool : Tool
     {
-        public FloodFillTool(Document document, ISelectedColors selectedColors, UndoService undoService) :
-            base(document, selectedColors, undoService)
+        public FloodFillTool(Func<Document> getDocument, ISelectedColors selectedColors, UndoService undoService) :
+            base(getDocument, selectedColors, undoService)
         {
         }
 

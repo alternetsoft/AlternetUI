@@ -27,6 +27,8 @@ namespace PaintSample
 
                 if (document != null)
                     document.Changed += Document_Changed;
+
+                Invalidate();
             }
         }
 

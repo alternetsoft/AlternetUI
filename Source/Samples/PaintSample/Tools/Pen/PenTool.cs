@@ -8,8 +8,8 @@ namespace PaintSample
 {
     internal sealed class PenTool : PenLikeTool
     {
-        public PenTool(Document document, ISelectedColors selectedColors, UndoService undoService) :
-            base(document, selectedColors, undoService)
+        public PenTool(Func<Document> getDocument, ISelectedColors selectedColors, UndoService undoService) :
+            base(getDocument, selectedColors, undoService)
         {
         }
 

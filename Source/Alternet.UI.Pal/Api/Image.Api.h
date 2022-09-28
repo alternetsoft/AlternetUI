@@ -59,3 +59,10 @@ ALTERNET_UI_API void Image_SaveToStream_(Image* obj, void* stream, const char16_
         });
 }
 
+ALTERNET_UI_API void Image_SaveToFile_(Image* obj, const char16_t* fileName)
+{
+    MarshalExceptions<void>([&](){
+            obj->SaveToFile(fileName);
+        });
+}
+
