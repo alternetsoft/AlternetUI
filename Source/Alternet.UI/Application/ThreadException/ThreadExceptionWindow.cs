@@ -186,7 +186,7 @@ namespace Alternet.UI
                 buttonsGrid.Children.Add(detailsButton);
                 Grid.SetColumn(detailsButton, 0);
 
-                var continueButton = new Button { Text = "&Continue" };
+                var continueButton = new Button { Text = "&Continue", Margin = new Thickness(0, 0, 5, 0) };
                 continueButton.Click += ContinueButton_Click;
                 buttonsGrid.Children.Add(continueButton);
                 Grid.SetColumn(continueButton, 2);
