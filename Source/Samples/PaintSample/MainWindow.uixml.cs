@@ -10,16 +10,16 @@ namespace PaintSample
     public partial class MainWindow : Window
     {
         private const string FileDialogImageFilesFilter = "Image files(*.png; *.jpg)|*.png;*.jpg|All files(*.*)|*.*";
-        private Tools tools;
+        private Tools? tools;
 
         private Document? document;
 
-        private UndoService undoService;
+        private UndoService? undoService;
 
         CommandButton? undoButton;
         CommandButton? redoButton;
 
-        string baseTitle;
+        string? baseTitle;
 
         public MainWindow()
         {
@@ -41,10 +41,10 @@ namespace PaintSample
             CreateNewDocument();
 
             tools = new Tools(() => Document, colorSelector, undoService, canvasControl);
-            tools.CurrentTool = tools.Pen;
+            Tools.CurrentTool = Tools.Pen;
             InitializeToolsMenuItems();
 
-            toolbar.SetTools(tools);
+            toolbar.SetTools(Tools);
 
             UpdateControls();
         }
@@ -74,6 +74,9 @@ namespace PaintSample
             Document = new Document();
         }
 
+        UndoService UndoService => undoService ?? throw new Exception();
+        Tools Tools => tools ?? throw new Exception();
+
         Document Document
         {
             get => document ?? throw new Exception();
@@ -91,7 +94,7 @@ namespace PaintSample
                 if (document != null)
                     document.Changed += Document_Changed;
 
-                undoService.Document = value;
+                UndoService.Document = value;
                 canvasControl.Document = value;
                 UpdateControls();
             }
@@ -106,23 +109,23 @@ namespace PaintSample
         {
             void ToolMenuItem_Click(object? sender, System.EventArgs e)
             {
-                tools.CurrentTool = (Tool)((MenuItem)sender!).Tag!;
+                Tools.CurrentTool = (Tool)((MenuItem)sender!).Tag!;
             }
 
             void UpdateCheckedItems()
             {
                 foreach (var item in toolsMenu.Items)
-                    item.Checked = item.Tag == tools.CurrentTool;
+                    item.Checked = item.Tag == Tools.CurrentTool;
             }
 
-            foreach (var tool in tools.AllTools)
+            foreach (var tool in Tools.AllTools)
             {
                 toolsMenu.Items.Add(new MenuItem(tool.Name, ToolMenuItem_Click) { Tag = tool });
             }
 
             UpdateCheckedItems();
 
-            tools.CurrentToolChanged += (_, __) => UpdateCheckedItems();
+            Tools.CurrentToolChanged += (_, __) => UpdateCheckedItems();
         }
 
         private void InitializeCommandButtons()
@@ -143,8 +146,8 @@ namespace PaintSample
 
         private void UpdateControls()
         {
-            undoMenuItem!.Enabled = undoButton!.Enabled = undoService.CanUndo;
-            redoMenuItem!.Enabled = redoButton!.Enabled = undoService.CanRedo;
+            undoMenuItem!.Enabled = undoButton!.Enabled = UndoService.CanUndo;
+            redoMenuItem!.Enabled = redoButton!.Enabled = UndoService.CanRedo;
             saveMenuItem!.Enabled = Document.Dirty;
 
             UpdateTitle();
@@ -157,7 +160,7 @@ namespace PaintSample
 
         private void Undo()
         {
-            undoService.Undo();
+            UndoService.Undo();
         }
 
         void RedoButton_Click(object? sender, EventArgs e)
@@ -167,7 +170,7 @@ namespace PaintSample
 
         private void Redo()
         {
-            undoService.Redo();
+            UndoService.Redo();
         }
 
         private void ExitMenuItem_Click(object sender, EventArgs e)
@@ -257,6 +260,8 @@ namespace PaintSample
         private void PromptToSaveDocument(out bool cancel)
         {
             cancel = false;
+            if (document == null)
+                return;
 
             if (!Document.Dirty)
                 return;

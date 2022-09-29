@@ -36,7 +36,7 @@ namespace Alternet.UI
 
         private static Image LoadImage(string name)
         {
-            return new Image(typeof(ThreadExceptionWindow).Assembly.GetManifestResourceStream(name));
+            return new Image(typeof(ThreadExceptionWindow).Assembly.GetManifestResourceStream(name) ?? throw new Exception());
         }
 
         private static string GetMessageText(Exception e)
@@ -210,19 +210,19 @@ namespace Alternet.UI
             }
         }
 
-        private void QuitButton_Click(object sender, EventArgs e)
+        private void QuitButton_Click(object? sender, EventArgs e)
         {
             ModalResult = ModalResult.Canceled;
             Close();
         }
 
-        private void ContinueButton_Click(object sender, EventArgs e)
+        private void ContinueButton_Click(object? sender, EventArgs e)
         {
             ModalResult = ModalResult.Accepted;
             Close();
         }
 
-        private void DetailsButton_Click(object sender, EventArgs e)
+        private void DetailsButton_Click(object? sender, EventArgs e)
         {
             using (var detailsWindow = new ThreadExceptionDetailsWindow(GetDetailsText(exception)))
                 detailsWindow.ShowModal(this);

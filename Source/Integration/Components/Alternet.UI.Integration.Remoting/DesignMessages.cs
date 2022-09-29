@@ -48,15 +48,15 @@ namespace Alternet.UI.Integration.Remoting
 
             if (e is XmlException xml)
             {
-                LineNumber = xml.LineNumber;
-                LinePosition = xml.LinePosition;
+                UixmlLineNumber = xml.LineNumber;
+                UixmlLinePosition = xml.LinePosition;
             }
         }
 
         public string ExceptionType { get; set; }
         public string Message { get; set; }
         public string StackTrace { get; set; }
-        public int? LineNumber { get; set; }
-        public int? LinePosition { get; set; }
+        public int? UixmlLineNumber { get; set; }
+        public int? UixmlLinePosition { get; set; }
     }
 }

@@ -469,7 +469,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
                     if (exception != null)
                     {
-                        _log.Error(new XamlException(exception.Message + "\n" + exception.StackTrace, null, exception.LineNumber ?? 0, exception.LinePosition ?? 0), "UpdateXamlResult error");
+                        _log.Error(new XamlException(exception.Message + "\n" + exception.StackTrace, null, exception.UixmlLineNumber ?? 0, exception.UixmlLinePosition ?? 0), "UpdateXamlResult error");
                     }
 
                     break;
@@ -538,8 +538,8 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
             return a?.ExceptionType == b?.ExceptionType &&
                 a?.Message == b?.Message &&
-                a?.LineNumber == b?.LineNumber &&
-                a?.LinePosition == b?.LinePosition;
+                a?.UixmlLineNumber == b?.UixmlLineNumber &&
+                a?.UixmlLinePosition == b?.UixmlLinePosition;
         }
     }
 }

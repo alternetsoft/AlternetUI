@@ -25,9 +25,11 @@ namespace PaintSample
         public ColorSelector()
         {
             InitializeComponent();
+        }
 
+        protected override void OnInitialize()
+        {
             CreateSwatches();
-
             selectedColorDisplay.SelectedColor = Color.Blue;
         }
 

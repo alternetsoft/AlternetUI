@@ -45,6 +45,7 @@ namespace Alternet.UI.Integration
             application = new Application();
 
             UixmlLoader.DisableComponentInitialization = true;
+            application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
             application.InUixmlPreviewerMode = true;
 
             application.Idle += Application_Idle;

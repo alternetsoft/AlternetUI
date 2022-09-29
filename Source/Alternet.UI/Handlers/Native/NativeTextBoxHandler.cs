@@ -26,7 +26,7 @@ namespace Alternet.UI
             NativeControl.TextChanged += NativeControl_TextChanged;
         }
 
-        private void Control_ReadOnlyChanged(object sender, System.EventArgs e)
+        private void Control_ReadOnlyChanged(object? sender, System.EventArgs e)
         {
             ApplyReadOnly();
         }
@@ -41,7 +41,7 @@ namespace Alternet.UI
             NativeControl.Multiline = Control.Multiline;
         }
 
-        private void Control_MultilineChanged(object sender, System.EventArgs e)
+        private void Control_MultilineChanged(object? sender, System.EventArgs e)
         {
             ApplyMultiline();
         }

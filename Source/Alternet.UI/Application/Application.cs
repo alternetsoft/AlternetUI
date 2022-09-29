@@ -14,7 +14,7 @@ namespace Alternet.UI
     public partial class Application : IDisposable
     {
         private static Application? current;
-        private static UnhandledExceptionMode unhandledExceptionMode;
+        private UnhandledExceptionMode unhandledExceptionMode;
         private readonly List<Window> windows = new List<Window>();
         private volatile bool isDisposed;
 
@@ -89,6 +89,9 @@ namespace Alternet.UI
         [return: MaybeNull]
         T HandleThreadExceptionsCore<T>(Func<T> func)
         {
+            if (unhandledExceptionMode == UnhandledExceptionMode.ThrowException)
+                return func();
+
             try
             {
                 return func();
@@ -102,6 +105,12 @@ namespace Alternet.UI
 
         void HandleThreadExceptionsCore(Action action)
         {
+            if (unhandledExceptionMode == UnhandledExceptionMode.ThrowException)
+            {
+                action();
+                return;
+            }
+
             try
             {
                 action();
@@ -180,7 +189,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="mode">An <see cref="UnhandledExceptionMode"/> value describing how the application should
         /// behave if an exception is thrown without being caught.</param>
-        public static void SetUnhandledExceptionMode(UnhandledExceptionMode mode)
+        public void SetUnhandledExceptionMode(UnhandledExceptionMode mode)
         {
             unhandledExceptionMode = mode;
         }
