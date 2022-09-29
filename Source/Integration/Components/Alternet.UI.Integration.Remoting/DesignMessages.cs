@@ -44,6 +44,7 @@ namespace Alternet.UI.Integration.Remoting
 
             ExceptionType = e.GetType().Name;
             Message = e.Message;
+            StackTrace = e.StackTrace;
 
             if (e is XmlException xml)
             {
@@ -54,6 +55,7 @@ namespace Alternet.UI.Integration.Remoting
 
         public string ExceptionType { get; set; }
         public string Message { get; set; }
+        public string StackTrace { get; set; }
         public int? LineNumber { get; set; }
         public int? LinePosition { get; set; }
     }

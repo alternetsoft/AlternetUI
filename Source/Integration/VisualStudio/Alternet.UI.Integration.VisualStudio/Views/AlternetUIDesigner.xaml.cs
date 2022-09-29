@@ -578,7 +578,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             if (Process.PreviewData == null || Process.Error != null)
             {
-                ShowError("Invalid Markup", "Check the Error List for more information.");
+                ShowError("Error while generating preview", "Check the Output window, \"AlterNET UI\" source for more information.");
             }
             else if (Process.Error == null)
             {
