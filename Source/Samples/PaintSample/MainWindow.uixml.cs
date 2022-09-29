@@ -24,7 +24,10 @@ namespace PaintSample
         public MainWindow()
         {
             InitializeComponent();
+        }
 
+        protected override void OnInitialize()
+        {
             baseTitle = Title;
 
             border.BorderBrush = Brushes.Black;

@@ -8,5 +8,10 @@ namespace test_netcoreapp6_0
         {
             InitializeComponent();
         }
+
+        protected override void OnInitialize()
+        {
+            helloLabel.Text += " 123";
+        }
     }
 }

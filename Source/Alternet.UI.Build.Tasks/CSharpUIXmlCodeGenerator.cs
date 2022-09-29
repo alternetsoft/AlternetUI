@@ -57,6 +57,9 @@ using System;
                         w.WriteLine();
                         foreach (var eventBinding in document.EventBindings)
                             WriteEventBinding(w, eventBinding);
+
+                        w.WriteLine();
+                        w.WriteLine("OnInitialize();");
                     }
                 }
             }

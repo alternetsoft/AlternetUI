@@ -3,6 +3,6 @@
         x:Class="test_netcoreapp6_0.MainWindow"
         Title="refs-netcoreapp6.0">
   <StackPanel Margin="10">
-    <Label Text="Hello!" />
+    <Label Text="Hello!" Name="helloLabel"/>
   </StackPanel>
 </Window>
