@@ -23,7 +23,7 @@ namespace ControlsSample
             }
         }
 
-        private void TextBox_ValueChanged(object? sender, EventArgs e)
+        private void TextBox_ValueChanged(object? sender, TextChangedEventArgs e)
         {
             site?.LogEvent("New TextBox value is: " + ((TextBox)sender!).Text);
         }

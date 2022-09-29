@@ -8,7 +8,10 @@ namespace LayoutSample
         public StackLayoutPropertiesWindow()
         {
             InitializeComponent();
+        }
 
+        protected override void OnInitialize()
+        {
             containerAlignmentControl.Control = subjectGroupBox;
         }
 
@@ -30,7 +33,12 @@ namespace LayoutSample
         private void IncreaseContainerPaddingButton_Click(object? sender, EventArgs e) =>
             subjectGroupBox.Padding = IncreaseThickness(subjectGroupBox.Padding);
 
-        private void HorizontalContainerLayoutCheckBox_CheckedChanged(object? sender, EventArgs e) =>
+        private void HorizontalContainerLayoutCheckBox_CheckedChanged(object? sender, EventArgs e)
+        {
+            if (subjectPanel == null)
+                return;
+
             subjectPanel.Orientation = ((CheckBox)sender!).IsChecked ? StackPanelOrientation.Horizontal : StackPanelOrientation.Vertical;
+        }
     }
 }

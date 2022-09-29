@@ -12,12 +12,15 @@ namespace ExplorerUISample
         public MainWindow()
         {
             InitializeComponent();
+        }
 
+        protected override void OnInitialize()
+        {
             var date = DateTime.Now.ToShortDateString();
-            listView.Items.Add(new ListViewItem(new[] {"July Report 1", "1K", date}, 0));
-            listView.Items.Add(new ListViewItem(new[] {"06.21 M&A Meeting Memo", "1.5K", date}, 2));
-            listView.Items.Add(new ListViewItem(new[] {"RTC Chart - Mary", "12M", date}, 3));
-            listView.Items.Add(new ListViewItem(new[] {"3rd quarter results - Mary", "1M", date}, 3));
+            listView.Items.Add(new ListViewItem(new[] { "July Report 1", "1K", date }, 0));
+            listView.Items.Add(new ListViewItem(new[] { "06.21 M&A Meeting Memo", "1.5K", date }, 2));
+            listView.Items.Add(new ListViewItem(new[] { "RTC Chart - Mary", "12M", date }, 3));
+            listView.Items.Add(new ListViewItem(new[] { "3rd quarter results - Mary", "1M", date }, 3));
 
             const int FolderImageIndex = 1;
             var maryM = new TreeViewItem("MaryM", FolderImageIndex);
@@ -39,6 +42,9 @@ namespace ExplorerUISample
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
+
+            if (listView == null)
+                return;
 
             if (Visible)
                 new ProgressWindow().Show();

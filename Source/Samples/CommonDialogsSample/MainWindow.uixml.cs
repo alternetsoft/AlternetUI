@@ -11,7 +11,10 @@ namespace CommonDialogsSample
         public MainWindow()
         {
             InitializeComponent();
+        }
 
+        protected override void OnInitialize()
+        {
             InitializeEnumComboBox<MessageBoxButtons>(messageBoxButtonsComboBox);
             InitializeEnumComboBox<MessageBoxDefaultButton>(messageBoxDefaultButtonComboBox);
             InitializeEnumComboBox<MessageBoxIcon>(messageBoxIconComboBox);

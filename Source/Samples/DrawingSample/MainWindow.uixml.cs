@@ -14,6 +14,10 @@ namespace DrawingSample
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        protected override void OnInitialize()
+        {
             InitializePages();
         }
 

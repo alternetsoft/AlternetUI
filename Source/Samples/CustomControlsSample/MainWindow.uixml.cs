@@ -10,12 +10,18 @@ namespace CustomControlsSample
         public MainWindow()
         {
             InitializeComponent();
+        }
 
+        protected override void OnInitialize()
+        {
             UpdateText();
         }
 
         protected override void OnClosing(WindowClosingEventArgs e)
         {
+            if (allowCloseWindowCheckBox == null)
+                return;
+
             if (!allowCloseWindowCheckBox.IsChecked)
             {
                 MessageBox.Show("Closing the window is not allowed. Set the check box to allow.", "Closing Not Allowed");
@@ -47,13 +53,16 @@ namespace CustomControlsSample
 
         private void SetBrush(Brush b) => customDrawnControl!.Brush = /*customCompositeControl!.Brush =*/ b;
 
-        private void TextBox_TextChanged(object? sender, EventArgs e)
+        private void TextBox_TextChanged(object? sender, TextChangedEventArgs e)
         {
             UpdateText();
         }
 
         private void UpdateText()
         {
+            if (customDrawnControl == null)
+                return;
+
             customDrawnControl!.Text = /*customCompositeControl!.Text =*/ textBox!.Text;
         }
     }

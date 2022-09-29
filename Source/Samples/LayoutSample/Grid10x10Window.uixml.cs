@@ -1,36 +1,41 @@
-using System;
 using Alternet.UI;
+using System;
 
 namespace LayoutSample
 {
     public partial class Grid10x10Window : Window
     {
+        private Grid? grid;
+
         public Grid10x10Window()
         {
             InitializeComponent();
-
-            grid = CreateGrid();
-            grid.BeginInit();
-            PrepopulateGrid(10, 10);
-            grid.EndInit();
         }
 
-        Grid grid;
+        protected override void OnInitialize()
+        {
+            grid = CreateGrid();
+            Grid.BeginInit();
+            PrepopulateGrid(10, 10);
+            Grid.EndInit();
+        }
+
+        Grid Grid => grid ?? throw new Exception();
 
         private void PrepopulateGrid(int rowCount, int columnCount)
         {
             for (int i = 0; i < columnCount; i++)
-                grid.ColumnDefinitions.Add(new ColumnDefinition());
+                Grid.ColumnDefinitions.Add(new ColumnDefinition());
 
             for (int i = 0; i < rowCount; i++)
-                grid.RowDefinitions.Add(new RowDefinition());
+                Grid.RowDefinitions.Add(new RowDefinition());
 
-            for (int columnIndex = 0; columnIndex < grid.ColumnDefinitions.Count; columnIndex++)
+            for (int columnIndex = 0; columnIndex < Grid.ColumnDefinitions.Count; columnIndex++)
             {
-                for (int rowIndex = 0; rowIndex < grid.RowDefinitions.Count; rowIndex++)
+                for (int rowIndex = 0; rowIndex < Grid.RowDefinitions.Count; rowIndex++)
                 {
                     var control = new Label { Text = $"{rowIndex}.{columnIndex}" };
-                    grid.Children.Add(control);
+                    Grid.Children.Add(control);
 
                     Grid.SetColumn(control, columnIndex);
                     Grid.SetRow(control, rowIndex);

@@ -9,7 +9,10 @@ namespace InputSample
         public MouseInputWindow()
         {
             InitializeComponent();
+        }
 
+        protected override void OnInitialize()
+        {
             InputManager.Current.PreProcessInput += InputManager_PreProcessInput;
 
             mouseCaptureLabel.Text = MouseUncapturedLabel;

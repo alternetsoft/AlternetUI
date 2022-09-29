@@ -66,6 +66,9 @@ namespace ControlsSample
 
         private void EnabledCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
+            if (treeView == null)
+                return;
+
             treeView.Enabled = enabledCheckBox.IsChecked;
         }
 

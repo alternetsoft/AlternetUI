@@ -9,7 +9,10 @@ namespace MenuSample
         public MainWindow()
         {
             InitializeComponent();
+        }
 
+        protected override void OnInitialize()
+        {
             SaveCommand = new Command(o => MessageBox.Show("Save"), o => saveEnabledMenuItem.Checked);
             ExportToPngCommand = new Command(o => MessageBox.Show("Export to PNG"));
             DataContext = this;
@@ -30,12 +33,12 @@ namespace MenuSample
             roleControlsPanel.Visible = runningUnderMacOS;
         }
 
-        public Command SaveCommand { get; }
-        public Command ExportToPngCommand { get; }
+        public Command? SaveCommand { get; private set; }
+        public Command? ExportToPngCommand { get; private set; }
 
         private void OpenMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("Open");
 
-        private void SaveEnabledMenuItem_Click(object sender, EventArgs e) => SaveCommand.RaiseCanExecuteChanged();
+        private void SaveEnabledMenuItem_Click(object sender, EventArgs e) => SaveCommand!.RaiseCanExecuteChanged();
 
         private void ExportToPdfMenuItem_Click(object sender, EventArgs e) => MessageBox.Show("Export to PDF");
 

@@ -10,7 +10,10 @@ namespace EmployeeFormSample
         public MainWindow()
         {
             InitializeComponent();
+        }
 
+        protected override void OnInitialize()
+        {
             PopuplateComboBoxes();
 
             DataContext = new Employee
