@@ -18,6 +18,8 @@
   href: menu/menu.md
 - name: Drag and Drop
   href: drag-and-drop/drag-and-drop.md
+- name: Clipboard
+  href: clipboard/clipboard.md
 - name: Rendering Graphics
   href: rendering-graphics.md
 - name: System Requirements
