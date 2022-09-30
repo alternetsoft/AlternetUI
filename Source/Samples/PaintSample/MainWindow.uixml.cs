@@ -188,6 +188,22 @@ namespace PaintSample
             Redo();
         }
 
+        private void CopyMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetBitmap(Document.Bitmap);
+            UpdateControls();
+        }
+
+        private void PasteMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsBitmap)
+            {
+                var bitmap = Clipboard.GetBitmap();
+                if (bitmap != null)
+                    Document.Bitmap = bitmap;
+            }
+        }
+
         private void AboutMenuItem_Click(object sender, System.EventArgs e)
         {
             MessageBox.Show("AlterNET UI Paint Sample Application", "About");

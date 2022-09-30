@@ -1,7 +1,5 @@
-using System;
+using Alternet.Drawing;
 using System.Diagnostics;
-using System.Drawing;
-using System.Runtime.InteropServices;
 
 namespace Alternet.UI
 {
@@ -79,7 +77,14 @@ namespace Alternet.UI
         /// <summary>
         /// Retrieves bitmap data from the Clipboard in the <see cref="DataFormats.Bitmap"/> format.
         /// </summary>
-        public static Bitmap? GetBitmap() => GetData(DataFormats.Bitmap) as Bitmap;
+        public static Bitmap? GetBitmap()
+        {
+            var image = GetData(DataFormats.Bitmap) as Image;
+            if (image == null)
+                return null;
+
+            return new Bitmap(image);
+        }
 
         /// <summary>
         /// Retrieves text data from the Clipboard in the <see cref="DataFormats.Text"/> format.

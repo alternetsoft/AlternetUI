@@ -93,15 +93,21 @@ namespace Alternet::UI
 
     /*static*/ optional<wxBitmap> UnmanagedDataObject::TryGetBitmap(wxDataObjectComposite* dataObject)
     {
-        wxBitmapDataObject* object = nullptr;
-        auto format = GetBitmapDataFormat();
-        if (dataObject->IsSupportedFormat(format))
-            object = static_cast<wxBitmapDataObject*>(dataObject->GetObject(format));
-
+        auto object = TryGetBitmapDataObject(dataObject);
         if (object == nullptr)
             return nullopt;
 
         return object->GetBitmap();
+    }
+
+    /*static*/ wxBitmapDataObject* UnmanagedDataObject::TryGetBitmapDataObject(wxDataObjectComposite* dataObject)
+    {
+        wxBitmapDataObject* object = nullptr;
+        auto format = GetBitmapDataFormat();
+        if (dataObject->IsSupportedFormat(format))
+            return static_cast<wxBitmapDataObject*>(dataObject->GetObject(format));
+
+        return nullptr;
     }
 
     /*static*/ wxDataFormat UnmanagedDataObject::GetBitmapDataFormat()

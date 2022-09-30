@@ -20,7 +20,6 @@ namespace Alternet::UI
         wxGraphicsContext* _graphicsContext = nullptr;
 
         wxGraphicsRenderer* _dcRenderer = nullptr;
-        wxGraphicsContext* _dcGraphicsContext = nullptr;
 
         Size _translation;
         std::stack<Size> _translationStack;

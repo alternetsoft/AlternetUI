@@ -18,6 +18,8 @@ namespace Alternet::UI
         static optional<wxArrayString> TryGetFiles(wxDataObjectComposite* dataObject);
         static optional<wxBitmap> TryGetBitmap(wxDataObjectComposite* dataObject);
 
+        static wxBitmapDataObject* TryGetBitmapDataObject(wxDataObjectComposite* dataObject);
+
     private:
         wxDataObjectComposite* _dataObject = nullptr;
 

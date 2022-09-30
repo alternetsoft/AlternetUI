@@ -75,8 +75,11 @@ namespace PaintSample
 
         public void Modify(Action<DrawingContext> action)
         {
-            using var dc = DrawingContext.FromImage(Bitmap);
-            action(dc);
+            using (var dc = DrawingContext.FromImage(Bitmap))
+                action(dc);
+
+            using (var dc = DrawingContext.FromImage(Bitmap)) { }
+
             OnChanged();
         }
 

@@ -18,6 +18,9 @@
       <MenuItem Text="_Edit">
         <MenuItem Text="_Undo" Name="undoMenuItem" Click="UndoMenuItem_Click" Shortcut="Ctrl+Z"/>
         <MenuItem Text="_Redo" Name="redoMenuItem" Click="RedoMenuItem_Click" Shortcut="Ctrl+Y"/>
+        <MenuItem Text="-" />
+        <MenuItem Text="_Copy" Name="copyMenuItem" Click="CopyMenuItem_Click" Shortcut="Ctrl+C"/>
+        <MenuItem Text="_Paste" Name="pasteMenuItem" Click="PasteMenuItem_Click" Shortcut="Ctrl+V"/>
       </MenuItem>
       <MenuItem Text="_Tools" Name="toolsMenu" />
       <MenuItem Text="_Help">
