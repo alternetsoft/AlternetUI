@@ -213,8 +213,7 @@ example usage of the helper method:
 
 [!code-csharp[](./snippets/AddHandlerCode.cs)]
 
-The next example shows the C# operator syntax (Visual Basic has slightly
-different operator syntax because of its handling of dereferencing):
+The next example shows the C# operator syntax:
 
 [!code-csharp[](./snippets/AddHandlerPlusEquals.cs)]
 
