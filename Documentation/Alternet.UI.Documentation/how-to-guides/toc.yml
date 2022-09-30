@@ -2,3 +2,5 @@
   href: debugging-with-alternet-ui-sources/debugging-with-alternet-ui-sources.md
 - name: Using AlterNET UI NuGet Packages
   href: using-alternet-ui-packages/using-alternet-ui-packages.md
+- name: Using UIXML Previewer
+  href: using-uixml-previewer/using-uixml-previewer.md
