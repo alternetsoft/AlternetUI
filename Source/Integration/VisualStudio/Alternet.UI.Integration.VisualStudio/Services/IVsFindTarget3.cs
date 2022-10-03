@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Alternet.UI.Integration.VisualStudio.Services
+// Do not change the namespace; otherwise, search box is broken in VS2022
+namespace Microsoft.VisualStudio.Editor.Internal
 {
     [ComImport]
     [Guid("A2F0D62B-D0DD-4C59-AAB8-79CD20785451")]
+    [TypeIdentifier]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IVsFindTarget3
     {

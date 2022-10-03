@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using Alternet.UI.Integration.VisualStudio.Services;
 using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Editor.Internal;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
