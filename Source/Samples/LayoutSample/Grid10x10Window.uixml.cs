@@ -10,10 +10,7 @@ namespace LayoutSample
         public Grid10x10Window()
         {
             InitializeComponent();
-        }
 
-        protected override void OnInitialize()
-        {
             grid = CreateGrid();
             Grid.BeginInit();
             PrepopulateGrid(10, 10);

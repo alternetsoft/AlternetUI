@@ -8,10 +8,7 @@ namespace LayoutSample
         public StackLayoutPropertiesWindow()
         {
             InitializeComponent();
-        }
 
-        protected override void OnInitialize()
-        {
             containerAlignmentControl.Control = subjectGroupBox;
         }
 

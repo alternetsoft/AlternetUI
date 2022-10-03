@@ -10,10 +10,7 @@ namespace CustomControlsSample
         public MainWindow()
         {
             InitializeComponent();
-        }
 
-        protected override void OnInitialize()
-        {
             UpdateText();
         }
 

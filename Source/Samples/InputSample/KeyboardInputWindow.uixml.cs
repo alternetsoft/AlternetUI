@@ -11,10 +11,7 @@ namespace InputSample
         public KeyboardInputWindow()
         {
             InitializeComponent();
-        }
 
-        protected override void OnInitialize()
-        {
             PlatformSpecificInitialize();
             InputManager.Current.PreProcessInput += InputManager_PreProcessInput;
         }

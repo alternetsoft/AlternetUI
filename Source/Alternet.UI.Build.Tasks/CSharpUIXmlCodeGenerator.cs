@@ -26,45 +26,68 @@ using System;
                 using (new BlockIndent(w))
                 {
                     var namedObjects = document.NamedObjects;
-                    foreach (var namedObject in namedObjects)
-                        w.WriteLine($"private {namedObject.TypeFullName} {namedObject.Name};");
 
-                    w.WriteLine();
-                    w.WriteLine("private bool contentLoaded;");
-                    w.WriteLine();
-                    w.WriteLine("[System.Diagnostics.DebuggerNonUserCodeAttribute()]");
-                    w.WriteLine("public void InitializeComponent()");
-                    using (new BlockIndent(w))
-                    {
-                        w.WriteLine("if (Alternet.UI.UixmlLoader.DisableComponentInitialization)");
-                        using (new LineIndent(w))
-                            w.WriteLine("return;");
-                        w.WriteLine("if (contentLoaded)");
-                        using (new LineIndent(w))
-                            w.WriteLine("return;");
-                        w.WriteLine("contentLoaded = true;");
-
-                        w.WriteLine($"var uixmlStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(\"{document.ResourceName}\");");
-                        w.WriteLine("if (uixmlStream == null)");
-                        using (new LineIndent(w))
-                            w.WriteLine("throw new InvalidOperationException();");
-                        w.WriteLine("new Alternet.UI.UixmlLoader().LoadExisting(uixmlStream, this);");
-
-                        w.WriteLine();
-                        foreach (var namedObject in namedObjects)
-                            w.WriteLine($"{namedObject.Name} = ({namedObject.TypeFullName})FindElement(\"{namedObject.Name}\");");
-
-                        w.WriteLine();
-                        foreach (var eventBinding in document.EventBindings)
-                            WriteEventBinding(w, eventBinding);
-
-                        w.WriteLine();
-                        w.WriteLine("OnInitialize();");
-                    }
+                    WriteNamedObjectsFields(w, namedObjects);
+                    WriteInitializeComponent(document, w, namedObjects);
+                    WriteUIXmlPreviewerConstructor(document, w);
                 }
             }
 
             return codeWriter.ToString();
+        }
+
+        private static void WriteNamedObjectsFields(IndentedTextWriter w, IReadOnlyList<UIXmlDocument.NamedObject> namedObjects)
+        {
+            foreach (var namedObject in namedObjects)
+                w.WriteLine($"private {namedObject.TypeFullName} {namedObject.Name};");
+        }
+
+        private static void WriteInitializeComponent(UIXmlDocument document, IndentedTextWriter w, IReadOnlyList<UIXmlDocument.NamedObject> namedObjects)
+        {
+            w.WriteLine();
+            w.WriteLine("private bool contentLoaded;");
+            w.WriteLine();
+            w.WriteLine("[System.Diagnostics.DebuggerNonUserCodeAttribute()]");
+            w.WriteLine("public void InitializeComponent()");
+            using (new BlockIndent(w))
+            {
+                w.WriteLine("if (Alternet.UI.UixmlLoader.DisableComponentInitialization)");
+                using (new LineIndent(w))
+                    w.WriteLine("return;");
+                w.WriteLine("if (contentLoaded)");
+                using (new LineIndent(w))
+                    w.WriteLine("return;");
+                w.WriteLine("contentLoaded = true;");
+
+                w.WriteLine($"var uixmlStream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(\"{document.ResourceName}\");");
+                w.WriteLine("if (uixmlStream == null)");
+                using (new LineIndent(w))
+                    w.WriteLine("throw new InvalidOperationException();");
+                w.WriteLine("new Alternet.UI.UixmlLoader().LoadExisting(uixmlStream, this);");
+
+                w.WriteLine();
+                foreach (var namedObject in namedObjects)
+                    w.WriteLine($"{namedObject.Name} = ({namedObject.TypeFullName})FindElement(\"{namedObject.Name}\");");
+
+                w.WriteLine();
+                foreach (var eventBinding in document.EventBindings)
+                    WriteEventBinding(w, eventBinding);
+            }
+        }
+
+        private static void WriteUIXmlPreviewerConstructor(UIXmlDocument document, IndentedTextWriter w)
+        {
+            const string UIXmlPreviewerConstructorMarkerTypeName = "UIXmlPreviewerConstructorMarkerType";
+
+            w.WriteLine();
+            w.WriteLine("[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]");
+            w.WriteLine("class " + UIXmlPreviewerConstructorMarkerTypeName + " {}");
+            w.WriteLine();
+            w.WriteLine("[System.Diagnostics.DebuggerNonUserCodeAttribute()]");
+            w.WriteLine($"{document.ClassName}(UIXmlPreviewerConstructorMarkerType _)");
+            using (new BlockIndent(w))
+            {
+            }
         }
 
         private static void WriteEventBinding(IndentedTextWriter w, UIXmlDocument.EventBinding eventBinding)

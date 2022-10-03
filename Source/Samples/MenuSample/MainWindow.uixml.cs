@@ -9,10 +9,7 @@ namespace MenuSample
         public MainWindow()
         {
             InitializeComponent();
-        }
 
-        protected override void OnInitialize()
-        {
             SaveCommand = new Command(o => MessageBox.Show("Save"), o => saveEnabledMenuItem.Checked);
             ExportToPngCommand = new Command(o => MessageBox.Show("Export to PNG"));
             DataContext = this;

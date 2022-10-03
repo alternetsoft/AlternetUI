@@ -9,10 +9,7 @@ namespace ControlsSample
         public MainWindow()
         {
             InitializeComponent();
-        }
 
-        protected override void OnInitialize()
-        {
             var pages = pageContainer.Pages;
 
             pages.Add(new PageContainer.Page("Tree View", new TreeViewPage { Site = this }));

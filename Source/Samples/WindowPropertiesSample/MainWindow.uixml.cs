@@ -13,10 +13,7 @@ namespace WindowPropertiesSample
         public MainWindow()
         {
             InitializeComponent();
-        }
 
-        protected override void OnInitialize()
-        {
             foreach (var value in Enum.GetValues(typeof(WindowState)))
                 stateComboBox.Items.Add(value!);
 

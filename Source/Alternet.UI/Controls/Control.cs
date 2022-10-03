@@ -41,14 +41,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// This method is called after the UIXML initialization performed in InitializeComponent is finished.
-        /// For controls which are not root objects of a UIXML this method is not called.
-        /// </summary>
-        protected virtual void OnInitialize()
-        {
-        }
-
-        /// <summary>
         /// Occurs when the control is clicked.
         /// </summary>
         public event EventHandler? Click;

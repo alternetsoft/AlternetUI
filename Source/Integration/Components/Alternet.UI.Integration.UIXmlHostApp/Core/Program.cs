@@ -16,7 +16,7 @@ namespace Alternet.UI.Integration.UIXmlHostApp
         [STAThread]
         public static void Main(string[] cmdline)
         {
-            //System.Windows.Forms.MessageBox.Show("Attach.");
+            System.Windows.Forms.MessageBox.Show("Attach.");
 
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
