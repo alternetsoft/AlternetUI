@@ -1,5 +1,6 @@
 ﻿using Alternet.UI;
 using System;
+using System.Linq;
 
 namespace ControlsSample
 {
@@ -54,8 +55,8 @@ namespace ControlsSample
 
         private void RemoveItemButton_Click(object? sender, EventArgs e)
         {
-            if (listBox.Items.Count > 0)
-                listBox.Items.RemoveAt(listBox.Items.Count - 1);
+            foreach (var item in listBox.SelectedItems.ToArray())
+                listBox.Items.Remove(item);
         }
 
         private void AddItemButton_Click(object? sender, EventArgs e)

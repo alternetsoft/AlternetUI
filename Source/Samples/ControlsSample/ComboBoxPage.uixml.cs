@@ -76,7 +76,7 @@ namespace ControlsSample
         private void RemoveItemButton_Click(object? sender, EventArgs e)
         {
             if (comboBox.Items.Count > 0)
-                comboBox.Items.RemoveAt(comboBox.Items.Count - 1);
+                comboBox.Items.RemoveAt(comboBox.SelectedIndex ?? comboBox.Items.Count - 1);
         }
 
         private void AddItemButton_Click(object? sender, EventArgs e)
