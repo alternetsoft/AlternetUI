@@ -85,7 +85,7 @@ namespace ControlsSample
 
         private void AddItemButton_Click(object? sender, EventArgs e)
         {
-            treeView.Items.Add(new TreeViewItem("Item " + (treeView.Items.Count + 1)));
+            treeView.Items.Add(new TreeViewItem("Item " + (treeView.Items.Count + 1), 0));
         }
     }
 }

@@ -206,12 +206,19 @@ namespace Alternet.UI
         private void Control_ItemRemoved(object? sender, TreeViewItemContainmentEventArgs e)
         {
             var item = e.Item;
-            var handle = handlesByItems[item];
 
             NativeControl.RemoveItem(GetHandleFromItem(item));
+            RemoveItemAndChildrenFromDictionaries(item);
 
-            handlesByItems.Remove(item);
-            itemsByHandles.Remove(handle);
+            void RemoveItemAndChildrenFromDictionaries(TreeViewItem parentItem)
+            {
+                foreach (var childItem in parentItem.Items)
+                    RemoveItemAndChildrenFromDictionaries(childItem);
+
+                var handle = handlesByItems[parentItem];
+                handlesByItems.Remove(parentItem);
+                itemsByHandles.Remove(handle);
+            }
         }
     }
 }
