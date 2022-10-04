@@ -65,7 +65,7 @@ private void textBox1_DragDrop(object sender, DragEventArgs e) =>
  is implemented in the <xref:Alternet.UI.Control.DoDragDrop%2A> method.  
   
  In the following example, the <xref:Alternet.UI.UIElement.MouseDown> event is used to start the drag operation
- because it is the most intuitive (most drag-and-drop actions begin with the mouse button being depressed). However,
+ because it is the most intuitive (most drag-and-drop actions begin with the mouse button being pressed). However,
  remember that any event could be used to initiate a drag-and-drop procedure.  
   
 ### To start a drag operation  
