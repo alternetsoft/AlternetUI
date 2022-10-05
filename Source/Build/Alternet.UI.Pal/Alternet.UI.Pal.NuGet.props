@@ -3,7 +3,7 @@
     <Import Project="../Alternet.UI.Common/Alternet.UI.Common.NuGet.props"/>
 
     <PropertyGroup>
-        <NuGetDirectoryPath>$(MSBuildProjectDirectory)/NuGet</NuGetDirectoryPath>
+        <NuGetDirectoryPath>$(MSBuildProjectDirectory)\NuGet</NuGetDirectoryPath>
         <NuGetExeDirectoryPath>$(MSBuildProjectDirectory)/../Alternet.UI.Common/.nuget/</NuGetExeDirectoryPath>
         <NuGetExeFilePath>$(NuGetExeDirectoryPath)/nuget.exe</NuGetExeFilePath>
         <NuGetPackageName>Alternet.UI.Pal</NuGetPackageName>
