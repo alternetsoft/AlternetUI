@@ -78,4 +78,6 @@ dotnet msbuild /restore /t:Clean,Build,Pack /p:Configuration=Release "%SCRIPT_HO
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-    
+dotnet nuget sign "%SCRIPT_HOME%\..\..\Integration\Templates\bin\Release\*.nupkg" --certificate-path "%SCRIPT_HOME%\..\..\Keys\Alternet.pfx" --timestamper http://timestamp.digicert.com --certificate-password Alternet^^!
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
