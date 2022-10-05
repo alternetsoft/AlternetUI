@@ -68,7 +68,9 @@
         <Exec Condition="$([MSBuild]::IsOsPlatform('Windows'))"
               Command="$(NuGetExeFilePath) pack $(NuGetNuspecFileName) -NoDefaultExcludes -Exclude .nuget\*;*.nupkg -properties version=$(Version)"
               WorkingDirectory="$(NuGetDirectoryPath)" />
-        
+
+		<Exec Command="dotnet nuget sign &quot;$(NuGetDirectoryPath)\*.nupkg&quot; --certificate-path &quot;$(SignKeyPath)&quot; --timestamper http://timestamp.digicert.com --certificate-password $(SignPassword)" />
+
         <Exec Condition="!$([MSBuild]::IsOsPlatform('Windows'))"
               Command="mono $(NuGetExeFilePath) pack $(NuGetNuspecFileName) -NoDefaultExcludes -Exclude .nuget/*\;*.nupkg -properties version=$(Version)"
               WorkingDirectory="$(NuGetDirectoryPath)" />

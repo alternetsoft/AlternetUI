@@ -33,6 +33,8 @@
     </PropertyGroup>
 
     <PropertyGroup>
+        <SignKeyPath>$(MSBuildProjectDirectory)\..\..\..\Source\Keys\Alternet.pfx</SignKeyPath>
+        <SignPassword>Alternet!</SignPassword>
         <NuGetDotNetLegacyLibDirectoryPath>$(NuGetDirectoryPath)\lib</NuGetDotNetLegacyLibDirectoryPath>
         <NuGetSourceRefDirectoryPath>$(NuGetDirectoryPath)\ref</NuGetSourceRefDirectoryPath>
         <NuGetSourceRuntimesDirectoryPath>$(NuGetDirectoryPath)\runtimes</NuGetSourceRuntimesDirectoryPath>

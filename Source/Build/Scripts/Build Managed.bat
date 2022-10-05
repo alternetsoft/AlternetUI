@@ -35,3 +35,7 @@ if not !ERRORLEVEL! EQU 0 (
 dotnet msbuild /restore /t:Pack /p:Configuration=Release /p:AlternetUIPackagesBuild=true "%SCRIPT_HOME%\..\..\Alternet.UI\Alternet.UI.csproj"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
+
+dotnet nuget sign "%SCRIPT_HOME%\..\..\Alternet.UI\bin\Release\*.nupkg" --certificate-path "%SCRIPT_HOME%\..\..\Keys\Alternet.pfx" --timestamper http://timestamp.digicert.com --certificate-password Alternet^^!
+if not !ERRORLEVEL! EQU 0 (
+    exit /b !ERRORLEVEL!)
