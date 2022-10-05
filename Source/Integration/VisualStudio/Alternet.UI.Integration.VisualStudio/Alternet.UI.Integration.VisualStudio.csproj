@@ -147,7 +147,14 @@
         </PackageReference>
         <PackageReference Include="Microsoft.VisualStudio.Composition" Version="17.2.41" />
         <PackageReference Include="Microsoft.VisualStudio.ProjectSystem" Version="17.2.402-pre" />
-      </ItemGroup>
+        <ProjectReference Include="..\Templates\AlternetUIApplicationTemplate.VS2022\AlternetUIApplicationTemplate.csproj">
+          <Project>{75104aa0-3b1b-47d4-9c4d-501aaaa5acfc}</Project>
+          <Name>AlternetUIApplicationTemplate</Name>
+          <VSIXSubPath>ProjectTemplates</VSIXSubPath>
+          <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+          <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+        </ProjectReference>
+    </ItemGroup>
     </When>
     <Otherwise>
       <PropertyGroup>
@@ -178,6 +185,13 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
+        <ProjectReference Include="..\Templates\AlternetUIApplicationTemplate.VS2019\AlternetUIApplicationTemplate.csproj">
+          <Project>{75104aa0-3b1b-47d4-9c4d-501aaaa5acfc}</Project>
+          <Name>AlternetUIApplicationTemplate</Name>
+          <VSIXSubPath>ProjectTemplates</VSIXSubPath>
+          <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+          <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+        </ProjectReference>
       </ItemGroup>
     </Otherwise>
   </Choose>
@@ -268,13 +282,6 @@
     <ProjectReference Include="..\..\Components\Alternet.UI.Integration.Remoting\Alternet.UI.Integration.Remoting.csproj">
       <Project>{7d12ea9b-9c8b-4efb-b52f-8fa76e19845d}</Project>
       <Name>Alternet.UI.Integration.Remoting</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Templates\AlternetUIApplicationTemplate\AlternetUIApplicationTemplate.csproj">
-      <Project>{75104aa0-3b1b-47d4-9c4d-501aaaa5acfc}</Project>
-      <Name>AlternetUIApplicationTemplate</Name>
-      <VSIXSubPath>ProjectTemplates</VSIXSubPath>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
     </ProjectReference>
     <ProjectReference Include="..\Templates\AlternetUIWindowTemplate\AlternetUIWindowTemplate.csproj">
       <Project>{c8baaa98-50a3-4c04-8f8c-ed853ec0760c}</Project>
