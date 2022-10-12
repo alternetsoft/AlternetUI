@@ -47,10 +47,10 @@ AlterNET UI Roadmap
 1.0 Release (first stable release):
     - implement all the missing controls features, TBD
     - UIXML previewer
-    - VS Code and Rider extensions
     - possibly add some missing controls (RichEdit, Toolbar, Splitter etc), TBD
     - port several small open source GUI applications to AlterNET UI to find and fix bugs / uncover unsupported scenarios
 
 Future releases:
     - custom visual themes
     - additional controls
+    - VS Code, VS for Mac and Rider extensions
