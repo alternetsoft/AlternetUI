@@ -42,7 +42,7 @@ AlterNET UI Roadmap
     - tray icon
     - basic stress and memory tests, check memory leaks
     - remove/hide parts ported from WPF which are redundant (like Dispatcher)
-    - color/brush support for in UIXML
+    - color/brush support in UIXML
     
 0.6-beta (release at the beginning of December 2022):
     - implement all the missing standard controls features
