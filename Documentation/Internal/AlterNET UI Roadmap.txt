@@ -7,48 +7,55 @@ AlterNET UI Roadmap
         + bindings
         + layout
         ? styles
-        - resource URI support (pack://)
         
     + keyboard and mouse input support
-    - establish API to create custom controls abd layouts
-    - scrollable controls support
     + user controls defined in UIXML support
     + ensure native exceptions marshalled to .NET properly
-    - basic unit tests (UI automation)
-    - basic stress and memory tests
     + additional drawing functionality
-    + timer support
     + added PictureBox control
     + use data binding and UIXML used controls in the existing samples
 
 0.3-beta (common features release):
     + window properties and management
+    + timer support
     + modal dialogs
-    + message box full API
     + menus with keyboard shortcuts
-	+ context menus
-    + commands
-    + common dialogs (Open file etc)
-    - tool tips
-    - focus management
-    + drag and drop, clipboard
-    + timers
-    - unhandled exception dialog
-    + SynchronizationContext, Invoke/BeginInvoke
-    - tray icon
-    - application deployment and packaging documentation (on macOS, Linux)
-    - full-featured document-based application sample
     
 
-0.4-beta (drawing and printing release):
-    - drawing context and printing features, TBD
-    - advanced drawing/printing sample
+0.4-beta:
+    + unhandled exception dialog
+    + message box full API
+    + context menus
+    + commands
+    + common dialogs (Open file etc)
+    + drag and drop, clipboard
+    + SynchronizationContext, Invoke/BeginInvoke
+    + full-featured document-based application sample
+    + UIXML previewer
+
+-------------------
     
-1.0 Release (first stable release):
-    - implement all the missing controls features, TBD
-    - UIXML previewer
-    - possibly add some missing controls (RichEdit, Toolbar, Splitter etc), TBD
+0.5-beta (release at the beginning of November 2022):
+    - drawing context and printing features
+    - advanced drawing/printing sample
+    - tool tips
+    - tray icon
+    - basic stress and memory tests, check memory leaks
+    - remove/hide parts ported from WPF which are redundant (like Dispatcher)
+    - color/brush support for in UIXML
+    
+0.6-beta (release at the beginning of December 2022):
+    - focus management
+    - implement all the missing standard controls features
+    - RichEdit, Toolbar (whether or not this will fit depends on how much of work the previous item will take
+    - scrollable controls support
+    - resource URI support (pack://)
+    
+1.0 Release (release at the end of December 2022):
+    - establish API to create custom controls abd layouts
+    - application deployment and packaging documentation (on macOS, Linux)
     - port several small open source GUI applications to AlterNET UI to find and fix bugs / uncover unsupported scenarios
+    - basic unit tests (UI automation)
 
 Future releases:
     - custom visual themes
