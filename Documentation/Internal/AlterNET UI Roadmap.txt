@@ -36,26 +36,26 @@ AlterNET UI Roadmap
 -------------------
     
 0.5-beta (release at the beginning of November 2022):
-    - drawing context and printing features
-    - advanced drawing/printing sample
-    - tool tips
-    - tray icon
-    - basic stress and memory tests, check memory leaks
-    - remove/hide parts ported from WPF which are redundant (like Dispatcher)
-    - color/brush support for in UIXML
-    
+    - full drawing context and printing features
+    - advanced drawing/printing sample
+    - tooltips
+    - tray icon
+    - basic stress and memory tests, check memory leaks
+    - remove/hide parts ported from WPF which are redundant (like Dispatcher)
+    - color/brush support for in UIXML
+    
 0.6-beta (release at the beginning of December 2022):
-    - focus management
-    - implement all the missing standard controls features
-    - RichEdit, Toolbar (whether or not this will fit depends on how much of work the previous item will take
-    - scrollable controls support
-    - resource URI support (pack://)
-    
+    - implement all the missing standard controls features
+    - RichEdit, Toolbar (whether or not this will fit depends on how much of work the previous item will take)
+    - resource URI support (pack://)
+    - focus management
+    - scrollable controls support
+    
 1.0 Release (release at the end of December 2022):
-    - establish API to create custom controls abd layouts
-    - application deployment and packaging documentation (on macOS, Linux)
-    - port several small open source GUI applications to AlterNET UI to find and fix bugs / uncover unsupported scenarios
-    - basic unit tests (UI automation)
+    - establish API to create custom controls and layouts
+    - application deployment and packaging documentation (on macOS, Linux)
+    - port several small open source GUI applications to AlterNET UI to find and fix bugs / uncover unsupported scenarios
+    - basic unit tests (UI automation)
 
 Future releases:
     - custom visual themes
