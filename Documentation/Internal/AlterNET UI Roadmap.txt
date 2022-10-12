@@ -36,7 +36,7 @@ AlterNET UI Roadmap
 -------------------
     
 0.5-beta (release at the beginning of November 2022):
-    - full drawing context and printing features
+    - full drawing context and printing features (using wxWidgets as an implementation)
     - advanced drawing/printing sample
     - tooltips
     - tray icon
