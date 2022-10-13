@@ -86,6 +86,69 @@ namespace DrawingSample
             }
         }
 
+        int textWidthLimit = 500;
+
+        public int TextWidthLimit
+        {
+            get => textWidthLimit;
+            set
+            {
+                textWidthLimit = value;
+                Invalidate();
+            }
+        }
+
+        public int MinTextWidthLimit => 100;
+        public int MaxTextWidthLimit => 1000;
+
+        bool textWidthLimitEnabled = true;
+
+        public bool TextWidthLimitEnabled
+        {
+            get => textWidthLimitEnabled;
+            set
+            {
+                textWidthLimitEnabled = value;
+                Invalidate();
+            }
+        }
+
+        TextHorizontalAlignment horizontalAlignment = TextHorizontalAlignment.Left;
+
+        public TextHorizontalAlignment HorizontalAlignment
+        {
+            get => horizontalAlignment;
+            set
+            {
+                horizontalAlignment = value;
+                Invalidate();
+            }
+        }
+
+        TextVerticalAlignment verticalAlignment = TextVerticalAlignment.Top;
+
+        public TextVerticalAlignment VerticalAlignment
+        {
+            get => verticalAlignment;
+            set
+            {
+                verticalAlignment = value;
+                Invalidate();
+            }
+        }
+
+        TextTrimming trimming = TextTrimming.EllipsisCharacter;
+
+        public TextTrimming Trimming
+        {
+            get => trimming;
+            set
+            {
+                trimming = value;
+                Invalidate();
+            }
+        }
+
         public override void Draw(DrawingContext dc, Rect bounds)
         {
             if (paragraphs == null)
@@ -125,6 +188,11 @@ namespace DrawingSample
                 paragraphs = null;
             }
 
+            Invalidate();
+        }
+
+        private void Invalidate()
+        {
             Canvas?.Invalidate();
         }
 
