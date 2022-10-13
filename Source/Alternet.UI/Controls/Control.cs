@@ -28,7 +28,6 @@ namespace Alternet.UI
         private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Stretch;
 
         private bool visible = true;
-        private bool enabled = true;
         private Control? parent;
 
         /// <summary>
@@ -39,6 +38,24 @@ namespace Alternet.UI
             Children.ItemInserted += Children_ItemInserted;
             Children.ItemRemoved += Children_ItemRemoved;
         }
+
+        /// <summary>
+        /// Identifies the <see cref="Enabled"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty EnabledProperty =
+            DependencyProperty.Register(
+                    "Enabled", // Property name
+                    typeof(bool), // Property type
+                    typeof(Control), // Property owner
+                    new FrameworkPropertyMetadata( // Property metadata
+                            true, // default enabled
+                            FrameworkPropertyMetadataOptions.AffectsPaint, // Flags
+                            new PropertyChangedCallback(OnEnabledPropertyChanged),    // property changed callback
+                            null, // coerce callback
+                            true, // IsAnimationProhibited
+                            UpdateSourceTrigger.PropertyChanged
+                            //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
+                            ));
 
         /// <summary>
         /// Occurs when the control is clicked.
@@ -247,17 +264,43 @@ namespace Alternet.UI
         /// </remarks>
         public bool Enabled
         {
-            get => enabled;
+            get { return (bool)GetValue(EnabledProperty); }
+            set { SetValue(EnabledProperty, value); }
+        }
 
-            set
-            {
-                if (enabled == value)
-                    return;
+        /// <summary>
+        /// Called when the enabled of the <see cref="Enabled"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnEnabledChanged(EventArgs e)
+        {
+        }
 
-                enabled = value;
-                OnEnabledChanged(EventArgs.Empty);
-                EnabledChanged?.Invoke(this, EventArgs.Empty);
-            }
+        /// <summary>
+        /// Callback for changes to the Enabled property
+        /// </summary>
+        private static void OnEnabledPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            Control control = (Control)d;
+            control.OnEnabledPropertyChanged((bool)e.OldValue, (bool)e.NewValue);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="EnabledChanged"/> event and calls <see cref="OnEnabledChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        void RaiseEnabledChanged(EventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnEnabledChanged(e);
+            EnabledChanged?.Invoke(this, e);
+        }
+
+        private void OnEnabledPropertyChanged(bool oldValue, bool newValue)
+        {
+            RaiseEnabledChanged(EventArgs.Empty);
         }
 
         /// <summary>
@@ -1032,14 +1075,6 @@ namespace Alternet.UI
         /// Called when the mouse pointer leaves the control.
         /// </summary>
         protected virtual void OnMouseLeave()
-        {
-        }
-
-        /// <summary>
-        /// Called when the value of the <see cref="Enabled"/> property changes.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnEnabledChanged(EventArgs e)
         {
         }
 

@@ -31,9 +31,41 @@ namespace Alternet.UI
                             //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
                             ));
 
-        private decimal minimum;
+        /// <summary>
+        /// Identifies the <see cref="Minimum"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty MinimumProperty =
+            DependencyProperty.Register(
+                    "Minimum", // Property name
+                    typeof(decimal), // Property type
+                    typeof(NumericUpDown), // Property owner
+                    new FrameworkPropertyMetadata( // Property metadata
+                            0m, // default minimum
+                            FrameworkPropertyMetadataOptions.AffectsPaint, // Flags
+                            new PropertyChangedCallback(OnMinimumPropertyChanged),    // property changed callback
+                            null, // coerce callback
+                            true, // IsAnimationProhibited
+                            UpdateSourceTrigger.PropertyChanged
+                            //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
+                            ));
 
-        private decimal maximum = 100;
+        /// <summary>
+        /// Identifies the <see cref="Maximum"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty MaximumProperty =
+            DependencyProperty.Register(
+                    "Maximum", // Property name
+                    typeof(decimal), // Property type
+                    typeof(NumericUpDown), // Property owner
+                    new FrameworkPropertyMetadata( // Property metadata
+                            100m, // default maximum
+                            FrameworkPropertyMetadataOptions.AffectsPaint, // Flags
+                            new PropertyChangedCallback(OnMaximumPropertyChanged),    // property changed callback
+                            CoerceMaximum, // coerce callback
+                            true, // IsAnimationProhibited
+                            UpdateSourceTrigger.PropertyChanged
+                            //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
+                            ));
 
         /// <summary>
         /// Occurs when the <see cref="Value"/> property has been changed in some way.
@@ -67,6 +99,18 @@ namespace Alternet.UI
             set { SetValue(ValueProperty, value); }
         }
 
+        private static object CoerceMaximum(DependencyObject d, object value)
+        {
+            var o = (NumericUpDown)d;
+
+            decimal min = o.Minimum;
+            if ((decimal) value < min)
+            {
+                return min;
+            }
+            return value;
+        }
+
         /// <summary>
         /// Gets or sets the minimum allowed value for the numeric up-down control.
         /// </summary>
@@ -80,27 +124,8 @@ namespace Alternet.UI
         /// </remarks>
         public decimal Minimum
         {
-            get
-            {
-                CheckDisposed();
-                return minimum;
-            }
-
-            set
-            {
-                CheckDisposed();
-                if (minimum == value)
-                    return;
-
-                minimum = value;
-
-                if (value > Maximum)
-                    Maximum = value;
-                if (Value < value)
-                    Value = value;
-
-                MinimumChanged?.Invoke(this, EventArgs.Empty);
-            }
+            get { return (decimal)GetValue(MinimumProperty); }
+            set { SetValue(MinimumProperty, value); }
         }
 
         /// <summary>
@@ -115,27 +140,22 @@ namespace Alternet.UI
         /// </remarks>
         public decimal Maximum
         {
-            get
-            {
-                CheckDisposed();
-                return maximum;
-            }
+            get { return (decimal)GetValue(MaximumProperty); }
+            set { SetValue(MaximumProperty, value); }
+        }
 
-            set
-            {
-                CheckDisposed();
-                if (maximum == value)
-                    return;
+        private static object CoerceValue(DependencyObject d, object value)
+        {
+            var o = (NumericUpDown)d;
 
-                maximum = value;
+            var intValue = (decimal)value;
+            if (intValue < o.Minimum)
+                return o.Minimum;
 
-                if (value < Minimum)
-                    Minimum = value;
-                if (Value > value)
-                    Value = value;
+            if (intValue > o.Maximum)
+                return o.Maximum;
 
-                MaximumChanged?.Invoke(this, EventArgs.Empty);
-            }
+            return value;
         }
 
         /// <summary>
@@ -168,23 +188,79 @@ namespace Alternet.UI
             control.OnValuePropertyChanged((decimal)e.OldValue, (decimal)e.NewValue);
         }
 
-        private static object CoerceValue(DependencyObject d, object value)
-        {
-            var o = (NumericUpDown)d;
-
-            var intValue = (decimal)value;
-            if (intValue < o.Minimum)
-                return o.Minimum;
-
-            if (intValue > o.Maximum)
-                return o.Maximum;
-
-            return value;
-        }
-
         private void OnValuePropertyChanged(decimal oldValue, decimal newValue)
         {
             RaiseValueChanged(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Called when the minimum of the <see cref="Minimum"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnMinimumChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Callback for changes to the Minimum property
+        /// </summary>
+        private static void OnMinimumPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            NumericUpDown control = (NumericUpDown)d;
+            control.OnMinimumPropertyChanged((decimal)e.OldValue, (decimal)e.NewValue);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="MinimumChanged"/> event and calls <see cref="OnMinimumChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        void RaiseMinimumChanged(EventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnMinimumChanged(e);
+            MinimumChanged?.Invoke(this, e);
+        }
+
+        private void OnMinimumPropertyChanged(decimal oldValue, decimal newValue)
+        {
+            RaiseMinimumChanged(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Called when the maximum of the <see cref="Maximum"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnMaximumChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Callback for changes to the Maximum property
+        /// </summary>
+        private static void OnMaximumPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            NumericUpDown control = (NumericUpDown)d;
+            control.OnMaximumPropertyChanged((decimal)e.OldValue, (decimal)e.NewValue);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="MaximumChanged"/> event and calls <see cref="OnMaximumChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        void RaiseMaximumChanged(EventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnMaximumChanged(e);
+            MaximumChanged?.Invoke(this, e);
+        }
+
+        private void OnMaximumPropertyChanged(decimal oldValue, decimal newValue)
+        {
+            RaiseMaximumChanged(EventArgs.Empty);
         }
     }
 }
