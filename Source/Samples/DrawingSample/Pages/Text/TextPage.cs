@@ -170,7 +170,12 @@ namespace DrawingSample
                 var c = new Skybrud.Colors.RgbColor(color.R, color.G, color.B).Lighten(lighten).ToRgb();
                 color = Color.FromArgb(c.R, c.G, c.B);
             }
+
+            if (TextWidthLimitEnabled)
+                dc.DrawLine(textWidthLimitPen, new Point(TextWidthLimit, bounds.Top), new Point(TextWidthLimit, bounds.Bottom));
         }
+
+        static Pen textWidthLimitPen = new Pen(Color.Gray, 1, PenDashStyle.Dash);
 
         protected override Control CreateSettingsControl()
         {
