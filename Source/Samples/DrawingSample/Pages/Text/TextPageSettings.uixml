@@ -29,6 +29,14 @@
                 Value="{Binding TextWidthLimit}"
                 Enabled="{Binding TextWidthLimitEnabled}"/>
         </StackPanel>
-    
+
+        <Label Text="Horizontal Alignment:" Margin="0,15,0,5" />
+        <ComboBox Name="horizontalAlignmentComboBox" IsEditable="false" SelectedItem="{Binding HorizontalAlignment}"/>
+
+        <Label Text="Vertical Alignment:" Margin="0,5,0,5" />
+        <ComboBox Name="verticalAlignmentComboBox" IsEditable="false" SelectedItem="{Binding VerticalAlignment}"/>
+
+        <Label Text="Trimming:" Margin="0,5,0,5" />
+        <ComboBox Name="trimmingComboBox" IsEditable="false" SelectedItem="{Binding Trimming}"/>
     </StackPanel>
 </Control>

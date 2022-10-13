@@ -1,7 +1,7 @@
-﻿using Alternet.UI;
+﻿using Alternet.Drawing;
+using Alternet.UI;
 using System;
 using System.Collections.Generic;
-using Alternet.Drawing;
 using System.Linq;
 
 namespace DrawingSample
@@ -12,10 +12,21 @@ namespace DrawingSample
 
         private static Font fontInfoFont = new Font(FontFamily.GenericMonospace, 8);
         private static Brush fontInfoBrush = Brushes.Black;
+        private static Pen textWidthLimitPen = new Pen(Color.Gray, 1, PenDashStyle.Dash);
         private Paragraph[]? paragraphs;
         private double fontSize = 10;
         private FontStyle fontStyle;
         private string customFontFamilyName = Control.DefaultFont.FontFamily.Name;
+
+        private int textWidthLimit = 500;
+
+        private bool textWidthLimitEnabled = true;
+
+        private TextHorizontalAlignment horizontalAlignment = TextHorizontalAlignment.Left;
+
+        private TextVerticalAlignment verticalAlignment = TextVerticalAlignment.Top;
+
+        private TextTrimming trimming = TextTrimming.EllipsisCharacter;
 
         public override string Name => "Text";
 
@@ -53,29 +64,6 @@ namespace DrawingSample
             set => SetFontStyle(FontStyle.Strikethrough, value);
         }
 
-        private void SetFontStyle(FontStyle style, bool value)
-        {
-            if (value)
-                FontStyle |= style;
-            else
-                FontStyle &= ~style;
-        }
-
-        private bool GetFontStyle(FontStyle style)
-        {
-            return (FontStyle & style) != 0;
-        }
-
-        FontStyle FontStyle
-        {
-            get => fontStyle;
-            set
-            {
-                fontStyle = value;
-                InvalidateParagraphs();
-            }
-        }
-
         public string CustomFontFamilyName
         {
             get => customFontFamilyName;
@@ -85,8 +73,6 @@ namespace DrawingSample
                 InvalidateParagraphs();
             }
         }
-
-        int textWidthLimit = 500;
 
         public int TextWidthLimit
         {
@@ -99,9 +85,8 @@ namespace DrawingSample
         }
 
         public int MinTextWidthLimit => 100;
-        public int MaxTextWidthLimit => 1000;
 
-        bool textWidthLimitEnabled = true;
+        public int MaxTextWidthLimit => 1000;
 
         public bool TextWidthLimitEnabled
         {
@@ -113,8 +98,6 @@ namespace DrawingSample
             }
         }
 
-        TextHorizontalAlignment horizontalAlignment = TextHorizontalAlignment.Left;
-
         public TextHorizontalAlignment HorizontalAlignment
         {
             get => horizontalAlignment;
@@ -124,8 +107,6 @@ namespace DrawingSample
                 Invalidate();
             }
         }
-
-        TextVerticalAlignment verticalAlignment = TextVerticalAlignment.Top;
 
         public TextVerticalAlignment VerticalAlignment
         {
@@ -137,8 +118,6 @@ namespace DrawingSample
             }
         }
 
-        TextTrimming trimming = TextTrimming.EllipsisCharacter;
-
         public TextTrimming Trimming
         {
             get => trimming;
@@ -146,6 +125,16 @@ namespace DrawingSample
             {
                 trimming = value;
                 Invalidate();
+            }
+        }
+
+        private FontStyle FontStyle
+        {
+            get => fontStyle;
+            set
+            {
+                fontStyle = value;
+                InvalidateParagraphs();
             }
         }
 
@@ -175,13 +164,24 @@ namespace DrawingSample
                 dc.DrawLine(textWidthLimitPen, new Point(TextWidthLimit, bounds.Top), new Point(TextWidthLimit, bounds.Bottom));
         }
 
-        static Pen textWidthLimitPen = new Pen(Color.Gray, 1, PenDashStyle.Dash);
-
         protected override Control CreateSettingsControl()
         {
             var control = new TextPageSettings();
             control.Initialize(this);
             return control;
+        }
+
+        private void SetFontStyle(FontStyle style, bool value)
+        {
+            if (value)
+                FontStyle |= style;
+            else
+                FontStyle &= ~style;
+        }
+
+        private bool GetFontStyle(FontStyle style)
+        {
+            return (FontStyle & style) != 0;
         }
 
         private void InvalidateParagraphs()
