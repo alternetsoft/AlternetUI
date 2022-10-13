@@ -249,7 +249,7 @@ namespace Alternet::UI
         return pen->GetGraphicsPen(_graphicsContext->GetRenderer());
     }
 
-    Size DrawingContext::MeasureText(const string& text, Font* font)
+    Size DrawingContext::MeasureText(const string& text, Font* font, double maximumWidth)
     {
         if (_useDCForText)
         {

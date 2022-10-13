@@ -8,7 +8,7 @@ namespace DrawingSample
 {
     internal sealed class TextPage : DrawingPage
     {
-        private const string LoremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nSuspendisse tincidunt orci vitae arcu congue commodo.\nProin fermentum rhoncus dictum.";
+        private const string LoremIpsum = "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. Suspendisse tincidunt orci vitae arcu congue commodo. Proin fermentum rhoncus dictum.";
 
         private static Font fontInfoFont = new Font(FontFamily.GenericMonospace, 8);
         private static Brush fontInfoBrush = Brushes.Black;
@@ -138,6 +138,16 @@ namespace DrawingSample
             }
         }
 
+        TextFormat GetTextFormat()
+        {
+            return new TextFormat
+            {
+                HorizontalAlignment = HorizontalAlignment,
+                VerticalAlignment = VerticalAlignment,
+                Trimming = Trimming
+            };
+        }
+
         public override void Draw(DrawingContext dc, Rect bounds)
         {
             if (paragraphs == null)
@@ -146,6 +156,8 @@ namespace DrawingSample
             var color = Color.MidnightBlue;
             float lighten = 10;
 
+            var textFormat = GetTextFormat();
+
             double x = 20;
             double y = 20;
             foreach (var paragraph in paragraphs)
@@ -153,8 +165,19 @@ namespace DrawingSample
                 dc.DrawText(paragraph.FontInfo, fontInfoFont, fontInfoBrush, new Point(x, y));
                 y += dc.MeasureText(paragraph.FontInfo, fontInfoFont).Height + 3;
 
-                dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new Point(20, y));
-                y += dc.MeasureText(LoremIpsum, paragraph.Font).Height + 20;
+                double textHeight;
+
+                if (TextWidthLimitEnabled)
+                    textHeight = dc.MeasureText(LoremIpsum, paragraph.Font).Height; // todo
+                else
+                    textHeight = dc.MeasureText(LoremIpsum, paragraph.Font).Height;
+
+                if (TextWidthLimitEnabled)
+                    dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new Rect(x, y, TextWidthLimit, textHeight), textFormat);
+                else
+                    dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new Point(x, y), textFormat);
+
+                y += textHeight + 20;
 
                 var c = new Skybrud.Colors.RgbColor(color.R, color.G, color.B).Lighten(lighten).ToRgb();
                 color = Color.FromArgb(c.R, c.G, c.B);

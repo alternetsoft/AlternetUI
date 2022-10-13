@@ -82,10 +82,10 @@ ALTERNET_UI_API void DrawingContext_DrawImageAtRect_(DrawingContext* obj, Image*
         });
 }
 
-ALTERNET_UI_API Size_C DrawingContext_MeasureText_(DrawingContext* obj, const char16_t* text, Font* font)
+ALTERNET_UI_API Size_C DrawingContext_MeasureText_(DrawingContext* obj, const char16_t* text, Font* font, double maximumWidth)
 {
     return MarshalExceptions<Size_C>([&](){
-            return obj->MeasureText(text, font);
+            return obj->MeasureText(text, font, maximumWidth);
         });
 }
 

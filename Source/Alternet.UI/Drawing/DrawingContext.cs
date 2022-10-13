@@ -280,7 +280,29 @@ namespace Alternet.Drawing
             if (font is null)
                 throw new ArgumentNullException(nameof(font));
 
-            return dc.MeasureText(text, font.NativeFont);
+            return dc.MeasureText(text, font.NativeFont, double.NaN);
+        }
+
+        /// <summary>
+        /// Measures the specified string when drawn with the specified <see cref="Font"/>.
+        /// </summary>
+        /// <param name="text">String to measure.</param>
+        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
+        /// <param name="maximumWidth">Maximum width of the string in device-independent units (1/96th inch per unit).</param>
+        /// <returns>
+        /// This method returns a <see cref="Size"/> structure that represents the size,
+        /// in device-independent units (1/96th inch per unit), of the
+        /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
+        /// </returns>
+        public Size MeasureText(string text, Font font, double maximumWidth)
+        {
+            if (text is null)
+                throw new ArgumentNullException(nameof(text));
+
+            if (font is null)
+                throw new ArgumentNullException(nameof(font));
+
+            return dc.MeasureText(text, font.NativeFont, maximumWidth);
         }
 
         /// <summary>

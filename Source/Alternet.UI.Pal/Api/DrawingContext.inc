@@ -10,7 +10,7 @@ void DrawTextAtPoint(const string& text, const Point& origin, Font* font, Brush*
 void DrawTextAtRect(const string& text, const Rect& bounds, Font* font, Brush* brush, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment, TextTrimming trimming);
 void DrawImageAtPoint(Image* image, const Point& origin);
 void DrawImageAtRect(Image* image, const Rect& rect);
-Size MeasureText(const string& text, Font* font);
+Size MeasureText(const string& text, Font* font, double maximumWidth);
 void PushTransform(const Size& translation);
 void Pop();
 void DrawLine(const Point& a, const Point& b, Pen* pen);
