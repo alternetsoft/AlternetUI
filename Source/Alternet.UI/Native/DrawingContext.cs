@@ -59,10 +59,16 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_FloodFill_(NativePointer, point, brush.NativePointer);
         }
         
-        public void DrawText(string text, Alternet.Drawing.Point origin, Font font, Brush brush)
+        public void DrawTextAtPoint(string text, Alternet.Drawing.Point origin, Font font, Brush brush, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment, TextTrimming trimming)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_DrawText_(NativePointer, text, origin, font.NativePointer, brush.NativePointer);
+            NativeApi.DrawingContext_DrawTextAtPoint_(NativePointer, text, origin, font.NativePointer, brush.NativePointer, horizontalAlignment, verticalAlignment, trimming);
+        }
+        
+        public void DrawTextAtRect(string text, Alternet.Drawing.Rect bounds, Font font, Brush brush, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment, TextTrimming trimming)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_DrawTextAtRect_(NativePointer, text, bounds, font.NativePointer, brush.NativePointer, horizontalAlignment, verticalAlignment, trimming);
         }
         
         public void DrawImageAtPoint(Image image, Alternet.Drawing.Point origin)
@@ -134,7 +140,10 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_FloodFill_(IntPtr obj, NativeApiTypes.Point point, IntPtr brush);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawText_(IntPtr obj, string text, NativeApiTypes.Point origin, IntPtr font, IntPtr brush);
+            public static extern void DrawingContext_DrawTextAtPoint_(IntPtr obj, string text, NativeApiTypes.Point origin, IntPtr font, IntPtr brush, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment, TextTrimming trimming);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DrawTextAtRect_(IntPtr obj, string text, NativeApiTypes.Rect bounds, IntPtr font, IntPtr brush, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment, TextTrimming trimming);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawImageAtPoint_(IntPtr obj, IntPtr image, NativeApiTypes.Point origin);

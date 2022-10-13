@@ -59,6 +59,29 @@ namespace Alternet.UI.Native
         Custom = 4,
     }
     
+    enum TextHorizontalAlignment
+    {
+        Left = 0,
+        Center = 1,
+        Right = 2,
+    }
+    
+    enum TextTrimming
+    {
+        None = 0,
+        Character = 1,
+        Word = 2,
+        EllipsisCharacter = 3,
+        EllipsisWord = 4,
+    }
+    
+    enum TextVerticalAlignment
+    {
+        Top = 0,
+        Center = 1,
+        Bottom = 2,
+    }
+    
     enum Key
     {
         None = 0,

@@ -19,7 +19,23 @@ namespace NativeApi.Api
 
         public void FloodFill(Point point, Brush brush) => throw new Exception();
 
-        public void DrawText(string text, Point origin, Font font, Brush brush) => throw new Exception();
+        public void DrawTextAtPoint(
+            string text,
+            Point origin,
+            Font font,
+            Brush brush,
+            TextHorizontalAlignment horizontalAlignment,
+            TextVerticalAlignment verticalAlignment,
+            TextTrimming trimming) => throw new Exception();
+
+        public void DrawTextAtRect(
+            string text,
+            Rect bounds,
+            Font font,
+            Brush brush,
+            TextHorizontalAlignment horizontalAlignment,
+            TextVerticalAlignment verticalAlignment,
+            TextTrimming trimming) => throw new Exception();
 
         public void DrawImageAtPoint(Image image, Point origin) => throw new Exception();
 

@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 
 namespace Alternet.Drawing
 {
@@ -180,6 +181,66 @@ namespace Alternet.Drawing
         /// <param name="brush"><see cref="Brush"/> that determines the color and texture of the drawn text.</param>
         /// <param name="origin"><see cref="Point"/> structure that specifies the upper-left corner of the drawn text.</param>
         public void DrawText(string text, Font font, Brush brush, Point origin)
+        {
+            if (text is null)
+                throw new ArgumentNullException(nameof(text));
+
+            if (font is null)
+                throw new ArgumentNullException(nameof(font));
+
+            dc.DrawText(text, origin, font.NativeFont, brush.NativeBrush);
+        }
+
+        /// <summary>
+        /// Draws the specified text string at the specified location with the specified <see cref="Brush"/> and <see cref="Font"/> objects.
+        /// </summary>
+        /// <param name="text">String to draw.</param>
+        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
+        /// <param name="brush"><see cref="Brush"/> that determines the color and texture of the drawn text.</param>
+        /// <param name="origin"><see cref="Point"/> structure that specifies the upper-left corner of the drawn text.</param>
+        /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes, such as
+        /// alignment and trimming, that are applied to the drawn text.</param>
+        public void DrawText(string text, Font font, Brush brush, Point origin, TextFormat format)
+        {
+            if (text is null)
+                throw new ArgumentNullException(nameof(text));
+
+            if (font is null)
+                throw new ArgumentNullException(nameof(font));
+
+            dc.DrawText(text, origin, font.NativeFont, brush.NativeBrush);
+        }
+
+        /// <summary>
+        /// Draws the specified text string at the specified location with the specified <see cref="Brush"/> and <see cref="Font"/> objects.
+        /// </summary>
+        /// <param name="text">String to draw.</param>
+        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
+        /// <param name="brush"><see cref="Brush"/> that determines the color and texture of the drawn text.</param>
+        /// <param name="bounds"><see cref="Rectangle"/> structure that specifies the bounds of the drawn text.</param>
+        public void DrawText(string text, Font font, Brush brush, Rectangle bounds)
+        {
+            if (text is null)
+                throw new ArgumentNullException(nameof(text));
+
+            if (font is null)
+                throw new ArgumentNullException(nameof(font));
+
+            dc.DrawText(text, origin, font.NativeFont, brush.NativeBrush);
+        }
+
+
+        /// <summary>
+        /// Draws the specified text string at the specified location with the specified <see cref="Brush"/> and <see
+        /// cref="Font"/> objects.
+        /// </summary>
+        /// <param name="text">String to draw.</param>
+        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
+        /// <param name="brush"><see cref="Brush"/> that determines the color and texture of the drawn text.</param>
+        /// <param name="bounds"><see cref="Rectangle"/> structure that specifies the bounds of the drawn text.</param>
+        /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes, such as
+        /// alignment and trimming, that are applied to the drawn text.</param>
+        public void DrawText(string text, Font font, Brush brush, Rectangle bounds, TextFormat format)
         {
             if (text is null)
                 throw new ArgumentNullException(nameof(text));

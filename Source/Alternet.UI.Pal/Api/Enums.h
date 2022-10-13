@@ -60,6 +60,29 @@ namespace Alternet::UI
         Custom = 4,
     };
     
+    enum class TextHorizontalAlignment
+    {
+        Left = 0,
+        Center = 1,
+        Right = 2,
+    };
+    
+    enum class TextTrimming
+    {
+        None = 0,
+        Character = 1,
+        Word = 2,
+        EllipsisCharacter = 3,
+        EllipsisWord = 4,
+    };
+    
+    enum class TextVerticalAlignment
+    {
+        Top = 0,
+        Center = 1,
+        Bottom = 2,
+    };
+    
     enum class Key
     {
         None = 0,

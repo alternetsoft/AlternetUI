@@ -194,7 +194,14 @@ namespace Alternet::UI
         _dc->SetBrush(oldBrush);
     }
 
-    void DrawingContext::DrawText(const string& text, const Point& origin, Font* font, Brush* brush)
+    void DrawingContext::DrawTextAtPoint(
+        const string& text,
+        const Point& origin,
+        Font* font,
+        Brush* brush,
+        TextHorizontalAlignment horizontalAlignment,
+        TextVerticalAlignment verticalAlignment,
+        TextTrimming trimming)
     {
         if (_useDCForText)
         {
@@ -219,6 +226,17 @@ namespace Alternet::UI
             _graphicsContext->SetBrush(GetGraphicsBrush(brush));
             _graphicsContext->DrawText(wxStr(text), o.X, o.Y);
         }
+    }
+
+    void DrawingContext::DrawTextAtRect(
+        const string& text,
+        const Rect& bounds,
+        Font* font,
+        Brush* brush,
+        TextHorizontalAlignment horizontalAlignment,
+        TextVerticalAlignment verticalAlignment,
+        TextTrimming trimming)
+    {
     }
 
     wxGraphicsBrush DrawingContext::GetGraphicsBrush(Brush* brush)
