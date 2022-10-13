@@ -1,5 +1,5 @@
+using Alternet.UI.Native;
 using System;
-using System.Drawing;
 
 namespace Alternet.Drawing
 {
@@ -182,13 +182,7 @@ namespace Alternet.Drawing
         /// <param name="origin"><see cref="Point"/> structure that specifies the upper-left corner of the drawn text.</param>
         public void DrawText(string text, Font font, Brush brush, Point origin)
         {
-            if (text is null)
-                throw new ArgumentNullException(nameof(text));
-
-            if (font is null)
-                throw new ArgumentNullException(nameof(font));
-
-            dc.DrawText(text, origin, font.NativeFont, brush.NativeBrush);
+            DrawText(text, font, brush, origin, TextFormat.Default);
         }
 
         /// <summary>
@@ -208,7 +202,17 @@ namespace Alternet.Drawing
             if (font is null)
                 throw new ArgumentNullException(nameof(font));
 
-            dc.DrawText(text, origin, font.NativeFont, brush.NativeBrush);
+            if (format is null)
+                throw new ArgumentNullException(nameof(format));
+
+            dc.DrawTextAtPoint(
+                text,
+                origin,
+                font.NativeFont,
+                brush.NativeBrush,
+                (UI.Native.TextHorizontalAlignment)format.HorizontalAlignment,
+                (UI.Native.TextVerticalAlignment)format.VerticalAlignment,
+                (UI.Native.TextTrimming)format.Trimming);
         }
 
         /// <summary>
@@ -217,8 +221,8 @@ namespace Alternet.Drawing
         /// <param name="text">String to draw.</param>
         /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
         /// <param name="brush"><see cref="Brush"/> that determines the color and texture of the drawn text.</param>
-        /// <param name="bounds"><see cref="Rectangle"/> structure that specifies the bounds of the drawn text.</param>
-        public void DrawText(string text, Font font, Brush brush, Rectangle bounds)
+        /// <param name="bounds"><see cref="Rect"/> structure that specifies the bounds of the drawn text.</param>
+        public void DrawText(string text, Font font, Brush brush, Rect bounds)
         {
             if (text is null)
                 throw new ArgumentNullException(nameof(text));
@@ -226,7 +230,7 @@ namespace Alternet.Drawing
             if (font is null)
                 throw new ArgumentNullException(nameof(font));
 
-            dc.DrawText(text, origin, font.NativeFont, brush.NativeBrush);
+            DrawText(text, font, brush, bounds, TextFormat.Default);
         }
 
 
@@ -237,10 +241,10 @@ namespace Alternet.Drawing
         /// <param name="text">String to draw.</param>
         /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
         /// <param name="brush"><see cref="Brush"/> that determines the color and texture of the drawn text.</param>
-        /// <param name="bounds"><see cref="Rectangle"/> structure that specifies the bounds of the drawn text.</param>
+        /// <param name="bounds"><see cref="Rect"/> structure that specifies the bounds of the drawn text.</param>
         /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes, such as
         /// alignment and trimming, that are applied to the drawn text.</param>
-        public void DrawText(string text, Font font, Brush brush, Rectangle bounds, TextFormat format)
+        public void DrawText(string text, Font font, Brush brush, Rect bounds, TextFormat format)
         {
             if (text is null)
                 throw new ArgumentNullException(nameof(text));
@@ -248,7 +252,14 @@ namespace Alternet.Drawing
             if (font is null)
                 throw new ArgumentNullException(nameof(font));
 
-            dc.DrawText(text, origin, font.NativeFont, brush.NativeBrush);
+            dc.DrawTextAtRect(
+                text,
+                bounds,
+                font.NativeFont,
+                brush.NativeBrush,
+                (UI.Native.TextHorizontalAlignment)format.HorizontalAlignment,
+                (UI.Native.TextVerticalAlignment)format.VerticalAlignment,
+                (UI.Native.TextTrimming)format.Trimming);
         }
 
         /// <summary>
