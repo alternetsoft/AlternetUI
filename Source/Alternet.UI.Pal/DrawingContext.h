@@ -9,6 +9,8 @@
 
 namespace Alternet::UI
 {
+    class TextPainter;
+
     class DrawingContext : public Object
     {
 #include "Api/DrawingContext.inc"
@@ -26,6 +28,8 @@ namespace Alternet::UI
 
         wxGraphicsBrush GetGraphicsBrush(Brush* brush);
         wxGraphicsPen GetGraphicsPen(Pen* pen);
+
+        TextPainter* GetTextPainter();
 
         bool _useDCForText = true;
     };

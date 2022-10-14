@@ -59,10 +59,10 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_FloodFill_(NativePointer, point, brush.NativePointer);
         }
         
-        public void DrawTextAtPoint(string text, Alternet.Drawing.Point origin, Font font, Brush brush, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment, TextTrimming trimming)
+        public void DrawTextAtPoint(string text, Alternet.Drawing.Point origin, Font font, Brush brush)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_DrawTextAtPoint_(NativePointer, text, origin, font.NativePointer, brush.NativePointer, horizontalAlignment, verticalAlignment, trimming);
+            NativeApi.DrawingContext_DrawTextAtPoint_(NativePointer, text, origin, font.NativePointer, brush.NativePointer);
         }
         
         public void DrawTextAtRect(string text, Alternet.Drawing.Rect bounds, Font font, Brush brush, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment, TextTrimming trimming)
@@ -140,7 +140,7 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_FloodFill_(IntPtr obj, NativeApiTypes.Point point, IntPtr brush);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawTextAtPoint_(IntPtr obj, string text, NativeApiTypes.Point origin, IntPtr font, IntPtr brush, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment, TextTrimming trimming);
+            public static extern void DrawingContext_DrawTextAtPoint_(IntPtr obj, string text, NativeApiTypes.Point origin, IntPtr font, IntPtr brush);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawTextAtRect_(IntPtr obj, string text, NativeApiTypes.Rect bounds, IntPtr font, IntPtr brush, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment, TextTrimming trimming);

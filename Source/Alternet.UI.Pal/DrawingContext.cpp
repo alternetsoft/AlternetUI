@@ -1,6 +1,7 @@
 #include "DrawingContext.h"
 #include "SolidBrush.h"
 #include "FloodFill.h"
+#include "TextPainter.h"
 
 namespace Alternet::UI
 {
@@ -198,34 +199,13 @@ namespace Alternet::UI
         const string& text,
         const Point& origin,
         Font* font,
-        Brush* brush,
-        TextHorizontalAlignment horizontalAlignment,
-        TextVerticalAlignment verticalAlignment,
-        TextTrimming trimming)
+        Brush* brush)
     {
-        if (_useDCForText)
-        {
-            auto solidBrush = dynamic_cast<SolidBrush*>(brush);
-            if (solidBrush == nullptr)
-            {
-                throwExInvalidArg(solidBrush, u"Only SolidBrush objects are supported");
-            }
-
-            auto oldTextForeground = _dc->GetTextForeground();
-            auto oldFont = _dc->GetFont();
-            _dc->SetTextForeground(solidBrush->GetWxBrush().GetColour());
-            _dc->SetFont(font->GetWxFont());
-            _dc->DrawText(wxStr(text), fromDip(origin + _translation, _dc->GetWindow()));
-            _dc->SetTextForeground(oldTextForeground);
-            _dc->SetFont(oldFont);
-        }
-        else
-        {
-            auto o = fromDipF(origin + _translation, _dc->GetWindow());
-            _graphicsContext->SetFont(_graphicsContext->CreateFont(font->GetWxFont()));
-            _graphicsContext->SetBrush(GetGraphicsBrush(brush));
-            _graphicsContext->DrawText(wxStr(text), o.X, o.Y);
-        }
+        std::unique_ptr<TextPainter>(GetTextPainter())->DrawTextAtPoint(
+            text,
+            origin,
+            font,
+            brush);
     }
 
     void DrawingContext::DrawTextAtRect(
@@ -237,6 +217,14 @@ namespace Alternet::UI
         TextVerticalAlignment verticalAlignment,
         TextTrimming trimming)
     {
+        std::unique_ptr<TextPainter>(GetTextPainter())->DrawTextAtRect(
+            text,
+            bounds,
+            font,
+            brush,
+            horizontalAlignment,
+            verticalAlignment,
+            trimming);
     }
 
     wxGraphicsBrush DrawingContext::GetGraphicsBrush(Brush* brush)
@@ -249,21 +237,13 @@ namespace Alternet::UI
         return pen->GetGraphicsPen(_graphicsContext->GetRenderer());
     }
 
+    TextPainter* DrawingContext::GetTextPainter()
+    {
+        return new TextPainter(_dc, _translation);
+    }
+
     Size DrawingContext::MeasureText(const string& text, Font* font, double maximumWidth)
     {
-        if (_useDCForText)
-        {
-            wxCoord x = 0, y = 0;
-            auto wxFont = font->GetWxFont();
-            auto oldFont = _dc->GetFont();
-            _dc->SetFont(wxFont); // just passing font as a GetMultiLineTextExtent argument doesn't work on macOS/Linux
-            _dc->GetMultiLineTextExtent(wxStr(text), &x, &y, nullptr, &wxFont);
-            _dc->SetFont(oldFont);
-            return toDip(wxSize(x, y), _dc->GetWindow());
-        }
-        else
-        {
-            throwEx(u"todo");
-        }
+        return std::unique_ptr<TextPainter>(GetTextPainter())->MeasureText(text, font, maximumWidth);
     }
 }

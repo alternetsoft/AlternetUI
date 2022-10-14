@@ -209,10 +209,7 @@ namespace Alternet.Drawing
                 text,
                 origin,
                 font.NativeFont,
-                brush.NativeBrush,
-                (UI.Native.TextHorizontalAlignment)format.HorizontalAlignment,
-                (UI.Native.TextVerticalAlignment)format.VerticalAlignment,
-                (UI.Native.TextTrimming)format.Trimming);
+                brush.NativeBrush);
         }
 
         /// <summary>

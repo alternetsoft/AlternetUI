@@ -334,6 +334,7 @@
     <ClInclude Include="SolidBrush.h" />
     <ClInclude Include="TabControl.h" />
     <ClInclude Include="TextBox.h" />
+    <ClInclude Include="TextPainter.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TreeView.h" />
     <ClInclude Include="TypedEnumFlags.h" />

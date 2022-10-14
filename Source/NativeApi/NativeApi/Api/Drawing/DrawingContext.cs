@@ -23,10 +23,7 @@ namespace NativeApi.Api
             string text,
             Point origin,
             Font font,
-            Brush brush,
-            TextHorizontalAlignment horizontalAlignment,
-            TextVerticalAlignment verticalAlignment,
-            TextTrimming trimming) => throw new Exception();
+            Brush brush) => throw new Exception();
 
         public void DrawTextAtRect(
             string text,

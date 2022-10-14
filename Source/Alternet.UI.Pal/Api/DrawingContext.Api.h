@@ -54,10 +54,10 @@ ALTERNET_UI_API void DrawingContext_FloodFill_(DrawingContext* obj, Point point,
         });
 }
 
-ALTERNET_UI_API void DrawingContext_DrawTextAtPoint_(DrawingContext* obj, const char16_t* text, Point origin, Font* font, Brush* brush, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment, TextTrimming trimming)
+ALTERNET_UI_API void DrawingContext_DrawTextAtPoint_(DrawingContext* obj, const char16_t* text, Point origin, Font* font, Brush* brush)
 {
     MarshalExceptions<void>([&](){
-            obj->DrawTextAtPoint(text, origin, font, brush, horizontalAlignment, verticalAlignment, trimming);
+            obj->DrawTextAtPoint(text, origin, font, brush);
         });
 }
 
