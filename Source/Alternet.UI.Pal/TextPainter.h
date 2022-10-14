@@ -7,109 +7,77 @@
 
 namespace
 {
+    using namespace Alternet::UI;
+
     class TextWrapper
     {
     public:
-        TextWrapper(wxDC* dc, const wxString& text, int maximumWidth)
+        static wxString Wrap(wxDC* dc, wxString str, int maxWidth, TextWrapping wrapping)
         {
-            Wrap(dc, text, maximumWidth);
-        }
+            auto parts = Explode(str, wrapping);
 
-        wxString const& GetWrapped() const { return _wrapped; }
-    protected:
-        virtual void OnOutputLine(const wxString& line)
-        {
-            _wrapped += line;
-        }
+            wxArrayInt widths;
+            GetPartsWidths(dc, str, parts, wrapping, widths);
 
-        virtual void OnNewLine()
-        {
-            _wrapped += '\n';
+            int curLineLength = 0;
+            wxString strBuilder;
+            for (int i = 0; i < parts.Count(); i += 1)
+            {
+                auto part = parts[i];
+                auto partWidth = widths[i];
+                
+                // If adding the new part to the current line would be too long,
+                // then put it on a new line (and split it up if it's too long).
+                if (curLineLength + partWidth > maxWidth)
+                {
+                    // Only move down to a new line if we have text on the current line.
+                    // Avoids situation where wrapped whitespace causes emptylines in text.
+                    if (curLineLength > 0)
+                    {
+                        strBuilder.Append('\n');
+                        curLineLength = 0;
+                    }
+
+                    part.Trim();
+                }
+
+                strBuilder.Append(part);
+                curLineLength += partWidth;
+            }
+
+            return strBuilder;
         }
 
     private:
-
-        // call OnOutputLine() and set m_eol to true
-        void DoOutputLine(const wxString& line)
+        static void GetPartsWidths(wxDC* dc, const wxString& str, const wxArrayString& parts, TextWrapping wrapping, wxArrayInt& widths)
         {
-            OnOutputLine(line);
-
-            m_eol = true;
-        }
-
-        // this function is a destructive inspector: when it returns true it also
-        // resets the flag to false so calling it again wouldn't return true any
-        // more
-        bool IsStartOfNewLine()
-        {
-            if (!m_eol)
-                return false;
-
-            m_eol = false;
-
-            return true;
-        }
-
-        bool m_eol = false;
-
-        void Wrap(wxDC* dc, const wxString& text, int widthMax)
-        {
-            const wxArrayString ls = wxSplit(text, '\n', '\0');
-            for (wxArrayString::const_iterator i = ls.begin(); i != ls.end(); ++i)
+            if (wrapping == TextWrapping::Character)
             {
-                wxString line = *i;
-
-                if (i != ls.begin())
-                {
-                    // Do this even if the line is empty, except if it's the first one.
-                    OnNewLine();
-                }
-
-                // Is this a special case when wrapping is disabled?
-                if (widthMax < 0)
-                {
-                    DoOutputLine(line);
-                    continue;
-                }
-
-                for (bool newLine = false; !line.empty(); newLine = true)
-                {
-                    if (newLine)
-                        OnNewLine();
-
-                    wxArrayInt widths;
-                    dc->GetPartialTextExtents(line, widths);
-
-                    const size_t posEnd = std::lower_bound(widths.begin(),
-                        widths.end(),
-                        widthMax) - widths.begin();
-
-                    // Does the entire remaining line fit?
-                    if (posEnd == line.length())
-                    {
-                        DoOutputLine(line);
-                        break;
-                    }
-
-                    // Find the last word to chop off.
-                    const size_t lastSpace = line.rfind(' ', posEnd);
-                    if (lastSpace == wxString::npos)
-                    {
-                        // No spaces, so can't wrap.
-                        DoOutputLine(line);
-                        break;
-                    }
-
-                    // Output the part that fits.
-                    DoOutputLine(line.substr(0, lastSpace));
-
-                    // And redo the layout with the rest.
-                    line = line.substr(lastSpace + 1);
-                }
+                dc->GetPartialTextExtents(str, widths);
             }
+            else if (wrapping == TextWrapping::Word)
+            {
+                for (auto part : parts)
+                    widths.Add(dc->GetTextExtent(part).x);
+            }
+            else
+                throwExNoInfo;
         }
 
-        wxString _wrapped;
+        static wxArrayString Explode(wxString str, TextWrapping textWrapping)
+        {
+            if (textWrapping == TextWrapping::Word)
+                return wxSplit(str, ' ', '\0');
+            else if (textWrapping == TextWrapping::Character)
+            {
+                wxArrayString result;
+                for (int i = 0; i < str.length(); i++)
+                    result.Add(str[i]);
+                return result;
+            }
+            else
+                throwExNoInfo;
+        }
     };
 }
 
@@ -201,8 +169,8 @@ namespace Alternet::UI
 
             if (useBounds)
             {
-                TextWrapper wrapper(_dc, wxStr(text), fromDip(bounds.Width, window));
-                _dc->DrawText(wrapper.GetWrapped(), fromDip(bounds.GetLocation() + _translation, window));
+                auto wrapped = TextWrapper::Wrap(_dc, wxStr(text), fromDip(bounds.Width, window), wrapping);
+                _dc->DrawText(wrapped, fromDip(bounds.GetLocation() + _translation, window));
             }
             else
             {
