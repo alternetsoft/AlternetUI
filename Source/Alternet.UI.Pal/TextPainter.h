@@ -139,7 +139,8 @@ namespace Alternet::UI
                 brush,
                 (TextHorizontalAlignment)0,
                 (TextVerticalAlignment)0,
-                (TextTrimming)0);
+                (TextTrimming)0,
+                (TextWrapping)0);
         }
 
         void DrawTextAtRect(
@@ -149,7 +150,8 @@ namespace Alternet::UI
             Brush* brush,
             TextHorizontalAlignment horizontalAlignment,
             TextVerticalAlignment verticalAlignment,
-            TextTrimming trimming)
+            TextTrimming trimming,
+            TextWrapping wrapping)
         {
             DrawTextCore(
                 text,
@@ -159,7 +161,8 @@ namespace Alternet::UI
                 brush,
                 horizontalAlignment,
                 verticalAlignment,
-                trimming);
+                trimming,
+                wrapping);
         }
 
         Size MeasureText(const string& text, Font* font, double maximumWidth)
@@ -182,7 +185,8 @@ namespace Alternet::UI
             Brush* brush,
             TextHorizontalAlignment horizontalAlignment,
             TextVerticalAlignment verticalAlignment,
-            TextTrimming trimming)
+            TextTrimming trimming,
+            TextWrapping wrapping)
         {
             auto solidBrush = dynamic_cast<SolidBrush*>(brush);
             if (solidBrush == nullptr)

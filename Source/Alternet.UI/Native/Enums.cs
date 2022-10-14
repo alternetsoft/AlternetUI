@@ -82,6 +82,13 @@ namespace Alternet.UI.Native
         Bottom = 2,
     }
     
+    enum TextWrapping
+    {
+        None = 0,
+        Character = 1,
+        Word = 2,
+    }
+    
     enum Key
     {
         None = 0,

@@ -19,14 +19,18 @@ namespace DrawingSample
         private string customFontFamilyName = Control.DefaultFont.FontFamily.Name;
 
         private int textWidthLimit = 500;
+        private int textHeightLimit = 40;
 
         private bool textWidthLimitEnabled = true;
+        private bool textHeightLimitEnabled = false;
 
         private TextHorizontalAlignment horizontalAlignment = TextHorizontalAlignment.Left;
 
         private TextVerticalAlignment verticalAlignment = TextVerticalAlignment.Top;
 
         private TextTrimming trimming = TextTrimming.EllipsisCharacter;
+
+        private TextWrapping wrapping = TextWrapping.Character;
 
         public override string Name => "Text";
 
@@ -84,9 +88,23 @@ namespace DrawingSample
             }
         }
 
+        public int TextHeightLimit
+        {
+            get => textHeightLimit;
+            set
+            {
+                textHeightLimit = value;
+                Invalidate();
+            }
+        }
+
         public int MinTextWidthLimit => 100;
 
         public int MaxTextWidthLimit => 1000;
+
+        public int MinTextHeightLimit => 20;
+
+        public int MaxTextHeightLimit => 200;
 
         public bool TextWidthLimitEnabled
         {
@@ -94,6 +112,16 @@ namespace DrawingSample
             set
             {
                 textWidthLimitEnabled = value;
+                Invalidate();
+            }
+        }
+
+        public bool TextHeightLimitEnabled
+        {
+            get => textHeightLimitEnabled;
+            set
+            {
+                textHeightLimitEnabled = value;
                 Invalidate();
             }
         }
@@ -128,6 +156,16 @@ namespace DrawingSample
             }
         }
 
+        public TextWrapping Wrapping
+        {
+            get => wrapping;
+            set
+            {
+                wrapping = value;
+                Invalidate();
+            }
+        }
+
         private FontStyle FontStyle
         {
             get => fontStyle;
@@ -136,16 +174,6 @@ namespace DrawingSample
                 fontStyle = value;
                 InvalidateParagraphs();
             }
-        }
-
-        TextFormat GetTextFormat()
-        {
-            return new TextFormat
-            {
-                HorizontalAlignment = HorizontalAlignment,
-                VerticalAlignment = VerticalAlignment,
-                Trimming = Trimming
-            };
         }
 
         public override void Draw(DrawingContext dc, Rect bounds)
@@ -167,13 +195,22 @@ namespace DrawingSample
 
                 double textHeight;
 
-                if (TextWidthLimitEnabled)
-                    textHeight = dc.MeasureText(LoremIpsum, paragraph.Font, MaxTextWidthLimit).Height;
+                if (TextHeightLimitEnabled)
+                {
+                    textHeight = TextHeightLimit;
+                }
                 else
-                    textHeight = dc.MeasureText(LoremIpsum, paragraph.Font).Height;
+                {
+                    if (TextWidthLimitEnabled)
+                        textHeight = dc.MeasureText(LoremIpsum, paragraph.Font, TextWidthLimit).Height;
+                    else
+                        textHeight = dc.MeasureText(LoremIpsum, paragraph.Font).Height;
+                }
 
                 if (TextWidthLimitEnabled)
                     dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new Rect(x, y, TextWidthLimit, textHeight), textFormat);
+                else if (TextHeightLimitEnabled)
+                    dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new Rect(x, y, TextWidthLimitEnabled ? TextWidthLimit : double.MaxValue, textHeight), textFormat);
                 else
                     dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new Point(x, y), textFormat);
 
@@ -192,6 +229,17 @@ namespace DrawingSample
             var control = new TextPageSettings();
             control.Initialize(this);
             return control;
+        }
+
+        private TextFormat GetTextFormat()
+        {
+            return new TextFormat
+            {
+                HorizontalAlignment = HorizontalAlignment,
+                VerticalAlignment = VerticalAlignment,
+                Trimming = Trimming,
+                Wrapping = Wrapping
+            };
         }
 
         private void SetFontStyle(FontStyle style, bool value)

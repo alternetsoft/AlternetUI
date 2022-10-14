@@ -26,6 +26,9 @@ namespace DrawingSample
 
             foreach (var value in Enum.GetValues(typeof(TextTrimming)))
                 trimmingComboBox.Items.Add(value!);
+
+            foreach (var value in Enum.GetValues(typeof(TextWrapping)))
+                wrappingComboBox.Items.Add(value!);
         }
     }
 }

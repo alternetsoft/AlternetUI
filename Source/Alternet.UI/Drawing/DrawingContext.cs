@@ -256,7 +256,8 @@ namespace Alternet.Drawing
                 brush.NativeBrush,
                 (UI.Native.TextHorizontalAlignment)format.HorizontalAlignment,
                 (UI.Native.TextVerticalAlignment)format.VerticalAlignment,
-                (UI.Native.TextTrimming)format.Trimming);
+                (UI.Native.TextTrimming)format.Trimming,
+                (UI.Native.TextWrapping)format.Wrapping);
         }
 
         /// <summary>

@@ -215,7 +215,8 @@ namespace Alternet::UI
         Brush* brush,
         TextHorizontalAlignment horizontalAlignment,
         TextVerticalAlignment verticalAlignment,
-        TextTrimming trimming)
+        TextTrimming trimming,
+        TextWrapping wrapping)
     {
         std::unique_ptr<TextPainter>(GetTextPainter())->DrawTextAtRect(
             text,
@@ -224,7 +225,8 @@ namespace Alternet::UI
             brush,
             horizontalAlignment,
             verticalAlignment,
-            trimming);
+            trimming,
+            wrapping);
     }
 
     wxGraphicsBrush DrawingContext::GetGraphicsBrush(Brush* brush)

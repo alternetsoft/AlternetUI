@@ -61,10 +61,10 @@ ALTERNET_UI_API void DrawingContext_DrawTextAtPoint_(DrawingContext* obj, const 
         });
 }
 
-ALTERNET_UI_API void DrawingContext_DrawTextAtRect_(DrawingContext* obj, const char16_t* text, Rect bounds, Font* font, Brush* brush, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment, TextTrimming trimming)
+ALTERNET_UI_API void DrawingContext_DrawTextAtRect_(DrawingContext* obj, const char16_t* text, Rect bounds, Font* font, Brush* brush, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment, TextTrimming trimming, TextWrapping wrapping)
 {
     MarshalExceptions<void>([&](){
-            obj->DrawTextAtRect(text, bounds, font, brush, horizontalAlignment, verticalAlignment, trimming);
+            obj->DrawTextAtRect(text, bounds, font, brush, horizontalAlignment, verticalAlignment, trimming, wrapping);
         });
 }
 

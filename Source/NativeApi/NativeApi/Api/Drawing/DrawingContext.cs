@@ -32,7 +32,8 @@ namespace NativeApi.Api
             Brush brush,
             TextHorizontalAlignment horizontalAlignment,
             TextVerticalAlignment verticalAlignment,
-            TextTrimming trimming) => throw new Exception();
+            TextTrimming trimming,
+            TextWrapping wrapping) => throw new Exception();
 
         public void DrawImageAtPoint(Image image, Point origin) => throw new Exception();
 

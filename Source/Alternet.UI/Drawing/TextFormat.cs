@@ -35,5 +35,12 @@ namespace Alternet.Drawing
         /// <value>A <see cref="TextTrimming"/> enumeration that indicates how text drawn with this
         /// <see cref="TextFormat"/> object is trimmed when it exceeds the edges of the layout rectangle. Default is <see cref="TextTrimming.None"/></value>
         public TextTrimming Trimming { get; set; } = TextTrimming.None;
+
+        /// <summary>
+        /// Gets or sets the <see cref="TextWrapping"/> enumeration for this <see cref="TextFormat"/> object.
+        /// </summary>
+        /// <value>A <see cref="TextWrapping"/> enumeration that indicates how text drawn with this
+        /// <see cref="TextFormat"/> object is wrapped when it exceeds the edges of the layout rectangle. Default is <see cref="TextWrapping.Character"/></value>
+        public TextWrapping Wrapping { get; set; } = TextWrapping.Character;
     }
 }
