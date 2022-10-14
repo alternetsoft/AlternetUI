@@ -8,7 +8,10 @@ namespace DrawingSample
 {
     internal sealed class TextPage : DrawingPage
     {
-        private const string LoremIpsum = "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. Suspendisse tincidunt orci vitae arcu congue commodo. Proin fermentum rhoncus dictum.";
+        //private const string LoremIpsum = "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. Suspendisse tincidunt orci vitae arcu congue commodo. Proin fermentum rhoncus dictum.";
+        private const string LoremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt orci vitae arcu congue commodo. Proin fermentum rhoncus dictum.";
+        //private const string LoremIpsum = "abcabcabcabcabcabcabcabcabcabcabcabcabcabcabc";
+        //private const string LoremIpsum = "01234567890123456789";
 
         private static Font fontInfoFont = new Font(FontFamily.GenericMonospace, 8);
         private static Brush fontInfoBrush = Brushes.Black;
@@ -221,7 +224,7 @@ namespace DrawingSample
             }
 
             if (TextWidthLimitEnabled)
-                dc.DrawLine(textWidthLimitPen, new Point(TextWidthLimit, bounds.Top), new Point(TextWidthLimit, bounds.Bottom));
+                dc.DrawLine(textWidthLimitPen, new Point(TextWidthLimit + x, bounds.Top), new Point(TextWidthLimit + x, bounds.Bottom));
         }
 
         protected override Control CreateSettingsControl()

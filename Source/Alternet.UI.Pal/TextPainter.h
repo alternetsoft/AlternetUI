@@ -14,41 +14,104 @@ namespace
     public:
         static wxString Wrap(wxDC* dc, wxString str, int maxWidth, TextWrapping wrapping)
         {
-            auto parts = Explode(str, wrapping);
-
-            wxArrayInt widths;
-            GetPartsWidths(dc, str, parts, wrapping, widths);
-
-            int curLineLength = 0;
-            wxString strBuilder;
-            for (int i = 0; i < parts.Count(); i += 1)
-            {
-                auto part = parts[i];
-                auto partWidth = widths[i];
-                
-                // If adding the new part to the current line would be too long,
-                // then put it on a new line (and split it up if it's too long).
-                if (curLineLength + partWidth > maxWidth)
-                {
-                    // Only move down to a new line if we have text on the current line.
-                    // Avoids situation where wrapped whitespace causes emptylines in text.
-                    if (curLineLength > 0)
-                    {
-                        strBuilder.Append('\n');
-                        curLineLength = 0;
-                    }
-
-                    part.Trim();
-                }
-
-                strBuilder.Append(part);
-                curLineLength += partWidth;
-            }
-
-            return strBuilder;
+            if (wrapping == TextWrapping::Character)
+                return WrapByCharacter(dc, str, maxWidth);
+            else if (wrapping == TextWrapping::Word)
+                return WrapByWord(dc, str, maxWidth);
+            else
+                return str;
         }
 
     private:
+        static wxString WrapByWord(wxDC* dc, wxString str, int maxWidth)
+        {
+            //auto parts = Explode(str, wrapping);
+
+            //wxArrayInt widths;
+            //GetPartsWidths(dc, str, parts, wrapping, widths);
+
+            //int curLineLength = 0;
+            //wxString strBuilder;
+            //for (int i = 0; i < parts.Count(); i += 1)
+            //{
+            //    auto part = parts[i];
+            //    auto partWidth = widths[i];
+
+            //    // If adding the new part to the current line would be too long,
+            //    // then put it on a new line (and split it up if it's too long).
+            //    if (curLineLength + partWidth > maxWidth)
+            //    {
+            //        // Only move down to a new line if we have text on the current line.
+            //        // Avoids situation where wrapped whitespace causes emptylines in text.
+            //        if (curLineLength > 0)
+            //        {
+            //            strBuilder.Append('\n');
+            //            curLineLength = 0;
+            //        }
+
+            //        part.Trim();
+            //    }
+
+            //    strBuilder.Append(part);
+            //    curLineLength += partWidth;
+            //}
+
+            //return strBuilder;
+
+            return str;
+        }
+
+        static wxString WrapByCharacter(wxDC* dc, wxString str, int maxWidth)
+        {
+            wxArrayInt widths;
+            dc->GetPartialTextExtents(str, widths);
+
+            int lineWidth = 0;
+            wxString stringBuilder;
+            for (int i = 0; i < str.Length(); i++)
+            {
+                auto c = str.GetChar(i);
+                
+                int charWidth;
+                if (i == 0)
+                    charWidth = widths[i];
+                else
+                    charWidth = widths[i] - widths[i - 1];
+
+                bool needLineBreak = false;
+
+                if (c == '\n')
+                {
+                    needLineBreak = true;
+                }
+                else
+                {
+                    if (lineWidth + charWidth > maxWidth)
+                    {
+                        if (lineWidth > 0)
+                        {
+                            // Only move down to a new line if we have text on the current line.
+                            // Avoids situation where wrapped whitespace causes emptylines in text.
+                            needLineBreak = true;
+                        }
+                    }
+                }
+
+                if (needLineBreak)
+                {
+                    stringBuilder.Append('\n');
+                    lineWidth = 0;
+                }
+                else
+                    stringBuilder.Append(c);
+    
+                lineWidth += charWidth;
+            }
+
+            return stringBuilder;
+        }
+
+
         static void GetPartsWidths(wxDC* dc, const wxString& str, const wxArrayString& parts, TextWrapping wrapping, wxArrayInt& widths)
         {
             if (wrapping == TextWrapping::Character)
