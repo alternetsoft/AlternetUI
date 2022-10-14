@@ -244,8 +244,8 @@ namespace Alternet::UI
         return new TextPainter(_dc, _translation);
     }
 
-    Size DrawingContext::MeasureText(const string& text, Font* font, double maximumWidth)
+    Size DrawingContext::MeasureText(const string& text, Font* font, double maximumWidth, TextWrapping wrapping)
     {
-        return std::unique_ptr<TextPainter>(GetTextPainter())->MeasureText(text, font, maximumWidth);
+        return std::unique_ptr<TextPainter>(GetTextPainter())->MeasureText(text, font, maximumWidth, wrapping);
     }
 }

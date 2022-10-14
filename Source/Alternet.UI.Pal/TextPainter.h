@@ -196,13 +196,18 @@ namespace Alternet::UI
                 wrapping);
         }
 
-        Size MeasureText(const string& text, Font* font, double maximumWidth)
+        Size MeasureText(const string& text, Font* font, double maximumWidth, TextWrapping wrapping)
         {
             wxCoord x = 0, y = 0;
             auto wxFont = font->GetWxFont();
             auto oldFont = _dc->GetFont();
             _dc->SetFont(wxFont); // just passing font as a GetMultiLineTextExtent argument doesn't work on macOS/Linux
-            _dc->GetMultiLineTextExtent(wxStr(text), &x, &y, nullptr, &wxFont);
+            
+            wxString str = wxStr(text);
+            if (!isnan(maximumWidth))
+                str = TextWrapper::Wrap(_dc, str, maximumWidth, wrapping);
+
+            _dc->GetMultiLineTextExtent(str, &x, &y, nullptr, &wxFont);
             _dc->SetFont(oldFont);
             return toDip(wxSize(x, y), _dc->GetWindow());
         }

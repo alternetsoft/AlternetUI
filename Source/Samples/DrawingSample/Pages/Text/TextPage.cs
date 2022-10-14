@@ -205,7 +205,7 @@ namespace DrawingSample
                 else
                 {
                     if (TextWidthLimitEnabled)
-                        textHeight = dc.MeasureText(LoremIpsum, paragraph.Font, TextWidthLimit).Height;
+                        textHeight = dc.MeasureText(LoremIpsum, paragraph.Font, TextWidthLimit, GetTextFormat()).Height;
                     else
                         textHeight = dc.MeasureText(LoremIpsum, paragraph.Font).Height;
                 }

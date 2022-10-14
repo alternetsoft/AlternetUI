@@ -278,11 +278,11 @@ namespace Alternet.Drawing
             if (font is null)
                 throw new ArgumentNullException(nameof(font));
 
-            return dc.MeasureText(text, font.NativeFont, double.NaN);
+            return dc.MeasureText(text, font.NativeFont, double.NaN, UI.Native.TextWrapping.None);
         }
 
         /// <summary>
-        /// Measures the specified string when drawn with the specified <see cref="Font"/>.
+        /// Measures the specified string when drawn with the specified <see cref="Font"/> and maximum width.
         /// </summary>
         /// <param name="text">String to measure.</param>
         /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
@@ -300,7 +300,34 @@ namespace Alternet.Drawing
             if (font is null)
                 throw new ArgumentNullException(nameof(font));
 
-            return dc.MeasureText(text, font.NativeFont, maximumWidth);
+            return dc.MeasureText(text, font.NativeFont, maximumWidth, UI.Native.TextWrapping.Character);
+        }
+
+        /// <summary>
+        /// Measures the specified string when drawn with the specified <see cref="Font"/>, maximum width and <see cref="TextFormat"/>.
+        /// </summary>
+        /// <param name="text">String to measure.</param>
+        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
+        /// <param name="maximumWidth">Maximum width of the string in device-independent units (1/96th inch per unit).</param>
+        /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes, such as
+        /// alignment and trimming, that are applied to the drawn text.</param>
+        /// <returns>
+        /// This method returns a <see cref="Size"/> structure that represents the size,
+        /// in device-independent units (1/96th inch per unit), of the
+        /// string specified by the <c>text</c> parameter as drawn with the <c>font</c> parameter.
+        /// </returns>
+        public Size MeasureText(string text, Font font, double maximumWidth, TextFormat format)
+        {
+            if (text is null)
+                throw new ArgumentNullException(nameof(text));
+
+            if (font is null)
+                throw new ArgumentNullException(nameof(font));
+        
+            if (format is null)
+                throw new ArgumentNullException(nameof(format));
+
+            return dc.MeasureText(text, font.NativeFont, maximumWidth, (UI.Native.TextWrapping)format.Wrapping);
         }
 
         /// <summary>

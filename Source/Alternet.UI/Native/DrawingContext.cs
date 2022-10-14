@@ -83,10 +83,10 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DrawImageAtRect_(NativePointer, image.NativePointer, rect);
         }
         
-        public Alternet.Drawing.Size MeasureText(string text, Font font, double maximumWidth)
+        public Alternet.Drawing.Size MeasureText(string text, Font font, double maximumWidth, TextWrapping textWrapping)
         {
             CheckDisposed();
-            var n = NativeApi.DrawingContext_MeasureText_(NativePointer, text, font.NativePointer, maximumWidth);
+            var n = NativeApi.DrawingContext_MeasureText_(NativePointer, text, font.NativePointer, maximumWidth, textWrapping);
             var m = n;
             return m;
         }
@@ -152,7 +152,7 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_DrawImageAtRect_(IntPtr obj, IntPtr image, NativeApiTypes.Rect rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Size DrawingContext_MeasureText_(IntPtr obj, string text, IntPtr font, double maximumWidth);
+            public static extern NativeApiTypes.Size DrawingContext_MeasureText_(IntPtr obj, string text, IntPtr font, double maximumWidth, TextWrapping textWrapping);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_PushTransform_(IntPtr obj, NativeApiTypes.Size translation);

@@ -39,7 +39,7 @@ namespace NativeApi.Api
 
         public void DrawImageAtRect(Image image, Rect rect) => throw new Exception();
 
-        public Size MeasureText(string text, Font font, double maximumWidth) => throw new Exception();
+        public Size MeasureText(string text, Font font, double maximumWidth, TextWrapping textWrapping) => throw new Exception();
 
         public void PushTransform(Size translation) => throw new Exception();
 

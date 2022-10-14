@@ -745,7 +745,7 @@ namespace Alternet.UI
         /// The <see cref="DrawingContext"/> object that you retrieve through the <see cref="CreateDrawingContext"/> method should not normally
         /// be retained after the current UI event has been processed, because anything painted
         /// with that object will be erased with the next paint event. Therefore you cannot cache
-        /// the <see cref="DrawingContext"/> object for reuse, except to use non-visual methods like <see cref="DrawingContext.MeasureText"/>.
+        /// the <see cref="DrawingContext"/> object for reuse, except to use non-visual methods like <see cref="DrawingContext.MeasureText(string, Font)"/>.
         /// Instead, you must call <see cref="CreateDrawingContext"/> every time that you want to use the <see cref="DrawingContext"/> object,
         /// and then call <see cref="Dispose()"/> when you are finished using it.
         /// </remarks>
