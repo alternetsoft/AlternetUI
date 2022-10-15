@@ -213,6 +213,44 @@ namespace Alternet::UI
         }
 
     private:
+
+        int GetWxAlignment(TextHorizontalAlignment horizontal, TextVerticalAlignment vertical)
+        {
+            int result = 0;
+
+            switch (horizontal)
+            {
+            case TextHorizontalAlignment::Left:
+                result |= wxALIGN_LEFT;
+                break;
+            case TextHorizontalAlignment::Center:
+                result |= wxALIGN_CENTER_HORIZONTAL;
+                break;
+            case TextHorizontalAlignment::Right:
+                result |= wxALIGN_RIGHT;
+                break;
+            default:
+                throwExNoInfo;
+            }
+
+            switch (vertical)
+            {
+            case TextVerticalAlignment::Top:
+                result |= wxALIGN_TOP;
+                break;
+            case TextVerticalAlignment::Center:
+                result |= wxALIGN_CENTER_VERTICAL;
+                break;
+            case TextVerticalAlignment::Bottom:
+                result |= wxALIGN_BOTTOM;
+                break;
+            default:
+                throwExNoInfo;
+            }
+
+            return result;
+        }
+
         void DrawTextCore(
             const string& text,
             bool useBounds,
@@ -238,7 +276,10 @@ namespace Alternet::UI
             if (useBounds)
             {
                 auto wrapped = TextWrapper::Wrap(_dc, wxStr(text), fromDip(bounds.Width, window), wrapping);
-                _dc->DrawText(wrapped, fromDip(bounds.GetLocation() + _translation, window));
+                _dc->DrawLabel(
+                    wrapped,
+                    fromDip(Rect(bounds.GetLocation() + _translation, bounds.GetSize()), window),
+                    GetWxAlignment(horizontalAlignment, verticalAlignment));
             }
             else
             {

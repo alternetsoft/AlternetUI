@@ -31,19 +31,19 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Margin="0,15,0,5">
-            <CheckBox Text="Limit height to:" Margin="0,0,5,0" IsChecked="{Binding TextHeightLimitEnabled}"/>
+            <CheckBox Text="Set height to:" Margin="0,0,5,0" IsChecked="{Binding TextHeightSet}"/>
             <NumericUpDown
-                Minimum="{Binding MinTextHeightLimit}"
-                Maximum="{Binding MaxTextHeightLimit}"
-                Value="{Binding TextHeightLimit}"
+                Minimum="{Binding MinTextHeightValue}"
+                Maximum="{Binding MaxTextHeightValue}"
+                Value="{Binding TextHeightValue}"
                 Margin="0,0,5,0"
-                Enabled="{Binding TextHeightLimitEnabled}"/>
+                Enabled="{Binding TextHeightSet}"/>
             
             <Slider
-                Minimum="{Binding MinTextHeightLimit}"
-                Maximum="{Binding MaxTextHeightLimit}"
-                Value="{Binding TextHeightLimit}"
-                Enabled="{Binding TextHeightLimitEnabled}"/>
+                Minimum="{Binding MinTextHeightValue}"
+                Maximum="{Binding MaxTextHeightValue}"
+                Value="{Binding TextHeightValue}"
+                Enabled="{Binding TextHeightSet}"/>
         </StackPanel>
 
         <Label Text="Horizontal Alignment:" Margin="0,15,0,5" />

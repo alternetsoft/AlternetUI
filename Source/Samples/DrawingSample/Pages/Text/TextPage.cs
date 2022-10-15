@@ -22,10 +22,10 @@ namespace DrawingSample
         private string customFontFamilyName = Control.DefaultFont.FontFamily.Name;
 
         private int textWidthLimit = 500;
-        private int textHeightLimit = 40;
+        private int textHeightValue = 40;
 
         private bool textWidthLimitEnabled = true;
-        private bool textHeightLimitEnabled = false;
+        private bool textHeightSet = false;
 
         private TextHorizontalAlignment horizontalAlignment = TextHorizontalAlignment.Left;
 
@@ -91,12 +91,12 @@ namespace DrawingSample
             }
         }
 
-        public int TextHeightLimit
+        public int TextHeightValue
         {
-            get => textHeightLimit;
+            get => textHeightValue;
             set
             {
-                textHeightLimit = value;
+                textHeightValue = value;
                 Invalidate();
             }
         }
@@ -105,9 +105,9 @@ namespace DrawingSample
 
         public int MaxTextWidthLimit => 1000;
 
-        public int MinTextHeightLimit => 20;
+        public int MinTextHeightValue => 20;
 
-        public int MaxTextHeightLimit => 200;
+        public int MaxTextHeightValue => 200;
 
         public bool TextWidthLimitEnabled
         {
@@ -119,12 +119,12 @@ namespace DrawingSample
             }
         }
 
-        public bool TextHeightLimitEnabled
+        public bool TextHeightSet
         {
-            get => textHeightLimitEnabled;
+            get => textHeightSet;
             set
             {
-                textHeightLimitEnabled = value;
+                textHeightSet = value;
                 Invalidate();
             }
         }
@@ -198,9 +198,9 @@ namespace DrawingSample
 
                 double textHeight;
 
-                if (TextHeightLimitEnabled)
+                if (TextHeightSet)
                 {
-                    textHeight = TextHeightLimit;
+                    textHeight = TextHeightValue;
                 }
                 else
                 {
@@ -212,7 +212,7 @@ namespace DrawingSample
 
                 if (TextWidthLimitEnabled)
                     dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new Rect(x, y, TextWidthLimit, textHeight), textFormat);
-                else if (TextHeightLimitEnabled)
+                else if (TextHeightSet)
                     dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new Rect(x, y, TextWidthLimitEnabled ? TextWidthLimit : double.MaxValue, textHeight), textFormat);
                 else
                     dc.DrawText(LoremIpsum, paragraph.Font, new SolidBrush(color), new Point(x, y), textFormat);
