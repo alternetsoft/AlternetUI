@@ -69,10 +69,8 @@ namespace Alternet.UI.Native
     enum TextTrimming
     {
         None = 0,
-        Character = 1,
-        Word = 2,
-        EllipsisCharacter = 3,
-        EllipsisWord = 4,
+        Pixel = 1,
+        Character = 2,
     }
     
     enum TextVerticalAlignment
@@ -86,7 +84,6 @@ namespace Alternet.UI.Native
     {
         None = 0,
         Character = 1,
-        Word = 2,
     }
     
     enum Key

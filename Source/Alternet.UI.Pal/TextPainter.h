@@ -12,62 +12,24 @@ namespace
     class TextWrapper
     {
     public:
-        static wxString Wrap(wxDC* dc, wxString str, int maxWidth, TextWrapping wrapping)
+        static wxString Wrap(wxDC* dc, wxString str, int maxWidth, int maxHeight, TextWrapping wrapping, TextTrimming trimming)
         {
             if (wrapping == TextWrapping::Character)
-                return WrapByCharacter(dc, str, maxWidth);
-            else if (wrapping == TextWrapping::Word)
-                return WrapByWord(dc, str, maxWidth);
+                return WrapByCharacter(dc, str, maxWidth, maxHeight, trimming);
             else
                 return str;
         }
 
     private:
-        static wxString WrapByWord(wxDC* dc, wxString str, int maxWidth)
-        {
-            //auto parts = Explode(str, wrapping);
-
-            //wxArrayInt widths;
-            //GetPartsWidths(dc, str, parts, wrapping, widths);
-
-            //int curLineLength = 0;
-            //wxString strBuilder;
-            //for (int i = 0; i < parts.Count(); i += 1)
-            //{
-            //    auto part = parts[i];
-            //    auto partWidth = widths[i];
-
-            //    // If adding the new part to the current line would be too long,
-            //    // then put it on a new line (and split it up if it's too long).
-            //    if (curLineLength + partWidth > maxWidth)
-            //    {
-            //        // Only move down to a new line if we have text on the current line.
-            //        // Avoids situation where wrapped whitespace causes emptylines in text.
-            //        if (curLineLength > 0)
-            //        {
-            //            strBuilder.Append('\n');
-            //            curLineLength = 0;
-            //        }
-
-            //        part.Trim();
-            //    }
-
-            //    strBuilder.Append(part);
-            //    curLineLength += partWidth;
-            //}
-
-            //return strBuilder;
-
-            return str;
-        }
-
-        static wxString WrapByCharacter(wxDC* dc, wxString str, int maxWidth)
+        static wxString WrapByCharacter(wxDC* dc, wxString str, int maxWidth, int maxHeight, TextTrimming trimming)
         {
             wxArrayInt widths;
             dc->GetPartialTextExtents(str, widths);
 
             int lineWidth = 0;
-            wxString stringBuilder;
+
+            wxStringList lines;
+            wxString currentLine;
             for (int i = 0; i < str.Length(); i++)
             {
                 auto c = str.GetChar(i);
@@ -99,47 +61,43 @@ namespace
 
                 if (needLineBreak)
                 {
-                    stringBuilder.Append('\n');
+                    lines.Add(currentLine);
+                    currentLine.Clear();
+                    if (c != '\n')
+                        currentLine.Append(c);
+
                     lineWidth = 0;
                 }
                 else
-                    stringBuilder.Append(c);
+                {
+                    currentLine.Append(c);
+                    if (i == str.Length() - 1)
+                        lines.Add(currentLine);
+                }
     
                 lineWidth += charWidth;
             }
 
-            return stringBuilder;
-        }
+            wxString result;
 
+            int textHeight = 0;
+            bool needToTrim = (trimming == TextTrimming::Character);
 
-        static void GetPartsWidths(wxDC* dc, const wxString& str, const wxArrayString& parts, TextWrapping wrapping, wxArrayInt& widths)
-        {
-            if (wrapping == TextWrapping::Character)
+            for (auto line : lines)
             {
-                dc->GetPartialTextExtents(str, widths);
-            }
-            else if (wrapping == TextWrapping::Word)
-            {
-                for (auto part : parts)
-                    widths.Add(dc->GetTextExtent(part).x);
-            }
-            else
-                throwExNoInfo;
-        }
+                if (needToTrim)
+                {
+                    int lineHeight = dc->GetTextExtent(line).y;
+                    textHeight += lineHeight;
+                    if (textHeight > maxHeight)
+                        break;
+                }
 
-        static wxArrayString Explode(wxString str, TextWrapping textWrapping)
-        {
-            if (textWrapping == TextWrapping::Word)
-                return wxSplit(str, ' ', '\0');
-            else if (textWrapping == TextWrapping::Character)
-            {
-                wxArrayString result;
-                for (int i = 0; i < str.length(); i++)
-                    result.Add(str[i]);
-                return result;
+                result.Append(line);
+                result.Append('\n');
             }
-            else
-                throwExNoInfo;
+
+            return result;
         }
     };
 }
@@ -205,7 +163,10 @@ namespace Alternet::UI
             
             wxString str = wxStr(text);
             if (!isnan(maximumWidth))
-                str = TextWrapper::Wrap(_dc, str, maximumWidth, wrapping);
+            {
+                auto window = GetWindow();
+                str = TextWrapper::Wrap(_dc, str, fromDip(maximumWidth, window), MAXINT, wrapping, TextTrimming::None);
+            }
 
             _dc->GetMultiLineTextExtent(str, &x, &y, nullptr, &wxFont);
             _dc->SetFont(oldFont);
@@ -275,11 +236,23 @@ namespace Alternet::UI
 
             if (useBounds)
             {
-                auto wrapped = TextWrapper::Wrap(_dc, wxStr(text), fromDip(bounds.Width, window), wrapping);
-                _dc->DrawLabel(
-                    wrapped,
-                    fromDip(Rect(bounds.GetLocation() + _translation, bounds.GetSize()), window),
-                    GetWxAlignment(horizontalAlignment, verticalAlignment));
+                auto wrapped = TextWrapper::Wrap(
+                    _dc,
+                    wxStr(text),
+                    fromDip(bounds.Width, window),
+                    fromDip(bounds.Height, window),
+                    wrapping,
+                    trimming);
+
+                auto rect = fromDip(Rect(bounds.GetLocation() + _translation, bounds.GetSize()), window);
+                
+                if (trimming == TextTrimming::Pixel)
+                    _dc->SetClippingRegion(rect);
+                
+                _dc->DrawLabel(wrapped, rect, GetWxAlignment(horizontalAlignment, verticalAlignment));
+                
+                if (trimming == TextTrimming::Pixel)
+                    _dc->DestroyClippingRegion();
             }
             else
             {

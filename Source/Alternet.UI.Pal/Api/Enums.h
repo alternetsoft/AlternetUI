@@ -70,10 +70,8 @@ namespace Alternet::UI
     enum class TextTrimming
     {
         None = 0,
-        Character = 1,
-        Word = 2,
-        EllipsisCharacter = 3,
-        EllipsisWord = 4,
+        Pixel = 1,
+        Character = 2,
     };
     
     enum class TextVerticalAlignment
@@ -87,7 +85,6 @@ namespace Alternet::UI
     {
         None = 0,
         Character = 1,
-        Word = 2,
     };
     
     enum class Key

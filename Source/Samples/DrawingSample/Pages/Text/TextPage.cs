@@ -31,7 +31,7 @@ namespace DrawingSample
 
         private TextVerticalAlignment verticalAlignment = TextVerticalAlignment.Top;
 
-        private TextTrimming trimming = TextTrimming.EllipsisCharacter;
+        private TextTrimming trimming = TextTrimming.Pixel;
 
         private TextWrapping wrapping = TextWrapping.Character;
 

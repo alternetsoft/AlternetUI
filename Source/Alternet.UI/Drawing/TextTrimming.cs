@@ -11,23 +11,13 @@ namespace Alternet.Drawing
         None,
 
         /// <summary>
+        /// Specifies that the text is trimmed to the pixels of the specified text bounds.
+        /// </summary>
+        Pixel,
+
+        /// <summary>
         /// Specifies that the text is trimmed to the nearest character.
         /// </summary>
-        Character,
-
-        /// <summary>
-        /// Specifies that text is trimmed to the nearest word.
-        /// </summary>
-        Word,
-
-        /// <summary>
-        /// Specifies that the text is trimmed to the nearest character, and an ellipsis is inserted at the end of a trimmed line.
-        /// </summary>
-        EllipsisCharacter,
-
-        /// <summary>
-        /// Specifies that text is trimmed to the nearest word, and an ellipsis is inserted at the end of a trimmed line.
-        /// </summary>
-        EllipsisWord
+        Character
     }
 }
