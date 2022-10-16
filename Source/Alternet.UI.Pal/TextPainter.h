@@ -171,7 +171,7 @@ namespace Alternet::UI
             if (!isnan(maximumWidth))
             {
                 auto window = GetWindow();
-                str = TextWrapper::Wrap(_dc, str, fromDip(maximumWidth, window), MAXINT, wrapping, TextTrimming::None);
+                str = TextWrapper::Wrap(_dc, str, fromDip(maximumWidth, window), INT_MAX, wrapping, TextTrimming::None);
             }
 
             _dc->GetMultiLineTextExtent(str, &x, &y, nullptr, &wxFont);
