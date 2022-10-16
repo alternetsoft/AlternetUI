@@ -14,26 +14,20 @@ namespace
     public:
         static wxString Wrap(wxDC* dc, wxString str, int maxWidth, int maxHeight, TextWrapping wrapping, TextTrimming trimming)
         {
-            if (wrapping == TextWrapping::Character)
-                return WrapByCharacter(dc, str, maxWidth, maxHeight, trimming);
-            else
-                return str;
-        }
-
-    private:
-        static wxString WrapByCharacter(wxDC* dc, wxString str, int maxWidth, int maxHeight, TextTrimming trimming)
-        {
             wxArrayInt widths;
             dc->GetPartialTextExtents(str, widths);
 
             int lineWidth = 0;
+
+            bool needToWrap = (wrapping == TextWrapping::Character);
+            bool needToTrim = (trimming == TextTrimming::Character);
 
             wxStringList lines;
             wxString currentLine;
             for (int i = 0; i < str.Length(); i++)
             {
                 auto c = str.GetChar(i);
-                
+
                 int charWidth;
                 if (i == 0)
                     charWidth = widths[i];
@@ -48,7 +42,7 @@ namespace
                 }
                 else
                 {
-                    if (lineWidth + charWidth > maxWidth)
+                    if (needToWrap && lineWidth + charWidth > maxWidth)
                     {
                         if (lineWidth > 0)
                         {
@@ -74,15 +68,25 @@ namespace
                     if (i == str.Length() - 1)
                         lines.Add(currentLine);
                 }
-    
-                lineWidth += charWidth;
+
+                auto newLineWidth = lineWidth + charWidth;
+                if ((!needToWrap) && needToTrim && newLineWidth > maxWidth)
+                {
+                    currentLine.RemoveLast();
+                    lines.Add(currentLine);
+                    break;
+                }
+
+                lineWidth = newLineWidth;
             }
 
             wxString result;
 
             int textHeight = 0;
-            bool needToTrim = (trimming == TextTrimming::Character);
 
+            int linesLastIndex = lines.GetCount() - 1;
+
+            int i = 0;
             for (auto line : lines)
             {
                 if (needToTrim)
@@ -94,7 +98,9 @@ namespace
                 }
 
                 result.Append(line);
-                result.Append('\n');
+
+                if (i++ < linesLastIndex)
+                    result.Append('\n');
             }
 
             return result;
