@@ -11,12 +11,36 @@ namespace Alternet::UI
         _graphicsContext = wxGraphicsContext::CreateFromUnknownDC(*_dc);
     }
 
+    wxGraphicsContext* DrawingContext::GetGraphicsContext()
+    {
+        return _graphicsContext;
+    }
+
+    wxDC* DrawingContext::GetDC()
+    {
+        return _dc;
+    }
+
+    /*static*/ wxWindow* DrawingContext::GetWindow(wxDC* dc)
+    {
+        auto window = dc->GetWindow();
+        if (window == nullptr)
+            return ParkingWindow::GetWindow();
+        else
+            return window;
+    }
+
     void DrawingContext::DrawPath(Pen* pen, GraphicsPath* path)
     {
+        _graphicsContext->SetPen(pen->GetWxPen());
+        _graphicsContext->DrawPath(path->GetPath());
     }
 
     void DrawingContext::FillPath(Brush* brush, GraphicsPath* path)
     {
+        _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
+        _graphicsContext->SetBrush(GetGraphicsBrush(brush));
+        _graphicsContext->FillPath(path->GetPath());
     }
 
     DrawingContext::~DrawingContext()

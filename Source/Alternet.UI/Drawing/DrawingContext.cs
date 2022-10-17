@@ -16,6 +16,8 @@ namespace Alternet.Drawing
             this.dc = dc;
         }
 
+        internal UI.Native.DrawingContext NativeDrawingContext => dc;
+
         /// <summary>
         /// Creates a new <see cref="DrawingContext"/> from the specified <see cref="Image"/>.
         /// </summary>

@@ -317,7 +317,7 @@ namespace Alternet::UI
             wxString str = wxStr(text);
             if (!isnan(maximumWidth))
             {
-                auto window = GetWindow();
+                auto window = DrawingContext::GetWindow(_dc);
                 str = TextWrapper::Wrap(_dc, str, fromDip(maximumWidth, window), INT_MAX, wrapping, TextTrimming::None);
             }
 
@@ -385,7 +385,7 @@ namespace Alternet::UI
             _dc->SetTextForeground(solidBrush->GetWxBrush().GetColour());
             _dc->SetFont(font->GetWxFont());
             
-            auto window = GetWindow();
+            auto window = DrawingContext::GetWindow(_dc);
 
             if (useBounds)
             {
@@ -414,15 +414,6 @@ namespace Alternet::UI
 
             _dc->SetTextForeground(oldTextForeground);
             _dc->SetFont(oldFont);
-        }
-
-        wxWindow* GetWindow()
-        {
-            auto window = _dc->GetWindow();
-            if (window == nullptr)
-                return ParkingWindow::GetWindow();
-            else
-                return window;
         }
 
         BYREF_ONLY(TextPainter);

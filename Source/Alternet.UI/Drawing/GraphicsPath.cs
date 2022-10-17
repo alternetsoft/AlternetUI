@@ -21,8 +21,12 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="GraphicsPath"/> class.
         /// </summary>
-        public GraphicsPath() : this(new UI.Native.GraphicsPath())
+        public GraphicsPath(DrawingContext drawingContext) : this(new UI.Native.GraphicsPath())
         {
+            if (drawingContext is null)
+                throw new ArgumentNullException(nameof(drawingContext));
+            
+            NativePath.Initialize(drawingContext.NativeDrawingContext);
         }
 
         private GraphicsPath(UI.Native.GraphicsPath nativePath)

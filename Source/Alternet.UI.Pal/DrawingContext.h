@@ -18,6 +18,11 @@ namespace Alternet::UI
     public:
         DrawingContext(wxDC* dc);
         
+        wxGraphicsContext* GetGraphicsContext();
+        wxDC* GetDC();
+
+        static wxWindow* GetWindow(wxDC* dc);
+
     private:
         wxDC* _dc;
         wxGraphicsContext* _graphicsContext = nullptr;

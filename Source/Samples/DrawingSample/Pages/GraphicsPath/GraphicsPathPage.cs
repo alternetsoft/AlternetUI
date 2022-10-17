@@ -17,7 +17,7 @@ namespace DrawingSample
 
         private void DrawInitialPath(DrawingContext dc)
         {
-            using var path = new GraphicsPath();
+            using var path = new GraphicsPath(dc);
             path.AddLines(new[] { new Point(10, 10), new Point(100, 100), new Point(200, 10) });
 
             dc.DrawPath(Pens.Fuchsia, path);

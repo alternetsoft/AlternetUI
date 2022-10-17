@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GraphicsPath.h"
+#include "DrawingContext.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -12,6 +13,13 @@ ALTERNET_UI_API GraphicsPath* GraphicsPath_Create_()
 {
     return MarshalExceptions<GraphicsPath*>([&](){
             return new GraphicsPath();
+        });
+}
+
+ALTERNET_UI_API void GraphicsPath_Initialize_(GraphicsPath* obj, DrawingContext* dc)
+{
+    MarshalExceptions<void>([&](){
+            obj->Initialize(dc);
         });
 }
 

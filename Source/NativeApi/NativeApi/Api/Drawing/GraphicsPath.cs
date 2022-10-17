@@ -5,6 +5,8 @@ namespace NativeApi.Api
 {
     public class GraphicsPath
     {
+        public void Initialize(DrawingContext dc) => throw new Exception();
+
         public void AddLines(Point[] points) => throw new Exception();
 
         public void AddLine(Point pt1, Point pt2) => throw new Exception();

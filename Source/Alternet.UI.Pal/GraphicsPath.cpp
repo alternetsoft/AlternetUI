@@ -1,4 +1,5 @@
 #include "GraphicsPath.h"
+#include "DrawingContext.h"
 
 namespace Alternet::UI
 {
@@ -8,10 +9,30 @@ namespace Alternet::UI
 
     GraphicsPath::~GraphicsPath()
     {
+        if (_dc != nullptr)
+        {
+            _dc->Release();
+            _dc = nullptr;
+        }
     }
-    
+
+    void GraphicsPath::Initialize(DrawingContext* dc)
+    {
+        _dc = dc;
+        _dc->AddRef();
+        _path = dc->GetGraphicsContext()->CreatePath();
+    }
+
     void GraphicsPath::AddLines(Point* points, int pointsCount)
     {
+        auto window = DrawingContext::GetWindow(_dc->GetDC());
+        
+        for (int i = 0; i < pointsCount; i++)
+        {
+            auto point = points[i];
+            auto wxPoint = fromDip(point, window);
+            _path.AddLineToPoint(wxPoint);
+        }
     }
     
     void GraphicsPath::AddLine(const Point& pt1, const Point& pt2)
@@ -57,5 +78,10 @@ namespace Alternet::UI
     
     void GraphicsPath::CloseFigure()
     {
+    }
+
+    wxGraphicsPath GraphicsPath::GetPath()
+    {
+        return _path;
     }
 }
