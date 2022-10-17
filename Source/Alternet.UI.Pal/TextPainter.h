@@ -4,7 +4,6 @@
 #include "Font.h"
 #include "SolidBrush.h"
 
-
 namespace
 {
     using namespace Alternet::UI;
@@ -14,6 +13,15 @@ namespace
     public:
         static wxString Wrap(wxDC* dc, wxString str, int maxWidth, int maxHeight, TextWrapping wrapping, TextTrimming trimming)
         {
+            if (wrapping == TextWrapping::Word)
+                return WrapByWord(dc, str, maxWidth, maxHeight, wrapping, trimming);
+            else
+                return WrapByCharacter(dc, str, maxWidth, maxHeight, wrapping, trimming);
+        }
+    
+    private:
+        static wxString WrapByCharacter(wxDC* dc, wxString str, int maxWidth, int maxHeight, TextWrapping wrapping, TextTrimming trimming)
+        {
             wxArrayInt widths;
             dc->GetPartialTextExtents(str, widths);
 
@@ -22,7 +30,9 @@ namespace
             bool needToWrap = (wrapping == TextWrapping::Character);
             bool needToTrim = (trimming == TextTrimming::Character);
 
-            wxStringList lines;
+            bool needToTrimLastLine = false;
+
+            wxArrayString lines;
             wxString currentLine;
             for (int i = 0; i < str.Length(); i++)
             {
@@ -65,22 +75,151 @@ namespace
                 else
                 {
                     currentLine.Append(c);
-                    if (i == str.Length() - 1)
-                        lines.Add(currentLine);
                 }
 
                 auto newLineWidth = lineWidth + charWidth;
                 if ((!needToWrap) && needToTrim && newLineWidth > maxWidth)
                 {
-                    currentLine.RemoveLast();
-                    lines.Add(currentLine);
+                    needToTrimLastLine = true;
                     break;
                 }
 
                 lineWidth = newLineWidth;
             }
 
+            lines.Add(currentLine);
+
+            return GetTrimmedString(dc, lines, trimming, maxHeight, needToTrimLastLine);
+        }
+
+        static void SplitToWords(const wxString& text, wxArrayString& words)
+        {
+            auto length = text.Length();
+            wxString word;
+            for (int i = 0; i < length; i++)
+            {
+                auto ch = text[i];
+                if (isspace(ch))
+                {
+                    if (!word.empty())
+                    {
+                        words.Add(word);
+                    }
+
+                    if (ch == '\n')
+                        words.Add("\n");
+
+                    word = "";
+                }
+                else
+                {
+                    word += ch;
+                }
+            }
+
+            if (!word.empty())
+            {
+                words.Add(word);
+            }
+        }
+
+        static void GetStringsWidths(wxDC* dc, const wxArrayString& strings, wxArrayInt& widths)
+        {
+            for (auto str : strings)
+                widths.Add(dc->GetTextExtent(str).x);
+        }
+
+        static wxString WrapByWord(wxDC* dc, wxString str, int maxWidth, int maxHeight, TextWrapping wrapping, TextTrimming trimming)
+        {
+            wxArrayString words;
+            SplitToWords(str, words);
+
+            wxArrayInt widths;
+            GetStringsWidths(dc, words, widths);
+
+            int lineWidth = 0;
+
+            bool needToTrim = (trimming == TextTrimming::Character);
+
+            bool needToTrimLastLine = false;
+
+            auto spaceWidth = dc->GetTextExtent(" ").x;
+
+            wxArrayString lines;
+            wxString currentLine;
+            int wordCount = words.Count();
+            for (int i = 0; i < wordCount; i++)
+            {
+                wxString word = words[i];
+
+                auto wordWidth = widths[i];
+                bool needLineBreak = false;
+
+                wxString toAppendString;
+                int toAppendWidth;
+                if (currentLine.IsEmpty())
+                {
+                    toAppendString = word;
+                    toAppendWidth = wordWidth;
+                }
+                else
+                {
+                    toAppendString = " " + word;
+                    toAppendWidth = wordWidth + spaceWidth;
+                }
+
+                if (word == "\n")
+                {
+                    needLineBreak = true;
+                    toAppendString = "";
+                    toAppendWidth = 0;
+                }
+                else
+                {
+                    if (lineWidth + toAppendWidth > maxWidth)
+                    {
+                        if (lineWidth > 0)
+                        {
+                            needLineBreak = true;
+
+                            toAppendString = word;
+                            toAppendWidth = wordWidth;
+                        }
+                    }
+                }
+
+                if (needLineBreak)
+                {
+                    lines.Add(currentLine);
+                    currentLine.Clear();
+                    currentLine.Append(toAppendString);
+
+                    lineWidth = 0;
+                }
+                else
+                {
+                    currentLine.Append(toAppendString);
+                }
+
+                auto newLineWidth = lineWidth + toAppendWidth;
+                if (needToTrim && newLineWidth > maxWidth)
+                {
+                    needToTrimLastLine = true;
+                    break;
+                }
+
+                lineWidth = newLineWidth;
+            }
+
+            lines.Add(currentLine);
+
+            return GetTrimmedString(dc, lines, trimming, maxHeight, needToTrimLastLine);
+        }
+
+        static wxString GetTrimmedString(wxDC* dc, const wxArrayString& lines, TextTrimming trimming, int maxHeight, bool needToTrimLastLine)
+        {
             wxString result;
+            bool needToTrim = (trimming == TextTrimming::Character);
 
             int textHeight = 0;
 
@@ -101,6 +240,14 @@ namespace
 
                 if (i++ < linesLastIndex)
                     result.Append('\n');
+            }
+
+            if (needToTrimLastLine)
+            {
+                if (trimming == TextTrimming::Character)
+                    result.RemoveLast();
+                else
+                    throwExNoInfo;
             }
 
             return result;

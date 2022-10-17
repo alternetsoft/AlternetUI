@@ -13,6 +13,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Specifies that text is wrapped by the character boundary.
         /// </summary>
-        Character
+        Character,
+
+        /// <summary>
+        /// Specifies that text is wrapped by the word boundary.
+        /// </summary>
+        Word,
     }
 }

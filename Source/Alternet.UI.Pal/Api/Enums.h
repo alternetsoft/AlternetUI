@@ -85,6 +85,7 @@ namespace Alternet::UI
     {
         None = 0,
         Character = 1,
+        Word = 2,
     };
     
     enum class Key
