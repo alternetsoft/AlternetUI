@@ -11,6 +11,14 @@ namespace Alternet::UI
         _graphicsContext = wxGraphicsContext::CreateFromUnknownDC(*_dc);
     }
 
+    void DrawingContext::DrawPath(Pen* pen, GraphicsPath* path)
+    {
+    }
+
+    void DrawingContext::FillPath(Brush* brush, GraphicsPath* path)
+    {
+    }
+
     DrawingContext::~DrawingContext()
     {
         wxDELETE(_graphicsContext);

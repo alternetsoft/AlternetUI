@@ -101,6 +101,32 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Draws a <see cref="GraphicsPath"/>.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the path.</param>
+        /// <param name="path"><see cref="GraphicsPath"/> to draw.</param>
+        public void DrawPath(Pen pen, GraphicsPath path)
+        {
+            if (pen is null)
+                throw new ArgumentNullException(nameof(pen));
+
+            dc.DrawPath(pen.NativePen, path.NativePath);
+        }
+
+        /// <summary>
+        /// Fills the interior of a <see cref="GraphicsPath"/>.
+        /// </summary>
+        /// <param name="brush"><see cref="Brush"/> that determines the characteristics of the fill.</param>
+        /// <param name="path"><see cref="GraphicsPath"/> that represents the path to fill.</param>
+        public void FillPath(Brush brush, GraphicsPath path)
+        {
+            if (brush is null)
+                throw new ArgumentNullException(nameof(brush));
+
+            dc.FillPath(brush.NativeBrush, path.NativePath);
+        }
+
+        /// <summary>
         /// Draws a line connecting two <see cref="Point"/> structures.
         /// </summary>
         /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the line.</param>

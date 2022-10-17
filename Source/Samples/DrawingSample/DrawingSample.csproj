@@ -28,6 +28,7 @@
 
     <ItemGroup>
       <None Remove="Pages\BrushesAndPens\BrushesAndPensPageSettings.uixml" />
+      <None Remove="Pages\GraphicsPath\GraphicsPathPageSettings.uixml" />
       <None Remove="Pages\Text\TextPageSettings.uixml" />
     </ItemGroup>
 
@@ -43,6 +44,9 @@
     <UIXml Update="Pages\BrushesAndPens\BrushesAndPensPageSettings.uixml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </UIXml>
+    <UIXml Update="Pages\GraphicsPath\GraphicsPathPageSettings.uixml">
+      <SubType>Designer</SubType>
     </UIXml>
     <UIXml Update="Pages\Text\TextPageSettings.uixml">
       <Generator>MSBuild:Compile</Generator>

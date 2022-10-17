@@ -59,6 +59,18 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_FloodFill_(NativePointer, point, brush.NativePointer);
         }
         
+        public void DrawPath(Pen pen, GraphicsPath path)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_DrawPath_(NativePointer, pen.NativePointer, path.NativePointer);
+        }
+        
+        public void FillPath(Brush brush, GraphicsPath path)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_FillPath_(NativePointer, brush.NativePointer, path.NativePointer);
+        }
+        
         public void DrawTextAtPoint(string text, Alternet.Drawing.Point origin, Font font, Brush brush)
         {
             CheckDisposed();
@@ -138,6 +150,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_FloodFill_(IntPtr obj, NativeApiTypes.Point point, IntPtr brush);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DrawPath_(IntPtr obj, IntPtr pen, IntPtr path);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_FillPath_(IntPtr obj, IntPtr brush, IntPtr path);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawTextAtPoint_(IntPtr obj, string text, NativeApiTypes.Point origin, IntPtr font, IntPtr brush);

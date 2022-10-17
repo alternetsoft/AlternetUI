@@ -6,6 +6,7 @@
 #include "Font.h"
 #include "Brush.h"
 #include "Pen.h"
+#include "GraphicsPath.h"
 
 namespace Alternet::UI
 {

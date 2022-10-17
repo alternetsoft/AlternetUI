@@ -19,6 +19,9 @@ namespace NativeApi.Api
 
         public void FloodFill(Point point, Brush brush) => throw new Exception();
 
+        public void DrawPath(Pen pen, GraphicsPath path) => throw new Exception();
+        public void FillPath(Brush brush, GraphicsPath path) => throw new Exception();
+
         public void DrawTextAtPoint(
             string text,
             Point origin,

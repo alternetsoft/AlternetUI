@@ -6,6 +6,7 @@
 #include "Image.h"
 #include "Brush.h"
 #include "Pen.h"
+#include "GraphicsPath.h"
 #include "Font.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
@@ -51,6 +52,20 @@ ALTERNET_UI_API void DrawingContext_FloodFill_(DrawingContext* obj, Point point,
 {
     MarshalExceptions<void>([&](){
             obj->FloodFill(point, brush);
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_DrawPath_(DrawingContext* obj, Pen* pen, GraphicsPath* path)
+{
+    MarshalExceptions<void>([&](){
+            obj->DrawPath(pen, path);
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_FillPath_(DrawingContext* obj, Brush* brush, GraphicsPath* path)
+{
+    MarshalExceptions<void>([&](){
+            obj->FillPath(brush, path);
         });
 }
 

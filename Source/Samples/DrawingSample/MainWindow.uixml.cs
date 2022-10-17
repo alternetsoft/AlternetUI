@@ -7,6 +7,7 @@ namespace DrawingSample
     {
         private DrawingPage[] drawingPages = new DrawingPage[]
         {
+            new GraphicsPathPage(),
             new TextPage(),
             new BrushesAndPensPage()
         };

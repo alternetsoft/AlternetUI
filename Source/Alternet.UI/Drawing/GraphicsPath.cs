@@ -1,6 +1,4 @@
 using System;
-using System.Diagnostics;
-using System.Net;
 
 namespace Alternet.Drawing
 {
@@ -16,10 +14,8 @@ namespace Alternet.Drawing
     /// The ending point is the last point in the sequence.
     /// The starting and ending points of a geometric shape primitive are defined by the primitive specification.
     /// </remarks>
-    internal sealed class GraphicsPath : IDisposable
+    public sealed class GraphicsPath : IDisposable
     {
-        // TODO: to be implemented in the future.
-
         private bool isDisposed;
 
         /// <summary>
@@ -33,6 +29,8 @@ namespace Alternet.Drawing
         {
             NativePath = nativePath;
         }
+
+        internal UI.Native.GraphicsPath NativePath { get; private set; }
 
         /// <summary>
         /// Appends a series of connected line segments to the end of this <see cref="GraphicsPath"/>.
@@ -49,6 +47,7 @@ namespace Alternet.Drawing
         public void AddLines(Point[] points)
         {
             CheckDisposed();
+            NativePath.AddLines(points);
         }
 
         /// <summary>
@@ -64,6 +63,7 @@ namespace Alternet.Drawing
         public void AddLine(Point pt1, Point pt2)
         {
             CheckDisposed();
+            NativePath.AddLine(pt1, pt2);
         }
 
         /// <summary>
@@ -77,6 +77,7 @@ namespace Alternet.Drawing
         public void AddLineTo(Point pt)
         {
             CheckDisposed();
+            NativePath.AddLineTo(pt);
         }
 
         /// <summary>
@@ -86,6 +87,7 @@ namespace Alternet.Drawing
         public void AddEllipse(Rect rect)
         {
             CheckDisposed();
+            NativePath.AddEllipse(rect);
         }
 
         /// <summary>
@@ -103,6 +105,7 @@ namespace Alternet.Drawing
         public void AddBezier(Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint)
         {
             CheckDisposed();
+            NativePath.AddBezier(startPoint, controlPoint1, controlPoint2, endPoint);
         }
 
         /// <summary>
@@ -119,6 +122,7 @@ namespace Alternet.Drawing
         public void AddBezierTo(Point controlPoint1, Point controlPoint2, Point endPoint)
         {
             CheckDisposed();
+            NativePath.AddBezierTo(controlPoint1, controlPoint2, endPoint);
         }
 
         /// <summary>
@@ -141,6 +145,7 @@ namespace Alternet.Drawing
         public void AddArc(Point center, double radius, double startAngle, double sweepAngle)
         {
             CheckDisposed();
+            NativePath.AddArc(center, radius, startAngle, sweepAngle);
         }
 
         /// <summary>
@@ -150,6 +155,7 @@ namespace Alternet.Drawing
         public void AddRectangle(Rect rect)
         {
             CheckDisposed();
+            NativePath.AddRectangle(rect);
         }
 
         /// <summary>
@@ -160,6 +166,7 @@ namespace Alternet.Drawing
         public void AddRoundedRectangle(Rect rect, double cornerRadius)
         {
             CheckDisposed();
+            NativePath.AddRoundedRectangle(rect, cornerRadius);
         }
 
         /// <summary>
@@ -169,7 +176,7 @@ namespace Alternet.Drawing
         public Rect GetBounds()
         {
             CheckDisposed();
-            return new Rect();
+            return NativePath.GetBounds();
         }
 
         /// <summary>
@@ -178,6 +185,7 @@ namespace Alternet.Drawing
         public void StartFigure()
         {
             CheckDisposed();
+            NativePath.StartFigure();
         }
 
         /// <summary>
@@ -187,9 +195,8 @@ namespace Alternet.Drawing
         public void CloseFigure()
         {
             CheckDisposed();
+            NativePath.CloseFigure();
         }
-
-        internal UI.Native.GraphicsPath NativePath { get; private set; }
 
         /// <summary>
         /// Releases all resources used by this <see cref="GraphicsPath"/>.

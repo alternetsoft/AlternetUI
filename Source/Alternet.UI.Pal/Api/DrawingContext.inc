@@ -6,6 +6,8 @@ void DrawRectangle(const Rect& rectangle, Pen* pen);
 void FillEllipse(const Rect& bounds, Brush* brush);
 void DrawEllipse(const Rect& bounds, Pen* pen);
 void FloodFill(const Point& point, Brush* brush);
+void DrawPath(Pen* pen, GraphicsPath* path);
+void FillPath(Brush* brush, GraphicsPath* path);
 void DrawTextAtPoint(const string& text, const Point& origin, Font* font, Brush* brush);
 void DrawTextAtRect(const string& text, const Rect& bounds, Font* font, Brush* brush, TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment, TextTrimming trimming, TextWrapping wrapping);
 void DrawImageAtPoint(Image* image, const Point& origin);

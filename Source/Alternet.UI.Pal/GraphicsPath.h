@@ -9,7 +9,7 @@ namespace Alternet::UI
     {
 #include "Api/GraphicsPath.inc"
     public:
-    
+
     private:
     
     };

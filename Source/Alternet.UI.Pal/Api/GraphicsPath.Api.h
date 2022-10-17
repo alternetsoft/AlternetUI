@@ -15,3 +15,87 @@ ALTERNET_UI_API GraphicsPath* GraphicsPath_Create_()
         });
 }
 
+ALTERNET_UI_API void GraphicsPath_AddLines_(GraphicsPath* obj, Point* points, int pointsCount)
+{
+    MarshalExceptions<void>([&](){
+            obj->AddLines(points, pointsCount);
+        });
+}
+
+ALTERNET_UI_API void GraphicsPath_AddLine_(GraphicsPath* obj, Point pt1, Point pt2)
+{
+    MarshalExceptions<void>([&](){
+            obj->AddLine(pt1, pt2);
+        });
+}
+
+ALTERNET_UI_API void GraphicsPath_AddLineTo_(GraphicsPath* obj, Point pt)
+{
+    MarshalExceptions<void>([&](){
+            obj->AddLineTo(pt);
+        });
+}
+
+ALTERNET_UI_API void GraphicsPath_AddEllipse_(GraphicsPath* obj, Rect rect)
+{
+    MarshalExceptions<void>([&](){
+            obj->AddEllipse(rect);
+        });
+}
+
+ALTERNET_UI_API void GraphicsPath_AddBezier_(GraphicsPath* obj, Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint)
+{
+    MarshalExceptions<void>([&](){
+            obj->AddBezier(startPoint, controlPoint1, controlPoint2, endPoint);
+        });
+}
+
+ALTERNET_UI_API void GraphicsPath_AddBezierTo_(GraphicsPath* obj, Point controlPoint1, Point controlPoint2, Point endPoint)
+{
+    MarshalExceptions<void>([&](){
+            obj->AddBezierTo(controlPoint1, controlPoint2, endPoint);
+        });
+}
+
+ALTERNET_UI_API void GraphicsPath_AddArc_(GraphicsPath* obj, Point center, double radius, double startAngle, double sweepAngle)
+{
+    MarshalExceptions<void>([&](){
+            obj->AddArc(center, radius, startAngle, sweepAngle);
+        });
+}
+
+ALTERNET_UI_API void GraphicsPath_AddRectangle_(GraphicsPath* obj, Rect rect)
+{
+    MarshalExceptions<void>([&](){
+            obj->AddRectangle(rect);
+        });
+}
+
+ALTERNET_UI_API void GraphicsPath_AddRoundedRectangle_(GraphicsPath* obj, Rect rect, double cornerRadius)
+{
+    MarshalExceptions<void>([&](){
+            obj->AddRoundedRectangle(rect, cornerRadius);
+        });
+}
+
+ALTERNET_UI_API Rect_C GraphicsPath_GetBounds_(GraphicsPath* obj)
+{
+    return MarshalExceptions<Rect_C>([&](){
+            return obj->GetBounds();
+        });
+}
+
+ALTERNET_UI_API void GraphicsPath_StartFigure_(GraphicsPath* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->StartFigure();
+        });
+}
+
+ALTERNET_UI_API void GraphicsPath_CloseFigure_(GraphicsPath* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->CloseFigure();
+        });
+}
+
