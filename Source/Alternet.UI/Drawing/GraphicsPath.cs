@@ -67,6 +67,19 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Appends a line segment to this <see cref="GraphicsPath"/>.
+        /// </summary>
+        /// <param name="pt">A <see cref="Point"/> that represents the endpoint of the line.</param>
+        /// <remarks>
+        /// This method adds the line segment defined by the specified point to the end of this <see cref="GraphicsPath"/>. If there
+        /// are no previous lines or curves in the <see cref="GraphicsPath"/>, a line segment is drawn for the (0, 0) point.
+        /// </remarks>
+        public void AddLineTo(Point pt)
+        {
+            CheckDisposed();
+        }
+
+        /// <summary>
         /// Adds an ellipse to the current path.
         /// </summary>
         /// <param name="rect">A <see cref="Rect"/> that represents the bounding rectangle that defines the ellipse.</param>
@@ -78,16 +91,32 @@ namespace Alternet.Drawing
         /// <summary>
         /// Adds a cubic Bézier curve to the current figure.
         /// </summary>
-        /// <param name="pt1">A <see cref="Point"/> that represents the starting point of the curve.</param>
-        /// <param name="pt2">A <see cref="Point"/> that represents the first control point for the curve.</param>
-        /// <param name="pt3">A <see cref="Point"/> that represents the second control point for the curve.</param>
-        /// <param name="pt4">A <see cref="Point"/> that represents the endpoint of the curve.</param>
+        /// <param name="startPoint">A <see cref="Point"/> that represents the starting point of the curve.</param>
+        /// <param name="controlPoint1">A <see cref="Point"/> that represents the first control point for the curve.</param>
+        /// <param name="controlPoint2">A <see cref="Point"/> that represents the second control point for the curve.</param>
+        /// <param name="endPoint">A <see cref="Point"/> that represents the endpoint of the curve.</param>
         /// <remarks>
         /// The cubic curve is constructed from the first point to the fourth point by using the second and third points
         /// as control points. If there is a previous line or curve segment in the figure, a line is added to connect
         /// the endpoint of the previous segment to the starting point of the cubic curve.
         /// </remarks>
-        public void AddBezier(Point pt1, Point pt2, Point pt3, Point pt4)
+        public void AddBezier(Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint)
+        {
+            CheckDisposed();
+        }
+
+        /// <summary>
+        /// Adds a cubic Bézier curve to the current figure.
+        /// </summary>
+        /// <param name="controlPoint1">A <see cref="Point"/> that represents the first control point for the curve.</param>
+        /// <param name="controlPoint2">A <see cref="Point"/> that represents the second control point for the curve.</param>
+        /// <param name="endPoint">A <see cref="Point"/> that represents the endpoint of the curve.</param>
+        /// <remarks>
+        /// The cubic curve is constructed from the last point in the figure to the fourth point by using the second and third points
+        /// as control points. If there is a previous line or curve segment in the figure, a line is added to connect
+        /// the endpoint of the previous segment to the starting point of the cubic curve.
+        /// </remarks>
+        public void AddBezierTo(Point controlPoint1, Point controlPoint2, Point endPoint)
         {
             CheckDisposed();
         }
