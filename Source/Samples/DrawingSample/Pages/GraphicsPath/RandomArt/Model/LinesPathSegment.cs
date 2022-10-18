@@ -6,27 +6,27 @@ namespace DrawingSample.RandomArt
 {
     internal class LinesPathSegment : PathSegment
     {
+        private List<Point> points = new List<Point>();
+
         public LinesPathSegment(Point start) : base(start)
         {
-            Points.Add(start);
+            points.Add(start);
         }
 
         public override PathSegmentType Type => PathSegmentType.Lines;
 
-        public List<Point> Points { get; } = new List<Point>();
-
-        public override Point End => Points.Last();
+        public override Point End => points.Last();
 
         public override void Render(GraphicsPath path)
         {
-            path.AddLines(Points.ToArray());
+            path.AddLines(points.ToArray());
         }
 
         public override void TryAddSegmentParts(Point tipPoint, ToolSettings toolSettings)
         {
             if (Utils.IsDistanceGreaterOrEqual(End, tipPoint, toolSettings.PartLength))
             {
-                Points.Add(Utils.GetJitteredPointAlongLineSegment(
+                points.Add(Utils.GetJitteredPointAlongLineSegment(
                     End,
                     tipPoint,
                     toolSettings.PartLength,

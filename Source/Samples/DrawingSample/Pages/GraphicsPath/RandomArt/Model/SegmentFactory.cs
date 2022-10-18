@@ -1,17 +1,15 @@
 ﻿using Alternet.Drawing;
-using Alternet.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
 
 namespace DrawingSample.RandomArt
 {
     internal static class SegmentFactory
     {
-        public static PathSegment CreateSegment(PathSegmentType type, Point start)
+        public static PathSegment CreateSegment(PathSegmentType type, Point start) => type switch
         {
-            return new LinesPathSegment(start);
-        }
+            PathSegmentType.Lines => new LinesPathSegment(start),
+            PathSegmentType.Curves => new CurvesPathSegment(start),
+            _ => throw new Exception(),
+        };
     }
 }

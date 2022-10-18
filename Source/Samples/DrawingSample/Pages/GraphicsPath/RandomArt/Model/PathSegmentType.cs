@@ -10,7 +10,6 @@ namespace DrawingSample.RandomArt
     internal enum PathSegmentType
     {
         Lines,
-        Curves,
-        Arcs
+        Curves
     }
 }

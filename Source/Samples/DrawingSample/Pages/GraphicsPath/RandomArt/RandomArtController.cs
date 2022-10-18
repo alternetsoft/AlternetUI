@@ -13,8 +13,10 @@ namespace DrawingSample.RandomArt
 
         private ToolSettings toolSettings = new ToolSettings();
 
-        public RandomArtController(Model model, Control canvas)
+        public RandomArtController(Model model, Control canvas, PathSegmentType pathSegmentType)
         {
+            PathSegmentType = pathSegmentType;
+
             this.model = model;
             this.canvas = canvas;
 

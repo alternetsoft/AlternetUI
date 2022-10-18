@@ -15,8 +15,8 @@ namespace DrawingSample
 
         public override void Draw(DrawingContext dc, Rect bounds)
         {
-            DrawDemoPath(dc);
             DrawRandomArtModel(dc);
+            DrawDemoForeground(dc, bounds);
         }
 
         protected override void OnCanvasChanged(Control? oldValue, Control? value)
@@ -32,7 +32,7 @@ namespace DrawingSample
 
             if (value != null)
             {
-                randomArtController = new RandomArt.RandomArtController(randomArtModel, value);
+                randomArtController = new RandomArt.RandomArtController(randomArtModel, value, PathSegmentType);
             }
         }
 
@@ -48,7 +48,7 @@ namespace DrawingSample
             if (randomArtController == null)
                 throw new Exception();
 
-            var pen = Pens.Red;
+            Pen? lastPen = null;
 
             foreach (var path in randomArtModel.Paths)
             {
@@ -57,40 +57,64 @@ namespace DrawingSample
                 foreach (var segment in path.Segments)
                 {
                     segment.Render(graphicsPath);
-                    dc.FillPath(Brushes.LightGray, graphicsPath);
-                    dc.DrawPath(pen, graphicsPath);
+                    dc.FillPath(path.GetBrush(), graphicsPath);
+
+                    lastPen = path.GetPen();
+                    dc.DrawPath(lastPen, graphicsPath);
                 }
             }
 
-            var lastPoint = randomArtModel.Paths.LastOrDefault()?.Segments.LastOrDefault()?.End;
-            if (lastPoint != null)
+            if (lastPen != null)
             {
-                dc.DrawLine(pen, lastPoint.Value, randomArtController.TipPoint);
+                var lastPoint = randomArtModel.Paths.LastOrDefault()?.Segments.LastOrDefault()?.End;
+                if (lastPoint != null)
+                    dc.DrawLine(lastPen, lastPoint.Value, randomArtController.TipPoint);
             }
         }
 
-        private void DrawDemoPath(DrawingContext dc)
+        RandomArt.PathSegmentType pathSegmentType = RandomArt.PathSegmentType.Curves;
+
+        public RandomArt.PathSegmentType PathSegmentType
         {
+            get => pathSegmentType;
+            set
+            {
+                pathSegmentType = value;
+
+                if (randomArtController != null)
+                    randomArtController.PathSegmentType = value;
+            }
+        }
+
+        private void DrawDemoForeground(DrawingContext dc, Rect bounds)
+        {
+            dc.DrawText(
+                "\n\nClick and drag here to draw.\nYou can select the path segment type to draw in the combo box in the panel to the right.",
+                Control.DefaultFont,
+                Brushes.Black,
+                bounds,
+                new TextFormat { Wrapping = TextWrapping.Word, HorizontalAlignment = TextHorizontalAlignment.Center });
+
             using var path = new GraphicsPath(dc);
 
-            path.AddLines(new[] { new Point(10, 10), new Point(100, 100), new Point(100, 120) });
-            path.AddLine(new Point(120, 120), new Point(140, 140));
-            path.AddLineTo(new Point(140, 150));
+            path.AddLines(new[] { new Point(210, 210), new Point(300, 300), new Point(300, 320) });
+            path.AddLine(new Point(320, 320), new Point(340, 340));
+            path.AddLineTo(new Point(340, 350));
             path.CloseFigure();
 
-            path.AddEllipse(new Rect(60, 60, 40, 20));
+            path.AddEllipse(new Rect(260, 260, 40, 20));
 
-            path.AddBezier(new Point(40, 10), new Point(250, 50), new Point(350, 50), new Point(110, 100));
-            path.AddBezierTo(new Point(250, 50), new Point(350, 50), new Point(200, 10));
+            path.AddBezier(new Point(240, 210), new Point(450, 250), new Point(550, 250), new Point(310, 300));
+            path.AddBezierTo(new Point(450, 250), new Point(550, 250), new Point(400, 210));
             path.CloseFigure();
 
             path.StartFigure();
-            path.AddArc(new Point(110, 10), 100, 95, 85);
+            path.AddArc(new Point(310, 210), 30, 295, 285);
 
-            path.AddRectangle(new Rect(60, 60, 40, 20));
-            path.AddRoundedRectangle(new Rect(50, 50, 60, 40), 5);
+            path.AddRectangle(new Rect(260, 260, 40, 20));
+            path.AddRoundedRectangle(new Rect(250, 250, 60, 40), 5);
 
-            dc.FillPath(Brushes.LightBlue, path);
+            dc.FillPath(Brushes.LightGreen, path);
             dc.DrawPath(Pens.Fuchsia, path);
         }
     }

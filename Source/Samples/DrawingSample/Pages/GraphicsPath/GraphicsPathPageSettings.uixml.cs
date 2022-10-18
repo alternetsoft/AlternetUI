@@ -1,11 +1,12 @@
 ﻿using Alternet.Drawing;
 using Alternet.UI;
+using System;
 
 namespace DrawingSample
 {
     internal partial class GraphicsPathPageSettings : Control
     {
-        GraphicsPathPage page;
+        GraphicsPathPage? page;
 
         public GraphicsPathPageSettings()
         {
@@ -16,10 +17,9 @@ namespace DrawingSample
         {
             DataContext = page;
             this.page = page;
-        }
 
-        private void StartFigureButton_Click(object sender, System.EventArgs e)
-        {
+            foreach (var value in Enum.GetValues(typeof(RandomArt.PathSegmentType)))
+                pathSegmentTypeComboBox.Items.Add(value!);
         }
     }
 }
