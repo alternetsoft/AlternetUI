@@ -15,7 +15,13 @@ namespace Alternet::UI
         wxGraphicsPath GetPath();
 
     private:
+        wxWindow* GetWindow();
+
+        void MoveToIfNeeded(wxPoint point);
+
         wxGraphicsPath _path;
         DrawingContext* _dc = nullptr;
+
+        bool _startFigure = false;
     };
 }

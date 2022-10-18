@@ -139,12 +139,10 @@ namespace Alternet.Drawing
         /// <param name="sweepAngle">The angle between <paramref name="startAngle"/> and the end of the arc.</param>
         /// <remarks>
         /// If there are previous lines or curves in the figure, a line is added to connect the endpoint of the previous
-        /// segment to the beginning of the arc. The arc is traced along the perimeter of the ellipse bounded by the
-        /// specified rectangle.The starting point of the arc is determined by measuring clockwise from the x-axis of
-        /// the ellipse (at the 0-degree angle) by the number of degrees in the start angle.The endpoint is similarly
-        /// located by measuring clockwise from the starting point by the number of degrees in the sweep angle.If the
-        /// sweep angle is greater than 360 degrees or less than -360 degrees, the arc is swept by exactly 360 degrees
-        /// or -360 degrees, respectively.
+        /// segment to the beginning of the arc. The starting point of the arc is determined by measuring clockwise from
+        /// the x-axis of the ellipse (at the 0-degree angle) by the number of degrees in the start angle. The endpoint
+        /// is similarly located by measuring clockwise from the starting point by the number of degrees in the sweep
+        /// angle.
         /// </remarks>
         public void AddArc(Point center, double radius, double startAngle, double sweepAngle)
         {

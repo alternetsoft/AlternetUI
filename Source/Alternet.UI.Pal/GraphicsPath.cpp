@@ -23,9 +23,26 @@ namespace Alternet::UI
         _path = dc->GetGraphicsContext()->CreatePath();
     }
 
+    wxWindow* GraphicsPath::GetWindow()
+    {
+        return DrawingContext::GetWindow(_dc->GetDC());
+    }
+
+    void GraphicsPath::MoveToIfNeeded(wxPoint point)
+    {
+        if (_startFigure)
+        {
+            _path.MoveToPoint(point);
+            _startFigure = false;
+        }
+    }
+
     void GraphicsPath::AddLines(Point* points, int pointsCount)
     {
-        auto window = DrawingContext::GetWindow(_dc->GetDC());
+        auto window = GetWindow();
+        
+        if (pointsCount > 0)
+            MoveToIfNeeded(fromDip(points[0], window));
         
         for (int i = 0; i < pointsCount; i++)
         {
@@ -37,26 +54,63 @@ namespace Alternet::UI
     
     void GraphicsPath::AddLine(const Point& pt1, const Point& pt2)
     {
+        auto window = GetWindow();
+        auto wxPt1 = fromDip(pt1, window);
+        MoveToIfNeeded(wxPt1);
+        _path.AddLineToPoint(wxPt1);
+        _path.AddLineToPoint(fromDip(pt2, window));
     }
     
     void GraphicsPath::AddLineTo(const Point& pt)
     {
+        auto window = GetWindow();
+        MoveToIfNeeded(wxPoint());
+        _path.AddLineToPoint(fromDip(pt, window));
     }
     
     void GraphicsPath::AddEllipse(const Rect& rect)
     {
+        auto window = GetWindow();
+        auto wxRect = fromDip(rect, window);
+        _path.AddEllipse(wxRect.x, wxRect.y, wxRect.width, wxRect.height);
     }
     
     void GraphicsPath::AddBezier(const Point& startPoint, const Point& controlPoint1, const Point& controlPoint2, const Point& endPoint)
     {
+        auto window = GetWindow();
+        _path.MoveToPoint(fromDip(startPoint, window));
+        _path.AddCurveToPoint(fromDip(controlPoint1, window), fromDip(controlPoint2, window), fromDip(endPoint, window));
     }
     
     void GraphicsPath::AddBezierTo(const Point& controlPoint1, const Point& controlPoint2, const Point& endPoint)
     {
+        auto window = GetWindow();
+        MoveToIfNeeded(wxPoint());
+        _path.AddCurveToPoint(fromDip(controlPoint1, window), fromDip(controlPoint2, window), fromDip(endPoint, window));
     }
     
     void GraphicsPath::AddArc(const Point& center, double radius, double startAngle, double sweepAngle)
     {
+        const double DegToRad = M_PI / 180;
+
+        auto window = GetWindow();
+        
+        auto startAngleRad = DegToRad * startAngle;
+        auto sweepAngleRad = DegToRad * sweepAngle;
+
+        auto wxCenter = fromDip(center, window);
+        auto wxRadius = fromDip(radius, window);
+
+        if (_startFigure)
+        {
+            auto counterClockwiseStartAngle = -startAngleRad + (M_PI / 2);
+            wxPoint startPoint(
+                wxCenter.x + (wxRadius * sin(counterClockwiseStartAngle)),
+                wxCenter.y + (wxRadius * cos(counterClockwiseStartAngle)));
+            MoveToIfNeeded(startPoint);
+        }
+
+        _path.AddArc(wxCenter, wxRadius, startAngleRad, startAngleRad + sweepAngleRad, true);
     }
     
     void GraphicsPath::AddRectangle(const Rect& rect)
@@ -74,10 +128,12 @@ namespace Alternet::UI
     
     void GraphicsPath::StartFigure()
     {
+        _startFigure = true;
     }
     
     void GraphicsPath::CloseFigure()
     {
+        _path.CloseSubpath();
     }
 
     wxGraphicsPath GraphicsPath::GetPath()
