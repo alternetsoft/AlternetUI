@@ -115,15 +115,26 @@ namespace Alternet::UI
     
     void GraphicsPath::AddRectangle(const Rect& rect)
     {
+        auto window = GetWindow();
+        auto wxRect = fromDip(rect, window);
+        _path.AddRectangle(wxRect.x, wxRect.y, wxRect.width, wxRect.height);
     }
     
     void GraphicsPath::AddRoundedRectangle(const Rect& rect, double cornerRadius)
     {
+        auto window = GetWindow();
+        auto wxRect = fromDip(rect, window);
+        _path.AddRoundedRectangle(wxRect.x, wxRect.y, wxRect.width, wxRect.height, fromDip(cornerRadius, window));
     }
     
     Rect GraphicsPath::GetBounds()
     {
-        return Rect();
+        auto window = GetWindow();
+        
+        auto box = _path.GetBox();
+        wxRect intBox((int)box.m_x, (int)box.m_y, (int)box.m_width, (int)box.m_height);
+
+        return toDip(intBox, window);
     }
     
     void GraphicsPath::StartFigure()

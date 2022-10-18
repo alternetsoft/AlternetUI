@@ -23,12 +23,15 @@ namespace DrawingSample
 
             path.AddEllipse(new Rect(60, 60, 40, 20));
 
-            path.AddBezier(new Point(110, 100), new Point(250, 150), new Point(350, 150), new Point(200, 200));
-            path.AddBezierTo(new Point(250, 150), new Point(350, 150), new Point(300, 100));
+            path.AddBezier(new Point(40, 10), new Point(250, 50), new Point(350, 50), new Point(110, 100));
+            path.AddBezierTo(new Point(250, 50), new Point(350, 50), new Point(200, 10));
             path.CloseFigure();
 
             path.StartFigure();
-            path.AddArc(new Point(200, 200), 100, 95, 90);
+            path.AddArc(new Point(110, 10), 100, 95, 85);
+
+            path.AddRectangle(new Rect(60, 60, 40, 20));
+            path.AddRoundedRectangle(new Rect(50, 50, 60, 40), 5);
 
             dc.FillPath(Brushes.LightBlue, path);
             dc.DrawPath(Pens.Fuchsia, path);
