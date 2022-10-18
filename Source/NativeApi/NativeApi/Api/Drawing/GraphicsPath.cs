@@ -30,5 +30,7 @@ namespace NativeApi.Api
         public void StartFigure() => throw new Exception();
 
         public void CloseFigure() => throw new Exception();
+
+        public FillMode FillMode { get; set; }
     }
 }

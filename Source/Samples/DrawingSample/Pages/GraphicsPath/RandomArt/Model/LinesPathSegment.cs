@@ -20,6 +20,9 @@ namespace DrawingSample.RandomArt
         public override void Render(GraphicsPath path)
         {
             path.AddLines(points.ToArray());
+
+            if (IsClosed)
+                path.CloseFigure();
         }
 
         public override void TryAddSegmentParts(Point tipPoint, ToolSettings toolSettings)

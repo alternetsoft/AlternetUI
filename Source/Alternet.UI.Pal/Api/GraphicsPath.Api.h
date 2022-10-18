@@ -16,6 +16,20 @@ ALTERNET_UI_API GraphicsPath* GraphicsPath_Create_()
         });
 }
 
+ALTERNET_UI_API FillMode GraphicsPath_GetFillMode_(GraphicsPath* obj)
+{
+    return MarshalExceptions<FillMode>([&](){
+            return obj->GetFillMode();
+        });
+}
+
+ALTERNET_UI_API void GraphicsPath_SetFillMode_(GraphicsPath* obj, FillMode value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetFillMode(value);
+        });
+}
+
 ALTERNET_UI_API void GraphicsPath_Initialize_(GraphicsPath* obj, DrawingContext* dc)
 {
     MarshalExceptions<void>([&](){

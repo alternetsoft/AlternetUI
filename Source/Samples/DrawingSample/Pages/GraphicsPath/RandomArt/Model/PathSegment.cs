@@ -24,5 +24,12 @@ namespace DrawingSample.RandomArt
         public abstract void Render(GraphicsPath path);
 
         public double Length => Vector2.Distance(Utils.GetVector(Start), Utils.GetVector(End));
+
+        public bool IsClosed { get; private set; }
+
+        public void CloseFigure()
+        {
+            IsClosed = true;
+        }
     }
 }

@@ -6,7 +6,7 @@ namespace DrawingSample
 {
     internal partial class GraphicsPathPageSettings : Control
     {
-        GraphicsPathPage? page;
+        private GraphicsPathPage? page;
 
         public GraphicsPathPageSettings()
         {
@@ -20,6 +20,19 @@ namespace DrawingSample
 
             foreach (var value in Enum.GetValues(typeof(RandomArt.PathSegmentType)))
                 pathSegmentTypeComboBox.Items.Add(value!);
+
+            foreach (var value in Enum.GetValues(typeof(FillMode)))
+                pathFillModeComboBox.Items.Add(value!);
+        }
+
+        private void ClearButton_Click(object sender, System.EventArgs e)
+        {
+            page?.Clear();
+        }
+
+        private void CloseLastFigureButton_Click(object sender, System.EventArgs e)
+        {
+            page?.CloseLastFigure();
         }
     }
 }

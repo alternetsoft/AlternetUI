@@ -55,6 +55,28 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets a <see cref="FillMode"/> enumeration that determines how the interiors of shapes in this <see cref="GraphicsPath"/> are filled.
+        /// </summary>
+        /// <value>
+        /// A <see cref="Drawing.FillMode"/> enumeration that specifies how the interiors of shapes in this <see cref="GraphicsPath"/> are filled.
+        /// The default mode is <see cref="FillMode.Alternate"/>.
+        /// </value>
+        public FillMode FillMode
+        {
+            get
+            {
+                CheckDisposed();
+                return (FillMode)NativePath.FillMode;
+            }
+
+            set
+            {
+                CheckDisposed();
+                NativePath.FillMode = (UI.Native.FillMode)value;
+            }
+        }
+
+        /// <summary>
         /// Appends a line segment to this <see cref="GraphicsPath"/>.
         /// </summary>
         /// <param name="pt1">A <see cref="Point"/> that represents the starting point of the line.</param>

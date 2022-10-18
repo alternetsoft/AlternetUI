@@ -147,8 +147,31 @@ namespace Alternet::UI
         _path.CloseSubpath();
     }
 
+    FillMode GraphicsPath::GetFillMode()
+    {
+        return _fillMode;
+    }
+
+    void GraphicsPath::SetFillMode(FillMode value)
+    {
+        _fillMode = value;
+    }
+
     wxGraphicsPath GraphicsPath::GetPath()
     {
         return _path;
+    }
+
+    wxPolygonFillMode GraphicsPath::GetWxFillMode()
+    {
+        switch (_fillMode)
+        {
+        case FillMode::Alternate:
+            return wxPolygonFillMode::wxODDEVEN_RULE;
+        case FillMode::Winding:
+            return wxPolygonFillMode::wxWINDING_RULE;
+        default:
+            throwExNoInfo;
+        }
     }
 }

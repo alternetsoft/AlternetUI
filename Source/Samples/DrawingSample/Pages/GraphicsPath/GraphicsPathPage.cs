@@ -11,7 +11,33 @@ namespace DrawingSample
 
         private RandomArt.RandomArtController? randomArtController;
 
+        private RandomArt.PathSegmentType pathSegmentType = RandomArt.PathSegmentType.Curves;
+
+        private FillMode pathFillMode;
+
         public override string Name => "Graphics Path";
+
+        public RandomArt.PathSegmentType PathSegmentType
+        {
+            get => pathSegmentType;
+            set
+            {
+                pathSegmentType = value;
+
+                if (randomArtController != null)
+                    randomArtController.PathSegmentType = value;
+            }
+        }
+
+        public FillMode PathFillMode
+        {
+            get => pathFillMode;
+            set
+            {
+                pathFillMode = value;
+                Canvas?.Invalidate();
+            }
+        }
 
         public override void Draw(DrawingContext dc, Rect bounds)
         {
@@ -52,7 +78,7 @@ namespace DrawingSample
 
             foreach (var path in randomArtModel.Paths)
             {
-                using var graphicsPath = new GraphicsPath(dc);
+                using var graphicsPath = new GraphicsPath(dc) { FillMode = PathFillMode };
 
                 foreach (var segment in path.Segments)
                 {
@@ -64,25 +90,11 @@ namespace DrawingSample
                 }
             }
 
-            if (lastPen != null)
+            if (randomArtController.IsDrawing && lastPen != null)
             {
                 var lastPoint = randomArtModel.Paths.LastOrDefault()?.Segments.LastOrDefault()?.End;
                 if (lastPoint != null)
                     dc.DrawLine(lastPen, lastPoint.Value, randomArtController.TipPoint);
-            }
-        }
-
-        RandomArt.PathSegmentType pathSegmentType = RandomArt.PathSegmentType.Curves;
-
-        public RandomArt.PathSegmentType PathSegmentType
-        {
-            get => pathSegmentType;
-            set
-            {
-                pathSegmentType = value;
-
-                if (randomArtController != null)
-                    randomArtController.PathSegmentType = value;
             }
         }
 
@@ -95,7 +107,7 @@ namespace DrawingSample
                 bounds,
                 new TextFormat { Wrapping = TextWrapping.Word, HorizontalAlignment = TextHorizontalAlignment.Center });
 
-            using var path = new GraphicsPath(dc);
+            using var path = new GraphicsPath(dc) { FillMode = PathFillMode };
 
             path.AddLines(new[] { new Point(210, 210), new Point(300, 300), new Point(300, 320) });
             path.AddLine(new Point(320, 320), new Point(340, 340));
@@ -116,6 +128,18 @@ namespace DrawingSample
 
             dc.FillPath(Brushes.LightGreen, path);
             dc.DrawPath(Pens.Fuchsia, path);
+        }
+
+        public void Clear()
+        {
+            randomArtModel.Paths.Clear();
+            Canvas?.Invalidate();
+        }
+
+        public void CloseLastFigure()
+        {
+            randomArtModel.Paths.LastOrDefault()?.Segments.LastOrDefault()?.CloseFigure();
+            Canvas?.Invalidate();
         }
     }
 }

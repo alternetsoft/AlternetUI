@@ -22,6 +22,23 @@ namespace Alternet.UI.Native
         {
         }
         
+        public FillMode FillMode
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.GraphicsPath_GetFillMode_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.GraphicsPath_SetFillMode_(NativePointer, value);
+            }
+        }
+        
         public void Initialize(DrawingContext dc)
         {
             CheckDisposed();
@@ -110,6 +127,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr GraphicsPath_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern FillMode GraphicsPath_GetFillMode_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void GraphicsPath_SetFillMode_(IntPtr obj, FillMode value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void GraphicsPath_Initialize_(IntPtr obj, IntPtr dc);

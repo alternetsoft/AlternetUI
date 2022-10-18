@@ -11,8 +11,9 @@ namespace Alternet::UI
     {
 #include "Api/GraphicsPath.inc"
     public:
-
         wxGraphicsPath GetPath();
+
+        wxPolygonFillMode GetWxFillMode();
 
     private:
         wxWindow* GetWindow();
@@ -21,6 +22,8 @@ namespace Alternet::UI
 
         wxGraphicsPath _path;
         DrawingContext* _dc = nullptr;
+
+        FillMode _fillMode = FillMode::Alternate;
 
         bool _startFigure = false;
     };

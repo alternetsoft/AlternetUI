@@ -34,6 +34,12 @@ namespace Alternet::UI
         Vertical = 5,
     };
     
+    enum class FillMode
+    {
+        Alternate = 0,
+        Winding = 1,
+    };
+    
     enum class FontStyle
     {
         Regular = 0,

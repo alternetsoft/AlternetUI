@@ -33,14 +33,14 @@ namespace Alternet::UI
     void DrawingContext::DrawPath(Pen* pen, GraphicsPath* path)
     {
         _graphicsContext->SetPen(pen->GetWxPen());
-        _graphicsContext->DrawPath(path->GetPath());
+        _graphicsContext->DrawPath(path->GetPath(), path->GetWxFillMode());
     }
 
     void DrawingContext::FillPath(Brush* brush, GraphicsPath* path)
     {
         _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
         _graphicsContext->SetBrush(GetGraphicsBrush(brush));
-        _graphicsContext->FillPath(path->GetPath());
+        _graphicsContext->FillPath(path->GetPath(), path->GetWxFillMode());
     }
 
     DrawingContext::~DrawingContext()

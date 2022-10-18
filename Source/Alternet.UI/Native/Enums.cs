@@ -33,6 +33,12 @@ namespace Alternet.UI.Native
         Vertical = 5,
     }
     
+    enum FillMode
+    {
+        Alternate = 0,
+        Winding = 1,
+    }
+    
     enum FontStyle
     {
         Regular = 0,

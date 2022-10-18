@@ -9,8 +9,6 @@ namespace DrawingSample.RandomArt
     {
         private readonly Control canvas;
         private Model model;
-        private bool drawing;
-
         private ToolSettings toolSettings = new ToolSettings();
 
         public RandomArtController(Model model, Control canvas, PathSegmentType pathSegmentType)
@@ -24,6 +22,8 @@ namespace DrawingSample.RandomArt
             canvas.MouseMove += Canvas_MouseMove;
             canvas.MouseLeftButtonUp += Canvas_MouseLeftButtonUp;
         }
+
+        public bool IsDrawing { get; private set; }
 
         public Point TipPoint { get; private set; }
 
@@ -40,7 +40,7 @@ namespace DrawingSample.RandomArt
         {
             canvas.CaptureMouse();
             model.Paths.Add(new Path());
-            drawing = true;
+            IsDrawing = true;
             TipPoint = e.GetPosition(canvas);
             model.Paths.Last().Segments.Add(SegmentFactory.CreateSegment(PathSegmentType, TipPoint));
             canvas.Invalidate();
@@ -48,7 +48,7 @@ namespace DrawingSample.RandomArt
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!drawing)
+            if (!IsDrawing)
                 return;
 
             TipPoint = e.GetPosition(canvas);
@@ -59,7 +59,8 @@ namespace DrawingSample.RandomArt
         private void Canvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             canvas.ReleaseMouseCapture();
-            drawing = false;
+            IsDrawing = false;
+            canvas.Invalidate();
         }
     }
 }
