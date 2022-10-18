@@ -1,5 +1,6 @@
 ﻿using Alternet.UI;
 using Alternet.Drawing;
+using System;
 
 namespace DrawingSample
 {
@@ -21,11 +22,18 @@ namespace DrawingSample
                 if (canvas != null)
                     canvas.Paint -= Canvas_Paint;
 
+                var oldValue = canvas;
                 canvas = value;
 
                 if (canvas != null)
                     canvas.Paint += Canvas_Paint;
+
+                OnCanvasChanged(oldValue, value);
             }
+        }
+
+        protected virtual void OnCanvasChanged(Control? oldValue, Control? value)
+        {
         }
 
         public Control SettingsControl => settingsControl ??= CreateSettingsControl();

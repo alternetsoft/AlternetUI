@@ -3,5 +3,6 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
     <StackPanel Orientation="Vertical" Margin="5">
+        <Button Text="Start Figure" Name="startFigureButton" Click="StartFigureButton_Click" />
     </StackPanel>
 </Control>
