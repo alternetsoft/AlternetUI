@@ -261,9 +261,8 @@ namespace Alternet::UI
     {
     private:
         wxDC* _dc;
-        Size _translation;
     public:
-        TextPainter(wxDC* dc, Size translation) : _dc(dc), _translation(translation)
+        TextPainter(wxDC* dc) : _dc(dc)
         {
         }
 
@@ -397,7 +396,7 @@ namespace Alternet::UI
                     wrapping,
                     trimming);
 
-                auto rect = fromDip(Rect(bounds.GetLocation() + _translation, bounds.GetSize()), window);
+                auto rect = fromDip(Rect(bounds.GetLocation(), bounds.GetSize()), window);
                 
                 if (trimming == TextTrimming::Pixel)
                     _dc->SetClippingRegion(rect);
@@ -409,7 +408,7 @@ namespace Alternet::UI
             }
             else
             {
-                _dc->DrawText(wxStr(text), fromDip(bounds.GetLocation() + _translation, window));
+                _dc->DrawText(wxStr(text), fromDip(bounds.GetLocation(), window));
             }
 
             _dc->SetTextForeground(oldTextForeground);
@@ -422,7 +421,7 @@ namespace Alternet::UI
 
     /*
         Alternative implementation for wxGraphicsContext:
-        auto o = fromDipF(origin + _translation, _dc->GetWindow());
+        auto o = fromDipF(origin, _dc->GetWindow());
         _graphicsContext->SetFont(_graphicsContext->CreateFont(font->GetWxFont()));
         _graphicsContext->SetBrush(GetGraphicsBrush(brush));
         _graphicsContext->DrawText(wxStr(text), o.X, o.Y);

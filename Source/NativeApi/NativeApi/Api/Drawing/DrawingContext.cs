@@ -44,9 +44,11 @@ namespace NativeApi.Api
 
         public Size MeasureText(string text, Font font, double maximumWidth, TextWrapping textWrapping) => throw new Exception();
 
-        public void PushTransform(Size translation) => throw new Exception();
+        public void Push() => throw new Exception();
 
         public void Pop() => throw new Exception();
+
+        public TransformMatrix Transform { get; set; }
 
         public void DrawLine(Point a, Point b, Pen pen) => throw new Exception();
 

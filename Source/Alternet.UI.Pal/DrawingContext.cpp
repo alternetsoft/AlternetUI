@@ -106,16 +106,30 @@ namespace Alternet::UI
         _dc->SetBrush(oldBrush);
     }
 
-    void DrawingContext::PushTransform(const Size& translation)
+    void DrawingContext::Push()
     {
-        _translationStack.push(_translation);
-        _translation += translation;
+        _transformStack.push(_dc->GetTransformMatrix());
     }
 
     void DrawingContext::Pop()
     {
-        _translation = _translationStack.top();
-        _translationStack.pop();
+        if (_transformStack.empty())
+            return;
+
+        _dc->SetTransformMatrix(_transformStack.top());
+        _transformStack.pop();
+    }
+
+    TransformMatrix* DrawingContext::GetTransform()
+    {
+        auto result = new TransformMatrix(_dc->GetTransformMatrix());
+        result->AddRef();
+        return result;
+    }
+
+    void DrawingContext::SetTransform(TransformMatrix* value)
+    {
+        _dc->SetTransformMatrix(value->GetMatrix());
     }
 
     void DrawingContext::FillRectangle(const Rect& rectangle, Brush* brush)
@@ -123,7 +137,7 @@ namespace Alternet::UI
         _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
         _graphicsContext->SetBrush(GetGraphicsBrush(brush));
 
-        auto rect = fromDipF(rectangle.Offset(_translation), _dc->GetWindow());
+        auto rect = fromDipF(rectangle, _dc->GetWindow());
         _graphicsContext->DrawRectangle(rect.X, rect.Y, rect.Width, rect.Height);
     }
 
@@ -132,7 +146,7 @@ namespace Alternet::UI
         _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
         _graphicsContext->SetBrush(GetGraphicsBrush(brush));
 
-        auto rect = fromDipF(bounds.Offset(_translation), _dc->GetWindow());
+        auto rect = fromDipF(bounds, _dc->GetWindow());
         _graphicsContext->DrawEllipse(rect.X, rect.Y, rect.Width, rect.Height);
     }
 
@@ -165,7 +179,7 @@ namespace Alternet::UI
                     rectangle.X + locationOffset,
                     rectangle.Y + locationOffset,
                     rectangle.Width - sizeOffset,
-                    rectangle.Height - sizeOffset).Offset(_translation),
+                    rectangle.Height - sizeOffset),
                 _dc->GetWindow()));
 
         _dc->SetPen(oldPen);
@@ -179,7 +193,7 @@ namespace Alternet::UI
         _dc->SetPen(pen->GetWxPen());
 
         auto window = _dc->GetWindow();
-        _dc->DrawLine(fromDip(a + _translation, window), fromDip(b + _translation, window));
+        _dc->DrawLine(fromDip(a, window), fromDip(b, window));
 
         _dc->SetPen(oldPen);
     }
@@ -199,9 +213,7 @@ namespace Alternet::UI
         for (int i = 0; i < pointsCount; i++)
             wxPoints[i] = fromDip(points[i], window);
 
-        wxSize wxTranslation = fromDip(_translation, window);
-
-        _dc->DrawLines(pointsCount, &wxPoints[0], wxTranslation.x, wxTranslation.y);
+        _dc->DrawLines(pointsCount, &wxPoints[0]);
 
         _dc->SetPen(oldPen);
     }
@@ -220,7 +232,7 @@ namespace Alternet::UI
                     bounds.X,
                     bounds.Y,
                     bounds.Width,
-                    bounds.Height).Offset(_translation),
+                    bounds.Height),
                 _dc->GetWindow()));
 
         _dc->SetPen(oldPen);
@@ -273,7 +285,7 @@ namespace Alternet::UI
 
     TextPainter* DrawingContext::GetTextPainter()
     {
-        return new TextPainter(_dc, _translation);
+        return new TextPainter(_dc);
     }
 
     Size DrawingContext::MeasureText(const string& text, Font* font, double maximumWidth, TextWrapping wrapping)

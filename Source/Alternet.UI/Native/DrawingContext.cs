@@ -21,6 +21,24 @@ namespace Alternet.UI.Native
         {
         }
         
+        public TransformMatrix Transform
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.DrawingContext_GetTransform_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<TransformMatrix>(n, p => new TransformMatrix(p))!;
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.DrawingContext_SetTransform_(NativePointer, value.NativePointer);
+            }
+        }
+        
         public static DrawingContext FromImage(Image image)
         {
             var n = NativeApi.DrawingContext_FromImage_(image.NativePointer);
@@ -103,10 +121,10 @@ namespace Alternet.UI.Native
             return m;
         }
         
-        public void PushTransform(Alternet.Drawing.Size translation)
+        public void Push()
         {
             CheckDisposed();
-            NativeApi.DrawingContext_PushTransform_(NativePointer, translation);
+            NativeApi.DrawingContext_Push_(NativePointer);
         }
         
         public void Pop()
@@ -132,6 +150,12 @@ namespace Alternet.UI.Native
         private class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr DrawingContext_GetTransform_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_SetTransform_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr DrawingContext_FromImage_(IntPtr image);
@@ -173,7 +197,7 @@ namespace Alternet.UI.Native
             public static extern NativeApiTypes.Size DrawingContext_MeasureText_(IntPtr obj, string text, IntPtr font, double maximumWidth, TextWrapping textWrapping);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_PushTransform_(IntPtr obj, NativeApiTypes.Size translation);
+            public static extern void DrawingContext_Push_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_Pop_(IntPtr obj);

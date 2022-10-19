@@ -6,6 +6,10 @@ namespace Alternet::UI
     {
     }
 
+    TransformMatrix::TransformMatrix(const wxAffineMatrix2D& matrix) : _matrix(matrix)
+    {
+    }
+
     TransformMatrix::~TransformMatrix()
     {
     }

@@ -7,6 +7,7 @@
 #include "Brush.h"
 #include "Pen.h"
 #include "GraphicsPath.h"
+#include "TransformMatrix.h"
 
 namespace Alternet::UI
 {
@@ -24,13 +25,12 @@ namespace Alternet::UI
         static wxWindow* GetWindow(wxDC* dc);
 
     private:
+        std::stack<wxAffineMatrix2D> _transformStack;
+
         wxDC* _dc;
         wxGraphicsContext* _graphicsContext = nullptr;
 
         wxGraphicsRenderer* _dcRenderer = nullptr;
-
-        Size _translation;
-        std::stack<Size> _translationStack;
 
         wxGraphicsBrush GetGraphicsBrush(Brush* brush);
         wxGraphicsPen GetGraphicsPen(Pen* pen);

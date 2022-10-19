@@ -3,6 +3,7 @@
 #pragma once
 
 #include "DrawingContext.h"
+#include "TransformMatrix.h"
 #include "Image.h"
 #include "Brush.h"
 #include "Pen.h"
@@ -12,6 +13,20 @@
 #include "Exceptions.h"
 
 using namespace Alternet::UI;
+
+ALTERNET_UI_API TransformMatrix* DrawingContext_GetTransform_(DrawingContext* obj)
+{
+    return MarshalExceptions<TransformMatrix*>([&](){
+            return obj->GetTransform();
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_SetTransform_(DrawingContext* obj, TransformMatrix* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetTransform(value);
+        });
+}
 
 ALTERNET_UI_API DrawingContext* DrawingContext_FromImage_(Image* image)
 {
@@ -104,10 +119,10 @@ ALTERNET_UI_API Size_C DrawingContext_MeasureText_(DrawingContext* obj, const ch
         });
 }
 
-ALTERNET_UI_API void DrawingContext_PushTransform_(DrawingContext* obj, Size translation)
+ALTERNET_UI_API void DrawingContext_Push_(DrawingContext* obj)
 {
     MarshalExceptions<void>([&](){
-            obj->PushTransform(translation);
+            obj->Push();
         });
 }
 

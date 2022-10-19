@@ -9,6 +9,8 @@ namespace Alternet::UI
     {
 #include "Api/TransformMatrix.inc"
     public:
+        TransformMatrix(const wxAffineMatrix2D& matrix);
+
         wxAffineMatrix2D GetMatrix();
 
     private:
