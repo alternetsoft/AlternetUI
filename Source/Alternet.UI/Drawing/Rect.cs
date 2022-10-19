@@ -357,6 +357,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates a <see cref='Drawing.Rect'/> that is inflated by the specified amount.
+        /// </summary>
+        public Rect InflatedBy(double x, double y) => Inflate(this, x, y);
+
+        /// <summary>
+        /// Gets the center point of this <see cref="Rect"/>.
+        /// </summary>
+        public Point Center => Location + Size / 2;
+
+        /// <summary>
         /// Inflates this <see cref='Drawing.Rect'/> by the specified amount.
         /// </summary>
         public void Inflate(Size size) => Inflate(size.Width, size.Height);

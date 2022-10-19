@@ -107,10 +107,10 @@ namespace Alternet.UI.Native
             return m;
         }
         
-        public void StartFigure()
+        public void StartFigure(Alternet.Drawing.Point point)
         {
             CheckDisposed();
-            NativeApi.GraphicsPath_StartFigure_(NativePointer);
+            NativeApi.GraphicsPath_StartFigure_(NativePointer, point);
         }
         
         public void CloseFigure()
@@ -168,7 +168,7 @@ namespace Alternet.UI.Native
             public static extern NativeApiTypes.Rect GraphicsPath_GetBounds_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_StartFigure_(IntPtr obj);
+            public static extern void GraphicsPath_StartFigure_(IntPtr obj, NativeApiTypes.Point point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void GraphicsPath_CloseFigure_(IntPtr obj);

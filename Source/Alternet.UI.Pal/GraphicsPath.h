@@ -18,13 +18,9 @@ namespace Alternet::UI
     private:
         wxWindow* GetWindow();
 
-        void MoveToIfNeeded(wxPoint point);
-
         wxGraphicsPath _path;
         DrawingContext* _dc = nullptr;
 
         FillMode _fillMode = FillMode::Alternate;
-
-        bool _startFigure = false;
     };
 }

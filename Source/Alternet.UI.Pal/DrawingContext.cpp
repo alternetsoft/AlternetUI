@@ -116,7 +116,7 @@ namespace Alternet::UI
         if (_transformStack.empty())
             return;
 
-        _dc->SetTransformMatrix(_transformStack.top());
+        SetTransformCore(_transformStack.top());
         _transformStack.pop();
     }
 
@@ -129,7 +129,13 @@ namespace Alternet::UI
 
     void DrawingContext::SetTransform(TransformMatrix* value)
     {
-        _dc->SetTransformMatrix(value->GetMatrix());
+        SetTransformCore(value->GetMatrix());
+    }
+
+    void DrawingContext::SetTransformCore(const wxAffineMatrix2D& value)
+    {
+        _graphicsContext->SetTransform(_graphicsContext->CreateMatrix(value));
+        _dc->SetTransformMatrix(value);
     }
 
     void DrawingContext::FillRectangle(const Rect& rectangle, Brush* brush)

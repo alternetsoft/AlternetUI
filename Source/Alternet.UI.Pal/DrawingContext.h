@@ -25,6 +25,8 @@ namespace Alternet::UI
         static wxWindow* GetWindow(wxDC* dc);
 
     private:
+        void SetTransformCore(const wxAffineMatrix2D& value);
+
         std::stack<wxAffineMatrix2D> _transformStack;
 
         wxDC* _dc;

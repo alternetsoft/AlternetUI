@@ -107,10 +107,10 @@ ALTERNET_UI_API Rect_C GraphicsPath_GetBounds_(GraphicsPath* obj)
         });
 }
 
-ALTERNET_UI_API void GraphicsPath_StartFigure_(GraphicsPath* obj)
+ALTERNET_UI_API void GraphicsPath_StartFigure_(GraphicsPath* obj, Point point)
 {
     MarshalExceptions<void>([&](){
-            obj->StartFigure();
+            obj->StartFigure(point);
         });
 }
 

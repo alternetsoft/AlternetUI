@@ -120,7 +120,7 @@ namespace DrawingSample
             path.AddBezierTo(new Point(450, 250), new Point(550, 250), new Point(400, 210));
             path.CloseFigure();
 
-            path.StartFigure();
+            path.StartFigure(new Point(310, 210));
             path.AddArc(new Point(310, 210), 30, 295, 285);
 
             path.AddRectangle(new Rect(260, 260, 40, 20));

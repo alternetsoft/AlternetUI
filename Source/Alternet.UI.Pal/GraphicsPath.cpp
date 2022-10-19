@@ -28,21 +28,9 @@ namespace Alternet::UI
         return DrawingContext::GetWindow(_dc->GetDC());
     }
 
-    void GraphicsPath::MoveToIfNeeded(wxPoint point)
-    {
-        if (_startFigure)
-        {
-            _path.MoveToPoint(point);
-            _startFigure = false;
-        }
-    }
-
     void GraphicsPath::AddLines(Point* points, int pointsCount)
     {
         auto window = GetWindow();
-        
-        if (pointsCount > 0)
-            MoveToIfNeeded(fromDip(points[0], window));
         
         for (int i = 0; i < pointsCount; i++)
         {
@@ -56,7 +44,6 @@ namespace Alternet::UI
     {
         auto window = GetWindow();
         auto wxPt1 = fromDip(pt1, window);
-        MoveToIfNeeded(wxPt1);
         _path.AddLineToPoint(wxPt1);
         _path.AddLineToPoint(fromDip(pt2, window));
     }
@@ -64,7 +51,6 @@ namespace Alternet::UI
     void GraphicsPath::AddLineTo(const Point& pt)
     {
         auto window = GetWindow();
-        MoveToIfNeeded(wxPoint());
         _path.AddLineToPoint(fromDip(pt, window));
     }
     
@@ -85,7 +71,6 @@ namespace Alternet::UI
     void GraphicsPath::AddBezierTo(const Point& controlPoint1, const Point& controlPoint2, const Point& endPoint)
     {
         auto window = GetWindow();
-        MoveToIfNeeded(wxPoint());
         _path.AddCurveToPoint(fromDip(controlPoint1, window), fromDip(controlPoint2, window), fromDip(endPoint, window));
     }
     
@@ -99,14 +84,14 @@ namespace Alternet::UI
         auto wxCenter = fromDip(center, window);
         auto wxRadius = fromDip(radius, window);
 
-        if (_startFigure)
-        {
-            auto counterClockwiseStartAngle = -startAngleRad + (M_PI / 2);
-            wxPoint startPoint(
-                wxCenter.x + (wxRadius * sin(counterClockwiseStartAngle)),
-                wxCenter.y + (wxRadius * cos(counterClockwiseStartAngle)));
-            MoveToIfNeeded(startPoint);
-        }
+        //if (_startFigure)
+        //{
+        //    auto counterClockwiseStartAngle = -startAngleRad + (M_PI / 2);
+        //    wxPoint startPoint(
+        //        wxCenter.x + (wxRadius * sin(counterClockwiseStartAngle)),
+        //        wxCenter.y + (wxRadius * cos(counterClockwiseStartAngle)));
+        //    MoveToIfNeeded(startPoint);
+        //}
 
         _path.AddArc(wxCenter, wxRadius, startAngleRad, startAngleRad + sweepAngleRad, true);
     }
@@ -135,9 +120,9 @@ namespace Alternet::UI
         return toDip(intBox, window);
     }
     
-    void GraphicsPath::StartFigure()
+    void GraphicsPath::StartFigure(const Point& point)
     {
-        _startFigure = true;
+        _path.MoveToPoint(fromDip(point, GetWindow()));
     }
     
     void GraphicsPath::CloseFigure()

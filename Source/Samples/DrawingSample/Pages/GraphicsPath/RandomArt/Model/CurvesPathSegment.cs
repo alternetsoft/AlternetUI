@@ -18,7 +18,7 @@ namespace DrawingSample.RandomArt
 
         public override void Render(GraphicsPath path)
         {
-            path.AddLine(Start, Start);
+            path.StartFigure(Start);
 
             foreach (var arc in curves)
                 path.AddBezierTo(arc.Control1, arc.Control2, arc.End);

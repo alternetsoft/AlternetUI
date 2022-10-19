@@ -15,7 +15,7 @@ void AddArc(const Point& center, double radius, double startAngle, double sweepA
 void AddRectangle(const Rect& rect);
 void AddRoundedRectangle(const Rect& rect, double cornerRadius);
 Rect GetBounds();
-void StartFigure();
+void StartFigure(const Point& point);
 void CloseFigure();
 public:
 GraphicsPath();

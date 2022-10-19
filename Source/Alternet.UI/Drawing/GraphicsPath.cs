@@ -206,10 +206,10 @@ namespace Alternet.Drawing
         /// <summary>
         /// Starts a new figure without closing the current figure. All subsequent points added to the path are added to this new figure.
         /// </summary>
-        public void StartFigure()
+        public void StartFigure(Point point)
         {
             CheckDisposed();
-            NativePath.StartFigure();
+            NativePath.StartFigure(point);
         }
 
         /// <summary>

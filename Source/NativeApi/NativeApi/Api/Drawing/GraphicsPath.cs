@@ -27,7 +27,7 @@ namespace NativeApi.Api
 
         public Rect GetBounds() => throw new Exception();
 
-        public void StartFigure() => throw new Exception();
+        public void StartFigure(Point point) => throw new Exception();
 
         public void CloseFigure() => throw new Exception();
 
