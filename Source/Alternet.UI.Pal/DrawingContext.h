@@ -36,6 +36,7 @@ namespace Alternet::UI
         std::stack<wxAffineMatrix2D> _transformStack;
 
         wxAffineMatrix2D _currentTransform;
+        wxPoint _currentTranslation;
 
         wxDC* _dc;
         wxGraphicsContext* _graphicsContext = nullptr;

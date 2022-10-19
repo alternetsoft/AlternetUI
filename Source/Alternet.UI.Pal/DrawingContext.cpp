@@ -151,6 +151,12 @@ namespace Alternet::UI
     void DrawingContext::SetTransformCore(const wxAffineMatrix2D& value)
     {
         _currentTransform = value;
+
+        wxMatrix2D m;
+        wxPoint2DDouble t;
+        value.Get(&m, &t);
+        _currentTranslation = wxPoint((int)t.m_x, (int)t.m_y);
+
         _nonIdentityTransformSet = !_currentTransform.IsIdentity();
 
         // Setting transform on DC and GC at the same time doesn't work.
@@ -383,10 +389,15 @@ namespace Alternet::UI
         Font* font,
         Brush* brush)
     {
-        if (NeedToUseDC())
-            UseDC();
-        else
-            UseGC();
+        //if (NeedToUseDC())
+        //    UseDC();
+        //else
+        //    UseGC();
+#if __WXMSW__
+        UseDC();
+#else
+        _dc->ResetTransformMatrix();
+#endif
 
         std::unique_ptr<TextPainter>(GetTextPainter())->DrawTextAtPoint(
             text,
@@ -405,10 +416,15 @@ namespace Alternet::UI
         TextTrimming trimming,
         TextWrapping wrapping)
     {
-        if (NeedToUseDC())
-            UseDC();
-        else
-            UseGC();
+        //if (NeedToUseDC())
+        //    UseDC();
+        //else
+        //    UseGC();
+#if __WXMSW__
+        UseDC();
+#else
+        _dc->ResetTransformMatrix();
+#endif
 
         std::unique_ptr<TextPainter>(GetTextPainter())->DrawTextAtRect(
             text,
@@ -433,15 +449,24 @@ namespace Alternet::UI
 
     TextPainter* DrawingContext::GetTextPainter()
     {
-        return new TextPainter(_dc, _graphicsContext, NeedToUseDC());
+        wxPoint translation;
+#ifndef __WXMSW__
+        translation = _currentTranslation;
+#endif
+        return new TextPainter(_dc, _graphicsContext, /*NeedToUseDC()*/true, translation);
     }
 
     Size DrawingContext::MeasureText(const string& text, Font* font, double maximumWidth, TextWrapping wrapping)
     {
-        if (NeedToUseDC())
-            UseDC();
-        else
-            UseGC();
+        //if (NeedToUseDC())
+        //    UseDC();
+        //else
+        //    UseGC();
+#if __WXMSW__
+        UseDC();
+#else
+        _dc->ResetTransformMatrix();
+#endif
 
         return std::unique_ptr<TextPainter>(GetTextPainter())->MeasureText(text, font, maximumWidth, wrapping);
     }
