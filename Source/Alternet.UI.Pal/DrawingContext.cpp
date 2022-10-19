@@ -405,7 +405,10 @@ namespace Alternet::UI
         TextTrimming trimming,
         TextWrapping wrapping)
     {
-        UseDC();
+        if (NeedToUseDC())
+            UseDC();
+        else
+            UseGC();
 
         std::unique_ptr<TextPainter>(GetTextPainter())->DrawTextAtRect(
             text,
@@ -435,7 +438,11 @@ namespace Alternet::UI
 
     Size DrawingContext::MeasureText(const string& text, Font* font, double maximumWidth, TextWrapping wrapping)
     {
-        UseDC();
+        if (NeedToUseDC())
+            UseDC();
+        else
+            UseGC();
+
         return std::unique_ptr<TextPainter>(GetTextPainter())->MeasureText(text, font, maximumWidth, wrapping);
     }
 }

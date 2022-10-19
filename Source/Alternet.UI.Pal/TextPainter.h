@@ -11,21 +11,41 @@ namespace
     class TextWrapper
     {
     public:
-        static wxString Wrap(wxDC* dc, wxString str, int maxWidth, int maxHeight, TextWrapping wrapping, TextTrimming trimming)
+        static wxString Wrap(
+            wxDC* dc,
+            wxGraphicsContext* graphicsContext,
+            bool useDC,
+            wxString str,
+            int maxWidth,
+            int maxHeight,
+            TextWrapping wrapping,
+            TextTrimming trimming)
         {
             if (wrapping == TextWrapping::Word)
-                return WrapByWord(dc, str, maxWidth, maxHeight, wrapping, trimming);
+                return WrapByWord(dc, graphicsContext, useDC, str, maxWidth, maxHeight, wrapping, trimming);
             else
-                return WrapByCharacter(dc, str, maxWidth, maxHeight, wrapping, trimming);
+                return WrapByCharacter(dc, graphicsContext, useDC, str, maxWidth, maxHeight, wrapping, trimming);
         }
     
     private:
-        static wxString WrapByCharacter(wxDC* dc, wxString str, int maxWidth, int maxHeight, TextWrapping wrapping, TextTrimming trimming)
+        static wxString WrapByCharacter(
+            wxDC* dc,
+            wxGraphicsContext* graphicsContext,
+            bool useDC,
+            wxString str,
+            int maxWidth,
+            int maxHeight,
+            TextWrapping wrapping,
+            TextTrimming trimming)
         {
             wxArrayInt widths;
-            dc->GetPartialTextExtents(str, widths);
+            wxArrayDouble doubleWidths;
+            if (useDC)
+                dc->GetPartialTextExtents(str, widths);
+            else
+                graphicsContext->GetPartialTextExtents(str, doubleWidths);
 
-            int lineWidth = 0;
+            double lineWidth = 0;
 
             bool needToWrap = (wrapping == TextWrapping::Character);
             bool needToTrim = (trimming == TextTrimming::Character);
@@ -38,11 +58,11 @@ namespace
             {
                 auto c = str.GetChar(i);
 
-                int charWidth;
+                double charWidth;
                 if (i == 0)
-                    charWidth = widths[i];
+                    charWidth = useDC ? widths[i] : doubleWidths[i];
                 else
-                    charWidth = widths[i] - widths[i - 1];
+                    charWidth = useDC ? (widths[i] - widths[i - 1]) : (doubleWidths[i] - doubleWidths[i - 1]);
 
                 bool needLineBreak = false;
 
@@ -89,7 +109,7 @@ namespace
 
             lines.Add(currentLine);
 
-            return GetTrimmedString(dc, lines, trimming, maxHeight, needToTrimLastLine);
+            return GetTrimmedString(dc, graphicsContext, useDC, lines, trimming, maxHeight, needToTrimLastLine);
         }
 
         static void SplitToWords(const wxString& text, wxArrayString& words)
@@ -129,7 +149,15 @@ namespace
                 widths.Add(dc->GetTextExtent(str).x);
         }
 
-        static wxString WrapByWord(wxDC* dc, wxString str, int maxWidth, int maxHeight, TextWrapping wrapping, TextTrimming trimming)
+        static wxString WrapByWord(
+            wxDC* dc,
+            wxGraphicsContext* graphicsContext,
+            bool useDC,
+            wxString str,
+            int maxWidth,
+            int maxHeight,
+            TextWrapping wrapping,
+            TextTrimming trimming)
         {
             wxArrayString words;
             SplitToWords(str, words);
@@ -213,10 +241,17 @@ namespace
 
             lines.Add(currentLine);
 
-            return GetTrimmedString(dc, lines, trimming, maxHeight, needToTrimLastLine);
+            return GetTrimmedString(dc, graphicsContext, useDC, lines, trimming, maxHeight, needToTrimLastLine);
         }
 
-        static wxString GetTrimmedString(wxDC* dc, const wxArrayString& lines, TextTrimming trimming, int maxHeight, bool needToTrimLastLine)
+        static wxString GetTrimmedString(
+            wxDC* dc,
+            wxGraphicsContext* graphicsContext,
+            bool useDC,
+            const wxArrayString& lines,
+            TextTrimming trimming,
+            int maxHeight,
+            bool needToTrimLastLine)
         {
             wxString result;
             bool needToTrim = (trimming == TextTrimming::Character);
@@ -230,7 +265,16 @@ namespace
             {
                 if (needToTrim)
                 {
-                    int lineHeight = dc->GetTextExtent(line).y;
+                    int lineHeight;
+                    if (useDC)
+                        lineHeight = dc->GetTextExtent(line).y;
+                    else
+                    {
+                        double w = 0, h = 0;
+                        graphicsContext->GetTextExtent(line, &w, &h);
+                        lineHeight = (int)h;
+                    }
+
                     textHeight += lineHeight;
                     if (textHeight > maxHeight)
                         break;
@@ -311,21 +355,40 @@ namespace Alternet::UI
 
         Size MeasureText(const string& text, Font* font, double maximumWidth, TextWrapping wrapping)
         {
-            wxCoord x = 0, y = 0;
             auto wxFont = font->GetWxFont();
-            auto oldFont = _dc->GetFont();
-            _dc->SetFont(wxFont); // just passing font as a GetMultiLineTextExtent argument doesn't work on macOS/Linux
-            
-            wxString str = wxStr(text);
-            if (!isnan(maximumWidth))
-            {
-                auto window = DrawingContext::GetWindow(_dc);
-                str = TextWrapper::Wrap(_dc, str, fromDip(maximumWidth, window), INT_MAX, wrapping, TextTrimming::None);
-            }
 
-            _dc->GetMultiLineTextExtent(str, &x, &y, nullptr, &wxFont);
-            _dc->SetFont(oldFont);
-            return toDip(wxSize(x, y), _dc->GetWindow());
+            if (_useDC)
+            {
+                wxCoord x = 0, y = 0;
+                auto oldFont = _dc->GetFont();
+                _dc->SetFont(wxFont); // just passing font as a GetMultiLineTextExtent argument doesn't work on macOS/Linux
+
+                wxString str = wxStr(text);
+                if (!isnan(maximumWidth))
+                {
+                    auto window = DrawingContext::GetWindow(_dc);
+                    str = TextWrapper::Wrap(_dc, _graphicsContext, _useDC, str, fromDip(maximumWidth, window), INT_MAX, wrapping, TextTrimming::None);
+                }
+
+                _dc->GetMultiLineTextExtent(str, &x, &y, nullptr, &wxFont);
+                _dc->SetFont(oldFont);
+                return toDip(wxSize(x, y), _dc->GetWindow());
+            }
+            else
+            {
+                double x = 0, y = 0;
+                _graphicsContext->SetFont(wxFont, *wxBLACK);
+
+                wxString str = wxStr(text);
+                if (!isnan(maximumWidth))
+                {
+                    auto window = DrawingContext::GetWindow(_dc);
+                    str = TextWrapper::Wrap(_dc, _graphicsContext, _useDC, str, fromDip(maximumWidth, window), INT_MAX, wrapping, TextTrimming::None);
+                }
+
+                _graphicsContext->GetTextExtent(str, &x, &y);
+                return toDip(wxSize(x, y), _dc->GetWindow());
+            }
         }
 
     private:
@@ -382,51 +445,80 @@ namespace Alternet::UI
             if (solidBrush == nullptr)
                 throwExInvalidArg(solidBrush, u"Only SolidBrush objects are supported");
 
-            auto oldTextForeground = _dc->GetTextForeground();
-            auto oldFont = _dc->GetFont();
-            _dc->SetTextForeground(solidBrush->GetWxBrush().GetColour());
-            _dc->SetFont(font->GetWxFont());
-            
             auto window = DrawingContext::GetWindow(_dc);
 
-            if (useBounds)
+            if (_useDC)
             {
-                auto wrapped = TextWrapper::Wrap(
-                    _dc,
-                    wxStr(text),
-                    fromDip(bounds.Width, window),
-                    fromDip(bounds.Height, window),
-                    wrapping,
-                    trimming);
+                auto oldTextForeground = _dc->GetTextForeground();
+                auto oldFont = _dc->GetFont();
+                _dc->SetTextForeground(solidBrush->GetWxBrush().GetColour());
+                _dc->SetFont(font->GetWxFont());
 
-                auto rect = fromDip(Rect(bounds.GetLocation(), bounds.GetSize()), window);
-                
-                if (trimming == TextTrimming::Pixel)
-                    _dc->SetClippingRegion(rect);
-                
-                _dc->DrawLabel(wrapped, rect, GetWxAlignment(horizontalAlignment, verticalAlignment));
-                
-                if (trimming == TextTrimming::Pixel)
-                    _dc->DestroyClippingRegion();
+
+                if (useBounds)
+                {
+                    auto wrapped = TextWrapper::Wrap(
+                        _dc,
+                        _graphicsContext,
+                        _useDC,
+                        wxStr(text),
+                        fromDip(bounds.Width, window),
+                        fromDip(bounds.Height, window),
+                        wrapping,
+                        trimming);
+
+                    auto rect = fromDip(Rect(bounds.GetLocation(), bounds.GetSize()), window);
+
+                    if (trimming == TextTrimming::Pixel)
+                        _dc->SetClippingRegion(rect);
+
+                    _dc->DrawLabel(wrapped, rect, GetWxAlignment(horizontalAlignment, verticalAlignment));
+
+                    if (trimming == TextTrimming::Pixel)
+                        _dc->DestroyClippingRegion();
+                }
+                else
+                {
+                    _dc->DrawText(wxStr(text), fromDip(bounds.GetLocation(), window));
+                }
+
+                _dc->SetTextForeground(oldTextForeground);
+                _dc->SetFont(oldFont);
             }
             else
             {
-                _dc->DrawText(wxStr(text), fromDip(bounds.GetLocation(), window));
-            }
+                _graphicsContext->SetFont(font->GetWxFont(), solidBrush->GetWxBrush().GetColour());
 
-            _dc->SetTextForeground(oldTextForeground);
-            _dc->SetFont(oldFont);
+                if (useBounds)
+                {
+                    auto wrapped = TextWrapper::Wrap(
+                        _dc,
+                        _graphicsContext,
+                        _useDC,
+                        wxStr(text),
+                        fromDip(bounds.Width, window),
+                        fromDip(bounds.Height, window),
+                        wrapping,
+                        trimming);
+
+                    auto rect = fromDip(Rect(bounds.GetLocation(), bounds.GetSize()), window);
+
+                    if (trimming == TextTrimming::Pixel)
+                        _graphicsContext->Clip(rect.x, rect.y, rect.width, rect.height);
+
+                    _graphicsContext->DrawText(wrapped, rect.x, rect.y);
+
+                    if (trimming == TextTrimming::Pixel)
+                        _graphicsContext->ResetClip();
+                }
+                else
+                {
+                    auto location = fromDip(bounds.GetLocation(), window);
+                    _graphicsContext->DrawText(wxStr(text), location.x, location.y);
+                }
+            }
         }
 
         BYREF_ONLY(TextPainter);
     };
-
-
-    /*
-        Alternative implementation for wxGraphicsContext:
-        auto o = fromDipF(origin, _dc->GetWindow());
-        _graphicsContext->SetFont(_graphicsContext->CreateFont(font->GetWxFont()));
-        _graphicsContext->SetBrush(GetGraphicsBrush(brush));
-        _graphicsContext->DrawText(wxStr(text), o.X, o.Y);
-    */
 }
