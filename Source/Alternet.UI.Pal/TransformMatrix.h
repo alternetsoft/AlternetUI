@@ -9,8 +9,15 @@ namespace Alternet::UI
     {
 #include "Api/TransformMatrix.inc"
     public:
-    
+        wxAffineMatrix2D GetMatrix();
+
     private:
-    
+
+        int GetHashCode(double value);
+        int CombineHashCodes(double v1, double v2, double v3, double v4, double v5, double v6);
+
+        wxWindow* GetWindow();
+
+        wxAffineMatrix2D _matrix;
     };
 }

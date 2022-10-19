@@ -393,4 +393,14 @@ namespace Alternet::UI
             toDip(value.x, window),
             toDip(value.y, window));
     };
+
+    inline Point toDip(const wxPoint2DDouble& value, wxWindow* window)
+    {
+        if (window == nullptr)
+            window = ParkingWindow::GetWindow();
+
+        return Point(
+            toDip(value.m_x, window),
+            toDip(value.m_y, window));
+    };
 }
