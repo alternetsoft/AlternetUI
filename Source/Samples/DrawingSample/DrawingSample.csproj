@@ -31,6 +31,11 @@
       <None Remove="Pages\GraphicsPath\GraphicsPathPageSettings.uixml" />
       <None Remove="Pages\Text\TextPageSettings.uixml" />
       <None Remove="Pages\Transforms\TransformsPageSettings.uixml" />
+      <None Remove="Resources\logo.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\Logo.png" />
     </ItemGroup>
 
   <ItemGroup>

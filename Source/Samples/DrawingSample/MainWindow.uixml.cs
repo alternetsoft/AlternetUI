@@ -7,10 +7,10 @@ namespace DrawingSample
     {
         private DrawingPage[] drawingPages = new DrawingPage[]
         {
-            new TransformsPage(),
             new TextPage(),
             new BrushesAndPensPage(),
             new GraphicsPathPage(),
+            new TransformsPage(),
         };
 
         public MainWindow()

@@ -32,12 +32,14 @@ namespace Alternet::UI
 
     void DrawingContext::DrawPath(Pen* pen, GraphicsPath* path)
     {
+        UseGC();
         _graphicsContext->SetPen(pen->GetWxPen());
         _graphicsContext->DrawPath(path->GetPath(), path->GetWxFillMode());
     }
 
     void DrawingContext::FillPath(Brush* brush, GraphicsPath* path)
     {
+        UseGC();
         _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
         _graphicsContext->SetBrush(GetGraphicsBrush(brush));
         _graphicsContext->FillPath(path->GetPath(), path->GetWxFillMode());
@@ -59,6 +61,7 @@ namespace Alternet::UI
 
     void DrawingContext::DrawImageAtPoint(Image* image, const Point& origin)
     {
+        UseDC();
         wxBitmap bitmap = image->GetBitmap();
 
         auto window = _dc->GetWindow();
@@ -68,6 +71,8 @@ namespace Alternet::UI
 
     void DrawingContext::DrawImageAtRect(Image* image, const Rect& rect)
     {
+        UseGC();
+
         wxBitmap bitmap = image->GetBitmap();
         auto destRect = fromDip(rect, _dc->GetWindow());
         
@@ -81,6 +86,8 @@ namespace Alternet::UI
 
     void DrawingContext::FloodFill(const Point& point, Brush* fillBrush)
     {
+        UseDC();
+
         auto fillSolidBrush = dynamic_cast<SolidBrush*>(fillBrush);
         if (fillSolidBrush == nullptr)
         {
@@ -122,7 +129,7 @@ namespace Alternet::UI
 
     TransformMatrix* DrawingContext::GetTransform()
     {
-        auto result = new TransformMatrix(_dc->GetTransformMatrix());
+        auto result = new TransformMatrix(_currentTransform);
         result->AddRef();
         return result;
     }
@@ -134,12 +141,47 @@ namespace Alternet::UI
 
     void DrawingContext::SetTransformCore(const wxAffineMatrix2D& value)
     {
-        _graphicsContext->SetTransform(_graphicsContext->CreateMatrix(value));
-        _dc->SetTransformMatrix(value);
+        _currentTransform = value;
+        _nonIdentityTransformSet = !_currentTransform.IsIdentity();
+
+        // Setting transform on DC and GC at the same time doesn't work.
+        // So apply them before every operation on by one if needed.
+
+        _dc->ResetTransformMatrix();
+        _graphicsContext->SetTransform(_graphicsContext->CreateMatrix());
+    }
+
+    void DrawingContext::ApplyTransform(bool useDC)
+    {
+        if (!_nonIdentityTransformSet)
+            return;
+
+        if (useDC)
+        {
+            _dc->SetTransformMatrix(_currentTransform);
+            _graphicsContext->SetTransform(_graphicsContext->CreateMatrix());
+        }
+        else
+        {
+            _dc->ResetTransformMatrix();
+            _graphicsContext->SetTransform(_graphicsContext->CreateMatrix(_currentTransform));
+        }
+    }
+
+    void DrawingContext::UseDC()
+    {
+        ApplyTransform(/*useDC:*/true);
+    }
+
+    void DrawingContext::UseGC()
+    {
+        ApplyTransform(/*useDC:*/false);
     }
 
     void DrawingContext::FillRectangle(const Rect& rectangle, Brush* brush)
     {
+        UseGC();
+
         _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
         _graphicsContext->SetBrush(GetGraphicsBrush(brush));
 
@@ -149,6 +191,8 @@ namespace Alternet::UI
 
     void DrawingContext::FillEllipse(const Rect& bounds, Brush* brush)
     {
+        UseGC();
+
         _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
         _graphicsContext->SetBrush(GetGraphicsBrush(brush));
 
@@ -158,6 +202,8 @@ namespace Alternet::UI
 
     void DrawingContext::DrawRectangle(const Rect& rectangle, Pen* pen)
     {
+        UseDC();
+
         auto oldPen = _dc->GetPen();
         auto oldBrush = _dc->GetBrush();
 
@@ -194,6 +240,8 @@ namespace Alternet::UI
 
     void DrawingContext::DrawLine(const Point& a, const Point& b, Pen* pen)
     {
+        UseDC();
+
         auto oldPen = _dc->GetPen();
 
         _dc->SetPen(pen->GetWxPen());
@@ -206,6 +254,8 @@ namespace Alternet::UI
 
     void DrawingContext::DrawLines(Point* points, int pointsCount, Pen* pen)
     {
+        UseDC();
+
         if (pointsCount <= 2)
             return;
 
@@ -226,6 +276,8 @@ namespace Alternet::UI
 
     void DrawingContext::DrawEllipse(const Rect& bounds, Pen* pen)
     {
+        UseDC();
+
         auto oldPen = _dc->GetPen();
         auto oldBrush = _dc->GetBrush();
 
@@ -251,6 +303,8 @@ namespace Alternet::UI
         Font* font,
         Brush* brush)
     {
+        UseDC();
+
         std::unique_ptr<TextPainter>(GetTextPainter())->DrawTextAtPoint(
             text,
             origin,
@@ -268,6 +322,8 @@ namespace Alternet::UI
         TextTrimming trimming,
         TextWrapping wrapping)
     {
+        UseDC();
+
         std::unique_ptr<TextPainter>(GetTextPainter())->DrawTextAtRect(
             text,
             bounds,
@@ -296,6 +352,7 @@ namespace Alternet::UI
 
     Size DrawingContext::MeasureText(const string& text, Font* font, double maximumWidth, TextWrapping wrapping)
     {
+        UseDC();
         return std::unique_ptr<TextPainter>(GetTextPainter())->MeasureText(text, font, maximumWidth, wrapping);
     }
 }

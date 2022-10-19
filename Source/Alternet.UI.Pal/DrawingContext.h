@@ -26,8 +26,14 @@ namespace Alternet::UI
 
     private:
         void SetTransformCore(const wxAffineMatrix2D& value);
+        void ApplyTransform(bool useDC);
+
+        void UseDC();
+        void UseGC();
 
         std::stack<wxAffineMatrix2D> _transformStack;
+
+        wxAffineMatrix2D _currentTransform;
 
         wxDC* _dc;
         wxGraphicsContext* _graphicsContext = nullptr;
@@ -40,5 +46,6 @@ namespace Alternet::UI
         TextPainter* GetTextPainter();
 
         bool _useDCForText = true;
+        bool _nonIdentityTransformSet = false;
     };
 }
