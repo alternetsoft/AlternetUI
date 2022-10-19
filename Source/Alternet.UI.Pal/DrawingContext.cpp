@@ -11,6 +11,12 @@ namespace Alternet::UI
         _graphicsContext = wxGraphicsContext::CreateFromUnknownDC(*_dc);
     }
 
+    DrawingContext::~DrawingContext()
+    {
+        wxDELETE(_graphicsContext);
+        wxDELETE(_dc);
+    }
+
     wxGraphicsContext* DrawingContext::GetGraphicsContext()
     {
         return _graphicsContext;
@@ -45,12 +51,6 @@ namespace Alternet::UI
         _graphicsContext->FillPath(path->GetPath(), path->GetWxFillMode());
     }
 
-    DrawingContext::~DrawingContext()
-    {
-        wxDELETE(_graphicsContext);
-        wxDELETE(_dc);
-    }
-
     /*static*/ DrawingContext* DrawingContext::FromImage(Image* image)
     {
         auto bitmap = image->GetBitmap();
@@ -61,12 +61,21 @@ namespace Alternet::UI
 
     void DrawingContext::DrawImageAtPoint(Image* image, const Point& origin)
     {
-        UseDC();
         wxBitmap bitmap = image->GetBitmap();
-
         auto window = _dc->GetWindow();
 
-        _dc->DrawBitmap(bitmap, fromDip(origin, _dc->GetWindow()));
+
+        if (NeedToUseDC())
+        {
+            UseDC();
+            _dc->DrawBitmap(bitmap, fromDip(origin, _dc->GetWindow()));
+        }
+        else
+        {
+            UseGC();
+            auto wxRect = fromDip(Rect(origin, image->GetSize()), _dc->GetWindow());
+            _graphicsContext->DrawBitmap(bitmap, wxRect.x, wxRect.y, wxRect.width, wxRect.height);
+        }
     }
 
     void DrawingContext::DrawImageAtRect(Image* image, const Rect& rect)
@@ -75,10 +84,10 @@ namespace Alternet::UI
 
         wxBitmap bitmap = image->GetBitmap();
         auto destRect = fromDip(rect, _dc->GetWindow());
-        
+
         auto oldInterpolationQuality = _graphicsContext->GetInterpolationQuality();
         _graphicsContext->SetInterpolationQuality(wxInterpolationQuality::wxINTERPOLATION_BEST);
-        
+
         _graphicsContext->DrawBitmap(bitmap, destRect.x, destRect.y, destRect.width, destRect.height);
 
         _graphicsContext->SetInterpolationQuality(oldInterpolationQuality);
@@ -178,6 +187,11 @@ namespace Alternet::UI
         ApplyTransform(/*useDC:*/false);
     }
 
+    bool DrawingContext::NeedToUseDC()
+    {
+        return false;
+    }
+
     void DrawingContext::FillRectangle(const Rect& rectangle, Brush* brush)
     {
         UseGC();
@@ -202,99 +216,165 @@ namespace Alternet::UI
 
     void DrawingContext::DrawRectangle(const Rect& rectangle, Pen* pen)
     {
-        UseDC();
+        if (NeedToUseDC())
+        {
+            UseDC();
 
-        auto oldPen = _dc->GetPen();
-        auto oldBrush = _dc->GetBrush();
+            auto oldPen = _dc->GetPen();
+            auto oldBrush = _dc->GetBrush();
 
-        auto penThickness = pen->GetWxPen().GetWidth();
-        _dc->SetPen(pen->GetWxPen());
-        _dc->SetBrush(*wxTRANSPARENT_BRUSH);
+            auto penThickness = pen->GetWxPen().GetWidth();
+            _dc->SetPen(pen->GetWxPen());
+            _dc->SetBrush(*wxTRANSPARENT_BRUSH);
 
-        // todo: different OSes and DPI levels may require adjustment to the rectangle.
-        // maybe we will need to make platform-specific DC implementations?
+            // todo: different OSes and DPI levels may require adjustment to the rectangle.
+            // maybe we will need to make platform-specific DC implementations?
 
 #ifdef __WXOSX_COCOA__
-        auto locationOffset = 0;
-        auto sizeOffset = -penThickness;
+            auto locationOffset = 0;
+            auto sizeOffset = -penThickness;
 #elif __WXMSW__
-        auto locationOffset = penThickness / 2;
-        auto sizeOffset = penThickness / 2;
+            auto locationOffset = penThickness / 2;
+            auto sizeOffset = penThickness / 2;
 #else
-        auto locationOffset = 0;
-        auto sizeOffset = 0;
+            auto locationOffset = 0;
+            auto sizeOffset = 0;
 #endif
 
-        _dc->DrawRectangle(
-            fromDip(
-                Rect(
-                    rectangle.X + locationOffset,
-                    rectangle.Y + locationOffset,
-                    rectangle.Width - sizeOffset,
-                    rectangle.Height - sizeOffset),
-                _dc->GetWindow()));
+            _dc->DrawRectangle(
+                fromDip(
+                    Rect(
+                        rectangle.X + locationOffset,
+                        rectangle.Y + locationOffset,
+                        rectangle.Width - sizeOffset,
+                        rectangle.Height - sizeOffset),
+                    _dc->GetWindow()));
 
-        _dc->SetPen(oldPen);
-        _dc->SetBrush(oldBrush);
+            _dc->SetPen(oldPen);
+            _dc->SetBrush(oldBrush);
+        }
+        else
+        {
+            UseGC();
+
+            _graphicsContext->SetPen(pen->GetWxPen());
+            _graphicsContext->SetBrush(*wxTRANSPARENT_BRUSH);
+
+            auto rect = fromDip(rectangle, _dc->GetWindow());
+
+            _graphicsContext->DrawRectangle(rect.x, rect.y, rect.width, rect.height);
+        }
     }
 
     void DrawingContext::DrawLine(const Point& a, const Point& b, Pen* pen)
     {
-        UseDC();
+        if (NeedToUseDC())
+        {
+            UseDC();
 
-        auto oldPen = _dc->GetPen();
+            auto oldPen = _dc->GetPen();
 
-        _dc->SetPen(pen->GetWxPen());
+            _dc->SetPen(pen->GetWxPen());
 
-        auto window = _dc->GetWindow();
-        _dc->DrawLine(fromDip(a, window), fromDip(b, window));
+            auto window = _dc->GetWindow();
+            _dc->DrawLine(fromDip(a, window), fromDip(b, window));
 
-        _dc->SetPen(oldPen);
+            _dc->SetPen(oldPen);
+        }
+        else
+        {
+            UseGC();
+
+            _graphicsContext->SetPen(pen->GetWxPen());
+
+            auto window = _dc->GetWindow();
+            auto p1 = fromDip(a, window);
+            auto p2 = fromDip(b, window);
+            _graphicsContext->StrokeLine(p1.x, p1.y, p2.x, p2.y);
+        }
     }
 
     void DrawingContext::DrawLines(Point* points, int pointsCount, Pen* pen)
     {
-        UseDC();
+        if (NeedToUseDC())
+        {
+            UseDC();
 
-        if (pointsCount <= 2)
-            return;
+            if (pointsCount <= 2)
+                return;
 
-        auto oldPen = _dc->GetPen();
+            auto oldPen = _dc->GetPen();
 
-        _dc->SetPen(pen->GetWxPen());
+            _dc->SetPen(pen->GetWxPen());
 
-        auto window = _dc->GetWindow();
+            auto window = _dc->GetWindow();
 
-        std::vector<wxPoint> wxPoints(pointsCount);
-        for (int i = 0; i < pointsCount; i++)
-            wxPoints[i] = fromDip(points[i], window);
+            std::vector<wxPoint> wxPoints(pointsCount);
+            for (int i = 0; i < pointsCount; i++)
+                wxPoints[i] = fromDip(points[i], window);
 
-        _dc->DrawLines(pointsCount, &wxPoints[0]);
+            _dc->DrawLines(pointsCount, &wxPoints[0]);
 
-        _dc->SetPen(oldPen);
+            _dc->SetPen(oldPen);
+        }
+        else
+        {
+            UseGC();
+
+            if (pointsCount <= 2)
+                return;
+
+            _graphicsContext->SetPen(pen->GetWxPen());
+
+            auto window = _dc->GetWindow();
+
+            std::vector<wxPoint2DDouble> wxPoints(pointsCount);
+            for (int i = 0; i < pointsCount; i++)
+                wxPoints[i] = fromDip(points[i], window);
+
+            _graphicsContext->DrawLines(pointsCount, &wxPoints[0]);
+        }
     }
 
     void DrawingContext::DrawEllipse(const Rect& bounds, Pen* pen)
     {
-        UseDC();
+        if (NeedToUseDC())
+        {
+            UseDC();
 
-        auto oldPen = _dc->GetPen();
-        auto oldBrush = _dc->GetBrush();
+            auto oldPen = _dc->GetPen();
+            auto oldBrush = _dc->GetBrush();
 
-        _dc->SetPen(pen->GetWxPen());
-        _dc->SetBrush(*wxTRANSPARENT_BRUSH);
+            _dc->SetPen(pen->GetWxPen());
+            _dc->SetBrush(*wxTRANSPARENT_BRUSH);
 
-        _dc->DrawEllipse(
-            fromDip(
+            _dc->DrawEllipse(
+                fromDip(
+                    Rect(
+                        bounds.X,
+                        bounds.Y,
+                        bounds.Width,
+                        bounds.Height),
+                    _dc->GetWindow()));
+
+            _dc->SetPen(oldPen);
+            _dc->SetBrush(oldBrush);
+        }
+        else
+        {
+            UseGC();
+            _graphicsContext->SetPen(pen->GetWxPen());
+            _graphicsContext->SetBrush(*wxTRANSPARENT_BRUSH);
+
+            auto rect = fromDip(
                 Rect(
                     bounds.X,
                     bounds.Y,
                     bounds.Width,
                     bounds.Height),
-                _dc->GetWindow()));
-
-        _dc->SetPen(oldPen);
-        _dc->SetBrush(oldBrush);
+                _dc->GetWindow());
+            _graphicsContext->DrawEllipse(rect.x, rect.y, rect.width, rect.height);
+        }
     }
 
     void DrawingContext::DrawTextAtPoint(
@@ -303,7 +383,10 @@ namespace Alternet::UI
         Font* font,
         Brush* brush)
     {
-        UseDC();
+        if (NeedToUseDC())
+            UseDC();
+        else
+            UseGC();
 
         std::unique_ptr<TextPainter>(GetTextPainter())->DrawTextAtPoint(
             text,
@@ -347,7 +430,7 @@ namespace Alternet::UI
 
     TextPainter* DrawingContext::GetTextPainter()
     {
-        return new TextPainter(_dc);
+        return new TextPainter(_dc, _graphicsContext, NeedToUseDC());
     }
 
     Size DrawingContext::MeasureText(const string& text, Font* font, double maximumWidth, TextWrapping wrapping)

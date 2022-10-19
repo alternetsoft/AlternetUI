@@ -31,6 +31,8 @@ namespace Alternet::UI
         void UseDC();
         void UseGC();
 
+        bool NeedToUseDC();
+
         std::stack<wxAffineMatrix2D> _transformStack;
 
         wxAffineMatrix2D _currentTransform;
@@ -45,7 +47,6 @@ namespace Alternet::UI
 
         TextPainter* GetTextPainter();
 
-        bool _useDCForText = true;
         bool _nonIdentityTransformSet = false;
     };
 }

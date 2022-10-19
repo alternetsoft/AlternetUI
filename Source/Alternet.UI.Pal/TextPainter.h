@@ -261,8 +261,11 @@ namespace Alternet::UI
     {
     private:
         wxDC* _dc;
+        wxGraphicsContext* _graphicsContext;
+        bool _useDC;
     public:
-        TextPainter(wxDC* dc) : _dc(dc)
+        TextPainter(wxDC* dc, wxGraphicsContext* graphicsContext, bool useDC) :
+            _dc(dc), _graphicsContext(graphicsContext), _useDC(useDC)
         {
         }
 
