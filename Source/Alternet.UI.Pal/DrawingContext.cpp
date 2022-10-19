@@ -222,7 +222,13 @@ namespace Alternet::UI
 
     void DrawingContext::DrawRectangle(const Rect& rectangle, Pen* pen)
     {
-        if (NeedToUseDC())
+        bool needToUseDC;
+#ifdef __WXMSW__
+        needToUseDC = true;
+#else
+        needToUseDC = NeedToUseDC();
+#endif
+        if (needToUseDC)
         {
             UseDC();
 

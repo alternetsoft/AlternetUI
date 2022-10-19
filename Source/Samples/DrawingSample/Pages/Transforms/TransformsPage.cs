@@ -154,12 +154,12 @@ namespace DrawingSample
             DrawFrame();
             DrawFigure();
 
-            dc.DrawText(
-                "AlterNET UI",
-                canvasTestFont,
-                Brushes.Blue,
-                innerFrame.InflatedBy(-10, -10),
-                new TextFormat { HorizontalAlignment = TextHorizontalAlignment.Center, VerticalAlignment = TextVerticalAlignment.Bottom });
+            //dc.DrawText(
+            //    "AlterNET UI",
+            //    canvasTestFont,
+            //    Brushes.Blue,
+            //    innerFrame.InflatedBy(-10, -10),
+            //    new TextFormat { HorizontalAlignment = TextHorizontalAlignment.Center, VerticalAlignment = TextVerticalAlignment.Bottom });
 
             dc.DrawImage(logoImage, innerFrame.InflatedBy(-10, -10).TopLeft);
         }
@@ -172,12 +172,12 @@ namespace DrawingSample
 
             var r = new Rect(10, 10, 100, 200);
             dc.DrawRectangle(Pens.Blue, r);
-            dc.DrawText(
-                "This rectangle is drawn with additional transforms pushed on stack.",
-                Control.DefaultFont,
-                Brushes.Blue,
-                r.InflatedBy(-10, -10),
-                new TextFormat { Wrapping = TextWrapping.Word });
+            //dc.DrawText(
+            //    "This rectangle is drawn with additional transforms pushed on stack.",
+            //    Control.DefaultFont,
+            //    Brushes.Blue,
+            //    r.InflatedBy(-10, -10),
+            //    new TextFormat { Wrapping = TextWrapping.Word });
 
             dc.Pop();
             dc.Pop();
