@@ -9,6 +9,8 @@
 
 namespace Alternet::UI
 {
+    const double DegToRad = M_PI / 180;
+
     namespace Collections
     {
         template <typename T> size_t IndexOf(const std::vector<T>& vector, const T& value)

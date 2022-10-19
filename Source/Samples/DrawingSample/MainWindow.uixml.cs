@@ -7,6 +7,7 @@ namespace DrawingSample
     {
         private DrawingPage[] drawingPages = new DrawingPage[]
         {
+            new TransformsPage(),
             new TextPage(),
             new BrushesAndPensPage(),
             new GraphicsPathPage(),
@@ -15,7 +16,6 @@ namespace DrawingSample
         public MainWindow()
         {
             InitializeComponent();
-
             InitializePages();
         }
 

@@ -150,7 +150,7 @@ namespace Alternet::UI
 
     void TransformMatrix::Rotate(double angle)
     {
-        _matrix.Rotate(angle);
+        _matrix.Rotate(angle * DegToRad);
     }
 
     void TransformMatrix::Invert()

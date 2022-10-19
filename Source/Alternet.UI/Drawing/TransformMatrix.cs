@@ -36,7 +36,7 @@ namespace Alternet.Drawing
             NativeMatrix.Initialize(m11, m12, m21, m22, dx, dy);
         }
 
-        private TransformMatrix(UI.Native.TransformMatrix nativeMatrix)
+        internal TransformMatrix(UI.Native.TransformMatrix nativeMatrix)
         {
             NativeMatrix = nativeMatrix;
         }

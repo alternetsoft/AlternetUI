@@ -1,3 +1,4 @@
+using Alternet.UI.Internal.ComponentModel;
 using Alternet.UI.Native;
 using System;
 
@@ -363,6 +364,7 @@ namespace Alternet.Drawing
         /// </summary>
         public void Push()
         {
+            dc.Push();
         }
 
         /// <summary>
@@ -380,12 +382,12 @@ namespace Alternet.Drawing
         {
             get
             {
-                throw new NotImplementedException();
+                return new TransformMatrix(dc.Transform);
             }
 
             set
             {
-                throw new NotImplementedException();
+                dc.Transform = value.NativeMatrix;
             }
         }
 

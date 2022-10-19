@@ -91,8 +91,6 @@ namespace Alternet::UI
     
     void GraphicsPath::AddArc(const Point& center, double radius, double startAngle, double sweepAngle)
     {
-        const double DegToRad = M_PI / 180;
-
         auto window = GetWindow();
         
         auto startAngleRad = DegToRad * startAngle;

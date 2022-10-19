@@ -5,7 +5,7 @@
     <UIXml Update="Pages\BrushesAndPens\BrushesAndPensPageSettings.uixml">
       <SubType>Designer</SubType>
     </UIXml>
-    <UIXml Update="Pages\Text\TextPageSettings.uixml">
+    <UIXml Update="Pages\Transforms\TransformsPageSettings.uixml">
       <SubType>Designer</SubType>
     </UIXml>
   </ItemGroup>
