@@ -359,19 +359,34 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Pushes the specified <see cref="Transform"/> onto the drawing context.
+        /// Pushes the current state of the <see cref="DrawingContext"/> transformation matrix on a stack.
         /// </summary>
-        public void PushTransform(Transform value)
+        public void Push()
         {
-            dc.PushTransform(value.Translation);
         }
 
         /// <summary>
-        /// Pops the last transform operation that was pushed onto the drawing context.
+        /// Pops a stored state from the stack and sets the current transformation matrix to that state.
         /// </summary>
         public void Pop()
         {
             dc.Pop();
+        }
+
+        /// <summary>
+        /// Gets or sets a copy of the geometric world transformation for this <see cref="DrawingContext"/>.
+        /// </summary>
+        public TransformMatrix Transform
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
         }
 
         /// <summary>
