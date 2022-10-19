@@ -1,5 +1,5 @@
-﻿using Alternet.Drawing;
-using Alternet.UI;
+﻿using Alternet.UI;
+using DrawingSample.RandomArt;
 using System;
 
 namespace DrawingSample
@@ -11,8 +11,11 @@ namespace DrawingSample
             InitializeComponent();
         }
 
+        TransformsPage page;
+
         public void Initialize(TransformsPage page)
         {
+            this.page = page;
             DataContext = page;
         }
     }

@@ -368,6 +368,19 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Pushes the current state of the <see cref="DrawingContext"/> transformation matrix on a stack
+        /// and concatenates the current transform with a new transform.
+        /// </summary>
+        /// <param name="transform">A transform to concatenate with the current transform.</param>
+        public void PushTransform(TransformMatrix transform)
+        {
+            Push();
+            var currentTransform = Transform;
+            currentTransform.Multiply(transform);
+            Transform = currentTransform; 
+        }
+
+        /// <summary>
         /// Pops a stored state from the stack and sets the current transformation matrix to that state.
         /// </summary>
         public void Pop()

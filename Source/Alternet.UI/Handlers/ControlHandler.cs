@@ -1087,9 +1087,8 @@ namespace Alternet.UI
 
             foreach (var visualChild in VisualChildren)
             {
-                dc.Push();
                 var location = visualChild.Handler.Bounds.Location;
-                dc.Transform = TransformMatrix.CreateTranslation(location.X, location.Y);
+                dc.PushTransform(TransformMatrix.CreateTranslation(location.X, location.Y));
                 visualChild.Handler.PaintSelfAndVisualChildren(dc);
                 dc.Pop();
             }

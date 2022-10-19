@@ -12,9 +12,24 @@ namespace DrawingSample
 
         public override void Draw(DrawingContext dc, Rect bounds)
         {
-            dc.Push();
-            dc.Transform = GetTransform();
+            dc.PushTransform(GetTransform());
             dc.DrawRectangle(Pens.Red, new Rect(10, 10, 100, 200));
+
+            dc.PushTransform(TransformMatrix.CreateTranslation(50, 50));
+            dc.PushTransform(TransformMatrix.CreateScale(2, 2));
+            dc.PushTransform(TransformMatrix.CreateRotation(10));
+            var r = new Rect(10, 10, 100, 200);
+            dc.DrawRectangle(Pens.Blue, r);
+            dc.DrawText(
+                "This rectangle is drawn with additional transforms pushed on stack.",
+                Control.DefaultFont,
+                Brushes.Blue,
+                r,
+                new TextFormat { Wrapping = TextWrapping.Word });
+            dc.Pop();
+            dc.Pop();
+            dc.Pop();
+
             dc.Pop();
         }
 

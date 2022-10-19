@@ -16,6 +16,6 @@
         <Slider Minimum="0" Maximum="100" Margin="0,0,0,10" Value="{Binding ScaleFactorY}" />
 
         <Label Text="Rotation:" />
-        <Slider Minimum="0" Maximum="90" Margin="0,0,0,10" Value="{Binding Rotation}" />
+        <Slider Minimum="0" Maximum="90" Margin="0,0,0,20" Value="{Binding Rotation}" />
     </StackPanel>
 </Control>
