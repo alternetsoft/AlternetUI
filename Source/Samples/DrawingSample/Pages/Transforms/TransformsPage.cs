@@ -129,11 +129,7 @@ namespace DrawingSample
 
                 var pathRadius = 80;
 
-                Point GetPointOnCircle(double r, double a)
-                {
-                    const double DegToRad = Math.PI / 180;
-                    return new Point(center.X + r * Math.Cos(a * DegToRad), center.Y + r * Math.Sin(a * DegToRad));
-                }
+                Point GetPointOnCircle(double r, double a) => MathUtils.GetPointOnCircle(center, r, a);
 
                 path.StartFigure(GetPointOnCircle(pathRadius, 0));
 

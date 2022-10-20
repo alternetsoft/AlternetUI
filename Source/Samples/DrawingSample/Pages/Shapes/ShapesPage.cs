@@ -28,6 +28,9 @@ namespace DrawingSample
             var actions = new[]
             {
                 new Cell(nameof(s.DrawLine), s.DrawLine),
+                new Cell(nameof(s.DrawLines), s.DrawLines),
+                new Cell(nameof(s.DrawPolygon), s.DrawPolygon),
+                new Cell(nameof(s.FillPolygon), s.FillPolygon),
             };
 
             DrawShapesGrid(dc, bounds, actions);
@@ -72,7 +75,7 @@ namespace DrawingSample
                 if (cellContentFrameRect.Width <= 0 || cellContentFrameRect.Height <= 0)
                     continue;
 
-                var cellContentRect = cellContentFrameRect.InflatedBy(-5, -5);
+                var cellContentRect = cellContentFrameRect.InflatedBy(-10, -10);
                 if (cellContentRect.Width <= 0 || cellContentRect.Height <= 0)
                     continue;
 

@@ -7,25 +7,31 @@ namespace Alternet::UI
     {
     }
 
+    GraphicsPath::GraphicsPath(wxDC* dc, wxGraphicsContext* graphicsConext) :
+        _dc(dc), _graphicsConext(graphicsConext)
+    {
+        InitializePath(_graphicsConext);
+    }
+
     GraphicsPath::~GraphicsPath()
     {
-        if (_dc != nullptr)
-        {
-            _dc->Release();
-            _dc = nullptr;
-        }
     }
 
     void GraphicsPath::Initialize(DrawingContext* dc)
     {
-        _dc = dc;
-        _dc->AddRef();
-        _path = dc->GetGraphicsContext()->CreatePath();
+        _dc = dc->GetDC();
+        _graphicsConext = dc->GetGraphicsContext();
+        InitializePath(_graphicsConext);
+    }
+
+    void GraphicsPath::InitializePath(wxGraphicsContext* graphicsConext)
+    {
+        _path = graphicsConext->CreatePath();
     }
 
     wxWindow* GraphicsPath::GetWindow()
     {
-        return DrawingContext::GetWindow(_dc->GetDC());
+        return DrawingContext::GetWindow(_dc);
     }
 
     void GraphicsPath::AddLines(Point* points, int pointsCount)

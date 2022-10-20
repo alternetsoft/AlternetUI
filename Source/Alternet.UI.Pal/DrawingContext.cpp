@@ -38,7 +38,7 @@ namespace Alternet::UI
 
     void DrawingContext::DrawArc(Pen* pen, const Point& center, double radius, double startAngle, double sweepAngle)
     {
-        auto path = new GraphicsPath();
+        auto path = new GraphicsPath(_dc, _graphicsContext);
 
         path->AddArc(center, radius, startAngle, sweepAngle);
         DrawPath(pen, path);
@@ -48,7 +48,7 @@ namespace Alternet::UI
 
     void DrawingContext::FillPie(Brush* brush, const Point& center, double radius, double startAngle, double sweepAngle)
     {
-        auto path = new GraphicsPath();
+        auto path = new GraphicsPath(_dc, _graphicsContext);
 
         path->AddArc(center, radius, startAngle, sweepAngle);
         FillPath(brush, path);
@@ -58,7 +58,7 @@ namespace Alternet::UI
 
     void DrawingContext::DrawBezier(Pen* pen, const Point& startPoint, const Point& controlPoint1, const Point& controlPoint2, const Point& endPoint)
     {
-        auto path = new GraphicsPath();
+        auto path = new GraphicsPath(_dc, _graphicsContext);
 
         path->AddBezier(startPoint, controlPoint1, controlPoint2, endPoint);
         DrawPath(pen, path);
@@ -76,7 +76,7 @@ namespace Alternet::UI
                 pointsCount,
                 u"The number of points in the array should be a multiple of 3 plus 1, such as 4, 7, or 10.");
 
-        auto path = new GraphicsPath();
+        auto path = new GraphicsPath(_dc, _graphicsContext);
 
         path->StartFigure(points[0]);
 
@@ -104,7 +104,7 @@ namespace Alternet::UI
 
     void DrawingContext::DrawRoundedRectangle(Pen* pen, const Rect& rect, double cornerRadius)
     {
-        auto path = new GraphicsPath();
+        auto path = new GraphicsPath(_dc, _graphicsContext);
 
         path->AddRoundedRectangle(rect, cornerRadius);
         DrawPath(pen, path);
@@ -114,7 +114,7 @@ namespace Alternet::UI
 
     void DrawingContext::FillRoundedRectangle(Brush* brush, const Rect& rect, double cornerRadius)
     {
-        auto path = new GraphicsPath();
+        auto path = new GraphicsPath(_dc, _graphicsContext);
 
         path->AddRoundedRectangle(rect, cornerRadius);
         FillPath(brush, path);
@@ -147,7 +147,7 @@ namespace Alternet::UI
         }
         else
         {
-            auto path = new GraphicsPath();
+            auto path = new GraphicsPath(_dc, _graphicsContext);
 
             path->AddLines(points, pointsCount);
             path->CloseFigure();
@@ -159,7 +159,7 @@ namespace Alternet::UI
 
     void DrawingContext::FillPolygon(Brush* brush, Point* points, int pointsCount, FillMode fillMode)
     {
-        auto path = new GraphicsPath();
+        auto path = new GraphicsPath(_dc, _graphicsContext);
 
         path->AddLines(points, pointsCount);
         path->CloseFigure();
