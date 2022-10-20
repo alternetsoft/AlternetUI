@@ -13,6 +13,52 @@ namespace DrawingSample
             shapes = new Shapes(this);
         }
 
+        public int BrushColorHue
+        {
+            get => brushColorHue;
+            set
+            {
+                FillBrush = CreateFillBrush();
+                brushColorHue = value;
+                Canvas?.Invalidate();
+            }
+        }
+
+        public int PenColorHue
+        {
+            get => penColorHue;
+            set
+            {
+                StrokePen = CreateStrokePen();
+                penColorHue = value;
+                Canvas?.Invalidate();
+            }
+        }
+
+        private Pen CreateStrokePen()
+        {
+            var c = new Skybrud.Colors.HslColor(
+                MathUtils.MapRanges(penColorHue, 0, 10, 0, 1),
+                1,
+                0.3).ToRgb();
+
+            return new Pen(Color.FromArgb(c.R, c.G, c.B), 1);
+        }
+
+        private Brush CreateFillBrush()
+        {
+            var c = new Skybrud.Colors.HslColor(
+                MathUtils.MapRanges(brushColorHue, 0, 10, 0, 1),
+                1,
+                0.7).ToRgb();
+
+            return new SolidBrush(Color.FromArgb(c.R, c.G, c.B));
+        }
+
+        private int brushColorHue = 1;
+
+        private int penColorHue = 2;
+
         public override string Name => "Shapes";
 
         public Pen StrokePen { get; set; } = Pens.Blue;

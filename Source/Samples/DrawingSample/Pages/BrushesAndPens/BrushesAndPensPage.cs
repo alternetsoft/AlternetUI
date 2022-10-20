@@ -93,9 +93,6 @@ namespace DrawingSample
             }
         }
 
-        private static double MapRanges(double value, double fromLow, double fromHigh, double toLow, double toHigh) =>
-            ((value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow)) + toLow;
-
         public int BrushColorHue
         {
             get => brushColorHue;
@@ -217,7 +214,7 @@ namespace DrawingSample
         private Pen CreateStrokePen()
         {
             var c = new Skybrud.Colors.HslColor(
-                MapRanges(penColorHue, 0, 10, 0, 1),
+                MathUtils.MapRanges(penColorHue, 0, 10, 0, 1),
                 1,
                 0.3).ToRgb();
 
@@ -227,7 +224,7 @@ namespace DrawingSample
         private Brush CreateFillBrush()
         {
             var c = new Skybrud.Colors.HslColor(
-                MapRanges(brushColorHue, 0, 10, 0, 1),
+                MathUtils.MapRanges(brushColorHue, 0, 10, 0, 1),
                 1,
                 0.7).ToRgb();
 

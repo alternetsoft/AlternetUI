@@ -12,5 +12,9 @@ namespace DrawingSample
         {
             return new Point(center.X + radius * Math.Cos(angle * DegToRad), center.Y + radius * Math.Sin(angle * DegToRad));
         }
+
+        public static double MapRanges(double value, double fromLow, double fromHigh, double toLow, double toHigh) =>
+            ((value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow)) + toLow;
+
     }
 }
