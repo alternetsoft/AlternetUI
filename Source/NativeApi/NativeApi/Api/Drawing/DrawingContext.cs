@@ -9,15 +9,15 @@ namespace NativeApi.Api
 
         public static DrawingContext FromImage(Image image) => throw new Exception();
 
-        public void FillRectangle(Rect rectangle, Brush brush) => throw new Exception();
+        public void FillRectangle(Brush brush, Rect rectangle) => throw new Exception();
 
-        public void DrawRectangle(Rect rectangle, Pen pen) => throw new Exception();
+        public void DrawRectangle(Pen pen, Rect rectangle) => throw new Exception();
 
-        public void FillEllipse(Rect bounds, Brush brush) => throw new Exception();
+        public void FillEllipse(Brush brush, Rect bounds) => throw new Exception();
 
-        public void DrawEllipse(Rect bounds, Pen pen) => throw new Exception();
+        public void DrawEllipse(Pen pen, Rect bounds) => throw new Exception();
 
-        public void FloodFill(Point point, Brush brush) => throw new Exception();
+        public void FloodFill(Brush brush, Point point) => throw new Exception();
 
         public void DrawPath(Pen pen, GraphicsPath path) => throw new Exception();
         public void FillPath(Brush brush, GraphicsPath path) => throw new Exception();
@@ -50,15 +50,11 @@ namespace NativeApi.Api
 
         public TransformMatrix Transform { get; set; }
 
-        public void DrawLine(Point a, Point b, Pen pen) => throw new Exception();
+        public void DrawLine(Pen pen, Point a, Point b) => throw new Exception();
 
-        public void DrawLines(Point[] points, Pen pen) => throw new Exception();
-
-        public void DrawEllipticArc(Pen pen, Rect rect, double startAngle, double sweepAngle) => throw new Exception();
+        public void DrawLines(Pen pen, Point[] points) => throw new Exception();
 
         public void DrawArc(Pen pen, Point center, double radius, double startAngle, double sweepAngle) => throw new Exception();
-
-        public void FillEllipticPie(Brush brush, Rect rect, double startAngle, double sweepAngle) => throw new Exception();
 
         public void FillPie(Brush brush, Point center, double radius, double startAngle, double sweepAngle) => throw new Exception();
 

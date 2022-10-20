@@ -145,9 +145,9 @@ namespace Alternet::UI
         return _path;
     }
 
-    wxPolygonFillMode GraphicsPath::GetWxFillMode()
+    /*static*/ wxPolygonFillMode GraphicsPath::GetWxFillMode(FillMode value)
     {
-        switch (_fillMode)
+        switch (value)
         {
         case FillMode::Alternate:
             return wxPolygonFillMode::wxODDEVEN_RULE;
@@ -156,5 +156,10 @@ namespace Alternet::UI
         default:
             throwExNoInfo;
         }
+    }
+
+    wxPolygonFillMode GraphicsPath::GetWxFillMode()
+    {
+        return GetWxFillMode(_fillMode);
     }
 }

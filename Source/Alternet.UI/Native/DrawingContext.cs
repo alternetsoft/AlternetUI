@@ -47,34 +47,34 @@ namespace Alternet.UI.Native
             return m;
         }
         
-        public void FillRectangle(Alternet.Drawing.Rect rectangle, Brush brush)
+        public void FillRectangle(Brush brush, Alternet.Drawing.Rect rectangle)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_FillRectangle_(NativePointer, rectangle, brush.NativePointer);
+            NativeApi.DrawingContext_FillRectangle_(NativePointer, brush.NativePointer, rectangle);
         }
         
-        public void DrawRectangle(Alternet.Drawing.Rect rectangle, Pen pen)
+        public void DrawRectangle(Pen pen, Alternet.Drawing.Rect rectangle)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_DrawRectangle_(NativePointer, rectangle, pen.NativePointer);
+            NativeApi.DrawingContext_DrawRectangle_(NativePointer, pen.NativePointer, rectangle);
         }
         
-        public void FillEllipse(Alternet.Drawing.Rect bounds, Brush brush)
+        public void FillEllipse(Brush brush, Alternet.Drawing.Rect bounds)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_FillEllipse_(NativePointer, bounds, brush.NativePointer);
+            NativeApi.DrawingContext_FillEllipse_(NativePointer, brush.NativePointer, bounds);
         }
         
-        public void DrawEllipse(Alternet.Drawing.Rect bounds, Pen pen)
+        public void DrawEllipse(Pen pen, Alternet.Drawing.Rect bounds)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_DrawEllipse_(NativePointer, bounds, pen.NativePointer);
+            NativeApi.DrawingContext_DrawEllipse_(NativePointer, pen.NativePointer, bounds);
         }
         
-        public void FloodFill(Alternet.Drawing.Point point, Brush brush)
+        public void FloodFill(Brush brush, Alternet.Drawing.Point point)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_FloodFill_(NativePointer, point, brush.NativePointer);
+            NativeApi.DrawingContext_FloodFill_(NativePointer, brush.NativePointer, point);
         }
         
         public void DrawPath(Pen pen, GraphicsPath path)
@@ -133,34 +133,22 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_Pop_(NativePointer);
         }
         
-        public void DrawLine(Alternet.Drawing.Point a, Alternet.Drawing.Point b, Pen pen)
+        public void DrawLine(Pen pen, Alternet.Drawing.Point a, Alternet.Drawing.Point b)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_DrawLine_(NativePointer, a, b, pen.NativePointer);
+            NativeApi.DrawingContext_DrawLine_(NativePointer, pen.NativePointer, a, b);
         }
         
-        public void DrawLines(Alternet.Drawing.Point[] points, Pen pen)
+        public void DrawLines(Pen pen, Alternet.Drawing.Point[] points)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_DrawLines_(NativePointer, Array.ConvertAll<Alternet.Drawing.Point, NativeApiTypes.Point>(points, x => x), points.Length, pen.NativePointer);
-        }
-        
-        public void DrawEllipticArc(Pen pen, Alternet.Drawing.Rect rect, double startAngle, double sweepAngle)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_DrawEllipticArc_(NativePointer, pen.NativePointer, rect, startAngle, sweepAngle);
+            NativeApi.DrawingContext_DrawLines_(NativePointer, pen.NativePointer, Array.ConvertAll<Alternet.Drawing.Point, NativeApiTypes.Point>(points, x => x), points.Length);
         }
         
         public void DrawArc(Pen pen, Alternet.Drawing.Point center, double radius, double startAngle, double sweepAngle)
         {
             CheckDisposed();
             NativeApi.DrawingContext_DrawArc_(NativePointer, pen.NativePointer, center, radius, startAngle, sweepAngle);
-        }
-        
-        public void FillEllipticPie(Brush brush, Alternet.Drawing.Rect rect, double startAngle, double sweepAngle)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_FillEllipticPie_(NativePointer, brush.NativePointer, rect, startAngle, sweepAngle);
         }
         
         public void FillPie(Brush brush, Alternet.Drawing.Point center, double radius, double startAngle, double sweepAngle)
@@ -245,19 +233,19 @@ namespace Alternet.UI.Native
             public static extern IntPtr DrawingContext_FromImage_(IntPtr image);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_FillRectangle_(IntPtr obj, NativeApiTypes.Rect rectangle, IntPtr brush);
+            public static extern void DrawingContext_FillRectangle_(IntPtr obj, IntPtr brush, NativeApiTypes.Rect rectangle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawRectangle_(IntPtr obj, NativeApiTypes.Rect rectangle, IntPtr pen);
+            public static extern void DrawingContext_DrawRectangle_(IntPtr obj, IntPtr pen, NativeApiTypes.Rect rectangle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_FillEllipse_(IntPtr obj, NativeApiTypes.Rect bounds, IntPtr brush);
+            public static extern void DrawingContext_FillEllipse_(IntPtr obj, IntPtr brush, NativeApiTypes.Rect bounds);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawEllipse_(IntPtr obj, NativeApiTypes.Rect bounds, IntPtr pen);
+            public static extern void DrawingContext_DrawEllipse_(IntPtr obj, IntPtr pen, NativeApiTypes.Rect bounds);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_FloodFill_(IntPtr obj, NativeApiTypes.Point point, IntPtr brush);
+            public static extern void DrawingContext_FloodFill_(IntPtr obj, IntPtr brush, NativeApiTypes.Point point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawPath_(IntPtr obj, IntPtr pen, IntPtr path);
@@ -287,19 +275,13 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_Pop_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawLine_(IntPtr obj, NativeApiTypes.Point a, NativeApiTypes.Point b, IntPtr pen);
+            public static extern void DrawingContext_DrawLine_(IntPtr obj, IntPtr pen, NativeApiTypes.Point a, NativeApiTypes.Point b);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawLines_(IntPtr obj, NativeApiTypes.Point[] points, int pointsCount, IntPtr pen);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawEllipticArc_(IntPtr obj, IntPtr pen, NativeApiTypes.Rect rect, double startAngle, double sweepAngle);
+            public static extern void DrawingContext_DrawLines_(IntPtr obj, IntPtr pen, NativeApiTypes.Point[] points, int pointsCount);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawArc_(IntPtr obj, IntPtr pen, NativeApiTypes.Point center, double radius, double startAngle, double sweepAngle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_FillEllipticPie_(IntPtr obj, IntPtr brush, NativeApiTypes.Rect rect, double startAngle, double sweepAngle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_FillPie_(IntPtr obj, IntPtr brush, NativeApiTypes.Point center, double radius, double startAngle, double sweepAngle);

@@ -36,60 +36,148 @@ namespace Alternet::UI
             return window;
     }
 
-    void DrawingContext::DrawEllipticArc(Pen* pen, const Rect& rect, double startAngle, double sweepAngle)
-    {
-    }
-
     void DrawingContext::DrawArc(Pen* pen, const Point& center, double radius, double startAngle, double sweepAngle)
     {
-    }
+        auto path = new GraphicsPath();
 
-    void DrawingContext::FillEllipticPie(Brush* brush, const Rect& rect, double startAngle, double sweepAngle)
-    {
+        path->AddArc(center, radius, startAngle, sweepAngle);
+        DrawPath(pen, path);
+
+        path->Release();
     }
 
     void DrawingContext::FillPie(Brush* brush, const Point& center, double radius, double startAngle, double sweepAngle)
     {
+        auto path = new GraphicsPath();
+
+        path->AddArc(center, radius, startAngle, sweepAngle);
+        FillPath(brush, path);
+
+        path->Release();
     }
 
     void DrawingContext::DrawBezier(Pen* pen, const Point& startPoint, const Point& controlPoint1, const Point& controlPoint2, const Point& endPoint)
     {
+        auto path = new GraphicsPath();
+
+        path->AddBezier(startPoint, controlPoint1, controlPoint2, endPoint);
+        DrawPath(pen, path);
+
+        path->Release();
     }
 
     void DrawingContext::DrawBeziers(Pen* pen, Point* points, int pointsCount)
     {
+        if (pointsCount == 0)
+            return;
+
+        if ((pointsCount - 1) % 3 != 0)
+            throwExInvalidArg(
+                pointsCount,
+                u"The number of points in the array should be a multiple of 3 plus 1, such as 4, 7, or 10.");
+
+        auto path = new GraphicsPath();
+
+        path->StartFigure(points[0]);
+
+        for (int i = 1; i < pointsCount - 4; i += 3)
+        {
+            path->AddBezierTo(points[i], points[i + 1], points[i + 2]);
+        }
+        
+        DrawPath(pen, path);
+
+        path->Release();
     }
 
     void DrawingContext::DrawCircle(Pen* pen, const Point& center, double radius)
     {
+        auto diameter = radius * 2;
+        DrawEllipse(pen, Rect(center, Size(diameter, diameter)));
     }
 
     void DrawingContext::FillCircle(Brush* brush, const Point& center, double radius)
     {
+        auto diameter = radius * 2;
+        FillEllipse(brush, Rect(center, Size(diameter, diameter)));
     }
 
     void DrawingContext::DrawRoundedRectangle(Pen* pen, const Rect& rect, double cornerRadius)
     {
+        auto path = new GraphicsPath();
+
+        path->AddRoundedRectangle(rect, cornerRadius);
+        DrawPath(pen, path);
+
+        path->Release();
     }
 
     void DrawingContext::FillRoundedRectangle(Brush* brush, const Rect& rect, double cornerRadius)
     {
+        auto path = new GraphicsPath();
+
+        path->AddRoundedRectangle(rect, cornerRadius);
+        FillPath(brush, path);
+
+        path->Release();
     }
 
     void DrawingContext::DrawPolygon(Pen* pen, Point* points, int pointsCount)
     {
+        if (NeedToUseDC())
+        {
+            UseDC();
+
+            if (pointsCount <= 2)
+                return;
+
+            auto oldPen = _dc->GetPen();
+
+            _dc->SetPen(pen->GetWxPen());
+
+            auto window = _dc->GetWindow();
+
+            std::vector<wxPoint> wxPoints(pointsCount);
+            for (int i = 0; i < pointsCount; i++)
+                wxPoints[i] = fromDip(points[i], window);
+
+            _dc->DrawPolygon(pointsCount, &wxPoints[0]);
+
+            _dc->SetPen(oldPen);
+        }
+        else
+        {
+            auto path = new GraphicsPath();
+
+            path->AddLines(points, pointsCount);
+            path->CloseFigure();
+            DrawPath(pen, path);
+
+            path->Release();
+        }
     }
 
     void DrawingContext::FillPolygon(Brush* brush, Point* points, int pointsCount, FillMode fillMode)
     {
+        auto path = new GraphicsPath();
+
+        path->AddLines(points, pointsCount);
+        path->CloseFigure();
+        FillPath(brush, path);
+
+        path->Release();
     }
 
     void DrawingContext::DrawRectangles(Pen* pen, Rect* rects, int rectsCount)
     {
+        for (int i = 0; i < rectsCount; i++)
+            DrawRectangle(pen, rects[i]);
     }
 
     void DrawingContext::FillRectangles(Brush* brush, Rect* rects, int rectsCount)
     {
+        for (int i = 0; i < rectsCount; i++)
+            FillRectangle(brush, rects[i]);
     }
 
     void DrawingContext::DrawPath(Pen* pen, GraphicsPath* path)
@@ -149,7 +237,7 @@ namespace Alternet::UI
         _graphicsContext->SetInterpolationQuality(oldInterpolationQuality);
     }
 
-    void DrawingContext::FloodFill(const Point& point, Brush* fillBrush)
+    void DrawingContext::FloodFill(Brush* fillBrush, const Point& point)
     {
         UseDC();
 
@@ -254,7 +342,7 @@ namespace Alternet::UI
         return false;
     }
 
-    void DrawingContext::FillRectangle(const Rect& rectangle, Brush* brush)
+    void DrawingContext::FillRectangle(Brush* brush, const Rect& rectangle)
     {
         UseGC();
 
@@ -265,7 +353,7 @@ namespace Alternet::UI
         _graphicsContext->DrawRectangle(rect.X, rect.Y, rect.Width, rect.Height);
     }
 
-    void DrawingContext::FillEllipse(const Rect& bounds, Brush* brush)
+    void DrawingContext::FillEllipse(Brush* brush, const Rect& bounds)
     {
         UseGC();
 
@@ -276,7 +364,7 @@ namespace Alternet::UI
         _graphicsContext->DrawEllipse(rect.X, rect.Y, rect.Width, rect.Height);
     }
 
-    void DrawingContext::DrawRectangle(const Rect& rectangle, Pen* pen)
+    void DrawingContext::DrawRectangle(Pen* pen, const Rect& rectangle)
     {
         bool needToUseDC;
 #ifdef __WXMSW__
@@ -334,7 +422,7 @@ namespace Alternet::UI
         }
     }
 
-    void DrawingContext::DrawLine(const Point& a, const Point& b, Pen* pen)
+    void DrawingContext::DrawLine(Pen* pen, const Point& a, const Point& b)
     {
         if (NeedToUseDC())
         {
@@ -362,7 +450,7 @@ namespace Alternet::UI
         }
     }
 
-    void DrawingContext::DrawLines(Point* points, int pointsCount, Pen* pen)
+    void DrawingContext::DrawLines(Pen* pen, Point* points, int pointsCount)
     {
         if (NeedToUseDC())
         {
@@ -404,7 +492,7 @@ namespace Alternet::UI
         }
     }
 
-    void DrawingContext::DrawEllipse(const Rect& bounds, Pen* pen)
+    void DrawingContext::DrawEllipse(Pen* pen, const Rect& bounds)
     {
         if (NeedToUseDC())
         {

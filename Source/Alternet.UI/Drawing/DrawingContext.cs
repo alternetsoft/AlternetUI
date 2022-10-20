@@ -52,23 +52,7 @@ namespace Alternet.Drawing
             if (brush is null)
                 throw new ArgumentNullException(nameof(brush));
 
-            dc.FillRectangle(rectangle, brush.NativeBrush);
-        }
-
-        /// <summary>
-        /// Draws an arc representing a portion of an ellipse specified by a <see cref="Rect"/> structure.
-        /// </summary>
-        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the arc.</param>
-        /// <param name="rect"><see cref="Rect"/> structure that defines the boundaries of the ellipse.</param>
-        /// <param name="startAngle">Angle in degrees measured clockwise from the x-axis to the starting point of the arc.</param>
-        /// <param name="sweepAngle">Angle in degrees measured clockwise from the <paramref name="startAngle"/>
-        /// parameter to ending point of the arc.</param>
-        public void DrawArc(Pen pen, Rect rect, double startAngle, double sweepAngle)
-        {
-            if (pen is null)
-                throw new ArgumentNullException(nameof(pen));
-
-            dc.DrawEllipticArc(pen.NativePen, rect, startAngle, sweepAngle);
+            dc.FillRectangle(brush.NativeBrush, rectangle);
         }
 
         /// <summary>
@@ -86,24 +70,6 @@ namespace Alternet.Drawing
                 throw new ArgumentNullException(nameof(pen));
 
             dc.DrawArc(pen.NativePen, center, radius, startAngle, sweepAngle);
-        }
-
-        /// <summary>
-        /// Fills the interior of a pie section defined by an ellipse specified by a <see cref="Rect"/> structure and two radial lines.
-        /// </summary>
-        /// <param name="brush"><see cref="Brush"/> that determines the characteristics of the fill.</param>
-        /// <param name="rect">
-        /// <see cref="Rect"/> structure that represents the bounding rectangle that defines
-        /// the ellipse from which the pie section comes.
-        /// </param>
-        /// <param name="startAngle">Angle in degrees measured clockwise from the x-axis to the first side of the pie section.</param>
-        /// <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to the second side of the pie section.</param>
-        public void FillPie(Brush brush, Rect rect, double startAngle, double sweepAngle)
-        {
-            if (brush is null)
-                throw new ArgumentNullException(nameof(brush));
-
-            dc.FillEllipticPie(brush.NativeBrush, rect, startAngle, sweepAngle);
         }
 
         /// <summary>
@@ -150,6 +116,14 @@ namespace Alternet.Drawing
         {
             if (pen is null)
                 throw new ArgumentNullException(nameof(pen));
+
+            if (points.Length == 0)
+                return;
+
+            if ((points.Length - 1) % 3 != 0)
+                throw new ArgumentException(
+                    "The number of points in the array should be a multiple of 3 plus 1, such as 4, 7, or 10.",
+                    nameof(points));
 
             dc.DrawBeziers(pen.NativePen, points);
         }
@@ -277,7 +251,7 @@ namespace Alternet.Drawing
             if (brush is null)
                 throw new ArgumentNullException(nameof(brush));
 
-            dc.FillEllipse(bounds, brush.NativeBrush);
+            dc.FillEllipse(brush.NativeBrush, bounds);
         }
 
         /// <summary>
@@ -295,7 +269,7 @@ namespace Alternet.Drawing
             if (brush is not SolidBrush)
                 throw new ArgumentException("Only SolidBrush objects are supported.", nameof(brush));
 
-            dc.FloodFill(point, brush.NativeBrush);
+            dc.FloodFill(brush.NativeBrush, point);
         }
 
         /// <summary>
@@ -308,7 +282,7 @@ namespace Alternet.Drawing
             if (pen is null)
                 throw new ArgumentNullException(nameof(pen));
 
-            dc.DrawRectangle(rectangle, pen.NativePen);
+            dc.DrawRectangle(pen.NativePen, rectangle);
         }
 
         /// <summary>
@@ -349,7 +323,7 @@ namespace Alternet.Drawing
             if (pen is null)
                 throw new ArgumentNullException(nameof(pen));
 
-            dc.DrawLine(a, b, pen.NativePen);
+            dc.DrawLine(pen.NativePen, a, b);
         }
 
         /// <summary>
@@ -368,7 +342,7 @@ namespace Alternet.Drawing
             if (pen is null)
                 throw new ArgumentNullException(nameof(pen));
 
-            dc.DrawLines(points, pen.NativePen);
+            dc.DrawLines(pen.NativePen, points);
         }
 
         /// <summary>
@@ -381,7 +355,7 @@ namespace Alternet.Drawing
             if (pen is null)
                 throw new ArgumentNullException(nameof(pen));
 
-            dc.DrawEllipse(bounds, pen.NativePen);
+            dc.DrawEllipse(pen.NativePen, bounds);
         }
 
         /// <summary>

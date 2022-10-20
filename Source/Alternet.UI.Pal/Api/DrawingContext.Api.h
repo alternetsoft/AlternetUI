@@ -35,38 +35,38 @@ ALTERNET_UI_API DrawingContext* DrawingContext_FromImage_(Image* image)
         });
 }
 
-ALTERNET_UI_API void DrawingContext_FillRectangle_(DrawingContext* obj, Rect rectangle, Brush* brush)
+ALTERNET_UI_API void DrawingContext_FillRectangle_(DrawingContext* obj, Brush* brush, Rect rectangle)
 {
     MarshalExceptions<void>([&](){
-            obj->FillRectangle(rectangle, brush);
+            obj->FillRectangle(brush, rectangle);
         });
 }
 
-ALTERNET_UI_API void DrawingContext_DrawRectangle_(DrawingContext* obj, Rect rectangle, Pen* pen)
+ALTERNET_UI_API void DrawingContext_DrawRectangle_(DrawingContext* obj, Pen* pen, Rect rectangle)
 {
     MarshalExceptions<void>([&](){
-            obj->DrawRectangle(rectangle, pen);
+            obj->DrawRectangle(pen, rectangle);
         });
 }
 
-ALTERNET_UI_API void DrawingContext_FillEllipse_(DrawingContext* obj, Rect bounds, Brush* brush)
+ALTERNET_UI_API void DrawingContext_FillEllipse_(DrawingContext* obj, Brush* brush, Rect bounds)
 {
     MarshalExceptions<void>([&](){
-            obj->FillEllipse(bounds, brush);
+            obj->FillEllipse(brush, bounds);
         });
 }
 
-ALTERNET_UI_API void DrawingContext_DrawEllipse_(DrawingContext* obj, Rect bounds, Pen* pen)
+ALTERNET_UI_API void DrawingContext_DrawEllipse_(DrawingContext* obj, Pen* pen, Rect bounds)
 {
     MarshalExceptions<void>([&](){
-            obj->DrawEllipse(bounds, pen);
+            obj->DrawEllipse(pen, bounds);
         });
 }
 
-ALTERNET_UI_API void DrawingContext_FloodFill_(DrawingContext* obj, Point point, Brush* brush)
+ALTERNET_UI_API void DrawingContext_FloodFill_(DrawingContext* obj, Brush* brush, Point point)
 {
     MarshalExceptions<void>([&](){
-            obj->FloodFill(point, brush);
+            obj->FloodFill(brush, point);
         });
 }
 
@@ -133,24 +133,17 @@ ALTERNET_UI_API void DrawingContext_Pop_(DrawingContext* obj)
         });
 }
 
-ALTERNET_UI_API void DrawingContext_DrawLine_(DrawingContext* obj, Point a, Point b, Pen* pen)
+ALTERNET_UI_API void DrawingContext_DrawLine_(DrawingContext* obj, Pen* pen, Point a, Point b)
 {
     MarshalExceptions<void>([&](){
-            obj->DrawLine(a, b, pen);
+            obj->DrawLine(pen, a, b);
         });
 }
 
-ALTERNET_UI_API void DrawingContext_DrawLines_(DrawingContext* obj, Point* points, int pointsCount, Pen* pen)
+ALTERNET_UI_API void DrawingContext_DrawLines_(DrawingContext* obj, Pen* pen, Point* points, int pointsCount)
 {
     MarshalExceptions<void>([&](){
-            obj->DrawLines(points, pointsCount, pen);
-        });
-}
-
-ALTERNET_UI_API void DrawingContext_DrawEllipticArc_(DrawingContext* obj, Pen* pen, Rect rect, double startAngle, double sweepAngle)
-{
-    MarshalExceptions<void>([&](){
-            obj->DrawEllipticArc(pen, rect, startAngle, sweepAngle);
+            obj->DrawLines(pen, points, pointsCount);
         });
 }
 
@@ -158,13 +151,6 @@ ALTERNET_UI_API void DrawingContext_DrawArc_(DrawingContext* obj, Pen* pen, Poin
 {
     MarshalExceptions<void>([&](){
             obj->DrawArc(pen, center, radius, startAngle, sweepAngle);
-        });
-}
-
-ALTERNET_UI_API void DrawingContext_FillEllipticPie_(DrawingContext* obj, Brush* brush, Rect rect, double startAngle, double sweepAngle)
-{
-    MarshalExceptions<void>([&](){
-            obj->FillEllipticPie(brush, rect, startAngle, sweepAngle);
         });
 }
 

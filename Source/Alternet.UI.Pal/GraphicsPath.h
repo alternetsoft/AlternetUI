@@ -14,6 +14,7 @@ namespace Alternet::UI
         wxGraphicsPath GetPath();
 
         wxPolygonFillMode GetWxFillMode();
+        static wxPolygonFillMode GetWxFillMode(FillMode value);
 
     private:
         wxWindow* GetWindow();
