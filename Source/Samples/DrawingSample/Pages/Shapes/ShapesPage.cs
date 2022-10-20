@@ -108,7 +108,7 @@ namespace DrawingSample
         {
             const int ColumnCount = 5;
             const double CellMargin = 10;
-            var cellSize = (Math.Min(bounds.Width, bounds.Height) / ColumnCount) - CellMargin - (CellMargin / ColumnCount);
+            var cellSize = (Math.Max(bounds.Width, bounds.Height) / ColumnCount) - CellMargin - (CellMargin / ColumnCount);
 
             double x = CellMargin, y = CellMargin;
 
