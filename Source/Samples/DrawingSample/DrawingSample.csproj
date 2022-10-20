@@ -29,7 +29,7 @@
     <ItemGroup>
       <None Remove="Pages\BrushesAndPens\BrushesAndPensPageSettings.uixml" />
       <None Remove="Pages\GraphicsPath\GraphicsPathPageSettings.uixml" />
-      <None Remove="Pages\Text\TextPageSettings.uixml" />
+      <None Remove="Pages\Shapes\ShapesPageSettings.uixml" />
       <None Remove="Pages\Transforms\TransformsPageSettings.uixml" />
       <None Remove="Resources\logo.png" />
     </ItemGroup>
@@ -55,6 +55,9 @@
       <SubType>Designer</SubType>
     </UIXml>
     <UIXml Update="Pages\Text\TextPageSettings.uixml">
+      <SubType>Designer</SubType>
+    </UIXml>
+    <UIXml Update="Pages\Shapes\ShapesPageSettings.uixml">
       <SubType>Designer</SubType>
     </UIXml>
     <UIXml Update="Pages\Transforms\TransformsPageSettings.uixml">
