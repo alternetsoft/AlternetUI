@@ -35,6 +35,17 @@ namespace DrawingSample
                 new Cell(nameof(s.FillRectangle), s.FillRectangle),
                 new Cell(nameof(s.DrawRectangles), s.DrawRectangles),
                 new Cell(nameof(s.FillRectangles), s.FillRectangles),
+                new Cell(nameof(s.DrawRoundedRectangle), s.DrawRoundedRectangle),
+                new Cell(nameof(s.FillRoundedRectangle), s.FillRoundedRectangle),
+                new Cell(nameof(s.DrawCircle), s.DrawCircle),
+                new Cell(nameof(s.FillCircle), s.FillCircle),
+                new Cell(nameof(s.DrawEllipse), s.DrawEllipse),
+                new Cell(nameof(s.FillEllipse), s.FillEllipse),
+                new Cell(nameof(s.DrawBezier), s.DrawBezier),
+                new Cell(nameof(s.DrawBeziers), s.DrawBeziers),
+                new Cell(nameof(s.DrawArc), s.DrawArc),
+                new Cell(nameof(s.FillPie), s.FillPie),
+                new Cell(nameof(s.DrawPie), s.DrawPie),
             };
 
             DrawShapesGrid(dc, bounds, actions);
@@ -49,9 +60,9 @@ namespace DrawingSample
 
         private void DrawShapesGrid(DrawingContext dc, Rect bounds, Cell[] cells)
         {
-            const int ColumnCount = 4;
+            const int ColumnCount = 5;
             const double CellMargin = 10;
-            var cellSize = (bounds.Width / ColumnCount) - CellMargin - (CellMargin / ColumnCount);
+            var cellSize = (Math.Min(bounds.Width, bounds.Height) / ColumnCount) - CellMargin - (CellMargin / ColumnCount);
 
             double x = CellMargin, y = CellMargin;
 

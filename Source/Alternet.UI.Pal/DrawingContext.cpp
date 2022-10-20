@@ -51,7 +51,21 @@ namespace Alternet::UI
         auto path = new GraphicsPath(_dc, _graphicsContext);
 
         path->AddArc(center, radius, startAngle, sweepAngle);
+        path->AddLineTo(center);
+        path->CloseFigure();
         FillPath(brush, path);
+
+        path->Release();
+    }
+
+    void DrawingContext::DrawPie(Pen* pen, const Point& center, double radius, double startAngle, double sweepAngle)
+    {
+        auto path = new GraphicsPath(_dc, _graphicsContext);
+
+        path->AddArc(center, radius, startAngle, sweepAngle);
+        path->AddLineTo(center);
+        path->CloseFigure();
+        DrawPath(pen, path);
 
         path->Release();
     }
@@ -80,7 +94,7 @@ namespace Alternet::UI
 
         path->StartFigure(points[0]);
 
-        for (int i = 1; i < pointsCount - 4; i += 3)
+        for (int i = 1; i <= pointsCount - 3; i += 3)
         {
             path->AddBezierTo(points[i], points[i + 1], points[i + 2]);
         }
@@ -93,13 +107,13 @@ namespace Alternet::UI
     void DrawingContext::DrawCircle(Pen* pen, const Point& center, double radius)
     {
         auto diameter = radius * 2;
-        DrawEllipse(pen, Rect(center, Size(diameter, diameter)));
+        DrawEllipse(pen, Rect(center - Size(radius, radius), Size(diameter, diameter)));
     }
 
     void DrawingContext::FillCircle(Brush* brush, const Point& center, double radius)
     {
         auto diameter = radius * 2;
-        FillEllipse(brush, Rect(center, Size(diameter, diameter)));
+        FillEllipse(brush, Rect(center - Size(radius, radius), Size(diameter, diameter)));
     }
 
     void DrawingContext::DrawRoundedRectangle(Pen* pen, const Rect& rect, double cornerRadius)

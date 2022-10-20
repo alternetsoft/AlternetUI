@@ -89,6 +89,22 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Draws an outline of a pie section defined by a circle specified by a center <see cref="Point"/> and a radius.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the pie section.</param>
+        /// <param name="center"><see cref="Point"/> structure that defines the center of the circle.</param>
+        /// <param name="radius">Defines the radius of the circle.</param>
+        /// <param name="startAngle">Angle in degrees measured clockwise from the x-axis to the first side of the pie section.</param>
+        /// <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to the second side of the pie section.</param>
+        public void DrawPie(Pen pen, Point center, double radius, double startAngle, double sweepAngle)
+        {
+            if (pen is null)
+                throw new ArgumentNullException(nameof(pen));
+
+            dc.DrawPie(pen.NativePen, center, radius, startAngle, sweepAngle);
+        }
+
+        /// <summary>
         /// Draws a Bézier spline defined by four <see cref="Point"/> structures.
         /// </summary>
         /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the curve.</param>

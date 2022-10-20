@@ -114,6 +114,7 @@ namespace Alternet::UI
         operator Point_C() const { return Point_C{ X, Y }; }
 
         inline Point operator+(const Size& value) const { return Point(X + value.Width, Y + value.Height); }
+        inline Point operator-(const Size& value) const { return Point(X - value.Width, Y - value.Height); }
 
         bool operator==(const Point& rhs) { return X == rhs.X && Y == rhs.Y; }
         bool operator!=(const Point& rhs) { return !(*this == rhs); }

@@ -45,6 +45,38 @@ namespace DrawingSample
             dc.DrawLines(StrokePen, lines.ToArray());
         }
 
+        public void DrawBezier(DrawingContext dc, Rect bounds)
+        {
+            dc.DrawBezier(StrokePen, bounds.TopLeft, bounds.TopRight, bounds.BottomLeft, bounds.BottomRight);
+        }
+
+        public void DrawArc(DrawingContext dc, Rect bounds)
+        {
+            dc.DrawArc(StrokePen, bounds.Center, Math.Min(bounds.Width, bounds.Height) * 0.3, 10, 210);
+        }
+
+        public void FillPie(DrawingContext dc, Rect bounds)
+        {
+            dc.FillPie(FillBrush, bounds.Center, Math.Min(bounds.Width, bounds.Height) * 0.3, 10, 210);
+        }
+
+        public void DrawPie(DrawingContext dc, Rect bounds)
+        {
+            dc.DrawPie(StrokePen, bounds.Center, Math.Min(bounds.Width, bounds.Height) * 0.3, 10, 210);
+        }
+
+        public void DrawBeziers(DrawingContext dc, Rect bounds)
+        {
+            var points = new[]
+            {
+                bounds.TopLeft, bounds.TopRight, bounds.BottomLeft, bounds.BottomRight,
+                bounds.BottomLeft, bounds.BottomLeft, bounds.TopRight,
+                bounds.BottomRight, bounds.BottomRight, bounds.BottomLeft,
+            };
+
+            dc.DrawBeziers(StrokePen, points);
+        }
+
         public void DrawPolygon(DrawingContext dc, Rect bounds)
         {
             var lines = GetPolygonLines(bounds);
@@ -69,6 +101,40 @@ namespace DrawingSample
         {
             var r = GetRectangle(bounds);
             dc.FillRectangle(FillBrush, r);
+        }
+
+        public void DrawEllipse(DrawingContext dc, Rect bounds)
+        {
+            var r = GetRectangle(bounds);
+            dc.DrawEllipse(StrokePen, r);
+        }
+
+        public void FillEllipse(DrawingContext dc, Rect bounds)
+        {
+            var r = GetRectangle(bounds);
+            dc.FillEllipse(FillBrush, r);
+        }
+
+        public void DrawCircle(DrawingContext dc, Rect bounds)
+        {
+            dc.DrawCircle(StrokePen, bounds.Center, Math.Min(bounds.Width, bounds.Height) * 0.3);
+        }
+
+        public void FillCircle(DrawingContext dc, Rect bounds)
+        {
+            dc.FillCircle(FillBrush, bounds.Center, Math.Min(bounds.Width, bounds.Height) * 0.3);
+        }
+
+        public void DrawRoundedRectangle(DrawingContext dc, Rect bounds)
+        {
+            var r = GetRectangle(bounds);
+            dc.DrawRoundedRectangle(StrokePen, r, 10);
+        }
+
+        public void FillRoundedRectangle(DrawingContext dc, Rect bounds)
+        {
+            var r = GetRectangle(bounds);
+            dc.FillRoundedRectangle(FillBrush, r, 10);
         }
 
         public void DrawRectangles(DrawingContext dc, Rect bounds)

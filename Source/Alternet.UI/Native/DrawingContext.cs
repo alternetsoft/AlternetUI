@@ -157,6 +157,12 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_FillPie_(NativePointer, brush.NativePointer, center, radius, startAngle, sweepAngle);
         }
         
+        public void DrawPie(Pen pen, Alternet.Drawing.Point center, double radius, double startAngle, double sweepAngle)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_DrawPie_(NativePointer, pen.NativePointer, center, radius, startAngle, sweepAngle);
+        }
+        
         public void DrawBezier(Pen pen, Alternet.Drawing.Point startPoint, Alternet.Drawing.Point controlPoint1, Alternet.Drawing.Point controlPoint2, Alternet.Drawing.Point endPoint)
         {
             CheckDisposed();
@@ -285,6 +291,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_FillPie_(IntPtr obj, IntPtr brush, NativeApiTypes.Point center, double radius, double startAngle, double sweepAngle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DrawPie_(IntPtr obj, IntPtr pen, NativeApiTypes.Point center, double radius, double startAngle, double sweepAngle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawBezier_(IntPtr obj, IntPtr pen, NativeApiTypes.Point startPoint, NativeApiTypes.Point controlPoint1, NativeApiTypes.Point controlPoint2, NativeApiTypes.Point endPoint);

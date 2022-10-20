@@ -161,6 +161,13 @@ ALTERNET_UI_API void DrawingContext_FillPie_(DrawingContext* obj, Brush* brush, 
         });
 }
 
+ALTERNET_UI_API void DrawingContext_DrawPie_(DrawingContext* obj, Pen* pen, Point center, double radius, double startAngle, double sweepAngle)
+{
+    MarshalExceptions<void>([&](){
+            obj->DrawPie(pen, center, radius, startAngle, sweepAngle);
+        });
+}
+
 ALTERNET_UI_API void DrawingContext_DrawBezier_(DrawingContext* obj, Pen* pen, Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint)
 {
     MarshalExceptions<void>([&](){

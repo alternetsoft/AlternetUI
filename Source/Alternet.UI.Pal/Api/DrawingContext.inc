@@ -23,6 +23,7 @@ void DrawLine(Pen* pen, const Point& a, const Point& b);
 void DrawLines(Pen* pen, Point* points, int pointsCount);
 void DrawArc(Pen* pen, const Point& center, double radius, double startAngle, double sweepAngle);
 void FillPie(Brush* brush, const Point& center, double radius, double startAngle, double sweepAngle);
+void DrawPie(Pen* pen, const Point& center, double radius, double startAngle, double sweepAngle);
 void DrawBezier(Pen* pen, const Point& startPoint, const Point& controlPoint1, const Point& controlPoint2, const Point& endPoint);
 void DrawBeziers(Pen* pen, Point* points, int pointsCount);
 void DrawCircle(Pen* pen, const Point& center, double radius);

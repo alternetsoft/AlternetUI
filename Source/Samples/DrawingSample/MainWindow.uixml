@@ -3,6 +3,6 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample"
         Title="Alternet UI Drawing Sample"
-        Width="1000" Height="800">
+        Width="1100" Height="800">
     <TabControl Name="tabControl" />
 </Window>

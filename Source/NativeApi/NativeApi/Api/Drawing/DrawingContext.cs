@@ -57,6 +57,8 @@ namespace NativeApi.Api
         public void DrawArc(Pen pen, Point center, double radius, double startAngle, double sweepAngle) => throw new Exception();
 
         public void FillPie(Brush brush, Point center, double radius, double startAngle, double sweepAngle) => throw new Exception();
+        
+        public void DrawPie(Pen pen, Point center, double radius, double startAngle, double sweepAngle) => throw new Exception();
 
         public void DrawBezier(Pen pen, Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint) => throw new Exception();
 
