@@ -36,7 +36,7 @@ namespace DrawingSample
         {
             var lines = new List<Point>();
             var w = bounds.Width / 6;
-            for (double x = 0; x <= bounds.Width; x += w)
+            for (double x = 0; x < bounds.Width; x += w)
             {
                 lines.Add(bounds.TopLeft + new Size(x, 0));
                 lines.Add(bounds.BottomLeft + new Size(x, 0));
@@ -57,6 +57,49 @@ namespace DrawingSample
             var lines = GetPolygonLines(bounds);
 
             dc.FillPolygon(FillBrush, lines.ToArray());
+        }
+
+        public void DrawRectangle(DrawingContext dc, Rect bounds)
+        {
+            var r = GetRectangle(bounds);
+            dc.DrawRectangle(StrokePen, r);
+        }
+
+        public void FillRectangle(DrawingContext dc, Rect bounds)
+        {
+            var r = GetRectangle(bounds);
+            dc.FillRectangle(FillBrush, r);
+        }
+
+        public void DrawRectangles(DrawingContext dc, Rect bounds)
+        {
+            var r = GetRectangles(bounds);
+            dc.DrawRectangles(StrokePen, r);
+        }
+
+        public void FillRectangles(DrawingContext dc, Rect bounds)
+        {
+            var r = GetRectangles(bounds);
+            dc.FillRectangles(FillBrush, r);
+        }
+
+        private static Rect GetRectangle(Rect bounds)
+        {
+            var s = Math.Min(bounds.Width, bounds.Height) * 0.1;
+            var r = bounds.InflatedBy(-s, -s * 2);
+            return r;
+        }
+
+        private static Rect[] GetRectangles(Rect bounds)
+        {
+            var s = Math.Min(bounds.Width, bounds.Height) / 2;
+            var r = bounds.WithSize(s, s);
+            var w = s / 6;
+            var rects = new List<Rect>();
+            for (int i = 0; i < 7; i++)
+                rects.Add(r.OffsetBy(i * w, i * w));
+
+            return rects.ToArray();
         }
 
         private static List<Point> GetPolygonLines(Rect bounds)

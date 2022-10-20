@@ -31,6 +31,10 @@ namespace DrawingSample
                 new Cell(nameof(s.DrawLines), s.DrawLines),
                 new Cell(nameof(s.DrawPolygon), s.DrawPolygon),
                 new Cell(nameof(s.FillPolygon), s.FillPolygon),
+                new Cell(nameof(s.DrawRectangle), s.DrawRectangle),
+                new Cell(nameof(s.FillRectangle), s.FillRectangle),
+                new Cell(nameof(s.DrawRectangles), s.DrawRectangles),
+                new Cell(nameof(s.FillRectangles), s.FillRectangles),
             };
 
             DrawShapesGrid(dc, bounds, actions);

@@ -362,6 +362,28 @@ namespace Alternet.Drawing
         public Rect InflatedBy(double x, double y) => Inflate(this, x, y);
 
         /// <summary>
+        /// Creates a <see cref='Drawing.Rect'/> that is offset by the specified amount.
+        /// </summary>
+        public Rect OffsetBy(double dx, double dy)
+        {
+            var r = this;
+            r.x += dx;
+            r.y += dy;
+            return r;
+        }
+
+        /// <summary>
+        /// Creates a <see cref='Drawing.Rect'/> with the specified size.
+        /// </summary>
+        public Rect WithSize(double width, double height)
+        {
+            var r = this;
+            r.width = width;
+            r.height = height;
+            return r;
+        }
+
+        /// <summary>
         /// Gets the center point of this <see cref="Rect"/>.
         /// </summary>
         public Point Center => Location + Size / 2;
