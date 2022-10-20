@@ -36,6 +36,62 @@ namespace Alternet::UI
             return window;
     }
 
+    void DrawingContext::DrawEllipticArc(Pen* pen, const Rect& rect, double startAngle, double sweepAngle)
+    {
+    }
+
+    void DrawingContext::DrawArc(Pen* pen, const Point& center, double radius, double startAngle, double sweepAngle)
+    {
+    }
+
+    void DrawingContext::FillEllipticPie(Brush* brush, const Rect& rect, double startAngle, double sweepAngle)
+    {
+    }
+
+    void DrawingContext::FillPie(Brush* brush, const Point& center, double radius, double startAngle, double sweepAngle)
+    {
+    }
+
+    void DrawingContext::DrawBezier(Pen* pen, const Point& startPoint, const Point& controlPoint1, const Point& controlPoint2, const Point& endPoint)
+    {
+    }
+
+    void DrawingContext::DrawBeziers(Pen* pen, Point* points, int pointsCount)
+    {
+    }
+
+    void DrawingContext::DrawCircle(Pen* pen, const Point& center, double radius)
+    {
+    }
+
+    void DrawingContext::FillCircle(Brush* brush, const Point& center, double radius)
+    {
+    }
+
+    void DrawingContext::DrawRoundedRectangle(Pen* pen, const Rect& rect, double cornerRadius)
+    {
+    }
+
+    void DrawingContext::FillRoundedRectangle(Brush* brush, const Rect& rect, double cornerRadius)
+    {
+    }
+
+    void DrawingContext::DrawPolygon(Pen* pen, Point* points, int pointsCount)
+    {
+    }
+
+    void DrawingContext::FillPolygon(Brush* brush, Point* points, int pointsCount, FillMode fillMode)
+    {
+    }
+
+    void DrawingContext::DrawRectangles(Pen* pen, Rect* rects, int rectsCount)
+    {
+    }
+
+    void DrawingContext::FillRectangles(Brush* brush, Rect* rects, int rectsCount)
+    {
+    }
+
     void DrawingContext::DrawPath(Pen* pen, GraphicsPath* path)
     {
         UseGC();

@@ -21,6 +21,20 @@ void Push();
 void Pop();
 void DrawLine(const Point& a, const Point& b, Pen* pen);
 void DrawLines(Point* points, int pointsCount, Pen* pen);
+void DrawEllipticArc(Pen* pen, const Rect& rect, double startAngle, double sweepAngle);
+void DrawArc(Pen* pen, const Point& center, double radius, double startAngle, double sweepAngle);
+void FillEllipticPie(Brush* brush, const Rect& rect, double startAngle, double sweepAngle);
+void FillPie(Brush* brush, const Point& center, double radius, double startAngle, double sweepAngle);
+void DrawBezier(Pen* pen, const Point& startPoint, const Point& controlPoint1, const Point& controlPoint2, const Point& endPoint);
+void DrawBeziers(Pen* pen, Point* points, int pointsCount);
+void DrawCircle(Pen* pen, const Point& center, double radius);
+void FillCircle(Brush* brush, const Point& center, double radius);
+void DrawRoundedRectangle(Pen* pen, const Rect& rect, double cornerRadius);
+void FillRoundedRectangle(Brush* brush, const Rect& rect, double cornerRadius);
+void DrawPolygon(Pen* pen, Point* points, int pointsCount);
+void FillPolygon(Brush* brush, Point* points, int pointsCount, FillMode fillMode);
+void DrawRectangles(Pen* pen, Rect* rects, int rectsCount);
+void FillRectangles(Brush* brush, Rect* rects, int rectsCount);
 private:
 DrawingContext() {}
 protected:

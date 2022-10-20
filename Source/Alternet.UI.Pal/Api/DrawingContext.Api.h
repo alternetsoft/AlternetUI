@@ -147,3 +147,101 @@ ALTERNET_UI_API void DrawingContext_DrawLines_(DrawingContext* obj, Point* point
         });
 }
 
+ALTERNET_UI_API void DrawingContext_DrawEllipticArc_(DrawingContext* obj, Pen* pen, Rect rect, double startAngle, double sweepAngle)
+{
+    MarshalExceptions<void>([&](){
+            obj->DrawEllipticArc(pen, rect, startAngle, sweepAngle);
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_DrawArc_(DrawingContext* obj, Pen* pen, Point center, double radius, double startAngle, double sweepAngle)
+{
+    MarshalExceptions<void>([&](){
+            obj->DrawArc(pen, center, radius, startAngle, sweepAngle);
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_FillEllipticPie_(DrawingContext* obj, Brush* brush, Rect rect, double startAngle, double sweepAngle)
+{
+    MarshalExceptions<void>([&](){
+            obj->FillEllipticPie(brush, rect, startAngle, sweepAngle);
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_FillPie_(DrawingContext* obj, Brush* brush, Point center, double radius, double startAngle, double sweepAngle)
+{
+    MarshalExceptions<void>([&](){
+            obj->FillPie(brush, center, radius, startAngle, sweepAngle);
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_DrawBezier_(DrawingContext* obj, Pen* pen, Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint)
+{
+    MarshalExceptions<void>([&](){
+            obj->DrawBezier(pen, startPoint, controlPoint1, controlPoint2, endPoint);
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_DrawBeziers_(DrawingContext* obj, Pen* pen, Point* points, int pointsCount)
+{
+    MarshalExceptions<void>([&](){
+            obj->DrawBeziers(pen, points, pointsCount);
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_DrawCircle_(DrawingContext* obj, Pen* pen, Point center, double radius)
+{
+    MarshalExceptions<void>([&](){
+            obj->DrawCircle(pen, center, radius);
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_FillCircle_(DrawingContext* obj, Brush* brush, Point center, double radius)
+{
+    MarshalExceptions<void>([&](){
+            obj->FillCircle(brush, center, radius);
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_DrawRoundedRectangle_(DrawingContext* obj, Pen* pen, Rect rect, double cornerRadius)
+{
+    MarshalExceptions<void>([&](){
+            obj->DrawRoundedRectangle(pen, rect, cornerRadius);
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_FillRoundedRectangle_(DrawingContext* obj, Brush* brush, Rect rect, double cornerRadius)
+{
+    MarshalExceptions<void>([&](){
+            obj->FillRoundedRectangle(brush, rect, cornerRadius);
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_DrawPolygon_(DrawingContext* obj, Pen* pen, Point* points, int pointsCount)
+{
+    MarshalExceptions<void>([&](){
+            obj->DrawPolygon(pen, points, pointsCount);
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_FillPolygon_(DrawingContext* obj, Brush* brush, Point* points, int pointsCount, FillMode fillMode)
+{
+    MarshalExceptions<void>([&](){
+            obj->FillPolygon(brush, points, pointsCount, fillMode);
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_DrawRectangles_(DrawingContext* obj, Pen* pen, Rect* rects, int rectsCount)
+{
+    MarshalExceptions<void>([&](){
+            obj->DrawRectangles(pen, rects, rectsCount);
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_FillRectangles_(DrawingContext* obj, Brush* brush, Rect* rects, int rectsCount)
+{
+    MarshalExceptions<void>([&](){
+            obj->FillRectangles(brush, rects, rectsCount);
+        });
+}
+

@@ -55,9 +55,6 @@ namespace Alternet.Drawing
             dc.FillRectangle(rectangle, brush.NativeBrush);
         }
 
-        //===============================================================
-
-
         /// <summary>
         /// Draws an arc representing a portion of an ellipse specified by a <see cref="Rect"/> structure.
         /// </summary>
@@ -68,7 +65,10 @@ namespace Alternet.Drawing
         /// parameter to ending point of the arc.</param>
         public void DrawArc(Pen pen, Rect rect, double startAngle, double sweepAngle)
         {
+            if (pen is null)
+                throw new ArgumentNullException(nameof(pen));
 
+            dc.DrawEllipticArc(pen.NativePen, rect, startAngle, sweepAngle);
         }
 
         /// <summary>
@@ -82,7 +82,10 @@ namespace Alternet.Drawing
         /// parameter to ending point of the arc.</param>
         public void DrawArc(Pen pen, Point center, double radius, double startAngle, double sweepAngle)
         {
+            if (pen is null)
+                throw new ArgumentNullException(nameof(pen));
 
+            dc.DrawArc(pen.NativePen, center, radius, startAngle, sweepAngle);
         }
 
         /// <summary>
@@ -97,7 +100,10 @@ namespace Alternet.Drawing
         /// <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to the second side of the pie section.</param>
         public void FillPie(Brush brush, Rect rect, double startAngle, double sweepAngle)
         {
+            if (brush is null)
+                throw new ArgumentNullException(nameof(brush));
 
+            dc.FillEllipticPie(brush.NativeBrush, rect, startAngle, sweepAngle);
         }
 
         /// <summary>
@@ -110,7 +116,10 @@ namespace Alternet.Drawing
         /// <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to the second side of the pie section.</param>
         public void FillPie(Brush brush, Point center, double radius, double startAngle, double sweepAngle)
         {
+            if (brush is null)
+                throw new ArgumentNullException(nameof(brush));
 
+            dc.FillPie(brush.NativeBrush, center, radius, startAngle, sweepAngle);
         }
 
         /// <summary>
@@ -123,7 +132,10 @@ namespace Alternet.Drawing
         /// <param name="endPoint"><see cref="Point"/> structure that represents the ending point of the curve.</param>
         public void DrawBezier(Pen pen, Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint)
         {
+            if (pen is null)
+                throw new ArgumentNullException(nameof(pen));
 
+            dc.DrawBezier(pen.NativePen, startPoint, controlPoint1, controlPoint2, endPoint);
         }
 
         /// <summary>
@@ -136,6 +148,10 @@ namespace Alternet.Drawing
         /// </param>
         public void DrawBeziers(Pen pen, Point[] points)
         {
+            if (pen is null)
+                throw new ArgumentNullException(nameof(pen));
+
+            dc.DrawBeziers(pen.NativePen, points);
         }
 
         /// <summary>
@@ -146,6 +162,10 @@ namespace Alternet.Drawing
         /// <param name="radius">Defines the radius of the circle.</param>
         public void DrawCircle(Pen pen, Point center, double radius)
         {
+            if (pen is null)
+                throw new ArgumentNullException(nameof(pen));
+
+            dc.DrawCircle(pen.NativePen, center, radius);
         }
 
         /// <summary>
@@ -156,6 +176,10 @@ namespace Alternet.Drawing
         /// <param name="radius">Defines the radius of the circle.</param>
         public void FillCircle(Brush brush, Point center, double radius)
         {
+            if (brush is null)
+                throw new ArgumentNullException(nameof(brush));
+
+            dc.FillCircle(brush.NativeBrush, center, radius);
         }
 
         /// <summary>
@@ -166,6 +190,10 @@ namespace Alternet.Drawing
         /// <param name="cornerRadius">The corner radius of the rectangle.</param>
         public void DrawRoundedRectangle(Pen pen, Rect rect, double cornerRadius)
         {
+            if (pen is null)
+                throw new ArgumentNullException(nameof(pen));
+
+            dc.DrawRoundedRectangle(pen.NativePen, rect, cornerRadius);
         }
 
         /// <summary>
@@ -176,6 +204,10 @@ namespace Alternet.Drawing
         /// <param name="cornerRadius">The corner radius of the rectangle.</param>
         public void FillRoundedRectangle(Brush brush, Rect rect, double cornerRadius)
         {
+            if (brush is null)
+                throw new ArgumentNullException(nameof(brush));
+
+            dc.FillRoundedRectangle(brush.NativeBrush, rect, cornerRadius);
         }
 
         /// <summary>
@@ -185,6 +217,10 @@ namespace Alternet.Drawing
         /// <param name="points">Array of <see cref="Point"/> structures that represent the vertices of the polygon.</param>
         public void DrawPolygon(Pen pen, Point[] points)
         {
+            if (pen is null)
+                throw new ArgumentNullException(nameof(pen));
+
+            dc.DrawPolygon(pen.NativePen, points);
         }
 
         /// <summary>
@@ -195,6 +231,10 @@ namespace Alternet.Drawing
         /// <param name="fillMode">Member of the <see cref="FillMode"/> enumeration that determines the style of the fill.</param>
         public void FillPolygon(Brush brush, Point[] points, FillMode fillMode = FillMode.Alternate)
         {
+            if (brush is null)
+                throw new ArgumentNullException(nameof(brush));
+
+            dc.FillPolygon(brush.NativeBrush, points, (UI.Native.FillMode)fillMode);
         }
 
         /// <summary>
@@ -204,6 +244,10 @@ namespace Alternet.Drawing
         /// <param name="rects">Array of <see cref="Rect"/> structures that represent the rectangles to draw.</param>
         public void DrawRectangles(Pen pen, Rect[] rects)
         {
+            if (pen is null)
+                throw new ArgumentNullException(nameof(pen));
+
+            dc.DrawRectangles(pen.NativePen, rects);
         }
 
         /// <summary>
@@ -213,10 +257,11 @@ namespace Alternet.Drawing
         /// <param name="rects">Array of <see cref="Rect"/> structures that represent the rectangles to fill.</param>
         public void FillRectangles(Brush brush, Rect[] rects)
         {
+            if (brush is null)
+                throw new ArgumentNullException(nameof(brush));
+
+            dc.FillRectangles(brush.NativeBrush, rects);
         }
-
-        //===============================================================
-
 
         /// <summary>
         /// Fills the interior of an ellipse defined by a bounding rectangle specified by a <see cref="Rect"/> structure.

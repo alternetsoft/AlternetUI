@@ -53,5 +53,33 @@ namespace NativeApi.Api
         public void DrawLine(Point a, Point b, Pen pen) => throw new Exception();
 
         public void DrawLines(Point[] points, Pen pen) => throw new Exception();
+
+        public void DrawEllipticArc(Pen pen, Rect rect, double startAngle, double sweepAngle) => throw new Exception();
+
+        public void DrawArc(Pen pen, Point center, double radius, double startAngle, double sweepAngle) => throw new Exception();
+
+        public void FillEllipticPie(Brush brush, Rect rect, double startAngle, double sweepAngle) => throw new Exception();
+
+        public void FillPie(Brush brush, Point center, double radius, double startAngle, double sweepAngle) => throw new Exception();
+
+        public void DrawBezier(Pen pen, Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint) => throw new Exception();
+
+        public void DrawBeziers(Pen pen, Point[] points) => throw new Exception();
+
+        public void DrawCircle(Pen pen, Point center, double radius) => throw new Exception();
+
+        public void FillCircle(Brush brush, Point center, double radius) => throw new Exception();
+
+        public void DrawRoundedRectangle(Pen pen, Rect rect, double cornerRadius) => throw new Exception();
+
+        public void FillRoundedRectangle(Brush brush, Rect rect, double cornerRadius) => throw new Exception();
+
+        public void DrawPolygon(Pen pen, Point[] points) => throw new Exception();
+
+        public void FillPolygon(Brush brush, Point[] points, FillMode fillMode) => throw new Exception();
+
+        public void DrawRectangles(Pen pen, Rect[] rects) => throw new Exception();
+
+        public void FillRectangles(Brush brush, Rect[] rects) => throw new Exception();
     }
 }
