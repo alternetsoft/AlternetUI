@@ -55,6 +55,169 @@ namespace Alternet.Drawing
             dc.FillRectangle(rectangle, brush.NativeBrush);
         }
 
+        //===============================================================
+
+
+        /// <summary>
+        /// Draws an arc representing a portion of an ellipse specified by a <see cref="Rect"/> structure.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the arc.</param>
+        /// <param name="rect"><see cref="Rect"/> structure that defines the boundaries of the ellipse.</param>
+        /// <param name="startAngle">Angle in degrees measured clockwise from the x-axis to the starting point of the arc.</param>
+        /// <param name="sweepAngle">Angle in degrees measured clockwise from the <paramref name="startAngle"/>
+        /// parameter to ending point of the arc.</param>
+        public void DrawArc(Pen pen, Rect rect, double startAngle, double sweepAngle)
+        {
+
+        }
+
+        /// <summary>
+        /// Draws an arc representing a portion of a circle specified by a center <see cref="Point"/> and a radius.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the arc.</param>
+        /// <param name="center"><see cref="Point"/> structure that defines the center of the circle.</param>
+        /// <param name="radius">Defines the radius of the circle.</param>
+        /// <param name="startAngle">Angle in degrees measured clockwise from the x-axis to the starting point of the arc.</param>
+        /// <param name="sweepAngle">Angle in degrees measured clockwise from the <paramref name="startAngle"/>
+        /// parameter to ending point of the arc.</param>
+        public void DrawArc(Pen pen, Point center, double radius, double startAngle, double sweepAngle)
+        {
+
+        }
+
+        /// <summary>
+        /// Fills the interior of a pie section defined by an ellipse specified by a <see cref="Rect"/> structure and two radial lines.
+        /// </summary>
+        /// <param name="brush"><see cref="Brush"/> that determines the characteristics of the fill.</param>
+        /// <param name="rect">
+        /// <see cref="Rect"/> structure that represents the bounding rectangle that defines
+        /// the ellipse from which the pie section comes.
+        /// </param>
+        /// <param name="startAngle">Angle in degrees measured clockwise from the x-axis to the first side of the pie section.</param>
+        /// <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to the second side of the pie section.</param>
+        public void FillPie(Brush brush, Rect rect, double startAngle, double sweepAngle)
+        {
+
+        }
+
+        /// <summary>
+        /// Fills the interior of a pie section defined by a circle specified by a center <see cref="Point"/> and a radius.
+        /// </summary>
+        /// <param name="brush"><see cref="Brush"/> that determines the characteristics of the fill.</param>
+        /// <param name="center"><see cref="Point"/> structure that defines the center of the circle.</param>
+        /// <param name="radius">Defines the radius of the circle.</param>
+        /// <param name="startAngle">Angle in degrees measured clockwise from the x-axis to the first side of the pie section.</param>
+        /// <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to the second side of the pie section.</param>
+        public void FillPie(Brush brush, Point center, double radius, double startAngle, double sweepAngle)
+        {
+
+        }
+
+        /// <summary>
+        /// Draws a Bézier spline defined by four <see cref="Point"/> structures.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the curve.</param>
+        /// <param name="startPoint"><see cref="Point"/> structure that represents the starting point of the curve.</param>
+        /// <param name="controlPoint1"><see cref="Point"/> structure that represents the first control point for the curve.</param>
+        /// <param name="controlPoint2"><see cref="Point"/> structure that represents the second control point for the curve.</param>
+        /// <param name="endPoint"><see cref="Point"/> structure that represents the ending point of the curve.</param>
+        public void DrawBezier(Pen pen, Point startPoint, Point controlPoint1, Point controlPoint2, Point endPoint)
+        {
+
+        }
+
+        /// <summary>
+        /// Draws a series of Bézier splines from an array of <see cref="Point"/> structures.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the curve.</param>
+        /// <param name="points">
+        /// Array of <see cref="Point"/> structures that represent the points that determine the curve.
+        /// The number of points in the array should be a multiple of 3 plus 1, such as 4, 7, or 10.
+        /// </param>
+        public void DrawBeziers(Pen pen, Point[] points)
+        {
+        }
+
+        /// <summary>
+        /// Draws an circle specified by a center <see cref="Point"/> and a radius.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the circle.</param>
+        /// <param name="center"><see cref="Point"/> structure that defines the center of the circle.</param>
+        /// <param name="radius">Defines the radius of the circle.</param>
+        public void DrawCircle(Pen pen, Point center, double radius)
+        {
+        }
+
+        /// <summary>
+        /// Fills the interior of a circle specified by a center <see cref="Point"/> and a radius.
+        /// </summary>
+        /// <param name="brush"><see cref="Brush"/> that determines the characteristics of the fill.</param>
+        /// <param name="center"><see cref="Point"/> structure that defines the center of the circle.</param>
+        /// <param name="radius">Defines the radius of the circle.</param>
+        public void FillCircle(Brush brush, Point center, double radius)
+        {
+        }
+
+        /// <summary>
+        /// Draws a rounded rectangle specified by a <see cref="Rect"/> and a corner radius.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the rounded rectangle.</param>
+        /// <param name="rect">A <see cref="Rect"/> that represents the rectangle to add.</param>
+        /// <param name="cornerRadius">The corner radius of the rectangle.</param>
+        public void DrawRoundedRectangle(Pen pen, Rect rect, double cornerRadius)
+        {
+        }
+
+        /// <summary>
+        /// Fills the interior of a rounded rectangle specified by a <see cref="Rect"/> and a corner radius.
+        /// </summary>
+        /// <param name="brush"><see cref="Brush"/> that determines the characteristics of the fill.</param>
+        /// <param name="rect">A <see cref="Rect"/> that represents the rectangle to add.</param>
+        /// <param name="cornerRadius">The corner radius of the rectangle.</param>
+        public void FillRoundedRectangle(Brush brush, Rect rect, double cornerRadius)
+        {
+        }
+
+        /// <summary>
+        /// Draws a polygon defined by an array of <see cref="Point"/> structures.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the polygon.</param>
+        /// <param name="points">Array of <see cref="Point"/> structures that represent the vertices of the polygon.</param>
+        public void DrawPolygon(Pen pen, Point[] points)
+        {
+        }
+
+        /// <summary>
+        /// Fills the interior of a polygon defined by an array of <see cref="Point"/> structures.
+        /// </summary>
+        /// <param name="brush"><see cref="Brush"/> that determines the characteristics of the fill.</param>
+        /// <param name="points">Array of <see cref="Point"/> structures that represent the vertices of the polygon.</param>
+        /// <param name="fillMode">Member of the <see cref="FillMode"/> enumeration that determines the style of the fill.</param>
+        public void FillPolygon(Brush brush, Point[] points, FillMode fillMode = FillMode.Alternate)
+        {
+        }
+
+        /// <summary>
+        /// Draws a series of rectangles specified by <see cref="Rect"/> structures.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the outlines of the rectangles.</param>
+        /// <param name="rects">Array of <see cref="Rect"/> structures that represent the rectangles to draw.</param>
+        public void DrawRectangles(Pen pen, Rect[] rects)
+        {
+        }
+
+        /// <summary>
+        /// Fills a series of rectangles specified by <see cref="Rect"/> structures.
+        /// </summary>
+        /// <param name="brush"><see cref="Brush"/> that determines the characteristics of the fill.</param>
+        /// <param name="rects">Array of <see cref="Rect"/> structures that represent the rectangles to fill.</param>
+        public void FillRectangles(Brush brush, Rect[] rects)
+        {
+        }
+
+        //===============================================================
+
+
         /// <summary>
         /// Fills the interior of an ellipse defined by a bounding rectangle specified by a <see cref="Rect"/> structure.
         /// </summary>

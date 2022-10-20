@@ -183,7 +183,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Adds a rectangle to this path.
+        /// Adds a rounded rectangle to this path.
         /// </summary>
         /// <param name="rect">A <see cref="Rect"/> that represents the rectangle to add.</param>
         /// <param name="cornerRadius">The corner radius of the rectangle.</param>
