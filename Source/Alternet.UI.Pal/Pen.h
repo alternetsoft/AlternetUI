@@ -15,6 +15,8 @@ namespace Alternet::UI
 
     private:
         wxPenStyle GetWxStyle(PenDashStyle style);
+        wxPenCap GetWxPenCap(LineCap value);
+        wxPenJoin GetWxPenJoin(LineJoin value);
 
         wxPen _pen;
     };

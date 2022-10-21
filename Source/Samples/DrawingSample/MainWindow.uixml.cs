@@ -8,12 +8,12 @@ namespace DrawingSample
     {
         private DrawingPage[] drawingPages = new DrawingPage[]
         {
-            new ClippingPage(),
             new ShapesPage(),
             new TextPage(),
             new BrushesAndPensPage(),
             new GraphicsPathPage(),
             new TransformsPage(),
+            new ClippingPage(),
         };
 
         private TabPage? selectedPage;

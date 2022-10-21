@@ -1282,7 +1282,7 @@ namespace Alternet.Drawing
         private static Pen GetPen(ref Pen? pen, Color color)
         {
             if (pen == null)
-                pen = new Pen(color, 1, PenDashStyle.Solid, immutable: true);
+                pen = new Pen(color, 1, PenDashStyle.Solid, LineCap.Flat, LineJoin.Miter, immutable: true);
             return pen;
         }
     }

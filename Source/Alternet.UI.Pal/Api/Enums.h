@@ -57,6 +57,19 @@ namespace Alternet::UI
         Monospace = 3,
     };
     
+    enum class LineCap
+    {
+        Flat = 0,
+        Round = 1,
+    };
+    
+    enum class LineJoin
+    {
+        Miter = 0,
+        Bevel = 1,
+        Round = 2,
+    };
+    
     enum class PenDashStyle
     {
         Solid = 0,

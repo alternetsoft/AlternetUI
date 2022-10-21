@@ -56,6 +56,19 @@ namespace Alternet.UI.Native
         Monospace = 3,
     }
     
+    enum LineCap
+    {
+        Flat = 0,
+        Round = 1,
+    }
+    
+    enum LineJoin
+    {
+        Miter = 0,
+        Bevel = 1,
+        Round = 2,
+    }
+    
     enum PenDashStyle
     {
         Solid = 0,

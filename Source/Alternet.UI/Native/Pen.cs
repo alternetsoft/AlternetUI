@@ -22,10 +22,10 @@ namespace Alternet.UI.Native
         {
         }
         
-        public void Initialize(PenDashStyle style, Alternet.Drawing.Color color, double width)
+        public void Initialize(PenDashStyle style, Alternet.Drawing.Color color, double width, LineCap lineCap, LineJoin lineJoin)
         {
             CheckDisposed();
-            NativeApi.Pen_Initialize_(NativePointer, style, color, width);
+            NativeApi.Pen_Initialize_(NativePointer, style, color, width, lineCap, lineJoin);
         }
         
         
@@ -38,7 +38,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr Pen_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Pen_Initialize_(IntPtr obj, PenDashStyle style, NativeApiTypes.Color color, double width);
+            public static extern void Pen_Initialize_(IntPtr obj, PenDashStyle style, NativeApiTypes.Color color, double width, LineCap lineCap, LineJoin lineJoin);
             
         }
     }

@@ -14,6 +14,8 @@ namespace Alternet.Drawing
         private bool isDisposed;
         private Color color;
         private PenDashStyle dashStyle;
+        private LineCap lineCap;
+        private LineJoin lineJoin;
         private double width;
 
         /// <summary>
@@ -23,18 +25,35 @@ namespace Alternet.Drawing
         /// <param name="color">A <see cref="Color"/> structure that indicates the color of this <see cref="Pen"/>.</param>
         /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in device-independent units (1/96th inch per unit).</param>
         /// <param name="dashStyle">A style used for dashed lines drawn with this <see cref="Pen"/>.</param>
-        public Pen(Color color, double width, PenDashStyle dashStyle) : this(color, width, dashStyle, immutable: false)
+        public Pen(Color color, double width, PenDashStyle dashStyle) : this(color, width, dashStyle, LineCap.Flat, LineJoin.Miter)
         {
         }
 
-        internal Pen(Color color, double width, PenDashStyle dashStyle, bool immutable) : this(new UI.Native.Pen())
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Pen"/> class with the specified
+        /// <see cref="Color"/>, <see cref="Width"/> and <see cref="DashStyle"/> properties.
+        /// </summary>
+        /// <param name="color">A <see cref="Color"/> structure that indicates the color of this <see cref="Pen"/>.</param>
+        /// <param name="width">A value indicating the width of this <see cref="Pen"/>, in device-independent units (1/96th inch per unit).</param>
+        /// <param name="dashStyle">A style used for dashed lines drawn with this <see cref="Pen"/>.</param>
+        /// <param name="lineCap">Specifies the available cap styles with which a <see cref="Pen"/> object can end a line.</param>
+        /// <param name="lineJoin">Specifies how to join consecutive line or curve segments.</param>
+        public Pen(Color color, double width, PenDashStyle dashStyle, LineCap lineCap, LineJoin lineJoin) :
+            this(color, width, dashStyle, lineCap, lineJoin, immutable: false)
         {
-            DashStyle = dashStyle;
-            Color = color;
-            Width = width;
+        }
+
+        internal Pen(Color color, double width, PenDashStyle dashStyle, LineCap lineCap, LineJoin lineJoin, bool immutable) : this(new UI.Native.Pen())
+        {
+            this.color = color;
+            this.width = width;
+            this.dashStyle = dashStyle;
+            this.lineCap = lineCap;
+            this.lineJoin = lineJoin;
+
+            this.immutable = immutable;
 
             ReinitializeNativePen();
-            this.immutable = true;
         }
 
         private bool immutable;
@@ -108,6 +127,42 @@ namespace Alternet.Drawing
                     return;
 
                 dashStyle = value;
+                ReinitializeNativePen();
+            }
+        }
+
+        /// <summary>
+        /// Specifies the available cap styles with which a <see cref="Pen"/> object can end a line.
+        /// </summary>
+        public LineCap LineCap
+        {
+            get => lineCap;
+
+            set
+            {
+                CheckModificationOfImmutableObject();
+                if (lineCap == value)
+                    return;
+
+                lineCap = value;
+                ReinitializeNativePen();
+            }
+        }
+
+        /// <summary>
+        /// Specifies how to join consecutive line or curve segments.
+        /// </summary>
+        public LineJoin LineJoin
+        {
+            get => lineJoin;
+
+            set
+            {
+                CheckModificationOfImmutableObject();
+                if (lineJoin == value)
+                    return;
+
+                lineJoin = value;
                 ReinitializeNativePen();
             }
         }
@@ -222,7 +277,12 @@ namespace Alternet.Drawing
 
         private void ReinitializeNativePen()
         {
-            NativePen.Initialize((UI.Native.PenDashStyle)DashStyle, Color, Width);
+            NativePen.Initialize(
+                (UI.Native.PenDashStyle)DashStyle,
+                Color,
+                Width,
+                (UI.Native.LineCap)LineCap,
+                (UI.Native.LineJoin)LineJoin);
         }
 
         /// <summary>
