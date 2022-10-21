@@ -24,6 +24,10 @@ namespace DrawingSample
 
         private PenDashStyle penDashStyle = PenDashStyle.Dash;
 
+        private LineJoin lineJoin = LineJoin.Miter;
+
+        private LineCap lineCap = LineCap.Flat;
+
         private Shape[]? shapes;
 
         public BrushesAndPensPage()
@@ -143,6 +147,26 @@ namespace DrawingSample
             }
         }
 
+        public LineJoin LineJoin
+        {
+            get => lineJoin;
+            set
+            {
+                lineJoin = value;
+                Update();
+            }
+        }
+
+        public LineCap LineCap
+        {
+            get => lineCap;
+            set
+            {
+                lineCap = value;
+                Update();
+            }
+        }
+
         public override string Name => "Brushes and Pens";
 
         public static ShapeTypes AllShapeTypes { get; } = new ShapeTypes(
@@ -218,7 +242,7 @@ namespace DrawingSample
                 1,
                 0.3).ToRgb();
 
-            return new Pen(Color.FromArgb(c.R, c.G, c.B), penWidth, penDashStyle);
+            return new Pen(Color.FromArgb(c.R, c.G, c.B), penWidth, penDashStyle, lineCap, lineJoin);
         }
 
         private Brush CreateFillBrush()

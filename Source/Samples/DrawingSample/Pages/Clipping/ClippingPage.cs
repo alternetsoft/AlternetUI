@@ -64,7 +64,7 @@ namespace DrawingSample
                 return lines.ToArray();
             }
 
-            var region = new Region(GetPolygonPoints());
+            using var region = new Region(GetPolygonPoints());
             ApplyRegionParts(region);
 
             dc.Clip = region;

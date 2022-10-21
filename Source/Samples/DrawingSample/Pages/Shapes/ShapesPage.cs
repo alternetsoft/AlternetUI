@@ -146,9 +146,10 @@ namespace DrawingSample
                 dc.FillRectangle(BackgroundBrush, cellContentFrameRect);
                 dc.DrawRectangle(cellBorderPen, cellContentFrameRect);
 
-                // todo: set clip
-
+                using var clip = new Region(cellContentFrameRect);
+                dc.Clip = clip;
                 cell.DrawAction(dc, cellContentRect);
+                dc.Clip = null;
 
                 if (nameVisible)
                 {

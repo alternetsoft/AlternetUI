@@ -27,6 +27,12 @@ namespace DrawingSample
 
             foreach (var style in Enum.GetValues(typeof(PenDashStyle)))
                 dashStyleComboBox.Items.Add(style!);
+
+            foreach (var value in Enum.GetValues(typeof(LineJoin)))
+                lineJoinComboBox.Items.Add(value!);
+
+            foreach (var value in Enum.GetValues(typeof(LineCap)))
+                lineCapComboBox.Items.Add(value!);
         }
 
         private void BrushComboBox_SelectedItemChanged(object? sender, EventArgs e)

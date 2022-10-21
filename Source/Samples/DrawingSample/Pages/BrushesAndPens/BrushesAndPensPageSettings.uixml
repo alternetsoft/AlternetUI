@@ -28,5 +28,11 @@
 
         <Label Text="Pen Dash Style:" Margin="0,5,0,5" />
         <ComboBox Name="dashStyleComboBox" IsEditable="false" SelectedItem="{Binding PenDashStyle}"/>
+
+        <Label Text="Line Cap:" Margin="0,5,0,5" />
+        <ComboBox Name="lineCapComboBox" IsEditable="false" SelectedItem="{Binding LineCap}"/>
+
+        <Label Text="Line Join:" Margin="0,5,0,5" />
+        <ComboBox Name="lineJoinComboBox" IsEditable="false" SelectedItem="{Binding LineJoin}"/>
     </StackPanel>
 </Control>
