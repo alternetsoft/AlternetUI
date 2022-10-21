@@ -1,18 +1,22 @@
 ﻿using Alternet.UI;
 using System;
+using System.Linq;
 
 namespace DrawingSample
 {
-    partial class MainWindow : Window
+    internal partial class MainWindow : Window
     {
         private DrawingPage[] drawingPages = new DrawingPage[]
         {
+            new ClippingPage(),
             new ShapesPage(),
             new TextPage(),
             new BrushesAndPensPage(),
             new GraphicsPathPage(),
             new TransformsPage(),
         };
+
+        private TabPage? selectedPage;
 
         public MainWindow()
         {
@@ -24,6 +28,8 @@ namespace DrawingSample
         {
             foreach (var page in drawingPages)
                 tabControl.Pages.Add(CreateTabPage(page));
+
+            drawingPages.First().OnActivated();
         }
 
         private TabPage CreateTabPage(DrawingPage page)
@@ -38,7 +44,19 @@ namespace DrawingSample
             Grid.SetColumn(canvas, 1);
             page.Canvas = canvas;
             tabPage.Children.Add(grid);
+            tabPage.Tag = page;
             return tabPage;
+        }
+
+        private void TabControl_SelectedPageChanged(object? sender, EventArgs e)
+        {
+            if (selectedPage != null)
+                ((DrawingPage)selectedPage.Tag!).OnDeactivated();
+
+            selectedPage = tabControl.SelectedPage;
+
+            if (selectedPage != null)
+                ((DrawingPage)selectedPage.Tag!).OnActivated();
         }
     }
 }

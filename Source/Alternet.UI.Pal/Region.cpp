@@ -18,7 +18,8 @@ namespace Alternet::UI
 
     void Region::InitializeWithPolygon(Point* points, int pointsCount, FillMode fillMode)
     {
-        std::vector<wxPoint> wxPoints(pointsCount);
+        std::vector<wxPoint> wxPoints;
+        wxPoints.reserve(pointsCount);
         for (int i = 0; i < pointsCount; i++)
         {
             wxPoints.push_back(fromDip(points[i], GetWindow()));

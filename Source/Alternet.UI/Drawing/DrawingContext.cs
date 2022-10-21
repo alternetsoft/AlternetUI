@@ -608,7 +608,7 @@ namespace Alternet.Drawing
         /// <value>
         /// A <see cref="Region"/> that limits the portion of this <see cref="DrawingContext"/> that is currently available for drawing.
         /// </value>
-        public Region Clip
+        public Region? Clip
         {
             get
             {
@@ -617,7 +617,7 @@ namespace Alternet.Drawing
 
             set
             {
-                dc.Clip = value.NativeRegion;
+                dc.Clip = value?.NativeRegion;
             }
         }
 

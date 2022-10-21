@@ -6,9 +6,6 @@ namespace DrawingSample
 {
     internal sealed class TransformsPage : DrawingPage
     {
-        private static readonly Image logoImage = new Image(typeof(TransformsPage).Assembly.GetManifestResourceStream(
-            "DrawingSample.Resources.Logo.png") ?? throw new Exception());
-
         private static readonly Pen frameShadowDarkPen = new Pen(Color.DarkGoldenrod, 3);
 
         private static readonly Pen frameShadowLightPen = new Pen(Color.Wheat, 3);
@@ -157,7 +154,7 @@ namespace DrawingSample
             //    innerFrame.InflatedBy(-10, -10),
             //    new TextFormat { HorizontalAlignment = TextHorizontalAlignment.Center, VerticalAlignment = TextVerticalAlignment.Bottom });
 
-            dc.DrawImage(logoImage, innerFrame.InflatedBy(-10, -10).TopLeft);
+            dc.DrawImage(Resources.LogoImage, innerFrame.InflatedBy(-10, -10).TopLeft);
         }
 
         private static void DrawSubTransformedPart(DrawingContext dc)

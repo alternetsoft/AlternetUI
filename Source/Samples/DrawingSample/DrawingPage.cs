@@ -44,6 +44,14 @@ namespace DrawingSample
 
         protected abstract Control CreateSettingsControl();
 
+        public virtual void OnActivated()
+        {
+        }
+
+        public virtual void OnDeactivated()
+        {
+        }
+
         private void Canvas_Paint(object? sender, PaintEventArgs e)
         {
             //e.DrawingContext.FillRectangle(e.Bounds, Color.White);

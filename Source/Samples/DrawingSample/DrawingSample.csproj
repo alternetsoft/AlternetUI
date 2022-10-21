@@ -54,6 +54,9 @@
     <UIXml Update="Pages\GraphicsPath\GraphicsPathPageSettings.uixml">
       <SubType>Designer</SubType>
     </UIXml>
+    <UIXml Update="Pages\Clipping\ClippingPageSettings.uixml">
+      <SubType>Designer</SubType>
+    </UIXml>
     <UIXml Update="Pages\Text\TextPageSettings.uixml">
       <SubType>Designer</SubType>
     </UIXml>

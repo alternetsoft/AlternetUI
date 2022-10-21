@@ -63,6 +63,14 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates a new <see cref="Rect"/> from a centerpoint and size.
+        /// </summary>
+        public static Rect FromCenter(Point center, Size size)
+        {
+            return new Rect(center.X - size.Width / 2, center.Y - size.Height / 2, size.Width, size.Height);
+        }
+
+        /// <summary>
         /// Parse - returns an instance converted from the provided string using
         /// the culture "en-US"
         /// <param name="source"> string with Rect data </param>

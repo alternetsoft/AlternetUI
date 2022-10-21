@@ -39,13 +39,13 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Region Clip
+        public Region? Clip
         {
             get
             {
                 CheckDisposed();
                 var n = NativeApi.DrawingContext_GetClip_(NativePointer);
-                var m = NativeObject.GetFromNativePointer<Region>(n, p => new Region(p))!;
+                var m = NativeObject.GetFromNativePointer<Region>(n, p => new Region(p));
                 ReleaseNativeObjectPointer(n);
                 return m;
             }
@@ -53,7 +53,7 @@ namespace Alternet.UI.Native
             set
             {
                 CheckDisposed();
-                NativeApi.DrawingContext_SetClip_(NativePointer, value.NativePointer);
+                NativeApi.DrawingContext_SetClip_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
             }
         }
         

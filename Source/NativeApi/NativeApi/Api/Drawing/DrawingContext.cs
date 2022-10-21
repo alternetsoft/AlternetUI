@@ -80,6 +80,6 @@ namespace NativeApi.Api
 
         public void FillRectangles(Brush brush, Rect[] rects) => throw new Exception();
 
-        public Region Clip { get; set; }
+        public Region? Clip { get; set; }
     }
 }

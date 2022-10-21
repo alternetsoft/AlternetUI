@@ -4,5 +4,5 @@
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample"
         Title="Alternet UI Drawing Sample"
         Width="1150" Height="800">
-    <TabControl Name="tabControl" />
+    <TabControl Name="tabControl" SelectedPageChanged="TabControl_SelectedPageChanged" />
 </Window>
