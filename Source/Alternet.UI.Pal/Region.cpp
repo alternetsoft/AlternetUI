@@ -95,6 +95,6 @@ namespace Alternet::UI
 
     int Region::GetHashCode_()
     {
-        return (int)(int64_t)_region.GetResourceHandle();
+        return (int)(int64_t)_region.GetRefData();
     }
 }
