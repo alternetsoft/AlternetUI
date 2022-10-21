@@ -39,6 +39,24 @@ namespace Alternet.UI.Native
             }
         }
         
+        public Region Clip
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.DrawingContext_GetClip_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<Region>(n, p => new Region(p))!;
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.DrawingContext_SetClip_(NativePointer, value.NativePointer);
+            }
+        }
+        
         public static DrawingContext FromImage(Image image)
         {
             var n = NativeApi.DrawingContext_FromImage_(image.NativePointer);
@@ -234,6 +252,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_SetTransform_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr DrawingContext_GetClip_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_SetClip_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr DrawingContext_FromImage_(IntPtr image);

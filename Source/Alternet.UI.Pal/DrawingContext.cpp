@@ -36,6 +36,36 @@ namespace Alternet::UI
             return window;
     }
 
+    Region* DrawingContext::GetClip()
+    {
+        if (_clip == nullptr)
+            return nullptr;
+
+        _clip->AddRef();
+        return _clip;
+    }
+
+    void DrawingContext::SetClip(Region* value)
+    {
+        if (_clip != nullptr)
+        {
+            _clip->Release();
+            _clip = nullptr;
+            
+            _dc->DestroyClippingRegion();
+            _graphicsContext->ResetClip();
+        }
+
+        _clip = value;
+        
+        if (_clip != nullptr)
+        {
+            _clip->AddRef();
+            _dc->SetDeviceClippingRegion(_clip->GetRegion());
+            _graphicsContext->Clip(_clip->GetRegion());
+        }
+    }
+
     void DrawingContext::DrawArc(Pen* pen, const Point& center, double radius, double startAngle, double sweepAngle)
     {
         auto path = new GraphicsPath(_dc, _graphicsContext);

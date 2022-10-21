@@ -18,6 +18,7 @@
 #include "Api/ImageList.Api.h"
 #include "Api/ImageSet.Api.h"
 #include "Api/Pen.Api.h"
+#include "Api/Region.Api.h"
 #include "Api/TransformMatrix.Api.h"
 #include "Api/GroupBox.Api.h"
 #include "Api/Keyboard.Api.h"

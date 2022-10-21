@@ -4,6 +4,7 @@
 
 #include "DrawingContext.h"
 #include "TransformMatrix.h"
+#include "Region.h"
 #include "Image.h"
 #include "Brush.h"
 #include "Pen.h"
@@ -25,6 +26,20 @@ ALTERNET_UI_API void DrawingContext_SetTransform_(DrawingContext* obj, Transform
 {
     MarshalExceptions<void>([&](){
             obj->SetTransform(value);
+        });
+}
+
+ALTERNET_UI_API Region* DrawingContext_GetClip_(DrawingContext* obj)
+{
+    return MarshalExceptions<Region*>([&](){
+            return obj->GetClip();
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_SetClip_(DrawingContext* obj, Region* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetClip(value);
         });
 }
 

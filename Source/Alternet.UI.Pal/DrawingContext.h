@@ -8,6 +8,7 @@
 #include "Pen.h"
 #include "GraphicsPath.h"
 #include "TransformMatrix.h"
+#include "Region.h"
 
 namespace Alternet::UI
 {
@@ -47,6 +48,8 @@ namespace Alternet::UI
         wxGraphicsPen GetGraphicsPen(Pen* pen);
 
         TextPainter* GetTextPainter();
+
+        Region* _clip = nullptr;
 
         bool _nonIdentityTransformSet = false;
     };

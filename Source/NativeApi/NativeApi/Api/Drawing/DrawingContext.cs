@@ -79,5 +79,7 @@ namespace NativeApi.Api
         public void DrawRectangles(Pen pen, Rect[] rects) => throw new Exception();
 
         public void FillRectangles(Brush brush, Rect[] rects) => throw new Exception();
+
+        public Region Clip { get; set; }
     }
 }

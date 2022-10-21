@@ -603,6 +603,25 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets a <see cref="Region"/> that limits the drawing region of this <see cref="DrawingContext"/>.
+        /// </summary>
+        /// <value>
+        /// A <see cref="Region"/> that limits the portion of this <see cref="DrawingContext"/> that is currently available for drawing.
+        /// </value>
+        public Region Clip
+        {
+            get
+            {
+                return new Region(dc.Clip);
+            }
+
+            set
+            {
+                dc.Clip = value.NativeRegion;
+            }
+        }
+
+        /// <summary>
         /// Releases all resources used by the <see cref="DrawingContext"/> object.
         /// </summary>
         public void Dispose()

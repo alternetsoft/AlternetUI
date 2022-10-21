@@ -4,6 +4,10 @@ public:
 TransformMatrix* GetTransform();
 void SetTransform(TransformMatrix* value);
 
+
+Region* GetClip();
+void SetClip(Region* value);
+
 static DrawingContext* FromImage(Image* image);
 void FillRectangle(Brush* brush, const Rect& rectangle);
 void DrawRectangle(Pen* pen, const Rect& rectangle);

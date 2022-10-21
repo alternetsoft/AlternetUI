@@ -11,11 +11,8 @@ namespace DrawingSample
             InitializeComponent();
         }
 
-        TransformsPage page;
-
         public void Initialize(TransformsPage page)
         {
-            this.page = page;
             DataContext = page;
         }
     }

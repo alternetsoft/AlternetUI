@@ -218,6 +218,7 @@
     <ClCompile Include="Pen.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="RadioButton.cpp" />
+    <ClCompile Include="Region.cpp" />
     <ClCompile Include="SelectDirectoryDialog.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="SolidBrush.cpp" />
@@ -273,6 +274,7 @@
     <ClInclude Include="Api\Pen.Api.h" />
     <ClInclude Include="Api\ProgressBar.Api.h" />
     <ClInclude Include="Api\RadioButton.Api.h" />
+    <ClInclude Include="Api\Region.Api.h" />
     <ClInclude Include="Api\SelectDirectoryDialog.Api.h" />
     <ClInclude Include="Api\Slider.Api.h" />
     <ClInclude Include="Api\SolidBrush.Api.h" />
@@ -330,6 +332,7 @@
     <ClInclude Include="Pen.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="RadioButton.h" />
+    <ClInclude Include="Region.h" />
     <ClInclude Include="Screenshot.h" />
     <ClInclude Include="SelectDirectoryDialog.h" />
     <ClInclude Include="Slider.h" />
@@ -377,6 +380,7 @@
     <None Include="Api\Pen.inc" />
     <None Include="Api\ProgressBar.inc" />
     <None Include="Api\RadioButton.inc" />
+    <None Include="Api\Region.inc" />
     <None Include="Api\SelectDirectoryDialog.inc" />
     <None Include="Api\Slider.inc" />
     <None Include="Api\SolidBrush.inc" />
