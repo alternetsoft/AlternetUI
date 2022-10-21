@@ -34,6 +34,8 @@ namespace ApiGenerator.Api
 
         public static bool IsStruct(Type type) => type.IsValueType && !type.IsPrimitive && !type.IsEnum;
 
+        public static bool IsPrimitive(Type type) => type.IsPrimitive;
+
         public static bool IsComplexType(Type type) => !type.IsValueType && !type.IsPrimitive && type != typeof(string);
 
         public static bool IsMarshaledStruct(Type type) => type.IsValueType &&

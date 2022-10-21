@@ -612,7 +612,11 @@ namespace Alternet.Drawing
         {
             get
             {
-                return new Region(dc.Clip);
+                var clip = dc.Clip;
+                if (clip == null)
+                    return null;
+                
+                return new Region(clip);
             }
 
             set

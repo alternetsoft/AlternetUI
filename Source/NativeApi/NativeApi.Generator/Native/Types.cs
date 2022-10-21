@@ -109,6 +109,8 @@ namespace ApiGenerator.Native
                 var elementType = type.Type.GetElementType() ?? throw new Exception();
                 if (TypeProvider.IsStruct(elementType) && !usage.HasFlag(TypeUsage.Return))
                     return TypeProvider.GetNativeName(elementType) + "*";
+                if (TypeProvider.IsPrimitive(elementType) && !usage.HasFlag(TypeUsage.Return))
+                    return TryGetPrimitiveType(elementType.ToContextualType()) + "*";
             }
 
             if (type.Type.IsEnum)
@@ -161,6 +163,8 @@ namespace ApiGenerator.Native
                 var elementType = type.Type.GetElementType() ?? throw new Exception();
                 if (TypeProvider.IsStruct(elementType) && !usage.HasFlag(TypeUsage.Return))
                     return TypeProvider.GetNativeName(elementType) + "*";
+                if (TypeProvider.IsPrimitive(elementType) && !usage.HasFlag(TypeUsage.Return))
+                    return TryGetPrimitiveType(elementType.ToContextualType()) + "*";
             }
 
             if (TypeProvider.IsStruct(type))

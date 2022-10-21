@@ -10,6 +10,8 @@
 #include "Api/Control.Api.h"
 #include "Api/Brush.Api.h"
 #include "Api/HatchBrush.Api.h"
+#include "Api/LinearGradientBrush.Api.h"
+#include "Api/RadialGradientBrush.Api.h"
 #include "Api/SolidBrush.Api.h"
 #include "Api/DrawingContext.Api.h"
 #include "Api/Font.Api.h"
