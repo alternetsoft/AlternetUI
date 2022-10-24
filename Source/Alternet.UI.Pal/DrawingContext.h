@@ -44,7 +44,7 @@ namespace Alternet::UI
 
         wxGraphicsRenderer* _dcRenderer = nullptr;
 
-        wxGraphicsBrush GetGraphicsBrush(Brush* brush);
+        wxGraphicsBrush GetGraphicsBrush(Brush* brush, const wxPoint2DDouble& offset);
         wxGraphicsPen GetGraphicsPen(Pen* pen);
 
         TextPainter* GetTextPainter();

@@ -29,13 +29,13 @@ namespace Alternet::UI
             _gradientStops.Add(gradientStopsColors[i], gradientStopsOffsets[i]);
     }
 
-    wxGraphicsBrush LinearGradientBrush::GetGraphicsBrush(wxGraphicsRenderer* renderer)
+    wxGraphicsBrush LinearGradientBrush::GetGraphicsBrush(wxGraphicsRenderer* renderer, const wxPoint2DDouble& offset)
     {
         return renderer->CreateLinearGradientBrush(
-            _startPoint.x,
-            _startPoint.y,
-            _endPoint.x,
-            _endPoint.y,
+            offset.m_x + _startPoint.x,
+            offset.m_y + _startPoint.y,
+            offset.m_x + _endPoint.x,
+            offset.m_y + _endPoint.y,
             _gradientStops);
     }
 }

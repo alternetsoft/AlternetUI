@@ -9,7 +9,7 @@ namespace Alternet::UI
     {
 #include "Api/SolidBrush.inc"
     public:
-        virtual wxGraphicsBrush GetGraphicsBrush(wxGraphicsRenderer* renderer) override;
+        virtual wxGraphicsBrush GetGraphicsBrush(wxGraphicsRenderer* renderer, const wxPoint2DDouble& offset) override;
 
         wxBrush GetWxBrush();
 

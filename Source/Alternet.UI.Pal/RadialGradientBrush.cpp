@@ -31,13 +31,13 @@ namespace Alternet::UI
             _gradientStops.Add(gradientStopsColors[i], gradientStopsOffsets[i]);
     }
 
-    wxGraphicsBrush RadialGradientBrush::GetGraphicsBrush(wxGraphicsRenderer* renderer)
+    wxGraphicsBrush RadialGradientBrush::GetGraphicsBrush(wxGraphicsRenderer* renderer, const wxPoint2DDouble& offset)
     {
         return renderer->CreateRadialGradientBrush(
-            _gradientOrigin.x,
-            _gradientOrigin.y,
-            _center.x,
-            _center.y,
+            offset.m_x + _gradientOrigin.x,
+            offset.m_y + _gradientOrigin.y,
+            offset.m_x + _center.x,
+            offset.m_y + _center.y,
             _radius,
             _gradientStops);
     }

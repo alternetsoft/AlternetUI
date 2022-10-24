@@ -235,7 +235,7 @@ namespace Alternet::UI
     {
         UseGC();
         _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
-        _graphicsContext->SetBrush(GetGraphicsBrush(brush));
+        _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint()));
         _graphicsContext->FillPath(path->GetPath(), path->GetWxFillMode());
     }
 
@@ -390,10 +390,11 @@ namespace Alternet::UI
     {
         UseGC();
 
-        _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
-        _graphicsContext->SetBrush(GetGraphicsBrush(brush));
-
         auto rect = fromDipF(rectangle, _dc->GetWindow());
+
+        _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
+        _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
+
         _graphicsContext->DrawRectangle(rect.X, rect.Y, rect.Width, rect.Height);
     }
 
@@ -401,10 +402,11 @@ namespace Alternet::UI
     {
         UseGC();
 
-        _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
-        _graphicsContext->SetBrush(GetGraphicsBrush(brush));
-
         auto rect = fromDipF(bounds, _dc->GetWindow());
+
+        _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
+        _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
+
         _graphicsContext->DrawEllipse(rect.X, rect.Y, rect.Width, rect.Height);
     }
 
@@ -631,9 +633,9 @@ namespace Alternet::UI
             wrapping);
     }
 
-    wxGraphicsBrush DrawingContext::GetGraphicsBrush(Brush* brush)
+    wxGraphicsBrush DrawingContext::GetGraphicsBrush(Brush* brush, const wxPoint2DDouble& offset)
     {
-        return brush->GetGraphicsBrush(_graphicsContext->GetRenderer());
+        return brush->GetGraphicsBrush(_graphicsContext->GetRenderer(), offset);
     }
 
     wxGraphicsPen DrawingContext::GetGraphicsPen(Pen* pen)

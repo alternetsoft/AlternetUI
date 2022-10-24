@@ -9,7 +9,7 @@ namespace Alternet::UI
     {
 #include "Api/RadialGradientBrush.inc"
     public:
-        virtual wxGraphicsBrush GetGraphicsBrush(wxGraphicsRenderer* renderer) override;
+        virtual wxGraphicsBrush GetGraphicsBrush(wxGraphicsRenderer* renderer, const wxPoint2DDouble& offset) override;
 
     private:
         wxPoint _gradientOrigin;

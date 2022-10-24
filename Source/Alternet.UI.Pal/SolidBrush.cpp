@@ -15,7 +15,7 @@ namespace Alternet::UI
         _brush = wxBrush(color);
     }
 
-    wxGraphicsBrush SolidBrush::GetGraphicsBrush(wxGraphicsRenderer* renderer)
+    wxGraphicsBrush SolidBrush::GetGraphicsBrush(wxGraphicsRenderer* renderer, const wxPoint2DDouble& offset)
     {
         return renderer->CreateBrush(_brush);
     }
