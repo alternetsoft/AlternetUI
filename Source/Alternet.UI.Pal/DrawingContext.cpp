@@ -633,6 +633,12 @@ namespace Alternet::UI
 
     wxGraphicsBrush DrawingContext::GetGraphicsBrush(Brush* brush)
     {
+        wxGraphicsGradientStops ss(*wxRED, *wxGREEN);
+
+        return _graphicsContext->CreateRadialGradientBrush(
+            50, 50, 50, 50, 50, ss
+        );
+
         return brush->GetGraphicsBrush(_graphicsContext->GetRenderer());
     }
 

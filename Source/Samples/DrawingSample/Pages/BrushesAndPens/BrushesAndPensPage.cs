@@ -282,14 +282,15 @@ namespace DrawingSample
                 
                 BrushType.RadialGradient =>
                     new RadialGradientBrush(
-                        new Point(10, 10),
-                        10,
-                        new Point(10, 10),
+                        new Point(50, 50),
+                        50,
+                        new Point(50, 50),
                         new[]
                         {
                             new GradientStop(Color.FromArgb(c.R, c.G, c.B), 0),
-                            new GradientStop(Color.FromArgb(c1.R, c1.G, c1.B), 0.5),
-                            new GradientStop(Color.FromArgb(c2.R, c2.G, c2.B), 0.8),
+                            new GradientStop(Color.Red, 0.5),
+                            new GradientStop(Color.Gray, 0.8),
+                            new GradientStop(Color.Gray, 1),
                         }),
                 
                 _ => throw new Exception(),
