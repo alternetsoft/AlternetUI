@@ -234,8 +234,12 @@ namespace Alternet::UI
     void DrawingContext::FillPath(Brush* brush, GraphicsPath* path)
     {
         UseGC();
+
+        auto bounds = fromDipF(path->GetBounds(), _dc->GetWindow());
+
         _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
-        _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint()));
+        _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(bounds.X, bounds.Y)));
+
         _graphicsContext->FillPath(path->GetPath(), path->GetWxFillMode());
     }
 
