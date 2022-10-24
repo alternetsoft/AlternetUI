@@ -22,9 +22,9 @@ namespace Alternet::UI
         if (gradientStopsColorsCount != gradientStopsOffsetsCount)
             throwExNoInfo;
 
-        _center = center;
-        _radius = radius;
-        _gradientOrigin = gradientOrigin;
+        _center = fromDip(center, nullptr);
+        _radius = fromDip(radius, nullptr);
+        _gradientOrigin = fromDip(gradientOrigin, nullptr);
         _gradientStops = wxGraphicsGradientStops();
         
         for (int i = 0; i < gradientStopsColorsCount; i++)
@@ -34,10 +34,10 @@ namespace Alternet::UI
     wxGraphicsBrush RadialGradientBrush::GetGraphicsBrush(wxGraphicsRenderer* renderer)
     {
         return renderer->CreateRadialGradientBrush(
-            _gradientOrigin.X,
-            _gradientOrigin.Y,
-            _center.X,
-            _center.Y,
+            _gradientOrigin.x,
+            _gradientOrigin.y,
+            _center.x,
+            _center.y,
             _radius,
             _gradientStops);
     }

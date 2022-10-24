@@ -12,9 +12,9 @@ namespace Alternet::UI
         virtual wxGraphicsBrush GetGraphicsBrush(wxGraphicsRenderer* renderer) override;
 
     private:
-        Point _gradientOrigin;
-        Point _center;
-        double _radius = 0;
+        wxPoint _gradientOrigin;
+        wxPoint _center;
+        int _radius = 0;
         wxGraphicsGradientStops _gradientStops;
     };
 }
