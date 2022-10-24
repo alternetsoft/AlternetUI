@@ -25,28 +25,20 @@ namespace Alternet::UI
         _center = fromDip(center, nullptr);
         _radius = fromDip(radius, nullptr);
         _gradientOrigin = fromDip(gradientOrigin, nullptr);
-        _gradientStops = wxGraphicsGradientStops(gradientStopsColors[0], gradientStopsColors[gradientStopsColorsCount - 1]);
+        _gradientStops = wxGraphicsGradientStops();
         
-        for (int i = 1; i < gradientStopsColorsCount - 1; i++)
+        for (int i = 0; i < gradientStopsColorsCount; i++)
             _gradientStops.Add(gradientStopsColors[i], gradientStopsOffsets[i]);
-
-        auto s = _gradientStops.Item(0);
-        auto s1 = _gradientStops.Item(1);
     }
 
     wxGraphicsBrush RadialGradientBrush::GetGraphicsBrush(wxGraphicsRenderer* renderer)
     {
-        auto s = _gradientStops.Item(0);
-
-        wxGraphicsGradientStops ss(*wxRED, *wxGREEN);
-
         return renderer->CreateRadialGradientBrush(
-            _center.x,
-            _center.y,
             _gradientOrigin.x,
             _gradientOrigin.y,
+            _center.x,
+            _center.y,
             _radius,
-            ss);
-            //_gradientStops);
+            _gradientStops);
     }
 }
