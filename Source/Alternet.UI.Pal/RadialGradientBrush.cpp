@@ -33,6 +33,12 @@ namespace Alternet::UI
 
     wxGraphicsBrush RadialGradientBrush::GetGraphicsBrush(wxGraphicsRenderer* renderer)
     {
-        return wxGraphicsBrush();
+        return renderer->CreateRadialGradientBrush(
+            _gradientOrigin.X,
+            _gradientOrigin.Y,
+            _center.X,
+            _center.Y,
+            _radius,
+            _gradientStops);
     }
 }

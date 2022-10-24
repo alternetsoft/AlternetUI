@@ -6,9 +6,8 @@ namespace Alternet.Drawing
     /// <summary>
     /// Paints an area with a linear gradient.
     /// </summary>
-    public sealed class LinearGradientBrush : IDisposable
+    public sealed class LinearGradientBrush : Brush
     {
-        private bool isDisposed;
         private Point startPoint;
         private Point endPoint;
         private GradientStop[] gradientStops;
@@ -66,9 +65,8 @@ namespace Alternet.Drawing
             ReinitializeNativeBrush();
         }
 
-        private LinearGradientBrush(UI.Native.LinearGradientBrush nativeBrush)
+        private LinearGradientBrush(UI.Native.LinearGradientBrush nativeBrush) : base(nativeBrush, false)
         {
-            NativeBrush = nativeBrush;
             gradientStops = new GradientStop[0];
         }
 
@@ -129,16 +127,7 @@ namespace Alternet.Drawing
             }
         }
 
-        internal UI.Native.LinearGradientBrush NativeBrush { get; private set; }
-
-        /// <summary>
-        /// Releases all resources used by this <see cref="Pen"/>.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
+        internal new UI.Native.LinearGradientBrush NativeBrush => (UI.Native.LinearGradientBrush)base.NativeBrush;
 
         private static GradientStop[] GetGradientStopsFromEdgeColors(Color startColor, Color endColor) =>
                                     new[] { new GradientStop(startColor, 0), new GradientStop(endColor, 1) };
@@ -152,28 +141,29 @@ namespace Alternet.Drawing
                 gradientStops.Select(x => x.Offset).ToArray());
         }
 
-        /// <summary>
-        /// Throws <see cref="ObjectDisposedException"/> if the object has been disposed.
-        /// </summary>
-        private void CheckDisposed()
+        private protected override bool EqualsCore(Brush other)
         {
-            if (isDisposed)
-                throw new ObjectDisposedException(null);
+            var o = other as LinearGradientBrush;
+            if (o == null)
+                return false;
+
+            return
+                StartPoint == o.StartPoint &&
+                EndPoint == o.EndPoint &&
+                Enumerable.SequenceEqual(GradientStops, o.GradientStops);
         }
 
-        /// <inheritdoc/>
-        private void Dispose(bool disposing)
+        private protected override int GetHashCodeCore()
         {
-            if (!isDisposed)
-            {
-                if (disposing)
-                {
-                    NativeBrush.Dispose();
-                    NativeBrush = null!;
-                }
+            var hashCode = new HashCode();
+            hashCode.Add(StartPoint);
+            hashCode.Add(EndPoint);
+            foreach (var gradientStop in GradientStops)
+                hashCode.Add(gradientStop);
 
-                isDisposed = true;
-            }
+            return hashCode.ToHashCode();
         }
+
+        private protected override string ToStringCore() => $"LinearGradientBrush";
     }
 }

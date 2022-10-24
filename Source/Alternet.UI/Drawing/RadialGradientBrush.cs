@@ -6,9 +6,8 @@ namespace Alternet.Drawing
     /// <summary>
     /// Paints an area with a radial gradient.
     /// </summary>
-    public sealed class RadialGradientBrush : IDisposable
+    public sealed class RadialGradientBrush : Brush
     {
-        private bool isDisposed;
         private Point center;
         private double radius;
         private Point gradientOrigin;
@@ -34,7 +33,7 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="RadialGradientBrush"/> class that has the specified gradient stops.
         /// </summary>
         /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on this brush.</param>
-        public RadialGradientBrush(GradientStop[] gradientStops) : this(new Point(0.5, 0.5), 0.5, gradientStops)
+        public RadialGradientBrush(GradientStop[] gradientStops) : this(new Point(0, 0), 10, gradientStops)
         {
         }
 
@@ -45,7 +44,7 @@ namespace Alternet.Drawing
         /// <param name="radius">The radius of the outermost circle of the radial gradient.</param>
         /// <param name="gradientStops">The <see cref="GradientStop"/> instances array to set on this brush.</param>
         public RadialGradientBrush(Point center, double radius, GradientStop[] gradientStops) :
-            this(center, radius, new Point(0.5, 0.5), gradientStops)
+            this(center, radius, new Point(0, 0), gradientStops)
         {
         }
 
@@ -67,9 +66,8 @@ namespace Alternet.Drawing
             ReinitializeNativeBrush();
         }
 
-        private RadialGradientBrush(UI.Native.RadialGradientBrush nativeBrush)
+        private RadialGradientBrush(UI.Native.RadialGradientBrush nativeBrush) : base(nativeBrush, false)
         {
-            NativeBrush = nativeBrush;
             gradientStops = new GradientStop[0];
         }
 
@@ -145,16 +143,34 @@ namespace Alternet.Drawing
             }
         }
 
-        internal UI.Native.RadialGradientBrush NativeBrush { get; private set; }
+        internal new UI.Native.RadialGradientBrush NativeBrush => (UI.Native.RadialGradientBrush)base.NativeBrush;
 
-        /// <summary>
-        /// Releases all resources used by this <see cref="Pen"/>.
-        /// </summary>
-        public void Dispose()
+        private protected override bool EqualsCore(Brush other)
         {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
+            var o = other as RadialGradientBrush;
+            if (o == null)
+                return false;
+
+            return
+                Center == o.Center &&
+                GradientOrigin == o.GradientOrigin &&
+                Radius == o.Radius &&
+                Enumerable.SequenceEqual(GradientStops, o.GradientStops);
         }
+
+        private protected override int GetHashCodeCore()
+        {
+            var hashCode = new HashCode();
+            hashCode.Add(Center);
+            hashCode.Add(GradientOrigin);
+            hashCode.Add(Radius);
+            foreach (var gradientStop in GradientStops)
+                hashCode.Add(gradientStop);
+
+            return hashCode.ToHashCode();
+        }
+
+        private protected override string ToStringCore() => $"RadialGradientBrush";
 
         private static GradientStop[] GetGradientStopsFromEdgeColors(Color startColor, Color endColor) =>
                                     new[] { new GradientStop(startColor, 0), new GradientStop(endColor, 1) };
@@ -167,30 +183,6 @@ namespace Alternet.Drawing
                 gradientOrigin,
                 gradientStops.Select(x => x.Color).ToArray(),
                 gradientStops.Select(x => x.Offset).ToArray());
-        }
-
-        /// <summary>
-        /// Throws <see cref="ObjectDisposedException"/> if the object has been disposed.
-        /// </summary>
-        private void CheckDisposed()
-        {
-            if (isDisposed)
-                throw new ObjectDisposedException(null);
-        }
-
-        /// <inheritdoc/>
-        private void Dispose(bool disposing)
-        {
-            if (!isDisposed)
-            {
-                if (disposing)
-                {
-                    NativeBrush.Dispose();
-                    NativeBrush = null!;
-                }
-
-                isDisposed = true;
-            }
         }
     }
 }

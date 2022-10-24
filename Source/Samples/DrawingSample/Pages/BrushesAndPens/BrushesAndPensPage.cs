@@ -8,7 +8,7 @@ namespace DrawingSample
 {
     internal sealed class BrushesAndPensPage : DrawingPage
     {
-        private BrushType brush;
+        private BrushType brush = BrushType.RadialGradient;
 
         private ShapeType[] includedShapeTypes;
 
@@ -38,7 +38,9 @@ namespace DrawingSample
         public enum BrushType
         {
             Solid,
-            Hatch
+            Hatch,
+            LinearGradient,
+            RadialGradient
         }
 
         public BrushType Brush
@@ -252,10 +254,44 @@ namespace DrawingSample
                 1,
                 0.7).ToRgb();
 
+            var c1 = new Skybrud.Colors.HslColor(
+                MathUtils.MapRanges(brushColorHue, 0, 10, 0, 1) - 0.3,
+                1,
+                0.7).ToRgb();
+
+            var c2 = new Skybrud.Colors.HslColor(
+                MathUtils.MapRanges(brushColorHue, 0, 10, 0, 1) - 0.8,
+                1,
+                0.7).ToRgb();
+
             return brush switch
             {
                 BrushType.Solid => new SolidBrush(Color.FromArgb(c.R, c.G, c.B)),
                 BrushType.Hatch => new HatchBrush(hatchStyle, Color.FromArgb(c.R, c.G, c.B)),
+                
+                BrushType.LinearGradient =>
+                    new LinearGradientBrush(
+                        new Point(0,0),
+                        new Point(30, 50),
+                        new[]
+                        {
+                            new GradientStop(Color.FromArgb(c.R, c.G, c.B), 0),
+                            new GradientStop(Color.FromArgb(c1.R, c1.G, c1.B), 0.5),
+                            new GradientStop(Color.FromArgb(c2.R, c2.G, c2.B), 0.8)
+                        }),
+                
+                BrushType.RadialGradient =>
+                    new RadialGradientBrush(
+                        new Point(20, 20),
+                        100,
+                        new Point(0, 10),
+                        new[]
+                        {
+                            new GradientStop(Color.FromArgb(c.R, c.G, c.B), 0),
+                            new GradientStop(Color.FromArgb(c1.R, c1.G, c1.B), 0.5),
+                            new GradientStop(Color.FromArgb(c2.R, c2.G, c2.B), 0.8)
+                        }),
+                
                 _ => throw new Exception(),
             };
         }
