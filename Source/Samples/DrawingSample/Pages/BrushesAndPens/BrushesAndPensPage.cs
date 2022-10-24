@@ -272,7 +272,7 @@ namespace DrawingSample
                 BrushType.LinearGradient =>
                     new LinearGradientBrush(
                         new Point(0,0),
-                        new Point(30, 50),
+                        new Point(200, 200),
                         new[]
                         {
                             new GradientStop(Color.FromArgb(c.R, c.G, c.B), 0),
