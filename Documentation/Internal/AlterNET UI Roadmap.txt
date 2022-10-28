@@ -46,6 +46,7 @@ AlterNET UI Roadmap
     
 0.6-beta (release at the beginning of December 2022):
     - implement all the missing standard controls features
+	- color dialog, color picker, use in the drawing demo
     - RichEdit, Toolbar (whether or not this will fit depends on how much of work the previous item will take)
     - resource URI support (pack://)
     - focus management
