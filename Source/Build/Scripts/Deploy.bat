@@ -18,7 +18,7 @@ mkdir %PublicRepo%
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-set NuGetApiKey=oy2iknibdcdvlz5ztp3ae34lrw65b5uebhs2dcvfwrlitq
+set NuGetApiKey=oy2nrayighgyc7lqilqazrqnfovhsgquxgdnfjjh6elebi
 set GitHubApiKey=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
 set AzureDevOpsAccessToken=4u542gllvtm2sl3zkuquchj6ma4aexme5qykv7dyozkrmz26cora
 
