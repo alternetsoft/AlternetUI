@@ -20,7 +20,7 @@ if not !ERRORLEVEL! EQU 0 (
 
 set NuGetApiKey=oy2nrayighgyc7lqilqazrqnfovhsgquxgdnfjjh6elebi
 set GitHubApiKey=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
-set AzureDevOpsAccessToken=4u542gllvtm2sl3zkuquchj6ma4aexme5qykv7dyozkrmz26cora
+set AzureDevOpsAccessToken=um24u63qk5rsghmygvvwpaji44vz27gsevyu5z5h4pl7hpt3ofra
 
 :: NuGet packages.
 
