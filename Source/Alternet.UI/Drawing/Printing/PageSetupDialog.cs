@@ -28,45 +28,135 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the printer settings that are modified in the dialog.
         /// </summary>
-        public PrinterSettings PrinterSettings { get => throw new Exception(); set => throw new Exception(); }
+        public PrinterSettings PrinterSettings
+        {
+            get
+            {
+                return new PrinterSettings(nativeDialog.PrinterSettings);
+            }
+
+            set
+            {
+                nativeDialog.PrinterSettings = value.NativePrinterSettings;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating the page settings to modify.
         /// </summary>
-        public PageSettings PageSettings { get => throw new Exception(); set => throw new Exception(); }
+        public PageSettings PageSettings
+        {
+            get
+            {
+                return new PageSettings(nativeDialog.PageSettings);
+            }
+
+            set
+            {
+                nativeDialog.PageSettings = value.NativePageSettings;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating the <see cref="PrintDocument"/> to get page settings from.
         /// </summary>
-        public PrintDocument? Document { get => throw new Exception(); set => throw new Exception(); }
+        public PrintDocument? Document
+        {
+            get
+            {
+                return nativeDialog.Document == null ? null : new PrintDocument(nativeDialog.Document);
+            }
+
+            set
+            {
+                nativeDialog.Document = value == null ? null : value.NativePrintDocument;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating the minimum margins, in millimeters, the user is allowed to select.
         /// </summary>
-        public Margins? MinMargins { get => throw new Exception(); set => throw new Exception(); }
+        public Margins? MinMargins
+        {
+            get
+            {
+                return nativeDialog.MinMarginsValueSet ? new Margins(nativeDialog.MinMargins) : null;
+            }
+
+            set
+            {
+                nativeDialog.MinMarginsValueSet = value != null;
+
+                if (value != null)
+                    nativeDialog.MinMargins = value.Value.ToThickness();
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the margins section of the dialog box is enabled.
         /// </summary>
-        public bool AllowMargins { get => throw new Exception(); set => throw new Exception(); }
+        public bool AllowMargins
+        {
+            get
+            {
+                return nativeDialog.AllowMargins;
+            }
+
+            set
+            {
+                nativeDialog.AllowMargins = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the orientation section of the dialog box (landscape versus
         /// portrait) is enabled.
         /// </summary>
-        public bool AllowOrientation { get => throw new Exception(); set => throw new Exception(); }
+        public bool AllowOrientation
+        {
+            get
+            {
+                return nativeDialog.AllowOrientation;
+            }
+
+            set
+            {
+                nativeDialog.AllowOrientation = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the paper section of the dialog box (paper size and paper source) is
         /// enabled.
         /// </summary>
-        public bool AllowPaper { get => throw new Exception(); set => throw new Exception(); }
+        public bool AllowPaper
+        {
+            get
+            {
+                return nativeDialog.AllowPaper;
+            }
+
+            set
+            {
+                nativeDialog.AllowPaper = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the <b>Printer button</b> is enabled.
         /// </summary>
-        public bool AllowPrinter { get => throw new Exception(); set => throw new Exception(); }
+        public bool AllowPrinter
+        {
+            get
+            {
+                return nativeDialog.AllowPrinter;
+            }
 
+            set
+            {
+                nativeDialog.AllowPrinter = value;
+            }
+        }
 
         private Native.PageSetupDialog nativeDialog;
 
@@ -81,25 +171,10 @@ namespace Alternet.UI
         private protected override ModalResult ShowModalCore(Window? owner)
         {
             CheckDisposed();
-            return ModalResult.Canceled;
-            //var nativeOwner = owner == null ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
-            //return (ModalResult)nativeDialog.ShowModal(nativeOwner);
+            var nativeOwner = owner == null ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
+            return (ModalResult)nativeDialog.ShowModal(nativeOwner);
         }
 
-        private protected override string? TitleCore
-        {
-            get
-            {
-                CheckDisposed();
-                return null;
-                //return nativeDialog.Title;
-            }
-
-            set
-            {
-                CheckDisposed();
-                //nativeDialog.Title = value;
-            }
-        }
+        private protected override string? TitleCore { get; set; }
     }
 }
