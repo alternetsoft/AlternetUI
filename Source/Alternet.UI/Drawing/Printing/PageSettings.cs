@@ -1,3 +1,4 @@
+using Alternet.UI;
 using Alternet.UI.Internal.ComponentModel;
 using Alternet.UI.Native;
 using System;
@@ -19,7 +20,7 @@ namespace Alternet.Drawing.Printing
 
         public bool Landscape { get; set; }
 
-        public PhysicalMargins Margins { get; set; }
+        public Thickness Margins { get; set; }
 
         public string DocumentName { get; set; }
 
