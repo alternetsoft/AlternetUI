@@ -11,7 +11,18 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the document to preview.
         /// </summary>
-        public PrintDocument? Document { get => throw new Exception(); set => throw new Exception(); }
+        public PrintDocument? Document
+        {
+            get
+            {
+                return nativeDialog.Document == null ? null : new PrintDocument(nativeDialog.Document);
+            }
+
+            set
+            {
+                nativeDialog.Document = value == null ? null : value.NativePrintDocument;
+            }
+        }
 
         private Native.PrintPreviewDialog nativeDialog;
 
@@ -26,25 +37,10 @@ namespace Alternet.UI
         private protected override ModalResult ShowModalCore(Window? owner)
         {
             CheckDisposed();
-            return ModalResult.Canceled;
-            //var nativeOwner = owner == null ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
-            //return (ModalResult)nativeDialog.ShowModal(nativeOwner);
+            var nativeOwner = owner == null ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
+            return (ModalResult)nativeDialog.ShowModal(nativeOwner);
         }
 
-        private protected override string? TitleCore
-        {
-            get
-            {
-                CheckDisposed();
-                return null;
-                //return nativeDialog.Title;
-            }
-
-            set
-            {
-                CheckDisposed();
-                //nativeDialog.Title = value;
-            }
-        }
+        private protected override string? TitleCore { get; set; }
     }
 }
