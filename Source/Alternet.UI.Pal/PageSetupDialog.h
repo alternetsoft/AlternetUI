@@ -5,6 +5,11 @@
 
 namespace Alternet::UI
 {
+    class PrinterSettings;
+    class PageSettings;
+    class PrintDocument;
+    class Window;
+
     class PageSetupDialog : public Object
     {
 #include "Api/PageSetupDialog.inc"

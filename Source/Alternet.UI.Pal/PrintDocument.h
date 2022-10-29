@@ -5,6 +5,10 @@
 
 namespace Alternet::UI
 {
+    class PrinterSettings;
+    class PageSettings;
+    class DrawingContext;
+
     class PrintDocument : public Object
     {
 #include "Api/PrintDocument.inc"

@@ -22,6 +22,170 @@ namespace Alternet.UI.Native
         {
         }
         
+        public PrinterSettings PrinterSettings
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSetupDialog_GetPrinterSettings_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<PrinterSettings>(n, p => new PrinterSettings(p))!;
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSetupDialog_SetPrinterSettings_(NativePointer, value.NativePointer);
+            }
+        }
+        
+        public PageSettings PageSettings
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSetupDialog_GetPageSettings_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<PageSettings>(n, p => new PageSettings(p))!;
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSetupDialog_SetPageSettings_(NativePointer, value.NativePointer);
+            }
+        }
+        
+        public PrintDocument? Document
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSetupDialog_GetDocument_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<PrintDocument>(n, p => new PrintDocument(p));
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSetupDialog_SetDocument_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+            }
+        }
+        
+        public Alternet.UI.Thickness MinMargins
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSetupDialog_GetMinMargins_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSetupDialog_SetMinMargins_(NativePointer, value);
+            }
+        }
+        
+        public bool MinMarginsValueSet
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSetupDialog_GetMinMarginsValueSet_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSetupDialog_SetMinMarginsValueSet_(NativePointer, value);
+            }
+        }
+        
+        public bool AllowMargins
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSetupDialog_GetAllowMargins_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSetupDialog_SetAllowMargins_(NativePointer, value);
+            }
+        }
+        
+        public bool AllowOrientation
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSetupDialog_GetAllowOrientation_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSetupDialog_SetAllowOrientation_(NativePointer, value);
+            }
+        }
+        
+        public bool AllowPaper
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSetupDialog_GetAllowPaper_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSetupDialog_SetAllowPaper_(NativePointer, value);
+            }
+        }
+        
+        public bool AllowPrinter
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSetupDialog_GetAllowPrinter_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSetupDialog_SetAllowPrinter_(NativePointer, value);
+            }
+        }
+        
+        public ModalResult ShowModal(Window? owner)
+        {
+            CheckDisposed();
+            var n = NativeApi.PageSetupDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
+            var m = n;
+            return m;
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -30,6 +194,63 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PageSetupDialog_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr PageSetupDialog_GetPrinterSettings_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSetupDialog_SetPrinterSettings_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr PageSetupDialog_GetPageSettings_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSetupDialog_SetPageSettings_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr PageSetupDialog_GetDocument_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSetupDialog_SetDocument_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Thickness PageSetupDialog_GetMinMargins_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSetupDialog_SetMinMargins_(IntPtr obj, NativeApiTypes.Thickness value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PageSetupDialog_GetMinMarginsValueSet_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSetupDialog_SetMinMarginsValueSet_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PageSetupDialog_GetAllowMargins_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSetupDialog_SetAllowMargins_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PageSetupDialog_GetAllowOrientation_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSetupDialog_SetAllowOrientation_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PageSetupDialog_GetAllowPaper_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSetupDialog_SetAllowPaper_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PageSetupDialog_GetAllowPrinter_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSetupDialog_SetAllowPrinter_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern ModalResult PageSetupDialog_ShowModal_(IntPtr obj, IntPtr owner);
             
         }
     }

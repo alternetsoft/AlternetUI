@@ -11,6 +11,7 @@ namespace Alternet.UI.Native
     {
         static PrintDocument()
         {
+            SetEventCallback();
         }
         
         public PrintDocument()
@@ -22,14 +23,268 @@ namespace Alternet.UI.Native
         {
         }
         
+        public string DocumentName
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrintDocument_GetDocumentName_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrintDocument_SetDocumentName_(NativePointer, value);
+            }
+        }
+        
+        public PrinterSettings PrinterSettings
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrintDocument_GetPrinterSettings_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<PrinterSettings>(n, p => new PrinterSettings(p))!;
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrintDocument_SetPrinterSettings_(NativePointer, value.NativePointer);
+            }
+        }
+        
+        public PageSettings DefaultPageSettings
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrintDocument_GetDefaultPageSettings_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<PageSettings>(n, p => new PageSettings(p))!;
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrintDocument_SetDefaultPageSettings_(NativePointer, value.NativePointer);
+            }
+        }
+        
+        public DrawingContext PrintDrawingContext
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrintDocument_GetPrintDrawingContext_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<DrawingContext>(n, p => new DrawingContext(p))!;
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+        }
+        
+        public bool PrintHasMorePages
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrintDocument_GetPrintHasMorePages_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public PageSettings PrintPageSettings
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrintDocument_GetPrintPageSettings_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<PageSettings>(n, p => new PageSettings(p))!;
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+        }
+        
+        public Alternet.UI.Thickness PrintPhysicalMarginBounds
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrintDocument_GetPrintPhysicalMarginBounds_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public Alternet.Drawing.Rect MarginBounds
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrintDocument_GetMarginBounds_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public Alternet.Drawing.Rect PhysicalPageBounds
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrintDocument_GetPhysicalPageBounds_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public Alternet.Drawing.Rect PageBounds
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrintDocument_GetPageBounds_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public void Print()
+        {
+            CheckDisposed();
+            NativeApi.PrintDocument_Print_(NativePointer);
+        }
+        
+        static GCHandle eventCallbackGCHandle;
+        
+        static void SetEventCallback()
+        {
+            if (!eventCallbackGCHandle.IsAllocated)
+            {
+                var sink = new NativeApi.PrintDocumentEventCallbackType((obj, e, parameter) =>
+                UI.Application.HandleThreadExceptions(() =>
+                {
+                    var w = NativeObject.GetFromNativePointer<PrintDocument>(obj, p => new PrintDocument(p));
+                    if (w == null) return IntPtr.Zero;
+                    return w.OnEvent(e, parameter);
+                }
+                ));
+                eventCallbackGCHandle = GCHandle.Alloc(sink);
+                NativeApi.PrintDocument_SetEventCallback_(sink);
+            }
+        }
+        
+        IntPtr OnEvent(NativeApi.PrintDocumentEvent e, IntPtr parameter)
+        {
+            switch (e)
+            {
+                case NativeApi.PrintDocumentEvent.PrintPage:
+                {
+                    {
+                        var cea = new CancelEventArgs();
+                        PrintPage?.Invoke(this, cea);
+                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                    }
+                }
+                case NativeApi.PrintDocumentEvent.BeginPrint:
+                {
+                    {
+                        var cea = new CancelEventArgs();
+                        BeginPrint?.Invoke(this, cea);
+                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                    }
+                }
+                case NativeApi.PrintDocumentEvent.EndPrint:
+                {
+                    {
+                        var cea = new CancelEventArgs();
+                        EndPrint?.Invoke(this, cea);
+                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                    }
+                }
+                default: throw new Exception("Unexpected PrintDocumentEvent value: " + e);
+            }
+        }
+        
+        public event EventHandler<CancelEventArgs>? PrintPage;
+        public event EventHandler<CancelEventArgs>? BeginPrint;
+        public event EventHandler<CancelEventArgs>? EndPrint;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate IntPtr PrintDocumentEventCallbackType(IntPtr obj, PrintDocumentEvent e, IntPtr param);
+            
+            public enum PrintDocumentEvent
+            {
+                PrintPage,
+                BeginPrint,
+                EndPrint,
+            }
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrintDocument_SetEventCallback_(PrintDocumentEventCallbackType callback);
+            
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PrintDocument_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string PrintDocument_GetDocumentName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrintDocument_SetDocumentName_(IntPtr obj, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr PrintDocument_GetPrinterSettings_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrintDocument_SetPrinterSettings_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr PrintDocument_GetDefaultPageSettings_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrintDocument_SetDefaultPageSettings_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr PrintDocument_GetPrintDrawingContext_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PrintDocument_GetPrintHasMorePages_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr PrintDocument_GetPrintPageSettings_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Thickness PrintDocument_GetPrintPhysicalMarginBounds_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Rect PrintDocument_GetMarginBounds_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Rect PrintDocument_GetPhysicalPageBounds_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Rect PrintDocument_GetPageBounds_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrintDocument_Print_(IntPtr obj);
             
         }
     }

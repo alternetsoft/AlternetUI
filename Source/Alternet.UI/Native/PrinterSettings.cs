@@ -22,6 +22,235 @@ namespace Alternet.UI.Native
         {
         }
         
+        public Duplex Duplex
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrinterSettings_GetDuplex_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrinterSettings_SetDuplex_(NativePointer, value);
+            }
+        }
+        
+        public int FromPage
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrinterSettings_GetFromPage_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrinterSettings_SetFromPage_(NativePointer, value);
+            }
+        }
+        
+        public int ToPage
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrinterSettings_GetToPage_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrinterSettings_SetToPage_(NativePointer, value);
+            }
+        }
+        
+        public int MinimumPage
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrinterSettings_GetMinimumPage_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrinterSettings_SetMinimumPage_(NativePointer, value);
+            }
+        }
+        
+        public int MaximumPage
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrinterSettings_GetMaximumPage_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrinterSettings_SetMaximumPage_(NativePointer, value);
+            }
+        }
+        
+        public PrintRange PrintRange
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrinterSettings_GetPrintRange_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrinterSettings_SetPrintRange_(NativePointer, value);
+            }
+        }
+        
+        public bool Collate
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrinterSettings_GetCollate_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrinterSettings_SetCollate_(NativePointer, value);
+            }
+        }
+        
+        public int Copies
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrinterSettings_GetCopies_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrinterSettings_SetCopies_(NativePointer, value);
+            }
+        }
+        
+        public PageSettings DefaultPageSettings
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrinterSettings_GetDefaultPageSettings_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<PageSettings>(n, p => new PageSettings(p))!;
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrinterSettings_SetDefaultPageSettings_(NativePointer, value.NativePointer);
+            }
+        }
+        
+        public bool PrintToFile
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrinterSettings_GetPrintToFile_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrinterSettings_SetPrintToFile_(NativePointer, value);
+            }
+        }
+        
+        public string? PrinterName
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrinterSettings_GetPrinterName_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrinterSettings_SetPrinterName_(NativePointer, value);
+            }
+        }
+        
+        public bool IsValid
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrinterSettings_GetIsValid_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public bool IsDefaultPrinter
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrinterSettings_GetIsDefaultPrinter_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public string? PrintFileName
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrinterSettings_GetPrintFileName_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrinterSettings_SetPrintFileName_(NativePointer, value);
+            }
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -30,6 +259,84 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PrinterSettings_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Duplex PrinterSettings_GetDuplex_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrinterSettings_SetDuplex_(IntPtr obj, Duplex value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PrinterSettings_GetFromPage_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrinterSettings_SetFromPage_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PrinterSettings_GetToPage_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrinterSettings_SetToPage_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PrinterSettings_GetMinimumPage_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrinterSettings_SetMinimumPage_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PrinterSettings_GetMaximumPage_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrinterSettings_SetMaximumPage_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern PrintRange PrinterSettings_GetPrintRange_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrinterSettings_SetPrintRange_(IntPtr obj, PrintRange value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PrinterSettings_GetCollate_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrinterSettings_SetCollate_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PrinterSettings_GetCopies_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrinterSettings_SetCopies_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr PrinterSettings_GetDefaultPageSettings_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrinterSettings_SetDefaultPageSettings_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PrinterSettings_GetPrintToFile_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrinterSettings_SetPrintToFile_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string? PrinterSettings_GetPrinterName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrinterSettings_SetPrinterName_(IntPtr obj, string? value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PrinterSettings_GetIsValid_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PrinterSettings_GetIsDefaultPrinter_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string? PrinterSettings_GetPrintFileName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrinterSettings_SetPrintFileName_(IntPtr obj, string? value);
             
         }
     }

@@ -3,6 +3,9 @@
 #pragma once
 
 #include "PrintDocument.h"
+#include "PrinterSettings.h"
+#include "PageSettings.h"
+#include "DrawingContext.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -13,5 +16,108 @@ ALTERNET_UI_API PrintDocument* PrintDocument_Create_()
     return MarshalExceptions<PrintDocument*>([&](){
             return new PrintDocument();
         });
+}
+
+ALTERNET_UI_API char16_t* PrintDocument_GetDocumentName_(PrintDocument* obj)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetDocumentName());
+        });
+}
+
+ALTERNET_UI_API void PrintDocument_SetDocumentName_(PrintDocument* obj, const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetDocumentName(value);
+        });
+}
+
+ALTERNET_UI_API PrinterSettings* PrintDocument_GetPrinterSettings_(PrintDocument* obj)
+{
+    return MarshalExceptions<PrinterSettings*>([&](){
+            return obj->GetPrinterSettings();
+        });
+}
+
+ALTERNET_UI_API void PrintDocument_SetPrinterSettings_(PrintDocument* obj, PrinterSettings* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetPrinterSettings(value);
+        });
+}
+
+ALTERNET_UI_API PageSettings* PrintDocument_GetDefaultPageSettings_(PrintDocument* obj)
+{
+    return MarshalExceptions<PageSettings*>([&](){
+            return obj->GetDefaultPageSettings();
+        });
+}
+
+ALTERNET_UI_API void PrintDocument_SetDefaultPageSettings_(PrintDocument* obj, PageSettings* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetDefaultPageSettings(value);
+        });
+}
+
+ALTERNET_UI_API DrawingContext* PrintDocument_GetPrintDrawingContext_(PrintDocument* obj)
+{
+    return MarshalExceptions<DrawingContext*>([&](){
+            return obj->GetPrintDrawingContext();
+        });
+}
+
+ALTERNET_UI_API c_bool PrintDocument_GetPrintHasMorePages_(PrintDocument* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetPrintHasMorePages();
+        });
+}
+
+ALTERNET_UI_API PageSettings* PrintDocument_GetPrintPageSettings_(PrintDocument* obj)
+{
+    return MarshalExceptions<PageSettings*>([&](){
+            return obj->GetPrintPageSettings();
+        });
+}
+
+ALTERNET_UI_API Thickness_C PrintDocument_GetPrintPhysicalMarginBounds_(PrintDocument* obj)
+{
+    return MarshalExceptions<Thickness_C>([&](){
+            return obj->GetPrintPhysicalMarginBounds();
+        });
+}
+
+ALTERNET_UI_API Rect_C PrintDocument_GetMarginBounds_(PrintDocument* obj)
+{
+    return MarshalExceptions<Rect_C>([&](){
+            return obj->GetMarginBounds();
+        });
+}
+
+ALTERNET_UI_API Rect_C PrintDocument_GetPhysicalPageBounds_(PrintDocument* obj)
+{
+    return MarshalExceptions<Rect_C>([&](){
+            return obj->GetPhysicalPageBounds();
+        });
+}
+
+ALTERNET_UI_API Rect_C PrintDocument_GetPageBounds_(PrintDocument* obj)
+{
+    return MarshalExceptions<Rect_C>([&](){
+            return obj->GetPageBounds();
+        });
+}
+
+ALTERNET_UI_API void PrintDocument_Print_(PrintDocument* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->Print();
+        });
+}
+
+ALTERNET_UI_API void PrintDocument_SetEventCallback_(PrintDocument::PrintDocumentEventCallbackType callback)
+{
+    PrintDocument::SetEventCallback(callback);
 }
 

@@ -22,6 +22,32 @@ namespace Alternet.UI.Native
         {
         }
         
+        public PrintDocument? Document
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrintPreviewDialog_GetDocument_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<PrintDocument>(n, p => new PrintDocument(p));
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrintPreviewDialog_SetDocument_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+            }
+        }
+        
+        public ModalResult ShowModal(Window? owner)
+        {
+            CheckDisposed();
+            var n = NativeApi.PrintPreviewDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
+            var m = n;
+            return m;
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -30,6 +56,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PrintPreviewDialog_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr PrintPreviewDialog_GetDocument_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrintPreviewDialog_SetDocument_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern ModalResult PrintPreviewDialog_ShowModal_(IntPtr obj, IntPtr owner);
             
         }
     }

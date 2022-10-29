@@ -5,6 +5,8 @@
 
 namespace Alternet::UI
 {
+    class PrinterSettings;
+
     class PageSettings : public Object
     {
 #include "Api/PageSettings.inc"

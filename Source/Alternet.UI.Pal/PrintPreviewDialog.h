@@ -5,10 +5,14 @@
 
 namespace Alternet::UI
 {
+    class PrintDocument;
+    class Window;
+
     class PrintPreviewDialog : public Object
     {
 #include "Api/PrintPreviewDialog.inc"
     public:
+
 
     private:
     

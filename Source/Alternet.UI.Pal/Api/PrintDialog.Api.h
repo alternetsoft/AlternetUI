@@ -3,6 +3,9 @@
 #pragma once
 
 #include "PrintDialog.h"
+#include "PrintDocument.h"
+#include "PrinterSettings.h"
+#include "Window.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -12,6 +15,97 @@ ALTERNET_UI_API PrintDialog* PrintDialog_Create_()
 {
     return MarshalExceptions<PrintDialog*>([&](){
             return new PrintDialog();
+        });
+}
+
+ALTERNET_UI_API c_bool PrintDialog_GetAllowSomePages_(PrintDialog* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetAllowSomePages();
+        });
+}
+
+ALTERNET_UI_API void PrintDialog_SetAllowSomePages_(PrintDialog* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetAllowSomePages(value);
+        });
+}
+
+ALTERNET_UI_API c_bool PrintDialog_GetAllowSelection_(PrintDialog* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetAllowSelection();
+        });
+}
+
+ALTERNET_UI_API void PrintDialog_SetAllowSelection_(PrintDialog* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetAllowSelection(value);
+        });
+}
+
+ALTERNET_UI_API c_bool PrintDialog_GetAllowPrintToFile_(PrintDialog* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetAllowPrintToFile();
+        });
+}
+
+ALTERNET_UI_API void PrintDialog_SetAllowPrintToFile_(PrintDialog* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetAllowPrintToFile(value);
+        });
+}
+
+ALTERNET_UI_API c_bool PrintDialog_GetShowHelp_(PrintDialog* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetShowHelp();
+        });
+}
+
+ALTERNET_UI_API void PrintDialog_SetShowHelp_(PrintDialog* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetShowHelp(value);
+        });
+}
+
+ALTERNET_UI_API PrintDocument* PrintDialog_GetDocument_(PrintDialog* obj)
+{
+    return MarshalExceptions<PrintDocument*>([&](){
+            return obj->GetDocument();
+        });
+}
+
+ALTERNET_UI_API void PrintDialog_SetDocument_(PrintDialog* obj, PrintDocument* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetDocument(value);
+        });
+}
+
+ALTERNET_UI_API PrinterSettings* PrintDialog_GetPrinterSettings_(PrintDialog* obj)
+{
+    return MarshalExceptions<PrinterSettings*>([&](){
+            return obj->GetPrinterSettings();
+        });
+}
+
+ALTERNET_UI_API void PrintDialog_SetPrinterSettings_(PrintDialog* obj, PrinterSettings* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetPrinterSettings(value);
+        });
+}
+
+ALTERNET_UI_API ModalResult PrintDialog_ShowModal_(PrintDialog* obj, Window* owner)
+{
+    return MarshalExceptions<ModalResult>([&](){
+            return obj->ShowModal(owner);
         });
 }
 

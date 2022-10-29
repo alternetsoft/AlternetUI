@@ -163,7 +163,7 @@ namespace Alternet.Drawing.Printing
         /// <value>
         /// <see langword="true"/> if the <see cref="PrinterName"/> property designates a valid printer; otherwise, <see langword="false"/>.
         /// </value>
-        public bool IsValid { get => throw new Exception(); set => throw new Exception(); }
+        public bool IsValid { get => throw new Exception(); }
 
         /// <summary>
         /// Gets a value indicating whether the <see cref="PrinterName"/> property designates the default printer.

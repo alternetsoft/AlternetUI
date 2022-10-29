@@ -3,6 +3,8 @@
 #pragma once
 
 #include "PrintPreviewDialog.h"
+#include "PrintDocument.h"
+#include "Window.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -12,6 +14,27 @@ ALTERNET_UI_API PrintPreviewDialog* PrintPreviewDialog_Create_()
 {
     return MarshalExceptions<PrintPreviewDialog*>([&](){
             return new PrintPreviewDialog();
+        });
+}
+
+ALTERNET_UI_API PrintDocument* PrintPreviewDialog_GetDocument_(PrintPreviewDialog* obj)
+{
+    return MarshalExceptions<PrintDocument*>([&](){
+            return obj->GetDocument();
+        });
+}
+
+ALTERNET_UI_API void PrintPreviewDialog_SetDocument_(PrintPreviewDialog* obj, PrintDocument* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetDocument(value);
+        });
+}
+
+ALTERNET_UI_API ModalResult PrintPreviewDialog_ShowModal_(PrintPreviewDialog* obj, Window* owner)
+{
+    return MarshalExceptions<ModalResult>([&](){
+            return obj->ShowModal(owner);
         });
 }
 

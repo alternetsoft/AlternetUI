@@ -3,6 +3,7 @@
 #pragma once
 
 #include "PageSettings.h"
+#include "PrinterSettings.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -12,6 +13,97 @@ ALTERNET_UI_API PageSettings* PageSettings_Create_()
 {
     return MarshalExceptions<PageSettings*>([&](){
             return new PageSettings();
+        });
+}
+
+ALTERNET_UI_API Rect_C PageSettings_GetBounds_(PageSettings* obj)
+{
+    return MarshalExceptions<Rect_C>([&](){
+            return obj->GetBounds();
+        });
+}
+
+ALTERNET_UI_API c_bool PageSettings_GetColor_(PageSettings* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetColor();
+        });
+}
+
+ALTERNET_UI_API void PageSettings_SetColor_(PageSettings* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetColor(value);
+        });
+}
+
+ALTERNET_UI_API c_bool PageSettings_GetLandscape_(PageSettings* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetLandscape();
+        });
+}
+
+ALTERNET_UI_API void PageSettings_SetLandscape_(PageSettings* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetLandscape(value);
+        });
+}
+
+ALTERNET_UI_API Thickness_C PageSettings_GetMargins_(PageSettings* obj)
+{
+    return MarshalExceptions<Thickness_C>([&](){
+            return obj->GetMargins();
+        });
+}
+
+ALTERNET_UI_API void PageSettings_SetMargins_(PageSettings* obj, Thickness value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetMargins(value);
+        });
+}
+
+ALTERNET_UI_API PrinterSettings* PageSettings_GetPrinterSettings_(PageSettings* obj)
+{
+    return MarshalExceptions<PrinterSettings*>([&](){
+            return obj->GetPrinterSettings();
+        });
+}
+
+ALTERNET_UI_API void PageSettings_SetPrinterSettings_(PageSettings* obj, PrinterSettings* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetPrinterSettings(value);
+        });
+}
+
+ALTERNET_UI_API PaperKind PageSettings_GetPaperSize_(PageSettings* obj)
+{
+    return MarshalExceptions<PaperKind>([&](){
+            return obj->GetPaperSize();
+        });
+}
+
+ALTERNET_UI_API void PageSettings_SetPaperSize_(PageSettings* obj, PaperKind value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetPaperSize(value);
+        });
+}
+
+ALTERNET_UI_API PrinterResolutionKind PageSettings_GetPrinterResolution_(PageSettings* obj)
+{
+    return MarshalExceptions<PrinterResolutionKind>([&](){
+            return obj->GetPrinterResolution();
+        });
+}
+
+ALTERNET_UI_API void PageSettings_SetPrinterResolution_(PageSettings* obj, PrinterResolutionKind value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetPrinterResolution(value);
         });
 }
 

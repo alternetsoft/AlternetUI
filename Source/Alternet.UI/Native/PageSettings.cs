@@ -22,6 +22,121 @@ namespace Alternet.UI.Native
         {
         }
         
+        public Alternet.Drawing.Rect Bounds
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSettings_GetBounds_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public bool Color
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSettings_GetColor_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSettings_SetColor_(NativePointer, value);
+            }
+        }
+        
+        public bool Landscape
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSettings_GetLandscape_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSettings_SetLandscape_(NativePointer, value);
+            }
+        }
+        
+        public Alternet.UI.Thickness Margins
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSettings_GetMargins_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSettings_SetMargins_(NativePointer, value);
+            }
+        }
+        
+        public PrinterSettings PrinterSettings
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSettings_GetPrinterSettings_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<PrinterSettings>(n, p => new PrinterSettings(p))!;
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSettings_SetPrinterSettings_(NativePointer, value.NativePointer);
+            }
+        }
+        
+        public PaperKind PaperSize
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSettings_GetPaperSize_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSettings_SetPaperSize_(NativePointer, value);
+            }
+        }
+        
+        public PrinterResolutionKind PrinterResolution
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSettings_GetPrinterResolution_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSettings_SetPrinterResolution_(NativePointer, value);
+            }
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -30,6 +145,45 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PageSettings_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Rect PageSettings_GetBounds_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PageSettings_GetColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSettings_SetColor_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PageSettings_GetLandscape_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSettings_SetLandscape_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Thickness PageSettings_GetMargins_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSettings_SetMargins_(IntPtr obj, NativeApiTypes.Thickness value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr PageSettings_GetPrinterSettings_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSettings_SetPrinterSettings_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern PaperKind PageSettings_GetPaperSize_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSettings_SetPaperSize_(IntPtr obj, PaperKind value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern PrinterResolutionKind PageSettings_GetPrinterResolution_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSettings_SetPrinterResolution_(IntPtr obj, PrinterResolutionKind value);
             
         }
     }

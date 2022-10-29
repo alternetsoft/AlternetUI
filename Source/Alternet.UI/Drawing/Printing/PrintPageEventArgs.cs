@@ -21,7 +21,7 @@ namespace Alternet.Drawing.Printing
         /// <value>
         /// The <see cref="DrawingContext"/> used to paint the page.
         /// </value>
-        public DrawingContext DrawingContext { get => throw new Exception(); set => throw new Exception(); }
+        public DrawingContext DrawingContext { get => throw new Exception(); }
 
         /// <summary>
         /// Gets or sets a value indicating whether an additional page should be printed.
@@ -38,23 +38,23 @@ namespace Alternet.Drawing.Printing
         /// <value>
         /// The page settings for the current page.
         /// </value>
-        public PageSettings PageSettings { get => throw new Exception(); set => throw new Exception(); }
+        public PageSettings PageSettings { get => throw new Exception(); }
 
         /// <summary>
         /// Gets the rectangular area that represents the portion of the page inside the margins, in millimeters.
         /// </summary>
-        public Margins PhysicalMarginBounds { get => throw new Exception(); set => throw new Exception(); }
+        public Margins PhysicalMarginBounds { get => throw new Exception(); }
 
         /// <summary>
         /// Gets the rectangular area that represents the portion of the page inside the margins, in device-independent
         /// units (1/96th inch per unit).
         /// </summary>
-        public Rect MarginBounds { get => throw new Exception(); set => throw new Exception(); }
+        public Rect MarginBounds { get => throw new Exception(); }
 
         /// <summary>
         /// Gets the rectangular area that represents the total area of the page, in millimeters.
         /// </summary>
-        public Rect PhysicalPageBounds { get => throw new Exception(); set => throw new Exception(); }
+        public Rect PhysicalPageBounds { get => throw new Exception(); }
 
         /// <summary>
         /// Gets the rectangular area that represents the portion of the page inside the margins, in device-independent
@@ -63,6 +63,6 @@ namespace Alternet.Drawing.Printing
         /// <value>
         /// The rectangular area, measured in device-independent units (1/96th inch per unit) that represents the total area of the page.
         /// </value>
-        public Rect PageBounds { get => throw new Exception(); set => throw new Exception(); }
+        public Rect PageBounds { get => throw new Exception(); }
     }
 }
