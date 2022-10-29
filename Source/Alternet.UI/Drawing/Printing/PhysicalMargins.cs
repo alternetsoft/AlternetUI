@@ -1,7 +1,7 @@
 
 namespace Alternet.Drawing.Printing
 {
-    public class Margins
+    public class PhysicalMargins
     {
     }
 }

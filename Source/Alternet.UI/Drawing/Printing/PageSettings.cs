@@ -19,7 +19,7 @@ namespace Alternet.Drawing.Printing
 
         public bool Landscape { get; set; }
 
-        public Margins Margins { get; set; }
+        public PhysicalMargins Margins { get; set; }
 
         public string DocumentName { get; set; }
 
