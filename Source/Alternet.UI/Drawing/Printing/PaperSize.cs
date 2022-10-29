@@ -1,5 +1,3 @@
-using System;
-
 namespace Alternet.Drawing.Printing
 {
     /// <summary>
@@ -18,6 +16,8 @@ namespace Alternet.Drawing.Printing
         /// <param name="customSize">The custom size of the paper, in millimeters.</param>
         public PaperSize(Size customSize)
         {
+            IsCustom = true;
+            CustomSize = customSize;
         }
 
         /// <summary>
@@ -26,21 +26,23 @@ namespace Alternet.Drawing.Printing
         /// <param name="paperKind">The type of paper.</param>
         public PaperSize(PaperKind paperKind)
         {
+            IsCustom = false;
+            Kind = paperKind;
         }
 
         /// <summary>
         /// Gets a value indicating whether this <see cref="PaperSize"/> us custom.
         /// </summary>
-        public bool IsCustom { get => throw new Exception(); }
+        public bool IsCustom { get; private set; }
 
         /// <summary>
         /// Gets the custom size of the paper, in millimeters.
         /// </summary>
-        public Size CustomSize { get => throw new Exception(); }
+        public Size CustomSize { get; private set; }
 
         /// <summary>
         /// Gets the type of paper.
         /// </summary>
-        public PaperKind Kind { get => throw new Exception(); set => throw new Exception(); }
+        public PaperKind Kind { get; private set; }
     }
 }
