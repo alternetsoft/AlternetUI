@@ -1,4 +1,3 @@
-using Alternet.UI;
 using System;
 
 namespace Alternet.Drawing.Printing
@@ -50,10 +49,10 @@ namespace Alternet.Drawing.Printing
         /// <summary>
         /// Gets or sets the margins for this page.
         /// </summary>
-        /// <value>A <see cref="Thickness"/> value that represents the margins, in millimeters, for the page.</value>
+        /// <value>A <see cref="Printing.Margins"/> value that represents the margins, in millimeters, for the page.</value>
         /// <remarks>When handling the <see cref="PrintDocument.PrintPage"/> event, you can use this property along with
         /// the <see cref="Bounds"/> property to calculate the printing area for the page.</remarks>
-        public Thickness Margins { get; set; }
+        public Margins Margins { get; set; }
 
         /// <summary>
         /// Gets or sets the printer settings associated with the page.

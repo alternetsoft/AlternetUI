@@ -1,4 +1,3 @@
-using Alternet.UI;
 using System;
 using System.ComponentModel;
 
@@ -44,7 +43,7 @@ namespace Alternet.Drawing.Printing
         /// <summary>
         /// Gets the rectangular area that represents the portion of the page inside the margins, in millimeters.
         /// </summary>
-        public Thickness PhysicalMarginBounds { get => throw new Exception(); set => throw new Exception(); }
+        public Margins PhysicalMarginBounds { get => throw new Exception(); set => throw new Exception(); }
 
         /// <summary>
         /// Gets the rectangular area that represents the portion of the page inside the margins, in device-independent
