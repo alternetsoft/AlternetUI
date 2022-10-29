@@ -54,4 +54,18 @@ namespace Alternet::UI
     void PageSettings::SetPrinterResolution(PrinterResolutionKind value)
     {
     }
+    Size PageSettings::GetCustomPaperSize()
+    {
+        return Size();
+    }
+    void PageSettings::SetCustomPaperSize(const Size& value)
+    {
+    }
+    bool PageSettings::GetUseCustomPaperSize()
+    {
+        return false;
+    }
+    void PageSettings::SetUseCustomPaperSize(bool value)
+    {
+    }
 }

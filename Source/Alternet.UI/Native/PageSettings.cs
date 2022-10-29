@@ -103,6 +103,40 @@ namespace Alternet.UI.Native
             }
         }
         
+        public Alternet.Drawing.Size CustomPaperSize
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSettings_GetCustomPaperSize_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSettings_SetCustomPaperSize_(NativePointer, value);
+            }
+        }
+        
+        public bool UseCustomPaperSize
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PageSettings_GetUseCustomPaperSize_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PageSettings_SetUseCustomPaperSize_(NativePointer, value);
+            }
+        }
+        
         public PaperKind PaperSize
         {
             get
@@ -172,6 +206,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PageSettings_SetPrinterSettings_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Size PageSettings_GetCustomPaperSize_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSettings_SetCustomPaperSize_(IntPtr obj, NativeApiTypes.Size value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PageSettings_GetUseCustomPaperSize_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PageSettings_SetUseCustomPaperSize_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern PaperKind PageSettings_GetPaperSize_(IntPtr obj);

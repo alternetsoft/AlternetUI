@@ -79,6 +79,34 @@ ALTERNET_UI_API void PageSettings_SetPrinterSettings_(PageSettings* obj, Printer
         });
 }
 
+ALTERNET_UI_API Size_C PageSettings_GetCustomPaperSize_(PageSettings* obj)
+{
+    return MarshalExceptions<Size_C>([&](){
+            return obj->GetCustomPaperSize();
+        });
+}
+
+ALTERNET_UI_API void PageSettings_SetCustomPaperSize_(PageSettings* obj, Size value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetCustomPaperSize(value);
+        });
+}
+
+ALTERNET_UI_API c_bool PageSettings_GetUseCustomPaperSize_(PageSettings* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetUseCustomPaperSize();
+        });
+}
+
+ALTERNET_UI_API void PageSettings_SetUseCustomPaperSize_(PageSettings* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetUseCustomPaperSize(value);
+        });
+}
+
 ALTERNET_UI_API PaperKind PageSettings_GetPaperSize_(PageSettings* obj)
 {
     return MarshalExceptions<PaperKind>([&](){

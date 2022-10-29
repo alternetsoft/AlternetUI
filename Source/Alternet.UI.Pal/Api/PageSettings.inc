@@ -20,6 +20,14 @@ PrinterSettings* GetPrinterSettings();
 void SetPrinterSettings(PrinterSettings* value);
 
 
+Size GetCustomPaperSize();
+void SetCustomPaperSize(const Size& value);
+
+
+bool GetUseCustomPaperSize();
+void SetUseCustomPaperSize(bool value);
+
+
 PaperKind GetPaperSize();
 void SetPaperSize(PaperKind value);
 

@@ -1,4 +1,6 @@
+using Alternet.UI;
 using System;
+using System.CodeDom;
 
 namespace Alternet.Drawing.Printing
 {
@@ -50,6 +52,12 @@ namespace Alternet.Drawing.Printing
             left = right = horizontal;
             top = bottom = vertical;
         }
+
+        internal Margins(Thickness t) : this(t.Left, t.Top, t.Right, t.Bottom)
+        {
+        }
+
+        internal Thickness ToThickness() => new Thickness(Left, Top, Right, Bottom);
 
         /// <summary>
         /// Gets the combined padding information in the form of a <see cref="Drawing.Size"/>.

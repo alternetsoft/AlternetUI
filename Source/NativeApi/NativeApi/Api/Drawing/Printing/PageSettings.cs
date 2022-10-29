@@ -11,6 +11,8 @@ namespace NativeApi.Api
         public bool Landscape { get; set; }
         public Thickness Margins { get; set; }
         public PrinterSettings PrinterSettings { get => throw new Exception(); set => throw new Exception(); }
+        public Size CustomPaperSize { get => throw new Exception(); set => throw new Exception(); }
+        public bool UseCustomPaperSize { get => throw new Exception(); set => throw new Exception(); }
         public PaperKind PaperSize { get => throw new Exception(); set => throw new Exception(); }
         public PrinterResolutionKind PrinterResolution { get => throw new Exception(); set => throw new Exception(); }
     }
