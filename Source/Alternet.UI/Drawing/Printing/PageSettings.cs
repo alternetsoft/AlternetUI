@@ -67,6 +67,25 @@ namespace Alternet.Drawing.Printing
         public PrinterSettings PrinterSettings { get => throw new Exception(); set => throw new Exception(); }
 
         /// <summary>
+        /// Gets or sets the paper size for the page.
+        /// </summary>
+        /// <value>A <see cref="PaperSize"/> that represents the size of the paper.</value>
+        public PaperSize PaperSize { get => throw new Exception(); set => throw new Exception(); }
+
+        /// <summary>
+        /// Gets or sets the printer resolution for the page.
+        /// </summary>
+        /// <value>
+        /// A <see cref="PrinterResolution"/> that specifies the printer resolution for the page.
+        /// </value>
+        /// <remarks>
+        /// A <see cref="PrinterResolution"/> represents the printer resolution of through the
+        /// <see cref="PrinterResolution.Kind"/> property, which contains one of the <see cref="PrinterResolutionKind"/>
+        /// values.
+        /// </remarks>
+        public PrinterResolution PrinterResolution { get => throw new Exception(); set => throw new Exception(); }
+
+        /// <summary>
         /// Releases all resources used by the object.
         /// </summary>
         public void Dispose()

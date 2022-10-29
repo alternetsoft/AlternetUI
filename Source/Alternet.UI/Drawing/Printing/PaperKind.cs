@@ -6,11 +6,6 @@ namespace Alternet.Drawing.Printing
     public enum PaperKind
     {
         /// <summary>
-        /// Use custom paper size.
-        /// </summary>
-        Custom,
-
-        /// <summary>
         /// Letter, 8 1/2 by 11 inches.
         /// </summary>
         Letter,
