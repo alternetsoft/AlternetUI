@@ -108,6 +108,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -126,6 +127,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -149,6 +151,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -171,6 +174,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -215,8 +219,14 @@
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="NumericUpDown.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PageSettings.cpp" />
+    <ClCompile Include="PageSetupDialog.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="Pen.cpp" />
+    <ClCompile Include="PrintDialog.cpp" />
+    <ClCompile Include="PrintDocument.cpp" />
+    <ClCompile Include="PrinterSettings.cpp" />
+    <ClCompile Include="PrintPreviewDialog.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="RadialGradientBrush.cpp" />
     <ClCompile Include="RadioButton.cpp" />
@@ -273,8 +283,14 @@
     <ClInclude Include="Api\Object.Api.h" />
     <ClInclude Include="Api\OutputStream.Api.h" />
     <ClInclude Include="Api\OutputStream.h" />
+    <ClInclude Include="Api\PageSettings.Api.h" />
+    <ClInclude Include="Api\PageSetupDialog.Api.h" />
     <ClInclude Include="Api\Panel.Api.h" />
     <ClInclude Include="Api\Pen.Api.h" />
+    <ClInclude Include="Api\PrintDialog.Api.h" />
+    <ClInclude Include="Api\PrintDocument.Api.h" />
+    <ClInclude Include="Api\PrinterSettings.Api.h" />
+    <ClInclude Include="Api\PrintPreviewDialog.Api.h" />
     <ClInclude Include="Api\ProgressBar.Api.h" />
     <ClInclude Include="Api\RadialGradientBrush.Api.h" />
     <ClInclude Include="Api\RadioButton.Api.h" />
@@ -333,8 +349,14 @@
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="NumericUpDown.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="PageSettings.h" />
+    <ClInclude Include="PageSetupDialog.h" />
     <ClInclude Include="Panel.h" />
     <ClInclude Include="Pen.h" />
+    <ClInclude Include="PrintDialog.h" />
+    <ClInclude Include="PrintDocument.h" />
+    <ClInclude Include="PrinterSettings.h" />
+    <ClInclude Include="PrintPreviewDialog.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="RadialGradientBrush.h" />
     <ClInclude Include="RadioButton.h" />
@@ -383,8 +405,14 @@
     <None Include="Api\MessageBox_.inc" />
     <None Include="Api\Mouse.inc" />
     <None Include="Api\NumericUpDown.inc" />
+    <None Include="Api\PageSettings.inc" />
+    <None Include="Api\PageSetupDialog.inc" />
     <None Include="Api\Panel.inc" />
     <None Include="Api\Pen.inc" />
+    <None Include="Api\PrintDialog.inc" />
+    <None Include="Api\PrintDocument.inc" />
+    <None Include="Api\PrinterSettings.inc" />
+    <None Include="Api\PrintPreviewDialog.inc" />
     <None Include="Api\ProgressBar.inc" />
     <None Include="Api\RadialGradientBrush.inc" />
     <None Include="Api\RadioButton.inc" />
