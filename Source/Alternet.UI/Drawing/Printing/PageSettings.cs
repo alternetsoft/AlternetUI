@@ -24,6 +24,8 @@ namespace Alternet.Drawing.Printing
 
         public string DocumentName { get; set; }
 
+        public PrinterSettings PrinterSettings { get => throw new Exception(); set => throw new Exception(); }
+
         /// <summary>
         /// Releases all resources used by the object.
         /// </summary>

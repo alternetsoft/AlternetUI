@@ -21,8 +21,12 @@ namespace Alternet.UI.Native
         public PrintDialog(IntPtr nativePointer) : base(nativePointer)
         {
         }
-        
-        
+
+
+        public bool AllowSomePages { get; set; }
+
+        public bool AllowSelection { get; set; }
+
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
         {
