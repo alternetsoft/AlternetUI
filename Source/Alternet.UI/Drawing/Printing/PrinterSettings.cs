@@ -1,4 +1,3 @@
-using Alternet.UI.Internal.ComponentModel;
 using Alternet.UI.Native;
 using System;
 
@@ -25,7 +24,18 @@ namespace Alternet.Drawing.Printing
         /// <summary>
         /// Gets or sets the printer setting for double-sided printing.
         /// </summary>
-        public Duplex Duplex { get => throw new Exception(); set => throw new Exception(); }
+        public Duplex Duplex
+        {
+            get
+            {
+                return (Duplex)NativePrinterSettings.Duplex;
+            }
+
+            set
+            {
+                NativePrinterSettings.Duplex = (UI.Native.Duplex)value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the page number of the first page to print.
@@ -46,7 +56,18 @@ namespace Alternet.Drawing.Printing
         /// then specify output only for the selected pages.
         /// </para>
         /// </remarks>
-        public int FromPage { get => throw new Exception(); set => throw new Exception(); }
+        public int FromPage
+        {
+            get
+            {
+                return NativePrinterSettings.FromPage;
+            }
+
+            set
+            {
+                NativePrinterSettings.FromPage = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the number of the last page to print.
@@ -67,7 +88,18 @@ namespace Alternet.Drawing.Printing
         /// then specify output only for the selected pages.
         /// </para>
         /// </remarks>
-        public int ToPage { get => throw new Exception(); set => throw new Exception(); }
+        public int ToPage
+        {
+            get
+            {
+                return NativePrinterSettings.ToPage;
+            }
+
+            set
+            {
+                NativePrinterSettings.ToPage = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the minimum <see cref="FromPage"/> or <see cref="ToPage"/> that can be selected in a <see
@@ -77,7 +109,18 @@ namespace Alternet.Drawing.Printing
         /// The <see cref="FromPage"/> and <see cref="ToPage"/> properties are used by the <see cref="PrintDialog"/> when the user selects a print range. The
         /// <see cref="PrintDialog.AllowSomePages"/> property must be set to true to enable the user to specify a print range.
         /// </remarks>
-        public int MinimumPage { get => throw new Exception(); set => throw new Exception(); }
+        public int MinimumPage
+        {
+            get
+            {
+                return NativePrinterSettings.MinimumPage;
+            }
+
+            set
+            {
+                NativePrinterSettings.MinimumPage = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the maximum <see cref="FromPage"/> or <see cref="ToPage"/> that can be selected in a <see cref="PrintDialog"/>.
@@ -86,7 +129,18 @@ namespace Alternet.Drawing.Printing
         /// The <see cref="FromPage"/> and <see cref="ToPage"/> properties are used by the <see cref="PrintDialog"/> when the user selects a print range. The
         /// <see cref="PrintDialog.AllowSomePages"/> property must be set to true to enable the user to specify a print range.
         /// </remarks>
-        public int MaximumPage { get => throw new Exception(); set => throw new Exception(); }
+        public int MaximumPage
+        {
+            get
+            {
+                return NativePrinterSettings.MaximumPage;
+            }
+
+            set
+            {
+                NativePrinterSettings.MaximumPage = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the page numbers that the user has specified to be printed.
@@ -106,7 +160,18 @@ namespace Alternet.Drawing.Printing
         /// the selected pages.
         /// </para>
         /// </remarks>
-        public PrintRange PrintRange { get => throw new Exception(); set => throw new Exception(); }
+        public PrintRange PrintRange
+        {
+            get
+            {
+                return (PrintRange)NativePrinterSettings.PrintRange;
+            }
+
+            set
+            {
+                NativePrinterSettings.PrintRange = (UI.Native.PrintRange)value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the printed document is collated.
@@ -119,7 +184,18 @@ namespace Alternet.Drawing.Printing
         /// first page of the next copy is printed. false will print each page by the number of copies specified before
         /// printing the next page.
         /// </remarks>
-        public bool Collate { get => throw new Exception(); set => throw new Exception(); }
+        public bool Collate
+        {
+            get
+            {
+                return NativePrinterSettings.Collate;
+            }
+
+            set
+            {
+                NativePrinterSettings.Collate = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the number of copies of the document to print.
@@ -127,7 +203,18 @@ namespace Alternet.Drawing.Printing
         /// <value>
         /// The number of copies to print. The default is 1.
         /// </value>
-        public int Copies { get => throw new Exception(); set => throw new Exception(); }
+        public int Copies
+        {
+            get
+            {
+                return NativePrinterSettings.Copies;
+            }
+
+            set
+            {
+                NativePrinterSettings.Copies = value;
+            }
+        }
 
         /// <summary>
         /// Gets the default page settings for this printer.
@@ -137,7 +224,18 @@ namespace Alternet.Drawing.Printing
         /// Page settings include the size of the margins on the page, the size of paper to use, and whether to print in
         /// color. For more information about page settings, see the <see cref="PageSettings"/> class.
         /// </remarks>
-        public PageSettings DefaultPageSettings { get => throw new Exception(); set => throw new Exception(); }
+        public PageSettings DefaultPageSettings
+        {
+            get
+            {
+                return new PageSettings(NativePrinterSettings.DefaultPageSettings);
+            }
+
+            set
+            {
+                NativePrinterSettings.DefaultPageSettings = value.NativePageSettings;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the printing output is sent to a file instead of a port.
@@ -146,7 +244,18 @@ namespace Alternet.Drawing.Printing
         /// <remarks>
         /// The <see cref="PrintToFile"/> property is used by the <see cref="PrintDialog"/> when the user selects the <b>Print to file</b> option.
         /// </remarks>
-        public bool PrintToFile { get => throw new Exception(); set => throw new Exception(); }
+        public bool PrintToFile
+        {
+            get
+            {
+                return NativePrinterSettings.PrintToFile;
+            }
+
+            set
+            {
+                NativePrinterSettings.PrintToFile = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the name of the printer to use.
@@ -155,7 +264,18 @@ namespace Alternet.Drawing.Printing
         /// <remarks>
         /// After setting the printer name, call <see cref="IsValid"/> to determine if the printer name is recognized as a valid printer on the system.
         /// </remarks>
-        public string? PrinterName { get => throw new Exception(); set => throw new Exception(); }
+        public string? PrinterName
+        {
+            get
+            {
+                return NativePrinterSettings.PrinterName;
+            }
+
+            set
+            {
+                NativePrinterSettings.PrinterName = value;
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether the <see cref="PrinterName"/> property designates a valid printer.
@@ -163,7 +283,7 @@ namespace Alternet.Drawing.Printing
         /// <value>
         /// <see langword="true"/> if the <see cref="PrinterName"/> property designates a valid printer; otherwise, <see langword="false"/>.
         /// </value>
-        public bool IsValid { get => throw new Exception(); }
+        public bool IsValid { get => NativePrinterSettings.IsValid; }
 
         /// <summary>
         /// Gets a value indicating whether the <see cref="PrinterName"/> property designates the default printer.
@@ -173,12 +293,23 @@ namespace Alternet.Drawing.Printing
         /// <see cref="IsDefaultPrinter"/> always returns <see langword="false"/> when you explicitly set the <see
         /// cref="PrinterName"/> property to a string value other than <see langword="null"/>.
         /// </remarks>
-        public bool IsDefaultPrinter { get => throw new Exception(); }
+        public bool IsDefaultPrinter { get => NativePrinterSettings.IsDefaultPrinter; }
 
         /// <summary>
         /// Gets or sets the file name, when printing to a file.
         /// </summary>
-        public string? PrintFileName { get => throw new Exception(); set => throw new Exception(); }
+        public string? PrintFileName
+        {
+            get
+            {
+                return NativePrinterSettings.PrintFileName;
+            }
+
+            set
+            {
+                NativePrinterSettings.PrintFileName = value;
+            }
+        }
 
         /// <summary>
         /// Releases all resources used by the object.

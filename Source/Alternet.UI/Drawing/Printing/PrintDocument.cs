@@ -38,7 +38,18 @@ namespace Alternet.Drawing.Printing
         /// <value>
         /// The document name to display while printing the document.
         /// </value>
-        public string DocumentName { get => throw new Exception(); set => throw new Exception(); }
+        public string DocumentName
+        {
+            get
+            {
+                return NativePrintDocument.DocumentName;
+            }
+
+            set
+            {
+                NativePrintDocument.DocumentName = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the printer that prints the document.
@@ -47,7 +58,18 @@ namespace Alternet.Drawing.Printing
         /// A <see cref="PrinterSettings"/> that specifies where and how the document is printed.
         /// The default is a <see cref="PrinterSettings"/> with its properties set to their default values.
         /// </value>
-        public PrinterSettings PrinterSettings { get => throw new Exception(); set => throw new Exception(); }
+        public PrinterSettings PrinterSettings
+        {
+            get
+            {
+                return new PrinterSettings(NativePrintDocument.PrinterSettings);
+            }
+
+            set
+            {
+                NativePrintDocument.PrinterSettings = value.NativePrinterSettings;
+            }
+        }
 
         /// <summary>
         /// Gets or sets page settings that are used as defaults for all pages to be printed.
@@ -61,7 +83,18 @@ namespace Alternet.Drawing.Printing
         /// specifies landscape or portrait orientation, and the <see cref="PageSettings.Margins"/> property specifies the margins of
         /// the page.
         /// </remarks>
-        public PageSettings DefaultPageSettings { get => throw new Exception(); set => throw new Exception(); }
+        public PageSettings DefaultPageSettings
+        {
+            get
+            {
+                return new PageSettings(NativePrintDocument.DefaultPageSettings);
+            }
+
+            set
+            {
+                NativePrintDocument.DefaultPageSettings = value.NativePageSettings;
+            }
+        }
 
         /// <summary>
         /// Occurs when the output to print for the current page is needed.
@@ -155,6 +188,7 @@ namespace Alternet.Drawing.Printing
         /// </remarks>
         public void Print()
         {
+            NativePrintDocument.Print();
         }
 
         /// <summary>
