@@ -110,12 +110,12 @@ namespace Alternet.UI
         {
             get
             {
-                return new PrinterSettings(nativeDialog.PrinterSettings);
+                return nativeDialog.PrinterSettings == null ? null : new PrinterSettings(nativeDialog.PrinterSettings);
             }
 
             set
             {
-                nativeDialog.PrinterSettings = value.NativePrinterSettings;
+                nativeDialog.PrinterSettings = value == null ? null : value.NativePrinterSettings;
             }
         }
 

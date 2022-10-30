@@ -118,6 +118,9 @@ namespace Alternet.Drawing.Printing
 
             set
             {
+                if (value == null)
+                    throw new ArgumentNullException();
+
                 NativePageSettings.PrinterSettings = value.NativePrinterSettings;
             }
         }

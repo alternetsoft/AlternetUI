@@ -28,32 +28,32 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the printer settings that are modified in the dialog.
         /// </summary>
-        public PrinterSettings PrinterSettings
+        public PrinterSettings? PrinterSettings
         {
             get
             {
-                return new PrinterSettings(nativeDialog.PrinterSettings);
+                return nativeDialog.PrinterSettings == null ? null : new PrinterSettings(nativeDialog.PrinterSettings);
             }
 
             set
             {
-                nativeDialog.PrinterSettings = value.NativePrinterSettings;
+                nativeDialog.PrinterSettings = value == null ? null : value.NativePrinterSettings;
             }
         }
 
         /// <summary>
         /// Gets or sets a value indicating the page settings to modify.
         /// </summary>
-        public PageSettings PageSettings
+        public PageSettings? PageSettings
         {
             get
             {
-                return new PageSettings(nativeDialog.PageSettings);
+                return nativeDialog.PageSettings == null ? null : new PageSettings(nativeDialog.PageSettings);
             }
 
             set
             {
-                nativeDialog.PageSettings = value.NativePageSettings;
+                nativeDialog.PageSettings = value == null ? null : value.NativePageSettings;
             }
         }
 

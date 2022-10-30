@@ -34,7 +34,7 @@ namespace Alternet.Drawing.Printing
             nativePrintDocument.EndPrint += NativePrintDocument_EndPrint;
         }
 
-        private void NativePrintDocument_EndPrint(object sender, CancelEventArgs e)
+        private void NativePrintDocument_EndPrint(object? sender, CancelEventArgs e)
         {
             var ea = new PrintEventArgs();
             OnEndPrint(ea);
@@ -43,7 +43,7 @@ namespace Alternet.Drawing.Printing
             currentDrawingContext = null;
         }
 
-        private void NativePrintDocument_BeginPrint(object sender, CancelEventArgs e)
+        private void NativePrintDocument_BeginPrint(object? sender, CancelEventArgs e)
         {
             if (currentDrawingContext != null)
                 throw new InvalidOperationException();
@@ -57,7 +57,7 @@ namespace Alternet.Drawing.Printing
 
         DrawingContext? currentDrawingContext;
 
-        private void NativePrintDocument_PrintPage(object sender, CancelEventArgs e)
+        private void NativePrintDocument_PrintPage(object? sender, CancelEventArgs e)
         {
             if (currentDrawingContext == null)
                 throw new InvalidOperationException();

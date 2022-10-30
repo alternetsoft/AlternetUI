@@ -60,10 +60,24 @@ namespace PrintingSample
 
             if (pageSetupDialog.ShowModal() == ModalResult.Accepted)
             {
-                document.DefaultPageSettings = pageSetupDialog.PageSettings;
-                document.PrinterSettings = pageSetupDialog.PrinterSettings;
+                //document.DefaultPageSettings = pageSetupDialog.PageSettings;
+                //document.PrinterSettings = pageSetupDialog.PrinterSettings;
 
                 document.PrintPage += Document_PrintPage;
+                document.Print();
+            }
+        }
+
+        private void PrintPreviewMenuItem_Click(object sender, System.EventArgs e)
+        {
+            var dialog = new PrintPreviewDialog();
+            var document = new PrintDocument();
+
+            document.PrintPage += Document_PrintPage;
+            dialog.Document = document;
+
+            if (dialog.ShowModal() == ModalResult.Accepted)
+            {
                 document.Print();
             }
         }

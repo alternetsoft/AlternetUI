@@ -22,13 +22,13 @@ namespace Alternet.UI.Native
         {
         }
         
-        public PrinterSettings PrinterSettings
+        public PrinterSettings? PrinterSettings
         {
             get
             {
                 CheckDisposed();
                 var n = NativeApi.PageSetupDialog_GetPrinterSettings_(NativePointer);
-                var m = NativeObject.GetFromNativePointer<PrinterSettings>(n, p => new PrinterSettings(p))!;
+                var m = NativeObject.GetFromNativePointer<PrinterSettings>(n, p => new PrinterSettings(p));
                 ReleaseNativeObjectPointer(n);
                 return m;
             }
@@ -36,17 +36,17 @@ namespace Alternet.UI.Native
             set
             {
                 CheckDisposed();
-                NativeApi.PageSetupDialog_SetPrinterSettings_(NativePointer, value.NativePointer);
+                NativeApi.PageSetupDialog_SetPrinterSettings_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
             }
         }
         
-        public PageSettings PageSettings
+        public PageSettings? PageSettings
         {
             get
             {
                 CheckDisposed();
                 var n = NativeApi.PageSetupDialog_GetPageSettings_(NativePointer);
-                var m = NativeObject.GetFromNativePointer<PageSettings>(n, p => new PageSettings(p))!;
+                var m = NativeObject.GetFromNativePointer<PageSettings>(n, p => new PageSettings(p));
                 ReleaseNativeObjectPointer(n);
                 return m;
             }
@@ -54,7 +54,7 @@ namespace Alternet.UI.Native
             set
             {
                 CheckDisposed();
-                NativeApi.PageSetupDialog_SetPageSettings_(NativePointer, value.NativePointer);
+                NativeApi.PageSetupDialog_SetPageSettings_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
             }
         }
         
