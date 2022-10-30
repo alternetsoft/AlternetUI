@@ -1,0 +1,19 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="PrintingSample.MainWindow"
+        Title="Printing Sample">
+    <Window.Menu>
+        <MainMenu>
+            <MenuItem Text="_File">
+                <MenuItem Text="Print Immediately" Click="PrintImmediatelyMenuItem_Click" />
+                <MenuItem Text="-" Name="separatorMenuItem" />
+                <MenuItem Text="E_xit" Name="exitMenuItem" Click="ExitMenuItem_Click" />
+            </MenuItem>
+            <MenuItem Text="_Help">
+                <MenuItem Text="_About" Name="aboutMenuItem" Click="AboutMenuItem_Click" />
+            </MenuItem>
+        </MainMenu>
+    </Window.Menu>
+    <Grid Paint="Grid_Paint" UserPaint="True">
+    </Grid>
+</Window>
