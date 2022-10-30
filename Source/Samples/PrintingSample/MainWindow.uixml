@@ -7,6 +7,7 @@
             <MenuItem Text="_File">
                 <MenuItem Text="Print Immediately" Click="PrintImmediatelyMenuItem_Click" />
                 <MenuItem Text="Print..." Click="PrintMenuItem_Click" />
+                <MenuItem Text="Page Setup..." Click="PageSetupMenuItem_Click" />
                 <MenuItem Text="-" Name="separatorMenuItem" />
                 <MenuItem Text="E_xit" Name="exitMenuItem" Click="ExitMenuItem_Click" />
             </MenuItem>

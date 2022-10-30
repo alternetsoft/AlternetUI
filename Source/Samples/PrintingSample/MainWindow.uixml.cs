@@ -46,6 +46,28 @@ namespace PrintingSample
                 document.Print();
         }
 
+        private void PageSetupMenuItem_Click(object sender, System.EventArgs e)
+        {
+            var pageSetupDialog = new PageSetupDialog();
+            var document = new PrintDocument();
+            document.DocumentName = "Print Document";
+
+            pageSetupDialog.Document = document;
+            //setupDlg.AllowMargins = false;
+            //setupDlg.AllowOrientation = false;
+            //setupDlg.AllowPaper = false;
+            //setupDlg.AllowPrinter = false;
+
+            if (pageSetupDialog.ShowModal() == ModalResult.Accepted)
+            {
+                document.DefaultPageSettings = pageSetupDialog.PageSettings;
+                document.PrinterSettings = pageSetupDialog.PrinterSettings;
+
+                document.PrintPage += Document_PrintPage;
+                document.Print();
+            }
+        }
+
         private void Document_PrintPage(object? sender, PrintPageEventArgs e)
         {
             Draw(e.DrawingContext);

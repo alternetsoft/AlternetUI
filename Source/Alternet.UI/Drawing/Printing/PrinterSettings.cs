@@ -14,6 +14,13 @@ namespace Alternet.Drawing.Printing
     {
         private bool isDisposed;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PrinterSettings"/> class.
+        /// </summary>
+        public PrinterSettings() : this(new UI.Native.PrinterSettings())
+        {
+        }
+
         internal PrinterSettings(UI.Native.PrinterSettings nativePrinterSettings)
         {
             NativePrinterSettings = nativePrinterSettings;

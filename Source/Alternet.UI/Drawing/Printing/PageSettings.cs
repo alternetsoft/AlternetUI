@@ -16,6 +16,13 @@ namespace Alternet.Drawing.Printing
     {
         private bool isDisposed;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageSettings"/> class.
+        /// </summary>
+        public PageSettings() : this(new UI.Native.PageSettings())
+        {
+        }
+
         internal PageSettings(UI.Native.PageSettings nativePageSettings)
         {
             NativePageSettings = nativePageSettings;
