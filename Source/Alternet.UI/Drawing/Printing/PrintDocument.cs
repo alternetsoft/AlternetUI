@@ -36,9 +36,6 @@ namespace Alternet.Drawing.Printing
 
         private void NativePrintDocument_EndPrint(object sender, CancelEventArgs e)
         {
-            if (currentDrawingContext == null)
-                throw new InvalidOperationException();
-
             var ea = new PrintEventArgs();
             OnEndPrint(ea);
             e.Cancel = ea.Cancel;

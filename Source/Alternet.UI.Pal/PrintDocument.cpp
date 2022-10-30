@@ -114,11 +114,7 @@ namespace Alternet::UI
         wxPrintDialogData printDialogData(printData);
         wxPrinter printer(&printDialogData);
 
-        if (!printer.Print(nullptr, _printout, /*prompt:*/false))
-        {
-            if (wxPrinter::GetLastError() == wxPRINTER_ERROR)
-                throwEx(u"An error occured while printing.");
-        }
+        printer.Print(nullptr, _printout, /*prompt:*/false);
     }
 
     DrawingContext* PrintDocument::GetPrintPage_DrawingContext()
