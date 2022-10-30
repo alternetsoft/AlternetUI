@@ -177,6 +177,7 @@ namespace Alternet.Drawing.Printing
         /// </remarks>
         protected virtual void OnBeginPrint(PrintEventArgs e)
         {
+            BeginPrint?.Invoke(this, e);
         }
 
         /// <summary>
@@ -190,6 +191,7 @@ namespace Alternet.Drawing.Printing
         /// </remarks>
         protected virtual void OnEndPrint(PrintEventArgs e)
         {
+            EndPrint?.Invoke(this, e);
         }
 
         /// <summary>
@@ -202,6 +204,7 @@ namespace Alternet.Drawing.Printing
         /// </remarks>
         protected virtual void OnPrintPage(PrintPageEventArgs e)
         {
+            PrintPage?.Invoke(this, e);
         }
 
         /// <summary>
