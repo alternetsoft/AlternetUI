@@ -13,25 +13,26 @@ PageSettings* GetDefaultPageSettings();
 void SetDefaultPageSettings(PageSettings* value);
 
 
-DrawingContext* GetPrintDrawingContext();
+DrawingContext* GetPrintPage_DrawingContext();
 
 
-bool GetPrintHasMorePages();
+bool GetPrintPage_HasMorePages();
+void SetPrintPage_HasMorePages(bool value);
 
 
-PageSettings* GetPrintPageSettings();
+PageSettings* GetPrintPage_PageSettings();
 
 
-Thickness GetPrintPhysicalMarginBounds();
+Thickness GetPrintPage_PhysicalMarginBounds();
 
 
-Rect GetMarginBounds();
+Rect GetPrintPage_MarginBounds();
 
 
-Rect GetPhysicalPageBounds();
+Rect GetPrintPage_PhysicalPageBounds();
 
 
-Rect GetPageBounds();
+Rect GetPrintPage_PageBounds();
 
 void Print();
 public:

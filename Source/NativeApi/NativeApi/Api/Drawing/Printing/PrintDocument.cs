@@ -22,18 +22,18 @@ namespace NativeApi.Api
 
         public void Print() => throw new Exception();
 
-        public DrawingContext PrintDrawingContext { get => throw new Exception(); }
+        public DrawingContext PrintPage_DrawingContext { get => throw new Exception(); }
 
-        public bool PrintHasMorePages { get => throw new Exception(); }
+        public bool PrintPage_HasMorePages { get => throw new Exception(); set => throw new Exception(); }
 
-        public PageSettings PrintPageSettings { get => throw new Exception(); }
+        public PageSettings PrintPage_PageSettings { get => throw new Exception(); }
 
-        public Thickness PrintPhysicalMarginBounds { get => throw new Exception(); }
+        public Thickness PrintPage_PhysicalMarginBounds { get => throw new Exception(); }
 
-        public Rect MarginBounds { get => throw new Exception(); }
+        public Rect PrintPage_MarginBounds { get => throw new Exception(); }
 
-        public Rect PhysicalPageBounds { get => throw new Exception(); }
+        public Rect PrintPage_PhysicalPageBounds { get => throw new Exception(); }
 
-        public Rect PageBounds { get => throw new Exception(); }
+        public Rect PrintPage_PageBounds { get => throw new Exception(); }
     }
 }

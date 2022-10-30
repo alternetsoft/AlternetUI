@@ -28,6 +28,31 @@ namespace Alternet.Drawing.Printing
         internal PrintDocument(UI.Native.PrintDocument nativePrintDocument)
         {
             NativePrintDocument = nativePrintDocument;
+
+            nativePrintDocument.PrintPage += NativePrintDocument_PrintPage;
+            nativePrintDocument.BeginPrint += NativePrintDocument_BeginPrint;
+            nativePrintDocument.EndPrint += NativePrintDocument_EndPrint;
+        }
+
+        private void NativePrintDocument_EndPrint(object sender, CancelEventArgs e)
+        {
+            var ea = new PrintEventArgs();
+            OnEndPrint(ea);
+            e.Cancel = ea.Cancel;
+        }
+
+        private void NativePrintDocument_BeginPrint(object sender, CancelEventArgs e)
+        {
+            var ea = new PrintEventArgs();
+            OnBeginPrint(ea);
+            e.Cancel = ea.Cancel;
+        }
+
+        private void NativePrintDocument_PrintPage(object sender, CancelEventArgs e)
+        {
+            var ea = new PrintPageEventArgs(NativePrintDocument);
+            OnPrintPage(ea);
+            e.Cancel = ea.Cancel;
         }
 
         internal UI.Native.PrintDocument NativePrintDocument { get; private set; }
@@ -210,6 +235,10 @@ namespace Alternet.Drawing.Printing
             {
                 if (disposing)
                 {
+                    NativePrintDocument.PrintPage -= NativePrintDocument_PrintPage;
+                    NativePrintDocument.BeginPrint -= NativePrintDocument_BeginPrint;
+                    NativePrintDocument.EndPrint -= NativePrintDocument_EndPrint;
+
                     NativePrintDocument.Dispose();
                     NativePrintDocument = null!;
                 }

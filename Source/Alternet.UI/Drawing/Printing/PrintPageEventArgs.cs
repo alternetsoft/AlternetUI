@@ -15,13 +15,20 @@ namespace Alternet.Drawing.Printing
     /// </remarks>
     public class PrintPageEventArgs : CancelEventArgs
     {
+        private UI.Native.PrintDocument nativePrintDocument;
+
+        internal PrintPageEventArgs(UI.Native.PrintDocument nativePrintDocument)
+        {
+            this.nativePrintDocument = nativePrintDocument;
+        }
+
         /// <summary>
         /// Gets the <see cref="DrawingContext"/> used to paint the page.
         /// </summary>
         /// <value>
         /// The <see cref="DrawingContext"/> used to paint the page.
         /// </value>
-        public DrawingContext DrawingContext { get => throw new Exception(); }
+        public DrawingContext DrawingContext { get => new DrawingContext(nativePrintDocument.PrintPage_DrawingContext); }
 
         /// <summary>
         /// Gets or sets a value indicating whether an additional page should be printed.
@@ -30,7 +37,7 @@ namespace Alternet.Drawing.Printing
         /// <see langword="true"/> if an additional page should be printed; otherwise, <see langword="false"/>. The
         /// default is <see langword="false"/>.
         /// </value>
-        public bool HasMorePages { get => throw new Exception(); set => throw new Exception(); }
+        public bool HasMorePages { get => nativePrintDocument.PrintPage_HasMorePages; set => nativePrintDocument.PrintPage_HasMorePages = value; }
 
         /// <summary>
         /// Gets the page settings for the current page.
@@ -38,23 +45,23 @@ namespace Alternet.Drawing.Printing
         /// <value>
         /// The page settings for the current page.
         /// </value>
-        public PageSettings PageSettings { get => throw new Exception(); }
+        public PageSettings PageSettings { get => new PageSettings(nativePrintDocument.PrintPage_PageSettings); }
 
         /// <summary>
         /// Gets the rectangular area that represents the portion of the page inside the margins, in millimeters.
         /// </summary>
-        public Margins PhysicalMarginBounds { get => throw new Exception(); }
+        public Margins PhysicalMarginBounds { get => new Margins(nativePrintDocument.PrintPage_PhysicalMarginBounds); }
 
         /// <summary>
         /// Gets the rectangular area that represents the portion of the page inside the margins, in device-independent
         /// units (1/96th inch per unit).
         /// </summary>
-        public Rect MarginBounds { get => throw new Exception(); }
+        public Rect MarginBounds { get => nativePrintDocument.PrintPage_MarginBounds; }
 
         /// <summary>
         /// Gets the rectangular area that represents the total area of the page, in millimeters.
         /// </summary>
-        public Rect PhysicalPageBounds { get => throw new Exception(); }
+        public Rect PhysicalPageBounds { get => nativePrintDocument.PrintPage_PhysicalPageBounds; }
 
         /// <summary>
         /// Gets the rectangular area that represents the portion of the page inside the margins, in device-independent
@@ -63,6 +70,6 @@ namespace Alternet.Drawing.Printing
         /// <value>
         /// The rectangular area, measured in device-independent units (1/96th inch per unit) that represents the total area of the page.
         /// </value>
-        public Rect PageBounds { get => throw new Exception(); }
+        public Rect PageBounds { get => nativePrintDocument.PrintPage_PageBounds; }
     }
 }

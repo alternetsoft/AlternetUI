@@ -29,35 +29,38 @@ namespace Alternet::UI
     void PrintDocument::SetDefaultPageSettings(PageSettings* value)
     {
     }
-    DrawingContext* PrintDocument::GetPrintDrawingContext()
+    void PrintDocument::Print()
+    {
+    }
+    DrawingContext* PrintDocument::GetPrintPage_DrawingContext()
     {
         return nullptr;
     }
-    bool PrintDocument::GetPrintHasMorePages()
+    bool PrintDocument::GetPrintPage_HasMorePages()
     {
         return false;
     }
-    PageSettings* PrintDocument::GetPrintPageSettings()
+    void PrintDocument::SetPrintPage_HasMorePages(bool value)
+    {
+    }
+    PageSettings* PrintDocument::GetPrintPage_PageSettings()
     {
         return nullptr;
     }
-    Thickness PrintDocument::GetPrintPhysicalMarginBounds()
+    Thickness PrintDocument::GetPrintPage_PhysicalMarginBounds()
     {
         return Thickness();
     }
-    Rect PrintDocument::GetMarginBounds()
+    Rect PrintDocument::GetPrintPage_MarginBounds()
     {
         return Rect();
     }
-    Rect PrintDocument::GetPhysicalPageBounds()
+    Rect PrintDocument::GetPrintPage_PhysicalPageBounds()
     {
         return Rect();
     }
-    Rect PrintDocument::GetPageBounds()
+    Rect PrintDocument::GetPrintPage_PageBounds()
     {
         return Rect();
-    }
-    void PrintDocument::Print()
-    {
     }
 }
