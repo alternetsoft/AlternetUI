@@ -30,6 +30,22 @@ namespace PrintingSample
             document.Print();
         }
 
+        private void PrintMenuItem_Click(object sender, System.EventArgs e)
+        {
+            var dialog = new PrintDialog();
+            var document = new PrintDocument();
+            document.DocumentName = "Print Document";
+
+            dialog.Document = document;
+            dialog.AllowSelection = true;
+            dialog.AllowSomePages = false;
+
+            document.PrintPage += Document_PrintPage;
+
+            if (dialog.ShowModal() == ModalResult.Accepted)
+                document.Print();
+        }
+
         private void Document_PrintPage(object? sender, PrintPageEventArgs e)
         {
             Draw(e.DrawingContext);
