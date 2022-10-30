@@ -9,15 +9,20 @@ namespace Alternet::UI
 
     bool PrintDocument::Printout::OnBeginDocument(int startPage, int endPage)
     {
+        if (!wxPrintout::OnBeginDocument(startPage, endPage))
+            return false;
+
         return !_owner->RaiseEvent(PrintDocumentEvent::BeginPrint);
     }
 
     void PrintDocument::Printout::OnEndDocument()
     {
+        wxPrintout::OnEndDocument();
     }
 
     void PrintDocument::Printout::OnBeginPrinting()
     {
+        wxPrintout::OnBeginPrinting();
     }
 
     void PrintDocument::Printout::OnEndPrinting()
@@ -27,6 +32,7 @@ namespace Alternet::UI
 
     void PrintDocument::Printout::OnPreparePrinting()
     {
+        wxPrintout::OnPreparePrinting();
     }
 
     bool PrintDocument::Printout::HasPage(int page)
@@ -41,7 +47,12 @@ namespace Alternet::UI
 
     void PrintDocument::Printout::GetPageInfo(int* minPage, int* maxPage, int* pageFrom, int* pageTo)
     {
-        wxPrintout::GetPageInfo(minPage, maxPage, pageFrom, pageTo);
+        *minPage = 1;
+        *maxPage = 1;
+        *pageFrom = 1;
+        *pageTo = 1;
+
+        //wxPrintout::GetPageInfo(minPage, maxPage, pageFrom, pageTo);
     }
 
     // =========================================================
@@ -103,7 +114,7 @@ namespace Alternet::UI
         wxPrintDialogData printDialogData(printData);
         wxPrinter printer(&printDialogData);
 
-        if (!printer.Print(/*ParkingWindow::GetWindow()*/wxTheApp->GetMainTopWindow(), _printout, /*prompt:*/true))
+        if (!printer.Print(nullptr, _printout, /*prompt:*/false))
         {
             if (wxPrinter::GetLastError() == wxPRINTER_ERROR)
                 throwEx(u"An error occured while printing.");
