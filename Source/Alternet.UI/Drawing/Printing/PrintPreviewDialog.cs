@@ -37,6 +37,10 @@ namespace Alternet.UI
         private protected override ModalResult ShowModalCore(Window? owner)
         {
             CheckDisposed();
+
+            if (nativeDialog.Document == null)
+                throw new InvalidOperationException("Cannot show the print preview dialog when the Document property value is null.");
+
             var nativeOwner = owner == null ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
             return (ModalResult)nativeDialog.ShowModal(nativeOwner);
         }

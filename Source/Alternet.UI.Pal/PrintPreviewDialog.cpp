@@ -1,4 +1,6 @@
 #include "PrintPreviewDialog.h"
+#include "PrintDocument.h"
+#include "Window.h"
 
 namespace Alternet::UI
 {
@@ -8,32 +10,53 @@ namespace Alternet::UI
 
     PrintPreviewDialog::~PrintPreviewDialog()
     {
+        SetDocument(nullptr);
     }
 
     PrintDocument* PrintPreviewDialog::GetDocument()
     {
-        return nullptr;
+        _document->AddRef();
+        return _document;
     }
 
     void PrintPreviewDialog::SetDocument(PrintDocument* value)
     {
+        if (_document != nullptr)
+            _document->Release();
+
+        _document = value;
+
+        if (_document != nullptr)
+            _document->AddRef();
     }
 
     ModalResult PrintPreviewDialog::ShowModal(Window* owner)
     {
-        //wxPrintPreview* preview =
-        //    new wxPrintPreview(new MyPrintout(this), new MyPrintout(this), &printDialogData);
-        //if (!preview->IsOk())
-        //{
-        //    delete preview;
-        //    wxLogError("There was a problem previewing.\nPerhaps your current printer is not set correctly?");
-        //    return;
-        //}
+        if (_document == nullptr)
+            throwExInvalidOpWithInfo(u"Cannot show the print preview dialog when the document is null.");
 
-        //wxPreviewFrame* frame =
-        //    new wxPreviewFrame(preview, this, "Demo Print Preview", wxPoint(100, 100), wxSize(600, 650));
-        //frame->Centre(wxBOTH);
-        //frame->InitializeWithModality(m_previewModality);
-        //frame->Show();
+
+        auto previewPrintout = _document->CreatePrintout();
+
+        ScopeGuard scope([&]
+            {
+                delete previewPrintout;
+            });
+
+
+        wxPrintData printData;
+        wxPrintDialogData printDialogData(printData);
+
+        wxPrintPreview preview(previewPrintout, nullptr, &printDialogData);
+        if (!preview.IsOk())
+            throwEx(u"Print preview failed.");
+
+        auto frame = new wxPreviewFrame(
+            &preview,
+            owner == nullptr ? ParkingWindow::GetWindow() : owner->GetWxWindow(),
+            "Print Preview");
+        frame->InitializeWithModality(wxPreviewFrameModalityKind::wxPreviewFrame_AppModal);
+        frame->Show();
+        return ModalResult::None;
     }
 }

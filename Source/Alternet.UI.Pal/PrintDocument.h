@@ -14,6 +14,8 @@ namespace Alternet::UI
 #include "Api/PrintDocument.inc"
     public:
 
+        wxPrintout* CreatePrintout();
+
     private:
         class Printout : public wxPrintout
         {

@@ -15,6 +15,6 @@ namespace Alternet::UI
 
 
     private:
-    
+        PrintDocument* _document = nullptr;
     };
 }

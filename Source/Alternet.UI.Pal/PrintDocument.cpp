@@ -102,7 +102,7 @@ namespace Alternet::UI
         if (_printout != nullptr)
             throwExInvalidOpWithInfo(u"Another printing operation for this PrintDocument is in progress.");
 
-        _printout = new Printout(this);
+        _printout = dynamic_cast<Printout*>(CreatePrintout());
 
         ScopeGuard scope([&]
             {
@@ -116,6 +116,12 @@ namespace Alternet::UI
 
         printer.Print(nullptr, _printout, /*prompt:*/false);
     }
+
+    wxPrintout* PrintDocument::CreatePrintout()
+    {
+        return new Printout(this);
+    }
+
 
     DrawingContext* PrintDocument::GetPrintPage_DrawingContext()
     {
