@@ -54,4 +54,24 @@ namespace Alternet::UI
     private:
         TFlagsEnum _value;
     };
+
+    class ScopeGuard
+    {
+        std::function<void()> onExit;
+        BYREF_ONLY(ScopeGuard);
+    public:
+        ScopeGuard(std::function<void()> onEnter, std::function<void()> onExit_) : onExit(onExit_)
+        {
+            onEnter();
+        }
+
+        ScopeGuard(std::function<void()> onExit_) : ScopeGuard([] {}, onExit_)
+        {
+        }
+
+        virtual ~ScopeGuard()
+        {
+            onExit();
+        }
+    };
 }

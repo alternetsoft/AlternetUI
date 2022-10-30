@@ -91,10 +91,22 @@ namespace Alternet::UI
             throwExInvalidOpWithInfo(u"Another printing operation for this PrintDocument is in progress.");
 
         _printout = new Printout(this);
-        wxPrinter printer;
-        printer.Print(ParkingWindow::GetWindow(), _printout, /*prompt:*/false);
-        delete _printout;
-        _printout = nullptr;
+
+        ScopeGuard scope([&]
+            {
+                delete _printout;
+                _printout = nullptr;
+            });
+
+        wxPrintData printData;
+        wxPrintDialogData printDialogData(printData);
+        wxPrinter printer(&printDialogData);
+
+        if (!printer.Print(ParkingWindow::GetWindow(), _printout, /*prompt:*/false))
+        {
+            if (wxPrinter::GetLastError() == wxPRINTER_ERROR)
+                throwEx(u"An error occured while printing.");
+        }
     }
 
     DrawingContext* PrintDocument::GetPrintPage_DrawingContext()
