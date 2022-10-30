@@ -36,21 +36,36 @@ namespace Alternet.Drawing.Printing
 
         private void NativePrintDocument_EndPrint(object sender, CancelEventArgs e)
         {
+            if (currentDrawingContext == null)
+                throw new InvalidOperationException();
+
             var ea = new PrintEventArgs();
             OnEndPrint(ea);
             e.Cancel = ea.Cancel;
+
+            currentDrawingContext = null;
         }
 
         private void NativePrintDocument_BeginPrint(object sender, CancelEventArgs e)
         {
+            if (currentDrawingContext != null)
+                throw new InvalidOperationException();
+
+            currentDrawingContext = new DrawingContext(NativePrintDocument.PrintPage_DrawingContext);
+            
             var ea = new PrintEventArgs();
             OnBeginPrint(ea);
             e.Cancel = ea.Cancel;
         }
 
+        DrawingContext? currentDrawingContext;
+
         private void NativePrintDocument_PrintPage(object sender, CancelEventArgs e)
         {
-            var ea = new PrintPageEventArgs(NativePrintDocument);
+            if (currentDrawingContext == null)
+                throw new InvalidOperationException();
+
+            var ea = new PrintPageEventArgs(NativePrintDocument, currentDrawingContext);
             OnPrintPage(ea);
             e.Cancel = ea.Cancel;
         }
@@ -216,6 +231,9 @@ namespace Alternet.Drawing.Printing
         /// </remarks>
         public void Print()
         {
+            if (currentDrawingContext != null)
+                throw new InvalidOperationException("Another printing operation is in progress.");
+
             NativePrintDocument.Print();
         }
 

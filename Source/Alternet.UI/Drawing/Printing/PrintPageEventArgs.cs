@@ -16,10 +16,12 @@ namespace Alternet.Drawing.Printing
     public class PrintPageEventArgs : CancelEventArgs
     {
         private UI.Native.PrintDocument nativePrintDocument;
+        private readonly DrawingContext drawingContext;
 
-        internal PrintPageEventArgs(UI.Native.PrintDocument nativePrintDocument)
+        internal PrintPageEventArgs(UI.Native.PrintDocument nativePrintDocument, DrawingContext drawingContext)
         {
             this.nativePrintDocument = nativePrintDocument;
+            this.drawingContext = drawingContext;
         }
 
         /// <summary>
@@ -28,7 +30,7 @@ namespace Alternet.Drawing.Printing
         /// <value>
         /// The <see cref="DrawingContext"/> used to paint the page.
         /// </value>
-        public DrawingContext DrawingContext { get => new DrawingContext(nativePrintDocument.PrintPage_DrawingContext); }
+        public DrawingContext DrawingContext => drawingContext;
 
         /// <summary>
         /// Gets or sets a value indicating whether an additional page should be printed.

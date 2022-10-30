@@ -9,7 +9,7 @@ namespace Alternet::UI
 
     bool PrintDocument::Printout::OnBeginDocument(int startPage, int endPage)
     {
-        return true;
+        return !_owner->RaiseEvent(PrintDocumentEvent::BeginPrint);
     }
 
     void PrintDocument::Printout::OnEndDocument()
@@ -22,6 +22,7 @@ namespace Alternet::UI
 
     void PrintDocument::Printout::OnEndPrinting()
     {
+        _owner->RaiseEvent(PrintDocumentEvent::EndPrint);
     }
 
     void PrintDocument::Printout::OnPreparePrinting()
@@ -102,7 +103,7 @@ namespace Alternet::UI
         wxPrintDialogData printDialogData(printData);
         wxPrinter printer(&printDialogData);
 
-        if (!printer.Print(ParkingWindow::GetWindow(), _printout, /*prompt:*/false))
+        if (!printer.Print(/*ParkingWindow::GetWindow()*/wxTheApp->GetMainTopWindow(), _printout, /*prompt:*/true))
         {
             if (wxPrinter::GetLastError() == wxPRINTER_ERROR)
                 throwEx(u"An error occured while printing.");
