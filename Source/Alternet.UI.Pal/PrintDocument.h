@@ -74,5 +74,6 @@ namespace Alternet::UI
         Duplex GetDuplexMode(wxDuplexMode value);
 
         void SetPrintRange(wxPrintDialogData& data, PrintRange range);
+        PrintRange GetPrintRangeFromData(wxPrintDialogData& data);
     };
 }

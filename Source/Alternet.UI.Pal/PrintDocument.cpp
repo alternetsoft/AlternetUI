@@ -422,6 +422,26 @@ namespace Alternet::UI
     void PrintDocument::ApplyData(wxPrintDialogData& data)
     {
         ApplyData(data.GetPrintData());
+
+        auto printerSettings = GetPrinterSettingsCore();
+
+        printerSettings->SetFromPage(data.GetFromPage());
+        printerSettings->SetToPage(data.GetToPage());
+        printerSettings->SetMinimumPage(data.GetMinPage());
+        printerSettings->SetMaximumPage(data.GetMaxPage());
+        printerSettings->SetPrintRange(GetPrintRangeFromData(data));
+        printerSettings->SetCollate(data.GetCollate());
+        printerSettings->SetCopies(data.GetNoCopies());
+        printerSettings->SetPrintToFile(data.GetPrintToFile());
+    }
+
+    PrintRange PrintDocument::GetPrintRangeFromData(wxPrintDialogData& data)
+    {
+        if (data.GetAllPages())
+            return PrintRange::AllPages;
+        if (data.GetSelection())
+            return PrintRange::Selection;
+        return PrintRange::SomePages;
     }
 
     void PrintDocument::ApplyData(wxPrintData& data)
