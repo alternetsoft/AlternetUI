@@ -18,7 +18,7 @@ namespace Alternet::UI
     {
 #include "Api/DrawingContext.inc"
     public:
-        DrawingContext(wxDC* dc);
+        DrawingContext(wxDC* dc, optional<std::function<void()>> onUseDC = nullopt);
         
         wxGraphicsContext* GetGraphicsContext();
         wxDC* GetDC();
@@ -52,5 +52,7 @@ namespace Alternet::UI
         Region* _clip = nullptr;
 
         bool _nonIdentityTransformSet = false;
+
+        optional<std::function<void()>> _onUseDC;
     };
 }

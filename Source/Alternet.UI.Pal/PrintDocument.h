@@ -42,6 +42,8 @@ namespace Alternet::UI
 
             bool GetHasMorePages();
             void SetHasMorePages(bool value);
+
+            void SetDCMapping();
         private:
             PrintDocument* _owner;
 

@@ -38,16 +38,8 @@ namespace PrintingSample
             var cornerRectLeft = new Rect(bounds.Location, cornerRectSize);
             var cornerRectRight = new Rect(bounds.TopRight - new Size(cornerRectSize.Width, 0), cornerRectSize);
 
-            dc.FillEllipse(Brushes.Gold, cornerRectLeft.InflatedBy(-5, -5));
-            dc.FillEllipse(Brushes.Gold, cornerRectRight.InflatedBy(-5, -5));
-
-            //dc.DrawEllipse(Pens.Goldenrod, cornerRectLeft.InflatedBy(-5, -5));
-            //dc.DrawEllipse(Pens.Goldenrod, cornerRectRight.InflatedBy(-5, -5));
-
-            //dc.DrawRectangle(Pens.Red, cornerRectLeft);
-            //dc.DrawRectangle(Pens.Red, cornerRectRight);
-
-            //dc.DrawLine(thickGrayPen, cornerRectLeft.Center, cornerRectRight.Center);
+            dc.DrawRectangle(Pens.Red, cornerRectLeft);
+            dc.DrawRectangle(Pens.Red, cornerRectRight);
 
             dc.DrawText(
                 "The quick brown fox jumps over the lazy dog.",
@@ -55,6 +47,14 @@ namespace PrintingSample
                 Brushes.Black,
                 bounds.OffsetBy(0, 50),
                 new TextFormat { Wrapping = TextWrapping.None });
+
+            dc.FillEllipse(Brushes.Gold, cornerRectLeft.InflatedBy(-5, -5));
+            dc.FillEllipse(Brushes.Gold, cornerRectRight.InflatedBy(-5, -5));
+
+            dc.DrawEllipse(Pens.Goldenrod, cornerRectLeft.InflatedBy(-5, -5));
+            dc.DrawEllipse(Pens.Goldenrod, cornerRectRight.InflatedBy(-5, -5));
+
+            dc.DrawLine(thickGrayPen, cornerRectLeft.Center, cornerRectRight.Center);
         }
 
         private void PrintImmediatelyMenuItem_Click(object sender, System.EventArgs e)
@@ -141,25 +141,25 @@ namespace PrintingSample
 
             int pageNumber = e.PageNumber;
 
+            var bounds = new Rect(new Point(), originAtMarginCheckBox.IsChecked ? e.MarginBounds.Size : e.PrintablePageBounds.Size);
+
             if (pageNumber == 1)
             {
                 DrawFirstPage(
                     e.DrawingContext,
-                    new Rect(
-                        new Point(),
-                        originAtMarginCheckBox.IsChecked ? e.MarginBounds.Size : e.PrintablePageBounds.Size));
+                    bounds);
             }
             else
             {
-                DrawAdditionalPage(e.DrawingContext, pageNumber);
+                DrawAdditionalPage(e.DrawingContext, pageNumber, bounds);
             }
 
             e.HasMorePages = pageNumber - 1 < additionalPagesCountNumericUpDown.Value;
         }
 
-        private void DrawAdditionalPage(DrawingContext dc, int pageNumber)
+        private void DrawAdditionalPage(DrawingContext dc, int pageNumber, Rect bounds)
         {
-            dc.DrawText("Additional page #" + pageNumber, font, Brushes.Black, new Point());
+            dc.DrawText("Additional page #" + pageNumber, font, Brushes.Black, bounds.Location + new Size(10, 10));
         }
 
         private void AboutMenuItem_Click(object sender, System.EventArgs e) => MessageBox.Show("AlterNET UI Printing Sample Application.", "About");

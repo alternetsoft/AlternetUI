@@ -17,10 +17,7 @@ namespace Alternet::UI
         if (!wxPrintout::OnBeginDocument(startPage, endPage))
             return false;
 
-        if (_owner->GetOriginAtMargins())
-            MapScreenSizeToPageMargins(_owner->GetPageSetupDialogData());
-        else
-            MapScreenSizeToPage();
+        SetDCMapping();
 
         _lastPrintedPageNumber = 0;
 
@@ -60,8 +57,19 @@ namespace Alternet::UI
 
     bool PrintDocument::Printout::OnPrintPage(int page)
     {
+        SetDCMapping();
         _lastPrintedPageNumber = page;
         return _owner->OnPrintPage(page);
+    }
+
+    void PrintDocument::Printout::SetDCMapping()
+    {
+        MapScreenSizeToDevice();
+
+        if (_owner->GetOriginAtMargins())
+            MapScreenSizeToPageMargins(_owner->GetPageSetupDialogData());
+        else
+            MapScreenSizeToPage();
     }
 
     void PrintDocument::Printout::GetPageInfo(int* minPage, int* maxPage, int* pageFrom, int* pageTo)
@@ -223,6 +231,7 @@ namespace Alternet::UI
         if (_printout == nullptr)
             throwExInvalidOp;
 
+        //return new DrawingContext(_printout->GetDC(), [&]() { _printout->SetDCMapping(); });
         return new DrawingContext(_printout->GetDC());
     }
 

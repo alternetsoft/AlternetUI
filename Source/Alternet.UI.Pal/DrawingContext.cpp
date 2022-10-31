@@ -5,7 +5,7 @@
 
 namespace Alternet::UI
 {
-    DrawingContext::DrawingContext(wxDC* dc) : _dc(dc)
+    DrawingContext::DrawingContext(wxDC* dc, optional<std::function<void()>> onUseDC /*= nullopt*/) : _dc(dc), _onUseDC(onUseDC)
     {
         assert(_dc);
         _graphicsContext = wxGraphicsContext::CreateFromUnknownDC(*_dc);
@@ -377,11 +377,17 @@ namespace Alternet::UI
 
     void DrawingContext::UseDC()
     {
+        if (_onUseDC != nullopt)
+            _onUseDC.value()();
+
         ApplyTransform(/*useDC:*/true);
     }
 
     void DrawingContext::UseGC()
     {
+        if (_onUseDC != nullopt)
+            _onUseDC.value()();
+
         ApplyTransform(/*useDC:*/false);
     }
 
@@ -497,6 +503,8 @@ namespace Alternet::UI
             auto p1 = fromDip(a, window);
             auto p2 = fromDip(b, window);
             _graphicsContext->StrokeLine(p1.x, p1.y, p2.x, p2.y);
+
+            _graphicsContext->Flush();
         }
     }
 
