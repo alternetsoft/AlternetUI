@@ -11,24 +11,6 @@ namespace Alternet::UI
     {
     }
 
-    PrinterSettings* PageSetupDialog::GetPrinterSettings()
-    {
-        return nullptr;
-    }
-
-    void PageSetupDialog::SetPrinterSettings(PrinterSettings* value)
-    {
-    }
-
-    PageSettings* PageSetupDialog::GetPageSettings()
-    {
-        return nullptr;
-    }
-
-    void PageSetupDialog::SetPageSettings(PageSettings* value)
-    {
-    }
-
     PrintDocument* PageSetupDialog::GetDocument()
     {
         return nullptr;

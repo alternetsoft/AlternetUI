@@ -3,8 +3,6 @@
 #pragma once
 
 #include "PageSetupDialog.h"
-#include "PrinterSettings.h"
-#include "PageSettings.h"
 #include "PrintDocument.h"
 #include "Window.h"
 #include "ApiUtils.h"
@@ -16,34 +14,6 @@ ALTERNET_UI_API PageSetupDialog* PageSetupDialog_Create_()
 {
     return MarshalExceptions<PageSetupDialog*>([&](){
             return new PageSetupDialog();
-        });
-}
-
-ALTERNET_UI_API PrinterSettings* PageSetupDialog_GetPrinterSettings_(PageSetupDialog* obj)
-{
-    return MarshalExceptions<PrinterSettings*>([&](){
-            return obj->GetPrinterSettings();
-        });
-}
-
-ALTERNET_UI_API void PageSetupDialog_SetPrinterSettings_(PageSetupDialog* obj, PrinterSettings* value)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetPrinterSettings(value);
-        });
-}
-
-ALTERNET_UI_API PageSettings* PageSetupDialog_GetPageSettings_(PageSetupDialog* obj)
-{
-    return MarshalExceptions<PageSettings*>([&](){
-            return obj->GetPageSettings();
-        });
-}
-
-ALTERNET_UI_API void PageSetupDialog_SetPageSettings_(PageSetupDialog* obj, PageSettings* value)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetPageSettings(value);
         });
 }
 

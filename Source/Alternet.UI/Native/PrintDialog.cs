@@ -108,24 +108,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public PrinterSettings? PrinterSettings
-        {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.PrintDialog_GetPrinterSettings_(NativePointer);
-                var m = NativeObject.GetFromNativePointer<PrinterSettings>(n, p => new PrinterSettings(p));
-                ReleaseNativeObjectPointer(n);
-                return m;
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.PrintDialog_SetPrinterSettings_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
-            }
-        }
-        
         public ModalResult ShowModal(Window? owner)
         {
             CheckDisposed();
@@ -172,12 +154,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PrintDialog_SetDocument_(IntPtr obj, IntPtr value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr PrintDialog_GetPrinterSettings_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PrintDialog_SetPrinterSettings_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern ModalResult PrintDialog_ShowModal_(IntPtr obj, IntPtr owner);

@@ -20,10 +20,6 @@ void SetShowHelp(bool value);
 PrintDocument* GetDocument();
 void SetDocument(PrintDocument* value);
 
-
-PrinterSettings* GetPrinterSettings();
-void SetPrinterSettings(PrinterSettings* value);
-
 ModalResult ShowModal(Window* owner);
 public:
 PrintDialog();

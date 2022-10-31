@@ -6,8 +6,6 @@ namespace NativeApi.Api
     public class PageSetupDialog
     {
         public ModalResult ShowModal(Window? owner) => throw new Exception();
-        public PrinterSettings? PrinterSettings { get => throw new Exception(); set => throw new Exception(); }
-        public PageSettings? PageSettings { get => throw new Exception(); set => throw new Exception(); }
         public PrintDocument? Document { get => throw new Exception(); set => throw new Exception(); }
 
         public Thickness MinMargins { get => throw new Exception(); set => throw new Exception(); }

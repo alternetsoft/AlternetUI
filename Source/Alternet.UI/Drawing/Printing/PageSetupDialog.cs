@@ -26,38 +26,6 @@ namespace Alternet.UI
     public sealed class PageSetupDialog : CommonDialog
     {
         /// <summary>
-        /// Gets or sets the printer settings that are modified in the dialog.
-        /// </summary>
-        public PrinterSettings? PrinterSettings
-        {
-            get
-            {
-                return nativeDialog.PrinterSettings == null ? null : new PrinterSettings(nativeDialog.PrinterSettings);
-            }
-
-            set
-            {
-                nativeDialog.PrinterSettings = value == null ? null : value.NativePrinterSettings;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating the page settings to modify.
-        /// </summary>
-        public PageSettings? PageSettings
-        {
-            get
-            {
-                return nativeDialog.PageSettings == null ? null : new PageSettings(nativeDialog.PageSettings);
-            }
-
-            set
-            {
-                nativeDialog.PageSettings = value == null ? null : value.NativePageSettings;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating the <see cref="PrintDocument"/> to get page settings from.
         /// </summary>
         public PrintDocument? Document

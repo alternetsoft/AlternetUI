@@ -4,7 +4,6 @@
 
 #include "PrintDialog.h"
 #include "PrintDocument.h"
-#include "PrinterSettings.h"
 #include "Window.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
@@ -85,20 +84,6 @@ ALTERNET_UI_API void PrintDialog_SetDocument_(PrintDialog* obj, PrintDocument* v
 {
     MarshalExceptions<void>([&](){
             obj->SetDocument(value);
-        });
-}
-
-ALTERNET_UI_API PrinterSettings* PrintDialog_GetPrinterSettings_(PrintDialog* obj)
-{
-    return MarshalExceptions<PrinterSettings*>([&](){
-            return obj->GetPrinterSettings();
-        });
-}
-
-ALTERNET_UI_API void PrintDialog_SetPrinterSettings_(PrintDialog* obj, PrinterSettings* value)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetPrinterSettings(value);
         });
 }
 

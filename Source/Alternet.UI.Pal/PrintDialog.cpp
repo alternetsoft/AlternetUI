@@ -1,5 +1,6 @@
 #include "PrintDialog.h"
 #include "Window.h"
+#include "PrintDocument.h"
 
 namespace Alternet::UI
 {
@@ -9,69 +10,88 @@ namespace Alternet::UI
 
     PrintDialog::~PrintDialog()
     {
+        SetDocument(nullptr);
     }
 
     bool PrintDialog::GetAllowSomePages()
     {
-        return false;
+        return _allowSomePages;
     }
 
     void PrintDialog::SetAllowSomePages(bool value)
     {
+        _allowSomePages = value;
     }
 
     bool PrintDialog::GetAllowSelection()
     {
-        return false;
+        return _allowSelection;
     }
 
     void PrintDialog::SetAllowSelection(bool value)
     {
+        _allowSelection = value;
     }
 
     bool PrintDialog::GetAllowPrintToFile()
     {
-        return false;
+        return _allowPrintToFile;
     }
 
     void PrintDialog::SetAllowPrintToFile(bool value)
     {
+        _allowPrintToFile = value;
     }
 
     bool PrintDialog::GetShowHelp()
     {
-        return false;
+        return _showHelp;
     }
 
     void PrintDialog::SetShowHelp(bool value)
     {
+        _showHelp = value;
     }
 
     PrintDocument* PrintDialog::GetDocument()
     {
-        return nullptr;
+        _document->AddRef();
+        return _document;
     }
 
     void PrintDialog::SetDocument(PrintDocument* value)
     {
+        if (_document != nullptr)
+            _document->Release();
+
+        _document = value;
+
+        if (_document != nullptr)
+            _document->AddRef();
     }
 
-    PrinterSettings* PrintDialog::GetPrinterSettings()
-    {
-        return nullptr;
-    }
 
-    void PrintDialog::SetPrinterSettings(PrinterSettings* value)
+    void PrintDialog::ApplyProperties(wxPrintDialogData& data)
     {
+        data.EnablePageNumbers(_allowSomePages);
+        data.EnableSelection(_allowSelection);
+        data.EnablePrintToFile(_allowPrintToFile);
+        data.EnableHelp(_showHelp);
     }
 
     ModalResult PrintDialog::ShowModal(Window* owner)
     {
-        wxPrintDialogData data;
+        if (_document == nullptr)
+            throwExInvalidOpWithInfo(u"Cannot show the print dialog when the document is null.");
+
+        auto data = _document->GetPrintDialogData();
+        ApplyProperties(data);
+
         wxPrintDialog dialog(owner == nullptr ? nullptr : owner->GetWxWindow(), &data);
 
         auto result = dialog.ShowModal();
 
-        return result == wxID_OK ? ModalResult::Accepted : ModalResult::Canceled;
+        bool accepted = result == wxID_OK;
+        return accepted ? ModalResult::Accepted : ModalResult::Canceled;
     }
 }

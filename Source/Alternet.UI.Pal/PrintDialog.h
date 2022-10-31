@@ -16,6 +16,13 @@ namespace Alternet::UI
     public:
 
     private:
-    
+        PrintDocument* _document = nullptr;
+
+        bool _allowSomePages = true;
+        bool _allowSelection = true;
+        bool _allowPrintToFile = true;
+        bool _showHelp = true;
+
+        void ApplyProperties(wxPrintDialogData& data);
     };
 }

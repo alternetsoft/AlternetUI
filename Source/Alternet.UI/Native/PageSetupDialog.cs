@@ -22,42 +22,6 @@ namespace Alternet.UI.Native
         {
         }
         
-        public PrinterSettings? PrinterSettings
-        {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.PageSetupDialog_GetPrinterSettings_(NativePointer);
-                var m = NativeObject.GetFromNativePointer<PrinterSettings>(n, p => new PrinterSettings(p));
-                ReleaseNativeObjectPointer(n);
-                return m;
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.PageSetupDialog_SetPrinterSettings_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
-            }
-        }
-        
-        public PageSettings? PageSettings
-        {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.PageSetupDialog_GetPageSettings_(NativePointer);
-                var m = NativeObject.GetFromNativePointer<PageSettings>(n, p => new PageSettings(p));
-                ReleaseNativeObjectPointer(n);
-                return m;
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.PageSetupDialog_SetPageSettings_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
-            }
-        }
-        
         public PrintDocument? Document
         {
             get
@@ -194,18 +158,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PageSetupDialog_Create_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr PageSetupDialog_GetPrinterSettings_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSetupDialog_SetPrinterSettings_(IntPtr obj, IntPtr value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr PageSetupDialog_GetPageSettings_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSetupDialog_SetPageSettings_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PageSetupDialog_GetDocument_(IntPtr obj);
