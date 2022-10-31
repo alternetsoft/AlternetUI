@@ -293,7 +293,7 @@ namespace Alternet::UI
         data.SetMinPage(printerSettings->GetMinimumPage());
         data.SetMaxPage(printerSettings->GetMaximumPage());
 
-        ApplyPrintRange(data, printerSettings->GetPrintRange());
+        SetPrintRange(data, printerSettings->GetPrintRange());
 
         data.SetCollate(printerSettings->GetCollate());
         data.SetNoCopies(printerSettings->GetCopies());
@@ -351,6 +351,23 @@ namespace Alternet::UI
         }
     }
 
+    PrinterResolutionKind PrintDocument::GetPrintQuality(wxPrintQuality value)
+    {
+        switch (value)
+        {
+        case wxPRINT_QUALITY_DRAFT:
+            return PrinterResolutionKind::Draft;
+        case wxPRINT_QUALITY_LOW:
+            return PrinterResolutionKind::Low;
+        case wxPRINT_QUALITY_MEDIUM:
+            return PrinterResolutionKind::Medium;
+        case wxPRINT_QUALITY_HIGH:
+            return PrinterResolutionKind::High;
+        default:
+            return PrinterResolutionKind::High; // For values like "600". This is a DPI.
+        }
+    }
+
     wxDuplexMode PrintDocument::GetWxDuplexMode(Duplex value)
     {
         switch (value)
@@ -366,7 +383,22 @@ namespace Alternet::UI
         }
     }
 
-    void PrintDocument::ApplyPrintRange(wxPrintDialogData& data, PrintRange range)
+    Duplex PrintDocument::GetDuplexMode(wxDuplexMode value)
+    {
+        switch (value)
+        {
+        case wxDUPLEX_SIMPLEX:
+            return Duplex::Simplex;
+        case wxDUPLEX_HORIZONTAL:
+            return Duplex::Horizontal;
+        case wxDUPLEX_VERTICAL:
+            return Duplex::Vertical;
+        default:
+            throwExNoInfo;
+        }
+    }
+
+    void PrintDocument::SetPrintRange(wxPrintDialogData& data, PrintRange range)
     {
         switch (range)
         {
@@ -385,5 +417,36 @@ namespace Alternet::UI
         default:
             throwExNoInfo;
         }
+    }
+
+    void PrintDocument::ApplyData(wxPrintDialogData& data)
+    {
+        ApplyData(data.GetPrintData());
+    }
+
+    void PrintDocument::ApplyData(wxPrintData& data)
+    {
+        auto printerSettings = GetPrinterSettingsCore();
+        auto pageSettings = GetPageSettingsCore();
+
+        printerSettings->SetPrinterName(data.GetPrinterName() == "" ? nullopt : optional<string>(wxStr(data.GetPrinterName())));
+        printerSettings->SetPrintFileName(data.GetFilename() == "" ? nullopt : optional<string>(wxStr(data.GetFilename())));
+        printerSettings->SetDuplex(GetDuplexMode(data.GetDuplex()));
+        pageSettings->SetColor(data.GetColour());
+        pageSettings->SetLandscape(data.GetOrientation() == wxPrintOrientation::wxLANDSCAPE);
+
+        if (data.GetPaperId() == wxPaperSize::wxPAPER_NONE)
+        {
+            pageSettings->SetUseCustomPaperSize(true);
+            auto paperSize = data.GetPaperSize();
+            pageSettings->SetCustomPaperSize(Size(paperSize.x, paperSize.y));
+        }
+        else
+        {
+            pageSettings->SetUseCustomPaperSize(false);
+            pageSettings->SetPaperSize(GetPaperSize(data.GetPaperId()));
+        }
+
+        pageSettings->SetPrinterResolution(GetPrintQuality(data.GetQuality()));
     }
 }

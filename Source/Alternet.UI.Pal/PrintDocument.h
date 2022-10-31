@@ -22,6 +22,9 @@ namespace Alternet::UI
         wxPrintDialogData GetPrintDialogData();
         wxPrintData GetPrintData();
 
+        void ApplyData(wxPrintDialogData& data);
+        void ApplyData(wxPrintData& data);
+
     private:
         class Printout : public wxPrintout
         {
@@ -65,8 +68,11 @@ namespace Alternet::UI
         PrinterSettings* GetPrinterSettingsCore();
 
         wxPrintQuality GetWxPrintQuality(PrinterResolutionKind value);
-        wxDuplexMode GetWxDuplexMode(Duplex value);
+        PrinterResolutionKind GetPrintQuality(wxPrintQuality value);
 
-        void ApplyPrintRange(wxPrintDialogData& data, PrintRange range);
+        wxDuplexMode GetWxDuplexMode(Duplex value);
+        Duplex GetDuplexMode(wxDuplexMode value);
+
+        void SetPrintRange(wxPrintDialogData& data, PrintRange range);
     };
 }

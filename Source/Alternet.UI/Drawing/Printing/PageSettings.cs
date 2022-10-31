@@ -68,8 +68,6 @@ namespace Alternet.Drawing.Printing
         /// Gets or sets the margins for this page.
         /// </summary>
         /// <value>A <see cref="Printing.Margins"/> value that represents the margins, in millimeters, for the page.</value>
-        /// <remarks>When handling the <see cref="PrintDocument.PrintPage"/> event, you can use this property along with
-        /// the <see cref="Bounds"/> property to calculate the printing area for the page.</remarks>
         public Margins Margins
         {
             get

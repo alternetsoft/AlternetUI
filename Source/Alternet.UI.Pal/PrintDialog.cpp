@@ -92,6 +92,10 @@ namespace Alternet::UI
         auto result = dialog.ShowModal();
 
         bool accepted = result == wxID_OK;
+
+        if (accepted)
+            _document->ApplyData(dialog.GetPrintDialogData());
+
         return accepted ? ModalResult::Accepted : ModalResult::Canceled;
     }
 }
