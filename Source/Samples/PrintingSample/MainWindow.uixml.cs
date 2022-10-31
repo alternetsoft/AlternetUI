@@ -62,6 +62,7 @@ namespace PrintingSample
                 DocumentName = printDocumentNameTextBox.Text,
             };
 
+            document.DefaultPageSettings.Color = printInColorCheckBox.IsChecked;
             document.DefaultPageSettings.Margins = TryGetPageMargins() ?? new Margins();
 
             return document;

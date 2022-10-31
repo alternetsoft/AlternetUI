@@ -18,7 +18,7 @@ namespace Alternet::UI
             return false;
 
         if (_owner->GetOriginAtMargins())
-            MapScreenSizeToPageMargins(_owner->GetDefaultPageSettingsCore()->GetPageSetupDialogData());
+            MapScreenSizeToPageMargins(_owner->GetPageSetupDialogData());
         else
             MapScreenSizeToPage();
 
@@ -169,9 +169,8 @@ namespace Alternet::UI
                 DeletePrintout();
             });
 
-        wxPrintData printData;
-        wxPrintDialogData printDialogData(printData);
-        wxPrinter printer(&printDialogData);
+        auto printDialogData = GetPrintDialogData();
+        wxPrinter printer(& printDialogData);
 
         printer.Print(nullptr, _printout, /*prompt:*/false);
     }
@@ -256,7 +255,7 @@ namespace Alternet::UI
         if (_printout == nullptr)
             throwExInvalidOp;
 
-        auto rect = _printout->GetLogicalPageMarginsRect(GetDefaultPageSettingsCore()->GetPageSetupDialogData());
+        auto rect = _printout->GetLogicalPageMarginsRect(GetPageSetupDialogData());
         return toDip(rect, nullptr);
     }
 
@@ -286,5 +285,35 @@ namespace Alternet::UI
 
         auto rect = _printout->GetLogicalPageRect();
         return toDip(rect, nullptr);
+    }
+
+    wxPageSetupDialogData PrintDocument::GetPageSetupDialogData()
+    {
+        wxPageSetupDialogData data;
+
+        auto settings = GetDefaultPageSettingsCore();
+
+        auto m = settings->GetMargins();
+
+        data.SetMarginTopLeft(wxPoint(fromDip(m.Left, nullptr), fromDip(m.Top, nullptr)));
+        data.SetMarginBottomRight(wxPoint(fromDip(m.Right, nullptr), fromDip(m.Bottom, nullptr)));
+
+        return data;
+    }
+
+    wxPrintDialogData PrintDocument::GetPrintDialogData()
+    {
+        wxPrintDialogData data(GetPrintData());
+        return data;
+    }
+
+    wxPrintData PrintDocument::GetPrintData()
+    {
+        wxPrintData data;
+
+        auto settings = GetDefaultPageSettingsCore();
+        data.SetColour(settings->GetColor());
+
+        return data;
     }
 }

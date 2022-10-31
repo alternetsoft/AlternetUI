@@ -22,18 +22,6 @@ namespace Alternet.UI.Native
         {
         }
         
-        public Alternet.Drawing.Rect Bounds
-        {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.PageSettings_GetBounds_(NativePointer);
-                var m = n;
-                return m;
-            }
-            
-        }
-        
         public bool Color
         {
             get
@@ -179,9 +167,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PageSettings_Create_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Rect PageSettings_GetBounds_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PageSettings_GetColor_(IntPtr obj);

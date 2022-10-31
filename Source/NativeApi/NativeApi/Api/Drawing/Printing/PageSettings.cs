@@ -6,7 +6,6 @@ namespace NativeApi.Api
 {
     public class PageSettings
     {
-        public Rect Bounds { get; }
         public bool Color { get; set; }
         public bool Landscape { get; set; }
         public Thickness Margins { get; set; }

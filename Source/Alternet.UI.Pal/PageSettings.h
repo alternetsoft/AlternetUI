@@ -11,11 +11,10 @@ namespace Alternet::UI
     {
 #include "Api/PageSettings.inc"
     public:
-        wxPageSetupDialogData GetPageSetupDialogData();
 
     private:
-        wxPageSetupDialogData _pageSetupDialogData;
 
+        bool _color = true;
         Thickness _margins;
     };
 }

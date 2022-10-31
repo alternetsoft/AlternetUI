@@ -16,13 +16,6 @@ ALTERNET_UI_API PageSettings* PageSettings_Create_()
         });
 }
 
-ALTERNET_UI_API Rect_C PageSettings_GetBounds_(PageSettings* obj)
-{
-    return MarshalExceptions<Rect_C>([&](){
-            return obj->GetBounds();
-        });
-}
-
 ALTERNET_UI_API c_bool PageSettings_GetColor_(PageSettings* obj)
 {
     return MarshalExceptions<c_bool>([&](){

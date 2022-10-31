@@ -31,23 +31,6 @@ namespace Alternet.Drawing.Printing
         internal UI.Native.PageSettings NativePageSettings { get; private set; }
 
         /// <summary>
-        /// Gets the size of the page, taking into account the page orientation specified by the <see cref="Landscape"/> property.
-        /// </summary>
-        /// <value>
-        /// A <see cref="Rect"/> that represents the length and width, in millimeters, of the page.
-        /// </value>
-        /// <remarks>
-        /// Use the <see cref="Bounds"/> property along with the <see cref="Margins"/> property to calculate the printing area for the page.
-        /// </remarks>
-        public Rect Bounds
-        {
-            get
-            {
-                return NativePageSettings.Bounds;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the page should be printed in color.
         /// </summary>
         /// <value><see langword="true"/> if the page should be printed in color; otherwise, <see langword="false"/>.</value>

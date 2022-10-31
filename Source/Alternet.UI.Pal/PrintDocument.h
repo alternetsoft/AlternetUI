@@ -17,6 +17,11 @@ namespace Alternet::UI
         void DeletePrintout();
         void ClearPrintout();
 
+        wxPageSetupDialogData GetPageSetupDialogData();
+
+        wxPrintDialogData GetPrintDialogData();
+        wxPrintData GetPrintData();
+
     private:
         class Printout : public wxPrintout
         {

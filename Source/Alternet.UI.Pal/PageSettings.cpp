@@ -11,18 +11,14 @@ namespace Alternet::UI
     {
     }
     
-    Rect PageSettings::GetBounds()
-    {
-        return Rect();
-    }
-    
     bool PageSettings::GetColor()
     {
-        return false;
+        return _color;
     }
     
     void PageSettings::SetColor(bool value)
     {
+        _color = value;
     }
     
     bool PageSettings::GetLandscape()
@@ -87,13 +83,5 @@ namespace Alternet::UI
 
     void PageSettings::SetUseCustomPaperSize(bool value)
     {
-    }
-
-    wxPageSetupDialogData PageSettings::GetPageSetupDialogData()
-    {
-        _pageSetupDialogData.SetMarginTopLeft(wxPoint(fromDip(_margins.Left, nullptr), fromDip(_margins.Top, nullptr)));
-        _pageSetupDialogData.SetMarginBottomRight(wxPoint(fromDip(_margins.Right, nullptr), fromDip(_margins.Bottom, nullptr)));
-
-        return _pageSetupDialogData;
     }
 }

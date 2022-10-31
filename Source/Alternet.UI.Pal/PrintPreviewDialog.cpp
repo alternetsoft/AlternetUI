@@ -55,10 +55,9 @@ namespace Alternet::UI
 
         _state->previewPrintout = _document->CreatePrintout();
 
-        wxPrintData printData;
-        wxPrintDialogData printDialogData(printData);
+        auto printData = _document->GetPrintData();
 
-        _state->printPreview = new wxPrintPreview(_state->previewPrintout, nullptr, & printDialogData);
+        _state->printPreview = new wxPrintPreview(_state->previewPrintout, nullptr, &printData);
         if (!_state->printPreview->IsOk())
             throwEx(u"Print preview failed.");
 
