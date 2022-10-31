@@ -24,6 +24,7 @@ namespace Alternet::UI
 
         void ApplyData(wxPrintDialogData& data);
         void ApplyData(wxPrintData& data);
+        void ApplyData(wxPageSetupDialogData& data);
 
     private:
         class Printout : public wxPrintout
@@ -41,7 +42,6 @@ namespace Alternet::UI
             virtual bool HasPage(int page) override;
             virtual bool OnPrintPage(int page) override;
             virtual void GetPageInfo(int* minPage, int* maxPage, int* pageFrom, int* pageTo) override;
-
 
             bool GetHasMorePages();
             void SetHasMorePages(bool value);

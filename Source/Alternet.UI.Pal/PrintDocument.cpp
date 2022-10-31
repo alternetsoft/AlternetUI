@@ -435,6 +435,21 @@ namespace Alternet::UI
         printerSettings->SetPrintToFile(data.GetPrintToFile());
     }
 
+    void PrintDocument::ApplyData(wxPageSetupDialogData& data)
+    {
+        auto pageSettings = GetPageSettingsCore();
+
+        auto topLeft = data.GetMarginTopLeft();
+        auto bottomRight = data.GetMarginBottomRight();
+
+        pageSettings->SetMargins(
+            Thickness(
+                toDip(topLeft.x, nullptr),
+                toDip(topLeft.y, nullptr),
+                toDip(bottomRight.x, nullptr),
+                toDip(bottomRight.y, nullptr)));
+    }
+
     PrintRange PrintDocument::GetPrintRangeFromData(wxPrintDialogData& data)
     {
         if (data.GetAllPages())

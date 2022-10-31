@@ -70,7 +70,6 @@ namespace Alternet::UI
             _document->AddRef();
     }
 
-
     void PrintDialog::ApplyProperties(wxPrintDialogData& data)
     {
         data.EnablePageNumbers(_allowSomePages);

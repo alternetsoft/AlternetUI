@@ -16,6 +16,15 @@ namespace Alternet::UI
     public:
 
     private:
-    
+        void ApplyProperties(wxPageSetupDialogData& data);
+
+        PrintDocument* _document = nullptr;
+
+        Thickness _minMargins;
+        bool _minMarginsValueSet = false;
+        bool _allowMargins = true;
+        bool _allowOrientation = true;
+        bool _allowPaper = true;
+        bool _allowPrinter = true;
     };
 }
