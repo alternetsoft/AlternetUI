@@ -63,13 +63,13 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="owner">The owner window for the dialog.</param>
         /// <exception cref="InvalidOperationException">The <see cref="Document"/> property value is <see langword="null"/>.</exception>
-        public void Show(Window? owner = null)
+        public void ShowModal(Window? owner = null)
         {
             if (NativePrintPreviewDialog.Document == null)
                 throw new InvalidOperationException("Cannot show the print preview dialog when the Document property value is null.");
 
             var nativeOwner = owner == null ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
-            NativePrintPreviewDialog.Show(nativeOwner);
+            NativePrintPreviewDialog.ShowModal(nativeOwner);
         }
 
         /// <summary>

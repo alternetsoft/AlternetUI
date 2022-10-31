@@ -57,10 +57,10 @@ namespace Alternet.UI.Native
             }
         }
         
-        public void Show(Window? owner)
+        public void ShowModal(Window? owner)
         {
             CheckDisposed();
-            NativeApi.PrintPreviewDialog_Show_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
+            NativeApi.PrintPreviewDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
         }
         
         
@@ -85,7 +85,7 @@ namespace Alternet.UI.Native
             public static extern void PrintPreviewDialog_SetDocument_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PrintPreviewDialog_Show_(IntPtr obj, IntPtr owner);
+            public static extern void PrintPreviewDialog_ShowModal_(IntPtr obj, IntPtr owner);
             
         }
     }

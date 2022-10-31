@@ -40,7 +40,7 @@ namespace Alternet::UI
         _title = value;
     }
 
-    void PrintPreviewDialog::Show(Window* owner)
+    void PrintPreviewDialog::ShowModal(Window* owner)
     {
         if (_state != nullptr)
             return;
@@ -69,9 +69,13 @@ namespace Alternet::UI
             wxDefaultPosition,
             wxSize(800, 600));
         
-        _state->frame->InitializeWithModality(wxPreviewFrameModalityKind::wxPreviewFrame_NonModal);
+        _state->frame->InitializeWithModality(wxPreviewFrameModalityKind::wxPreviewFrame_AppModal);
         _state->frame->Bind(wxEVT_CLOSE_WINDOW, &PrintPreviewDialog::OnClose, this);
         _state->frame->Show();
+        
+        auto loop = _state->eventLoop = new wxEventLoop();
+        loop->Run();
+        delete loop;
     }
 
     void PrintPreviewDialog::OnClose(wxCloseEvent& event)
@@ -85,6 +89,8 @@ namespace Alternet::UI
         
         _state->document->ClearPrintout();
         _state->document->Release();
+
+        _state->eventLoop->Exit();
 
         _state = nullptr;
     }

@@ -8,7 +8,7 @@ void SetTitle(optional<string> value);
 PrintDocument* GetDocument();
 void SetDocument(PrintDocument* value);
 
-void Show(Window* owner);
+void ShowModal(Window* owner);
 public:
 PrintPreviewDialog();
 protected:

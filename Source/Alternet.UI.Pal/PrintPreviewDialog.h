@@ -23,6 +23,7 @@ namespace Alternet::UI
             wxPrintout* previewPrintout = nullptr;
             wxPreviewFrame* frame = nullptr;
             wxPrintPreview* printPreview = nullptr;
+            wxEventLoop* eventLoop = nullptr;
         };
 
         State* _state = nullptr;

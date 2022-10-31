@@ -45,10 +45,10 @@ ALTERNET_UI_API void PrintPreviewDialog_SetDocument_(PrintPreviewDialog* obj, Pr
         });
 }
 
-ALTERNET_UI_API void PrintPreviewDialog_Show_(PrintPreviewDialog* obj, Window* owner)
+ALTERNET_UI_API void PrintPreviewDialog_ShowModal_(PrintPreviewDialog* obj, Window* owner)
 {
     MarshalExceptions<void>([&](){
-            obj->Show(owner);
+            obj->ShowModal(owner);
         });
 }
 
