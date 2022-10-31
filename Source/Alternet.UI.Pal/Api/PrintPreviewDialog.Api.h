@@ -17,6 +17,20 @@ ALTERNET_UI_API PrintPreviewDialog* PrintPreviewDialog_Create_()
         });
 }
 
+ALTERNET_UI_API char16_t* PrintPreviewDialog_GetTitle_(PrintPreviewDialog* obj)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetTitle());
+        });
+}
+
+ALTERNET_UI_API void PrintPreviewDialog_SetTitle_(PrintPreviewDialog* obj, const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetTitle(ToOptional(value));
+        });
+}
+
 ALTERNET_UI_API PrintDocument* PrintPreviewDialog_GetDocument_(PrintPreviewDialog* obj)
 {
     return MarshalExceptions<PrintDocument*>([&](){
@@ -31,10 +45,10 @@ ALTERNET_UI_API void PrintPreviewDialog_SetDocument_(PrintPreviewDialog* obj, Pr
         });
 }
 
-ALTERNET_UI_API ModalResult PrintPreviewDialog_ShowModal_(PrintPreviewDialog* obj, Window* owner)
+ALTERNET_UI_API void PrintPreviewDialog_Show_(PrintPreviewDialog* obj, Window* owner)
 {
-    return MarshalExceptions<ModalResult>([&](){
-            return obj->ShowModal(owner);
+    MarshalExceptions<void>([&](){
+            obj->Show(owner);
         });
 }
 

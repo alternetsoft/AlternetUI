@@ -6,8 +6,22 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a dialog box form that contains a preview for printing from an AlterNET UI application.
     /// </summary>
-    public sealed class PrintPreviewDialog : CommonDialog
+    public class PrintPreviewDialog : IDisposable
     {
+        private bool isDisposed;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PrintPreviewDialog"/> class.
+        /// </summary>
+        public PrintPreviewDialog() : this(new Native.PrintPreviewDialog())
+        {
+        }
+
+        internal PrintPreviewDialog(Native.PrintPreviewDialog nativePrintPreviewDialog)
+        {
+            NativePrintPreviewDialog = nativePrintPreviewDialog;
+        }
+
         /// <summary>
         /// Gets or sets the document to preview.
         /// </summary>
@@ -15,36 +29,65 @@ namespace Alternet.UI
         {
             get
             {
-                return nativeDialog.Document == null ? null : new PrintDocument(nativeDialog.Document);
+                return NativePrintPreviewDialog.Document == null ? null : new PrintDocument(NativePrintPreviewDialog.Document);
             }
 
             set
             {
-                nativeDialog.Document = value == null ? null : value.NativePrintDocument;
+                NativePrintPreviewDialog.Document = value == null ? null : value.NativePrintDocument;
             }
         }
 
-        private Native.PrintPreviewDialog nativeDialog;
-
         /// <summary>
-        /// Initializes a new instance of <see cref="PrintPreviewDialog"/>.
+        /// Gets or sets the title of this <see cref="PrintPreviewDialog"/>.
         /// </summary>
-        public PrintPreviewDialog()
+        public string? Title
         {
-            nativeDialog = new Native.PrintPreviewDialog();
+            get => NativePrintPreviewDialog.Title;
+            set => NativePrintPreviewDialog.Title = value;
         }
 
-        private protected override ModalResult ShowModalCore(Window? owner)
-        {
-            CheckDisposed();
+        internal Native.PrintPreviewDialog NativePrintPreviewDialog { get; private set; }
 
-            if (nativeDialog.Document == null)
+        /// <summary>
+        /// Releases all resources used by the <see cref="PrintDocument"/> object.
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Shows the <see cref="PrintPreviewDialog"/> with the specified optional owner window.
+        /// </summary>
+        /// <param name="owner">The owner window for the dialog.</param>
+        /// <exception cref="InvalidOperationException">The <see cref="Document"/> property value is <see langword="null"/>.</exception>
+        public void Show(Window? owner = null)
+        {
+            if (NativePrintPreviewDialog.Document == null)
                 throw new InvalidOperationException("Cannot show the print preview dialog when the Document property value is null.");
 
             var nativeOwner = owner == null ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
-            return (ModalResult)nativeDialog.ShowModal(nativeOwner);
+            NativePrintPreviewDialog.Show(nativeOwner);
         }
 
-        private protected override string? TitleCore { get; set; }
+        /// <summary>
+        /// Releases the unmanaged resources used by the <see cref="PrintPreviewDialog"/> and optionally releases the managed resources.
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!isDisposed)
+            {
+                if (disposing)
+                {
+                    NativePrintPreviewDialog.Dispose();
+                    NativePrintPreviewDialog = null!;
+                }
+
+                isDisposed = true;
+            }
+        }
     }
 }

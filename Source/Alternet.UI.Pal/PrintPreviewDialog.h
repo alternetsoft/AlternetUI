@@ -13,8 +13,8 @@ namespace Alternet::UI
 #include "Api/PrintPreviewDialog.inc"
     public:
 
-
     private:
         PrintDocument* _document = nullptr;
+        optional<string> _title;
     };
 }

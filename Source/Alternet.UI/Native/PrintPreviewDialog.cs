@@ -22,6 +22,23 @@ namespace Alternet.UI.Native
         {
         }
         
+        public string? Title
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrintPreviewDialog_GetTitle_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrintPreviewDialog_SetTitle_(NativePointer, value);
+            }
+        }
+        
         public PrintDocument? Document
         {
             get
@@ -40,12 +57,10 @@ namespace Alternet.UI.Native
             }
         }
         
-        public ModalResult ShowModal(Window? owner)
+        public void Show(Window? owner)
         {
             CheckDisposed();
-            var n = NativeApi.PrintPreviewDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
-            var m = n;
-            return m;
+            NativeApi.PrintPreviewDialog_Show_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
         }
         
         
@@ -58,13 +73,19 @@ namespace Alternet.UI.Native
             public static extern IntPtr PrintPreviewDialog_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string? PrintPreviewDialog_GetTitle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrintPreviewDialog_SetTitle_(IntPtr obj, string? value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PrintPreviewDialog_GetDocument_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PrintPreviewDialog_SetDocument_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern ModalResult PrintPreviewDialog_ShowModal_(IntPtr obj, IntPtr owner);
+            public static extern void PrintPreviewDialog_Show_(IntPtr obj, IntPtr owner);
             
         }
     }

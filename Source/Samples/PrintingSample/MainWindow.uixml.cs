@@ -75,11 +75,7 @@ namespace PrintingSample
 
             document.PrintPage += Document_PrintPage;
             dialog.Document = document;
-
-            if (dialog.ShowModal() == ModalResult.Accepted)
-            {
-                document.Print();
-            }
+            dialog.Show();
         }
 
         private void Document_PrintPage(object? sender, PrintPageEventArgs e)

@@ -30,7 +30,17 @@ namespace Alternet::UI
             _document->AddRef();
     }
 
-    ModalResult PrintPreviewDialog::ShowModal(Window* owner)
+    optional<string> PrintPreviewDialog::GetTitle()
+    {
+        return _title;
+    }
+
+    void PrintPreviewDialog::SetTitle(optional<string> value)
+    {
+        _title = value;
+    }
+
+    void PrintPreviewDialog::Show(Window* owner)
     {
         if (_document == nullptr)
             throwExInvalidOpWithInfo(u"Cannot show the print preview dialog when the document is null.");
@@ -43,7 +53,6 @@ namespace Alternet::UI
                 delete previewPrintout;
             });
 
-
         wxPrintData printData;
         wxPrintDialogData printDialogData(printData);
 
@@ -54,9 +63,9 @@ namespace Alternet::UI
         auto frame = new wxPreviewFrame(
             &preview,
             owner == nullptr ? ParkingWindow::GetWindow() : owner->GetWxWindow(),
-            "Print Preview");
-        frame->InitializeWithModality(wxPreviewFrameModalityKind::wxPreviewFrame_AppModal);
+            wxStr(_title.value_or(u"Print Preview")));
+        
+        frame->InitializeWithModality(wxPreviewFrameModalityKind::wxPreviewFrame_NonModal);
         frame->Show();
-        return ModalResult::None;
     }
 }
