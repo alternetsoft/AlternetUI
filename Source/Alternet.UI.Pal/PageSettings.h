@@ -15,6 +15,7 @@ namespace Alternet::UI
     private:
 
         bool _color = true;
+        bool _landscape = false;
         Thickness _margins;
     };
 }

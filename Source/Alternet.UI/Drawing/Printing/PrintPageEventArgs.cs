@@ -42,14 +42,6 @@ namespace Alternet.Drawing.Printing
         public bool HasMorePages { get => nativePrintDocument.PrintPage_HasMorePages; set => nativePrintDocument.PrintPage_HasMorePages = value; }
 
         /// <summary>
-        /// Gets the page settings for the current page.
-        /// </summary>
-        /// <value>
-        /// The page settings for the current page.
-        /// </value>
-        public PageSettings PageSettings { get => new PageSettings(nativePrintDocument.PrintPage_PageSettings); }
-
-        /// <summary>
         /// Gets the rectangular area that represents the portion of the page inside the margins, in device-independent
         /// units (1/96th inch per unit).
         /// </summary>

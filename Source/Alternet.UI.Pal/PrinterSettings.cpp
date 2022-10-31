@@ -64,13 +64,6 @@ namespace Alternet::UI
     void PrinterSettings::SetCopies(int value)
     {
     }
-    PageSettings* PrinterSettings::GetDefaultPageSettings()
-    {
-        return nullptr;
-    }
-    void PrinterSettings::SetDefaultPageSettings(PageSettings* value)
-    {
-    }
     bool PrinterSettings::GetPrintToFile()
     {
         return false;

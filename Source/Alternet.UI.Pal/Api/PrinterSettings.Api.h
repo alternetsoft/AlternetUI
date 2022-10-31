@@ -3,7 +3,6 @@
 #pragma once
 
 #include "PrinterSettings.h"
-#include "PageSettings.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -125,20 +124,6 @@ ALTERNET_UI_API void PrinterSettings_SetCopies_(PrinterSettings* obj, int value)
 {
     MarshalExceptions<void>([&](){
             obj->SetCopies(value);
-        });
-}
-
-ALTERNET_UI_API PageSettings* PrinterSettings_GetDefaultPageSettings_(PrinterSettings* obj)
-{
-    return MarshalExceptions<PageSettings*>([&](){
-            return obj->GetDefaultPageSettings();
-        });
-}
-
-ALTERNET_UI_API void PrinterSettings_SetDefaultPageSettings_(PrinterSettings* obj, PageSettings* value)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetDefaultPageSettings(value);
         });
 }
 

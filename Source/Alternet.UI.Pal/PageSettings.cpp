@@ -23,11 +23,12 @@ namespace Alternet::UI
     
     bool PageSettings::GetLandscape()
     {
-        return false;
+        return _landscape;
     }
     
     void PageSettings::SetLandscape(bool value)
     {
+        _landscape = true;
     }
     
     Thickness PageSettings::GetMargins()
@@ -38,15 +39,6 @@ namespace Alternet::UI
     void PageSettings::SetMargins(const Thickness& value)
     {
         _margins = value;
-    }
-    
-    PrinterSettings* PageSettings::GetPrinterSettings()
-    {
-        return nullptr;
-    }
-    
-    void PageSettings::SetPrinterSettings(PrinterSettings* value)
-    {
     }
     
     PaperKind PageSettings::GetPaperSize()

@@ -224,27 +224,6 @@ namespace Alternet.Drawing.Printing
         }
 
         /// <summary>
-        /// Gets the default page settings for this printer.
-        /// </summary>
-        /// <value>A <see cref="PageSettings"/> that represents the default page settings for this printer.</value>
-        /// <remarks>
-        /// Page settings include the size of the margins on the page, the size of paper to use, and whether to print in
-        /// color. For more information about page settings, see the <see cref="PageSettings"/> class.
-        /// </remarks>
-        public PageSettings DefaultPageSettings
-        {
-            get
-            {
-                return new PageSettings(NativePrinterSettings.DefaultPageSettings);
-            }
-
-            set
-            {
-                NativePrinterSettings.DefaultPageSettings = value.NativePageSettings;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the printing output is sent to a file instead of a port.
         /// </summary>
         /// <value><see langword="true"/> if the printing output is sent to a file; otherwise, <see langword="false"/>. The default is <see langword="false"/>.</value>

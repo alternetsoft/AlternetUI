@@ -60,17 +60,17 @@ ALTERNET_UI_API void PrintDocument_SetPrinterSettings_(PrintDocument* obj, Print
         });
 }
 
-ALTERNET_UI_API PageSettings* PrintDocument_GetDefaultPageSettings_(PrintDocument* obj)
+ALTERNET_UI_API PageSettings* PrintDocument_GetPageSettings_(PrintDocument* obj)
 {
     return MarshalExceptions<PageSettings*>([&](){
-            return obj->GetDefaultPageSettings();
+            return obj->GetPageSettings();
         });
 }
 
-ALTERNET_UI_API void PrintDocument_SetDefaultPageSettings_(PrintDocument* obj, PageSettings* value)
+ALTERNET_UI_API void PrintDocument_SetPageSettings_(PrintDocument* obj, PageSettings* value)
 {
     MarshalExceptions<void>([&](){
-            obj->SetDefaultPageSettings(value);
+            obj->SetPageSettings(value);
         });
 }
 
@@ -92,13 +92,6 @@ ALTERNET_UI_API void PrintDocument_SetPrintPage_HasMorePages_(PrintDocument* obj
 {
     MarshalExceptions<void>([&](){
             obj->SetPrintPage_HasMorePages(value);
-        });
-}
-
-ALTERNET_UI_API PageSettings* PrintDocument_GetPrintPage_PageSettings_(PrintDocument* obj)
-{
-    return MarshalExceptions<PageSettings*>([&](){
-            return obj->GetPrintPage_PageSettings();
         });
 }
 

@@ -13,8 +13,8 @@ PrinterSettings* GetPrinterSettings();
 void SetPrinterSettings(PrinterSettings* value);
 
 
-PageSettings* GetDefaultPageSettings();
-void SetDefaultPageSettings(PageSettings* value);
+PageSettings* GetPageSettings();
+void SetPageSettings(PageSettings* value);
 
 
 DrawingContext* GetPrintPage_DrawingContext();
@@ -22,9 +22,6 @@ DrawingContext* GetPrintPage_DrawingContext();
 
 bool GetPrintPage_HasMorePages();
 void SetPrintPage_HasMorePages(bool value);
-
-
-PageSettings* GetPrintPage_PageSettings();
 
 
 Rect GetPrintPage_MarginBounds();

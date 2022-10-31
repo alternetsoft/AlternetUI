@@ -33,10 +33,6 @@ int GetCopies();
 void SetCopies(int value);
 
 
-PageSettings* GetDefaultPageSettings();
-void SetDefaultPageSettings(PageSettings* value);
-
-
 bool GetPrintToFile();
 void SetPrintToFile(bool value);
 

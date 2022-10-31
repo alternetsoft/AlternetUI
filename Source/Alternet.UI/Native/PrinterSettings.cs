@@ -158,24 +158,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public PageSettings DefaultPageSettings
-        {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.PrinterSettings_GetDefaultPageSettings_(NativePointer);
-                var m = NativeObject.GetFromNativePointer<PageSettings>(n, p => new PageSettings(p))!;
-                ReleaseNativeObjectPointer(n);
-                return m;
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.PrinterSettings_SetDefaultPageSettings_(NativePointer, value.NativePointer);
-            }
-        }
-        
         public bool PrintToFile
         {
             get
@@ -307,12 +289,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PrinterSettings_SetCopies_(IntPtr obj, int value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr PrinterSettings_GetDefaultPageSettings_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PrinterSettings_SetDefaultPageSettings_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PrinterSettings_GetPrintToFile_(IntPtr obj);

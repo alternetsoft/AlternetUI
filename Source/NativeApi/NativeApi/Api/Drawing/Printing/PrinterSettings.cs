@@ -20,8 +20,6 @@ namespace NativeApi.Api
 
         public int Copies { get => throw new Exception(); set => throw new Exception(); }
 
-        public PageSettings DefaultPageSettings { get => throw new Exception(); set => throw new Exception(); }
-
         public bool PrintToFile { get => throw new Exception(); set => throw new Exception(); }
 
         public string? PrinterName { get => throw new Exception(); set => throw new Exception(); }

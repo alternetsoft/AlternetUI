@@ -1,5 +1,3 @@
-using Alternet.UI.Internal.ComponentModel;
-using Alternet.UI.Native;
 using System;
 using System.ComponentModel;
 
@@ -18,6 +16,12 @@ namespace Alternet.Drawing.Printing
     {
         private bool isDisposed;
 
+        private DrawingContext? currentDrawingContext;
+
+        private PrinterSettings? printerSettings;
+
+        private PageSettings? pageSettings;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PrintDocument"/> class.
         /// </summary>
@@ -34,40 +38,50 @@ namespace Alternet.Drawing.Printing
             nativePrintDocument.EndPrint += NativePrintDocument_EndPrint;
         }
 
-        private void NativePrintDocument_EndPrint(object? sender, CancelEventArgs e)
-        {
-            var ea = new PrintEventArgs();
-            OnEndPrint(ea);
-            e.Cancel = ea.Cancel;
+        /// <summary>
+        /// Occurs when the output to print for the current page is needed.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// To specify the output to print, use the <see cref="PrintPageEventArgs.DrawingContext"/> property of the <see
+        /// cref="PrintPageEventArgs"/>. For example, to specify a line of text that should be printed, draw the text
+        /// using the <see cref="DrawingContext.DrawText(string, Font, Brush, Point)"/> method.
+        /// </para>
+        /// <para>
+        /// In addition to specifying the output, you can indicate if there are additional pages to print by setting the
+        /// <see cref="PrintPageEventArgs.HasMorePages"/> property to <see langword="true"/>. The default is <see
+        /// langword="false"/>, which indicates that there are no more pages to print. Individual page settings can also
+        /// be modified through the <see cref="Printing.PageSettings"/> and the print job can be canceled by setting the
+        /// <see cref="CancelEventArgs.Cancel"/> property of the <see cref="PrintPageEventArgs"/> object to
+        /// <see langword="true"/>.
+        /// </para>
+        /// </remarks>
+        public event EventHandler<PrintPageEventArgs>? PrintPage;
 
-            currentDrawingContext = null;
-        }
+        /// <summary>
+        /// Occurs when the <see cref="Print()"/> method is called and before the first page of the document prints.
+        /// </summary>
+        /// <remarks>
+        /// Typically, you handle the <see cref="BeginPrint"/> event to initialize fonts, file streams,
+        /// and other resources used during the printing process.
+        /// </remarks>
+        public event EventHandler<PrintEventArgs>? BeginPrint;
 
-        private void NativePrintDocument_BeginPrint(object? sender, CancelEventArgs e)
-        {
-            if (currentDrawingContext != null)
-                throw new InvalidOperationException();
-
-            currentDrawingContext = new DrawingContext(NativePrintDocument.PrintPage_DrawingContext);
-            
-            var ea = new PrintEventArgs();
-            OnBeginPrint(ea);
-            e.Cancel = ea.Cancel;
-        }
-
-        DrawingContext? currentDrawingContext;
-
-        private void NativePrintDocument_PrintPage(object? sender, CancelEventArgs e)
-        {
-            if (currentDrawingContext == null)
-                throw new InvalidOperationException();
-
-            var ea = new PrintPageEventArgs(NativePrintDocument, currentDrawingContext);
-            OnPrintPage(ea);
-            e.Cancel = ea.Cancel;
-        }
-
-        internal UI.Native.PrintDocument NativePrintDocument { get; private set; }
+        /// <summary>
+        /// Occurs when the last page of the document has printed.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Typically, you handle the <see cref="EndPrint"/> event to release fonts, file streams, and other resources
+        /// used during the printing process, like fonts.
+        /// </para>
+        /// <para>
+        /// You indicate that there are no more pages to print by setting the <see cref="PrintPageEventArgs.HasMorePages"/> property
+        /// to false in the <see cref="PrintPage"/> event. The <see cref="EndPrint"/> event also occurs if the printing process is canceled or an
+        /// exception occurs during the printing process.
+        /// </para>
+        /// </remarks>
+        public event EventHandler<PrintEventArgs>? EndPrint;
 
         /// <summary>
         /// Gets or sets the document name to display (for example, in a print status dialog box or printer queue) while printing the document.
@@ -113,7 +127,7 @@ namespace Alternet.Drawing.Printing
         }
 
         /// <summary>
-        /// Gets or sets the printer that prints the document.
+        /// Gets the printer settings for this document.
         /// </summary>
         /// <value>
         /// A <see cref="PrinterSettings"/> that specifies where and how the document is printed.
@@ -123,84 +137,55 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                return new PrinterSettings(NativePrintDocument.PrinterSettings);
-            }
-
-            set
-            {
-                NativePrintDocument.PrinterSettings = value.NativePrinterSettings;
+                return printerSettings ??= new PrinterSettings(NativePrintDocument.PrinterSettings);
             }
         }
 
         /// <summary>
-        /// Gets or sets page settings that are used as defaults for all pages to be printed.
+        /// Gets or sets page settings that are used for all pages to be printed.
         /// </summary>
         /// <value>
-        /// A <see cref="PageSettings"/> that specifies the default page settings for the document.
+        /// A <see cref="Printing.PageSettings"/> that specifies the page settings for the document.
         /// </value>
         /// <remarks>
-        /// You can specify several default page settings through the <see cref="DefaultPageSettings"/> property. For example, the
+        /// You can specify several page settings through the <see cref="PageSettings"/> property. For example, the
         /// <see cref="PageSettings.Color"/> property specifies whether the page prints in color, the <see cref="PageSettings.Landscape"/> property
         /// specifies landscape or portrait orientation, and the <see cref="PageSettings.Margins"/> property specifies the margins of
         /// the page.
         /// </remarks>
-        public PageSettings DefaultPageSettings
+        public PageSettings PageSettings
         {
             get
             {
-                return new PageSettings(NativePrintDocument.DefaultPageSettings);
-            }
-
-            set
-            {
-                NativePrintDocument.DefaultPageSettings = value.NativePageSettings;
+                return pageSettings ??= new PageSettings(NativePrintDocument.PageSettings);
             }
         }
 
-        /// <summary>
-        /// Occurs when the output to print for the current page is needed.
-        /// </summary>
-        /// <remarks>
-        /// <para>
-        /// To specify the output to print, use the <see cref="PrintPageEventArgs.DrawingContext"/> property of the <see
-        /// cref="PrintPageEventArgs"/>. For example, to specify a line of text that should be printed, draw the text
-        /// using the <see cref="DrawingContext.DrawText(string, Font, Brush, Point)"/> method.
-        /// </para>
-        /// <para>
-        /// In addition to specifying the output, you can indicate if there are additional pages to print by setting the
-        /// <see cref="PrintPageEventArgs.HasMorePages"/> property to <see langword="true"/>. The default is <see
-        /// langword="false"/>, which indicates that there are no more pages to print. Individual page settings can also
-        /// be modified through the <see cref="PageSettings"/> and the print job can be canceled by setting the
-        /// <see cref="CancelEventArgs.Cancel"/> property of the <see cref="PrintPageEventArgs"/> object to
-        /// <see langword="true"/>.
-        /// </para>
-        /// </remarks>
-        public event EventHandler<PrintPageEventArgs>? PrintPage;
+        internal UI.Native.PrintDocument NativePrintDocument { get; private set; }
 
         /// <summary>
-        /// Occurs when the <see cref="Print()"/> method is called and before the first page of the document prints.
+        /// Starts the document's printing process.
         /// </summary>
         /// <remarks>
-        /// Typically, you handle the <see cref="BeginPrint"/> event to initialize fonts, file streams,
-        /// and other resources used during the printing process.
+        /// Specify the output to print by handling the <see cref="PrintPage"/> event and by using the
+        /// <see cref="PrintPageEventArgs.DrawingContext"/> included in the <see cref="PrintPageEventArgs"/>.
         /// </remarks>
-        public event EventHandler<PrintEventArgs>? BeginPrint;
+        public void Print()
+        {
+            if (currentDrawingContext != null)
+                throw new InvalidOperationException("Another printing operation is in progress.");
+
+            NativePrintDocument.Print();
+        }
 
         /// <summary>
-        /// Occurs when the last page of the document has printed.
+        /// Releases all resources used by the <see cref="PrintDocument"/> object.
         /// </summary>
-        /// <remarks>
-        /// <para>
-        /// Typically, you handle the <see cref="EndPrint"/> event to release fonts, file streams, and other resources
-        /// used during the printing process, like fonts.
-        /// </para>
-        /// <para>
-        /// You indicate that there are no more pages to print by setting the <see cref="PrintPageEventArgs.HasMorePages"/> property
-        /// to false in the <see cref="PrintPage"/> event. The <see cref="EndPrint"/> event also occurs if the printing process is canceled or an
-        /// exception occurs during the printing process.
-        /// </para>
-        /// </remarks>
-        public event EventHandler<PrintEventArgs>? EndPrint;
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
 
         /// <summary>
         /// Raises the <see cref="BeginPrint"/> event. It is called after the <see cref="Print()"/> method is called and
@@ -244,30 +229,6 @@ namespace Alternet.Drawing.Printing
         }
 
         /// <summary>
-        /// Starts the document's printing process.
-        /// </summary>
-        /// <remarks>
-        /// Specify the output to print by handling the <see cref="PrintPage"/> event and by using the
-        /// <see cref="PrintPageEventArgs.DrawingContext"/> included in the <see cref="PrintPageEventArgs"/>.
-        /// </remarks>
-        public void Print()
-        {
-            if (currentDrawingContext != null)
-                throw new InvalidOperationException("Another printing operation is in progress.");
-
-            NativePrintDocument.Print();
-        }
-
-        /// <summary>
-        /// Releases all resources used by the <see cref="PrintDocument"/> object.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
         /// Releases the unmanaged resources used by the <see cref="PrintDocument"/> and optionally releases the managed resources.
         /// </summary>
         /// <param name="disposing"></param>
@@ -287,6 +248,37 @@ namespace Alternet.Drawing.Printing
 
                 isDisposed = true;
             }
+        }
+
+        private void NativePrintDocument_EndPrint(object? sender, CancelEventArgs e)
+        {
+            var ea = new PrintEventArgs();
+            OnEndPrint(ea);
+            e.Cancel = ea.Cancel;
+
+            currentDrawingContext = null;
+        }
+
+        private void NativePrintDocument_BeginPrint(object? sender, CancelEventArgs e)
+        {
+            if (currentDrawingContext != null)
+                throw new InvalidOperationException();
+
+            currentDrawingContext = new DrawingContext(NativePrintDocument.PrintPage_DrawingContext);
+
+            var ea = new PrintEventArgs();
+            OnBeginPrint(ea);
+            e.Cancel = ea.Cancel;
+        }
+
+        private void NativePrintDocument_PrintPage(object? sender, CancelEventArgs e)
+        {
+            if (currentDrawingContext == null)
+                throw new InvalidOperationException();
+
+            var ea = new PrintPageEventArgs(NativePrintDocument, currentDrawingContext);
+            OnPrintPage(ea);
+            e.Cancel = ea.Cancel;
         }
     }
 }

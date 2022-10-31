@@ -75,12 +75,12 @@ namespace Alternet.UI.Native
             }
         }
         
-        public PageSettings DefaultPageSettings
+        public PageSettings PageSettings
         {
             get
             {
                 CheckDisposed();
-                var n = NativeApi.PrintDocument_GetDefaultPageSettings_(NativePointer);
+                var n = NativeApi.PrintDocument_GetPageSettings_(NativePointer);
                 var m = NativeObject.GetFromNativePointer<PageSettings>(n, p => new PageSettings(p))!;
                 ReleaseNativeObjectPointer(n);
                 return m;
@@ -89,7 +89,7 @@ namespace Alternet.UI.Native
             set
             {
                 CheckDisposed();
-                NativeApi.PrintDocument_SetDefaultPageSettings_(NativePointer, value.NativePointer);
+                NativeApi.PrintDocument_SetPageSettings_(NativePointer, value.NativePointer);
             }
         }
         
@@ -121,19 +121,6 @@ namespace Alternet.UI.Native
                 CheckDisposed();
                 NativeApi.PrintDocument_SetPrintPage_HasMorePages_(NativePointer, value);
             }
-        }
-        
-        public PageSettings PrintPage_PageSettings
-        {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.PrintDocument_GetPrintPage_PageSettings_(NativePointer);
-                var m = NativeObject.GetFromNativePointer<PageSettings>(n, p => new PageSettings(p))!;
-                ReleaseNativeObjectPointer(n);
-                return m;
-            }
-            
         }
         
         public Alternet.Drawing.Rect PrintPage_MarginBounds
@@ -297,10 +284,10 @@ namespace Alternet.UI.Native
             public static extern void PrintDocument_SetPrinterSettings_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr PrintDocument_GetDefaultPageSettings_(IntPtr obj);
+            public static extern IntPtr PrintDocument_GetPageSettings_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PrintDocument_SetDefaultPageSettings_(IntPtr obj, IntPtr value);
+            public static extern void PrintDocument_SetPageSettings_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PrintDocument_GetPrintPage_DrawingContext_(IntPtr obj);
@@ -310,9 +297,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PrintDocument_SetPrintPage_HasMorePages_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr PrintDocument_GetPrintPage_PageSettings_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Rect PrintDocument_GetPrintPage_MarginBounds_(IntPtr obj);

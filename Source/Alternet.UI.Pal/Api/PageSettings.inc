@@ -13,10 +13,6 @@ Thickness GetMargins();
 void SetMargins(const Thickness& value);
 
 
-PrinterSettings* GetPrinterSettings();
-void SetPrinterSettings(PrinterSettings* value);
-
-
 Size GetCustomPaperSize();
 void SetCustomPaperSize(const Size& value);
 

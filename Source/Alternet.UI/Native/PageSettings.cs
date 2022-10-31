@@ -73,24 +73,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public PrinterSettings PrinterSettings
-        {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.PageSettings_GetPrinterSettings_(NativePointer);
-                var m = NativeObject.GetFromNativePointer<PrinterSettings>(n, p => new PrinterSettings(p))!;
-                ReleaseNativeObjectPointer(n);
-                return m;
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.PageSettings_SetPrinterSettings_(NativePointer, value.NativePointer);
-            }
-        }
-        
         public Alternet.Drawing.Size CustomPaperSize
         {
             get
@@ -185,12 +167,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PageSettings_SetMargins_(IntPtr obj, NativeApiTypes.Thickness value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr PageSettings_GetPrinterSettings_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSettings_SetPrinterSettings_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Size PageSettings_GetCustomPaperSize_(IntPtr obj);

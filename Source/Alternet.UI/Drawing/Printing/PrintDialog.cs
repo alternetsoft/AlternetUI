@@ -103,22 +103,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Gets or sets the printer settings the dialog box modifies.
-        /// </summary>
-        public PrinterSettings PrinterSettings
-        {
-            get
-            {
-                return nativeDialog.PrinterSettings == null ? null : new PrinterSettings(nativeDialog.PrinterSettings);
-            }
-
-            set
-            {
-                nativeDialog.PrinterSettings = value == null ? null : value.NativePrinterSettings;
-            }
-        }
-
         private protected override string? TitleCore { get; set; }
 
         private protected override ModalResult ShowModalCore(Window? owner)

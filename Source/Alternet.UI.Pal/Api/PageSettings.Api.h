@@ -3,7 +3,6 @@
 #pragma once
 
 #include "PageSettings.h"
-#include "PrinterSettings.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -55,20 +54,6 @@ ALTERNET_UI_API void PageSettings_SetMargins_(PageSettings* obj, Thickness value
 {
     MarshalExceptions<void>([&](){
             obj->SetMargins(value);
-        });
-}
-
-ALTERNET_UI_API PrinterSettings* PageSettings_GetPrinterSettings_(PageSettings* obj)
-{
-    return MarshalExceptions<PrinterSettings*>([&](){
-            return obj->GetPrinterSettings();
-        });
-}
-
-ALTERNET_UI_API void PageSettings_SetPrinterSettings_(PageSettings* obj, PrinterSettings* value)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetPrinterSettings(value);
         });
 }
 

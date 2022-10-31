@@ -136,7 +136,7 @@ namespace Alternet::UI
             _printerSettings->AddRef();
     }
 
-    PageSettings* PrintDocument::GetDefaultPageSettings()
+    PageSettings* PrintDocument::GetPageSettings()
     {
         auto settings = GetDefaultPageSettingsCore();
         settings->AddRef();
@@ -151,7 +151,7 @@ namespace Alternet::UI
         return _defaultPageSettings;
     }
 
-    void PrintDocument::SetDefaultPageSettings(PageSettings* value)
+    void PrintDocument::SetPageSettings(PageSettings* value)
     {
         if (_defaultPageSettings == value)
             return;
@@ -249,14 +249,6 @@ namespace Alternet::UI
             throwExInvalidOp;
 
         _printout->SetHasMorePages(value);
-    }
-
-    PageSettings* PrintDocument::GetPrintPage_PageSettings()
-    {
-        if (_printout == nullptr)
-            throwExInvalidOp;
-
-        return GetDefaultPageSettings();
     }
 
     Rect PrintDocument::GetPrintPage_MarginBounds()

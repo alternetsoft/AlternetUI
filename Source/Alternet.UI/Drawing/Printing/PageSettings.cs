@@ -8,7 +8,7 @@ namespace Alternet.Drawing.Printing
     /// <remarks>
     /// The <see cref="PageSettings"/> class is used to specify settings that modify the way a page will be printed.
     /// Typically, you set default settings for all pages to be printed through the <see
-    /// cref="PrintDocument.DefaultPageSettings"/> property. To specify settings on a page-by-page basis, handle the
+    /// cref="PrintDocument.PageSettings"/> property. To specify settings on a page-by-page basis, handle the
     /// <see cref="PrintDocument.PrintPage"/> event and modify the <see cref="PageSettings"/> argument included in the
     /// <see cref="PrintPageEventArgs"/>.
     /// </remarks>
@@ -80,31 +80,6 @@ namespace Alternet.Drawing.Printing
             set
             {
                 NativePageSettings.Margins = value.ToThickness();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the printer settings associated with the page.
-        /// </summary>
-        /// <value>
-        /// A <see cref="PrinterSettings"/> that represents the printer settings associated with the page.
-        /// </value>
-        /// <remarks>
-        /// You can use the printer settings to find default values for properties of the page that are not set.
-        /// </remarks>
-        public PrinterSettings PrinterSettings
-        {
-            get
-            {
-                return new PrinterSettings(NativePageSettings.PrinterSettings);
-            }
-
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException();
-
-                NativePageSettings.PrinterSettings = value.NativePrinterSettings;
             }
         }
 
