@@ -28,14 +28,32 @@ namespace PrintingSample
             DrawFirstPage(dc, bounds);
         }
 
+        Pen thickGrayPen = new Pen(Color.Gray, 4);
+
         private void DrawFirstPage(DrawingContext dc, Rect bounds)
         {
             dc.DrawRectangle(Pens.Blue, bounds);
+
+            var cornerRectSize = new Size(50, 50);
+            var cornerRectLeft = new Rect(bounds.Location, cornerRectSize);
+            var cornerRectRight = new Rect(bounds.TopRight - new Size(cornerRectSize.Width, 0), cornerRectSize);
+
+            dc.FillEllipse(Brushes.Gold, cornerRectLeft.InflatedBy(-5, -5));
+            dc.FillEllipse(Brushes.Gold, cornerRectRight.InflatedBy(-5, -5));
+
+            //dc.DrawEllipse(Pens.Goldenrod, cornerRectLeft.InflatedBy(-5, -5));
+            //dc.DrawEllipse(Pens.Goldenrod, cornerRectRight.InflatedBy(-5, -5));
+
+            //dc.DrawRectangle(Pens.Red, cornerRectLeft);
+            //dc.DrawRectangle(Pens.Red, cornerRectRight);
+
+            //dc.DrawLine(thickGrayPen, cornerRectLeft.Center, cornerRectRight.Center);
+
             dc.DrawText(
                 "The quick brown fox jumps over the lazy dog.",
                 font,
                 Brushes.Black,
-                bounds,
+                bounds.OffsetBy(0, 50),
                 new TextFormat { Wrapping = TextWrapping.None });
         }
 
