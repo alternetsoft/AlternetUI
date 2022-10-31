@@ -42,30 +42,50 @@ namespace Alternet::UI
 
     void PrintPreviewDialog::Show(Window* owner)
     {
+        if (_state != nullptr)
+            return;
+
         if (_document == nullptr)
             throwExInvalidOpWithInfo(u"Cannot show the print preview dialog when the document is null.");
 
+        _state = new State();
 
-        auto previewPrintout = _document->CreatePrintout();
+        _state->document = _document;
+        _state->document->AddRef();
 
-        ScopeGuard scope([&]
-            {
-                delete previewPrintout;
-            });
+        _state->previewPrintout = _document->CreatePrintout();
 
         wxPrintData printData;
         wxPrintDialogData printDialogData(printData);
 
-        wxPrintPreview preview(previewPrintout, nullptr, &printDialogData);
-        if (!preview.IsOk())
+        _state->printPreview = new wxPrintPreview(_state->previewPrintout, nullptr, & printDialogData);
+        if (!_state->printPreview->IsOk())
             throwEx(u"Print preview failed.");
 
-        auto frame = new wxPreviewFrame(
-            &preview,
+        _state->frame = new wxPreviewFrame(
+            _state->printPreview,
             owner == nullptr ? ParkingWindow::GetWindow() : owner->GetWxWindow(),
-            wxStr(_title.value_or(u"Print Preview")));
+            wxStr(_title.value_or(u"Print Preview")),
+            wxDefaultPosition,
+            wxSize(800, 600));
         
-        frame->InitializeWithModality(wxPreviewFrameModalityKind::wxPreviewFrame_NonModal);
-        frame->Show();
+        _state->frame->InitializeWithModality(wxPreviewFrameModalityKind::wxPreviewFrame_NonModal);
+        _state->frame->Bind(wxEVT_CLOSE_WINDOW, &PrintPreviewDialog::OnClose, this);
+        _state->frame->Show();
+    }
+
+    void PrintPreviewDialog::OnClose(wxCloseEvent& event)
+    {
+        if (_state == nullptr)
+            throwExNoInfo;
+
+        event.Skip();
+
+        _state->frame->Unbind(wxEVT_CLOSE_WINDOW, &PrintPreviewDialog::OnClose, this);
+        
+        _state->document->ClearPrintout();
+        _state->document->Release();
+
+        _state = nullptr;
     }
 }

@@ -15,6 +15,8 @@ namespace Alternet::UI
     public:
 
         wxPrintout* CreatePrintout();
+        void DeletePrintout();
+        void ClearPrintout();
 
     private:
         class Printout : public wxPrintout

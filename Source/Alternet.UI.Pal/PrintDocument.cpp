@@ -106,8 +106,7 @@ namespace Alternet::UI
 
         ScopeGuard scope([&]
             {
-                delete _printout;
-                _printout = nullptr;
+                DeletePrintout();
             });
 
         wxPrintData printData;
@@ -119,9 +118,28 @@ namespace Alternet::UI
 
     wxPrintout* PrintDocument::CreatePrintout()
     {
-        return new Printout(this);
+        if (_printout != nullptr)
+            throwExNoInfo;
+
+        return _printout = new Printout(this);
     }
 
+    void PrintDocument::DeletePrintout()
+    {
+        if (_printout == nullptr)
+            throwExNoInfo;
+
+        delete _printout;
+        _printout = nullptr;
+    }
+
+    void PrintDocument::ClearPrintout()
+    {
+        if (_printout == nullptr)
+            throwExNoInfo;
+
+        _printout = nullptr;
+    }
 
     DrawingContext* PrintDocument::GetPrintPage_DrawingContext()
     {

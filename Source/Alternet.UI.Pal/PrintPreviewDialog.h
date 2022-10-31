@@ -16,5 +16,17 @@ namespace Alternet::UI
     private:
         PrintDocument* _document = nullptr;
         optional<string> _title;
+
+        struct State
+        {
+            PrintDocument* document = nullptr;
+            wxPrintout* previewPrintout = nullptr;
+            wxPreviewFrame* frame = nullptr;
+            wxPrintPreview* printPreview = nullptr;
+        };
+
+        State* _state = nullptr;
+
+        void OnClose(wxCloseEvent& event);
     };
 }
