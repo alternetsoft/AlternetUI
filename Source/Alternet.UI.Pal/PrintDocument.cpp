@@ -15,6 +15,8 @@ namespace Alternet::UI
         if (!wxPrintout::OnBeginDocument(startPage, endPage))
             return false;
 
+        MapScreenSizeToPaper();
+
         return !_owner->RaiseEvent(PrintDocumentEvent::BeginPrint);
     }
 
