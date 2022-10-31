@@ -6,7 +6,9 @@
 
 namespace Alternet::UI
 {
-    PrintDocument::Printout::Printout(PrintDocument* owner) : _owner(owner)
+    PrintDocument::Printout::Printout(PrintDocument* owner) :
+        wxPrintout::wxPrintout(wxStr(owner->GetDocumentName())),
+        _owner(owner)
     {
     }
 
@@ -15,7 +17,10 @@ namespace Alternet::UI
         if (!wxPrintout::OnBeginDocument(startPage, endPage))
             return false;
 
-        MapScreenSizeToPaper();
+        if (_owner->GetOriginAtMargins())
+            MapScreenSizeToPageMargins(_owner->GetDefaultPageSettingsCore()->GetPageSetupDialogData());
+        else
+            MapScreenSizeToPage();
 
         return !_owner->RaiseEvent(PrintDocumentEvent::BeginPrint);
     }
@@ -120,10 +125,16 @@ namespace Alternet::UI
 
     PageSettings* PrintDocument::GetDefaultPageSettings()
     {
+        auto settings = GetDefaultPageSettingsCore();
+        settings->AddRef();
+        return settings;
+    }
+
+    PageSettings* PrintDocument::GetDefaultPageSettingsCore()
+    {
         if (_defaultPageSettings == nullptr)
             _defaultPageSettings = new PageSettings();
 
-        _defaultPageSettings->AddRef();
         return _defaultPageSettings;
     }
 
@@ -158,6 +169,16 @@ namespace Alternet::UI
         wxPrinter printer(&printDialogData);
 
         printer.Print(nullptr, _printout, /*prompt:*/false);
+    }
+
+    bool PrintDocument::GetOriginAtMargins()
+    {
+        return _originAtMargins;
+    }
+
+    void PrintDocument::SetOriginAtMargins(bool value)
+    {
+        _originAtMargins = value;
     }
 
     wxPrintout* PrintDocument::CreatePrintout()
@@ -222,10 +243,7 @@ namespace Alternet::UI
         if (_printout == nullptr)
             throwExInvalidOp;
 
-        wxPageSetupData data;
-        data.SetMarginTopLeft(wxPoint(10, 10));
-        data.SetMarginBottomRight(wxPoint(10, 10));
-        auto rect = _printout->GetLogicalPageMarginsRect(data);
+        auto rect = _printout->GetLogicalPageMarginsRect(GetDefaultPageSettingsCore()->GetPageSetupDialogData());
         return toDip(rect, nullptr);
     }
 

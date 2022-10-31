@@ -18,6 +18,20 @@ ALTERNET_UI_API PrintDocument* PrintDocument_Create_()
         });
 }
 
+ALTERNET_UI_API c_bool PrintDocument_GetOriginAtMargins_(PrintDocument* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetOriginAtMargins();
+        });
+}
+
+ALTERNET_UI_API void PrintDocument_SetOriginAtMargins_(PrintDocument* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetOriginAtMargins(value);
+        });
+}
+
 ALTERNET_UI_API char16_t* PrintDocument_GetDocumentName_(PrintDocument* obj)
 {
     return MarshalExceptions<char16_t*>([&](){

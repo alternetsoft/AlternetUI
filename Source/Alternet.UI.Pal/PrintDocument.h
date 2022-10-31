@@ -13,7 +13,6 @@ namespace Alternet::UI
     {
 #include "Api/PrintDocument.inc"
     public:
-
         wxPrintout* CreatePrintout();
         void DeletePrintout();
         void ClearPrintout();
@@ -48,8 +47,11 @@ namespace Alternet::UI
         bool OnPrintPage(int page);
         Printout* _printout = nullptr;
         string _documentName = u"Print Document";
+        bool _originAtMargins = false;
 
         PrinterSettings* _printerSettings = nullptr;
         PageSettings* _defaultPageSettings = nullptr;
+
+        PageSettings* GetDefaultPageSettingsCore();
     };
 }

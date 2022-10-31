@@ -23,6 +23,23 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool OriginAtMargins
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrintDocument_GetOriginAtMargins_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.PrintDocument_SetOriginAtMargins_(NativePointer, value);
+            }
+        }
+        
         public string DocumentName
         {
             get
@@ -248,6 +265,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PrintDocument_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool PrintDocument_GetOriginAtMargins_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrintDocument_SetOriginAtMargins_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string PrintDocument_GetDocumentName_(IntPtr obj);

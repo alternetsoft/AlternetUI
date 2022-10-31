@@ -92,6 +92,27 @@ namespace Alternet.Drawing.Printing
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the position of a graphics object associated with a page is located
+        /// just inside the user-specified margins or at the top-left corner of the printable area of the page.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the graphics origin starts at the page margins; <see langword="false"/> if the graphics origin is at the top-left
+        /// corner of the printable page. The default is false.
+        /// </value>
+        public bool OriginAtMargins
+        {
+            get
+            {
+                return NativePrintDocument.OriginAtMargins;
+            }
+
+            set
+            {
+                NativePrintDocument.OriginAtMargins = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the printer that prints the document.
         /// </summary>
         /// <value>

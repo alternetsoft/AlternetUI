@@ -1,7 +1,9 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="PrintingSample.MainWindow"
-        Title="Printing Sample">
+        Title="Printing Sample"
+        Width="800"
+        Height="600">
     <Window.Menu>
         <MainMenu>
             <MenuItem Text="_File">
@@ -17,6 +19,26 @@
             </MenuItem>
         </MainMenu>
     </Window.Menu>
-    <Grid Paint="Grid_Paint" UserPaint="True">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Title="Settings" Margin="0,0,10,0">
+            <StackPanel Orientation="Vertical" Margin="10">
+                <CheckBox Text="Origin At Margin" Name="originAtMarginCheckBox" />
+
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <Label Text="Print Document Name:" VerticalAlignment="Center"/>
+                    <TextBox Text="My Print Document" Name="printDocumentNameTextBox" Margin="5,0,0,0" VerticalAlignment="Center" Width="150"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Title="Drawing Area" Grid.Column="2">
+            <Grid Paint="Grid_Paint" UserPaint="True" />
+        </GroupBox>
+
     </Grid>
 </Window>

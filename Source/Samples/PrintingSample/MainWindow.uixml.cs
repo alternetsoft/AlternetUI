@@ -20,21 +20,31 @@ namespace PrintingSample
 
         private static void Draw(DrawingContext dc)
         {
-            dc.DrawRectangle(Pens.Blue, new Rect(10, 10, 100, 100));
+            dc.DrawRectangle(Pens.Blue, new Rect(0, 0, 100, 100));
         }
 
         private void PrintImmediatelyMenuItem_Click(object sender, System.EventArgs e)
         {
-            var document = new PrintDocument();
+            var document = CreatePrintDocument();
             document.PrintPage += Document_PrintPage;
             document.Print();
+        }
+
+        private PrintDocument CreatePrintDocument()
+        {
+            var document = new PrintDocument
+            {
+                OriginAtMargins = originAtMarginCheckBox.IsChecked,
+                DocumentName = printDocumentNameTextBox.Text,
+            };
+
+            return document;
         }
 
         private void PrintMenuItem_Click(object sender, System.EventArgs e)
         {
             var dialog = new PrintDialog();
-            var document = new PrintDocument();
-            document.DocumentName = "Print Document";
+            var document = CreatePrintDocument();
 
             dialog.Document = document;
             dialog.AllowSelection = true;
@@ -49,8 +59,7 @@ namespace PrintingSample
         private void PageSetupMenuItem_Click(object sender, System.EventArgs e)
         {
             var pageSetupDialog = new PageSetupDialog();
-            var document = new PrintDocument();
-            document.DocumentName = "Print Document";
+            var document = CreatePrintDocument();
 
             pageSetupDialog.Document = document;
             //setupDlg.AllowMargins = false;
