@@ -128,7 +128,20 @@ namespace Alternet.UI
         {
             const string exceptionMessage = "Invalid Thickness.";
 
-            using (var tokenizer = new StringTokenizer(s, CultureInfo.InvariantCulture, exceptionMessage))
+            if (!TryParse(s, out var result))
+                throw new FormatException(exceptionMessage);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Parses a <see cref="Thickness"/> string.
+        /// </summary>
+        public static bool TryParse(string s, out Thickness value)
+        {
+            value = new Thickness();
+
+            using (var tokenizer = new StringTokenizer(s, CultureInfo.InvariantCulture))
             {
                 if (tokenizer.TryReadSingle(out var a))
                 {
@@ -136,16 +149,24 @@ namespace Alternet.UI
                     {
                         if (tokenizer.TryReadSingle(out var c))
                         {
-                            return new Thickness(a, b, c, tokenizer.ReadSingle());
+                            if (tokenizer.TryReadSingle(out var d))
+                            {
+                                value = new Thickness(a, b, c, d);
+                                return true;
+                            }
+
+                            return false;
                         }
 
-                        return new Thickness(a, b);
+                        value = new Thickness(a, b);
+                        return true;
                     }
 
-                    return new Thickness(a);
+                    value = new Thickness(a);
+                    return true;
                 }
 
-                throw new FormatException(exceptionMessage);
+                return false;
             }
         }
 

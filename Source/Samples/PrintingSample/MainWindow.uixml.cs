@@ -13,10 +13,19 @@ namespace PrintingSample
             InitializeComponent();
         }
 
-        private void Grid_Paint(object? sender, PaintEventArgs e)
+        private void DrawingArea_Paint(object? sender, PaintEventArgs e)
         {
             var dc = e.DrawingContext;
-            DrawFirstPage(dc, e.Bounds);
+            var bounds = e.Bounds;
+
+            if (originAtMarginCheckBox.IsChecked)
+            {
+                var margins = TryGetPageMargins();
+                if (margins != null)
+                    bounds.Inflate(margins.Value.Size * -1);
+            }
+
+            DrawFirstPage(dc, bounds);
         }
 
         private void DrawFirstPage(DrawingContext dc, Rect bounds)
@@ -37,6 +46,14 @@ namespace PrintingSample
             document.Print();
         }
 
+        Margins? TryGetPageMargins()
+        {
+            if (Thickness.TryParse(pageMarginTextBox.Text, out var thickness))
+                return new Margins(thickness.Left, thickness.Top, thickness.Right, thickness.Bottom);
+
+            return null;
+        }
+
         private PrintDocument CreatePrintDocument()
         {
             var document = new PrintDocument
@@ -44,6 +61,8 @@ namespace PrintingSample
                 OriginAtMargins = originAtMarginCheckBox.IsChecked,
                 DocumentName = printDocumentNameTextBox.Text,
             };
+
+            document.DefaultPageSettings.Margins = TryGetPageMargins() ?? new Margins();
 
             return document;
         }
@@ -127,5 +146,15 @@ namespace PrintingSample
         private void AboutMenuItem_Click(object sender, System.EventArgs e) => MessageBox.Show("AlterNET UI Printing Sample Application.", "About");
 
         private void ExitMenuItem_Click(object sender, System.EventArgs e) => Close();
+
+        private void OriginAtMarginCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            DrawingArea.Invalidate();
+        }
+
+        private void PageMarginTextBox_TextChanged(object sender, Alternet.UI.TextChangedEventArgs e)
+        {
+            DrawingArea.Invalidate();
+        }
     }
 }

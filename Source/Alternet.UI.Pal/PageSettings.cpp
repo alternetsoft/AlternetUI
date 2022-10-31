@@ -1,4 +1,5 @@
 #include "PageSettings.h"
+#include "Api/DrawingTypes.h"
 
 namespace Alternet::UI
 {
@@ -35,11 +36,12 @@ namespace Alternet::UI
     
     Thickness PageSettings::GetMargins()
     {
-        return Thickness();
+        return _margins;
     }
     
     void PageSettings::SetMargins(const Thickness& value)
     {
+        _margins = value;
     }
     
     PrinterSettings* PageSettings::GetPrinterSettings()
@@ -89,8 +91,8 @@ namespace Alternet::UI
 
     wxPageSetupDialogData PageSettings::GetPageSetupDialogData()
     {
-        _pageSetupDialogData.SetMarginTopLeft(wxPoint(10, 10));
-        _pageSetupDialogData.SetMarginBottomRight(wxPoint(10, 10));
+        _pageSetupDialogData.SetMarginTopLeft(wxPoint(fromDip(_margins.Left, nullptr), fromDip(_margins.Top, nullptr)));
+        _pageSetupDialogData.SetMarginBottomRight(wxPoint(fromDip(_margins.Right, nullptr), fromDip(_margins.Bottom, nullptr)));
 
         return _pageSetupDialogData;
     }

@@ -15,5 +15,7 @@ namespace Alternet::UI
 
     private:
         wxPageSetupDialogData _pageSetupDialogData;
+
+        Thickness _margins;
     };
 }

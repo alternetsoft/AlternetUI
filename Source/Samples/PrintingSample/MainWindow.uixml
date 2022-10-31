@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="PrintingSample.MainWindow"
         Title="Printing Sample"
-        Width="1000"
+        Width="1050"
         Height="600">
     <Window.Menu>
         <MainMenu>
@@ -31,13 +31,14 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <CheckBox Text="Origin At Margin" Name="originAtMarginCheckBox" Grid.ColumnSpan="2" IsChecked="True" />
+                <CheckBox Text="Origin At Margin" Name="originAtMarginCheckBox" Grid.ColumnSpan="2" IsChecked="True" CheckedChanged="OriginAtMarginCheckBox_CheckedChanged" />
 
                 <Label Text="Print Document Name:" VerticalAlignment="Center" Margin="0,10,0,0" Grid.Row="1"/>
                 <TextBox Text="My Print Document" Name="printDocumentNameTextBox" Margin="5,10,0,0" VerticalAlignment="Center"
@@ -48,11 +49,15 @@
                                Minimum="0"
                                Maximum="10"
                                Grid.Column="1" Grid.Row="2"/>
+
+                <Label Text="Page Margin:" VerticalAlignment="Center" Margin="0,10,0,0" Grid.Row="3"/>
+                <TextBox Text="10,10,10,10" Name="pageMarginTextBox" Margin="5,10,0,0" VerticalAlignment="Center"
+                         Width="150" Grid.Column="1" Grid.Row="3" TextChanged="PageMarginTextBox_TextChanged"/>
             </Grid>
         </GroupBox>
 
         <GroupBox Title="Drawing Area" Grid.Column="2">
-            <Grid Paint="Grid_Paint" UserPaint="True" />
+            <Grid Paint="DrawingArea_Paint" UserPaint="True" Name="DrawingArea"/>
         </GroupBox>
 
     </Grid>
