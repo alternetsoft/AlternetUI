@@ -23,6 +23,8 @@ namespace Alternet::UI
         wxGraphicsContext* GetGraphicsContext();
         wxDC* GetDC();
 
+        void SetDoNotDeleteDC(bool value);
+
         static wxWindow* GetWindow(wxDC* dc);
 
     private:
@@ -52,6 +54,8 @@ namespace Alternet::UI
         Region* _clip = nullptr;
 
         bool _nonIdentityTransformSet = false;
+
+        bool _doNotDeleteDC = false;
 
         optional<std::function<void()>> _onUseDC;
     };

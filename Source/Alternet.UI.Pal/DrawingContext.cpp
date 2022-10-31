@@ -14,7 +14,14 @@ namespace Alternet::UI
     DrawingContext::~DrawingContext()
     {
         wxDELETE(_graphicsContext);
-        wxDELETE(_dc);
+        
+        if (!_doNotDeleteDC)
+            wxDELETE(_dc);
+    }
+
+    void DrawingContext::SetDoNotDeleteDC(bool value)
+    {
+        _doNotDeleteDC = value;
     }
 
     wxGraphicsContext* DrawingContext::GetGraphicsContext()
