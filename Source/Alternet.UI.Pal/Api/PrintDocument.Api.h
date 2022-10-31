@@ -53,24 +53,10 @@ ALTERNET_UI_API PrinterSettings* PrintDocument_GetPrinterSettings_(PrintDocument
         });
 }
 
-ALTERNET_UI_API void PrintDocument_SetPrinterSettings_(PrintDocument* obj, PrinterSettings* value)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetPrinterSettings(value);
-        });
-}
-
 ALTERNET_UI_API PageSettings* PrintDocument_GetPageSettings_(PrintDocument* obj)
 {
     return MarshalExceptions<PageSettings*>([&](){
             return obj->GetPageSettings();
-        });
-}
-
-ALTERNET_UI_API void PrintDocument_SetPageSettings_(PrintDocument* obj, PageSettings* value)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetPageSettings(value);
         });
 }
 

@@ -10,11 +10,9 @@ void SetDocumentName(const string& value);
 
 
 PrinterSettings* GetPrinterSettings();
-void SetPrinterSettings(PrinterSettings* value);
 
 
 PageSettings* GetPageSettings();
-void SetPageSettings(PageSettings* value);
 
 
 DrawingContext* GetPrintPage_DrawingContext();

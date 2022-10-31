@@ -43,37 +43,41 @@ namespace Alternet::UI
     
     PaperKind PageSettings::GetPaperSize()
     {
-        return PaperKind();
+        return _paperSize;
     }
     
     void PageSettings::SetPaperSize(PaperKind value)
     {
+        _paperSize = value;
     }
     
     PrinterResolutionKind PageSettings::GetPrinterResolution()
     {
-        return PrinterResolutionKind();
+        return _printerResolutionKind;
     }
     
     void PageSettings::SetPrinterResolution(PrinterResolutionKind value)
     {
+        _printerResolutionKind = value;
     }
     
     Size PageSettings::GetCustomPaperSize()
     {
-        return Size();
+        return _customPaperSize;
     }
     
     void PageSettings::SetCustomPaperSize(const Size& value)
     {
+        _customPaperSize = value;
     }
     
     bool PageSettings::GetUseCustomPaperSize()
     {
-        return false;
+        return _useCustomPaperSize;
     }
 
     void PageSettings::SetUseCustomPaperSize(bool value)
     {
+        _useCustomPaperSize = value;
     }
 }

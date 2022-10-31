@@ -352,6 +352,7 @@
     <ClInclude Include="PageSettings.h" />
     <ClInclude Include="PageSetupDialog.h" />
     <ClInclude Include="Panel.h" />
+    <ClInclude Include="PaperSizes.h" />
     <ClInclude Include="Pen.h" />
     <ClInclude Include="PrintDialog.h" />
     <ClInclude Include="PrintDocument.h" />

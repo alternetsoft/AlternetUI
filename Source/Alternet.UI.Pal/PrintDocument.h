@@ -59,8 +59,14 @@ namespace Alternet::UI
         bool _originAtMargins = false;
 
         PrinterSettings* _printerSettings = nullptr;
-        PageSettings* _defaultPageSettings = nullptr;
+        PageSettings* _pageSettings = nullptr;
 
-        PageSettings* GetDefaultPageSettingsCore();
+        PageSettings* GetPageSettingsCore();
+        PrinterSettings* GetPrinterSettingsCore();
+
+        wxPrintQuality GetWxPrintQuality(PrinterResolutionKind value);
+        wxDuplexMode GetWxDuplexMode(Duplex value);
+
+        void ApplyPrintRange(wxPrintDialogData& data, PrintRange range);
     };
 }

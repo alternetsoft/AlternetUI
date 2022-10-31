@@ -3,6 +3,7 @@
 #include "PrinterSettings.h"
 #include "PageSettings.h"
 #include "Api/DrawingTypes.h"
+#include "PaperSizes.h"
 
 namespace Alternet::UI
 {
@@ -115,54 +116,32 @@ namespace Alternet::UI
 
     PrinterSettings* PrintDocument::GetPrinterSettings()
     {
-        if (_printerSettings == nullptr)
-            _printerSettings = new PrinterSettings();
-
-        _printerSettings->AddRef();
-        return _printerSettings;
-    }
-
-    void PrintDocument::SetPrinterSettings(PrinterSettings* value)
-    {
-        if (_printerSettings == value)
-            return;
-
-        if (_printerSettings != nullptr)
-            _printerSettings->Release();
-
-        _printerSettings = value;
-
-        if (_printerSettings != nullptr)
-            _printerSettings->AddRef();
-    }
-
-    PageSettings* PrintDocument::GetPageSettings()
-    {
-        auto settings = GetDefaultPageSettingsCore();
+        auto settings = GetPrinterSettingsCore();
         settings->AddRef();
         return settings;
     }
 
-    PageSettings* PrintDocument::GetDefaultPageSettingsCore()
+    PageSettings* PrintDocument::GetPageSettings()
     {
-        if (_defaultPageSettings == nullptr)
-            _defaultPageSettings = new PageSettings();
-
-        return _defaultPageSettings;
+        auto settings = GetPageSettingsCore();
+        settings->AddRef();
+        return settings;
     }
 
-    void PrintDocument::SetPageSettings(PageSettings* value)
+    PageSettings* PrintDocument::GetPageSettingsCore()
     {
-        if (_defaultPageSettings == value)
-            return;
+        if (_pageSettings == nullptr)
+            _pageSettings = new PageSettings();
 
-        if (_defaultPageSettings != nullptr)
-            _defaultPageSettings->Release();
+        return _pageSettings;
+    }
 
-        _defaultPageSettings = value;
+    PrinterSettings* PrintDocument::GetPrinterSettingsCore()
+    {
+        if (_printerSettings == nullptr)
+            _printerSettings = new PrinterSettings();
 
-        if (_defaultPageSettings != nullptr)
-            _defaultPageSettings->AddRef();
+        return _printerSettings;
     }
 
     void PrintDocument::Print()
@@ -292,12 +271,12 @@ namespace Alternet::UI
     {
         wxPageSetupDialogData data;
 
-        auto settings = GetDefaultPageSettingsCore();
+        auto pageSettings = GetPageSettingsCore();
 
-        auto m = settings->GetMargins();
+        auto margins = pageSettings->GetMargins();
 
-        data.SetMarginTopLeft(wxPoint(fromDip(m.Left, nullptr), fromDip(m.Top, nullptr)));
-        data.SetMarginBottomRight(wxPoint(fromDip(m.Right, nullptr), fromDip(m.Bottom, nullptr)));
+        data.SetMarginTopLeft(wxPoint(fromDip(margins.Left, nullptr), fromDip(margins.Top, nullptr)));
+        data.SetMarginBottomRight(wxPoint(fromDip(margins.Right, nullptr), fromDip(margins.Bottom, nullptr)));
 
         return data;
     }
@@ -305,6 +284,21 @@ namespace Alternet::UI
     wxPrintDialogData PrintDocument::GetPrintDialogData()
     {
         wxPrintDialogData data(GetPrintData());
+        
+        auto printerSettings = GetPrinterSettingsCore();
+
+        data.SetFromPage(printerSettings->GetFromPage());
+        data.SetToPage(printerSettings->GetToPage());
+
+        data.SetMinPage(printerSettings->GetMinimumPage());
+        data.SetMaxPage(printerSettings->GetMaximumPage());
+
+        ApplyPrintRange(data, printerSettings->GetPrintRange());
+
+        data.SetCollate(printerSettings->GetCollate());
+        data.SetNoCopies(printerSettings->GetCopies());
+        data.SetPrintToFile(printerSettings->GetPrintToFile());
+
         return data;
     }
 
@@ -312,9 +306,84 @@ namespace Alternet::UI
     {
         wxPrintData data;
 
-        auto settings = GetDefaultPageSettingsCore();
-        data.SetColour(settings->GetColor());
+        auto printerSettings = GetPrinterSettingsCore();
+        data.SetPrinterName(wxStr(printerSettings->GetPrinterName().value_or(u"")));
+
+        auto pageSettings = GetPageSettingsCore();
+
+        if (printerSettings->GetPrintFileName() != nullopt)
+            data.SetFilename(wxStr(printerSettings->GetPrintFileName().value()));
+
+        data.SetDuplex(GetWxDuplexMode(printerSettings->GetDuplex()));
+        data.SetColour(pageSettings->GetColor());
+        data.SetOrientation(pageSettings->GetLandscape() ? wxPrintOrientation::wxLANDSCAPE : wxPrintOrientation::wxPORTRAIT);
+        
+        if (pageSettings->GetUseCustomPaperSize())
+        {
+            data.SetPaperId(wxPaperSize::wxPAPER_NONE);
+            auto customPaperSize = pageSettings->GetCustomPaperSize();
+            data.SetPaperSize(wxSize((int)customPaperSize.Width, (int)customPaperSize.Height));
+        }
+        else
+        {
+            data.SetPaperId(GetWxPaperSize(pageSettings->GetPaperSize()));
+        }
+
+        data.SetQuality(GetWxPrintQuality(pageSettings->GetPrinterResolution()));
 
         return data;
+    }
+
+    wxPrintQuality PrintDocument::GetWxPrintQuality(PrinterResolutionKind value)
+    {
+        switch (value)
+        {
+        case PrinterResolutionKind::Draft:
+            return wxPRINT_QUALITY_DRAFT;
+        case PrinterResolutionKind::Low:
+            return wxPRINT_QUALITY_LOW;
+        case PrinterResolutionKind::Medium:
+            return wxPRINT_QUALITY_MEDIUM;
+        case PrinterResolutionKind::High:
+            return wxPRINT_QUALITY_HIGH;
+        default:
+            throwExNoInfo;
+        }
+    }
+
+    wxDuplexMode PrintDocument::GetWxDuplexMode(Duplex value)
+    {
+        switch (value)
+        {
+        case Duplex::Simplex:
+            return wxDUPLEX_SIMPLEX;
+        case Duplex::Horizontal:
+            return wxDUPLEX_HORIZONTAL;
+        case Duplex::Vertical:
+            return wxDUPLEX_VERTICAL;
+        default:
+            throwExNoInfo;
+        }
+    }
+
+    void PrintDocument::ApplyPrintRange(wxPrintDialogData& data, PrintRange range)
+    {
+        switch (range)
+        {
+        case PrintRange::AllPages:
+            data.SetAllPages(true);
+            data.SetSelection(false);
+            break;
+        case PrintRange::Selection:
+            data.SetAllPages(false);
+            data.SetSelection(true);
+            break;
+        case PrintRange::SomePages:
+            data.SetAllPages(false);
+            data.SetSelection(false);
+            break;
+        default:
+            throwExNoInfo;
+        }
     }
 }

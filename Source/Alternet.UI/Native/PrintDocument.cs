@@ -68,11 +68,6 @@ namespace Alternet.UI.Native
                 return m;
             }
             
-            set
-            {
-                CheckDisposed();
-                NativeApi.PrintDocument_SetPrinterSettings_(NativePointer, value.NativePointer);
-            }
         }
         
         public PageSettings PageSettings
@@ -86,11 +81,6 @@ namespace Alternet.UI.Native
                 return m;
             }
             
-            set
-            {
-                CheckDisposed();
-                NativeApi.PrintDocument_SetPageSettings_(NativePointer, value.NativePointer);
-            }
         }
         
         public DrawingContext PrintPage_DrawingContext
@@ -281,13 +271,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr PrintDocument_GetPrinterSettings_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PrintDocument_SetPrinterSettings_(IntPtr obj, IntPtr value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PrintDocument_GetPageSettings_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PrintDocument_SetPageSettings_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PrintDocument_GetPrintPage_DrawingContext_(IntPtr obj);

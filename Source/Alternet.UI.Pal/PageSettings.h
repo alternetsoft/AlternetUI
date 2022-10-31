@@ -13,9 +13,12 @@ namespace Alternet::UI
     public:
 
     private:
-
         bool _color = true;
         bool _landscape = false;
         Thickness _margins;
+        PaperKind _paperSize = PaperKind::Letter;
+        PrinterResolutionKind _printerResolutionKind = PrinterResolutionKind::High;
+        Size _customPaperSize;
+        bool _useCustomPaperSize = false;
     };
 }
