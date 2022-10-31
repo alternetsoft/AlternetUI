@@ -32,16 +32,24 @@ namespace Alternet::UI
             virtual void OnPreparePrinting() override;
 
             virtual bool HasPage(int page) override;
-            virtual bool OnPrintPage(int page)  override;
+            virtual bool OnPrintPage(int page) override;
             virtual void GetPageInfo(int* minPage, int* maxPage, int* pageFrom, int* pageTo) override;
 
+
+            bool GetHasMorePages();
+            void SetHasMorePages(bool value);
         private:
             PrintDocument* _owner;
+
+            bool _hasMorePages = false;
         };
 
     private:
         bool OnPrintPage(int page);
         Printout* _printout = nullptr;
+        string _documentName = u"Print Document";
 
+        PrinterSettings* _printerSettings = nullptr;
+        PageSettings* _defaultPageSettings = nullptr;
     };
 }

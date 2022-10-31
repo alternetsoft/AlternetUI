@@ -23,9 +23,6 @@ void SetPrintPage_HasMorePages(bool value);
 PageSettings* GetPrintPage_PageSettings();
 
 
-Thickness GetPrintPage_PhysicalMarginBounds();
-
-
 Rect GetPrintPage_MarginBounds();
 
 
@@ -33,6 +30,9 @@ Rect GetPrintPage_PhysicalPageBounds();
 
 
 Rect GetPrintPage_PageBounds();
+
+
+Rect GetPrintPage_PrintablePageBounds();
 
 void Print();
 public:

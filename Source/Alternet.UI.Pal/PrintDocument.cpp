@@ -1,5 +1,8 @@
 #include "PrintDocument.h"
 #include "DrawingContext.h"
+#include "PrinterSettings.h"
+#include "PageSettings.h"
+#include "Api/DrawingTypes.h"
 
 namespace Alternet::UI
 {
@@ -55,6 +58,16 @@ namespace Alternet::UI
         //wxPrintout::GetPageInfo(minPage, maxPage, pageFrom, pageTo);
     }
 
+    bool PrintDocument::Printout::GetHasMorePages()
+    {
+        return _hasMorePages;
+    }
+
+    void PrintDocument::Printout::SetHasMorePages(bool value)
+    {
+        _hasMorePages = value;
+    }
+
     // =========================================================
 
     PrintDocument::PrintDocument()
@@ -72,29 +85,58 @@ namespace Alternet::UI
 
     string PrintDocument::GetDocumentName()
     {
-        return string();
+        return _documentName;
     }
 
     void PrintDocument::SetDocumentName(const string& value)
     {
+        _documentName = value;
     }
 
     PrinterSettings* PrintDocument::GetPrinterSettings()
     {
-        return nullptr;
+        if (_printerSettings == nullptr)
+            _printerSettings = new PrinterSettings();
+
+        _printerSettings->AddRef();
+        return _printerSettings;
     }
 
     void PrintDocument::SetPrinterSettings(PrinterSettings* value)
     {
+        if (_printerSettings == value)
+            return;
+
+        if (_printerSettings != nullptr)
+            _printerSettings->Release();
+
+        _printerSettings = value;
+
+        if (_printerSettings != nullptr)
+            _printerSettings->AddRef();
     }
 
     PageSettings* PrintDocument::GetDefaultPageSettings()
     {
-        return nullptr;
+        if (_defaultPageSettings == nullptr)
+            _defaultPageSettings = new PageSettings();
+
+        _defaultPageSettings->AddRef();
+        return _defaultPageSettings;
     }
 
     void PrintDocument::SetDefaultPageSettings(PageSettings* value)
     {
+        if (_defaultPageSettings == value)
+            return;
+
+        if (_defaultPageSettings != nullptr)
+            _defaultPageSettings->Release();
+
+        _defaultPageSettings = value;
+
+        if (_defaultPageSettings != nullptr)
+            _defaultPageSettings->AddRef();
     }
 
     void PrintDocument::Print()
@@ -151,35 +193,65 @@ namespace Alternet::UI
 
     bool PrintDocument::GetPrintPage_HasMorePages()
     {
-        return false;
+        if (_printout == nullptr)
+            throwExInvalidOp;
+
+        return _printout->GetHasMorePages();
     }
 
     void PrintDocument::SetPrintPage_HasMorePages(bool value)
     {
+        if (_printout == nullptr)
+            throwExInvalidOp;
+
+        _printout->SetHasMorePages(value);
     }
 
     PageSettings* PrintDocument::GetPrintPage_PageSettings()
     {
-        return nullptr;
-    }
+        if (_printout == nullptr)
+            throwExInvalidOp;
 
-    Thickness PrintDocument::GetPrintPage_PhysicalMarginBounds()
-    {
-        return Thickness();
+        return GetDefaultPageSettings();
     }
 
     Rect PrintDocument::GetPrintPage_MarginBounds()
     {
-        return Rect();
+        if (_printout == nullptr)
+            throwExInvalidOp;
+
+        wxPageSetupData data;
+        data.SetMarginTopLeft(wxPoint(10, 10));
+        data.SetMarginBottomRight(wxPoint(10, 10));
+        auto rect = _printout->GetLogicalPageMarginsRect(data);
+        return toDip(rect, nullptr);
     }
 
     Rect PrintDocument::GetPrintPage_PhysicalPageBounds()
     {
-        return Rect();
+        if (_printout == nullptr)
+            throwExInvalidOp;
+
+        int w = 0, h = 0;
+        _printout->GetPageSizeMM(&w, &h);
+        return Rect(0, 0, w, h);
     }
 
     Rect PrintDocument::GetPrintPage_PageBounds()
     {
-        return Rect();
+        if (_printout == nullptr)
+            throwExInvalidOp;
+
+        auto rect = _printout->GetLogicalPaperRect();
+        return toDip(rect, nullptr);
+    }
+
+    Rect PrintDocument::GetPrintPage_PrintablePageBounds()
+    {
+        if (_printout == nullptr)
+            throwExInvalidOp;
+
+        auto rect = _printout->GetLogicalPageRect();
+        return toDip(rect, nullptr);
     }
 }

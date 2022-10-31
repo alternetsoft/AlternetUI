@@ -88,13 +88,6 @@ ALTERNET_UI_API PageSettings* PrintDocument_GetPrintPage_PageSettings_(PrintDocu
         });
 }
 
-ALTERNET_UI_API Thickness_C PrintDocument_GetPrintPage_PhysicalMarginBounds_(PrintDocument* obj)
-{
-    return MarshalExceptions<Thickness_C>([&](){
-            return obj->GetPrintPage_PhysicalMarginBounds();
-        });
-}
-
 ALTERNET_UI_API Rect_C PrintDocument_GetPrintPage_MarginBounds_(PrintDocument* obj)
 {
     return MarshalExceptions<Rect_C>([&](){
@@ -113,6 +106,13 @@ ALTERNET_UI_API Rect_C PrintDocument_GetPrintPage_PageBounds_(PrintDocument* obj
 {
     return MarshalExceptions<Rect_C>([&](){
             return obj->GetPrintPage_PageBounds();
+        });
+}
+
+ALTERNET_UI_API Rect_C PrintDocument_GetPrintPage_PrintablePageBounds_(PrintDocument* obj)
+{
+    return MarshalExceptions<Rect_C>([&](){
+            return obj->GetPrintPage_PrintablePageBounds();
         });
 }
 

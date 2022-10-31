@@ -119,18 +119,6 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.UI.Thickness PrintPage_PhysicalMarginBounds
-        {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.PrintDocument_GetPrintPage_PhysicalMarginBounds_(NativePointer);
-                var m = n;
-                return m;
-            }
-            
-        }
-        
         public Alternet.Drawing.Rect PrintPage_MarginBounds
         {
             get
@@ -161,6 +149,18 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 var n = NativeApi.PrintDocument_GetPrintPage_PageBounds_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public Alternet.Drawing.Rect PrintPage_PrintablePageBounds
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrintDocument_GetPrintPage_PrintablePageBounds_(NativePointer);
                 var m = n;
                 return m;
             }
@@ -280,9 +280,6 @@ namespace Alternet.UI.Native
             public static extern IntPtr PrintDocument_GetPrintPage_PageSettings_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Thickness PrintDocument_GetPrintPage_PhysicalMarginBounds_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Rect PrintDocument_GetPrintPage_MarginBounds_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -290,6 +287,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Rect PrintDocument_GetPrintPage_PageBounds_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Rect PrintDocument_GetPrintPage_PrintablePageBounds_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PrintDocument_Print_(IntPtr obj);

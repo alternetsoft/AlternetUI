@@ -28,12 +28,12 @@ namespace NativeApi.Api
 
         public PageSettings PrintPage_PageSettings { get => throw new Exception(); }
 
-        public Thickness PrintPage_PhysicalMarginBounds { get => throw new Exception(); }
-
         public Rect PrintPage_MarginBounds { get => throw new Exception(); }
 
         public Rect PrintPage_PhysicalPageBounds { get => throw new Exception(); }
 
         public Rect PrintPage_PageBounds { get => throw new Exception(); }
+
+        public Rect PrintPage_PrintablePageBounds { get => throw new Exception(); }
     }
 }

@@ -84,6 +84,9 @@ namespace Alternet.Drawing.Printing
 
             set
             {
+                if (value == null)
+                    throw new ArgumentNullException();
+
                 NativePrintDocument.DocumentName = value;
             }
         }

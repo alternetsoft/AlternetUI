@@ -80,6 +80,11 @@ namespace PrintingSample
 
         private void Document_PrintPage(object? sender, PrintPageEventArgs e)
         {
+            var pb = e.PageBounds;
+            var ppb = e.PrintablePageBounds;
+            var phpb = e.PhysicalPageBounds;
+            var mb = e.MarginBounds;
+
             Draw(e.DrawingContext);
         }
 
