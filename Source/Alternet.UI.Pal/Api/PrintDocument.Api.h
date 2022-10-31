@@ -130,6 +130,13 @@ ALTERNET_UI_API Rect_C PrintDocument_GetPrintPage_PrintablePageBounds_(PrintDocu
         });
 }
 
+ALTERNET_UI_API int PrintDocument_GetPrintPage_PageNumber_(PrintDocument* obj)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetPrintPage_PageNumber();
+        });
+}
+
 ALTERNET_UI_API void PrintDocument_Print_(PrintDocument* obj)
 {
     MarshalExceptions<void>([&](){

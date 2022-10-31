@@ -45,6 +45,7 @@ namespace Alternet::UI
 
     private:
         bool OnPrintPage(int page);
+        int _currentPageNumber = 0;
         Printout* _printout = nullptr;
         string _documentName = u"Print Document";
         bool _originAtMargins = false;

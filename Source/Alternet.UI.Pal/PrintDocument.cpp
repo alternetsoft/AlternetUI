@@ -47,7 +47,7 @@ namespace Alternet::UI
 
     bool PrintDocument::Printout::HasPage(int page)
     {
-        return page == 1;
+        return page < 3;
     }
 
     bool PrintDocument::Printout::OnPrintPage(int page)
@@ -57,12 +57,7 @@ namespace Alternet::UI
 
     void PrintDocument::Printout::GetPageInfo(int* minPage, int* maxPage, int* pageFrom, int* pageTo)
     {
-        *minPage = 1;
-        *maxPage = 1;
-        *pageFrom = 1;
-        *pageTo = 1;
-
-        //wxPrintout::GetPageInfo(minPage, maxPage, pageFrom, pageTo);
+        wxPrintout::GetPageInfo(minPage, maxPage, pageFrom, pageTo);
     }
 
     bool PrintDocument::Printout::GetHasMorePages()
@@ -87,6 +82,7 @@ namespace Alternet::UI
 
     bool PrintDocument::OnPrintPage(int page)
     {
+        _currentPageNumber = page;
         return !RaiseEvent(PrintDocumentEvent::PrintPage);
     }
 
@@ -195,7 +191,7 @@ namespace Alternet::UI
             throwExNoInfo;
 
         delete _printout;
-        _printout = nullptr;
+        ClearPrintout();
     }
 
     void PrintDocument::ClearPrintout()
@@ -204,6 +200,14 @@ namespace Alternet::UI
             throwExNoInfo;
 
         _printout = nullptr;
+    }
+
+    int PrintDocument::GetPrintPage_PageNumber()
+    {
+        if (_printout == nullptr)
+            throwExNoInfo;
+
+        return _currentPageNumber;
     }
 
     DrawingContext* PrintDocument::GetPrintPage_DrawingContext()

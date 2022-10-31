@@ -184,6 +184,18 @@ namespace Alternet.UI.Native
             
         }
         
+        public int PrintPage_PageNumber
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.PrintDocument_GetPrintPage_PageNumber_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
         public void Print()
         {
             CheckDisposed();
@@ -313,6 +325,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Rect PrintDocument_GetPrintPage_PrintablePageBounds_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PrintDocument_GetPrintPage_PageNumber_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PrintDocument_Print_(IntPtr obj);

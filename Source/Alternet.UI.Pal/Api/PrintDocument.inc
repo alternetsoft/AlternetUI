@@ -38,6 +38,9 @@ Rect GetPrintPage_PageBounds();
 
 Rect GetPrintPage_PrintablePageBounds();
 
+
+int GetPrintPage_PageNumber();
+
 void Print();
 public:
 enum class PrintDocumentEvent

@@ -36,5 +36,7 @@ namespace NativeApi.Api
         public Rect PrintPage_PageBounds { get => throw new Exception(); }
 
         public Rect PrintPage_PrintablePageBounds { get => throw new Exception(); }
+
+        public int PrintPage_PageNumber { get => throw new Exception(); }
     }
 }

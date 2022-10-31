@@ -15,12 +15,18 @@ namespace PrintingSample
         void Grid_Paint(object? sender, PaintEventArgs e)
         {
             var dc = e.DrawingContext;
-            Draw(dc);
+            DrawFirstPage(dc, e.Bounds);
         }
 
-        private static void Draw(DrawingContext dc)
+        private void DrawFirstPage(DrawingContext dc, Rect bounds)
         {
-            dc.DrawRectangle(Pens.Blue, new Rect(0, 0, 100, 100));
+            dc.DrawRectangle(Pens.Blue, bounds);
+            dc.DrawText(
+                "The quick brown fox jumps over the lazy dog.",
+                font,
+                Brushes.Black,
+                bounds,
+                new TextFormat { Wrapping = TextWrapping.None });
         }
 
         private void PrintImmediatelyMenuItem_Click(object sender, System.EventArgs e)
@@ -94,7 +100,32 @@ namespace PrintingSample
             var phpb = e.PhysicalPageBounds;
             var mb = e.MarginBounds;
 
-            Draw(e.DrawingContext);
+            int pageNumber = e.PageNumber;
+            
+            if (pageNumber == 1)
+            {
+                DrawFirstPage(
+                    e.DrawingContext,
+                    new Rect(
+                        new Point(),
+                        originAtMarginCheckBox.IsChecked ? e.MarginBounds.Size : e.PrintablePageBounds.Size));
+                return;
+            }
+
+            if (pageNumber > additionalPagesCountNumericUpDown.Value + 1)
+            {
+                e.HasMorePages = false;
+                return;
+            }
+
+            DrawAdditionalPage(e.DrawingContext, pageNumber);
+        }
+
+        Font font = new Font(FontFamily.GenericSerif, 25);
+
+        private void DrawAdditionalPage(DrawingContext dc, int pageNumber)
+        {
+            dc.DrawText("Additional page #" + pageNumber, font, Brushes.Black, new Point());
         }
 
         private void AboutMenuItem_Click(object sender, System.EventArgs e) => MessageBox.Show("AlterNET UI Printing Sample Application.", "About");

@@ -68,7 +68,7 @@ namespace Alternet.Drawing.Printing
         /// The rectangular area, measured in device-independent units (1/96th inch per unit) that represents the total area of the page.
         /// </value>
         public Rect PageBounds { get => nativePrintDocument.PrintPage_PageBounds; }
-        
+
         /// <summary>
         /// Gets the rectangular area that represents the printable portion of the page, in device-independent
         /// units (1/96th inch per unit).
@@ -77,5 +77,10 @@ namespace Alternet.Drawing.Printing
         /// The rectangular area, measured in device-independent units (1/96th inch per unit) that represents the printable area of the page.
         /// </value>
         public Rect PrintablePageBounds { get => nativePrintDocument.PrintPage_PrintablePageBounds; }
+
+        /// <summary>
+        /// Gets the 1-based number of the page being printed.
+        /// </summary>
+        public int PageNumber { get => nativePrintDocument.PrintPage_PageNumber; }
     }
 }
