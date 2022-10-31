@@ -22,6 +22,8 @@ namespace Alternet::UI
         else
             MapScreenSizeToPage();
 
+        _lastPrintedPageNumber = 0;
+
         return !_owner->RaiseEvent(PrintDocumentEvent::BeginPrint);
     }
 
@@ -47,11 +49,18 @@ namespace Alternet::UI
 
     bool PrintDocument::Printout::HasPage(int page)
     {
-        return page < 3;
+        if (page == 1)
+            return true;
+
+        if (_lastPrintedPageNumber == page - 1)
+            return _hasMorePages;
+
+        return false;
     }
 
     bool PrintDocument::Printout::OnPrintPage(int page)
     {
+        _lastPrintedPageNumber = page;
         return _owner->OnPrintPage(page);
     }
 

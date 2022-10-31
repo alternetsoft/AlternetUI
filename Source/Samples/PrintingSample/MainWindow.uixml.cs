@@ -1,4 +1,3 @@
-using System;
 using Alternet.Drawing;
 using Alternet.Drawing.Printing;
 using Alternet.UI;
@@ -7,12 +6,14 @@ namespace PrintingSample
 {
     public partial class MainWindow : Window
     {
+        private Font font = new Font(FontFamily.GenericSerif, 25);
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        void Grid_Paint(object? sender, PaintEventArgs e)
+        private void Grid_Paint(object? sender, PaintEventArgs e)
         {
             var dc = e.DrawingContext;
             DrawFirstPage(dc, e.Bounds);
@@ -101,7 +102,7 @@ namespace PrintingSample
             var mb = e.MarginBounds;
 
             int pageNumber = e.PageNumber;
-            
+
             if (pageNumber == 1)
             {
                 DrawFirstPage(
@@ -109,19 +110,14 @@ namespace PrintingSample
                     new Rect(
                         new Point(),
                         originAtMarginCheckBox.IsChecked ? e.MarginBounds.Size : e.PrintablePageBounds.Size));
-                return;
             }
-
-            if (pageNumber > additionalPagesCountNumericUpDown.Value + 1)
+            else
             {
-                e.HasMorePages = false;
-                return;
+                DrawAdditionalPage(e.DrawingContext, pageNumber);
             }
 
-            DrawAdditionalPage(e.DrawingContext, pageNumber);
+            e.HasMorePages = pageNumber - 1 < additionalPagesCountNumericUpDown.Value;
         }
-
-        Font font = new Font(FontFamily.GenericSerif, 25);
 
         private void DrawAdditionalPage(DrawingContext dc, int pageNumber)
         {

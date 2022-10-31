@@ -41,6 +41,7 @@ namespace Alternet::UI
             PrintDocument* _owner;
 
             bool _hasMorePages = false;
+            int _lastPrintedPageNumber = 0;
         };
 
     private:
