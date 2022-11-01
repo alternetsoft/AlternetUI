@@ -24,6 +24,11 @@ namespace Alternet::UI
         _doNotDeleteDC = value;
     }
 
+    void DrawingContext::SetIsPrinterDC(bool value)
+    {
+        _isPrinterDC = value;
+    }
+
     wxGraphicsContext* DrawingContext::GetGraphicsContext()
     {
         return _graphicsContext;
@@ -400,7 +405,11 @@ namespace Alternet::UI
 
     bool DrawingContext::NeedToUseDC()
     {
+#ifdef __WXOSX_MAC__
+        return _isPrinterDC;
+#else
         return false;
+#endif
     }
 
     void DrawingContext::FillRectangle(Brush* brush, const Rect& rectangle)

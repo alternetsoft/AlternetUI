@@ -24,6 +24,7 @@ namespace Alternet::UI
         wxDC* GetDC();
 
         void SetDoNotDeleteDC(bool value);
+        void SetIsPrinterDC(bool value);
 
         static wxWindow* GetWindow(wxDC* dc);
 
@@ -56,6 +57,7 @@ namespace Alternet::UI
         bool _nonIdentityTransformSet = false;
 
         bool _doNotDeleteDC = false;
+        bool _isPrinterDC = false;
 
         optional<std::function<void()>> _onUseDC;
     };
