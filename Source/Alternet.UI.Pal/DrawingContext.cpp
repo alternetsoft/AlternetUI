@@ -414,26 +414,76 @@ namespace Alternet::UI
 
     void DrawingContext::FillRectangle(Brush* brush, const Rect& rectangle)
     {
-        UseGC();
+        if (NeedToUseDC())
+        {
+            UseDC();
 
-        auto rect = fromDipF(rectangle, _dc->GetWindow());
+            auto oldPen = _dc->GetPen();
+            auto oldBrush = _dc->GetBrush();
 
-        _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
-        _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
+            _dc->SetPen(*wxTRANSPARENT_PEN);
+            _dc->SetBrush(*wxTRANSPARENT_BRUSH);
 
-        _graphicsContext->DrawRectangle(rect.X, rect.Y, rect.Width, rect.Height);
+            _dc->DrawRectangle(
+                fromDip(
+                    Rect(
+                        rectangle.X,
+                        rectangle.Y,
+                        rectangle.Width,
+                        rectangle.Height),
+                    _dc->GetWindow()));
+
+            _dc->SetPen(oldPen);
+            _dc->SetBrush(oldBrush);
+        }
+        else
+        {
+            UseGC();
+
+            auto rect = fromDipF(rectangle, _dc->GetWindow());
+
+            _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
+            _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
+
+            _graphicsContext->DrawRectangle(rect.X, rect.Y, rect.Width, rect.Height);
+        }
     }
 
     void DrawingContext::FillEllipse(Brush* brush, const Rect& bounds)
     {
-        UseGC();
+        if (NeedToUseDC())
+        {
+            UseDC();
 
-        auto rect = fromDipF(bounds, _dc->GetWindow());
+            auto oldPen = _dc->GetPen();
+            auto oldBrush = _dc->GetBrush();
 
-        _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
-        _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
+            _dc->SetPen(*wxTRANSPARENT_PEN);
+            _dc->SetBrush(*wxTRANSPARENT_BRUSH);
 
-        _graphicsContext->DrawEllipse(rect.X, rect.Y, rect.Width, rect.Height);
+            _dc->DrawEllipse(
+                fromDip(
+                    Rect(
+                        bounds.X,
+                        bounds.Y,
+                        bounds.Width,
+                        bounds.Height),
+                    _dc->GetWindow()));
+
+            _dc->SetPen(oldPen);
+            _dc->SetBrush(oldBrush);
+        }
+        else
+        {
+            UseGC();
+
+            auto rect = fromDipF(bounds, _dc->GetWindow());
+
+            _graphicsContext->SetPen(*wxTRANSPARENT_PEN);
+            _graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
+
+            _graphicsContext->DrawEllipse(rect.X, rect.Y, rect.Width, rect.Height);
+        }
     }
 
     void DrawingContext::DrawRectangle(Pen* pen, const Rect& rectangle)
