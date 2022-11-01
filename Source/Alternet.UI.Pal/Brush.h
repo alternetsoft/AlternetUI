@@ -10,6 +10,7 @@ namespace Alternet::UI
 #include "Api/Brush.inc"
     public:
         virtual wxGraphicsBrush GetGraphicsBrush(wxGraphicsRenderer* renderer, const wxPoint2DDouble& offset) = 0;
+        virtual wxBrush GetWxBrush() = 0;
 
     private:
     

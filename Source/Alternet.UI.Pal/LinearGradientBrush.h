@@ -10,6 +10,7 @@ namespace Alternet::UI
 #include "Api/LinearGradientBrush.inc"
     public:
         virtual wxGraphicsBrush GetGraphicsBrush(wxGraphicsRenderer* renderer, const wxPoint2DDouble& offset) override;
+        virtual wxBrush GetWxBrush() override;
 
     private:
         wxPoint _startPoint;

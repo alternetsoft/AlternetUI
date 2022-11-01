@@ -41,4 +41,9 @@ namespace Alternet::UI
             _radius,
             _gradientStops);
     }
+
+    wxBrush RadialGradientBrush::GetWxBrush()
+    {
+        return *wxTRANSPARENT_BRUSH;
+    }
 }

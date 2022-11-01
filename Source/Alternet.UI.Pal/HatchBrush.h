@@ -11,7 +11,7 @@ namespace Alternet::UI
     public:
         virtual wxGraphicsBrush GetGraphicsBrush(wxGraphicsRenderer* renderer, const wxPoint2DDouble& offset) override;
 
-        wxBrush GetWxBrush();
+        virtual wxBrush GetWxBrush() override;
 
     private:
         wxBrushStyle GetWxStyle(BrushHatchStyle style);

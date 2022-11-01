@@ -38,4 +38,9 @@ namespace Alternet::UI
             offset.m_y + _endPoint.y,
             _gradientStops);
     }
+
+    wxBrush LinearGradientBrush::GetWxBrush()
+    {
+        return *wxTRANSPARENT_BRUSH;
+    }
 }

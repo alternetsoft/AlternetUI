@@ -422,7 +422,7 @@ namespace Alternet::UI
             auto oldBrush = _dc->GetBrush();
 
             _dc->SetPen(*wxTRANSPARENT_PEN);
-            _dc->SetBrush(*wxTRANSPARENT_BRUSH);
+            _dc->SetBrush(brush->GetWxBrush());
 
             _dc->DrawRectangle(
                 fromDip(
@@ -459,7 +459,7 @@ namespace Alternet::UI
             auto oldBrush = _dc->GetBrush();
 
             _dc->SetPen(*wxTRANSPARENT_PEN);
-            _dc->SetBrush(*wxTRANSPARENT_BRUSH);
+            _dc->SetBrush(brush->GetWxBrush());
 
             _dc->DrawEllipse(
                 fromDip(
