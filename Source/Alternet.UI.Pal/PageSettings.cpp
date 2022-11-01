@@ -28,7 +28,7 @@ namespace Alternet::UI
     
     void PageSettings::SetLandscape(bool value)
     {
-        _landscape = true;
+        _landscape = value;
     }
     
     Thickness PageSettings::GetMargins()
