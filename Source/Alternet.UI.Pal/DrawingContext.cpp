@@ -11,6 +11,16 @@ namespace Alternet::UI
         _graphicsContext = wxGraphicsContext::CreateFromUnknownDC(*_dc);
     }
 
+    InterpolationMode DrawingContext::GetInterpolationMode()
+    {
+        return _interpolationMode;
+    }
+
+    void DrawingContext::SetInterpolationMode(InterpolationMode value)
+    {
+        _interpolationMode = value;
+    }
+
     DrawingContext::~DrawingContext()
     {
         wxDELETE(_graphicsContext);
@@ -290,7 +300,7 @@ namespace Alternet::UI
         auto destRect = fromDip(destinationRect, _dc->GetWindow());
 
         auto oldInterpolationQuality = _graphicsContext->GetInterpolationQuality();
-        _graphicsContext->SetInterpolationQuality(wxInterpolationQuality::wxINTERPOLATION_BEST);
+        _graphicsContext->SetInterpolationQuality(GetInterpolationQuality(_interpolationMode));
 
         _graphicsContext->DrawBitmap(bitmap, destRect.x, destRect.y, destRect.width, destRect.height);
 
@@ -299,20 +309,45 @@ namespace Alternet::UI
 
     void DrawingContext::DrawImagePortionAtRect(Image* image, const Rect& destinationRect, const Rect& sourceRect)
     {
-        UseDC();
-
         wxBitmap bitmap = image->GetBitmap();
         auto wxSourceRect = fromDip(sourceRect, _dc->GetWindow());
         auto wxDestinationRect = fromDip(destinationRect, _dc->GetWindow());
 
         wxMemoryDC sourceBitmapDC(bitmap);
+        if (_interpolationMode == InterpolationMode::None)
+        {
+            UseDC();
+            _dc->StretchBlit(
+                wxDestinationRect.GetLeftTop(),
+                wxDestinationRect.GetSize(),
+                &sourceBitmapDC,
+                wxSourceRect.GetLeftTop(),
+                wxSourceRect.GetSize());
+        }
+        else
+        {
+            UseGC();
 
-        _dc->StretchBlit(
-            wxDestinationRect.GetLeftTop(),
-            wxDestinationRect.GetSize(),
-            &sourceBitmapDC,
-            wxSourceRect.GetLeftTop(),
-            wxSourceRect.GetSize());
+            wxMemoryDC newDC, oldDC;
+            oldDC.SelectObject(bitmap);
+            wxBitmap tempBitmap(wxSourceRect.width, wxSourceRect.height);
+            newDC.SelectObject(tempBitmap);
+            newDC.Blit(0, 0, wxSourceRect.width, wxSourceRect.height, &oldDC, wxSourceRect.x, wxSourceRect.y);
+            oldDC.SelectObject(wxNullBitmap);
+            newDC.SelectObject(wxNullBitmap);
+
+            auto oldInterpolationQuality = _graphicsContext->GetInterpolationQuality();
+            _graphicsContext->SetInterpolationQuality(GetInterpolationQuality(_interpolationMode));
+
+            _graphicsContext->DrawBitmap(
+                tempBitmap,
+                wxDestinationRect.x,
+                wxDestinationRect.y,
+                wxDestinationRect.width,
+                wxDestinationRect.height);
+
+            _graphicsContext->SetInterpolationQuality(oldInterpolationQuality);
+        }
     }
 
     void DrawingContext::FloodFill(Brush* fillBrush, const Point& point)
@@ -428,6 +463,23 @@ namespace Alternet::UI
 #else
         return false;
 #endif
+    }
+
+    /*static*/ wxInterpolationQuality DrawingContext::GetInterpolationQuality(InterpolationMode mode)
+    {
+        switch (mode)
+        {
+        case InterpolationMode::None:
+            return wxINTERPOLATION_NONE;
+        case InterpolationMode::LowQuality:
+            return wxINTERPOLATION_FAST;
+        case InterpolationMode::MediumQuality:
+            return wxINTERPOLATION_GOOD;
+        case InterpolationMode::HighQuality:
+            return wxINTERPOLATION_BEST;
+        default:
+            throwExNoInfo;
+        }
     }
 
     void DrawingContext::FillRectangle(Brush* brush, const Rect& rectangle)

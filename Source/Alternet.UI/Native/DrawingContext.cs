@@ -57,6 +57,23 @@ namespace Alternet.UI.Native
             }
         }
         
+        public InterpolationMode InterpolationMode
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.DrawingContext_GetInterpolationMode_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.DrawingContext_SetInterpolationMode_(NativePointer, value);
+            }
+        }
+        
         public static DrawingContext FromImage(Image image)
         {
             var n = NativeApi.DrawingContext_FromImage_(image.NativePointer);
@@ -264,6 +281,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_SetClip_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern InterpolationMode DrawingContext_GetInterpolationMode_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_SetInterpolationMode_(IntPtr obj, InterpolationMode value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr DrawingContext_FromImage_(IntPtr image);

@@ -57,6 +57,14 @@ namespace Alternet::UI
         Monospace = 3,
     };
     
+    enum class InterpolationMode
+    {
+        None = 0,
+        LowQuality = 1,
+        MediumQuality = 2,
+        HighQuality = 3,
+    };
+    
     enum class LineCap
     {
         Flat = 0,

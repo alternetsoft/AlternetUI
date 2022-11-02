@@ -19,7 +19,7 @@ namespace Alternet::UI
 #include "Api/DrawingContext.inc"
     public:
         DrawingContext(wxDC* dc, optional<std::function<void()>> onUseDC = nullopt);
-        
+
         wxGraphicsContext* GetGraphicsContext();
         wxDC* GetDC();
 
@@ -37,10 +37,14 @@ namespace Alternet::UI
 
         bool NeedToUseDC();
 
+        static wxInterpolationQuality GetInterpolationQuality(InterpolationMode mode);
+
         std::stack<wxAffineMatrix2D> _transformStack;
 
         wxAffineMatrix2D _currentTransform;
         wxPoint _currentTranslation;
+
+        InterpolationMode _interpolationMode = InterpolationMode::HighQuality;
 
         wxDC* _dc;
         wxGraphicsContext* _graphicsContext = nullptr;

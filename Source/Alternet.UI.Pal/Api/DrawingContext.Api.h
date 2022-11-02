@@ -43,6 +43,20 @@ ALTERNET_UI_API void DrawingContext_SetClip_(DrawingContext* obj, Region* value)
         });
 }
 
+ALTERNET_UI_API InterpolationMode DrawingContext_GetInterpolationMode_(DrawingContext* obj)
+{
+    return MarshalExceptions<InterpolationMode>([&](){
+            return obj->GetInterpolationMode();
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_SetInterpolationMode_(DrawingContext* obj, InterpolationMode value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetInterpolationMode(value);
+        });
+}
+
 ALTERNET_UI_API DrawingContext* DrawingContext_FromImage_(Image* image)
 {
     return MarshalExceptions<DrawingContext*>([&](){

@@ -642,6 +642,26 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets the interpolation mode associated with this <see cref="DrawingContext"/>.
+        /// </summary>
+        /// <value>One of the <see cref="InterpolationMode"/> values.</value>
+        /// <remarks>
+        /// The interpolation mode determines how intermediate values between two endpoints are calculated.
+        /// </remarks>
+        public InterpolationMode InterpolationMode
+        {
+            get
+            {
+                return (InterpolationMode)dc.InterpolationMode;
+            }
+
+            set
+            {
+                dc.InterpolationMode = (UI.Native.InterpolationMode)value;
+            }
+        }
+
+        /// <summary>
         /// Releases all resources used by the <see cref="DrawingContext"/> object.
         /// </summary>
         public void Dispose()
