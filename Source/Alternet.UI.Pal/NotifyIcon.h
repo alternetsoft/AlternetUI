@@ -12,7 +12,14 @@ namespace Alternet::UI
     public:
 
     private:
-
+        wxTaskBarIcon* _taskBarIcon = nullptr;
     
+        void CreateTaskBarIcon();
+        void DeleteTaskBarIcon();
+        void RecreateTaskBarIcon();
+
+        optional<string> _text;
+        Image* _icon = nullptr;
+        bool _visible = false;
     };
 }
