@@ -19,6 +19,9 @@ namespace Alternet::UI
         void DeleteTaskBarIcon();
         void RecreateTaskBarIcon();
 
+        void OnLeftMouseButtonUp(wxTaskBarIconEvent& event);
+        void OnLeftMouseButtonDoubleClick(wxTaskBarIconEvent& event);
+
         optional<string> _text;
         Image* _icon = nullptr;
         bool _visible = false;

@@ -19,12 +19,26 @@ namespace Alternet::UI
         _taskBarIcons.clear();
     }
 
+    void NotifyIcon::OnLeftMouseButtonUp(wxTaskBarIconEvent& event)
+    {
+        RaiseEvent(NotifyIconEvent::Click);
+    }
+
+    void NotifyIcon::OnLeftMouseButtonDoubleClick(wxTaskBarIconEvent& event)
+    {
+        RaiseEvent(NotifyIconEvent::DoubleClick);
+    }
+
     void NotifyIcon::CreateTaskBarIcon()
     {
         if (_taskBarIcon != nullptr)
             throwExNoInfo;
 
         _taskBarIcon = new wxTaskBarIcon();
+
+        _taskBarIcon->Bind(wxEVT_TASKBAR_LEFT_UP, &NotifyIcon::OnLeftMouseButtonUp, this);
+        _taskBarIcon->Bind(wxEVT_TASKBAR_LEFT_DCLICK, &NotifyIcon::OnLeftMouseButtonDoubleClick, this);
+
         _taskBarIcons.push_back(_taskBarIcon);
 
         auto text = wxStr(_text.value_or(u""));
@@ -46,6 +60,10 @@ namespace Alternet::UI
         if (_taskBarIcon != nullptr)
         {
             _taskBarIcons.erase(std::find(_taskBarIcons.begin(), _taskBarIcons.end(), _taskBarIcon));
+            
+            _taskBarIcon->Unbind(wxEVT_TASKBAR_LEFT_UP, &NotifyIcon::OnLeftMouseButtonUp, this);
+            _taskBarIcon->Unbind(wxEVT_TASKBAR_LEFT_DCLICK, &NotifyIcon::OnLeftMouseButtonDoubleClick, this);
+            
             delete _taskBarIcon;
             _taskBarIcon = nullptr;
         }

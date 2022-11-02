@@ -12,6 +12,20 @@ namespace ControlsSample
         public NotifyIconPage()
         {
             InitializeComponent();
+
+            notifyIcon = new NotifyIcon { Icon = Image, Text = "AlterNET UI Notify Icon example." };
+            notifyIcon.Click += NotifyIcon_Click;
+            notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
+        }
+
+        private void NotifyIcon_DoubleClick(object? sender, EventArgs e)
+        {
+            site?.LogEvent("NotifyIcon.DoubleClick");
+        }
+
+        private void NotifyIcon_Click(object? sender, EventArgs e)
+        {
+            site?.LogEvent("NotifyIcon.Click");
         }
 
         public IPageSite? Site
@@ -27,7 +41,7 @@ namespace ControlsSample
         public static readonly Image Image = new Image(typeof(NotifyIconPage).Assembly.GetManifestResourceStream(
             "ControlsSample.Resources.Logo16x16.png") ?? throw new Exception());
 
-        NotifyIcon notifyIcon = new NotifyIcon { Icon = Image, Text = "MYTEXT^" };
+        NotifyIcon notifyIcon;
 
         private void NotifyIconVisibleCheckBox_CheckedChanged(object sender, System.EventArgs e)
         {
