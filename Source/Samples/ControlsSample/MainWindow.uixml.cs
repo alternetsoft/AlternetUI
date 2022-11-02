@@ -23,6 +23,7 @@ namespace ControlsSample
             pages.Add(new PageContainer.Page("Radio Buttons", new RadioButtonsPage { Site = this }));
             pages.Add(new PageContainer.Page("Check Boxes", new CheckBoxesPage { Site = this }));
             pages.Add(new PageContainer.Page("Text Input", new TextInputPage { Site = this }));
+            pages.Add(new PageContainer.Page("Notify Icon", new NotifyIconPage { Site = this }));
 
             Grid.SetRow(eventsListBox, 1);
 

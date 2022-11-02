@@ -38,6 +38,7 @@
 #include "Api/MenuItem.Api.h"
 #include "Api/MessageBox_.Api.h"
 #include "Api/Mouse.Api.h"
+#include "Api/NotifyIcon.Api.h"
 #include "Api/NumericUpDown.Api.h"
 #include "Api/Panel.Api.h"
 #include "Api/ProgressBar.Api.h"

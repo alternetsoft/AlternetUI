@@ -92,6 +92,10 @@
       <UIXml Update="GridPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>
+      <UIXml Update="NotifyIconPage.uixml">
+        <SubType>Designer</SubType>
+        <Generator>MSBuild:Compile</Generator>
+      </UIXml>
       <UIXml Update="TreeViewPage.uixml">
         <SubType>Designer</SubType>
         <Generator>MSBuild:Compile</Generator>

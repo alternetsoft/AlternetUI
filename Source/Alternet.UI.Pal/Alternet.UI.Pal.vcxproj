@@ -217,6 +217,7 @@
     <ClCompile Include="MenuItem.cpp" />
     <ClCompile Include="MessageBox_.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="NotifyIcon.cpp" />
     <ClCompile Include="NumericUpDown.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="PageSettings.cpp" />
@@ -347,6 +348,7 @@
     <ClInclude Include="MenuItem.h" />
     <ClInclude Include="MessageBox_.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="NotifyIcon.h" />
     <ClInclude Include="NumericUpDown.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="PageSettings.h" />
