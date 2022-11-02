@@ -44,7 +44,7 @@ namespace DrawingSample
 
             double spacing = 10;
 
-            dc.DrawText($"Image size: {image.Size.Width}x{image.Size.Height}", font, Brushes.Black, new Point(spacing, spacing));
+            dc.DrawText($"Image size: {image.PixelSize.Width}x{image.PixelSize.Height} px", font, Brushes.Black, new Point(spacing, spacing));
 
             var imageLocation = new Point(spacing, spacing * 1.5 + textHeight);
             dc.DrawImage(image, imageLocation);
