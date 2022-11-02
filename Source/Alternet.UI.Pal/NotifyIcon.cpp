@@ -19,6 +19,12 @@ namespace Alternet::UI
         _taskBarIcons.clear();
     }
 
+    void NotifyIcon::OnRightMouseButtonUp(wxTaskBarIconEvent& event)
+    {
+        if (_menu != nullptr && _taskBarIcon != nullptr)
+            _taskBarIcon->PopupMenu(_menu->GetWxMenu());
+    }
+
     void NotifyIcon::OnLeftMouseButtonUp(wxTaskBarIconEvent& event)
     {
         RaiseEvent(NotifyIconEvent::Click);
@@ -29,17 +35,10 @@ namespace Alternet::UI
         RaiseEvent(NotifyIconEvent::DoubleClick);
     }
 
-    void NotifyIcon::CreateTaskBarIcon()
+    void NotifyIcon::ApplyTextAndIcon()
     {
-        if (_taskBarIcon != nullptr)
+        if (_taskBarIcon == nullptr)
             throwExNoInfo;
-
-        _taskBarIcon = new wxTaskBarIcon();
-
-        _taskBarIcon->Bind(wxEVT_TASKBAR_LEFT_UP, &NotifyIcon::OnLeftMouseButtonUp, this);
-        _taskBarIcon->Bind(wxEVT_TASKBAR_LEFT_DCLICK, &NotifyIcon::OnLeftMouseButtonDoubleClick, this);
-
-        _taskBarIcons.push_back(_taskBarIcon);
 
         auto text = wxStr(_text.value_or(u""));
 
@@ -55,6 +54,22 @@ namespace Alternet::UI
         }
     }
 
+    void NotifyIcon::CreateTaskBarIcon()
+    {
+        if (_taskBarIcon != nullptr)
+            throwExNoInfo;
+
+        _taskBarIcon = new wxTaskBarIcon();
+
+        _taskBarIcon->Bind(wxEVT_TASKBAR_LEFT_UP, &NotifyIcon::OnLeftMouseButtonUp, this);
+        _taskBarIcon->Bind(wxEVT_TASKBAR_RIGHT_UP, &NotifyIcon::OnRightMouseButtonUp, this);
+        _taskBarIcon->Bind(wxEVT_TASKBAR_LEFT_DCLICK, &NotifyIcon::OnLeftMouseButtonDoubleClick, this);
+
+        _taskBarIcons.push_back(_taskBarIcon);
+
+        ApplyTextAndIcon();
+    }
+
     void NotifyIcon::DeleteTaskBarIcon()
     {
         if (_taskBarIcon != nullptr)
@@ -62,6 +77,7 @@ namespace Alternet::UI
             _taskBarIcons.erase(std::find(_taskBarIcons.begin(), _taskBarIcons.end(), _taskBarIcon));
             
             _taskBarIcon->Unbind(wxEVT_TASKBAR_LEFT_UP, &NotifyIcon::OnLeftMouseButtonUp, this);
+            _taskBarIcon->Unbind(wxEVT_TASKBAR_RIGHT_UP, &NotifyIcon::OnRightMouseButtonUp, this);
             _taskBarIcon->Unbind(wxEVT_TASKBAR_LEFT_DCLICK, &NotifyIcon::OnLeftMouseButtonDoubleClick, this);
             
             delete _taskBarIcon;
@@ -69,7 +85,7 @@ namespace Alternet::UI
         }
     }
 
-    void NotifyIcon::RecreateTaskBarIcon()
+    void NotifyIcon::RecreateTaskBarIconIfNeeded()
     {
         DeleteTaskBarIcon();
 
@@ -85,27 +101,50 @@ namespace Alternet::UI
     void NotifyIcon::SetText(optional<string> value)
     {
         _text = value;
-        RecreateTaskBarIcon();
+
+        if (_taskBarIcon == nullptr)
+            RecreateTaskBarIconIfNeeded();
+        else
+            ApplyTextAndIcon();
     }
 
     Image* NotifyIcon::GetIcon()
     {
+        _icon->AddRef();
         return _icon;
     }
 
     void NotifyIcon::SetIcon(Image* value)
     {
+        if (_icon != nullptr)
+            _icon->Release();
+
         _icon = value;
-        RecreateTaskBarIcon();
+
+        if (_icon != nullptr)
+            _icon->AddRef();
+
+        if (_taskBarIcon == nullptr)
+            RecreateTaskBarIconIfNeeded();
+        else
+            ApplyTextAndIcon();
     }
 
     Menu* NotifyIcon::GetMenu()
     {
-        return nullptr;
+        _menu->AddRef();
+        return _menu;
     }
 
     void NotifyIcon::SetMenu(Menu* value)
     {
+        if (_menu != nullptr)
+            _menu->Release();
+
+        _menu = value;
+
+        if (_menu != nullptr)
+            _menu->AddRef();
     }
 
     bool NotifyIcon::GetVisible()
@@ -116,6 +155,6 @@ namespace Alternet::UI
     void NotifyIcon::SetVisible(bool value)
     {
         _visible = value;
-        RecreateTaskBarIcon();
+        RecreateTaskBarIconIfNeeded();
     }
 }

@@ -17,13 +17,17 @@ namespace Alternet::UI
     
         void CreateTaskBarIcon();
         void DeleteTaskBarIcon();
-        void RecreateTaskBarIcon();
+        void RecreateTaskBarIconIfNeeded();
 
         void OnLeftMouseButtonUp(wxTaskBarIconEvent& event);
+        void OnRightMouseButtonUp(wxTaskBarIconEvent& event);
         void OnLeftMouseButtonDoubleClick(wxTaskBarIconEvent& event);
+
+        void ApplyTextAndIcon();
 
         optional<string> _text;
         Image* _icon = nullptr;
+        Menu* _menu = nullptr;
         bool _visible = false;
 
         inline static std::vector<wxTaskBarIcon*> _taskBarIcons;

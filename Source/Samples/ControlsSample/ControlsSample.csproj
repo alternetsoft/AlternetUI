@@ -29,6 +29,7 @@
     <ItemGroup>
       <None Remove="CheckBoxesPage.uixml" />
       <None Remove="ComboBoxPage.uixml" />
+      <None Remove="ExampleContextMenu.uixml" />
       <None Remove="GridPage.uixml" />
       <None Remove="ListBoxPage.uixml" />
       <None Remove="ListViewPage.uixml" />
