@@ -125,10 +125,16 @@ namespace Alternet.UI.Native
             NativeApi.DrawingContext_DrawImageAtPoint_(NativePointer, image.NativePointer, origin);
         }
         
-        public void DrawImageAtRect(Image image, Alternet.Drawing.Rect rect)
+        public void DrawImageAtRect(Image image, Alternet.Drawing.Rect destinationRect)
         {
             CheckDisposed();
-            NativeApi.DrawingContext_DrawImageAtRect_(NativePointer, image.NativePointer, rect);
+            NativeApi.DrawingContext_DrawImageAtRect_(NativePointer, image.NativePointer, destinationRect);
+        }
+        
+        public void DrawImagePortionAtRect(Image image, Alternet.Drawing.Rect destinationRect, Alternet.Drawing.Rect sourceRect)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_DrawImagePortionAtRect_(NativePointer, image.NativePointer, destinationRect, sourceRect);
         }
         
         public Alternet.Drawing.Size MeasureText(string text, Font font, double maximumWidth, TextWrapping textWrapping)
@@ -293,7 +299,10 @@ namespace Alternet.UI.Native
             public static extern void DrawingContext_DrawImageAtPoint_(IntPtr obj, IntPtr image, NativeApiTypes.Point origin);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawImageAtRect_(IntPtr obj, IntPtr image, NativeApiTypes.Rect rect);
+            public static extern void DrawingContext_DrawImageAtRect_(IntPtr obj, IntPtr image, NativeApiTypes.Rect destinationRect);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DrawImagePortionAtRect_(IntPtr obj, IntPtr image, NativeApiTypes.Rect destinationRect, NativeApiTypes.Rect sourceRect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Size DrawingContext_MeasureText_(IntPtr obj, string text, IntPtr font, double maximumWidth, TextWrapping textWrapping);

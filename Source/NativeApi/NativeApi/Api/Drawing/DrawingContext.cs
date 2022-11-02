@@ -40,7 +40,9 @@ namespace NativeApi.Api
 
         public void DrawImageAtPoint(Image image, Point origin) => throw new Exception();
 
-        public void DrawImageAtRect(Image image, Rect rect) => throw new Exception();
+        public void DrawImageAtRect(Image image, Rect destinationRect) => throw new Exception();
+
+        public void DrawImagePortionAtRect(Image image, Rect destinationRect, Rect sourceRect) => throw new Exception();
 
         public Size MeasureText(string text, Font font, double maximumWidth, TextWrapping textWrapping) => throw new Exception();
 

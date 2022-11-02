@@ -391,13 +391,29 @@ namespace Alternet.Drawing
         /// Draws an image into the region defined by the specified <see cref="Rect"/>.
         /// </summary>
         /// <param name="image"><see cref="Image"/> to draw.</param>
-        /// <param name="rect">The region in which to draw <paramref name="image"/>.</param>
-        public void DrawImage(Image image, Rect rect)
+        /// <param name="destinationRect">The region in which to draw <paramref name="image"/>.</param>
+        public void DrawImage(Image image, Rect destinationRect)
         {
             if (image is null)
                 throw new ArgumentNullException(nameof(image));
 
-            dc.DrawImageAtRect(image.NativeImage, rect);
+            dc.DrawImageAtRect(image.NativeImage, destinationRect);
+        }
+
+        /// <summary>
+        /// Draws the specified portion of the image into the region defined by the specified <see cref="Rect"/>.
+        /// </summary>
+        /// <param name="image"><see cref="Image"/> to draw.</param>
+        /// <param name="destinationRect">The region in which to draw <paramref name="image"/>.</param>
+        /// <param name="sourceRect">
+        /// <see cref="Rect"/> structure that specifies the portion of the <paramref name="image"/> object to draw.
+        /// </param>
+        public void DrawImage(Image image, Rect destinationRect, Rect sourceRect)
+        {
+            if (image is null)
+                throw new ArgumentNullException(nameof(image));
+
+            dc.DrawImagePortionAtRect(image.NativeImage, destinationRect, sourceRect);
         }
 
         /// <summary>

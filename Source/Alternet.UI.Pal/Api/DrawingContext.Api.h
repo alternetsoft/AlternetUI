@@ -120,10 +120,17 @@ ALTERNET_UI_API void DrawingContext_DrawImageAtPoint_(DrawingContext* obj, Image
         });
 }
 
-ALTERNET_UI_API void DrawingContext_DrawImageAtRect_(DrawingContext* obj, Image* image, Rect rect)
+ALTERNET_UI_API void DrawingContext_DrawImageAtRect_(DrawingContext* obj, Image* image, Rect destinationRect)
 {
     MarshalExceptions<void>([&](){
-            obj->DrawImageAtRect(image, rect);
+            obj->DrawImageAtRect(image, destinationRect);
+        });
+}
+
+ALTERNET_UI_API void DrawingContext_DrawImagePortionAtRect_(DrawingContext* obj, Image* image, Rect destinationRect, Rect sourceRect)
+{
+    MarshalExceptions<void>([&](){
+            obj->DrawImagePortionAtRect(image, destinationRect, sourceRect);
         });
 }
 

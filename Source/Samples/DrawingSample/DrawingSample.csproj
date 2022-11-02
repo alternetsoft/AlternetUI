@@ -31,10 +31,12 @@
       <None Remove="Pages\GraphicsPath\GraphicsPathPageSettings.uixml" />
       <None Remove="Pages\Shapes\ShapesPageSettings.uixml" />
       <None Remove="Pages\Transforms\TransformsPageSettings.uixml" />
+      <None Remove="Resources\Leaves.jpg" />
       <None Remove="Resources\logo.png" />
     </ItemGroup>
 
     <ItemGroup>
+      <EmbeddedResource Include="Resources\Leaves.jpg" />
       <EmbeddedResource Include="Resources\Logo.png" />
     </ItemGroup>
 
@@ -55,6 +57,9 @@
       <SubType>Designer</SubType>
     </UIXml>
     <UIXml Update="Pages\Clipping\ClippingPageSettings.uixml">
+      <SubType>Designer</SubType>
+    </UIXml>
+    <UIXml Update="Pages\Images\ImagesPageSettings.uixml">
       <SubType>Designer</SubType>
     </UIXml>
     <UIXml Update="Pages\Text\TextPageSettings.uixml">

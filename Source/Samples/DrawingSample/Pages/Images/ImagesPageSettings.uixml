@@ -1,0 +1,12 @@
+﻿<Control x:Class="DrawingSample.ImagesPageSettings"
+        xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
+    <StackPanel Orientation="Vertical" Margin="5">
+        <Label Text="Brush Color:" Margin="0,5,0,5"/>
+        <Slider Minimum="0" Maximum="10" Margin="0,0,0,10" Value="{Binding BrushColorHue}"/>
+
+        <Label Text="Pen Color:" Margin="0,5,0,5"/>
+        <Slider Minimum="0" Maximum="10" Margin="0,0,0,10" Value="{Binding PenColorHue}"/>
+    </StackPanel>
+</Control>

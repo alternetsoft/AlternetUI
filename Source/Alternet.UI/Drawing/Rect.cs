@@ -392,6 +392,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates a <see cref='Drawing.Rect'/> with the specified location.
+        /// </summary>
+        public Rect WithLocation(double x, double y)
+        {
+            var r = this;
+            r.x = x;
+            r.y = y;
+            return r;
+        }
+
+        /// <summary>
         /// Gets the center point of this <see cref="Rect"/>.
         /// </summary>
         public Point Center => Location + Size / 2;
