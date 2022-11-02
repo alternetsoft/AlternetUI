@@ -605,6 +605,7 @@ namespace Alternet::UI
                 return;
 
             _graphicsContext->SetPen(pen->GetWxPen());
+            _graphicsContext->SetBrush(*wxTRANSPARENT_BRUSH);
 
             auto window = _dc->GetWindow();
 
