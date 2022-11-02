@@ -10,6 +10,7 @@ namespace Alternet::UI
     {
 #include "Api/NotifyIcon.inc"
     public:
+        static void DestroyAllNotifyIcons();
 
     private:
         wxTaskBarIcon* _taskBarIcon = nullptr;
@@ -21,5 +22,7 @@ namespace Alternet::UI
         optional<string> _text;
         Image* _icon = nullptr;
         bool _visible = false;
+
+        inline static std::vector<wxTaskBarIcon*> _taskBarIcons;
     };
 }

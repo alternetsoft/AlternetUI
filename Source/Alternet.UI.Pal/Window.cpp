@@ -1,6 +1,7 @@
 #include "Window.h"
 #include "Application.h"
 #include "IdManager.h"
+#include "NotifyIcon.h"
 
 namespace Alternet::UI
 {
@@ -20,7 +21,10 @@ namespace Alternet::UI
         if (wxTheApp->GetTopWindow() == ParkingWindow::GetWindow())
         {
             if (_allFrames.size() == 0)
+            {
+                NotifyIcon::DestroyAllNotifyIcons();
                 ParkingWindow::Destroy();
+            }
             else
                 _allFrames[0]->SetFocus();
         }

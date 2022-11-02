@@ -11,13 +11,22 @@ namespace Alternet::UI
         DeleteTaskBarIcon();
     }
 
+    void NotifyIcon::DestroyAllNotifyIcons()
+    {
+        for (auto icon : _taskBarIcons)
+            icon->Destroy();
+
+        _taskBarIcons.clear();
+    }
+
     void NotifyIcon::CreateTaskBarIcon()
     {
         if (_taskBarIcon != nullptr)
             throwExNoInfo;
 
         _taskBarIcon = new wxTaskBarIcon();
-        
+        _taskBarIcons.push_back(_taskBarIcon);
+
         auto text = wxStr(_text.value_or(u""));
 
         if (_icon != nullptr)
@@ -36,6 +45,7 @@ namespace Alternet::UI
     {
         if (_taskBarIcon != nullptr)
         {
+            _taskBarIcons.erase(std::find(_taskBarIcons.begin(), _taskBarIcons.end(), _taskBarIcon));
             delete _taskBarIcon;
             _taskBarIcon = nullptr;
         }
