@@ -1,13 +1,18 @@
 ﻿using Alternet.Drawing;
 using Alternet.UI;
 using System;
-using System.ComponentModel;
 
 namespace DrawingSample
 {
     internal sealed class ImagesPage : DrawingPage
     {
-        public override string Name => "Images";
+        private Image image;
+
+        private Rect magnifiedRect;
+
+        private Pen dashPen = new Pen(Color.Black, 2, PenDashStyle.Dash);
+
+        private InterpolationMode interpolationMode = InterpolationMode.None;
 
         public ImagesPage()
         {
@@ -20,23 +25,37 @@ namespace DrawingSample
                     image.Size.Height / 2 - rectSize / 2);
         }
 
-        Image image;
-        Rect magnifiedRect;
+        public override string Name => "Images";
 
-        Pen dashPen = new Pen(Color.Black, 2, PenDashStyle.Dash);
+        public InterpolationMode InterpolationMode
+        {
+            get => interpolationMode;
+            set
+            {
+                interpolationMode = value;
+                Canvas?.Invalidate();
+            }
+        }
 
         public override void Draw(DrawingContext dc, Rect bounds)
         {
+            var font = Control.DefaultFont;
+            var textHeight = dc.MeasureText("M", font).Height;
+
             double spacing = 10;
-            var imageLocation = new Point(spacing, spacing);
+
+            dc.DrawText($"Image size: {image.Size.Width}x{image.Size.Height}", font, Brushes.Black, new Point(spacing, spacing));
+
+            var imageLocation = new Point(spacing, spacing * 1.5 + textHeight);
             dc.DrawImage(image, imageLocation);
             dc.DrawRectangle(dashPen, magnifiedRect.OffsetBy(imageLocation.X, imageLocation.Y));
 
             var x = spacing;
-            var y = image.Size.Height + spacing * 4;
+            var y = image.Size.Height + spacing * 4 + textHeight;
 
-            var font = Control.DefaultFont;
-            var textHeight = dc.MeasureText("M", font).Height;
+            var oldInterpolationMode = dc.InterpolationMode;
+
+            dc.InterpolationMode = InterpolationMode;
 
             for (var factor = 1.0; factor <= 3; factor++)
             {
@@ -48,6 +67,7 @@ namespace DrawingSample
                 x += spacing + sourceRect.Width;
             }
 
+            dc.InterpolationMode = oldInterpolationMode;
         }
 
         protected override Control CreateSettingsControl()
