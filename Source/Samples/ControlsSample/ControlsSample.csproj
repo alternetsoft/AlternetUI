@@ -44,6 +44,7 @@
       <None Remove="Resources\ImageListIcons\Small\LineGraph16.png" />
       <None Remove="Resources\ImageListIcons\Small\Pencil16.png" />
       <None Remove="Resources\ImageListIcons\Small\Photo16.png" />
+      <None Remove="Resources\Logo16x16.png" />
       <None Remove="SliderPage.uixml" />
       <None Remove="TextInputPage.uixml" />
       <None Remove="TreeViewPage.uixml" />
@@ -58,6 +59,7 @@
       <EmbeddedResource Include="Resources\ImageListIcons\Small\LineGraph16.png" />
       <EmbeddedResource Include="Resources\ImageListIcons\Small\Pencil16.png" />
       <EmbeddedResource Include="Resources\ImageListIcons\Small\Photo16.png" />
+      <EmbeddedResource Include="Resources\Logo16x16.png" />
     </ItemGroup>
 
     <ItemGroup>

@@ -25,7 +25,7 @@ namespace ControlsSample
         }
 
         public static readonly Image Image = new Image(typeof(NotifyIconPage).Assembly.GetManifestResourceStream(
-            "ControlsSample.Resources.ImageListIcons.Small.Pencil16.png") ?? throw new Exception());
+            "ControlsSample.Resources.Logo16x16.png") ?? throw new Exception());
 
         NotifyIcon notifyIcon = new NotifyIcon { Icon = Image, Text = "MYTEXT^" };
 
