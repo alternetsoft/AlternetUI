@@ -123,6 +123,8 @@ namespace Alternet::UI
 
         DropTarget* _dropTarget = nullptr;
 
+        optional<string> _toolTip;
+
         static DragDropEffects GetDragDropEffects(wxDragResult input);
         static wxDragResult GetDragResult(DragDropEffects input);
         static int GetDoDragDropFlags(DragDropEffects allowedEffects);
@@ -152,6 +154,8 @@ namespace Alternet::UI
         void OnVisibleChanged(wxShowEvent& event);
         void OnSizeChanged(wxSizeEvent& event);
         void OnDestroy(wxWindowDestroyEvent& event);
+
+        void ApplyToolTip();
 
         void DestroyWxWindow();
 

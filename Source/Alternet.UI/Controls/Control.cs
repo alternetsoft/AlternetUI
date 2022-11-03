@@ -1230,5 +1230,62 @@ namespace Alternet.UI
         {
             e.Item.Parent = null;
         }
+
+        /// <summary>
+        /// Gets or sets the tool-tip object that is displayed for this element in the user interface.
+        /// </summary>
+        [DefaultValue(null)]
+        [Localizability(LocalizationCategory.ToolTip)]
+        public string? ToolTip
+        {
+            get { return (string?)GetValue(ToolTipProperty); }
+            set { SetValue(ToolTipProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the <see cref="ToolTip"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ToolTipProperty =
+        DependencyProperty.Register(
+                "ToolTip", // Property name
+                typeof(string), // Property type
+                typeof(Control), // Property owner
+                new FrameworkPropertyMetadata( // Property metadata
+                        null, // default value
+                        FrameworkPropertyMetadataOptions.None,
+                        new PropertyChangedCallback(OnToolTipPropertyChanged),    // property changed callback
+                        null,
+                        true, // IsAnimationProhibited
+                        UpdateSourceTrigger.PropertyChanged
+                        //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
+                        ));
+
+        /// <summary>
+        /// Callback for changes to the ToolTip property
+        /// </summary>
+        private static void OnToolTipPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            Control c = (Control)d;
+            c.OnToolTipPropertyChanged((string)e.OldValue, (string)e.NewValue);
+        }
+
+        private void OnToolTipPropertyChanged(string oldToolTip, string newToolTip)
+        {
+            OnToolTipChanged(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="ToolTipChanged"/> event.
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void OnToolTipChanged(EventArgs e)
+        {
+            ToolTipChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Occurs when the <see cref="ToolTip"/> property value changes.
+        /// </summary>
+        public event EventHandler? ToolTipChanged;
     }
 }

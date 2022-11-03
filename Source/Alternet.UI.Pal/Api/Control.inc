@@ -4,6 +4,10 @@ public:
 Control* GetParentRefCounted();
 
 
+optional<string> GetToolTip();
+void SetToolTip(optional<string> value);
+
+
 bool GetAllowDrop();
 void SetAllowDrop(bool value);
 

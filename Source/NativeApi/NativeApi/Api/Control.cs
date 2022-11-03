@@ -30,6 +30,8 @@ namespace NativeApi.Api
 
         public Control? ParentRefCounted { get; }
 
+        public string? ToolTip { get; set; }
+
         public bool AllowDrop { get; set; }
 
         public Size Size { get; set; }

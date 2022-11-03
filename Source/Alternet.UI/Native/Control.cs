@@ -35,6 +35,23 @@ namespace Alternet.UI.Native
             
         }
         
+        public string? ToolTip
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetToolTip_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetToolTip_(NativePointer, value);
+            }
+        }
+        
         public bool AllowDrop
         {
             get
@@ -549,6 +566,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_GetParentRefCounted_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string? Control_GetToolTip_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetToolTip_(IntPtr obj, string? value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_GetAllowDrop_(IntPtr obj);

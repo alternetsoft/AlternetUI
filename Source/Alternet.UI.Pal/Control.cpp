@@ -251,6 +251,30 @@ namespace Alternet::UI
         wxWindow->Update();
     }
 
+    optional<string> Control::GetToolTip()
+    {
+        return _toolTip;
+    }
+
+    void Control::SetToolTip(optional<string> value)
+    {
+        _toolTip = value;
+
+        if (IsWxWindowCreated())
+            ApplyToolTip();
+    }
+
+    void Control::ApplyToolTip()
+    {
+        if (_wxWindow == nullptr)
+            throwExInvalidOp;
+
+        if (_toolTip == nullopt)
+            _wxWindow->SetToolTip(nullptr);
+        else
+            _wxWindow->SetToolTip(wxStr(_toolTip.value()));
+    }
+
     void Control::CreateWxWindow()
     {
         _flags.Set(ControlFlags::CreatingWxWindow, true);
@@ -262,6 +286,8 @@ namespace Alternet::UI
             parentingWxWindow = ParkingWindow::GetWindow();
         
         _wxWindow = CreateWxWindowCore(parentingWxWindow);
+
+        ApplyToolTip();
 
         if (GetUserPaint())
         {

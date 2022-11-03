@@ -528,6 +528,7 @@ namespace Alternet.UI
             ApplyBackgroundColor();
             ApplyForegroundColor();
             ApplyFont();
+            ApplyToolTip();
             ApplyChildren();
 
             Control.MarginChanged += Control_MarginChanged;
@@ -540,6 +541,7 @@ namespace Alternet.UI
             Control.EnabledChanged += Control_EnabledChanged;
             Control.VerticalAlignmentChanged += Control_VerticalAlignmentChanged;
             Control.HorizontalAlignmentChanged += Control_HorizontalAlignmentChanged;
+            Control.ToolTipChanged += Control_ToolTipChanged;
 
             Control.Children.ItemInserted += Children_ItemInserted;
             VisualChildren.ItemInserted += Children_ItemInserted;
@@ -547,6 +549,17 @@ namespace Alternet.UI
             Control.Children.ItemRemoved += Children_ItemRemoved;
             VisualChildren.ItemRemoved += Children_ItemRemoved;
 
+        }
+
+        private void Control_ToolTipChanged(object? sender, EventArgs e)
+        {
+            ApplyToolTip();
+        }
+
+        private void ApplyToolTip()
+        {
+            if (NativeControl != null)
+                NativeControl.ToolTip = Control.ToolTip;
         }
 
         private void Control_FontChanged(object? sender, EventArgs e)
@@ -570,6 +583,7 @@ namespace Alternet.UI
             Control.EnabledChanged -= Control_EnabledChanged;
             Control.VerticalAlignmentChanged -= Control_VerticalAlignmentChanged;
             Control.HorizontalAlignmentChanged -= Control_HorizontalAlignmentChanged;
+            Control.ToolTipChanged -= Control_ToolTipChanged;
 
             Control.Children.ItemInserted -= Children_ItemInserted;
             Control.Children.ItemRemoved -= Children_ItemRemoved;

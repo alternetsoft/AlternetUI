@@ -8,7 +8,7 @@ namespace Alternet.Drawing.Printing
     /// </summary>
     /// <remarks>
     /// Typically, you access a <see cref="PrinterSettings"/> through <see cref="PrintDocument.PrinterSettings"/>
-    /// or <see cref="PageSettings.PrinterSettings"/> properties to modify printer settings.
+    /// property to modify printer settings.
     /// </remarks>
     public class PrinterSettings : IDisposable
     {

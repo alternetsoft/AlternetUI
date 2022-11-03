@@ -18,6 +18,20 @@ ALTERNET_UI_API Control* Control_GetParentRefCounted_(Control* obj)
         });
 }
 
+ALTERNET_UI_API char16_t* Control_GetToolTip_(Control* obj)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetToolTip());
+        });
+}
+
+ALTERNET_UI_API void Control_SetToolTip_(Control* obj, const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetToolTip(ToOptional(value));
+        });
+}
+
 ALTERNET_UI_API c_bool Control_GetAllowDrop_(Control* obj)
 {
     return MarshalExceptions<c_bool>([&](){
