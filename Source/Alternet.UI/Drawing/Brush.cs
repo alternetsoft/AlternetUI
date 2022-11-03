@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 namespace Alternet.Drawing
 {
@@ -9,6 +10,7 @@ namespace Alternet.Drawing
     /// This is an abstract base class and cannot be instantiated. To create a brush object,
     /// use classes derived from <see cref="Brush" />, such as <see cref="SolidBrush" /> or <see cref="HatchBrush" />.
     /// </remarks>
+    [TypeConverter(typeof(BrushConverter))]
     public abstract class Brush : IDisposable, IEquatable<Brush>
     {
         private bool isDisposed;
