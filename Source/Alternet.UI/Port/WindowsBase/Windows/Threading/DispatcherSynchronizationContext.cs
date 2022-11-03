@@ -11,7 +11,7 @@ namespace Alternet.UI.Threading
     /// <summary>
     ///     SynchronizationContext subclass used by the Dispatcher.
     /// </summary>
-    public sealed class DispatcherSynchronizationContext : SynchronizationContext
+    internal sealed class DispatcherSynchronizationContext : SynchronizationContext
     {
         /// <summary>
         ///     Constructs a new instance of the DispatcherSynchroniazationContext

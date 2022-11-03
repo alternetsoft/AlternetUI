@@ -22,7 +22,7 @@ namespace Alternet.UI.Threading
     /// <summary>
     ///     Provides UI services for a thread.
     /// </summary>
-    public sealed class Dispatcher
+    internal sealed class Dispatcher
     {
         internal delegate void ShutdownCallback();
 

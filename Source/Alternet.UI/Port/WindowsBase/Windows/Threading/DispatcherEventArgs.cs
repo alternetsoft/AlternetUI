@@ -11,7 +11,7 @@ namespace Alternet.UI.Threading
     ///     Base class for all event arguments associated with a <see cref="Dispatcher"/>.
     /// </summary>
     /// <ExternalAPI/> 
-    public class DispatcherEventArgs : EventArgs
+    internal class DispatcherEventArgs : EventArgs
     {
         /// <summary>
         ///     The <see cref="Dispatcher"/> associated with this event.

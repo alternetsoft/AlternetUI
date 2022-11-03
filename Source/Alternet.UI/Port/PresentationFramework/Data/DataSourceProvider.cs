@@ -214,7 +214,7 @@ namespace Alternet.UI
         /// By default, this is the Dispatcher associated with the thread
         /// on which this DataProvider instance was created.
         /// </remarks>
-        protected Dispatcher Dispatcher
+        internal Dispatcher Dispatcher
         {
             get { return _dispatcher; }
             set

@@ -27,7 +27,7 @@ namespace Alternet.UI.Threading
         ///     <see cref="DispatcherObject"/> is associated with.
         /// </summary>
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public Dispatcher Dispatcher
+        internal Dispatcher Dispatcher
         {
             get
             {

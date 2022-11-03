@@ -10,7 +10,7 @@ namespace Alternet.UI.Threading
     /// <summary>
     ///     Additional information provided about a dispatcher.
     /// </summary>
-    public sealed class DispatcherHooks
+    internal sealed class DispatcherHooks
     {
         /// <summary>
         ///     An event indicating the the dispatcher has no more operations to process.
@@ -52,7 +52,7 @@ namespace Alternet.UI.Threading
         ///     Note that any thread can post operations, so this event can be
         ///     raised by any thread.
         /// </remarks>
-        public event DispatcherHookEventHandler OperationPosted
+        internal event DispatcherHookEventHandler OperationPosted
         {
             add
             {

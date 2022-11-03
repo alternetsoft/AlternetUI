@@ -22,7 +22,7 @@ namespace Alternet.UI.Threading
     ///   Arguments for the events that convey an exception that was raised
     ///   while executing code via the dispatcher.
     /// </summary>
-    public sealed class DispatcherUnhandledExceptionEventArgs : DispatcherEventArgs
+    internal sealed class DispatcherUnhandledExceptionEventArgs : DispatcherEventArgs
     {
         //------------------------------------------------------
         //
@@ -121,6 +121,6 @@ namespace Alternet.UI.Threading
     ///   Delegate for the events that convey the state of the UiConext
     ///   in response to various actions that involve items.
     /// </summary>
-    public delegate void DispatcherUnhandledExceptionEventHandler(object sender, DispatcherUnhandledExceptionEventArgs e);
+    internal delegate void DispatcherUnhandledExceptionEventHandler(object sender, DispatcherUnhandledExceptionEventArgs e);
 }
 

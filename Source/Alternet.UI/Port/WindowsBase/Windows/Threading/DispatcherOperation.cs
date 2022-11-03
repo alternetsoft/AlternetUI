@@ -16,7 +16,7 @@ namespace Alternet.UI.Threading
     ///     DispatcherOperation represents a delegate that has been
     ///     posted to the Dispatcher queue.
     /// </summary>
-    public class DispatcherOperation
+    internal class DispatcherOperation
     {
         static DispatcherOperation()
         {
@@ -717,7 +717,7 @@ namespace Alternet.UI.Threading
     ///     DispatcherOperation represents a delegate that has been
     ///     posted to the Dispatcher queue.
     /// </summary>
-    public class DispatcherOperation<TResult> : DispatcherOperation
+    internal class DispatcherOperation<TResult> : DispatcherOperation
     {
         internal DispatcherOperation(
             Dispatcher dispatcher,

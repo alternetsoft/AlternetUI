@@ -11,7 +11,7 @@ namespace Alternet.UI.Threading
     ///     A timer that is integrated into the Dispatcher queues, and will
     ///     be processed after a given amount of time at a specified priority.
     /// </summary>
-    public class DispatcherTimer
+    internal class DispatcherTimer
     {
         /// <summary>
         ///     Creates a timer that uses the current thread's Dispatcher to

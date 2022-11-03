@@ -26,7 +26,7 @@ namespace Alternet.UI.Threading
     /// <remarks>
     ///     This event is raised before the callstack is unwound.
     /// </remarks>
-    public sealed class DispatcherUnhandledExceptionFilterEventArgs : DispatcherEventArgs
+    internal sealed class DispatcherUnhandledExceptionFilterEventArgs : DispatcherEventArgs
     {
         //------------------------------------------------------
         //
@@ -133,6 +133,6 @@ namespace Alternet.UI.Threading
     ///   Delegate for the events that convey the state of the UiConext
     ///   in response to various actions that involve items.
     /// </summary>
-    public delegate void DispatcherUnhandledExceptionFilterEventHandler(object sender, DispatcherUnhandledExceptionFilterEventArgs e);
+    internal delegate void DispatcherUnhandledExceptionFilterEventHandler(object sender, DispatcherUnhandledExceptionFilterEventArgs e);
 }
 
