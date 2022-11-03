@@ -14,6 +14,19 @@ namespace Alternet::UI
         return _owner->_menu->GetWxMenu();
     }
 
+    wxMenu* NotifyIcon::TaskBarIcon::CreatePopupMenu()
+    {
+#if __WXOSX_COCOA__
+        // macOS implementation does not call GetPopupMenu, so here is a workaround.
+        if (_owner->_menu != nullptr)
+            PopupMenu(_owner->_menu->GetWxMenu());
+
+        return nullptr;
+#else
+        return wxTaskBarIcon::CreatePopupMenu();
+#endif
+    }
+
     //===========================================================
 
     NotifyIcon::NotifyIcon()

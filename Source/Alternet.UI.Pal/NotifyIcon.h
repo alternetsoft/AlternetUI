@@ -20,6 +20,7 @@ namespace Alternet::UI
             TaskBarIcon(NotifyIcon* owner);
         protected:
             virtual wxMenu* GetPopupMenu() override;
+            virtual wxMenu* CreatePopupMenu() override;
         private:
             NotifyIcon* _owner;
         };
