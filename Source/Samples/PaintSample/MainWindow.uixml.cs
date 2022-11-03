@@ -128,10 +128,12 @@ namespace PaintSample
         private void InitializeCommandButtons()
         {
             undoButton = new CommandButton("Undo");
+            undoButton.ToolTip = "Undo";
             undoButton.Click += UndoButton_Click;
             toolbar.CommandButtons.Add(undoButton);
 
             redoButton = new CommandButton("Redo");
+            redoButton.ToolTip = "Redo";
             redoButton.Click += RedoButton_Click;
             toolbar.CommandButtons.Add(redoButton);
         }

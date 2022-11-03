@@ -39,7 +39,8 @@ namespace PaintSample
                 var swatch = new ColorSwatch(color)
                 {
                     VerticalAlignment = VerticalAlignment.Center,
-                    Margin = new Thickness(0, 0, 5, 0)
+                    Margin = new Thickness(0, 0, 5, 0),
+                    ToolTip = color.Name
                 };
 
                 swatch.Click += Swatch_Click;

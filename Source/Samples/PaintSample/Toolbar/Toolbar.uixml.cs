@@ -46,7 +46,8 @@ namespace PaintSample
                 var button = new ToolButton(tool)
                 {
                     HorizontalAlignment = HorizontalAlignment.Center,
-                    Margin = new Thickness(0, 0, 5, 0)
+                    Margin = new Thickness(0, 0, 5, 0),
+                    ToolTip = tool.Name
                 };
 
                 button.ToggledChanged += Button_ToggledChanged;

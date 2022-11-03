@@ -270,7 +270,7 @@ namespace Alternet::UI
             throwExInvalidOp;
 
         if (_toolTip == nullopt)
-            _wxWindow->SetToolTip(nullptr);
+            _wxWindow->UnsetToolTip();
         else
             _wxWindow->SetToolTip(wxStr(_toolTip.value()));
     }

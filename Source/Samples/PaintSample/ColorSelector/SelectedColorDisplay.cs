@@ -10,6 +10,7 @@ namespace PaintSample
         public SelectedColorDisplay()
         {
             UserPaint = true;
+            ToolTip = "Currently selected color";
         }
 
         public Color SelectedColor
