@@ -36,10 +36,10 @@ AlterNET UI Roadmap
 -------------------
     
 0.5-beta (release at the beginning of November 2022):
-    - full drawing context and printing features (using wxWidgets as an implementation)
-    - advanced drawing/printing sample
-    - tooltips
-    - tray icon
+    + full drawing context and printing features (using wxWidgets as an implementation)
+    + advanced drawing/printing sample
+    + tooltips
+    + tray icon
     - basic stress and memory tests, check memory leaks
     - remove/hide parts ported from WPF which are redundant (like Dispatcher)
     - color/brush support in UIXML
