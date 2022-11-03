@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragAndDropSample", "DragAn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThreadingSample", "ThreadingSample\ThreadingSample.csproj", "{F211B821-A35B-4313-AC1A-1FD8D32DC020}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingSample", "PrintingSample\PrintingSample.csproj", "{E31A1D08-D2B9-4D63-BE5B-EBFE55446AAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -223,6 +225,18 @@ Global
 		{F211B821-A35B-4313-AC1A-1FD8D32DC020}.Release|x64.Build.0 = Release|x64
 		{F211B821-A35B-4313-AC1A-1FD8D32DC020}.Release|x86.ActiveCfg = Release|x86
 		{F211B821-A35B-4313-AC1A-1FD8D32DC020}.Release|x86.Build.0 = Release|x86
+		{E31A1D08-D2B9-4D63-BE5B-EBFE55446AAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E31A1D08-D2B9-4D63-BE5B-EBFE55446AAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E31A1D08-D2B9-4D63-BE5B-EBFE55446AAE}.Debug|x64.ActiveCfg = Debug|x64
+		{E31A1D08-D2B9-4D63-BE5B-EBFE55446AAE}.Debug|x64.Build.0 = Debug|x64
+		{E31A1D08-D2B9-4D63-BE5B-EBFE55446AAE}.Debug|x86.ActiveCfg = Debug|x86
+		{E31A1D08-D2B9-4D63-BE5B-EBFE55446AAE}.Debug|x86.Build.0 = Debug|x86
+		{E31A1D08-D2B9-4D63-BE5B-EBFE55446AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E31A1D08-D2B9-4D63-BE5B-EBFE55446AAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E31A1D08-D2B9-4D63-BE5B-EBFE55446AAE}.Release|x64.ActiveCfg = Release|x64
+		{E31A1D08-D2B9-4D63-BE5B-EBFE55446AAE}.Release|x64.Build.0 = Release|x64
+		{E31A1D08-D2B9-4D63-BE5B-EBFE55446AAE}.Release|x86.ActiveCfg = Release|x86
+		{E31A1D08-D2B9-4D63-BE5B-EBFE55446AAE}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
