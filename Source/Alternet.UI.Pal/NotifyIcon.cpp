@@ -2,6 +2,20 @@
 
 namespace Alternet::UI
 {
+    NotifyIcon::TaskBarIcon::TaskBarIcon(NotifyIcon* owner) : _owner(owner)
+    {
+    }
+
+    wxMenu* NotifyIcon::TaskBarIcon::GetPopupMenu()
+    {
+        if (_owner->_menu == nullptr)
+            return nullptr;
+
+        return _owner->_menu->GetWxMenu();
+    }
+
+    //===========================================================
+
     NotifyIcon::NotifyIcon()
     {
     }
@@ -17,12 +31,6 @@ namespace Alternet::UI
             icon->Destroy();
 
         _taskBarIcons.clear();
-    }
-
-    void NotifyIcon::OnRightMouseButtonUp(wxTaskBarIconEvent& event)
-    {
-        if (_menu != nullptr && _taskBarIcon != nullptr)
-            _taskBarIcon->PopupMenu(_menu->GetWxMenu());
     }
 
     void NotifyIcon::OnLeftMouseButtonUp(wxTaskBarIconEvent& event)
@@ -59,10 +67,9 @@ namespace Alternet::UI
         if (_taskBarIcon != nullptr)
             throwExNoInfo;
 
-        _taskBarIcon = new wxTaskBarIcon();
+        _taskBarIcon = new TaskBarIcon(this);
 
         _taskBarIcon->Bind(wxEVT_TASKBAR_LEFT_UP, &NotifyIcon::OnLeftMouseButtonUp, this);
-        _taskBarIcon->Bind(wxEVT_TASKBAR_RIGHT_UP, &NotifyIcon::OnRightMouseButtonUp, this);
         _taskBarIcon->Bind(wxEVT_TASKBAR_LEFT_DCLICK, &NotifyIcon::OnLeftMouseButtonDoubleClick, this);
 
         _taskBarIcons.push_back(_taskBarIcon);
@@ -77,7 +84,6 @@ namespace Alternet::UI
             _taskBarIcons.erase(std::find(_taskBarIcons.begin(), _taskBarIcons.end(), _taskBarIcon));
             
             _taskBarIcon->Unbind(wxEVT_TASKBAR_LEFT_UP, &NotifyIcon::OnLeftMouseButtonUp, this);
-            _taskBarIcon->Unbind(wxEVT_TASKBAR_RIGHT_UP, &NotifyIcon::OnRightMouseButtonUp, this);
             _taskBarIcon->Unbind(wxEVT_TASKBAR_LEFT_DCLICK, &NotifyIcon::OnLeftMouseButtonDoubleClick, this);
             
             delete _taskBarIcon;

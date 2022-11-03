@@ -13,6 +13,17 @@ namespace Alternet::UI
         static void DestroyAllNotifyIcons();
 
     private:
+
+        class TaskBarIcon : public wxTaskBarIcon
+        {
+        public:
+            TaskBarIcon(NotifyIcon* owner);
+        protected:
+            virtual wxMenu* GetPopupMenu() override;
+        private:
+            NotifyIcon* _owner;
+        };
+
         wxTaskBarIcon* _taskBarIcon = nullptr;
     
         void CreateTaskBarIcon();
@@ -20,7 +31,6 @@ namespace Alternet::UI
         void RecreateTaskBarIconIfNeeded();
 
         void OnLeftMouseButtonUp(wxTaskBarIconEvent& event);
-        void OnRightMouseButtonUp(wxTaskBarIconEvent& event);
         void OnLeftMouseButtonDoubleClick(wxTaskBarIconEvent& event);
 
         void ApplyTextAndIcon();
