@@ -7,7 +7,7 @@ remarks: *content
   
 -   The property can be set through data binding. For more information about
     data binding dependency properties, see [Data
-    binding](../../articles/data-binding/data-binding.md).
+    binding](../../introduction/data-binding/data-binding.md).
   
 -   The property can inherit its value automatically from a parent element in
     the element tree.
@@ -20,7 +20,7 @@ remarks: *content
     an element.  
     
  To learn more about dependency properties, see [Dependency
- Properties](../../articles/dependency-properties/dependency-properties.md). If
+ Properties](../../introduction/dependency-properties/dependency-properties.md). If
  you want properties on your custom types to support the capabilities in the
  preceding list, you should create a dependency property.
   

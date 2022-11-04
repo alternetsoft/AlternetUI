@@ -76,8 +76,53 @@ Below are the parts of the API responsible for different pen stroke styles:
   <xref:Alternet.Drawing.Color> and line thickness value.
 - Dashed lines: create an object of the <xref:Alternet.Drawing.Pen> class with a constructor which takes a
   <xref:Alternet.Drawing.PenDashStyle>, or set the <xref:Alternet.Drawing.Pen.DashStyle%2A> property.
+- <xref:Alternet.Drawing.LineCap> and <xref:Alternet.Drawing.LineJoin> enumerations provide different line cap and line
+  join styles.
 
 The following classes allow to fill geometry with different fill styles:
 - Solid fill: use <xref:Alternet.Drawing.SolidBrush>
 - Gradient fill: use <xref:Alternet.Drawing.RadialGradientBrush> and <xref:Alternet.Drawing.LinearGradientBrush>
 - Pattern fill: use <xref:Alternet.Drawing.HatchBrush>
+
+
+### GraphicsPath
+
+<xref:Alternet.Drawing.GraphicsPath> class provides a way to stroke and fill geometric shapes defined with a series of connected lines and curves:
+
+![](images/drawing-sample-path.png)
+
+Here are the types of segments supported by the <xref:Alternet.Drawing.GraphicsPath>:
+
+- Lines: <xref:Alternet.Drawing.GraphicsPath.AddLine%2A>, <xref:Alternet.Drawing.GraphicsPath.AddLines%2A>, <xref:Alternet.Drawing.GraphicsPath.AddLineTo%2A>
+- Curves: <xref:Alternet.Drawing.GraphicsPath.AddBezier%2A>, <xref:Alternet.Drawing.GraphicsPath.AddBezierTo%2A>, <xref:Alternet.Drawing.GraphicsPath.AddArc%2A>
+- Geometric shapes: <xref:Alternet.Drawing.GraphicsPath.AddEllipse%2A>, <xref:Alternet.Drawing.GraphicsPath.AddRectangle%2A>, <xref:Alternet.Drawing.GraphicsPath.AddRoundedRectangle%2A>
+
+### Transforms
+
+<xref:Alternet.Drawing.TransformMatrix> provides a way to set geometric transform to a <xref:Alternet.Drawing.DrawingContext>:
+
+![](images/drawing-sample-transforms.png)
+
+The transforms can include translation, rotation and scale (see the
+<xref:Alternet.Drawing.TransformMatrix.CreateTranslation%2A>, <xref:Alternet.Drawing.TransformMatrix.CreateRotation%2A>
+and <xref:Alternet.Drawing.TransformMatrix.CreateScale%2A> methods). Use the
+<xref:Alternet.Drawing.DrawingContext.Transform%2A> property of <xref:Alternet.Drawing.DrawingContext> to set the
+current transform. The transforms can be applied sequentially with a stack-like approach, using the
+<xref:Alternet.Drawing.DrawingContext.PushTransform%2A> and <xref:Alternet.Drawing.DrawingContext.Pop%2A> methods.
+
+### Clip Regions
+
+<xref:Alternet.Drawing.Region> class provides a way to set clip region to a <xref:Alternet.Drawing.DrawingContext>:
+
+![](images/drawing-sample-clip.png)
+
+Use the <xref:Alternet.Drawing.DrawingContext.Clip%2A> property of <xref:Alternet.Drawing.DrawingContext> to set the
+current clip region.
+
+### Drawing Images
+
+<xref:Alternet.Drawing.Image> class provides incapsulate a graphical image.
+<xref:Alternet.Drawing.DrawingContext.DrawImage%2A> method overloads provide several ways of drawing image with a
+specified <xref:Alternet.Drawing.DrawingContext.InterpolationMode>:
+
+![](images/drawing-sample-images.png)
