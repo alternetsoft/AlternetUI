@@ -21,6 +21,6 @@
 - name: Clipboard
   href: clipboard/clipboard.md
 - name: Rendering Graphics
-  href: rendering-graphics.md
+  href: rendering-graphics/rendering-graphics.md
 - name: System Requirements
   href: system-requirements.md
