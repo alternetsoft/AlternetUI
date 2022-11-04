@@ -5,9 +5,9 @@
 
 ## Overview
 
-AlterNET UI incudes set of resolution-independent graphics features that use native rendering on every supported platform.
+AlterNET UI includes set of resolution-independent graphics features that use native rendering on every supported platform.
 
-It supports rendering graphic primitives such as text, images, graphic shapes with different fonts, pens and brushes.
+It supports rendering graphic primitives such as text, images, and graphic shapes with different fonts, pens, and brushes.
 
 The following code example illustrates how graphics can be drawn in a UI element:
 
@@ -20,8 +20,8 @@ Refer to our [blog post](https://www.alternet-ui.com/blog/drawing-context-tutori
 
 ## Drawing Context Features
 
-Out [Drawing Sample](https://github.com/alternetsoft/alternet-ui-examples/tree/main/DrawingSample) illustrates the features AlterNET UI provides for rendering graphics.
-Below is a list of the features <xref:Alternet.Drawing.DrawingContext> provides grouped by category.
+Our [Drawing Sample](https://github.com/alternetsoft/alternet-ui-examples/tree/main/DrawingSample) illustrates the features AlterNET UI provides for rendering graphics.
+Below is a list of the features that <xref:Alternet.Drawing.DrawingContext> provides, grouped by category.
 The screenshots are taken from the [Drawing Sample](https://github.com/alternetsoft/alternet-ui-examples/tree/main/DrawingSample).
 
 ### Geometric Shapes
@@ -42,13 +42,12 @@ The screenshots are taken from the [Drawing Sample](https://github.com/alternets
 
 ### Text
 
-<xref:Alternet.Drawing.DrawingContext> allows to draw text with the specified <xref:Alternet.Drawing.Font>, bounds with
-the specified <xref:Alternet.Drawing.TextWrapping>, <xref:Alternet.Drawing.TextTrimming>,
+<xref:Alternet.Drawing.DrawingContext> allows to draw text with the specified <xref:Alternet.Drawing.Font>, bounds, and <xref:Alternet.Drawing.TextWrapping>, <xref:Alternet.Drawing.TextTrimming>,
 <xref:Alternet.Drawing.TextHorizontalAlignment> and <xref:Alternet.Drawing.TextVerticalAlignment>:
 
 ![](images/drawing-sample-text.png)
 
-Here is an example of how to draw a wrapped, trimmed and aligned text string:
+Here is an example of how to draw a wrapped, trimmed, and aligned text string:
 
 ```csharp
 dc.DrawText(
@@ -67,14 +66,14 @@ dc.DrawText(
 
 ### Brushes and Pens
 
-You can draw geometry with different stroke and fill styles provided by <xref:Alternet.Drawing.Brush> and <xref:Alternet.Drawing.Pen> objects:
+You can draw geometry with different stroke and fill styles provided by the <xref:Alternet.Drawing.Brush> and <xref:Alternet.Drawing.Pen> objects:
 
 ![](images/drawing-sample-brushes-pens.png)
 
 Below are the parts of the API responsible for different pen stroke styles:
-- Solid lines: create an object of the <xref:Alternet.Drawing.Pen> class with a constructor which takes a
+- Solid lines: create an object of the <xref:Alternet.Drawing.Pen> class with a constructor that takes a
   <xref:Alternet.Drawing.Color> and line thickness value.
-- Dashed lines: create an object of the <xref:Alternet.Drawing.Pen> class with a constructor which takes a
+- Dashed lines: create an object of the <xref:Alternet.Drawing.Pen> class with a constructor that takes a
   <xref:Alternet.Drawing.PenDashStyle>, or set the <xref:Alternet.Drawing.Pen.DashStyle%2A> property.
 - <xref:Alternet.Drawing.LineCap> and <xref:Alternet.Drawing.LineJoin> enumerations provide different line cap and line
   join styles.

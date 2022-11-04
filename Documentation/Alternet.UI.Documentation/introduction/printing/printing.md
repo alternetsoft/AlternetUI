@@ -55,7 +55,7 @@ steps demonstrate displaying the print dialog for a document:
 
 ## How to create print jobs
 
-The foundation of printing in AlterNET UI is the <xref:Alternet.Drawing.Printing.PrintDocument> component - more
+The foundation of printing in AlterNET UI is the <xref:Alternet.Drawing.Printing.PrintDocument> component, more
 specifically, the <xref:Alternet.Drawing.Printing.PrintDocument.PrintPage> event. By writing code to handle the
 <xref:Alternet.Drawing.Printing.PrintDocument.PrintPage> event, you can specify what to print and how to print it. The
 following steps demonstrate creating print job:
