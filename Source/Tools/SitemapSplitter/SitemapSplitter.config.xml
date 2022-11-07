@@ -1,0 +1,15 @@
+﻿<Configuration>
+    <Output FileName="sitemap.xml"/>
+    <Parts>
+        <Part OutputFileSuffix="-api">
+            <LocationRegex>
+                <![CDATA[^.*\.com\/api\/.*$]]>
+            </LocationRegex>
+        </Part>
+        <Part OutputFileSuffix="-doc">
+            <LocationRegex>
+                <![CDATA[.*]]>
+            </LocationRegex>
+        </Part>
+    </Parts>
+</Configuration>

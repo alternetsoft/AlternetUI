@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "SitemapSplitter": {
+      "commandName": "Project",
+      "commandLineArgs": "split --SourceSiteMapPath=C:\\Work\\AS\\Documentation\\Alternet.Studio.Documentation\\site\\sitemap.xml --OutputDirectoryPath=C:\\Temp\\Scratch --ConfigFilePath=C:\\Work\\AS\\Tools\\SitemapSplitter\\SitemapSplitter.config.xml"
+    }
+  }
+}
