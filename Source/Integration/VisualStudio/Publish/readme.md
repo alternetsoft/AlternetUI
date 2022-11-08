@@ -25,6 +25,8 @@ AlterNET UI Beta 3 adds important features like menus, keyboard shortcuts, comma
 
 AlterNET UI Beta 4 adds support of UIXML preview in Visual Studio, drag-and-drop, clipboard, common dialogs, thread synchronization, context menus, and more.
 
+In AlterNET UI Beta 5, we have added support for some missing functionality as well as wrapping up the features that were previously released. These include printing and print preview support, a much more complete implementation of DrawingContext, tray icons, and tooltips.
+
 For more info, see [alternet-ui.com](https://alternet-ui.com).
 
 The AlterNET UI Project template added by the extension:
