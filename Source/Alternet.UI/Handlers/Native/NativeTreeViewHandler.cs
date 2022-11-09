@@ -58,6 +58,27 @@ namespace Alternet.UI
             NativeControl.ControlRecreated += NativeControl_ControlRecreated;
             NativeControl.ItemExpanded += NativeControl_ItemExpanded;
             NativeControl.ItemCollapsed += NativeControl_ItemCollapsed;
+            NativeControl.BeforeItemLabelEdit += NativeControl_BeforeItemLabelEdit;
+            NativeControl.AfterItemLabelEdit += NativeControl_AfterItemLabelEdit;
+        }
+
+        private void NativeControl_AfterItemLabelEdit(object? sender, Native.NativeEventArgs<Native.TreeViewItemLabelEditEventData> e)
+        {
+            var ea = new TreeViewItemLabelEditEventArgs(GetItemFromHandle(e.Data.item), e.Data.editCancelled ? null : e.Data.label);
+
+            Control.RaiseAfterLabelEdit(ea);
+
+            if (!e.Data.editCancelled && !ea.Cancel)
+                ea.Item.Text = e.Data.label;
+
+            e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
+        }
+
+        private void NativeControl_BeforeItemLabelEdit(object? sender, Native.NativeEventArgs<Native.TreeViewItemLabelEditEventData> e)
+        {
+            var ea = new TreeViewItemLabelEditEventArgs(GetItemFromHandle(e.Data.item), e.Data.editCancelled ? null : e.Data.label);
+            Control.RaiseBeforeLabelEdit(ea);
+            e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
         }
 
         private void NativeControl_ItemCollapsed(object? sender, Native.NativeEventArgs<Native.TreeViewItemEventData> e)
@@ -94,6 +115,8 @@ namespace Alternet.UI
             NativeControl.ControlRecreated -= NativeControl_ControlRecreated;
             NativeControl.ItemExpanded -= NativeControl_ItemExpanded;
             NativeControl.ItemCollapsed -= NativeControl_ItemCollapsed;
+            NativeControl.BeforeItemLabelEdit -= NativeControl_BeforeItemLabelEdit;
+            NativeControl.AfterItemLabelEdit -= NativeControl_AfterItemLabelEdit;
 
             base.OnDetach();
         }

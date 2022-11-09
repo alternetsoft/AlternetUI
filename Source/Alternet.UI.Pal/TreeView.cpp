@@ -195,11 +195,31 @@ namespace Alternet::UI
 
     void TreeView::OnItemBeginLabelEdit(wxTreeEvent& event)
     {
+        OnItemLabelEditEvent(event, TreeViewEvent::BeforeItemLabelEdit);
+    }
+
+    void TreeView::OnItemLabelEditEvent(wxTreeEvent& event, TreeViewEvent e)
+    {
+        TreeViewItemLabelEditEventData data{ 0 };
+
+        data.editCancelled = event.IsEditCancelled();
+        data.item = event.GetItem();
+        auto label = wxStr(event.GetLabel());
+        data.label = const_cast<char16_t*>(label.c_str());
+
+        auto result = RaiseEventWithPointerResult(e, &data);
+
+        if (result != 0)
+            event.Veto();
     }
 
     void TreeView::OnItemEndLabelEdit(wxTreeEvent& event)
     {
-        GetWxWindow()->Update();
+        auto window = GetWxWindow();
+        window->Refresh();
+        window->Update();
+
+        OnItemLabelEditEvent(event, TreeViewEvent::AfterItemLabelEdit);
     }
 
     void TreeView::SetFocused(void* item, bool value)

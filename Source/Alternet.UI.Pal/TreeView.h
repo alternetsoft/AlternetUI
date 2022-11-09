@@ -20,6 +20,8 @@ namespace Alternet::UI
     private:
         void ApplyImageList(wxTreeCtrl* value);
 
+        void OnItemLabelEditEvent(wxTreeEvent& event, TreeViewEvent e);
+
         long GetStyle();
 
         void RecreateTreeCtrl();
