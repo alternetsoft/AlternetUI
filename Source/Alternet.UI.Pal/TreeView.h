@@ -14,6 +14,8 @@ namespace Alternet::UI
         void OnSelectionChanged(wxCommandEvent& event);
         void OnItemCollapsed(wxTreeEvent& event);
         void OnItemExpanded(wxTreeEvent& event);
+        void OnItemCollapsing(wxTreeEvent& event);
+        void OnItemExpanding(wxTreeEvent& event);
         void OnItemBeginLabelEdit(wxTreeEvent& event);
         void OnItemEndLabelEdit(wxTreeEvent& event);
 

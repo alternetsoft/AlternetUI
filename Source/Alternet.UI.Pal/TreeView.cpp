@@ -15,6 +15,8 @@ namespace Alternet::UI
             window->Unbind(wxEVT_TREE_SEL_CHANGED, &TreeView::OnSelectionChanged, this);
             window->Unbind(wxEVT_TREE_ITEM_EXPANDED, &TreeView::OnItemExpanded, this);
             window->Unbind(wxEVT_TREE_ITEM_COLLAPSED, &TreeView::OnItemCollapsed, this);
+            window->Unbind(wxEVT_TREE_ITEM_COLLAPSING, &TreeView::OnItemCollapsing, this);
+            window->Unbind(wxEVT_TREE_ITEM_EXPANDING, &TreeView::OnItemExpanding, this);
             window->Unbind(wxEVT_TREE_BEGIN_LABEL_EDIT, &TreeView::OnItemBeginLabelEdit, this);
             window->Unbind(wxEVT_TREE_END_LABEL_EDIT, &TreeView::OnItemEndLabelEdit, this);
         }
@@ -164,6 +166,8 @@ namespace Alternet::UI
         value->Bind(wxEVT_TREE_ITEM_COLLAPSED, &TreeView::OnItemCollapsed, this);
         value->Bind(wxEVT_TREE_BEGIN_LABEL_EDIT, &TreeView::OnItemBeginLabelEdit, this);
         value->Bind(wxEVT_TREE_END_LABEL_EDIT, &TreeView::OnItemEndLabelEdit, this);
+        value->Bind(wxEVT_TREE_ITEM_COLLAPSING, &TreeView::OnItemCollapsing, this);
+        value->Bind(wxEVT_TREE_ITEM_EXPANDING, &TreeView::OnItemExpanding, this);
 
         return value;
     }
@@ -180,7 +184,7 @@ namespace Alternet::UI
 
     void TreeView::OnItemCollapsed(wxTreeEvent& event)
     {
-        TreeViewItemEventData data { event.GetItem() };
+        TreeViewItemEventData data{ event.GetItem() };
         RaiseEvent(TreeViewEvent::ItemCollapsed, &data);
     }
 
@@ -191,6 +195,23 @@ namespace Alternet::UI
 
         TreeViewItemEventData data{ event.GetItem() };
         RaiseEvent(TreeViewEvent::ItemExpanded, &data);
+    }
+
+    void TreeView::OnItemCollapsing(wxTreeEvent& event)
+    {
+        TreeViewItemEventData data{ event.GetItem() };
+        if (RaiseEventWithPointerResult(TreeViewEvent::ItemCollapsing, &data) != 0)
+            event.Veto();
+    }
+
+    void TreeView::OnItemExpanding(wxTreeEvent& event)
+    {
+        if (_skipExpandedEvent)
+            return;
+
+        TreeViewItemEventData data{ event.GetItem() };
+        if (RaiseEventWithPointerResult(TreeViewEvent::ItemExpanding, &data) != 0)
+            event.Veto();
     }
 
     void TreeView::OnItemBeginLabelEdit(wxTreeEvent& event)

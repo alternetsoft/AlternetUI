@@ -60,6 +60,24 @@ namespace Alternet.UI
             NativeControl.ItemCollapsed += NativeControl_ItemCollapsed;
             NativeControl.BeforeItemLabelEdit += NativeControl_BeforeItemLabelEdit;
             NativeControl.AfterItemLabelEdit += NativeControl_AfterItemLabelEdit;
+            NativeControl.ItemExpanding += NativeControl_ItemExpanding;
+            NativeControl.ItemCollapsing += NativeControl_ItemCollapsing;
+        }
+
+        private void NativeControl_ItemCollapsing(object? sender, Native.NativeEventArgs<Native.TreeViewItemEventData> e)
+        {
+            var item = GetItemFromHandle(e.Data.item);
+            var ea = new TreeViewItemExpandedChangingEventArgs(item);
+            Control.RaiseBeforeCollapse(ea);
+            e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
+        }
+
+        private void NativeControl_ItemExpanding(object? sender, Native.NativeEventArgs<Native.TreeViewItemEventData> e)
+        {
+            var item = GetItemFromHandle(e.Data.item);
+            var ea = new TreeViewItemExpandedChangingEventArgs(item);
+            Control.RaiseBeforeExpand(ea);
+            e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
         }
 
         private void NativeControl_AfterItemLabelEdit(object? sender, Native.NativeEventArgs<Native.TreeViewItemLabelEditEventData> e)
@@ -117,6 +135,8 @@ namespace Alternet.UI
             NativeControl.ItemCollapsed -= NativeControl_ItemCollapsed;
             NativeControl.BeforeItemLabelEdit -= NativeControl_BeforeItemLabelEdit;
             NativeControl.AfterItemLabelEdit -= NativeControl_AfterItemLabelEdit;
+            NativeControl.ItemExpanding -= NativeControl_ItemExpanding;
+            NativeControl.ItemCollapsing -= NativeControl_ItemCollapsing;
 
             base.OnDetach();
         }
