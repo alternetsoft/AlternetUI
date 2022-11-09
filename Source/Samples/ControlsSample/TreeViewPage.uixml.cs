@@ -42,7 +42,18 @@ namespace ControlsSample
                     int imageIndex = i % 4;
                     var item = new TreeViewItem("Item " + i, imageIndex);
                     for (int j = 0; j < 3; j++)
-                        item.Items.Add(new TreeViewItem(item.Text + "." + j, imageIndex));
+                    {
+                        var childItem = new TreeViewItem(item.Text + "." + j, imageIndex);
+                        item.Items.Add(childItem);
+
+                        if (i < 5)
+                        {
+                            for (int k = 0; k < 2; k++)
+                            {
+                                childItem.Items.Add(new TreeViewItem(item.Text + "." + k, imageIndex));
+                            }
+                        }
+                    }
                     treeView.Items.Add(item);
                 }
             }
@@ -79,6 +90,30 @@ namespace ControlsSample
         {
             if (treeView != null)
                 treeView.Enabled = enabledCheckBox.IsChecked;
+        }
+
+        private void ShowRootLinesCheckBox_CheckedChanged(object? sender, EventArgs e)
+        {
+            if (treeView != null)
+                treeView.ShowRootLines = showRootLinesCheckBox.IsChecked;
+        }
+
+        private void ShowLinesCheckBox_CheckedChanged(object? sender, EventArgs e)
+        {
+            if (treeView != null)
+                treeView.ShowLines = showLinesCheckBox.IsChecked;
+        }
+
+        private void ShowExpandButtons_CheckedChanged(object? sender, EventArgs e)
+        {
+            if (treeView != null)
+                treeView.ShowExpandButtons = showExpandButtonsCheckBox.IsChecked;
+        }
+
+        private void FullRowSelectCheckBox_CheckedChanged(object? sender, EventArgs e)
+        {
+            if (treeView != null)
+                treeView.FullRowSelect = fullRowSelectCheckBox.IsChecked;
         }
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)

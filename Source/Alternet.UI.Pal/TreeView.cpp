@@ -233,29 +233,44 @@ namespace Alternet::UI
 
     bool TreeView::GetShowLines()
     {
-        return false;
+        return _showLines;
     }
 
     void TreeView::SetShowLines(bool value)
     {
+        if (_showLines == value)
+            return;
+
+        _showLines = value;
+        RecreateTreeCtrl();
     }
 
     bool TreeView::GetShowRootLines()
     {
-        return false;
+        return _showRootLines;
     }
 
     void TreeView::SetShowRootLines(bool value)
     {
+        if (_showRootLines == value)
+            return;
+
+        _showRootLines = value;
+        RecreateTreeCtrl();
     }
 
     bool TreeView::GetShowExpandButtons()
     {
-        return false;
+        return _showExpandButtons;
     }
 
     void TreeView::SetShowExpandButtons(bool value)
     {
+        if (_showExpandButtons == value)
+            return;
+
+        _showExpandButtons = value;
+        RecreateTreeCtrl();
     }
 
     void* TreeView::GetTopItem()
@@ -265,11 +280,16 @@ namespace Alternet::UI
 
     bool TreeView::GetFullRowSelect()
     {
-        return false;
+        return _fullRowSelect;
     }
 
     void TreeView::SetFullRowSelect(bool value)
     {
+        if (_fullRowSelect == value)
+            return;
+
+        _fullRowSelect = value;
+        RecreateTreeCtrl();
     }
 
     bool TreeView::GetAllowLabelEdit()
@@ -346,9 +366,13 @@ namespace Alternet::UI
 
     long TreeView::GetStyle()
     {
-        return wxTR_TWIST_BUTTONS | wxTR_HAS_BUTTONS | wxTR_HIDE_ROOT | wxTR_LINES_AT_ROOT | wxTR_NO_LINES |
+        return wxTR_TWIST_BUTTONS | wxTR_HIDE_ROOT |
             (_selectionMode == TreeViewSelectionMode::Single ? wxTR_SINGLE : wxTR_MULTIPLE) |
-            (_allowLabelEdit ? wxTR_EDIT_LABELS : 0);
+            (_allowLabelEdit ? wxTR_EDIT_LABELS : 0) |
+            (_showRootLines ? wxTR_LINES_AT_ROOT : 0) |
+            (_showLines ? 0 : wxTR_NO_LINES) |
+            (_fullRowSelect ? wxTR_FULL_ROW_HIGHLIGHT : 0) |
+            (_showExpandButtons ? wxTR_HAS_BUTTONS : 0);
     }
 
     void TreeView::RecreateTreeCtrl()

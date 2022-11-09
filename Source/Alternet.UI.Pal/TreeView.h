@@ -29,7 +29,13 @@ namespace Alternet::UI
         wxTreeCtrl* GetTreeCtrl();
 
         TreeViewSelectionMode _selectionMode = TreeViewSelectionMode::Single;
+
         bool _allowLabelEdit = false;
+        bool _fullRowSelect = false;
+        bool _showRootLines = true;
+        bool _showLines = false;
+        bool _showExpandButtons = true;
+
         ImageList* _imageList = nullptr;
 
         bool _skipSelectionChangedEvent = false;

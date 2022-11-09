@@ -18,7 +18,11 @@
                     <CheckBox Text="Allow Multiple Selection" Name="allowMultipleSelectionCheckBox" Margin="0,10,0,0" CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged" />
                     <CheckBox Text="Enabled" Name="enabledCheckBox" Margin="0,10,0,0" CheckedChanged="EnabledCheckBox_CheckedChanged" IsChecked="True" />
                     <CheckBox Text="Allow Label Editing" Name="allowLabelEditingCheckBox" Margin="0,10,0,0" CheckedChanged="AllowLabelEditingCheckBox_CheckedChanged" IsChecked="False" />
-                    <Button Text="Begin Selected Label Editing" Name="beginSelectedLabelEditingButton" Margin="0,3,0,0" Click="BeginSelectedLabelEditingButton_Click" Enabled="false" />
+                    <Button Text="Begin Selected Label Editing" Name="beginSelectedLabelEditingButton" Margin="0,3,0,0" Click="BeginSelectedLabelEditingButton_Click" Enabled="False" />
+                    <CheckBox Text="Show Root Lines" Name="showRootLinesCheckBox" Margin="0,10,0,0" CheckedChanged="ShowRootLinesCheckBox_CheckedChanged" IsChecked="True" />
+                    <CheckBox Text="Show Lines" Name="showLinesCheckBox" Margin="0,5,0,0" CheckedChanged="ShowLinesCheckBox_CheckedChanged" IsChecked="False" />
+                    <CheckBox Text="Show Expand Buttons" Name="showExpandButtonsCheckBox" Margin="0,5,0,0" CheckedChanged="ShowExpandButtons_CheckedChanged" IsChecked="True" />
+                    <CheckBox Text="Full Row Select" Name="fullRowSelectCheckBox" Margin="0,5,0,0" CheckedChanged="FullRowSelectCheckBox_CheckedChanged" IsChecked="False" />
                 </StackPanel>
             </StackPanel>
         </GroupBox>
