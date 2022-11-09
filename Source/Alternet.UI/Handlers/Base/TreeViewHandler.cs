@@ -30,7 +30,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the first fully-visible tree item in the tree view control.
         /// </summary>
-        public abstract TreeViewItem TopItem { get; }
+        public abstract TreeViewItem? TopItem { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the selection highlight spans the width of the tree view control.
@@ -51,11 +51,6 @@ namespace Alternet.UI
         /// Collapses all child tree items.
         /// </summary>
         public abstract void CollapseAll();
-
-        /// <summary>
-        /// Gets or sets a focused tree view item.
-        /// </summary>
-        public abstract TreeViewItem? FocusedItem { get; set; }
 
         /// <summary>
         /// Provides tree view item information, at a given client point, in device-independent units (1/96th inch per

@@ -20,15 +20,24 @@ namespace Alternet.UI
 
         public new Native.TreeView NativeControl => (Native.TreeView)base.NativeControl!;
 
-        public override bool ShowLines { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override bool ShowRootLines { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override bool ShowExpandButtons { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override bool ShowLines { get => NativeControl.ShowLines; set => NativeControl.ShowLines = value; }
+        public override bool ShowRootLines { get => NativeControl.ShowRootLines; set => NativeControl.ShowRootLines = value; }
+        public override bool ShowExpandButtons { get => NativeControl.ShowExpandButtons; set => NativeControl.ShowExpandButtons = value; }
 
-        public override TreeViewItem TopItem => throw new NotImplementedException();
+        public override TreeViewItem? TopItem
+        {
+            get
+            {
+                var item = NativeControl.TopItem;
+                if (item == IntPtr.Zero)
+                    return null;
 
-        public override bool FullRowSelect { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override bool AllowLabelEdit { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override TreeViewItem? FocusedItem { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+                return GetItemFromHandle(item);
+            }
+        }
+
+        public override bool FullRowSelect { get => NativeControl.FullRowSelect; set => NativeControl.FullRowSelect = value; }
+        public override bool AllowLabelEdit { get => NativeControl.AllowLabelEdit; set => NativeControl.AllowLabelEdit = value; }
 
         protected override void OnAttach()
         {

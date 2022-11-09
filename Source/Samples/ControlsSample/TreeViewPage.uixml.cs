@@ -66,15 +66,19 @@ namespace ControlsSample
 
         private void EnabledCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            if (treeView == null)
-                return;
-
-            treeView.Enabled = enabledCheckBox.IsChecked;
+            if (treeView != null)
+                treeView.Enabled = enabledCheckBox.IsChecked;
         }
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
             treeView.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ? TreeViewSelectionMode.Multiple : TreeViewSelectionMode.Single;
+        }
+
+        private void AllowLabelEditingCheckBox_CheckedChanged(object? sender, EventArgs e)
+        {
+            if (treeView != null)
+                treeView.AllowLabelEdit = allowLabelEditingCheckBox.IsChecked;
         }
 
         private void RemoveItemButton_Click(object? sender, EventArgs e)

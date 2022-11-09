@@ -192,7 +192,7 @@ namespace Alternet.UI
         /// Gets or sets the first fully-visible tree item in the tree view control.
         /// </summary>
         /// <value>A <see cref="TreeViewItem"/> that represents the first fully-visible tree item in the tree view control.</value>
-        public TreeViewItem TopItem { get => Handler.TopItem; }
+        public TreeViewItem? TopItem { get => Handler.TopItem; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the selection highlight spans the width of the tree view control.
