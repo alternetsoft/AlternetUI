@@ -331,14 +331,46 @@ namespace Alternet.UI.Markup.Parsers
             return (state, syntax);
         }
 
+        // yezo
+        //private static TSyntax ParseType<TSyntax>(ref CharacterReader r, TSyntax syntax)
+        //    where TSyntax : ITypeSyntax
+        //{
+        //    ReadOnlySpan<char> ns = default;
+        //    ReadOnlySpan<char> type;
+        //    var namespaceOrTypeName = r.ParseIdentifier();
+
+        //    if (namespaceOrTypeName.IsEmpty)
+        //    {
+        //        throw new ExpressionParseException(r.Position, $"Expected an identifier, got '{r.Peek}");
+        //    }
+
+        //    if (!r.End && r.TakeIf('|'))
+        //    {
+        //        ns = namespaceOrTypeName;
+        //        if (r.End)
+        //        {
+        //            throw new ExpressionParseException(r.Position, $"Unexpected end of selector.");
+        //        }
+        //        type = r.ParseIdentifier();
+        //    }
+        //    else
+        //    {
+        //        type = namespaceOrTypeName;
+        //    }
+
+        //    syntax.Xmlns = ns.ToString();
+        //    syntax.TypeName = type.ToString();
+        //    return syntax;
+        //}
+
         private static TSyntax ParseType<TSyntax>(ref CharacterReader r, TSyntax syntax)
             where TSyntax : ITypeSyntax
         {
-            ReadOnlySpan<char> ns = default;
-            ReadOnlySpan<char> type;
-            var namespaceOrTypeName = r.ParseIdentifier();
+            string ns = "";
+            string type;
+            var namespaceOrTypeName = r.ParseIdentifier().ToString();
 
-            if (namespaceOrTypeName.IsEmpty)
+            if (namespaceOrTypeName == "")
             {
                 throw new ExpressionParseException(r.Position, $"Expected an identifier, got '{r.Peek}");
             }
@@ -350,7 +382,7 @@ namespace Alternet.UI.Markup.Parsers
                 {
                     throw new ExpressionParseException(r.Position, $"Unexpected end of selector.");
                 }
-                type = r.ParseIdentifier();
+                type = r.ParseIdentifier().ToString();
             }
             else
             {

@@ -321,22 +321,42 @@ namespace Alternet.UI.Markup.Parsers
 
         private static TypeName ParseTypeName(ref CharacterReader r)
         {
-            ReadOnlySpan<char> ns, typeName;
-            ns = ReadOnlySpan<char>.Empty;
-            var typeNameOrNamespace = r.ParseIdentifier();
+            string ns, typeName;
+            ns = "";
+            var typeNameOrNamespace = r.ParseIdentifier().ToString();
 
             if (!r.End && r.TakeIf(':'))
             {
                 ns = typeNameOrNamespace;
-                typeName = r.ParseIdentifier();
+                typeName = r.ParseIdentifier().ToString();
             }
             else
             {
                 typeName = typeNameOrNamespace;
             }
 
-            return new TypeName(ns, typeName);
+            return new TypeName(ns.AsSpan(), typeName.AsSpan());
         }
+
+        // yezo
+        //private static TypeName ParseTypeName(ref CharacterReader r)
+        //{
+        //    ReadOnlySpan<char> ns, typeName;
+        //    ns = ReadOnlySpan<char>.Empty;
+        //    var typeNameOrNamespace = r.ParseIdentifier();
+
+        //    if (!r.End && r.TakeIf(':'))
+        //    {
+        //        ns = typeNameOrNamespace;
+        //        typeName = r.ParseIdentifier();
+        //    }
+        //    else
+        //    {
+        //        typeName = typeNameOrNamespace;
+        //    }
+
+        //    return new TypeName(ns, typeName);
+        //}
 
         private static bool ParseNot(ref CharacterReader r)
         {
