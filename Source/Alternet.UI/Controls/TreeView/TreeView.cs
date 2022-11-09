@@ -48,6 +48,16 @@ namespace Alternet.UI
             Items.ItemRemoved += Items_ItemRemoved;
         }
 
+        /// <inheritdoc/>
+        public new TreeViewHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (TreeViewHandler)base.Handler;
+            }
+        }
+
         /// <summary>
         /// Occurs when the <see cref="SelectedItem"/> property or the <see cref="SelectedItems"/> collection has changed.
         /// </summary>
@@ -159,14 +169,14 @@ namespace Alternet.UI
         /// </summary>
         /// <value><see langword="true"/> if lines are drawn between tree nodes in the tree view control; otherwise,
         /// <see langword="false"/>. The default is <see langword="true"/>.</value>
-        public bool ShowLines { get; set; }
+        public bool ShowLines { get => Handler.ShowLines; set => Handler.ShowLines = value; }
 
         /// <summary>
         /// Gets or sets a value indicating whether lines are drawn between the tree nodes that are at the root of the tree view.
         /// </summary>
         /// <value><see langword="true"/> if lines are drawn between the tree nodes that are at the root of the tree
         /// view; otherwise, <see langword="false"/>. The default is <see langword="true"/>.</value>
-        public bool ShowRootLines { get; set; }
+        public bool ShowRootLines { get => Handler.ShowRootLines; set => Handler.ShowRootLines = value; }
 
         /// <summary>
         /// Gets or sets a value indicating whether expand buttons are displayed next to tree nodes that contain child
@@ -176,13 +186,13 @@ namespace Alternet.UI
         /// <see langword="true"/> if expand buttons are displayed next to tree nodes that contain
         /// child tree nodes; otherwise, <see langword="false"/>. The default is <see langword="true"/>.
         /// </value>
-        public bool ShowExpandButtons { get; set; }
+        public bool ShowExpandButtons { get => Handler.ShowExpandButtons; set => Handler.ShowExpandButtons = value; }
 
         /// <summary>
         /// Gets or sets the first fully-visible tree item in the tree view control.
         /// </summary>
         /// <value>A <see cref="TreeViewItem"/> that represents the first fully-visible tree item in the tree view control.</value>
-        public TreeViewItem TopItem { get; }
+        public TreeViewItem TopItem { get => Handler.TopItem; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the selection highlight spans the width of the tree view control.
@@ -191,7 +201,7 @@ namespace Alternet.UI
         /// <see langword="true"/> if the selection highlight spans the width of the tree view control; otherwise, <see
         /// langword="false"/>. The default is <see langword="false"/>.
         /// </value>
-        public bool FullRowSelect { get; set; }
+        public bool FullRowSelect { get => Handler.FullRowSelect; set => Handler.FullRowSelect = value; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the label text of the tree nodes can be edited.
@@ -200,7 +210,7 @@ namespace Alternet.UI
         /// <see langword="true"/> if the label text of the tree nodes can be edited; otherwise, <see
         /// langword="false"/>. The default is <see langword="false"/>.
         /// </value>
-        public bool AllowLabelEdit { get; set; }
+        public bool AllowLabelEdit { get => Handler.AllowLabelEdit; set => Handler.AllowLabelEdit = value; }
 
         /// <summary>
         /// Expands all child tree items.

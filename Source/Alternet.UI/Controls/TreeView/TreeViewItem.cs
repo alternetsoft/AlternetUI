@@ -130,29 +130,25 @@ namespace Alternet.UI
             }
         }
 
+        private TreeView RequiredTreeView => TreeView ?? throw new InvalidOperationException("TreeView property value cannot be null during this opeation.");
+
         /// <summary>
         /// Gets a value indicating whether the tree item is in the selected state.
         /// </summary>
         /// <value><see langword="true"/> if the tree item is in the selected state; otherwise, <see langword="false"/>.</value>
-        public bool IsSelected { get; }
+        public bool IsSelected => RequiredTreeView.Handler.IsItemSelected(this);
 
         /// <summary>
         /// Initiates the editing of the tree node label.
         /// </summary>
-        public void BeginLabelEdit()
-        {
-            //if (!treeView.AllowLabelEdit)
-            //    throw new InvalidOperationException();
-        }
+        public void BeginLabelEdit() => RequiredTreeView.Handler.BeginLabelEdit(this);
 
         /// <summary>
         /// Ends the editing of the tree node label.
         /// </summary>
         /// <param name="cancel"><see langword="true"/> if the editing of the tree node label text was canceled without
         /// being saved; otherwise, <see langword="false"/>.</param>
-        public void EndLabelEdit(bool cancel)
-        {
-        }
+        public void EndLabelEdit(bool cancel) => RequiredTreeView.Handler.EndLabelEdit(this, cancel);
 
 
         /// <summary>
@@ -161,10 +157,7 @@ namespace Alternet.UI
         /// <remarks>
         /// The <see cref="ExpandAll"/> method expands this <see cref="TreeViewItem"/> and all the child tree items assigned to the <see cref="Items"/> collection.
         /// </remarks>
-        public void ExpandAll()
-        {
-            // todo
-        }
+        public void ExpandAll() => RequiredTreeView.Handler.ExpandAllChildren(this);
 
         /// <summary>
         /// Collapses this <see cref="TreeViewItem"/> and all the child tree items.
@@ -172,10 +165,7 @@ namespace Alternet.UI
         /// <remarks>
         /// The <see cref="CollapseAll"/> method collapses this <see cref="TreeViewItem"/> and all the child tree items assigned to the <see cref="Items"/> collection.
         /// </remarks>
-        public void CollapseAll()
-        {
-            // todo
-        }
+        public void CollapseAll() => RequiredTreeView.Handler.CollapseAllChildren(this);
 
         /// <summary>
         /// Ensures that the tree item is visible, expanding tree items and scrolling the tree view control as
@@ -187,22 +177,17 @@ namespace Alternet.UI
         /// certain criteria. By calling this method after you select the item, the user can see and interact with the
         /// selected node.
         /// </remarks>
-        public void EnsureVisible()
-        {
-
-        }
+        public void EnsureVisible() => RequiredTreeView.Handler.EnsureVisible(this);
 
         /// <summary>
         /// Scrolls the item into view.
         /// </summary>
-        public void ScrollIntoView()
-        {
-        }
+        public void ScrollIntoView() => RequiredTreeView.Handler.ScrollIntoView(this);
 
         /// <summary>
         /// Gets or sets a value indicating whether the tree item is in the focused state.
         /// </summary>
-        public bool IsFocused { get; set; }
+        public bool IsFocused { get => RequiredTreeView.Handler.IsFocused(this); set => RequiredTreeView.Handler.SetFocused(this, value); }
 
         /// <summary>
         /// Gets the position of the tree item in the tree item collection.

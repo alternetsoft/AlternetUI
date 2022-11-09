@@ -1,10 +1,11 @@
+using Alternet.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Alternet.UI
 {
-    internal class NativeTreeViewHandler : NativeControlHandler<TreeView, Native.TreeView>
+    internal class NativeTreeViewHandler : TreeViewHandler
     {
         private readonly Dictionary<TreeViewItem, IntPtr> handlesByItems = new Dictionary<TreeViewItem, IntPtr>();
         private readonly Dictionary<IntPtr, TreeViewItem> itemsByHandles = new Dictionary<IntPtr, TreeViewItem>();
@@ -16,6 +17,18 @@ namespace Alternet.UI
         {
             return new Native.TreeView();
         }
+
+        public new Native.TreeView NativeControl => (Native.TreeView)base.NativeControl!;
+
+        public override bool ShowLines { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override bool ShowRootLines { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override bool ShowExpandButtons { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public override TreeViewItem TopItem => throw new NotImplementedException();
+
+        public override bool FullRowSelect { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override bool AllowLabelEdit { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override TreeViewItem? FocusedItem { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         protected override void OnAttach()
         {
@@ -220,5 +233,47 @@ namespace Alternet.UI
                 itemsByHandles.Remove(handle);
             }
         }
+
+        public override void ExpandAll() => NativeControl.ExpandAll();
+
+        public override void CollapseAll() => NativeControl.CollapseAll();
+
+        public override TreeViewHitTestInfo HitTest(Point point)
+        {
+            var result = NativeControl.ItemHitTest(point);
+            if (result == IntPtr.Zero)
+                throw new Exception();
+
+            try
+            {
+                var itemHandle = NativeControl.GetHitTestResultItem(result);
+                return new TreeViewHitTestInfo(
+                    (TreeViewHitTestLocations)NativeControl.GetHitTestResultLocations(result),
+                    itemHandle == IntPtr.Zero ? null : GetItemFromHandle(itemHandle));
+            }
+            finally
+            {
+                NativeControl.FreeHitTestResult(result);
+            }
+        }
+
+        public override bool IsItemSelected(TreeViewItem item) => NativeControl.IsItemSelected(GetHandleFromItem(item));
+
+        public override void BeginLabelEdit(TreeViewItem item) => NativeControl.BeginLabelEdit(GetHandleFromItem(item));
+
+        public override void EndLabelEdit(TreeViewItem item, bool cancel) =>
+            NativeControl.EndLabelEdit(GetHandleFromItem(item), cancel);
+
+        public override void ExpandAllChildren(TreeViewItem item) => NativeControl.ExpandAllChildren(GetHandleFromItem(item));
+
+        public override void CollapseAllChildren(TreeViewItem item) => NativeControl.CollapseAllChildren(GetHandleFromItem(item));
+
+        public override void EnsureVisible(TreeViewItem item) => NativeControl.EnsureVisible(GetHandleFromItem(item));
+
+        public override void ScrollIntoView(TreeViewItem item) => NativeControl.ScrollIntoView(GetHandleFromItem(item));
+
+        public override void SetFocused(TreeViewItem item, bool value) => NativeControl.SetFocused(GetHandleFromItem(item), value);
+
+        public override bool IsFocused(TreeViewItem item) => NativeControl.IsFocused(GetHandleFromItem(item));
     }
 }

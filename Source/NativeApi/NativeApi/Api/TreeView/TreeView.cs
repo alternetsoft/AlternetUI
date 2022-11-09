@@ -46,8 +46,6 @@ namespace NativeApi.Api
         
         public void CollapseAll() => throw new Exception();
 
-        public IntPtr FocusedItem { get; set; }
-
         public IntPtr ItemHitTest(Point point) => throw new Exception();
         public TreeViewHitTestLocations GetHitTestResultLocations(IntPtr hitTestResult) => throw new Exception();
         public IntPtr GetHitTestResultItem(IntPtr hitTestResult) => throw new Exception();
@@ -55,8 +53,11 @@ namespace NativeApi.Api
 
         public bool IsItemSelected(IntPtr item) => throw new Exception();
 
+        public void SetFocused(IntPtr item, bool value) => throw new Exception();
+        public bool IsFocused(IntPtr item) => throw new Exception();
+
         public void BeginLabelEdit(IntPtr item) => throw new Exception();
-        public void EndLabelEdit(IntPtr item) => throw new Exception();
+        public void EndLabelEdit(IntPtr item, bool cancel) => throw new Exception();
         public void ExpandAllChildren(IntPtr item) => throw new Exception();
         public void CollapseAllChildren(IntPtr item) => throw new Exception();
         public void EnsureVisible(IntPtr item) => throw new Exception();

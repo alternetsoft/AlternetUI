@@ -192,6 +192,15 @@ namespace Alternet::UI
         RaiseEvent(TreeViewEvent::ItemExpanded, &data);
     }
 
+    void TreeView::SetFocused(void* item, bool value)
+    {
+    }
+
+    bool TreeView::IsFocused(void* item)
+    {
+        return false;
+    }
+
     bool TreeView::GetShowLines()
     {
         return false;
@@ -242,15 +251,6 @@ namespace Alternet::UI
     {
     }
 
-    void* TreeView::GetFocusedItem()
-    {
-        return nullptr;
-    }
-
-    void TreeView::SetFocusedItem(void* value)
-    {
-    }
-
     void TreeView::ExpandAll()
     {
     }
@@ -287,7 +287,7 @@ namespace Alternet::UI
     {
     }
 
-    void TreeView::EndLabelEdit(void* item)
+    void TreeView::EndLabelEdit(void* item, bool cancel)
     {
     }
 

@@ -193,23 +193,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public System.IntPtr FocusedItem
-        {
-            get
-            {
-                CheckDisposed();
-                var n = NativeApi.TreeView_GetFocusedItem_(NativePointer);
-                var m = n;
-                return m;
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.TreeView_SetFocusedItem_(NativePointer, value);
-            }
-        }
-        
         public int GetItemCount(System.IntPtr parentItem)
         {
             CheckDisposed();
@@ -300,16 +283,30 @@ namespace Alternet.UI.Native
             return m;
         }
         
+        public void SetFocused(System.IntPtr item, bool value)
+        {
+            CheckDisposed();
+            NativeApi.TreeView_SetFocused_(NativePointer, item, value);
+        }
+        
+        public bool IsFocused(System.IntPtr item)
+        {
+            CheckDisposed();
+            var n = NativeApi.TreeView_IsFocused_(NativePointer, item);
+            var m = n;
+            return m;
+        }
+        
         public void BeginLabelEdit(System.IntPtr item)
         {
             CheckDisposed();
             NativeApi.TreeView_BeginLabelEdit_(NativePointer, item);
         }
         
-        public void EndLabelEdit(System.IntPtr item)
+        public void EndLabelEdit(System.IntPtr item, bool cancel)
         {
             CheckDisposed();
-            NativeApi.TreeView_EndLabelEdit_(NativePointer, item);
+            NativeApi.TreeView_EndLabelEdit_(NativePointer, item, cancel);
         }
         
         public void ExpandAllChildren(System.IntPtr item)
@@ -485,12 +482,6 @@ namespace Alternet.UI.Native
             public static extern void TreeView_SetAllowLabelEdit_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr TreeView_GetFocusedItem_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TreeView_SetFocusedItem_(IntPtr obj, System.IntPtr value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr TreeView_OpenSelectedItemsArray_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -542,10 +533,16 @@ namespace Alternet.UI.Native
             public static extern bool TreeView_IsItemSelected_(IntPtr obj, System.IntPtr item);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetFocused_(IntPtr obj, System.IntPtr item, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TreeView_IsFocused_(IntPtr obj, System.IntPtr item);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_BeginLabelEdit_(IntPtr obj, System.IntPtr item);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TreeView_EndLabelEdit_(IntPtr obj, System.IntPtr item);
+            public static extern void TreeView_EndLabelEdit_(IntPtr obj, System.IntPtr item, bool cancel);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_ExpandAllChildren_(IntPtr obj, System.IntPtr item);

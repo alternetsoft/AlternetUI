@@ -128,20 +128,6 @@ ALTERNET_UI_API void TreeView_SetAllowLabelEdit_(TreeView* obj, c_bool value)
         });
 }
 
-ALTERNET_UI_API void* TreeView_GetFocusedItem_(TreeView* obj)
-{
-    return MarshalExceptions<void*>([&](){
-            return obj->GetFocusedItem();
-        });
-}
-
-ALTERNET_UI_API void TreeView_SetFocusedItem_(TreeView* obj, void* value)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetFocusedItem(value);
-        });
-}
-
 ALTERNET_UI_API void* TreeView_OpenSelectedItemsArray_(TreeView* obj)
 {
     return MarshalExceptions<void*>([&](){
@@ -261,6 +247,20 @@ ALTERNET_UI_API c_bool TreeView_IsItemSelected_(TreeView* obj, void* item)
         });
 }
 
+ALTERNET_UI_API void TreeView_SetFocused_(TreeView* obj, void* item, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetFocused(item, value);
+        });
+}
+
+ALTERNET_UI_API c_bool TreeView_IsFocused_(TreeView* obj, void* item)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->IsFocused(item);
+        });
+}
+
 ALTERNET_UI_API void TreeView_BeginLabelEdit_(TreeView* obj, void* item)
 {
     MarshalExceptions<void>([&](){
@@ -268,10 +268,10 @@ ALTERNET_UI_API void TreeView_BeginLabelEdit_(TreeView* obj, void* item)
         });
 }
 
-ALTERNET_UI_API void TreeView_EndLabelEdit_(TreeView* obj, void* item)
+ALTERNET_UI_API void TreeView_EndLabelEdit_(TreeView* obj, void* item, c_bool cancel)
 {
     MarshalExceptions<void>([&](){
-            obj->EndLabelEdit(item);
+            obj->EndLabelEdit(item, cancel);
         });
 }
 

@@ -34,10 +34,6 @@ void SetFullRowSelect(bool value);
 bool GetAllowLabelEdit();
 void SetAllowLabelEdit(bool value);
 
-
-void* GetFocusedItem();
-void SetFocusedItem(void* value);
-
 void* OpenSelectedItemsArray();
 int GetSelectedItemsItemCount(void* array);
 void* GetSelectedItemsItemAt(void* array, int index);
@@ -55,8 +51,10 @@ TreeViewHitTestLocations GetHitTestResultLocations(void* hitTestResult);
 void* GetHitTestResultItem(void* hitTestResult);
 void FreeHitTestResult(void* hitTestResult);
 bool IsItemSelected(void* item);
+void SetFocused(void* item, bool value);
+bool IsFocused(void* item);
 void BeginLabelEdit(void* item);
-void EndLabelEdit(void* item);
+void EndLabelEdit(void* item, bool cancel);
 void ExpandAllChildren(void* item);
 void CollapseAllChildren(void* item);
 void EnsureVisible(void* item);
