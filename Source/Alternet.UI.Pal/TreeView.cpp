@@ -192,6 +192,121 @@ namespace Alternet::UI
         RaiseEvent(TreeViewEvent::ItemExpanded, &data);
     }
 
+    bool TreeView::GetShowLines()
+    {
+        return false;
+    }
+
+    void TreeView::SetShowLines(bool value)
+    {
+    }
+
+    bool TreeView::GetShowRootLines()
+    {
+        return false;
+    }
+
+    void TreeView::SetShowRootLines(bool value)
+    {
+    }
+
+    bool TreeView::GetShowExpandButtons()
+    {
+        return false;
+    }
+
+    void TreeView::SetShowExpandButtons(bool value)
+    {
+    }
+
+    void* TreeView::GetTopItem()
+    {
+        return nullptr;
+    }
+
+    bool TreeView::GetFullRowSelect()
+    {
+        return false;
+    }
+
+    void TreeView::SetFullRowSelect(bool value)
+    {
+    }
+
+    bool TreeView::GetAllowLabelEdit()
+    {
+        return false;
+    }
+
+    void TreeView::SetAllowLabelEdit(bool value)
+    {
+    }
+
+    void* TreeView::GetFocusedItem()
+    {
+        return nullptr;
+    }
+
+    void TreeView::SetFocusedItem(void* value)
+    {
+    }
+
+    void TreeView::ExpandAll()
+    {
+    }
+
+    void TreeView::CollapseAll()
+    {
+    }
+
+    void* TreeView::ItemHitTest(const Point& point)
+    {
+        return nullptr;
+    }
+
+    TreeViewHitTestLocations TreeView::GetHitTestResultLocations(void* hitTestResult)
+    {
+        return TreeViewHitTestLocations();
+    }
+
+    void* TreeView::GetHitTestResultItem(void* hitTestResult)
+    {
+        return nullptr;
+    }
+
+    void TreeView::FreeHitTestResult(void* hitTestResult)
+    {
+    }
+
+    bool TreeView::IsItemSelected(void* item)
+    {
+        return false;
+    }
+
+    void TreeView::BeginLabelEdit(void* item)
+    {
+    }
+
+    void TreeView::EndLabelEdit(void* item)
+    {
+    }
+
+    void TreeView::ExpandAllChildren(void* item)
+    {
+    }
+
+    void TreeView::CollapseAllChildren(void* item)
+    {
+    }
+
+    void TreeView::EnsureVisible(void* item)
+    {
+    }
+
+    void TreeView::ScrollIntoView(void* item)
+    {
+    }
+
     long TreeView::GetStyle()
     {
         return wxTR_TWIST_BUTTONS | wxTR_HAS_BUTTONS | wxTR_HIDE_ROOT | wxTR_LINES_AT_ROOT | wxTR_NO_LINES |

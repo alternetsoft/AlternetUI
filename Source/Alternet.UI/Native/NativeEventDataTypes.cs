@@ -57,6 +57,14 @@ namespace Alternet.UI.Native
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class TreeViewItemLabelEditEventData
+    {
+        public System.IntPtr item;
+        public string label;
+        public bool editCancelled;
+    }
+    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class CommandEventData
     {
         public string managedCommandId;

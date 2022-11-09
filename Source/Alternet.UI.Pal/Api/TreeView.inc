@@ -11,6 +11,33 @@ void* GetRootItem();
 TreeViewSelectionMode GetSelectionMode();
 void SetSelectionMode(TreeViewSelectionMode value);
 
+
+bool GetShowLines();
+void SetShowLines(bool value);
+
+
+bool GetShowRootLines();
+void SetShowRootLines(bool value);
+
+
+bool GetShowExpandButtons();
+void SetShowExpandButtons(bool value);
+
+
+void* GetTopItem();
+
+
+bool GetFullRowSelect();
+void SetFullRowSelect(bool value);
+
+
+bool GetAllowLabelEdit();
+void SetAllowLabelEdit(bool value);
+
+
+void* GetFocusedItem();
+void SetFocusedItem(void* value);
+
 void* OpenSelectedItemsArray();
 int GetSelectedItemsItemCount(void* array);
 void* GetSelectedItemsItemAt(void* array, int index);
@@ -21,6 +48,19 @@ void RemoveItem(void* item);
 void ClearItems(void* parentItem);
 void ClearSelected();
 void SetSelected(void* item, bool value);
+void ExpandAll();
+void CollapseAll();
+void* ItemHitTest(const Point& point);
+TreeViewHitTestLocations GetHitTestResultLocations(void* hitTestResult);
+void* GetHitTestResultItem(void* hitTestResult);
+void FreeHitTestResult(void* hitTestResult);
+bool IsItemSelected(void* item);
+void BeginLabelEdit(void* item);
+void EndLabelEdit(void* item);
+void ExpandAllChildren(void* item);
+void CollapseAllChildren(void* item);
+void EnsureVisible(void* item);
+void ScrollIntoView(void* item);
 public:
 enum class TreeViewEvent
 {
@@ -28,6 +68,10 @@ enum class TreeViewEvent
     ControlRecreated,
     ItemExpanded,
     ItemCollapsed,
+    ItemExpanding,
+    ItemCollapsing,
+    BeforeItemLabelEdit,
+    AfterItemLabelEdit,
 };
 typedef void* (*TreeViewEventCallbackType)(TreeView* obj, TreeViewEvent event, void* param);
 static void SetEventCallback(TreeViewEventCallbackType value) { eventCallback = value; }

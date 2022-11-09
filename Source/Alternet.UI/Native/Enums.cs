@@ -479,6 +479,23 @@ namespace Alternet.UI.Native
         Pressed = 1,
     }
     
+    enum TreeViewHitTestLocations
+    {
+        None = 2,
+        AboveClientArea = 4,
+        BelowClientArea = 8,
+        LeftOfClientArea = 16,
+        RightOfClientArea = 32,
+        ItemExpandButton = 64,
+        ItemImage = 128,
+        ItemIndent = 256,
+        ItemLabel = 512,
+        RightOfItemLabel = 1024,
+        ItemStateImage = 2048,
+        ItemUpperPart = 4096,
+        ItemLowerPart = 8192,
+    }
+    
     enum TreeViewSelectionMode
     {
         Single = 0,

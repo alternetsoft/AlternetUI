@@ -96,6 +96,120 @@ namespace Alternet.UI.Native
             
         }
         
+        public bool ShowLines
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TreeView_GetShowLines_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TreeView_SetShowLines_(NativePointer, value);
+            }
+        }
+        
+        public bool ShowRootLines
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TreeView_GetShowRootLines_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TreeView_SetShowRootLines_(NativePointer, value);
+            }
+        }
+        
+        public bool ShowExpandButtons
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TreeView_GetShowExpandButtons_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TreeView_SetShowExpandButtons_(NativePointer, value);
+            }
+        }
+        
+        public System.IntPtr TopItem
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TreeView_GetTopItem_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public bool FullRowSelect
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TreeView_GetFullRowSelect_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TreeView_SetFullRowSelect_(NativePointer, value);
+            }
+        }
+        
+        public bool AllowLabelEdit
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TreeView_GetAllowLabelEdit_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TreeView_SetAllowLabelEdit_(NativePointer, value);
+            }
+        }
+        
+        public System.IntPtr FocusedItem
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TreeView_GetFocusedItem_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TreeView_SetFocusedItem_(NativePointer, value);
+            }
+        }
+        
         public int GetItemCount(System.IntPtr parentItem)
         {
             CheckDisposed();
@@ -134,6 +248,92 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.TreeView_SetSelected_(NativePointer, item, value);
+        }
+        
+        public void ExpandAll()
+        {
+            CheckDisposed();
+            NativeApi.TreeView_ExpandAll_(NativePointer);
+        }
+        
+        public void CollapseAll()
+        {
+            CheckDisposed();
+            NativeApi.TreeView_CollapseAll_(NativePointer);
+        }
+        
+        public System.IntPtr ItemHitTest(Alternet.Drawing.Point point)
+        {
+            CheckDisposed();
+            var n = NativeApi.TreeView_ItemHitTest_(NativePointer, point);
+            var m = n;
+            return m;
+        }
+        
+        public TreeViewHitTestLocations GetHitTestResultLocations(System.IntPtr hitTestResult)
+        {
+            CheckDisposed();
+            var n = NativeApi.TreeView_GetHitTestResultLocations_(NativePointer, hitTestResult);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr GetHitTestResultItem(System.IntPtr hitTestResult)
+        {
+            CheckDisposed();
+            var n = NativeApi.TreeView_GetHitTestResultItem_(NativePointer, hitTestResult);
+            var m = n;
+            return m;
+        }
+        
+        public void FreeHitTestResult(System.IntPtr hitTestResult)
+        {
+            CheckDisposed();
+            NativeApi.TreeView_FreeHitTestResult_(NativePointer, hitTestResult);
+        }
+        
+        public bool IsItemSelected(System.IntPtr item)
+        {
+            CheckDisposed();
+            var n = NativeApi.TreeView_IsItemSelected_(NativePointer, item);
+            var m = n;
+            return m;
+        }
+        
+        public void BeginLabelEdit(System.IntPtr item)
+        {
+            CheckDisposed();
+            NativeApi.TreeView_BeginLabelEdit_(NativePointer, item);
+        }
+        
+        public void EndLabelEdit(System.IntPtr item)
+        {
+            CheckDisposed();
+            NativeApi.TreeView_EndLabelEdit_(NativePointer, item);
+        }
+        
+        public void ExpandAllChildren(System.IntPtr item)
+        {
+            CheckDisposed();
+            NativeApi.TreeView_ExpandAllChildren_(NativePointer, item);
+        }
+        
+        public void CollapseAllChildren(System.IntPtr item)
+        {
+            CheckDisposed();
+            NativeApi.TreeView_CollapseAllChildren_(NativePointer, item);
+        }
+        
+        public void EnsureVisible(System.IntPtr item)
+        {
+            CheckDisposed();
+            NativeApi.TreeView_EnsureVisible_(NativePointer, item);
+        }
+        
+        public void ScrollIntoView(System.IntPtr item)
+        {
+            CheckDisposed();
+            NativeApi.TreeView_ScrollIntoView_(NativePointer, item);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -177,6 +377,26 @@ namespace Alternet.UI.Native
                     var ea = new NativeEventArgs<TreeViewItemEventData>(MarshalEx.PtrToStructure<TreeViewItemEventData>(parameter));
                     ItemCollapsed?.Invoke(this, ea); return ea.Result;
                 }
+                case NativeApi.TreeViewEvent.ItemExpanding:
+                {
+                    var ea = new NativeEventArgs<TreeViewItemEventData>(MarshalEx.PtrToStructure<TreeViewItemEventData>(parameter));
+                    ItemExpanding?.Invoke(this, ea); return ea.Result;
+                }
+                case NativeApi.TreeViewEvent.ItemCollapsing:
+                {
+                    var ea = new NativeEventArgs<TreeViewItemEventData>(MarshalEx.PtrToStructure<TreeViewItemEventData>(parameter));
+                    ItemCollapsing?.Invoke(this, ea); return ea.Result;
+                }
+                case NativeApi.TreeViewEvent.BeforeItemLabelEdit:
+                {
+                    var ea = new NativeEventArgs<TreeViewItemLabelEditEventData>(MarshalEx.PtrToStructure<TreeViewItemLabelEditEventData>(parameter));
+                    BeforeItemLabelEdit?.Invoke(this, ea); return ea.Result;
+                }
+                case NativeApi.TreeViewEvent.AfterItemLabelEdit:
+                {
+                    var ea = new NativeEventArgs<TreeViewItemLabelEditEventData>(MarshalEx.PtrToStructure<TreeViewItemLabelEditEventData>(parameter));
+                    AfterItemLabelEdit?.Invoke(this, ea); return ea.Result;
+                }
                 default: throw new Exception("Unexpected TreeViewEvent value: " + e);
             }
         }
@@ -185,6 +405,10 @@ namespace Alternet.UI.Native
         public event EventHandler? ControlRecreated;
         public event NativeEventHandler<TreeViewItemEventData>? ItemExpanded;
         public event NativeEventHandler<TreeViewItemEventData>? ItemCollapsed;
+        public event NativeEventHandler<TreeViewItemEventData>? ItemExpanding;
+        public event NativeEventHandler<TreeViewItemEventData>? ItemCollapsing;
+        public event NativeEventHandler<TreeViewItemLabelEditEventData>? BeforeItemLabelEdit;
+        public event NativeEventHandler<TreeViewItemLabelEditEventData>? AfterItemLabelEdit;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -200,6 +424,10 @@ namespace Alternet.UI.Native
                 ControlRecreated,
                 ItemExpanded,
                 ItemCollapsed,
+                ItemExpanding,
+                ItemCollapsing,
+                BeforeItemLabelEdit,
+                AfterItemLabelEdit,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -222,6 +450,45 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_SetSelectionMode_(IntPtr obj, TreeViewSelectionMode value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TreeView_GetShowLines_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetShowLines_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TreeView_GetShowRootLines_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetShowRootLines_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TreeView_GetShowExpandButtons_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetShowExpandButtons_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr TreeView_GetTopItem_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TreeView_GetFullRowSelect_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetFullRowSelect_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TreeView_GetAllowLabelEdit_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetAllowLabelEdit_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr TreeView_GetFocusedItem_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetFocusedItem_(IntPtr obj, System.IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr TreeView_OpenSelectedItemsArray_(IntPtr obj);
@@ -252,6 +519,45 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_SetSelected_(IntPtr obj, System.IntPtr item, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_ExpandAll_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_CollapseAll_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr TreeView_ItemHitTest_(IntPtr obj, NativeApiTypes.Point point);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern TreeViewHitTestLocations TreeView_GetHitTestResultLocations_(IntPtr obj, System.IntPtr hitTestResult);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr TreeView_GetHitTestResultItem_(IntPtr obj, System.IntPtr hitTestResult);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_FreeHitTestResult_(IntPtr obj, System.IntPtr hitTestResult);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TreeView_IsItemSelected_(IntPtr obj, System.IntPtr item);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_BeginLabelEdit_(IntPtr obj, System.IntPtr item);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_EndLabelEdit_(IntPtr obj, System.IntPtr item);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_ExpandAllChildren_(IntPtr obj, System.IntPtr item);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_CollapseAllChildren_(IntPtr obj, System.IntPtr item);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_EnsureVisible_(IntPtr obj, System.IntPtr item);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_ScrollIntoView_(IntPtr obj, System.IntPtr item);
             
         }
     }

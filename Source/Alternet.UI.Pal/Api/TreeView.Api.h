@@ -51,6 +51,97 @@ ALTERNET_UI_API void TreeView_SetSelectionMode_(TreeView* obj, TreeViewSelection
         });
 }
 
+ALTERNET_UI_API c_bool TreeView_GetShowLines_(TreeView* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetShowLines();
+        });
+}
+
+ALTERNET_UI_API void TreeView_SetShowLines_(TreeView* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetShowLines(value);
+        });
+}
+
+ALTERNET_UI_API c_bool TreeView_GetShowRootLines_(TreeView* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetShowRootLines();
+        });
+}
+
+ALTERNET_UI_API void TreeView_SetShowRootLines_(TreeView* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetShowRootLines(value);
+        });
+}
+
+ALTERNET_UI_API c_bool TreeView_GetShowExpandButtons_(TreeView* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetShowExpandButtons();
+        });
+}
+
+ALTERNET_UI_API void TreeView_SetShowExpandButtons_(TreeView* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetShowExpandButtons(value);
+        });
+}
+
+ALTERNET_UI_API void* TreeView_GetTopItem_(TreeView* obj)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetTopItem();
+        });
+}
+
+ALTERNET_UI_API c_bool TreeView_GetFullRowSelect_(TreeView* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetFullRowSelect();
+        });
+}
+
+ALTERNET_UI_API void TreeView_SetFullRowSelect_(TreeView* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetFullRowSelect(value);
+        });
+}
+
+ALTERNET_UI_API c_bool TreeView_GetAllowLabelEdit_(TreeView* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetAllowLabelEdit();
+        });
+}
+
+ALTERNET_UI_API void TreeView_SetAllowLabelEdit_(TreeView* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetAllowLabelEdit(value);
+        });
+}
+
+ALTERNET_UI_API void* TreeView_GetFocusedItem_(TreeView* obj)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetFocusedItem();
+        });
+}
+
+ALTERNET_UI_API void TreeView_SetFocusedItem_(TreeView* obj, void* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetFocusedItem(value);
+        });
+}
+
 ALTERNET_UI_API void* TreeView_OpenSelectedItemsArray_(TreeView* obj)
 {
     return MarshalExceptions<void*>([&](){
@@ -118,6 +209,97 @@ ALTERNET_UI_API void TreeView_SetSelected_(TreeView* obj, void* item, c_bool val
 {
     MarshalExceptions<void>([&](){
             obj->SetSelected(item, value);
+        });
+}
+
+ALTERNET_UI_API void TreeView_ExpandAll_(TreeView* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->ExpandAll();
+        });
+}
+
+ALTERNET_UI_API void TreeView_CollapseAll_(TreeView* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->CollapseAll();
+        });
+}
+
+ALTERNET_UI_API void* TreeView_ItemHitTest_(TreeView* obj, Point point)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->ItemHitTest(point);
+        });
+}
+
+ALTERNET_UI_API TreeViewHitTestLocations TreeView_GetHitTestResultLocations_(TreeView* obj, void* hitTestResult)
+{
+    return MarshalExceptions<TreeViewHitTestLocations>([&](){
+            return obj->GetHitTestResultLocations(hitTestResult);
+        });
+}
+
+ALTERNET_UI_API void* TreeView_GetHitTestResultItem_(TreeView* obj, void* hitTestResult)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetHitTestResultItem(hitTestResult);
+        });
+}
+
+ALTERNET_UI_API void TreeView_FreeHitTestResult_(TreeView* obj, void* hitTestResult)
+{
+    MarshalExceptions<void>([&](){
+            obj->FreeHitTestResult(hitTestResult);
+        });
+}
+
+ALTERNET_UI_API c_bool TreeView_IsItemSelected_(TreeView* obj, void* item)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->IsItemSelected(item);
+        });
+}
+
+ALTERNET_UI_API void TreeView_BeginLabelEdit_(TreeView* obj, void* item)
+{
+    MarshalExceptions<void>([&](){
+            obj->BeginLabelEdit(item);
+        });
+}
+
+ALTERNET_UI_API void TreeView_EndLabelEdit_(TreeView* obj, void* item)
+{
+    MarshalExceptions<void>([&](){
+            obj->EndLabelEdit(item);
+        });
+}
+
+ALTERNET_UI_API void TreeView_ExpandAllChildren_(TreeView* obj, void* item)
+{
+    MarshalExceptions<void>([&](){
+            obj->ExpandAllChildren(item);
+        });
+}
+
+ALTERNET_UI_API void TreeView_CollapseAllChildren_(TreeView* obj, void* item)
+{
+    MarshalExceptions<void>([&](){
+            obj->CollapseAllChildren(item);
+        });
+}
+
+ALTERNET_UI_API void TreeView_EnsureVisible_(TreeView* obj, void* item)
+{
+    MarshalExceptions<void>([&](){
+            obj->EnsureVisible(item);
+        });
+}
+
+ALTERNET_UI_API void TreeView_ScrollIntoView_(TreeView* obj, void* item)
+{
+    MarshalExceptions<void>([&](){
+            obj->ScrollIntoView(item);
         });
 }
 

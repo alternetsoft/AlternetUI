@@ -64,5 +64,11 @@ namespace NativeApi.Api
 
         public event NativeEventHandler<TreeViewItemEventData>? ItemExpanded { add => throw new Exception(); remove => throw new Exception(); }
         public event NativeEventHandler<TreeViewItemEventData>? ItemCollapsed { add => throw new Exception(); remove => throw new Exception(); }
+
+        public event NativeEventHandler<TreeViewItemEventData>? ItemExpanding { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<TreeViewItemEventData>? ItemCollapsing { add => throw new Exception(); remove => throw new Exception(); }
+
+        public event NativeEventHandler<TreeViewItemLabelEditEventData>? BeforeItemLabelEdit { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<TreeViewItemLabelEditEventData>? AfterItemLabelEdit { add => throw new Exception(); remove => throw new Exception(); }
     }
 }

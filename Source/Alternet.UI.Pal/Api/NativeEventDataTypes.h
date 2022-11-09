@@ -65,6 +65,15 @@ namespace Alternet::UI
     #pragma pack(pop)
     
     #pragma pack(push, 1)
+    struct TreeViewItemLabelEditEventData
+    {
+        void* item;
+        char16_t* label;
+        c_bool editCancelled;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
     struct CommandEventData
     {
         char16_t* managedCommandId;
