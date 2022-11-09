@@ -90,6 +90,8 @@ namespace ControlsSample
         {
             if (treeView != null)
                 treeView.AllowLabelEdit = allowLabelEditingCheckBox.IsChecked;
+
+            beginSelectedLabelEditingButton.Enabled = allowLabelEditingCheckBox.IsChecked;
         }
 
         private void RemoveItemButton_Click(object? sender, EventArgs e)
@@ -101,6 +103,11 @@ namespace ControlsSample
         private void AddItemButton_Click(object? sender, EventArgs e)
         {
             treeView.Items.Add(new TreeViewItem("Item " + (treeView.Items.Count + 1), 0));
+        }
+
+        private void BeginSelectedLabelEditingButton_Click(object sender, System.EventArgs e)
+        {
+            treeView.SelectedItem?.BeginLabelEdit();
         }
     }
 }

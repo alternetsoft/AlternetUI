@@ -291,7 +291,13 @@ namespace Alternet.UI
 
         public override bool IsItemSelected(TreeViewItem item) => NativeControl.IsItemSelected(GetHandleFromItem(item));
 
-        public override void BeginLabelEdit(TreeViewItem item) => NativeControl.BeginLabelEdit(GetHandleFromItem(item));
+        public override void BeginLabelEdit(TreeViewItem item)
+        {
+            if (!Control.AllowLabelEdit)
+                throw new InvalidOperationException("AllowLabelEdit must be true for the BeginLabelEdit operation to be allowed.");
+
+            NativeControl.BeginLabelEdit(GetHandleFromItem(item));
+        }
 
         public override void EndLabelEdit(TreeViewItem item, bool cancel) =>
             NativeControl.EndLabelEdit(GetHandleFromItem(item), cancel);

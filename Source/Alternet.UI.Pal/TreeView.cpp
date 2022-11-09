@@ -320,10 +320,12 @@ namespace Alternet::UI
 
     void TreeView::BeginLabelEdit(void* item)
     {
+        GetTreeCtrl()->EditLabel(item);
     }
 
     void TreeView::EndLabelEdit(void* item, bool cancel)
     {
+        GetTreeCtrl()->EndEditLabel(item, cancel);
     }
 
     void TreeView::ExpandAllChildren(void* item)
