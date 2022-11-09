@@ -92,6 +92,16 @@ namespace Alternet.UI
         public event EventHandler<TreeViewItemExpandedChangedEventArgs>? AfterCollapse;
 
         /// <summary>
+        /// Occurs before the tree item is expanded. This event can be canceled.
+        /// </summary>
+        public event EventHandler<TreeViewItemExpandedChangingEventArgs>? BeforeExpand;
+
+        /// <summary>
+        /// Occurs before the tree item is collapsed. This event can be canceled.
+        /// </summary>
+        public event EventHandler<TreeViewItemExpandedChangingEventArgs>? BeforeCollapse;
+
+        /// <summary>
         /// Occurs after <see cref="TreeViewItem.IsExpanded"/> property value of a tree item belonging to this <see cref="TreeView"/> changes.
         /// </summary>
         public event EventHandler<TreeViewItemExpandedChangedEventArgs>? ExpandedChanged;
@@ -133,6 +143,54 @@ namespace Alternet.UI
                 RaiseSelectionChanged(EventArgs.Empty);
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether lines are drawn between tree nodes in the tree view control.
+        /// </summary>
+        /// <value><see langword="true"/> if lines are drawn between tree nodes in the tree view control; otherwise,
+        /// <see langword="false"/>. The default is <see langword="true"/>.</value>
+        public bool ShowLines { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether lines are drawn between the tree nodes that are at the root of the tree view.
+        /// </summary>
+        /// <value><see langword="true"/> if lines are drawn between the tree nodes that are at the root of the tree
+        /// view; otherwise, <see langword="false"/>. The default is <see langword="true"/>.</value>
+        public bool ShowRootLines { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether expand buttons are displayed next to tree nodes that contain child
+        /// tree nodes.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if expand buttons are displayed next to tree nodes that contain
+        /// child tree nodes; otherwise, <see langword="false"/>. The default is <see langword="true"/>.
+        /// </value>
+        public bool ShowExpandButtons { get; set; }
+
+        /// <summary>
+        /// Gets or sets the first fully-visible tree item in the tree view control.
+        /// </summary>
+        /// <value>A <see cref="TreeViewItem"/> that represents the first fully-visible tree item in the tree view control.</value>
+        public TreeViewItem TopItem { get; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the selection highlight spans the width of the tree view control.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the selection highlight spans the width of the tree view control; otherwise, <see
+        /// langword="false"/>. The default is <see langword="false"/>.
+        /// </value>
+        public bool FullRowSelect { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the label text of the tree nodes can be edited.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the label text of the tree nodes can be edited; otherwise, <see
+        /// langword="false"/>. The default is <see langword="false"/>.
+        /// </value>
+        public bool AllowLabelEdit { get; set; }
 
         /// <summary>
         /// Gets a collection containing the currently selected items in the <see cref="TreeView"/>.
@@ -315,6 +373,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="BeforeCollapse"/> event and calls <see cref="OnBeforeCollapse"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="TreeViewItemExpandedChangingEventArgs"/> that contains the event data.</param>
+        public void RaiseBeforeCollapse(TreeViewItemExpandedChangingEventArgs e)
+        {
+            OnBeforeCollapse(e);
+            BeforeCollapse?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="BeforeExpand"/> event and calls <see cref="OnBeforeExpand"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="TreeViewItemExpandedChangingEventArgs"/> that contains the event data.</param>
+        public void RaiseBeforeExpand(TreeViewItemExpandedChangingEventArgs e)
+        {
+            OnBeforeExpand(e);
+            BeforeExpand?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Raises the <see cref="ExpandedChanged"/> event and calls <see cref="OnExpandedChanged"/>.
         /// </summary>
         /// <param name="e">An <see cref="TreeViewItemExpandedChangedEventArgs"/> that contains the event data.</param>
@@ -347,6 +425,22 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="TreeViewItemExpandedChangedEventArgs"/> that contains the event data.</param>
         protected virtual void OnAfterExpand(TreeViewItemExpandedChangedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called before a tree item is expanded.
+        /// </summary>
+        /// <param name="e">An <see cref="TreeViewItemExpandedChangingEventArgs"/> that contains the event data.</param>
+        protected virtual void OnBeforeExpand(TreeViewItemExpandedChangingEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called before a tree item is collapsed.
+        /// </summary>
+        /// <param name="e">An <see cref="TreeViewItemExpandedChangingEventArgs"/> that contains the event data.</param>
+        protected virtual void OnBeforeCollapse(TreeViewItemExpandedChangingEventArgs e)
         {
         }
 

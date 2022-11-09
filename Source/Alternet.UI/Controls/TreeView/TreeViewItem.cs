@@ -1,5 +1,6 @@
 using Alternet.Base.Collections;
 using Alternet.Drawing;
+using System;
 
 namespace Alternet.UI
 {
@@ -128,6 +129,25 @@ namespace Alternet.UI
                 text = value;
             }
         }
+
+        /// <summary>
+        /// Initiates the editing of the tree node label.
+        /// </summary>
+        public void BeginLabelEdit()
+        {
+            //if (!treeView.AllowLabelEdit)
+            //    throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Ends the editing of the tree node label.
+        /// </summary>
+        /// <param name="cancel"><see langword="true"/> if the editing of the tree node label text was canceled without
+        /// being saved; otherwise, <see langword="false"/>.</param>
+        public void EndLabelEdit(bool cancel)
+        {
+        }
+
 
         /// <summary>
         /// Gets the position of the tree item in the tree item collection.
