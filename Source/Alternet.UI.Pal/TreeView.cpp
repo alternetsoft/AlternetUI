@@ -15,6 +15,8 @@ namespace Alternet::UI
             window->Unbind(wxEVT_TREE_SEL_CHANGED, &TreeView::OnSelectionChanged, this);
             window->Unbind(wxEVT_TREE_ITEM_EXPANDED, &TreeView::OnItemExpanded, this);
             window->Unbind(wxEVT_TREE_ITEM_COLLAPSED, &TreeView::OnItemCollapsed, this);
+            window->Unbind(wxEVT_TREE_BEGIN_LABEL_EDIT, &TreeView::OnItemBeginLabelEdit, this);
+            window->Unbind(wxEVT_TREE_END_LABEL_EDIT, &TreeView::OnItemEndLabelEdit, this);
         }
 
         if (_imageList != nullptr)
@@ -63,10 +65,7 @@ namespace Alternet::UI
         _selectionMode = value;
         _skipSelectionChangedEvent = true;
         _skipExpandedEvent = true;
-        RecreateWxWindowIfNeeded();
-        
-        RaiseEvent(TreeViewEvent::ControlRecreated);
-
+        RecreateTreeCtrl();
         _skipSelectionChangedEvent = false;
         _skipExpandedEvent = false;
     }
@@ -163,6 +162,8 @@ namespace Alternet::UI
         value->Bind(wxEVT_TREE_SEL_CHANGED, &TreeView::OnSelectionChanged, this);
         value->Bind(wxEVT_TREE_ITEM_EXPANDED, &TreeView::OnItemExpanded, this);
         value->Bind(wxEVT_TREE_ITEM_COLLAPSED, &TreeView::OnItemCollapsed, this);
+        value->Bind(wxEVT_TREE_BEGIN_LABEL_EDIT, &TreeView::OnItemBeginLabelEdit, this);
+        value->Bind(wxEVT_TREE_END_LABEL_EDIT, &TreeView::OnItemEndLabelEdit, this);
 
         return value;
     }
@@ -190,6 +191,15 @@ namespace Alternet::UI
 
         TreeViewItemEventData data{ event.GetItem() };
         RaiseEvent(TreeViewEvent::ItemExpanded, &data);
+    }
+
+    void TreeView::OnItemBeginLabelEdit(wxTreeEvent& event)
+    {
+    }
+
+    void TreeView::OnItemEndLabelEdit(wxTreeEvent& event)
+    {
+        GetWxWindow()->Update();
     }
 
     void TreeView::SetFocused(void* item, bool value)
@@ -244,11 +254,16 @@ namespace Alternet::UI
 
     bool TreeView::GetAllowLabelEdit()
     {
-        return false;
+        return _allowLabelEdit;
     }
 
     void TreeView::SetAllowLabelEdit(bool value)
     {
+        if (_allowLabelEdit == value)
+            return;
+
+        _allowLabelEdit = value;
+        RecreateTreeCtrl();
     }
 
     void TreeView::ExpandAll()
@@ -310,6 +325,13 @@ namespace Alternet::UI
     long TreeView::GetStyle()
     {
         return wxTR_TWIST_BUTTONS | wxTR_HAS_BUTTONS | wxTR_HIDE_ROOT | wxTR_LINES_AT_ROOT | wxTR_NO_LINES |
-            (_selectionMode == TreeViewSelectionMode::Single ? wxTR_SINGLE : wxTR_MULTIPLE);
+            (_selectionMode == TreeViewSelectionMode::Single ? wxTR_SINGLE : wxTR_MULTIPLE) |
+            (_allowLabelEdit ? wxTR_EDIT_LABELS : 0);
+    }
+
+    void TreeView::RecreateTreeCtrl()
+    {
+        RecreateWxWindowIfNeeded();
+        RaiseEvent(TreeViewEvent::ControlRecreated);
     }
 }

@@ -14,15 +14,20 @@ namespace Alternet::UI
         void OnSelectionChanged(wxCommandEvent& event);
         void OnItemCollapsed(wxTreeEvent& event);
         void OnItemExpanded(wxTreeEvent& event);
+        void OnItemBeginLabelEdit(wxTreeEvent& event);
+        void OnItemEndLabelEdit(wxTreeEvent& event);
 
     private:
         void ApplyImageList(wxTreeCtrl* value);
 
         long GetStyle();
 
+        void RecreateTreeCtrl();
+
         wxTreeCtrl* GetTreeCtrl();
 
         TreeViewSelectionMode _selectionMode = TreeViewSelectionMode::Single;
+        bool _allowLabelEdit = false;
         ImageList* _imageList = nullptr;
 
         bool _skipSelectionChangedEvent = false;
