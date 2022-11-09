@@ -222,7 +222,20 @@ namespace Alternet.UI
         /// <value>A focused tree view item, or <see langword="null"/> if there is no item currently focused.</value>
         public TreeViewItem? FocusedItem { get; set; }
 
-
+        /// <summary>
+        /// Provides tree view item information, at a given client point, in device-independent units (1/96th inch per
+        /// unit).
+        /// </summary>
+        /// <param name="point">The <see cref="Point"/> at which to retrieve item information.</param>
+        /// <returns>The hit test result information.</returns>
+        /// <remarks>
+        /// Use this method to determine whether a point is located in a <see cref="TreeViewItem"/> and where within the
+        /// item the point is located, such as on the label or image area.
+        /// </remarks>
+        public TreeViewHitTestInfo HitTest(Point point)
+        {
+            return new TreeViewHitTestInfo(TreeViewHitTestLocations.None, null);
+        }
 
         /// <summary>
         /// Ensures that the tree item is visible, expanding tree items and scrolling the tree view control as
