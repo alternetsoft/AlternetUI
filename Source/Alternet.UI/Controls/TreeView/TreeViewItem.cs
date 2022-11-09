@@ -131,6 +131,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the tree item is in the selected state.
+        /// </summary>
+        /// <value><see langword="true"/> if the tree item is in the selected state; otherwise, <see langword="false"/>.</value>
+        public bool IsSelected { get; }
+
+        /// <summary>
         /// Initiates the editing of the tree node label.
         /// </summary>
         public void BeginLabelEdit()
@@ -148,6 +154,55 @@ namespace Alternet.UI
         {
         }
 
+
+        /// <summary>
+        /// Expands this <see cref="TreeViewItem"/> and all the child tree items.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="ExpandAll"/> method expands this <see cref="TreeViewItem"/> and all the child tree items assigned to the <see cref="Items"/> collection.
+        /// </remarks>
+        public void ExpandAll()
+        {
+            // todo
+        }
+
+        /// <summary>
+        /// Collapses this <see cref="TreeViewItem"/> and all the child tree items.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="CollapseAll"/> method collapses this <see cref="TreeViewItem"/> and all the child tree items assigned to the <see cref="Items"/> collection.
+        /// </remarks>
+        public void CollapseAll()
+        {
+            // todo
+        }
+
+        /// <summary>
+        /// Ensures that the tree item is visible, expanding tree items and scrolling the tree view control as
+        /// necessary.
+        /// </summary>
+        /// <remarks>
+        /// When the <see cref="EnsureVisible"/> method is called, the tree is expanded and scrolled to ensure that the current tree
+        /// item is visible in the <see cref="TreeView"/>. This method is useful if you are selecting a tree item in code based on
+        /// certain criteria. By calling this method after you select the item, the user can see and interact with the
+        /// selected node.
+        /// </remarks>
+        public void EnsureVisible()
+        {
+
+        }
+
+        /// <summary>
+        /// Scrolls the item into view.
+        /// </summary>
+        public void ScrollIntoView()
+        {
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the tree item is in the focused state.
+        /// </summary>
+        public bool IsFocused { get; set; }
 
         /// <summary>
         /// Gets the position of the tree item in the tree item collection.
@@ -223,17 +278,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Expands this <see cref="TreeViewItem"/> and all the child tree items.
-        /// </summary>
-        /// <remarks>
-        /// The <see cref="ExpandAll"/> method expands this <see cref="TreeViewItem"/> and all the child tree items assigned to the <see cref="Items"/> collection.
-        /// </remarks>
-        public void ExpandAll()
-        {
-            // todo
-        }
-
-        /// <summary>
         /// Collapses the tree item.
         /// </summary>
         /// <remarks>
@@ -242,17 +286,6 @@ namespace Alternet.UI
         public void Collapse()
         {
             IsExpanded = false;
-        }
-
-        /// <summary>
-        /// Collapses this <see cref="TreeViewItem"/> and all the child tree items.
-        /// </summary>
-        /// <remarks>
-        /// The <see cref="CollapseAll"/> method collapses this <see cref="TreeViewItem"/> and all the child tree items assigned to the <see cref="Items"/> collection.
-        /// </remarks>
-        public void CollapseAll()
-        {
-            // todo
         }
 
         /// <summary>

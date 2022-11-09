@@ -102,6 +102,16 @@ namespace Alternet.UI
         public event EventHandler<TreeViewItemExpandedChangingEventArgs>? BeforeCollapse;
 
         /// <summary>
+        /// Occurs before the tree item label text is edited. This event can be canceled.
+        /// </summary>
+        public event EventHandler<TreeViewItemLabelEditEventArgs>? BeforeLabelEdit;
+
+        /// <summary>
+        /// Occurs after the tree item label text is edited. This event can be canceled.
+        /// </summary>
+        public event EventHandler<TreeViewItemLabelEditEventArgs>? AfterLabelEdit;
+
+        /// <summary>
         /// Occurs after <see cref="TreeViewItem.IsExpanded"/> property value of a tree item belonging to this <see cref="TreeView"/> changes.
         /// </summary>
         public event EventHandler<TreeViewItemExpandedChangedEventArgs>? ExpandedChanged;
@@ -191,6 +201,57 @@ namespace Alternet.UI
         /// langword="false"/>. The default is <see langword="false"/>.
         /// </value>
         public bool AllowLabelEdit { get; set; }
+
+        /// <summary>
+        /// Expands all child tree items.
+        /// </summary>
+        public void ExpandAll()
+        {
+        }
+
+        /// <summary>
+        /// Collapses all child tree items.
+        /// </summary>
+        public void CollapseAll()
+        {
+        }
+
+        /// <summary>
+        /// Gets or sets a focused tree view item.
+        /// </summary>
+        /// <value>A focused tree view item, or <see langword="null"/> if there is no item currently focused.</value>
+        public TreeViewItem? FocusedItem { get; set; }
+
+
+
+        /// <summary>
+        /// Ensures that the tree item is visible, expanding tree items and scrolling the tree view control as
+        /// necessary.
+        /// </summary>
+        /// <remarks>
+        /// When the <see cref="EnsureVisible"/> method is called, the tree is expanded and scrolled to ensure that the current tree
+        /// item is visible in the <see cref="TreeView"/>. This method is useful if you are selecting a tree item in code based on
+        /// certain criteria. By calling this method after you select the item, the user can see and interact with the
+        /// selected node.
+        /// </remarks>
+        public void EnsureVisible(TreeViewItem item)
+        {
+            if (item is null)
+                throw new ArgumentNullException(nameof(item));
+
+            item.EnsureVisible();
+        }
+
+        /// <summary>
+        /// Scrolls the specified item into view.
+        /// </summary>
+        public void ScrollIntoView(TreeViewItem item)
+        {
+            if (item is null)
+                throw new ArgumentNullException(nameof(item));
+
+            item.ScrollIntoView();
+        }
 
         /// <summary>
         /// Gets a collection containing the currently selected items in the <see cref="TreeView"/>.
@@ -383,6 +444,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="BeforeLabelEdit"/> event and calls <see cref="OnBeforeLabelEdit"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="TreeViewItemLabelEditEventArgs"/> that contains the event data.</param>
+        public void RaiseBeforeLabelEdit(TreeViewItemLabelEditEventArgs e)
+        {
+            OnBeforeLabelEdit(e);
+            BeforeLabelEdit?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="AfterLabelEdit"/> event and calls <see cref="OnAfterLabelEdit"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="TreeViewItemLabelEditEventArgs"/> that contains the event data.</param>
+        public void RaiseAfterLabelEdit(TreeViewItemLabelEditEventArgs e)
+        {
+            OnAfterLabelEdit(e);
+            AfterLabelEdit?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Raises the <see cref="BeforeExpand"/> event and calls <see cref="OnBeforeExpand"/>.
         /// </summary>
         /// <param name="e">An <see cref="TreeViewItemExpandedChangingEventArgs"/> that contains the event data.</param>
@@ -433,6 +514,22 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="TreeViewItemExpandedChangingEventArgs"/> that contains the event data.</param>
         protected virtual void OnBeforeExpand(TreeViewItemExpandedChangingEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called before a tree item label is edited.
+        /// </summary>
+        /// <param name="e">An <see cref="TreeViewItemLabelEditEventArgs"/> that contains the event data.</param>
+        protected virtual void OnBeforeLabelEdit(TreeViewItemLabelEditEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called after a tree item label is edited.
+        /// </summary>
+        /// <param name="e">An <see cref="TreeViewItemLabelEditEventArgs"/> that contains the event data.</param>
+        protected virtual void OnAfterLabelEdit(TreeViewItemLabelEditEventArgs e)
         {
         }
 
