@@ -195,5 +195,11 @@ namespace ControlsSample
                 item.IsFocused = true;
             }
         }
+
+        private void TreeView_MouseLeftButtonDown(object sender, Alternet.UI.MouseButtonEventArgs e)
+        {
+            var result = treeView.HitTest(e.GetPosition(treeView));
+            site?.LogEvent($"HitTest result: Item: '{result.Item?.Text ?? "<none>"}, Location: {result.Location}'");
+        }
     }
 }

@@ -229,12 +229,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a focused tree view item.
-        /// </summary>
-        /// <value>A focused tree view item, or <see langword="null"/> if there is no item currently focused.</value>
-        public TreeViewItem? FocusedItem { get; set; }
-
-        /// <summary>
         /// Provides tree view item information, at a given client point, in device-independent units (1/96th inch per
         /// unit).
         /// </summary>
@@ -246,7 +240,7 @@ namespace Alternet.UI
         /// </remarks>
         public TreeViewHitTestInfo HitTest(Point point)
         {
-            return new TreeViewHitTestInfo(TreeViewHitTestLocations.None, null);
+            return Handler.HitTest(point);
         }
 
         /// <summary>
