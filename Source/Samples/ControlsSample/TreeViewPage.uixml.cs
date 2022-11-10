@@ -173,20 +173,27 @@ namespace ControlsSample
 
         private void CollapseAllChildrenButton_Click(object sender, EventArgs e) => treeView.SelectedItem?.CollapseAll();
 
-        private void EnsureLastItemVisibleButton_Click(object sender, System.EventArgs e)
+        static TreeViewItem? GetLastItem(TreeViewItem? parent, ICollection<TreeViewItem> children)
         {
-            static TreeViewItem? GetLastItem(TreeViewItem? parent, ICollection<TreeViewItem> children)
+            if (!children.Any())
+                return parent;
+
+            var child = children.Last();
+            return GetLastItem(child, child.Items);
+        }
+
+        private void EnsureLastItemVisibleButton_Click(object sender, System.EventArgs e) => GetLastItem(null, treeView.Items)?.EnsureVisible();
+
+        private void ScrollLastItemIntoViewButton_Click(object sender, System.EventArgs e) => GetLastItem(null, treeView.Items)?.ScrollIntoView();
+
+        private void FocusLastItemButton_Click(object sender, System.EventArgs e)
+        {
+            var item = GetLastItem(null, treeView.Items);
+            if (item != null)
             {
-                if (!children.Any())
-                    return parent;
-
-                var child = children.Last();
-                return GetLastItem(child, child.Items);
+                treeView.Focus();
+                item.IsFocused = true;
             }
-
-            var lastItem = GetLastItem(null, treeView.Items);
-            if (lastItem != null)
-                lastItem.EnsureVisible();
         }
     }
 }

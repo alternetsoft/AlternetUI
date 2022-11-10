@@ -39,6 +39,8 @@
                     <Button Text="Collapse All Children" Name="collapseAllChildrenButton" Margin="0,3,0,0" Click="CollapseAllChildrenButton_Click" />
 
                     <Button Text="Ensure Last Item is Visible" Name="ensureLastItemVisibleButton" Margin="0,5,0,0" Click="EnsureLastItemVisibleButton_Click" />
+                    <Button Text="Scroll Last Item Into View" Name="scrollLastItemIntoViewButton" Margin="0,3,0,0" Click="ScrollLastItemIntoViewButton_Click" />
+                    <Button Text="Focus Last Item" Name="focusLastItemButton" Margin="0,3,0,0" Click="FocusLastItemButton_Click" />
                 </StackPanel>
             </StackPanel>
         </GroupBox>
