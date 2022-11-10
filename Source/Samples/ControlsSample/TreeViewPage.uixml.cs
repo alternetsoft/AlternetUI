@@ -1,5 +1,6 @@
 ﻿using Alternet.UI;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ControlsSample
@@ -171,5 +172,21 @@ namespace ControlsSample
         private void ExpandAllChildrenButton_Click(object sender, EventArgs e) => treeView.SelectedItem?.ExpandAll();
 
         private void CollapseAllChildrenButton_Click(object sender, EventArgs e) => treeView.SelectedItem?.CollapseAll();
+
+        private void EnsureLastItemVisibleButton_Click(object sender, System.EventArgs e)
+        {
+            static TreeViewItem? GetLastItem(TreeViewItem? parent, ICollection<TreeViewItem> children)
+            {
+                if (!children.Any())
+                    return parent;
+
+                var child = children.Last();
+                return GetLastItem(child, child.Items);
+            }
+
+            var lastItem = GetLastItem(null, treeView.Items);
+            if (lastItem != null)
+                lastItem.EnsureVisible();
+        }
     }
 }

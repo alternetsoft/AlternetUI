@@ -37,6 +37,8 @@
                     <Button Text="Collapse All" Name="collapseAllButton" Margin="0,3,0,0" Click="CollapseAllButton_Click" />
                     <Button Text="Expand All Children" Name="expandAllChildrenButton" Margin="0,3,0,0" Click="ExpandAllChildrenButton_Click" />
                     <Button Text="Collapse All Children" Name="collapseAllChildrenButton" Margin="0,3,0,0" Click="CollapseAllChildrenButton_Click" />
+
+                    <Button Text="Ensure Last Item is Visible" Name="ensureLastItemVisibleButton" Margin="0,5,0,0" Click="EnsureLastItemVisibleButton_Click" />
                 </StackPanel>
             </StackPanel>
         </GroupBox>
