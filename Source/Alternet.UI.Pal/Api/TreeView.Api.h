@@ -261,6 +261,34 @@ ALTERNET_UI_API c_bool TreeView_IsFocused_(TreeView* obj, void* item)
         });
 }
 
+ALTERNET_UI_API void TreeView_SetItemText_(TreeView* obj, void* item, const char16_t* text)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetItemText(item, text);
+        });
+}
+
+ALTERNET_UI_API char16_t* TreeView_GetItemText_(TreeView* obj, void* item)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetItemText(item));
+        });
+}
+
+ALTERNET_UI_API void TreeView_SetItemImageIndex_(TreeView* obj, void* item, int imageIndex)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetItemImageIndex(item, imageIndex);
+        });
+}
+
+ALTERNET_UI_API int TreeView_GetItemImageIndex_(TreeView* obj, void* item)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetItemImageIndex(item);
+        });
+}
+
 ALTERNET_UI_API void TreeView_BeginLabelEdit_(TreeView* obj, void* item)
 {
     MarshalExceptions<void>([&](){

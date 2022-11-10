@@ -297,6 +297,34 @@ namespace Alternet.UI.Native
             return m;
         }
         
+        public void SetItemText(System.IntPtr item, string text)
+        {
+            CheckDisposed();
+            NativeApi.TreeView_SetItemText_(NativePointer, item, text);
+        }
+        
+        public string GetItemText(System.IntPtr item)
+        {
+            CheckDisposed();
+            var n = NativeApi.TreeView_GetItemText_(NativePointer, item);
+            var m = n;
+            return m;
+        }
+        
+        public void SetItemImageIndex(System.IntPtr item, int imageIndex)
+        {
+            CheckDisposed();
+            NativeApi.TreeView_SetItemImageIndex_(NativePointer, item, imageIndex);
+        }
+        
+        public int GetItemImageIndex(System.IntPtr item)
+        {
+            CheckDisposed();
+            var n = NativeApi.TreeView_GetItemImageIndex_(NativePointer, item);
+            var m = n;
+            return m;
+        }
+        
         public void BeginLabelEdit(System.IntPtr item)
         {
             CheckDisposed();
@@ -537,6 +565,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TreeView_IsFocused_(IntPtr obj, System.IntPtr item);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetItemText_(IntPtr obj, System.IntPtr item, string text);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string TreeView_GetItemText_(IntPtr obj, System.IntPtr item);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetItemImageIndex_(IntPtr obj, System.IntPtr item, int imageIndex);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int TreeView_GetItemImageIndex_(IntPtr obj, System.IntPtr item);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_BeginLabelEdit_(IntPtr obj, System.IntPtr item);

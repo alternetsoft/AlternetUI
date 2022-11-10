@@ -333,5 +333,9 @@ namespace Alternet.UI
         public override void SetFocused(TreeViewItem item, bool value) => NativeControl.SetFocused(GetHandleFromItem(item), value);
 
         public override bool IsFocused(TreeViewItem item) => NativeControl.IsFocused(GetHandleFromItem(item));
+
+        public override void SetItemText(TreeViewItem item, string text) => NativeControl.SetItemText(GetHandleFromItem(item), text);
+
+        public override void SetItemImageIndex(TreeViewItem item, int? imageIndex) => NativeControl.SetItemImageIndex(GetHandleFromItem(item), imageIndex ?? -1);
     }
 }

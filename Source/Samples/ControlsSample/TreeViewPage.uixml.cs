@@ -201,5 +201,21 @@ namespace ControlsSample
             var result = treeView.HitTest(e.GetPosition(treeView));
             site?.LogEvent($"HitTest result: Item: '{result.Item?.Text ?? "<none>"}, Location: {result.Location}'");
         }
+
+        private void ModifyLastItemButton_Click(object sender, System.EventArgs e)
+        {
+            var item = GetLastItem(null, treeView.Items);
+            if (item != null)
+            {
+                item.EnsureVisible();
+                item.Text += "X";
+                
+                var imageIndex = item.ImageIndex + 1;
+                if (imageIndex >= treeView.ImageList!.Images.Count)
+                    imageIndex = 0;
+
+                item.ImageIndex = imageIndex;
+            }
+        }
     }
 }

@@ -243,6 +243,26 @@ namespace Alternet::UI
         OnItemLabelEditEvent(event, TreeViewEvent::AfterItemLabelEdit);
     }
 
+    void TreeView::SetItemText(void* item, const string& text)
+    {
+        GetTreeCtrl()->SetItemText(item, wxStr(text));
+    }
+
+    string TreeView::GetItemText(void* item)
+    {
+        return wxStr(GetTreeCtrl()->GetItemText(item));
+    }
+
+    void TreeView::SetItemImageIndex(void* item, int imageIndex)
+    {
+        GetTreeCtrl()->SetItemImage(item, imageIndex);
+    }
+
+    int TreeView::GetItemImageIndex(void* item)
+    {
+        return GetTreeCtrl()->GetItemImage(item);
+    }
+
     void TreeView::SetFocused(void* item, bool value)
     {
         auto treeCtrl = GetTreeCtrl();

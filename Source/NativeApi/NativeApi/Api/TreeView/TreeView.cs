@@ -56,6 +56,12 @@ namespace NativeApi.Api
         public void SetFocused(IntPtr item, bool value) => throw new Exception();
         public bool IsFocused(IntPtr item) => throw new Exception();
 
+        public void SetItemText(IntPtr item, string text) => throw new Exception();
+        public string GetItemText(IntPtr item) => throw new Exception();
+
+        public void SetItemImageIndex(IntPtr item, int imageIndex) => throw new Exception();
+        public int GetItemImageIndex(IntPtr item) => throw new Exception();
+
         public void BeginLabelEdit(IntPtr item) => throw new Exception();
         public void EndLabelEdit(IntPtr item, bool cancel) => throw new Exception();
         public void ExpandAllChildren(IntPtr item) => throw new Exception();

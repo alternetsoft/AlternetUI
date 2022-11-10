@@ -39,6 +39,7 @@ namespace Alternet.UI
     {
         private string text = "";
         private TreeView? treeView;
+        private int? imageIndex;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TreeViewItem"/> class with default values.
@@ -127,6 +128,9 @@ namespace Alternet.UI
                     return;
 
                 text = value;
+
+                if (treeView != null)
+                    treeView.Handler.SetItemText(this, text);
             }
         }
 
@@ -212,7 +216,16 @@ namespace Alternet.UI
         /// Individual <see cref="TreeViewItem"/> objects can specify which image is displayed by setting the <see cref="ImageIndex"/> property.
         /// These individual <see cref="TreeViewItem"/> settings will override the settings in the corresponding <see cref="TreeView"/> properties.
         /// </remarks>
-        public int? ImageIndex { get; set; }
+        public int? ImageIndex
+        {
+            get => imageIndex;
+            set
+            {
+                imageIndex = value;
+                if (treeView != null)
+                    treeView.Handler.SetItemImageIndex(this, value);
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether the tree item is in the expanded state.
