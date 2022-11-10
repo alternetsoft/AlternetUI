@@ -77,13 +77,32 @@ namespace ControlsSample
 
         private void TreeView_BeforeLabelEdit(object? sender, TreeViewItemLabelEditEventArgs e)
         {
+            e.Cancel = cancelBeforeLabelEditEventsCheckBox.IsChecked;
             site?.LogEvent($"TreeView: BeforeLabelEdit. Item: '{e.Item.Text}', Label: '{e.Label ?? "<null>"}'");
         }
 
         private void TreeView_AfterLabelEdit(object? sender, TreeViewItemLabelEditEventArgs e)
         {
-            e.Cancel = true;
+            e.Cancel = cancelAfterLabelEditEventsCheckBox.IsChecked;
             site?.LogEvent($"TreeView: AfterLabelEdit. Item: '{e.Item.Text}', Label: '{e.Label ?? "<null>"}'");
+        }
+
+        private void TreeView_BeforeExpand(object? sender, TreeViewItemExpandedChangingEventArgs e)
+        {
+            e.Cancel = cancelBeforeExpandEventsCheckBox.IsChecked;
+            site?.LogEvent($"TreeView: BeforeExpand. Item: '{e.Item.Text}'");
+        }
+
+        private void TreeView_BeforeCollapse(object? sender, TreeViewItemExpandedChangingEventArgs e)
+        {
+            e.Cancel = cancelBeforeCollapseEventsCheckBox.IsChecked;
+            site?.LogEvent($"TreeView: BeforeCollapse. Item: '{e.Item.Text}'");
+        }
+
+        private void CancelBeforeExpandEventsCheckBox_CheckedChanged(object? sender, EventArgs e)
+        {
+            if (treeView != null)
+                treeView.Enabled = enabledCheckBox.IsChecked;
         }
 
         private void EnabledCheckBox_CheckedChanged(object? sender, EventArgs e)
