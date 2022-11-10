@@ -104,8 +104,14 @@ namespace Alternet.UI
         /// </summary>
         public abstract bool IsFocused(TreeViewItem treeViewItem);
 
+        /// <summary>
+        /// Sets the specified item text.
+        /// </summary>
         public abstract void SetItemText(TreeViewItem treeViewItem, string text);
 
+        /// <summary>
+        /// Sets the specified item image index.
+        /// </summary>
         public abstract void SetItemImageIndex(TreeViewItem treeViewItem, int? imageIndex);
 
         /// <inheritdoc/>
