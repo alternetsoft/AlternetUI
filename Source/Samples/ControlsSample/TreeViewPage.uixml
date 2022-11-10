@@ -43,6 +43,7 @@
                     <Button Text="Scroll Last Item Into View" Name="scrollLastItemIntoViewButton" Margin="0,3,0,0" Click="ScrollLastItemIntoViewButton_Click" />
                     <Button Text="Focus Last Item" Name="focusLastItemButton" Margin="0,3,0,0" Click="FocusLastItemButton_Click" />
                     <Button Text="Modify Last Item" Name="modifyLastItemButton" Margin="0,3,0,0" Click="ModifyLastItemButton_Click" />
+                    <Button Text="Add Last Item Sibling" Name="addLastItemSiblingButton" Margin="0,3,0,0" Click="AddLastItemSiblingButton_Click" />
                 </StackPanel>
             </StackPanel>
         </GroupBox>

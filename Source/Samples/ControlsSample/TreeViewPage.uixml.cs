@@ -217,5 +217,17 @@ namespace ControlsSample
                 item.ImageIndex = imageIndex;
             }
         }
+
+        private void AddLastItemSiblingButton_Click(object sender, System.EventArgs e)
+        {
+            var item = GetLastItem(null, treeView.Items);
+            if (item != null)
+            {
+                var collection = item.Parent == null ? treeView.Items : item.Parent.Items;
+                var newItem = new TreeViewItem(item.Text + " Sibling", item.ImageIndex ?? 0);
+                collection.Insert(collection.IndexOf(item), newItem);
+                newItem.EnsureVisible();
+            }
+        }
     }
 }
