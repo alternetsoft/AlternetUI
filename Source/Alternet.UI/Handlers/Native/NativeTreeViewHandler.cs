@@ -80,6 +80,8 @@ namespace Alternet.UI
             e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
         }
 
+        bool skipSetItemText;
+
         private void NativeControl_AfterItemLabelEdit(object? sender, Native.NativeEventArgs<Native.TreeViewItemLabelEditEventData> e)
         {
             var ea = new TreeViewItemLabelEditEventArgs(GetItemFromHandle(e.Data.item), e.Data.editCancelled ? null : e.Data.label);
@@ -87,7 +89,11 @@ namespace Alternet.UI
             Control.RaiseAfterLabelEdit(ea);
 
             if (!e.Data.editCancelled && !ea.Cancel)
+            {
+                skipSetItemText = true;
                 ea.Item.Text = e.Data.label;
+                skipSetItemText = false;
+            }
 
             e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
         }
@@ -334,7 +340,13 @@ namespace Alternet.UI
 
         public override bool IsFocused(TreeViewItem item) => NativeControl.IsFocused(GetHandleFromItem(item));
 
-        public override void SetItemText(TreeViewItem item, string text) => NativeControl.SetItemText(GetHandleFromItem(item), text);
+        public override void SetItemText(TreeViewItem item, string text)
+        {
+            if (skipSetItemText)
+                return;
+
+            NativeControl.SetItemText(GetHandleFromItem(item), text);
+        }
 
         public override void SetItemImageIndex(TreeViewItem item, int? imageIndex) => NativeControl.SetItemImageIndex(GetHandleFromItem(item), imageIndex ?? -1);
     }

@@ -96,7 +96,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value>
         /// A <see cref="TreeView"/> that represents the parent tree view that the tree item is assigned to,
-        /// or <c>null</c> if the node has not been assigned to a tree view.
+        /// or <c>null</c> if the item has not been assigned to a tree view.
         /// </value>
         public TreeView? TreeView
         {
@@ -143,14 +143,14 @@ namespace Alternet.UI
         public bool IsSelected => RequiredTreeView.Handler.IsItemSelected(this);
 
         /// <summary>
-        /// Initiates the editing of the tree node label.
+        /// Initiates the editing of the tree item label.
         /// </summary>
         public void BeginLabelEdit() => RequiredTreeView.Handler.BeginLabelEdit(this);
 
         /// <summary>
-        /// Ends the editing of the tree node label.
+        /// Ends the editing of the tree item label.
         /// </summary>
-        /// <param name="cancel"><see langword="true"/> if the editing of the tree node label text was canceled without
+        /// <param name="cancel"><see langword="true"/> if the editing of the tree item label text was canceled without
         /// being saved; otherwise, <see langword="false"/>.</param>
         public void EndLabelEdit(bool cancel) => RequiredTreeView.Handler.EndLabelEdit(this, cancel);
 
@@ -179,7 +179,7 @@ namespace Alternet.UI
         /// When the <see cref="EnsureVisible"/> method is called, the tree is expanded and scrolled to ensure that the current tree
         /// item is visible in the <see cref="TreeView"/>. This method is useful if you are selecting a tree item in code based on
         /// certain criteria. By calling this method after you select the item, the user can see and interact with the
-        /// selected node.
+        /// selected item.
         /// </remarks>
         public void EnsureVisible() => RequiredTreeView.Handler.EnsureVisible(this);
 

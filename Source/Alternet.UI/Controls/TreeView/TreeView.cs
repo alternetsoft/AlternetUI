@@ -12,11 +12,11 @@ namespace Alternet.UI
     /// <remarks>
     /// <para>
     /// The <see cref="Items"/> collection holds all the <see cref="TreeViewItem"/> objects that are assigned to the <see cref="TreeView"/> control.
-    /// The items in this collection are referred to as the root items. Any item that is subsequently added to a root item is referred to as a child node.
+    /// The items in this collection are referred to as the root items. Any item that is subsequently added to a root item is referred to as a child item.
     /// Each <see cref="TreeViewItem"/> can contain a collection of other <see cref="TreeViewItem"/> objects.
     /// </para>
     /// <para>
-    /// You can display images next to the tree nodes by assigning an <see cref="ImageList"/> to the <see cref="TreeView.ImageList"/> property and
+    /// You can display images next to the tree items by assigning an <see cref="ImageList"/> to the <see cref="TreeView.ImageList"/> property and
     /// referencing the index value of an <see cref="Image"/> in the <see cref="ImageList"/> to assign that <see cref="Image"/>.
     /// Set the <see cref="TreeView.ImageIndex"/> property to the index value of the <see cref="Image"/> that you want to display for all items by default.
     /// Individual items can override the default images by setting the <see cref="TreeViewItem.ImageIndex"/> property.
@@ -165,26 +165,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether lines are drawn between tree nodes in the tree view control.
+        /// Gets or sets a value indicating whether lines are drawn between tree items in the tree view control.
         /// </summary>
-        /// <value><see langword="true"/> if lines are drawn between tree nodes in the tree view control; otherwise,
+        /// <value><see langword="true"/> if lines are drawn between tree items in the tree view control; otherwise,
         /// <see langword="false"/>. The default is <see langword="true"/>.</value>
         public bool ShowLines { get => Handler.ShowLines; set => Handler.ShowLines = value; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether lines are drawn between the tree nodes that are at the root of the tree view.
+        /// Gets or sets a value indicating whether lines are drawn between the tree items that are at the root of the tree view.
         /// </summary>
-        /// <value><see langword="true"/> if lines are drawn between the tree nodes that are at the root of the tree
+        /// <value><see langword="true"/> if lines are drawn between the tree items that are at the root of the tree
         /// view; otherwise, <see langword="false"/>. The default is <see langword="true"/>.</value>
         public bool ShowRootLines { get => Handler.ShowRootLines; set => Handler.ShowRootLines = value; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether expand buttons are displayed next to tree nodes that contain child
-        /// tree nodes.
+        /// Gets or sets a value indicating whether expand buttons are displayed next to tree items that contain child
+        /// tree items.
         /// </summary>
         /// <value>
-        /// <see langword="true"/> if expand buttons are displayed next to tree nodes that contain
-        /// child tree nodes; otherwise, <see langword="false"/>. The default is <see langword="true"/>.
+        /// <see langword="true"/> if expand buttons are displayed next to tree items that contain
+        /// child tree items; otherwise, <see langword="false"/>. The default is <see langword="true"/>.
         /// </value>
         public bool ShowExpandButtons { get => Handler.ShowExpandButtons; set => Handler.ShowExpandButtons = value; }
 
@@ -204,10 +204,10 @@ namespace Alternet.UI
         public bool FullRowSelect { get => Handler.FullRowSelect; set => Handler.FullRowSelect = value; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the label text of the tree nodes can be edited.
+        /// Gets or sets a value indicating whether the label text of the tree items can be edited.
         /// </summary>
         /// <value>
-        /// <see langword="true"/> if the label text of the tree nodes can be edited; otherwise, <see
+        /// <see langword="true"/> if the label text of the tree items can be edited; otherwise, <see
         /// langword="false"/>. The default is <see langword="false"/>.
         /// </value>
         public bool AllowLabelEdit { get => Handler.AllowLabelEdit; set => Handler.AllowLabelEdit = value; }
@@ -251,7 +251,7 @@ namespace Alternet.UI
         /// When the <see cref="EnsureVisible"/> method is called, the tree is expanded and scrolled to ensure that the current tree
         /// item is visible in the <see cref="TreeView"/>. This method is useful if you are selecting a tree item in code based on
         /// certain criteria. By calling this method after you select the item, the user can see and interact with the
-        /// selected node.
+        /// selected item.
         /// </remarks>
         public void EnsureVisible(TreeViewItem item)
         {
