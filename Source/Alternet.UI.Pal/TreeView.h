@@ -42,5 +42,14 @@ namespace Alternet::UI
 
         bool _skipSelectionChangedEvent = false;
         bool _skipExpandedEvent = false;
+
+        static TreeViewHitTestLocations GetHitTestLocationsFromWxFlags(int flags);
+
+        class HitTestResult
+        {
+        public:
+            TreeViewHitTestLocations locations = TreeViewHitTestLocations::None;
+            wxTreeItemId item = 0;
+        };
     };
 }

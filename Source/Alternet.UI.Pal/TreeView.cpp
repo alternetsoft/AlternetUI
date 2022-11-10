@@ -245,11 +245,17 @@ namespace Alternet::UI
 
     void TreeView::SetFocused(void* item, bool value)
     {
+        auto treeCtrl = GetTreeCtrl();
+        
+        if (value)
+            treeCtrl->SetFocusedItem(item);
+        else
+            treeCtrl->ClearFocusedItem();
     }
 
     bool TreeView::IsFocused(void* item)
     {
-        return false;
+        return GetTreeCtrl()->GetFocusedItem() == item;
     }
 
     bool TreeView::GetShowLines()
@@ -296,7 +302,7 @@ namespace Alternet::UI
 
     void* TreeView::GetTopItem()
     {
-        return nullptr;
+        return GetTreeCtrl()->GetFirstVisibleItem();
     }
 
     bool TreeView::GetFullRowSelect()
@@ -329,34 +335,65 @@ namespace Alternet::UI
 
     void TreeView::ExpandAll()
     {
+        GetTreeCtrl()->ExpandAll();
     }
 
     void TreeView::CollapseAll()
     {
+        GetTreeCtrl()->CollapseAll();
     }
 
     void* TreeView::ItemHitTest(const Point& point)
     {
-        return nullptr;
+        auto treeCtrl = GetTreeCtrl();
+        int flags = 0;
+        auto item = treeCtrl->HitTest(fromDip(point, treeCtrl), flags);
+
+        auto result = new HitTestResult();
+        result->item = item;
+        result->locations = GetHitTestLocationsFromWxFlags(flags);
+        return result;
+    }
+
+    /*static*/ TreeViewHitTestLocations TreeView::GetHitTestLocationsFromWxFlags(int flags)
+    {
+        switch (flags)
+        {
+        case wxTREE_HITTEST_ABOVE: return TreeViewHitTestLocations::AboveClientArea;
+        case wxTREE_HITTEST_BELOW: return TreeViewHitTestLocations::BelowClientArea;
+        case wxTREE_HITTEST_NOWHERE: return TreeViewHitTestLocations::None;
+        case wxTREE_HITTEST_ONITEMBUTTON: return TreeViewHitTestLocations::ItemExpandButton;
+        case wxTREE_HITTEST_ONITEMICON: return TreeViewHitTestLocations::ItemImage;
+        case wxTREE_HITTEST_ONITEMINDENT: return TreeViewHitTestLocations::ItemIndent;
+        case wxTREE_HITTEST_ONITEMLABEL: return TreeViewHitTestLocations::ItemLabel;
+        case wxTREE_HITTEST_ONITEMRIGHT: return TreeViewHitTestLocations::RightOfItemLabel;
+        case wxTREE_HITTEST_ONITEMSTATEICON: return TreeViewHitTestLocations::ItemStateImage;
+        case wxTREE_HITTEST_TOLEFT: return TreeViewHitTestLocations::LeftOfClientArea;
+        case wxTREE_HITTEST_TORIGHT: return TreeViewHitTestLocations::RightOfClientArea;
+        case wxTREE_HITTEST_ONITEMUPPERPART: return TreeViewHitTestLocations::ItemUpperPart;
+        case wxTREE_HITTEST_ONITEMLOWERPART: return TreeViewHitTestLocations::ItemLowerPart;
+        default: throwExNoInfo;
+        }
     }
 
     TreeViewHitTestLocations TreeView::GetHitTestResultLocations(void* hitTestResult)
     {
-        return TreeViewHitTestLocations();
+        return ((HitTestResult*)hitTestResult)->locations;
     }
 
     void* TreeView::GetHitTestResultItem(void* hitTestResult)
     {
-        return nullptr;
+        return ((HitTestResult*)hitTestResult)->item;
     }
 
     void TreeView::FreeHitTestResult(void* hitTestResult)
     {
+        delete (HitTestResult*)hitTestResult;
     }
 
     bool TreeView::IsItemSelected(void* item)
     {
-        return false;
+        return GetTreeCtrl()->IsSelected(item);
     }
 
     void TreeView::BeginLabelEdit(void* item)
@@ -371,18 +408,22 @@ namespace Alternet::UI
 
     void TreeView::ExpandAllChildren(void* item)
     {
+        GetTreeCtrl()->ExpandAllChildren(item);
     }
 
     void TreeView::CollapseAllChildren(void* item)
     {
+        GetTreeCtrl()->CollapseAllChildren(item);
     }
 
     void TreeView::EnsureVisible(void* item)
     {
+        GetTreeCtrl()->EnsureVisible(item);
     }
 
     void TreeView::ScrollIntoView(void* item)
     {
+        GetTreeCtrl()->ScrollTo(item);
     }
 
     long TreeView::GetStyle()
