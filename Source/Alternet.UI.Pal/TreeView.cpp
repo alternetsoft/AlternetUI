@@ -357,23 +357,26 @@ namespace Alternet::UI
 
     /*static*/ TreeViewHitTestLocations TreeView::GetHitTestLocationsFromWxFlags(int flags)
     {
-        switch (flags)
-        {
-        case wxTREE_HITTEST_ABOVE: return TreeViewHitTestLocations::AboveClientArea;
-        case wxTREE_HITTEST_BELOW: return TreeViewHitTestLocations::BelowClientArea;
-        case wxTREE_HITTEST_NOWHERE: return TreeViewHitTestLocations::None;
-        case wxTREE_HITTEST_ONITEMBUTTON: return TreeViewHitTestLocations::ItemExpandButton;
-        case wxTREE_HITTEST_ONITEMICON: return TreeViewHitTestLocations::ItemImage;
-        case wxTREE_HITTEST_ONITEMINDENT: return TreeViewHitTestLocations::ItemIndent;
-        case wxTREE_HITTEST_ONITEMLABEL: return TreeViewHitTestLocations::ItemLabel;
-        case wxTREE_HITTEST_ONITEMRIGHT: return TreeViewHitTestLocations::RightOfItemLabel;
-        case wxTREE_HITTEST_ONITEMSTATEICON: return TreeViewHitTestLocations::ItemStateImage;
-        case wxTREE_HITTEST_TOLEFT: return TreeViewHitTestLocations::LeftOfClientArea;
-        case wxTREE_HITTEST_TORIGHT: return TreeViewHitTestLocations::RightOfClientArea;
-        case wxTREE_HITTEST_ONITEMUPPERPART: return TreeViewHitTestLocations::ItemUpperPart;
-        case wxTREE_HITTEST_ONITEMLOWERPART: return TreeViewHitTestLocations::ItemLowerPart;
-        default: throwExNoInfo;
-        }
+        TreeViewHitTestLocations result = (TreeViewHitTestLocations)0;
+
+        if ((flags & wxTREE_HITTEST_ABOVE) != 0) result |= TreeViewHitTestLocations::AboveClientArea;
+        if ((flags & wxTREE_HITTEST_BELOW) != 0) result |= TreeViewHitTestLocations::BelowClientArea;
+        if ((flags & wxTREE_HITTEST_NOWHERE) != 0) result |= TreeViewHitTestLocations::None;
+        if ((flags & wxTREE_HITTEST_ONITEMBUTTON) != 0) result |= TreeViewHitTestLocations::ItemExpandButton;
+        if ((flags & wxTREE_HITTEST_ONITEMICON) != 0) result |= TreeViewHitTestLocations::ItemImage;
+        if ((flags & wxTREE_HITTEST_ONITEMINDENT) != 0) result |= TreeViewHitTestLocations::ItemIndent;
+        if ((flags & wxTREE_HITTEST_ONITEMLABEL) != 0) result |= TreeViewHitTestLocations::ItemLabel;
+        if ((flags & wxTREE_HITTEST_ONITEMRIGHT) != 0) result |= TreeViewHitTestLocations::RightOfItemLabel;
+        if ((flags & wxTREE_HITTEST_ONITEMSTATEICON) != 0) result |= TreeViewHitTestLocations::ItemStateImage;
+        if ((flags & wxTREE_HITTEST_TOLEFT) != 0) result |= TreeViewHitTestLocations::LeftOfClientArea;
+        if ((flags & wxTREE_HITTEST_TORIGHT) != 0) result |= TreeViewHitTestLocations::RightOfClientArea;
+        if ((flags & wxTREE_HITTEST_ONITEMUPPERPART) != 0) result |= TreeViewHitTestLocations::ItemUpperPart;
+        if ((flags & wxTREE_HITTEST_ONITEMLOWERPART) != 0) result |= TreeViewHitTestLocations::ItemLowerPart;
+
+        if (result == (TreeViewHitTestLocations)0)
+            result = TreeViewHitTestLocations::None;
+
+        return result;
     }
 
     TreeViewHitTestLocations TreeView::GetHitTestResultLocations(void* hitTestResult)
