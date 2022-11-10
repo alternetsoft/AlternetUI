@@ -217,6 +217,7 @@ namespace Alternet.UI
         /// </summary>
         public void ExpandAll()
         {
+            Handler.ExpandAll();
         }
 
         /// <summary>
@@ -224,6 +225,7 @@ namespace Alternet.UI
         /// </summary>
         public void CollapseAll()
         {
+            Handler.CollapseAll();
         }
 
         /// <summary>

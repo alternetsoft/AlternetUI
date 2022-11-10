@@ -159,9 +159,17 @@ namespace ControlsSample
             treeView.Items.Add(new TreeViewItem("Item " + (treeView.Items.Count + 1), 0));
         }
 
-        private void BeginSelectedLabelEditingButton_Click(object sender, System.EventArgs e)
+        private void BeginSelectedLabelEditingButton_Click(object sender, EventArgs e)
         {
             treeView.SelectedItem?.BeginLabelEdit();
         }
+
+        private void ExpandAllButton_Click(object sender, EventArgs e) => treeView.ExpandAll();
+
+        private void CollapseAllButton_Click(object sender, EventArgs e) => treeView.CollapseAll();
+
+        private void ExpandAllChildrenButton_Click(object sender, EventArgs e) => treeView.SelectedItem?.ExpandAll();
+
+        private void CollapseAllChildrenButton_Click(object sender, EventArgs e) => treeView.SelectedItem?.CollapseAll();
     }
 }
