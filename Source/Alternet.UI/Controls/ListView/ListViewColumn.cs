@@ -52,5 +52,20 @@ namespace Alternet.UI
         /// You can use this property to determine which <see cref="ListView"/> control a specific <see cref="ListViewColumn"/> object is associated with.
         /// </remarks>
         public ListView? ListView { get; internal set; }
+
+        /// <summary>
+        /// Gets or sets the fixed width of the column, in device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <value>
+        /// The fixed width of the column, in device-independent units (1/96th inch per unit). Default value is 80.
+        /// </value>
+        public double Width { get; set; }
+
+        /// <summary>
+        /// Gets or set the width sizing behavior for this column.
+        /// </summary>
+        /// <value>A <see cref="ListViewColumnWidthMode"/> which specifies the width sizing behavior.
+        /// Default is <see cref="ListViewColumnWidthMode.Fixed"/>.</value>
+        public ListViewColumnWidthMode WidthMode { get; set; }
     }
 }

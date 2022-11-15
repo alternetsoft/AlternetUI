@@ -96,6 +96,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the custom sorting comparer for the control.
+        /// </summary>
+        public IComparer<ListViewItem>? CustomItemSortComparer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sort mode for items in the control.
+        /// </summary>
+        /// <value>One of the <see cref="ListViewSortMode"/> values. The default is <see cref="ListViewSortMode.None"/>.</value>
+        public ListViewSortMode SortMode { get; set; }
+
+        /// <summary>
+        /// Removes all items and columns from the control.
+        /// </summary>
+        public void Clear()
+        {
+        }
+
+        /// <summary>
+        /// Gets or sets a boolean value which specifies whether the column header is visible in <see
+        /// cref="ListViewView.Details"/> view.
+        /// </summary>
+        public bool ColumnHeaderVisible { get; set; }
+
+        /// <summary>
+        /// Occurs when the user clicks a column header within the list view control.
+        /// </summary>
+        public event EventHandler<ListViewColumnEventArgs>? ColumnClick;
+
+        /// <summary>
         /// Occurs before the item label text is edited. This event can be canceled.
         /// </summary>
         public event EventHandler<ListViewItemLabelEditEventArgs>? BeforeLabelEdit;
@@ -104,6 +133,16 @@ namespace Alternet.UI
         /// Occurs after the item label text is edited. This event can be canceled.
         /// </summary>
         public event EventHandler<ListViewItemLabelEditEventArgs>? AfterLabelEdit;
+
+        /// <summary>
+        /// Raises the <see cref="ColumnClick"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="ListViewColumnEventArgs"/> that contains the event data.</param>
+        public void RaiseColumnClick(ListViewColumnEventArgs e)
+        {
+            OnColumnClick(e);
+            ColumnClick?.Invoke(this, e);
+        }
 
         /// <summary>
         /// Raises the <see cref="BeforeLabelEdit"/> event and calls <see cref="OnBeforeLabelEdit"/>.
@@ -123,6 +162,14 @@ namespace Alternet.UI
         {
             OnAfterLabelEdit(e);
             AfterLabelEdit?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Called when the user clicks a column header within the list view control.
+        /// </summary>
+        /// <param name="e">An <see cref="ListViewColumnEventArgs"/> that contains the event data.</param>
+        protected virtual void OnColumnClick(ListViewColumnEventArgs e)
+        {
         }
 
         /// <summary>

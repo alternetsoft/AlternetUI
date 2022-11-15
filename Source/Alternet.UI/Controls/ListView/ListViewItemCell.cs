@@ -1,3 +1,5 @@
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -21,9 +23,20 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ListViewItemCell"/> class with the specified cell text.
         /// </summary>
         /// <param name="text">The text to display for the cell.</param>
-        public ListViewItemCell(string text)
+        public ListViewItemCell(string text) : this (text, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListViewItemCell"/> class with the specified item text and
+        /// the image index position of the cell's icon.
+        /// </summary>
+        /// <param name="text">The text to display for the item.</param>
+        /// <param name="imageIndex">The zero-based index of the image within the <see cref="ImageList"/> associated with the <see cref="ListView"/> that contains the item.</param>
+        public ListViewItemCell(string text, int? imageIndex)
         {
             Text = text;
+            ImageIndex = imageIndex;
         }
 
         /// <summary>
@@ -31,5 +44,11 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The text to display for the cell.</value>
         public string Text { get; set; } = "";
+
+        /// <summary>
+        /// Gets or sets the index of the image that is displayed for the cell.
+        /// </summary>
+        /// <value>The zero-based index of the image in the <see cref="ImageList"/> that is displayed for the cell. The default is <c>null</c>.</value>
+        public int? ImageIndex { get; set; }
     }
 }

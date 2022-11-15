@@ -40,9 +40,8 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ListViewItem"/> class with the specified item text.
         /// </summary>
         /// <param name="text">The text to display for the item.</param>
-        public ListViewItem(string text)
+        public ListViewItem(string text) : this(text, null)
         {
-            Text = text;
         }
 
         /// <summary>
@@ -51,7 +50,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">The text to display for the item.</param>
         /// <param name="imageIndex">The zero-based index of the image within the <see cref="ImageList"/> associated with the <see cref="ListView"/> that contains the item.</param>
-        public ListViewItem(string text, int imageIndex)
+        public ListViewItem(string text, int? imageIndex)
         {
             Text = text;
             ImageIndex = imageIndex;
@@ -87,6 +86,18 @@ namespace Alternet.UI
         /// Ensures that the item is visible within the control, scrolling the contents of the control, if necessary.
         /// </summary>
         public void EnsureVisible() { } //=> RequiredTreeView.Handler.BeginLabelEdit(this);
+
+        /// <summary>
+        /// Gets a value indicating whether the item is in the selected state.
+        /// </summary>
+        /// <value><see langword="true"/> if the item is in the selected state; otherwise, <see langword="false"/>.</value>
+        public bool IsSelected { get; }//=> RequiredTreeView.Handler.IsItemSelected(this);
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the item has focus within the <see cref="ListView"/> control.
+        /// </summary>
+        /// <value><see langword="true"/> if the item has focus; otherwise, <see langword="false"/>.</value>
+        public bool IsFocused { get; set; }
 
         /// <summary>
         /// Retrieves the bounding rectangle for this item.

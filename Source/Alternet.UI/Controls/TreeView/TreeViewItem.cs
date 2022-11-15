@@ -54,9 +54,8 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="TreeViewItem"/> class with the specified item text.
         /// </summary>
         /// <param name="text">The text to display for the item.</param>
-        public TreeViewItem(string text) : this()
+        public TreeViewItem(string text) : this(text, null)
         {
-            Text = text;
         }
 
         /// <summary>
@@ -68,8 +67,9 @@ namespace Alternet.UI
         /// The zero-based index of the image within the <see cref="TreeView.ImageList"/>
         /// associated with the <see cref="TreeView"/> that contains the item.
         /// </param>
-        public TreeViewItem(string text, int imageIndex) : this(text)
+        public TreeViewItem(string text, int? imageIndex)
         {
+            Text = text;
             ImageIndex = imageIndex;
         }
 
