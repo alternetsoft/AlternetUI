@@ -79,6 +79,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initiates the editing of the list view item label.
+        /// </summary>
+        public void BeginLabelEdit() { } //=> RequiredTreeView.Handler.BeginLabelEdit(this);
+
+        /// <summary>
+        /// Ensures that the item is visible within the control, scrolling the contents of the control, if necessary.
+        /// </summary>
+        public void EnsureVisible() { } //=> RequiredTreeView.Handler.BeginLabelEdit(this);
+
+        /// <summary>
+        /// Retrieves the bounding rectangle for this item.
+        /// </summary>
+        /// <param name="portion">One of the <see cref="ListViewItemBoundsPortion"/> values that represents a portion of
+        /// the item for which to retrieve the bounding rectangle.</param>
+        /// <returns>A <see cref="Rect"/> that represents the bounding rectangle for the specified portion of this item.</returns>
+        public Rect GetItemBounds(ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem)
+        {
+            return new Rect();
+        }
+
+        /// <summary>
+        /// Gets the zero-based index of the item within the <see cref="ListView"/> control,
+        /// or <see langword="null"/> if the item is not associated with a <see cref="ListView"/> control.
+        /// </summary>
+        public int? Index { get; }
+
+        /// <summary>
         /// Gets or sets an object that contains data to associate with the item.
         /// </summary>
         /// <value>An object that contains information that is associated with the item.</value>
