@@ -74,6 +74,11 @@ namespace Alternet::UI
         std::vector<wxListItem> _columns;
         ListViewView _view = ListViewView::List;
 
+        bool _allowLabelEdit = false;
+        ListViewGridLinesDisplayMode  _gridLinesDisplayMode = ListViewGridLinesDisplayMode::None;
+
+        void RecreateListView();
+
         void ApplySelectedIndices();
         void ReceiveSelectedIndices();
 

@@ -194,29 +194,45 @@ namespace Alternet::UI
 
     void ListView::SetFocusedItemIndex(int value)
     {
+        GetListView()->Focus(value);
     }
 
     bool ListView::GetAllowLabelEdit()
     {
-        return false;
+        return _allowLabelEdit;
     }
 
     void ListView::SetAllowLabelEdit(bool value)
     {
+        if (_allowLabelEdit == value)
+            return;
+
+        _allowLabelEdit = value;
+        RecreateListView();
+    }
+
+    void ListView::RecreateListView()
+    {
+        RecreateWxWindowIfNeeded();
     }
 
     int ListView::GetTopItemIndex()
     {
-        return 0;
+        return GetListView()->GetTopItem();
     }
 
     ListViewGridLinesDisplayMode ListView::GetGridLinesDisplayMode()
     {
-        return ListViewGridLinesDisplayMode();
+        return _gridLinesDisplayMode;
     }
 
     void ListView::SetGridLinesDisplayMode(ListViewGridLinesDisplayMode value)
     {
+        if (_gridLinesDisplayMode == value)
+            return;
+
+        _gridLinesDisplayMode = value;
+        RecreateListView();
     }
 
     ListViewSortMode ListView::GetSortMode()
@@ -507,7 +523,28 @@ namespace Alternet::UI
             }
         };
 
-        return getViewStyle() | getSelectionStyle();
+        auto getGridLinesStyle = [&]()
+        {
+            switch (_gridLinesDisplayMode)
+            {
+            case ListViewGridLinesDisplayMode::None:
+                return 0;
+            case ListViewGridLinesDisplayMode::Horizontal:
+                return wxLC_HRULES;
+            case ListViewGridLinesDisplayMode::Vertical:
+                return wxLC_VRULES;
+            case ListViewGridLinesDisplayMode::VerticalAndHorizontal:
+                return wxLC_HRULES | wxLC_VRULES;
+            default:
+                throwExInvalidOp;
+            }
+        };
+
+        auto style = getViewStyle() | getSelectionStyle() | getGridLinesStyle();
+
+        style |= (_allowLabelEdit ? wxLC_EDIT_LABELS : 0);
+
+        return style;
     }
 
     std::vector<int> ListView::GetSelectedIndices()
