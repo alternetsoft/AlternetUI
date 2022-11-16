@@ -1,5 +1,7 @@
 using Alternet.Base.Collections;
 using Alternet.Drawing;
+using System;
+using System.Linq;
 
 namespace Alternet.UI
 {
@@ -29,6 +31,8 @@ namespace Alternet.UI
     /// </remarks>
     public class ListViewItem
     {
+        private const string ItemIsNotConnectedToListView = "This list view item is not connected to list view.";
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ListViewItem"/> class with default values.
         /// </summary>
@@ -77,27 +81,53 @@ namespace Alternet.UI
             ImageIndex = imageIndex;
         }
 
+        private ListView RequiredListView => ListView ?? throw new InvalidOperationException("TreeView property value cannot be null during this opeation.");
+
+        /// <summary>
+        /// Gets the owner <see cref="ListView"/> that the tree item is assigned to.
+        /// </summary>
+        /// <value>
+        /// A <see cref="ListView"/> that represents the parent list view that the item is assigned to,
+        /// or <c>null</c> if the item has not been assigned to a tree view.
+        /// </value>
+        public ListView? ListView { get; internal set; }
+
         /// <summary>
         /// Initiates the editing of the list view item label.
         /// </summary>
-        public void BeginLabelEdit() { } //=> RequiredTreeView.Handler.BeginLabelEdit(this);
+        public void BeginLabelEdit() => RequiredListView.Handler.BeginLabelEdit(RequiredIndex);
+
+        int RequiredIndex
+        {
+            get
+            {
+                var index = Index;
+                if (index == null)
+                    throw new InvalidOperationException(ItemIsNotConnectedToListView);
+                return index.Value;
+            }
+        }
 
         /// <summary>
         /// Ensures that the item is visible within the control, scrolling the contents of the control, if necessary.
         /// </summary>
-        public void EnsureVisible() { } //=> RequiredTreeView.Handler.BeginLabelEdit(this);
+        public void EnsureVisible() => RequiredListView.Handler.EnsureItemVisible(RequiredIndex);
 
         /// <summary>
         /// Gets a value indicating whether the item is in the selected state.
         /// </summary>
         /// <value><see langword="true"/> if the item is in the selected state; otherwise, <see langword="false"/>.</value>
-        public bool IsSelected { get; }//=> RequiredTreeView.Handler.IsItemSelected(this);
+        public bool IsSelected => RequiredListView.SelectedIndices.Contains(RequiredIndex);
 
         /// <summary>
         /// Gets or sets a value indicating whether the item has focus within the <see cref="ListView"/> control.
         /// </summary>
         /// <value><see langword="true"/> if the item has focus; otherwise, <see langword="false"/>.</value>
-        public bool IsFocused { get; set; }
+        public bool IsFocused
+        {
+            get => RequiredListView.Handler.FocusedItemIndex == RequiredIndex;
+            set => RequiredListView.Handler.FocusedItemIndex = RequiredIndex;
+        }
 
         /// <summary>
         /// Retrieves the bounding rectangle for this item.
@@ -105,16 +135,14 @@ namespace Alternet.UI
         /// <param name="portion">One of the <see cref="ListViewItemBoundsPortion"/> values that represents a portion of
         /// the item for which to retrieve the bounding rectangle.</param>
         /// <returns>A <see cref="Rect"/> that represents the bounding rectangle for the specified portion of this item.</returns>
-        public Rect GetItemBounds(ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem)
-        {
-            return new Rect();
-        }
+        public Rect GetItemBounds(ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem) =>
+            RequiredListView.GetItemBounds(RequiredIndex, portion);
 
         /// <summary>
         /// Gets the zero-based index of the item within the <see cref="ListView"/> control,
         /// or <see langword="null"/> if the item is not associated with a <see cref="ListView"/> control.
         /// </summary>
-        public int? Index { get; }
+        public int? Index { get; internal set; }
 
         /// <summary>
         /// Gets or sets an object that contains data to associate with the item.

@@ -322,6 +322,8 @@ namespace Alternet.UI
 
         private void InsertItem(int itemIndex, ListViewItem item)
         {
+            item.ListView = Control;
+            item.Index = itemIndex;
             for (var columnIndex = 0; columnIndex < item.Cells.Count; columnIndex++)
             {
                 var cell = item.Cells[columnIndex];
@@ -337,6 +339,8 @@ namespace Alternet.UI
         private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<ListViewItem> e)
         {
             NativeControl.RemoveItemAt(e.Index);
+            e.Item.Index = null;
+            e.Item.ListView = null;
         }
 
         private void Columns_ItemInserted(object? sender, CollectionChangeEventArgs<ListViewColumn> e)
