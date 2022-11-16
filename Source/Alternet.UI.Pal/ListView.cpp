@@ -237,66 +237,128 @@ namespace Alternet::UI
 
     ListViewSortMode ListView::GetSortMode()
     {
-        return ListViewSortMode();
+        return _sortMode;
     }
 
     void ListView::SetSortMode(ListViewSortMode value)
     {
+        if (_sortMode == value)
+            return;
+
+        _sortMode = value;
+        RecreateListView();
     }
 
     bool ListView::GetColumnHeaderVisible()
     {
-        return false;
+        return _columnHeaderVisible;
     }
 
     void ListView::SetColumnHeaderVisible(bool value)
     {
+        if (_columnHeaderVisible == value)
+            return;
+
+        _columnHeaderVisible = value;
+        RecreateListView();
     }
 
     int ListView::GetFocusedItemIndex()
     {
-        return 0;
+        return GetListView()->GetFocusedItem();
     }
 
     void* ListView::ItemHitTest(const Point& point)
     {
-        return nullptr;
+        auto listView = GetListView();
+        int flags = 0;
+        long subItemIndex = 0;
+        auto itemIndex = listView->HitTest(fromDip(point, listView), flags, &subItemIndex);
+
+        auto result = new HitTestResult();
+        result->itemIndex = itemIndex;
+        result->columnIndex = subItemIndex;
+        result->locations = GetHitTestLocationsFromWxFlags(flags);
+        return result;
+    }
+
+    /*static*/ ListViewHitTestLocations ListView::GetHitTestLocationsFromWxFlags(int flags)
+    {
+        ListViewHitTestLocations result = (ListViewHitTestLocations)0;
+
+        if ((flags & wxLIST_HITTEST_ABOVE) != 0) result |= ListViewHitTestLocations::AboveClientArea;
+        if ((flags & wxLIST_HITTEST_BELOW) != 0) result |= ListViewHitTestLocations::BelowClientArea;
+        if ((flags & wxLIST_HITTEST_NOWHERE) != 0) result |= ListViewHitTestLocations::None;
+        if ((flags & wxLIST_HITTEST_ONITEMICON) != 0) result |= ListViewHitTestLocations::ItemImage;
+        if ((flags & wxLIST_HITTEST_ONITEMLABEL) != 0) result |= ListViewHitTestLocations::ItemLabel;
+        if ((flags & wxLIST_HITTEST_ONITEMRIGHT) != 0) result |= ListViewHitTestLocations::RightOfItem;
+        if ((flags & wxLIST_HITTEST_TOLEFT) != 0) result |= ListViewHitTestLocations::LeftOfClientArea;
+        if ((flags & wxLIST_HITTEST_TORIGHT) != 0) result |= ListViewHitTestLocations::RightOfClientArea;
+
+        if (result == (ListViewHitTestLocations)0)
+            result = ListViewHitTestLocations::None;
+
+        return result;
     }
 
     ListViewHitTestLocations ListView::GetHitTestResultLocations(void* hitTestResult)
     {
-        return ListViewHitTestLocations();
+        return ((HitTestResult*)hitTestResult)->locations;
     }
 
     int ListView::GetHitTestResultItemIndex(void* hitTestResult)
     {
-        return 0;
+        return ((HitTestResult*)hitTestResult)->itemIndex;
     }
 
     int ListView::GetHitTestResultColumnIndex(void* hitTestResult)
     {
-        return 0;
+        return ((HitTestResult*)hitTestResult)->columnIndex;
     }
 
     void ListView::FreeHitTestResult(void* hitTestResult)
     {
+        delete (HitTestResult*)hitTestResult;
     }
 
     void ListView::BeginLabelEdit(int itemIndex)
     {
+        GetListView()->EditLabel(itemIndex);
     }
 
     Rect ListView::GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion)
     {
-        return Rect();
+        auto getWxPortionCode = [&]()
+        {
+            switch (portion)
+            {
+            case ListViewItemBoundsPortion::EntireItem:
+                return wxLIST_RECT_BOUNDS;
+            case ListViewItemBoundsPortion::Icon:
+                return wxLIST_RECT_ICON;
+            case ListViewItemBoundsPortion::Label:
+                return wxLIST_RECT_LABEL;
+            default:
+                throwExNoInfo;
+            }
+        };
+
+        auto listView = GetListView();
+        wxRect rect;
+        if (!listView->GetItemRect(itemIndex, rect, getWxPortionCode()))
+            return Rect();
+
+        return toDip(rect, listView);
     }
 
     void ListView::Clear()
     {
+        GetListView()->ClearAll();
     }
 
     void ListView::EnsureItemVisible(int itemIndex)
     {
+        GetListView()->EnsureVisible(itemIndex);
     }
 
     void* ListView::OpenSelectedIndicesArray()
@@ -540,9 +602,27 @@ namespace Alternet::UI
             }
         };
 
-        auto style = getViewStyle() | getSelectionStyle() | getGridLinesStyle();
+        auto getSortStyle = [&]()
+        {
+            switch (_sortMode)
+            {
+            case ListViewSortMode::None:
+                return 0;
+            case ListViewSortMode::Ascending:
+                return wxLC_SORT_ASCENDING;
+            case ListViewSortMode::Descending:
+                return wxLC_SORT_DESCENDING;
+            case ListViewSortMode::Custom:
+                return 0;
+            default:
+                throwExInvalidOp;
+            }
+        };
+
+        auto style = getViewStyle() | getSelectionStyle() | getGridLinesStyle() | getSortStyle();
 
         style |= (_allowLabelEdit ? wxLC_EDIT_LABELS : 0);
+        style |= (_columnHeaderVisible ? 0 : wxLC_NO_HEADER);
 
         return style;
     }

@@ -76,6 +76,19 @@ namespace Alternet::UI
 
         bool _allowLabelEdit = false;
         ListViewGridLinesDisplayMode  _gridLinesDisplayMode = ListViewGridLinesDisplayMode::None;
+        ListViewSortMode _sortMode = ListViewSortMode::None;
+
+        bool _columnHeaderVisible = true;
+
+        class HitTestResult
+        {
+        public:
+            ListViewHitTestLocations locations = ListViewHitTestLocations::None;
+            int itemIndex = 0;
+            int columnIndex = 0;
+        };
+
+        static ListViewHitTestLocations GetHitTestLocationsFromWxFlags(int flags);
 
         void RecreateListView();
 
