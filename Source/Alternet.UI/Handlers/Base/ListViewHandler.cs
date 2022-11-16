@@ -90,6 +90,8 @@ namespace Alternet.UI
         /// </summary>
         public abstract int? FocusedItemIndex { get; set; }
 
+        public abstract void SetItemText(int itemIndex, string text);
+
         /// <inheritdoc/>
         protected override bool VisualChildNeedsNativeControl => true;
     }

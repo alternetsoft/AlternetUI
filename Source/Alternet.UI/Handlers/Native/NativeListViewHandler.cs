@@ -39,7 +39,71 @@ namespace Alternet.UI
             Control.SelectionModeChanged += Control_SelectionModeChanged;
 
             Control.SelectionChanged += Control_SelectionChanged;
+
             NativeControl.SelectionChanged += NativeControl_SelectionChanged;
+            NativeControl.ColumnClick += NativeControl_ColumnClick;
+            NativeControl.BeforeItemLabelEdit += NativeControl_BeforeItemLabelEdit;
+            NativeControl.AfterItemLabelEdit += NativeControl_AfterItemLabelEdit;
+            NativeControl.CompareItemsForCustomSort += NativeControl_CompareItemsForCustomSort;
+        }
+
+        private void NativeControl_CompareItemsForCustomSort(
+            object? sender,
+            Native.NativeEventArgs<Native.CompareListViewItemsEventData> e)
+        {
+            int result = 0;
+            if (CustomItemSortComparer != null)
+            {
+                var item1 = Control.Items[e.Data.item1Index];
+                var item2 = Control.Items[e.Data.item2Index];
+
+                result = CustomItemSortComparer.Compare(item1, item2);
+            }
+
+            e.Result = (IntPtr)result;
+        }
+
+        private void NativeControl_BeforeItemLabelEdit(
+            object? sender,
+            Native.NativeEventArgs<Native.ListViewItemLabelEditEventData> e)
+        {
+            var ea = new ListViewItemLabelEditEventArgs(e.Data.itemIndex, e.Data.editCancelled ? null : e.Data.label);
+            Control.RaiseBeforeLabelEdit(ea);
+            e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
+        }
+
+
+        private void NativeControl_AfterItemLabelEdit(
+            object? sender,
+            Native.NativeEventArgs<Native.ListViewItemLabelEditEventData> e)
+        {
+            var ea = new ListViewItemLabelEditEventArgs(e.Data.itemIndex, e.Data.editCancelled ? null : e.Data.label);
+
+            Control.RaiseAfterLabelEdit(ea);
+
+            if (!e.Data.editCancelled && !ea.Cancel)
+            {
+                skipSetItemText = true;
+                Control.Items[e.Data.itemIndex].Text = e.Data.label;
+                skipSetItemText = false;
+            }
+
+            e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
+        }
+
+        bool skipSetItemText;
+
+        public override void SetItemText(int itemIndex, string text)
+        {
+            if (skipSetItemText)
+                return;
+
+            //NativeControl.SetItemText(GetHandleFromItem(item), text);
+        }
+
+        private void NativeControl_ColumnClick(object? sender, Native.NativeEventArgs<Native.ListViewColumnEventData> e)
+        {
+            Control.RaiseColumnClick(new ListViewColumnEventArgs(e.Data.columnIndex));
         }
 
         /// <inheritdoc/>
@@ -155,7 +219,12 @@ namespace Alternet.UI
             Control.SelectionModeChanged -= Control_SelectionModeChanged;
 
             Control.SelectionChanged -= Control_SelectionChanged;
+            
             NativeControl.SelectionChanged -= NativeControl_SelectionChanged;
+            NativeControl.ColumnClick -= NativeControl_ColumnClick;
+            NativeControl.BeforeItemLabelEdit -= NativeControl_BeforeItemLabelEdit;
+            NativeControl.AfterItemLabelEdit -= NativeControl_AfterItemLabelEdit;
+            NativeControl.CompareItemsForCustomSort -= NativeControl_CompareItemsForCustomSort;
 
             base.OnDetach();
         }

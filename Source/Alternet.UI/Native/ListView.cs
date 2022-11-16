@@ -368,7 +368,8 @@ namespace Alternet.UI.Native
                 }
                 case NativeApi.ListViewEvent.ColumnClick:
                 {
-                    ColumnClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    var ea = new NativeEventArgs<ListViewColumnEventData>(MarshalEx.PtrToStructure<ListViewColumnEventData>(parameter));
+                    ColumnClick?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.ListViewEvent.BeforeItemLabelEdit:
                 {
@@ -386,7 +387,7 @@ namespace Alternet.UI.Native
         
         public event EventHandler? SelectionChanged;
         public event NativeEventHandler<CompareListViewItemsEventData>? CompareItemsForCustomSort;
-        public event EventHandler? ColumnClick;
+        public event NativeEventHandler<ListViewColumnEventData>? ColumnClick;
         public event NativeEventHandler<ListViewItemLabelEditEventData>? BeforeItemLabelEdit;
         public event NativeEventHandler<ListViewItemLabelEditEventData>? AfterItemLabelEdit;
         
