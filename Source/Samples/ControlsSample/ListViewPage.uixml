@@ -6,7 +6,13 @@
     <StackPanel Orientation="Vertical" Padding="10">
         <GroupBox Title="List View">
             <StackPanel Orientation="Horizontal" Margin="5">
-                <ListView Width="300" Name="listView" SelectionChanged="ListView_SelectionChanged"/>
+                <ListView Width="300" Name="listView"
+                          SelectionChanged="ListView_SelectionChanged"
+                          BeforeLabelEdit="ListView_BeforeLabelEdit"
+                          AfterLabelEdit="ListView_AfterLabelEdit"
+                          MouseLeftButtonDown="ListView_MouseLeftButtonDown"
+                          ColumnClick="ListView_ColumnClick"
+                          />
                 <StackPanel Orientation="Vertical" Margin="5,0,0,0">
                     <Button Text="Add Item" Name="addItemButton" Click="AddItemButton_Click"/>
                     <Button Text="Remove Item" Name="removeItemButton" Margin="0,3,0,0" Click="RemoveItemButton_Click"/>
@@ -17,7 +23,26 @@
                         <Label Text="View:" VerticalAlignment="Center"/>
                         <ComboBox IsEditable="false" Name="viewComboBox" Margin="5,0,0,0" SelectedItemChanged="ViewComboBox_SelectedItemChanged"/>
                     </StackPanel>
+
+                    <CheckBox Text="Allow Label Editing" Name="allowLabelEditingCheckBox" Margin="0,5,0,0" CheckedChanged="AllowLabelEditingCheckBox_CheckedChanged" IsChecked="False" />
+                    <Button Text="Begin Selected Label Editing" Name="beginSelectedLabelEditingButton" Margin="0,3,0,0" Click="BeginSelectedLabelEditingButton_Click" Enabled="False" />
+
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <Label Text="Grid Lines:" VerticalAlignment="Center"/>
+                        <ComboBox IsEditable="false" Name="gridLinesComboBox" Margin="5,0,0,0" SelectedItemChanged="GridLinesComboBox_SelectedItemChanged"/>
+                    </StackPanel>
+
+                    <CheckBox Text="Cancel BeforeLabelEdit Events" Name="cancelBeforeLabelEditEventsCheckBox" Margin="0,5,0,0" IsChecked="False" />
+                    <CheckBox Text="Cancel AfterLabelEdit Events" Name="cancelAfterLabelEditEventsCheckBox" Margin="0,5,0,0" IsChecked="False" />
                 </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                    <Button Text="Ensure Last Item is Visible" Name="ensureLastItemVisibleButton" Margin="0,5,0,0" Click="EnsureLastItemVisibleButton_Click" />
+                    <Button Text="Focus Last Item" Name="focusLastItemButton" Margin="0,3,0,0" Click="FocusLastItemButton_Click" />
+                    <Button Text="Modify Last Item" Name="modifyLastItemButton" Margin="0,3,0,0" Click="ModifyLastItemButton_Click" />
+                    <Button Text="Add Last Item Sibling" Name="addLastItemSiblingButton" Margin="0,3,0,0" Click="AddLastItemSiblingButton_Click" />
+                </StackPanel>
+
             </StackPanel>
         </GroupBox>
     </StackPanel>

@@ -32,6 +32,10 @@ namespace ControlsSample
                     viewComboBox.Items.Add(item ?? throw new Exception());
                 viewComboBox.SelectedIndex = 0;
 
+                foreach (var item in Enum.GetValues(typeof(ListViewGridLinesDisplayMode)))
+                    gridLinesComboBox.Items.Add(item ?? throw new Exception());
+                gridLinesComboBox.SelectedIndex = 0;
+
                 site = value;
             }
         }
@@ -39,6 +43,11 @@ namespace ControlsSample
         private void ViewComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
             listView.View = (ListViewView)(viewComboBox.SelectedItem ?? throw new InvalidOperationException());
+        }
+
+        private void GridLinesComboBox_SelectedItemChanged(object? sender, EventArgs e)
+        {
+            listView.GridLinesDisplayMode = (ListViewGridLinesDisplayMode)(gridLinesComboBox.SelectedItem ?? throw new InvalidOperationException());
         }
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
@@ -82,6 +91,94 @@ namespace ControlsSample
         private void AddItemButton_Click(object? sender, EventArgs e)
         {
             listView.Items.Add(new ListViewItem("Item " + (listView.Items.Count + 1)));
+        }
+
+        private void ListView_BeforeLabelEdit(object? sender, ListViewItemLabelEditEventArgs e)
+        {
+            e.Cancel = cancelBeforeLabelEditEventsCheckBox.IsChecked;
+            site?.LogEvent($"ListView: BeforeLabelEdit. Item: '{listView.Items[e.ItemIndex].Text}', Label: '{e.Label ?? "<null>"}'");
+        }
+
+        private void ListView_AfterLabelEdit(object? sender, ListViewItemLabelEditEventArgs e)
+        {
+            e.Cancel = cancelAfterLabelEditEventsCheckBox.IsChecked;
+            site?.LogEvent($"ListView: AfterLabelEdit. Item: '{listView.Items[e.ItemIndex].Text}', Label: '{e.Label ?? "<null>"}'");
+        }
+
+        private void ListView_ColumnClick(object? sender, ListViewColumnEventArgs e)
+        {
+            site?.LogEvent($"ListView: ColumnClick. Column title: '{listView.Columns[e.ColumnIndex].Title}''");
+        }
+
+        private void AllowLabelEditingCheckBox_CheckedChanged(object? sender, EventArgs e)
+        {
+            if (listView != null)
+                listView.AllowLabelEdit = allowLabelEditingCheckBox.IsChecked;
+
+            beginSelectedLabelEditingButton.Enabled = allowLabelEditingCheckBox.IsChecked;
+        }
+
+        private void BeginSelectedLabelEditingButton_Click(object sender, EventArgs e)
+        {
+            listView.SelectedItem?.BeginLabelEdit();
+        }
+
+        ListViewItem? GetLastItem()
+        {
+            return listView.Items.LastOrDefault();
+        }
+
+        private void EnsureLastItemVisibleButton_Click(object sender, System.EventArgs e) => GetLastItem()?.EnsureVisible();
+
+        private void FocusLastItemButton_Click(object sender, System.EventArgs e)
+        {
+            var item = GetLastItem();
+            if (item != null)
+            {
+                listView.Focus();
+                item.IsFocused = true;
+            }
+        }
+
+        private void ListView_MouseLeftButtonDown(object sender, Alternet.UI.MouseButtonEventArgs e)
+        {
+            var result = listView.HitTest(e.GetPosition(listView));
+            
+            string columnHeader;
+            var columnIndex = result.Cell?.ColumnIndex;
+            if (columnIndex != null)
+                columnHeader = listView.Columns[columnIndex.Value].Title;
+            else
+                columnHeader = "<none>";
+
+            site?.LogEvent($"HitTest result: Item: '{result.Item?.Text ?? "<none>"}, Column: '{columnHeader}, Location: {result.Location}'");
+        }
+
+        private void ModifyLastItemButton_Click(object sender, System.EventArgs e)
+        {
+            var item = GetLastItem();
+            if (item != null)
+            {
+                item.EnsureVisible();
+                item.Text += "X";
+
+                var imageIndex = item.ImageIndex + 1;
+                if (imageIndex >= listView.SmallImageList!.Images.Count)
+                    imageIndex = 0;
+
+                item.ImageIndex = imageIndex;
+            }
+        }
+
+        private void AddLastItemSiblingButton_Click(object sender, System.EventArgs e)
+        {
+            var item = GetLastItem();
+            if (item != null)
+            {
+                var newItem = new ListViewItem(item.Text + " Sibling", item.ImageIndex ?? 0);
+                listView.Items.Insert(listView.Items.IndexOf(item), newItem);
+                newItem.EnsureVisible();
+            }
         }
     }
 }

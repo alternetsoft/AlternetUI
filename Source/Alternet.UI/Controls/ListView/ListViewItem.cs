@@ -36,7 +36,7 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ListViewItem"/> class with default values.
         /// </summary>
-        public ListViewItem()
+        public ListViewItem() : this("")
         {
         }
 
@@ -54,20 +54,16 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">The text to display for the item.</param>
         /// <param name="imageIndex">The zero-based index of the image within the <see cref="ImageList"/> associated with the <see cref="ListView"/> that contains the item.</param>
-        public ListViewItem(string text, int? imageIndex)
+        public ListViewItem(string text, int? imageIndex) : this(new[] { text }, imageIndex)
         {
-            Text = text;
-            ImageIndex = imageIndex;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListViewItem"/> class with an array of strings representing column cells.
         /// </summary>
         /// <param name="cells">An array of strings that represent the column cells of the new item.</param>
-        public ListViewItem(string[] cells)
+        public ListViewItem(string[] cells) : this(cells, null)
         {
-            foreach (var cell in cells)
-                Cells.Add(new ListViewItemCell(cell));
         }
 
         /// <summary>
@@ -76,9 +72,25 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="cells">An array of strings that represent the column cells of the new item.</param>
         /// <param name="imageIndex">The zero-based index of the image within the <see cref="ImageList"/> associated with the <see cref="ListView"/> that contains the item.</param>
-        public ListViewItem(string[] cells, int imageIndex) : this(cells)
+        public ListViewItem(string[] cells, int? imageIndex)
         {
             ImageIndex = imageIndex;
+
+            Cells.ItemInserted += Cells_ItemInserted;
+            Cells.ItemRemoved += Cells_ItemRemoved;
+
+            foreach (var cell in cells)
+                Cells.Add(new ListViewItemCell(cell));
+        }
+
+        private void Cells_ItemInserted(object? sender, CollectionChangeEventArgs<ListViewItemCell> e)
+        {
+            e.Item.ColumnIndex = e.Index;
+        }
+
+        private void Cells_ItemRemoved(object? sender, CollectionChangeEventArgs<ListViewItemCell> e)
+        {
+            e.Item.ColumnIndex = null;
         }
 
         private ListView RequiredListView => ListView ?? throw new InvalidOperationException("TreeView property value cannot be null during this opeation.");

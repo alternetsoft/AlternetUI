@@ -50,5 +50,10 @@ namespace Alternet.UI
         /// </summary>
         /// <value>The zero-based index of the image in the <see cref="ImageList"/> that is displayed for the cell. The default is <c>null</c>.</value>
         public int? ImageIndex { get; set; }
+
+        /// <summary>
+        /// Gets the index the column associated to this cell. If the value is null, the cell is not associated with any item or column.
+        /// </summary>
+        public int? ColumnIndex { get; internal set; }
     }
 }
