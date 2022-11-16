@@ -164,7 +164,10 @@ namespace Alternet.UI
         private void InsertItem(int itemIndex, ListViewItem item)
         {
             for (var columnIndex = 0; columnIndex < item.Cells.Count; columnIndex++)
-                NativeControl.InsertItemAt(itemIndex, item.Cells[columnIndex].Text, columnIndex, item.ImageIndex ?? -1);
+            {
+                var cell = item.Cells[columnIndex];
+                NativeControl.InsertItemAt(itemIndex, cell.Text, columnIndex, cell.ImageIndex ?? item.ImageIndex ?? -1);
+            }
         }
 
         private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<ListViewItem> e)

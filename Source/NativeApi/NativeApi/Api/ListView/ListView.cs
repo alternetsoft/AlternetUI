@@ -18,7 +18,7 @@ namespace NativeApi.Api
 
         public void ClearItems() => throw new Exception();
 
-        public void InsertColumnAt(int index, string header) => throw new Exception();
+        public void InsertColumnAt(int index, string header, double width, ListViewColumnWidthMode widthMode) => throw new Exception();
         
         public void RemoveColumnAt(int index) => throw new Exception();
 
@@ -42,7 +42,8 @@ namespace NativeApi.Api
 
         public IntPtr ItemHitTest(Point point) => throw new Exception();
         public ListViewHitTestLocations GetHitTestResultLocations(IntPtr hitTestResult) => throw new Exception();
-        public IntPtr GetHitTestResultItem(IntPtr hitTestResult) => throw new Exception();
+        public int GetHitTestResultItemIndex(IntPtr hitTestResult) => throw new Exception();
+        public int GetHitTestResultColumnIndex(IntPtr hitTestResult) => throw new Exception();
         public void FreeHitTestResult(IntPtr hitTestResult) => throw new Exception();
 
         public void BeginLabelEdit(int itemIndex) => throw new Exception();
@@ -55,7 +56,11 @@ namespace NativeApi.Api
 
         public void Clear() => throw new Exception();
 
+        public void EnsureItemVisible(int itemIndex) => throw new Exception();
+
         public bool ColumnHeaderVisible { get; set; }
+
+        public int FocusedItemIndex { get; }
 
         public event EventHandler<ListViewColumnEventData>? ColumnClick { add => throw new Exception(); remove => throw new Exception(); }
 
