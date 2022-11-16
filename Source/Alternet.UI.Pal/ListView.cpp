@@ -17,6 +17,9 @@ namespace Alternet::UI
         {
             window->Unbind(wxEVT_LIST_ITEM_SELECTED, &ListView::OnItemSelected, this);
             window->Unbind(wxEVT_LIST_ITEM_DESELECTED, &ListView::OnItemDeselected, this);
+            window->Unbind(wxEVT_LIST_COL_CLICK, &ListView::OnColumnHeaderClicked, this);
+            window->Unbind(wxEVT_LIST_BEGIN_LABEL_EDIT, &ListView::OnBeginLabelEdit, this);
+            window->Unbind(wxEVT_LIST_END_LABEL_EDIT, &ListView::OnEndLabelEdit, this);
         }
 
         if (_smallImageList != nullptr)
@@ -57,9 +60,7 @@ namespace Alternet::UI
         item.SetText(wxStr(value));
         item.SetColumn(columnIndex);
         item.SetId(index);
-        
-        if (columnIndex == 0)
-            item.SetImage(imageIndex); // for now, allow images only for the first column, same as in WinForms.
+        item.SetImage(imageIndex);
 
         Row& row = GetRow(index);
         row.SetCell(columnIndex, item);
@@ -178,6 +179,9 @@ namespace Alternet::UI
 
         value->Bind(wxEVT_LIST_ITEM_SELECTED, &ListView::OnItemSelected, this);
         value->Bind(wxEVT_LIST_ITEM_DESELECTED, &ListView::OnItemDeselected, this);
+        value->Bind(wxEVT_LIST_COL_CLICK, &ListView::OnColumnHeaderClicked, this);
+        value->Bind(wxEVT_LIST_BEGIN_LABEL_EDIT, &ListView::OnBeginLabelEdit, this);
+        value->Bind(wxEVT_LIST_END_LABEL_EDIT, &ListView::OnEndLabelEdit, this);
 
         return value;
     }
@@ -190,6 +194,42 @@ namespace Alternet::UI
     void ListView::OnItemDeselected(wxCommandEvent& event)
     {
         RaiseSelectionChanged();
+    }
+
+    void ListView::OnColumnHeaderClicked(wxListEvent& event)
+    {
+        ListViewColumnEventData data = { 0 };
+        data.columnIndex = event.GetColumn();
+        RaiseEvent(ListViewEvent::ColumnClick, &data);
+    }
+
+    void ListView::OnBeginLabelEdit(wxListEvent& event)
+    {
+        OnLabelEditEvent(event, ListViewEvent::BeforeItemLabelEdit);
+    }
+
+    void ListView::OnLabelEditEvent(wxListEvent& event, ListViewEvent e)
+    {
+        ListViewItemLabelEditEventData data{ 0 };
+
+        data.editCancelled = event.IsEditCancelled();
+        data.itemIndex = event.GetItem().m_itemId;
+        auto label = wxStr(event.GetLabel());
+        data.label = const_cast<char16_t*>(label.c_str());
+
+        auto result = RaiseEventWithPointerResult(e, &data);
+
+        if (result != 0)
+            event.Veto();
+    }
+
+    void ListView::OnEndLabelEdit(wxListEvent& event)
+    {
+        auto window = GetWxWindow();
+        window->Refresh();
+        window->Update();
+
+        OnLabelEditEvent(event, ListViewEvent::AfterItemLabelEdit);
     }
 
     void ListView::SetFocusedItemIndex(int value)

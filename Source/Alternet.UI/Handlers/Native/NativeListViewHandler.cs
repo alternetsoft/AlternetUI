@@ -327,7 +327,14 @@ namespace Alternet.UI
             for (var columnIndex = 0; columnIndex < item.Cells.Count; columnIndex++)
             {
                 var cell = item.Cells[columnIndex];
-                NativeControl.InsertItemAt(itemIndex, cell.Text, columnIndex, cell.ImageIndex ?? item.ImageIndex ?? -1);
+
+                int imageIndex;
+                if (columnIndex == 0)
+                    imageIndex = item.ImageIndex ?? -1;
+                else
+                    imageIndex = cell.ImageIndex ?? -1;
+
+                NativeControl.InsertItemAt(itemIndex, cell.Text, columnIndex, imageIndex);
             }
         }
 

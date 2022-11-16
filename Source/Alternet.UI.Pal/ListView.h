@@ -13,6 +13,9 @@ namespace Alternet::UI
 
         void OnItemSelected(wxCommandEvent& event);
         void OnItemDeselected(wxCommandEvent& event);
+        void OnColumnHeaderClicked(wxListEvent& event);
+        void OnBeginLabelEdit(wxListEvent& event);
+        void OnEndLabelEdit(wxListEvent& event);
 
     protected:
         void OnWxWindowCreated() override;
@@ -89,6 +92,8 @@ namespace Alternet::UI
         };
 
         static ListViewHitTestLocations GetHitTestLocationsFromWxFlags(int flags);
+
+        void OnLabelEditEvent(wxListEvent& event, ListViewEvent e);
 
         void RecreateListView();
 
