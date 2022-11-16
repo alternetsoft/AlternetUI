@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Alternet.Drawing;
+using ApiCommon;
+using System;
 
 namespace NativeApi.Api
 {
@@ -31,5 +33,33 @@ namespace NativeApi.Api
         public void ClearSelected() => throw new Exception();
 
         public void SetSelected(int index, bool value) => throw new Exception();
+
+        public bool AllowLabelEdit { get; set; }
+
+        public int TopItemIndex { get; }
+
+        public ListViewGridLinesDisplayMode GridLinesDisplayMode { get; set; }
+
+        public IntPtr ItemHitTest(Point point) => throw new Exception();
+        public ListViewHitTestLocations GetHitTestResultLocations(IntPtr hitTestResult) => throw new Exception();
+        public IntPtr GetHitTestResultItem(IntPtr hitTestResult) => throw new Exception();
+        public void FreeHitTestResult(IntPtr hitTestResult) => throw new Exception();
+
+        public void BeginLabelEdit(int itemIndex) => throw new Exception();
+
+        public Rect GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion) => throw new Exception();
+
+        public event NativeEventHandler<CompareListViewItemsEventData>? CompareItemsForCustomSort { add => throw new Exception(); remove => throw new Exception(); }
+
+        public ListViewSortMode SortMode { get; set; }
+
+        public void Clear() => throw new Exception();
+
+        public bool ColumnHeaderVisible { get; set; }
+
+        public event EventHandler<ListViewColumnEventData>? ColumnClick { add => throw new Exception(); remove => throw new Exception(); }
+
+        public event NativeEventHandler<ListViewItemLabelEditEventData>? BeforeItemLabelEdit { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<ListViewItemLabelEditEventData>? AfterItemLabelEdit { add => throw new Exception(); remove => throw new Exception(); }
     }
 }

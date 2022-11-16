@@ -37,6 +37,16 @@ namespace Alternet.UI
             Columns.ItemRemoved += Columns_ItemRemoved;
         }
 
+        /// <inheritdoc/>
+        public new ListViewHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (ListViewHandler)base.Handler;
+            }
+        }
+
         /// <summary>
         /// Gets or sets a value indicating whether the user can edit the labels of items in the control.
         /// </summary>
