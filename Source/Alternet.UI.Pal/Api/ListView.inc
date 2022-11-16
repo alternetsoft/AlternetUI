@@ -19,6 +19,28 @@ void SetCurrentView(ListViewView value);
 ListViewSelectionMode GetSelectionMode();
 void SetSelectionMode(ListViewSelectionMode value);
 
+
+bool GetAllowLabelEdit();
+void SetAllowLabelEdit(bool value);
+
+
+int GetTopItemIndex();
+
+
+ListViewGridLinesDisplayMode GetGridLinesDisplayMode();
+void SetGridLinesDisplayMode(ListViewGridLinesDisplayMode value);
+
+
+ListViewSortMode GetSortMode();
+void SetSortMode(ListViewSortMode value);
+
+
+bool GetColumnHeaderVisible();
+void SetColumnHeaderVisible(bool value);
+
+
+int GetFocusedItemIndex();
+
 void* OpenSelectedIndicesArray();
 int GetSelectedIndicesItemCount(void* array);
 int GetSelectedIndicesItemAt(void* array, int index);
@@ -26,14 +48,27 @@ void CloseSelectedIndicesArray(void* array);
 void InsertItemAt(int index, const string& text, int columnIndex, int imageIndex);
 void RemoveItemAt(int index);
 void ClearItems();
-void InsertColumnAt(int index, const string& header);
+void InsertColumnAt(int index, const string& header, double width, ListViewColumnWidthMode widthMode);
 void RemoveColumnAt(int index);
 void ClearSelected();
 void SetSelected(int index, bool value);
+void* ItemHitTest(const Point& point);
+ListViewHitTestLocations GetHitTestResultLocations(void* hitTestResult);
+int GetHitTestResultItemIndex(void* hitTestResult);
+int GetHitTestResultColumnIndex(void* hitTestResult);
+void FreeHitTestResult(void* hitTestResult);
+void BeginLabelEdit(int itemIndex);
+Rect GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion);
+void Clear();
+void EnsureItemVisible(int itemIndex);
 public:
 enum class ListViewEvent
 {
     SelectionChanged,
+    CompareItemsForCustomSort,
+    ColumnClick,
+    BeforeItemLabelEdit,
+    AfterItemLabelEdit,
 };
 typedef void* (*ListViewEventCallbackType)(ListView* obj, ListViewEvent event, void* param);
 static void SetEventCallback(ListViewEventCallbackType value) { eventCallback = value; }

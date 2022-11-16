@@ -28,6 +28,27 @@ namespace Alternet.UI.Native
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class CompareListViewItemsEventData
+    {
+        public int item1Index;
+        public int item2Index;
+    }
+    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class ListViewColumnEventData
+    {
+        public int columnIndex;
+    }
+    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class ListViewItemLabelEditEventData
+    {
+        public int itemIndex;
+        public string label;
+        public bool editCancelled;
+    }
+    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class MouseButtonEventData
     {
         public long timestamp;

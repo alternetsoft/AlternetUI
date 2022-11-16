@@ -32,7 +32,7 @@ namespace Alternet::UI
         }
     }
 
-    void ListView::InsertColumnAt(int index, const string& header)
+    void ListView::InsertColumnAt(int index, const string& header, double width, ListViewColumnWidthMode widthMode)
     {
         wxListItem column;
         column.SetText(wxStr(header));
@@ -190,6 +190,93 @@ namespace Alternet::UI
     void ListView::OnItemDeselected(wxCommandEvent& event)
     {
         RaiseSelectionChanged();
+    }
+
+    bool ListView::GetAllowLabelEdit()
+    {
+        return false;
+    }
+
+    void ListView::SetAllowLabelEdit(bool value)
+    {
+    }
+
+    int ListView::GetTopItemIndex()
+    {
+        return 0;
+    }
+
+    ListViewGridLinesDisplayMode ListView::GetGridLinesDisplayMode()
+    {
+        return ListViewGridLinesDisplayMode();
+    }
+
+    void ListView::SetGridLinesDisplayMode(ListViewGridLinesDisplayMode value)
+    {
+    }
+
+    ListViewSortMode ListView::GetSortMode()
+    {
+        return ListViewSortMode();
+    }
+
+    void ListView::SetSortMode(ListViewSortMode value)
+    {
+    }
+
+    bool ListView::GetColumnHeaderVisible()
+    {
+        return false;
+    }
+
+    void ListView::SetColumnHeaderVisible(bool value)
+    {
+    }
+
+    int ListView::GetFocusedItemIndex()
+    {
+        return 0;
+    }
+
+    void* ListView::ItemHitTest(const Point& point)
+    {
+        return nullptr;
+    }
+
+    ListViewHitTestLocations ListView::GetHitTestResultLocations(void* hitTestResult)
+    {
+        return ListViewHitTestLocations();
+    }
+
+    int ListView::GetHitTestResultItemIndex(void* hitTestResult)
+    {
+        return 0;
+    }
+
+    int ListView::GetHitTestResultColumnIndex(void* hitTestResult)
+    {
+        return 0;
+    }
+
+    void ListView::FreeHitTestResult(void* hitTestResult)
+    {
+    }
+
+    void ListView::BeginLabelEdit(int itemIndex)
+    {
+    }
+
+    Rect ListView::GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion)
+    {
+        return Rect();
+    }
+
+    void ListView::Clear()
+    {
+    }
+
+    void ListView::EnsureItemVisible(int itemIndex)
+    {
     }
 
     void* ListView::OpenSelectedIndicesArray()

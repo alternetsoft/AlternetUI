@@ -131,6 +131,98 @@ namespace Alternet.UI.Native
             
         }
         
+        public bool AllowLabelEdit
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.ListView_GetAllowLabelEdit_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ListView_SetAllowLabelEdit_(NativePointer, value);
+            }
+        }
+        
+        public int TopItemIndex
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.ListView_GetTopItemIndex_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public ListViewGridLinesDisplayMode GridLinesDisplayMode
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.ListView_GetGridLinesDisplayMode_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ListView_SetGridLinesDisplayMode_(NativePointer, value);
+            }
+        }
+        
+        public ListViewSortMode SortMode
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.ListView_GetSortMode_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ListView_SetSortMode_(NativePointer, value);
+            }
+        }
+        
+        public bool ColumnHeaderVisible
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.ListView_GetColumnHeaderVisible_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ListView_SetColumnHeaderVisible_(NativePointer, value);
+            }
+        }
+        
+        public int FocusedItemIndex
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.ListView_GetFocusedItemIndex_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
         public void InsertItemAt(int index, string text, int columnIndex, int imageIndex)
         {
             CheckDisposed();
@@ -149,10 +241,10 @@ namespace Alternet.UI.Native
             NativeApi.ListView_ClearItems_(NativePointer);
         }
         
-        public void InsertColumnAt(int index, string header)
+        public void InsertColumnAt(int index, string header, double width, ListViewColumnWidthMode widthMode)
         {
             CheckDisposed();
-            NativeApi.ListView_InsertColumnAt_(NativePointer, index, header);
+            NativeApi.ListView_InsertColumnAt_(NativePointer, index, header, width, widthMode);
         }
         
         public void RemoveColumnAt(int index)
@@ -171,6 +263,70 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.ListView_SetSelected_(NativePointer, index, value);
+        }
+        
+        public System.IntPtr ItemHitTest(Alternet.Drawing.Point point)
+        {
+            CheckDisposed();
+            var n = NativeApi.ListView_ItemHitTest_(NativePointer, point);
+            var m = n;
+            return m;
+        }
+        
+        public ListViewHitTestLocations GetHitTestResultLocations(System.IntPtr hitTestResult)
+        {
+            CheckDisposed();
+            var n = NativeApi.ListView_GetHitTestResultLocations_(NativePointer, hitTestResult);
+            var m = n;
+            return m;
+        }
+        
+        public int GetHitTestResultItemIndex(System.IntPtr hitTestResult)
+        {
+            CheckDisposed();
+            var n = NativeApi.ListView_GetHitTestResultItemIndex_(NativePointer, hitTestResult);
+            var m = n;
+            return m;
+        }
+        
+        public int GetHitTestResultColumnIndex(System.IntPtr hitTestResult)
+        {
+            CheckDisposed();
+            var n = NativeApi.ListView_GetHitTestResultColumnIndex_(NativePointer, hitTestResult);
+            var m = n;
+            return m;
+        }
+        
+        public void FreeHitTestResult(System.IntPtr hitTestResult)
+        {
+            CheckDisposed();
+            NativeApi.ListView_FreeHitTestResult_(NativePointer, hitTestResult);
+        }
+        
+        public void BeginLabelEdit(int itemIndex)
+        {
+            CheckDisposed();
+            NativeApi.ListView_BeginLabelEdit_(NativePointer, itemIndex);
+        }
+        
+        public Alternet.Drawing.Rect GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion)
+        {
+            CheckDisposed();
+            var n = NativeApi.ListView_GetItemBounds_(NativePointer, itemIndex, portion);
+            var m = n;
+            return m;
+        }
+        
+        public void Clear()
+        {
+            CheckDisposed();
+            NativeApi.ListView_Clear_(NativePointer);
+        }
+        
+        public void EnsureItemVisible(int itemIndex)
+        {
+            CheckDisposed();
+            NativeApi.ListView_EnsureItemVisible_(NativePointer, itemIndex);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -200,11 +356,34 @@ namespace Alternet.UI.Native
                 {
                     SelectionChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.ListViewEvent.CompareItemsForCustomSort:
+                {
+                    var ea = new NativeEventArgs<CompareListViewItemsEventData>(MarshalEx.PtrToStructure<CompareListViewItemsEventData>(parameter));
+                    CompareItemsForCustomSort?.Invoke(this, ea); return ea.Result;
+                }
+                case NativeApi.ListViewEvent.ColumnClick:
+                {
+                    ColumnClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ListViewEvent.BeforeItemLabelEdit:
+                {
+                    var ea = new NativeEventArgs<ListViewItemLabelEditEventData>(MarshalEx.PtrToStructure<ListViewItemLabelEditEventData>(parameter));
+                    BeforeItemLabelEdit?.Invoke(this, ea); return ea.Result;
+                }
+                case NativeApi.ListViewEvent.AfterItemLabelEdit:
+                {
+                    var ea = new NativeEventArgs<ListViewItemLabelEditEventData>(MarshalEx.PtrToStructure<ListViewItemLabelEditEventData>(parameter));
+                    AfterItemLabelEdit?.Invoke(this, ea); return ea.Result;
+                }
                 default: throw new Exception("Unexpected ListViewEvent value: " + e);
             }
         }
         
         public event EventHandler? SelectionChanged;
+        public event NativeEventHandler<CompareListViewItemsEventData>? CompareItemsForCustomSort;
+        public event EventHandler? ColumnClick;
+        public event NativeEventHandler<ListViewItemLabelEditEventData>? BeforeItemLabelEdit;
+        public event NativeEventHandler<ListViewItemLabelEditEventData>? AfterItemLabelEdit;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -217,6 +396,10 @@ namespace Alternet.UI.Native
             public enum ListViewEvent
             {
                 SelectionChanged,
+                CompareItemsForCustomSort,
+                ColumnClick,
+                BeforeItemLabelEdit,
+                AfterItemLabelEdit,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -253,6 +436,36 @@ namespace Alternet.UI.Native
             public static extern void ListView_SetSelectionMode_(IntPtr obj, ListViewSelectionMode value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool ListView_GetAllowLabelEdit_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_SetAllowLabelEdit_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ListView_GetTopItemIndex_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern ListViewGridLinesDisplayMode ListView_GetGridLinesDisplayMode_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_SetGridLinesDisplayMode_(IntPtr obj, ListViewGridLinesDisplayMode value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern ListViewSortMode ListView_GetSortMode_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_SetSortMode_(IntPtr obj, ListViewSortMode value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool ListView_GetColumnHeaderVisible_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_SetColumnHeaderVisible_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ListView_GetFocusedItemIndex_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr ListView_OpenSelectedIndicesArray_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -274,7 +487,7 @@ namespace Alternet.UI.Native
             public static extern void ListView_ClearItems_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListView_InsertColumnAt_(IntPtr obj, int index, string header);
+            public static extern void ListView_InsertColumnAt_(IntPtr obj, int index, string header, double width, ListViewColumnWidthMode widthMode);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListView_RemoveColumnAt_(IntPtr obj, int index);
@@ -284,6 +497,33 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListView_SetSelected_(IntPtr obj, int index, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr ListView_ItemHitTest_(IntPtr obj, NativeApiTypes.Point point);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern ListViewHitTestLocations ListView_GetHitTestResultLocations_(IntPtr obj, System.IntPtr hitTestResult);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ListView_GetHitTestResultItemIndex_(IntPtr obj, System.IntPtr hitTestResult);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ListView_GetHitTestResultColumnIndex_(IntPtr obj, System.IntPtr hitTestResult);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_FreeHitTestResult_(IntPtr obj, System.IntPtr hitTestResult);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_BeginLabelEdit_(IntPtr obj, int itemIndex);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Rect ListView_GetItemBounds_(IntPtr obj, int itemIndex, ListViewItemBoundsPortion portion);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_Clear_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_EnsureItemVisible_(IntPtr obj, int itemIndex);
             
         }
     }

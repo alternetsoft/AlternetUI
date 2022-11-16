@@ -418,10 +418,52 @@ namespace Alternet.UI.Native
         Multiple = 1,
     }
     
+    enum ListViewColumnWidthMode
+    {
+        Fixed = 0,
+        AutoSize = 1,
+        AutoSizeHeader = 2,
+    }
+    
+    enum ListViewGridLinesDisplayMode
+    {
+        None = 0,
+        Vertical = 1,
+        Horizontal = 2,
+        VerticalAndHorizontal = 3,
+    }
+    
+    enum ListViewHitTestLocations
+    {
+        None = 2,
+        AboveClientArea = 4,
+        BelowClientArea = 8,
+        LeftOfClientArea = 16,
+        RightOfClientArea = 32,
+        ItemImage = 64,
+        ItemLabel = 128,
+        RightOfItem = 256,
+    }
+    
+    enum ListViewItemBoundsPortion
+    {
+        EntireItem = 0,
+        Icon = 1,
+        Label = 2,
+    }
+    
     enum ListViewSelectionMode
     {
         Single = 0,
         Multiple = 1,
+    }
+    
+    enum ListViewSortMode
+    {
+        None = 0,
+        Ascending = 1,
+        Descending = 2,
+        Custom = 3,
     }
     
     enum ListViewView

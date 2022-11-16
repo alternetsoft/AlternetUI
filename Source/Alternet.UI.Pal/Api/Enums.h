@@ -419,10 +419,52 @@ namespace Alternet::UI
         Multiple = 1,
     };
     
+    enum class ListViewColumnWidthMode
+    {
+        Fixed = 0,
+        AutoSize = 1,
+        AutoSizeHeader = 2,
+    };
+    
+    enum class ListViewGridLinesDisplayMode
+    {
+        None = 0,
+        Vertical = 1,
+        Horizontal = 2,
+        VerticalAndHorizontal = 3,
+    };
+    
+    enum class ListViewHitTestLocations
+    {
+        None = 2,
+        AboveClientArea = 4,
+        BelowClientArea = 8,
+        LeftOfClientArea = 16,
+        RightOfClientArea = 32,
+        ItemImage = 64,
+        ItemLabel = 128,
+        RightOfItem = 256,
+    };
+    
+    enum class ListViewItemBoundsPortion
+    {
+        EntireItem = 0,
+        Icon = 1,
+        Label = 2,
+    };
+    
     enum class ListViewSelectionMode
     {
         Single = 0,
         Multiple = 1,
+    };
+    
+    enum class ListViewSortMode
+    {
+        None = 0,
+        Ascending = 1,
+        Descending = 2,
+        Custom = 3,
     };
     
     enum class ListViewView
@@ -530,4 +572,5 @@ template<> struct enable_bitmask_operators<Alternet::UI::DragDropEffects> { stat
 template<> struct enable_bitmask_operators<Alternet::UI::FontStyle> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::KeyStates> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ModifierKeys> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::ListViewHitTestLocations> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::TreeViewHitTestLocations> { static const bool enable = true; };

@@ -182,7 +182,11 @@ namespace Alternet.UI
 
         private void Columns_ItemInserted(object? sender, CollectionChangeEventArgs<ListViewColumn> e)
         {
-            NativeControl.InsertColumnAt(e.Item.Index ?? throw new Exception(), e.Item.Title);
+            NativeControl.InsertColumnAt(
+                e.Item.Index ?? throw new Exception(),
+                e.Item.Title,
+                e.Item.Width,
+                (Native.ListViewColumnWidthMode)e.Item.WidthMode);
         }
 
         private void Columns_ItemRemoved(object? sender, CollectionChangeEventArgs<ListViewColumn> e)

@@ -32,6 +32,30 @@ namespace Alternet::UI
     #pragma pack(pop)
     
     #pragma pack(push, 1)
+    struct CompareListViewItemsEventData
+    {
+        int item1Index;
+        int item2Index;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
+    struct ListViewColumnEventData
+    {
+        int columnIndex;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
+    struct ListViewItemLabelEditEventData
+    {
+        int itemIndex;
+        char16_t* label;
+        c_bool editCancelled;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
     struct MouseButtonEventData
     {
         int64_t timestamp;
