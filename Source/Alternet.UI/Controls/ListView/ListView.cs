@@ -52,18 +52,18 @@ namespace Alternet.UI
         /// </summary>
         /// <value><see langword="true"/> if the user can edit the labels of items at run time; otherwise, <see
         /// langword="false"/>. The default is <see langword="false"/>.</value>
-        public bool AllowLabelEdit { get; set; }
+        public bool AllowLabelEdit { get => Handler.AllowLabelEdit; set => Handler.AllowLabelEdit = value; }
 
         /// <summary>
         /// Gets or sets the first fully-visible item in the list view control.
         /// </summary>
         /// <value>A <see cref="ListViewItem"/> that represents the first fully-visible item in the list view control.</value>
-        public ListViewItem? TopItem { get/* => Handler.TopItem*/; }
+        public ListViewItem? TopItem { get => Handler.TopItem; }
 
         /// <summary>
         /// Gets or sets the grid line display mode for this list view.
         /// </summary>
-        public ListViewGridLinesDisplayMode GridLinesDisplayMode { get; set; }
+        public ListViewGridLinesDisplayMode GridLinesDisplayMode { get => Handler.GridLinesDisplayMode; set => Handler.GridLinesDisplayMode = value; }
 
         /// <summary>
         /// Provides list view item information, at a given client point, in device-independent units (1/96th inch per
@@ -75,21 +75,14 @@ namespace Alternet.UI
         /// Use this method to determine whether a point is located in a <see cref="ListViewItem"/> and where within the
         /// item the point is located, such as on the label or image area.
         /// </remarks>
-        public ListViewHitTestInfo HitTest(Point point)
-        {
-            return null;
-            //return Handler.HitTest(point);
-        }
+        public ListViewHitTestInfo HitTest(Point point) => Handler.HitTest(point);
 
         /// <summary>
         /// Initiates the editing of the list view item label.
         /// </summary>
         /// <param name="itemIndex">The zero-based index of the item within the <see cref="ListView.Items"/> collection
         /// whose label you want to edit.</param>
-        public void BeginLabelEdit(int itemIndex)
-        {
-            //return Handler.HitTest(point);
-        }
+        public void BeginLabelEdit(int itemIndex) => Handler.BeginLabelEdit(itemIndex);
 
         /// <summary>
         /// Retrieves the bounding rectangle for an item within the control.
@@ -100,34 +93,30 @@ namespace Alternet.UI
         /// the item for which to retrieve the bounding rectangle.</param>
         /// <returns>A <see cref="Rect"/> that represents the bounding rectangle for the specified portion of the
         /// specified <see cref="ListViewItem"/>.</returns>
-        public Rect GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem)
-        {
-            return new Rect();
-        }
+        public Rect GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem) =>
+            Handler.GetItemBounds(itemIndex, portion);
 
         /// <summary>
         /// Gets or sets the custom sorting comparer for the control.
         /// </summary>
-        public IComparer<ListViewItem>? CustomItemSortComparer { get; set; }
+        public IComparer<ListViewItem>? CustomItemSortComparer { get => Handler.CustomItemSortComparer; set => Handler.CustomItemSortComparer = value; }
 
         /// <summary>
         /// Gets or sets the sort mode for items in the control.
         /// </summary>
         /// <value>One of the <see cref="ListViewSortMode"/> values. The default is <see cref="ListViewSortMode.None"/>.</value>
-        public ListViewSortMode SortMode { get; set; }
+        public ListViewSortMode SortMode { get => Handler.SortMode; set => Handler.SortMode = value; }
 
         /// <summary>
         /// Removes all items and columns from the control.
         /// </summary>
-        public void Clear()
-        {
-        }
+        public void Clear() => Handler.Clear();
 
         /// <summary>
         /// Gets or sets a boolean value which specifies whether the column header is visible in <see
         /// cref="ListViewView.Details"/> view.
         /// </summary>
-        public bool ColumnHeaderVisible { get; set; }
+        public bool ColumnHeaderVisible { get => Handler.ColumnHeaderVisible; set => Handler.ColumnHeaderVisible = value; }
 
         /// <summary>
         /// Occurs when the user clicks a column header within the list view control.

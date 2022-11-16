@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using Alternet.Base.Collections;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class NativeListViewHandler : NativeControlHandler<ListView, Native.ListView>
+    internal class NativeListViewHandler : ListViewHandler
     {
         private bool receivingSelection;
 
@@ -13,6 +15,8 @@ namespace Alternet.UI
         {
             return new Native.ListView();
         }
+
+        public new Native.ListView NativeControl => (Native.ListView)base.NativeControl!;
 
         protected override void OnAttach()
         {
@@ -36,6 +40,92 @@ namespace Alternet.UI
 
             Control.SelectionChanged += Control_SelectionChanged;
             NativeControl.SelectionChanged += NativeControl_SelectionChanged;
+        }
+
+        /// <inheritdoc/>
+        public override bool AllowLabelEdit { get => NativeControl.AllowLabelEdit; set => NativeControl.AllowLabelEdit = value; }
+
+        /// <inheritdoc/>
+        public override ListViewItem? TopItem
+        {
+            get
+            {
+                var i = NativeControl.TopItemIndex;
+                return i == -1 ? null : Control.Items[i];
+            }
+        }
+
+        /// <inheritdoc/>
+        public override ListViewGridLinesDisplayMode GridLinesDisplayMode
+        {
+            get => (ListViewGridLinesDisplayMode)NativeControl.GridLinesDisplayMode;
+            set => NativeControl.GridLinesDisplayMode = (Native.ListViewGridLinesDisplayMode)value;
+        }
+
+        /// <inheritdoc/>
+        public override ListViewHitTestInfo HitTest(Point point)
+        {
+            var result = NativeControl.ItemHitTest(point);
+            if (result == IntPtr.Zero)
+                throw new Exception();
+
+            try
+            {
+                var itemIndex = NativeControl.GetHitTestResultItemIndex(result);
+                var columnIndex = NativeControl.GetHitTestResultColumnIndex(result);
+                
+                var item = itemIndex == -1 ? null : Control.Items[itemIndex];
+                var cell = item == null || columnIndex == -1 ? null : item.Cells[columnIndex];
+                var location = (ListViewHitTestLocations)NativeControl.GetHitTestResultLocations(result);
+
+                return new ListViewHitTestInfo(location, item, cell);
+            }
+            finally
+            {
+                NativeControl.FreeHitTestResult(result);
+            }
+        }
+
+        /// <inheritdoc/>
+        public override void BeginLabelEdit(int itemIndex) => NativeControl.BeginLabelEdit(itemIndex);
+
+        /// <inheritdoc/>
+        public override Rect GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion) =>
+            NativeControl.GetItemBounds(itemIndex, (Native.ListViewItemBoundsPortion)portion);
+
+        /// <inheritdoc/>
+        public override IComparer<ListViewItem>? CustomItemSortComparer { get; set; }
+
+        /// <inheritdoc/>
+        public override ListViewSortMode SortMode
+        {
+            get => (ListViewSortMode)NativeControl.SortMode;
+            set => NativeControl.SortMode = (Native.ListViewSortMode)value;
+        }
+
+        /// <inheritdoc/>
+        public override void Clear() => NativeControl.Clear();
+
+        /// <inheritdoc/>
+        public override bool ColumnHeaderVisible
+        {
+            get => NativeControl.ColumnHeaderVisible;
+            set => NativeControl.ColumnHeaderVisible = value;
+        }
+
+        /// <inheritdoc/>
+        public override void EnsureItemVisible(int itemIndex) => NativeControl.EnsureItemVisible(itemIndex);
+
+        /// <inheritdoc/>
+        public override int? FocusedItemIndex
+        {
+            get
+            {
+                int i = NativeControl.FocusedItemIndex;
+                return i == -1 ? null : i;
+            }
+            
+            set => NativeControl.FocusedItemIndex = value ?? -1;
         }
 
         private void Control_ViewChanged(object? sender, EventArgs e)

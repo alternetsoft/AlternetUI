@@ -40,6 +40,7 @@ void SetColumnHeaderVisible(bool value);
 
 
 int GetFocusedItemIndex();
+void SetFocusedItemIndex(int value);
 
 void* OpenSelectedIndicesArray();
 int GetSelectedIndicesItemCount(void* array);

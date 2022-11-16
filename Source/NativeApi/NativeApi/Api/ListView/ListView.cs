@@ -60,7 +60,7 @@ namespace NativeApi.Api
 
         public bool ColumnHeaderVisible { get; set; }
 
-        public int FocusedItemIndex { get; }
+        public int FocusedItemIndex { get; set; }
 
         public event EventHandler<ListViewColumnEventData>? ColumnClick { add => throw new Exception(); remove => throw new Exception(); }
 

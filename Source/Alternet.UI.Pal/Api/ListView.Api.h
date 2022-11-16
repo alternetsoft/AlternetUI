@@ -149,6 +149,13 @@ ALTERNET_UI_API int ListView_GetFocusedItemIndex_(ListView* obj)
         });
 }
 
+ALTERNET_UI_API void ListView_SetFocusedItemIndex_(ListView* obj, int value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetFocusedItemIndex(value);
+        });
+}
+
 ALTERNET_UI_API void* ListView_OpenSelectedIndicesArray_(ListView* obj)
 {
     return MarshalExceptions<void*>([&](){

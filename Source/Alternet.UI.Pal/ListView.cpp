@@ -192,6 +192,10 @@ namespace Alternet::UI
         RaiseSelectionChanged();
     }
 
+    void ListView::SetFocusedItemIndex(int value)
+    {
+    }
+
     bool ListView::GetAllowLabelEdit()
     {
         return false;

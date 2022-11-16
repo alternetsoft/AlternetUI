@@ -221,6 +221,11 @@ namespace Alternet.UI.Native
                 return m;
             }
             
+            set
+            {
+                CheckDisposed();
+                NativeApi.ListView_SetFocusedItemIndex_(NativePointer, value);
+            }
         }
         
         public void InsertItemAt(int index, string text, int columnIndex, int imageIndex)
@@ -464,6 +469,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ListView_GetFocusedItemIndex_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_SetFocusedItemIndex_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr ListView_OpenSelectedIndicesArray_(IntPtr obj);
