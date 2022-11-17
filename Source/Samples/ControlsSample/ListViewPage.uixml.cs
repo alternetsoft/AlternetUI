@@ -26,7 +26,7 @@ namespace ControlsSample
                 listView.Columns.Add(new ListViewColumn("Column 1"));
                 listView.Columns.Add(new ListViewColumn("Column 2"));
 
-                AddItems(10);
+                AddItems(50);
 
                 foreach (var item in Enum.GetValues(typeof(ListViewView)))
                     viewComboBox.Items.Add(item ?? throw new Exception());

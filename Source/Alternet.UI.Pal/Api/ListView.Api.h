@@ -296,6 +296,20 @@ ALTERNET_UI_API void ListView_EnsureItemVisible_(ListView* obj, int itemIndex)
         });
 }
 
+ALTERNET_UI_API void ListView_SetItemText_(ListView* obj, int itemIndex, int columnIndex, const char16_t* text)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetItemText(itemIndex, columnIndex, text);
+        });
+}
+
+ALTERNET_UI_API void ListView_SetItemImageIndex_(ListView* obj, int itemIndex, int columnIndex, int imageIndex)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetItemImageIndex(itemIndex, columnIndex, imageIndex);
+        });
+}
+
 ALTERNET_UI_API void ListView_SetEventCallback_(ListView::ListViewEventCallbackType callback)
 {
     ListView::SetEventCallback(callback);

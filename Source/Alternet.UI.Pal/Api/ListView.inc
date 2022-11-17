@@ -62,6 +62,8 @@ void BeginLabelEdit(int itemIndex);
 Rect GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion);
 void Clear();
 void EnsureItemVisible(int itemIndex);
+void SetItemText(int itemIndex, int columnIndex, const string& text);
+void SetItemImageIndex(int itemIndex, int columnIndex, int imageIndex);
 public:
 enum class ListViewEvent
 {

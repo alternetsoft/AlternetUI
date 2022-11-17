@@ -334,6 +334,18 @@ namespace Alternet.UI.Native
             NativeApi.ListView_EnsureItemVisible_(NativePointer, itemIndex);
         }
         
+        public void SetItemText(int itemIndex, int columnIndex, string text)
+        {
+            CheckDisposed();
+            NativeApi.ListView_SetItemText_(NativePointer, itemIndex, columnIndex, text);
+        }
+        
+        public void SetItemImageIndex(int itemIndex, int columnIndex, int imageIndex)
+        {
+            CheckDisposed();
+            NativeApi.ListView_SetItemImageIndex_(NativePointer, itemIndex, columnIndex, imageIndex);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -533,6 +545,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListView_EnsureItemVisible_(IntPtr obj, int itemIndex);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_SetItemText_(IntPtr obj, int itemIndex, int columnIndex, string text);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_SetItemImageIndex_(IntPtr obj, int itemIndex, int columnIndex, int imageIndex);
             
         }
     }

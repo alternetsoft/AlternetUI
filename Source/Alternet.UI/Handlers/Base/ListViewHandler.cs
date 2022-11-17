@@ -90,7 +90,15 @@ namespace Alternet.UI
         /// </summary>
         public abstract int? FocusedItemIndex { get; set; }
 
-        public abstract void SetItemText(int itemIndex, string text);
+        /// <summary>
+        /// Gets or sets a list view item text.
+        /// </summary>
+        public abstract void SetItemText(int itemIndex, int columnIndex, string text);
+
+        /// <summary>
+        /// Gets or sets a list view item image index.
+        /// </summary>
+        public abstract void SetItemImageIndex(int itemIndex, int columnIndex, int? imageIndex);
 
         /// <inheritdoc/>
         protected override bool VisualChildNeedsNativeControl => true;

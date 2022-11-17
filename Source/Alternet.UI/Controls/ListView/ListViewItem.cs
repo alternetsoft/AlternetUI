@@ -74,23 +74,25 @@ namespace Alternet.UI
         /// <param name="imageIndex">The zero-based index of the image within the <see cref="ImageList"/> associated with the <see cref="ListView"/> that contains the item.</param>
         public ListViewItem(string[] cells, int? imageIndex)
         {
-            ImageIndex = imageIndex;
-
             Cells.ItemInserted += Cells_ItemInserted;
             Cells.ItemRemoved += Cells_ItemRemoved;
 
             foreach (var cell in cells)
                 Cells.Add(new ListViewItemCell(cell));
+
+            ImageIndex = imageIndex;
         }
 
         private void Cells_ItemInserted(object? sender, CollectionChangeEventArgs<ListViewItemCell> e)
         {
             e.Item.ColumnIndex = e.Index;
+            e.Item.Item = this;
         }
 
         private void Cells_ItemRemoved(object? sender, CollectionChangeEventArgs<ListViewItemCell> e)
         {
             e.Item.ColumnIndex = null;
+            e.Item.Item = null;
         }
 
         private ListView RequiredListView => ListView ?? throw new InvalidOperationException("TreeView property value cannot be null during this opeation.");
@@ -188,8 +190,11 @@ namespace Alternet.UI
             set
             {
                 if (Cells.Count == 0)
-                    Cells.Add(new ListViewItemCell(Text));
-                
+                {
+                    Cells.Add(new ListViewItemCell(value, null));
+                    return;
+                }
+
                 Cells[0].Text = value;
             }
         }
@@ -210,7 +215,26 @@ namespace Alternet.UI
         /// <see cref="ImageList"/> instances, you can set a single index value for the <see cref="ImageIndex"/> property and the appropriate
         /// image will be displayed regardless of the value of the <see cref="ListView.View"/> property of the <see cref="ListView"/> control.
         /// </remarks>
-        public int? ImageIndex { get; set; }
+        public int? ImageIndex
+        {
+            get
+            {
+                if (Cells.Count == 0)
+                    Cells.Add(new ListViewItemCell());
+                return Cells[0].ImageIndex;
+            }
+
+            set
+            {
+                if (Cells.Count == 0)
+                {
+                    Cells.Add(new ListViewItemCell("", value));
+                    return;
+                }
+
+                Cells[0].ImageIndex = value;
+            }
+        }
 
         /// <summary>
         /// Gets a collection containing all column cells of the item.

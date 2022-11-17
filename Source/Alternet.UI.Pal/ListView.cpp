@@ -232,6 +232,32 @@ namespace Alternet::UI
         OnLabelEditEvent(event, ListViewEvent::AfterItemLabelEdit);
     }
 
+    void ListView::SetItemText(int itemIndex, int columnIndex, const string& text)
+    {
+        auto wxText = wxStr(text);
+        wxListItem cell;
+        auto row = _rows[itemIndex];
+        row.GetCell(columnIndex, cell);
+        cell.m_text = wxText;
+        row.SetCell(columnIndex, cell);
+        _rows[itemIndex] = row;
+
+        auto listView = GetListView();
+        listView->SetItem(cell);
+    }
+
+    void ListView::SetItemImageIndex(int itemIndex, int columnIndex, int imageIndex)
+    {
+        wxListItem cell;
+        auto row = _rows[itemIndex];
+        row.GetCell(columnIndex, cell);
+        cell.m_image = imageIndex;
+        row.SetCell(columnIndex, cell);
+        _rows[itemIndex] = row;
+
+        GetListView()->SetItem(cell);
+    }
+
     void ListView::SetFocusedItemIndex(int value)
     {
         GetListView()->Focus(value);

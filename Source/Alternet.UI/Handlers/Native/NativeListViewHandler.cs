@@ -93,12 +93,17 @@ namespace Alternet.UI
 
         bool skipSetItemText;
 
-        public override void SetItemText(int itemIndex, string text)
+        public override void SetItemText(int itemIndex, int columnIndex, string text)
         {
             if (skipSetItemText)
                 return;
 
-            //NativeControl.SetItemText(GetHandleFromItem(item), text);
+            NativeControl.SetItemText(itemIndex, columnIndex, text);
+        }
+
+        public override void SetItemImageIndex(int itemIndex, int columnIndex, int? imageIndex)
+        {
+            NativeControl.SetItemImageIndex(itemIndex, columnIndex, imageIndex ?? -1);
         }
 
         private void NativeControl_ColumnClick(object? sender, Native.NativeEventArgs<Native.ListViewColumnEventData> e)

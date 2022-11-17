@@ -66,5 +66,8 @@ namespace NativeApi.Api
 
         public event NativeEventHandler<ListViewItemLabelEditEventData>? BeforeItemLabelEdit { add => throw new Exception(); remove => throw new Exception(); }
         public event NativeEventHandler<ListViewItemLabelEditEventData>? AfterItemLabelEdit { add => throw new Exception(); remove => throw new Exception(); }
+
+        public void SetItemText(int itemIndex, int columnIndex, string text) => throw new Exception();
+        public void SetItemImageIndex(int itemIndex, int columnIndex, int imageIndex) => throw new Exception();
     }
 }
