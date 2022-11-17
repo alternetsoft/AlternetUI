@@ -26,14 +26,18 @@
 
                     <CheckBox Text="Allow Label Editing" Name="allowLabelEditingCheckBox" Margin="0,5,0,0" CheckedChanged="AllowLabelEditingCheckBox_CheckedChanged" IsChecked="False" />
                     <Button Text="Begin Selected Label Editing" Name="beginSelectedLabelEditingButton" Margin="0,3,0,0" Click="BeginSelectedLabelEditingButton_Click" Enabled="False" />
+                    <CheckBox Text="Cancel BeforeLabelEdit Events" Name="cancelBeforeLabelEditEventsCheckBox" Margin="0,5,0,0" IsChecked="False" />
+                    <CheckBox Text="Cancel AfterLabelEdit Events" Name="cancelAfterLabelEditEventsCheckBox" Margin="0,5,0,0" IsChecked="False" />
 
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                         <Label Text="Grid Lines:" VerticalAlignment="Center"/>
                         <ComboBox IsEditable="false" Name="gridLinesComboBox" Margin="5,0,0,0" SelectedItemChanged="GridLinesComboBox_SelectedItemChanged"/>
                     </StackPanel>
 
-                    <CheckBox Text="Cancel BeforeLabelEdit Events" Name="cancelBeforeLabelEditEventsCheckBox" Margin="0,5,0,0" IsChecked="False" />
-                    <CheckBox Text="Cancel AfterLabelEdit Events" Name="cancelAfterLabelEditEventsCheckBox" Margin="0,5,0,0" IsChecked="False" />
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <Label Text="Sort Mode:" VerticalAlignment="Center"/>
+                        <ComboBox IsEditable="false" Name="sortModeComboBox" Margin="5,0,0,0" SelectedItemChanged="SortModeComboBox_SelectedItemChanged"/>
+                    </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Margin="10,0,0,0">

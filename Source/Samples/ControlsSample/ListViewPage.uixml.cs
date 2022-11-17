@@ -1,5 +1,6 @@
 ﻿using Alternet.UI;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ControlsSample
@@ -11,6 +12,8 @@ namespace ControlsSample
         public ListViewPage()
         {
             InitializeComponent();
+
+            listView.CustomItemSortComparer = Comparer<ListViewItem>.Create((a, b) => b.Text.Length.CompareTo(a.Text.Length));
         }
 
         public IPageSite? Site
@@ -36,6 +39,10 @@ namespace ControlsSample
                     gridLinesComboBox.Items.Add(item ?? throw new Exception());
                 gridLinesComboBox.SelectedIndex = 0;
 
+                foreach (var item in Enum.GetValues(typeof(ListViewSortMode)))
+                    sortModeComboBox.Items.Add(item ?? throw new Exception());
+                sortModeComboBox.SelectedIndex = 0;
+
                 site = value;
             }
         }
@@ -48,6 +55,11 @@ namespace ControlsSample
         private void GridLinesComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
             listView.GridLinesDisplayMode = (ListViewGridLinesDisplayMode)(gridLinesComboBox.SelectedItem ?? throw new InvalidOperationException());
+        }
+
+        private void SortModeComboBox_SelectedItemChanged(object? sender, EventArgs e)
+        {
+            listView.SortMode = (ListViewSortMode)(sortModeComboBox.SelectedItem ?? throw new InvalidOperationException());
         }
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
