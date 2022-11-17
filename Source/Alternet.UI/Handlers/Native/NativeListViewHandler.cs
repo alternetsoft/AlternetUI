@@ -172,8 +172,17 @@ namespace Alternet.UI
             set => NativeControl.SortMode = (Native.ListViewSortMode)value;
         }
 
+        bool clearing;
+
         /// <inheritdoc/>
-        public override void Clear() => NativeControl.Clear();
+        public override void Clear()
+        {
+            clearing = true;
+            NativeControl.Clear();
+            Control.Items.Clear();
+            Control.Columns.Clear();
+            clearing = false;
+        }
 
         /// <inheritdoc/>
         public override bool ColumnHeaderVisible
@@ -350,23 +359,26 @@ namespace Alternet.UI
 
         private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<ListViewItem> e)
         {
-            NativeControl.RemoveItemAt(e.Index);
+            if (!clearing)
+                NativeControl.RemoveItemAt(e.Index);
             e.Item.Index = null;
             e.Item.ListView = null;
         }
 
         private void Columns_ItemInserted(object? sender, CollectionChangeEventArgs<ListViewColumn> e)
         {
-            NativeControl.InsertColumnAt(
-                e.Item.Index ?? throw new Exception(),
-                e.Item.Title,
-                e.Item.Width,
-                (Native.ListViewColumnWidthMode)e.Item.WidthMode);
+            if (!clearing)
+                NativeControl.InsertColumnAt(
+                    e.Item.Index ?? throw new Exception(),
+                    e.Item.Title,
+                    e.Item.Width,
+                    (Native.ListViewColumnWidthMode)e.Item.WidthMode);
         }
 
         private void Columns_ItemRemoved(object? sender, CollectionChangeEventArgs<ListViewColumn> e)
         {
-            NativeControl.RemoveColumnAt(e.Item.Index ?? throw new Exception());
+            if (!clearing)
+                NativeControl.RemoveColumnAt(e.Item.Index ?? throw new Exception());
         }
     }
 }

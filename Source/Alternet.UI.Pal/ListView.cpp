@@ -79,6 +79,9 @@ namespace Alternet::UI
 
     void ListView::InsertItem(wxListView* listView, wxListItem& item)
     {
+        if (_view == ListViewView::Details && item.GetColumn() >= _columns.size())
+            return;
+
         if (_view == ListViewView::Details || item.GetColumn() == 0)
         {
             if (item.GetColumn() > 0)
@@ -419,6 +422,8 @@ namespace Alternet::UI
 
     void ListView::Clear()
     {
+        _rows.clear();
+        _columns.clear();
         GetListView()->ClearAll();
     }
 

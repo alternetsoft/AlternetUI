@@ -26,8 +26,7 @@ namespace ControlsSample
                 listView.SmallImageList = imageLists.Small;
                 listView.LargeImageList = imageLists.Large;
 
-                listView.Columns.Add(new ListViewColumn("Column 1"));
-                listView.Columns.Add(new ListViewColumn("Column 2"));
+                InitializeColumns();
 
                 AddItems(50);
 
@@ -45,6 +44,12 @@ namespace ControlsSample
 
                 site = value;
             }
+        }
+
+        private void InitializeColumns()
+        {
+            listView.Columns.Add(new ListViewColumn("Column 1"));
+            listView.Columns.Add(new ListViewColumn("Column 2"));
         }
 
         private void ViewComboBox_SelectedItemChanged(object? sender, EventArgs e)
@@ -102,7 +107,7 @@ namespace ControlsSample
 
         private void AddItemButton_Click(object? sender, EventArgs e)
         {
-            listView.Items.Add(new ListViewItem("Item " + (listView.Items.Count + 1)));
+            listView.Items.Add(new ListViewItem("Item " + (listView.Items.Count + 1), 1));
         }
 
         private void ListView_BeforeLabelEdit(object? sender, ListViewItemLabelEditEventArgs e)
@@ -202,6 +207,12 @@ namespace ControlsSample
                 listView.Items.Insert(listView.Items.IndexOf(item), newItem);
                 newItem.EnsureVisible();
             }
+        }
+
+        private void ClearButton_Click(object sender, System.EventArgs e)
+        {
+            listView.Clear();
+            InitializeColumns();
         }
     }
 }
