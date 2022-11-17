@@ -57,6 +57,8 @@
                     <Button Text="Focus Last Item" Name="focusLastItemButton" Margin="0,3,0,0" Click="FocusLastItemButton_Click" />
                     <Button Text="Modify Last Item" Name="modifyLastItemButton" Margin="0,3,0,0" Click="ModifyLastItemButton_Click" />
                     <Button Text="Add Last Item Sibling" Name="addLastItemSiblingButton" Margin="0,3,0,0" Click="AddLastItemSiblingButton_Click" />
+
+                    <CheckBox Text="Column Header Visible" Name="columnHeaderVisibleCheckBox" Margin="0,5,0,0" IsChecked="True" CheckedChanged="ColumnHeaderVisibleCheckBox_CheckedChanged" />
                 </StackPanel>
             </StackPanel>
         </GroupBox>

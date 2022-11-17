@@ -236,5 +236,10 @@ namespace ControlsSample
         {
             listView.Columns[1].Title += "X";
         }
+
+        private void ColumnHeaderVisibleCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            listView.ColumnHeaderVisible = columnHeaderVisibleCheckBox.IsChecked;
+        }
     }
 }
