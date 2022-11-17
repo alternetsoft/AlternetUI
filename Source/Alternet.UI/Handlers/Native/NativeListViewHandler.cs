@@ -407,7 +407,7 @@ namespace Alternet.UI
 
         public override void SetColumnTitle(int columnIndex, string title)
         {
-
+            NativeControl.SetColumnTitle(columnIndex, title);
         }
 
     }

@@ -230,5 +230,10 @@ namespace ControlsSample
         {
             listView.Columns.Add(new ListViewColumn("New Column"));
         }
+
+        private void ModifyColumnTitleButton_Click(object sender, System.EventArgs e)
+        {
+            listView.Columns[1].Title += "X";
+        }
     }
 }
