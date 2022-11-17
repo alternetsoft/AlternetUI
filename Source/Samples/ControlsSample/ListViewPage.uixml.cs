@@ -164,6 +164,17 @@ namespace ControlsSample
                 columnHeader = "<none>";
 
             site?.LogEvent($"HitTest result: Item: '{result.Item?.Text ?? "<none>"}, Column: '{columnHeader}, Location: {result.Location}'");
+
+            if (logItemBoundsOnClickCheckBox.IsChecked && result.Item != null)
+            {
+                int index = result.Item.Index!.Value;
+
+                var entireItemBounds = listView.GetItemBounds(index, ListViewItemBoundsPortion.EntireItem);
+                var iconBounds = listView.GetItemBounds(index, ListViewItemBoundsPortion.Icon);
+                var labelBounds = listView.GetItemBounds(index, ListViewItemBoundsPortion.Label);
+                
+                site?.LogEvent($"Item Bounds: {entireItemBounds}, Icon: {iconBounds}, Label: {labelBounds}");
+            }
         }
 
         private void ModifyLastItemButton_Click(object sender, System.EventArgs e)

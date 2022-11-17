@@ -38,6 +38,8 @@
                         <Label Text="Sort Mode:" VerticalAlignment="Center"/>
                         <ComboBox IsEditable="false" Name="sortModeComboBox" Margin="5,0,0,0" SelectedItemChanged="SortModeComboBox_SelectedItemChanged"/>
                     </StackPanel>
+
+                    <CheckBox Text="Log Item Bounds on Click" Name="logItemBoundsOnClickCheckBox" Margin="0,5,0,0" IsChecked="False" />
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Margin="10,0,0,0">
