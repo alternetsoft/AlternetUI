@@ -32,6 +32,7 @@ namespace Alternet.UI
     public class ListViewItem
     {
         private const string ItemIsNotConnectedToListView = "This list view item is not connected to list view.";
+        private ListView? listView;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListViewItem"/> class with default values.
@@ -104,7 +105,29 @@ namespace Alternet.UI
         /// A <see cref="ListView"/> that represents the parent list view that the item is assigned to,
         /// or <c>null</c> if the item has not been assigned to a tree view.
         /// </value>
-        public ListView? ListView { get; internal set; }
+        public ListView? ListView
+        {
+            get => listView;
+            internal set
+            {
+                listView = value;
+                ApplyColumns();
+            }
+        }
+
+        internal void ApplyColumns()
+        {
+            if (listView == null)
+                return;
+
+            int columnCount = listView.Columns.Count;
+
+            for (int i = Cells.Count; i > columnCount; i--)
+                Cells.RemoveAt(i);
+
+            for (int i = Cells.Count; i < columnCount; i++)
+                Cells.Add(new ListViewItemCell());
+        }
 
         /// <summary>
         /// Initiates the editing of the list view item label.

@@ -368,17 +368,30 @@ namespace Alternet.UI
         private void Columns_ItemInserted(object? sender, CollectionChangeEventArgs<ListViewColumn> e)
         {
             if (!clearing)
+            {
                 NativeControl.InsertColumnAt(
                     e.Item.Index ?? throw new Exception(),
                     e.Item.Title,
                     e.Item.Width,
                     (Native.ListViewColumnWidthMode)e.Item.WidthMode);
+
+                ApplyColumnsChangeToItems();
+            }
         }
 
         private void Columns_ItemRemoved(object? sender, CollectionChangeEventArgs<ListViewColumn> e)
         {
             if (!clearing)
+            {
                 NativeControl.RemoveColumnAt(e.Item.Index ?? throw new Exception());
+                ApplyColumnsChangeToItems();
+            }
+        }
+
+        private void ApplyColumnsChangeToItems()
+        {
+            foreach (var item in Control.Items)
+                item.ApplyColumns();
         }
     }
 }

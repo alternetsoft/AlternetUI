@@ -42,6 +42,10 @@ namespace ControlsSample
                     sortModeComboBox.Items.Add(item ?? throw new Exception());
                 sortModeComboBox.SelectedIndex = 0;
 
+                foreach (var item in Enum.GetValues(typeof(ListViewColumnWidthMode)))
+                    columnWidthModeComboBox.Items.Add(item ?? throw new Exception());
+                columnWidthModeComboBox.SelectedIndex = 0;
+
                 site = value;
             }
         }
@@ -65,6 +69,11 @@ namespace ControlsSample
         private void SortModeComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
             listView.SortMode = (ListViewSortMode)(sortModeComboBox.SelectedItem ?? throw new InvalidOperationException());
+        }
+
+        private void ColumnWidthModeComboBox_SelectedItemChanged(object? sender, EventArgs e)
+        {
+            listView.Columns[1].WidthMode = (ListViewColumnWidthMode)(columnWidthModeComboBox.SelectedItem ?? throw new InvalidOperationException());
         }
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
@@ -107,7 +116,9 @@ namespace ControlsSample
 
         private void AddItemButton_Click(object? sender, EventArgs e)
         {
-            listView.Items.Add(new ListViewItem("Item " + (listView.Items.Count + 1), 1));
+            var item = new ListViewItem("Item " + (listView.Items.Count + 1), 1);
+            listView.Items.Add(item);
+            item.EnsureVisible();
         }
 
         private void ListView_BeforeLabelEdit(object? sender, ListViewItemLabelEditEventArgs e)
@@ -213,6 +224,11 @@ namespace ControlsSample
         {
             listView.Clear();
             InitializeColumns();
+        }
+
+        private void AddColumnButton_Click(object sender, System.EventArgs e)
+        {
+            listView.Columns.Add(new ListViewColumn("New Column"));
         }
     }
 }
