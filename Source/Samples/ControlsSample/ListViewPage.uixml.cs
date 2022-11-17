@@ -206,6 +206,7 @@ namespace ControlsSample
                     imageIndex = 0;
 
                 item.ImageIndex = imageIndex;
+                item.Cells[1].ImageIndex = imageIndex;
             }
         }
 

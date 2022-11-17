@@ -296,7 +296,8 @@ namespace Alternet::UI
         row.SetCell(columnIndex, cell);
         _rows[itemIndex] = row;
 
-        GetListView()->SetItem(cell);
+        if (_view == ListViewView::Details)
+            GetListView()->SetItem(cell);
     }
 
     void ListView::SetFocusedItemIndex(int value)

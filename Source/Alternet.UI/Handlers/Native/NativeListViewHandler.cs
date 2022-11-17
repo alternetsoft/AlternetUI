@@ -409,6 +409,5 @@ namespace Alternet.UI
         {
             NativeControl.SetColumnTitle(columnIndex, title);
         }
-
     }
 }
