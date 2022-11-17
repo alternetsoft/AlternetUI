@@ -258,7 +258,8 @@ namespace Alternet::UI
 
         int width = GetWxColumnWidth(fixedWidth, widthMode);
 
-        listView->SetColumnWidth(columnIndex, width);
+        if (_view == ListViewView::Details)
+            listView->SetColumnWidth(columnIndex, width);
 
         auto column = _columns[columnIndex];
         column.width = width;
@@ -270,7 +271,9 @@ namespace Alternet::UI
         auto column = _columns[columnIndex];
         column.column.SetText(wxStr(title));
         _columns[columnIndex] = column;
-        GetListView()->SetColumn(columnIndex, column.column);
+
+        if (_view == ListViewView::Details)
+            GetListView()->SetColumn(columnIndex, column.column);
     }
 
     void ListView::SetItemText(int itemIndex, int columnIndex, const string& text)
