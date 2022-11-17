@@ -64,6 +64,8 @@ void Clear();
 void EnsureItemVisible(int itemIndex);
 void SetItemText(int itemIndex, int columnIndex, const string& text);
 void SetItemImageIndex(int itemIndex, int columnIndex, int imageIndex);
+void SetColumnWidth(int columnIndex, double fixedWidth, ListViewColumnWidthMode widthMode);
+void SetColumnTitle(int columnIndex, const string& text);
 public:
 enum class ListViewEvent
 {

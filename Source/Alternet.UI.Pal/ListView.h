@@ -25,6 +25,13 @@ namespace Alternet::UI
         void ApplySmallImageList(wxListView* value);
 
 
+        class Column
+        {
+        public:
+            wxListItem column;
+            int width = 80;
+        };
+
         class Row
         {
         public:
@@ -74,7 +81,7 @@ namespace Alternet::UI
         ListViewSelectionMode _selectionMode = ListViewSelectionMode::Single;
 
         std::vector<Row> _rows;
-        std::vector<wxListItem> _columns;
+        std::vector<Column> _columns;
         ListViewView _view = ListViewView::List;
 
         bool _allowLabelEdit = false;
@@ -110,7 +117,7 @@ namespace Alternet::UI
 
         wxListView* GetListView();
 
-        void InsertColumn(wxListView* listView, const wxListItem& column);
+        void InsertColumn(wxListView* listView, const Column& column);
         void InsertItem(wxListView* listView, wxListItem& item);
 
         Row& GetRow(int index);
@@ -118,5 +125,7 @@ namespace Alternet::UI
         long GetStyle();
 
         void RaiseSelectionChanged();
+
+        int GetWxColumnWidth(double width, ListViewColumnWidthMode widthMode);
     };
 }

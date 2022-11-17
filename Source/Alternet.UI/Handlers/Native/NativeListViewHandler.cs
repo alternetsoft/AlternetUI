@@ -370,13 +370,16 @@ namespace Alternet.UI
             if (!clearing)
             {
                 NativeControl.InsertColumnAt(
-                    e.Item.Index ?? throw new Exception(),
+                    e.Index,
                     e.Item.Title,
                     e.Item.Width,
                     (Native.ListViewColumnWidthMode)e.Item.WidthMode);
 
                 ApplyColumnsChangeToItems();
             }
+
+            e.Item.ListView = Control;
+            e.Item.Index = e.Index;
         }
 
         private void Columns_ItemRemoved(object? sender, CollectionChangeEventArgs<ListViewColumn> e)
@@ -386,6 +389,9 @@ namespace Alternet.UI
                 NativeControl.RemoveColumnAt(e.Item.Index ?? throw new Exception());
                 ApplyColumnsChangeToItems();
             }
+
+            e.Item.ListView = null;
+            e.Item.Index = null;
         }
 
         private void ApplyColumnsChangeToItems()
@@ -393,5 +399,16 @@ namespace Alternet.UI
             foreach (var item in Control.Items)
                 item.ApplyColumns();
         }
+
+        public override void SetColumnWidth(int columnIndex, double width, ListViewColumnWidthMode widthMode)
+        {
+            NativeControl.SetColumnWidth(columnIndex, width, (Native.ListViewColumnWidthMode)widthMode);
+        }
+
+        public override void SetColumnTitle(int columnIndex, string title)
+        {
+
+        }
+
     }
 }

@@ -100,6 +100,16 @@ namespace Alternet.UI
         /// </summary>
         public abstract void SetItemImageIndex(int itemIndex, int columnIndex, int? imageIndex);
 
+        /// <summary>
+        /// Gets or sets a list view item column width.
+        /// </summary>
+        public abstract void SetColumnWidth(int columnIndex, double width, ListViewColumnWidthMode widthMode);
+
+        /// <summary>
+        /// Gets or sets a list view item column title.
+        /// </summary>
+        public abstract void SetColumnTitle(int columnIndex, string title);
+
         /// <inheritdoc/>
         protected override bool VisualChildNeedsNativeControl => true;
     }

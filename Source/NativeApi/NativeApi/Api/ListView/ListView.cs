@@ -69,5 +69,8 @@ namespace NativeApi.Api
 
         public void SetItemText(int itemIndex, int columnIndex, string text) => throw new Exception();
         public void SetItemImageIndex(int itemIndex, int columnIndex, int imageIndex) => throw new Exception();
+
+        public void SetColumnWidth(int columnIndex, double fixedWidth, ListViewColumnWidthMode widthMode) => throw new Exception();
+        public void SetColumnTitle(int columnIndex, string text) => throw new Exception();
     }
 }

@@ -33,8 +33,6 @@ namespace Alternet.UI
         /// </summary>
         public ListView()
         {
-            Columns.ItemInserted += Columns_ItemInserted;
-            Columns.ItemRemoved += Columns_ItemRemoved;
         }
 
         /// <inheritdoc/>
@@ -612,18 +610,6 @@ namespace Alternet.UI
                 changed = selectedIndices.Remove(index);
 
             return changed;
-        }
-
-        private void Columns_ItemInserted(object? sender, CollectionChangeEventArgs<ListViewColumn> e)
-        {
-            e.Item.ListView = this;
-            e.Item.Index = e.Index;
-        }
-
-        private void Columns_ItemRemoved(object? sender, CollectionChangeEventArgs<ListViewColumn> e)
-        {
-            e.Item.ListView = null;
-            e.Item.Index = null;
         }
     }
 }

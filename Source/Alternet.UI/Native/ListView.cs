@@ -346,6 +346,18 @@ namespace Alternet.UI.Native
             NativeApi.ListView_SetItemImageIndex_(NativePointer, itemIndex, columnIndex, imageIndex);
         }
         
+        public void SetColumnWidth(int columnIndex, double fixedWidth, ListViewColumnWidthMode widthMode)
+        {
+            CheckDisposed();
+            NativeApi.ListView_SetColumnWidth_(NativePointer, columnIndex, fixedWidth, widthMode);
+        }
+        
+        public void SetColumnTitle(int columnIndex, string text)
+        {
+            CheckDisposed();
+            NativeApi.ListView_SetColumnTitle_(NativePointer, columnIndex, text);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -551,6 +563,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListView_SetItemImageIndex_(IntPtr obj, int itemIndex, int columnIndex, int imageIndex);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_SetColumnWidth_(IntPtr obj, int columnIndex, double fixedWidth, ListViewColumnWidthMode widthMode);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_SetColumnTitle_(IntPtr obj, int columnIndex, string text);
             
         }
     }

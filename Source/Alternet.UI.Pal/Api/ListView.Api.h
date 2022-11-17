@@ -310,6 +310,20 @@ ALTERNET_UI_API void ListView_SetItemImageIndex_(ListView* obj, int itemIndex, i
         });
 }
 
+ALTERNET_UI_API void ListView_SetColumnWidth_(ListView* obj, int columnIndex, double fixedWidth, ListViewColumnWidthMode widthMode)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetColumnWidth(columnIndex, fixedWidth, widthMode);
+        });
+}
+
+ALTERNET_UI_API void ListView_SetColumnTitle_(ListView* obj, int columnIndex, const char16_t* text)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetColumnTitle(columnIndex, text);
+        });
+}
+
 ALTERNET_UI_API void ListView_SetEventCallback_(ListView::ListViewEventCallbackType callback)
 {
     ListView::SetEventCallback(callback);

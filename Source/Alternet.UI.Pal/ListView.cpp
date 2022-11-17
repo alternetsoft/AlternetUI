@@ -37,13 +37,15 @@ namespace Alternet::UI
 
     void ListView::InsertColumnAt(int index, const string& header, double width, ListViewColumnWidthMode widthMode)
     {
-        wxListItem column;
-        column.SetText(wxStr(header));
-        column.SetColumn(index);
+        Column column;
+        column.column.SetText(wxStr(header));
+        column.column.SetColumn(index);
+        column.width = GetWxColumnWidth(width, widthMode);
+
         _columns.emplace(_columns.begin() + index, column);
 
         if (IsWxWindowCreated() && _view == ListViewView::Details)
-            InsertColumn(GetListView(),column);
+            InsertColumn(GetListView(), column);
     }
 
     void ListView::RemoveColumnAt(int index)
@@ -233,6 +235,42 @@ namespace Alternet::UI
         window->Update();
 
         OnLabelEditEvent(event, ListViewEvent::AfterItemLabelEdit);
+    }
+
+    int ListView::GetWxColumnWidth(double width, ListViewColumnWidthMode widthMode)
+    {
+        switch (widthMode)
+        {
+        case ListViewColumnWidthMode::Fixed:
+            return fromDip(width, GetListView());
+        case ListViewColumnWidthMode::AutoSize:
+            return wxLIST_AUTOSIZE;
+        case ListViewColumnWidthMode::AutoSizeHeader:
+            return wxLIST_AUTOSIZE_USEHEADER;
+        default:
+            throwExNoInfo;
+        }
+    }
+
+    void ListView::SetColumnWidth(int columnIndex, double fixedWidth, ListViewColumnWidthMode widthMode)
+    {
+        auto listView = GetListView();
+
+        int width = GetWxColumnWidth(fixedWidth, widthMode);
+
+        listView->SetColumnWidth(columnIndex, width);
+
+        auto column = _columns[columnIndex];
+        column.width = width;
+        _columns[columnIndex] = column;
+    }
+
+    void ListView::SetColumnTitle(int columnIndex, const string& title)
+    {
+        auto column = _columns[columnIndex];
+        column.column.SetText(wxStr(title));
+        _columns[columnIndex] = column;
+        GetListView()->SetColumn(columnIndex, column.column);
     }
 
     void ListView::SetItemText(int itemIndex, int columnIndex, const string& text)
@@ -619,9 +657,9 @@ namespace Alternet::UI
         return dynamic_cast<wxListView*>(GetWxWindow());
     }
 
-    void ListView::InsertColumn(wxListView* listView, const wxListItem& column)
+    void ListView::InsertColumn(wxListView* listView, const Column& column)
     {
-        listView->InsertColumn(column.GetColumn(), column.GetText());
+        listView->InsertColumn(column.column.GetColumn(), column.column.GetText(), 0, column.width);
     }
 
     long ListView::GetStyle()
