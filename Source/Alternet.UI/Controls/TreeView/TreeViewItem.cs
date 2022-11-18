@@ -67,7 +67,7 @@ namespace Alternet.UI
         /// The zero-based index of the image within the <see cref="TreeView.ImageList"/>
         /// associated with the <see cref="TreeView"/> that contains the item.
         /// </param>
-        public TreeViewItem(string text, int? imageIndex)
+        public TreeViewItem(string text, int? imageIndex) : this()
         {
             Text = text;
             ImageIndex = imageIndex;
