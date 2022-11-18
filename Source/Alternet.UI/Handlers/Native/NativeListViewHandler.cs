@@ -44,24 +44,24 @@ namespace Alternet.UI
             NativeControl.ColumnClick += NativeControl_ColumnClick;
             NativeControl.BeforeItemLabelEdit += NativeControl_BeforeItemLabelEdit;
             NativeControl.AfterItemLabelEdit += NativeControl_AfterItemLabelEdit;
-            NativeControl.CompareItemsForCustomSort += NativeControl_CompareItemsForCustomSort;
+            //NativeControl.CompareItemsForCustomSort += NativeControl_CompareItemsForCustomSort;
         }
 
-        private void NativeControl_CompareItemsForCustomSort(
-            object? sender,
-            Native.NativeEventArgs<Native.CompareListViewItemsEventData> e)
-        {
-            int result = 0;
-            if (CustomItemSortComparer != null)
-            {
-                var item1 = Control.Items[e.Data.item1Index];
-                var item2 = Control.Items[e.Data.item2Index];
+        //private void NativeControl_CompareItemsForCustomSort(
+        //    object? sender,
+        //    Native.NativeEventArgs<Native.CompareListViewItemsEventData> e)
+        //{
+        //    int result = 0;
+        //    if (CustomItemSortComparer != null)
+        //    {
+        //        var item1 = Control.Items[e.Data.item1Index];
+        //        var item2 = Control.Items[e.Data.item2Index];
 
-                result = CustomItemSortComparer.Compare(item1, item2);
-            }
+        //        result = CustomItemSortComparer.Compare(item1, item2);
+        //    }
 
-            e.Result = (IntPtr)result;
-        }
+        //    e.Result = (IntPtr)result;
+        //}
 
         private void NativeControl_BeforeItemLabelEdit(
             object? sender,
@@ -162,15 +162,15 @@ namespace Alternet.UI
         public override Rect GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion) =>
             NativeControl.GetItemBounds(itemIndex, (Native.ListViewItemBoundsPortion)portion);
 
-        /// <inheritdoc/>
-        public override IComparer<ListViewItem>? CustomItemSortComparer { get; set; }
+        ///// <inheritdoc/>
+        //public override IComparer<ListViewItem>? CustomItemSortComparer { get; set; }
 
-        /// <inheritdoc/>
-        public override ListViewSortMode SortMode
-        {
-            get => (ListViewSortMode)NativeControl.SortMode;
-            set => NativeControl.SortMode = (Native.ListViewSortMode)value;
-        }
+        ///// <inheritdoc/>
+        //public override ListViewSortMode SortMode
+        //{
+        //    get => (ListViewSortMode)NativeControl.SortMode;
+        //    set => NativeControl.SortMode = (Native.ListViewSortMode)value;
+        //}
 
         bool clearing;
 
@@ -238,7 +238,7 @@ namespace Alternet.UI
             NativeControl.ColumnClick -= NativeControl_ColumnClick;
             NativeControl.BeforeItemLabelEdit -= NativeControl_BeforeItemLabelEdit;
             NativeControl.AfterItemLabelEdit -= NativeControl_AfterItemLabelEdit;
-            NativeControl.CompareItemsForCustomSort -= NativeControl_CompareItemsForCustomSort;
+            //NativeControl.CompareItemsForCustomSort -= NativeControl_CompareItemsForCustomSort;
 
             base.OnDetach();
         }

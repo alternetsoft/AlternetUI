@@ -44,11 +44,6 @@
 
                     <CheckBox Text="Column Header Visible" Name="columnHeaderVisibleCheckBox" Margin="0,5,0,0" IsChecked="True" CheckedChanged="ColumnHeaderVisibleCheckBox_CheckedChanged" />
 
-                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                        <Label Text="Sort Mode:" VerticalAlignment="Center"/>
-                        <ComboBox IsEditable="false" Name="sortModeComboBox" Margin="5,0,0,0" SelectedItemChanged="SortModeComboBox_SelectedItemChanged"/>
-                    </StackPanel>
-
                     <CheckBox Text="Log Item Bounds on Click" Name="logItemBoundsOnClickCheckBox" Margin="0,5,0,0" IsChecked="False" />
 
                     <Button Text="Add Column" Name="AddColumnButton" Margin="0,3,0,0" Click="AddColumnButton_Click"/>

@@ -12,8 +12,6 @@ namespace ControlsSample
         public ListViewPage()
         {
             InitializeComponent();
-
-            listView.CustomItemSortComparer = Comparer<ListViewItem>.Create((a, b) => b.Text.Length.CompareTo(a.Text.Length));
         }
 
         public IPageSite? Site
@@ -38,10 +36,6 @@ namespace ControlsSample
                     gridLinesComboBox.Items.Add(item ?? throw new Exception());
                 gridLinesComboBox.SelectedIndex = 0;
 
-                foreach (var item in Enum.GetValues(typeof(ListViewSortMode)))
-                    sortModeComboBox.Items.Add(item ?? throw new Exception());
-                sortModeComboBox.SelectedIndex = 0;
-
                 foreach (var item in Enum.GetValues(typeof(ListViewColumnWidthMode)))
                     columnWidthModeComboBox.Items.Add(item ?? throw new Exception());
                 columnWidthModeComboBox.SelectedIndex = 0;
@@ -64,11 +58,6 @@ namespace ControlsSample
         private void GridLinesComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
             listView.GridLinesDisplayMode = (ListViewGridLinesDisplayMode)(gridLinesComboBox.SelectedItem ?? throw new InvalidOperationException());
-        }
-
-        private void SortModeComboBox_SelectedItemChanged(object? sender, EventArgs e)
-        {
-            listView.SortMode = (ListViewSortMode)(sortModeComboBox.SelectedItem ?? throw new InvalidOperationException());
         }
 
         private void ColumnWidthModeComboBox_SelectedItemChanged(object? sender, EventArgs e)

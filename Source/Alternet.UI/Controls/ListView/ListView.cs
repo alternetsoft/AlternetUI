@@ -94,16 +94,16 @@ namespace Alternet.UI
         public Rect GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem) =>
             Handler.GetItemBounds(itemIndex, portion);
 
-        /// <summary>
-        /// Gets or sets the custom sorting comparer for the control.
-        /// </summary>
-        public IComparer<ListViewItem>? CustomItemSortComparer { get => Handler.CustomItemSortComparer; set => Handler.CustomItemSortComparer = value; }
+        ///// <summary>
+        ///// Gets or sets the custom sorting comparer for the control.
+        ///// </summary>
+        //public IComparer<ListViewItem>? CustomItemSortComparer { get => Handler.CustomItemSortComparer; set => Handler.CustomItemSortComparer = value; }
 
-        /// <summary>
-        /// Gets or sets the sort mode for items in the control.
-        /// </summary>
-        /// <value>One of the <see cref="ListViewSortMode"/> values. The default is <see cref="ListViewSortMode.None"/>.</value>
-        public ListViewSortMode SortMode { get => Handler.SortMode; set => Handler.SortMode = value; }
+        ///// <summary>
+        ///// Gets or sets the sort mode for items in the control.
+        ///// </summary>
+        ///// <value>One of the <see cref="ListViewSortMode"/> values. The default is <see cref="ListViewSortMode.None"/>.</value>
+        //public ListViewSortMode SortMode { get => Handler.SortMode; set => Handler.SortMode = value; }
 
         /// <summary>
         /// Removes all items and columns from the control.
