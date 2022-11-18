@@ -355,6 +355,13 @@ namespace Alternet.UI
         private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<ListViewItem> e)
         {
             InsertItem(e.Index, e.Item);
+            UpdateItemIndices(e.Index + 1);
+        }
+
+        void UpdateItemIndices(int startIndex)
+        {
+            for (int i = startIndex; i < Control.Items.Count; i++)
+                Control.Items[i].Index = i;
         }
 
         private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<ListViewItem> e)
@@ -363,6 +370,8 @@ namespace Alternet.UI
                 NativeControl.RemoveItemAt(e.Index);
             e.Item.Index = null;
             e.Item.ListView = null;
+
+            UpdateItemIndices(e.Index);
         }
 
         private void Columns_ItemInserted(object? sender, CollectionChangeEventArgs<ListViewColumn> e)

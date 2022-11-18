@@ -286,8 +286,11 @@ namespace Alternet::UI
         row.SetCell(columnIndex, cell);
         _rows[itemIndex] = row;
 
-        auto listView = GetListView();
-        listView->SetItem(cell);
+        if (_view == ListViewView::Details || columnIndex == 0)
+        {
+            auto listView = GetListView();
+            listView->SetItem(cell);
+        }
     }
 
     void ListView::SetItemImageIndex(int itemIndex, int columnIndex, int imageIndex)
