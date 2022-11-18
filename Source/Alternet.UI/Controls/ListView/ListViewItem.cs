@@ -122,7 +122,7 @@ namespace Alternet.UI
 
             int columnCount = listView.Columns.Count;
 
-            for (int i = Cells.Count; i > columnCount; i--)
+            for (int i = Cells.Count - 1; i >= columnCount; i--)
                 Cells.RemoveAt(i);
 
             for (int i = Cells.Count; i < columnCount; i++)

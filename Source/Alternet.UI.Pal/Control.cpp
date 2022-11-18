@@ -56,14 +56,16 @@ namespace Alternet::UI
 
     void Control::OnDestroy(wxWindowDestroyEvent& event)
     {
+        auto wxWindow = event.GetWindow();
+        if (wxWindow != _wxWindow)
+            return;
+
         auto app = Application::GetCurrent();
         if (app == nullptr || app->GetInUixmlPreviewerMode())
             return; // HACK. This gets invoked by wxWidgets on a dead this pointer.
 
         if (!_flags.IsSet(ControlFlags::RecreatingWxWindow))
             _wxWindow = nullptr;
-
-        auto wxWindow = event.GetWindow();
 
         wxWindow->Unbind(wxEVT_PAINT, &Control::OnPaint, this);
         //wxWindow->Unbind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
