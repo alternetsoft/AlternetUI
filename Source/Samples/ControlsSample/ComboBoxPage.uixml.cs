@@ -113,5 +113,15 @@ namespace ControlsSample
             var message = $"ComboBox text selection is: [{start}..{start + length}], selected text: '{selectedText}'";
             MessageBox.Show(message, "ComboBox Text Selection");
         }
+
+        private void SetTextToAbcButton_Click(object sender, System.EventArgs e)
+        {
+            comboBox.Text = "abc";
+        }
+
+        private void SetTextToOneButton_Click(object sender, System.EventArgs e)
+        {
+            comboBox.Text = "One";
+        }
     }
 }
