@@ -182,7 +182,7 @@ namespace Alternet.UI
 
                 if (value == null)
                 {
-                    SelectedIndex = -1;
+                    SelectedIndex = null;
                     return;
                 }
 

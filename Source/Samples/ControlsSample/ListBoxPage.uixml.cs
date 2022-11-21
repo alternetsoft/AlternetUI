@@ -22,6 +22,13 @@ namespace ControlsSample
                 listBox.Items.Add("One");
                 listBox.Items.Add("Two");
                 listBox.Items.Add("Three");
+                listBox.Items.Add("Four");
+                listBox.Items.Add("Five");
+                listBox.Items.Add("Six");
+                listBox.Items.Add("Seven");
+                listBox.Items.Add("Eight");
+                listBox.Items.Add("Nine");
+                listBox.Items.Add("Ten");
                 site = value;
             }
         }
@@ -76,6 +83,27 @@ namespace ControlsSample
             var count = listBox.Items.Count;
             if (count > 0)
                 listBox.EnsureVisible(count - 1);
+        }
+
+        private void SelectItemAtIndex2Button_Click(object sender, System.EventArgs e)
+        {
+            int index = 2;
+            var count = listBox.Items.Count;
+            if (index < count)
+                listBox.SelectedIndex = index;
+        }
+
+        private void DeselectAllButton_Click(object sender, System.EventArgs e)
+        {
+            listBox.SelectedItem = null;
+        }
+
+        private void SelectItemAtIndices2And4Button_Click(object sender, System.EventArgs e)
+        {
+            int maxIndex = 4;
+            var count = listBox.Items.Count;
+            if (maxIndex < count)
+                listBox.SelectedIndices = new[] { 2, maxIndex };
         }
     }
 }

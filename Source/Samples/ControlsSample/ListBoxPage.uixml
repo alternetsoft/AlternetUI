@@ -14,6 +14,9 @@
                     <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0" Click="AddManyItemsButton_Click" />
                     <CheckBox Text="Allow Multiple Selection" Name="allowMultipleSelectionCheckBox" Margin="0,10,0,0" CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
                     <Button Text="Ensure Last Item is Visible" Name="ensureLastItemVisibleButton" Margin="0,3,0,0" Click="EnsureLastItemVisibleButton_Click" />
+                    <Button Text="Select Item at Index 2" Name="selectItemAtIndex2Button" Margin="0,3,0,0" Click="SelectItemAtIndex2Button_Click" />
+                    <Button Text="Select Item at Indices 2, 4" Name="selectItemAtIndices2And4Button" Margin="0,3,0,0" Click="SelectItemAtIndices2And4Button_Click" />
+                    <Button Text="Deselect All" Name="deselectAllButton" Margin="0,3,0,0" Click="DeselectAllButton_Click" />
                 </StackPanel>
             </StackPanel>
         </GroupBox>
