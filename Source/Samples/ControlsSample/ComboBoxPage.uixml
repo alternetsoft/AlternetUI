@@ -16,6 +16,8 @@
                     <Button Text="Set SelectedIndex to 2" Name="setSelectedIndexTo2Button" Margin="0,3,0,0" Click="SetSelectedIndexTo2_Click"/>
                     <Button Text="Set SelectedItem to null" Name="setSelectedItemToNullButton" Margin="0,3,0,0" Click="SetSelectedItemToNullButton_Click"/>
                     <CheckBox Text="Allow Text Editing" Name="allowTextEditingCheckBox" Margin="0,10,0,0" CheckedChanged="AllowTextEditingCheckBox_CheckedChanged"/>
+                    <Button Text="Select Text Range [2..5]" Name="selectTextRangeButton" Margin="0,3,0,0" Click="SelectTextRangeButton_Click"/>
+                    <Button Text="Get Text Selection" Name="getTextSelectionButton" Margin="0,3,0,0" Click="GetTextSelectionButton_Click"/>
                 </StackPanel>
             </StackPanel>
         </GroupBox>

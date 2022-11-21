@@ -64,6 +64,20 @@ ALTERNET_UI_API void ComboBox_SetText_(ComboBox* obj, const char16_t* value)
         });
 }
 
+ALTERNET_UI_API int ComboBox_GetSelectionStart_(ComboBox* obj)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetSelectionStart();
+        });
+}
+
+ALTERNET_UI_API int ComboBox_GetSelectionLength_(ComboBox* obj)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetSelectionLength();
+        });
+}
+
 ALTERNET_UI_API void ComboBox_InsertItem_(ComboBox* obj, int index, const char16_t* value)
 {
     MarshalExceptions<void>([&](){
@@ -103,6 +117,20 @@ ALTERNET_UI_API void ComboBox_ClearItems_(ComboBox* obj)
 {
     MarshalExceptions<void>([&](){
             obj->ClearItems();
+        });
+}
+
+ALTERNET_UI_API void ComboBox_SelectTextRange_(ComboBox* obj, int start, int length)
+{
+    MarshalExceptions<void>([&](){
+            obj->SelectTextRange(start, length);
+        });
+}
+
+ALTERNET_UI_API void ComboBox_SelectAllText_(ComboBox* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->SelectAllText();
         });
 }
 

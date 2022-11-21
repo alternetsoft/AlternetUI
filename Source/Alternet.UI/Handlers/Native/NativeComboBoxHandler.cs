@@ -3,12 +3,22 @@ using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
-    internal class NativeComboBoxHandler : NativeControlHandler<ComboBox, Native.ComboBox>
+    internal class NativeComboBoxHandler : ComboBoxHandler
     {
         internal override Native.Control CreateNativeControl()
         {
             return new Native.ComboBox();
         }
+
+        public new Native.ComboBox NativeControl => (Native.ComboBox)base.NativeControl!;
+
+        public override int SelectionStart => NativeControl.SelectionStart;
+
+        public override int SelectionLength => NativeControl.SelectionLength;
+
+        public override void SelectTextRange(int start, int length) => NativeControl.SelectTextRange(start, length);
+
+        public override void SelectAllText() => NativeControl.SelectAllText();
 
         protected override void OnAttach()
         {

@@ -128,6 +128,42 @@ namespace Alternet::UI
         RaiseEvent(ComboBoxEvent::TextChanged);
     }
 
+    int ComboBox::GetSelectionStart()
+    {
+        if (!_isEditable)
+            return 0;
+        
+        long from = 0, to = 0;
+        GetComboBox()->GetSelection(& from, & to);
+        return from;
+    }
+
+    int ComboBox::GetSelectionLength()
+    {
+        if (!_isEditable)
+            return 0;
+
+        long from = 0, to = 0;
+        GetComboBox()->GetSelection(&from, &to);
+        return to - from;
+    }
+
+    void ComboBox::SelectTextRange(int start, int length)
+    {
+        if (!_isEditable)
+            return;
+
+        GetComboBox()->SetSelection(start, start + length);
+    }
+
+    void ComboBox::SelectAllText()
+    {
+        if (IsUsingChoiceControl())
+            return;
+
+        GetComboBox()->SelectAll();
+    }
+
     bool ComboBox::GetIsEditable()
     {
         return _isEditable;

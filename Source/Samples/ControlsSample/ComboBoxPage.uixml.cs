@@ -83,5 +83,35 @@ namespace ControlsSample
         {
             comboBox.Items.Add("Item " + (comboBox.Items.Count + 1));
         }
+
+        bool CheckComboBoxIsEditable()
+        {
+            bool isEditable = comboBox.IsEditable;
+
+            if (!isEditable)
+                MessageBox.Show("Cannot perform this operation on a non-editable ComboBox.");
+
+            return isEditable;
+        }
+
+        private void SelectTextRangeButton_Click(object sender, System.EventArgs e)
+        {
+            if (!CheckComboBoxIsEditable())
+                return;
+
+            comboBox.SelectTextRange(2, 3);
+        }
+
+        private void GetTextSelectionButton_Click(object sender, System.EventArgs e)
+        {
+            if (!CheckComboBoxIsEditable())
+                return;
+
+            var start = comboBox.SelectionStart;
+            var length = comboBox.SelectionLength;
+            var selectedText = comboBox.Text.Substring(start, length);
+            var message = $"ComboBox text selection is: [{start}..{start + length}], selected text: '{selectedText}'";
+            MessageBox.Show(message, "ComboBox Text Selection");
+        }
     }
 }
