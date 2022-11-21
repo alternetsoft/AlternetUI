@@ -41,6 +41,69 @@ namespace Alternet.UI
         private bool isEditable = true;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the combo box is displaying its drop-down portion.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the drop-down portion is displayed; otherwise, <see langword="false"/>. The
+        /// default is <see langword="false"/>.
+        /// </value>
+        public bool IsDroppedDown
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets the starting index of text selected in the combo box.
+        /// </summary>
+        /// <value>The zero-based index of the first character in the string of the current text selection.</value>
+        public int SelectionStart
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Gets the number of characters selected in the editable portion of the combo box.
+        /// </summary>
+        /// <value>The number of characters selected in the combo box.</value>
+        public int SelectionLength
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Selects a range of text in the editable portion of the ComboBox.
+        /// </summary>
+        /// <param name="start">The position of the first character in the current text selection within the text
+        /// box.</param>
+        /// <param name="length">The number of characters to select.</param>
+        /// <remarks>
+        /// If you want to set the start position to the first character in the control's text, set the start parameter
+        /// to zero. You can use this method to select a substring of text, such as when searching through the text of
+        /// the control and replacing information.
+        /// </remarks>
+        public void SelectTextRange(int start, int length)
+        {
+        }
+
+        /// <summary>
+        /// Selects all the text in the editable portion of the ComboBox.
+        /// </summary>
+        public void SelectAllText()
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the drop-down portion of a <see cref="ComboBox"/> is shown.
+        /// </summary>
+        public event EventHandler? DroppedDown;
+
+        /// <summary>
+        /// Occurs when the drop-down portion of the <see cref="ComboBox"/> is no longer visible.
+        /// </summary>
+        public event EventHandler? DropDownClosed;
+
+        /// <summary>
         /// Occurs when the <see cref="SelectedItem"/> property value changes.
         /// </summary>
         /// <remarks>
@@ -252,6 +315,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="DroppedDown"/> event and calls <see cref="OnDroppedDown(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        public void RaiseDroppedDown(EventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnDroppedDown(e);
+            DroppedDown?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="DropDownClosed"/> event and calls <see cref="OnDropDownClosed(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        public void RaiseDropDownClosed(EventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnDropDownClosed(e);
+            DropDownClosed?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Raises the <see cref="TextChanged"/> event and calls <see cref="OnTextChanged(EventArgs)"/>.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
@@ -269,6 +358,22 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnSelectedItemChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the drop-down portion of a <see cref="ComboBox"/> is shown.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnDroppedDown(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the drop-down portion of the <see cref="ComboBox"/> is no longer visible.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnDropDownClosed(EventArgs e)
         {
         }
 
