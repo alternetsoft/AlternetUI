@@ -16,6 +16,8 @@ void RemoveItemAt(int index);
 void ClearItems();
 void ClearSelected();
 void SetSelected(int index, bool value);
+void EnsureVisible(int itemIndex);
+int ItemHitTest(const Point& position);
 public:
 enum class ListBoxEvent
 {

@@ -68,6 +68,16 @@ namespace Alternet::UI
         return size;
     }
 
+    void ListBox::EnsureVisible(int itemIndex)
+    {
+        GetListBox()->EnsureVisible(itemIndex);
+    }
+
+    int ListBox::ItemHitTest(const Point& position)
+    {
+        auto listBox = GetListBox();
+        return listBox->HitTest(fromDip(position, listBox));
+    }
 
     void ListBox::OnSelectionChanged(wxCommandEvent& event)
     {

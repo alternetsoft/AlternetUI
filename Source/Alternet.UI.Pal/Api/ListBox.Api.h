@@ -99,6 +99,20 @@ ALTERNET_UI_API void ListBox_SetSelected_(ListBox* obj, int index, c_bool value)
         });
 }
 
+ALTERNET_UI_API void ListBox_EnsureVisible_(ListBox* obj, int itemIndex)
+{
+    MarshalExceptions<void>([&](){
+            obj->EnsureVisible(itemIndex);
+        });
+}
+
+ALTERNET_UI_API int ListBox_ItemHitTest_(ListBox* obj, Point position)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->ItemHitTest(position);
+        });
+}
+
 ALTERNET_UI_API void ListBox_SetEventCallback_(ListBox::ListBoxEventCallbackType callback)
 {
     ListBox::SetEventCallback(callback);

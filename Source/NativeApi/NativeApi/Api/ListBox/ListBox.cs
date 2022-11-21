@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Alternet.Drawing;
+using System;
 
 namespace NativeApi.Api
 {
@@ -21,5 +22,9 @@ namespace NativeApi.Api
         public void ClearSelected() => throw new Exception();
 
         public void SetSelected(int index, bool value) => throw new Exception();
+
+        public void EnsureVisible(int itemIndex) => throw new Exception();
+        
+        public int ItemHitTest(Point position) => throw new Exception();
     }
 }

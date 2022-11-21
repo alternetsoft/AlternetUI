@@ -1,9 +1,10 @@
 using System;
 using Alternet.Base.Collections;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class NativeListBoxHandler : NativeControlHandler<ListBox, Native.ListBox>
+    internal class NativeListBoxHandler : ListBoxHandler
     {
         private bool receivingSelection;
 
@@ -13,6 +14,8 @@ namespace Alternet.UI
         {
             return new Native.ListBox();
         }
+
+        public new Native.ListBox NativeControl => (Native.ListBox)base.NativeControl!;
 
         protected override void OnAttach()
         {
@@ -123,6 +126,19 @@ namespace Alternet.UI
         private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<object> e)
         {
             NativeControl.RemoveItemAt(e.Index);
+        }
+
+        /// <inheritdoc/>
+        public override void EnsureVisible(int itemIndex)
+        {
+            NativeControl.EnsureVisible(itemIndex);
+        }
+
+        /// <inheritdoc/>
+        public override int? HitTest(Point position)
+        {
+            int index = NativeControl.ItemHitTest(position);
+            return index == -1 ? null : index;
         }
     }
 }

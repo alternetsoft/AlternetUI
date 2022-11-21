@@ -12,12 +12,16 @@ namespace Alternet.UI
 
         public new Native.ComboBox NativeControl => (Native.ComboBox)base.NativeControl!;
 
+        /// <inheritdoc/>
         public override int TextSelectionStart => NativeControl.TextSelectionStart;
 
+        /// <inheritdoc/>
         public override int TextSelectionLength => NativeControl.TextSelectionLength;
 
+        /// <inheritdoc/>
         public override void SelectTextRange(int start, int length) => NativeControl.SelectTextRange(start, length);
 
+        /// <inheritdoc/>
         public override void SelectAllText() => NativeControl.SelectAllText();
 
         protected override void OnAttach()

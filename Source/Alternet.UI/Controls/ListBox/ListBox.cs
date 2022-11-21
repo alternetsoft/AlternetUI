@@ -1,3 +1,4 @@
+using Alternet.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,31 @@ namespace Alternet.UI
         /// Occurs when the value of the <see cref="SelectionMode"/> property changes.
         /// </summary>
         public event EventHandler? SelectionModeChanged;
+
+        /// <inheritdoc/>
+        public new ListBoxHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (ListBoxHandler)base.Handler;
+            }
+        }
+
+        /// <summary>
+        /// Ensures that the item is visible within the control, scrolling the contents of the control, if necessary.
+        /// </summary>
+        /// <param name="itemIndex">The item index to scroll into visibility.</param>
+        public void EnsureVisible(int itemIndex) => Handler.EnsureVisible(itemIndex);
+
+        /// <summary>
+        /// Returns the zero-based index of the item at the specified coordinates.
+        /// </summary>
+        /// <param name="position">A <see cref="Point"/> object containing the coordinates used to obtain the item
+        /// index.</param>
+        /// <returns>The zero-based index of the item found at the specified coordinates; returns <see langword="null"/>
+        /// if no match is found.</returns>
+        public int? HitTest(Point position) => Handler.HitTest(position);
 
         /// <summary>
         /// Gets a collection that contains the zero-based indexes of all currently selected items in the <see cref="ListBox"/>.

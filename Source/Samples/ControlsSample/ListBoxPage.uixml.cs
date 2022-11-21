@@ -26,6 +26,13 @@ namespace ControlsSample
             }
         }
 
+        private void ListBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var result = listBox.HitTest(e.GetPosition(listBox));
+
+            site?.LogEvent($"HitTest result: Item: '{(result == null ? "<none>" : listBox.Items[result.Value])}'");
+        }
+
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
         {
             int start = listBox.Items.Count + 1;
@@ -62,6 +69,13 @@ namespace ControlsSample
         private void AddItemButton_Click(object? sender, EventArgs e)
         {
             listBox.Items.Add("Item " + (listBox.Items.Count + 1));
+        }
+
+        private void EnsureLastItemVisibleButton_Click(object sender, System.EventArgs e)
+        {
+            var count = listBox.Items.Count;
+            if (count > 0)
+                listBox.EnsureVisible(count - 1);
         }
     }
 }
