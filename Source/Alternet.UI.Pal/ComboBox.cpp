@@ -128,7 +128,7 @@ namespace Alternet::UI
         RaiseEvent(ComboBoxEvent::TextChanged);
     }
 
-    int ComboBox::GetSelectionStart()
+    int ComboBox::GetTextSelectionStart()
     {
         if (!_isEditable)
             return 0;
@@ -138,7 +138,7 @@ namespace Alternet::UI
         return from;
     }
 
-    int ComboBox::GetSelectionLength()
+    int ComboBox::GetTextSelectionLength()
     {
         if (!_isEditable)
             return 0;

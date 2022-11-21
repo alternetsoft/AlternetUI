@@ -16,13 +16,13 @@ namespace Alternet.UI
         /// Gets the starting index of text selected in the combo box.
         /// </summary>
         /// <value>The zero-based index of the first character in the string of the current text selection.</value>
-        public abstract int SelectionStart { get; }
+        public abstract int TextSelectionStart { get; }
 
         /// <summary>
         /// Gets the number of characters selected in the editable portion of the combo box.
         /// </summary>
         /// <value>The number of characters selected in the combo box.</value>
-        public abstract int SelectionLength { get; }
+        public abstract int TextSelectionLength { get; }
 
         /// <summary>
         /// Selects a range of text in the editable portion of the ComboBox.

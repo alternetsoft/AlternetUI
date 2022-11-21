@@ -107,8 +107,8 @@ namespace ControlsSample
             if (!CheckComboBoxIsEditable())
                 return;
 
-            var start = comboBox.SelectionStart;
-            var length = comboBox.SelectionLength;
+            var start = comboBox.TextSelectionStart;
+            var length = comboBox.TextSelectionLength;
             var selectedText = comboBox.Text.Substring(start, length);
             var message = $"ComboBox text selection is: [{start}..{start + length}], selected text: '{selectedText}'";
             MessageBox.Show(message, "ComboBox Text Selection");

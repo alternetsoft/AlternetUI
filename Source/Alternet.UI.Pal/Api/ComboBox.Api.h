@@ -64,17 +64,17 @@ ALTERNET_UI_API void ComboBox_SetText_(ComboBox* obj, const char16_t* value)
         });
 }
 
-ALTERNET_UI_API int ComboBox_GetSelectionStart_(ComboBox* obj)
+ALTERNET_UI_API int ComboBox_GetTextSelectionStart_(ComboBox* obj)
 {
     return MarshalExceptions<int>([&](){
-            return obj->GetSelectionStart();
+            return obj->GetTextSelectionStart();
         });
 }
 
-ALTERNET_UI_API int ComboBox_GetSelectionLength_(ComboBox* obj)
+ALTERNET_UI_API int ComboBox_GetTextSelectionLength_(ComboBox* obj)
 {
     return MarshalExceptions<int>([&](){
-            return obj->GetSelectionLength();
+            return obj->GetTextSelectionLength();
         });
 }
 

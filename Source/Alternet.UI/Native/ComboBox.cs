@@ -86,24 +86,24 @@ namespace Alternet.UI.Native
             }
         }
         
-        public int SelectionStart
+        public int TextSelectionStart
         {
             get
             {
                 CheckDisposed();
-                var n = NativeApi.ComboBox_GetSelectionStart_(NativePointer);
+                var n = NativeApi.ComboBox_GetTextSelectionStart_(NativePointer);
                 var m = n;
                 return m;
             }
             
         }
         
-        public int SelectionLength
+        public int TextSelectionLength
         {
             get
             {
                 CheckDisposed();
-                var n = NativeApi.ComboBox_GetSelectionLength_(NativePointer);
+                var n = NativeApi.ComboBox_GetTextSelectionLength_(NativePointer);
                 var m = n;
                 return m;
             }
@@ -240,10 +240,10 @@ namespace Alternet.UI.Native
             public static extern void ComboBox_SetText_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ComboBox_GetSelectionStart_(IntPtr obj);
+            public static extern int ComboBox_GetTextSelectionStart_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ComboBox_GetSelectionLength_(IntPtr obj);
+            public static extern int ComboBox_GetTextSelectionLength_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ComboBox_InsertItem_(IntPtr obj, int index, string value);

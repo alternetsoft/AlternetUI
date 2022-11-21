@@ -16,10 +16,10 @@ string GetText();
 void SetText(const string& value);
 
 
-int GetSelectionStart();
+int GetTextSelectionStart();
 
 
-int GetSelectionLength();
+int GetTextSelectionLength();
 
 void InsertItem(int index, const string& value);
 void* CreateItemsInsertion();

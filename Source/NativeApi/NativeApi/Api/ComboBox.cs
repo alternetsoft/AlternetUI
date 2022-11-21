@@ -26,9 +26,9 @@ namespace NativeApi.Api
 
         public void ClearItems() => throw new Exception();
 
-        public int SelectionStart { get; }
+        public int TextSelectionStart { get; }
 
-        public int SelectionLength { get; }
+        public int TextSelectionLength { get; }
 
         public void SelectTextRange(int start, int length) => throw new Exception();
 
