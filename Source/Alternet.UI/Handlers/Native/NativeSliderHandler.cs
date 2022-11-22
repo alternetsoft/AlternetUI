@@ -2,11 +2,25 @@ using System;
 
 namespace Alternet.UI
 {
-    internal class NativeSliderHandler : NativeControlHandler<Slider, Native.Slider>
+    internal class NativeSliderHandler : SliderHandler
     {
         internal override Native.Control CreateNativeControl()
         {
             return new Native.Slider();
+        }
+
+        public new Native.Slider NativeControl => (Native.Slider)base.NativeControl!;
+
+        public override SliderOrientation Orientation
+        {
+            get => (SliderOrientation)NativeControl.Orientation;
+            set => NativeControl.Orientation = (Native.SliderOrientation)value;
+        }
+
+        public override SliderTickStyle TickStyle
+        {
+            get => (SliderTickStyle)NativeControl.TickStyle;
+            set => NativeControl.TickStyle = (Native.SliderTickStyle)value;
         }
 
         protected override void OnAttach()

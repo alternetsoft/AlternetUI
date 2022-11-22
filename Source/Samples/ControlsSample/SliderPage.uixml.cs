@@ -36,7 +36,8 @@ namespace ControlsSample
 
         private void IncreaseAllButton_Click(object? sender, EventArgs e)
         {
-            foreach (var slider in slidersPanel.Children.OfType<Slider>())
+            var sliders = new Control[] { horizontalSlidersPanel, verticalSlidersGrid }.SelectMany(x => x.Children.OfType<Slider>());
+            foreach (var slider in sliders)
             {
                 if (slider.Value < slider.Maximum)
                     slider.Value++;

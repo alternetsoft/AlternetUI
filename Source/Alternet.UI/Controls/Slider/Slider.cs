@@ -22,6 +22,16 @@ namespace Alternet.UI
     /// </remarks>
     public class Slider : Control
     {
+        /// <inheritdoc/>
+        public new SliderHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (SliderHandler)base.Handler;
+            }
+        }
+
         /// <summary>
         /// Gets or sets a value indicating the horizontal or vertical orientation of the slider.
         /// </summary>
@@ -32,7 +42,7 @@ namespace Alternet.UI
         /// property is set to <see cref="SliderOrientation.Vertical"/>, the scroll box moves from bottom to top as the
         /// <see cref="Value"/> increases.
         /// </remarks>
-        public SliderOrientation Orientation { get; set; }
+        public SliderOrientation Orientation { get => Handler.Orientation; set => Handler.Orientation = value; }
 
         /// <summary>
         /// Gets or sets a value indicating how to display the tick marks on the slider.
@@ -40,7 +50,7 @@ namespace Alternet.UI
         /// <value>
         /// One of the <see cref="SliderTickStyle"/> values. The default is <see cref="SliderTickStyle.BottomRight"/>.
         /// </value>
-        public SliderTickStyle TickStyle { get; set; }
+        public SliderTickStyle TickStyle { get => Handler.TickStyle; set => Handler.TickStyle = value; }
 
         /// <summary>
         /// Identifies the <see cref="Value"/> dependency property.
