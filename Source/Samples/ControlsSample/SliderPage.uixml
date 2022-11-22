@@ -65,5 +65,10 @@
                 <ProgressBar Maximum="10" Margin="0,0,0,5" Name="progressBar" />
             </StackPanel>
         </GroupBox>
+
+        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+            <Label Text="Tick Style:" VerticalAlignment="Center"/>
+            <ComboBox IsEditable="false" Name="tickStyleComboBox" Margin="5,0,0,0" SelectedItemChanged="TickStyleComboBox_SelectedItemChanged"/>
+        </StackPanel>
     </StackPanel>
 </Control>
