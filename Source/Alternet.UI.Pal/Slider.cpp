@@ -34,6 +34,34 @@ namespace Alternet::UI
         return size;
     }
 
+    SliderOrientation Slider::GetOrientation()
+    {
+        return _orientation;
+    }
+
+    void Slider::SetOrientation(SliderOrientation value)
+    {
+        if (_orientation == value)
+            return;
+
+        _orientation = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    SliderTickStyle Slider::GetTickStyle()
+    {
+        return _tickStyle;
+    }
+
+    void Slider::SetTickStyle(SliderTickStyle value)
+    {
+        if (_tickStyle == value)
+            return;
+
+        _tickStyle = value;
+        RecreateWxWindowIfNeeded();
+    }
+
     int Slider::GetMinimum()
     {
         return _minimum.Get();
@@ -96,7 +124,16 @@ namespace Alternet::UI
 
     wxWindow* Slider::CreateWxWindowCore(wxWindow* parent)
     {
-        auto value = new wxSlider(parent, wxID_ANY, _value.Get(), _minimum.Get(), _maximum.Get());
+        auto value = new wxSlider(
+            parent,
+            wxID_ANY,
+            _value.Get(),
+            _minimum.Get(),
+            _maximum.Get(),
+            wxDefaultPosition,
+            wxDefaultSize,
+            GetStyle());
+
         value->Bind(wxEVT_SLIDER, &Slider::OnSliderValueChanged, this);
 
         return value;
@@ -169,5 +206,31 @@ namespace Alternet::UI
     void Slider::ApplyTickFrequency(const int& value)
     {
         GetSlider()->SetTickFreq(value);
+    }
+
+    long Slider::GetStyle()
+    {
+        bool isHorizontal = _orientation == SliderOrientation::Horizontal;
+
+        auto orientation = isHorizontal ? wxSL_HORIZONTAL : wxSL_VERTICAL;
+
+        auto getTickStyle = [&]()
+        {
+            switch (_tickStyle)
+            {
+            case SliderTickStyle::None:
+                return 0;
+            case SliderTickStyle::TopLeft:
+                return wxSL_AUTOTICKS | (isHorizontal ? wxSL_TOP : wxSL_LEFT);
+            case SliderTickStyle::BottomRight:
+                return wxSL_AUTOTICKS | (isHorizontal ? wxSL_BOTTOM : wxSL_RIGHT);
+            case SliderTickStyle::Both:
+                return wxSL_AUTOTICKS | wxSL_BOTH;
+            default:
+                throwExNoInfo;
+            }
+        };
+
+        return orientation | getTickStyle();
     }
 }

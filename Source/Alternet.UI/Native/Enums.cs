@@ -521,6 +521,20 @@ namespace Alternet.UI.Native
         Pressed = 1,
     }
     
+    enum SliderOrientation
+    {
+        Horizontal = 0,
+        Vertical = 1,
+    }
+    
+    enum SliderTickStyle
+    {
+        None = 0,
+        TopLeft = 1,
+        BottomRight = 2,
+        Both = 3,
+    }
+    
     enum TreeViewHitTestLocations
     {
         None = 2,

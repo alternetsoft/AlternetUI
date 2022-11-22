@@ -522,6 +522,20 @@ namespace Alternet::UI
         Pressed = 1,
     };
     
+    enum class SliderOrientation
+    {
+        Horizontal = 0,
+        Vertical = 1,
+    };
+    
+    enum class SliderTickStyle
+    {
+        None = 0,
+        TopLeft = 1,
+        BottomRight = 2,
+        Both = 3,
+    };
+    
     enum class TreeViewHitTestLocations
     {
         None = 2,

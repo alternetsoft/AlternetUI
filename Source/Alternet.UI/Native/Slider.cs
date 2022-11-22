@@ -125,6 +125,40 @@ namespace Alternet.UI.Native
             }
         }
         
+        public SliderOrientation Orientation
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Slider_GetOrientation_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Slider_SetOrientation_(NativePointer, value);
+            }
+        }
+        
+        public SliderTickStyle TickStyle
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Slider_GetTickStyle_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Slider_SetTickStyle_(NativePointer, value);
+            }
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -212,6 +246,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Slider_SetTickFrequency_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern SliderOrientation Slider_GetOrientation_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Slider_SetOrientation_(IntPtr obj, SliderOrientation value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern SliderTickStyle Slider_GetTickStyle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Slider_SetTickStyle_(IntPtr obj, SliderTickStyle value);
             
         }
     }

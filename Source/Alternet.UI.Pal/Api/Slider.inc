@@ -24,6 +24,14 @@ void SetLargeChange(int value);
 int GetTickFrequency();
 void SetTickFrequency(int value);
 
+
+SliderOrientation GetOrientation();
+void SetOrientation(SliderOrientation value);
+
+
+SliderTickStyle GetTickStyle();
+void SetTickStyle(SliderTickStyle value);
+
 public:
 enum class SliderEvent
 {

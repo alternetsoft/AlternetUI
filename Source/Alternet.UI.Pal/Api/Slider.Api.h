@@ -99,6 +99,34 @@ ALTERNET_UI_API void Slider_SetTickFrequency_(Slider* obj, int value)
         });
 }
 
+ALTERNET_UI_API SliderOrientation Slider_GetOrientation_(Slider* obj)
+{
+    return MarshalExceptions<SliderOrientation>([&](){
+            return obj->GetOrientation();
+        });
+}
+
+ALTERNET_UI_API void Slider_SetOrientation_(Slider* obj, SliderOrientation value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetOrientation(value);
+        });
+}
+
+ALTERNET_UI_API SliderTickStyle Slider_GetTickStyle_(Slider* obj)
+{
+    return MarshalExceptions<SliderTickStyle>([&](){
+            return obj->GetTickStyle();
+        });
+}
+
+ALTERNET_UI_API void Slider_SetTickStyle_(Slider* obj, SliderTickStyle value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetTickStyle(value);
+        });
+}
+
 ALTERNET_UI_API void Slider_SetEventCallback_(Slider::SliderEventCallbackType callback)
 {
     Slider::SetEventCallback(callback);

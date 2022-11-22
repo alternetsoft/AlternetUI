@@ -24,6 +24,9 @@ namespace Alternet::UI
         DelayedValue<Slider, int> _largeChange;
         DelayedValue<Slider, int> _tickFrequency;
 
+        SliderOrientation _orientation = SliderOrientation::Horizontal;
+        SliderTickStyle _tickStyle = SliderTickStyle::BottomRight;
+
         int RetrieveValue();
         void ApplyValue(const int& value);
 
@@ -41,5 +44,7 @@ namespace Alternet::UI
 
         int RetrieveTickFrequency();
         void ApplyTickFrequency(const int& value);
+
+        long GetStyle();
     };
 }

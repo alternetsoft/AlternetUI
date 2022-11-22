@@ -14,5 +14,8 @@ namespace NativeApi.Api
         public int SmallChange { get; set; }
         public int LargeChange { get; set; }
         public int TickFrequency { get; set; }
+
+        public SliderOrientation Orientation { get; set; }
+        public SliderTickStyle TickStyle { get; set; }
     }
 }
