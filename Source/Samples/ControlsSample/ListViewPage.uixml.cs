@@ -30,7 +30,7 @@ namespace ControlsSample
 
                 foreach (var item in Enum.GetValues(typeof(ListViewView)))
                     viewComboBox.Items.Add(item ?? throw new Exception());
-                viewComboBox.SelectedIndex = 0;
+                viewComboBox.SelectedIndex = 1;
 
                 foreach (var item in Enum.GetValues(typeof(ListViewGridLinesDisplayMode)))
                     gridLinesComboBox.Items.Add(item ?? throw new Exception());
