@@ -1,10 +1,24 @@
 namespace Alternet.UI
 {
-    internal class NativeProgressBarHandler : NativeControlHandler<ProgressBar, Native.ProgressBar>
+    internal class NativeProgressBarHandler : ProgressBarHandler
     {
         internal override Native.Control CreateNativeControl()
         {
             return new Native.ProgressBar();
+        }
+
+        public new Native.ProgressBar NativeControl => (Native.ProgressBar)base.NativeControl!;
+
+        public override bool IsIndeterminate
+        {
+            get => NativeControl.IsIndeterminate;
+            set => NativeControl.IsIndeterminate = value;
+        }
+        
+        public override ProgressBarOrientation Orientation
+        {
+            get => (ProgressBarOrientation)NativeControl.Orientation;
+            set => NativeControl.Orientation = (Native.ProgressBarOrientation)value;
         }
 
         protected override void OnAttach()

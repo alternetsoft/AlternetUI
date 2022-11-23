@@ -1,5 +1,6 @@
 ﻿using Alternet.UI;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ControlsSample
@@ -25,11 +26,22 @@ namespace ControlsSample
 
         private void IncreaseAllButton_Click(object? sender, EventArgs e)
         {
-            foreach (var progressBar in progressBarsPanel.Children.OfType<ProgressBar>())
+            foreach (var progressBar in GetAllProgressBars())
             {
                 if (progressBar.Value < progressBar.Maximum)
                     progressBar.Value++;
             }
+        }
+
+        private IEnumerable<ProgressBar> GetAllProgressBars()
+        {
+            return new Control[] { verticalProgressBarsGrid, horizontalProgressBarsPanel }.SelectMany(x => x.Children.OfType<ProgressBar>());
+        }
+
+        private void IndeterminateCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            foreach (var progressBar in GetAllProgressBars())
+                progressBar.IsIndeterminate = indeterminateCheckBox.IsChecked;
         }
     }
 }

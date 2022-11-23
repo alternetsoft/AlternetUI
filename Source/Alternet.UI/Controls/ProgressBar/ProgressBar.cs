@@ -29,13 +29,23 @@ namespace Alternet.UI
         /// </summary>
         /// <value><see langword="false"/> if the <see cref="ProgressBar"/> shows actual values; true if the <see
         /// cref="ProgressBar"/> shows generic progress. The default is <see langword="false"/>.</value>
-        public bool IsIndeterminate { get; set; }
+        public bool IsIndeterminate { get => Handler.IsIndeterminate; set => Handler.IsIndeterminate = value; }
 
         /// <summary>
         /// Gets or sets a value indicating the horizontal or vertical orientation of the progress bar.
         /// </summary>
         /// <value>One of the <see cref="ProgressBarOrientation"/> values.</value>
-        public ProgressBarOrientation Orientation { get; set; }
+        public ProgressBarOrientation Orientation { get => Handler.Orientation; set => Handler.Orientation = value; }
+
+        /// <inheritdoc/>
+        public new ProgressBarHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (ProgressBarHandler)base.Handler;
+            }
+        }
 
         private int value;
 

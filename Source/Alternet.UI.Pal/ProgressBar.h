@@ -16,12 +16,10 @@ namespace Alternet::UI
     private:
         wxGauge* GetGauge();
 
-        DelayedValue<ProgressBar, int> _value;
         DelayedValue<ProgressBar, int> _maximum;
         int _minimum = 0;
 
-        int RetrieveValue();
-        void ApplyValue(const int& value);
+        void ApplyValue();
 
         int RetrieveMaximum();
         void ApplyMaximum(const int& value);
@@ -46,5 +44,6 @@ namespace Alternet::UI
         long GetStyle();
 
         void ApplyIndeterminate();
+        int _value = 0;
     };
 }

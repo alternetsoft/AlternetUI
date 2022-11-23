@@ -3,10 +3,8 @@
 namespace Alternet::UI
 {
     ProgressBar::ProgressBar():
-        _value(*this, 0, &Control::IsWxWindowCreated, &ProgressBar::RetrieveValue, &ProgressBar::ApplyValue),
         _maximum(*this, 100, &Control::IsWxWindowCreated, &ProgressBar::RetrieveMaximum, &ProgressBar::ApplyMaximum)
     {
-        GetDelayedValues().Add(&_value);
         GetDelayedValues().Add(&_maximum);
     }
     
@@ -41,12 +39,13 @@ namespace Alternet::UI
 
     int ProgressBar::GetValue()
     {
-        return _value.Get() + _minimum;
+        return _value;
     }
 
     void ProgressBar::SetValue(int value)
     {
-        _value.Set(value - _minimum);
+        _value = value;
+        ApplyValue();
     }
 
     bool ProgressBar::GetIsIndeterminate()
@@ -79,6 +78,7 @@ namespace Alternet::UI
     void ProgressBar::OnWxWindowCreated()
     {
         Control::OnWxWindowCreated();
+        ApplyValue();
         ApplyIndeterminate();
     }
 
@@ -100,15 +100,10 @@ namespace Alternet::UI
     {
         return dynamic_cast<wxGauge*>(GetWxWindow());
     }
-    
-    int ProgressBar::RetrieveValue()
-    {
-        return GetGauge()->GetValue();
-    }
 
-    void ProgressBar::ApplyValue(const int& value)
+    void ProgressBar::ApplyValue()
     {
-        GetGauge()->SetValue(value);
+        GetGauge()->SetValue(_value - _minimum);
     }
 
     int ProgressBar::RetrieveMaximum()
@@ -149,7 +144,8 @@ namespace Alternet::UI
                 _indeterminedModeTimer = nullptr;
             }
 
-            gauge->SetValue(GetValue());
+            GetGauge()->SetValue(0);
+            ApplyValue();
         }
     }
 
