@@ -90,12 +90,22 @@ namespace Alternet.UI
 
         protected virtual void OnPageInserted(int index, TabPage page)
         {
+            page.Index = index;
             InsertPage(index, page);
+            page.TitleChanged += Page_TitleChanged;
+        }
+
+        private void Page_TitleChanged(object? sender, EventArgs e)
+        {
+            var page = (TabPage)sender!;
+            NativeControl.SetPageTitle(page.Index ?? throw new Exception(), page.Title);
         }
 
         protected virtual void OnPageRemoved(int index, TabPage page)
         {
+            page.TitleChanged -= Page_TitleChanged;
             RemovePage(index, page);
+            page.Index = null; ;
         }
 
         private void Pages_ItemInserted(object? sender, CollectionChangeEventArgs<TabPage> e)

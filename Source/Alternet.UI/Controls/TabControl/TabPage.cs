@@ -44,6 +44,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the zero-based index of the page within the <see cref="TabControl"/> control,
+        /// or <see langword="null"/> if the item is not associated with a <see cref="TabControl"/> control.
+        /// </summary>
+        public int? Index { get; internal set; }
+
+        /// <summary>
         /// Called when the value of the <see cref="Title"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>

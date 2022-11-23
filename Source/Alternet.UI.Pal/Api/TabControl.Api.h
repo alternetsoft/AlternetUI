@@ -51,6 +51,13 @@ ALTERNET_UI_API void TabControl_RemovePage_(TabControl* obj, int index, Control*
         });
 }
 
+ALTERNET_UI_API void TabControl_SetPageTitle_(TabControl* obj, int index, const char16_t* title)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetPageTitle(index, title);
+        });
+}
+
 ALTERNET_UI_API Size_C TabControl_GetTotalPreferredSizeFromPageSize_(TabControl* obj, Size pageSize)
 {
     return MarshalExceptions<Size_C>([&](){

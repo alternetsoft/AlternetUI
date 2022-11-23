@@ -9,6 +9,7 @@ void SetSelectedPageIndex(int value);
 
 void InsertPage(int index, Control* page, const string& title);
 void RemovePage(int index, Control* page);
+void SetPageTitle(int index, const string& title);
 Size GetTotalPreferredSizeFromPageSize(const Size& pageSize);
 public:
 enum class TabControlEvent

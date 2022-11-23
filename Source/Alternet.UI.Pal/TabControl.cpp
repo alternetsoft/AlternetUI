@@ -32,6 +32,11 @@ namespace Alternet::UI
         return notebook;
     }
 
+    void TabControl::SetPageTitle(int index, const string& title)
+    {
+        GetNotebook()->SetPageText(index, wxStr(title));
+    }
+
     Size TabControl::GetTotalPreferredSizeFromPageSize(const Size& pageSize)
     {
         auto notebook = GetNotebook();

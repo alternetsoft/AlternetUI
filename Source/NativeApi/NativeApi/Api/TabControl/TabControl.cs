@@ -10,6 +10,8 @@ namespace NativeApi.Api
 
         public void RemovePage(int index, Control page) => throw new Exception();
 
+        public void SetPageTitle(int index, string title) => throw new Exception();
+
         public int PageCount { get; }
 
         public int SelectedPageIndex { get; set; }
