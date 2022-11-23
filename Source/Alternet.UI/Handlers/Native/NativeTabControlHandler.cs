@@ -17,9 +17,18 @@ namespace Alternet.UI
 
             Control.Pages.ItemInserted += Pages_ItemInserted;
             Control.Pages.ItemRemoved += Pages_ItemRemoved;
+            Control.Children.ItemInserted += Children_ItemInserted;
+
 
             NativeControl.SelectedPageIndexChanged += NativeControl_SelectedPageIndexChanged;
             Control.SelectedPageChanged += Control_SelectedPageChanged;
+        }
+
+        private void Children_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
+        {
+            if (!skipChildrenInsertionCheck)
+                throw new InvalidOperationException(
+                    "Do not modify TabControl.Children collection directly. Use TabControl.Pages to add pages to the tab control instead.");
         }
 
         private void Control_SelectedPageChanged(object sender, RoutedEventArgs e)
@@ -71,9 +80,20 @@ namespace Alternet.UI
             }
         }
 
+        bool skipChildrenInsertionCheck;
+
         private void InsertPage(int index, TabPage page)
         {
-            Control.Children.Insert(index, page);
+            skipChildrenInsertionCheck = true;
+            try
+            {
+                Control.Children.Insert(index, page);
+            }
+            finally
+            {
+                skipChildrenInsertionCheck = false;
+            }
+
             var pageNativeControl = page.Handler.NativeControl;
             if (pageNativeControl == null)
                 throw new InvalidOperationException();
