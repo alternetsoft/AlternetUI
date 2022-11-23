@@ -132,12 +132,18 @@ namespace Alternet.UI
             Control.Children.RemoveAt(index);
         }
 
+        void UpdatePageIndices(int startIndex)
+        {
+            for (int i = startIndex; i < Control.Pages.Count; i++)
+                Control.Pages[i].Index = i;
+        }
+
         protected virtual void OnPageInserted(int index, TabPage page)
         {
             page.Index = index;
             InsertPage(index, page);
             page.TitleChanged += Page_TitleChanged;
-
+            UpdatePageIndices(index + 1);
             UpdateSelectedPageFromNativeControl();
         }
 
@@ -153,6 +159,7 @@ namespace Alternet.UI
             RemovePage(index, page);
             UpdateSelectedPageFromNativeControl();
             page.Index = null;
+            UpdatePageIndices(index);
         }
 
         private void Pages_ItemInserted(object? sender, CollectionChangeEventArgs<TabPage> e)

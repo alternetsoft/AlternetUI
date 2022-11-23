@@ -26,11 +26,10 @@ namespace Alternet::UI
 
         struct Page
         {
-            Page(Control* control_, int index_, const wxString& title_);
+            Page(Control* control_, const wxString& title_);
             ~Page();
 
             Control* control;
-            int index;
             wxString title;
 
             BYREF_ONLY(Page);
@@ -38,6 +37,6 @@ namespace Alternet::UI
 
         std::vector<Page*> _pages;
 
-        void InsertPage(Page* page);
+        void InsertPage(int index, Page* page);
     };
 }

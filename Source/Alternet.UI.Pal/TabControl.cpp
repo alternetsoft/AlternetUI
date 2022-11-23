@@ -38,8 +38,8 @@ namespace Alternet::UI
 
     void TabControl::OnWxWindowCreated()
     {
-        for (auto page : _pages)
-            InsertPage(page);
+        for (int i = 0; i < _pages.size(); i++)
+            InsertPage(i, _pages[i]);
     }
 
     TabAlignment TabControl::GetTabAlignment()
@@ -75,15 +75,17 @@ namespace Alternet::UI
 
     void TabControl::InsertPage(int index, Control* control, const string& title)
     {
-        auto page = new Page(control, index, wxStr(title));
-        _pages.push_back(page);
-        InsertPage(page);
+        auto page = new Page(control, wxStr(title));
+        _pages.insert(_pages.begin() + index, page);
+        InsertPage(index, page);
     }
 
     void TabControl::RemovePage(int index, Control* pageControl)
     {
         GetNotebook()->RemovePage(index);
+        
         auto page = _pages[index];
+        
         _pages.erase(_pages.begin() + index);
         delete page;
     }
@@ -132,15 +134,15 @@ namespace Alternet::UI
         return getTabAlignment();
     }
 
-    void TabControl::InsertPage(Page* page)
+    void TabControl::InsertPage(int index, Page* page)
     {
-        GetNotebook()->InsertPage(page->index, page->control->GetWxWindow(), page->title);
+        GetNotebook()->InsertPage(index, page->control->GetWxWindow(), page->title);
     }
 
     // ---------------
 
-    TabControl::Page::Page(Control* control_, int index_, const wxString& title_) :
-        control(control_), index(index_), title(title_)
+    TabControl::Page::Page(Control* control_, const wxString& title_) :
+        control(control_), title(title_)
     {
         control->AddRef();
         // Do not explicitly delete the window for a page that is currently managed by wxNotebook..
