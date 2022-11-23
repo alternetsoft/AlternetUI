@@ -71,3 +71,17 @@ ALTERNET_UI_API void ProgressBar_SetIsIndeterminate_(ProgressBar* obj, c_bool va
         });
 }
 
+ALTERNET_UI_API ProgressBarOrientation ProgressBar_GetOrientation_(ProgressBar* obj)
+{
+    return MarshalExceptions<ProgressBarOrientation>([&](){
+            return obj->GetOrientation();
+        });
+}
+
+ALTERNET_UI_API void ProgressBar_SetOrientation_(ProgressBar* obj, ProgressBarOrientation value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetOrientation(value);
+        });
+}
+

@@ -51,16 +51,49 @@ namespace Alternet::UI
 
     bool ProgressBar::GetIsIndeterminate()
     {
-        return false;
+        return _isIndeterminate;
     }
 
     void ProgressBar::SetIsIndeterminate(bool value)
     {
+        if (_isIndeterminate == value)
+            return;
+
+        _isIndeterminate = value;
+        ApplyIndeterminate();
     }
 
     wxWindow* ProgressBar::CreateWxWindowCore(wxWindow* parent)
     {
-        return new wxGauge(parent, wxID_ANY, _maximum.Get() - _minimum);
+        auto gauge = new wxGauge(
+            parent,
+            wxID_ANY,
+            _maximum.Get() - _minimum,
+            wxDefaultPosition,
+            wxDefaultSize,
+            GetStyle());
+
+        return gauge;
+    }
+
+    void ProgressBar::OnWxWindowCreated()
+    {
+        Control::OnWxWindowCreated();
+        ApplyIndeterminate();
+    }
+
+    ProgressBarOrientation ProgressBar::GetOrientation()
+    {
+        return _orientation;
+    }
+
+    void ProgressBar::SetOrientation(ProgressBarOrientation value)
+    {
+        if (_orientation == value)
+            return;
+
+        _orientation = value;
+        RecreateWxWindowIfNeeded();
     }
 
     wxGauge* ProgressBar::GetGauge()
@@ -86,5 +119,50 @@ namespace Alternet::UI
     void ProgressBar::ApplyMaximum(const int& value)
     {
         GetGauge()->SetRange(value);
+    }
+
+    long ProgressBar::GetStyle()
+    {
+        return wxGA_SMOOTH | (_orientation == ProgressBarOrientation::Horizontal ? wxGA_HORIZONTAL : wxGA_VERTICAL);
+    }
+
+    void ProgressBar::ApplyIndeterminate()
+    {
+        auto gauge = GetGauge();
+
+        if (_isIndeterminate)
+        {
+            if (_indeterminedModeTimer == nullptr)
+            {
+                _indeterminedModeTimer = new IndeterminedModeTimer(this);
+                _indeterminedModeTimer->Start(50);
+            }
+            
+            gauge->Pulse();
+        }
+        else
+        {
+            if (_indeterminedModeTimer != nullptr)
+            {
+                _indeterminedModeTimer->Stop();
+                delete _indeterminedModeTimer;
+                _indeterminedModeTimer = nullptr;
+            }
+
+            gauge->SetValue(GetValue());
+        }
+    }
+
+    // -----------------
+
+    ProgressBar::IndeterminedModeTimer::IndeterminedModeTimer(ProgressBar* owner) : _owner(owner)
+    {
+    }
+
+    void ProgressBar::IndeterminedModeTimer::Notify()
+    {
+        auto gauge = _owner->GetGauge();
+        if (gauge != nullptr)
+            gauge->Pulse();
     }
 }

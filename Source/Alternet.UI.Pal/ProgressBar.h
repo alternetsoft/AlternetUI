@@ -9,6 +9,9 @@ namespace Alternet::UI
 #include "Api/ProgressBar.inc"
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+    
+    protected:
+        virtual void OnWxWindowCreated() override;
 
     private:
         wxGauge* GetGauge();
@@ -22,5 +25,26 @@ namespace Alternet::UI
 
         int RetrieveMaximum();
         void ApplyMaximum(const int& value);
+
+        class IndeterminedModeTimer : public wxTimer
+        {
+        public:
+            IndeterminedModeTimer(ProgressBar* owner);
+
+            virtual void Notify() override;
+
+        private:
+            ProgressBar* _owner;
+        };
+
+        IndeterminedModeTimer* _indeterminedModeTimer = nullptr;
+
+        bool _isIndeterminate = false;
+
+        ProgressBarOrientation _orientation = ProgressBarOrientation::Horizontal;
+
+        long GetStyle();
+
+        void ApplyIndeterminate();
     };
 }

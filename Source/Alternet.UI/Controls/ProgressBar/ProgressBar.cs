@@ -23,6 +23,20 @@ namespace Alternet.UI
     /// </remarks>
     public class ProgressBar : Control
     {
+        /// <summary>
+        /// Gets or sets whether the <see cref="ProgressBar"/> shows actual values or generic, continuous progress
+        /// feedback.
+        /// </summary>
+        /// <value><see langword="false"/> if the <see cref="ProgressBar"/> shows actual values; true if the <see
+        /// cref="ProgressBar"/> shows generic progress. The default is <see langword="false"/>.</value>
+        public bool IsIndeterminate { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the horizontal or vertical orientation of the progress bar.
+        /// </summary>
+        /// <value>One of the <see cref="ProgressBarOrientation"/> values.</value>
+        public ProgressBarOrientation Orientation { get; set; }
+
         private int value;
 
         private int minimum;

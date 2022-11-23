@@ -16,6 +16,10 @@ void SetValue(int value);
 bool GetIsIndeterminate();
 void SetIsIndeterminate(bool value);
 
+
+ProgressBarOrientation GetOrientation();
+void SetOrientation(ProgressBarOrientation value);
+
 public:
 ProgressBar();
 protected:

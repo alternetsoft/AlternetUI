@@ -521,6 +521,12 @@ namespace Alternet.UI.Native
         Pressed = 1,
     }
     
+    enum ProgressBarOrientation
+    {
+        Horizontal = 0,
+        Vertical = 1,
+    }
+    
     enum SliderOrientation
     {
         Horizontal = 0,

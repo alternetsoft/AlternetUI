@@ -522,6 +522,12 @@ namespace Alternet::UI
         Pressed = 1,
     };
     
+    enum class ProgressBarOrientation
+    {
+        Horizontal = 0,
+        Vertical = 1,
+    };
+    
     enum class SliderOrientation
     {
         Horizontal = 0,

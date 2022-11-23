@@ -10,5 +10,7 @@ namespace NativeApi.Api
         public int Value { get; set; }
 
         public bool IsIndeterminate { get; set; }
+
+        public ProgressBarOrientation Orientation { get; set; }
     }
 }

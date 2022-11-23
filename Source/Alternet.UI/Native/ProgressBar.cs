@@ -90,6 +90,23 @@ namespace Alternet.UI.Native
             }
         }
         
+        public ProgressBarOrientation Orientation
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.ProgressBar_GetOrientation_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ProgressBar_SetOrientation_(NativePointer, value);
+            }
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -122,6 +139,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ProgressBar_SetIsIndeterminate_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern ProgressBarOrientation ProgressBar_GetOrientation_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ProgressBar_SetOrientation_(IntPtr obj, ProgressBarOrientation value);
             
         }
     }
