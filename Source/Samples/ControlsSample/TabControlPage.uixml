@@ -1,0 +1,38 @@
+﻿<Control x:Class="ControlsSample.TabControlPage"
+        xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
+    <StackPanel Orientation="Vertical" Padding="10">
+        <GroupBox Title="Tab Control">
+            <TabControl Margin="5" Name="tabControl">
+                <TabControl.Pages>
+                    <TabPage Title="Page 1" Name="page1">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                            <Button Text="Page 1 Button 1" Margin="5"/>
+                            <Button Text="Page 1 Button 2" Margin="5"/>
+                            <Button Text="Page 1 Button 3" Margin="5"/>
+                        </StackPanel>
+                    </TabPage>
+                    <TabPage Title="Page 2">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                            <Button Text="Page 2 Button 1" Margin="5"/>
+                            <Button Text="Page 2 Button 2" Margin="5"/>
+                            <Button Text="Page 2 Button 3" Margin="5"/>
+                        </StackPanel>
+                    </TabPage>
+                    <TabPage Title="Page 3">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                            <Button Text="Page 3 Button 1" Margin="5"/>
+                            <Button Text="Page 3 Button 2" Margin="5"/>
+                            <Button Text="Page 3 Button 3" Margin="5"/>
+                        </StackPanel>
+                    </TabPage>
+                </TabControl.Pages>
+            </TabControl>
+        </GroupBox>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,10,0,0">
+            <Button Text="Modify First Page Title" Name="modifyFirstPageTitleButton" Click="ModifyFirstPageTitleButton_Click" />
+        </StackPanel>
+    </StackPanel>
+</Control>
