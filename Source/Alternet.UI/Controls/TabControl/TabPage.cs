@@ -13,7 +13,22 @@ namespace Alternet.UI
     /// </remarks>
     public class TabPage : Control
     {
-        private string title = "";
+        /// <summary>
+        /// Initializes a new instance of <see cref="TabPage"/> class.
+        /// </summary>
+        public TabPage() : this("")
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="TabPage"/> class with the specified title.
+        /// </summary>
+        public TabPage(string title)
+        {
+            this.title = title;
+        }
+
+        private string title;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Title"/> property changes.
