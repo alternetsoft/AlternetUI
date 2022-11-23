@@ -38,6 +38,10 @@
             <Button Text="Remove Selected Page" Name="removeSelectedPageButton" Click="RemoveSelectedPageButton_Click" />
             <Button Text="Append Page" Name="appendPageButton" Click="AppendPageButton_Click" />
             <Button Text="Clear Pages" Name="clearPagesButton" Click="ClearPagesButton_Click" />
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Label Text="Tab Alignment:" VerticalAlignment="Center"/>
+                <ComboBox IsEditable="false" Name="tabAlignmentComboBox" Margin="5,0,0,0" SelectedItemChanged="TabAlignmentComboBox_SelectedItemChanged"/>
+            </StackPanel>
         </StackPanel>
     </StackPanel>
 </Control>

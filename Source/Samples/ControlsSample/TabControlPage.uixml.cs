@@ -9,6 +9,10 @@ namespace ControlsSample
         public TabControlPage()
         {
             InitializeComponent();
+
+            foreach (var item in Enum.GetValues(typeof(TabAlignment)))
+                tabAlignmentComboBox.Items.Add(item ?? throw new Exception());
+            tabAlignmentComboBox.SelectedIndex = 0;
         }
 
         public IPageSite? Site { get; set; }
@@ -54,6 +58,11 @@ namespace ControlsSample
         private void TabControl_SelectedPageChanged(object sender, SelectedTabPageChangedEventArgs e)
         {
             Site?.LogEvent($"SelectedPageChanged; Old: {GetPageTitle(e.OldValue)}, New: {GetPageTitle(e.NewValue)}");
+        }
+
+        private void TabAlignmentComboBox_SelectedItemChanged(object sender, EventArgs e)
+        {
+            tabControl.TabAlignment = (TabAlignment)tabAlignmentComboBox.SelectedItem!;
         }
     }
 }
