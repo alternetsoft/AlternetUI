@@ -82,6 +82,14 @@ namespace Alternet::UI
     #pragma pack(pop)
     
     #pragma pack(push, 1)
+    struct TabPageSelectionEventData
+    {
+        int oldSelectedTabPageIndex;
+        int newSelectedTabPageIndex;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
     struct TreeViewItemEventData
     {
         void* item;

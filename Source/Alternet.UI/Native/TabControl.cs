@@ -52,6 +52,23 @@ namespace Alternet.UI.Native
             }
         }
         
+        public TabAlignment TabAlignment
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TabControl_GetTabAlignment_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TabControl_SetTabAlignment_(NativePointer, value);
+            }
+        }
+        
         public void InsertPage(int index, Control page, string title)
         {
             CheckDisposed();
@@ -105,11 +122,17 @@ namespace Alternet.UI.Native
                 {
                     SelectedPageIndexChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.TabControlEvent.SelectedPageIndexChanging:
+                {
+                    var ea = new NativeEventArgs<TabPageSelectionEventData>(MarshalEx.PtrToStructure<TabPageSelectionEventData>(parameter));
+                    SelectedPageIndexChanging?.Invoke(this, ea); return ea.Result;
+                }
                 default: throw new Exception("Unexpected TabControlEvent value: " + e);
             }
         }
         
         public event EventHandler? SelectedPageIndexChanged;
+        public event NativeEventHandler<TabPageSelectionEventData>? SelectedPageIndexChanging;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -122,6 +145,7 @@ namespace Alternet.UI.Native
             public enum TabControlEvent
             {
                 SelectedPageIndexChanged,
+                SelectedPageIndexChanging,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -138,6 +162,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TabControl_SetSelectedPageIndex_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern TabAlignment TabControl_GetTabAlignment_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TabControl_SetTabAlignment_(IntPtr obj, TabAlignment value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TabControl_InsertPage_(IntPtr obj, int index, IntPtr page, string title);

@@ -4,12 +4,14 @@ using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
-    internal class NativeTabControlHandler : NativeControlHandler<TabControl, Native.TabControl>
+    internal class NativeTabControlHandler : TabControlHandler
     {
         internal override Native.Control CreateNativeControl()
         {
             return new Native.TabControl();
         }
+
+        public new Native.TabControl NativeControl => (Native.TabControl)base.NativeControl!;
 
         protected override void OnAttach()
         {
@@ -19,10 +21,20 @@ namespace Alternet.UI
             Control.Pages.ItemRemoved += Pages_ItemRemoved;
             Control.Children.ItemInserted += Children_ItemInserted;
 
-
             NativeControl.SelectedPageIndexChanged += NativeControl_SelectedPageIndexChanged;
+            //NativeControl.SelectedPageIndexChanging += NativeControl_SelectedPageIndexChanging;
             Control.SelectedPageChanged += Control_SelectedPageChanged;
         }
+
+        //private void NativeControl_SelectedPageIndexChanging(object? sender, Native.NativeEventArgs<Native.TabPageSelectionEventData> e)
+        //{
+        //    var oldValue = e.Data.oldSelectedTabPageIndex == -1 ? null : Control.Pages[e.Data.oldSelectedTabPageIndex];
+        //    var newValue = e.Data.newSelectedTabPageIndex == -1 ? null : Control.Pages[e.Data.newSelectedTabPageIndex];
+            
+        //    var ea = new SelectedTabPageChangingEventArgs(oldValue, newValue);
+        //    Control.RaiseSelectedPageChanging(ea);
+        //    e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
+        //}
 
         private void Children_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
         {
@@ -52,7 +64,9 @@ namespace Alternet.UI
         protected override void OnDetach()
         {
             NativeControl.SelectedPageIndexChanged -= NativeControl_SelectedPageIndexChanged;
+            //NativeControl.SelectedPageIndexChanging -= NativeControl_SelectedPageIndexChanging;
             Control.SelectedPageChanged -= Control_SelectedPageChanged;
+            Control.Children.ItemInserted -= Children_ItemInserted;
 
             Control.Pages.ItemInserted -= Pages_ItemInserted;
             Control.Pages.ItemRemoved -= Pages_ItemRemoved;
@@ -81,6 +95,12 @@ namespace Alternet.UI
         }
 
         bool skipChildrenInsertionCheck;
+
+        public override TabAlignment TabAlignment
+        {
+            get => (TabAlignment)NativeControl.TabAlignment;
+            set => NativeControl.TabAlignment = (Native.TabAlignment)value;
+        }
 
         private void InsertPage(int index, TabPage page)
         {

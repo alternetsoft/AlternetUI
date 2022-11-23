@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Alternet.Base.Collections;
@@ -9,11 +10,44 @@ namespace Alternet.UI
     /// </summary>
     public class TabControl : Control
     {
+        /// <inheritdoc/>
+        public new TabControlHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (TabControlHandler)base.Handler;
+            }
+        }
+
+        ///// <summary>
+        ///// Occurs before the selected tab page is being changed. This event can be canceled.
+        ///// </summary>
+        //public event EventHandler<SelectedTabPageChangingEventArgs>? SelectedPageChanging;
+
+        ///// <summary>
+        ///// Raises the <see cref="SelectedPageChanging"/> event and calls <see cref="OnSelectedPageChanging"/>.
+        ///// </summary>
+        ///// <param name="e">An <see cref="SelectedTabPageChangingEventArgs"/> that contains the event data.</param>
+        //public void RaiseSelectedPageChanging(SelectedTabPageChangingEventArgs e)
+        //{
+        //    OnSelectedPageChanging(e);
+        //    SelectedPageChanging?.Invoke(this, e);
+        //}
+
+        ///// <summary>
+        ///// Called before a tree item is collapsed.
+        ///// </summary>
+        ///// <param name="e">An <see cref="SelectedTabPageChangingEventArgs"/> that contains the event data.</param>
+        //protected virtual void OnSelectedPageChanging(SelectedTabPageChangingEventArgs e)
+        //{
+        //}
+
         /// <summary>
         /// Gets or sets the area of the control (for example, along the top) where the tabs are aligned.
         /// </summary>
         /// <value>One of the <see cref="TabAlignment"/> values. The default is <see cref="TabAlignment.Top"/>.</value>
-        public TabAlignment TabAlignment { get; set; }
+        public TabAlignment TabAlignment { get => Handler.TabAlignment; set => Handler.TabAlignment = value; }
 
         /// <summary>
         /// Gets the collection of tab pages in this tab control.

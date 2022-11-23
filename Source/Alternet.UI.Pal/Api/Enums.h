@@ -542,6 +542,14 @@ namespace Alternet::UI
         Both = 3,
     };
     
+    enum class TabAlignment
+    {
+        Top = 0,
+        Bottom = 1,
+        Left = 2,
+        Right = 3,
+    };
+    
     enum class TreeViewHitTestLocations
     {
         None = 2,

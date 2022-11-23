@@ -37,6 +37,20 @@ ALTERNET_UI_API void TabControl_SetSelectedPageIndex_(TabControl* obj, int value
         });
 }
 
+ALTERNET_UI_API TabAlignment TabControl_GetTabAlignment_(TabControl* obj)
+{
+    return MarshalExceptions<TabAlignment>([&](){
+            return obj->GetTabAlignment();
+        });
+}
+
+ALTERNET_UI_API void TabControl_SetTabAlignment_(TabControl* obj, TabAlignment value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetTabAlignment(value);
+        });
+}
+
 ALTERNET_UI_API void TabControl_InsertPage_(TabControl* obj, int index, Control* page, const char16_t* title)
 {
     MarshalExceptions<void>([&](){

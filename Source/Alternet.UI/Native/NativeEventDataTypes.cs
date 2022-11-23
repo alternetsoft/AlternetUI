@@ -72,6 +72,13 @@ namespace Alternet.UI.Native
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class TabPageSelectionEventData
+    {
+        public int oldSelectedTabPageIndex;
+        public int newSelectedTabPageIndex;
+    }
+    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class TreeViewItemEventData
     {
         public System.IntPtr item;

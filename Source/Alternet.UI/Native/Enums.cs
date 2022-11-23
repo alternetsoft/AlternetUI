@@ -541,6 +541,14 @@ namespace Alternet.UI.Native
         Both = 3,
     }
     
+    enum TabAlignment
+    {
+        Top = 0,
+        Bottom = 1,
+        Left = 2,
+        Right = 3,
+    }
+    
     enum TreeViewHitTestLocations
     {
         None = 2,

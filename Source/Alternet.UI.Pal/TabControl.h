@@ -13,7 +13,12 @@ namespace Alternet::UI
     private:
 
         void OnSelectedPageChanged(wxBookCtrlEvent& event);
+        void OnSelectedPageChanging(wxBookCtrlEvent& event);
 
         wxNotebook* GetNotebook();
+
+        TabAlignment _tabAlignment = TabAlignment::Top;
+
+        long GetStyle();
     };
 }

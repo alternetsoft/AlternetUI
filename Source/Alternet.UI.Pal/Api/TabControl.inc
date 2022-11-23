@@ -7,6 +7,10 @@ int GetPageCount();
 int GetSelectedPageIndex();
 void SetSelectedPageIndex(int value);
 
+
+TabAlignment GetTabAlignment();
+void SetTabAlignment(TabAlignment value);
+
 void InsertPage(int index, Control* page, const string& title);
 void RemovePage(int index, Control* page);
 void SetPageTitle(int index, const string& title);
@@ -15,6 +19,7 @@ public:
 enum class TabControlEvent
 {
     SelectedPageIndexChanged,
+    SelectedPageIndexChanging,
 };
 typedef void* (*TabControlEventCallbackType)(TabControl* obj, TabControlEvent event, void* param);
 static void SetEventCallback(TabControlEventCallbackType value) { eventCallback = value; }

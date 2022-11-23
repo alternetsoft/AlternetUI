@@ -49,9 +49,10 @@ namespace ControlsSample
             tabControl.Pages.Clear();
         }
 
+        static string GetPageTitle(TabPage? page) => page == null ? "<none>" : page.Title;
+
         private void TabControl_SelectedPageChanged(object sender, SelectedTabPageChangedEventArgs e)
         {
-            string GetPageTitle(TabPage? page) => page == null ? "<none>" : page.Title;
             Site?.LogEvent($"SelectedPageChanged; Old: {GetPageTitle(e.OldValue)}, New: {GetPageTitle(e.NewValue)}");
         }
     }
