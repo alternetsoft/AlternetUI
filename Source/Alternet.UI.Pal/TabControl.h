@@ -10,6 +10,9 @@ namespace Alternet::UI
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
+    protected:
+        virtual void OnWxWindowCreated() override;
+
     private:
 
         void OnSelectedPageChanged(wxBookCtrlEvent& event);
@@ -20,5 +23,21 @@ namespace Alternet::UI
         TabAlignment _tabAlignment = TabAlignment::Top;
 
         long GetStyle();
+
+        struct Page
+        {
+            Page(Control* control_, int index_, const wxString& title_);
+            ~Page();
+
+            Control* control;
+            int index;
+            wxString title;
+
+            BYREF_ONLY(Page);
+        };
+
+        std::vector<Page*> _pages;
+
+        void InsertPage(Page* page);
     };
 }

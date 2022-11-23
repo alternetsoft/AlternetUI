@@ -1,5 +1,4 @@
 #include "TabControl.h"
-
 namespace Alternet::UI
 {
     TabControl::TabControl()
@@ -37,6 +36,12 @@ namespace Alternet::UI
         return notebook;
     }
 
+    void TabControl::OnWxWindowCreated()
+    {
+        for (auto page : _pages)
+            InsertPage(page);
+    }
+
     TabAlignment TabControl::GetTabAlignment()
     {
         return _tabAlignment;
@@ -53,7 +58,8 @@ namespace Alternet::UI
 
     void TabControl::SetPageTitle(int index, const string& title)
     {
-        GetNotebook()->SetPageText(index, wxStr(title));
+        _pages[index]->title = wxStr(title);
+        GetNotebook()->SetPageText(index, _pages[index]->title);
     }
 
     Size TabControl::GetTotalPreferredSizeFromPageSize(const Size& pageSize)
@@ -67,19 +73,19 @@ namespace Alternet::UI
         return GetNotebook()->GetPageCount();
     }
 
-    void TabControl::InsertPage(int index, Control* page, const string& title)
+    void TabControl::InsertPage(int index, Control* control, const string& title)
     {
-        // Do not explicitly delete the window for a page that is currently managed by wxNotebook..
-        // See https://docs.wxwidgets.org/3.0/classwx_notebook.html.
-        page->SetDoNotDestroyWxWindow(true);
-
-        GetNotebook()->InsertPage(index, page->GetWxWindow(), wxStr(title));
+        auto page = new Page(control, index, wxStr(title));
+        _pages.push_back(page);
+        InsertPage(page);
     }
 
-    void TabControl::RemovePage(int index, Control* page)
+    void TabControl::RemovePage(int index, Control* pageControl)
     {
         GetNotebook()->RemovePage(index);
-        page->SetDoNotDestroyWxWindow(false); // See the corresponding SetDoNotDestroyWxWindow(true) call.
+        auto page = _pages[index];
+        _pages.erase(_pages.begin() + index);
+        delete page;
     }
 
     void TabControl::OnSelectedPageChanged(wxBookCtrlEvent& event)
@@ -124,5 +130,28 @@ namespace Alternet::UI
         };
 
         return getTabAlignment();
+    }
+
+    void TabControl::InsertPage(Page* page)
+    {
+        GetNotebook()->InsertPage(page->index, page->control->GetWxWindow(), page->title);
+    }
+
+    // ---------------
+
+    TabControl::Page::Page(Control* control_, int index_, const wxString& title_) :
+        control(control_), index(index_), title(title_)
+    {
+        control->AddRef();
+        // Do not explicitly delete the window for a page that is currently managed by wxNotebook..
+        // See https://docs.wxwidgets.org/3.0/classwx_notebook.html.
+        control->SetDoNotDestroyWxWindow(true);
+    }
+
+    TabControl::Page::~Page()
+    {
+        control->SetDoNotDestroyWxWindow(false); // See the corresponding SetDoNotDestroyWxWindow(true) call.
+        control->Release();
+        control = nullptr;
     }
 }
