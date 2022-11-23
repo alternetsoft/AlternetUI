@@ -3,10 +3,10 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
     <StackPanel Orientation="Vertical" Padding="10">
-        <GroupBox Title="Tab Control">
+        <GroupBox Title="Tab Control" Height="200">
             <TabControl Margin="5" Name="tabControl">
                 <TabControl.Pages>
-                    <TabPage Title="Page 1" Name="page1">
+                    <TabPage Title="Page 1">
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
                             <Button Text="Page 1 Button 1" Margin="5"/>
                             <Button Text="Page 1 Button 2" Margin="5"/>
@@ -34,6 +34,8 @@
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,10,0,0">
             <Button Text="Modify First Page Title" Name="modifyFirstPageTitleButton" Click="ModifyFirstPageTitleButton_Click" />
             <Button Text="Insert Last Page Sibling" Name="InsertLastPageSiblingButton" Click="InsertLastPageSiblingButton_Click" />
+            <Button Text="Remove Selected Page" Name="removeSelectedPageButton" Click="RemoveSelectedPageButton_Click" />
+            <Button Text="Append Page" Name="appendPageButton" Click="AppendPageButton_Click" />
         </StackPanel>
     </StackPanel>
 </Control>

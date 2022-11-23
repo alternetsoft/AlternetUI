@@ -30,10 +30,14 @@ namespace Alternet.UI
 
         private void NativeControl_SelectedPageIndexChanged(object? sender, EventArgs e)
         {
+            UpdateSelectedPageFromNativeControl();
+            LayoutSelectedPage();
+        }
+
+        private void UpdateSelectedPageFromNativeControl()
+        {
             var selectedPageIndex = NativeControl.SelectedPageIndex;
             Control.SelectedPage = selectedPageIndex == -1 ? null : Control.Pages[selectedPageIndex];
-            
-            LayoutSelectedPage();
         }
 
         protected override void OnDetach()
@@ -93,6 +97,8 @@ namespace Alternet.UI
             page.Index = index;
             InsertPage(index, page);
             page.TitleChanged += Page_TitleChanged;
+
+            UpdateSelectedPageFromNativeControl();
         }
 
         private void Page_TitleChanged(object? sender, EventArgs e)
