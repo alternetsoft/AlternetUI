@@ -131,7 +131,8 @@ namespace Alternet.UI
         {
             page.TitleChanged -= Page_TitleChanged;
             RemovePage(index, page);
-            page.Index = null; ;
+            UpdateSelectedPageFromNativeControl();
+            page.Index = null;
         }
 
         private void Pages_ItemInserted(object? sender, CollectionChangeEventArgs<TabPage> e)

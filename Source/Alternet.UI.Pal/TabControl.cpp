@@ -22,6 +22,9 @@ namespace Alternet::UI
 
     void TabControl::SetSelectedPageIndex(int value)
     {
+        if (value == -1)
+            return; // wxWidgets doesnt allow "no selection" in a tab control.
+
         GetNotebook()->SetSelection(value);
     }
 

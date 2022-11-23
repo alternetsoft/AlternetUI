@@ -10,6 +10,12 @@ namespace Alternet.UI
     public class TabControl : Control
     {
         /// <summary>
+        /// Gets or sets the area of the control (for example, along the top) where the tabs are aligned.
+        /// </summary>
+        /// <value>One of the <see cref="TabAlignment"/> values. The default is <see cref="TabAlignment.Top"/>.</value>
+        public TabAlignment TabAlignment { get; set; }
+
+        /// <summary>
         /// Gets the collection of tab pages in this tab control.
         /// </summary>
         /// <value>A <see cref="Collection{TabPage}"/> that contains the <see cref="TabPage"/> objects in this <see cref="TabControl"/>.</value>
@@ -46,7 +52,7 @@ namespace Alternet.UI
 
         private static void OnSelectedPageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((TabControl)d).OnSelectedPageChanged(new RoutedEventArgs(SelectedPageChangedEvent, d));
+            ((TabControl)d).OnSelectedPageChanged(new SelectedTabPageChangedEventArgs(SelectedPageChangedEvent, d, (TabPage?)e.OldValue, (TabPage?)e.NewValue));
         }
 
         /// <summary>
@@ -54,7 +60,7 @@ namespace Alternet.UI
         /// is to raise a SelectedPageChangedEvent
         /// </summary>
         /// <param name="e">The inputs for this event. Can be raised (default behavior) or processed in some other way.</param>
-        protected virtual void OnSelectedPageChanged(RoutedEventArgs e)
+        protected virtual void OnSelectedPageChanged(SelectedTabPageChangedEventArgs e)
         {
             RaiseEvent(e);
         }
@@ -63,13 +69,13 @@ namespace Alternet.UI
         ///     An event fired when the selection changes.
         /// </summary>
         public static readonly RoutedEvent SelectedPageChangedEvent = EventManager.RegisterRoutedEvent(
-            nameof(SelectedPageChanged), RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(TabControl));
+            nameof(SelectedPageChanged), RoutingStrategy.Bubble, typeof(SelectedTabPageChangedEventHandler), typeof(TabControl));
 
         /// <summary>
         /// Occurs when the <see cref="SelectedPage"/> property has changed.
         /// </summary>
         [Category("Behavior")]
-        public event RoutedEventHandler SelectedPageChanged
+        public event SelectedTabPageChangedEventHandler SelectedPageChanged
         {
             add { AddHandler(SelectedPageChangedEvent, value); }
             remove { RemoveHandler(SelectedPageChangedEvent, value); }
