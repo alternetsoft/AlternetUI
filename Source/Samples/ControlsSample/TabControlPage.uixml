@@ -36,6 +36,7 @@
             <Button Text="Insert Last Page Sibling" Name="InsertLastPageSiblingButton" Click="InsertLastPageSiblingButton_Click" />
             <Button Text="Remove Selected Page" Name="removeSelectedPageButton" Click="RemoveSelectedPageButton_Click" />
             <Button Text="Append Page" Name="appendPageButton" Click="AppendPageButton_Click" />
+            <Button Text="Clear Pages" Name="clearPagesButton" Click="ClearPagesButton_Click" />
         </StackPanel>
     </StackPanel>
 </Control>

@@ -43,5 +43,10 @@ namespace ControlsSample
         {
             tabControl.Pages.Add(new TabPage("Page " + (tabControl.Pages.Count + 1)));
         }
+
+        private void ClearPagesButton_Click(object sender, System.EventArgs e)
+        {
+            tabControl.Pages.Clear();
+        }
     }
 }
