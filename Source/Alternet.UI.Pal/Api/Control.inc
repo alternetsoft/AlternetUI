@@ -84,6 +84,8 @@ static Control* GetFocusedControl();
 static Control* HitTest(const Point& screenPoint);
 Point ClientToScreen(const Point& point);
 Point ScreenToClient(const Point& point);
+Point ScreenToDevice(const Point& point);
+Point DeviceToScreen(const Point& point);
 bool Focus();
 void BeginInit();
 void EndInit();

@@ -87,6 +87,9 @@ namespace NativeApi.Api
         public Point ClientToScreen(Point point) => throw new Exception();
         public Point ScreenToClient(Point point) => throw new Exception();
 
+        public Point ScreenToDevice(Point point) => throw new Exception();
+        public Point DeviceToScreen(Point point) => throw new Exception();
+
         public bool IsMouseCaptured { get; }
 
         public bool Focus() => throw new Exception();

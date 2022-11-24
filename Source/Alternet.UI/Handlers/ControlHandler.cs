@@ -712,6 +712,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Converts the screen coordinates of a specified point in device-independent units (1/96th inch per unit) to device (pixel) coordinates.
+        /// </summary>
+        /// <param name="point">A <see cref="Point"/> that specifies the screen device-independent coordinates to be converted.</param>
+        /// <returns>The converted cooridnates.</returns>
+        public Point ScreenToDevice(Point point)
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+            
+            return NativeControl.ScreenToDevice(point);
+        }
+
+        /// <summary>
+        /// Converts the device (pixel) coordinates of a specified point to coordinates in device-independent units (1/96th inch per unit).
+        /// </summary>
+        /// <param name="point">A <see cref="Point"/> that contains the coordinates in device-independent units (1/96th inch per unit) to be converted.</param>
+        /// <returns>The converted cooridnates.</returns>
+        public Point DeviceToScreen(Point point)
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+            
+            return NativeControl.DeviceToScreen(point);
+        }
+
+        /// <summary>
         /// Called when the mouse cursor enters the boundary of the control.
         /// </summary>
         protected virtual void OnMouseEnter()

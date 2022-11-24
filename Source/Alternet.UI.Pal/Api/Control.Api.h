@@ -333,6 +333,20 @@ ALTERNET_UI_API Point_C Control_ScreenToClient_(Control* obj, Point point)
         });
 }
 
+ALTERNET_UI_API Point_C Control_ScreenToDevice_(Control* obj, Point point)
+{
+    return MarshalExceptions<Point_C>([&](){
+            return obj->ScreenToDevice(point);
+        });
+}
+
+ALTERNET_UI_API Point_C Control_DeviceToScreen_(Control* obj, Point point)
+{
+    return MarshalExceptions<Point_C>([&](){
+            return obj->DeviceToScreen(point);
+        });
+}
+
 ALTERNET_UI_API c_bool Control_Focus_(Control* obj)
 {
     return MarshalExceptions<c_bool>([&](){

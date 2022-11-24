@@ -39,5 +39,7 @@
 		</StackPanel>
 
 		<ListBox Name="lb" Height="200" />
+        
+        <Label Name="mousePositionLabel" Margin="10" />
 	</StackPanel>
 </Window>

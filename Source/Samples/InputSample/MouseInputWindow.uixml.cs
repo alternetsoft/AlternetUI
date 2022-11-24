@@ -1,6 +1,8 @@
 using System;
+using System.Text;
 using Alternet.Drawing;
 using Alternet.UI;
+using Alternet.UI.Markup;
 
 namespace InputSample
 {
@@ -102,13 +104,13 @@ namespace InputSample
         }
 
         private void LogMouseMove(MouseEventArgs e, string objectName, string eventName, IInputElement element) =>
-            LogMessage($"{objectName}_{eventName} [{e.GetPosition(element)}]");
+            LogMessage($"{objectName}_{eventName} [{FormatPoint(e.GetPosition(element))}]");
 
         private void LogMouseButton(MouseButtonEventArgs e, string objectName, string eventName, IInputElement element) =>
-            LogMessage($"{objectName}_{eventName} [{e.ChangedButton}, {e.GetPosition(element)}]");
+            LogMessage($"{objectName}_{eventName} [{e.ChangedButton}, {FormatPoint(e.GetPosition(element))}]");
 
         private void LogMouseWheel(MouseWheelEventArgs e, string objectName, string eventName, IInputElement element) =>
-            LogMessage($"{objectName}_{eventName} [{e.Delta}, {e.GetPosition(element)}]");
+            LogMessage($"{objectName}_{eventName} [{e.Delta}, {FormatPoint(e.GetPosition(element))}]");
 
         private void HelloButton_MouseMove(object sender, MouseEventArgs e) => LogMouseMove(e, "HelloButton", "MouseMove", (IInputElement)sender);
         private void HelloButton_PreviewMouseMove(object sender, MouseEventArgs e) => LogMouseMove(e, "HelloButton", "PreviewMouseMove", (IInputElement)sender);
@@ -119,7 +121,29 @@ namespace InputSample
         private void HelloButton_MouseUp(object sender, MouseButtonEventArgs e) => LogMouseButton(e, "HelloButton", "MouseUp", (IInputElement)sender);
         private void HelloButton_PreviewMouseUp(object sender, MouseButtonEventArgs e) => LogMouseButton(e, "HelloButton", "PreviewMouseUp", (IInputElement)sender);
 
-        private void StackPanel_PreviewMouseMove(object sender, MouseEventArgs e) => LogMouseMove(e, "StackPanel", "PreviewMouseMove", (IInputElement)sender);
+        private void StackPanel_PreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            LogMouseMove(e, "StackPanel", "PreviewMouseMove", (IInputElement)sender);
+
+            var control = (Control)sender;
+            UpdateMousePositionLabel(control, e.GetPosition(control));
+        }
+
+        static string FormatPoint(Point pt) => $"{pt.X.ToString("F2")}, {pt.Y.ToString("F2")}";
+
+        private void UpdateMousePositionLabel(Control control, Point clientPosition)
+        {
+            var screenPosition = control.ClientToScreen(clientPosition);
+            var devicePosition = control.ScreenToDevice(screenPosition);
+
+            var text = $"Mouse position: " +
+                $"[Client: {FormatPoint(clientPosition)}], " +
+                $"[Screen: {FormatPoint(screenPosition)}], " +
+                $"[Device: {FormatPoint(devicePosition)}]]";
+
+            mousePositionLabel.Text = text;
+        }
+
         private void StackPanel_MouseMove(object sender, MouseEventArgs e) => LogMouseMove(e, "StackPanel", "MouseMove", (IInputElement)sender);
 
         private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e) => LogMouseButton(e, "StackPanel", "MouseDown", (IInputElement)sender);
