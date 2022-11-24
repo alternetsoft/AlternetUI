@@ -452,6 +452,12 @@ namespace Alternet.UI.Native
             NativeApi.Control_SaveScreenshot_(NativePointer, fileName);
         }
         
+        public void SendSizeEvent()
+        {
+            CheckDisposed();
+            NativeApi.Control_SendSizeEvent_(NativePointer);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -716,6 +722,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SaveScreenshot_(IntPtr obj, string fileName);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SendSizeEvent_(IntPtr obj);
             
         }
     }

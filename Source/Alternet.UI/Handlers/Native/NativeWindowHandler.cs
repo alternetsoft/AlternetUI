@@ -5,12 +5,14 @@ using System.Linq;
 
 namespace Alternet.UI
 {
-    internal class NativeWindowHandler : NativeControlHandler<Window, Native.Window>
+    internal class NativeWindowHandler : WindowHandler
     {
         internal override Native.Control CreateNativeControl()
         {
             return new Native.Window();
         }
+
+        public new Native.Window NativeControl => (Native.Window)base.NativeControl!;
 
         protected override void OnAttach()
         {
@@ -454,6 +456,18 @@ namespace Alternet.UI
             {
                 if (!Modal)
                     Control.Dispose();
+            }
+        }
+
+        public override void SetSizeToContent()
+        {
+            var size = GetChildrenMaxPreferredSizePadded(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            if (size != Size.Empty)
+            {
+                Control.ClientSize = size + new Size(1, 0);
+                Control.ClientSize = size;
+                Control.Refresh();
+                NativeControl.SendSizeEvent();
             }
         }
     }

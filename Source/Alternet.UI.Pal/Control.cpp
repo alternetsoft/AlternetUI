@@ -253,6 +253,15 @@ namespace Alternet::UI
         wxWindow->Update();
     }
 
+    void Control::SendSizeEvent()
+    {
+        if (!IsWxWindowCreated())
+            return;
+
+        auto wxWindow = GetWxWindow();
+        wxWindow->SendSizeEvent();
+    }
+
     optional<string> Control::GetToolTip()
     {
         return _toolTip;

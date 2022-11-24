@@ -89,6 +89,7 @@ void BeginInit();
 void EndInit();
 void Destroy();
 void SaveScreenshot(const string& fileName);
+void SendSizeEvent();
 public:
 enum class ControlEvent
 {

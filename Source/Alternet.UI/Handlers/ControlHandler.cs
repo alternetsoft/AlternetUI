@@ -329,7 +329,7 @@ namespace Alternet.UI
             }
             else
             {
-                return GetChildrenMaxPreferredSize(availableSize);
+                return GetSpecifiedOrChildrenPreferredSize(availableSize);
             }
         }
 
@@ -485,15 +485,54 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the size of the area which can fit all the children of this control.
+        /// Gets the size of the control specified in its <see cref="Control.Width"/> and <see cref="Control.Height"/>
+        /// properties or calculates preferred size from its children.
         /// </summary>
-        protected Size GetChildrenMaxPreferredSize(Size availableSize)
+        protected Size GetSpecifiedOrChildrenPreferredSize(Size availableSize)
         {
             var specifiedWidth = Control.Width;
             var specifiedHeight = Control.Height;
             if (!double.IsNaN(specifiedWidth) && !double.IsNaN(specifiedHeight))
                 return new Size(specifiedWidth, specifiedHeight);
 
+            var maxSize = GetChildrenMaxPreferredSizePadded(availableSize);
+            var maxWidth = maxSize.Width;
+            var maxHeight = maxSize.Height;
+
+            var width = double.IsNaN(specifiedWidth) ? maxWidth : specifiedWidth;
+            var height = double.IsNaN(specifiedHeight) ? maxHeight : specifiedHeight;
+
+            return new Size(width, height);
+        }
+
+        /// <summary>
+        /// Returns a preferred size of control with an added padding.
+        /// </summary>
+        protected Size GetChildrenMaxPreferredSizePadded(Size availableSize)
+        {
+            return GetPaddedPreferredSize(GetChildrenMaxPreferredSize(availableSize));
+        }
+
+        /// <summary>
+        /// Returns the size of the area which can fit all the children of this control, with an added padding.
+        /// </summary>
+        protected Size GetPaddedPreferredSize(Size preferredSize)
+        {
+            var padding = Control.Padding;
+
+            var intrinsicPadding = new Thickness();
+            var nativeControl = NativeControl;
+            if (nativeControl != null)
+                intrinsicPadding = nativeControl.IntrinsicPreferredSizePadding;
+
+            return preferredSize + padding.Size + intrinsicPadding.Size;
+        }
+
+        /// <summary>
+        /// Gets the size of the area which can fit all the children of this control.
+        /// </summary>
+        protected Size GetChildrenMaxPreferredSize(Size availableSize)
+        {
             double maxWidth = 0;
             double maxHeight = 0;
 
@@ -504,17 +543,7 @@ namespace Alternet.UI
                 maxHeight = Math.Max(preferredSize.Height, maxHeight);
             }
 
-            var padding = Control.Padding;
-
-            var intrinsicPadding = new Thickness();
-            var nativeControl = NativeControl;
-            if (nativeControl != null)
-                intrinsicPadding = nativeControl.IntrinsicPreferredSizePadding;
-
-            var width = double.IsNaN(specifiedWidth) ? maxWidth + padding.Horizontal + intrinsicPadding.Horizontal : specifiedWidth;
-            var height = double.IsNaN(specifiedHeight) ? maxHeight + padding.Vertical + intrinsicPadding.Vertical : specifiedHeight;
-
-            return new Size(width, height);
+            return new Size(maxWidth, maxHeight);
         }
 
         /// <summary>

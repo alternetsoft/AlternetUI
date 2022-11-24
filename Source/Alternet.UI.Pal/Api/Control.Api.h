@@ -368,6 +368,13 @@ ALTERNET_UI_API void Control_SaveScreenshot_(Control* obj, const char16_t* fileN
         });
 }
 
+ALTERNET_UI_API void Control_SendSizeEvent_(Control* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->SendSizeEvent();
+        });
+}
+
 ALTERNET_UI_API void Control_SetEventCallback_(Control::ControlEventCallbackType callback)
 {
     Control::SetEventCallback(callback);

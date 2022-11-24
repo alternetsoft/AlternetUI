@@ -159,6 +159,7 @@ namespace WindowPropertiesSample
             addOwnedWindow.Enabled = haveTestWindow;
             stateComboBox.Enabled = haveTestWindow;
 
+            setSizeToContentButton.Enabled = haveTestWindow;
             setSizeButton.Enabled = haveTestWindow;
             setClientSizeButton.Enabled = haveTestWindow;
             setBoundsButton.Enabled = haveTestWindow;
@@ -348,6 +349,12 @@ namespace WindowPropertiesSample
         {
             if (testWindow != null)
                 testWindow.Visible = !hideWindowCheckBox.IsChecked;
+        }
+
+        private void SetSizeToContentButton_Click(object sender, System.EventArgs e)
+        {
+            if (testWindow != null)
+                testWindow.SetSizeToContent();
         }
     }
 }

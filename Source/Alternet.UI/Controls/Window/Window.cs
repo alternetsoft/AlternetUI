@@ -26,6 +26,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Changes size of the window to fit the size of its content.
+        /// </summary>
+        public void SetSizeToContent()
+        {
+            Handler.SetSizeToContent();
+        }
+
+        /// <summary>
         /// Gets the collection of input bindings associated with this window.
         /// </summary>
         public Collection<InputBinding> InputBindings { get; } = new Collection<InputBinding>();
@@ -275,8 +283,14 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? StateChanged;
 
-
-        private new NativeWindowHandler Handler => (NativeWindowHandler)base.Handler;
+        private new NativeWindowHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (NativeWindowHandler)base.Handler;
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether the window is the currently active window for this application.
