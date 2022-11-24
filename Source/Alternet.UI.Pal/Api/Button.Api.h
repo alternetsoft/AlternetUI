@@ -29,6 +29,34 @@ ALTERNET_UI_API void Button_SetText_(Button* obj, const char16_t* value)
         });
 }
 
+ALTERNET_UI_API c_bool Button_GetIsDefault_(Button* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsDefault();
+        });
+}
+
+ALTERNET_UI_API void Button_SetIsDefault_(Button* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetIsDefault(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Button_GetIsCancel_(Button* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsCancel();
+        });
+}
+
+ALTERNET_UI_API void Button_SetIsCancel_(Button* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetIsCancel(value);
+        });
+}
+
 ALTERNET_UI_API void Button_SetEventCallback_(Button::ButtonEventCallbackType callback)
 {
     Button::SetEventCallback(callback);

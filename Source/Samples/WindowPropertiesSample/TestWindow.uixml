@@ -14,8 +14,8 @@
       <Button Text="Show Modal" Name="showModalButton" Click="ShowModalButton_Click"/>
     </StackPanel>
     <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10" >
-      <Button Name="okButton" Text="OK" Click="OkButton_Click" Margin="0,0,10,0"/>
-      <Button Name="cancelButton" Text="Cancel" Click="CancelButton_Click" />
+      <Button Name="okButton" Text="OK" Click="OkButton_Click" Margin="0,0,10,0" IsDefault="true" />
+      <Button Name="cancelButton" Text="Cancel" Click="CancelButton_Click" IsCancel="true" />
     </StackPanel>
   </Grid>
 </Window>

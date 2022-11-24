@@ -1,11 +1,16 @@
 namespace Alternet.UI
 {
-    internal class NativeButtonHandler : NativeControlHandler<Button, Native.Button>
+    internal class NativeButtonHandler : ButtonHandler
     {
         internal override Native.Control CreateNativeControl()
         {
             return new Native.Button();
         }
+
+        public new Native.Button NativeControl => (Native.Button)base.NativeControl!;
+
+        public override bool IsDefault { get => NativeControl.IsDefault; set => NativeControl.IsDefault = value; }
+        public override bool IsCancel { get => NativeControl.IsCancel; set => NativeControl.IsCancel = value; }
 
         protected override void OnAttach()
         {

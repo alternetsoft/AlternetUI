@@ -40,6 +40,40 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool IsDefault
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Button_GetIsDefault_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Button_SetIsDefault_(NativePointer, value);
+            }
+        }
+        
+        public bool IsCancel
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Button_GetIsCancel_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Button_SetIsCancel_(NativePointer, value);
+            }
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -97,6 +131,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Button_SetText_(IntPtr obj, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Button_GetIsDefault_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetIsDefault_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Button_GetIsCancel_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetIsCancel_(IntPtr obj, bool value);
             
         }
     }

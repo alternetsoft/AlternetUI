@@ -4,6 +4,14 @@ public:
 string GetText();
 void SetText(const string& value);
 
+
+bool GetIsDefault();
+void SetIsDefault(bool value);
+
+
+bool GetIsCancel();
+void SetIsCancel(bool value);
+
 public:
 enum class ButtonEvent
 {

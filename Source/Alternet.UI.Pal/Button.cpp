@@ -49,8 +49,50 @@ namespace Alternet::UI
         GetButton()->SetLabel(wxStr(value));
     }
 
+    void Button::ApplyIsDefault()
+    {
+        auto button = GetButton();
+        auto topLevelWindow = dynamic_cast<wxTopLevelWindow*>(wxGetTopLevelParent(button));
+        if (topLevelWindow != nullptr)
+        {
+            if (_isDefault)
+                button->SetDefault();
+            else if (topLevelWindow->GetDefaultItem() == button)
+                topLevelWindow->SetDefaultItem(nullptr);
+        }
+    }
+
     void Button::OnButtonClick(wxCommandEvent& event)
     {
         RaiseEvent(ButtonEvent::Click);
+    }
+
+    void Button::OnWxWindowCreated()
+    {
+        Control::OnWxWindowCreated();
+        ApplyIsDefault();
+    }
+    
+    bool Button::GetIsDefault()
+    {
+        return _isDefault;
+    }
+    
+    void Button::SetIsDefault(bool value)
+    {
+        if (_isDefault == value)
+            return;
+
+        _isDefault = value;
+        ApplyIsDefault();
+    }
+    
+    bool Button::GetIsCancel()
+    {
+        return false;
+    }
+    
+    void Button::SetIsCancel(bool value)
+    {
     }
 }

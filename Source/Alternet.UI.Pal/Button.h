@@ -14,6 +14,8 @@ namespace Alternet::UI
 
     protected:
 
+        virtual void OnWxWindowCreated() override;
+
     private:
 
         wxButton* GetButton();
@@ -22,5 +24,9 @@ namespace Alternet::UI
 
         string RetrieveText();
         void ApplyText(const string& value);
+
+        bool _isDefault = false;
+
+        void ApplyIsDefault();
     };
 }
