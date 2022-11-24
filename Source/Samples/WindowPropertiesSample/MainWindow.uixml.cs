@@ -21,6 +21,10 @@ namespace WindowPropertiesSample
                 startLocationComboBox.Items.Add(value!);
             startLocationComboBox.SelectedItem = WindowStartLocation.Default;
 
+            foreach (var value in Enum.GetValues(typeof(WindowSizeToContentMode)))
+                sizeToContentModeComboBox.Items.Add(value!);
+            sizeToContentModeComboBox.SelectedItem = WindowSizeToContentMode.WidthAndHeight;
+
             UpdateControls();
         }
 
@@ -159,6 +163,7 @@ namespace WindowPropertiesSample
             addOwnedWindow.Enabled = haveTestWindow;
             stateComboBox.Enabled = haveTestWindow;
 
+            sizeToContentModeComboBox.Enabled = haveTestWindow;
             setSizeToContentButton.Enabled = haveTestWindow;
             setSizeButton.Enabled = haveTestWindow;
             setClientSizeButton.Enabled = haveTestWindow;
@@ -354,7 +359,7 @@ namespace WindowPropertiesSample
         private void SetSizeToContentButton_Click(object sender, System.EventArgs e)
         {
             if (testWindow != null)
-                testWindow.SetSizeToContent();
+                testWindow.SetSizeToContent((WindowSizeToContentMode)sizeToContentModeComboBox.SelectedItem!);
         }
     }
 }

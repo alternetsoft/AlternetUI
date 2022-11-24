@@ -8,79 +8,85 @@
     StartLocation="CenterScreen"
 		Activated="Window_Activated"
 		Deactivated="Window_Deactivated">
-	<Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="*" />
-    </Grid.RowDefinitions>
-		<StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="0">
-			<GroupBox Title="Create" Margin="0,0,5,0">
-				<StackPanel>
-          <Button Text="Create and show window" Name="createAndShowWindowButton" Click="CreateAndShowWindowButton_Click" Margin="0,0,0,5" />
-          <Button Text="Create and show modal window" Name="createAndShowModalWindowButton" Click="CreateAndShowModalWindowButton_Click" Margin="0,0,0,5"/>
-          <CheckBox Text="Set Owner" Name="setOwnerCheckBox" Margin="0,0,0,5"/>
-					<CheckBox Text="Cancel Closing" Name="cancelClosingCheckBox" Margin="0,0,0,5"/>
-          <StackPanel Margin="0,0,0,5">
-            <Label Text="Start Location:" />
-            <ComboBox IsEditable="false" Name="startLocationComboBox" />
-          </StackPanel>
-        </StackPanel>
-			</GroupBox>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="0">
+            <GroupBox Title="Create" Margin="0,0,5,0">
+                <StackPanel>
+                    <Button Text="Create and show window" Name="createAndShowWindowButton" Click="CreateAndShowWindowButton_Click" Margin="0,0,0,5" />
+                    <Button Text="Create and show modal window" Name="createAndShowModalWindowButton" Click="CreateAndShowModalWindowButton_Click" Margin="0,0,0,5"/>
+                    <CheckBox Text="Set Owner" Name="setOwnerCheckBox" Margin="0,0,0,5"/>
+                    <CheckBox Text="Cancel Closing" Name="cancelClosingCheckBox" Margin="0,0,0,5"/>
+                    <StackPanel Margin="0,0,0,5">
+                        <Label Text="Start Location:" />
+                        <ComboBox IsEditable="false" Name="startLocationComboBox" />
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
 
-			<GroupBox Title="Properties" Margin="0,0,5,0">
-				<StackPanel>
-					<CheckBox Text="ShowInTaskbar" Name="showInTaskBarCheckBox" CheckedChanged="ShowInTaskBarCheckBox_CheckedChanged" IsChecked="True"/>
-					<CheckBox Text="Minimize Enabled" Name="minimizeEnabledCheckBox" CheckedChanged="MinimizeEnabledCheckBox_CheckedChanged" IsChecked="True"/>
-					<CheckBox Text="Maximize Enabled" Name="maximizeEnabledCheckBox" CheckedChanged="MaximizeEnabledCheckBox_CheckedChanged" IsChecked="True"/>
-					<CheckBox Text="Close Enabled" Name="closeEnabledCheckBox" CheckedChanged="CloseEnabledCheckBox_CheckedChanged" IsChecked="True"/>
+            <GroupBox Title="Properties" Margin="0,0,5,0">
+                <StackPanel>
+                    <CheckBox Text="ShowInTaskbar" Name="showInTaskBarCheckBox" CheckedChanged="ShowInTaskBarCheckBox_CheckedChanged" IsChecked="True"/>
+                    <CheckBox Text="Minimize Enabled" Name="minimizeEnabledCheckBox" CheckedChanged="MinimizeEnabledCheckBox_CheckedChanged" IsChecked="True"/>
+                    <CheckBox Text="Maximize Enabled" Name="maximizeEnabledCheckBox" CheckedChanged="MaximizeEnabledCheckBox_CheckedChanged" IsChecked="True"/>
+                    <CheckBox Text="Close Enabled" Name="closeEnabledCheckBox" CheckedChanged="CloseEnabledCheckBox_CheckedChanged" IsChecked="True"/>
 
-					<CheckBox Text="Always On Top" Name="alwaysOnTopCheckBox" CheckedChanged="AlwaysOnTopCheckBox_CheckedChanged" IsChecked="False"/>
-					<CheckBox Text="Is Tool Window" Name="isToolWindowCheckBox" CheckedChanged="IsToolWindowCheckBox_CheckedChanged" IsChecked="False"/>
-					<CheckBox Text="Resizable" Name="resizableCheckBox" CheckedChanged="ResizableCheckBox_CheckedChanged" IsChecked="True"/>
-					<CheckBox Text="Has Border" Name="hasBorderCheckBox" CheckedChanged="HasBorderCheckBox_CheckedChanged" IsChecked="True"/>
-					<CheckBox Text="Has Title Bar" Name="hasTitleBarCheckBox" CheckedChanged="HasTitleBarCheckBox_CheckedChanged" IsChecked="True"/>
-				</StackPanel>
-			</GroupBox>
-			<GroupBox Title="Owned Windows" Margin="0,0,5,0">
-				<StackPanel>
-					<Button Name="addOwnedWindow" Click="AddOwnedWindow_Click" Text="Add Owned Window" />
-				</StackPanel>
-			</GroupBox>
-			<GroupBox Title="State" Margin="0,0,5,0">
-				<StackPanel>
-					<Label Text="Window State:" />
-					<ComboBox IsEditable="false" Name="stateComboBox" SelectedItemChanged="StateComboBox_SelectedItemChanged"/>
-          <CheckBox Text="Hide Window" Name="hideWindowCheckBox" Margin="0,10,0,0" CheckedChanged="HideWindowCheckBox_CheckedChanged"/>
+                    <CheckBox Text="Always On Top" Name="alwaysOnTopCheckBox" CheckedChanged="AlwaysOnTopCheckBox_CheckedChanged" IsChecked="False"/>
+                    <CheckBox Text="Is Tool Window" Name="isToolWindowCheckBox" CheckedChanged="IsToolWindowCheckBox_CheckedChanged" IsChecked="False"/>
+                    <CheckBox Text="Resizable" Name="resizableCheckBox" CheckedChanged="ResizableCheckBox_CheckedChanged" IsChecked="True"/>
+                    <CheckBox Text="Has Border" Name="hasBorderCheckBox" CheckedChanged="HasBorderCheckBox_CheckedChanged" IsChecked="True"/>
+                    <CheckBox Text="Has Title Bar" Name="hasTitleBarCheckBox" CheckedChanged="HasTitleBarCheckBox_CheckedChanged" IsChecked="True"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Title="Owned Windows" Margin="0,0,5,0">
+                <StackPanel>
+                    <Button Name="addOwnedWindow" Click="AddOwnedWindow_Click" Text="Add Owned Window" />
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Title="State" Margin="0,0,5,0">
+                <StackPanel>
+                    <Label Text="Window State:" />
+                    <ComboBox IsEditable="false" Name="stateComboBox" SelectedItemChanged="StateComboBox_SelectedItemChanged"/>
+                    <CheckBox Text="Hide Window" Name="hideWindowCheckBox" Margin="0,10,0,0" CheckedChanged="HideWindowCheckBox_CheckedChanged"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Title="Icon" Margin="0,0,5,0">
+                <StackPanel>
+                    <Button Text="Set Icon 1" Name="setIcon1Button" Click="SetIcon1Button_Click" />
+                    <Button Text="Set Icon 2" Name="setIcon2Button" Click="SetIcon2Button_Click" />
+                </StackPanel>
+            </GroupBox>
         </StackPanel>
-			</GroupBox>
-			<GroupBox Title="Icon" Margin="0,0,5,0">
-				<StackPanel>
-					<Button Text="Set Icon 1" Name="setIcon1Button" Click="SetIcon1Button_Click" />
-					<Button Text="Set Icon 2" Name="setIcon2Button" Click="SetIcon2Button_Click" />
-				</StackPanel>
-			</GroupBox>
-		</StackPanel>
-    <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="1">
-      <GroupBox Title="Activation" Margin="0,0,5,0">
-        <StackPanel>
-          <Label Name="activeWindowTitleLabel" />
-          <Label Name="isWindowActiveLabel" />
-          <Button Name="activateButton" Click="ActivateButton_Click" Text="Activate" />
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10" Grid.Row="1">
+            <GroupBox Title="Bounds" Margin="0,0,5,0">
+                <StackPanel>
+                    <Label Name="currentBoundsLabel" />
+                    <Button Name="setSizeButton" Click="SetSizeButton_Click" Text="Set Size to (300, 300)" Margin="0,0,0,5"/>
+                    <Button Name="setClientSizeButton" Click="SetClientSizeButton_Click" Text="Set Client Size to (300, 300)" Margin="0,0,0,5"/>
+                    <Button Name="increaseLocationButton" Click="IncreaseLocationButton_Click" Text="Increase Location by (10, 10)" Margin="0,0,0,5"/>
+                    <Button Name="setBoundsButton" Click="SetBoundsButton_Click" Text="Set Bounds (0, 0, 400, 400)" Margin="0,0,0,5"/>
+                    <Button Name="setMinMaxSizeButton" Click="SetMinMaxSizeButton_Click" Text="Set Minimum and Maximum size" Margin="0,0,0,10"/>
+
+                    <GroupBox Margin="0,0,0,5" Title="Size to Content">
+                        <StackPanel>
+                            <ComboBox IsEditable="false" Name="sizeToContentModeComboBox" />
+                            <Button Name="setSizeToContentButton" Click="SetSizeToContentButton_Click" Text="Set Size to Content" Margin="0,0,0,5"/>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Title="Activation" Margin="0,0,5,0">
+                <StackPanel>
+                    <Label Name="activeWindowTitleLabel" />
+                    <Label Name="isWindowActiveLabel" />
+                    <Button Name="activateButton" Click="ActivateButton_Click" Text="Activate" />
+                </StackPanel>
+            </GroupBox>
         </StackPanel>
-      </GroupBox>
-      <GroupBox Title="Bounds" Margin="0,0,5,0">
-        <StackPanel>
-          <Label Name="currentBoundsLabel" />
-          <Button Name="setSizeButton" Click="SetSizeButton_Click" Text="Set Size to (300, 300)" Margin="0,0,0,5"/>
-          <Button Name="setClientSizeButton" Click="SetClientSizeButton_Click" Text="Set Client Size to (300, 300)" Margin="0,0,0,5"/>
-          <Button Name="increaseLocationButton" Click="IncreaseLocationButton_Click" Text="Increase Location by (10, 10)" Margin="0,0,0,5"/>
-          <Button Name="setBoundsButton" Click="SetBoundsButton_Click" Text="Set Bounds (0, 0, 400, 400)" Margin="0,0,0,5"/>
-          <Button Name="setMinMaxSizeButton" Click="SetMinMaxSizeButton_Click" Text="Set Minimum and Maximum size" Margin="0,0,0,5"/>
-          <Button Name="setSizeToContentButton" Click="SetSizeToContentButton_Click" Text="Set Size to Content" Margin="0,0,0,5"/>
-        </StackPanel>
-      </GroupBox>
-    </StackPanel>
-    <ListBox Name="eventsListBox"  Grid.Row="2"/>
-	</Grid>
+        <ListBox Name="eventsListBox"  Grid.Row="2"/>
+    </Grid>
 </Window>

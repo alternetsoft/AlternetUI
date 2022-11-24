@@ -11,7 +11,7 @@ namespace Alternet.UI
         /// <summary>
         /// Changes size of the window to fit the size of its content.
         /// </summary>
-        public abstract void SetSizeToContent();
+        public abstract void SetSizeToContent(WindowSizeToContentMode mode);
 
         /// <inheritdoc/>
         protected override bool VisualChildNeedsNativeControl => true;

@@ -459,13 +459,32 @@ namespace Alternet.UI
             }
         }
 
-        public override void SetSizeToContent()
+        /// <inheritdoc/>
+        public override void SetSizeToContent(WindowSizeToContentMode mode)
         {
-            var size = GetChildrenMaxPreferredSizePadded(new Size(double.PositiveInfinity, double.PositiveInfinity));
-            if (size != Size.Empty)
+            if (mode == WindowSizeToContentMode.None)
+                return;
+
+            var newSize = GetChildrenMaxPreferredSizePadded(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            if (newSize != Size.Empty)
             {
-                Control.ClientSize = size + new Size(1, 0);
-                Control.ClientSize = size;
+                var currentSize = Control.ClientSize;
+                switch (mode)
+                {
+                    case WindowSizeToContentMode.Width:
+                        newSize.Height = currentSize.Height;
+                        break;
+                    case WindowSizeToContentMode.Height:
+                        newSize.Width = currentSize.Width;
+                        break;
+                    case WindowSizeToContentMode.WidthAndHeight:
+                        break;
+                    default:
+                        throw new Exception();
+                }
+
+                Control.ClientSize = newSize + new Size(1, 0);
+                Control.ClientSize = newSize;
                 Control.Refresh();
                 NativeControl.SendSizeEvent();
             }

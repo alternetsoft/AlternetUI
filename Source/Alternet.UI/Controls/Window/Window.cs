@@ -28,9 +28,10 @@ namespace Alternet.UI
         /// <summary>
         /// Changes size of the window to fit the size of its content.
         /// </summary>
-        public void SetSizeToContent()
+        /// <param name="mode">Specifies how a window will size itself to fit the size of its content.</param>
+        public void SetSizeToContent(WindowSizeToContentMode mode = WindowSizeToContentMode.WidthAndHeight)
         {
-            Handler.SetSizeToContent();
+            Handler.SetSizeToContent(mode);
         }
 
         /// <summary>
