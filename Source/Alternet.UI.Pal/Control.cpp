@@ -1,6 +1,7 @@
 #include "Control.h"
 #include "Application.h"
 #include "Screenshot.h"
+#include "Window.h"
 
 namespace Alternet::UI
 {
@@ -284,6 +285,14 @@ namespace Alternet::UI
             _wxWindow->UnsetToolTip();
         else
             _wxWindow->SetToolTip(wxStr(_toolTip.value()));
+    }
+
+    void Control::OnParentChanged()
+    {
+    }
+
+    void Control::OnAnyParentChanged()
+    {
     }
 
     void Control::CreateWxWindow()
@@ -760,6 +769,16 @@ namespace Alternet::UI
             if (oldParent != parentWxWindow)
                 SetWxWindowParent(parentWxWindow);
         }
+
+        OnParentChanged();
+        NotifyAllChildrenOnParentChange();
+    }
+
+    void Control::NotifyAllChildrenOnParentChange()
+    {
+        OnAnyParentChanged();
+        for (auto child : _children)
+            child->NotifyAllChildrenOnParentChange();
     }
 
     void Control::SetWxWindowParent(wxWindow* parent)
@@ -921,6 +940,21 @@ namespace Alternet::UI
     void Control::RaiseDragLeave()
     {
         RaiseEvent(ControlEvent::DragLeave);
+    }
+
+    Window* Control::GetParentWindow()
+    {
+        Control* parent = this;
+        
+        while (parent != nullptr)
+        {
+            auto window = dynamic_cast<Window*>(parent);
+            if (window != nullptr)
+                return window;
+            parent = parent->GetParent();
+        }
+        
+        return nullptr;
     }
 
     bool Control::GetUserPaint()

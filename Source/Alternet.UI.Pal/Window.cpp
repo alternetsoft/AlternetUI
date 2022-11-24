@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "IdManager.h"
 #include "NotifyIcon.h"
+#include "Button.h"
 
 namespace Alternet::UI
 {
@@ -168,6 +169,16 @@ namespace Alternet::UI
             event.Skip();
     }
 
+    void Window::OnCharHook(wxKeyEvent& event)
+    {
+        if (event.m_keyCode == WXK_ESCAPE && _cancelButton != nullptr)
+            _cancelButton->RaiseClick();
+        else if (event.m_keyCode == WXK_RETURN && _acceptButton != nullptr)
+            _acceptButton->RaiseClick();
+        else
+            event.Skip();
+    }
+
     MainMenu* Window::GetMenu()
     {
         return _menu.Get();
@@ -284,6 +295,7 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
         wxWindow->Unbind(wxEVT_ICONIZE, &Window::OnIconize, this);
         wxWindow->Unbind(wxEVT_MENU, &Window::OnCommand, this);
+        wxWindow->Unbind(wxEVT_CHAR_HOOK, &Window::OnCharHook, this);
 
         _frame = nullptr;
         _panel = nullptr;
@@ -465,12 +477,45 @@ namespace Alternet::UI
         _frame->Bind(wxEVT_MAXIMIZE, &Window::OnMaximize, this);
         _frame->Bind(wxEVT_ICONIZE, &Window::OnIconize, this);
         _frame->Bind(wxEVT_MENU, &Window::OnCommand, this);
+        _frame->Bind(wxEVT_CHAR_HOOK, &Window::OnCharHook, this);
 
         _panel = new wxPanel(_frame);
 
         _frame->SetBackgroundColour(wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_BTNFACE));
 
         return _frame;
+    }
+
+    void Window::SetAcceptButton(Button* button)
+    {
+        if (_acceptButton != nullptr)
+            _acceptButton->Release();
+
+        _acceptButton = button;
+
+        if (_acceptButton != nullptr)
+            _acceptButton->AddRef();
+    }
+
+    Button* Window::GetAcceptButton()
+    {
+        return _acceptButton;
+    }
+
+    void Window::SetCancelButton(Button* button)
+    {
+        if (_cancelButton != nullptr)
+            _cancelButton->Release();
+
+        _cancelButton = button;
+
+        if (_cancelButton != nullptr)
+            _cancelButton->AddRef();
+    }
+
+    Button* Window::GetCancelButton()
+    {
+        return _cancelButton;
     }
 
     Size Window::GetMinimumSize()

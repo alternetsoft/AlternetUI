@@ -12,12 +12,14 @@ namespace Alternet::UI
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         void OnButtonClick(wxCommandEvent& event);
 
-    protected:
+        void RaiseClick();
 
+    protected:
         virtual void OnWxWindowCreated() override;
+        virtual void OnParentChanged() override;
+        virtual void OnAnyParentChanged() override;
 
     private:
-
         wxButton* GetButton();
 
         DelayedValue<Button, string> _text;
@@ -26,7 +28,9 @@ namespace Alternet::UI
         void ApplyText(const string& value);
 
         bool _isDefault = false;
+        bool _isCancel = false;
 
         void ApplyIsDefault();
+        void ApplyIsCancel();
     };
 }

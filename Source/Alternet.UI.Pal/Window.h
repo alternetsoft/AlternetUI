@@ -8,6 +8,7 @@
 namespace Alternet::UI
 {
     class Window;
+    class Button;
 
     class Frame : public wxFrame
     {
@@ -46,6 +47,12 @@ namespace Alternet::UI
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
+        void SetAcceptButton(Button* button);
+        Button* GetAcceptButton();
+
+        void SetCancelButton(Button* button);
+        Button* GetCancelButton();
+
     protected:
         Color RetrieveBackgroundColor() override;
         void ApplyBackgroundColor(const Color& value) override;
@@ -60,6 +67,9 @@ namespace Alternet::UI
 
         void UpdateWxWindowParent() override;
     private:
+
+        Button* _acceptButton = nullptr;
+        Button* _cancelButton = nullptr;
 
         std::map<string, wxAcceleratorEntry> _acceleratorsByCommandIds;
 
@@ -77,6 +87,7 @@ namespace Alternet::UI
         void OnMaximize(wxMaximizeEvent& event);
         void OnIconize(wxIconizeEvent& event);
         void OnCommand(wxCommandEvent& event);
+        void OnCharHook(wxKeyEvent& event);
 
         Frame* GetFrame();
 

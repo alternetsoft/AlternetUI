@@ -8,6 +8,8 @@
 
 namespace Alternet::UI
 {
+    class Window;
+
     class Control : public Object
     {
 #include "Api/Control.inc"
@@ -35,7 +37,12 @@ namespace Alternet::UI
         wxDragResult RaiseDragDrop(const wxPoint& location, wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite);
         void RaiseDragLeave();
 
+        Window* GetParentWindow();
     protected:
+
+        virtual void OnParentChanged();
+        virtual void OnAnyParentChanged();
+
         void CreateWxWindow();
 
         void RecreateWxWindowIfNeeded();
@@ -83,6 +90,9 @@ namespace Alternet::UI
         bool IsInitInProgress();
 
     private:
+
+        void NotifyAllChildrenOnParentChange();
+
         enum class DelayedControlFlags
         {
             None = 0,

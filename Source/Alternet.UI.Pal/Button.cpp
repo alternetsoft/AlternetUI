@@ -1,4 +1,5 @@
 #include "Button.h"
+#include "Window.h"
 
 namespace Alternet::UI
 {
@@ -60,9 +61,37 @@ namespace Alternet::UI
             else if (topLevelWindow->GetDefaultItem() == button)
                 topLevelWindow->SetDefaultItem(nullptr);
         }
+
+        auto window = GetParentWindow();
+        if (window != nullptr)
+        {
+            if (_isDefault)
+                window->SetAcceptButton(this);
+            else if (window->GetAcceptButton() == this)
+                window->SetAcceptButton(nullptr);
+        }
+    }
+
+    void Button::ApplyIsCancel()
+    {
+        auto button = GetButton();
+
+        auto window = GetParentWindow();
+        if (window != nullptr)
+        {
+            if (_isCancel)
+                window->SetCancelButton(this);
+            else if (window->GetCancelButton() == this)
+                window->SetCancelButton(nullptr);
+        }
     }
 
     void Button::OnButtonClick(wxCommandEvent& event)
+    {
+        RaiseClick();
+    }
+
+    void Button::RaiseClick()
     {
         RaiseEvent(ButtonEvent::Click);
     }
@@ -71,6 +100,21 @@ namespace Alternet::UI
     {
         Control::OnWxWindowCreated();
         ApplyIsDefault();
+        ApplyIsCancel();
+    }
+
+    void Button::OnParentChanged()
+    {
+        Control::OnParentChanged();
+        ApplyIsDefault();
+        ApplyIsCancel();
+    }
+
+    void Button::OnAnyParentChanged()
+    {
+        Control::OnAnyParentChanged();
+        ApplyIsDefault();
+        ApplyIsCancel();
     }
     
     bool Button::GetIsDefault()
@@ -89,10 +133,15 @@ namespace Alternet::UI
     
     bool Button::GetIsCancel()
     {
-        return false;
+        return _isCancel;
     }
     
     void Button::SetIsCancel(bool value)
     {
+        if (_isCancel == value)
+            return;
+
+        _isCancel = value;
+        ApplyIsCancel();
     }
 }
