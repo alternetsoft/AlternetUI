@@ -1,6 +1,10 @@
 #include "Button.h"
 #include "Window.h"
 
+#ifdef __WXOSX_COCOA__
+#include <wx/osx/core/private.h>
+#endif
+
 namespace Alternet::UI
 {
 #ifdef __WXOSX_COCOA__            
@@ -66,6 +70,9 @@ namespace Alternet::UI
                 button->SetDefault();
             else if (topLevelWindow->GetDefaultItem() == button)
             {
+#ifdef __WXOSX_COCOA__
+                button->GetPeer()->SetDefaultButton(false);
+#endif
                 ButtonDefaultStyleSetter::SetDefaultStyle(button, false);
                 topLevelWindow->SetDefaultItem(nullptr);
             }
