@@ -6,6 +6,22 @@ namespace Alternet.UI
     /// </summary>
     public class Button : ButtonBase
     {
+        /// <summary>
+        /// Initializes a new <see cref="Button"/> instance.
+        /// </summary>
+        public Button()
+        {
+
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="Button"/> instance with the specified text.
+        /// </summary>
+        public Button(string text)
+        {
+            Text = text;
+        }
+
         /// <inheritdoc/>
         public new ButtonHandler Handler
         {
