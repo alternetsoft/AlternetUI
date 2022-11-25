@@ -12,6 +12,7 @@ namespace ControlsSample
 
             var pages = pageContainer.Pages;
 
+            pages.Add(new PageContainer.Page("Button", new ButtonPage { Site = this }));
             pages.Add(new PageContainer.Page("Tree View", new TreeViewPage { Site = this }));
             pages.Add(new PageContainer.Page("List View", new ListViewPage { Site = this }));
             pages.Add(new PageContainer.Page("List Box", new ListBoxPage { Site = this }));

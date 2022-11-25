@@ -33,6 +33,7 @@ namespace Alternet.UI
 
                 text = value;
                 RaiseTextChanged(EventArgs.Empty);
+                PerformLayout();
             }
         }
 

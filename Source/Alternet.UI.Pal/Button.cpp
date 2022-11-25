@@ -126,29 +126,86 @@ namespace Alternet::UI
 
     Image* Button::GetHoveredImage()
     {
-        return nullptr;
+        if (_hoveredImage == nullptr)
+            return nullptr;
+
+        _hoveredImage->AddRef();
+        return _hoveredImage;
     }
 
     void Button::SetHoveredImage(Image* value)
     {
+        if (_hoveredImage != nullptr)
+            _hoveredImage->Release();
+
+        _hoveredImage = value;
+
+        auto button = GetButton();
+        if (_hoveredImage != nullptr)
+        {
+            _hoveredImage->AddRef();
+            button->SetBitmapCurrent(_hoveredImage->GetBitmap());
+        }
+        else
+        {
+            button->SetBitmapCurrent(wxBitmap());
+        }
     }
 
     Image* Button::GetPressedImage()
     {
-        return nullptr;
+        if (_pressedImage == nullptr)
+            return nullptr;
+
+        _pressedImage->AddRef();
+        return _pressedImage;
     }
 
     void Button::SetPressedImage(Image* value)
     {
+        if (_pressedImage != nullptr)
+            _pressedImage->Release();
+
+        _pressedImage = value;
+
+        auto button = GetButton();
+        if (_pressedImage != nullptr)
+        {
+            _pressedImage->AddRef();
+            button->SetBitmapPressed(_pressedImage->GetBitmap());
+        }
+        else
+        {
+            button->SetBitmapCurrent(wxBitmap());
+        }
     }
 
     Image* Button::GetDisabledImage()
     {
-        return nullptr;
+        if (_disabledImage == nullptr)
+            return nullptr;
+
+        _disabledImage->AddRef();
+        return _disabledImage;
     }
 
     void Button::SetDisabledImage(Image* value)
     {
+        if (_disabledImage != nullptr)
+            _disabledImage->Release();
+
+        _disabledImage = value;
+
+        auto button = GetButton();
+        if (_disabledImage != nullptr)
+        {
+            _disabledImage->AddRef();
+            button->SetBitmapDisabled(_disabledImage->GetBitmap());
+        }
+        else
+        {
+            button->SetBitmapCurrent(wxBitmap());
+        }
     }
 
     void Button::OnWxWindowCreated()

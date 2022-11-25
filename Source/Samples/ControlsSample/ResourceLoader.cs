@@ -18,6 +18,26 @@ namespace ControlsSample
             return imageLists;
         }
 
+        static ControlStateImages? buttonImages;
+
+        public static ControlStateImages ButtonImages => buttonImages ??= LoadButtonImages();
+
+        private static ControlStateImages LoadButtonImages()
+        {
+            static Image LoadImage(string stateName) =>
+                new Bitmap(
+                    Assembly.GetExecutingAssembly().GetManifestResourceStream(
+                        $"ControlsSample.Resources.ButtonImages.ButtonImage{stateName}.png") ?? throw new Exception());
+
+            return new ControlStateImages
+            {
+                NormalImage = LoadImage("Normal"),
+                HoveredImage = LoadImage("Hovered"),
+                PressedImage = LoadImage("Pressed"),
+                DisabledImage = LoadImage("Disabled"),
+            };
+        }
+
         private static ImageLists LoadImageListsCore()
         {
             var smallImageList = new ImageList();
