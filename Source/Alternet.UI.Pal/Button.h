@@ -32,5 +32,13 @@ namespace Alternet::UI
 
         void ApplyIsDefault();
         void ApplyIsCancel();
+
+        Image* _normalImage = nullptr;
+
+        Image* _hoveredImage = nullptr;
+
+        Image* _pressedImage = nullptr;
+
+        Image* _disabledImage = nullptr;
     };
 }

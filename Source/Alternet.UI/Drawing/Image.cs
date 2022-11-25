@@ -1,4 +1,3 @@
-using Microsoft.SqlServer.Server;
 using System;
 using System.IO;
 
@@ -7,7 +6,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Describes an image to be drawn on a <see cref="DrawingContext"/> or displayed in a UI control.
     /// </summary>
-    public class Image : IDisposable
+    public abstract class Image : IDisposable
     {
         private bool isDisposed;
         private UI.Native.Image nativeImage;
@@ -16,8 +15,9 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Image"/> class from the specified data stream.
         /// </summary>
         /// <param name="stream">The data stream used to load the image.</param>
-        public Image(Stream stream) : this()
+        private protected Image(Stream stream)
         {
+            nativeImage = new UI.Native.Image();
             using (var inputStream = new UI.Native.InputStream(stream))
                 NativeImage.LoadFromStream(inputStream);
         }
@@ -26,14 +26,22 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="Image"/> class with the specified size.
         /// </summary>
         /// <param name="size">The size used to create the image.</param>
-        public Image(Size size) : this()
+        private protected Image(Size size)
         {
+            nativeImage = new UI.Native.Image();
             NativeImage.Initialize(size);
         }
 
-        private protected Image()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class.
+        /// </summary>
+        private protected Image() : this(new Size())
         {
-            nativeImage = new UI.Native.Image();
+        }
+
+        private protected Image(UI.Native.Image nativeImage)
+        {
+            this.nativeImage = nativeImage;
         }
 
         /// <summary>

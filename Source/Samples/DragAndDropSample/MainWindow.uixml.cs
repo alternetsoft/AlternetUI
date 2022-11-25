@@ -19,7 +19,7 @@ namespace DragAndDropSample
         {
             InitializeComponent();
 
-            testBitmap = new Image(new Size(64, 64));
+            testBitmap = new Bitmap(new Size(64, 64));
         }
 
         private void CopyButton_Click(object sender, System.EventArgs e)

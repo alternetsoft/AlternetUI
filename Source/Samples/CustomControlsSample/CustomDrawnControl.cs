@@ -11,7 +11,7 @@ namespace CustomControlsSample
         private Brush brush = Brushes.LightGreen;
 
         Image image =
-            new Image(Assembly.GetExecutingAssembly().GetManifestResourceStream("CustomControlsSample.Resources.Car.png")!);
+            new Bitmap(Assembly.GetExecutingAssembly().GetManifestResourceStream("CustomControlsSample.Resources.Car.png")!);
 
         public CustomDrawnControl()
         {

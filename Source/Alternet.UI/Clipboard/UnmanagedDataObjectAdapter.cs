@@ -1,7 +1,6 @@
+using Alternet.Drawing;
 using Alternet.UI.Native;
 using System;
-using System.IO;
-using Image = Alternet.Drawing.Image;
 
 namespace Alternet.UI
 {
@@ -23,7 +22,7 @@ namespace Alternet.UI
                 return dataObject.GetFileNamesData(format).Split('|');
 
             if (format == DataFormats.Bitmap)
-                return new Image(new UnmanagedStreamAdapter(dataObject.GetStreamData(format)));
+                return new Bitmap(new UnmanagedStreamAdapter(dataObject.GetStreamData(format)));
 
             throw new NotSupportedException();
         }

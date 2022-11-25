@@ -127,7 +127,7 @@ namespace PaintSample
         private Bitmap LoadBitmap(string fileName)
         {
             using (var stream = File.OpenRead(fileName))
-                return new Bitmap(new Image(stream));
+                return new Bitmap(new Bitmap(stream));
         }
 
         private void RaiseChanged()

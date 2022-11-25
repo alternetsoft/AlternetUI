@@ -24,7 +24,7 @@ namespace PaintSample
             if (stream == null)
                 throw new InvalidOperationException();
 
-            return new Image(stream);
+            return new Bitmap(stream);
         }
 
         Image image;

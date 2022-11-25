@@ -12,6 +12,22 @@ void SetIsDefault(bool value);
 bool GetIsCancel();
 void SetIsCancel(bool value);
 
+
+Image* GetNormalImage();
+void SetNormalImage(Image* value);
+
+
+Image* GetHoveredImage();
+void SetHoveredImage(Image* value);
+
+
+Image* GetPressedImage();
+void SetPressedImage(Image* value);
+
+
+Image* GetDisabledImage();
+void SetDisabledImage(Image* value);
+
 public:
 enum class ButtonEvent
 {

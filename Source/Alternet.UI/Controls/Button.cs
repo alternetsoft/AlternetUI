@@ -1,4 +1,7 @@
 
+using Alternet.Drawing;
+using System;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -11,7 +14,6 @@ namespace Alternet.UI
         /// </summary>
         public Button()
         {
-
         }
 
         /// <summary>
@@ -20,6 +22,41 @@ namespace Alternet.UI
         public Button(string text)
         {
             Text = text;
+        }
+
+        /// <summary>
+        /// Specifies a set of images for different <see cref="Button"/> states.
+        /// </summary>
+        public ControlStateImages StateImages
+        {
+            get => Handler.StateImages;
+            
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException();
+
+                Handler.StateImages = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the image that is displayed on a button control.
+        /// </summary>
+        /// <value>
+        /// The <see cref="Image"/> displayed on the button control. The default value is <see langword="null"/>.
+        /// </value>
+        public Image? Image
+        {
+            get
+            {
+                return StateImages.NormalImage;
+            }
+
+            set
+            {
+                StateImages.NormalImage = value;
+            }
         }
 
         /// <inheritdoc/>

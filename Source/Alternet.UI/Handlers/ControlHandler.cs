@@ -716,7 +716,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="point">A <see cref="Point"/> that specifies the screen device-independent coordinates to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
-        public Point ScreenToDevice(Point point)
+        public Int32Point ScreenToDevice(Point point)
         {
             if (NativeControl == null)
                 throw new InvalidOperationException();
@@ -729,7 +729,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="point">A <see cref="Point"/> that contains the coordinates in device-independent units (1/96th inch per unit) to be converted.</param>
         /// <returns>The converted cooridnates.</returns>
-        public Point DeviceToScreen(Point point)
+        public Point DeviceToScreen(Int32Point point)
         {
             if (NativeControl == null)
                 throw new InvalidOperationException();

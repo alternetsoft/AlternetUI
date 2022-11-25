@@ -130,6 +130,7 @@ namespace InputSample
         }
 
         static string FormatPoint(Point pt) => $"{pt.X.ToString("F2")}, {pt.Y.ToString("F2")}";
+        static string FormatPoint(Int32Point pt) => $"{pt.X}, {pt.Y}";
 
         private void UpdateMousePositionLabel(Control control, Point clientPosition)
         {

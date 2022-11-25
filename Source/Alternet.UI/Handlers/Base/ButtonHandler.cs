@@ -24,6 +24,11 @@ namespace Alternet.UI
         /// </summary>
         public abstract bool IsCancel { get; set; }
 
+        /// <summary>
+        /// Specifies a set of images for different <see cref="Button"/> states.
+        /// </summary>
+        public abstract ControlStateImages StateImages { get; set; }
+
         /// <inheritdoc/>
         protected override bool VisualChildNeedsNativeControl => true;
     }

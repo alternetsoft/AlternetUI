@@ -12,5 +12,13 @@ namespace NativeApi.Api
         public bool IsDefault { get; set; }
 
         public bool IsCancel { get; set; }
+
+        public Image? NormalImage { get; set; }
+
+        public Image? HoveredImage { get; set; }
+
+        public Image? PressedImage { get; set; }
+
+        public Image? DisabledImage { get; set; }
     }
 }

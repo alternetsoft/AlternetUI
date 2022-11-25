@@ -420,7 +420,7 @@ namespace Alternet.UI.Native
             return m;
         }
         
-        public Alternet.Drawing.Point ScreenToDevice(Alternet.Drawing.Point point)
+        public Alternet.Drawing.Int32Point ScreenToDevice(Alternet.Drawing.Point point)
         {
             CheckDisposed();
             var n = NativeApi.Control_ScreenToDevice_(NativePointer, point);
@@ -428,7 +428,7 @@ namespace Alternet.UI.Native
             return m;
         }
         
-        public Alternet.Drawing.Point DeviceToScreen(Alternet.Drawing.Point point)
+        public Alternet.Drawing.Point DeviceToScreen(Alternet.Drawing.Int32Point point)
         {
             CheckDisposed();
             var n = NativeApi.Control_DeviceToScreen_(NativePointer, point);
@@ -725,10 +725,10 @@ namespace Alternet.UI.Native
             public static extern NativeApiTypes.Point Control_ScreenToClient_(IntPtr obj, NativeApiTypes.Point point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Point Control_ScreenToDevice_(IntPtr obj, NativeApiTypes.Point point);
+            public static extern NativeApiTypes.Int32Point Control_ScreenToDevice_(IntPtr obj, NativeApiTypes.Point point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Point Control_DeviceToScreen_(IntPtr obj, NativeApiTypes.Point point);
+            public static extern NativeApiTypes.Point Control_DeviceToScreen_(IntPtr obj, NativeApiTypes.Int32Point point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_Focus_(IntPtr obj);

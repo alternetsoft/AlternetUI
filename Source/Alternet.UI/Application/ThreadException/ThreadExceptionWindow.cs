@@ -36,7 +36,7 @@ namespace Alternet.UI
 
         private static Image LoadImage(string name)
         {
-            return new Image(typeof(ThreadExceptionWindow).Assembly.GetManifestResourceStream(name) ?? throw new Exception());
+            return new Bitmap(typeof(ThreadExceptionWindow).Assembly.GetManifestResourceStream(name) ?? throw new Exception());
         }
 
         private static string GetMessageText(Exception e)

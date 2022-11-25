@@ -54,7 +54,7 @@ namespace ExplorerUISample
             var assembly = Assembly.GetExecutingAssembly();
             var allResourceNames = assembly.GetManifestResourceNames();
             var allImageResourceNames = allResourceNames.Where(x => x.StartsWith("ExplorerUISample.Resources.")).ToArray();
-            Image LoadImage(string name) => new Image(assembly.GetManifestResourceStream(name) ?? throw new Exception());
+            Image LoadImage(string name) => new Bitmap(assembly.GetManifestResourceStream(name) ?? throw new Exception());
 
             foreach (var name in allImageResourceNames)
                 smallImageList.Images.Add(LoadImage(name));

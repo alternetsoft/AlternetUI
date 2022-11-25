@@ -39,7 +39,14 @@ namespace Alternet::UI
 
     void Image::Initialize(const Size& size)
     {
-        _bitmap = wxBitmap(fromDip(size, nullptr));
+        if (size.Width == 0 || size.Height == 0)
+        {
+            _bitmap = wxBitmap();
+        }
+        else
+        {
+            _bitmap = wxBitmap(fromDip(size, nullptr));
+        }
     }
 
     /*static*/ void Image::EnsureImageHandlersInitialized()
@@ -70,8 +77,13 @@ namespace Alternet::UI
 
     void Image::CopyFrom(Image* otherImage)
     {
-        auto otherBitmap = otherImage->GetBitmap();
-        _bitmap = otherImage->GetBitmap().GetSubBitmap(wxRect(0, 0, otherBitmap.GetWidth(), otherBitmap.GetHeight()));
+        if (!otherImage->_bitmap.IsOk())
+            _bitmap = wxBitmap();
+        else
+        {
+            auto otherBitmap = otherImage->GetBitmap();
+            _bitmap = otherImage->GetBitmap().GetSubBitmap(wxRect(0, 0, otherBitmap.GetWidth(), otherBitmap.GetHeight()));
+        }
     }
 
     wxBitmap Image::GetBitmap()
@@ -86,11 +98,17 @@ namespace Alternet::UI
 
     Size Image::GetSize()
     {
+        if (!_bitmap.IsOk())
+            return Size();
+
         return toDip(_bitmap.GetSize(), nullptr);
     }
     
     Int32Size Image::GetPixelSize()
     {
+        if (!_bitmap.IsOk())
+            return Int32Size(0, 0);
+
         return _bitmap.GetSize();
     }
 }

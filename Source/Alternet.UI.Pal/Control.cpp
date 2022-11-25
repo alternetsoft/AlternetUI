@@ -1005,13 +1005,13 @@ namespace Alternet::UI
         return toDip(screenClientPoint, window);
     }
 
-    Point Control::ScreenToDevice(const Point& point)
+    Int32Point Control::ScreenToDevice(const Point& point)
     {
         auto p = fromDip(point, GetWxWindow());
-        return Point(p.x, p.y);
+        return Int32Point(p.x, p.y);
     }
 
-    Point Control::DeviceToScreen(const Point& point)
+    Point Control::DeviceToScreen(const Int32Point& point)
     {
         return toDip(wxPoint(point.X, point.Y), GetWxWindow());
     }

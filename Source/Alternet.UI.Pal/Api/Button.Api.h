@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Button.h"
+#include "Image.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -54,6 +55,62 @@ ALTERNET_UI_API void Button_SetIsCancel_(Button* obj, c_bool value)
 {
     MarshalExceptions<void>([&](){
             obj->SetIsCancel(value);
+        });
+}
+
+ALTERNET_UI_API Image* Button_GetNormalImage_(Button* obj)
+{
+    return MarshalExceptions<Image*>([&](){
+            return obj->GetNormalImage();
+        });
+}
+
+ALTERNET_UI_API void Button_SetNormalImage_(Button* obj, Image* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetNormalImage(value);
+        });
+}
+
+ALTERNET_UI_API Image* Button_GetHoveredImage_(Button* obj)
+{
+    return MarshalExceptions<Image*>([&](){
+            return obj->GetHoveredImage();
+        });
+}
+
+ALTERNET_UI_API void Button_SetHoveredImage_(Button* obj, Image* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetHoveredImage(value);
+        });
+}
+
+ALTERNET_UI_API Image* Button_GetPressedImage_(Button* obj)
+{
+    return MarshalExceptions<Image*>([&](){
+            return obj->GetPressedImage();
+        });
+}
+
+ALTERNET_UI_API void Button_SetPressedImage_(Button* obj, Image* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetPressedImage(value);
+        });
+}
+
+ALTERNET_UI_API Image* Button_GetDisabledImage_(Button* obj)
+{
+    return MarshalExceptions<Image*>([&](){
+            return obj->GetDisabledImage();
+        });
+}
+
+ALTERNET_UI_API void Button_SetDisabledImage_(Button* obj, Image* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetDisabledImage(value);
         });
 }
 

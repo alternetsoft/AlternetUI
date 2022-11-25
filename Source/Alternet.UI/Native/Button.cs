@@ -74,6 +74,78 @@ namespace Alternet.UI.Native
             }
         }
         
+        public Image? NormalImage
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Button_GetNormalImage_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<Image>(n, p => new Image(p));
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Button_SetNormalImage_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+            }
+        }
+        
+        public Image? HoveredImage
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Button_GetHoveredImage_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<Image>(n, p => new Image(p));
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Button_SetHoveredImage_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+            }
+        }
+        
+        public Image? PressedImage
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Button_GetPressedImage_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<Image>(n, p => new Image(p));
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Button_SetPressedImage_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+            }
+        }
+        
+        public Image? DisabledImage
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Button_GetDisabledImage_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<Image>(n, p => new Image(p));
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Button_SetDisabledImage_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+            }
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -143,6 +215,30 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Button_SetIsCancel_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Button_GetNormalImage_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetNormalImage_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Button_GetHoveredImage_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetHoveredImage_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Button_GetPressedImage_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetPressedImage_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Button_GetDisabledImage_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetDisabledImage_(IntPtr obj, IntPtr value);
             
         }
     }

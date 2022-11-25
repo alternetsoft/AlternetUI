@@ -96,6 +96,61 @@ namespace Alternet::UI
         RaiseEvent(ButtonEvent::Click);
     }
 
+    Image* Button::GetNormalImage()
+    {
+        if (_normalImage == nullptr)
+            return nullptr;
+
+        _normalImage->AddRef();
+        return _normalImage;
+    }
+
+    void Button::SetNormalImage(Image* value)
+    {
+        if (_normalImage != nullptr)
+            _normalImage->Release();
+
+        _normalImage = value;
+
+        auto button = GetButton();
+        if (_normalImage != nullptr)
+        {
+            _normalImage->AddRef();
+            button->SetBitmapLabel(_normalImage->GetBitmap());
+        }
+        else
+        {
+            button->SetBitmapLabel(wxBitmap());
+        }
+    }
+
+    Image* Button::GetHoveredImage()
+    {
+        return nullptr;
+    }
+
+    void Button::SetHoveredImage(Image* value)
+    {
+    }
+
+    Image* Button::GetPressedImage()
+    {
+        return nullptr;
+    }
+
+    void Button::SetPressedImage(Image* value)
+    {
+    }
+
+    Image* Button::GetDisabledImage()
+    {
+        return nullptr;
+    }
+
+    void Button::SetDisabledImage(Image* value)
+    {
+    }
+
     void Button::OnWxWindowCreated()
     {
         Control::OnWxWindowCreated();
