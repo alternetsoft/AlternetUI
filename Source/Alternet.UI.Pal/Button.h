@@ -40,5 +40,16 @@ namespace Alternet::UI
         Image* _pressedImage = nullptr;
 
         Image* _disabledImage = nullptr;
+
+        class ButtonDefaultStyleSetter : public wxButton
+        {
+        public:
+            static void SetDefaultStyle(wxButton* button, bool on)
+            {
+#ifdef  __WXMSW__
+                wxButton::SetDefaultStyle(button, on);
+#endif
+            }
+        };
     };
 }

@@ -3,6 +3,12 @@
 
 namespace Alternet::UI
 {
+#ifdef __WXOSX_COCOA__            
+    static const bool ButtonImagesEnabled = false;
+#else
+    static const bool ButtonImagesEnabled = true;
+#endif
+
     Button::Button():
         _text(*this, u"", &Control::IsWxWindowCreated, &Button::RetrieveText, &Button::ApplyText)
     {
@@ -59,7 +65,10 @@ namespace Alternet::UI
             if (_isDefault)
                 button->SetDefault();
             else if (topLevelWindow->GetDefaultItem() == button)
+            {
+                ButtonDefaultStyleSetter::SetDefaultStyle(button, false);
                 topLevelWindow->SetDefaultItem(nullptr);
+            }
         }
 
         auto window = GetParentWindow();
@@ -112,15 +121,18 @@ namespace Alternet::UI
 
         _normalImage = value;
 
+        
         auto button = GetButton();
         if (_normalImage != nullptr)
         {
             _normalImage->AddRef();
-            button->SetBitmapLabel(_normalImage->GetBitmap());
+            if(ButtonImagesEnabled)
+                button->SetBitmapLabel(_normalImage->GetBitmap());
         }
         else
         {
-            button->SetBitmapLabel(wxBitmap());
+            if (ButtonImagesEnabled)
+                button->SetBitmapLabel(wxBitmap());
         }
     }
 
@@ -144,11 +156,13 @@ namespace Alternet::UI
         if (_hoveredImage != nullptr)
         {
             _hoveredImage->AddRef();
-            button->SetBitmapCurrent(_hoveredImage->GetBitmap());
+            if (ButtonImagesEnabled)
+                button->SetBitmapCurrent(_hoveredImage->GetBitmap());
         }
         else
         {
-            button->SetBitmapCurrent(wxBitmap());
+            if (ButtonImagesEnabled)
+                button->SetBitmapCurrent(wxBitmap());
         }
     }
 
@@ -172,11 +186,13 @@ namespace Alternet::UI
         if (_pressedImage != nullptr)
         {
             _pressedImage->AddRef();
-            button->SetBitmapPressed(_pressedImage->GetBitmap());
+            if (ButtonImagesEnabled)
+                button->SetBitmapPressed(_pressedImage->GetBitmap());
         }
         else
         {
-            button->SetBitmapCurrent(wxBitmap());
+            if (ButtonImagesEnabled)
+                button->SetBitmapCurrent(wxBitmap());
         }
     }
 
@@ -200,11 +216,13 @@ namespace Alternet::UI
         if (_disabledImage != nullptr)
         {
             _disabledImage->AddRef();
-            button->SetBitmapDisabled(_disabledImage->GetBitmap());
+            if (ButtonImagesEnabled)
+                button->SetBitmapDisabled(_disabledImage->GetBitmap());
         }
         else
         {
-            button->SetBitmapCurrent(wxBitmap());
+            if (ButtonImagesEnabled)
+                button->SetBitmapCurrent(wxBitmap());
         }
     }
 
