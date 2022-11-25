@@ -31,7 +31,7 @@ namespace ControlsSample
             if (smallImageResourceNames.Length != largeImageResourceNames.Length)
                 throw new Exception();
 
-            Image LoadImage(string name) => new Image(assembly.GetManifestResourceStream(name) ?? throw new Exception());
+            Image LoadImage(string name) => new Bitmap(assembly.GetManifestResourceStream(name) ?? throw new Exception());
 
             for (int i = 0; i < smallImageResourceNames.Length; i++)
             {
