@@ -219,6 +219,53 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? MenuChanged;
 
+        private Toolbar? toolbar = null;
+
+        /// <summary>
+        /// Gets or sets the <see cref="Toolbar"/> that is displayed in the window.
+        /// </summary>
+        /// <value>
+        /// A <see cref="Toolbar"/> that represents the toolbar to display in the window.
+        /// </value>
+        /// <remarks>
+        /// You can use this property to switch between complete toolbar sets at run time.
+        /// </remarks>
+        public Toolbar? Toolbar
+        {
+            get => toolbar;
+
+            set
+            {
+                if (toolbar == value)
+                    return;
+
+                var oldValue = toolbar;
+                toolbar = value;
+
+                if (oldValue != null)
+                    oldValue.Parent = null;
+
+                if (toolbar != null)
+                    toolbar.Parent = this;
+
+                OnToolbarChanged(EventArgs.Empty);
+                ToolbarChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="Toolbar"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnToolbarChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="Toolbar"/> property changes.
+        /// </summary>
+        public event EventHandler? ToolbarChanged;
+
         /// <summary>
         /// Gets an array of <see cref="Window"/> objects that represent all windows that are owned by this window.
         /// </summary>
