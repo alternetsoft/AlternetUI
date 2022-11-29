@@ -28,6 +28,8 @@ namespace Alternet.UI
             MainMenu => new NativeMainMenuHandler(),
             MenuItem => new NativeMenuItemHandler(),
             ContextMenu => new NativeContextMenuHandler(),
+            Toolbar => new NativeToolbarHandler(),
+            ToolbarItem => new NativeToolbarItemHandler(),
             _ => new GenericControlHandler()
         };
     }
