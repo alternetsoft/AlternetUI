@@ -518,6 +518,15 @@ namespace Alternet::UI
         return _cancelButton;
     }
 
+    Toolbar* Window::GetToolbar()
+    {
+        return nullptr;
+    }
+
+    void Window::SetToolbar(Toolbar* value)
+    {
+    }
+
     Size Window::GetMinimumSize()
     {
         return _minimumSize.Get();

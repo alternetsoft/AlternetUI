@@ -55,6 +55,8 @@ namespace NativeApi.Api
 
         public MainMenu? Menu { get => throw new Exception(); set => throw new Exception(); }
 
+        public Toolbar? Toolbar { get => throw new Exception(); set => throw new Exception(); }
+
         public void AddInputBinding(string managedCommandId, Key key, ModifierKeys modifiers) => throw new Exception();
         public void RemoveInputBinding(string managedCommandId) => throw new Exception();
 

@@ -377,6 +377,24 @@ namespace Alternet.UI.Native
             }
         }
         
+        public Toolbar? Toolbar
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Window_GetToolbar_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<Toolbar>(n, p => new Toolbar(p));
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Window_SetToolbar_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+            }
+        }
+        
         public void ShowModal()
         {
             CheckDisposed();
@@ -610,6 +628,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetMenu_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Window_GetToolbar_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetToolbar_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Window_OpenOwnedWindowsArray_(IntPtr obj);

@@ -77,6 +77,10 @@ void SetIcon(ImageSet* value);
 MainMenu* GetMenu();
 void SetMenu(MainMenu* value);
 
+
+Toolbar* GetToolbar();
+void SetToolbar(Toolbar* value);
+
 void* OpenOwnedWindowsArray();
 int GetOwnedWindowsItemCount(void* array);
 Window* GetOwnedWindowsItemAt(void* array, int index);

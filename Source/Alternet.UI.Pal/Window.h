@@ -4,6 +4,7 @@
 #include "Control.h"
 #include "ImageSet.h"
 #include "MainMenu.h"
+#include "Toolbar.h"
 
 namespace Alternet::UI
 {

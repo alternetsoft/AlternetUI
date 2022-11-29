@@ -238,6 +238,8 @@
     <ClCompile Include="TabControl.cpp" />
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Toolbar.cpp" />
+    <ClCompile Include="ToolbarItem.cpp" />
     <ClCompile Include="TransformMatrix.cpp" />
     <ClCompile Include="TreeView.cpp" />
     <ClCompile Include="UnmanagedDataObject.cpp" />
@@ -280,6 +282,7 @@
     <ClInclude Include="Api\MessageBox_.Api.h" />
     <ClInclude Include="Api\Mouse.Api.h" />
     <ClInclude Include="Api\NativeEventDataTypes.h" />
+    <ClInclude Include="Api\NotifyIcon.Api.h" />
     <ClInclude Include="Api\NumericUpDown.Api.h" />
     <ClInclude Include="Api\Object.Api.h" />
     <ClInclude Include="Api\OutputStream.Api.h" />
@@ -303,6 +306,8 @@
     <ClInclude Include="Api\TabPage.Api.h" />
     <ClInclude Include="Api\TextBox.Api.h" />
     <ClInclude Include="Api\Timer.Api.h" />
+    <ClInclude Include="Api\Toolbar.Api.h" />
+    <ClInclude Include="Api\ToolbarItem.Api.h" />
     <ClInclude Include="Api\TransformMatrix.Api.h" />
     <ClInclude Include="Api\TreeView.Api.h" />
     <ClInclude Include="Api\UnmanagedDataObject.Api.h" />
@@ -372,6 +377,8 @@
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="TextPainter.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="Toolbar.h" />
+    <ClInclude Include="ToolbarItem.h" />
     <ClInclude Include="TransformMatrix.h" />
     <ClInclude Include="TreeView.h" />
     <ClInclude Include="TypedEnumFlags.h" />
@@ -407,6 +414,7 @@
     <None Include="Api\MenuItem.inc" />
     <None Include="Api\MessageBox_.inc" />
     <None Include="Api\Mouse.inc" />
+    <None Include="Api\NotifyIcon.inc" />
     <None Include="Api\NumericUpDown.inc" />
     <None Include="Api\PageSettings.inc" />
     <None Include="Api\PageSetupDialog.inc" />
@@ -427,6 +435,8 @@
     <None Include="Api\TabPage.inc" />
     <None Include="Api\TextBox.inc" />
     <None Include="Api\Timer.inc" />
+    <None Include="Api\Toolbar.inc" />
+    <None Include="Api\ToolbarItem.inc" />
     <None Include="Api\TransformMatrix.inc" />
     <None Include="Api\TreeView.inc" />
     <None Include="Api\UnmanagedDataObject.inc" />

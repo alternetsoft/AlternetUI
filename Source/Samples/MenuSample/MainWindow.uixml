@@ -3,50 +3,57 @@
         x:Class="MenuSample.MainWindow"
         Title="Menu Sample"
         Padding="10">
-  <Window.InputBindings>
-    <KeyBinding Gesture="Ctrl+Shift+G" Command="{Binding ExportToPngCommand}" />
-  </Window.InputBindings>
-  <Window.Menu>
-    <MainMenu>
-      <MenuItem Text="_File">
-        <MenuItem Text="_Open..." Name="openMenuItem" Click="OpenMenuItem_Click" Shortcut="Ctrl+O" />
-        <MenuItem Text="_Save..." Name="saveMenuItem" Command="{Binding SaveCommand}" Shortcut="Ctrl+S"/>
-        <MenuItem Text="_Save Enabled" Name="saveEnabledMenuItem" Click="SaveEnabledMenuItem_Click" Checked="True" />
-        <MenuItem Text="-" Name="separatorMenuItem" />
-        <MenuItem Text="_Export">
-          <MenuItem Text="Export to P_DF" Name="exportToPdfMenuItem" Click="ExportToPdfMenuItem_Click" />
-          <MenuItem Text="Export to P_NG" Name="exportToPngMenuItem" Command="{Binding ExportToPngCommand}" Shortcut="Ctrl+Shift+G"/>
-        </MenuItem>
-        <MenuItem Text="E_xit" Name="exitMenuItem" Click="ExitMenuItem_Click" />
-      </MenuItem>
-      <MenuItem Text="_View">
-        <MenuItem Text="_Scrolling">
-          <MenuItem Text="Continous" Name="continousScrollingMenuItem" Checked="True" Click="ContinousScrollingMenuItem_Click" />
-          <MenuItem Text="Page" Name="pageScrollingMenuItem" Click="PageScrollingMenuItem_Click" />
-        </MenuItem>
-        <MenuItem Text="_Grid" Checked="True" Click="GridMenuItem_Click" />
-      </MenuItem>
-      <MenuItem Text="_Tools">
-        <MenuItem Text="_Options..." Name="optionsMenuItem" Click="OptionsMenuItem_Click" />
-      </MenuItem>
-      <MenuItem Text="_Help">
-        <MenuItem Text="Index" Enabled="false" />
-        <MenuItem Text="_About" Name="aboutMenuItem" Click="AboutMenuItem_Click" />
-      </MenuItem>
-    </MainMenu>
-  </Window.Menu>
-  <StackPanel>
-    <Button Text="Add Dynamic Menu Item" Name="addDynamicMenuItemMenuItem" Click="AddDynamicMenuItemMenuItem_Click" Margin="0,0,0,10" />
-    <Button Text="Remove Last Dynamic Menu Item" Name="removeLastDynamicMenuItemMenuItem" Click="RemoveLastDynamicMenuItemMenuItem_Click" Margin="0,0,0,10" />
-    <Button Name="toggleExitEnabledMenuItem" Click="ToggleExitEnabledMenuItem_Click" Margin="0,0,0,10" />
-    <Button Name="toggleSeparatorMenuItem" Click="ToggleSeparatorMenuItem_Click" Margin="0,0,0,10" />
-    <StackPanel Name="roleControlsPanel">
-      <Button Text="Set About Item Role to None" Name="setAboutMenuItemRoleToNone" Click="SetAboutMenuItemRoleToNone_Click" Margin="0,0,0,10" />
-      <Button Text="Set Options Item Role to None" Click="SetOptionsMenuItemRoleToNone_Click" Margin="0,0,0,10" />
-      <Button Text="Set Options Item Role to Preferences" Click="SetOptionsMenuItemRoleToPreferences_Click" Margin="0,0,0,10" />
+    <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+Shift+G" Command="{Binding ExportToPngCommand}" />
+    </Window.InputBindings>
+    <Window.Menu>
+        <MainMenu>
+            <MenuItem Text="_File">
+                <MenuItem Text="_Open..." Name="openMenuItem" Click="OpenMenuItem_Click" Shortcut="Ctrl+O" />
+                <MenuItem Text="_Save..." Name="saveMenuItem" Command="{Binding SaveCommand}" Shortcut="Ctrl+S"/>
+                <MenuItem Text="_Save Enabled" Name="saveEnabledMenuItem" Click="SaveEnabledMenuItem_Click" Checked="True" />
+                <MenuItem Text="-" Name="separatorMenuItem" />
+                <MenuItem Text="_Export">
+                    <MenuItem Text="Export to P_DF" Name="exportToPdfMenuItem" Click="ExportToPdfMenuItem_Click" />
+                    <MenuItem Text="Export to P_NG" Name="exportToPngMenuItem" Command="{Binding ExportToPngCommand}" Shortcut="Ctrl+Shift+G"/>
+                </MenuItem>
+                <MenuItem Text="E_xit" Name="exitMenuItem" Click="ExitMenuItem_Click" />
+            </MenuItem>
+            <MenuItem Text="_View">
+                <MenuItem Text="_Scrolling">
+                    <MenuItem Text="Continous" Name="continousScrollingMenuItem" Checked="True" Click="ContinousScrollingMenuItem_Click" />
+                    <MenuItem Text="Page" Name="pageScrollingMenuItem" Click="PageScrollingMenuItem_Click" />
+                </MenuItem>
+                <MenuItem Text="_Grid" Checked="True" Click="GridMenuItem_Click" />
+            </MenuItem>
+            <MenuItem Text="_Tools">
+                <MenuItem Text="_Options..." Name="optionsMenuItem" Click="OptionsMenuItem_Click" />
+            </MenuItem>
+            <MenuItem Text="_Help">
+                <MenuItem Text="Index" Enabled="false" />
+                <MenuItem Text="_About" Name="aboutMenuItem" Click="AboutMenuItem_Click" />
+            </MenuItem>
+        </MainMenu>
+    </Window.Menu>
+    <Window.Toolbar>
+        <Toolbar>
+            <ToolbarItem Text="New..." />
+            <ToolbarItem Text="Open..." />
+            <ToolbarItem Text="Save" />
+        </Toolbar>
+    </Window.Toolbar>
+    <StackPanel>
+        <Button Text="Add Dynamic Menu Item" Name="addDynamicMenuItemMenuItem" Click="AddDynamicMenuItemMenuItem_Click" Margin="0,0,0,10" />
+        <Button Text="Remove Last Dynamic Menu Item" Name="removeLastDynamicMenuItemMenuItem" Click="RemoveLastDynamicMenuItemMenuItem_Click" Margin="0,0,0,10" />
+        <Button Name="toggleExitEnabledMenuItem" Click="ToggleExitEnabledMenuItem_Click" Margin="0,0,0,10" />
+        <Button Name="toggleSeparatorMenuItem" Click="ToggleSeparatorMenuItem_Click" Margin="0,0,0,10" />
+        <StackPanel Name="roleControlsPanel">
+            <Button Text="Set About Item Role to None" Name="setAboutMenuItemRoleToNone" Click="SetAboutMenuItemRoleToNone_Click" Margin="0,0,0,10" />
+            <Button Text="Set Options Item Role to None" Click="SetOptionsMenuItemRoleToNone_Click" Margin="0,0,0,10" />
+            <Button Text="Set Options Item Role to Preferences" Click="SetOptionsMenuItemRoleToPreferences_Click" Margin="0,0,0,10" />
+        </StackPanel>
+        <Border Name="contextMenuBorder" MouseRightButtonUp="ContextMenuBorder_MouseRightButtonUp" Margin="0,20,0,10">
+            <Label Text="Right-click here to show the context menu." Margin="10" HorizontalAlignment="Center" />
+        </Border>
     </StackPanel>
-    <Border Name="contextMenuBorder" MouseRightButtonUp="ContextMenuBorder_MouseRightButtonUp" Margin="0,20,0,10">
-      <Label Text="Right-click here to show the context menu." Margin="10" HorizontalAlignment="Center" />
-    </Border>
-  </StackPanel>
 </Window>
