@@ -7,8 +7,6 @@ namespace EmployeeFormSample
 {
     internal class Employee
     {
-        public Image? Image { get; set; }
-
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? BirthDate { get; set; }

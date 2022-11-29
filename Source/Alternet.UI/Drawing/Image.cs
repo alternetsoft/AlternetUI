@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.IO;
 
 namespace Alternet.Drawing
@@ -6,6 +7,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Describes an image to be drawn on a <see cref="DrawingContext"/> or displayed in a UI control.
     /// </summary>
+    [TypeConverter(typeof(ImageConverter))]
     public abstract class Image : IDisposable
     {
         private bool isDisposed;

@@ -15,7 +15,6 @@ namespace EmployeeFormSample
 
             DataContext = new Employee
             {
-                Image = new Bitmap(GetType().Assembly.GetManifestResourceStream("EmployeeFormSample.Resources.EmployeePhoto.jpg") ?? throw new Exception()),
                 FirstName = "Alice",
                 LastName = "Jameson",
                 BirthDate = new DateTime(1993, 10, 2).ToShortDateString(),
