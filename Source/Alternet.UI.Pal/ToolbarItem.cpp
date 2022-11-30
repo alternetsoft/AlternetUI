@@ -37,6 +37,15 @@ namespace Alternet::UI
         _toolInfo->text = CoerceWxToolText(_text);
         _toolInfo->image = image;
 
+        auto getKind = [&]()
+        {
+            if (separator)
+                return wxItemKind::wxITEM_SEPARATOR;
+            return wxItemKind::wxITEM_NORMAL;
+        };
+
+        _toolInfo->kind = getKind();
+
         if (!separator)
             s_itemsByIdsMap[_toolInfo->id] = this;
     }
@@ -95,7 +104,7 @@ namespace Alternet::UI
 
     bool ToolbarItem::IsSeparator()
     {
-        return false;
+        return _text == u"-";
     }
 
     wxWindow* ToolbarItem::CreateWxWindowCore(wxWindow* parent)
@@ -110,11 +119,19 @@ namespace Alternet::UI
 
     ToolbarItem* ToolbarItem::GetToolbarItemById(int id)
     {
-        return nullptr;
+        auto it = s_itemsByIdsMap.find(id);
+        if (it == s_itemsByIdsMap.end())
+            throwEx(u"Cannot find toolbar item by id");
+
+        return it->second;
     }
 
     void ToolbarItem::RaiseClick()
     {
+        if (_toolInfo->kind == wxITEM_CHECK)
+            _flags.Set(ToolbarItemFlags::Checked, !_flags.IsSet(ToolbarItemFlags::Checked));
+
+        RaiseEvent(ToolbarItemEvent::Click);
     }
 
     bool ToolbarItem::GetEnabled()

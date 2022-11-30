@@ -36,7 +36,11 @@ namespace Alternet::UI
 
     void Toolbar::OnToolbarCommand(wxCommandEvent& event)
     {
-        wxMessageBox("!!");
+        auto item = ToolbarItem::GetToolbarItemById(event.GetId());
+        if (item != nullptr)
+        {
+            item->RaiseClick();
+        }
     }
 
     void Toolbar::InsertWxItem(int index)
@@ -45,7 +49,7 @@ namespace Alternet::UI
             return;
 
         auto info = _items[index]->GetToolInfo();
-        _wxToolBar->InsertTool(index, info->id, info->text, info->image);
+        _wxToolBar->InsertTool(index, info->id, info->text, info->image, wxBitmapBundle(), info->kind);
         //_wxToolBar->AddTool(_items[index]->GetWxTool()->GetId(), "eded", _items[index]->GetWxTool()->GetBitmap());
         //_wxToolBar->AddSeparator();
         //GetWxToolBar()->Realize();

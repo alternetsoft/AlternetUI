@@ -37,8 +37,10 @@
     </Window.Menu>
     <Window.Toolbar>
         <Toolbar>
-            <ToolbarItem Text="Calendar" Image="embres:MenuSample.Resources.Icons.Small.Calendar16.png" />
-            <ToolbarItem Text="Photo" Image="embres:MenuSample.Resources.Icons.Small.Photo16.png" />
+            <ToolbarItem Text="Calendar" Image="embres:MenuSample.Resources.Icons.Small.Calendar16.png" Click="ToolbarItem_Click" />
+            <ToolbarItem Text="Photo" Image="embres:MenuSample.Resources.Icons.Small.Photo16.png" Click="ToolbarItem_Click" />
+            <ToolbarItem Text="-" />
+            <ToolbarItem Text="Pencil Toggle" Image="embres:MenuSample.Resources.Icons.Small.Pencil16.png" Click="ToolbarItem_Click" />
         </Toolbar>
     </Window.Toolbar>
     <StackPanel>

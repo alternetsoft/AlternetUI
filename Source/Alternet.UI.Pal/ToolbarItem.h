@@ -21,6 +21,7 @@ namespace Alternet::UI
             int id = -1;
             wxString text;
             wxBitmapBundle image;
+            wxItemKind kind = wxItemKind::wxITEM_NORMAL;
         };
 
         ToolInfo* GetToolInfo();

@@ -158,5 +158,10 @@ namespace MenuSample
         {
             new ExampleContextMenu().Show(contextMenuBorder, e.GetPosition(contextMenuBorder));
         }
+
+        private void ToolbarItem_Click(object sender, System.EventArgs e)
+        {
+            MessageBox.Show("Toolbar item clicked: " + ((ToolbarItem)sender).Text);
+        }
     }
 }
