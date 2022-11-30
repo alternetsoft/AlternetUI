@@ -6,7 +6,7 @@ namespace Alternet::UI
 {
     ToolbarItem::ToolbarItem() : _flags(ToolbarItemFlags::Enabled)
     {
-        CreateWxTool();
+        CreateToolInfo();
     }
 
     ToolbarItem::~ToolbarItem()
@@ -14,7 +14,7 @@ namespace Alternet::UI
         DestroyWxTool();
     }
 
-    void ToolbarItem::CreateWxTool()
+    void ToolbarItem::CreateToolInfo()
     {
         if (_toolInfo != nullptr)
             throwExInvalidOp;
@@ -41,10 +41,17 @@ namespace Alternet::UI
         {
             if (separator)
                 return wxItemKind::wxITEM_SEPARATOR;
+            if (_dropDownMenu != nullptr)
+                return wxItemKind::wxITEM_DROPDOWN;
+            if (_isCheckable)
+                return wxItemKind::wxITEM_CHECK;
             return wxItemKind::wxITEM_NORMAL;
         };
 
         _toolInfo->kind = getKind();
+
+        if (_dropDownMenu != nullptr)
+            _toolInfo->dropDownMenu = _dropDownMenu->GetWxMenu();
 
         if (!separator)
             s_itemsByIdsMap[_toolInfo->id] = this;
@@ -80,7 +87,7 @@ namespace Alternet::UI
         _toolInfo = nullptr;
     }
 
-    void ToolbarItem::RecreateWxTool()
+    void ToolbarItem::RecreateTool()
     {
         bool wasCreated = _toolInfo != nullptr;
 
@@ -89,7 +96,7 @@ namespace Alternet::UI
         if (wasCreated)
             DestroyWxTool();
 
-        CreateWxTool();
+        CreateToolInfo();
 
         if (wasCreated)
         {
@@ -105,6 +112,20 @@ namespace Alternet::UI
     bool ToolbarItem::IsSeparator()
     {
         return _text == u"-";
+    }
+
+    bool ToolbarItem::GetIsCheckable()
+    {
+        return _isCheckable;
+    }
+
+    void ToolbarItem::SetIsCheckable(bool value)
+    {
+        if (_isCheckable == value)
+            return;
+
+        _isCheckable = value;
+        RecreateTool();
     }
 
     wxWindow* ToolbarItem::CreateWxWindowCore(wxWindow* parent)
@@ -182,7 +203,7 @@ namespace Alternet::UI
         _image = value;
         if (_image != nullptr)
             _image->AddRef();
-        RecreateWxTool();
+        RecreateTool();
     }
 
     void ToolbarItem::ShowCore()
@@ -226,7 +247,7 @@ namespace Alternet::UI
         bool wasSeparator = IsSeparator();
         _text = value;
         _toolInfo->text = CoerceWxToolText(value);
-        RecreateWxTool();
+        RecreateTool();
     }
 
     bool ToolbarItem::GetChecked()
@@ -240,7 +261,7 @@ namespace Alternet::UI
 
         if (value/* && !_toolInfo->CanBeToggled()*/)
         {
-            RecreateWxTool();
+            RecreateTool();
         }
 
         bool checked = _flags.IsSet(ToolbarItemFlags::Checked);
@@ -250,22 +271,14 @@ namespace Alternet::UI
 
     Menu* ToolbarItem::GetDropDownMenu()
     {
-        //auto wxMenu = _toolInfo->GetDropdownMenu();
-        //if (wxMenu == nullptr)
-        //    return nullptr;
-
-        //auto menu = Menu::TryFindMenuByWxMenu(wxMenu);
-        //if (menu == nullptr)
-        //    throwExInvalidOp;
-
-        //menu->AddRef();
-
-        //return menu;
-        return nullptr;
+        if (_dropDownMenu != nullptr)
+            _dropDownMenu->AddRef();
+        return _dropDownMenu;
     }
 
     void ToolbarItem::SetDropDownMenu(Menu* value)
     {
-        //_toolInfo->SetDropdownMenu(value->GetWxMenu());
+        _dropDownMenu = value;
+        RecreateTool();
     }
 }

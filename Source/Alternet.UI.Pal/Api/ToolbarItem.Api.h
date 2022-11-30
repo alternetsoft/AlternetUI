@@ -73,6 +73,20 @@ ALTERNET_UI_API void ToolbarItem_SetDropDownMenu_(ToolbarItem* obj, Menu* value)
         });
 }
 
+ALTERNET_UI_API c_bool ToolbarItem_GetIsCheckable_(ToolbarItem* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsCheckable();
+        });
+}
+
+ALTERNET_UI_API void ToolbarItem_SetIsCheckable_(ToolbarItem* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetIsCheckable(value);
+        });
+}
+
 ALTERNET_UI_API ImageSet* ToolbarItem_GetImage_(ToolbarItem* obj)
 {
     return MarshalExceptions<ImageSet*>([&](){

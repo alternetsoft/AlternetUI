@@ -1,6 +1,7 @@
 using Alternet.UI;
 using System;
 using System.Linq;
+using System.Security.Policy;
 
 namespace MenuSample
 {
@@ -162,6 +163,11 @@ namespace MenuSample
         private void ToolbarItem_Click(object sender, System.EventArgs e)
         {
             MessageBox.Show("Toolbar item clicked: " + ((ToolbarItem)sender).Text);
+        }
+
+        private void ToggleToolbarItem_Click(object sender, System.EventArgs e)
+        {
+            // todo: log to status bar
         }
     }
 }

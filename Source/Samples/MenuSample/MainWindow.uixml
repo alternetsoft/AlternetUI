@@ -40,7 +40,18 @@
             <ToolbarItem Text="Calendar" Image="embres:MenuSample.Resources.Icons.Small.Calendar16.png" Click="ToolbarItem_Click" />
             <ToolbarItem Text="Photo" Image="embres:MenuSample.Resources.Icons.Small.Photo16.png" Click="ToolbarItem_Click" />
             <ToolbarItem Text="-" />
-            <ToolbarItem Text="Pencil Toggle" Image="embres:MenuSample.Resources.Icons.Small.Pencil16.png" Click="ToolbarItem_Click" />
+            <ToolbarItem Text="Pencil Toggle" Image="embres:MenuSample.Resources.Icons.Small.Pencil16.png" Click="ToggleToolbarItem_Click" IsCheckable="true" />
+            <ToolbarItem Text="-" />
+            <ToolbarItem Text="Graph Drop Down" Image="embres:MenuSample.Resources.Icons.Small.LineGraph16.png" Click="ToolbarItem_Click">
+                <ToolbarItem.DropDownMenu>
+                    <ContextMenu>
+                        <MenuItem Text="_Open..." />
+                        <MenuItem Text="_Save..." />
+                        <MenuItem Text="-" />
+                        <MenuItem Text="E_xit" />
+                    </ContextMenu>
+                </ToolbarItem.DropDownMenu>
+            </ToolbarItem>
         </Toolbar>
     </Window.Toolbar>
     <StackPanel>

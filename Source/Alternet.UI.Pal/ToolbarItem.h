@@ -22,6 +22,7 @@ namespace Alternet::UI
             wxString text;
             wxBitmapBundle image;
             wxItemKind kind = wxItemKind::wxITEM_NORMAL;
+            wxMenu* dropDownMenu = nullptr;
         };
 
         ToolInfo* GetToolInfo();
@@ -59,6 +60,8 @@ namespace Alternet::UI
         Toolbar* _parentToolbar = nullptr;
         optional<int> _indexInParentToolbar;
 
+        Menu* _dropDownMenu = nullptr;
+
         static wxString CoerceWxToolText(const string& value);
 
         FlagsAccessor<ToolbarItemFlags> _flags;
@@ -68,11 +71,13 @@ namespace Alternet::UI
 
         string _managedCommandId;
 
+        bool _isCheckable = false;
+
         inline static std::map<int, ToolbarItem*> s_itemsByIdsMap;
 
-        void CreateWxTool();
+        void CreateToolInfo();
         void DestroyWxTool();
-        void RecreateWxTool();
+        void RecreateTool();
 
         bool IsSeparator();
 

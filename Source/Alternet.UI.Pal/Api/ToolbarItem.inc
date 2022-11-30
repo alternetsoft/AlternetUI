@@ -17,6 +17,10 @@ Menu* GetDropDownMenu();
 void SetDropDownMenu(Menu* value);
 
 
+bool GetIsCheckable();
+void SetIsCheckable(bool value);
+
+
 ImageSet* GetImage();
 void SetImage(ImageSet* value);
 

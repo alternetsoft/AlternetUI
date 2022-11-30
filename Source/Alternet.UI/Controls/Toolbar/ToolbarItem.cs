@@ -35,7 +35,25 @@ namespace Alternet.UI
                 Click += onClick;
         }
 
-        public Menu DropDownMenu { get; set; }
+        /// <inheritdoc/>
+        public new ToolbarItemHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (ToolbarItemHandler)base.Handler;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a menu used as this toolbar item drop-down.
+        /// </summary>
+        public Menu? DropDownMenu { get => Handler.DropDownMenu; set => Handler.DropDownMenu = value; }
+
+        /// <summary>
+        /// Gets or sets a boolean value indicating whether this toolbar item is checkable.
+        /// </summary>
+        public bool IsCheckable { get => Handler.IsCheckable; set => Handler.IsCheckable = value; }
 
         /// <inheritdoc />
         public override void RaiseClick(EventArgs e)

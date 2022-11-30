@@ -49,7 +49,11 @@ namespace Alternet::UI
             return;
 
         auto info = _items[index]->GetToolInfo();
-        _wxToolBar->InsertTool(index, info->id, info->text, info->image, wxBitmapBundle(), info->kind);
+        auto tool = _wxToolBar->InsertTool(index, info->id, info->text, info->image, wxBitmapBundle(), info->kind);
+
+        if (info->dropDownMenu != nullptr)
+            tool->SetDropdownMenu(info->dropDownMenu);
+
         //_wxToolBar->AddTool(_items[index]->GetWxTool()->GetId(), "eded", _items[index]->GetWxTool()->GetBitmap());
         //_wxToolBar->AddSeparator();
         //GetWxToolBar()->Realize();

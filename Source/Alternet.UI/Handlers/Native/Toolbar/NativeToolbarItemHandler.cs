@@ -2,12 +2,32 @@ using System;
 
 namespace Alternet.UI
 {
-    internal class NativeToolbarItemHandler : NativeControlHandler<ToolbarItem, Native.ToolbarItem>
+    internal class NativeToolbarItemHandler : ToolbarItemHandler
     {
         internal override Native.Control CreateNativeControl()
         {
             return new Native.ToolbarItem();
         }
+
+        public new Native.ToolbarItem NativeControl => (Native.ToolbarItem)base.NativeControl!;
+
+        Menu? dropDownMenu;
+
+        public override Menu? DropDownMenu
+        {
+            get => dropDownMenu;
+            set
+            {
+                dropDownMenu = value;
+
+                if (value == null)
+                    NativeControl.DropDownMenu = null;
+                else
+                    NativeControl.DropDownMenu = ((NativeContextMenuHandler)value.Handler).NativeControl;
+            }
+        }
+
+        public override bool IsCheckable { get => NativeControl.IsCheckable; set => NativeControl.IsCheckable = value; }
 
         protected override void OnAttach()
         {

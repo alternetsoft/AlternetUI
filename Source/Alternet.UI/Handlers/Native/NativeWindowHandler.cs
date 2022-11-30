@@ -65,7 +65,7 @@ namespace Alternet.UI
             NativeControl.InputBindingCommandExecuted += NativeControl_InputBindingCommandExecuted;
         }
 
-        private void Control_ToolbarChanged(object sender, EventArgs e)
+        private void Control_ToolbarChanged(object? sender, EventArgs e)
         {
             ApplyToolbar();
         }

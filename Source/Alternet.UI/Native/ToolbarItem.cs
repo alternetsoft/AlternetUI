@@ -92,6 +92,23 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool IsCheckable
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.ToolbarItem_GetIsCheckable_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ToolbarItem_SetIsCheckable_(NativePointer, value);
+            }
+        }
+        
         public ImageSet? Image
         {
             get
@@ -185,6 +202,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ToolbarItem_SetDropDownMenu_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool ToolbarItem_GetIsCheckable_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ToolbarItem_SetIsCheckable_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr ToolbarItem_GetImage_(IntPtr obj);
