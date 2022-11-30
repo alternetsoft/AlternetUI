@@ -23,7 +23,7 @@ namespace Alternet::UI
     void Toolbar::SetOwnerWindow(Window* window)
     {
         _ownerWindow = window;
-        RecreateWxToolbar();
+        RecreateWxToolbar(window);
     }
 
     void Toolbar::ApplyEnabled(bool value)
@@ -60,7 +60,7 @@ namespace Alternet::UI
     {
     }
 
-    void Toolbar::CreateWxToolbar()
+    void Toolbar::CreateWxToolbar(Window* window)
     {
         //if (_wxToolBar != nullptr)
         //    throwExNoInfo;
@@ -68,8 +68,9 @@ namespace Alternet::UI
         if (_ownerWindow == nullptr)
             return;
 
-        _wxToolBar = new wxToolBar(_ownerWindow->GetFrame(), /*IdManager::AllocateId()*/-1, wxDefaultPosition, wxDefaultSize,
-            wxTB_TEXT | wxTB_HORIZONTAL | wxTB_HORZ_TEXT | wxTB_FLAT);
+        _wxToolBar = window->GetFrame()->CreateToolBar(wxTB_TEXT | wxTB_HORIZONTAL | wxTB_HORZ_TEXT | wxTB_FLAT);
+        //_wxToolBar = new wxToolBar(window->GetFrame(), /*IdManager::AllocateId()*/-1, wxDefaultPosition, wxDefaultSize,
+        //    wxTB_TEXT | wxTB_HORIZONTAL | wxTB_HORZ_TEXT | wxTB_FLAT);
 
         _wxToolBar->Bind(wxEVT_TOOL, &Toolbar::OnToolbarCommand, this);
 
@@ -90,10 +91,10 @@ namespace Alternet::UI
         }
     }
 
-    void Toolbar::RecreateWxToolbar()
+    void Toolbar::RecreateWxToolbar(Window* window)
     {
         //DestroyWxToolbar();
-        CreateWxToolbar();
+        CreateWxToolbar(window);
     }
 
     int Toolbar::GetItemsCount()

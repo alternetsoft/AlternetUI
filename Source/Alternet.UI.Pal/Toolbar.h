@@ -33,8 +33,8 @@ namespace Alternet::UI
 
         wxToolBar* _wxToolBar = nullptr;
 
-        void CreateWxToolbar();
+        void CreateWxToolbar(Window* window);
         void DestroyWxToolbar();
-        void RecreateWxToolbar();
+        void RecreateWxToolbar(Window* window);
     };
 }
