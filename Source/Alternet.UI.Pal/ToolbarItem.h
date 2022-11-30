@@ -6,6 +6,8 @@
 
 namespace Alternet::UI
 {
+    class Toolbar;
+
     class ToolbarItem : public Control
     {
 #include "Api/ToolbarItem.inc"
@@ -21,6 +23,9 @@ namespace Alternet::UI
 
         bool GetEnabled() override;
         virtual void SetEnabled(bool value) override;
+
+        void SetParentToolbar(Toolbar* value, optional<int> index);
+        Toolbar* GetParentToolbar();
 
     protected:
 
@@ -41,9 +46,14 @@ namespace Alternet::UI
             Checked = 1 << 1,
         };
 
+        Toolbar* _parentToolbar = nullptr;
+        optional<int> _indexInParentToolbar;
+
+        static wxString CoerceWxToolText(const string& value);
+
         FlagsAccessor<ToolbarItemFlags> _flags;
 
-        wxToolBarToolBase* _toolbarItem = nullptr;
+        wxToolBarToolBase* _tool = nullptr;
         string _text;
 
         string _managedCommandId;
@@ -58,3 +68,5 @@ namespace Alternet::UI
 
     };
 }
+
+template<> struct enable_bitmask_operators<Alternet::UI::ToolbarItem::ToolbarItemFlags> { static const bool enable = true; };

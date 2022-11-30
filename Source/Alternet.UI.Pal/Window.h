@@ -109,6 +109,9 @@ namespace Alternet::UI
         MainMenu* RetrieveMenu();
         void ApplyMenu(MainMenu* const& value);
 
+        Toolbar* RetrieveToolbar();
+        void ApplyToolbar(Toolbar* const& value);
+
         long GetWindowStyle();
 
         void ApplyIcon(Frame* value);
@@ -152,8 +155,10 @@ namespace Alternet::UI
         DelayedValue<Window, Size> _maximumSize;
         
         DelayedValue<Window, MainMenu*> _menu;
+        DelayedValue<Window, Toolbar*> _toolbar;
 
         MainMenu* _storedMenu = nullptr;
+        Toolbar* _storedToolbar = nullptr;
 
         Size _appliedMinimumSize;
         Size _appliedMaximumSize;

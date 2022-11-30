@@ -49,9 +49,16 @@ namespace Alternet::UI
 
     void Toolbar::InsertItemAt(int index, ToolbarItem* item)
     {
+        GetWxToolBar()->InsertTool(index, item->GetWxTool());
+        item->SetParentToolbar(this, index);
     }
 
     void Toolbar::RemoveItemAt(int index)
     {
+        auto it = _items.begin() + index;
+        auto item = *it;
+        _items.erase(it);
+        GetWxToolBar()->RemoveTool(index);
+        item->SetParentToolbar(nullptr, nullopt);
     }
 }

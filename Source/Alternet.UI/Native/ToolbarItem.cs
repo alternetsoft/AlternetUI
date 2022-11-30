@@ -74,12 +74,12 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Menu? Submenu
+        public Menu? DropDownMenu
         {
             get
             {
                 CheckDisposed();
-                var n = NativeApi.ToolbarItem_GetSubmenu_(NativePointer);
+                var n = NativeApi.ToolbarItem_GetDropDownMenu_(NativePointer);
                 var m = NativeObject.GetFromNativePointer<Menu>(n, p => new Menu(p));
                 ReleaseNativeObjectPointer(n);
                 return m;
@@ -88,7 +88,7 @@ namespace Alternet.UI.Native
             set
             {
                 CheckDisposed();
-                NativeApi.ToolbarItem_SetSubmenu_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+                NativeApi.ToolbarItem_SetDropDownMenu_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
             }
         }
         
@@ -163,10 +163,10 @@ namespace Alternet.UI.Native
             public static extern void ToolbarItem_SetChecked_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr ToolbarItem_GetSubmenu_(IntPtr obj);
+            public static extern IntPtr ToolbarItem_GetDropDownMenu_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ToolbarItem_SetSubmenu_(IntPtr obj, IntPtr value);
+            public static extern void ToolbarItem_SetDropDownMenu_(IntPtr obj, IntPtr value);
             
         }
     }

@@ -58,17 +58,17 @@ ALTERNET_UI_API void ToolbarItem_SetChecked_(ToolbarItem* obj, c_bool value)
         });
 }
 
-ALTERNET_UI_API Menu* ToolbarItem_GetSubmenu_(ToolbarItem* obj)
+ALTERNET_UI_API Menu* ToolbarItem_GetDropDownMenu_(ToolbarItem* obj)
 {
     return MarshalExceptions<Menu*>([&](){
-            return obj->GetSubmenu();
+            return obj->GetDropDownMenu();
         });
 }
 
-ALTERNET_UI_API void ToolbarItem_SetSubmenu_(ToolbarItem* obj, Menu* value)
+ALTERNET_UI_API void ToolbarItem_SetDropDownMenu_(ToolbarItem* obj, Menu* value)
 {
     MarshalExceptions<void>([&](){
-            obj->SetSubmenu(value);
+            obj->SetDropDownMenu(value);
         });
 }
 

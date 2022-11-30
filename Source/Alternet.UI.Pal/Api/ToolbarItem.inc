@@ -13,8 +13,8 @@ bool GetChecked();
 void SetChecked(bool value);
 
 
-Menu* GetSubmenu();
-void SetSubmenu(Menu* value);
+Menu* GetDropDownMenu();
+void SetDropDownMenu(Menu* value);
 
 public:
 enum class ToolbarItemEvent

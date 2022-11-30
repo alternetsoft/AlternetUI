@@ -32,6 +32,7 @@ namespace Alternet.UI
             ApplyState();
             ApplyIcon();
             ApplyMenu();
+            ApplyToolbar();
             ApplyInputBindings();
 
             Control.TitleChanged += Control_TitleChanged;
@@ -50,6 +51,7 @@ namespace Alternet.UI
             Control.StateChanged += Control_StateChanged;
             Control.IconChanged += Control_IconChanged;
             Control.MenuChanged += Control_MenuChanged;
+            Control.ToolbarChanged += Control_ToolbarChanged;
 
             Control.InputBindings.ItemInserted += InputBindings_ItemInserted;
             Control.InputBindings.ItemRemoved += InputBindings_ItemRemoved;
@@ -61,6 +63,11 @@ namespace Alternet.UI
             NativeControl.Deactivated += NativeControl_Deactivated;
             NativeControl.StateChanged += NativeControl_StateChanged;
             NativeControl.InputBindingCommandExecuted += NativeControl_InputBindingCommandExecuted;
+        }
+
+        private void Control_ToolbarChanged(object sender, EventArgs e)
+        {
+            ApplyToolbar();
         }
 
         private void NativeControl_InputBindingCommandExecuted(object? sender, Native.NativeEventArgs<Native.CommandEventData> e)
@@ -147,6 +154,11 @@ namespace Alternet.UI
         private void ApplyMenu()
         {
             NativeControl.Menu = (Control.Menu?.Handler as NativeMainMenuHandler)?.NativeControl ?? null;
+        }
+
+        private void ApplyToolbar()
+        {
+            NativeControl.Toolbar = (Control.Toolbar?.Handler as NativeToolbarHandler)?.NativeControl ?? null;
         }
 
         private void NativeControl_Deactivated(object? sender, EventArgs e)
@@ -420,6 +432,7 @@ namespace Alternet.UI
             Control.StateChanged -= Control_StateChanged;
             Control.IconChanged -= Control_IconChanged;
             Control.MenuChanged -= Control_MenuChanged;
+            Control.ToolbarChanged -= Control_ToolbarChanged;
 
             base.OnDetach();
         }
