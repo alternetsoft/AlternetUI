@@ -36,6 +36,7 @@ namespace Alternet::UI
 
     void Toolbar::OnToolbarCommand(wxCommandEvent& event)
     {
+        wxMessageBox("!!");
     }
 
     void Toolbar::InsertWxItem(int index)
@@ -44,9 +45,9 @@ namespace Alternet::UI
             return;
 
         _wxToolBar->InsertTool(index, _items[index]->GetWxTool());
+        //_wxToolBar->AddTool(_items[index]->GetWxTool()->GetId(), "eded", _items[index]->GetWxTool()->GetBitmap());
+        //_wxToolBar->AddSeparator();
         //GetWxToolBar()->Realize();
-        //wxBitmapBundle bmp;
-        //GetWxToolBar()->AddTool(item->GetWxTool()->GetId(), item->GetWxTool()->GetLabel(), bmp);
     }
 
     wxToolBar* Toolbar::GetWxToolBar()
@@ -66,7 +67,10 @@ namespace Alternet::UI
         if (_ownerWindow == nullptr)
             return;
 
-        _wxToolBar = new wxToolBar(_ownerWindow->GetFrame(), IdManager::AllocateId());
+        _wxToolBar = new wxToolBar(_ownerWindow->GetFrame(), /*IdManager::AllocateId()*/-1, wxDefaultPosition, wxDefaultSize,
+            wxTB_TEXT | wxTB_HORIZONTAL | wxTB_HORZ_TEXT | wxTB_FLAT);
+
+        _wxToolBar->Bind(wxEVT_TOOL, &Toolbar::OnToolbarCommand, this);
 
         for (int i = 0; i < _items.size(); i++)
             InsertWxItem(i);
@@ -78,6 +82,8 @@ namespace Alternet::UI
     {
         if (_wxToolBar != nullptr)
         {
+            _wxToolBar->Unbind(wxEVT_TOOL, &Toolbar::OnToolbarCommand, this);
+
             delete _wxToolBar;
             _wxToolBar = nullptr;
         }

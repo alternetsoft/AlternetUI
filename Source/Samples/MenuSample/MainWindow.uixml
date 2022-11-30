@@ -38,6 +38,7 @@
     <Window.Toolbar>
         <Toolbar>
             <ToolbarItem Text="Calendar" Image="embres:MenuSample.Resources.Icons.Small.Calendar16.png" />
+            <ToolbarItem Text="Photo" Image="embres:MenuSample.Resources.Icons.Small.Photo16.png" />
         </Toolbar>
     </Window.Toolbar>
     <StackPanel>
