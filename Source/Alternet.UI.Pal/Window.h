@@ -54,6 +54,8 @@ namespace Alternet::UI
         void SetCancelButton(Button* button);
         Button* GetCancelButton();
 
+        Frame* GetFrame();
+
     protected:
         Color RetrieveBackgroundColor() override;
         void ApplyBackgroundColor(const Color& value) override;
@@ -89,8 +91,6 @@ namespace Alternet::UI
         void OnIconize(wxIconizeEvent& event);
         void OnCommand(wxCommandEvent& event);
         void OnCharHook(wxKeyEvent& event);
-
-        Frame* GetFrame();
 
         optional<Size> CoerceSize(const Size& value);
 

@@ -271,6 +271,8 @@ namespace Alternet::UI
 
     void Window::ApplyToolbar(Toolbar* const& value)
     {
+        if (value != nullptr)
+            value->SetOwnerWindow(this);
         _frame->SetToolBar(value == nullptr ? nullptr : value->GetWxToolBar());
     }
 

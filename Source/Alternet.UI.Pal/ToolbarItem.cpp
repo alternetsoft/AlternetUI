@@ -23,10 +23,12 @@ namespace Alternet::UI
 
         bool separator = IsSeparator();
 
+        wxBitmap bmp(wxSize(16, 16));
         _tool = new wxToolBarToolBase(
             nullptr,
             separator ? wxID_SEPARATOR : IdManager::AllocateId(),
-            CoerceWxToolText(_text));
+            CoerceWxToolText(_text),
+            bmp);
 
         _tool->SetToggle(checked);
 
@@ -131,7 +133,7 @@ namespace Alternet::UI
         _parentToolbar = value;
         _indexInParentToolbar = index;
 
-        RecreateWxTool();
+        //RecreateWxTool();
 
         if (value != nullptr)
         {

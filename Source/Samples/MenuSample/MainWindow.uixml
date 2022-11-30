@@ -38,8 +38,6 @@
     <Window.Toolbar>
         <Toolbar>
             <ToolbarItem Text="New..." />
-            <!--<ToolbarItem Text="Open..." />
-            <ToolbarItem Text="Save" />-->
         </Toolbar>
     </Window.Toolbar>
     <StackPanel>
