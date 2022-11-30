@@ -3,12 +3,14 @@ using System;
 
 namespace Alternet.UI
 {
-    internal class NativeToolbarHandler : NativeControlHandler<Toolbar, Native.Toolbar>
+    internal class NativeToolbarHandler : ToolbarHandler
     {
         internal override Native.Control CreateNativeControl()
         {
             return new Native.Toolbar();
         }
+
+        public new Native.Toolbar NativeControl => (Native.Toolbar)base.NativeControl!;
 
         protected override void OnAttach()
         {

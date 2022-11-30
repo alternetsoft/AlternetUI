@@ -11,8 +11,16 @@ namespace Alternet::UI
 #include "Api/ImageSet.inc"
     public:
         wxIconBundle* GetIconBundle();
+        wxBitmapBundle GetBitmapBundle();
 
     private:
-        wxIconBundle _bundle;
+        wxIconBundle _iconBundle;
+        
+        bool _bitmapBundleValid = false;
+        wxBitmapBundle _bitmapBundle;
+        
+        wxVector<wxBitmap> _bitmaps;
+
+        void InvalidateBitmapBundle();
     };
 }

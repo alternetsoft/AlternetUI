@@ -37,7 +37,7 @@
     </Window.Menu>
     <Window.Toolbar>
         <Toolbar>
-            <ToolbarItem Text="New..." />
+            <ToolbarItem Text="Calendar" Image="embres:MenuSample.Resources.Icons.Small.Calendar16.png" />
         </Toolbar>
     </Window.Toolbar>
     <StackPanel>

@@ -16,6 +16,10 @@ void SetChecked(bool value);
 Menu* GetDropDownMenu();
 void SetDropDownMenu(Menu* value);
 
+
+ImageSet* GetImage();
+void SetImage(ImageSet* value);
+
 public:
 enum class ToolbarItemEvent
 {

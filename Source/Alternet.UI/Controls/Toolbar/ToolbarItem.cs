@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 
 namespace Alternet.UI
 {
@@ -71,6 +72,42 @@ namespace Alternet.UI
                 TextChanged?.Invoke(this, EventArgs.Empty);
             }
         }
+
+        private ImageSet? image = null;
+
+        /// <summary>
+        /// Gets or sets the image for the toolbar item.
+        /// </summary>
+        /// <value>
+        /// An <see cref="ImageSet"/> that represents the image for the toolbar item.
+        /// </value>
+        public ImageSet? Image
+        {
+            get => image;
+
+            set
+            {
+                if (image == value)
+                    return;
+
+                image = value;
+                OnImageChanged(EventArgs.Empty);
+                ImageChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="Image"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnImageChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="Image"/> property changes.
+        /// </summary>
+        public event EventHandler? ImageChanged;
 
         /// <summary>
         /// Occurs when the <see cref="Text"/> property changes.

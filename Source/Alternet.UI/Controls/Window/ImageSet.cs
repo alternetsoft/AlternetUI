@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.IO;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
@@ -9,6 +10,7 @@ namespace Alternet.UI
     /// An image set to be used with UI elements (for example, <see cref="Window.Icon"/>).
     /// Can be used for specifying several size representations of the same picture.
     /// </summary>
+    [TypeConverter(typeof(ImageSetConverter))]
     public class ImageSet : IDisposable
     {
         private bool isDisposed;

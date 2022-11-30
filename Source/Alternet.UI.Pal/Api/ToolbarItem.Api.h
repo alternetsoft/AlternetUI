@@ -4,6 +4,7 @@
 
 #include "ToolbarItem.h"
 #include "Menu.h"
+#include "ImageSet.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -69,6 +70,20 @@ ALTERNET_UI_API void ToolbarItem_SetDropDownMenu_(ToolbarItem* obj, Menu* value)
 {
     MarshalExceptions<void>([&](){
             obj->SetDropDownMenu(value);
+        });
+}
+
+ALTERNET_UI_API ImageSet* ToolbarItem_GetImage_(ToolbarItem* obj)
+{
+    return MarshalExceptions<ImageSet*>([&](){
+            return obj->GetImage();
+        });
+}
+
+ALTERNET_UI_API void ToolbarItem_SetImage_(ToolbarItem* obj, ImageSet* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetImage(value);
         });
 }
 

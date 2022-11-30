@@ -92,6 +92,24 @@ namespace Alternet.UI.Native
             }
         }
         
+        public ImageSet? Image
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.ToolbarItem_GetImage_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<ImageSet>(n, p => new ImageSet(p));
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ToolbarItem_SetImage_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+            }
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -167,6 +185,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ToolbarItem_SetDropDownMenu_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr ToolbarItem_GetImage_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ToolbarItem_SetImage_(IntPtr obj, IntPtr value);
             
         }
     }

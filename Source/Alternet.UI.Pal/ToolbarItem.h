@@ -3,6 +3,7 @@
 #include "ApiTypes.h"
 #include "Control.h"
 #include "Menu.h"
+#include "ImageSet.h"
 
 namespace Alternet::UI
 {
@@ -38,8 +39,7 @@ namespace Alternet::UI
         void UpdateWxWindowParent() override;
 
     private:
-
-        bool _settingParentToolbar = false;
+        ImageSet* _image = nullptr;
 
         enum class ToolbarItemFlags
         {

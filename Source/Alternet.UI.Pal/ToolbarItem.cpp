@@ -23,7 +23,14 @@ namespace Alternet::UI
 
         bool separator = IsSeparator();
 
-        wxBitmap bmp(wxSize(16, 16));
+        wxBitmapBundle bmp;
+        if (_image != nullptr)
+        {
+            bmp = _image->GetBitmapBundle();
+        }
+        else
+            bmp = wxBitmap(wxSize(16, 16));
+
         _tool = new wxToolBarToolBase(
             nullptr,
             separator ? wxID_SEPARATOR : IdManager::AllocateId(),
@@ -126,10 +133,6 @@ namespace Alternet::UI
 
     void ToolbarItem::SetParentToolbar(Toolbar* value, optional<int> index)
     {
-        if (_settingParentToolbar)
-            return;
-
-        _settingParentToolbar = true;
         _parentToolbar = value;
         _indexInParentToolbar = index;
 
@@ -143,13 +146,28 @@ namespace Alternet::UI
             if (_tool->CanBeToggled())
                 _tool->Toggle(checked);
         }
-
-        _settingParentToolbar = false;
     }
 
     Toolbar* ToolbarItem::GetParentToolbar()
     {
         return _parentToolbar;
+    }
+
+    ImageSet* ToolbarItem::GetImage()
+    {
+        if (_image != nullptr)
+            _image->AddRef();
+        return _image;
+    }
+
+    void ToolbarItem::SetImage(ImageSet* value)
+    {
+        if (_image != nullptr)
+            _image->Release();
+        _image = value;
+        if (_image != nullptr)
+            _image->AddRef();
+        RecreateWxTool();
     }
 
     void ToolbarItem::ShowCore()

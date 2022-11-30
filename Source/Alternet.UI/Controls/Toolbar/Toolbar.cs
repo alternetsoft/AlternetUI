@@ -8,6 +8,16 @@ namespace Alternet.UI
     /// </summary>
     public class Toolbar : Control
     {
+        /// <inheritdoc/>
+        public new ToolbarHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (ToolbarHandler)base.Handler;
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Toolbar"/> class.
         /// </summary>
