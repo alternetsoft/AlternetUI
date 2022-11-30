@@ -10,6 +10,10 @@ namespace MenuSample
         {
             InitializeComponent();
 
+            var t = Toolbar;
+            Toolbar = null;
+            Toolbar = t;
+
             SaveCommand = new Command(o => MessageBox.Show("Save"), o => saveEnabledMenuItem.Checked);
             ExportToPngCommand = new Command(o => MessageBox.Show("Export to PNG"));
             DataContext = this;

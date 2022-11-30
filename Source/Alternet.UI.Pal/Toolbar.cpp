@@ -49,7 +49,10 @@ namespace Alternet::UI
 
     void Toolbar::InsertItemAt(int index, ToolbarItem* item)
     {
-        GetWxToolBar()->InsertTool(index, item->GetWxTool());
+//        GetWxToolBar()->InsertTool(index, item->GetWxTool());
+        wxBitmapBundle bmp;
+        // wxToolBarTool
+        GetWxToolBar()->AddTool(item->GetWxTool()->GetId(), item->GetWxTool()->GetLabel(), bmp);
         item->SetParentToolbar(this, index);
     }
 

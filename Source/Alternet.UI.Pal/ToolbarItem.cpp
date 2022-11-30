@@ -124,8 +124,14 @@ namespace Alternet::UI
 
     void ToolbarItem::SetParentToolbar(Toolbar* value, optional<int> index)
     {
+        if (_settingParentToolbar)
+            return;
+
+        _settingParentToolbar = true;
         _parentToolbar = value;
         _indexInParentToolbar = index;
+
+        RecreateWxTool();
 
         if (value != nullptr)
         {
@@ -135,6 +141,8 @@ namespace Alternet::UI
             if (_tool->CanBeToggled())
                 _tool->Toggle(checked);
         }
+
+        _settingParentToolbar = false;
     }
 
     Toolbar* ToolbarItem::GetParentToolbar()

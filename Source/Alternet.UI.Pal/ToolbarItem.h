@@ -39,6 +39,8 @@ namespace Alternet::UI
 
     private:
 
+        bool _settingParentToolbar = false;
+
         enum class ToolbarItemFlags
         {
             None = 0,
