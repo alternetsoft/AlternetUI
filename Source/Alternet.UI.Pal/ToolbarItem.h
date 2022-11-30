@@ -16,7 +16,14 @@ namespace Alternet::UI
 
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
-        wxToolBarToolBase* GetWxTool();
+        struct ToolInfo
+        {
+            int id = -1;
+            wxString text;
+            wxBitmapBundle image;
+        };
+
+        ToolInfo* GetToolInfo();
 
         static ToolbarItem* GetToolbarItemById(int id);
 
@@ -55,7 +62,7 @@ namespace Alternet::UI
 
         FlagsAccessor<ToolbarItemFlags> _flags;
 
-        wxToolBarToolBase* _tool = nullptr;
+        ToolInfo* _toolInfo = nullptr;
         string _text;
 
         string _managedCommandId;

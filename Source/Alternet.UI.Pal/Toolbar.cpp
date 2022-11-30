@@ -44,7 +44,8 @@ namespace Alternet::UI
         if (_wxToolBar == nullptr)
             return;
 
-        _wxToolBar->InsertTool(index, _items[index]->GetWxTool());
+        auto info = _items[index]->GetToolInfo();
+        _wxToolBar->InsertTool(index, info->id, info->text, info->image);
         //_wxToolBar->AddTool(_items[index]->GetWxTool()->GetId(), "eded", _items[index]->GetWxTool()->GetBitmap());
         //_wxToolBar->AddSeparator();
         //GetWxToolBar()->Realize();

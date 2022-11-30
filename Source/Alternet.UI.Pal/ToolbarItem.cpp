@@ -16,31 +16,29 @@ namespace Alternet::UI
 
     void ToolbarItem::CreateWxTool()
     {
-        if (_tool != nullptr)
+        if (_toolInfo != nullptr)
             throwExInvalidOp;
 
         bool checked = _flags.IsSet(ToolbarItemFlags::Checked);
 
         bool separator = IsSeparator();
 
-        wxBitmapBundle bmp;
+        wxBitmapBundle image;
         if (_image != nullptr)
         {
-            bmp = _image->GetBitmapBundle();
+            image = _image->GetBitmapBundle();
         }
         else
-            bmp = wxBitmap(wxSize(16, 16));
+            image = wxBitmap(wxSize(16, 16));
 
-        _tool = new wxToolBarToolBase(
-            nullptr,
-            separator ? wxID_SEPARATOR : IdManager::AllocateId(),
-            CoerceWxToolText(_text),
-            bmp);
+        _toolInfo = new ToolInfo();
 
-        _tool->SetToggle(checked);
+        _toolInfo->id = separator ? wxID_SEPARATOR : IdManager::AllocateId();
+        _toolInfo->text = CoerceWxToolText(_text);
+        _toolInfo->image = image;
 
         if (!separator)
-            s_itemsByIdsMap[_tool->GetId()] = this;
+            s_itemsByIdsMap[_toolInfo->id] = this;
     }
 
     /*static*/ wxString ToolbarItem::CoerceWxToolText(const string& value)
@@ -54,7 +52,7 @@ namespace Alternet::UI
 
     void ToolbarItem::DestroyWxTool()
     {
-        if (_tool == nullptr)
+        if (_toolInfo == nullptr)
             throwExInvalidOp;
 
         if (_parentToolbar != nullptr)
@@ -64,18 +62,18 @@ namespace Alternet::UI
 
         if (!IsSeparator())
         {
-            auto id = _tool->GetId();
+            auto id = _toolInfo->id;
             s_itemsByIdsMap.erase(id);
             IdManager::FreeId(id);
         }
 
-        delete _tool;
-        _tool = nullptr;
+        delete _toolInfo;
+        _toolInfo = nullptr;
     }
 
     void ToolbarItem::RecreateWxTool()
     {
-        bool wasCreated = _tool != nullptr;
+        bool wasCreated = _toolInfo != nullptr;
 
         auto parent = _parentToolbar;
         auto index = _indexInParentToolbar;
@@ -105,9 +103,9 @@ namespace Alternet::UI
         return new wxPanel();
     }
 
-    wxToolBarToolBase* ToolbarItem::GetWxTool()
+    ToolbarItem::ToolInfo* ToolbarItem::GetToolInfo()
     {
-        return _tool;
+        return _toolInfo;
     }
 
     ToolbarItem* ToolbarItem::GetToolbarItemById(int id)
@@ -127,8 +125,8 @@ namespace Alternet::UI
     void ToolbarItem::SetEnabled(bool value)
     {
         _flags.Set(ToolbarItemFlags::Enabled, value);
-        if (_tool != nullptr && _parentToolbar != nullptr)
-            _tool->Enable(value);
+        //if (_toolInfo != nullptr && _parentToolbar != nullptr)
+        //    _toolInfo->Enable(value);
     }
 
     void ToolbarItem::SetParentToolbar(Toolbar* value, optional<int> index)
@@ -140,11 +138,11 @@ namespace Alternet::UI
 
         if (value != nullptr)
         {
-            _tool->Enable(_flags.IsSet(ToolbarItemFlags::Enabled));
+            //_toolInfo->Enable(_flags.IsSet(ToolbarItemFlags::Enabled));
 
-            bool checked = _flags.IsSet(ToolbarItemFlags::Checked);
-            if (_tool->CanBeToggled())
-                _tool->Toggle(checked);
+            //bool checked = _flags.IsSet(ToolbarItemFlags::Checked);
+            //if (_toolInfo->CanBeToggled())
+            //    _toolInfo->Toggle(checked);
         }
     }
 
@@ -210,7 +208,7 @@ namespace Alternet::UI
     {
         bool wasSeparator = IsSeparator();
         _text = value;
-        _tool->SetLabel(CoerceWxToolText(value));
+        _toolInfo->text = CoerceWxToolText(value);
         RecreateWxTool();
     }
 
@@ -223,33 +221,34 @@ namespace Alternet::UI
     {
         _flags.Set(ToolbarItemFlags::Checked, value);
 
-        if (value && !_tool->CanBeToggled())
+        if (value/* && !_toolInfo->CanBeToggled()*/)
         {
             RecreateWxTool();
         }
 
         bool checked = _flags.IsSet(ToolbarItemFlags::Checked);
-        if (_tool != nullptr && _tool->CanBeToggled() && _parentToolbar != nullptr)
-            _tool->Toggle(checked);
+        //if (_toolInfo != nullptr && _toolInfo->CanBeToggled() && _parentToolbar != nullptr)
+        //    _toolInfo->Toggle(checked);
     }
 
     Menu* ToolbarItem::GetDropDownMenu()
     {
-        auto wxMenu = _tool->GetDropdownMenu();
-        if (wxMenu == nullptr)
-            return nullptr;
+        //auto wxMenu = _toolInfo->GetDropdownMenu();
+        //if (wxMenu == nullptr)
+        //    return nullptr;
 
-        auto menu = Menu::TryFindMenuByWxMenu(wxMenu);
-        if (menu == nullptr)
-            throwExInvalidOp;
+        //auto menu = Menu::TryFindMenuByWxMenu(wxMenu);
+        //if (menu == nullptr)
+        //    throwExInvalidOp;
 
-        menu->AddRef();
+        //menu->AddRef();
 
-        return menu;
+        //return menu;
+        return nullptr;
     }
 
     void ToolbarItem::SetDropDownMenu(Menu* value)
     {
-        _tool->SetDropdownMenu(value->GetWxMenu());
+        //_toolInfo->SetDropdownMenu(value->GetWxMenu());
     }
 }
