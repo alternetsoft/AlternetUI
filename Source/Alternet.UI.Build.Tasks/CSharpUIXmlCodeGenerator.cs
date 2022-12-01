@@ -124,6 +124,8 @@ using System;
                         result.Append($"{indexAccessor.CollectionName}[{indexAccessor.Index}]");
                         break;
                     case UIXmlDocument.MemberAccessorInfo memberAccessor:
+                        if (i > 0)
+                            result.Append(".");
                         result.Append(memberAccessor.Name);
                         break;
                     default:
