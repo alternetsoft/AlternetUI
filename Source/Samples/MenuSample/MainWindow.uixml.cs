@@ -198,7 +198,14 @@ namespace MenuSample
         private void AddDynamicToolbarItem()
         {
             int number = toolbar.Items.Count - dynamicToolbarItemsSeparatorIndex;
-            var item = new ToolbarItem("Dynamic Item " + number) { Image = toolbar.Items[0].Image };
+
+            string text = "Dynamic Item " + number;
+            var item = new ToolbarItem(text)
+            {
+                Image = toolbar.Items[0].Image,
+                ToolTip = text + " Description"
+            };
+            
             item.Click += ToolbarItem_Click;
             toolbar.Items.Add(item);
         }

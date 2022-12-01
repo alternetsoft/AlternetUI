@@ -20,6 +20,7 @@ namespace Alternet::UI
         {
             int id = -1;
             wxString text;
+            wxString toolTipText;
             wxBitmapBundle image;
             wxItemKind kind = wxItemKind::wxITEM_NORMAL;
             wxMenu* dropDownMenu = nullptr;
@@ -41,6 +42,8 @@ namespace Alternet::UI
         void RemoveWxTool();
 
     protected:
+
+        void OnToolTipChanged() override;
 
         void ShowCore() override;
 

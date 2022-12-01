@@ -37,6 +37,10 @@ namespace Alternet::UI
         _toolInfo->text = CoerceWxToolText(_text);
         _toolInfo->image = image;
 
+        auto toolTip = GetToolTip();
+        if (toolTip.has_value())
+            _toolInfo->toolTipText = wxStr(toolTip.value());
+
         auto getKind = [&]()
         {
             if (separator)
@@ -197,7 +201,7 @@ namespace Alternet::UI
             return;
 
         auto info = GetToolInfo();
-        auto tool = toolbar->InsertTool(index, info->id, info->text, info->image, wxBitmapBundle(), info->kind);
+        auto tool = toolbar->InsertTool(index, info->id, info->text, info->image, wxBitmapBundle(), info->kind, info->toolTipText);
 
         if (info->dropDownMenu != nullptr)
             tool->SetDropdownMenu(info->dropDownMenu);
@@ -234,6 +238,11 @@ namespace Alternet::UI
         _image = value;
         if (_image != nullptr)
             _image->AddRef();
+        RecreateTool();
+    }
+
+    void ToolbarItem::OnToolTipChanged()
+    {
         RecreateTool();
     }
 

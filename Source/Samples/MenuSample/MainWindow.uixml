@@ -39,12 +39,13 @@
     </Window.Menu>
     <Window.Toolbar>
         <Toolbar Name="toolbar">
-            <ToolbarItem Text="Calendar" Image="embres:MenuSample.Resources.Icons.Small.Calendar16.png" Click="ToolbarItem_Click" />
-            <ToolbarItem Text="Photo" Image="embres:MenuSample.Resources.Icons.Small.Photo16.png" Click="ToolbarItem_Click" />
+            <ToolbarItem Text="Calendar" Image="embres:MenuSample.Resources.Icons.Small.Calendar16.png" Click="ToolbarItem_Click" ToolTip="Calendar Toolbar Item" />
+            <ToolbarItem Text="Photo" Image="embres:MenuSample.Resources.Icons.Small.Photo16.png" Click="ToolbarItem_Click" ToolTip="Photo Toolbar Item"/>
             <ToolbarItem Text="-" />
-            <ToolbarItem Text="Pencil Toggle" Image="embres:MenuSample.Resources.Icons.Small.Pencil16.png" Click="ToggleToolbarItem_Click" IsCheckable="true" Name="checkableToolbarItem" />
+            <ToolbarItem Text="Pencil Toggle" Image="embres:MenuSample.Resources.Icons.Small.Pencil16.png" Click="ToggleToolbarItem_Click"
+                         ToolTip="Pencil Toolbar Item" IsCheckable="true" Name="checkableToolbarItem" />
             <ToolbarItem Text="-" />
-            <ToolbarItem Text="Graph Drop Down" Image="embres:MenuSample.Resources.Icons.Small.LineGraph16.png" Click="ToolbarItem_Click">
+            <ToolbarItem Text="Graph Drop Down" ToolTip="Graph Toolbar Item" Image="embres:MenuSample.Resources.Icons.Small.LineGraph16.png" Click="ToolbarItem_Click">
                 <ToolbarItem.DropDownMenu>
                     <ContextMenu>
                         <MenuItem Text="_Open..." Name="openToolbarMenuItem" Click="ToolbarDropDownMenuItem_Click" />

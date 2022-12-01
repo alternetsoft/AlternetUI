@@ -43,6 +43,8 @@ namespace Alternet::UI
         virtual void OnParentChanged();
         virtual void OnAnyParentChanged();
 
+        virtual void OnToolTipChanged();
+
         void CreateWxWindow();
 
         void RecreateWxWindowIfNeeded();

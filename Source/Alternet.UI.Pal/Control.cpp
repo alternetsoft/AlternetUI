@@ -274,6 +274,8 @@ namespace Alternet::UI
 
         if (IsWxWindowCreated())
             ApplyToolTip();
+
+        OnToolTipChanged();
     }
 
     void Control::ApplyToolTip()
@@ -292,6 +294,10 @@ namespace Alternet::UI
     }
 
     void Control::OnAnyParentChanged()
+    {
+    }
+
+    void Control::OnToolTipChanged()
     {
     }
 
