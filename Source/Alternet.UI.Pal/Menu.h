@@ -33,6 +33,8 @@ namespace Alternet::UI
         MainMenu* FindParentMainMenu();
 
         std::vector<MenuItem*> GetItems();
+
+        void DetachAndRecreateWxMenu();
     protected:
 
         void ApplyBounds(const Rect& value) override;

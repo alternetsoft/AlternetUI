@@ -214,5 +214,21 @@ namespace MenuSample
                 return;
             toolbar.Items.RemoveAt(toolbar.Items.Count - 1);
         }
+
+        private void ShowToolbarTextCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            toolbar.ItemTextVisible = showToolbarTextCheckBox.IsChecked;
+        }
+
+        private void ShowToolbarImagesCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            toolbar.ItemImagesVisible = showToolbarImagesCheckBox.IsChecked;
+        }
+
+        private void ToolbarDropDownMenuItem_Click(object sender, System.EventArgs e)
+        {
+            var item = (MenuItem)sender;
+            LogEvent($"Toolbar drop down menu item clicked: {item.Text.Replace("_", "")}.");
+        }
     }
 }

@@ -25,6 +25,36 @@ namespace Alternet::UI
         RecreateWxToolbar(window);
     }
 
+    bool Toolbar::GetItemTextVisible()
+    {
+        return _itemTextVisible;
+    }
+
+    void Toolbar::SetItemTextVisible(bool value)
+    {
+        if (_itemTextVisible == value)
+            return;
+
+        _itemTextVisible = value;
+        if (_ownerWindow != nullptr)
+            RecreateWxToolbar(_ownerWindow);
+    }
+
+    bool Toolbar::GetItemImagesVisible()
+    {
+        return _itemImagesVisible;
+    }
+
+    void Toolbar::SetItemImagesVisible(bool value)
+    {
+        if (_itemImagesVisible == value)
+            return;
+
+        _itemImagesVisible = value;
+        if (_ownerWindow != nullptr)
+            RecreateWxToolbar(_ownerWindow);
+    }
+
     void Toolbar::ApplyEnabled(bool value)
     {
     }
@@ -87,7 +117,20 @@ namespace Alternet::UI
         if (_ownerWindow == nullptr)
             return;
 
-        _wxToolBar = window->GetFrame()->CreateToolBar(wxTB_TEXT | wxTB_HORIZONTAL | wxTB_HORZ_TEXT | wxTB_FLAT);
+        auto getStyle = [&]
+        {
+            auto style = wxTB_HORIZONTAL | wxTB_HORZ_LAYOUT | wxTB_FLAT;
+            
+            if (_itemTextVisible)
+                style |= wxTB_TEXT;
+
+            if (!_itemImagesVisible)
+                style |= wxTB_NOICONS;
+
+            return style;
+        };
+
+        _wxToolBar = window->GetFrame()->CreateToolBar(getStyle());
 
         _wxToolBar->Bind(wxEVT_TOOL, &Toolbar::OnToolbarCommand, this);
 
@@ -102,6 +145,17 @@ namespace Alternet::UI
         if (_wxToolBar != nullptr)
         {
             _wxToolBar->Unbind(wxEVT_TOOL, &Toolbar::OnToolbarCommand, this);
+
+            for (auto item : _items)
+            {
+                auto menu = item->GetDropDownMenu();
+                if (menu != nullptr)
+                {
+                    menu->DetachAndRecreateWxMenu();
+                    item->GetToolInfo()->dropDownMenu = menu->GetWxMenu();
+                    menu->Release();
+                }
+            }
 
             delete _wxToolBar;
             _wxToolBar = nullptr;

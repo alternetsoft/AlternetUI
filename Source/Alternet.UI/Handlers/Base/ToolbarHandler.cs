@@ -12,6 +12,16 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public new Toolbar Control => (Toolbar)base.Control;
 
+        /// <summary>
+        /// Gets or sets a boolean value indicating whether this toolbar item text is visible.
+        /// </summary>
+        public abstract bool ItemTextVisible { get; set; }
+
+        /// <summary>
+        /// Gets or sets a boolean value indicating whether this toolbar item images are visible.
+        /// </summary>
+        public abstract bool ItemImagesVisible { get; set; }
+
         /// <inheritdoc/>
         protected override bool VisualChildNeedsNativeControl => true;
     }

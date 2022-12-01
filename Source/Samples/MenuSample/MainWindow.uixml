@@ -47,10 +47,10 @@
             <ToolbarItem Text="Graph Drop Down" Image="embres:MenuSample.Resources.Icons.Small.LineGraph16.png" Click="ToolbarItem_Click">
                 <ToolbarItem.DropDownMenu>
                     <ContextMenu>
-                        <MenuItem Text="_Open..." />
-                        <MenuItem Text="_Save..." />
+                        <MenuItem Text="_Open..." Name="openToolbarMenuItem" Click="ToolbarDropDownMenuItem_Click" />
+                        <MenuItem Text="_Save..." Name="saveToolbarMenuItem" Click="ToolbarDropDownMenuItem_Click" />
                         <MenuItem Text="-" />
-                        <MenuItem Text="E_xit" />
+                        <MenuItem Text="E_xport..." Name="exportToolbarMenuItem" Click="ToolbarDropDownMenuItem_Click" />
                     </ContextMenu>
                 </ToolbarItem.DropDownMenu>
             </ToolbarItem>
@@ -90,6 +90,8 @@
                 <Button Text="Toggle first item enabled" Name="toggleFirstToolbarEnabledButton" Click="ToggleFirstToolbarEnabledButton_Click" Margin="0,0,0,10" />
                 <Button Text="Add new dynamic item" Name="addDynamicToolbarItemButton" Click="AddDynamicToolbarItemButton_Click" Margin="0,0,0,10" />
                 <Button Text="Remove last dynamic item" Name="removeLastDynamicToolbarItemButton" Click="RemoveLastDynamicToolbarItemButton_Click" Margin="0,0,0,10" />
+                <CheckBox Text="Show text" Name="showToolbarTextCheckBox" CheckedChanged="ShowToolbarTextCheckBox_CheckedChanged" Margin="0,0,0,10" IsChecked="True" />
+                <CheckBox Text="Show images" Name="showToolbarImagesCheckBox" CheckedChanged="ShowToolbarImagesCheckBox_CheckedChanged" Margin="0,0,0,10" IsChecked="True"/>
             </StackPanel>
         </GroupBox>
 

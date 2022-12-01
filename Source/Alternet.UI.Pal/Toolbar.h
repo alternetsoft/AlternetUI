@@ -17,7 +17,6 @@ namespace Alternet::UI
         wxToolBar* GetWxToolBar();
 
         void SetOwnerWindow(Window* window);
-
     protected:
         void ApplyEnabled(bool value) override;
         void ApplyBounds(const Rect& value) override;
@@ -36,5 +35,8 @@ namespace Alternet::UI
         void CreateWxToolbar(Window* window);
         void DestroyWxToolbar();
         void RecreateWxToolbar(Window* window);
+
+        bool _itemTextVisible = true;
+        bool _itemImagesVisible = true;
     };
 }

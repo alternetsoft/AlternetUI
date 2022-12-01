@@ -155,7 +155,7 @@ namespace Alternet::UI
     {
         auto it = s_itemsByIdsMap.find(id);
         if (it == s_itemsByIdsMap.end())
-            throwEx(u"Cannot find toolbar item by id");
+            return nullptr;
 
         return it->second;
     }

@@ -23,6 +23,34 @@ ALTERNET_UI_API int Toolbar_GetItemsCount_(Toolbar* obj)
         });
 }
 
+ALTERNET_UI_API c_bool Toolbar_GetItemTextVisible_(Toolbar* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetItemTextVisible();
+        });
+}
+
+ALTERNET_UI_API void Toolbar_SetItemTextVisible_(Toolbar* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetItemTextVisible(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Toolbar_GetItemImagesVisible_(Toolbar* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetItemImagesVisible();
+        });
+}
+
+ALTERNET_UI_API void Toolbar_SetItemImagesVisible_(Toolbar* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetItemImagesVisible(value);
+        });
+}
+
 ALTERNET_UI_API void Toolbar_InsertItemAt_(Toolbar* obj, int index, ToolbarItem* item)
 {
     MarshalExceptions<void>([&](){

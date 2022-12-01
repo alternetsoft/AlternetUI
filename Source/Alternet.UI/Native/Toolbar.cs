@@ -34,6 +34,40 @@ namespace Alternet.UI.Native
             
         }
         
+        public bool ItemTextVisible
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Toolbar_GetItemTextVisible_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Toolbar_SetItemTextVisible_(NativePointer, value);
+            }
+        }
+        
+        public bool ItemImagesVisible
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Toolbar_GetItemImagesVisible_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Toolbar_SetItemImagesVisible_(NativePointer, value);
+            }
+        }
+        
         public void InsertItemAt(int index, ToolbarItem item)
         {
             CheckDisposed();
@@ -57,6 +91,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Toolbar_GetItemsCount_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Toolbar_GetItemTextVisible_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Toolbar_SetItemTextVisible_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Toolbar_GetItemImagesVisible_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Toolbar_SetItemImagesVisible_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Toolbar_InsertItemAt_(IntPtr obj, int index, IntPtr item);

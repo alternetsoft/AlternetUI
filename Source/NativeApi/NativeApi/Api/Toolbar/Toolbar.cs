@@ -9,5 +9,9 @@ namespace NativeApi.Api
         public void InsertItemAt(int index, ToolbarItem item) => throw new Exception();
 
         public void RemoveItemAt(int index) => throw new Exception();
+
+        public bool ItemTextVisible { get; set; }
+
+        public bool ItemImagesVisible { get; set; }
     }
 }

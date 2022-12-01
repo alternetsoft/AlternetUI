@@ -64,6 +64,22 @@ namespace Alternet::UI
         return _items;
     }
 
+    void Menu::DetachAndRecreateWxMenu()
+    {
+        auto oldMenu = _menu;
+        RemoveWxMenuAssociation(oldMenu);
+        _menu = new wxMenu();
+        AssociateMenuWithWxMenu(_menu, this);
+
+        int index = 0;
+        for (auto item : _items)
+        {
+            auto wxItem = item->GetWxMenuItem();
+            oldMenu->Remove(wxItem);
+            _menu->Insert(index++, wxItem);
+        }
+    }
+
     int Menu::GetItemsCount()
     {
         return _menu->GetMenuItemCount();

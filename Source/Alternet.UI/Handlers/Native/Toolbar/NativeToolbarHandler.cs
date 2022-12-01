@@ -12,6 +12,18 @@ namespace Alternet.UI
 
         public new Native.Toolbar NativeControl => (Native.Toolbar)base.NativeControl!;
 
+        public override bool ItemTextVisible
+        {
+            get => NativeControl.ItemTextVisible;
+            set => NativeControl.ItemTextVisible = value;
+        }
+        
+        public override bool ItemImagesVisible
+        {
+            get => NativeControl.ItemImagesVisible;
+            set => NativeControl.ItemImagesVisible = value;
+        }
+
         protected override void OnAttach()
         {
             base.OnAttach();

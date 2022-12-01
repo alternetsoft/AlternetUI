@@ -27,6 +27,16 @@ namespace Alternet.UI
             Items.ItemRemoved += Items_ItemRemoved;
         }
 
+        /// <summary>
+        /// Gets or sets a boolean value indicating whether this toolbar item text is visible.
+        /// </summary>
+        public bool ItemTextVisible { get => Handler.ItemTextVisible; set => Handler.ItemTextVisible = value; }
+
+        /// <summary>
+        /// Gets or sets a boolean value indicating whether this toolbar item images are visible.
+        /// </summary>
+        public bool ItemImagesVisible { get => Handler.ItemImagesVisible; set => Handler.ItemImagesVisible = value; }
+
         private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<ToolbarItem> e)
         {
             // This is required for data binding inheritance.

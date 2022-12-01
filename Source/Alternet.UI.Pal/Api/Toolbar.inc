@@ -3,6 +3,14 @@ public:
 
 int GetItemsCount();
 
+
+bool GetItemTextVisible();
+void SetItemTextVisible(bool value);
+
+
+bool GetItemImagesVisible();
+void SetItemImagesVisible(bool value);
+
 void InsertItemAt(int index, ToolbarItem* item);
 void RemoveItemAt(int index);
 public:
