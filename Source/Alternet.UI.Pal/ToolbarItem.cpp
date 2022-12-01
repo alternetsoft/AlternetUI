@@ -259,11 +259,6 @@ namespace Alternet::UI
     {
         _flags.Set(ToolbarItemFlags::Checked, value);
 
-        if (value/* && !_toolInfo->CanBeToggled()*/)
-        {
-            RecreateTool();
-        }
-
         bool checked = _flags.IsSet(ToolbarItemFlags::Checked);
         //if (_toolInfo != nullptr && _toolInfo->CanBeToggled() && _parentToolbar != nullptr)
         //    _toolInfo->Toggle(checked);

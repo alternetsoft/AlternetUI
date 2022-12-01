@@ -160,14 +160,23 @@ namespace MenuSample
             new ExampleContextMenu().Show(contextMenuBorder, e.GetPosition(contextMenuBorder));
         }
 
-        private void ToolbarItem_Click(object sender, System.EventArgs e)
+        private void ToolbarItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Toolbar item clicked: " + ((ToolbarItem)sender).Text);
+            LogEvent("Toolbar item clicked: " + ((ToolbarItem)sender).Text);
         }
 
-        private void ToggleToolbarItem_Click(object sender, System.EventArgs e)
+        private void ToggleToolbarItem_Click(object sender, EventArgs e)
         {
-            // todo: log to status bar
+            var item = (ToolbarItem)sender;
+            LogEvent($"Toggle toolbar item clicked: {item.Text}. Is checked: {item.Checked}");
+        }
+
+        private int lastEventNumber = 1;
+
+        void LogEvent(string message)
+        {
+            eventsListBox.Items.Add($"{lastEventNumber++}. {message}");
+            eventsListBox.SelectedIndex = eventsListBox.Items.Count - 1;
         }
     }
 }

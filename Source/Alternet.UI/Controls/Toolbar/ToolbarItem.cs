@@ -54,7 +54,7 @@ namespace Alternet.UI
         /// Gets or sets a boolean value indicating whether this toolbar item is checkable.
         /// </summary>
         public bool IsCheckable { get => Handler.IsCheckable; set => Handler.IsCheckable = value; }
-
+        
         /// <inheritdoc />
         public override void RaiseClick(EventArgs e)
         {
