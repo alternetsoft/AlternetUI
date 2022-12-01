@@ -80,7 +80,7 @@ namespace Alternet::UI
     void ToolbarItem::DestroyWxTool()
     {
         if (_toolInfo == nullptr)
-            throwExInvalidOp;
+            return;
 
         if (_parentToolbar != nullptr)
         {
@@ -96,6 +96,8 @@ namespace Alternet::UI
 
         delete _toolInfo;
         _toolInfo = nullptr;
+
+        _wxTool = nullptr;
     }
 
     void ToolbarItem::RecreateTool()
@@ -203,16 +205,19 @@ namespace Alternet::UI
         _wxTool = tool;
     }
 
-    void ToolbarItem::RemoveWxTool(int index)
+    void ToolbarItem::RemoveWxTool()
     {
         auto toolbar = GetToolbar();
         if (toolbar == nullptr)
             return;
 
-        if (toolbar != nullptr)
-            toolbar->RemoveTool(index);
+        if (_toolInfo == nullptr)
+            throwExNoInfo;
 
-        _wxTool = nullptr;
+        if (toolbar != nullptr)
+            toolbar->RemoveTool(_toolInfo->id);
+
+        DestroyWxTool();
     }
 
     ImageSet* ToolbarItem::GetImage()

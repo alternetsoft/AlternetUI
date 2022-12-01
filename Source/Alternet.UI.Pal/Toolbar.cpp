@@ -54,23 +54,29 @@ namespace Alternet::UI
 
     void Toolbar::RemoveWxItem(int index)
     {
-        _items[index]->RemoveWxTool(index);
+        _items[index]->RemoveWxTool();
     }
 
     void Toolbar::InsertItemAt(int index, ToolbarItem* item)
     {
         _items.insert(_items.begin() + index, item);
-        InsertWxItem(index);
         item->SetParentToolbar(this, index);
+        InsertWxItem(index);
+        
+        if (_wxToolBar != nullptr)
+            _wxToolBar->Realize();
     }
 
     void Toolbar::RemoveItemAt(int index)
     {
+        RemoveWxItem(index);
         auto it = _items.begin() + index;
         auto item = *it;
         _items.erase(it);
-        RemoveWxItem(index);
         item->SetParentToolbar(nullptr, nullopt);
+
+        if (_wxToolBar != nullptr)
+            _wxToolBar->Realize();
     }
 
     void Toolbar::CreateWxToolbar(Window* window)

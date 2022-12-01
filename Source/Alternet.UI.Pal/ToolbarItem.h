@@ -38,7 +38,7 @@ namespace Alternet::UI
         Toolbar* GetParentToolbar();
 
         void InsertWxTool(int index);
-        void RemoveWxTool(int index);
+        void RemoveWxTool();
 
     protected:
 

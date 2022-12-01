@@ -38,7 +38,7 @@
         </MainMenu>
     </Window.Menu>
     <Window.Toolbar>
-        <Toolbar>
+        <Toolbar Name="toolbar">
             <ToolbarItem Text="Calendar" Image="embres:MenuSample.Resources.Icons.Small.Calendar16.png" Click="ToolbarItem_Click" />
             <ToolbarItem Text="Photo" Image="embres:MenuSample.Resources.Icons.Small.Photo16.png" Click="ToolbarItem_Click" />
             <ToolbarItem Text="-" />
@@ -54,6 +54,7 @@
                     </ContextMenu>
                 </ToolbarItem.DropDownMenu>
             </ToolbarItem>
+            <ToolbarItem Text="-" Name="dynamicToolbarItemsSeparator"/>
         </Toolbar>
     </Window.Toolbar>
     <Grid>
@@ -87,6 +88,8 @@
             <StackPanel>
                 <Button Text="Toggle item check" Name="toggleToolbarItemCheckButton" Click="ToggleToolbarItemCheckButton_Click" Margin="0,0,0,10" />
                 <Button Text="Toggle first item enabled" Name="toggleFirstToolbarEnabledButton" Click="ToggleFirstToolbarEnabledButton_Click" Margin="0,0,0,10" />
+                <Button Text="Add new dynamic item" Name="addDynamicToolbarItemButton" Click="AddDynamicToolbarItemButton_Click" Margin="0,0,0,10" />
+                <Button Text="Remove last dynamic item" Name="removeLastDynamicToolbarItemButton" Click="RemoveLastDynamicToolbarItemButton_Click" Margin="0,0,0,10" />
             </StackPanel>
         </GroupBox>
 

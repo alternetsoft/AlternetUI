@@ -17,7 +17,12 @@ namespace MenuSample
 
             PlatformSpecificInitialize();
             UpdateControls();
+
+            dynamicToolbarItemsSeparatorIndex = toolbar.Items.IndexOf(dynamicToolbarItemsSeparator);
+            AddDynamicToolbarItem();
         }
+
+        int dynamicToolbarItemsSeparatorIndex;
 
         private void PlatformSpecificInitialize()
         {
@@ -160,9 +165,9 @@ namespace MenuSample
             new ExampleContextMenu().Show(contextMenuBorder, e.GetPosition(contextMenuBorder));
         }
 
-        private void ToolbarItem_Click(object sender, EventArgs e)
+        private void ToolbarItem_Click(object? sender, EventArgs e)
         {
-            LogEvent("Toolbar item clicked: " + ((ToolbarItem)sender).Text);
+            LogEvent("Toolbar item clicked: " + ((ToolbarItem)sender!).Text);
         }
 
         private void ToggleToolbarItem_Click(object sender, EventArgs e)
@@ -186,8 +191,28 @@ namespace MenuSample
 
         private void ToggleFirstToolbarEnabledButton_Click(object sender, System.EventArgs e)
         {
-            var item = Toolbar!.Items[0];
+            var item = toolbar.Items[0];
             item.Enabled = !item.Enabled;
+        }
+
+        private void AddDynamicToolbarItem()
+        {
+            int number = toolbar.Items.Count - dynamicToolbarItemsSeparatorIndex;
+            var item = new ToolbarItem("Dynamic Item " + number) { Image = toolbar.Items[0].Image };
+            item.Click += ToolbarItem_Click;
+            toolbar.Items.Add(item);
+        }
+
+        private void AddDynamicToolbarItemButton_Click(object sender, System.EventArgs e)
+        {
+            AddDynamicToolbarItem();
+        }
+
+        private void RemoveLastDynamicToolbarItemButton_Click(object sender, System.EventArgs e)
+        {
+            if (toolbar.Items.Count == dynamicToolbarItemsSeparatorIndex + 1)
+                return;
+            toolbar.Items.RemoveAt(toolbar.Items.Count - 1);
         }
     }
 }
