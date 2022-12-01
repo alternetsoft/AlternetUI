@@ -35,6 +35,9 @@ namespace Alternet::UI
         std::vector<MenuItem*> GetItems();
 
         void DetachAndRecreateWxMenu();
+
+        void CreateWxMenu();
+        void UnregisterWxMenu();
     protected:
 
         void ApplyBounds(const Rect& value) override;
@@ -42,7 +45,7 @@ namespace Alternet::UI
 
     private:
 
-        wxMenu* _menu;
+        wxMenu* _menu = nullptr;
         
         MainMenu* _parentMainMenu = nullptr;
         MenuItem* _parentMenuItem = nullptr;

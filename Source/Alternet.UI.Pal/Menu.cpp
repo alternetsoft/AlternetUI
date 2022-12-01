@@ -5,20 +5,29 @@ namespace Alternet::UI
 {
     /*static*/ Menu::MenusByWxMenusMap Menu::s_menusByWxMenusMap;
 
-    Menu::Menu() : _menu(new wxMenu())
+    Menu::Menu()
     {
-        AssociateMenuWithWxMenu(_menu, this);
-
-        _menu->Bind(wxEVT_MENU, &Menu::OnMenuCommand, this);
+        CreateWxMenu();
     }
 
     Menu::~Menu()
     {
-        _menu->Unbind(wxEVT_MENU, &Menu::OnMenuCommand, this);
-
-        RemoveWxMenuAssociation(_menu);
+        UnregisterWxMenu();
         delete _menu;
         _menu = nullptr;
+    }
+
+    void Menu::CreateWxMenu()
+    {
+        _menu = new wxMenu();
+        AssociateMenuWithWxMenu(_menu, this);
+        _menu->Bind(wxEVT_MENU, &Menu::OnMenuCommand, this);
+    }
+
+    void Menu::UnregisterWxMenu()
+    {
+        _menu->Unbind(wxEVT_MENU, &Menu::OnMenuCommand, this);
+        RemoveWxMenuAssociation(_menu);
     }
 
     void Menu::OnMenuCommand(wxCommandEvent& event)
@@ -66,10 +75,10 @@ namespace Alternet::UI
 
     void Menu::DetachAndRecreateWxMenu()
     {
+        UnregisterWxMenu();
         auto oldMenu = _menu;
-        RemoveWxMenuAssociation(oldMenu);
-        _menu = new wxMenu();
-        AssociateMenuWithWxMenu(_menu, this);
+
+        CreateWxMenu();
 
         int index = 0;
         for (auto item : _items)
