@@ -65,6 +65,9 @@ namespace Alternet.UI
 
                 if (Menu != null)
                     yield return Menu;
+
+                if (Toolbar != null)
+                    yield return Toolbar;
             }
         }
 

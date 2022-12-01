@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace Alternet.UI
@@ -42,6 +43,28 @@ namespace Alternet.UI
             {
                 CheckDisposed();
                 return (ToolbarItemHandler)base.Handler;
+            }
+        }
+
+
+        /// <inheritdoc/>
+        public override IReadOnlyList<FrameworkElement> ContentElements
+        {
+            get
+            {
+                if (DropDownMenu != null)
+                    return new[] { DropDownMenu };
+                return new FrameworkElement[0];
+            }
+        }
+
+        /// <inheritdoc />
+        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection
+        {
+            get
+            {
+                if (DropDownMenu != null)
+                    yield return DropDownMenu;
             }
         }
 

@@ -178,5 +178,10 @@ namespace MenuSample
             eventsListBox.Items.Add($"{lastEventNumber++}. {message}");
             eventsListBox.SelectedIndex = eventsListBox.Items.Count - 1;
         }
+
+        private void ToggleToolbarItemCheckButton_Click(object sender, EventArgs e)
+        {
+            checkableToolbarItem.Checked = !checkableToolbarItem.Checked;
+        }
     }
 }
