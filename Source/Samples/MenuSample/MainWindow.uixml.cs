@@ -183,5 +183,11 @@ namespace MenuSample
         {
             checkableToolbarItem.Checked = !checkableToolbarItem.Checked;
         }
+
+        private void ToggleFirstToolbarEnabledButton_Click(object sender, System.EventArgs e)
+        {
+            var item = Toolbar!.Items[0];
+            item.Enabled = !item.Enabled;
+        }
     }
 }

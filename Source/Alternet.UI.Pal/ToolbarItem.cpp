@@ -57,6 +57,7 @@ namespace Alternet::UI
             s_itemsByIdsMap[_toolInfo->id] = this;
 
         ApplyChecked();
+        ApplyEnabled();
     }
 
     wxToolBar* ToolbarItem::GetToolbar()
@@ -173,6 +174,7 @@ namespace Alternet::UI
     void ToolbarItem::SetEnabled(bool value)
     {
         _flags.Set(ToolbarItemFlags::Enabled, value);
+        ApplyEnabled();
     }
 
     void ToolbarItem::SetParentToolbar(Toolbar* value, optional<int> index)
@@ -293,6 +295,16 @@ namespace Alternet::UI
 
         bool checked = _flags.IsSet(ToolbarItemFlags::Checked);
         GetToolbar()->ToggleTool(_toolInfo->id, checked);
+    }
+
+    void ToolbarItem::ApplyEnabled()
+    {
+        auto toolbar = GetToolbar();
+        if (toolbar == nullptr)
+            return;
+
+        bool enabled = _flags.IsSet(ToolbarItemFlags::Enabled);
+        GetToolbar()->EnableTool(_toolInfo->id, enabled);
     }
 
     Menu* ToolbarItem::GetDropDownMenu()

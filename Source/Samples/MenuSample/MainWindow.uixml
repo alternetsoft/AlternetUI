@@ -86,6 +86,7 @@
         <GroupBox Title="Toolbar" Grid.Column="1" Grid.Row="0" Margin="5,0,0,0" VerticalAlignment="Top">
             <StackPanel>
                 <Button Text="Toggle item check" Name="toggleToolbarItemCheckButton" Click="ToggleToolbarItemCheckButton_Click" Margin="0,0,0,10" />
+                <Button Text="Toggle first item enabled" Name="toggleFirstToolbarEnabledButton" Click="ToggleFirstToolbarEnabledButton_Click" Margin="0,0,0,10" />
             </StackPanel>
         </GroupBox>
 

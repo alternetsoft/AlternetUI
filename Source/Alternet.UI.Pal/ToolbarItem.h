@@ -86,6 +86,8 @@ namespace Alternet::UI
 
         void ApplyChecked();
 
+        void ApplyEnabled();
+
         wxToolBar* GetToolbar();
 
         wxToolBarToolBase* _wxTool = nullptr;
