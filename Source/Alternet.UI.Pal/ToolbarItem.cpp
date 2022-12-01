@@ -55,6 +55,16 @@ namespace Alternet::UI
 
         if (!separator)
             s_itemsByIdsMap[_toolInfo->id] = this;
+
+        ApplyChecked();
+    }
+
+    wxToolBar* ToolbarItem::GetToolbar()
+    {
+        if (_parentToolbar == nullptr)
+            return nullptr;
+
+        return _parentToolbar->GetWxToolBar();
     }
 
     /*static*/ wxString ToolbarItem::CoerceWxToolText(const string& value)
@@ -163,30 +173,44 @@ namespace Alternet::UI
     void ToolbarItem::SetEnabled(bool value)
     {
         _flags.Set(ToolbarItemFlags::Enabled, value);
-        //if (_toolInfo != nullptr && _parentToolbar != nullptr)
-        //    _toolInfo->Enable(value);
     }
 
     void ToolbarItem::SetParentToolbar(Toolbar* value, optional<int> index)
     {
         _parentToolbar = value;
         _indexInParentToolbar = index;
-
-        //RecreateWxTool();
-
-        if (value != nullptr)
-        {
-            //_toolInfo->Enable(_flags.IsSet(ToolbarItemFlags::Enabled));
-
-            //bool checked = _flags.IsSet(ToolbarItemFlags::Checked);
-            //if (_toolInfo->CanBeToggled())
-            //    _toolInfo->Toggle(checked);
-        }
     }
 
     Toolbar* ToolbarItem::GetParentToolbar()
     {
         return _parentToolbar;
+    }
+
+    void ToolbarItem::InsertWxTool(int index)
+    {
+        auto toolbar = GetToolbar();
+        if (toolbar == nullptr)
+            return;
+
+        auto info = GetToolInfo();
+        auto tool = toolbar->InsertTool(index, info->id, info->text, info->image, wxBitmapBundle(), info->kind);
+
+        if (info->dropDownMenu != nullptr)
+            tool->SetDropdownMenu(info->dropDownMenu);
+
+        _wxTool = tool;
+    }
+
+    void ToolbarItem::RemoveWxTool(int index)
+    {
+        auto toolbar = GetToolbar();
+        if (toolbar == nullptr)
+            return;
+
+        if (toolbar != nullptr)
+            toolbar->RemoveTool(index);
+
+        _wxTool = nullptr;
     }
 
     ImageSet* ToolbarItem::GetImage()
@@ -258,10 +282,17 @@ namespace Alternet::UI
     void ToolbarItem::SetChecked(bool value)
     {
         _flags.Set(ToolbarItemFlags::Checked, value);
+        ApplyChecked();
+    }
+
+    void ToolbarItem::ApplyChecked()
+    {
+        auto toolbar = GetToolbar();
+        if (toolbar == nullptr)
+            return;
 
         bool checked = _flags.IsSet(ToolbarItemFlags::Checked);
-        //if (_toolInfo != nullptr && _toolInfo->CanBeToggled() && _parentToolbar != nullptr)
-        //    _toolInfo->Toggle(checked);
+        GetToolbar()->ToggleTool(_toolInfo->id, checked);
     }
 
     Menu* ToolbarItem::GetDropDownMenu()

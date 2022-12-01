@@ -37,6 +37,9 @@ namespace Alternet::UI
         void SetParentToolbar(Toolbar* value, optional<int> index);
         Toolbar* GetParentToolbar();
 
+        void InsertWxTool(int index);
+        void RemoveWxTool(int index);
+
     protected:
 
         void ShowCore() override;
@@ -81,6 +84,11 @@ namespace Alternet::UI
 
         bool IsSeparator();
 
+        void ApplyChecked();
+
+        wxToolBar* GetToolbar();
+
+        wxToolBarToolBase* _wxTool = nullptr;
     };
 }
 
