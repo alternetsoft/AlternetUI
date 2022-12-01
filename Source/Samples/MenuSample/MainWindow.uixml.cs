@@ -20,6 +20,10 @@ namespace MenuSample
 
             dynamicToolbarItemsSeparatorIndex = toolbar.Items.IndexOf(dynamicToolbarItemsSeparator);
             AddDynamicToolbarItem();
+
+            foreach (var value in Enum.GetValues(typeof(ToolbarItemImageToTextDisplayMode)))
+                imageToTextDisplayModeComboBox.Items.Add(value!);
+            imageToTextDisplayModeComboBox.SelectedItem = ToolbarItemImageToTextDisplayMode.Horizontal;
         }
 
         int dynamicToolbarItemsSeparatorIndex;
@@ -236,6 +240,11 @@ namespace MenuSample
         {
             var item = (MenuItem)sender;
             LogEvent($"Toolbar drop down menu item clicked: {item.Text.Replace("_", "")}.");
+        }
+
+        private void ImageToTextDisplayModeComboBox_SelectedItemChanged(object sender, System.EventArgs e)
+        {
+            toolbar.ImageToTextDisplayMode = (ToolbarItemImageToTextDisplayMode)imageToTextDisplayModeComboBox.SelectedItem;
         }
     }
 }

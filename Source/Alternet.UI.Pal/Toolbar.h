@@ -38,5 +38,7 @@ namespace Alternet::UI
 
         bool _itemTextVisible = true;
         bool _itemImagesVisible = true;
+
+        ToolbarItemImageToTextDisplayMode _imageToTextDisplayMode = ToolbarItemImageToTextDisplayMode::Horizontal;
     };
 }

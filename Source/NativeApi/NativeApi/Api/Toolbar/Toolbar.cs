@@ -13,5 +13,7 @@ namespace NativeApi.Api
         public bool ItemTextVisible { get; set; }
 
         public bool ItemImagesVisible { get; set; }
+
+        public ToolbarItemImageToTextDisplayMode ImageToTextDisplayMode { get; set; }
     }
 }

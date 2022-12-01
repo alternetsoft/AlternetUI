@@ -93,6 +93,10 @@
                 <Button Text="Remove last dynamic item" Name="removeLastDynamicToolbarItemButton" Click="RemoveLastDynamicToolbarItemButton_Click" Margin="0,0,0,10" />
                 <CheckBox Text="Show text" Name="showToolbarTextCheckBox" CheckedChanged="ShowToolbarTextCheckBox_CheckedChanged" Margin="0,0,0,10" IsChecked="True" />
                 <CheckBox Text="Show images" Name="showToolbarImagesCheckBox" CheckedChanged="ShowToolbarImagesCheckBox_CheckedChanged" Margin="0,0,0,10" IsChecked="True"/>
+                <StackPanel Margin="0,0,0,5">
+                    <Label Text="Image to Text Display Mode:" />
+                    <ComboBox IsEditable="false" Name="imageToTextDisplayModeComboBox" SelectedItemChanged="ImageToTextDisplayModeComboBox_SelectedItemChanged" />
+                </StackPanel>
             </StackPanel>
         </GroupBox>
 

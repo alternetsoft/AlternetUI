@@ -549,6 +549,12 @@ namespace Alternet.UI.Native
         Right = 3,
     }
     
+    enum ToolbarItemImageToTextDisplayMode
+    {
+        Horizontal = 0,
+        Vertical = 1,
+    }
+    
     enum TreeViewHitTestLocations
     {
         None = 2,

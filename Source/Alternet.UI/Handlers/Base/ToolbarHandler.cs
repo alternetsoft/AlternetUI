@@ -22,6 +22,11 @@ namespace Alternet.UI
         /// </summary>
         public abstract bool ItemImagesVisible { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value which specifies display modes for toolbar item image and text.
+        /// </summary>
+        public abstract ToolbarItemImageToTextDisplayMode ImageToTextDisplayMode { get; set; }
+
         /// <inheritdoc/>
         protected override bool VisualChildNeedsNativeControl => true;
     }

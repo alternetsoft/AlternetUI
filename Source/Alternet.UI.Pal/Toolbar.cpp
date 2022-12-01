@@ -25,6 +25,22 @@ namespace Alternet::UI
         RecreateWxToolbar(window);
     }
 
+    ToolbarItemImageToTextDisplayMode Toolbar::GetImageToTextDisplayMode()
+    {
+        return _imageToTextDisplayMode;
+    }
+
+    void Toolbar::SetImageToTextDisplayMode(ToolbarItemImageToTextDisplayMode value)
+    {
+        if (_imageToTextDisplayMode == value)
+            return;
+        
+        _imageToTextDisplayMode = value;
+        
+        if (_ownerWindow != nullptr)
+            RecreateWxToolbar(_ownerWindow);
+    }
+
     bool Toolbar::GetItemTextVisible()
     {
         return _itemTextVisible;
@@ -119,13 +135,16 @@ namespace Alternet::UI
 
         auto getStyle = [&]
         {
-            auto style = wxTB_HORIZONTAL | wxTB_HORZ_LAYOUT | wxTB_FLAT;
+            auto style = wxTB_HORIZONTAL | wxTB_FLAT;
             
             if (_itemTextVisible)
                 style |= wxTB_TEXT;
 
             if (!_itemImagesVisible)
                 style |= wxTB_NOICONS;
+
+            if (_imageToTextDisplayMode == ToolbarItemImageToTextDisplayMode::Horizontal)
+                style |= wxTB_HORZ_LAYOUT;
 
             return style;
         };

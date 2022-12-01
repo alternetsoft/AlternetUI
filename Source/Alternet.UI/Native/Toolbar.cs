@@ -68,6 +68,23 @@ namespace Alternet.UI.Native
             }
         }
         
+        public ToolbarItemImageToTextDisplayMode ImageToTextDisplayMode
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Toolbar_GetImageToTextDisplayMode_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Toolbar_SetImageToTextDisplayMode_(NativePointer, value);
+            }
+        }
+        
         public void InsertItemAt(int index, ToolbarItem item)
         {
             CheckDisposed();
@@ -103,6 +120,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Toolbar_SetItemImagesVisible_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern ToolbarItemImageToTextDisplayMode Toolbar_GetImageToTextDisplayMode_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Toolbar_SetImageToTextDisplayMode_(IntPtr obj, ToolbarItemImageToTextDisplayMode value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Toolbar_InsertItemAt_(IntPtr obj, int index, IntPtr item);

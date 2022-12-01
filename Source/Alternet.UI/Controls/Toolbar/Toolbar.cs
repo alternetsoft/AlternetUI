@@ -28,6 +28,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value which specifies display modes for toolbar item image and text.
+        /// </summary>
+        public ToolbarItemImageToTextDisplayMode ImageToTextDisplayMode
+        {
+            get => Handler.ImageToTextDisplayMode;
+            set => Handler.ImageToTextDisplayMode = value;
+        }
+
+        /// <summary>
         /// Gets or sets a boolean value indicating whether this toolbar item text is visible.
         /// </summary>
         public bool ItemTextVisible { get => Handler.ItemTextVisible; set => Handler.ItemTextVisible = value; }

@@ -23,6 +23,12 @@ namespace Alternet.UI
             get => NativeControl.ItemImagesVisible;
             set => NativeControl.ItemImagesVisible = value;
         }
+        
+        public override ToolbarItemImageToTextDisplayMode ImageToTextDisplayMode
+        {
+            get => (ToolbarItemImageToTextDisplayMode)NativeControl.ImageToTextDisplayMode;
+            set => NativeControl.ImageToTextDisplayMode = (Native.ToolbarItemImageToTextDisplayMode)value;
+        }
 
         protected override void OnAttach()
         {

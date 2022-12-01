@@ -11,6 +11,10 @@ void SetItemTextVisible(bool value);
 bool GetItemImagesVisible();
 void SetItemImagesVisible(bool value);
 
+
+ToolbarItemImageToTextDisplayMode GetImageToTextDisplayMode();
+void SetImageToTextDisplayMode(ToolbarItemImageToTextDisplayMode value);
+
 void InsertItemAt(int index, ToolbarItem* item);
 void RemoveItemAt(int index);
 public:

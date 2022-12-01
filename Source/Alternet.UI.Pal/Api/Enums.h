@@ -550,6 +550,12 @@ namespace Alternet::UI
         Right = 3,
     };
     
+    enum class ToolbarItemImageToTextDisplayMode
+    {
+        Horizontal = 0,
+        Vertical = 1,
+    };
+    
     enum class TreeViewHitTestLocations
     {
         None = 2,

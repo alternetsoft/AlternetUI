@@ -51,6 +51,20 @@ ALTERNET_UI_API void Toolbar_SetItemImagesVisible_(Toolbar* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API ToolbarItemImageToTextDisplayMode Toolbar_GetImageToTextDisplayMode_(Toolbar* obj)
+{
+    return MarshalExceptions<ToolbarItemImageToTextDisplayMode>([&](){
+            return obj->GetImageToTextDisplayMode();
+        });
+}
+
+ALTERNET_UI_API void Toolbar_SetImageToTextDisplayMode_(Toolbar* obj, ToolbarItemImageToTextDisplayMode value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetImageToTextDisplayMode(value);
+        });
+}
+
 ALTERNET_UI_API void Toolbar_InsertItemAt_(Toolbar* obj, int index, ToolbarItem* item)
 {
     MarshalExceptions<void>([&](){
