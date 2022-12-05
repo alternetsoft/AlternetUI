@@ -269,6 +269,53 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? ToolbarChanged;
 
+        private StatusBar? statusBar = null;
+
+        /// <summary>
+        /// Gets or sets the <see cref="StatusBar"/> that is displayed in the window.
+        /// </summary>
+        /// <value>
+        /// A <see cref="StatusBar"/> that represents the status bar to display in the window.
+        /// </value>
+        /// <remarks>
+        /// You can use this property to switch between complete status bar sets at run time.
+        /// </remarks>
+        public StatusBar? StatusBar
+        {
+            get => statusBar;
+
+            set
+            {
+                if (statusBar == value)
+                    return;
+
+                var oldValue = statusBar;
+                statusBar = value;
+
+                if (oldValue != null)
+                    oldValue.Parent = null;
+
+                if (statusBar != null)
+                    statusBar.Parent = this;
+
+                OnStatusBarChanged(EventArgs.Empty);
+                StatusBarChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="StatusBar"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnStatusBarChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="StatusBar"/> property changes.
+        /// </summary>
+        public event EventHandler? StatusBarChanged;
+
         /// <summary>
         /// Gets an array of <see cref="Window"/> objects that represent all windows that are owned by this window.
         /// </summary>
