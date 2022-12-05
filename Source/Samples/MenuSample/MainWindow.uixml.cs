@@ -24,7 +24,12 @@ namespace MenuSample
             foreach (var value in Enum.GetValues(typeof(ToolbarItemImageToTextDisplayMode)))
                 imageToTextDisplayModeComboBox.Items.Add(value!);
             imageToTextDisplayModeComboBox.SelectedItem = ToolbarItemImageToTextDisplayMode.Horizontal;
+
+            clockTimer = new Timer(TimeSpan.FromMilliseconds(200), (o, e) => clockStatusBarPanel.Text = DateTime.Now.ToString("HH:mm:ss"));
+            clockTimer.Start();
         }
+
+        Timer clockTimer;
 
         int dynamicToolbarItemsSeparatorIndex;
 

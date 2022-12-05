@@ -68,6 +68,9 @@ namespace Alternet.UI
 
                 if (Toolbar != null)
                     yield return Toolbar;
+
+                if (StatusBar != null)
+                    yield return StatusBar;
             }
         }
 

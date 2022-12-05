@@ -59,8 +59,9 @@
         </Toolbar>
     </Window.Toolbar>
     <Window.StatusBar>
-        <StatusBar>
+        <StatusBar Name="statusBar">
             <StatusBarPanel Text="Ready" />
+            <StatusBarPanel Name="clockStatusBarPanel" />
         </StatusBar>
     </Window.StatusBar>
     <Grid>
