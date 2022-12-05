@@ -17,6 +17,9 @@ namespace Alternet::UI
         wxToolBar* GetWxToolBar();
 
         void SetOwnerWindow(Window* window);
+
+        void OnItemChanged(int index);
+
     protected:
         void ApplyEnabled(bool value) override;
         void ApplyBounds(const Rect& value) override;

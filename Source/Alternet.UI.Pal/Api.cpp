@@ -44,6 +44,8 @@
 #include "Api/ProgressBar.Api.h"
 #include "Api/RadioButton.Api.h"
 #include "Api/Slider.Api.h"
+#include "Api/StatusBar.Api.h"
+#include "Api/StatusBarPanel.Api.h"
 #include "Api/TabControl.Api.h"
 #include "Api/TextBox.Api.h"
 #include "Api/Timer.Api.h"

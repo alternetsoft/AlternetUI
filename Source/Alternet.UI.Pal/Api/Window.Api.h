@@ -6,6 +6,7 @@
 #include "ImageSet.h"
 #include "MainMenu.h"
 #include "Toolbar.h"
+#include "StatusBar.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -288,6 +289,20 @@ ALTERNET_UI_API void Window_SetToolbar_(Window* obj, Toolbar* value)
 {
     MarshalExceptions<void>([&](){
             obj->SetToolbar(value);
+        });
+}
+
+ALTERNET_UI_API StatusBar* Window_GetStatusBar_(Window* obj)
+{
+    return MarshalExceptions<StatusBar*>([&](){
+            return obj->GetStatusBar();
+        });
+}
+
+ALTERNET_UI_API void Window_SetStatusBar_(Window* obj, StatusBar* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetStatusBar(value);
         });
 }
 

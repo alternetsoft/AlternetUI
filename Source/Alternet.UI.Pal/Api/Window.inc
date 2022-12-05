@@ -81,6 +81,10 @@ void SetMenu(MainMenu* value);
 Toolbar* GetToolbar();
 void SetToolbar(Toolbar* value);
 
+
+StatusBar* GetStatusBar();
+void SetStatusBar(StatusBar* value);
+
 void* OpenOwnedWindowsArray();
 int GetOwnedWindowsItemCount(void* array);
 Window* GetOwnedWindowsItemAt(void* array, int index);

@@ -235,6 +235,8 @@
     <ClCompile Include="SelectDirectoryDialog.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="SolidBrush.cpp" />
+    <ClCompile Include="StatusBar.cpp" />
+    <ClCompile Include="StatusBarPanel.cpp" />
     <ClCompile Include="TabControl.cpp" />
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -373,6 +375,8 @@
     <ClInclude Include="SelectDirectoryDialog.h" />
     <ClInclude Include="Slider.h" />
     <ClInclude Include="SolidBrush.h" />
+    <ClInclude Include="StatusBar.h" />
+    <ClInclude Include="StatusBarPanel.h" />
     <ClInclude Include="TabControl.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="TextPainter.h" />

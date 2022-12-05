@@ -25,6 +25,10 @@ namespace Alternet::UI
         RecreateWxToolbar(window);
     }
 
+    void Toolbar::OnItemChanged(int index)
+    {
+    }
+
     ToolbarItemImageToTextDisplayMode Toolbar::GetImageToTextDisplayMode()
     {
         return _imageToTextDisplayMode;

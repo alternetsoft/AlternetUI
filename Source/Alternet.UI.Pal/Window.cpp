@@ -86,7 +86,8 @@ namespace Alternet::UI
         _minimumSize(*this, Size(), &Control::IsWxWindowCreated, &Window::RetrieveMinimumSize, &Window::ApplyMinimumSize),
         _maximumSize(*this, Size(), &Control::IsWxWindowCreated, &Window::RetrieveMaximumSize, &Window::ApplyMaximumSize),
         _menu(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveMenu, &Window::ApplyMenu),
-        _toolbar(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveToolbar, &Window::ApplyToolbar)
+        _toolbar(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveToolbar, &Window::ApplyToolbar),
+        _statusBar(*this, nullptr, &Control::IsWxWindowCreated, &Window::RetrieveStatusBar, &Window::ApplyStatusBar)
     {
         GetDelayedValues().Add(&_title);
         GetDelayedValues().Add(&_state);
@@ -202,6 +203,17 @@ namespace Alternet::UI
         _toolbar.Set(value);
     }
 
+    StatusBar* Window::GetStatusBar()
+    {
+        return _statusBar.Get();
+    }
+
+    void Window::SetStatusBar(StatusBar* value)
+    {
+        _storedStatusBar = value;
+        _statusBar.Set(value);
+    }
+
     WindowState Window::RetrieveState()
     {
         if (_frame->IsMaximized())
@@ -274,6 +286,18 @@ namespace Alternet::UI
         if (value != nullptr)
             value->SetOwnerWindow(this);
         _frame->SetToolBar(value == nullptr ? nullptr : value->GetWxToolBar());
+    }
+
+    StatusBar* Window::RetrieveStatusBar()
+    {
+        return _storedStatusBar;
+    }
+
+    void Window::ApplyStatusBar(StatusBar* const& value)
+    {
+        if (value != nullptr)
+            value->SetOwnerWindow(this);
+        _frame->SetStatusBar(value == nullptr ? nullptr : value->GetWxStatusBar());
     }
 
     void Window::OnWxWindowDestroyed(wxWindow* window)
