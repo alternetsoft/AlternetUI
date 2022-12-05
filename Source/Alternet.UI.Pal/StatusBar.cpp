@@ -64,6 +64,9 @@ namespace Alternet::UI
     void StatusBar::ApplyItems(int startIndex, optional<int> count/* = nullopt*/)
     {
         auto sb = GetWxStatusBar();
+        if (sb == nullptr)
+            return;
+
         auto itemsCount = _items.size();
         if (sb->GetFieldsCount() != itemsCount)
             sb->SetFieldsCount(itemsCount);

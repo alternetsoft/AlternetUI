@@ -193,7 +193,7 @@ namespace MenuSample
             checkableToolbarItem.Checked = !checkableToolbarItem.Checked;
         }
 
-        private void ToggleFirstToolbarEnabledButton_Click(object sender, System.EventArgs e)
+        private void ToggleFirstToolbarEnabledButton_Click(object sender, EventArgs e)
         {
             var item = toolbar.Items[0];
             item.Enabled = !item.Enabled;
@@ -214,37 +214,37 @@ namespace MenuSample
             toolbar.Items.Add(item);
         }
 
-        private void AddDynamicToolbarItemButton_Click(object sender, System.EventArgs e)
+        private void AddDynamicToolbarItemButton_Click(object sender, EventArgs e)
         {
             AddDynamicToolbarItem();
         }
 
-        private void RemoveLastDynamicToolbarItemButton_Click(object sender, System.EventArgs e)
+        private void RemoveLastDynamicToolbarItemButton_Click(object sender, EventArgs e)
         {
             if (toolbar.Items.Count == dynamicToolbarItemsSeparatorIndex + 1)
                 return;
             toolbar.Items.RemoveAt(toolbar.Items.Count - 1);
         }
 
-        private void ShowToolbarTextCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void ShowToolbarTextCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             toolbar.ItemTextVisible = showToolbarTextCheckBox.IsChecked;
         }
 
-        private void ShowToolbarImagesCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void ShowToolbarImagesCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             toolbar.ItemImagesVisible = showToolbarImagesCheckBox.IsChecked;
         }
 
-        private void ToolbarDropDownMenuItem_Click(object sender, System.EventArgs e)
+        private void ToolbarDropDownMenuItem_Click(object sender, EventArgs e)
         {
             var item = (MenuItem)sender;
             LogEvent($"Toolbar drop down menu item clicked: {item.Text.Replace("_", "")}.");
         }
 
-        private void ImageToTextDisplayModeComboBox_SelectedItemChanged(object sender, System.EventArgs e)
+        private void ImageToTextDisplayModeComboBox_SelectedItemChanged(object sender, EventArgs e)
         {
-            toolbar.ImageToTextDisplayMode = (ToolbarItemImageToTextDisplayMode)imageToTextDisplayModeComboBox.SelectedItem;
+            toolbar.ImageToTextDisplayMode = (ToolbarItemImageToTextDisplayMode)imageToTextDisplayModeComboBox.SelectedItem!;
         }
     }
 }

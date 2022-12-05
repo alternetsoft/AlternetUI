@@ -30,6 +30,8 @@ namespace Alternet.UI
             ContextMenu => new NativeContextMenuHandler(),
             Toolbar => new NativeToolbarHandler(),
             ToolbarItem => new NativeToolbarItemHandler(),
+            StatusBar => new NativeStatusBarHandler(),
+            StatusBarPanel => new NativeStatusBarPanelHandler(),
             _ => new GenericControlHandler()
         };
     }

@@ -58,6 +58,11 @@
             <ToolbarItem Text="-" Name="dynamicToolbarItemsSeparator"/>
         </Toolbar>
     </Window.Toolbar>
+    <Window.StatusBar>
+        <StatusBar>
+            <StatusBarPanel Text="Ready" />
+        </StatusBar>
+    </Window.StatusBar>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
