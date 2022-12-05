@@ -11,7 +11,7 @@ The list then displays the default string value for each object. You can add ind
 You can delete items with the Remove method or clear the entire list with the Clear method.
 
 In addition to display and selection functionality, the <xref:Alternet.UI.ComboBox> also provides features that enable you to
-efficiently add items to the <xref:Alternet.UI.ComboBox> and to find text within the items of the list. With the <xref:Alternet.UI.Control.BeginUpdate>
+add items to the <xref:Alternet.UI.ComboBox> and to find text within the items of the list. With the <xref:Alternet.UI.Control.BeginUpdate>
 and <xref:Alternet.UI.Control.EndUpdate> methods, you can add a large number of items to the <xref:Alternet.UI.ComboBox> without the control
 being repainted each time an item is added to the list.
 

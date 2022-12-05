@@ -5,7 +5,7 @@
 
 ## Overview
 
-AlterNET UI includes set of resolution-independent graphics features that use native rendering on every supported platform.
+AlterNET UI includes a set of resolution-independent graphics features that use native rendering on every supported platform.
 
 It supports rendering graphic primitives such as text, images, and graphic shapes with different fonts, pens, and brushes.
 
@@ -78,7 +78,7 @@ Below are the parts of the API responsible for different pen stroke styles:
 - <xref:Alternet.Drawing.LineCap> and <xref:Alternet.Drawing.LineJoin> enumerations provide different line cap and line
   join styles.
 
-The following classes allow to fill geometry with different fill styles:
+The following classes allow you to fill geometry with different fill styles:
 - Solid fill: use <xref:Alternet.Drawing.SolidBrush>
 - Gradient fill: use <xref:Alternet.Drawing.RadialGradientBrush> and <xref:Alternet.Drawing.LinearGradientBrush>
 - Pattern fill: use <xref:Alternet.Drawing.HatchBrush>
@@ -102,7 +102,7 @@ Here are the types of segments supported by the <xref:Alternet.Drawing.GraphicsP
 
 ![](images/drawing-sample-transforms.png)
 
-The transforms can include translation, rotation and scale (see the
+The transforms can include translation, rotation, and scale (see the
 <xref:Alternet.Drawing.TransformMatrix.CreateTranslation%2A>, <xref:Alternet.Drawing.TransformMatrix.CreateRotation%2A>
 and <xref:Alternet.Drawing.TransformMatrix.CreateScale%2A> methods). Use the
 <xref:Alternet.Drawing.DrawingContext.Transform%2A> property of <xref:Alternet.Drawing.DrawingContext> to set the
@@ -120,8 +120,8 @@ current clip region.
 
 ### Drawing Images
 
-<xref:Alternet.Drawing.Image> class provides incapsulate a graphical image.
-<xref:Alternet.Drawing.DrawingContext.DrawImage%2A> method overloads provide several ways of drawing image with a
+<xref:Alternet.Drawing.Image> class encapsulate a graphical image.
+<xref:Alternet.Drawing.DrawingContext.DrawImage%2A> method overloads provide several ways of drawing images with a
 specified <xref:Alternet.Drawing.DrawingContext.InterpolationMode>:
 
 ![](images/drawing-sample-images.png)

@@ -9,5 +9,5 @@ Here is how to declare a <xref:Alternet.UI.Slider> in UIXML:
 And the corresponding event handler in the code-behind:
 [!code-csharp[](examples/ExampleWindow.uixml.cs#SliderEventHandler)]
 
-Also a <xref:Alternet.UI.Slider> can be created from code:
+Also, a <xref:Alternet.UI.Slider> can be created from code:
 [!code-csharp[](examples/ExampleWindow.uixml.cs#SliderCSharpCreation)]

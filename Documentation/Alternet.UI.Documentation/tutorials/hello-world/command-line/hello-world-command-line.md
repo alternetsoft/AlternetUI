@@ -1,22 +1,22 @@
-#  "Hello, World" with Command Line and Visual Studio Code
+#  "Hello, World" with Command-Line and Visual Studio Code
 
-In this tutorial you will create a cross-platform desktop application using C#, .NET command line tools and Visual Studio Code.
+In this tutorial, you will create a cross-platform desktop application using C#, .NET command line tools, and Visual Studio Code.
 The application will display a message box in response to a button click.
 
 ### Prerequisites
 
-1. Download and install [.NET SDK](https://dotnet.microsoft.com/download/dotnet). Minimum supported SDK version is .NET Core 3.1.
+1. Download and install [.NET SDK](https://dotnet.microsoft.com/download/dotnet). The minimum supported SDK version is .NET Core 3.1.
 1. Install AlterNET UI project templates by running
     ```dos
     dotnet new --install Alternet.UI.Templates
     ```
 1. Download and install [Visual Studio Code](https://code.visualstudio.com/download)
-1. In Visual Studio Code, make sure the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) is installed. For
+1. In Visual Studio Code, ensure the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) is installed. For
    information about how to install extensions on Visual Studio Code, see [VS Code Extension Marketplace](https://code.visualstudio.com/docs/editor/extension-gallery).
 
 ### Create New Project
 
-1. Create a new directory for your application, name it `HelloWorld`
+1. Create a new directory for your application; name it `HelloWorld`
 1. Open the **Command Prompt** window (**Terminal** on macOS or Linux)
 1. Navigate the terminal to the created directory:
     ```dos
@@ -42,7 +42,7 @@ The application will start and display its window:
 ![Created Application Window](images/created-application-window-macos-window.png)
 
 > [!NOTE]
-> By default the created project will use .NET Core 3.1 as a target framework. If .NET Core 3.1 runtime is not installed on your machine you
+> By default, the created project will use .NET Core 3.1 as a target framework. If .NET Core 3.1 runtime is not installed on your machine, you
 > will be prompted to do so on the first application run.
 
 > [!NOTE]
@@ -63,18 +63,18 @@ The application will start and display its window:
    
    Select **All contained projects**.
 
-1. After several seconds, a popup dialog with message **Required assets to build and debug are missing from 'HelloWorld'. Add them?** will appear at
+1. After several seconds, a popup dialog with the message **Required assets to build and debug are missing from 'HelloWorld'. Add them?** will appear at
    the bottom-right corner of the screen:
    
    ![Required Assets Popup](images/vscode-required-assets-popup.png)
 
    Select **Yes**. The `.vscode` subdirectory will be created with the workspace settings automatically set up.
-1. Now you can debug your application by pressing `F5`, or run it without debugging by pressing `Ctrl+F5`.
-   The application will be built automatically, if required.
-1. Open `MainWindow.uixml` by clicking the corresponing item in the VS Code **Explorer** panel. In the editor, change the `Title` attribute value from
+1. Now, you can debug your application by pressing `F5` or run it without debugging by pressing `Ctrl+F5`.
+   The application will be built automatically if required.
+1. Open `MainWindow.uixml` by clicking the corresponding item in the VS Code **Explorer** panel. In the editor, change the `Title` attribute value from
    `"HelloWorld"` to `"My First Application"`:
    [!code-xml[](../examples/change-title.uixml?highlight=4)]
-1. Press `Ctrl+F5` to build and run the application and see its window title had changed accordingly.
+1. Press `Ctrl+F5` to build and run the application and see its window title has changed accordingly.
 
 > [!NOTE]
 > For information and tutorials on general C# development and debugging with Visual Studio Code, see the
@@ -92,7 +92,7 @@ The application will start and display its window:
 
 1. In `MainWindow.uixml`, add the `Click` attribute to the `Button` element like the following:
    [!code-xml[](../examples/add-click-handler.uixml?highlight=6)]
-   This will bind the `Click` event to its handler named `HelloButton_Click`.
+   This will bind the `Click` event to its handler, ' HelloButton_Click`.
 1. In `MainWindow.uixml.cs` file, add the following `HelloButton_Click` method:
    [!code-csharp[](../examples/add-click-handler.uixml.cs?highlight=1,13-16)]
 1. Run the application, then click **Say Hello** button. The message box appears:
@@ -100,9 +100,9 @@ The application will start and display its window:
    ![MessageBox on Click](images/message-box-on-click-macos-window.png)
 
 > [!NOTE]
-> The application created in this tutorial can be compiled and run without any modifications on all the supported platforms: Windows, macOS, Linux.
+> The application created in this tutorial can be compiled and run without modifications on all the supported platforms: Windows, macOS, and Linux.
 
 ---
-*Congratulations, you have successfully completed the "Hello, World" tutorial using command line tools and Visual Studio Code.*
+*Congratulations, you have completed the "Hello, World" tutorial using command line tools and Visual Studio Code.*
 
-*For a similar tutorial, but using Visual Studio on Windows, see ["Hello, World" with Visual Studio](../visual-studio/hello-world-visual-studio.md).*
+*For a similar tutorial but using Visual Studio on Windows, see ["Hello, World" with Visual Studio](../visual-studio/hello-world-visual-studio.md).*

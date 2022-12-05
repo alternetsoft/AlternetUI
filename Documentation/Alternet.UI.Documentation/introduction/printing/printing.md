@@ -14,8 +14,8 @@ you create applications whose basic functionality is immediately familiar to use
 
 Typically, you create a new instance of the <xref:Alternet.Drawing.Printing.PrintDocument> component and set the
 properties that describe what to print using the <xref:Alternet.Drawing.Printing.PrinterSettings> and
-<xref:Alternet.Drawing.Printing.PageSettings> classes. Call to the <xref:Alternet.Drawing.Printing.PrintDocument.Print%2A>
-method actually prints the document.
+<xref:Alternet.Drawing.Printing.PageSettings> classes. Calling the <xref:Alternet.Drawing.Printing.PrintDocument.Print%2A>
+method prints the document.
 
 ## Working with the component
 
@@ -45,7 +45,7 @@ steps demonstrate displaying the print dialog for a document:
     <xref:Alternet.UI.CommonDialog.ShowModal%2A> method.
 
     ```csharp
-    // display show dialog and if user selects "Ok" document is printed
+    // display show dialog, and if the user selects "Ok" the document is printed
     if (printDialog1.ShowDialog() == DialogResult.OK)
         printDocument1.Print();
     ```
@@ -58,7 +58,7 @@ steps demonstrate displaying the print dialog for a document:
 The foundation of printing in AlterNET UI is the <xref:Alternet.Drawing.Printing.PrintDocument> component, more
 specifically, the <xref:Alternet.Drawing.Printing.PrintDocument.PrintPage> event. By writing code to handle the
 <xref:Alternet.Drawing.Printing.PrintDocument.PrintPage> event, you can specify what to print and how to print it. The
-following steps demonstrate creating print job:
+following steps demonstrate creating a print job:
 
 01. Add a <xref:Alternet.Drawing.Printing.PrintDocument> component to your form.
 
@@ -74,7 +74,7 @@ following steps demonstrate creating print job:
         e.Graphics.FillRectangle(Brushes.Red, new Rectangle(100, 100, 100, 100));
     ```
 
-You may also want to write code for the <xref:Alternet.Drawing.Printing.PrintDocument.BeginPrint> and
+You can also write code for the <xref:Alternet.Drawing.Printing.PrintDocument.BeginPrint> and
 <xref:Alternet.Drawing.Printing.PrintDocument.EndPrint> events. It will help to include an integer representing the total
 number of pages to print that is decremented as each page prints.
 

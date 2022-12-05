@@ -13,10 +13,9 @@ remarks: *content
     the element tree.
   
 -   The property can report when the previous value of the property has been
-    changed and the property value can be coerced.
+    changed, and the property value can be coerced.
   
--   The property reports information to Alternet UI, such as whether changing a
-    property value should require the layout system to recompose the visuals for
+-   The property reports information to Alternet UI, such as whether changing a the property value should require the layout system to recompose the visuals for
     an element.  
     
  To learn more about dependency properties, see [Dependency
@@ -32,6 +31,6 @@ remarks: *content
  To set an attached property in UIXML, use the *ownerType*.*propertyName* syntax.
  An example of an attached property is the Grid.Column attached property implemented by the
  <xref:Alternet.UI.Grid.GetColumn*>/<xref:Alternet.UI.Grid.SetColumn*> methods.
- property. If you want to create a property that can be used on all
+ If you want to create a property that can be used on all
  <xref:Alternet.UI.DependencyObject> types, then you should create an
  attached property.

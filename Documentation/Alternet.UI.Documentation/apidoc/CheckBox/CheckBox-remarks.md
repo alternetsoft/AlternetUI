@@ -3,7 +3,7 @@ uid: Alternet.UI.CheckBox
 remarks: *content
 ---
 Use a <xref:Alternet.UI.CheckBox> to give the user an option, such as true/false or yes/no.
-The <xref:Alternet.UI.CheckBox> control can display an image or text or both.
+The <xref:Alternet.UI.CheckBox> control can display an image or text, or both.
 <xref:Alternet.UI.CheckBox> and <xref:Alternet.UI.RadioButton> controls have a similar function: they allow the user to
 choose from a list of options. <xref:Alternet.UI.CheckBox> controls let the user pick a combination of options.
 In contrast, <xref:Alternet.UI.RadioButton> controls allow a user to choose from mutually exclusive options.

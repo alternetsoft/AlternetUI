@@ -9,5 +9,5 @@ Here is how to declare a Button in UIXML:
 And the corresponding event handler in the code-behind:
 [!code-csharp[](examples/ExampleWindow.uixml.cs#ButtonEventHandler)]
 
-Also a button can be created from code:
+Also, a button can be created from code:
 [!code-csharp[](examples/ExampleWindow.uixml.cs#ButtonCSharpCreation)]

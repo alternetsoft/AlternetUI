@@ -6,8 +6,8 @@ notably the <xref:Alternet.UI.Control.DragEnter>, <xref:Alternet.UI.Control.Drag
 
 ## Drag-and-drop events
 
-There are two categories of events in a drag and drop operation: events that occur on the current target of the
-drag-and-drop operation, and events that occur on the source of the drag and drop operation. To perform drag-and-drop
+There are two categories of events in a drag-and-drop operation: events that occur on the current target of the
+drag-and-drop operation and events that occur on the source of the drag-and-drop operation. To perform drag-and-drop
 operations, you must handle these events. By working with the information available in the event arguments of these
 events, you can easily facilitate drag-and-drop operations.
 
@@ -34,7 +34,7 @@ event. In the event handler, call the <xref:Alternet.UI.Control.DoDragDrop%2A> m
 with the drop and the a <xref:Alternet.UI.DragDropEffects> value.
 
 Set the target control's <xref:Alternet.UI.Control.AllowDrop> property set to `true` to allow that control to
-accept a drag-and-drop operation. The target handles two events, first an event in response to the drag being over the
+accept a drag-and-drop operation. The target handles two events. First, an event in response to the drag being over the
 control, such as <xref:Alternet.UI.Control.DragOver>. And a second event which is the drop action itself,
 <xref:Alternet.UI.Control.DragDrop>.
 
@@ -70,7 +70,7 @@ private void textBox1_DragDrop(object sender, DragEventArgs e) =>
   
 ### To start a drag operation  
   
-1. In the <xref:Alternet.UI.UIElement.MouseDown> event for the control where the drag will begin, use the
+1. In the <xref:Alternet.UI.UIElement.MouseDown> event for the control where the drag will begin use the
    `DoDragDrop` method to set the data to be dragged and the allowed effect dragging will have. For more information,
    see <xref:Alternet.UI.DragEventArgs.Data%2A> and <xref:Alternet.UI.DragEventArgs.Effect%2A>.  
   

@@ -26,7 +26,7 @@ you can use any type that implements the <xref:Alternet.UI.IDataObject> interfac
 > [!NOTE]
 > All applications in an OS environment share the Clipboard. Therefore, the contents are subject to change when you switch to another application.
 
-The following sample illustrates how to add a textual data to the Clipboard:
+The following sample illustrates how to add textual data to the Clipboard:
 
 ```csharp
 private void CopyButton_Click(object sender, System.EventArgs e)

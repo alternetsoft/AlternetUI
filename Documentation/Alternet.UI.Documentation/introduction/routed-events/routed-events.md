@@ -3,24 +3,22 @@
 This topic describes the concept of routed events in AlterNET UI. The topic
 defines routed events terminology, describes how routed events are routed
 through a tree of elements, summarizes how you handle routed events, and
-introduces how to create your own custom routed events.
+introduces how to create custom routed events.
 
 ## Prerequisites
 
 This topic assumes that you have basic knowledge of the common language runtime
 (CLR) and object-oriented programming, as well as the concept of how the
-relationships between AlterNET UI elements can be conceptualized as a tree. In order to
-follow the examples in this topic, you should also understand AlterNET UI applications
-or pages.
+relationships between AlterNET UI elements can be conceptualized as a tree. To follow the examples in this topic, you should also understand AlterNET UI applications or pages.
 
 ## What Is a Routed Event?
 
 You can think about routed events either from a functional or implementation
-perspective. Both definitions are presented here, because some people find one
+perspective. Both definitions are presented here because some people find one
 or the other definition more useful.
 
 Functional definition: A routed event is a type of event that can invoke
-handlers on multiple listeners in an element tree, rather than just on the
+handlers on multiple listeners in an element tree rather than just on an 
 object that raised the event.
 
 Implementation definition: A routed event is a CLR event that is backed by an
@@ -30,7 +28,7 @@ AlterNET UI event system.
 A typical AlterNET UI application contains many elements. Whether created in code or
 declared in UIXML, these elements exist in an element tree relationship to each
 other. The event route can travel in one of two directions depending on the
-event definition, but generally the route travels from the source element and
+event definition, but generally, the route travels from the source element and
 then "bubbles" upward through the element tree until it reaches the element tree
 root (typically a page or a window). This bubbling concept might be familiar to
 you if you have worked with the DHTML object model previously.
@@ -43,7 +41,7 @@ In this simplified element tree, the source of a
 <xref:Alternet.UI.Control.Click> event is one of the
 <xref:Alternet.UI.Button> elements, and whichever
 <xref:Alternet.UI.Button> was clicked is the first element that has
-the opportunity to handle the event. But if no handler attached to the
+the opportunity to handle the event. But if no handler is attached to the
 <xref:Alternet.UI.Button> acts on the event, then the event will
 bubble upwards to the <xref:Alternet.UI.Button> parent in the
 element tree, which is the <xref:Alternet.UI.StackPanel>.
@@ -73,8 +71,7 @@ attached instance handlers can.
 **Referencing an event without reflection:** Certain code and markup techniques
 require a way to identify a specific event. A routed event creates a
 <xref:Alternet.UI.RoutedEvent> field as an identifier, which provides a
-robust event identification technique that does not require static or run-time
-reflection.
+robust event identification technique that does not require static or runtime reflection.
 
 ### How Routed Events Are Implemented
 
@@ -108,8 +105,8 @@ class of the code-behind file.
 
 [!code-xml[](./snippets/SimplestSyntax.uixml)]
 
-The UIXML syntax for adding standard CLR event handlers is the same for adding
-routed event handlers, because you are really adding handlers to the CLR event
+The UIXML syntax for adding standard CLR event handlers is the same as for adding
+routed event handlers because you are really adding handlers to the CLR event
 wrapper, which has a routed event implementation underneath.
 
 ## Routing Strategies
@@ -129,13 +126,13 @@ Routed events use one of three routing strategies:
 
 - **Tunneling:** Initially, event handlers at the element tree root are invoked.
   The routed event then travels a route through successive child elements along
-  the route, towards the node element that is the routed event source (the
+  the route towards the node element that is the routed event source (the
   element that raised the routed event). Tunneling routed events are often used
   or handled as part of the compositing for a control, such that events from
   composite parts can be deliberately suppressed or replaced by events that are
   specific to the complete control. Input events provided in AlterNET UI often come
   implemented as a tunneling/bubbling pair. Tunneling events are also sometimes
-  referred to as Preview events, because of a naming convention that is used for
+  referred to as Preview events because of a naming convention that is used for
   the pairs.
 
 ## Why Use Routed Events?
@@ -154,17 +151,17 @@ event in their hierarchy. Any <xref:Alternet.UI.UIElement> can be an event liste
 event. Therefore, you can use the full set of routed events available throughout
 the working API set as a conceptual "interface" whereby disparate elements in
 the application can exchange event information. This "interface" concept for
-routed events is particularly applicable for input events.
+routed events is particularly applicable to input events.
 
-Routed events can also be used to communicate through the element tree, because
+Routed events can also be used to communicate through the element tree because
 the event data for the event is perpetuated to each element in the route. One
 element could change something in the event data, and that change would be
 available to the next element in the route.
 
-Other than the routing aspect, routed events support a class handling mechanism whereby the class can specify
+Other than the routing aspect, routed events support a class-handling mechanism whereby the class can specify
 static methods that have the opportunity to handle routed events before any
-registered instance handlers can access them. This is very useful in control
-design, because your class can enforce event-driven class behaviors that
+registered instance handlers can access them. This is very useful in the control
+design because your class can enforce event-driven class behaviors that
 cannot be accidentally suppressed by handling an event on an instance.
 
 Each of the above considerations is discussed in a separate section of this
@@ -194,19 +191,19 @@ the data for the event.
 <xref:Alternet.UI.RoutedEventHandler> is the basic routed event handler
 delegate. For routed events that are specialized for certain controls or
 scenarios, the delegates to use for the routed event handlers also might become
-more specialized, so that they can transmit specialized event data. For
+more specialized so that they can transmit specialized event data. For
 instance, in a common input scenario, you might handle a
 <xref:Alternet.UI.UIElement.MouseMove> routed event. Your handler should
 implement the <xref:Alternet.UI.MouseEventHandler> delegate. By using the most
 specific delegate, you can process the <xref:Alternet.UI.MouseEventArgs> in
 the handler and read the <xref:Alternet.UI.MouseEventArgs.LeftButton%2A> property,
-which contains the the state of the left mouse button.
+which contains the state of the left mouse button.
 
 Adding a handler for a routed event in an application that is created in code is
 straightforward. Routed event handlers can always be added through a helper
 method <xref:Alternet.UI.UIElement.AddHandler%2A> (which is the same method
 that the existing backing calls for `add`.) However, existing AlterNET UI routed events
-generally have backing implementations of `add` and `remove` logic that allow
+generally have backing implementations of `add` and `remove` logic that allows
 the handlers for routed events to be added by a language-specific event syntax,
 which is more intuitive syntax than the helper method. The following is an
 example usage of the helper method:
@@ -219,7 +216,7 @@ The next example shows the C# operator syntax:
 
 ### The Concept of Handled
 
-All routed events share a common event data base class,
+All routed events share a common event database class,
 <xref:Alternet.UI.RoutedEventArgs>. <xref:Alternet.UI.RoutedEventArgs>
 defines the <xref:Alternet.UI.RoutedEventArgs.Handled%2A> property, which
 takes a Boolean value. The purpose of the
@@ -238,7 +235,7 @@ This is true both for handlers attached in UIXML and for handlers added by
 language-specific event handler attachment syntaxes such as `+=` or `Handles`.
 For most common handler scenarios, marking an event as handled by setting
 <xref:Alternet.UI.RoutedEventArgs.Handled%2A> to `true` will "stop" routing
-for either a tunneling route or a bubbling route, and also for any event that is
+for either a tunneling route or a bubbling route and also for any event that is
 handled at a point in the route by a class handler.
 
 In addition to the behavior that
@@ -255,11 +252,9 @@ follows:
 - If a routed event is marked as handled, then it does not need to be handled
   again by other elements along that route.
 
-- If a routed event is not marked as handled, then other listeners that were
-  earlier along the route have chosen either not to register a handler, or the
-  handlers that were registered chose not to manipulate the event data and set
-  <xref:Alternet.UI.RoutedEventArgs.Handled%2A> to `true`. (Or, it is of
-  course possible that the current listener is the first point in the route.)
+- If a routed event is not marked as handled, then other listeners that were earlier along the route have chosen either not to register a handler or the handlers that were registered chose not to manipulate the event data and set
+  <xref:Alternet.UI.RoutedEventArgs.Handled%2A> to `true`. (Or, it is, of
+  course, possible that the current listener is the first point in the route.)
   Handlers on the current listener now have three possible courses of action:
 
   - Take no action at all; the event remains unhandled, and the event routes to
@@ -270,7 +265,7 @@ follows:
     handled. The event routes to the next listener.
 
   - Execute code in response to the event. Mark the event as handled in the
-    event data passed to the handler, because the action taken was deemed
+    event data passed to the handler because the action taken was deemed
     substantial enough to warrant marking as handled. The event still routes to
     the next listener, but with
     <xref:Alternet.UI.RoutedEventArgs.Handled%2A>=`true` in its event data,
@@ -279,14 +274,10 @@ follows:
 
 This conceptual design is reinforced by the routing behavior mentioned earlier:
 it is more difficult (although still possible in code or styles) to attach
-handlers for routed events that are invoked even if a previous handler along the
-route has already set <xref:Alternet.UI.RoutedEventArgs.Handled%2A> to
+handlers for routed events that are invoked even if a previous handler along the route has already set <xref:Alternet.UI.RoutedEventArgs.Handled%2A> to
 `true`.
 
-In applications, it is quite common to just handle a bubbling routed event on
-the object that raised it, and not be concerned with the event's routing
-characteristics at all. However, it is still a good practice to mark the routed
-event as handled in the event data, to prevent unanticipated side effects just
+In applications, it is quite common to just handle a bubbling routed event on the object that raised it, and not be concerned with the event's routing characteristics at all. However, it is still a good practice to mark the routed event as handled in the event data to prevent unanticipated side effects just
 in case an element that is further up the element tree also has a handler
 attached for that same routed event.
 
@@ -300,8 +291,7 @@ attached to an instance of that class, whenever a routed event reaches an
 element instance in its route.
 
 Some AlterNET UI controls have inherent class handling for certain routed events. This
-might give the outward appearance that the routed event is not ever raised, but
-in reality it is being class handled, and the routed event can potentially still
+might give the outward appearance that the routed event is not ever raised, but in reality, it is being class handled, and the routed event can potentially still
 be handled by your instance handlers if you use certain techniques. Also, many
 base classes and controls expose virtual methods that can be used to override
 class handling behavior.
