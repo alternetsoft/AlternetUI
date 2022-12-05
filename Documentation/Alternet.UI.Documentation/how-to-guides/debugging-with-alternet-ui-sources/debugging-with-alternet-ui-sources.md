@@ -1,6 +1,6 @@
 # Debugging with AlterNET UI Sources
 
-In some cases, while debugging your AlterNET UI application, it may be useful to *step into* the AlterNET UI source code to get better understanding of what is happening under the hood.
+While debugging your AlterNET UI application, it may be helpful to *step into* the AlterNET UI source code to better understand what is happening under the hood.
 
 Here are the steps required to get AlterNET UI Source debugging working in Visual Studio:
 
@@ -11,9 +11,9 @@ Here are the steps required to get AlterNET UI Source debugging working in Visua
 
    ![](images/nuget-symbol-server-settings.png)
 1. In Visual Studio, open **Tools > Options > Debugging > General** (or **Debug > Options > General**). Ensure **Enable Just My Code** is unchecked.
-1. Start debugging your AlterNET UI application. To ensure the symbols are loaded, open **Debug > Windows > Modules**, locate the `Alternet.UI.dll` row, and in its context menu select **Load Symbols**.
-1. After that, executing **Step Into** command on an AlterNET UI method call will lead to an *open file dialog* prompting to locate an AlterNET UI source
-   code file. In that dialog, navigate to the AlterNET UI sources directory you prepared in the step 1, and find and select the requested source file there.
+1. Start debugging your AlterNET UI application. To ensure the symbols are loaded, open **Debug > Windows > Modules**, locate the `Alternet.UI.dll` row, and select **Load Symbols** in its context menu.
+1. After that, executing the **Step Into** command on an AlterNET UI method call will lead to an *open file dialog* prompting to locate an AlterNET UI source
+   code file. In that dialog, navigate to the AlterNET UI sources directory you prepared in step 1 and find and select the requested source file there.
 1. After the initial setup described in the steps above is done, the AlterNET UI sources will be debugged automatically without any additional actions required.
 
 For additional information on consuming NuGet debug symbols, see
