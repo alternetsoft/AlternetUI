@@ -14,7 +14,7 @@ your own dependency property in a custom class.
 ## Prerequisites
 
 This article assumes basic knowledge of the .NET type system and object-oriented
-programming. To follow the examples in this article, it helps to understand UIXML
+programming. Following the examples in this article helps to understand UIXML
 and know how to write AlterNET UI applications.
 
 ## Dependency properties and CLR properties
@@ -23,7 +23,7 @@ AlterNET UI properties are typically exposed as standard .NET
 properties. You
 might interact with these properties at a basic level and never know that
 they're implemented as a dependency property. However, familiarity with some or
-all of the features of the AlterNET UI property system, will help you take advantage of
+all of the features of the AlterNET UI property system will help you take advantage of
 those features.
 
 The purpose of dependency properties is to provide a way to compute the value of
@@ -36,7 +36,7 @@ a property based on the value of other inputs, such as:
 - Values known through parent-child relationships with other elements in the
   element tree.
 
-Also, a dependency property can provide:
+Also, a dependency property can provide the following:
 
 - Self-contained validation.
 - Default values.
@@ -44,7 +44,7 @@ Also, a dependency property can provide:
 - A system that can coerce property values based on runtime information.
 
 Derived classes can change some characteristics of an existing property by
-overriding the metadata of a dependency property, rather than overriding the
+overriding the metadata of a dependency property rather than overriding the
 actual implementation of existing properties or creating new properties.
 
 In the SDK reference, you can identify a dependency property by the presence of
@@ -57,7 +57,7 @@ per-class override information, and other details.
 ## Dependency properties back CLR properties
 
 Dependency properties and the AlterNET UI property system extend property functionality
-by providing a type that backs a property, as an alternative to the standard
+by providing a type that backs a property as an alternative to the standard
 pattern of backing a property with a private field. The name of this type is
 <xref:Alternet.UI.DependencyProperty>. The other important type that defines
 the AlterNET UI property system is <xref:Alternet.UI.DependencyObject>, which defines
@@ -69,9 +69,8 @@ Here's some commonly used terminology:
   <xref:Alternet.UI.DependencyProperty>.
 
 - **Dependency property identifier**, which is a `DependencyProperty` instance
-  obtained as a return value when registering a dependency property, and then
-  stored as a static member of a class. Many of the APIs that interact with the
-  AlterNET UI property system use the dependency property identifier as a parameter.
+  obtained as a return value when registering a dependency property and then
+  stored as a static member of a class. Many APIs that interact with the AlterNET UI property system use the dependency property identifier as a parameter.
 
 - **CLR "wrapper"**, which is the `get` and `set` implementations for the
   property. These implementations incorporate the dependency property identifier
@@ -130,11 +129,11 @@ implementation:
 You can also call the property system APIs
 <xref:Alternet.UI.DependencyObject.GetValue%2A> and
 <xref:Alternet.UI.DependencyObject.SetValue%2A> directly. Calling the APIs
-directly is appropriate for some scenarios, but usually not when you're using
-existing properties. Typically, wrappers are more convenient, and provide better
-exposure of the property for developer tools.
+directly is appropriate for some scenarios but usually not when using
+existing properties. Typically, wrappers are more convenient and provide better
+exposure to the property for developer tools.
 
-Properties can be also set in UIXML and then accessed later in code, through
+Properties can also be set in UIXML and then accessed later in code, through
 code-behind.
 
 ## Property functionality provided by a dependency property
@@ -175,10 +174,10 @@ object tree.
 
 > [!NOTE]
 > Property value inheritance behavior isn't globally enabled for all
-> dependency properties, because the calculation time for inheritance affects
+> dependency properties because the calculation time for inheritance affects
 > performance. Property value inheritance is typically only enabled in scenarios
 > that suggest applicability. You can check whether a dependency property
-> inherits by looking at the documenatation for
+> inherits by looking at the documentation for
 > that dependency property in the API reference.
 
 The following example shows a binding that includes the

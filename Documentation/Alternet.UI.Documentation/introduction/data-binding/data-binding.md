@@ -73,14 +73,14 @@ looking at their immediate <xref:Alternet.UI.FrameworkElement.DataContext%2A>
 property. The data context is typically the **binding source object** for the
 **binding source value path** evaluation. You can override this behavior in the
 binding and set a specific **binding source object** value. If the `DataContext`
-property for the object hosting the binding isn't set, the parent element's
+property for the object hosting the binding is not set, the parent element's
 `DataContext` property is checked, and so on, up until the root of the UIXML
 object tree. In short, the data context used to resolve binding is inherited
 from the parent unless explicitly set on the object.
 
 Bindings can be configured to resolve with a specific object, as opposed to
 using the data context for binding resolution. Specifying a source object
-directly is used when, for example, you bind the foreground color of an object
+is used when, for example, you bind the foreground color of an object
 to the background color of another object. Data context isn't needed since the
 binding is resolved between those two objects. Inversely, bindings that aren't
 bound to specific source objects use data-context resolution.
@@ -90,7 +90,7 @@ the data context are reevaluated.
 
 ### Direction of the data flow
 
-As indicated by the arrow in the previous figure, the data flow of a binding can
+The data flow of a binding can
 go from the binding target to the binding source (for example, the source value
 changes when a user edits the value of a `TextBox`) and/or from the binding
 source to the binding target (for example, your `TextBox` content is updated
@@ -134,8 +134,7 @@ data. You can control the flow of data by setting the
   property when the target property changes. One example scenario is if you only
   need to reevaluate the source value from the UI.
 
-- Not illustrated in the figure is
-  <xref:Alternet.UI.BindingMode.OneTime> binding, which causes the
+ - <xref:Alternet.UI.BindingMode.OneTime> binding causes the
   source property to initialize the target property but doesn't propagate
   subsequent changes. If the data context changes or the object in the data
   context changes, the change is *not* reflected in the target property. This
@@ -149,7 +148,7 @@ data. You can control the flow of data by setting the
 To detect source changes (applicable to
 <xref:Alternet.UI.BindingMode.OneWay> and
 <xref:Alternet.UI.BindingMode.TwoWay> bindings), the source must
-implement a suitable property change notification mechanism such as
+implement a suitable property change notification mechanism, such as
 <xref:System.ComponentModel.INotifyPropertyChanged>.
 
 ### What triggers source updates
@@ -160,7 +159,8 @@ target property and propagate them back to the source, known as updating the
 source. For example, you may edit the text of a TextBox to change the underlying
 source value.
 
-However, is your source value updated while you're editing the text or after you
+
+However, is your source value updated while editing the text or after you
 finish editing the text and the control loses focus? The
 <xref:Alternet.UI.Binding.UpdateSourceTrigger?displayProperty=nameWithType>
 property determines what triggers the update of the source.

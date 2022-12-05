@@ -1,8 +1,6 @@
 # Layout
 
-This topic describes the AlterNET UI layout system. Understanding how and when
-layout calculations occur is essential for creating user interfaces in AlterNET
-UI.
+This topic describes the AlterNET UI layout system. Understanding how and when layout calculations occur is essential for creating user interfaces in AlterNET UI.
 
 ## Control Bounding Boxes
 
@@ -13,10 +11,9 @@ thought of as a rectangle that is slotted into the layout. The size of the recta
 is determined by calculating the available screen space, the size of any
 constraints, layout-specific properties (such as margin and padding), and the
 individual behavior of the parent control.
-Processing this data, the layout system is able to calculate the position of all
+By processing this data, the layout system can calculate the position of all
 the children of a particular <xref:Alternet.UI.Control>. It is
-important to remember that sizing characteristics defined on the parent control,
-such as a <xref:Alternet.UI.Border>, affect its children.
+important to remember that sizing characteristics, defined on the parent control, such as a <xref:Alternet.UI.Border>, affect its children.
 
 The following illustration shows a simple layout.
 
@@ -45,17 +42,17 @@ appears. As additional controls are added to the
 <xref:Alternet.UI.Grid>, this allocation could shrink or expand,
 depending on the type and size of controls that are added.
 
-The layout bounds of the <xref:Alternet.UI.Border> ar highlighted
+The layout bounds of the <xref:Alternet.UI.Border> are highlighted
 by setting the <xref:Alternet.UI.Control.BorderBrush> property.
 
 [!code-csharp[](./snippets/BoundingBox.cs)]
 
 ## The Layout System
 
-At its simplest, layout is a recursive system that leads to an control being
+At its simplest, the layout is a recursive system that leads to control being
 sized, positioned, and drawn. More specifically, layout describes the process of
 measuring and arranging the members of a <xref:Alternet.UI.Control>'s
-<xref:Alternet.UI.Control.Children%2A> collection. Layout is
+<xref:Alternet.UI.Control.Children%2A> collection. The layout is
 an intensive process. The larger the
 <xref:Alternet.UI.Control.Children%2A> collection, the greater the
 number of calculations that must be made. Complexity can also be introduced
@@ -78,12 +75,12 @@ describes the process that occurs when the layout system is invoked.
    <xref:Alternet.UI.Control.Height%2A>, and
    <xref:Alternet.UI.Control.Margin%2A>.
 
-2. After that, a custom <xref:Alternet.UI.Control.GetPreferredSize%2A> implementation may change the disired control's size.
+2. After that, a custom <xref:Alternet.UI.Control.GetPreferredSize%2A> implementation may change the desired control's size.
 
 3. Layout <xref:Alternet.UI.Control>-specific logic is applied, such as
    <xref:Alternet.UI.StackPanel>'s <xref:Alternet.UI.Control.OnLayout%2A> logic and its related properties, such as <xref:Alternet.UI.StackPanel.Orientation%2A>.
 
-4. The control's bounds are set after all children have been measured and laid out.
+4. The control bounds are set after all children have been measured and laid out.
 
 5. The process is invoked again if additional
    <xref:Alternet.UI.Control.Children%2A> are added to the collection, or
@@ -104,7 +101,7 @@ It considers several base control inputs to perform its operation.
 First, native size properties of the <xref:Alternet.UI.Control> are
 evaluated, such as
 <xref:Alternet.UI.Control.Visible%2A>.
-Secondly, the properties which affect the value of the controls preferred size are processed. These properties
+Secondly, the properties which affect the value of the control's preferred size are processed. These properties
 generally describe the sizing characteristics of the underlying
 <xref:Alternet.UI.Control>, such as its
 <xref:Alternet.UI.Control.Height%2A>,
@@ -115,7 +112,7 @@ generally describe the sizing characteristics of the underlying
 <xref:Alternet.UI.Control.VerticalAlignment%2A>. Each of these properties can
 change the space that is necessary to display the control.
 
-The ultimate goal of the measure process is for the child to determine its preferred size, which occurs during the
+The ultimate goal of the measurement process is for the child to determine its preferred size, which occurs during the
 <xref:Alternet.UI.Control.GetPreferredSize%2A> call.
 
 During the layout process, the
@@ -127,7 +124,7 @@ The layout logic evaluates the
 preferred size of the child and evaluates any
 additional properties that may affect the actual size of the control, such as margin and alignment, and puts the
 child within its layout slot. The child does not have to (and frequently does
-not) fill the entire allocated space. After that the layout process is complete.
+not) fill the entire allocated space. After that, the layout process is complete.
 
 ## Standard Layout Controls
 
