@@ -7,8 +7,7 @@ For example, you can use a <xref:Alternet.UI.Label> to add descriptive text for 
 user about the type of data expected in the control. <xref:Alternet.UI.Label> controls can also be used
 to add descriptive text to a <xref:Alternet.UI.Window> to provide the user with helpful information.
 For example, you can add a <xref:Alternet.UI.Label> to the top of a <xref:Alternet.UI.Window> that provides instructions
-to the user on how to input data in the controls on the form. <xref:Alternet.UI.Label> controls can be
-also used to display run time information on the status of an application. For example,
+to the user on how to input data in the controls on the form. <xref:Alternet.UI.Label> controls can also be used to display run time information on the status of an application. For example,
 you can add a <xref:Alternet.UI.Label> control to a form to display the status of each file as a list of files is processed.
 
 
