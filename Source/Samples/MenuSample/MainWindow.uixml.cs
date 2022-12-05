@@ -21,6 +21,9 @@ namespace MenuSample
             dynamicToolbarItemsSeparatorIndex = toolbar.Items.IndexOf(dynamicToolbarItemsSeparator);
             AddDynamicToolbarItem();
 
+            clockStatusBarPanelIndex = statusBar.Panels.IndexOf(clockStatusBarPanel);
+            AddDynamicStatusBarPanel();
+
             foreach (var value in Enum.GetValues(typeof(ToolbarItemImageToTextDisplayMode)))
                 imageToTextDisplayModeComboBox.Items.Add(value!);
             imageToTextDisplayModeComboBox.SelectedItem = ToolbarItemImageToTextDisplayMode.Horizontal;
@@ -32,6 +35,7 @@ namespace MenuSample
         Timer clockTimer;
 
         int dynamicToolbarItemsSeparatorIndex;
+        int clockStatusBarPanelIndex;
 
         private void PlatformSpecificInitialize()
         {
@@ -250,6 +254,30 @@ namespace MenuSample
         private void ImageToTextDisplayModeComboBox_SelectedItemChanged(object sender, EventArgs e)
         {
             toolbar.ImageToTextDisplayMode = (ToolbarItemImageToTextDisplayMode)imageToTextDisplayModeComboBox.SelectedItem!;
+        }
+
+        private void AddDynamicStatusBarPanelButton_Click(object sender, System.EventArgs e)
+        {
+            AddDynamicStatusBarPanel();
+        }
+
+        private void RemoveLastDynamicStatusBarPanelButton_Click(object sender, System.EventArgs e)
+        {
+            if (statusBar.Panels.Count == clockStatusBarPanelIndex + 1)
+                return;
+            statusBar.Panels.RemoveAt(statusBar.Panels.Count - 1);
+        }
+
+        private void AddDynamicStatusBarPanel()
+        {
+            int number = statusBar.Panels.Count - clockStatusBarPanelIndex;
+            string text = "Dynamic Panel " + number;
+            statusBar.Panels.Add(new StatusBarPanel(text));
+        }
+
+        private void ShowSizingGripCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        {
+            statusBar.SizingGripVisible = showSizingGripCheckBox.IsChecked;
         }
     }
 }

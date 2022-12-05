@@ -71,6 +71,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="100" />
         </Grid.RowDefinitions>
 
@@ -106,6 +107,14 @@
             </StackPanel>
         </GroupBox>
 
-        <ListBox Name="eventsListBox" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <GroupBox Title="Status Bar" Grid.Column="0" Grid.Row="1" Margin="5,0,0,0" VerticalAlignment="Top">
+            <StackPanel>
+                <CheckBox Text="Show Sizing Grip" Name="showSizingGripCheckBox" CheckedChanged="ShowSizingGripCheckBox_CheckedChanged" Margin="0,0,0,10" IsChecked="True" />
+                <Button Text="Add new dynamic panel" Name="addDynamicStatusBarPanelButton" Click="AddDynamicStatusBarPanelButton_Click" Margin="0,0,0,10" />
+                <Button Text="Remove last dynamic panel" Name="removeLastDynamicStatusBarPanelButton" Click="RemoveLastDynamicStatusBarPanelButton_Click" Margin="0,0,0,10" />
+            </StackPanel>
+        </GroupBox>
+
+        <ListBox Name="eventsListBox" Grid.Row="2" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>
