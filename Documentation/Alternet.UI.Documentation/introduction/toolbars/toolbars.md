@@ -1,4 +1,4 @@
-# Toolbars
+# Using Toolbars
   
 The AlterNET UI <xref:Alternet.UI.Toolbar> control is used a control bar that displays a row of drop-down menus and
 bitmapped buttons that activate commands. Thus, clicking a toolbar button is equivalent to choosing a menu command. The
