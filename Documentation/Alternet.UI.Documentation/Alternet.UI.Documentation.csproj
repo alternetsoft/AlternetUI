@@ -29,6 +29,7 @@
         <Folder Include="how-to-guides\debugging-with-alternet-ui-sources\images\" />
         <Folder Include="how-to-guides\using-uixml-previewer\images\" />
         <Folder Include="introduction\menu\images\" />
+        <Folder Include="introduction\toolbars\images\" />
         <None Include="**\*.cs; **\*.uixml; apidoc\**\*.csproj" />
         <None Remove="site\**" />
         <None Remove="obj\**" />

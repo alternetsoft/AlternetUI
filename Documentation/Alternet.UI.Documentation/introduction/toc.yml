@@ -16,6 +16,8 @@
   href: input/input.md
 - name: Menu
   href: menu/menu.md
+- name: Toolbars
+  href: toolbars/toolbars.md
 - name: Drag and Drop
   href: drag-and-drop/drag-and-drop.md
 - name: Clipboard
