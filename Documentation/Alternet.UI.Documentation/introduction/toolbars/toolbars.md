@@ -18,7 +18,7 @@ application's most frequently used functions and commands.
 A <xref:Alternet.UI.Toolbar> control is "docked" along the top of its parent window.
 Use the <xref:Alternet.UI.Window.Toolbar> property to specify a toolbar associate with the window.
 
-The <xref:Alternet.UI.Toolbar> control allows you to create toolbars by adding
+The <xref:Alternet.UI.Toolbar> control allows you to create toolbar items by adding
 <xref:Alternet.UI.ToolbarItem> objects to a <xref:Alternet.UI.Toolbar.Items%2A> collection. Each
 <xref:Alternet.UI.ToolbarItem> object should have <xref:Alternet.UI.ToolbarItem.Text> or an <xref:Alternet.UI.ToolbarItem.Image> assigned,
 although you can assign both. The image is supplied by an associated <xref:Alternet.UI.ImageSet> component. At run time, you can
@@ -36,7 +36,7 @@ Set <xref:Alternet.UI.ToolbarItem>.<xref:Alternet.UI.ToolbarItem.Text> property 
 A toolbar can display tooltips when the user points the mouse pointer at a toolbar
 button. A ToolTip is a small pop-up window that briefly describes the button or menu's purpose.
 
-The following examples shows how to use <xref:Alternet.UI.Toolbar> component:
+The following example shows how to use <xref:Alternet.UI.Toolbar> component:
 
 ```xml
 <Window>
