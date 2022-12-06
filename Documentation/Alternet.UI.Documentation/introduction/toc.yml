@@ -28,5 +28,7 @@
   href: rendering-graphics/rendering-graphics.md
 - name: Printing
   href: printing/printing.md
+- name: Resource URIs
+  href: resource-uris/resource-uris.md
 - name: System Requirements
   href: system-requirements.md
