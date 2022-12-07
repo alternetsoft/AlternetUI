@@ -42,7 +42,7 @@ The application will start and display its window:
 ![Created Application Window](images/created-application-window-macos-window.png)
 
 > [!NOTE]
-> By default, the created project will use .NET Core 3.1 as a target framework. If .NET Core 3.1 runtime is not installed on your machine, you
+> By default, the created project will use .NET 6.0 as a target framework. If .NET 6.0 runtime is not installed on your machine, you
 > will be prompted to do so on the first application run.
 
 > [!NOTE]
