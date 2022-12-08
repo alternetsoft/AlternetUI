@@ -193,6 +193,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CheckBox.cpp" />
     <ClCompile Include="Clipboard.cpp" />
+    <ClCompile Include="ColorDialog.cpp" />
     <ClCompile Include="ComboBox.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="DrawingContext.cpp" />
@@ -320,6 +321,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="CheckBox.h" />
     <ClInclude Include="Clipboard.h" />
+    <ClInclude Include="ColorDialog.h" />
     <ClInclude Include="ComboBox.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Common.Strings.h" />

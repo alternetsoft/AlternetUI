@@ -4,7 +4,7 @@
         Title="Common Dialogs Sample"
         Width="800" Height="500">
   <StackPanel Orientation="Horizontal">
-    <GroupBox Title="File Dialogs" Margin="10" VerticalAlignment="Top">
+    <GroupBox Title="Common Dialogs" Margin="10" VerticalAlignment="Top">
       <StackPanel>
         <CheckBox Text="Set Initial Directory to User Home Directory" Name="setInitialDirectoryCheckBox" Margin="10" />
 
@@ -21,6 +21,7 @@
 
         <Button Text="Show Save File Dialog" Name="showSaveFileDialogButton" Click="ShowSaveFileDialogButton_Click" Margin="10"/>
         <Button Text="Show Select Directory Dialog" Name="showSelectDirectoryDialogButton" Click="ShowSelectDirectoryDialogButton_Click" Margin="10"/>
+        <Button Text="Show Color Dialog" Name="showColorDialogButton" Click="ShowColorDialogButton_Click" Margin="10"/>
       </StackPanel>
     </GroupBox>
     <StackPanel Orientation="Vertical">
