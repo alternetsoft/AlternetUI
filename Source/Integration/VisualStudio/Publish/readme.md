@@ -27,6 +27,8 @@ AlterNET UI Beta 4 adds support of UIXML preview in Visual Studio, drag-and-drop
 
 In AlterNET UI Beta 5, we have added support for some missing functionality as well as wrapping up the features that were previously released. These include printing and print preview support, a much more complete implementation of DrawingContext, tray icons, and tooltips.
 
+AlterNET UI Beta 6 adds many advanced features to the standard control set as well as adds several completely new controls. The amended controls include TreeView, ListView, ComboBox, ListBox, Slider, ProgressBar, TabControl, Window, and Button. The new controls are Toolbar and StatusBar.
+
 For more info, see [alternet-ui.com](https://alternet-ui.com).
 
 The AlterNET UI Project template added by the extension:
