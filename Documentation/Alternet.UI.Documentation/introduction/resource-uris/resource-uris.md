@@ -6,7 +6,7 @@ In AlterNET UI, uniform resource identifiers (URIs) are used to identify and loa
 
 - Loading data files.
 
-- Anoy other scenario when a read-only access to a resource file is required.
+- Any other scenario when read-only access to a resource file is required.
 
 ## Using `embres:` Scheme
 
@@ -16,13 +16,13 @@ In AlterNET UI, uniform resource identifiers (URIs) are used to identify and loa
 embres:Manifest.Resource.Name[?assembly=assembly-name]
 ```
 
-The following is the example of using an image from a resource embedded into the current assembly :
+The following is an example of using an image from a resource embedded into the current assembly :
 
 ```xml
 <PictureBox Image="embres:EmployeeFormSample.Resources.EmployeePhoto.jpg" />
 ```
 
-The resource the example above is embedded to the assembly in the following way (an excerpt from the `.csproj` file):
+The resource in the example above is embedded into the assembly in the following way (an excerpt from the `.csproj` file):
 
 ```xml
 <ItemGroup>

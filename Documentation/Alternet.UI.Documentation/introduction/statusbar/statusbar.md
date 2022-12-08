@@ -1,9 +1,8 @@
 # Using StatusBar
   
 The AlterNET UI <xref:Alternet.UI.StatusBar> control is used as an area, usually displayed
-at the bottom of a window, in which an application can display various kinds of status information.
-<xref:Alternet.UI.StatusBar> controls can have status bar panels on them that display text to indicate
-state; for example, that the document is being saved.  
+at the bottom of a window, where an application can display various status information.
+<xref:Alternet.UI.StatusBar> controls can have status bar panels that display text to indicate the state of the open document; for example, that the document is modified.  
   
 # [Windows](#tab/screenshot-windows)
 ![Status Bar on Windows](./images/statusbar-windows.png)
@@ -16,13 +15,13 @@ state; for example, that the document is being saved.
 ## Using the StatusBar Control  
 Internet Explorer uses a status bar to indicate the URL of a page when the mouse rolls over the hyperlink; Microsoft
 Word gives you information on page location, section location, and editing modes such as overtype and revision tracking;
-and Visual Studio uses the status bar to give context-sensitive information, such as telling you how to manipulate
+and Visual Studio uses the status bar to provide context-sensitive information, such as telling you how to manipulate
 dockable windows as either docked or floating.  
   
-A status bar is divided into panels to display information by using the <xref:Alternet.UI.StatusBar.Panels> property.
+A status bar is divided into panels to display information using the <xref:Alternet.UI.StatusBar.Panels> property.
 The <xref:Alternet.UI.StatusBar> control allows you to create status bar panels by adding
 <xref:Alternet.UI.StatusBarPanel> objects to a <xref:Alternet.UI.Toolbar.Items%2A> collection. Each
-<xref:Alternet.UI.StatusBarPanel> object should have <xref:Alternet.UI.StatusBarPanel.Text> assigned in order to be
+<xref:Alternet.UI.StatusBarPanel> object should have <xref:Alternet.UI.StatusBarPanel.Text> assigned to be
 displayed in the status bar.
 
 ## Working with the StatusBar Control  

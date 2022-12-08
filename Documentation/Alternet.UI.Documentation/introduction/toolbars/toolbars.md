@@ -1,9 +1,8 @@
 # Using Toolbars
   
-The AlterNET UI <xref:Alternet.UI.Toolbar> control is used a control bar that displays a row of drop-down menus and
-bitmapped buttons that activate commands. Thus, clicking a toolbar button is equivalent to choosing a menu command. The
-buttons can be configured to appear and behave as push buttons, drop-down menus, or separators. Typically, a toolbar
-contains buttons and menus that correspond to items in an application's menu structure, providing quick access to an
+The AlterNET UI <xref:Alternet.UI.Toolbar> control is used as a control bar that displays a row of drop-down menus and
+bitmapped buttons that activate commands. Thus, clicking a toolbar button is equivalent to choosing a menu command. You can configure toolbar buttons to appear and behave as push buttons, drop-down menus, or separators. Typically, a toolbar
+contains buttons and menus corresponding to items in an application's menu structure, providing quick access to an
 application's most frequently used functions and commands.  
 
 # [Windows](#tab/screenshot-windows)
@@ -16,7 +15,7 @@ application's most frequently used functions and commands.
 
 ## Working with the Toolbar Control  
 A <xref:Alternet.UI.Toolbar> control is "docked" along the top of its parent window.
-Use the <xref:Alternet.UI.Window.Toolbar> property to specify a toolbar associate with the window.
+Use the <xref:Alternet.UI.Window.Toolbar> property to specify a toolbar associated with the window.
 
 The <xref:Alternet.UI.Toolbar> control allows you to create toolbar items by adding
 <xref:Alternet.UI.ToolbarItem> objects to a <xref:Alternet.UI.Toolbar.Items%2A> collection. Each
@@ -24,9 +23,9 @@ The <xref:Alternet.UI.Toolbar> control allows you to create toolbar items by add
 although you can assign both. The image is supplied by an associated <xref:Alternet.UI.ImageSet> component. At run time, you can
 add or remove buttons from the <xref:Alternet.UI.Toolbar.Items%2A> collection. To program the items of a
 <xref:Alternet.UI.Toolbar>, add code to the <xref:Alternet.UI.Control.Click> events of the
-<xref:Alternet.UI.ToolbarItem> to determine a toolbar item was clicked.
+<xref:Alternet.UI.ToolbarItem> to determine which toolbar item was clicked.
 
-Using <xref:Alternet.UI.ToolbarItem.IsCheckable> property you can specify whether a <xref:Alternet.UI.ToolbarItem> can be "checked" or "toggled".
+Using <xref:Alternet.UI.ToolbarItem.IsCheckable> property, you can specify whether a <xref:Alternet.UI.ToolbarItem> can be "checked" or "toggled".
 Use <xref:Alternet.UI.ToolbarItem.Checked> property to tell the check state of such items.
 
 Use <xref:Alternet.UI.ToolbarItem.DropDownMenu> to specify a drop-down <xref:Alternet.UI.Menu> for a <xref:Alternet.UI.ToolbarItem>.
@@ -34,7 +33,7 @@ Use <xref:Alternet.UI.ToolbarItem.DropDownMenu> to specify a drop-down <xref:Alt
 Set <xref:Alternet.UI.ToolbarItem>.<xref:Alternet.UI.ToolbarItem.Text> property to a *minus* ("-") value to use the item as a toolbar separator.
 
 A toolbar can display tooltips when the user points the mouse pointer at a toolbar
-button. A ToolTip is a small pop-up window that briefly describes the button or menu's purpose.
+button. A ToolTip is a small pop-up window briefly describing the button or menu's purpose.
 
 The following example shows how to use <xref:Alternet.UI.Toolbar> component:
 
