@@ -62,5 +62,10 @@ namespace CustomControlsSample
 
             customDrawnControl!.Text = /*customCompositeControl!.Text =*/ textBox!.Text;
         }
+
+        private void ColorPicker_ValueChanged(object sender, System.EventArgs e)
+        {
+            MessageBox.Show("New Color Value: " + colorPicker.Value);
+        }
     }
 }

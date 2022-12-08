@@ -49,6 +49,7 @@
 #include <wx/printdlg.h>
 #include <wx/taskbar.h>
 #include <wx/colordlg.h>
+#include <wx/clrpicker.h>
 
 #define DELELTE_COPY_CONSTRUCTOR(TypeName) \
   TypeName(const TypeName&) = delete
