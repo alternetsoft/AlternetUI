@@ -32,6 +32,7 @@ namespace Alternet.UI
             ToolbarItem => new NativeToolbarItemHandler(),
             StatusBar => new NativeStatusBarHandler(),
             StatusBarPanel => new NativeStatusBarPanelHandler(),
+            ColorPicker => new NativeColorPickerHandler(),
             _ => new GenericControlHandler()
         };
     }

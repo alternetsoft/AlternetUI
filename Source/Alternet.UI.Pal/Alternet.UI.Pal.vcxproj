@@ -193,6 +193,8 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CheckBox.cpp" />
     <ClCompile Include="Clipboard.cpp" />
+    <ClCompile Include="ColorDialog.cpp" />
+    <ClCompile Include="ColorPicker.cpp" />
     <ClCompile Include="ComboBox.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="DrawingContext.cpp" />
@@ -257,6 +259,7 @@
     <ClInclude Include="Api\Button.Api.h" />
     <ClInclude Include="Api\CheckBox.Api.h" />
     <ClInclude Include="Api\Clipboard.Api.h" />
+    <ClInclude Include="Api\ColorPicker.Api.h" />
     <ClInclude Include="Api\ComboBox.Api.h" />
     <ClInclude Include="Api\Exceptions.Api.h" />
     <ClInclude Include="Api\Control.Api.h" />
@@ -320,6 +323,8 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="CheckBox.h" />
     <ClInclude Include="Clipboard.h" />
+    <ClInclude Include="ColorDialog.h" />
+    <ClInclude Include="ColorPicker.h" />
     <ClInclude Include="ComboBox.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Common.Strings.h" />
@@ -397,6 +402,7 @@
     <None Include="Api\Button.inc" />
     <None Include="Api\CheckBox.inc" />
     <None Include="Api\Clipboard.inc" />
+    <None Include="Api\ColorPicker.inc" />
     <None Include="Api\ComboBox.inc" />
     <None Include="Api\Control.inc" />
     <None Include="Api\DrawingContext.inc" />

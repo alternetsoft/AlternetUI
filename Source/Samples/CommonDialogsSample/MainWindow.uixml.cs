@@ -143,5 +143,20 @@ namespace CommonDialogsSample
                 _ => throw new Exception(),
             };
         }
+
+        private void ShowColorDialogButton_Click(object sender, System.EventArgs e)
+        {
+            var dialog = new ColorDialog();
+
+            if (setCustomTitleCheckBox.IsChecked)
+                dialog.Title = CustomTitle;
+
+            var result = dialog.ShowModal(this);
+
+            if (result == ModalResult.Accepted)
+                MessageBox.Show("Accepted, Color = " + dialog.Color, "Dialog Result");
+            else
+                MessageBox.Show(result.ToString(), "Dialog Result");
+        }
     }
 }
