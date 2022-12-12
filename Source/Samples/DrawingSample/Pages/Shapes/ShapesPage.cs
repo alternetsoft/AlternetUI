@@ -11,61 +11,55 @@ namespace DrawingSample
         public ShapesPage()
         {
             shapes = new Shapes(this);
+
+            StrokePen = CreateStrokePen();
+            FillBrush = CreateFillBrush();
+            BackgroundBrush = Brushes.White;
         }
 
-        public int BrushColorHue
+        public Color BrushColor
         {
-            get => brushColorHue;
+            get => brushColor;
             set
             {
+                brushColor = value;
                 FillBrush = CreateFillBrush();
-                brushColorHue = value;
                 Canvas?.Invalidate();
             }
         }
 
-        public int PenColorHue
+        public Color PenColor
         {
-            get => penColorHue;
+            get => penColor;
             set
             {
+                penColor = value;
                 StrokePen = CreateStrokePen();
-                penColorHue = value;
                 Canvas?.Invalidate();
             }
         }
 
         private Pen CreateStrokePen()
         {
-            var c = new Skybrud.Colors.HslColor(
-                MathUtils.MapRanges(penColorHue, 0, 10, 0, 1),
-                1,
-                0.3).ToRgb();
-
-            return new Pen(Color.FromArgb(c.R, c.G, c.B), 1);
+            return new Pen(PenColor, 1);
         }
 
         private Brush CreateFillBrush()
         {
-            var c = new Skybrud.Colors.HslColor(
-                MathUtils.MapRanges(brushColorHue, 0, 10, 0, 1),
-                1,
-                0.7).ToRgb();
-
-            return new SolidBrush(Color.FromArgb(c.R, c.G, c.B));
+            return new SolidBrush(BrushColor);
         }
 
-        private int brushColorHue = 1;
+        private Color brushColor = Color.LightGreen;
 
-        private int penColorHue = 2;
+        private Color penColor = Color.Blue;
 
         public override string Name => "Shapes";
 
         public Pen StrokePen { get; set; } = Pens.Blue;
 
-        public Brush FillBrush { get; set; } = Brushes.LightGreen;
+        public Brush FillBrush { get; private set; }
 
-        public Brush BackgroundBrush { get; set; } = Brushes.White;
+        public Brush BackgroundBrush { get; private set; }
 
         public override void Draw(DrawingContext dc, Rect bounds)
         {
