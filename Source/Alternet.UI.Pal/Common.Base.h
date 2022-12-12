@@ -50,6 +50,7 @@
 #include <wx/taskbar.h>
 #include <wx/colordlg.h>
 #include <wx/clrpicker.h>
+#include <wx/popupwin.h>
 
 #define DELELTE_COPY_CONSTRUCTOR(TypeName) \
   TypeName(const TypeName&) = delete

@@ -226,6 +226,7 @@
     <ClCompile Include="PageSetupDialog.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="Pen.cpp" />
+    <ClCompile Include="Popup.cpp" />
     <ClCompile Include="PrintDialog.cpp" />
     <ClCompile Include="PrintDocument.cpp" />
     <ClCompile Include="PrinterSettings.cpp" />
@@ -259,6 +260,7 @@
     <ClInclude Include="Api\Button.Api.h" />
     <ClInclude Include="Api\CheckBox.Api.h" />
     <ClInclude Include="Api\Clipboard.Api.h" />
+    <ClInclude Include="Api\ColorDialog.Api.h" />
     <ClInclude Include="Api\ColorPicker.Api.h" />
     <ClInclude Include="Api\ComboBox.Api.h" />
     <ClInclude Include="Api\Exceptions.Api.h" />
@@ -307,6 +309,8 @@
     <ClInclude Include="Api\SelectDirectoryDialog.Api.h" />
     <ClInclude Include="Api\Slider.Api.h" />
     <ClInclude Include="Api\SolidBrush.Api.h" />
+    <ClInclude Include="Api\StatusBar.Api.h" />
+    <ClInclude Include="Api\StatusBarPanel.Api.h" />
     <ClInclude Include="Api\TabControl.Api.h" />
     <ClInclude Include="Api\TabPage.Api.h" />
     <ClInclude Include="Api\TextBox.Api.h" />
@@ -368,6 +372,7 @@
     <ClInclude Include="Panel.h" />
     <ClInclude Include="PaperSizes.h" />
     <ClInclude Include="Pen.h" />
+    <ClInclude Include="Popup.h" />
     <ClInclude Include="PrintDialog.h" />
     <ClInclude Include="PrintDocument.h" />
     <ClInclude Include="PrinterSettings.h" />
@@ -402,6 +407,7 @@
     <None Include="Api\Button.inc" />
     <None Include="Api\CheckBox.inc" />
     <None Include="Api\Clipboard.inc" />
+    <None Include="Api\ColorDialog.inc" />
     <None Include="Api\ColorPicker.inc" />
     <None Include="Api\ComboBox.inc" />
     <None Include="Api\Control.inc" />
@@ -441,6 +447,8 @@
     <None Include="Api\SelectDirectoryDialog.inc" />
     <None Include="Api\Slider.inc" />
     <None Include="Api\SolidBrush.inc" />
+    <None Include="Api\StatusBar.inc" />
+    <None Include="Api\StatusBarPanel.inc" />
     <None Include="Api\TabControl.inc" />
     <None Include="Api\TabPage.inc" />
     <None Include="Api\TextBox.inc" />
