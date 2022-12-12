@@ -18,7 +18,7 @@ namespace Alternet.UI
         {
             SetVisibleValue(false);
 
-            Bounds = new Rect(100, 100, 400, 400);
+            Bounds = new Rect(0, 0, 100, 100);
         }
 
         /// <summary>

@@ -4,6 +4,8 @@ namespace Alternet::UI
 {
     Popup::Popup()
     {
+        SetVisible(false);
+        CreateWxWindow();
     }
 
     Popup::~Popup()
@@ -12,7 +14,7 @@ namespace Alternet::UI
 
     wxWindow* Popup::CreateWxWindowCore(wxWindow* parent)
     {
-        return nullptr;
+        return new wxPopupTransientWindow(parent);
     }
 
     void Popup::UpdateWxWindowParent()
@@ -21,6 +23,6 @@ namespace Alternet::UI
 
     wxPopupTransientWindow* Popup::GetWxPopup()
     {
-        return nullptr;
+        return dynamic_cast<wxPopupTransientWindow*>(GetWxWindow());
     }
 }

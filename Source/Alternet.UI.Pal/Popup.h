@@ -16,7 +16,5 @@ namespace Alternet::UI
 
     private:
         wxPopupTransientWindow* GetWxPopup();
-
-        wxPopupTransientWindow* _popup = nullptr;
     };
 }
