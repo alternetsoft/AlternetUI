@@ -100,6 +100,8 @@ namespace CustomControlsSample
 
         private void ColorButton_Click(object? sender, EventArgs e)
         {
+            Control.Value = ((ColorPicker)sender!).Value;
+            Popup.Hide();
         }
 
         SolidBrush? colorBrush;

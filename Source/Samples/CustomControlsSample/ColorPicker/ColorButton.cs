@@ -51,13 +51,12 @@ namespace CustomControlsSample
             {
                 var bounds = ClientRectangle;
                 dc.FillRectangle(GetBackgroundBrush(), bounds);
-                dc.DrawRectangle(CustomControlsColors.BorderPen, bounds);
-                dc.FillRectangle(ColorBrush, bounds.InflatedBy(-5, -5));
+                dc.FillRectangle(ColorBrush, bounds.InflatedBy(-2, -2));
             }
 
             public override Size GetPreferredSize(Size availableSize)
             {
-                return new Size(30, 30);
+                return new Size(20, 20);
             }
 
             protected override void OnAttach()
@@ -102,6 +101,7 @@ namespace CustomControlsSample
             private void Control_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
             {
                 IsPressed = true;
+                Control.RaiseClick(EventArgs.Empty);
             }
 
             private void Control_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
