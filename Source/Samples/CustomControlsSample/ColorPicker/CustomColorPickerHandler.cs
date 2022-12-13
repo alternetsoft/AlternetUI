@@ -6,14 +6,6 @@ namespace CustomControlsSample
 {
     public class CustomColorPickerHandler : ControlHandler<ColorPicker>
     {
-        private Brush backgroundBrush = Brushes.LightCyan;
-
-        private Brush backgroundHoveredBrush = Brushes.LightYellow;
-
-        private Brush backgroundPressedBrush = Brushes.PeachPuff;
-
-        private Pen borderPen = Pens.LightGray;
-
         private bool isPressed;
 
         private Popup? popup;
@@ -43,7 +35,10 @@ namespace CustomControlsSample
                 if (popup == null)
                 {
                     popup = new Popup();
-                    popup.Children.Add(new Button("HELLO"));
+
+                    var border = new Border();
+                    border.Children.Add(GetColorButtonsGrid());
+                    popup.Children.Add(border);
                     popup.SetSizeToContent();
                 }
 
@@ -51,12 +46,81 @@ namespace CustomControlsSample
             }
         }
 
+        Color[] colors = new[]
+        {
+            Color.IndianRed,
+            Color.LightSalmon,
+            Color.Firebrick,
+            Color.DarkRed,
+
+            Color.ForestGreen,
+            Color.YellowGreen,
+            Color.PaleGreen,
+            Color.Olive,
+
+            Color.PowderBlue,
+            Color.DodgerBlue,
+            Color.DarkBlue,
+            Color.SteelBlue,
+
+            Color.Silver,
+            Color.LightSlateGray,
+            Color.DarkSlateGray,
+            Color.Black
+        };
+
+        Grid GetColorButtonsGrid()
+        {
+            int RowCount = 4;
+            int ColumnCount = 4;
+
+            var grid = new Grid();
+
+            for (int y = 0; y < ColumnCount; y++)
+                grid.ColumnDefinitions.Add(new ColumnDefinition());
+
+            for (int x = 0; x < RowCount; x++)
+                grid.RowDefinitions.Add(new RowDefinition());
+
+            int i = 0;
+            for (int x = 0; x < RowCount; x++)
+            {
+                for (int y = 0; y < ColumnCount; y++)
+                {
+                    var button = new ColorButton { Value = colors[i++] };
+                    button.Click += ColorButton_Click;
+                    grid.Children.Add(button);
+                    Grid.SetRow(button, y);
+                    Grid.SetColumn(button, x);
+                }
+            }
+
+            return grid;
+        }
+
+        private void ColorButton_Click(object? sender, EventArgs e)
+        {
+        }
+
+        SolidBrush? colorBrush;
+
+        SolidBrush ColorBrush
+        {
+            get
+            {
+                if (colorBrush == null)
+                    colorBrush = new SolidBrush(Control.Value);
+
+                return colorBrush;
+            }
+        }
+
         public override void OnPaint(DrawingContext dc)
         {
             var bounds = ClientRectangle;
             dc.FillRectangle(GetBackgroundBrush(), bounds);
-            dc.DrawRectangle(borderPen, bounds);
-            dc.FillRectangle(new SolidBrush(Control.Value), bounds.InflatedBy(-5, -5));
+            dc.DrawRectangle(CustomControlsColors.BorderPen, bounds);
+            dc.FillRectangle(ColorBrush, bounds.InflatedBy(-5, -5));
         }
 
         public override Size GetPreferredSize(Size availableSize)
@@ -105,29 +169,28 @@ namespace CustomControlsSample
 
         private void Control_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            CaptureMouse();
             IsPressed = true;
         }
 
         private void Control_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            ReleaseMouseCapture();
             IsPressed = false;
         }
 
         private void Control_ValueChanged(object? sender, EventArgs e)
         {
+            colorBrush = null;
             Refresh();
         }
 
         private Brush GetBackgroundBrush()
         {
             if (IsPressed)
-                return backgroundPressedBrush;
+                return CustomControlsColors.BackgroundPressedBrush;
             if (IsMouseOver)
-                return backgroundHoveredBrush;
+                return CustomControlsColors.BackgroundHoveredBrush;
 
-            return backgroundBrush;
+            return CustomControlsColors.BackgroundBrush;
         }
 
         private void OpenPopup()
