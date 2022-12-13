@@ -4,8 +4,12 @@
         xmlns:local="clr-namespace:CustomControlsSample;assembly=CustomControlsSample"
         Title="Alternet UI Custom Controls Sample"
         Width="600" Height="400">
-    <StackPanel Orientation="Horizontal" Margin="10">
-        <StackPanel Orientation="Vertical">
+    <StackPanel Orientation="Vertical" Margin="10">
+        <Button/>
+        <!--<local:CustomDrawnControl Margin="0,10,0,10" Name="customDrawnControl" />-->
+
+        <local:CustomColorPicker Value="Red" ValueChanged="ColorPicker_ValueChanged" Name="colorPicker"/>
+        <!--<StackPanel Orientation="Vertical">
             <Button Text="Red" Margin="0,0,0,5" Name="redButton" Click="RedButton_Click"/>
             <Button Text="Green" Margin="0,0,0,5" Name="greenButton" Click="GreenButton_Click"/>
             <Button Text="Blue" Margin="0,0,0,5" Name="blueButton" Click="BlueButton_Click"/>
@@ -15,10 +19,10 @@
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+            <local:CustomColorPicker Value="Red" ValueChanged="ColorPicker_ValueChanged" Name="colorPicker"/>
             <TextBox Name="textBox" Text="Hello" TextChanged="TextBox_TextChanged"/>
             <local:CustomDrawnControl Margin="0,10,0,10" Name="customDrawnControl" />
-            <ColorPicker Value="Red" ValueChanged="ColorPicker_ValueChanged" Name="colorPicker"/>
-        </StackPanel>
+        </StackPanel>-->
 
         <!--<StackPanel Orientation="Vertical" Margin="10,0,0,0">
       <local:CustomCompositeControl Margin="0,10,0,10" Name="customCompositeControl"/>
