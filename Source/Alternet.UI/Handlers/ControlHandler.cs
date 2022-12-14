@@ -1142,7 +1142,7 @@ namespace Alternet.UI
                 using (var dc = new DrawingContext(NativeControl.OpenPaintDrawingContext()))
                     Control.RaisePaint(new PaintEventArgs(dc, ClientRectangle));
             }
-            else if (NeedsPaint || hasVisualChildren)
+            if (NeedsPaint || hasVisualChildren)
             {
                 using (var dc = new DrawingContext(NativeControl.OpenPaintDrawingContext()))
                     PaintSelfAndVisualChildren(dc);

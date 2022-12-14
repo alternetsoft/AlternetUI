@@ -133,7 +133,7 @@ namespace CustomControlsSample
         protected override void OnAttach()
         {
             base.OnAttach();
-
+            UserPaint = true;
             Control.ValueChanged += Control_ValueChanged;
             Control.MouseMove += Control_MouseMove;
             Control.MouseEnter += Control_MouseEnter;
