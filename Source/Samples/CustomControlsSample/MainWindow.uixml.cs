@@ -11,6 +11,8 @@ namespace CustomControlsSample
         {
             InitializeComponent();
 
+            knob2.Handler.HasTicks = true;
+
             //UpdateText();
         }
 

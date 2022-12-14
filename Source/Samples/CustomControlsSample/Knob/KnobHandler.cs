@@ -7,16 +7,15 @@ using System.ComponentModel;
 
 namespace CustomControlsSample
 {
-    public class KnobHandler : ControlHandler<Slider>
+    public class KnobHandler : SliderHandler
     {
         protected override bool NeedsPaint => true;
 
+        public override SliderOrientation Orientation { get; set; }
+        public override SliderTickStyle TickStyle { get; set; }
+
         public override void OnPaint(DrawingContext dc)
         {
-            var bounds = ClientRectangle;
-
-            var g = dc;
-
             // we need to copy these so we can adjust them
             float knobMinAngle = _minimumAngle;
             float knobMaxAngle = _maximumAngle;
@@ -86,13 +85,13 @@ namespace CustomControlsSample
 
 
                             // erase the background so it antialiases properly
-                            g.FillRectangle(backBrush, new Rect(orr.Left - 1, orr.Top - 1, orr.Width + 2, orr.Height + 2));
+                            dc.FillRectangle(backBrush, new Rect(orr.Left - 1, orr.Top - 1, orr.Width + 2, orr.Height + 2));
                             // draw the border
-                            g.DrawEllipse(borderPen, borderRect);
+                            dc.DrawEllipse(borderPen, borderRect);
                             // draw the knob
-                            g.FillEllipse(bgBrush, knobInnerRect);
+                            dc.FillEllipse(bgBrush, knobInnerRect);
                             // draw the pointer
-                            g.DrawLine(pointerPen, new Point(x1, y1), new Point(x2, y2));
+                            dc.DrawLine(pointerPen, new Point(x1, y1), new Point(x2, y2));
                         }
                     }
                 }
@@ -116,7 +115,7 @@ namespace CustomControlsSample
                         y1 = origin.Y + (radius + 2) * Math.Sin(angrad);
                         x2 = origin.X + (radius + _tickHeight + 2) * Math.Cos(angrad);
                         y2 = origin.Y + (radius + _tickHeight + 2) * Math.Sin(angrad);
-                        g.DrawLine(pen, new Point(x1, y1), new Point(x2, y2));
+                        dc.DrawLine(pen, new Point(x1, y1), new Point(x2, y2));
                     }
                 }
             }
