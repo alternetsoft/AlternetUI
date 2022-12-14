@@ -1,7 +1,8 @@
 ﻿using Alternet.Drawing;
 using Alternet.UI;
 using System;
-
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace CustomControlsSample
 {
@@ -11,9 +12,33 @@ namespace CustomControlsSample
         {
             InitializeComponent();
 
+            DataContext = new Data();
+
             knob2.Handler.HasTicks = true;
 
             //UpdateText();
+        }
+
+        class Data : INotifyPropertyChanged
+        {
+            private int intValue;
+
+            public event PropertyChangedEventHandler? PropertyChanged;
+
+            public int IntValue
+            {
+                get => intValue;
+                set
+                {
+                    intValue = value;
+                    OnPropertyChanged();
+                }
+            }
+
+            void OnPropertyChanged([CallerMemberName] string propertyName = "")
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         protected override void OnClosing(WindowClosingEventArgs e)

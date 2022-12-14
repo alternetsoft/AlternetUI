@@ -47,7 +47,72 @@ namespace Alternet.UI
             }
         }
 
-        private int value;
+        /// <summary>
+        /// Identifies the <see cref="Value"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ValueProperty =
+            DependencyProperty.Register(
+                    "Value", // Property name
+                    typeof(int), // Property type
+                    typeof(ProgressBar), // Property owner
+                    new FrameworkPropertyMetadata( // Property metadata
+                            0, // default value
+                            FrameworkPropertyMetadataOptions.AffectsPaint,
+                            new PropertyChangedCallback(OnValuePropertyChanged),    // property changed callback
+                            new CoerceValueCallback(CoerceValue),
+                            true, // IsAnimationProhibited
+                            UpdateSourceTrigger.PropertyChanged
+                            //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
+                            ));
+
+        /// <summary>
+        /// Callback for changes to the Value property
+        /// </summary>
+        private static void OnValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ProgressBar control = (ProgressBar)d;
+            control.OnValuePropertyChanged((int)e.OldValue, (int)e.NewValue);
+        }
+
+        private static object CoerceValue(DependencyObject d, object value)
+        {
+            var o = (ProgressBar)d;
+
+            var intValue = (int)value;
+            if (intValue < o.Minimum)
+                return o.Minimum;
+
+            if (intValue > o.Maximum)
+                return o.Maximum;
+
+            return value;
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="Value"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnValueChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Raises the <see cref="ValueChanged"/> event and calls <see cref="OnValueChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        public void RaiseValueChanged(EventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnValueChanged(e);
+            ValueChanged?.Invoke(this, e);
+        }
+
+        private void OnValuePropertyChanged(int oldValue, int newValue)
+        {
+            RaiseValueChanged(EventArgs.Empty);
+        }
 
         private int minimum;
 
@@ -81,21 +146,8 @@ namespace Alternet.UI
         /// </exception>
         public int Value
         {
-            get
-            {
-                CheckDisposed();
-                return value;
-            }
-
-            set
-            {
-                CheckDisposed();
-                if (this.value == value)
-                    return;
-
-                this.value = value;
-                ValueChanged?.Invoke(this, EventArgs.Empty);
-            }
+            get { return (int)GetValue(ValueProperty); }
+            set { SetValue(ValueProperty, value); }
         }
 
         /// <summary>
