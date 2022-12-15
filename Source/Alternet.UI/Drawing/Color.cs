@@ -32,6 +32,14 @@ namespace Alternet.Drawing
     public readonly struct Color : IEquatable<Color>
     {
         /// <summary>
+        /// Returns a color from the specified string.
+        /// </summary>
+        public static Color Parse(string s)
+        {
+            return (Color)new ColorConverter().ConvertFromString(s);
+        }
+
+        /// <summary>
         /// Represents a color that is <c>null</c>.
         /// </summary>
         public static readonly Color Empty;
