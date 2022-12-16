@@ -14,8 +14,6 @@ namespace CustomControlsSample
 
             DataContext = new Data();
 
-            knob2.Handler.HasTicks = true;
-
             //UpdateText();
         }
 

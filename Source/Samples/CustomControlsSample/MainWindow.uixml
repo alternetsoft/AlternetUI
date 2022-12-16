@@ -13,8 +13,7 @@
         <StackPanel Orientation="Horizontal">
             <Slider Minimum="0" Maximum="100" Value="{Binding IntValue}" TickFrequency="25" VerticalAlignment="Center" Margin="0,0,5,0" Width="100"/>
             <Label Text="{Binding IntValue}" VerticalAlignment="Center" Margin="0,0,5,0" Width="40"/>
-            <local:KnobControl Minimum="0" Maximum="100" Value="{Binding IntValue}" Name="knob1" Margin="0,0,5,0"/>
-            <local:KnobControl Minimum="0" Maximum="100" Value="{Binding IntValue}" Name="knob2" Margin="0,0,5,0"/>
+            <local:KnobControl Minimum="0" Maximum="100" Value="{Binding IntValue}" Margin="0,0,5,0"/>
             <ProgressBar Minimum="0" Maximum="100" Value="{Binding IntValue}" VerticalAlignment="Center" Margin="0,0,5,0" Width="100"/>
             <local:GaugeControl Minimum="0" Maximum="100" Value="{Binding IntValue}" VerticalAlignment="Center" Margin="0,0,5,0" Width="100"/>
         </StackPanel>
