@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:CustomControlsSample;assembly=CustomControlsSample"
         Title="Alternet UI Custom Controls Sample"
-        Width="600" Height="400">
+        Width="600" Height="600">
     <StackPanel Orientation="Vertical" Margin="10">
         <GroupBox Title="Color Picker" Margin="0,0,0,10">
             <StackPanel Orientation="Horizontal">
@@ -31,6 +31,10 @@
                     </StackPanel>
                 </GroupBox>
             </StackPanel>
+        </GroupBox>
+
+        <GroupBox Title="Tic Tac Toe" VerticalAlignment="Top" >
+            <local:TicTacToeControl />
         </GroupBox>
     </StackPanel>
 </Window>
