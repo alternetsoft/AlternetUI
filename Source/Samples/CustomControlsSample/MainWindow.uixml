@@ -5,18 +5,35 @@
         Title="Alternet UI Custom Controls Sample"
         Width="600" Height="400">
     <StackPanel Orientation="Vertical" Margin="10">
-        <Button/>
         <!--<local:CustomDrawnControl Margin="0,10,0,10" Name="customDrawnControl" />-->
 
-        <!--<local:CustomColorPicker Value="Red" ValueChanged="ColorPicker_ValueChanged" Name="colorPicker" HorizontalAlignment="Left"/>-->
+        <GroupBox Title="Color Picker" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal">
+                <Label Text="Native:" VerticalAlignment="Center" Margin="0,0,5,0" />
+                <ColorPicker Value="Red" HorizontalAlignment="Left" Margin="0,0,10,0"/>
+                <Label Text="Custom:" VerticalAlignment="Center" Margin="0,0,5,0" />
+                <local:CustomColorPicker Value="Red" ValueChanged="ColorPicker_ValueChanged" Name="colorPicker" HorizontalAlignment="Left"/>
+            </StackPanel>
+        </GroupBox>
 
-        <StackPanel Orientation="Horizontal">
-            <Slider Minimum="0" Maximum="100" Value="{Binding IntValue}" TickFrequency="25" VerticalAlignment="Center" Margin="0,0,5,0" Width="100"/>
-            <Label Text="{Binding IntValue}" VerticalAlignment="Center" Margin="0,0,5,0" Width="40"/>
-            <local:KnobControl Minimum="0" Maximum="100" Value="{Binding IntValue}" Margin="0,0,5,0"/>
-            <ProgressBar Minimum="0" Maximum="100" Value="{Binding IntValue}" VerticalAlignment="Center" Margin="0,0,5,0" Width="100"/>
-            <local:GaugeControl Minimum="0" Maximum="100" Value="{Binding IntValue}" VerticalAlignment="Center" Margin="0,0,5,0" Width="100"/>
-        </StackPanel>
+        <GroupBox Title="Sliders and Progress Bars" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal">
+                <GroupBox Title="Native" Margin="0,0,10,0">
+                    <StackPanel Orientation="Horizontal">
+                        <Slider Minimum="0" Maximum="100" Value="{Binding IntValue}" TickFrequency="25" VerticalAlignment="Center" Margin="0,0,5,0" Width="100"/>
+                        <ProgressBar Minimum="0" Maximum="100" Value="{Binding IntValue}" VerticalAlignment="Center" Margin="0,0,10,0" Width="100"/>
+                        <Label Text="{Binding IntValue}" VerticalAlignment="Center" Width="40"/>
+                    </StackPanel>
+                </GroupBox>
+                
+                <GroupBox Title="Custom">
+                    <StackPanel Orientation="Horizontal">
+                        <local:KnobControl Minimum="0" Maximum="100" Value="{Binding IntValue}" Margin="0,0,5,0"/>
+                        <local:GaugeControl Minimum="0" Maximum="100" Value="{Binding IntValue}" VerticalAlignment="Center" Margin="0,0,5,0" Width="100"/>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </GroupBox>
 
         <!--<StackPanel Orientation="Vertical">
             <Button Text="Red" Margin="0,0,0,5" Name="redButton" Click="RedButton_Click"/>
