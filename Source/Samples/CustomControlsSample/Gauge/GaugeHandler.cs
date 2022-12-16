@@ -62,11 +62,11 @@ namespace CustomControlsSample.Gauge
                 var y = bounds.Center.Y;
                 var minY = y - bounds.Height * 5;
 
-                var yStep = MapRanges(step, Control.Minimum, Control.Maximum, 0, minY);
+                var yStep = MathUtil.MapRanges(step, Control.Minimum, Control.Maximum, 0, minY);
 
                 y += offsetInSteps * yStep;
 
-                var shift = -MapRanges(Control.Value, Control.Minimum, Control.Maximum, 0, minY);
+                var shift = -MathUtil.MapRanges(Control.Value, Control.Minimum, Control.Maximum, 0, minY);
 
                 for (int tickValue = Control.Minimum; tickValue <= Control.Maximum; tickValue += step)
                 {
@@ -105,9 +105,6 @@ namespace CustomControlsSample.Gauge
 
             base.OnDetach();
         }
-
-        private static double MapRanges(double value, double from1, double to1, double from2, double to2) =>
-            (value - from1) / (to1 - from1) * (to2 - from2) + from2;
 
         private void Control_ValueChanged(object sender, EventArgs e)
         {

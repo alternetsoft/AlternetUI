@@ -14,115 +14,60 @@ namespace CustomControlsSample
         public override SliderOrientation Orientation { get; set; }
         public override SliderTickStyle TickStyle { get; set; }
 
+        Pen knobBorderPen = new Pen(Color.Black, 2);
+
+        private Pen knobPointerPen1 = new Pen(Color.Parse("#FC4154"), 3);
+        private Pen knobPointerPen2 = new Pen(Color.Parse("#FF827D"), 1);
+
         public override void OnPaint(DrawingContext dc)
         {
-            // we need to copy these so we can adjust them
-            float knobMinAngle = _minimumAngle;
-            float knobMaxAngle = _maximumAngle;
-            // adjust them to be within bounds
-            if (knobMinAngle < 0)
-                knobMinAngle = 360 + knobMinAngle;
-            if (knobMaxAngle <= 0)
-                knobMaxAngle = 360 + knobMaxAngle;
+            var bounds = ClientRectangle;
 
-            double offset = 0.0;
-            int min = Minimum, max = Maximum;
-            var knobRange = (knobMaxAngle - knobMinAngle);
-            double valueRange = max - min;
-            double valueRatio = knobRange / valueRange;
-            if (0 > min)
-                offset = -min;
-            var knobRect = ClientRectangle;
-            // adjust the client rect so it doesn't overhang
-            knobRect.Inflate(-1, -1);
-            var orr = knobRect;
-            if (TicksVisible)
-            {
-                // we have to make the knob smaller to make room
-                // for the ticks
-                knobRect.Inflate(new Size(-_tickHeight - 2, -_tickHeight - 2));
-            }
-            var size = (float)Math.Min(knobRect.Width - 4, knobRect.Height - 4);
-            // give it a bit of a margin:
-            knobRect.X += 2;
-            knobRect.Y += 2;
+            var minSize = Math.Min(bounds.Width, bounds.Height);
+            var center = bounds.Center;
+            var gaugePadding = 1;
+            var gaugeRadius = Math.Min(bounds.Width, bounds.Height) / 2 - gaugePadding;
+            var largeTickLength = 4;
+            var smallTickLength = 2;
+            var knobPadding = 1;
+            var knobRadius = gaugeRadius - largeTickLength - knobPadding;
 
-            var radius = size / 2f;
-            var origin = new Point(knobRect.Left + radius, knobRect.Top + radius);
-            var borderRect = _GetCircleRect(origin.X, origin.Y, (radius - (_borderWidth / 2)));
-            var knobInnerRect = _GetCircleRect(origin.X, origin.Y, (radius - (_borderWidth)));
-            // compute our angle
-            double q = ((Value + offset) * valueRatio) + knobMinAngle;
-            double angle = (q + 90d);
-            if (angle > 360.0)
-                angle -= 360.0;
-            // now in radians
-            double angrad = angle * (Math.PI / 180d);
-            // pointer adjustment
-            double adj = 1;
-            // adjust for endcap
-            //if (_pointerEndCap != LineCap.NoAnchor)
-            //    adj += (_pointerWidth) / 2d;
-            // compute the pointer line coordinates
-            var x1 = (origin.X + (_pointerOffset - adj) * Math.Cos(angrad));
-            var y1 = (origin.Y + (_pointerOffset - adj) * Math.Sin(angrad));
-            var x2 = (origin.X + (radius - adj) * Math.Cos(angrad));
-            var y2 = (origin.Y + (radius - adj) * Math.Sin(angrad));
-
-            using (var backBrush = new SolidBrush(SystemColors.Control))
-            {
-                using (var bgBrush = new SolidBrush(_knobColor))
+            using var knobGradientBrush = new LinearGradientBrush(new Point(0, 0), new Point(knobRadius * 2, knobRadius * 2),
+                new[]
                 {
-                    using (var borderPen = new Pen(_borderColor, _borderWidth))
-                    {
-                        using (var pointerPen = new Pen(_pointerColor, _pointerWidth))
-                        {
-                            //g.SmoothingMode = SmoothingMode.AntiAlias;
+                    new GradientStop(Color.Parse("#A9A9A9"), 0),
+                    new GradientStop(Color.Parse("#676767"), 0.5),
+                    new GradientStop(Color.Parse("#353535"), 1),
+                });
 
-                            //pointerPen.StartCap = _pointerStartCap;
-                            //pointerPen.EndCap = _pointerEndCap;
-                            pointerPen.LineCap = _pointerStartCap;
+            dc.FillCircle(knobGradientBrush, center, knobRadius);
+            dc.DrawCircle(knobBorderPen, center, knobRadius);
 
+            var emptyScaleSectorAngle = 70.0;
+            var emptyScaleSectorHalfAngle = emptyScaleSectorAngle / 2;
 
-                            // erase the background so it antialiases properly
-                            dc.FillRectangle(backBrush, new Rect(orr.Left - 1, orr.Top - 1, orr.Width + 2, orr.Height + 2));
-                            // draw the border
-                            dc.DrawEllipse(borderPen, borderRect);
-                            // draw the knob
-                            dc.FillEllipse(bgBrush, knobInnerRect);
-                            // draw the pointer
-                            dc.DrawLine(pointerPen, new Point(x1, y1), new Point(x2, y2));
-                        }
-                    }
-                }
-            }
+            var scaleStartAngle = 90 + emptyScaleSectorHalfAngle;
+            var scaleEndAngle = scaleStartAngle + 360 - emptyScaleSectorAngle;
 
-            if (TicksVisible)
+            var pointerAngle = MathUtil.MapRanges(
+                Control.Value,
+                Control.Minimum,
+                Control.Maximum,
+                scaleStartAngle,
+                scaleEndAngle);
+
+            const double DegreesToRadians = Math.PI / 180;
+
+            Point GetPointerEndPoint(double pointerRadius)
             {
-                // draw the ticks
-                using (var pen = new Pen(_tickColor, _tickWidth))
-                {
-                    // for each tick line, compute its coordinates
-                    // and then draw it
-                    for (var i = 0; i < _tickPositions.Length; ++i)
-                    {
-                        // get the angle from our tick position
-                        angle = ((_tickPositions[i] + offset) * valueRatio) + knobMinAngle + 90d;
-                        if (angle > 360.0)
-                            angle -= 360.0;
-                        angrad = angle * (Math.PI / 180d);
-                        x1 = origin.X + (radius + 2) * Math.Cos(angrad);
-                        y1 = origin.Y + (radius + 2) * Math.Sin(angrad);
-                        x2 = origin.X + (radius + _tickHeight + 2) * Math.Cos(angrad);
-                        y2 = origin.Y + (radius + _tickHeight + 2) * Math.Sin(angrad);
-                        dc.DrawLine(pen, new Point(x1, y1), new Point(x2, y2));
-                    }
-                }
+                var pointerAngleRadians = pointerAngle * DegreesToRadians;
+                return center + new Size(pointerRadius * Math.Cos(pointerAngleRadians), pointerRadius * Math.Sin(pointerAngleRadians));
             }
-            
-            //// draw the focus rectangle if needed
-            //if (Focused)
-            //    ControlPaint.DrawFocusRectangle(g, new Rectangle(0, 0, Math.Min(Width, Height), Math.Min(Width, Height)));
+
+            var pointerEndPoint1 = GetPointerEndPoint(knobRadius * 0.95);
+            var pointerEndPoint2 = GetPointerEndPoint(knobRadius * 0.5);
+            dc.DrawLine(knobPointerPen1, pointerEndPoint1, pointerEndPoint2);
+            dc.DrawLine(knobPointerPen2, pointerEndPoint1, pointerEndPoint2);
         }
 
         public override Size GetPreferredSize(Size availableSize)
