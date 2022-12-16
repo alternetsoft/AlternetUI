@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace CustomControlsSample
 {
@@ -37,19 +38,21 @@ namespace CustomControlsSample
             {
                 int a = Winners[i, 0], b = Winners[i, 1], c = Winners[i, 2];
 
-                TicTacToeCell b1 = cells[a], b2 = cells[b], b3 = cells[c];
+                TicTacToeCell c1 = cells[a], c2 = cells[b], c3 = cells[c];
 
-                if (b1.Mark == null || b2.Mark == null || b3.Mark == null)
+                if (c1.Mark == null || c2.Mark == null || c3.Mark == null)
                     continue;
 
-                if (b1.Mark == b2.Mark && b2.Mark == b3.Mark)
+                if (c1.Mark == c2.Mark && c2.Mark == c3.Mark)
                 {
-                    //b1.BackColor = b2.BackColor = b3.BackColor = Color.LightCoral;
-                    //b1.Font = b2.Font = b3.Font = new System.Drawing.Font("Microsoft Sans Serif", 32F, System.Drawing.FontStyle.Italic & System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
+                    c1.IsWinningCell = c2.IsWinningCell = c3.IsWinningCell = true;
                     gameOver = true;
                     break;
                 }
             }
+
+            if (!gameOver)
+                gameOver = cells.All(x => x.Mark != null);
 
             return gameOver;
         }

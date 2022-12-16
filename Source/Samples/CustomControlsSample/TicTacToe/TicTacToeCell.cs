@@ -7,16 +7,13 @@ namespace CustomControlsSample
 {
     public class TicTacToeCell : Control
     {
+        private PlayerMark? mark;
+
+        private bool isWinningCell;
+
         public TicTacToeCell()
         {
         }
-
-        protected override ControlHandler CreateHandler()
-        {
-            return new CustomHandler();
-        }
-
-        private PlayerMark? mark;
 
         public PlayerMark? Mark
         {
@@ -29,14 +26,35 @@ namespace CustomControlsSample
             }
         }
 
+        public bool IsWinningCell
+        {
+            get => isWinningCell;
+
+            set
+            {
+                isWinningCell = value;
+                Refresh();
+            }
+        }
+
+        protected override ControlHandler CreateHandler()
+        {
+            return new CustomHandler();
+        }
+
         public class CustomHandler : ControlHandler<TicTacToeCell>
         {
+            private SolidBrush winningCellBrush = new SolidBrush(Color.Parse("#FFD0BF"));
+            private Pen xPen = new Pen(Color.Red, 2);
+            private Pen oPen = new Pen(Color.Blue, 2);
+
             protected override bool NeedsPaint => true;
 
             public override void OnPaint(DrawingContext dc)
             {
                 var bounds = ClientRectangle;
                 dc.FillRectangle(GetBackgroundBrush(), bounds);
+                dc.DrawRectangle(Pens.Gray, bounds.InflatedBy(-1, -1));
 
                 var minBoundsSize = Math.Min(bounds.Width, bounds.Height);
 
@@ -48,20 +66,17 @@ namespace CustomControlsSample
 
                     if (mark == PlayerMark.X)
                     {
-                        var xPen = Pens.Red;
                         dc.DrawLine(xPen, markBounds.TopLeft, markBounds.BottomRight);
                         dc.DrawLine(xPen, markBounds.BottomLeft, markBounds.TopRight);
                     }
                     else if (mark == PlayerMark.O)
                     {
-                        var oPen = Pens.Blue;
                         dc.DrawEllipse(oPen, markBounds);
                     }
                     else
                         throw new Exception();
                 }
             }
-
 
             protected override void OnAttach()
             {
@@ -112,6 +127,9 @@ namespace CustomControlsSample
 
             private Brush GetBackgroundBrush()
             {
+                if (Control.IsWinningCell)
+                    return winningCellBrush;
+
                 if (IsMouseOver)
                     return CustomControlsColors.BackgroundHoveredBrush;
 

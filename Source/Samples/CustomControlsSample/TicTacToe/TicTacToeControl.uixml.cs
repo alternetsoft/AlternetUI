@@ -59,9 +59,10 @@ namespace CustomControlsSample
             currentPlayerMark = PlayerMark.X;
             gameOver = false;
 
-            foreach (var button in cells)
+            foreach (var cell in cells)
             {
-                button.Mark = null;
+                cell.Mark = null;
+                cell.IsWinningCell = false;
             }
         }
 
