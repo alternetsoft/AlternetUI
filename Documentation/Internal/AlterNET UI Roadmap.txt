@@ -42,23 +42,25 @@ AlterNET UI Roadmap
     + tray icon
     + color/brush support in UIXML
     + remove/hide parts ported from WPF which are redundant (like Dispatcher)
-    - basic stress and memory tests, check memory leaks
     
 0.6-beta (release at the beginning of December 2022):
-    - implement all the missing standard controls features
-	- color dialog, color picker, use in the drawing demo
-    - RichEdit, Toolbar (whether or not this will fit depends on how much of work the previous item will take)
-    - resource URI support (pack://)
-    - focus management
-    - scrollable controls support
+    + implement all the missing standard controls features
+	+ color dialog, color picker, use in the drawing demo
+    + Toolbar, StatusBar
+    + resource URI support (embres://)
     
 1.0 Release (release at the end of December 2022):
-    - establish API to create custom controls and layouts
+    + establish API to create custom controls and layouts
+    - focus management
+    - scrollable controls support
+
+Future releases:
     - application deployment and packaging documentation (on macOS, Linux)
     - port several small open source GUI applications to AlterNET UI to find and fix bugs / uncover unsupported scenarios
     - basic unit tests (UI automation)
-
-Future releases:
+    - resource URI support (pack://)
+	- RichEdit
+    - basic stress and memory tests, check memory leaks
     - custom visual themes
     - additional controls
     - VS Code, VS for Mac and Rider extensions
