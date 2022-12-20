@@ -183,6 +183,7 @@ namespace Alternet::UI
         void OnVisibleChanged(wxShowEvent& event);
         void OnSizeChanged(wxSizeEvent& event);
         void OnDestroy(wxWindowDestroyEvent& event);
+        void OnScroll(wxScrollWinEvent& event);
 
         void ApplyToolTip();
 
@@ -198,6 +199,7 @@ namespace Alternet::UI
         ScrollInfo GetScrollInfo(ScrollBarOrientation orientation);
         void SetScrollInfo(ScrollBarOrientation orientation, const ScrollInfo& value);
         wxOrientation GetWxScrollOrientation(ScrollBarOrientation orientation);
+        ScrollBarOrientation GetScrollOrientation(wxOrientation orientation);
         DelayedValue<Control, ScrollInfo>& GetScrollInfoDelayedValue(ScrollBarOrientation orientation);
     };
 }

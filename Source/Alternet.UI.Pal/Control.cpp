@@ -79,6 +79,16 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
         wxWindow->Unbind(wxEVT_SIZE, &Control::OnSizeChanged, this);
 
+        wxWindow->Unbind(wxEVT_SCROLLWIN_TOP, &Control::OnScroll, this);
+        wxWindow->Unbind(wxEVT_SCROLLWIN_BOTTOM, &Control::OnScroll, this);
+        wxWindow->Unbind(wxEVT_SCROLLWIN_LINEUP, &Control::OnScroll, this);
+        wxWindow->Unbind(wxEVT_SCROLLWIN_LINEDOWN, &Control::OnScroll, this);
+        wxWindow->Unbind(wxEVT_SCROLLWIN_PAGEUP, &Control::OnScroll, this);
+        wxWindow->Unbind(wxEVT_SCROLLWIN_PAGEDOWN, &Control::OnScroll, this);
+        wxWindow->Unbind(wxEVT_SCROLLWIN_THUMBTRACK, &Control::OnScroll, this);
+        wxWindow->Unbind(wxEVT_SCROLLWIN_THUMBRELEASE, &Control::OnScroll, this);
+
+
         RemoveWxWindowControlAssociation(wxWindow);
 
         OnWxWindowDestroyed(wxWindow);
@@ -86,6 +96,27 @@ namespace Alternet::UI
 
         if (_flags.IsSet(ControlFlags::RecreatingWxWindow))
             _flags.Set(ControlFlags::RecreatingWxWindow, false);
+    }
+
+    void Control::OnScroll(wxScrollWinEvent& event)
+    {
+        auto wxOrientation = event.GetOrientation();
+        GetWxWindow()->SetScrollPos(wxOrientation, event.GetPosition());
+
+        auto getEvent = [&]()
+        {
+            switch (wxOrientation)
+            {
+            case wxHORIZONTAL:
+                return ControlEvent::HorizontalScrollBarValueChanged;
+            case wxVERTICAL:
+                return ControlEvent::VerticalScrollBarValueChanged;
+            default:
+                throwExNoInfo;
+            }
+        };
+
+        RaiseEvent(getEvent());
     }
 
     void Control::DestroyWxWindow()
@@ -331,6 +362,15 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
         _wxWindow->Bind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
         _wxWindow->Bind(wxEVT_SIZE, &Control::OnSizeChanged, this);
+
+        _wxWindow->Bind(wxEVT_SCROLLWIN_TOP, &Control::OnScroll, this);
+        _wxWindow->Bind(wxEVT_SCROLLWIN_BOTTOM, &Control::OnScroll, this);
+        _wxWindow->Bind(wxEVT_SCROLLWIN_LINEUP, &Control::OnScroll, this);
+        _wxWindow->Bind(wxEVT_SCROLLWIN_LINEDOWN, &Control::OnScroll, this);
+        _wxWindow->Bind(wxEVT_SCROLLWIN_PAGEUP, &Control::OnScroll, this);
+        _wxWindow->Bind(wxEVT_SCROLLWIN_PAGEDOWN, &Control::OnScroll, this);
+        _wxWindow->Bind(wxEVT_SCROLLWIN_THUMBTRACK, &Control::OnScroll, this);
+        _wxWindow->Bind(wxEVT_SCROLLWIN_THUMBRELEASE, &Control::OnScroll, this);
 
         AssociateControlWithWxWindow(_wxWindow, this);
 
@@ -973,6 +1013,19 @@ namespace Alternet::UI
             return wxOrientation::wxVERTICAL;
         case ScrollBarOrientation::Horizontal:
             return wxOrientation::wxHORIZONTAL;
+        default:
+            throwExNoInfo;
+        }
+    }
+
+    ScrollBarOrientation Control::GetScrollOrientation(wxOrientation orientation)
+    {
+        switch (orientation)
+        {
+        case wxHORIZONTAL:
+            return ScrollBarOrientation::Horizontal;
+        case wxVERTICAL:
+            return ScrollBarOrientation::Vertical;
         default:
             throwExNoInfo;
         }
