@@ -527,6 +527,12 @@ namespace Alternet.UI.Native
         Vertical = 1,
     }
     
+    enum ScrollBarOrientation
+    {
+        Vertical = 0,
+        Horizontal = 1,
+    }
+    
     enum SliderOrientation
     {
         Horizontal = 0,

@@ -38,6 +38,7 @@ namespace Alternet::UI
         void RaiseDragLeave();
 
         Window* GetParentWindow();
+
     protected:
 
         virtual void OnParentChanged();
@@ -67,6 +68,20 @@ namespace Alternet::UI
 
         virtual Rect RetrieveBounds();
         virtual void ApplyBounds(const Rect& value);
+
+        struct ScrollInfo
+        {
+            bool visible = false;
+            int value = 0;
+            int largeChange = 0;
+            int maximum = 0;
+        };
+
+        virtual ScrollInfo RetrieveVerticalScrollBarInfo();
+        virtual void ApplyVerticalScrollBarInfo(const ScrollInfo& value);
+
+        virtual ScrollInfo RetrieveHorizontalScrollBarInfo();
+        virtual void ApplyHorizontalScrollBarInfo(const ScrollInfo& value);
 
         bool EventsSuspended() override;
 
@@ -130,6 +145,8 @@ namespace Alternet::UI
         DelayedValue<Control, Rect> _bounds;
         DelayedValue<Control, Color> _backgroundColor;
         DelayedValue<Control, Color> _foregroundColor;
+        DelayedValue<Control, ScrollInfo> _verticalScrollBarInfo;
+        DelayedValue<Control, ScrollInfo> _horizontalScrollBarInfo;
 
         DelayedValues _delayedValues;
 
@@ -177,6 +194,11 @@ namespace Alternet::UI
 
         static void AssociateControlWithWxWindow(wxWindow* wxWindow, Control* control);
         static void RemoveWxWindowControlAssociation(wxWindow* wxWindow);
+
+        ScrollInfo GetScrollInfo(ScrollBarOrientation orientation);
+        void SetScrollInfo(ScrollBarOrientation orientation, const ScrollInfo& value);
+        wxOrientation GetWxScrollOrientation(ScrollBarOrientation orientation);
+        DelayedValue<Control, ScrollInfo>& GetScrollInfoDelayedValue(ScrollBarOrientation orientation);
     };
 }
 

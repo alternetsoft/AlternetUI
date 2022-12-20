@@ -92,6 +92,11 @@ void EndInit();
 void Destroy();
 void SaveScreenshot(const string& fileName);
 void SendSizeEvent();
+void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
+bool IsScrollBarVisible(ScrollBarOrientation orientation);
+int GetScrollBarValue(ScrollBarOrientation orientation);
+int GetScrollBarLargeChange(ScrollBarOrientation orientation);
+int GetScrollBarMaximum(ScrollBarOrientation orientation);
 public:
 enum class ControlEvent
 {
@@ -106,6 +111,8 @@ enum class ControlEvent
     DragOver,
     DragEnter,
     DragLeave,
+    VerticalScrollBarValueChanged,
+    HorizontalScrollBarValueChanged,
 };
 typedef void* (*ControlEventCallbackType)(Control* obj, ControlEvent event, void* param);
 static void SetEventCallback(ControlEventCallbackType value) { eventCallback = value; }

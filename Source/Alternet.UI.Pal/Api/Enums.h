@@ -528,6 +528,12 @@ namespace Alternet::UI
         Vertical = 1,
     };
     
+    enum class ScrollBarOrientation
+    {
+        Vertical = 0,
+        Horizontal = 1,
+    };
+    
     enum class SliderOrientation
     {
         Horizontal = 0,

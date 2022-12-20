@@ -389,6 +389,41 @@ ALTERNET_UI_API void Control_SendSizeEvent_(Control* obj)
         });
 }
 
+ALTERNET_UI_API void Control_SetScrollBar_(Control* obj, ScrollBarOrientation orientation, c_bool visible, int value, int largeChange, int maximum)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetScrollBar(orientation, visible, value, largeChange, maximum);
+        });
+}
+
+ALTERNET_UI_API c_bool Control_IsScrollBarVisible_(Control* obj, ScrollBarOrientation orientation)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->IsScrollBarVisible(orientation);
+        });
+}
+
+ALTERNET_UI_API int Control_GetScrollBarValue_(Control* obj, ScrollBarOrientation orientation)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetScrollBarValue(orientation);
+        });
+}
+
+ALTERNET_UI_API int Control_GetScrollBarLargeChange_(Control* obj, ScrollBarOrientation orientation)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetScrollBarLargeChange(orientation);
+        });
+}
+
+ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientation orientation)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetScrollBarMaximum(orientation);
+        });
+}
+
 ALTERNET_UI_API void Control_SetEventCallback_(Control::ControlEventCallbackType callback)
 {
     Control::SetEventCallback(callback);

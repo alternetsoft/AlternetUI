@@ -104,5 +104,15 @@ namespace NativeApi.Api
         public void SaveScreenshot(string fileName) => throw new Exception();
 
         public void SendSizeEvent() => throw new Exception();
+
+        public void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum) => throw new Exception();
+
+        public bool IsScrollBarVisible(ScrollBarOrientation orientation) => throw new Exception();
+        public int GetScrollBarValue(ScrollBarOrientation orientation) => throw new Exception();
+        public int GetScrollBarLargeChange(ScrollBarOrientation orientation) => throw new Exception();
+        public int GetScrollBarMaximum(ScrollBarOrientation orientation) => throw new Exception();
+
+        public event EventHandler? VerticalScrollBarValueChanged { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler? HorizontalScrollBarValueChanged { add => throw new Exception(); remove => throw new Exception(); }
     }
 }

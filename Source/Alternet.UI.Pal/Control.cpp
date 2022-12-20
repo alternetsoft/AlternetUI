@@ -21,7 +21,9 @@ namespace Alternet::UI
             _bounds(*this, Rect(), &Control::IsWxWindowCreated, &Control::RetrieveBounds, &Control::ApplyBounds),
             _backgroundColor(*this, Color(), &Control::IsWxWindowCreated, &Control::RetrieveBackgroundColor, &Control::ApplyBackgroundColor),
             _foregroundColor(*this, Color(), &Control::IsWxWindowCreated, &Control::RetrieveForegroundColor, &Control::ApplyForegroundColor),
-            _delayedValues({&_delayedFlags, &_bounds, &_backgroundColor, &_foregroundColor})
+            _horizontalScrollBarInfo(*this, ScrollInfo(), &Control::IsWxWindowCreated, &Control::RetrieveHorizontalScrollBarInfo, &Control::ApplyHorizontalScrollBarInfo),
+            _verticalScrollBarInfo(*this, ScrollInfo(), &Control::IsWxWindowCreated, &Control::RetrieveVerticalScrollBarInfo, &Control::ApplyVerticalScrollBarInfo),
+            _delayedValues({&_delayedFlags, &_bounds, &_backgroundColor, &_foregroundColor, &_horizontalScrollBarInfo, &_verticalScrollBarInfo })
     {
     }
 
@@ -961,6 +963,113 @@ namespace Alternet::UI
         }
         
         return nullptr;
+    }
+
+    wxOrientation Control::GetWxScrollOrientation(ScrollBarOrientation orientation)
+    {
+        switch (orientation)
+        {
+        case ScrollBarOrientation::Vertical:
+            return wxOrientation::wxVERTICAL;
+        case ScrollBarOrientation::Horizontal:
+            return wxOrientation::wxHORIZONTAL;
+        default:
+            throwExNoInfo;
+        }
+    }
+
+    DelayedValue<Control, Control::ScrollInfo>& Control::GetScrollInfoDelayedValue(ScrollBarOrientation orientation)
+    {
+        switch (orientation)
+        {
+        case ScrollBarOrientation::Vertical:
+            return _verticalScrollBarInfo;
+        case ScrollBarOrientation::Horizontal:
+            return _horizontalScrollBarInfo;
+        default:
+            throwExNoInfo;
+        }
+    }
+
+    Control::ScrollInfo Control::GetScrollInfo(ScrollBarOrientation orientation)
+    {
+        auto window = GetWxWindow();
+        auto wxOrientation = GetWxScrollOrientation(orientation);
+        
+        ScrollInfo info;
+        info.value = window->GetScrollPos(wxOrientation);
+        info.largeChange = window->GetScrollThumb(wxOrientation);
+        info.maximum = window->GetScrollRange(wxOrientation);
+        info.visible = info.maximum > 0;
+        
+        return info;
+    }
+
+    void Control::SetScrollInfo(ScrollBarOrientation orientation, const ScrollInfo& value)
+    {
+        auto window = GetWxWindow();
+        auto wxOrientation = GetWxScrollOrientation(orientation);
+
+        if (!value.visible)
+        {
+            window->SetScrollbar(wxOrientation, 0, 0, 0);
+            return;
+        }
+
+        window->SetScrollbar(wxOrientation, value.value, value.largeChange, value.maximum);
+    }
+
+    Control::ScrollInfo Control::RetrieveVerticalScrollBarInfo()
+    {
+        return GetScrollInfo(ScrollBarOrientation::Vertical);
+    }
+
+    void Control::ApplyVerticalScrollBarInfo(const ScrollInfo& value)
+    {
+        SetScrollInfo(ScrollBarOrientation::Vertical, value);
+    }
+
+    Control::ScrollInfo Control::RetrieveHorizontalScrollBarInfo()
+    {
+        return GetScrollInfo(ScrollBarOrientation::Horizontal);
+    }
+
+    void Control::ApplyHorizontalScrollBarInfo(const ScrollInfo& value)
+    {
+        SetScrollInfo(ScrollBarOrientation::Horizontal, value);
+    }
+
+    void Control::SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum)
+    {
+        auto& delayedValue = GetScrollInfoDelayedValue(orientation);
+        
+        ScrollInfo info;
+        info.value = value;
+        info.largeChange = largeChange;
+        info.maximum = maximum;
+        info.visible = visible;
+
+        delayedValue.Set(info);
+    }
+
+    bool Control::IsScrollBarVisible(ScrollBarOrientation orientation)
+    {
+        return GetScrollInfoDelayedValue(orientation).Get().visible;
+    }
+
+    int Control::GetScrollBarValue(ScrollBarOrientation orientation)
+    {
+        return GetScrollInfoDelayedValue(orientation).Get().value;
+    }
+
+    int Control::GetScrollBarLargeChange(ScrollBarOrientation orientation)
+    {
+        return GetScrollInfoDelayedValue(orientation).Get().largeChange;
+    }
+
+    int Control::GetScrollBarMaximum(ScrollBarOrientation orientation)
+    {
+        return GetScrollInfoDelayedValue(orientation).Get().maximum;
     }
 
     bool Control::GetUserPaint()

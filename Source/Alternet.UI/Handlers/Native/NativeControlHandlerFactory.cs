@@ -33,6 +33,7 @@ namespace Alternet.UI
             StatusBar => new NativeStatusBarHandler(),
             StatusBarPanel => new NativeStatusBarPanelHandler(),
             ColorPicker => new NativeColorPickerHandler(),
+            ScrollViewer => new NativeScrollViewerHandler(),
             _ => new GenericControlHandler()
         };
     }
