@@ -14,8 +14,8 @@
         </Grid.ColumnDefinitions>
         <GroupBox Title="StackPanel" Padding="10" Grid.Row="0" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <Border>
-                    <ScrollViewer Width="200" Height="200" VerticalAlignment="Top" HorizontalAlignment="Left">
+                <Border Width="200" Height="200" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <ScrollViewer>
                         <StackPanel Name="stackPanel" Orientation="Vertical">
                         </StackPanel>
                     </ScrollViewer>
@@ -61,8 +61,8 @@
 
         <GroupBox Title="Grid" Padding="10" Grid.Row="1" Grid.Column="0">
             <StackPanel Orientation="Horizontal">
-                <Border>
-                    <ScrollViewer Width="200" Height="200" VerticalAlignment="Top" HorizontalAlignment="Left">
+                <Border Width="200" Height="200" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <ScrollViewer>
                         <Grid Name="grid">
                         </Grid>
                     </ScrollViewer>
