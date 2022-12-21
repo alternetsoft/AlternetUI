@@ -31,7 +31,12 @@
       <None Remove="Grid10x10Window.uixml" />
       <None Remove="GridLayoutPropertiesWindow.uixml" />
       <None Remove="GridLengthControl.uixml" />
+      <None Remove="Resources\logo.png" />
       <None Remove="StackLayoutPropertiesWindow.uixml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\logo.png" />
     </ItemGroup>
 
     <ItemGroup>

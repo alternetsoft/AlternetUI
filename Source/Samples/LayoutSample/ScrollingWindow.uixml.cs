@@ -142,15 +142,20 @@ namespace LayoutSample
             grid.RowDefinitions.RemoveAt(rowIndex);
         }
 
-        private void GridHorizontalAlignmentComboBox_SelectedItemChanged(object sender, System.EventArgs e)
+        private void GridHorizontalAlignmentComboBox_SelectedItemChanged(object sender, EventArgs e)
         {
             grid.VerticalAlignment = (VerticalAlignment)gridVerticalAlignmentComboBox.SelectedItem!;
         }
 
-        private void GridVerticalAlignmentComboBox_SelectedItemChanged(object sender, System.EventArgs e)
+        private void GridVerticalAlignmentComboBox_SelectedItemChanged(object sender, EventArgs e)
         {
             if (gridHorizontalAlignmentComboBox.SelectedItem != null)
                 grid.HorizontalAlignment = (HorizontalAlignment)gridHorizontalAlignmentComboBox.SelectedItem!;
+        }
+
+        private void ZoomSlider_ValueChanged(object sender, EventArgs e)
+        {
+            imageControl.Zoom = zoomSlider.Value;
         }
     }
 }
