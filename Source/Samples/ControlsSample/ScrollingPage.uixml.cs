@@ -42,14 +42,19 @@ namespace ControlsSample
             {
                 for (int rowIndex = 0; rowIndex < grid.RowDefinitions.Count; rowIndex++)
                 {
-                    var control = new Button { Text = $"{rowIndex}.{columnIndex}" };
-                    grid.Children.Add(control);
-
-                    Grid.SetColumn(control, columnIndex);
-                    Grid.SetRow(control, rowIndex);
+                    AddControlToGrid(columnIndex, rowIndex);
                 }
             }
             grid.EndInit();
+        }
+
+        private void AddControlToGrid(int columnIndex, int rowIndex)
+        {
+            var control = new Button { Text = $"{rowIndex}.{columnIndex}" };
+            grid.Children.Add(control);
+
+            Grid.SetColumn(control, columnIndex);
+            Grid.SetRow(control, rowIndex);
         }
 
         private void AddControlToStackPanel()
@@ -113,32 +118,49 @@ namespace ControlsSample
 
         private void AddColumnToGridButton_Click(object? sender, EventArgs e)
         {
-            
+            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            int columnIndex = grid.ColumnDefinitions.Count - 1;
+            for (int rowIndex = 0; rowIndex < grid.RowDefinitions.Count; rowIndex++)
+                AddControlToGrid(columnIndex, rowIndex);
         }
 
         private void RemoveColumnFromGridButton_Click(object? sender, EventArgs e)
         {
-            
+            int columnIndex = grid.ColumnDefinitions.Count - 1;
+            var toRemove = grid.Children.Where(x => Grid.GetColumn(x) == columnIndex).ToArray();
+            foreach (var control in toRemove)
+                grid.Children.Remove(control);
+
+            grid.ColumnDefinitions.RemoveAt(columnIndex);
         }
 
         private void AddRowToGridButton_Click(object? sender, EventArgs e)
         {
-            
+            grid.RowDefinitions.Add(new RowDefinition());
+            int rowIndex = grid.RowDefinitions.Count - 1;
+            for (int columnIndex = 0; columnIndex < grid.ColumnDefinitions.Count; columnIndex++)
+                AddControlToGrid(columnIndex, rowIndex);
         }
 
         private void RemoveRowFromGridButton_Click(object? sender, EventArgs e)
         {
+            int rowIndex = grid.RowDefinitions.Count - 1;
+            var toRemove = grid.Children.Where(x => Grid.GetRow(x) == rowIndex).ToArray();
+            foreach (var control in toRemove)
+                grid.Children.Remove(control);
             
+            grid.RowDefinitions.RemoveAt(rowIndex);
         }
 
         private void GridHorizontalAlignmentComboBox_SelectedItemChanged(object sender, System.EventArgs e)
         {
-            
+            grid.VerticalAlignment = (VerticalAlignment)gridVerticalAlignmentComboBox.SelectedItem!;
         }
 
         private void GridVerticalAlignmentComboBox_SelectedItemChanged(object sender, System.EventArgs e)
         {
-            
+            if (gridHorizontalAlignmentComboBox.SelectedItem != null)
+                grid.HorizontalAlignment = (HorizontalAlignment)gridHorizontalAlignmentComboBox.SelectedItem!;
         }
     }
 }

@@ -94,7 +94,7 @@
                             Click="AddRowToGridButton_Click"
                             Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
 
-                    <Button Text="Remove Column" Name="removeRowFromGridButton" Margin="0,0,0,5"
+                    <Button Text="Remove Row" Name="removeRowFromGridButton" Margin="0,0,0,5"
                             Click="RemoveRowFromGridButton_Click"
                             Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"/>
                 </Grid>
