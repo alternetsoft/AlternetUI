@@ -15,6 +15,7 @@ namespace ControlsSample
             InitializeComboBoxes();
 
             InitializeStackPanel();
+            InitializeGrid();
         }
 
         private void InitializeStackPanel()
@@ -23,6 +24,32 @@ namespace ControlsSample
             for (int i = 0; i < 50; i++)
                 AddControlToStackPanel();
             stackPanel.EndInit();
+        }
+
+        private void InitializeGrid()
+        {
+            int rowCount = 10;
+            int columnCount = 10;
+
+            grid.BeginInit();
+            for (int i = 0; i < columnCount; i++)
+                grid.ColumnDefinitions.Add(new ColumnDefinition());
+
+            for (int i = 0; i < rowCount; i++)
+                grid.RowDefinitions.Add(new RowDefinition());
+
+            for (int columnIndex = 0; columnIndex < grid.ColumnDefinitions.Count; columnIndex++)
+            {
+                for (int rowIndex = 0; rowIndex < grid.RowDefinitions.Count; rowIndex++)
+                {
+                    var control = new Button { Text = $"{rowIndex}.{columnIndex}" };
+                    grid.Children.Add(control);
+
+                    Grid.SetColumn(control, columnIndex);
+                    Grid.SetRow(control, rowIndex);
+                }
+            }
+            grid.EndInit();
         }
 
         private void AddControlToStackPanel()
@@ -35,6 +62,9 @@ namespace ControlsSample
             InitializeEnumComboBox(orientationComboBox, StackPanelOrientation.Vertical);
             InitializeEnumComboBox(stackPanelVerticalAlignmentComboBox, VerticalAlignment.Stretch);
             InitializeEnumComboBox(stackPanelHorizontalAlignmentComboBox, HorizontalAlignment.Stretch);
+
+            InitializeEnumComboBox(gridVerticalAlignmentComboBox, VerticalAlignment.Stretch);
+            InitializeEnumComboBox(gridHorizontalAlignmentComboBox, HorizontalAlignment.Stretch);
         }
 
         private void InitializeEnumComboBox<TEnum>(ComboBox comboBox, TEnum defaultValue) where TEnum : Enum
@@ -79,6 +109,36 @@ namespace ControlsSample
             int count = stackPanel.Children.Count;
             if (count > 0)
                 stackPanel.Children.RemoveAt(count - 1);
+        }
+
+        private void AddColumnToGridButton_Click(object? sender, EventArgs e)
+        {
+            
+        }
+
+        private void RemoveColumnFromGridButton_Click(object? sender, EventArgs e)
+        {
+            
+        }
+
+        private void AddRowToGridButton_Click(object? sender, EventArgs e)
+        {
+            
+        }
+
+        private void RemoveRowFromGridButton_Click(object? sender, EventArgs e)
+        {
+            
+        }
+
+        private void GridHorizontalAlignmentComboBox_SelectedItemChanged(object sender, System.EventArgs e)
+        {
+            
+        }
+
+        private void GridVerticalAlignmentComboBox_SelectedItemChanged(object sender, System.EventArgs e)
+        {
+            
         }
     }
 }
