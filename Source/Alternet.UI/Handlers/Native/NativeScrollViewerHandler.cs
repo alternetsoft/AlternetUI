@@ -1,33 +1,35 @@
+using Alternet.Drawing;
 using System;
 
 namespace Alternet.UI
 {
     internal class NativeScrollViewerHandler : ScrollViewerHandler
     {
+        private bool settingLayoutOffset;
+
+        public new Native.Panel NativeControl => (Native.Panel)base.NativeControl!;
+
+        private Size LayoutOffset { get; set; }
+
+        public override void OnLayout()
+        {
+            LayoutCore();
+
+            if (!settingLayoutOffset)
+                SetScrollInfo();
+        }
+
         internal override Native.Control CreateNativeControl()
         {
             return new Native.Panel();
         }
 
-        public new Native.Panel NativeControl => (Native.Panel)base.NativeControl!;
-
         protected override void OnAttach()
         {
             base.OnAttach();
 
-            NativeControl.SetScrollBar(Native.ScrollBarOrientation.Vertical, true, 10, 100, 1000);
-            NativeControl.SetScrollBar(Native.ScrollBarOrientation.Horizontal, true, 10, 100, 1000);
-
             NativeControl.VerticalScrollBarValueChanged += NativeControl_VerticalScrollBarValueChanged;
             NativeControl.HorizontalScrollBarValueChanged += NativeControl_HorizontalScrollBarValueChanged;
-        }
-
-        private void NativeControl_HorizontalScrollBarValueChanged(object? sender, EventArgs e)
-        {
-        }
-
-        private void NativeControl_VerticalScrollBarValueChanged(object? sender, EventArgs e)
-        {
         }
 
         protected override void OnDetach()
@@ -36,6 +38,80 @@ namespace Alternet.UI
 
             NativeControl.VerticalScrollBarValueChanged -= NativeControl_VerticalScrollBarValueChanged;
             NativeControl.HorizontalScrollBarValueChanged -= NativeControl_HorizontalScrollBarValueChanged;
+        }
+
+        private void LayoutCore()
+        {
+            var childrenLayoutBounds = ChildrenLayoutBounds;
+            foreach (var control in AllChildrenIncludedInLayout)
+            {
+                var boundedPreferredSize = control.GetPreferredSize(childrenLayoutBounds.Size);
+                var unboundedPreferredSize = control.GetPreferredSize(new Size(double.PositiveInfinity, double.PositiveInfinity));
+
+                var verticalAlignment = control.VerticalAlignment;
+                var horizontalAlignment = control.HorizontalAlignment;
+
+                if (unboundedPreferredSize.Width > childrenLayoutBounds.Width)
+                {
+                    horizontalAlignment = HorizontalAlignment.Left;
+                }
+
+                if (unboundedPreferredSize.Height > childrenLayoutBounds.Height)
+                {
+                    verticalAlignment = VerticalAlignment.Top;
+                }
+
+                var horizontalPosition = AlignedLayout.AlignHorizontal(childrenLayoutBounds, control, boundedPreferredSize, horizontalAlignment);
+                var verticalPosition = AlignedLayout.AlignVertical(childrenLayoutBounds, control, boundedPreferredSize, verticalAlignment);
+
+                var offset = LayoutOffset;
+
+                control.Handler.Bounds = new Rect(
+                    horizontalPosition.Origin + offset.Width,
+                    verticalPosition.Origin + offset.Height,
+                    horizontalPosition.Size,
+                    verticalPosition.Size);
+            }
+        }
+
+        private void SetScrollInfo()
+        {
+            var preferredSize = GetChildrenMaxPreferredSizePadded(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            var size = ClientRectangle.Size;
+
+            if (preferredSize.Width <= size.Width)
+                NativeControl.SetScrollBar(Native.ScrollBarOrientation.Horizontal, false, 0, 0, 0);
+            else
+                NativeControl.SetScrollBar(Native.ScrollBarOrientation.Horizontal, true, 0, (int)size.Width, (int)preferredSize.Width);
+
+            if (preferredSize.Height <= size.Height)
+                NativeControl.SetScrollBar(Native.ScrollBarOrientation.Vertical, false, 0, 0, 0);
+            else
+                NativeControl.SetScrollBar(Native.ScrollBarOrientation.Vertical, true, 0, (int)size.Height, (int)preferredSize.Height);
+        }
+
+        private void NativeControl_HorizontalScrollBarValueChanged(object? sender, EventArgs e)
+        {
+        }
+
+        private void RelayoutAll(Control control)
+        {
+            foreach (var child in control.Handler.AllChildrenIncludedInLayout)
+            {
+                child.PerformLayout();
+                RelayoutAll(child);
+            }
+        }
+
+        private void NativeControl_VerticalScrollBarValueChanged(object? sender, EventArgs e)
+        {
+            settingLayoutOffset = true;
+            LayoutOffset = new Size(
+                LayoutOffset.Width,
+                -NativeControl.GetScrollBarValue(Native.ScrollBarOrientation.Vertical));
+            PerformLayout();
+            //RelayoutAll(Control);
+            settingLayoutOffset = false;
         }
     }
 }

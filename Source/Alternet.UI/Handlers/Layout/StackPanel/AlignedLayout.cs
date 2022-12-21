@@ -17,9 +17,15 @@ namespace Alternet.UI
             public double Size { get; }
         }
 
-        public static AlignedPosition AlignHorizontal(Rect layoutBounds, Control childControl, Size childPreferredSize)
+        public static AlignedPosition AlignHorizontal(Rect layoutBounds, Control childControl, Size childPreferredSize) =>
+            AlignHorizontal(layoutBounds, childControl, childPreferredSize, childControl.HorizontalAlignment);
+
+        public static AlignedPosition AlignVertical(Rect layoutBounds, Control childControl, Size childPreferredSize) =>
+            AlignVertical(layoutBounds, childControl, childPreferredSize, childControl.VerticalAlignment);
+
+        public static AlignedPosition AlignHorizontal(Rect layoutBounds, Control childControl, Size childPreferredSize, HorizontalAlignment alignment)
         {
-            switch (childControl.HorizontalAlignment)
+            switch (alignment)
             {
                 case HorizontalAlignment.Left:
                     return new AlignedPosition(layoutBounds.Left + childControl.Margin.Left, childPreferredSize.Width);
@@ -36,9 +42,9 @@ namespace Alternet.UI
             }
         }
 
-        public static AlignedPosition AlignVertical(Rect layoutBounds, Control control, Size childPreferredSize)
+        public static AlignedPosition AlignVertical(Rect layoutBounds, Control control, Size childPreferredSize, VerticalAlignment alignment)
         {
-            switch (control.VerticalAlignment)
+            switch (alignment)
             {
                 case VerticalAlignment.Top:
                     return new AlignedPosition(layoutBounds.Top + control.Margin.Top, childPreferredSize.Height);

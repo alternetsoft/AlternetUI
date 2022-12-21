@@ -12,7 +12,7 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 50; i++)
             {
                 stackPanel.Children.Add(new Button("Button " + i));
             }
