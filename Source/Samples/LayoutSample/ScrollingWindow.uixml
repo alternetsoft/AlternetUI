@@ -1,7 +1,7 @@
-﻿<Control x:Class="ControlsSample.ScrollingPage"
-        xmlns="http://schemas.alternetsoft.com/ui/2021"
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
+        x:Class="LayoutSample.ScrollingWindow"
+        Title="Scrolling">
     <StackPanel Orientation="Vertical" Margin="10">
         <GroupBox Title="StackPanel" Padding="10">
             <StackPanel Orientation="Horizontal">
@@ -42,7 +42,7 @@
                     <Button Text="Add Control" Name="addControlToStackPanelButton" Margin="0,0,0,5"
                             Click="AddControlToStackPanelButton_Click"
                             Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"/>
-                    
+
                     <Button Text="Remove Control" Name="removeControlFromStackPanelButton"
                             Click="RemoveControlFromStackPanelButton_Click"
                             Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
@@ -99,5 +99,6 @@
                             Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"/>
                 </Grid>
             </StackPanel>
-        </GroupBox>    </StackPanel>
-</Control>
+        </GroupBox>
+    </StackPanel>
+</Window>

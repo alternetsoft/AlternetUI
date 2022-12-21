@@ -1,14 +1,12 @@
-﻿using Alternet.UI;
+using Alternet.UI;
 using System;
 using System.Linq;
 
-namespace ControlsSample
+namespace LayoutSample
 {
-    partial class ScrollingPage : Control
+    public partial class ScrollingWindow : Window
     {
-        private IPageSite? site;
-
-        public ScrollingPage()
+        public ScrollingWindow()
         {
             InitializeComponent();
 
@@ -16,6 +14,8 @@ namespace ControlsSample
 
             InitializeStackPanel();
             InitializeGrid();
+
+            SetSizeToContent();
         }
 
         private void InitializeStackPanel()
@@ -79,16 +79,6 @@ namespace ControlsSample
             comboBox.SelectedItem = defaultValue;
         }
 
-        public IPageSite? Site
-        {
-            get => site;
-
-            set
-            {
-                site = value;
-            }
-        }
-
         private void OrientationComboBox_SelectedItemChanged(object? sender, System.EventArgs e)
         {
             stackPanel.Orientation = (StackPanelOrientation)orientationComboBox.SelectedItem!;
@@ -148,7 +138,7 @@ namespace ControlsSample
             var toRemove = grid.Children.Where(x => Grid.GetRow(x) == rowIndex).ToArray();
             foreach (var control in toRemove)
                 grid.Children.Remove(control);
-            
+
             grid.RowDefinitions.RemoveAt(rowIndex);
         }
 
