@@ -92,15 +92,12 @@ namespace Alternet.UI
 
         private void NativeControl_HorizontalScrollBarValueChanged(object? sender, EventArgs e)
         {
-        }
-
-        private void RelayoutAll(Control control)
-        {
-            foreach (var child in control.Handler.AllChildrenIncludedInLayout)
-            {
-                child.PerformLayout();
-                RelayoutAll(child);
-            }
+            settingLayoutOffset = true;
+            LayoutOffset = new Size(
+                -NativeControl.GetScrollBarValue(Native.ScrollBarOrientation.Horizontal),
+                LayoutOffset.Height);
+            PerformLayout();
+            settingLayoutOffset = false;
         }
 
         private void NativeControl_VerticalScrollBarValueChanged(object? sender, EventArgs e)
@@ -110,7 +107,6 @@ namespace Alternet.UI
                 LayoutOffset.Width,
                 -NativeControl.GetScrollBarValue(Native.ScrollBarOrientation.Vertical));
             PerformLayout();
-            //RelayoutAll(Control);
             settingLayoutOffset = false;
         }
     }
