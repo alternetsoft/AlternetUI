@@ -21,8 +21,8 @@ namespace Alternet::UI
             _bounds(*this, Rect(), &Control::IsWxWindowCreated, &Control::RetrieveBounds, &Control::ApplyBounds),
             _backgroundColor(*this, Color(), &Control::IsWxWindowCreated, &Control::RetrieveBackgroundColor, &Control::ApplyBackgroundColor),
             _foregroundColor(*this, Color(), &Control::IsWxWindowCreated, &Control::RetrieveForegroundColor, &Control::ApplyForegroundColor),
-            _horizontalScrollBarInfo(*this, ScrollInfo(), &Control::IsWxWindowCreated, &Control::RetrieveHorizontalScrollBarInfo, &Control::ApplyHorizontalScrollBarInfo),
-            _verticalScrollBarInfo(*this, ScrollInfo(), &Control::IsWxWindowCreated, &Control::RetrieveVerticalScrollBarInfo, &Control::ApplyVerticalScrollBarInfo),
+            _horizontalScrollBarInfo(*this, ScrollInfo(), &Control::CanSetScrollbar, &Control::RetrieveHorizontalScrollBarInfo, &Control::ApplyHorizontalScrollBarInfo),
+            _verticalScrollBarInfo(*this, ScrollInfo(), &Control::CanSetScrollbar, &Control::RetrieveVerticalScrollBarInfo, &Control::ApplyVerticalScrollBarInfo),
             _delayedValues({&_delayedFlags, &_bounds, &_backgroundColor, &_foregroundColor, &_horizontalScrollBarInfo, &_verticalScrollBarInfo })
     {
     }
@@ -31,6 +31,11 @@ namespace Alternet::UI
     {
         DestroyDropTarget();
         DestroyWxWindow();
+    }
+
+    bool Control::CanSetScrollbar()
+    {
+        return IsWxWindowCreated() && GetIsScrollable();
     }
 
     void Control::Destroy()

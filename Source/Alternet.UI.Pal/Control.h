@@ -108,6 +108,8 @@ namespace Alternet::UI
 
     private:
 
+        bool CanSetScrollbar();
+
         void NotifyAllChildrenOnParentChange();
 
         enum class DelayedControlFlags
