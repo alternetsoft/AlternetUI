@@ -547,6 +547,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// This methods is called when the layout of the control changes.
+        /// </summary>
+        protected virtual void OnLayoutChanged()
+        {
+        }
+
+        /// <summary>
+        /// Initiates invocation of <see cref="OnLayoutChanged"/> for this and all parent controls.
+        /// </summary>
+        public void RaiseLayoutChanged()
+        {
+            var control = Control;
+            while (control != null)
+            {
+                control.Handler.OnLayoutChanged();
+                control = control.Parent;
+            }
+        }
+
+        /// <summary>
         /// Called after this handler has been attached to a <see cref="Control"/>.
         /// </summary>
         protected virtual void OnAttach()
@@ -808,11 +828,13 @@ namespace Alternet.UI
 
         private void Control_VerticalAlignmentChanged(object? sender, EventArgs e)
         {
+            RaiseLayoutChanged();
             PerformLayout();
         }
 
         private void Control_HorizontalAlignmentChanged(object? sender, EventArgs e)
         {
+            RaiseLayoutChanged();
             PerformLayout();
         }
 
@@ -1109,12 +1131,14 @@ namespace Alternet.UI
         private void Children_ItemInserted(object? sender, CollectionChangeEventArgs<Control> e)
         {
             RaiseChildInserted(e.Index, e.Item);
+            RaiseLayoutChanged();
             PerformLayout();
         }
 
         private void Children_ItemRemoved(object? sender, CollectionChangeEventArgs<Control> e)
         {
             RaiseChildRemoved(e.Index, e.Item);
+            RaiseLayoutChanged();
             PerformLayout();
         }
 

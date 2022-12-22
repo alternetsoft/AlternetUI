@@ -15,8 +15,11 @@ namespace Alternet.UI
         {
             LayoutCore();
 
-            if (!settingLayoutOffset)
+            if (!settingLayoutOffset && !scrollInfoValid)
+            {
                 SetScrollInfo();
+                LayoutCore();
+            }
         }
 
         internal override Native.Control CreateNativeControl()
@@ -26,6 +29,8 @@ namespace Alternet.UI
 
         protected override void OnAttach()
         {
+            scrollInfoValid = false;
+
             base.OnAttach();
 
             NativeControl.VerticalScrollBarValueChanged += NativeControl_VerticalScrollBarValueChanged;
@@ -74,6 +79,14 @@ namespace Alternet.UI
             }
         }
 
+        bool scrollInfoValid;
+
+        protected override void OnLayoutChanged()
+        {
+            base.OnLayoutChanged();
+            scrollInfoValid = false;
+        }
+
         private void SetScrollInfo()
         {
             var preferredSize = GetChildrenMaxPreferredSizePadded(new Size(double.PositiveInfinity, double.PositiveInfinity));
@@ -88,6 +101,10 @@ namespace Alternet.UI
                 NativeControl.SetScrollBar(Native.ScrollBarOrientation.Vertical, false, 0, 0, 0);
             else
                 NativeControl.SetScrollBar(Native.ScrollBarOrientation.Vertical, true, 0, (int)size.Height, (int)preferredSize.Height);
+
+            LayoutOffset = new Size();
+
+            scrollInfoValid = true;
         }
 
         private void NativeControl_HorizontalScrollBarValueChanged(object? sender, EventArgs e)

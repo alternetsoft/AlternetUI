@@ -21,6 +21,7 @@ namespace LayoutSample
             set
             {
                 zoom = value;
+                Handler.RaiseLayoutChanged();
                 PerformLayout();
             }
         }
