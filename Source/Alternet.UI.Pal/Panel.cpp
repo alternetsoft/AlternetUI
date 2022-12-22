@@ -12,7 +12,12 @@ namespace Alternet::UI
 
     wxWindow* Panel::CreateWxWindowCore(wxWindow* parent)
     {
-        auto p = new wxPanel(parent, -1, wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+        long style = wxNO_BORDER;
+
+        if (GetIsScrollable())
+            style |= wxHSCROLL | wxVSCROLL;
+
+        auto p = new wxPanel(parent, -1, wxDefaultPosition, wxDefaultSize, style);
         return p;
     }
 }

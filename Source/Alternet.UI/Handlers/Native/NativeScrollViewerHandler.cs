@@ -33,6 +33,7 @@ namespace Alternet.UI
 
             base.OnAttach();
 
+            NativeControl.IsScrollable = true;
             NativeControl.VerticalScrollBarValueChanged += NativeControl_VerticalScrollBarValueChanged;
             NativeControl.HorizontalScrollBarValueChanged += NativeControl_HorizontalScrollBarValueChanged;
         }

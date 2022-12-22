@@ -228,6 +228,20 @@ ALTERNET_UI_API void* Control_GetHandle_(Control* obj)
         });
 }
 
+ALTERNET_UI_API c_bool Control_GetIsScrollable_(Control* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsScrollable();
+        });
+}
+
+ALTERNET_UI_API void Control_SetIsScrollable_(Control* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetIsScrollable(value);
+        });
+}
+
 ALTERNET_UI_API void Control_SetMouseCapture_(Control* obj, c_bool value)
 {
     MarshalExceptions<void>([&](){

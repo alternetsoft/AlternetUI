@@ -69,6 +69,10 @@ bool GetIsMouseCaptured();
 
 void* GetHandle();
 
+
+bool GetIsScrollable();
+void SetIsScrollable(bool value);
+
 void SetMouseCapture(bool value);
 void AddChild(Control* control);
 void RemoveChild(Control* control);

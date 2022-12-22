@@ -98,6 +98,20 @@ namespace Alternet::UI
             _flags.Set(ControlFlags::RecreatingWxWindow, false);
     }
 
+    bool Control::GetIsScrollable()
+    {
+        return _flags.IsSet(ControlFlags::IsScrollable);
+    }
+
+    void Control::SetIsScrollable(bool value)
+    {
+        if (value == GetIsScrollable())
+            return;
+
+        _flags.Set(ControlFlags::IsScrollable, value);
+        RecreateWxWindowIfNeeded();
+    }
+
     void Control::OnScroll(wxScrollWinEvent& event)
     {
         auto wxOrientation = event.GetOrientation();

@@ -105,6 +105,8 @@ namespace NativeApi.Api
 
         public void SendSizeEvent() => throw new Exception();
 
+        public bool IsScrollable { get; set; }
+
         public void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum) => throw new Exception();
 
         public bool IsScrollBarVisible(ScrollBarOrientation orientation) => throw new Exception();

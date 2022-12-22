@@ -312,6 +312,23 @@ namespace Alternet.UI.Native
             
         }
         
+        public bool IsScrollable
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetIsScrollable_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetIsScrollable_(NativePointer, value);
+            }
+        }
+        
         public void SetMouseCapture(bool value)
         {
             CheckDisposed();
@@ -728,6 +745,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Control_GetHandle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetIsScrollable_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetIsScrollable_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetMouseCapture_(IntPtr obj, bool value);

@@ -115,7 +115,7 @@ namespace Alternet::UI
             None = 0,
             Visible = 1 << 0,
             Frozen = 1 << 1,
-            Enabled = 1 << 2,
+            Enabled = 1 << 2
         };
 
         enum class ControlFlags
@@ -129,6 +129,7 @@ namespace Alternet::UI
             PostInitWxWindowRecreationPending = 1 << 5,
             DestroyingWxWindow = 1 << 6,
             RecreatingWxWindow = 1 << 7,
+            IsScrollable = 1 << 8
         };
 
         std::vector<std::function<void()>> _postInitActions;
