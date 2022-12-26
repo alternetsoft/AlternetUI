@@ -289,10 +289,10 @@ namespace Alternet.UI.Native
             NativeApi.TreeView_SetFocused_(NativePointer, item, value);
         }
         
-        public bool IsFocused(System.IntPtr item)
+        public bool IsItemFocused(System.IntPtr item)
         {
             CheckDisposed();
-            var n = NativeApi.TreeView_IsFocused_(NativePointer, item);
+            var n = NativeApi.TreeView_IsItemFocused_(NativePointer, item);
             var m = n;
             return m;
         }
@@ -564,7 +564,7 @@ namespace Alternet.UI.Native
             public static extern void TreeView_SetFocused_(IntPtr obj, System.IntPtr item, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TreeView_IsFocused_(IntPtr obj, System.IntPtr item);
+            public static extern bool TreeView_IsItemFocused_(IntPtr obj, System.IntPtr item);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_SetItemText_(IntPtr obj, System.IntPtr item, string text);

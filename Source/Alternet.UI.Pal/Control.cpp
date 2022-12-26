@@ -1024,6 +1024,24 @@ namespace Alternet::UI
         return nullptr;
     }
 
+    bool Control::GetTabStop()
+    {
+        return false;
+    }
+
+    void Control::SetTabStop(bool value)
+    {
+    }
+
+    bool Control::GetIsFocused()
+    {
+        return false;
+    }
+
+    void Control::SelectNextControl(bool forward, bool nested)
+    {
+    }
+
     wxOrientation Control::GetWxScrollOrientation(ScrollBarOrientation orientation)
     {
         switch (orientation)
@@ -1203,7 +1221,7 @@ namespace Alternet::UI
         return toDip(wxPoint(point.X, point.Y), GetWxWindow());
     }
 
-    bool Control::Focus()
+    bool Control::SetFocus()
     {
         auto window = GetWxWindow();
         if (!window->AcceptsFocus() || !window->CanAcceptFocus() || !window->CanBeFocused())

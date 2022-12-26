@@ -168,7 +168,7 @@ namespace CustomControlsSample
 
             var location = e.GetPosition(Control);
 
-            Focus();
+            SetFocus();
             if (MathUtil.IsPointInCircle(location, GetControlCenter(), GetControlRadius()))
             {
                 dragStartPosition = location;

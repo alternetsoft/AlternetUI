@@ -54,7 +54,7 @@ namespace NativeApi.Api
         public bool IsItemSelected(IntPtr item) => throw new Exception();
 
         public void SetFocused(IntPtr item, bool value) => throw new Exception();
-        public bool IsFocused(IntPtr item) => throw new Exception();
+        public new bool IsItemFocused(IntPtr item) => throw new Exception();
 
         public void SetItemText(IntPtr item, string text) => throw new Exception();
         public string GetItemText(IntPtr item) => throw new Exception();

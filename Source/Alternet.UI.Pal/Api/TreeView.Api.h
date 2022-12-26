@@ -254,10 +254,10 @@ ALTERNET_UI_API void TreeView_SetFocused_(TreeView* obj, void* item, c_bool valu
         });
 }
 
-ALTERNET_UI_API c_bool TreeView_IsFocused_(TreeView* obj, void* item)
+ALTERNET_UI_API c_bool TreeView_IsItemFocused_(TreeView* obj, void* item)
 {
     return MarshalExceptions<c_bool>([&](){
-            return obj->IsFocused(item);
+            return obj->IsItemFocused(item);
         });
 }
 

@@ -67,12 +67,23 @@ void SetFont(Font* value);
 bool GetIsMouseCaptured();
 
 
+bool GetTabStop();
+void SetTabStop(bool value);
+
+
+bool GetIsFocused();
+
+
 void* GetHandle();
 
 
 bool GetIsScrollable();
 void SetIsScrollable(bool value);
 
+bool IsScrollBarVisible(ScrollBarOrientation orientation);
+int GetScrollBarValue(ScrollBarOrientation orientation);
+int GetScrollBarLargeChange(ScrollBarOrientation orientation);
+int GetScrollBarMaximum(ScrollBarOrientation orientation);
 void SetMouseCapture(bool value);
 void AddChild(Control* control);
 void RemoveChild(Control* control);
@@ -84,23 +95,20 @@ DrawingContext* OpenPaintDrawingContext();
 DrawingContext* OpenClientDrawingContext();
 void BeginUpdate();
 void EndUpdate();
-static Control* GetFocusedControl();
 static Control* HitTest(const Point& screenPoint);
 Point ClientToScreen(const Point& point);
 Point ScreenToClient(const Point& point);
 Int32Point ScreenToDevice(const Point& point);
 Point DeviceToScreen(const Int32Point& point);
-bool Focus();
+static Control* GetFocusedControl();
+bool SetFocus();
+void SelectNextControl(bool forward, bool nested);
 void BeginInit();
 void EndInit();
 void Destroy();
 void SaveScreenshot(const string& fileName);
 void SendSizeEvent();
 void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
-bool IsScrollBarVisible(ScrollBarOrientation orientation);
-int GetScrollBarValue(ScrollBarOrientation orientation);
-int GetScrollBarLargeChange(ScrollBarOrientation orientation);
-int GetScrollBarMaximum(ScrollBarOrientation orientation);
 public:
 enum class ControlEvent
 {
@@ -115,6 +123,8 @@ enum class ControlEvent
     DragOver,
     DragEnter,
     DragLeave,
+    GotFocus,
+    LostFocus,
     VerticalScrollBarValueChanged,
     HorizontalScrollBarValueChanged,
 };

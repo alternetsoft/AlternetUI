@@ -920,7 +920,7 @@ namespace Alternet.UI
         /// <remarks>The <see cref="Focus"/> method returns true if the control successfully received input focus.</remarks>
         public bool Focus()
         {
-            return Handler.Focus();
+            return Handler.SetFocus();
         }
 
         /// <summary>

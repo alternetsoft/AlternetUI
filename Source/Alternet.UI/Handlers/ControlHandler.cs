@@ -1057,13 +1057,13 @@ namespace Alternet.UI
         /// Sets input focus to the control.
         /// </summary>
         /// <returns><see langword="true"/> if the input focus request was successful; otherwise, <see langword="false"/>.</returns>
-        /// <remarks>The <see cref="Focus"/> method returns true if the control successfully received input focus.</remarks>
-        public bool Focus()
+        /// <remarks>The <see cref="SetFocus"/> method returns true if the control successfully received input focus.</remarks>
+        public bool SetFocus()
         {
             if (NativeControl == null)
                 throw new InvalidOperationException();
 
-            return NativeControl.Focus();
+            return NativeControl.SetFocus();
         }
 
         private Control? TryFindClosestParentWithNativeControl()

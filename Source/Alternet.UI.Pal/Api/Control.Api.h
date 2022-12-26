@@ -221,6 +221,27 @@ ALTERNET_UI_API c_bool Control_GetIsMouseCaptured_(Control* obj)
         });
 }
 
+ALTERNET_UI_API c_bool Control_GetTabStop_(Control* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetTabStop();
+        });
+}
+
+ALTERNET_UI_API void Control_SetTabStop_(Control* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetTabStop(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Control_GetIsFocused_(Control* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsFocused();
+        });
+}
+
 ALTERNET_UI_API void* Control_GetHandle_(Control* obj)
 {
     return MarshalExceptions<void*>([&](){
@@ -239,6 +260,34 @@ ALTERNET_UI_API void Control_SetIsScrollable_(Control* obj, c_bool value)
 {
     MarshalExceptions<void>([&](){
             obj->SetIsScrollable(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Control_IsScrollBarVisible_(Control* obj, ScrollBarOrientation orientation)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->IsScrollBarVisible(orientation);
+        });
+}
+
+ALTERNET_UI_API int Control_GetScrollBarValue_(Control* obj, ScrollBarOrientation orientation)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetScrollBarValue(orientation);
+        });
+}
+
+ALTERNET_UI_API int Control_GetScrollBarLargeChange_(Control* obj, ScrollBarOrientation orientation)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetScrollBarLargeChange(orientation);
+        });
+}
+
+ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientation orientation)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetScrollBarMaximum(orientation);
         });
 }
 
@@ -319,13 +368,6 @@ ALTERNET_UI_API void Control_EndUpdate_(Control* obj)
         });
 }
 
-ALTERNET_UI_API Control* Control_GetFocusedControl_()
-{
-    return MarshalExceptions<Control*>([&](){
-            return Control::GetFocusedControl();
-        });
-}
-
 ALTERNET_UI_API Control* Control_HitTest_(Point screenPoint)
 {
     return MarshalExceptions<Control*>([&](){
@@ -361,10 +403,24 @@ ALTERNET_UI_API Point_C Control_DeviceToScreen_(Control* obj, Int32Point point)
         });
 }
 
-ALTERNET_UI_API c_bool Control_Focus_(Control* obj)
+ALTERNET_UI_API Control* Control_GetFocusedControl_()
+{
+    return MarshalExceptions<Control*>([&](){
+            return Control::GetFocusedControl();
+        });
+}
+
+ALTERNET_UI_API c_bool Control_SetFocus_(Control* obj)
 {
     return MarshalExceptions<c_bool>([&](){
-            return obj->Focus();
+            return obj->SetFocus();
+        });
+}
+
+ALTERNET_UI_API void Control_SelectNextControl_(Control* obj, c_bool forward, c_bool nested)
+{
+    MarshalExceptions<void>([&](){
+            obj->SelectNextControl(forward, nested);
         });
 }
 
@@ -407,34 +463,6 @@ ALTERNET_UI_API void Control_SetScrollBar_(Control* obj, ScrollBarOrientation or
 {
     MarshalExceptions<void>([&](){
             obj->SetScrollBar(orientation, visible, value, largeChange, maximum);
-        });
-}
-
-ALTERNET_UI_API c_bool Control_IsScrollBarVisible_(Control* obj, ScrollBarOrientation orientation)
-{
-    return MarshalExceptions<c_bool>([&](){
-            return obj->IsScrollBarVisible(orientation);
-        });
-}
-
-ALTERNET_UI_API int Control_GetScrollBarValue_(Control* obj, ScrollBarOrientation orientation)
-{
-    return MarshalExceptions<int>([&](){
-            return obj->GetScrollBarValue(orientation);
-        });
-}
-
-ALTERNET_UI_API int Control_GetScrollBarLargeChange_(Control* obj, ScrollBarOrientation orientation)
-{
-    return MarshalExceptions<int>([&](){
-            return obj->GetScrollBarLargeChange(orientation);
-        });
-}
-
-ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientation orientation)
-{
-    return MarshalExceptions<int>([&](){
-            return obj->GetScrollBarMaximum(orientation);
         });
 }
 

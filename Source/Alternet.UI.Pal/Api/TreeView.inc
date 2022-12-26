@@ -52,7 +52,7 @@ void* GetHitTestResultItem(void* hitTestResult);
 void FreeHitTestResult(void* hitTestResult);
 bool IsItemSelected(void* item);
 void SetFocused(void* item, bool value);
-bool IsFocused(void* item);
+bool IsItemFocused(void* item);
 void SetItemText(void* item, const string& text);
 string GetItemText(void* item);
 void SetItemImageIndex(void* item, int imageIndex);

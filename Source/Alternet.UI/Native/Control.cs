@@ -300,6 +300,35 @@ namespace Alternet.UI.Native
             
         }
         
+        public bool TabStop
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetTabStop_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Control_SetTabStop_(NativePointer, value);
+            }
+        }
+        
+        public bool IsFocused
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetIsFocused_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
         public System.IntPtr Handle
         {
             get
@@ -327,6 +356,38 @@ namespace Alternet.UI.Native
                 CheckDisposed();
                 NativeApi.Control_SetIsScrollable_(NativePointer, value);
             }
+        }
+        
+        public bool IsScrollBarVisible(ScrollBarOrientation orientation)
+        {
+            CheckDisposed();
+            var n = NativeApi.Control_IsScrollBarVisible_(NativePointer, orientation);
+            var m = n;
+            return m;
+        }
+        
+        public int GetScrollBarValue(ScrollBarOrientation orientation)
+        {
+            CheckDisposed();
+            var n = NativeApi.Control_GetScrollBarValue_(NativePointer, orientation);
+            var m = n;
+            return m;
+        }
+        
+        public int GetScrollBarLargeChange(ScrollBarOrientation orientation)
+        {
+            CheckDisposed();
+            var n = NativeApi.Control_GetScrollBarLargeChange_(NativePointer, orientation);
+            var m = n;
+            return m;
+        }
+        
+        public int GetScrollBarMaximum(ScrollBarOrientation orientation)
+        {
+            CheckDisposed();
+            var n = NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
+            var m = n;
+            return m;
         }
         
         public void SetMouseCapture(bool value)
@@ -405,14 +466,6 @@ namespace Alternet.UI.Native
             NativeApi.Control_EndUpdate_(NativePointer);
         }
         
-        public static Control? GetFocusedControl()
-        {
-            var n = NativeApi.Control_GetFocusedControl_();
-            var m = NativeObject.GetFromNativePointer<Control>(n, null);
-            ReleaseNativeObjectPointer(n);
-            return m;
-        }
-        
         public static Control? HitTest(Alternet.Drawing.Point screenPoint)
         {
             var n = NativeApi.Control_HitTest_(screenPoint);
@@ -453,12 +506,26 @@ namespace Alternet.UI.Native
             return m;
         }
         
-        public bool Focus()
+        public static Control? GetFocusedControl()
+        {
+            var n = NativeApi.Control_GetFocusedControl_();
+            var m = NativeObject.GetFromNativePointer<Control>(n, null);
+            ReleaseNativeObjectPointer(n);
+            return m;
+        }
+        
+        public bool SetFocus()
         {
             CheckDisposed();
-            var n = NativeApi.Control_Focus_(NativePointer);
+            var n = NativeApi.Control_SetFocus_(NativePointer);
             var m = n;
             return m;
+        }
+        
+        public void SelectNextControl(bool forward, bool nested)
+        {
+            CheckDisposed();
+            NativeApi.Control_SelectNextControl_(NativePointer, forward, nested);
         }
         
         public void BeginInit()
@@ -495,38 +562,6 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.Control_SetScrollBar_(NativePointer, orientation, visible, value, largeChange, maximum);
-        }
-        
-        public bool IsScrollBarVisible(ScrollBarOrientation orientation)
-        {
-            CheckDisposed();
-            var n = NativeApi.Control_IsScrollBarVisible_(NativePointer, orientation);
-            var m = n;
-            return m;
-        }
-        
-        public int GetScrollBarValue(ScrollBarOrientation orientation)
-        {
-            CheckDisposed();
-            var n = NativeApi.Control_GetScrollBarValue_(NativePointer, orientation);
-            var m = n;
-            return m;
-        }
-        
-        public int GetScrollBarLargeChange(ScrollBarOrientation orientation)
-        {
-            CheckDisposed();
-            var n = NativeApi.Control_GetScrollBarLargeChange_(NativePointer, orientation);
-            var m = n;
-            return m;
-        }
-        
-        public int GetScrollBarMaximum(ScrollBarOrientation orientation)
-        {
-            CheckDisposed();
-            var n = NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
-            var m = n;
-            return m;
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -599,6 +634,14 @@ namespace Alternet.UI.Native
                 {
                     DragLeave?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.ControlEvent.GotFocus:
+                {
+                    GotFocus?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.ControlEvent.LostFocus:
+                {
+                    LostFocus?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 case NativeApi.ControlEvent.VerticalScrollBarValueChanged:
                 {
                     VerticalScrollBarValueChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
@@ -622,6 +665,8 @@ namespace Alternet.UI.Native
         public event NativeEventHandler<DragEventData>? DragOver;
         public event NativeEventHandler<DragEventData>? DragEnter;
         public event EventHandler? DragLeave;
+        public event EventHandler? GotFocus;
+        public event EventHandler? LostFocus;
         public event EventHandler? VerticalScrollBarValueChanged;
         public event EventHandler? HorizontalScrollBarValueChanged;
         
@@ -646,6 +691,8 @@ namespace Alternet.UI.Native
                 DragOver,
                 DragEnter,
                 DragLeave,
+                GotFocus,
+                LostFocus,
                 VerticalScrollBarValueChanged,
                 HorizontalScrollBarValueChanged,
             }
@@ -744,6 +791,15 @@ namespace Alternet.UI.Native
             public static extern bool Control_GetIsMouseCaptured_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetTabStop_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetTabStop_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_GetIsFocused_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Control_GetHandle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -751,6 +807,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetIsScrollable_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_IsScrollBarVisible_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Control_GetScrollBarValue_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Control_GetScrollBarLargeChange_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetMouseCapture_(IntPtr obj, bool value);
@@ -786,9 +854,6 @@ namespace Alternet.UI.Native
             public static extern void Control_EndUpdate_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Control_GetFocusedControl_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_HitTest_(NativeApiTypes.Point screenPoint);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -804,7 +869,13 @@ namespace Alternet.UI.Native
             public static extern NativeApiTypes.Point Control_DeviceToScreen_(IntPtr obj, NativeApiTypes.Int32Point point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Control_Focus_(IntPtr obj);
+            public static extern IntPtr Control_GetFocusedControl_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Control_SetFocus_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SelectNextControl_(IntPtr obj, bool forward, bool nested);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_BeginInit_(IntPtr obj);
@@ -823,18 +894,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetScrollBar_(IntPtr obj, ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Control_IsScrollBarVisible_(IntPtr obj, ScrollBarOrientation orientation);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Control_GetScrollBarValue_(IntPtr obj, ScrollBarOrientation orientation);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Control_GetScrollBarLargeChange_(IntPtr obj, ScrollBarOrientation orientation);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
             
         }
     }

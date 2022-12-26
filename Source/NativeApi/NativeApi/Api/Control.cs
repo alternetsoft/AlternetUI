@@ -80,8 +80,6 @@ namespace NativeApi.Api
         public void BeginUpdate() => throw new Exception();
         public void EndUpdate() => throw new Exception();
 
-        public static Control? GetFocusedControl() => throw new Exception();
-
         public static Control? HitTest(Point screenPoint) => throw new Exception();
 
         public Point ClientToScreen(Point point) => throw new Exception();
@@ -92,7 +90,13 @@ namespace NativeApi.Api
 
         public bool IsMouseCaptured { get; }
 
-        public bool Focus() => throw new Exception();
+        public static Control? GetFocusedControl() => throw new Exception();
+        public bool SetFocus() => throw new Exception();
+        public bool TabStop { get; set; }
+        public bool IsFocused { get; }
+        public void SelectNextControl(bool forward, bool nested) => throw new Exception();
+        public event EventHandler? GotFocus { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler? LostFocus { add => throw new Exception(); remove => throw new Exception(); }
 
         public void BeginInit() => throw new Exception();
         public void EndInit() => throw new Exception();

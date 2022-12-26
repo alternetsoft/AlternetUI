@@ -273,7 +273,7 @@ namespace Alternet::UI
             treeCtrl->ClearFocusedItem();
     }
 
-    bool TreeView::IsFocused(void* item)
+    bool TreeView::IsItemFocused(void* item)
     {
         return GetTreeCtrl()->GetFocusedItem() == item;
     }
