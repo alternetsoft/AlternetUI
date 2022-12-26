@@ -917,10 +917,19 @@ namespace Alternet.UI
         /// Sets input focus to the control.
         /// </summary>
         /// <returns><see langword="true"/> if the input focus request was successful; otherwise, <see langword="false"/>.</returns>
-        /// <remarks>The <see cref="Focus"/> method returns true if the control successfully received input focus.</remarks>
-        public bool Focus()
+        /// <remarks>The <see cref="SetFocus"/> method returns true if the control successfully received input focus.</remarks>
+        public bool SetFocus()
         {
             return Handler.SetFocus();
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the user can give the focus to this control using the TAB key.
+        /// </summary>
+        public bool TabStop
+        {
+            get => Handler.TabStop;
+            set => Handler.TabStop = value;
         }
 
         /// <summary>

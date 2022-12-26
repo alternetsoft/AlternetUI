@@ -131,7 +131,8 @@ namespace Alternet::UI
             PostInitWxWindowRecreationPending = 1 << 5,
             DestroyingWxWindow = 1 << 6,
             RecreatingWxWindow = 1 << 7,
-            IsScrollable = 1 << 8
+            IsScrollable = 1 << 8,
+            TabStop = 1 << 9,
         };
 
         std::vector<std::function<void()>> _postInitActions;

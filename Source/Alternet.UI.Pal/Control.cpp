@@ -8,7 +8,7 @@ namespace Alternet::UI
     /*static*/ Control::ControlsByWxWindowsMap Control::s_controlsByWxWindowsMap;
 
     Control::Control() :
-        _flags(ControlFlags::None),
+        _flags(ControlFlags::TabStop),
         _delayedFlags(
             *this,
             DelayedControlFlags::Visible,
@@ -372,6 +372,9 @@ namespace Alternet::UI
             _wxWindow->SetDoubleBuffered(true);
             _wxWindow->SetBackgroundStyle(wxBG_STYLE_PAINT);
         }
+
+        if (!GetTabStop())
+            _wxWindow->DisableFocusFromKeyboard();
 
         _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
         //_wxWindow->Bind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
@@ -1026,11 +1029,13 @@ namespace Alternet::UI
 
     bool Control::GetTabStop()
     {
-        return false;
+        return _flags.IsSet(ControlFlags::TabStop);
     }
 
     void Control::SetTabStop(bool value)
     {
+        _flags.Set(ControlFlags::TabStop, value);
+        RecreateWxWindowIfNeeded();
     }
 
     bool Control::GetIsFocused()

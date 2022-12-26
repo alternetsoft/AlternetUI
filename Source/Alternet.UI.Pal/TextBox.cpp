@@ -29,7 +29,7 @@ namespace Alternet::UI
 
     wxWindow* TextBox::CreateWxWindowCore(wxWindow* parent)
     {
-        auto textCtrl = new wxTextCtrl(
+        auto textCtrl = new TextCtrlEx(
             parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, GetStyle());
 
 #ifdef __WXOSX__

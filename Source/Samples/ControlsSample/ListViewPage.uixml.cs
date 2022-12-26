@@ -152,7 +152,7 @@ namespace ControlsSample
             var item = GetLastItem();
             if (item != null)
             {
-                listView.Focus();
+                listView.SetFocus();
                 item.IsFocused = true;
             }
         }

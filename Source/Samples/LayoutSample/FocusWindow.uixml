@@ -7,13 +7,13 @@
         <GroupBox Margin="0,0,0,10">
             <StackPanel>
                 <Label Text="TextBox1 (TabStop = true):" />
-                <TextBox Name="textBox1" Text="TextBox1" Margin="0,0,0,15" />
+                <TextBox Name="textBox1" Text="TextBox1" Margin="0,0,0,15" TabStop="true"/>
 
                 <Label Text="TextBox2 (TabStop = false):" />
-                <TextBox Name="textBox2" Text="TextBox2" Margin="0,0,0,15" />
+                <TextBox Name="textBox2" Text="TextBox2" Margin="0,0,0,15" TabStop="false"/>
 
                 <Label Text="TextBox3 (TabStop = true):" />
-                <TextBox Name="textBox3" Text="TextBox3" Margin="0,0,0,15" />
+                <TextBox Name="textBox3" Text="TextBox3" Margin="0,0,0,15" TabStop="true"/>
             </StackPanel>
         </GroupBox>
 

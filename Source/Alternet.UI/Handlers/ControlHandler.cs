@@ -1066,6 +1066,28 @@ namespace Alternet.UI
             return NativeControl.SetFocus();
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the user can give the focus to this control using the TAB key.
+        /// </summary>
+        public virtual bool TabStop
+        {
+            get
+            {
+                if (NativeControl == null)
+                    throw new InvalidOperationException();
+
+                return NativeControl.TabStop;
+            }
+
+            set
+            {
+                if (NativeControl == null)
+                    throw new InvalidOperationException();
+
+                NativeControl.TabStop = value;
+            }
+        }
+
         private Control? TryFindClosestParentWithNativeControl()
         {
             var control = Control;

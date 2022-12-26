@@ -191,7 +191,7 @@ namespace ControlsSample
             var item = GetLastItem(null, treeView.Items);
             if (item != null)
             {
-                treeView.Focus();
+                treeView.SetFocus();
                 item.IsFocused = true;
             }
         }
