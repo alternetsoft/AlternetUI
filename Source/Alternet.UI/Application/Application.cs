@@ -72,18 +72,18 @@ namespace Alternet.UI
         [return: MaybeNull]
         internal static T HandleThreadExceptions<T>(Func<T> func)
         {
-            if (Current == null)
+            if (current == null)
                 return func();
 
-            return Current.HandleThreadExceptionsCore(func);
+            return current.HandleThreadExceptionsCore(func);
         }
 
         internal static void HandleThreadExceptions(Action action)
         {
-            if (Current == null)
+            if (current == null)
                 action();
             else
-                Current.HandleThreadExceptionsCore(action);
+                current.HandleThreadExceptionsCore(action);
         }
 
         [return: MaybeNull]
