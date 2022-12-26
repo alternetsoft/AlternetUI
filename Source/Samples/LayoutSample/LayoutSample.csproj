@@ -28,6 +28,7 @@
 
     <ItemGroup>
       <None Remove="AlignmentControl.uixml" />
+      <None Remove="FocusWindow.uixml" />
       <None Remove="Grid10x10Window.uixml" />
       <None Remove="GridLayoutPropertiesWindow.uixml" />
       <None Remove="GridLengthControl.uixml" />

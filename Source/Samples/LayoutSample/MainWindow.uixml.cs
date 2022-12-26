@@ -33,5 +33,11 @@ namespace LayoutSample
             var window = new ScrollingWindow();
             window.Show();
         }
+
+        private void ShowFocusButton_Click(object? sender, EventArgs e)
+        {
+            var window = new FocusWindow();
+            window.Show();
+        }
     }
 }
