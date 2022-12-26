@@ -102,7 +102,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a value indicating whether the tree item is in the focused state.
         /// </summary>
-        public abstract bool IsFocused(TreeViewItem treeViewItem);
+        public abstract bool IsItemFocused(TreeViewItem treeViewItem);
 
         /// <summary>
         /// Sets the specified item text.

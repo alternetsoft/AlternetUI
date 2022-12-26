@@ -597,7 +597,6 @@ namespace Alternet.UI
 
             Control.Children.ItemRemoved += Children_ItemRemoved;
             VisualChildren.ItemRemoved += Children_ItemRemoved;
-
         }
 
         private void Control_ToolTipChanged(object? sender, EventArgs e)
@@ -650,6 +649,8 @@ namespace Alternet.UI
                 NativeControl.DragEnter -= NativeControl_DragEnter;
                 NativeControl.DragLeave -= NativeControl_DragLeave;
                 NativeControl.DragDrop -= NativeControl_DragDrop;
+                NativeControl.GotFocus -= NativeControl_GotFocus;
+                NativeControl.LostFocus -= NativeControl_LostFocus;
             }
         }
 
@@ -674,6 +675,18 @@ namespace Alternet.UI
             NativeControl.DragEnter += NativeControl_DragEnter;
             NativeControl.DragLeave += NativeControl_DragLeave;
             NativeControl.DragDrop += NativeControl_DragDrop;
+            NativeControl.GotFocus += NativeControl_GotFocus;
+            NativeControl.LostFocus += NativeControl_LostFocus;
+        }
+
+        private void NativeControl_GotFocus(object sender, EventArgs e)
+        {
+            Control.RaiseEvent(new RoutedEventArgs(UIElement.GotFocusEvent));
+        }
+
+        private void NativeControl_LostFocus(object sender, EventArgs e)
+        {
+            Control.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
         }
 
         void RaiseDragAndDropEvent(Native.NativeEventArgs<Native.DragEventData> e, Action<DragEventArgs> raiseAction)
@@ -1085,6 +1098,20 @@ namespace Alternet.UI
                     throw new InvalidOperationException();
 
                 NativeControl.TabStop = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the control has input focus.
+        /// </summary>
+        public bool IsFocused
+        {
+            get
+            {
+                if (NativeControl == null)
+                    throw new InvalidOperationException();
+
+                return NativeControl.IsFocused;
             }
         }
 

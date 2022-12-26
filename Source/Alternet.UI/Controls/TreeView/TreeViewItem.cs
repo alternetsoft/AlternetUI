@@ -191,7 +191,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the tree item is in the focused state.
         /// </summary>
-        public bool IsFocused { get => RequiredTreeView.Handler.IsFocused(this); set => RequiredTreeView.Handler.SetFocused(this, value); }
+        public bool IsFocused { get => RequiredTreeView.Handler.IsItemFocused(this); set => RequiredTreeView.Handler.SetFocused(this, value); }
 
         /// <summary>
         /// Gets the position of the tree item in the tree item collection.

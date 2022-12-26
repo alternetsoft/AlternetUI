@@ -189,6 +189,9 @@ namespace Alternet::UI
         void OnDestroy(wxWindowDestroyEvent& event);
         void OnScroll(wxScrollWinEvent& event);
 
+        void OnGotFocus(wxFocusEvent& event);
+        void OnLostFocus(wxFocusEvent& event);
+
         void ApplyToolTip();
 
         void DestroyWxWindow();

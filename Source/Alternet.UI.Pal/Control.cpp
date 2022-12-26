@@ -83,6 +83,8 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
         wxWindow->Unbind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
         wxWindow->Unbind(wxEVT_SIZE, &Control::OnSizeChanged, this);
+        wxWindow->Unbind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
+        wxWindow->Unbind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
 
         wxWindow->Unbind(wxEVT_SCROLLWIN_TOP, &Control::OnScroll, this);
         wxWindow->Unbind(wxEVT_SCROLLWIN_BOTTOM, &Control::OnScroll, this);
@@ -136,6 +138,18 @@ namespace Alternet::UI
         };
 
         RaiseEvent(getEvent());
+    }
+
+    void Control::OnGotFocus(wxFocusEvent& event)
+    {
+        event.Skip();
+        RaiseEvent(ControlEvent::GotFocus);
+    }
+
+    void Control::OnLostFocus(wxFocusEvent& event)
+    {
+        event.Skip();
+        RaiseEvent(ControlEvent::LostFocus);
     }
 
     void Control::DestroyWxWindow()
@@ -384,6 +398,8 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_ENTER_WINDOW, &Control::OnMouseEnter, this);
         _wxWindow->Bind(wxEVT_LEAVE_WINDOW, &Control::OnMouseLeave, this);
         _wxWindow->Bind(wxEVT_SIZE, &Control::OnSizeChanged, this);
+        _wxWindow->Bind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
+        _wxWindow->Bind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
 
         _wxWindow->Bind(wxEVT_SCROLLWIN_TOP, &Control::OnScroll, this);
         _wxWindow->Bind(wxEVT_SCROLLWIN_BOTTOM, &Control::OnScroll, this);
@@ -1040,7 +1056,10 @@ namespace Alternet::UI
 
     bool Control::GetIsFocused()
     {
-        return false;
+        if (_wxWindow == nullptr)
+            return false;
+
+        return _wxWindow->HasFocus();
     }
 
     void Control::SelectNextControl(bool forward, bool nested)

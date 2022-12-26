@@ -933,6 +933,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the control has input focus.
+        /// </summary>
+        public bool IsFocused => Handler.IsFocused;
+
+        /// <summary>
         /// Releases all resources used by the object.
         /// </summary>
         public void Dispose()
