@@ -924,6 +924,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns the currently focused control, or <see langword="null"/> if no control is focused.
+        /// </summary>
+        public static Control? GetFocusedControl()
+        {
+            return ControlHandler.GetFocusedControl();
+        }
+
+        /// <summary>
+        /// Focuses the next control.
+        /// </summary>
+        /// <param name="forward"><see langword="true"/> to move forward in the tab order; <see langword="false"/> to move backward in the tab order.</param>
+        /// <param name="nested"><see langword="true"/> to include nested (children of child controls) child controls; otherwise, <see langword="false"/>.</param>
+        public void FocusNextControl(bool forward = true, bool nested = true)
+        {
+            Handler.FocusNextControl(forward, nested);
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the user can give the focus to this control using the TAB key.
         /// </summary>
         public bool TabStop

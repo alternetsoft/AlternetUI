@@ -94,7 +94,7 @@ namespace NativeApi.Api
         public bool SetFocus() => throw new Exception();
         public bool TabStop { get; set; }
         public bool IsFocused { get; }
-        public void SelectNextControl(bool forward, bool nested) => throw new Exception();
+        public void FocusNextControl(bool forward, bool nested) => throw new Exception();
         public event EventHandler? GotFocus { add => throw new Exception(); remove => throw new Exception(); }
         public event EventHandler? LostFocus { add => throw new Exception(); remove => throw new Exception(); }
 

@@ -417,10 +417,10 @@ ALTERNET_UI_API c_bool Control_SetFocus_(Control* obj)
         });
 }
 
-ALTERNET_UI_API void Control_SelectNextControl_(Control* obj, c_bool forward, c_bool nested)
+ALTERNET_UI_API void Control_FocusNextControl_(Control* obj, c_bool forward, c_bool nested)
 {
     MarshalExceptions<void>([&](){
-            obj->SelectNextControl(forward, nested);
+            obj->FocusNextControl(forward, nested);
         });
 }
 

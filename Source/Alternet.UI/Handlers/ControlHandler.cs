@@ -679,12 +679,12 @@ namespace Alternet.UI
             NativeControl.LostFocus += NativeControl_LostFocus;
         }
 
-        private void NativeControl_GotFocus(object sender, EventArgs e)
+        private void NativeControl_GotFocus(object? sender, EventArgs e)
         {
             Control.RaiseEvent(new RoutedEventArgs(UIElement.GotFocusEvent));
         }
 
-        private void NativeControl_LostFocus(object sender, EventArgs e)
+        private void NativeControl_LostFocus(object? sender, EventArgs e)
         {
             Control.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
         }
@@ -1080,6 +1080,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Focuses the next control.
+        /// </summary>
+        public void FocusNextControl(bool forward, bool nested)
+        {
+            if (NativeControl == null)
+                throw new InvalidOperationException();
+
+            NativeControl.FocusNextControl(forward, nested);
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the user can give the focus to this control using the TAB key.
         /// </summary>
         public virtual bool TabStop
@@ -1242,6 +1253,22 @@ namespace Alternet.UI
                 throw new InvalidOperationException();
 
             NativeControl.SaveScreenshot(fileName);
+        }
+
+        /// <summary>
+        /// Returns the currently focused control, or <see langword="null"/> if no control is focused.
+        /// </summary>
+        public static Control? GetFocusedControl()
+        {
+            var focusedNativeControl = Native.Control.GetFocusedControl();
+            if (focusedNativeControl == null)
+                return null;
+
+            var handler = TryGetHandlerByNativeControl(focusedNativeControl);
+            if (handler == null)
+                return null;
+
+            return handler.Control;
         }
     }
 }

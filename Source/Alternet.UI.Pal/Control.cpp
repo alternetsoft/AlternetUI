@@ -1062,8 +1062,17 @@ namespace Alternet::UI
         return _wxWindow->HasFocus();
     }
 
-    void Control::SelectNextControl(bool forward, bool nested)
+    void Control::FocusNextControl(bool forward, bool nested)
     {
+        if (_wxWindow == nullptr)
+            return;
+        
+        int flags = forward ? wxNavigationKeyEvent::IsForward : wxNavigationKeyEvent::IsBackward;
+
+        if (nested)
+            _wxWindow->Navigate(flags);
+        else
+            _wxWindow->NavigateIn(flags);
     }
 
     wxOrientation Control::GetWxScrollOrientation(ScrollBarOrientation orientation)

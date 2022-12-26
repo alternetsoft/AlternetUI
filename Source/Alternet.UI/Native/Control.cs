@@ -522,10 +522,10 @@ namespace Alternet.UI.Native
             return m;
         }
         
-        public void SelectNextControl(bool forward, bool nested)
+        public void FocusNextControl(bool forward, bool nested)
         {
             CheckDisposed();
-            NativeApi.Control_SelectNextControl_(NativePointer, forward, nested);
+            NativeApi.Control_FocusNextControl_(NativePointer, forward, nested);
         }
         
         public void BeginInit()
@@ -875,7 +875,7 @@ namespace Alternet.UI.Native
             public static extern bool Control_SetFocus_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SelectNextControl_(IntPtr obj, bool forward, bool nested);
+            public static extern void Control_FocusNextControl_(IntPtr obj, bool forward, bool nested);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_BeginInit_(IntPtr obj);

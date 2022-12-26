@@ -102,7 +102,7 @@ Int32Point ScreenToDevice(const Point& point);
 Point DeviceToScreen(const Int32Point& point);
 static Control* GetFocusedControl();
 bool SetFocus();
-void SelectNextControl(bool forward, bool nested);
+void FocusNextControl(bool forward, bool nested);
 void BeginInit();
 void EndInit();
 void Destroy();

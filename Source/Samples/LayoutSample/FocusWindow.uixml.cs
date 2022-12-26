@@ -1,6 +1,4 @@
 using Alternet.UI;
-using System;
-using System.Linq;
 
 namespace LayoutSample
 {
@@ -14,14 +12,23 @@ namespace LayoutSample
             UpdateTextBox1IsFocusedValueLabel();
         }
 
+        protected override void OnPreviewKeyDown(KeyEventArgs e)
+        {
+            base.OnPreviewKeyDown(e);
+
+            if (e.Key == Key.N)
+            {
+                var focusedControl = GetFocusedControl();
+                if (focusedControl == null)
+                    return;
+
+                focusedControl.FocusNextControl();
+            }
+        }
+
         private void SetFocusToTextBox1Button_Click(object sender, System.EventArgs e)
         {
             textBox1.SetFocus();
-        }
-
-        private void SetFocusToNextControlButton_Click(object sender, System.EventArgs e)
-        {
-            
         }
 
         private void UpdateTextBox1IsFocusedValueLabel()
