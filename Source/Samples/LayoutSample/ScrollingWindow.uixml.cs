@@ -16,6 +16,7 @@ namespace LayoutSample
             InitializeGrid();
 
             SetSizeToContent();
+            UpdateImageZoom();
         }
 
         private void InitializeStackPanel()
@@ -153,9 +154,14 @@ namespace LayoutSample
                 grid.HorizontalAlignment = (HorizontalAlignment)gridHorizontalAlignmentComboBox.SelectedItem!;
         }
 
-        private void ZoomSlider_ValueChanged(object sender, EventArgs e)
+        private void UpdateImageZoom()
         {
             imageControl.Zoom = zoomSlider.Value;
+        }
+
+        private void ZoomSlider_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateImageZoom();
         }
     }
 }

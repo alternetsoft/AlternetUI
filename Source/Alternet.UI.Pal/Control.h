@@ -187,7 +187,19 @@ namespace Alternet::UI
         void OnVisibleChanged(wxShowEvent& event);
         void OnSizeChanged(wxSizeEvent& event);
         void OnDestroy(wxWindowDestroyEvent& event);
-        void OnScroll(wxScrollWinEvent& event);
+
+        void OnScrollTop(wxScrollWinEvent& event);
+        void OnScrollBottom(wxScrollWinEvent& event);
+        void OnScrollLineUp(wxScrollWinEvent& event);
+        void OnScrollLineDown(wxScrollWinEvent& event);
+        void OnScrollPageUp(wxScrollWinEvent& event);
+        void OnScrollPageDown(wxScrollWinEvent& event);
+        void OnScrollThumbTrack(wxScrollWinEvent& event);
+        void OnScrollThumbRelease(wxScrollWinEvent& event);
+
+        DelayedValue<Control, Control::ScrollInfo>& GetScrollInfoDelayedValue(const wxScrollWinEvent& event);
+
+        void ApplyScroll(wxScrollWinEvent& event, int position);
 
         void OnGotFocus(wxFocusEvent& event);
         void OnLostFocus(wxFocusEvent& event);

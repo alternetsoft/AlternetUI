@@ -86,14 +86,14 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
         wxWindow->Unbind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
 
-        wxWindow->Unbind(wxEVT_SCROLLWIN_TOP, &Control::OnScroll, this);
-        wxWindow->Unbind(wxEVT_SCROLLWIN_BOTTOM, &Control::OnScroll, this);
-        wxWindow->Unbind(wxEVT_SCROLLWIN_LINEUP, &Control::OnScroll, this);
-        wxWindow->Unbind(wxEVT_SCROLLWIN_LINEDOWN, &Control::OnScroll, this);
-        wxWindow->Unbind(wxEVT_SCROLLWIN_PAGEUP, &Control::OnScroll, this);
-        wxWindow->Unbind(wxEVT_SCROLLWIN_PAGEDOWN, &Control::OnScroll, this);
-        wxWindow->Unbind(wxEVT_SCROLLWIN_THUMBTRACK, &Control::OnScroll, this);
-        wxWindow->Unbind(wxEVT_SCROLLWIN_THUMBRELEASE, &Control::OnScroll, this);
+        wxWindow->Unbind(wxEVT_SCROLLWIN_TOP, &Control::OnScrollTop, this);
+        wxWindow->Unbind(wxEVT_SCROLLWIN_BOTTOM, &Control::OnScrollBottom, this);
+        wxWindow->Unbind(wxEVT_SCROLLWIN_LINEUP, &Control::OnScrollLineUp, this);
+        wxWindow->Unbind(wxEVT_SCROLLWIN_LINEDOWN, &Control::OnScrollLineDown, this);
+        wxWindow->Unbind(wxEVT_SCROLLWIN_PAGEUP, &Control::OnScrollPageUp, this);
+        wxWindow->Unbind(wxEVT_SCROLLWIN_PAGEDOWN, &Control::OnScrollPageDown, this);
+        wxWindow->Unbind(wxEVT_SCROLLWIN_THUMBTRACK, &Control::OnScrollThumbTrack, this);
+        wxWindow->Unbind(wxEVT_SCROLLWIN_THUMBRELEASE, &Control::OnScrollThumbRelease, this);
 
 
         RemoveWxWindowControlAssociation(wxWindow);
@@ -119,10 +119,60 @@ namespace Alternet::UI
         RecreateWxWindowIfNeeded();
     }
 
-    void Control::OnScroll(wxScrollWinEvent& event)
+    void Control::OnScrollTop(wxScrollWinEvent& event)
+    {
+        ApplyScroll(event, 0);
+    }
+
+    void Control::OnScrollBottom(wxScrollWinEvent& event)
+    {
+        auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
+        ApplyScroll(event, scrollInfo.maximum);
+    }
+
+    void Control::OnScrollLineUp(wxScrollWinEvent& event)
+    {
+        auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
+        ApplyScroll(event, scrollInfo.value - 1);
+    }
+
+    void Control::OnScrollLineDown(wxScrollWinEvent& event)
+    {
+        auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
+        ApplyScroll(event, scrollInfo.value + 1);
+    }
+
+    void Control::OnScrollPageUp(wxScrollWinEvent& event)
+    {
+        auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
+        ApplyScroll(event, scrollInfo.value - scrollInfo.largeChange);
+    }
+
+    void Control::OnScrollPageDown(wxScrollWinEvent& event)
+    {
+        auto scrollInfo = GetScrollInfoDelayedValue(event).Get();
+        ApplyScroll(event, scrollInfo.value + scrollInfo.largeChange);
+    }
+
+    void Control::OnScrollThumbTrack(wxScrollWinEvent& event)
+    {
+        ApplyScroll(event, event.GetPosition());
+    }
+
+    void Control::OnScrollThumbRelease(wxScrollWinEvent& event)
+    {
+        ApplyScroll(event, event.GetPosition());
+    }
+
+    DelayedValue<Control, Control::ScrollInfo>& Control::GetScrollInfoDelayedValue(const wxScrollWinEvent& event)
+    {
+        return GetScrollInfoDelayedValue(event.GetOrientation() == wxHORIZONTAL ? ScrollBarOrientation::Horizontal : ScrollBarOrientation::Vertical);
+    }
+
+    void Control::ApplyScroll(wxScrollWinEvent& event, int position)
     {
         auto wxOrientation = event.GetOrientation();
-        GetWxWindow()->SetScrollPos(wxOrientation, event.GetPosition());
+        GetWxWindow()->SetScrollPos(wxOrientation, position);
 
         auto getEvent = [&]()
         {
@@ -401,14 +451,14 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
         _wxWindow->Bind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
 
-        _wxWindow->Bind(wxEVT_SCROLLWIN_TOP, &Control::OnScroll, this);
-        _wxWindow->Bind(wxEVT_SCROLLWIN_BOTTOM, &Control::OnScroll, this);
-        _wxWindow->Bind(wxEVT_SCROLLWIN_LINEUP, &Control::OnScroll, this);
-        _wxWindow->Bind(wxEVT_SCROLLWIN_LINEDOWN, &Control::OnScroll, this);
-        _wxWindow->Bind(wxEVT_SCROLLWIN_PAGEUP, &Control::OnScroll, this);
-        _wxWindow->Bind(wxEVT_SCROLLWIN_PAGEDOWN, &Control::OnScroll, this);
-        _wxWindow->Bind(wxEVT_SCROLLWIN_THUMBTRACK, &Control::OnScroll, this);
-        _wxWindow->Bind(wxEVT_SCROLLWIN_THUMBRELEASE, &Control::OnScroll, this);
+        _wxWindow->Bind(wxEVT_SCROLLWIN_TOP, &Control::OnScrollTop, this);
+        _wxWindow->Bind(wxEVT_SCROLLWIN_BOTTOM, &Control::OnScrollBottom, this);
+        _wxWindow->Bind(wxEVT_SCROLLWIN_LINEUP, &Control::OnScrollLineUp, this);
+        _wxWindow->Bind(wxEVT_SCROLLWIN_LINEDOWN, &Control::OnScrollLineDown, this);
+        _wxWindow->Bind(wxEVT_SCROLLWIN_PAGEUP, &Control::OnScrollPageUp, this);
+        _wxWindow->Bind(wxEVT_SCROLLWIN_PAGEDOWN, &Control::OnScrollPageDown, this);
+        _wxWindow->Bind(wxEVT_SCROLLWIN_THUMBTRACK, &Control::OnScrollThumbTrack, this);
+        _wxWindow->Bind(wxEVT_SCROLLWIN_THUMBRELEASE, &Control::OnScrollThumbRelease, this);
 
         AssociateControlWithWxWindow(_wxWindow, this);
 
@@ -1124,7 +1174,7 @@ namespace Alternet::UI
         info.largeChange = window->GetScrollThumb(wxOrientation);
         info.maximum = window->GetScrollRange(wxOrientation);
         info.visible = info.maximum > 0;
-        
+
         return info;
     }
 
