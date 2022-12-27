@@ -15,10 +15,13 @@ namespace Alternet::UI
 
     Slider::~Slider()
     {
-        auto window = GetWxWindow();
-        if (window != nullptr)
+        if (IsWxWindowCreated())
         {
-            window->Unbind(wxEVT_SLIDER, &Slider::OnSliderValueChanged, this);
+            auto window = GetWxWindow();
+            if (window != nullptr)
+            {
+                window->Unbind(wxEVT_SLIDER, &Slider::OnSliderValueChanged, this);
+            }
         }
     }
 

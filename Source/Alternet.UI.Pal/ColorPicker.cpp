@@ -10,10 +10,13 @@ namespace Alternet::UI
 
     ColorPicker::~ColorPicker()
     {
-        auto window = GetWxWindow();
-        if (window != nullptr)
+        if (IsWxWindowCreated())
         {
-            window->Unbind(wxEVT_COLOURPICKER_CHANGED, &ColorPicker::OnColourPickerValueChanged, this);
+            auto window = GetWxWindow();
+            if (window != nullptr)
+            {
+                window->Unbind(wxEVT_COLOURPICKER_CHANGED, &ColorPicker::OnColourPickerValueChanged, this);
+            }
         }
     }
 

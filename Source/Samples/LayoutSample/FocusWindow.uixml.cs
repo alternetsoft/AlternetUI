@@ -22,6 +22,7 @@ namespace LayoutSample
                 if (focusedControl == null)
                     return;
 
+                e.Handled = true;
                 focusedControl.FocusNextControl();
             }
         }

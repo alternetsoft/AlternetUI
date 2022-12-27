@@ -7,11 +7,14 @@ namespace Alternet::UI
 
     TabControl::~TabControl()
     {
-        auto window = GetWxWindow();
-        if (window != nullptr)
+        if (IsWxWindowCreated())
         {
-            window->Unbind(wxEVT_NOTEBOOK_PAGE_CHANGED, &TabControl::OnSelectedPageChanged, this);
-            window->Unbind(wxEVT_NOTEBOOK_PAGE_CHANGING, &TabControl::OnSelectedPageChanging, this);
+            auto window = GetWxWindow();
+            if (window != nullptr)
+            {
+                window->Unbind(wxEVT_NOTEBOOK_PAGE_CHANGED, &TabControl::OnSelectedPageChanged, this);
+                window->Unbind(wxEVT_NOTEBOOK_PAGE_CHANGING, &TabControl::OnSelectedPageChanging, this);
+            }
         }
     }
 

@@ -21,7 +21,7 @@ namespace Alternet::UI
 
     ComboBox::~ComboBox()
     {
-        if (GetWxWindow() != nullptr)
+        if (IsWxWindowCreated())
         {
             if (IsUsingChoiceControl())
             {

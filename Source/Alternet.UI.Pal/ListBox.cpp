@@ -8,10 +8,13 @@ namespace Alternet::UI
 
     ListBox::~ListBox()
     {
-        auto window = GetWxWindow();
-        if (window != nullptr)
+        if (IsWxWindowCreated())
         {
-            window->Unbind(wxEVT_LISTBOX, &ListBox::OnSelectionChanged, this);
+            auto window = GetWxWindow();
+            if (window != nullptr)
+            {
+                window->Unbind(wxEVT_LISTBOX, &ListBox::OnSelectionChanged, this);
+            }
         }
     }
 

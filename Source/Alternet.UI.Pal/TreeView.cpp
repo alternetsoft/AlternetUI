@@ -9,16 +9,19 @@ namespace Alternet::UI
 
     TreeView::~TreeView()
     {
-        auto window = GetTreeCtrl();
-        if (window != nullptr)
+        if (IsWxWindowCreated())
         {
-            window->Unbind(wxEVT_TREE_SEL_CHANGED, &TreeView::OnSelectionChanged, this);
-            window->Unbind(wxEVT_TREE_ITEM_EXPANDED, &TreeView::OnItemExpanded, this);
-            window->Unbind(wxEVT_TREE_ITEM_COLLAPSED, &TreeView::OnItemCollapsed, this);
-            window->Unbind(wxEVT_TREE_ITEM_COLLAPSING, &TreeView::OnItemCollapsing, this);
-            window->Unbind(wxEVT_TREE_ITEM_EXPANDING, &TreeView::OnItemExpanding, this);
-            window->Unbind(wxEVT_TREE_BEGIN_LABEL_EDIT, &TreeView::OnItemBeginLabelEdit, this);
-            window->Unbind(wxEVT_TREE_END_LABEL_EDIT, &TreeView::OnItemEndLabelEdit, this);
+            auto window = GetTreeCtrl();
+            if (window != nullptr)
+            {
+                window->Unbind(wxEVT_TREE_SEL_CHANGED, &TreeView::OnSelectionChanged, this);
+                window->Unbind(wxEVT_TREE_ITEM_EXPANDED, &TreeView::OnItemExpanded, this);
+                window->Unbind(wxEVT_TREE_ITEM_COLLAPSED, &TreeView::OnItemCollapsed, this);
+                window->Unbind(wxEVT_TREE_ITEM_COLLAPSING, &TreeView::OnItemCollapsing, this);
+                window->Unbind(wxEVT_TREE_ITEM_EXPANDING, &TreeView::OnItemExpanding, this);
+                window->Unbind(wxEVT_TREE_BEGIN_LABEL_EDIT, &TreeView::OnItemBeginLabelEdit, this);
+                window->Unbind(wxEVT_TREE_END_LABEL_EDIT, &TreeView::OnItemEndLabelEdit, this);
+            }
         }
 
         if (_imageList != nullptr)

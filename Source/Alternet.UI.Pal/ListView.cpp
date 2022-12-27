@@ -12,14 +12,17 @@ namespace Alternet::UI
 
     ListView::~ListView()
     {
-        auto window = GetWxWindow();
-        if (window != nullptr)
+        if (IsWxWindowCreated())
         {
-            window->Unbind(wxEVT_LIST_ITEM_SELECTED, &ListView::OnItemSelected, this);
-            window->Unbind(wxEVT_LIST_ITEM_DESELECTED, &ListView::OnItemDeselected, this);
-            window->Unbind(wxEVT_LIST_COL_CLICK, &ListView::OnColumnHeaderClicked, this);
-            window->Unbind(wxEVT_LIST_BEGIN_LABEL_EDIT, &ListView::OnBeginLabelEdit, this);
-            window->Unbind(wxEVT_LIST_END_LABEL_EDIT, &ListView::OnEndLabelEdit, this);
+            auto window = GetWxWindow();
+            if (window != nullptr)
+            {
+                window->Unbind(wxEVT_LIST_ITEM_SELECTED, &ListView::OnItemSelected, this);
+                window->Unbind(wxEVT_LIST_ITEM_DESELECTED, &ListView::OnItemDeselected, this);
+                window->Unbind(wxEVT_LIST_COL_CLICK, &ListView::OnColumnHeaderClicked, this);
+                window->Unbind(wxEVT_LIST_BEGIN_LABEL_EDIT, &ListView::OnBeginLabelEdit, this);
+                window->Unbind(wxEVT_LIST_END_LABEL_EDIT, &ListView::OnEndLabelEdit, this);
+            }
         }
 
         if (_smallImageList != nullptr)

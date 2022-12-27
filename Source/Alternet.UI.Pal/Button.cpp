@@ -21,10 +21,13 @@ namespace Alternet::UI
 
     Button::~Button()
     {
-        auto window = GetWxWindow();
-        if (window != nullptr)
+        if (IsWxWindowCreated())
         {
-            window->Unbind(wxEVT_BUTTON, &Button::OnButtonClick, this);
+            auto window = GetWxWindow();
+            if (window != nullptr)
+            {
+                window->Unbind(wxEVT_BUTTON, &Button::OnButtonClick, this);
+            }
         }
     }
 

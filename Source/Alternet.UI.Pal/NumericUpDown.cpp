@@ -12,10 +12,13 @@ namespace Alternet::UI
 
     NumericUpDown::~NumericUpDown()
     {
-        auto window = GetWxWindow();
-        if (window != nullptr)
+        if (IsWxWindowCreated())
         {
-            window->Unbind(wxEVT_SPINCTRL, &NumericUpDown::OnSpinCtrlValueChanged, this);
+            auto window = GetWxWindow();
+            if (window != nullptr)
+            {
+                window->Unbind(wxEVT_SPINCTRL, &NumericUpDown::OnSpinCtrlValueChanged, this);
+            }
         }
     }
 
