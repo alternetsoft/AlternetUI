@@ -1,8 +1,5 @@
 # Controls
 
-> [!NOTE]
-> Warning: AlterNET UI is still in beta, and the API is subject to change in the next beta releases.
-
 AlterNET UI provides a set of standard controls which use native API and look and feel precisely like native elements on all platforms and different screen resolutions.
 
 Examples of how a <xref:Alternet.UI.ListBox> can look on different platforms:

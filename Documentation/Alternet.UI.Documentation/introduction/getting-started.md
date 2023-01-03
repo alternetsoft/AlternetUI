@@ -1,8 +1,5 @@
 # Getting Started
 
-> [!NOTE]
-> Warning: AlterNET UI is still in beta, and the API is subject to change in the next beta releases.
-
 AlterNET UI allows you to develop light-footprint cross-platform .NET desktop applications.
 
 You can use your favorite .NET development environments on Windows, macOS, and Linux to develop AlterNET UI applications:

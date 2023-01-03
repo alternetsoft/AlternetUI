@@ -1,8 +1,5 @@
 # System Requirements
 
-> [!NOTE]
-> Warning: AlterNET UI is still in beta, and the API is subject to change in the next beta releases.
-
 AlterNET UI supports the following .NET versions:
 - .NET Core 3.1 or newer
 - .NET Framework 4.5 or newer
