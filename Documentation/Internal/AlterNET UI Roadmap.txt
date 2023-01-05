@@ -65,3 +65,4 @@ Future releases:
     - additional controls
     - VS Code, VS for Mac and Rider extensions
 	- text rotation and scaling transforms support on macOS and Linux
+    - WinForms Form/ WPF window convertor
