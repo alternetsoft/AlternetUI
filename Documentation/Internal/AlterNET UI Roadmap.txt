@@ -65,3 +65,7 @@ Future releases:
     - additional controls
     - VS Code, VS for Mac and Rider extensions
 	- text rotation and scaling transforms support on macOS and Linux
+    - WinForms Form/ WPF window convertor
+    - benchmarks to compare Alternet UI with Winforms/WPF/Avalonia…
+    - have a look to Modern Form (Modern.Forms · GitHub) to see if there is some interesting ideas
+    - do we need to specifically add .net 7 as a compilation target?

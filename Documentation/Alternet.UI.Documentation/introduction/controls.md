@@ -1,8 +1,5 @@
 # Controls
 
-> [!NOTE]
-> Warning: AlterNET UI is still in beta, and the API is subject to change in the next beta releases.
-
 AlterNET UI provides a set of standard controls which use native API and look and feel precisely like native elements on all platforms and different screen resolutions.
 
 Examples of how a <xref:Alternet.UI.ListBox> can look on different platforms:
@@ -18,6 +15,7 @@ Examples of how a <xref:Alternet.UI.ListBox> can look on different platforms:
 AlterNET UI provides the following core controls:
 
 **Containers**: <xref:Alternet.UI.Grid>, <xref:Alternet.UI.StackPanel>, <xref:Alternet.UI.GroupBox>, <xref:Alternet.UI.Border> and <xref:Alternet.UI.TabControl>.
+A <xref:Alternet.UI.ScrollViewer> is a special kind of container which makes its child controls scrollable.
 
 These controls act as containers for other controls and provide a different kinds of layouts in your windows.
 

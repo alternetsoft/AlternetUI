@@ -1,8 +1,5 @@
 # Rendering Graphics
 
-> [!NOTE]
-> Warning: AlterNET UI is still in beta, and the API is subject to change in the next beta releases.
-
 ## Overview
 
 AlterNET UI includes a set of resolution-independent graphics features that use native rendering on every supported platform.

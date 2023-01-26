@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Screenshot.h"
 #include "Window.h"
+#include "Popup.h"
 
 namespace Alternet::UI
 {
@@ -1266,8 +1267,53 @@ namespace Alternet::UI
         s_controlsByWxWindowsMap.erase(wxWindow);
     }
 
+    wxWindow* wxFindWindowAtPoint(wxWindow* win, const wxPoint& pt)
+    {
+        if (!win->IsShown())
+            return NULL;
+
+        wxWindowList::compatibility_iterator node = win->GetChildren().GetLast();
+        while (node)
+        {
+            wxWindow* child = node->GetData();
+            wxWindow* foundWin = wxFindWindowAtPoint(child, pt);
+            if (foundWin)
+            return foundWin;
+            node = node->GetPrevious();
+        }
+
+        wxPoint pos = win->GetPosition();
+        wxSize sz = win->GetSize();
+        if ( !win->IsTopLevel() && win->GetParent() )
+        {
+            pos = win->GetParent()->ClientToScreen(pos);
+        }
+
+        wxRect rect(pos, sz);
+        if (rect.Contains(pt))
+            return win;
+
+        return NULL;
+    }
+
     /*static*/ Control* Control::HitTest(const Point& screenPoint)
     {
+#if __WXOSX__
+        for (auto popupWindow : Popup::GetVisiblePopupWindows())
+        {
+            auto window = wxFindWindowAtPoint(popupWindow, fromDip(screenPoint, nullptr));
+            if (window == nullptr)
+                continue;
+        
+            auto control = TryFindControlByWxWindow(window);
+            if (control != nullptr)
+            {
+                control->AddRef();
+                return control;
+            }
+        }
+#endif
+
         auto window = wxFindWindowAtPoint(fromDip(screenPoint, nullptr));
         if (window == nullptr)
             return nullptr;

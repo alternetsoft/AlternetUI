@@ -30,5 +30,7 @@
   href: printing/printing.md
 - name: Resource URIs
   href: resource-uris/resource-uris.md
+- name: Focus Management
+  href: focus-management/focus-management.md
 - name: System Requirements
   href: system-requirements.md
