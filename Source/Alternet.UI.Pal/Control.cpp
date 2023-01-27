@@ -71,9 +71,13 @@ namespace Alternet::UI
 
         auto wxWindow = event.GetWindow();
         if (wxWindow != _wxWindow)
+        {
+            if (IsRecreatingWxWindow())
+                SetRecreatingWxWindow(false);
             return;
+        }
 
-        if (!_flags.IsSet(ControlFlags::RecreatingWxWindow))
+        if (!IsRecreatingWxWindow())
             _wxWindow = nullptr;
 
         wxWindow->Unbind(wxEVT_PAINT, &Control::OnPaint, this);
@@ -102,8 +106,8 @@ namespace Alternet::UI
         OnWxWindowDestroyed(wxWindow);
         RaiseEvent(ControlEvent::Destroyed);
 
-        if (_flags.IsSet(ControlFlags::RecreatingWxWindow))
-            _flags.Set(ControlFlags::RecreatingWxWindow, false);
+        if (IsRecreatingWxWindow())
+            SetRecreatingWxWindow(false);
     }
 
     bool Control::GetIsScrollable()
@@ -477,7 +481,7 @@ namespace Alternet::UI
         if (!IsWxWindowCreated())
             return;
 
-        _flags.Set(ControlFlags::RecreatingWxWindow, true);
+        SetRecreatingWxWindow(true);
         DestroyWxWindow();
         CreateWxWindow();
     }
@@ -622,7 +626,7 @@ namespace Alternet::UI
 
     bool Control::IsRecreatingWxWindow()
     {
-        return _flags.IsSet(ControlFlags::RecreatingWxWindow);
+        return _recreatingWxWindowCounter > 0;
     }
 
     bool Control::RetrieveEnabled()
@@ -916,6 +920,14 @@ namespace Alternet::UI
         OnAnyParentChanged();
         for (auto child : _children)
             child->NotifyAllChildrenOnParentChange();
+    }
+
+    void Control::SetRecreatingWxWindow(bool value)
+    {
+        if (value)
+            _recreatingWxWindowCounter++;
+        else if (_recreatingWxWindowCounter > 0)
+            _recreatingWxWindowCounter--;
     }
 
     void Control::SetWxWindowParent(wxWindow* parent)

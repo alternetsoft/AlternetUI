@@ -611,6 +611,12 @@ namespace Alternet::UI
 
     void Window::ShowModal()
     {
+        while (IsRecreatingWxWindow())
+        {
+            wxMilliSleep(1);
+            wxTheApp->GetMainLoop()->Yield();
+        }
+
         _flags.Set(WindowFlags::Modal, true);
 
         if (_modalWindowDisabler != nullptr)

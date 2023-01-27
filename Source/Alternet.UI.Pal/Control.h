@@ -130,10 +130,13 @@ namespace Alternet::UI
             InitInProgress = 1 << 4,
             PostInitWxWindowRecreationPending = 1 << 5,
             DestroyingWxWindow = 1 << 6,
-            RecreatingWxWindow = 1 << 7,
-            IsScrollable = 1 << 8,
-            TabStop = 1 << 9,
+            IsScrollable = 1 << 7,
+            TabStop = 1 << 8,
         };
+
+        void SetRecreatingWxWindow(bool value);
+
+        int _recreatingWxWindowCounter = 0;
 
         std::vector<std::function<void()>> _postInitActions;
 
