@@ -27,13 +27,18 @@ namespace PaintSample
             InitializeComponent();
 
             CreateSwatches();
-            selectedColorDisplay.SelectedColor = Color.Blue;
+            
+            if (selectedColorDisplay != null)
+                selectedColorDisplay.SelectedColor = Color.Blue;
         }
 
         Color ISelectedColors.Stroke => selectedColorDisplay.SelectedColor;
 
         private void CreateSwatches()
         {
+            if (container == null)
+                return;
+
             foreach (var color in SwatchColors)
             {
                 var swatch = new ColorSwatch(color)
