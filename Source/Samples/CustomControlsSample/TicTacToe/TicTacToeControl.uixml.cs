@@ -21,6 +21,9 @@ namespace CustomControlsSample
 
         private void CreateCells()
         {
+            if (grid == null)
+                return;
+
             var cellSize = 50;
 
             for (int i = 0; i < 3; i++)
