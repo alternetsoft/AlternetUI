@@ -10,7 +10,7 @@ if not !ERRORLEVEL! EQU 0 (
 
 :: Build Alternet.UI.
 
-for /f "usebackq tokens=*" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\amd64\MSBuild.exe`) do (
+for /f "usebackq tokens=*" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe`) do (
     set FOUND_MSBUILD_PATH=%%i)
 
 dotnet msbuild /p:CppMsBuildPath="%FOUND_MSBUILD_PATH%" "%SCRIPT_HOME%\..\Alternet.UI.Pal\Alternet.UI.Pal.proj"
