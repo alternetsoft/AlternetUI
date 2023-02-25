@@ -51,8 +51,21 @@ AlterNET UI Roadmap
     
 1.0 Release (release at the end of December 2022):
     + establish API to create custom controls and layouts
-    - focus management
-    - scrollable controls support
+    + focus management
+    + scrollable controls support
+1.01
+CheckedListBox 
+DateTimePicker 
+FontDialog 
+HelpProvider 
+LinkLabel 
+MonthCalendar 
+PropertyGrid 
+RichTextBox 
+SplitterWindow
+WebBrowser
+DPIScale/DeviceDpi 
+
 
 Future releases:
     - application deployment and packaging documentation (on macOS, Linux)
