@@ -16,6 +16,7 @@ namespace Alternet::UI
     protected:
         void OnWxWindowCreated() override;
         void OnBeforeDestroyWxWindow() override;
+        long GetSelectionStyle();
 
     private:
 
@@ -23,8 +24,6 @@ namespace Alternet::UI
         std::vector<int> _selectedIndices;
 
         ListBoxSelectionMode _selectionMode = ListBoxSelectionMode::Single;
-
-        long GetSelectionStyle();
 
         void ApplyItems();
         void ReceiveItems();

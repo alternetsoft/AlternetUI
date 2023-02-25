@@ -16,6 +16,7 @@ namespace ControlsSample
             pages.Add(new PageContainer.Page("List View", new ListViewPage { Site = this }));
             pages.Add(new PageContainer.Page("List Box", new ListBoxPage { Site = this }));
             pages.Add(new PageContainer.Page("Combo Box", new ComboBoxPage { Site = this }));
+            pages.Add(new PageContainer.Page("Check List Box", new CheckListBoxPage { Site = this }));
             pages.Add(new PageContainer.Page("Tab Control", new TabControlPage { Site = this }));
             pages.Add(new PageContainer.Page("Progress Bar", new ProgressBarPage { Site = this }));
             pages.Add(new PageContainer.Page("Button", new ButtonPage { Site = this }));

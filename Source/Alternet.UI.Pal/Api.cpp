@@ -1,6 +1,7 @@
 #include "Api/Application.Api.h"
 #include "Api/Button.Api.h"
 #include "Api/CheckBox.Api.h"
+#include "Api/CheckListBox.Api.h"
 #include "Api/Clipboard.Api.h"
 #include "Api/UnmanagedDataObject.Api.h"
 #include "Api/UnmanagedStream.Api.h"
