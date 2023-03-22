@@ -11,6 +11,7 @@
 #include "Api/FileDialog.Api.h"
 #include "Api/SelectDirectoryDialog.Api.h"
 #include "Api/Control.Api.h"
+#include "Api/DateTimePicker.Api.h"
 #include "Api/Brush.Api.h"
 #include "Api/HatchBrush.Api.h"
 #include "Api/LinearGradientBrush.Api.h"

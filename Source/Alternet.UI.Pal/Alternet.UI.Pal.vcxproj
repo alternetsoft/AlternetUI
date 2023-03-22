@@ -198,6 +198,7 @@
     <ClCompile Include="ColorPicker.cpp" />
     <ClCompile Include="ComboBox.cpp" />
     <ClCompile Include="Control.cpp" />
+    <ClCompile Include="DateTimePicker.cpp" />
     <ClCompile Include="DrawingContext.cpp" />
     <ClCompile Include="DropTarget.cpp" />
     <ClCompile Include="Exceptions.cpp" />
@@ -337,6 +338,7 @@
     <ClInclude Include="Common.Strings.h" />
     <ClInclude Include="Common.Base.h" />
     <ClInclude Include="Control.h" />
+    <ClInclude Include="DateTimePicker.h" />
     <ClInclude Include="DelayedValue.h" />
     <ClInclude Include="DrawingContext.h" />
     <ClInclude Include="DropTarget.h" />
