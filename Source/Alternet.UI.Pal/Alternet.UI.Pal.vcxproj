@@ -266,6 +266,7 @@
     <ClInclude Include="Api\ColorDialog.Api.h" />
     <ClInclude Include="Api\ColorPicker.Api.h" />
     <ClInclude Include="Api\ComboBox.Api.h" />
+    <ClInclude Include="Api\DateTimePicker.Api.h" />
     <ClInclude Include="Api\Exceptions.Api.h" />
     <ClInclude Include="Api\Control.Api.h" />
     <ClInclude Include="Api\DrawingContext.Api.h" />
@@ -417,6 +418,7 @@
     <None Include="Api\ColorPicker.inc" />
     <None Include="Api\ComboBox.inc" />
     <None Include="Api\Control.inc" />
+    <None Include="Api\DateTimePicker.inc" />
     <None Include="Api\DrawingContext.inc" />
     <None Include="Api\FileDialog.inc" />
     <None Include="Api\Font.inc" />

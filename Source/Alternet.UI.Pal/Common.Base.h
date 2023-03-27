@@ -50,6 +50,7 @@
 #include <wx/taskbar.h>
 #include <wx/colordlg.h>
 #include <wx/clrpicker.h>
+#include <wx/dateevt.h>
 #include <wx/datetimectrl.h>
 #include <wx/popupwin.h>
 

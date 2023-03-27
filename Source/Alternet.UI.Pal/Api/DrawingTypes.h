@@ -47,6 +47,11 @@ namespace Alternet::UI
         {
             uint8_t R, G, B, A, state;
         };
+
+        struct DateTime_C
+        {
+            uint8_t Year, Month, Day, H, M, S, MS;
+        };
     }
 
 #pragma pack(pop)
@@ -172,6 +177,29 @@ namespace Alternet::UI
 
         bool operator==(const Thickness& rhs) { return Left == rhs.Left && Top == rhs.Top && Right == rhs.Right && Bottom == rhs.Bottom; }
         bool operator!=(const Thickness& rhs) { return !(*this == rhs); }
+    };
+
+    struct DateTime
+    {
+    public:
+        uint16_t Hour, Minute, Second, Millisecond;
+        int Year;
+        uint16_t Day;
+        wxDateTime::Month Month;
+
+        DateTime(const wxDateTime& c)
+        {
+            wxDateTime::Tm cc = c.GetTm();
+            Year = cc.year;
+            Month = cc.mon;
+            Day = cc.mday;
+            Hour = cc.hour;
+            Minute = cc.min;
+            Second = cc.sec;
+            Millisecond == cc.msec;
+        }
+
+        operator wxDateTime() const { return wxDateTime(Day, Month, Year, Hour, Minute, Second, Millisecond); }
     };
 
     struct Color

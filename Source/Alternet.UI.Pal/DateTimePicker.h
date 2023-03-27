@@ -12,15 +12,15 @@ namespace Alternet::UI
 
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
-        //void OnDateTimePickerValueChanged(wxDateTimePickerEvent& event);
+        void OnDateTimePickerValueChanged(wxDateEvent& event);
 
     private:
-        //wxDateTimePickerCtrl* GetDateTimePickerCtrl();
+        wxDateTimePickerCtrl* GetDateTimePickerCtrl();
 
-        //DelayedValue<DateTimePicker, DateTime> _value;
+        DelayedValue<DateTimePicker, DateTime> _value;
 
-        //DateTime RetrieveValue();
-        //void ApplyValue(const DateTime& value);
+        DateTime RetrieveValue();
+        void ApplyValue(const DateTime& value);
 
     };
 }

@@ -2,58 +2,58 @@
 
 namespace Alternet::UI
 {
-    //DateTimePicker::DateTimePicker() :
-    //    _value(*this, *wxBLACK, &Control::IsWxWindowCreated, &DateTimePicker::RetrieveValue, &DateTimePicker::ApplyValue)
-    //{
-    //    GetDelayedValues().Add({ &_value });
-    //}
+    DateTimePicker::DateTimePicker() :
+        _value(*this, wxINT64_MIN, &Control::IsWxWindowCreated, &DateTimePicker::RetrieveValue, &DateTimePicker::ApplyValue)
+    {
+        GetDelayedValues().Add({ &_value });
+    }
 
-    //DateTimePicker::~DateTimePicker()
-    //{
-    //    if (IsWxWindowCreated())
-    //    {
-    //        auto window = GetWxWindow();
-    //        if (window != nullptr)
-    //        {
-    //            window->Unbind(wxEVT_COLOURPICKER_CHANGED, &DateTimePicker::OnDateTimePickerValueChanged, this);
-    //        }
-    //    }
-    //}
+    DateTimePicker::~DateTimePicker()
+    {
+        if (IsWxWindowCreated())
+        {
+            auto window = GetWxWindow();
+            if (window != nullptr)
+            {
+                window->Unbind(wxEVT_COLOURPICKER_CHANGED, &DateTimePicker::OnDateTimePickerValueChanged, this);
+            }
+        }
+    }
 
-    //DateTime DateTimePicker::GetValue()
-    //{
-    //    return _value.Get();
-    //}
+    DateTime DateTimePicker::GetValue()
+    {
+        return _value.Get();
+    }
 
-    //void DateTimePicker::SetValue(const DateTime& value)
-    //{
-    //    _value.Set(value);
-    //}
+    void DateTimePicker::SetValue(const DateTime& value)
+    {
+        _value.Set(value);
+    }
 
-    //wxWindow* DateTimePicker::CreateWxWindowCore(wxWindow* parent)
-    //{
-    //    auto value = new wxColourPickerCtrl(parent, wxID_ANY);
-    //    value->Bind(wxEVT_COLOURPICKER_CHANGED, &DateTimePicker::OnDateTimePickerValueChanged, this);
-    //    return value;
-    //}
+    wxWindow* DateTimePicker::CreateWxWindowCore(wxWindow* parent)
+    {
+        auto value = new wxColourPickerCtrl(parent, wxID_ANY);
+        value->Bind(wxEVT_COLOURPICKER_CHANGED, &DateTimePicker::OnDateTimePickerValueChanged, this);
+        return value;
+    }
 
-    //void DateTimePicker::OnDateTimePickerValueChanged(wxDateTimePickerEvent& event)
-    //{
-    //    RaiseEvent(DateTimePickerEvent::ValueChanged);
-    //}
+    void DateTimePicker::OnDateTimePickerValueChanged(wxDateEvent& event)
+    {
+        RaiseEvent(DateTimePickerEvent::ValueChanged);
+    }
 
-    //wxDateTimePickerCtrl* DateTimePicker::GetDateTimePickerCtrl()
-    //{
-    //    return dynamic_cast<wxDateTimePickerCtrl*>(GetWxWindow());
-    //}
+    wxDateTimePickerCtrl* DateTimePicker::GetDateTimePickerCtrl()
+    {
+        return dynamic_cast<wxDateTimePickerCtrl*>(GetWxWindow());
+    }
 
-    //DateTime DateTimePicker::RetrieveValue()
-    //{
-    //    return GetDateTimePickerCtrl()->GetValue();
-    //}
+    DateTime DateTimePicker::RetrieveValue()
+    {
+        return GetDateTimePickerCtrl()->GetValue();
+    }
 
-    //void DateTimePicker::ApplyValue(const DateTime& value)
-    //{
-    //    GetDateTimePickerCtrl()->SetValue(value);
-    //}
+    void DateTimePicker::ApplyValue(const DateTime& value)
+    {
+        GetDateTimePickerCtrl()->SetValue(value);
+    }
 }
