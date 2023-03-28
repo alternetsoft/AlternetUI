@@ -15,7 +15,7 @@ namespace Alternet::UI
         void OnDateTimePickerValueChanged(wxDateEvent& event);
 
     private:
-        wxDateTimePickerCtrl* GetDateTimePickerCtrl();
+        wxDatePickerCtrl* GetDateTimePickerCtrl();
 
         DelayedValue<DateTimePicker, DateTime> _value;
 

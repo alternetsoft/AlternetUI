@@ -3,7 +3,7 @@
 namespace Alternet::UI
 {
     DateTimePicker::DateTimePicker() :
-        _value(*this, wxINT64_MIN, &Control::IsWxWindowCreated, &DateTimePicker::RetrieveValue, &DateTimePicker::ApplyValue)
+        _value(*this, wxDefaultDateTime, &Control::IsWxWindowCreated, &DateTimePicker::RetrieveValue, &DateTimePicker::ApplyValue)
     {
         GetDelayedValues().Add({ &_value });
     }
@@ -15,7 +15,8 @@ namespace Alternet::UI
             auto window = GetWxWindow();
             if (window != nullptr)
             {
-                window->Unbind(wxEVT_COLOURPICKER_CHANGED, &DateTimePicker::OnDateTimePickerValueChanged, this);
+                window->Unbind(wxEVT_DATE_CHANGED, &DateTimePicker::OnDateTimePickerValueChanged, this);
+                window->Unbind(wxEVT_TIME_CHANGED, &DateTimePicker::OnDateTimePickerValueChanged, this);
             }
         }
     }
@@ -32,8 +33,9 @@ namespace Alternet::UI
 
     wxWindow* DateTimePicker::CreateWxWindowCore(wxWindow* parent)
     {
-        auto value = new wxColourPickerCtrl(parent, wxID_ANY);
-        value->Bind(wxEVT_COLOURPICKER_CHANGED, &DateTimePicker::OnDateTimePickerValueChanged, this);
+        auto value = new wxDatePickerCtrl(parent, wxID_ANY);
+        value->Bind(wxEVT_DATE_CHANGED, &DateTimePicker::OnDateTimePickerValueChanged, this);
+        value->Bind(wxEVT_TIME_CHANGED, &DateTimePicker::OnDateTimePickerValueChanged, this);
         return value;
     }
 
@@ -42,9 +44,9 @@ namespace Alternet::UI
         RaiseEvent(DateTimePickerEvent::ValueChanged);
     }
 
-    wxDateTimePickerCtrl* DateTimePicker::GetDateTimePickerCtrl()
+    wxDatePickerCtrl* DateTimePicker::GetDateTimePickerCtrl()
     {
-        return dynamic_cast<wxDateTimePickerCtrl*>(GetWxWindow());
+        return dynamic_cast<wxDatePickerCtrl*>(GetWxWindow());
     }
 
     DateTime DateTimePicker::RetrieveValue()

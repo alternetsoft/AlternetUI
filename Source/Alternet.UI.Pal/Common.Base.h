@@ -51,6 +51,7 @@
 #include <wx/colordlg.h>
 #include <wx/clrpicker.h>
 #include <wx/dateevt.h>
+#include <wx/datectrl.h>
 #include <wx/datetimectrl.h>
 #include <wx/popupwin.h>
 

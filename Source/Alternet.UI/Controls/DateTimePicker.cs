@@ -9,90 +9,78 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Represents control that displays a selected date and allows to change it.
+    /// </summary>
     public class DateTimePicker : Control
     {
-        /// <inheritdoc/>
-        public new DateTimePickerHandler Handler
+        /// <summary>
+        /// Identifies the <see cref="Value"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ValueProperty =
+            DependencyProperty.Register(
+                    "Value", // Property name
+                    typeof(DateTime), // Property type
+                    typeof(DateTimePicker), // Property owner
+                    new FrameworkPropertyMetadata(
+                            DateTime.MinValue, // default value
+                            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsPaint,
+                            new PropertyChangedCallback(OnValuePropertyChanged),    // property changed callback
+                            null, // CoerseValueCallback
+                            true, // IsAnimationProhibited
+                            UpdateSourceTrigger.PropertyChanged
+                            //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
+                            ));
+
+        /// <summary>
+        /// Occurs when the <see cref="Value"/> property has been changed in some way.
+        /// </summary>
+        /// <remarks>For the <see cref="ValueChanged"/> event to occur, the <see cref="Value"/> property can be changed in code,
+        /// by clicking the up or down button, or by the user entering a new value that is read by the control.</remarks>
+        public event EventHandler? ValueChanged;
+
+        /// <summary>
+        /// Gets or sets the value assigned to the color picker as a selected color.
+        /// </summary>
+        public DateTime Value
         {
-            get
-            {
-                CheckDisposed();
-                return (DateTimePickerHandler)base.Handler;
-            }
+            get { return (DateTime)GetValue(ValueProperty); }
+            set { SetValue(ValueProperty, value); }
         }
 
         /// <summary>
-        /// Gets or sets the text displayed on this picker.
+        /// Raises the <see cref="ValueChanged"/> event and calls <see cref="OnValueChanged(EventArgs)"/>.
         /// </summary>
-        //[DefaultValue("")]
-        //[Localizability(LocalizationCategory.Text)]
-        //public string Text
-        //{
-        //    get { return (string)GetValue(TextProperty); }
-        //    set { SetValue(TextProperty, value); }
-        //}
-
-        private DateTime currentValue;
-
-        public virtual DateTime GetValue()
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        public void RaiseValueChanged(EventArgs e)
         {
-            return currentValue;
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnValueChanged(e);
+            ValueChanged?.Invoke(this, e);
         }
 
-        //public virtual bool GetRange(DateTime dt1, DateTime dt2)
-        //{
-
-        //}
+        /// <summary>
+        /// Called when the value of the <see cref="Value"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnValueChanged(EventArgs e)
+        {
+        }
 
         /// <summary>
-        /// Event for "Text has changed"
+        /// Callback for changes to the Value property
         /// </summary>
-        //public static readonly RoutedEvent TextChangedEvent = EventManager.RegisterRoutedEvent(
-        //    "TextChanged", // Event name
-        //    RoutingStrategy.Bubble, //
-        //    typeof(TextChangedEventHandler), //
-        //    typeof(DateTimePicker)); //
+        private static void OnValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            DateTimePicker control = (DateTimePicker)d;
+            control.OnValuePropertyChanged((DateTime)e.OldValue, (DateTime)e.NewValue);
+        }
 
-        /// <summary>
-        /// Identifies the <see cref="Text"/> dependency property.
-        /// </summary>
-        //public static readonly DependencyProperty TextProperty =
-        //DependencyProperty.Register(
-        //        "Text", // Property name
-        //        typeof(string), // Property type
-        //        typeof(DateTimePicker), // Property owner
-        //        new FrameworkPropertyMetadata( // Property metadata
-        //                string.Empty, // default value
-        //                FrameworkPropertyMetadataOptions.AffectsLayout | FrameworkPropertyMetadataOptions.AffectsPaint,// Flags
-        //                new PropertyChangedCallback(OnTextPropertyChanged),    // property changed callback
-        //                new CoerceValueCallback(CoerceText)
-        //                ));
-
-
-        /// <summary>
-        /// Called when content in this Control changes.
-        /// Raises the TextChanged event.
-        /// </summary>
-        /// <param name="e"></param>
-        //protected virtual void OnTextChanged(TextChangedEventArgs e)
-        //{
-        //    RaiseEvent(e);
-        //}
-
-        /// <summary>
-        /// Callback for changes to the Text property
-        /// </summary>
-        //private static void OnTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        //{
-        //    DateTimePicker picker = (DateTimePicker)d;
-        //    picker.OnTextPropertyChanged((string)e.OldValue, (string)e.NewValue);
-        //}
-
-        //private void OnTextPropertyChanged(string oldText, string newText)
-        //{
-        //    OnTextChanged(new TextChangedEventArgs(TextChangedEvent));
-        //}
-
-        //private static object CoerceText(DependencyObject d, object value) => value == null ? string.Empty : value;
+        private void OnValuePropertyChanged(DateTime oldValue, DateTime newValue)
+        {
+            RaiseValueChanged(EventArgs.Empty);
+        }
     }
 }
