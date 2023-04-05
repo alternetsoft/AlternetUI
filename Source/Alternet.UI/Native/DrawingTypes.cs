@@ -148,5 +148,6 @@ namespace Alternet.UI.Native
 
             public static implicit operator Color(Drawing.Color color) => color.IsEmpty ? Color.Empty : new Color(color.R, color.G, color.B, color.A);
         }
+
     }
 }

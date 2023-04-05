@@ -1,9 +1,10 @@
 #include "DateTimePicker.h"
+#include "wx/datetime.h"
 
 namespace Alternet::UI
 {
     DateTimePicker::DateTimePicker() :
-        _value(*this, wxDefaultDateTime, &Control::IsWxWindowCreated, &DateTimePicker::RetrieveValue, &DateTimePicker::ApplyValue)
+        _value(*this, DateTime(), &Control::IsWxWindowCreated, &DateTimePicker::RetrieveValue, &DateTimePicker::ApplyValue)
     {
         GetDelayedValues().Add({ &_value });
     }
@@ -49,7 +50,7 @@ namespace Alternet::UI
         return dynamic_cast<wxDatePickerCtrl*>(GetWxWindow());
     }
 
-    DateTime DateTimePicker::RetrieveValue()
+    wxDateTime DateTimePicker::RetrieveValue()
     {
         return GetDateTimePickerCtrl()->GetValue();
     }

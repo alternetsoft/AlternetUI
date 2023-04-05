@@ -19,7 +19,8 @@ namespace Alternet::UI
 
         DelayedValue<DateTimePicker, DateTime> _value;
 
-        DateTime RetrieveValue();
+        wxDateTime RetrieveValue();
+
         void ApplyValue(const DateTime& value);
 
     };

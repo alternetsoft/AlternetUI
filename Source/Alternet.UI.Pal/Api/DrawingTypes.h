@@ -50,7 +50,8 @@ namespace Alternet::UI
 
         struct DateTime_C
         {
-            uint8_t Year, Month, Day, H, M, S, MS;
+            int Year;
+            uint8_t Month, Day, H, M, S, MS;
         };
     }
 
@@ -181,11 +182,15 @@ namespace Alternet::UI
 
     struct DateTime
     {
-    public:
-        uint16_t Hour, Minute, Second, Millisecond;
-        int Year;
-        uint16_t Day;
+        uint8_t Hour, Minute, Second, Millisecond = 0;
+        int Year = 0;
+        uint8_t Day = 0;
         wxDateTime::Month Month;
+
+        DateTime() : 
+            DateTime(wxDefaultDateTime)
+        {
+        }
 
         DateTime(const wxDateTime& c)
         {
@@ -198,6 +203,11 @@ namespace Alternet::UI
             Second = cc.sec;
             Millisecond == cc.msec;
         }
+
+        operator DateTime_C() { return DateTime_C{ Year, (uint8_t)Month, Day, Hour, Minute, Second, Millisecond}; }
+
+        bool operator==(const DateTime& rhs) { return Hour == rhs.Hour && Minute == rhs.Minute && Second == rhs.Second && Millisecond == rhs.Millisecond && Year == rhs.Year && Month == rhs.Month && Day == rhs.Day; }
+        bool operator!=(const DateTime& rhs) { return !(*this == rhs); }
 
         operator wxDateTime() const { return wxDateTime(Day, Month, Year, Hour, Minute, Second, Millisecond); }
     };

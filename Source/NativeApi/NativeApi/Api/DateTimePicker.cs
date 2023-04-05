@@ -1,11 +1,12 @@
 ﻿using System;
-using Alternet.DateTime;
+using Alternet.UI;
 
 namespace NativeApi.Api
 {
     public class DateTimePicker : Control
     {
         public event EventHandler? ValueChanged { add => throw new Exception(); remove => throw new Exception(); }
-        public Alternet.DateTime.DateTime Value { get; set; }
+        
+        public System.DateTime Value { get; set; }
     }
 }
