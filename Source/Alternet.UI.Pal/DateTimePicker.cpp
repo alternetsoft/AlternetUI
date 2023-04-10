@@ -50,7 +50,7 @@ namespace Alternet::UI
         return dynamic_cast<wxDatePickerCtrl*>(GetWxWindow());
     }
 
-    wxDateTime DateTimePicker::RetrieveValue()
+    DateTime DateTimePicker::RetrieveValue()
     {
         return GetDateTimePickerCtrl()->GetValue();
     }

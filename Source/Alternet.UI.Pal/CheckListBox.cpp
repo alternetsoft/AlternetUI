@@ -121,7 +121,7 @@ namespace Alternet::UI
     {
         auto listBox = GetCheckListBox();
 
-        for (int i = 0; i < listBox->GetCount(); i++)
+        for (unsigned i = 0; i < listBox->GetCount(); i++)
             listBox->Check(i, false);
     }
 
@@ -148,7 +148,7 @@ namespace Alternet::UI
         if (listBox->GetCount() == 0)
             return;
 
-        for (int i = 0; i < listBox->GetCount(); i++)
+        for (unsigned i = 0; i < listBox->GetCount(); i++)
             if (listBox->IsChecked(i))
                 _checkedIndices.push_back(i);
     }

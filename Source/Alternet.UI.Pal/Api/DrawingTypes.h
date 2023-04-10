@@ -182,10 +182,10 @@ namespace Alternet::UI
 
     struct DateTime
     {
-        uint8_t Hour, Minute, Second, Millisecond = 0;
+        uint8_t Hour = 0, Minute = 0, Second = 0, Millisecond = 0;
         int Year = 0;
         uint8_t Day = 0;
-        wxDateTime::Month Month;
+        wxDateTime::Month Month = wxDateTime::Jan;
 
         DateTime() : 
             DateTime(wxDefaultDateTime)
@@ -201,7 +201,7 @@ namespace Alternet::UI
             Hour = cc.hour;
             Minute = cc.min;
             Second = cc.sec;
-            Millisecond == cc.msec;
+            Millisecond = cc.msec;
         }
 
         operator DateTime_C() { return DateTime_C{ Year, (uint8_t)Month, Day, Hour, Minute, Second, Millisecond}; }
