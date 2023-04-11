@@ -227,12 +227,12 @@ namespace Alternet::UI
             Millisecond = cc.msec;
         }
 
-        operator DateTime_C() { return DateTime_C{ Year, (uint8_t)Month, Day, Hour, Minute, Second, Millisecond }; }
+        operator DateTime_C() { return DateTime_C{ Year, (uint8_t)(Month + 1), Day, Hour, Minute, Second, Millisecond }; }
 
         bool operator==(const DateTime& rhs) { return Hour == rhs.Hour && Minute == rhs.Minute && Second == rhs.Second && Millisecond == rhs.Millisecond && Year == rhs.Year && Month == rhs.Month && Day == rhs.Day; }
         bool operator!=(const DateTime& rhs) { return !(*this == rhs); }
 
-        operator wxDateTime() const { return wxDateTime(Day, (wxDateTime::Month)Month, Year, Hour, Minute, Second, Millisecond); }
+        operator wxDateTime() const { return wxDateTime(Day, (wxDateTime::Month)(Month - 1), Year, Hour, Minute, Second, Millisecond); }
     };
 
     class ParkingWindow
