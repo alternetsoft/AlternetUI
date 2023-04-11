@@ -23,7 +23,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public System.DateTime Value
+        public Alternet.UI.DateTime Value
         {
             get
             {
@@ -93,10 +93,10 @@ namespace Alternet.UI.Native
             public static extern IntPtr DateTimePicker_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.DateTime DateTimePicker_GetValue_(IntPtr obj);
+            public static extern NativeApiTypes.DateTime DateTimePicker_GetValue_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DateTimePicker_SetValue_(IntPtr obj, System.DateTime value);
+            public static extern void DateTimePicker_SetValue_(IntPtr obj, NativeApiTypes.DateTime value);
             
         }
     }

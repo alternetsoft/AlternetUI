@@ -149,5 +149,26 @@ namespace Alternet.UI.Native
             public static implicit operator Color(Drawing.Color color) => color.IsEmpty ? Color.Empty : new Color(color.R, color.G, color.B, color.A);
         }
 
+        [StructLayout(LayoutKind.Sequential)]
+        public struct DateTime
+        {
+            public int Year, Month, Day;
+            public int Hour, Minute, Second, Millisecond;
+
+            public DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
+            {
+                Year = year;
+                Month = month;
+                Day = day;
+                Hour = hour;
+                Minute = minute;
+                Second = second;
+                Millisecond = millisecond;
+            }
+
+            public static implicit operator Alternet.UI.DateTime(DateTime v) => new Alternet.UI.DateTime(v.Year, v.Month, v.Day, v.Hour, v.Minute, v.Second, v.Millisecond);
+
+            public static implicit operator DateTime(Alternet.UI.DateTime v) => new DateTime(v.Year, v.Month, v.Day, v.Hour, v.Minute, v.Second, v.Millisecond);
+        }
     }
 }

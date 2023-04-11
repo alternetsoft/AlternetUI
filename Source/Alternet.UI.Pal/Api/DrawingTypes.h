@@ -50,8 +50,7 @@ namespace Alternet::UI
 
         struct DateTime_C
         {
-            int Year;
-            uint8_t Month, Day, H, M, S, MS;
+            int Year, Month, Day, H, M, S, MS;
         };
     }
 
@@ -178,39 +177,8 @@ namespace Alternet::UI
 
         bool operator==(const Thickness& rhs) { return Left == rhs.Left && Top == rhs.Top && Right == rhs.Right && Bottom == rhs.Bottom; }
         bool operator!=(const Thickness& rhs) { return !(*this == rhs); }
-    };
+    };   
 
-    struct DateTime
-    {
-        uint8_t Hour = 0, Minute = 0, Second = 0, Millisecond = 0;
-        int Year = 0;
-        uint8_t Day = 0;
-        wxDateTime::Month Month = wxDateTime::Jan;
-
-        DateTime() : 
-            DateTime(wxDefaultDateTime)
-        {
-        }
-
-        DateTime(const wxDateTime& c)
-        {
-            wxDateTime::Tm cc = c.GetTm();
-            Year = cc.year;
-            Month = cc.mon;
-            Day = cc.mday;
-            Hour = cc.hour;
-            Minute = cc.min;
-            Second = cc.sec;
-            Millisecond = cc.msec;
-        }
-
-        operator DateTime_C() { return DateTime_C{ Year, (uint8_t)Month, Day, Hour, Minute, Second, Millisecond}; }
-
-        bool operator==(const DateTime& rhs) { return Hour == rhs.Hour && Minute == rhs.Minute && Second == rhs.Second && Millisecond == rhs.Millisecond && Year == rhs.Year && Month == rhs.Month && Day == rhs.Day; }
-        bool operator!=(const DateTime& rhs) { return !(*this == rhs); }
-
-        operator wxDateTime() const { return wxDateTime(Day, Month, Year, Hour, Minute, Second, Millisecond); }
-    };
 
     struct Color
     {
@@ -235,6 +203,36 @@ namespace Alternet::UI
         bool operator!=(const struct Color& rhs) { return !(*this == rhs); }
 
         operator wxColor() const { return IsEmpty()? wxColor() : wxColor(R, G, B, A); }
+    };
+
+    struct DateTime
+    {
+        int Year = 0, Month = 0, Day = 0;
+        int Hour = 0, Minute = 0, Second = 0, Millisecond = 0;
+
+        DateTime()
+            :DateTime(wxDateTime::Today())
+        {
+        }
+
+        DateTime(const wxDateTime& c)
+        {
+            wxDateTime::Tm cc = c.GetTm();
+            Year = cc.year;
+            Month = cc.mon;
+            Day = cc.mday;
+            Hour = cc.hour;
+            Minute = cc.min;
+            Second = cc.sec;
+            Millisecond = cc.msec;
+        }
+
+        operator DateTime_C() { return DateTime_C{ Year, (uint8_t)Month, Day, Hour, Minute, Second, Millisecond }; }
+
+        bool operator==(const DateTime& rhs) { return Hour == rhs.Hour && Minute == rhs.Minute && Second == rhs.Second && Millisecond == rhs.Millisecond && Year == rhs.Year && Month == rhs.Month && Day == rhs.Day; }
+        bool operator!=(const DateTime& rhs) { return !(*this == rhs); }
+
+        operator wxDateTime() const { return wxDateTime(Day, (wxDateTime::Month)Month, Year, Hour, Minute, Second, Millisecond); }
     };
 
     class ParkingWindow
@@ -441,5 +439,5 @@ namespace Alternet::UI
         return Point(
             toDip(value.m_x, window),
             toDip(value.m_y, window));
-    };
+    };  
 }
