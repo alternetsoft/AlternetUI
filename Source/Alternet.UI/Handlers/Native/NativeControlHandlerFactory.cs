@@ -21,6 +21,7 @@ namespace Alternet.UI
             ProgressBar => new NativeProgressBarHandler(),
             Slider => new NativeSliderHandler(),
             NumericUpDown => new NativeNumericUpDownHandler(),
+            CheckListBox => new NativeCheckListBoxHandler(),
             ListBox => new NativeListBoxHandler(),
             ComboBox => new NativeComboBoxHandler(),
             ListView => new NativeListViewHandler(),
