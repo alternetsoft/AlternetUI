@@ -5,7 +5,7 @@
   <StackPanel Orientation="Vertical" Padding="10">
     <GroupBox Title="Text Input">
       <StackPanel Orientation="Vertical" Margin="5" Name="textBoxesPanel">
-        <DateTimePicker Margin="0,0,0,5" Name="datePicker"/>
+        <DateTimePicker Margin="0,0,0,5" Value="11/21/2003" Name="datePicker" ValueChanged="DatePicker_DateChanged"/>
         <Label Text="Selected Date" Margin="0,10,0,5" Name="dateLabel"/>
       </StackPanel>
     </GroupBox>

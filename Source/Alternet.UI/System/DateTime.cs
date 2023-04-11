@@ -86,6 +86,11 @@ namespace Alternet.UI
             return new DateTime(System.DateTime.Parse(value, provider, styles));
         }
 
+        public static DateTime Parse(string value, IFormatProvider provider)
+        {
+            return new DateTime(System.DateTime.Parse(value, provider, DateTimeStyles.None));
+        }
+
         public override string ToString()
         {
             return NativeDateTime.ToString();

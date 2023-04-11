@@ -23,7 +23,7 @@ namespace ControlsSample
             }
         }
 
-        private void DatPicker_DateChanged(object? sender, TextChangedEventArgs e)
+        private void DatePicker_DateChanged(object? sender, EventArgs e)
         {
             dateLabel.Text = string.Format("Selected Date: {0}", datePicker.Value.ToString());
         }
