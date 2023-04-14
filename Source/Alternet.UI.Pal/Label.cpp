@@ -43,4 +43,14 @@ namespace Alternet::UI
 	{
 		GetStaticText()->SetLabel(wxStr(value));
 	}
+
+	bool Label::IsEllipsized()
+	{
+		return GetStaticText()->IsEllipsized();
+	}
+
+	void Label::Wrap(int width)
+	{
+		GetStaticText()->Wrap(width);
+	}
 }

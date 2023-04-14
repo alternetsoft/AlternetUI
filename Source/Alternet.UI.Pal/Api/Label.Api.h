@@ -29,3 +29,17 @@ ALTERNET_UI_API void Label_SetText_(Label* obj, const char16_t* value)
         });
 }
 
+ALTERNET_UI_API c_bool Label_IsEllipsized_(Label* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->IsEllipsized();
+        });
+}
+
+ALTERNET_UI_API void Label_Wrap_(Label* obj, int width)
+{
+    MarshalExceptions<void>([&](){
+            obj->Wrap(width);
+        });
+}
+

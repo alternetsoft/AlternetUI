@@ -39,6 +39,20 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool IsEllipsized()
+        {
+            CheckDisposed();
+            var n = NativeApi.Label_IsEllipsized_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public void Wrap(int width)
+        {
+            CheckDisposed();
+            NativeApi.Label_Wrap_(NativePointer, width);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -53,6 +67,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Label_SetText_(IntPtr obj, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Label_IsEllipsized_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Label_Wrap_(IntPtr obj, int width);
             
         }
     }

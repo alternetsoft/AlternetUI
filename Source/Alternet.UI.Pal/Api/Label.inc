@@ -4,6 +4,8 @@ public:
 string GetText();
 void SetText(const string& value);
 
+bool IsEllipsized();
+void Wrap(int width);
 public:
 Label();
 protected:
