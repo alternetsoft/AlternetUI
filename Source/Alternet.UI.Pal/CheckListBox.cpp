@@ -117,6 +117,12 @@ namespace Alternet::UI
         }
     }
 
+    bool CheckListBox::IsChecked(int index)
+    {
+        auto listBox = GetCheckListBox();
+        return listBox->IsChecked(index);
+    }
+
     void CheckListBox::UncheckAll()
     {
         auto listBox = GetCheckListBox();

@@ -6,6 +6,7 @@ int GetCheckedIndicesItemAt(void* array, int index);
 void CloseCheckedIndicesArray(void* array);
 void ClearChecked();
 void SetChecked(int index, bool value);
+bool IsChecked(int item);
 public:
 enum class CheckListBoxEvent
 {

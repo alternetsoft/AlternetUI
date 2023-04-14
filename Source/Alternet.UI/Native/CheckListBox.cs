@@ -61,6 +61,14 @@ namespace Alternet.UI.Native
             NativeApi.CheckListBox_SetChecked_(NativePointer, index, value);
         }
         
+        public bool IsChecked(int item)
+        {
+            CheckDisposed();
+            var n = NativeApi.CheckListBox_IsChecked_(NativePointer, item);
+            var m = n;
+            return m;
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -130,6 +138,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void CheckListBox_SetChecked_(IntPtr obj, int index, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool CheckListBox_IsChecked_(IntPtr obj, int item);
             
         }
     }

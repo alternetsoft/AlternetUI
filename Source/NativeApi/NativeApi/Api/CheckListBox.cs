@@ -12,5 +12,7 @@ namespace NativeApi.Api
         public void ClearChecked() => throw new Exception();
 
         public void SetChecked(int index, bool value) => throw new Exception();
+
+        public bool IsChecked(int item) => throw new Exception();
     }
 }

@@ -57,6 +57,13 @@ ALTERNET_UI_API void CheckListBox_SetChecked_(CheckListBox* obj, int index, c_bo
         });
 }
 
+ALTERNET_UI_API c_bool CheckListBox_IsChecked_(CheckListBox* obj, int item)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->IsChecked(item);
+        });
+}
+
 ALTERNET_UI_API void CheckListBox_SetEventCallback_(CheckListBox::CheckListBoxEventCallbackType callback)
 {
     CheckListBox::SetEventCallback(callback);
