@@ -29,6 +29,7 @@ namespace ControlsSample
                 checkListBox.Items.Add("Eight");
                 checkListBox.Items.Add("Nine");
                 checkListBox.Items.Add("Ten");
+                checkListBox.SelectionMode = ListBoxSelectionMode.Multiple;
                 site = value;
             }
         }
