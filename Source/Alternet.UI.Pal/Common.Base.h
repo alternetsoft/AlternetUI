@@ -54,6 +54,7 @@
 #include <wx/datectrl.h>
 #include <wx/datetimectrl.h>
 #include <wx/popupwin.h>
+#include <wx/webview.h>
 
 #define DELELTE_COPY_CONSTRUCTOR(TypeName) \
   TypeName(const TypeName&) = delete

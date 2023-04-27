@@ -251,6 +251,7 @@
     <ClCompile Include="TreeView.cpp" />
     <ClCompile Include="UnmanagedDataObject.cpp" />
     <ClCompile Include="UnmanagedStream.cpp" />
+    <ClCompile Include="WebBrowser.cpp" />
     <ClCompile Include="WindowsVisualThemeSupport.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -325,6 +326,7 @@
     <ClInclude Include="Api\TreeView.Api.h" />
     <ClInclude Include="Api\UnmanagedDataObject.Api.h" />
     <ClInclude Include="Api\UnmanagedStream.Api.h" />
+    <ClInclude Include="Api\WebBrowser.Api.h" />
     <ClInclude Include="Api\Window.Api.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Brush.h" />
@@ -404,6 +406,7 @@
     <ClInclude Include="TypedEnumFlags.h" />
     <ClInclude Include="UnmanagedDataObject.h" />
     <ClInclude Include="UnmanagedStream.h" />
+    <ClInclude Include="WebBrowser.h" />
     <ClInclude Include="WindowsVisualThemeSupport.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
@@ -467,6 +470,7 @@
     <None Include="Api\TreeView.inc" />
     <None Include="Api\UnmanagedDataObject.inc" />
     <None Include="Api\UnmanagedStream.inc" />
+    <None Include="Api\WebBrowser.inc" />
     <None Include="Api\Window.inc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
