@@ -57,5 +57,4 @@
 #include "Api/Toolbar.Api.h"
 #include "Api/ToolbarItem.Api.h"
 #include "Api/TreeView.Api.h"
-#include "Api/WebBrowser.Api.h"
 #include "Api/Window.Api.h"

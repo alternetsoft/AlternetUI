@@ -584,15 +584,6 @@ namespace Alternet.UI.Native
         Multiple = 1,
     }
     
-    enum WebViewZoom
-    {
-        Tiny = 0,
-        Small = 1,
-        Medium = 2,
-        Large = 3,
-        Largest = 4,
-    }
-    
     enum ModalResult
     {
         None = 0,
