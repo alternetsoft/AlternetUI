@@ -84,6 +84,8 @@ namespace Alternet::UI
                 return WebViewZoom::Large;
             case wxWebViewZoom::wxWEBVIEW_ZOOM_LARGEST:
                 return WebViewZoom::Largest;
+            default:
+                return WebViewZoom::Medium;
         }
     }
 
