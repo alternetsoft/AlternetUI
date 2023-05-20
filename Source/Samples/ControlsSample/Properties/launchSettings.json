@@ -2,6 +2,7 @@
   "profiles": {
     "ControlsSample": {
       "commandName": "Project",
+      "commandLineArgs": "-test -nomfcdebug",
       "nativeDebugging": true
     }
   }

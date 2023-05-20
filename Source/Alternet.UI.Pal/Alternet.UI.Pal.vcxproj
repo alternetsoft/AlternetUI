@@ -252,6 +252,7 @@
     <ClCompile Include="UnmanagedDataObject.cpp" />
     <ClCompile Include="UnmanagedStream.cpp" />
     <ClCompile Include="WebBrowser.cpp" />
+    <ClCompile Include="WebBrowserApiPal.cpp" />
     <ClCompile Include="WindowsVisualThemeSupport.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>

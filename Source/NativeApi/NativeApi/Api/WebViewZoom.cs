@@ -5,7 +5,7 @@ using System.Text;
 namespace NativeApi.Api
 {
     public enum WebViewZoom
-    {
+    { 
         Tiny,
         Small,
         Medium,

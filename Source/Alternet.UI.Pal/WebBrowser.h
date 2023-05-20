@@ -3,20 +3,50 @@
 #include "ApiTypes.h"
 #include "Object.h"
 #include "Control.h"
+#include "Exceptions.h"
+
 
 namespace Alternet::UI
 {
+    enum WebBrowserBackend
+    {
+        WEBBROWSER_BACKEND_DEFAULT = 0,
+        WEBBROWSER_BACKEND_IE = 1,
+        WEBBROWSER_BACKEND_IELATEST=2,
+        WEBBROWSER_BACKEND_EDGE=3,
+        WEBBROWSER_BACKEND_WEBKIT=4,
+    };
+
     class WebBrowser : public Control
     {
 #include "Api/WebBrowser.inc"
-    public:
-        wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+    private:
+        static WebBrowserBackend DefaultBackend;
+        static wxString DefaultPage;
+        static bool IELatest;
+        static wxString WebViewBackendNameFromId(WebBrowserBackend id);
 
+        WebBrowserBackend Backend;
+    public:
+        WebBrowserBackend GetBackend();
+
+        wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxWebView* GetWebViewCtrl();
 
-        wxWebViewZoom GetWxWebViewZoom(WebViewZoom value);
-        WebViewZoom GetWxWebViewZoom(wxWebViewZoom value);
+        static void SetDefaultPage(const string& value);
+        static bool IsBackendAvailable(const string& value);
+        static bool IsBackendIEAvailable();
+        static bool IsBackendEdgeAvailable();
+        static bool IsBackendWebKitAvailable();
+        static void SetBackend(WebBrowserBackend value);
+        static string GetBackendVersionString(WebBrowserBackend id);
+        static string GetLibraryVersionString();
 
+        bool CanSetZoomType(wxWebViewZoomType type);
+        wxWebViewZoomType GetZoomType();
+        void SetZoomType(wxWebViewZoomType zoomType);
+
+        long Find(const string& text, int flags);
     protected:
         virtual void OnWxWindowCreated() override;
 
@@ -29,3 +59,5 @@ namespace Alternet::UI
         void OnTitleChanged(wxWebViewEvent& event);
     };
 }
+
+
