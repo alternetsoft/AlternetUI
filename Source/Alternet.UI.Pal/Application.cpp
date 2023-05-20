@@ -169,14 +169,53 @@ namespace Alternet::UI
         _inUixmlPreviewerMode = value;
     }
 
+    string Application::GetDisplayName() 
+    {
+        return wxStr(_app->GetAppDisplayName());
+    }
+
+    void Application::SetDisplayName(const string& value) 
+    {
+        _app->SetAppDisplayName(wxStr(value));
+    }
+
+    string Application::GetAppClassName() 
+    {
+        return wxStr(_app->GetClassName());
+    }
+    void Application::SetAppClassName(const string& value)
+    {
+        _app->SetClassName(wxStr(value));
+    }
+
+    string Application::GetVendorName()
+    {
+        return wxStr(_app->GetVendorName());
+    }
+
+    void Application::SetVendorName(const string& value)
+    {
+        _app->SetVendorName(wxStr(value));
+    }
+
+    string Application::GetVendorDisplayName()
+    {
+        return wxStr(_app->GetVendorDisplayName());
+    }
+
+    void Application::SetVendorDisplayName(const string& value)
+    {
+        _app->SetVendorDisplayName(wxStr(value));
+    }
+
     string Application::GetName()
     {
-        return _name;
+        return wxStr(_app->GetAppName());
     }
 
     void Application::SetName(const string& value)
     {
-        _name = value;
+        _app->SetAppName(wxStr(value));
     }
 
     void Application::RaiseIdle()

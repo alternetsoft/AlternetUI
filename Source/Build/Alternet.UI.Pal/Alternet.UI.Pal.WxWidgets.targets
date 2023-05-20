@@ -5,61 +5,103 @@
         <RemoveDir Directories="$(WxWidgetsDirectory)" Condition="Exists($(WxWidgetsDirectory))"/>
     </Target>
 
+    <Target Name="DownloadAndExtractWebView">
+        <DownloadFile Condition="!Exists($(WebViewDownloadTargetPath))"
+            SourceUrl="$(WebViewDownloadUrl)"
+            DestinationFolder="$(WebViewDownloadDirectory)" DestinationFileName="$(WebViewDownloadFileName)" />
+        <Unzip SourceFiles="$(WebViewDownloadTargetPath)" DestinationFolder="$(WebViewDirectory)" />
+        <Delete Files="$(WebViewDownloadTargetPath)"/>
+    </Target>
+
     <Target Name="DownloadAndExtractWxWidgets">
+        <CallTarget Targets="CleanWxWidgets" />
         <DownloadFile Condition="!Exists($(WxWidgetsDownloadTargetPath))"
             SourceUrl="$(WxWidgetsDownloadUrl)"
             DestinationFolder="$(WxWidgetsDownloadDirectory)" DestinationFileName="$(WxWidgetsDownloadFileName)" />
         <Unzip SourceFiles="$(WxWidgetsDownloadTargetPath)" DestinationFolder="$(WxWidgetsDirectory)" />
         <Delete Files="$(WxWidgetsDownloadTargetPath)"/>
+	<CallTarget Targets="DownloadAndExtractWebView"/>
     </Target>
 
-    <Target Name="BuildWxWidgets_Windows" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-        <!-- 32 Bit Release -->
-        <Exec
+    <!-- Windows -->
+    <Target Name="BuildWxWidgets_Windows_x86">
+        <!-- Windows 32 Bit Release -->
+        <Exec Condition="'$(DebugOnlyWxWidgetsBuild)' != 'true'"
             WorkingDirectory="$(WxWidgetsWindowsBuildDirectory)"
             Command="cmd.exe /s /c &quot; &quot;$(VCVarsAllPath)&quot; x86 &amp;&amp; nmake /f makefile.vc BUILD=release TARGET_CPU=X86 RUNTIME_LIBS=static &quot;" />
 
-        <!-- 32 Bit Debug -->
+        <!-- Windows 32 Bit Debug -->
         <Exec Condition="'$(ReleaseOnlyWxWidgetsBuild)' != 'true'"
             WorkingDirectory="$(WxWidgetsWindowsBuildDirectory)"
-            Command="cmd.exe /s /c &quot; &quot;$(VCVarsAllPath)&quot; x86 &amp;&amp; nmake /f makefile.vc BUILD=debug TARGET_CPU=X86 RUNTIME_LIBS=static &quot;" />
+            Command="cmd.exe /s /c &quot; &quot;$(VCVarsAllPath)&quot; x86 &amp;&amp; nmake /f makefile.vc BUILD=debug TARGET_CPU=X86 RUNTIME_LIBS=static &quot;"/>
+    </Target>
 
-        <!-- 64 Bit Release -->
-        <Exec
+    <Target Name="BuildWxWidgets_Windows_x64">
+        <!-- Windows 64 Bit Release -->
+        <Exec Condition="'$(DebugOnlyWxWidgetsBuild)' != 'true'"
             WorkingDirectory="$(WxWidgetsWindowsBuildDirectory)"
             Command="cmd.exe /s /c &quot; &quot;$(VCVarsAllPath)&quot; x64 &amp;&amp; nmake /f makefile.vc BUILD=release TARGET_CPU=X64 RUNTIME_LIBS=static &quot;" />
 
-        <!-- 64 Bit Debug -->
+        <!-- Windows 64 Bit Debug -->
         <Exec Condition="'$(ReleaseOnlyWxWidgetsBuild)' != 'true'"
             WorkingDirectory="$(WxWidgetsWindowsBuildDirectory)"
             Command="cmd.exe /s /c &quot; &quot;$(VCVarsAllPath)&quot; x64 &amp;&amp; nmake /f makefile.vc BUILD=debug TARGET_CPU=X64 RUNTIME_LIBS=static &quot;" />
     </Target>
 
+    <Target Name="BuildWxWidgets_Windows" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+        <Exec WorkingDirectory="$(WxWidgetsDirectory)" 
+			Command="mkdir $(WxWidgetsWindowsBuildDirectoryNameParent)" 
+			Condition="!Exists($(WxWidgetsWindowsBuildDirectoryParent))"/>
+        <Exec WorkingDirectory="$(WxWidgetsWindowsBuildDirectoryParent)" 
+			Command="mkdir $(WxWidgetsWindowsBuildDirectoryName)" 
+			Condition="!Exists($(WxWidgetsWindowsBuildDirectory))"/>
+
+	<CallTarget Targets="BuildWxWidgets_Windows_x86" Condition="'$(x64Only)' != 'true'"/>
+	<CallTarget Targets="BuildWxWidgets_Windows_x64" />
+    </Target>
+
+    <!-- Linux -->
     <Target Name="BuildWxWidgets_Linux" Condition="$([MSBuild]::IsOsPlatform('Linux'))">
         <Exec WorkingDirectory="$(WxWidgetsDirectory)" Command="chmod +x configure" />
-        <Exec WorkingDirectory="$(WxWidgetsDirectory)" Command="mkdir $(WxWidgetsGtkBuildDirectoryName)" />
-        <Exec WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" Command="../configure --enable-debug --disable-shared" Condition="'$(DebugWxWidgetsBuild)' == 'true'"/>
-        <Exec WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" Command="../configure --disable-shared" Condition="'$(DebugWxWidgetsBuild)' != 'true'"/>
+        <Exec WorkingDirectory="$(WxWidgetsDirectory)" 
+			Command="mkdir $(WxWidgetsGtkBuildDirectoryName)" 
+			Condition="!Exists($(WxWidgetsGtkBuildDirectory))"/>
+
+        <!-- Linux Debug -->
+        <Exec 	WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" 
+				Command="../configure --enable-webview --enable-webviewwebkit --enable-debug --disable-shared" 
+				Condition="'$(DebugWxWidgetsBuild)' == 'true'"/>
+
+        <!-- Linux Release -->
+        <Exec 	WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" 
+				Command="../configure --enable-webview --enable-webviewwebkit --disable-shared" 
+				Condition="'$(DebugWxWidgetsBuild)' != 'true'"/>
         <Exec WorkingDirectory="$(WxWidgetsGtkBuildDirectory)" Command="make -j20" />
     </Target>
+
+    <!-- MacOS -->
     <Target Name="BuildWxWidgets_MacOS" Condition="$([MSBuild]::IsOsPlatform('OSX'))">
         <Exec WorkingDirectory="$(WxWidgetsDirectory)" Command="chmod +x configure" />
-        <Exec WorkingDirectory="$(WxWidgetsDirectory)" Command="mkdir $(WxWidgetsMacOSBuildDirectoryName)" />
+        <Exec WorkingDirectory="$(WxWidgetsDirectory)" 
+			Command="mkdir $(WxWidgetsMacOSBuildDirectoryName)" 
+			Condition="!Exists($(WxWidgetsMacOSBuildDirectory))"/>
 
         <PropertyGroup>
             <ConfigureCommand>../configure</ConfigureCommand>
             <DebugFlag>--enable-debug</DebugFlag>
     
             <!-- On macOS High Sierra (10.13.6, the minimum supported version), libtiff, expat, pcre fail to build. So have to exclude them. -->
-            <ConfigureCommandParameters>--disable-shared --disable-sys-libs --with-macosx-version-min=10.13 --without-libtiff --without-expat --without-regex</ConfigureCommandParameters>
+            <ConfigureCommandParameters>--disable-shared --enable-webview --enable-webviewwebkit --disable-sys-libs --with-macosx-version-min=10.13 --without-libtiff --without-expat --without-regex</ConfigureCommandParameters>
         </PropertyGroup>
         
+        <!-- MacOS Debug -->
         <CreateProperty
             Condition="'$(DebugWxWidgetsBuild)' == 'true'"
             Value="$(ConfigureCommand) $(DebugFlag) $(ConfigureCommandParameters)">
             <Output TaskParameter="Value" PropertyName="ConfigureCommandLine" />  
         </CreateProperty>  
 
+        <!-- MacOS Release -->
         <CreateProperty
             Condition="'$(DebugWxWidgetsBuild)' != 'true'"
             Value="$(ConfigureCommand) $(ConfigureCommandParameters)">
@@ -72,8 +114,27 @@
     </Target>
 
     <Target Name="BuildWxWidgets">
-        <CallTarget Targets="CleanWxWidgets" />
         <CallTarget Targets="DownloadAndExtractWxWidgets" />
+        <CallTarget Targets="BuildWxWidgets_Windows" />
+        <CallTarget Targets="BuildWxWidgets_Linux" />
+        <CallTarget Targets="BuildWxWidgets_MacOS" />
+    </Target>
+
+    <Target Name="CleanWxWidgetsBuildDirectory">
+        <Message Text="Do CleanWxWidgetsBuildDirectory" />
+        <RemoveDir Directories="$(WxWidgetsMacOSBuildDirectory)" Condition="Exists($(WxWidgetsMacOSBuildDirectory))"/>
+        <RemoveDir Directories="$(WxWidgetsGtkBuildDirectory)" Condition="Exists($(WxWidgetsGtkBuildDirectory))"/>
+
+        <RemoveDir Directories="$(WxWidgetsWindowsBuildDirectory_vc_mswu)" Condition="Exists($(WxWidgetsWindowsBuildDirectory_vc_mswu))"/>
+        <RemoveDir Directories="$(WxWidgetsWindowsBuildDirectory_vc_x64_mswu)" Condition="Exists($(WxWidgetsWindowsBuildDirectory_vc_x64_mswu))"/>
+        <RemoveDir Directories="$(WxWidgetsWindowsBuildDirectory_vc_mswud)" Condition="Exists($(WxWidgetsWindowsBuildDirectory_vc_mswud))"/>
+        <RemoveDir Directories="$(WxWidgetsWindowsBuildDirectory_vc_x64_mswud)" Condition="Exists($(WxWidgetsWindowsBuildDirectory_vc_x64_mswud))"/>
+        <RemoveDir Directories="$(WxWidgetsWindowsBuildDirectory_vc_lib)" Condition="Exists($(WxWidgetsWindowsBuildDirectory_vc_lib))"/>
+        <RemoveDir Directories="$(WxWidgetsWindowsBuildDirectory_vc_x64_lib)" Condition="Exists($(WxWidgetsWindowsBuildDirectory_vc_x64_lib))"/>
+    </Target>
+
+    <Target Name="BuildWxWidgetsWithoutDownload">
+        <CallTarget Targets="CleanWxWidgetsBuildDirectory" />
         <CallTarget Targets="BuildWxWidgets_Windows" />
         <CallTarget Targets="BuildWxWidgets_Linux" />
         <CallTarget Targets="BuildWxWidgets_MacOS" />

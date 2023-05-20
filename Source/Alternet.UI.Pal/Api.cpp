@@ -37,6 +37,7 @@
 #include "Api/Label.Api.h"
 #include "Api/ListBox.Api.h"
 #include "Api/ListView.Api.h"
+#include "Api/MemoryFSHandler.Api.h"
 #include "Api/MainMenu.Api.h"
 #include "Api/Menu.Api.h"
 #include "Api/MenuItem.Api.h"

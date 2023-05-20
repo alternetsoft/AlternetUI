@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup Condition="'$(AlternetUIBuildTaskPath)' == ''">
-    <AlternetUIBuildTaskPath Condition="'$(MSBuildRuntimeType)' != 'Core'">$(AlternetUIBuildTaskAllPlatformsPath)\net46</AlternetUIBuildTaskPath>
+    <AlternetUIBuildTaskPath Condition="'$(MSBuildRuntimeType)' != 'Core'">$(AlternetUIBuildTaskAllPlatformsPath)\net461</AlternetUIBuildTaskPath>
     <AlternetUIBuildTaskPath Condition="'$(MSBuildRuntimeType)' == 'Core'">$(AlternetUIBuildTaskAllPlatformsPath)\netcoreapp3.1</AlternetUIBuildTaskPath>
   </PropertyGroup>
 
