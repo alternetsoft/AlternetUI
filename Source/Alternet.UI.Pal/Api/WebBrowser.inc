@@ -63,6 +63,9 @@ void SetEditable(bool value);
 int GetZoom();
 void SetZoom(int value);
 
+string DoCommand(const string& cmdName, const string& cmdParam1, const string& cmdParam2);
+static string DoCommandGlobal(const string& cmdName, const string& cmdParam1, const string& cmdParam2);
+void* GetNativeBackend();
 void GoBack();
 void GoForward();
 void Stop();

@@ -106,6 +106,19 @@ namespace Alternet::UI
     #pragma pack(pop)
     
     #pragma pack(push, 1)
+    struct WebBrowserEventData
+    {
+        char16_t* Url;
+        char16_t* Target;
+        int ActionFlags;
+        char16_t* MessageHandler;
+        c_bool IsError;
+        char16_t* Text;
+        int IntVal;
+    };
+    #pragma pack(pop)
+    
+    #pragma pack(push, 1)
     struct CommandEventData
     {
         char16_t* managedCommandId;

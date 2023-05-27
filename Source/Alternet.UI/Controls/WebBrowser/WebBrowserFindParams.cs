@@ -10,34 +10,78 @@ namespace Alternet.UI
     /// <summary>
     /// 
     /// </summary>
+    /*
+wxWebViewFindFlags
+enum wxWebViewFindFlags
+Find flags used when searching for text on page.
+
+Enumerator
+wxWEBVIEW_FIND_WRAP 	
+Causes the search to restart when end or beginning reached.
+
+wxWEBVIEW_FIND_ENTIRE_WORD 	
+Matches an entire word when searching.
+
+wxWEBVIEW_FIND_MATCH_CASE 	
+Match case, i.e.
+
+case sensitive searching
+
+wxWEBVIEW_FIND_HIGHLIGHT_RESULT 	
+Highlights the search results.
+
+wxWEBVIEW_FIND_BACKWARDS 	
+Searches for phrase in backward direction.
+
+wxWEBVIEW_FIND_DEFAULT 	
+The default flag, which is simple searching.
+     */
     public class WebBrowserFindParams
     {
         //-------------------------------------------------
         /// <summary>
         /// 
         /// </summary>
+        /*
+         
+        */
         public bool Wrap = false;
         /// <summary>
         /// 
         /// </summary>
+        /*
+         
+        */
         public bool EntireWord = false;
         /// <summary>
         /// 
         /// </summary>
+        /*
+         
+        */
         public bool MatchCase = false;
         /// <summary>
         /// 
         /// </summary>
+        /*
+         
+        */
         public bool HighlightResult=true;
         /// <summary>
         /// 
         /// </summary>
+        /*
+         
+        */
         public bool Backwards=false;
         //-------------------------------------------------
         /// <summary>
         /// 
         /// </summary>
-        public int ToWebViewParams()
+        /*
+
+         */
+        internal int ToWebViewParams()
         {
             const int FindWrap = 0x0001;
             const int FindEntireWord = 0x0002;

@@ -190,6 +190,27 @@ ALTERNET_UI_API void WebBrowser_SetZoom_(WebBrowser* obj, int value)
         });
 }
 
+ALTERNET_UI_API char16_t* WebBrowser_DoCommand_(WebBrowser* obj, const char16_t* cmdName, const char16_t* cmdParam1, const char16_t* cmdParam2)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->DoCommand(cmdName, cmdParam1, cmdParam2));
+        });
+}
+
+ALTERNET_UI_API char16_t* WebBrowser_DoCommandGlobal_(const char16_t* cmdName, const char16_t* cmdParam1, const char16_t* cmdParam2)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(WebBrowser::DoCommandGlobal(cmdName, cmdParam1, cmdParam2));
+        });
+}
+
+ALTERNET_UI_API void* WebBrowser_GetNativeBackend_(WebBrowser* obj)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetNativeBackend();
+        });
+}
+
 ALTERNET_UI_API void WebBrowser_GoBack_(WebBrowser* obj)
 {
     MarshalExceptions<void>([&](){

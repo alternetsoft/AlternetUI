@@ -1,9 +1,23 @@
 #include "WebBrowser.h"
 #include "wx/webview.h"
+#include "wx/version.h"
+#include "wx/webviewarchivehandler.h"
+#include "wx/filesys.h"
+#include <wx/webviewfshandler.h>
+#include "wx/fs_mem.h"
+
+#if defined(__WXOSX__)
+#include "wx/osx/webview_webkit.h"
+#endif
+
+#if defined(__WXGTK__)
+
+#endif
+
+#if defined(__WXMSW__)
 #include "wx/msw/webview_ie.h"
 #include "wx/msw/webview_edge.h"
-#include "wx/osx/webview_webkit.h"
-#include "wx/version.h"
+#endif
 
 
 namespace Alternet::UI
@@ -22,6 +36,11 @@ namespace Alternet::UI
     {
         return wxWebView::IsBackendAvailable(wxWebViewBackendWebKit);
     }    
+    //-------------------------------------------------
+    /*bool WebBrowser::IsBackendWebKit2Available()
+    {
+        return wxWebView::IsBackendAvailable(wxWebViewBackendWebKit2);
+    } */
     //-------------------------------------------------
     bool WebBrowser::IsBackendIEAvailable()
     {
@@ -83,23 +102,6 @@ namespace Alternet::UI
     {
     }
     //-------------------------------------------------
-    WebBrowser::~WebBrowser()
-    {
-        if (IsWxWindowCreated())
-        {
-            auto window = GetWxWindow();
-            if (window != nullptr)
-            {
-                window->Unbind(wxEVT_WEBVIEW_NAVIGATING, &WebBrowser::OnNavigating, this);
-                window->Unbind(wxEVT_WEBVIEW_NAVIGATED, &WebBrowser::OnNavigated, this);
-                window->Unbind(wxEVT_WEBVIEW_LOADED, &WebBrowser::OnLoaded, this);
-                window->Unbind(wxEVT_WEBVIEW_ERROR, &WebBrowser::OnError, this);
-                window->Unbind(wxEVT_WEBVIEW_NEWWINDOW, &WebBrowser::OnNewWindow, this);
-                window->Unbind(wxEVT_WEBVIEW_TITLE_CHANGED, &WebBrowser::OnTitleChanged, this);
-            }
-        }
-    }
-    //-------------------------------------------------
     wxString WebBrowser::WebViewBackendNameFromId(WebBrowserBackend id)
     {
         auto backend = wxASCII_STR(wxWebViewBackendDefault);
@@ -137,16 +139,31 @@ namespace Alternet::UI
         WebBrowser::DefaultPage = wxStr(value);
     }
     //-------------------------------------------------
+    void* WebBrowser::GetNativeBackend() 
+    {
+        return GetWebViewCtrl()->GetNativeBackend();
+    }
+    //-------------------------------------------------
     wxWindow* WebBrowser::CreateWxWindowCore(wxWindow* parent)
     {
         auto backend = WebViewBackendNameFromId(WebBrowser::DefaultBackend);
 
         Backend = WebBrowser::DefaultBackend;
+       /*
+        auto webView = new wxWebViewEdge(
+            parent,
+            -1,
+            WebBrowser::DefaultPage,
+            wxDefaultPosition,
+            wxDefaultSize,
+            0,
+            "");*/
+
 
         auto webView = wxWebView::New(
             parent, 
             -1, 
-            WebBrowser::DefaultPage, //"about:blank"
+            WebBrowser::DefaultPage,
             wxDefaultPosition, 
             wxDefaultSize, 
             backend,
@@ -160,80 +177,210 @@ namespace Alternet::UI
         webView->Bind(wxEVT_WEBVIEW_ERROR, &WebBrowser::OnError, this);
         webView->Bind(wxEVT_WEBVIEW_NEWWINDOW, &WebBrowser::OnNewWindow, this);
         webView->Bind(wxEVT_WEBVIEW_TITLE_CHANGED, &WebBrowser::OnTitleChanged, this);
+        webView->Bind(wxEVT_WEBVIEW_FULLSCREEN_CHANGED, &WebBrowser::OnFullScreenChanged, this);
+        webView->Bind(wxEVT_WEBVIEW_SCRIPT_MESSAGE_RECEIVED, &WebBrowser::OnScriptMessageReceived, this);
+        webView->Bind(wxEVT_WEBVIEW_SCRIPT_RESULT, &WebBrowser::OnScriptResult, this);
+        //-------------------------------------------------
+
+    
+        //-------------------------------------------------
         return webView;
+    }
+    //-------------------------------------------------
+    WebBrowser::~WebBrowser()
+    {
+        if (IsWxWindowCreated())
+        {
+            auto window = GetWxWindow();
+            if (window != nullptr)
+            {
+                window->Unbind(wxEVT_WEBVIEW_NAVIGATING, &WebBrowser::OnNavigating, this);
+                window->Unbind(wxEVT_WEBVIEW_NAVIGATED, &WebBrowser::OnNavigated, this);
+                window->Unbind(wxEVT_WEBVIEW_LOADED, &WebBrowser::OnLoaded, this);
+                window->Unbind(wxEVT_WEBVIEW_ERROR, &WebBrowser::OnError, this);
+                window->Unbind(wxEVT_WEBVIEW_NEWWINDOW, &WebBrowser::OnNewWindow, this);
+                window->Unbind(wxEVT_WEBVIEW_TITLE_CHANGED, &WebBrowser::OnTitleChanged, this);
+                window->Unbind(wxEVT_WEBVIEW_FULLSCREEN_CHANGED, &WebBrowser::OnFullScreenChanged, this);
+                window->Unbind(wxEVT_WEBVIEW_SCRIPT_MESSAGE_RECEIVED, &WebBrowser::OnScriptMessageReceived, this);
+                window->Unbind(wxEVT_WEBVIEW_SCRIPT_RESULT, &WebBrowser::OnScriptResult, this);
+            }
+        }
     }
     //-------------------------------------------------
     void WebBrowser::OnWxWindowCreated()
     {
     }
     //-------------------------------------------------
+    #define scast(v) (const_cast<char16_t*>(v.c_str()))
+    void WebBrowser::RaiseEventEx(WebBrowserEvent eventId, wxWebViewEvent& event, bool canVeto)
+    {
+        WebBrowserEventData data = { 0 };
+
+        auto url = wxStr(event.GetURL());
+        data.Url = scast(url);
+
+        auto intVal = event.GetInt();
+        data.IntVal = intVal;
+
+        auto text = wxStr(event.GetString());
+        data.Text = scast(text);
+
+        auto target = wxStr(event.GetTarget());
+        data.Target = scast(target);
+
+        auto messageHandler = wxStr(event.GetMessageHandler());
+        data.MessageHandler = scast(messageHandler);
+
+        data.ActionFlags = event.GetNavigationAction();
+        data.IsError = event.IsError();
+
+        if (canVeto) 
+        {
+            auto result = RaiseEventWithPointerResult(eventId, &data);
+
+            if (result != 0)
+                event.Veto();
+        } else
+            RaiseEvent(eventId, &data);
+
+    }
+    //-------------------------------------------------
+    void WebBrowser::OnFullScreenChanged(wxWebViewEvent& event)
+    {
+        RaiseEventEx(WebBrowserEvent::FullScreenChanged, event);
+    }
+    //-------------------------------------------------
+    void WebBrowser::OnScriptMessageReceived(wxWebViewEvent& event)
+    {
+        RaiseEventEx(WebBrowserEvent::ScriptMessageReceived, event);
+    }
+    //-------------------------------------------------
+    void WebBrowser::OnScriptResult(wxWebViewEvent& event)
+    {
+        RaiseEventEx(WebBrowserEvent::ScriptResult, event);
+    }
+    //-------------------------------------------------
     void WebBrowser::OnNavigating(wxWebViewEvent& event)
     {
-        RaiseEvent(WebBrowserEvent::Navigating);
+        RaiseEventEx(WebBrowserEvent::Navigating, event,true);
     }
     //-------------------------------------------------
     void WebBrowser::OnNavigated(wxWebViewEvent& event)
     {
-        RaiseEvent(WebBrowserEvent::Navigated);
+        RaiseEventEx(WebBrowserEvent::Navigated,event);
     }
     //-------------------------------------------------
     void WebBrowser::OnLoaded(wxWebViewEvent& event)
     {
-        RaiseEvent(WebBrowserEvent::Loaded);
+        RaiseEventEx(WebBrowserEvent::Loaded,event);
     }
     //-------------------------------------------------
     void WebBrowser::OnError(wxWebViewEvent& event)
     {
-        RaiseEvent(WebBrowserEvent::Error);
+        RaiseEventEx(WebBrowserEvent::Error,event);
     }
     //-------------------------------------------------
     void WebBrowser::OnNewWindow(wxWebViewEvent& event)
     {
-        RaiseEvent(WebBrowserEvent::NewWindow);
+        RaiseEventEx(WebBrowserEvent::NewWindow,event);
     }
     //-------------------------------------------------
     void WebBrowser::OnTitleChanged(wxWebViewEvent& event)
     {
-        RaiseEvent(WebBrowserEvent::TitleChanged);
+        RaiseEventEx(WebBrowserEvent::TitleChanged,event);
     }
     //-------------------------------------------------
-    /*WebViewZoom WebBrowser::GetWxWebViewZoom(wxWebViewZoom value)
+    void WebBrowser::RegisterHandlerZip(const string& schemeName)
     {
-        switch (value)
-        {
-            case wxWebViewZoom::wxWEBVIEW_ZOOM_TINY:
-                return WebViewZoom::Tiny;
-            case wxWebViewZoom::wxWEBVIEW_ZOOM_SMALL:
-                return WebViewZoom::Small;
-            case wxWebViewZoom::wxWEBVIEW_ZOOM_MEDIUM:
-                return WebViewZoom::Medium;
-            case wxWebViewZoom::wxWEBVIEW_ZOOM_LARGE:
-                return WebViewZoom::Large;
-            case wxWebViewZoom::wxWEBVIEW_ZOOM_LARGEST:
-                return WebViewZoom::Largest;
-            default:
-                return WebViewZoom::Medium;
-        }
-    }*/
+        GetWebViewCtrl()->RegisterHandler(
+            wxSharedPtr<wxWebViewHandler>(new wxWebViewArchiveHandler(wxStr(schemeName))));
+    }
     //-------------------------------------------------
-    /*wxWebViewZoom WebBrowser::GetWxWebViewZoom(WebViewZoom value)
+    void WebBrowser::RegisterHandlerMemory(const string& schemeName)
     {
-        switch (value)
+        wxFileSystem::AddHandler(new wxMemoryFSHandler);
+        GetWebViewCtrl()->RegisterHandler(
+            wxSharedPtr<wxWebViewHandler>(new wxWebViewFSHandler(wxStr(schemeName))));
+    }
+    //-------------------------------------------------
+    string WebBrowser::DoCommandGlobal(const string& cmdName, const string& cmdParam1, const string& cmdParam2)
+    {
+        string noresult = wxStr("");
+
+        return noresult;
+    }
+    //-------------------------------------------------
+    string WebBrowser::DoCommand(const string& cmdName, const string& cmdParam1, const string& cmdParam2)
+    {
+        string noresult = wxStr("");
+        //-------------------------------------------------
+        if (cmdName == wxStr("ZipScheme.Init"))
         {
-        case WebViewZoom::Tiny:
-            return wxWebViewZoom::wxWEBVIEW_ZOOM_TINY;
-        case WebViewZoom::Small:
-            return wxWebViewZoom::wxWEBVIEW_ZOOM_SMALL;
-        case WebViewZoom::Medium:
-            return wxWebViewZoom::wxWEBVIEW_ZOOM_MEDIUM;
-        case WebViewZoom::Large:
-            return wxWebViewZoom::wxWEBVIEW_ZOOM_LARGE;
-        case WebViewZoom::Largest:
-            return wxWebViewZoom::wxWEBVIEW_ZOOM_LARGEST;
-        default:
-            throwExNoInfo;
+            RegisterHandlerZip(cmdParam1);
+            return noresult;
         }
-    }*/
+        if (cmdName == wxStr("MemoryScheme.Init"))
+        {
+            RegisterHandlerMemory(cmdParam1);
+            return noresult;
+        }
+        //-------------------------------------------------
+#if defined(__WXMSW__)
+        if (cmdName == wxStr("IE.ShowPrintPreviewDialog"))
+        {
+            IEShowPrintPreviewDialog();
+            return noresult;
+        }
+#endif
+        return noresult;
+    }
+    //-------------------------------------------------
+#if defined(__WXOSX__)
+
+#endif
+    //-------------------------------------------------
+#if defined(__WXGTK__)
+
+#endif
+    //-------------------------------------------------
+#if defined(__WXMSW__)
+    void WebBrowser::IEShowPrintPreviewDialog() 
+    {
+        void* native = GetNativeBackend();
+        IWebBrowser2* wb = static_cast<IWebBrowser2*>(native);
+        wb->ExecWB(OLECMDID_PRINTPREVIEW,
+            OLECMDEXECOPT_PROMPTUSER, NULL, NULL);
+    }
+    /*
+
+    void wxWebViewIE::Print()
+    {
+        m_webBrowser->ExecWB(OLECMDID_PRINTPREVIEW,
+                                     OLECMDEXECOPT_DODEFAULT, NULL, NULL);
+    }
+
+
+    public void ShowPrintPreviewDialog()
+    {
+        IntSecurity.SafePrinting.Demand();
+        object pvaIn = null;
+        try
+        {
+            AxIWebBrowser2.ExecWB(NativeMethods.OLECMDID.OLECMDID_PRINTPREVIEW,
+            NativeMethods.OLECMDEXECOPT.OLECMDEXECOPT_PROMPTUSER, ref pvaIn, IntPtr.Zero);
+        }
+        catch (Exception ex)
+        {
+            if (ClientUtils.IsSecurityOrCriticalException(ex))
+            {
+                throw;
+            }
+        }
+    }
+
+    */
+
+#endif
     //-------------------------------------------------
     string WebBrowser::GetCurrentTitle()
     {

@@ -281,6 +281,29 @@ namespace Alternet.UI.Native
             }
         }
         
+        public string DoCommand(string cmdName, string cmdParam1, string cmdParam2)
+        {
+            CheckDisposed();
+            var n = NativeApi.WebBrowser_DoCommand_(NativePointer, cmdName, cmdParam1, cmdParam2);
+            var m = n;
+            return m;
+        }
+        
+        public static string DoCommandGlobal(string cmdName, string cmdParam1, string cmdParam2)
+        {
+            var n = NativeApi.WebBrowser_DoCommandGlobal_(cmdName, cmdParam1, cmdParam2);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr GetNativeBackend()
+        {
+            CheckDisposed();
+            var n = NativeApi.WebBrowser_GetNativeBackend_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
         public void GoBack()
         {
             CheckDisposed();
@@ -474,53 +497,62 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.WebBrowserEvent.Navigating:
                 {
-                    Navigating?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
+                    Navigating?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.WebBrowserEvent.Navigated:
                 {
-                    Navigated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
+                    Navigated?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.WebBrowserEvent.Loaded:
                 {
-                    Loaded?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
+                    Loaded?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.WebBrowserEvent.Error:
                 {
-                    Error?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
+                    Error?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.WebBrowserEvent.NewWindow:
                 {
-                    NewWindow?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
+                    NewWindow?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.WebBrowserEvent.TitleChanged:
                 {
-                    TitleChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
+                    TitleChanged?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.WebBrowserEvent.FullScreenChanged:
                 {
-                    FullScreenChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
+                    FullScreenChanged?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.WebBrowserEvent.ScriptMessageReceived:
                 {
-                    ScriptMessageReceived?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
+                    ScriptMessageReceived?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.WebBrowserEvent.ScriptResult:
                 {
-                    ScriptResult?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
+                    ScriptResult?.Invoke(this, ea); return ea.Result;
                 }
                 default: throw new Exception("Unexpected WebBrowserEvent value: " + e);
             }
         }
         
-        public event EventHandler? Navigating;
-        public event EventHandler? Navigated;
-        public event EventHandler? Loaded;
-        public event EventHandler? Error;
-        public event EventHandler? NewWindow;
-        public event EventHandler? TitleChanged;
-        public event EventHandler? FullScreenChanged;
-        public event EventHandler? ScriptMessageReceived;
-        public event EventHandler? ScriptResult;
+        public event NativeEventHandler<WebBrowserEventData>? Navigating;
+        public event NativeEventHandler<WebBrowserEventData>? Navigated;
+        public event NativeEventHandler<WebBrowserEventData>? Loaded;
+        public event NativeEventHandler<WebBrowserEventData>? Error;
+        public event NativeEventHandler<WebBrowserEventData>? NewWindow;
+        public event NativeEventHandler<WebBrowserEventData>? TitleChanged;
+        public event NativeEventHandler<WebBrowserEventData>? FullScreenChanged;
+        public event NativeEventHandler<WebBrowserEventData>? ScriptMessageReceived;
+        public event NativeEventHandler<WebBrowserEventData>? ScriptResult;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -623,6 +655,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WebBrowser_SetZoom_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string WebBrowser_DoCommand_(IntPtr obj, string cmdName, string cmdParam1, string cmdParam2);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string WebBrowser_DoCommandGlobal_(string cmdName, string cmdParam1, string cmdParam2);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr WebBrowser_GetNativeBackend_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WebBrowser_GoBack_(IntPtr obj);

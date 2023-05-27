@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApiCommon;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -29,6 +30,10 @@ namespace NativeApi.Api
         public string UserAgent { get => throw new Exception(); set => throw new Exception(); }
         public bool ContextMenuEnabled { get; set; }
 
+        public string DoCommand(string cmdName, string cmdParam1, string cmdParam2) => throw new Exception();
+        public static string DoCommandGlobal(string cmdName, string cmdParam1, string cmdParam2) => throw new Exception();
+
+        public IntPtr GetNativeBackend() => throw new Exception();
         public void GoBack() => throw new Exception();
         public void GoForward() => throw new Exception();
         public void Stop() => throw new Exception();
@@ -60,14 +65,14 @@ namespace NativeApi.Api
         public void SetPage(string text, string baseUrl) => throw new Exception();
         public bool AddUserScript(string javascript, int injectionTime) => throw new Exception();
 
-        public event EventHandler Navigating { add => throw new Exception(); remove => throw new Exception(); }
-        public event EventHandler Navigated { add => throw new Exception(); remove => throw new Exception(); }
-        public event EventHandler Loaded { add => throw new Exception(); remove => throw new Exception(); }
-        public event EventHandler Error { add => throw new Exception(); remove => throw new Exception(); }
-        public event EventHandler NewWindow { add => throw new Exception(); remove => throw new Exception(); }
-        public event EventHandler TitleChanged { add => throw new Exception(); remove => throw new Exception(); }
-        public event EventHandler FullScreenChanged { add => throw new Exception(); remove => throw new Exception(); }
-        public event EventHandler ScriptMessageReceived { add => throw new Exception(); remove => throw new Exception(); }
-        public event EventHandler ScriptResult { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<WebBrowserEventData>? Navigating { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<WebBrowserEventData>? Navigated { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<WebBrowserEventData>? Loaded { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<WebBrowserEventData>? Error { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<WebBrowserEventData>? NewWindow { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<WebBrowserEventData>? TitleChanged { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<WebBrowserEventData>? FullScreenChanged { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<WebBrowserEventData>? ScriptMessageReceived { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<WebBrowserEventData>? ScriptResult { add => throw new Exception(); remove => throw new Exception(); }
     }
 }

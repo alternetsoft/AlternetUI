@@ -3,23 +3,57 @@ using System;
 namespace Alternet.UI
 {
     //-------------------------------------------------
-    internal partial class WebBrowserHandler : 
+    internal partial class WebBrowserHandler :
         NativeControlHandler<WebBrowser, Native.WebBrowser>, IWebBrowserLite
     {
         //-------------------------------------------------
-        internal static bool IsBackendIEAvailable() => WebBrowser_IsBackendIEAvailable_();
-        internal static bool IsBackendEdgeAvailable() => WebBrowser_IsBackendEdgeAvailable_();
-        internal static bool IsBackendWebKitAvailable() => WebBrowser_IsBackendWebKitAvailable_();
-
+        internal static bool IsBackendIEAvailable() => WebBrowserNativeApi.WebBrowser_IsBackendIEAvailable_();
+        internal static bool IsBackendEdgeAvailable() => WebBrowserNativeApi.WebBrowser_IsBackendEdgeAvailable_();
+        internal static bool IsBackendWebKitAvailable() => WebBrowserNativeApi.WebBrowser_IsBackendWebKitAvailable_();
         //-------------------------------------------------
         private IntPtr NativePointer => NativeControl.NativePointer;
         public void LoadURL(string url) => NativeControl.LoadURL(url);
         public string GetCurrentTitle() => NativeControl.GetCurrentTitle();
         public string GetCurrentURL() => NativeControl.GetCurrentURL();
+        public IntPtr GetNativeBackend() => NativeControl.GetNativeBackend();
         public bool CanGoBack => NativeControl.CanGoBack;
         public bool CanGoForward => NativeControl.CanGoForward;
-        public void GoBack() => NativeControl.GoBack();
-        public void GoForward() => NativeControl.GoForward();
+        //-------------------------------------------------
+        private static void ArgsToDoCommandParams(object?[] args,out string? cmdParam1, 
+            out string? cmdParam2)
+        {
+            cmdParam1 = String.Empty;
+            cmdParam2 = String.Empty;
+            if (args.Length > 0 && args[0] != null)
+                cmdParam1 = args[0]?.ToString();
+            if (args.Length > 1 && args[1] != null)
+                cmdParam2 = args[1]?.ToString();
+        }
+        //-------------------------------------------------
+        public static string DoCommandGlobal(string cmdName, params object?[] args)
+        {
+            ArgsToDoCommandParams(args, out string? cmdParam1, out string? cmdParam2);
+            return Native.WebBrowser.DoCommandGlobal(cmdName, cmdParam1!, cmdParam2!);
+        }
+        //-------------------------------------------------
+        public string DoCommand(string cmdName,params object?[] args)
+        {
+            ArgsToDoCommandParams(args, out string? cmdParam1, out string? cmdParam2);
+            return NativeControl.DoCommand(cmdName, cmdParam1!,cmdParam2!);
+        }
+        //-------------------------------------------------
+        public bool GoBack() 
+        { 
+            NativeControl.GoBack(); 
+            return true;
+        }
+        //-------------------------------------------------
+        public bool GoForward()
+        {
+            NativeControl.GoForward();
+            return true;
+        }
+        //-------------------------------------------------
         public void Stop()=> NativeControl.Stop();
         public void ClearHistory()=> NativeControl.ClearHistory();
         public void SelectAll() => NativeControl.SelectAll();
@@ -43,21 +77,21 @@ namespace Alternet.UI
         {
             get
             {
-                var zoomType = WebBrowser_GetZoomType_(NativeControl.NativePointer);
+                var zoomType = WebBrowserNativeApi.WebBrowser_GetZoomType_(NativeControl.NativePointer);
                 WebBrowserZoomType result = 
                     (WebBrowserZoomType)Enum.ToObject(typeof(WebBrowserZoomType), zoomType);
                 return result;
             }
             set
             {
-                if (WebBrowser_CanSetZoomType_(NativeControl.NativePointer, (int)value))
-                    WebBrowser_SetZoomType_(NativeControl.NativePointer, (int)value);
+                if (WebBrowserNativeApi.WebBrowser_CanSetZoomType_(NativeControl.NativePointer, (int)value))
+                    WebBrowserNativeApi.WebBrowser_SetZoomType_(NativeControl.NativePointer, (int)value);
             }
         }
         //-------------------------------------------------
         public bool CanSetZoomType(WebBrowserZoomType value)
         {
-            return WebBrowser_CanSetZoomType_(NativeControl.NativePointer, (int)value);
+            return WebBrowserNativeApi.WebBrowser_CanSetZoomType_(NativeControl.NativePointer, (int)value);
         }
         //-------------------------------------------------
         public float ZoomFactor
@@ -94,30 +128,30 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            NativeControl.Navigating += Control.OnNavigating;
-            NativeControl.Navigated += Control.OnNavigated;
-            NativeControl.Loaded += Control.OnLoaded;
-            NativeControl.Error += Control.OnError;
-            NativeControl.NewWindow += Control.OnNewWindow;
-            NativeControl.TitleChanged += Control.OnTitleChanged;
-            NativeControl.FullScreenChanged += Control.OnFullScreenChanged;
-            NativeControl.ScriptMessageReceived += Control.OnScriptMessageReceived;
-            NativeControl.ScriptResult += Control.OnScriptResult;
+            NativeControl.Navigating += Control.OnNativeNavigating;
+            NativeControl.Navigated += Control.OnNativeNavigated;
+            NativeControl.Loaded += Control.OnNativeLoaded;
+            NativeControl.Error += Control.OnNativeError;
+            NativeControl.NewWindow += Control.OnNativeNewWindow;
+            NativeControl.TitleChanged += Control.OnNativeTitleChanged;
+            NativeControl.FullScreenChanged += Control.OnNativeFullScreenChanged;
+            NativeControl.ScriptMessageReceived += Control.OnNativeScriptMessageReceived;
+            NativeControl.ScriptResult += Control.OnNativeScriptResult;
         }
         //-------------------------------------------------
         protected override void OnDetach()
         {
             base.OnDetach();
 
-            NativeControl.Navigating -= Control.OnNavigating;
-            NativeControl.Navigated -= Control.OnNavigated;
-            NativeControl.Loaded -= Control.OnLoaded;
-            NativeControl.Error -= Control.OnError;
-            NativeControl.NewWindow -= Control.OnNewWindow;
-            NativeControl.TitleChanged -= Control.OnTitleChanged;
-            NativeControl.FullScreenChanged -= Control.OnFullScreenChanged;
-            NativeControl.ScriptMessageReceived -= Control.OnScriptMessageReceived;
-            NativeControl.ScriptResult -= Control.OnScriptResult;
+            NativeControl.Navigating -= Control.OnNativeNavigating;
+            NativeControl.Navigated -= Control.OnNativeNavigated;
+            NativeControl.Loaded -= Control.OnNativeLoaded;
+            NativeControl.Error -= Control.OnNativeError;
+            NativeControl.NewWindow -= Control.OnNativeNewWindow;
+            NativeControl.TitleChanged -= Control.OnNativeTitleChanged;
+            NativeControl.FullScreenChanged -= Control.OnNativeFullScreenChanged;
+            NativeControl.ScriptMessageReceived -= Control.OnNativeScriptMessageReceived;
+            NativeControl.ScriptResult -= Control.OnNativeScriptResult;
         }
         //-------------------------------------------------
         public bool HasSelection => NativeControl.HasSelection;
@@ -141,7 +175,7 @@ namespace Alternet.UI
             int flags = 0;
             if (prm != null)
                 flags = prm.ToWebViewParams();
-            return WebBrowser_Find_(NativePointer, text, flags);
+            return WebBrowserNativeApi.WebBrowser_Find_(NativePointer, text, flags);
         }
         //-------------------------------------------------
         public bool IsBusy=> NativeControl.IsBusy;
@@ -186,7 +220,7 @@ namespace Alternet.UI
         {
             get
             {
-                int v = WebBrowser_GetBackend_(NativePointer);
+                int v = WebBrowserNativeApi.WebBrowser_GetBackend_(NativePointer);
                 return (WebBrowserBackend)Enum.ToObject(typeof(WebBrowserBackend), v);
             }
         }

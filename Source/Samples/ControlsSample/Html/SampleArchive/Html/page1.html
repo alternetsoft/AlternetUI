@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Panda</title>
+    <script src="default.js"></script>
+    <link rel="stylesheet" href="../Styles/default.css" />
+    <script>
+        function fn1(s) {
+            document.getElementById(s).innerHTML = "<b>Panda is great.</b>";
+        }
+
+        function fn3(s) {
+            document.getElementById(s).innerHTML = "<b>Panda is cute.</b>";
+            fn2();
+        }
+    </script>
+</head>
+<body>
+    <h1>Panda sample page</h1>
+
+    <p id="p1">Panda is cute.</p>
+
+    <p ><a href="page2.html">Go to another page with panda</a></p>
+
+    <p><a href="javascript:fn1('p1')">Run script (this page)</a></p>
+
+    <p><a href="javascript:fn3('p1')">Run script (external file)</a></p>
+
+    <p><img src="../Images/panda1.jpg" /></p>
+
+</body>
+</html>

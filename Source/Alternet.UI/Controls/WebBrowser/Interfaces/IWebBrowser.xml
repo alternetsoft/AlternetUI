@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<doc>
+	<!--==============================================-->
+	<summary>
+	</summary>
+	<!--==============================================-->
+	<CanZoomIn>
+		<summary>
+			Gets a value indicating whether the zoom factor of the page can be increased,
+			which allows the <see cref="M:ZoomIn"/> method to succeed.
+		</summary>
+		<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>
+	</CanZoomIn>
+	<!--==============================================-->
+</doc>

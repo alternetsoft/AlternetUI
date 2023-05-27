@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Policy;
 using System.Text;
+using System.Threading;
 using static System.Net.Mime.MediaTypeNames;
 
 
@@ -13,8 +15,89 @@ namespace ControlsSample
     partial class WebBrowserPage : Control
     {
         private IPageSite? site;
-        private WebBrowserFindParams FindParams = new WebBrowserFindParams();
+        private readonly WebBrowserFindParams FindParams = new();
 
+        //-------------------------------------------------
+        public void DoTestIEShowPrintPreviewDialog()
+        {
+            if(WebBrowser1.Backend == WebBrowserBackend.IE || WebBrowser1.Backend == WebBrowserBackend.IELatest)
+                WebBrowser1.DoCommand("IE.ShowPrintPreviewDialog");
+        }
+        //-------------------------------------------------
+        private static bool PandaInMemory = false;
+        public void DoTestPandaFromMemory()
+        {
+            void PandaToMemory()
+            {
+                if (PandaInMemory)
+                    return;
+                PandaInMemory = true;
+                WebBrowser1.MemoryFS.Init("memory");
+                WebBrowser1.MemoryFS.AddTextFile("index.html", "<html><body><b>index.html</b></body></html>");
+                WebBrowser1.MemoryFS.AddTextFile("myFolder/index.html",
+                    "<html><body><b>file in subfolder</b></body></html>");
+
+                AddPandaFile("Html/page1.html");
+                AddPandaFile("Html/page2.html");
+                AddPandaFile("Images/panda1.jpg");
+                AddPandaFile("Images/panda2.jpg");
+                AddPandaFile("Html/default.js");
+                AddPandaFile("Styles/default.css");
+
+                void AddPandaFile(string name, string? mimeType = null)
+                {
+                    string sPath = GetAppFolder() + "Html\\SampleArchive\\" + name;
+
+                    if (mimeType == null)
+                        WebBrowser1.MemoryFS.AddOSFile(name, sPath);
+                    else
+                        WebBrowser1.MemoryFS.AddOSFileWithMimeType(name, sPath, mimeType);
+                }
+            }
+            PandaToMemory();
+            WebBrowser1.LoadURL("memory:Html/page1.html");
+        }
+        //-------------------------------------------------
+        private void Test()
+        {
+            DoTestPandaFromMemory();
+            /*
+            string schemeName = "zip";
+            string archivePath = Path.Combine(GetAppFolder(), "SampleArchive.zip");
+            archivePath = "c:\\SampleArchive.zip";
+            string url = PrepareZipUrl(schemeName,archivePath, "topic0.htm");
+            WebBrowser1.LoadURL("zip:///c:\\SampleArchive.zip;protocol=zip/topic0.htm");
+            //scheme:///C:/example/docs.zip;protocol=zip/main.htm
+            */
+        }
+        //-------------------------------------------------
+        static WebBrowserPage()
+        {
+            string[] commandLineArgs = Environment.GetCommandLineArgs();
+            ParseCmdLine(commandLineArgs);
+            if (CmdLineNoMfcDedug)
+                WebBrowser.CrtSetDbgFlag(0);
+
+            
+            LogToFile("===================");
+            LogToFile("Application started");
+            LogToFile("===================");
+
+            //WebBrowser.SetDefaultPage("google.com");
+
+            WebBrowser.SetLatestBackend();
+            //WebBrowser.SetBackend(WebBrowserBackend.Edge);
+
+        }
+        //-------------------------------------------------
+        public static void HookExceptionEvents(Alternet.UI.Application a)
+        {
+            if (!CmdLineTest)
+                return;
+            a.ThreadException += Application_ThreadException;
+            a.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+        }
         //-------------------------------------------------
         public IPageSite? Site
         {
@@ -25,12 +108,10 @@ namespace ControlsSample
                 WebBrowser1.ZoomType = WebBrowserZoomType.Layout;
                 FindParamsToControls();
                 AddTestActions();
-
                 if (CmdLineTest)
                 {
                     ListBox1.Visible = true;
                 }
-
                 site = value;
             }
         }
@@ -53,6 +134,12 @@ namespace ControlsSample
             FindParams.Backwards = FindBackwardsCheckBox.IsChecked;
         }
         //-------------------------------------------------
+        private void FindClearButton_Click(object sender, EventArgs e)
+        {
+            FindTextBox.Text = "";
+            WebBrowser1.FindClearResultSelection();
+        }
+        //-------------------------------------------------
         private void FindButton_Click(object sender, EventArgs e)
         {
             FindParamsFromControls();
@@ -60,11 +147,21 @@ namespace ControlsSample
             Log("Find Result = " + findResult.ToString());
         }
         //-------------------------------------------------
-        private void DoTest()
+        /*public string PrepareZipUrl(string schemeName,string arcPath,string fileInArchivePath)
         {
-        }
+            string prepareUrl(string s)
+            {
+                s = s.Replace('\\', '/')
+                    .Replace(":", "%3A")
+                    .Replace(" ", "%20");
+                return s;
+            }
+            string url = schemeName+":///" + prepareUrl(arcPath) + ";protocol=zip/" + 
+                prepareUrl(fileInArchivePath);
+            return url;
+        }*/
         //-------------------------------------------------
-        private void TestMessageHandler()
+        public void TestMessageHandler()
         {
             /*
             m_webView->Bind(wxEVT_WEBVIEW_SCRIPT_MESSAGE_RECEIVED, [](wxWebViewEvent& evt) {
@@ -83,48 +180,48 @@ namespace ControlsSample
             WebBrowser1.RemoveScriptMessageHandler("wx_msg");
         }
         //-------------------------------------------------
-        private void DoTestInvokeScript()
+        public void DoTestInvokeScript()
         {
             WebBrowser1.InvokeScript("alert","hello");
         }
         //-------------------------------------------------
-        private void DoDoTestInvokeScript3()
+        public void DoDoTestInvokeScript3()
         {
             WebBrowser1.InvokeScript("alert", 16325.62901F);
             WebBrowser1.InvokeScript("alert", WebBrowser1.ToInvokeScriptArg(16325.62901F)?.ToString());
             WebBrowser1.InvokeScript("alert", System.DateTime.Now);
         }
         //-------------------------------------------------
-        private void DoTestInvokeScript2()
+        public void DoTestInvokeScript2()
         {
             Log("js result = " + WebBrowser1.InvokeScript("document.URL.toUpperCase"));
         }
         //-------------------------------------------------
-        private void DoTestRunScript()
+        public void DoTestRunScript()
         {
             Log("js result = " + WebBrowser1.RunScript("get_browser()"));
         }
         //-------------------------------------------------
-        private void DoTestRunScript2()
+        public void DoTestRunScript2()
         {
             WebBrowser1.RunScript("alert('hello');");
         }
         //-------------------------------------------------
-        static WebBrowserPage()
+        public static void DeleteLog()
         {
-            //WebBrowser.SetDefaultPage("google.com");
-
-            WebBrowser.SetLatestBackend();
-
-            string[] commandLineArgs = Environment.GetCommandLineArgs();
-            ParseCmdLine(commandLineArgs);
-            if (CmdLineNoMfcDedug)
-                WebBrowser.CrtSetDbgFlag(0);
+            if (File.Exists(MyLogFilePath))
+                File.Delete(MyLogFilePath);
         }
         //-------------------------------------------------
-        private void Log(string s)
+        internal static readonly Destructor MyDestructor = new();
+        public sealed class Destructor
         {
-            site?.LogEvent(s);
+            ~Destructor()
+            {
+                LogToFile("===================");
+                LogToFile("Application finished");
+                LogToFile("===================");
+            }
         }
         //-------------------------------------------------
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
@@ -137,53 +234,140 @@ namespace ControlsSample
             }
         }
         //-------------------------------------------------
-        private void WebBrowser1_FullScreenChanged(object? sender, EventArgs e)
+        private void Log(string s)
         {
-            Log("WebBrowser FullScreenChanged");
+            LogToFile(s);
+            site?.LogEvent(s);
         }
         //-------------------------------------------------
-        private void WebBrowser1_ScriptMessageReceived(object? sender, EventArgs e)
+        static readonly string MyLogFilePath= Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, ".log");
+        static readonly string[] StringSplitToArrayChars = { Environment.NewLine };
+        public static void LogToFile(string s)
         {
-            Log("WebBrowser ScriptMessageReceived");
+            if (!CmdLineLog)
+                return;
+
+            string dt = System.DateTime.Now.ToString(WebBrowser.StringFormatJs);
+            string[] result = s.Split(StringSplitToArrayChars, StringSplitOptions.None);
+
+            string contents = String.Empty;
+
+            foreach (string s2 in result)
+                contents += $"{dt} :: {s2}{Environment.NewLine}";
+            File.AppendAllText(MyLogFilePath, contents);
         }
         //-------------------------------------------------
-        private void WebBrowser1_ScriptResult(object? sender, EventArgs e)
+        public static void LogException(Exception e)
         {
-            Log("WebBrowser ScriptResult");
+            LogToFile("====== EXCEPTION:");
+            LogToFile(e.ToString());
+            LogToFile("======");
         }
         //-------------------------------------------------
-        private void WebBrowser1_Navigated(object sender, EventArgs e)
+        private static void HandleException(Exception e)
         {
-            var s = WebBrowser1.GetCurrentURL();
-            Log("WebBrowser Navigated: "+s);
-            UrlTextBox.Text = s;
+            LogException(e);
         }
         //-------------------------------------------------
-        private void WebBrowser1_Navigating(object sender, EventArgs e)
+        private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
-            Log("WebBrowser Navigating");
+            HandleException(e.Exception);
+        }
+        //-------------------------------------------------
+        private static bool InsideUnhandledException;
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (!InsideUnhandledException)
+            {
+                InsideUnhandledException = true;
+                HandleException((e.ExceptionObject as Exception)!);
+                InsideUnhandledException = false;
+            }
+        }
+        //-------------------------------------------------
+        private void LogWebBrowserEvent(string ev, WebBrowserEventArgs e)
+        {
+            Log("====== EVENT: " + ev);
+
+            if (!String.IsNullOrEmpty(e.Text))
+                Log($"  Text = '{e.Text}'");
+            if (!String.IsNullOrEmpty(e.Url))
+                Log($"  Url = '{e.Url}'");
+            if(!String.IsNullOrEmpty(e.Target))
+                Log($"  Target = '{e.Target}'");
+            if(e.NavigationAction!=0)
+                Log($"  ActionFlags = {e.NavigationAction}");
+            if (!String.IsNullOrEmpty(e.MessageHandler))
+                Log($"  MessageHandler = '{e.MessageHandler}'");
+            if(e.IsError)
+                Log($"  IsError = {e.IsError}");
+            if (e.NavigationError != null)
+                Log($"  NavigationError = {e.NavigationError}");
+            Log("======");
+        }
+        //-------------------------------------------------
+        private void WebBrowser1_FullScreenChanged(object? sender, WebBrowserEventArgs e)
+        {
+            LogWebBrowserEvent("FullScreenChanged",e);
+        }
+        //-------------------------------------------------
+        private void WebBrowser1_ScriptMessageReceived(object? sender, WebBrowserEventArgs e)
+        {
+            LogWebBrowserEvent("ScriptMessageReceived",e);
+        }
+        //-------------------------------------------------
+        private void WebBrowser1_ScriptResult(object? sender, WebBrowserEventArgs e)
+        {
+            LogWebBrowserEvent("ScriptResult",e);
+        }
+        //-------------------------------------------------
+        private void WebBrowser1_Navigated(object sender, WebBrowserEventArgs e)
+        {
+            LogWebBrowserEvent("Navigated",e);
+            UrlTextBox.Text = WebBrowser1.GetCurrentURL();
+        }
+        //-------------------------------------------------
+        private static bool CanNavigate = true;
+        private void WebBrowser1_Navigating(object sender, WebBrowserEventArgs e)
+        {
+            LogWebBrowserEvent("Navigating",e);
+            if (!CanNavigate)
+                e.Cancel = true;
         }
         //-------------------------------------------------
         private static bool HistoryCleared = false;
-        private void WebBrowser1_Loaded(object sender, EventArgs e)
+        private static bool PandaLoaded = false;
+        private void WebBrowser1_Loaded(object sender, WebBrowserEventArgs e)
         {
-            Log("WebBrowser Loaded");
+            LogWebBrowserEvent("Loaded",e);
             UpdateHistoryButtons();
+
+            if (!PandaLoaded)
+            {
+                PandaLoaded = true;
+                try
+                {
+                    WebBrowser1.LoadURL(GetPandaUrl());
+                }
+                catch (Exception)
+                {
+                }
+            }
         }
         //-------------------------------------------------
-        private void WebBrowser1_Error(object sender, EventArgs e)
+        private void WebBrowser1_Error(object sender, WebBrowserEventArgs e)
         {
-            Log("WebBrowser Error");
+            LogWebBrowserEvent("Error",e);
         }
         //-------------------------------------------------
-        private void WebBrowser1_NewWindow(object sender, EventArgs e)
+        private void WebBrowser1_NewWindow(object sender, WebBrowserEventArgs e)
         {
-            Log("WebBrowser NewWindow");
+            LogWebBrowserEvent("NewWindow",e);
         }
         //-------------------------------------------------
-        private void WebBrowser1_TitleChanged(object sender, EventArgs e)
+        private void WebBrowser1_TitleChanged(object sender, WebBrowserEventArgs e)
         {
-            Log("WebBrowser TitleChanged: "+WebBrowser1.GetCurrentTitle());
+            LogWebBrowserEvent("TitleChanged",e);
         }
         //-------------------------------------------------
         private void GoButton_Click(object sender, EventArgs e)
@@ -212,7 +396,7 @@ namespace ControlsSample
             }
             if (s == "t")
             {
-                DoTest();
+                Test();
                 return;
             }
             if (s == "v")
@@ -356,14 +540,13 @@ namespace ControlsSample
 
             string? name = listbox.Items[(int)index].ToString();
 
-            Action? action;
-            if (!TestActions.TryGetValue(name!, out action))
+            if (!TestActions.TryGetValue(name!, out Action? action))
                 return;
             Log("DoAction: " + name);
             action();
         }
         //-------------------------------------------------
-        private Dictionary<string, Action> TestActions = new Dictionary<string, Action>();
+        private readonly Dictionary<string, Action> TestActions = new();
         private void AddTestAction(string? name=null, Action? action=null) 
         {
             if (name == null)
@@ -376,12 +559,39 @@ namespace ControlsSample
             ListBox1.Items.Add(name);
         }
         //-------------------------------------------------
+        string PrepareUrl(string s)
+        {
+            s = s.Replace('\\', '/')
+                .Replace(":", "%3A")
+                .Replace(" ", "%20");
+            return s;
+        }
+        //-------------------------------------------------
+        public string PrepareFileUrl(string filename)
+        {
+            string url = "file:///" + PrepareUrl(filename);
+            return url;
+        }
+        //-------------------------------------------------
+        private string GetPandaFileName()
+        {
+            return GetAppFolder() + "Html\\SampleArchive\\Html\\page1.html";
+        }
+        //-------------------------------------------------
+        private string GetPandaUrl()
+        {
+            return PrepareFileUrl(GetPandaFileName());
+        }
+        //-------------------------------------------------
         private void AddTestActions()
         {
-            AddTestAction("Info", () => { LogInfo(); });
-            AddTestAction("Test", () => { DoTest(); });
+            AddTestAction("Open Panda sample", () => { WebBrowser1.LoadURL(GetPandaUrl()); });
             AddTestAction("Google", () => { WebBrowser1.LoadURL("www.google.com"); });
             AddTestAction("BrowserVersion", () => { ShowBrowserVersion(); });
+            AddTestAction();
+            AddTestAction("Info", () => { LogInfo(); });
+            AddTestAction("Test", () => { Test(); });
+            AddTestAction("TestErrorEvent", () => { WebBrowser1.LoadURL("memoray:myFolder/indeax.html"); });
             AddTestAction();
             AddTestAction("Stop", () => { WebBrowser1.Stop(); });
             AddTestAction("ClearHistory", () => { WebBrowser1.ClearHistory(); });
@@ -397,18 +607,31 @@ namespace ControlsSample
             AddTestAction("Undo", () => { WebBrowser1.Undo(); });
             AddTestAction("Redo", () => { WebBrowser1.Redo(); });
             AddTestAction("Print", () => { WebBrowser1.Print(); });
+            AddTestAction("DeleteLog", () => { DeleteLog(); });
             AddTestAction("ZoomFactor+", () => { WebBrowser1.ZoomFactor += 1; });
             AddTestAction("ZoomFactor-", () => { WebBrowser1.ZoomFactor -= 1; });
-
+            AddTestAction();
+            AddTestAction("CanNavigate=false", () => { CanNavigate=false; });
+            AddTestAction("CanNavigate=true", () => { CanNavigate = true; });
             AddTestAction("ContextMenuEnabled=true", () => { WebBrowser1.ContextMenuEnabled = true; });
             AddTestAction("ContextMenuEnabled=false", () => { WebBrowser1.ContextMenuEnabled = false; });
             AddTestAction("Editable=true", () => { WebBrowser1.Editable = true; });
             AddTestAction("Editable=false", () => { WebBrowser1.Editable = false; });
             AddTestAction("AccessToDevToolsEnabled=true", () => { WebBrowser1.AccessToDevToolsEnabled = true; });
             AddTestAction("AccessToDevToolsEnabled=false", () => { WebBrowser1.AccessToDevToolsEnabled = false; });
+            AddTestAction("EnableHistory=true", () => { WebBrowser1.EnableHistory(true); });
+            AddTestAction("EnableHistory=false", () => { WebBrowser1.EnableHistory(false); });
+            AddTestAction();
 
-            AddTestAction("EnableHistory(true)", () => { WebBrowser1.EnableHistory(true); });
-            AddTestAction("EnableHistory(false)", () => { WebBrowser1.EnableHistory(false); });
+            var methods = GetType().GetRuntimeMethods();
+            foreach (var item in methods)
+            {
+                if (!item.Name.StartsWith("DoTest"))
+                    continue;
+                
+                AddTestAction(item.Name, () => { });
+            }
+
         }
         //-------------------------------------------------
         public static string PathAddBackslash(string? path)
@@ -439,6 +662,7 @@ namespace ControlsSample
         }
         //-------------------------------------------------
         public static bool CmdLineTest = false;
+        public static bool CmdLineLog = false;
         public static bool CmdLineNoMfcDedug = false;
         public static string? CmdLineExecCommands = null;
         public static void ParseCmdLine(string[] args)
@@ -446,18 +670,18 @@ namespace ControlsSample
             for (int i = 1; i < args.Length; i++)
             {
                 string text = args[i];
-                if (text.ToLower() == "-nomfcdebug")
-                {
-                    CmdLineNoMfcDedug = true;
-                } else
-                if (text.ToLower() == "-test")
-                {
-                    CmdLineTest = true;
-                }
-                else if (text.StartsWith("-r=", StringComparison.CurrentCultureIgnoreCase))
-                {
+
+                fn("-log",out CmdLineLog);
+                fn("-nomfcdebug", out CmdLineNoMfcDedug);
+                fn("-test", out CmdLineTest);
+
+                if (text.StartsWith("-r=", StringComparison.CurrentCultureIgnoreCase))
                     CmdLineExecCommands = text.Substring("-r=".Length).Trim();
-                }
+            }
+
+            static void fn(string strFlag,out bool boolFlag)
+            {
+                boolFlag = (strFlag.ToLower() == strFlag);
             }
         }
         //-------------------------------------------------
@@ -475,8 +699,8 @@ namespace ControlsSample
         //-------------------------------------------------
         public static string StringFromFile(string filename)
         {
-            using (FileStream stream = File.OpenRead(filename))
-                return StringFromStream(stream);
+            using FileStream stream = File.OpenRead(filename);
+            return StringFromStream(stream);
         }
         //-------------------------------------------------
         public static string ResNamePrefix = "ControlsSample.";

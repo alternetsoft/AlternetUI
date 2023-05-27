@@ -22,7 +22,7 @@
 
 		<StackPanel Orientation="Horizontal">
 			<WebBrowser 
-			Height="500"
+			Height="400"
 			Width="700"
 			Name="WebBrowser1"
 		    FullScreenChanged="WebBrowser1_FullScreenChanged"
@@ -33,16 +33,18 @@
             Loaded="WebBrowser1_Loaded"
             Error="WebBrowser1_Error"
             NewWindow="WebBrowser1_NewWindow"
-            TitleChanged="WebBrowser1_TitleChanged"			
+            DocumentTitleChanged="WebBrowser1_TitleChanged"			
 			/>
 
-			<ListBox Width="200" Height="500" Name="ListBox1" MouseDoubleClick="ListBox1_MouseDoubleClick" Visible="false"/>
+			<ListBox Width="200" Height="400" Name="ListBox1" 
+					 MouseDoubleClick="ListBox1_MouseDoubleClick" Visible="false"/>
 
 		</StackPanel>
 		
 		<StackPanel Orientation="Horizontal">
-			<TextBox Width="300" Margin="0,10,0,5" Name="FindTextBox" Text="google"/>
+			<TextBox Width="300" Margin="0,10,0,5" Name="FindTextBox" Text="panda"/>
 			<Button Text="Find" Margin="0,10,0,5" Click="FindButton_Click"/>
+			<Button Text="Find Clear" Margin="0,10,0,5" Click="FindClearButton_Click"/>
 		</StackPanel>
 		
 		<StackPanel Orientation="Horizontal">

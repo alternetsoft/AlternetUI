@@ -13,6 +13,7 @@ namespace ControlsSample
             var application = new Application();
             var window = new MainWindow();
 
+            WebBrowserPage.HookExceptionEvents(application);
             application.Run(window);
 
             window.Dispose();
