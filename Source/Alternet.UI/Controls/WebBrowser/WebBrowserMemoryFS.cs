@@ -10,51 +10,50 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    //-------------------------------------------------
+    
     internal class WebBrowserMemoryFS : IWebBrowserMemoryFS
     {
-        //-------------------------------------------------
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>")]
-        private WebBrowser FBrowser;
-        //-------------------------------------------------
+        
+        private readonly WebBrowser FBrowser;
+        
         public WebBrowserMemoryFS(WebBrowser browser) :base()
         {
             FBrowser = browser;
         }
-        //-------------------------------------------------
+        
         public void Init(string schemeName) 
         {
             FBrowser.DoCommand("MemoryScheme.Init", "memory");
         }
-        //-------------------------------------------------
+        
         public void RemoveFile(string filename) 
         {
             Native.MemoryFSHandler.RemoveFile(filename);
         }
-        //-------------------------------------------------
+        
         public void AddTextFileWithMimeType(string filename, String textdata,
             string mimetype)
         {
             Native.MemoryFSHandler.AddTextFileWithMimeType(filename, textdata, mimetype);
         }
-        //-------------------------------------------------
+        
         public void AddTextFile(string filename, string textdata) 
         {
             Native.MemoryFSHandler.AddTextFile(filename, textdata);
         }
-        //-------------------------------------------------
+        
         public void AddFile(string filename, IntPtr binarydata, int size) 
         {
             Native.MemoryFSHandler.AddFile(filename, binarydata, size);
         }
-        //-------------------------------------------------
+        
         public void AddFileWithMimeType(string filename,
             IntPtr binarydata, int size, string mimetype)
         {
             Native.MemoryFSHandler.AddFileWithMimeType(filename,
                 binarydata, size, mimetype);
         }
-        //-------------------------------------------------
+        
         class AutoPinner : IDisposable
         {
             GCHandle _pinnedArray;
@@ -71,15 +70,16 @@ namespace Alternet.UI
                 _pinnedArray.Free();
             }
         }
-        //-------------------------------------------------
+        
         public static byte[] ReadFully(Stream input)
         {
             using MemoryStream memoryStream = new();
             input.CopyTo(memoryStream);
             return memoryStream.ToArray();
         }
-        //-------------------------------------------------
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0063", Justification = "<Pending>")]
+        
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0063", 
+            Justification = "<Pending>")]
         public void AddStreamWithMimeType(string filename, Stream stream, string mimetype)
         {
             byte[] data = ReadFully(stream);
@@ -89,23 +89,22 @@ namespace Alternet.UI
                 IntPtr UnmanagedIntPtr = ap;
                 AddFileWithMimeType(filename, UnmanagedIntPtr, data.Length, mimetype);
             }
-            //byte[] ToArray();
-            //bool TryGetBuffer(out ArraySegment<byte> buffer);
         }
-        //-------------------------------------------------
+        
         public void AddOSFileWithMimeType(string fsFilename, string osFilename, string mimetype)
         {
             using FileStream stream = File.OpenRead(osFilename);
             AddStreamWithMimeType(fsFilename, stream, mimetype);
         }
-        //-------------------------------------------------
+        
         public void AddOSFile(string fsFilename, string osFilename)
         {
             using FileStream stream = File.OpenRead(osFilename);
             AddStream(fsFilename, stream);
         }
-        //-------------------------------------------------
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0063", Justification = "<Pending>")]
+        
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0063", 
+            Justification = "<Pending>")]
         public void AddStream(string filename, Stream stream)
         {
             byte[] data = ReadFully(stream);
@@ -116,9 +115,8 @@ namespace Alternet.UI
                 AddFile(filename, UnmanagedIntPtr, data.Length);
             }
         }
-        //-------------------------------------------------
-        //-------------------------------------------------
+        
     }
-    //-------------------------------------------------
+    
 }
-//-------------------------------------------------
+

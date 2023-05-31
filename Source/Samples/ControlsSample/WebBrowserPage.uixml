@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
 	<StackPanel Orientation="Vertical" Padding="10">
-		<Label Text="Web Browser Control" Margin="0,0,5,0" VerticalAlignment="Center"/>
+		<Label Text="Web Browser Control" Margin="0,0,5,0" VerticalAlignment="Center" Name="HeaderLabel"/>
 		<!--This is a comment. Comments are not displayed in the browser-->
 		
 		<StackPanel Orientation="Horizontal">
@@ -33,6 +33,7 @@
             Loaded="WebBrowser1_Loaded"
             Error="WebBrowser1_Error"
             NewWindow="WebBrowser1_NewWindow"
+            BeforeBrowserCreate="WebBrowser1_BeforeBrowserCreate"
             DocumentTitleChanged="WebBrowser1_TitleChanged"			
 			/>
 
@@ -47,7 +48,7 @@
 			<Button Text="Find Clear" Margin="0,10,0,5" Click="FindClearButton_Click"/>
 		</StackPanel>
 		
-		<StackPanel Orientation="Horizontal">
+		<StackPanel Orientation="Horizontal" Name="FindOptionsPanel" Visible="false">
 			<CheckBox Text="Wrap" Margin="0,10,0,5" Name="FindWrapCheckBox"/>
 			<CheckBox Text="Entire Word" Margin="0,10,0,5" Name="FindEntireWordCheckBox"/>
 			<CheckBox Text="Match Case" Margin="0,10,0,5" Name="FindMatchCaseCheckBox"/>

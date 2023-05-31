@@ -102,6 +102,7 @@ namespace Alternet.UI.Native
         public bool IsError;
         public string Text;
         public int IntVal;
+        public System.IntPtr ClientData;
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]

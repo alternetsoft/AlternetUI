@@ -7,32 +7,108 @@ using System.Reflection;
 using System.Security.Policy;
 using System.Text;
 using System.Threading;
+using static System.Collections.Specialized.BitVector32;
+using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
-
+using System.Diagnostics;
+using Microsoft.Win32;
+using System.Runtime.InteropServices;
 
 namespace ControlsSample
 {
     partial class WebBrowserPage : Control
     {
+        private static int ScriptRunCounter = 0;
+        private bool ScriptMessageHandlerAdded = false;
+        private static WebBrowserBackend UseBackend = WebBrowserBackend.IELatest;
+        private static bool SetLatestBackend = true;
+        private static bool InitSchemesDone = false;
+        private static readonly string ZipSchemeName = "zipfs";
+        private static bool PandaInMemory = false;
+
         private IPageSite? site;
         private readonly WebBrowserFindParams FindParams = new();
 
-        //-------------------------------------------------
+        
+        public void DoTestMessageHandler()
+        {
+            if(ScriptMessageHandlerAdded)
+                DoRunScript("window.wx_msg.postMessage('This is a message body');");
+            //WebBrowser1.RemoveScriptMessageHandler("wx_msg");
+        }
+        
+        public bool IsIEBackend()
+        {
+            return WebBrowser1.Backend == WebBrowserBackend.IE ||
+                WebBrowser1.Backend == WebBrowserBackend.IELatest;
+        }
+        
+        private static string GetFileWithExt(string ext)
+        {
+            string sPath1 = Assembly.GetExecutingAssembly().Location;
+            string sPath2 = Path.ChangeExtension(sPath1, ext);
+            return sPath2;
+
+        }
+
+        private void RemoveFileWithExt(string ext)
+        {
+            var s = GetFileWithExt(ext);
+            if (File.Exists(s))
+                File.Delete(s);
+        }
+
+        private void CreateFileWithExt(string ext,string data="")
+        {
+            var s = GetFileWithExt(ext);
+            var streamWriter = File.CreateText(s);
+            streamWriter.WriteLine(data);
+            streamWriter.Close();
+        }
+
+        public void RestartWithEdge()
+        {
+            RemoveFileWithExt("ie");
+            CreateFileWithExt("edge");
+            Alternet.UI.Application.Current.Exit();
+        }
+
+        public void RestartWithIE()
+        {
+            RemoveFileWithExt("edge");
+            CreateFileWithExt("ie");
+            Alternet.UI.Application.Current.Exit();
+        }
+
         public void DoTestIEShowPrintPreviewDialog()
         {
-            if(WebBrowser1.Backend == WebBrowserBackend.IE || WebBrowser1.Backend == WebBrowserBackend.IELatest)
+            if(IsIEBackend())
                 WebBrowser1.DoCommand("IE.ShowPrintPreviewDialog");
         }
-        //-------------------------------------------------
-        private static bool PandaInMemory = false;
+        
+        private void InitSchemes(WebBrowser browser)
+        {
+            if (!IsIEBackend())
+                return;
+
+            if (InitSchemesDone)
+                return;
+            InitSchemesDone = true;
+            browser.MemoryFS.Init("memory");
+            browser.DoCommand("ZipScheme.Init", ZipSchemeName);
+        }
+        
         public void DoTestPandaFromMemory()
         {
+            if (!IsIEBackend())
+                return;
+
             void PandaToMemory()
             {
                 if (PandaInMemory)
                     return;
                 PandaInMemory = true;
-                WebBrowser1.MemoryFS.Init("memory");
+                InitSchemes(WebBrowser1);
                 WebBrowser1.MemoryFS.AddTextFile("index.html", "<html><body><b>index.html</b></body></html>");
                 WebBrowser1.MemoryFS.AddTextFile("myFolder/index.html",
                     "<html><body><b>file in subfolder</b></body></html>");
@@ -57,65 +133,133 @@ namespace ControlsSample
             PandaToMemory();
             WebBrowser1.LoadURL("memory:Html/page1.html");
         }
-        //-------------------------------------------------
+        
+        public void DoTestZip()
+        {
+            string arcSubPath = "Html\\SampleArchive.zip";
+            string webPagePath = "root.html";
+
+            InitSchemes(WebBrowser1);
+
+            string archivePath = Path.Combine(GetAppFolder(), arcSubPath);
+            if (File.Exists(archivePath))
+            {
+                string url = PrepareZipUrl(ZipSchemeName, archivePath, webPagePath);
+                WebBrowser1.LoadURL(url);
+            }
+        }
+        
         private void Test()
         {
-            DoTestPandaFromMemory();
-            /*
-            string schemeName = "zip";
-            string archivePath = Path.Combine(GetAppFolder(), "SampleArchive.zip");
-            archivePath = "c:\\SampleArchive.zip";
-            string url = PrepareZipUrl(schemeName,archivePath, "topic0.htm");
-            WebBrowser1.LoadURL("zip:///c:\\SampleArchive.zip;protocol=zip/topic0.htm");
-            //scheme:///C:/example/docs.zip;protocol=zip/main.htm
-            */
+            DoTestZip();
         }
-        //-------------------------------------------------
+        
+        //scheme:///C:/example/docs.zip;protocol=zip/main.htm
+        public string PrepareZipUrl(string schemeName,string arcPath,string fileInArchivePath)
+        {
+            static string prepareUrl(string s)
+            {
+                s = s.Replace('\\', '/');
+                return s;
+            }
+
+            string url = schemeName+":///" + prepareUrl(arcPath) + ";protocol=zip/" + 
+                prepareUrl(fileInArchivePath);
+            return url;
+        }
+        
+        public static void SetBackendPathSmart(string folder)
+        {
+            var os = Environment.OSVersion;
+            var platform = os.Platform;
+
+            if (platform != PlatformID.Win32NT)
+                return;
+
+            var pa = "win-" + RuntimeInformation.ProcessArchitecture.ToString().ToLower();
+            string edgePath = Path.Combine(folder, pa);
+
+            WebBrowser.SetBackendPath(edgePath, true);
+        }
+        
         static WebBrowserPage()
         {
+
+            SetBackendPathSmart("Edge");
+
             string[] commandLineArgs = Environment.GetCommandLineArgs();
             ParseCmdLine(commandLineArgs);
             if (CmdLineNoMfcDedug)
                 WebBrowser.CrtSetDbgFlag(0);
 
             
-            LogToFile("===================");
+            LogToFile("======================================");
             LogToFile("Application started");
-            LogToFile("===================");
+            LogToFile("======================================");
 
-            //WebBrowser.SetDefaultPage("google.com");
+            if (File.Exists(GetFileWithExt("ie")))
+            {
+                UseBackend = WebBrowserBackend.IELatest;
+                SetLatestBackend = false;
+            }
+            else
+            {
+                if (File.Exists(GetFileWithExt("edge")))
+                {
+                    UseBackend = WebBrowserBackend.Edge;
+                    SetLatestBackend = false;
+                }
+            }
 
-            WebBrowser.SetLatestBackend();
-            //WebBrowser.SetBackend(WebBrowserBackend.Edge);
+
+            if (UseBackend==WebBrowserBackend.IE || UseBackend == WebBrowserBackend.IELatest
+                || UseBackend == WebBrowserBackend.Edge)
+            {
+                if (WebBrowser.GetBackendOS() != WebBrowserBackendOS.Windows)
+                    UseBackend = WebBrowserBackend.Default;
+            }
+
+            WebBrowser.SetBackend(UseBackend);
+            if (SetLatestBackend)
+                WebBrowser.SetLatestBackend();
 
         }
-        //-------------------------------------------------
+        
         public static void HookExceptionEvents(Alternet.UI.Application a)
         {
             if (!CmdLineTest)
                 return;
             a.ThreadException += Application_ThreadException;
             a.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += 
+                CurrentDomain_UnhandledException;
         }
-        //-------------------------------------------------
+        
+        private static string? HeaderText;
         public IPageSite? Site
         {
             get => site;
 
             set
             {
+                HeaderText = HeaderLabel.Text;
                 WebBrowser1.ZoomType = WebBrowserZoomType.Layout;
+                ScriptMessageHandlerAdded = WebBrowser1.AddScriptMessageHandler("wx_msg");
+                if(!ScriptMessageHandlerAdded)
+                    Log("AddScriptMessageHandler not supported");
                 FindParamsToControls();
                 AddTestActions();
+                if(IsIEBackend())
+                    WebBrowser1.DoCommand("IE.SetScriptErrorsSuppressed","true");
                 if (CmdLineTest)
                 {
                     ListBox1.Visible = true;
+                    FindOptionsPanel.Visible = true;
                 }
                 site = value;
             }
         }
-        //-------------------------------------------------
+        
         private void FindParamsToControls()
         {
             FindWrapCheckBox.IsChecked = FindParams.Wrap;
@@ -124,7 +268,7 @@ namespace ControlsSample
             FindHighlightResultCheckBox.IsChecked = FindParams.HighlightResult;
             FindBackwardsCheckBox.IsChecked = FindParams.Backwards;
         }
-        //-------------------------------------------------
+        
         private void FindParamsFromControls()
         {
             FindParams.Wrap = FindWrapCheckBox.IsChecked;
@@ -133,86 +277,74 @@ namespace ControlsSample
             FindParams.HighlightResult = FindHighlightResultCheckBox.IsChecked;
             FindParams.Backwards = FindBackwardsCheckBox.IsChecked;
         }
-        //-------------------------------------------------
+        
         private void FindClearButton_Click(object sender, EventArgs e)
         {
             FindTextBox.Text = "";
             WebBrowser1.FindClearResultSelection();
         }
-        //-------------------------------------------------
+        
         private void FindButton_Click(object sender, EventArgs e)
         {
             FindParamsFromControls();
             long findResult = WebBrowser1.Find(FindTextBox.Text, FindParams);
             Log("Find Result = " + findResult.ToString());
         }
-        //-------------------------------------------------
-        /*public string PrepareZipUrl(string schemeName,string arcPath,string fileInArchivePath)
+        
+        private IntPtr GetNewClientData()
         {
-            string prepareUrl(string s)
-            {
-                s = s.Replace('\\', '/')
-                    .Replace(":", "%3A")
-                    .Replace(" ", "%20");
-                return s;
-            }
-            string url = schemeName+":///" + prepareUrl(arcPath) + ";protocol=zip/" + 
-                prepareUrl(fileInArchivePath);
-            return url;
-        }*/
-        //-------------------------------------------------
-        public void TestMessageHandler()
-        {
-            /*
-            m_webView->Bind(wxEVT_WEBVIEW_SCRIPT_MESSAGE_RECEIVED, [](wxWebViewEvent& evt) {
-                wxLogMessage("Script message received; value = %s, handler = %s", 
-            evt.GetString(), evt.GetMessageHandler());
-            }); 
-
-             */
-
-            if (!WebBrowser1.AddScriptMessageHandler("wx_msg"))
-            {
-                Log("AddScriptMessageHandler not supported");
-                return;
-            }
-            WebBrowser1.RunScript("window.wx_msg.postMessage('This is a message body');");
-            WebBrowser1.RemoveScriptMessageHandler("wx_msg");
+            ScriptRunCounter++;
+            IntPtr clientData = new(ScriptRunCounter);
+            return clientData;
         }
-        //-------------------------------------------------
+        
+        private void DoInvokeScript(string scriptName, params object?[] args)
+        {
+            var clientData = GetNewClientData();
+            Log($"InvokeScript {scriptName}({WebBrowser1.ToInvokeScriptArgs(args)})");
+            WebBrowser1.InvokeScriptAsync(scriptName, clientData, args);
+        }
+        
+        private void DoRunScript(string script)
+        {
+            var clientData = GetNewClientData();
+            Log($"RunScript {clientData} > {script}");
+            WebBrowser1.RunScriptAsync(script, clientData);
+        }
+        
         public void DoTestInvokeScript()
         {
-            WebBrowser1.InvokeScript("alert","hello");
+            DoInvokeScript("alert","hello");
         }
-        //-------------------------------------------------
-        public void DoDoTestInvokeScript3()
+        
+        public void DoTestInvokeScript3()
         {
-            WebBrowser1.InvokeScript("alert", 16325.62901F);
-            WebBrowser1.InvokeScript("alert", WebBrowser1.ToInvokeScriptArg(16325.62901F)?.ToString());
-            WebBrowser1.InvokeScript("alert", System.DateTime.Now);
+            DoInvokeScript("alert", 16325.62901F);
+            DoInvokeScript("alert", WebBrowser1.ToInvokeScriptArg(16325.62901F)?.ToString());
+            DoInvokeScript("alert", System.DateTime.Now);
         }
-        //-------------------------------------------------
+        
         public void DoTestInvokeScript2()
         {
-            Log("js result = " + WebBrowser1.InvokeScript("document.URL.toUpperCase"));
+            DoInvokeScript("document.URL.toUpperCase");
         }
-        //-------------------------------------------------
-        public void DoTestRunScript()
+        
+        public void DoTestRunScriptGetBrowser()
         {
-            Log("js result = " + WebBrowser1.RunScript("get_browser()"));
+            DoRunScript("get_browser()");
         }
-        //-------------------------------------------------
+        
         public void DoTestRunScript2()
         {
-            WebBrowser1.RunScript("alert('hello');");
+            DoRunScript("alert('hello');");
         }
-        //-------------------------------------------------
+        
         public static void DeleteLog()
         {
             if (File.Exists(MyLogFilePath))
                 File.Delete(MyLogFilePath);
         }
-        //-------------------------------------------------
+        
         internal static readonly Destructor MyDestructor = new();
         public sealed class Destructor
         {
@@ -223,7 +355,7 @@ namespace ControlsSample
                 LogToFile("===================");
             }
         }
-        //-------------------------------------------------
+        
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -233,13 +365,13 @@ namespace ControlsSample
                 LoadUrl(s);
             }
         }
-        //-------------------------------------------------
+        
         private void Log(string s)
         {
             LogToFile(s);
             site?.LogEvent(s);
         }
-        //-------------------------------------------------
+        
         static readonly string MyLogFilePath= Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, ".log");
         static readonly string[] StringSplitToArrayChars = { Environment.NewLine };
         public static void LogToFile(string s)
@@ -256,24 +388,24 @@ namespace ControlsSample
                 contents += $"{dt} :: {s2}{Environment.NewLine}";
             File.AppendAllText(MyLogFilePath, contents);
         }
-        //-------------------------------------------------
+        
         public static void LogException(Exception e)
         {
             LogToFile("====== EXCEPTION:");
             LogToFile(e.ToString());
             LogToFile("======");
         }
-        //-------------------------------------------------
+        
         private static void HandleException(Exception e)
         {
             LogException(e);
         }
-        //-------------------------------------------------
+        
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
             HandleException(e.Exception);
         }
-        //-------------------------------------------------
+        
         private static bool InsideUnhandledException;
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
@@ -284,17 +416,17 @@ namespace ControlsSample
                 InsideUnhandledException = false;
             }
         }
-        //-------------------------------------------------
-        private void LogWebBrowserEvent(string ev, WebBrowserEventArgs e)
+        
+        private void LogWebBrowserEvent(WebBrowserEventArgs e)
         {
-            Log("====== EVENT: " + ev);
+            Log("====== EVENT: " + e.EventType);
 
             if (!String.IsNullOrEmpty(e.Text))
                 Log($"  Text = '{e.Text}'");
             if (!String.IsNullOrEmpty(e.Url))
                 Log($"  Url = '{e.Url}'");
-            if(!String.IsNullOrEmpty(e.Target))
-                Log($"  Target = '{e.Target}'");
+            if(!String.IsNullOrEmpty(e.TargetFrameName))
+                Log($"  Target = '{e.TargetFrameName}'");
             if(e.NavigationAction!=0)
                 Log($"  ActionFlags = {e.NavigationAction}");
             if (!String.IsNullOrEmpty(e.MessageHandler))
@@ -303,43 +435,50 @@ namespace ControlsSample
                 Log($"  IsError = {e.IsError}");
             if (e.NavigationError != null)
                 Log($"  NavigationError = {e.NavigationError}");
+            if(e.ClientData!=null && e.ClientData!=IntPtr.Zero)
+                Log($"  ClientData = {e.ClientData}");
             Log("======");
         }
-        //-------------------------------------------------
+        
+        private void WebBrowser1_BeforeBrowserCreate(object? sender, WebBrowserEventArgs e)
+        {
+            LogWebBrowserEvent(e);
+        }
+        
         private void WebBrowser1_FullScreenChanged(object? sender, WebBrowserEventArgs e)
         {
-            LogWebBrowserEvent("FullScreenChanged",e);
+            LogWebBrowserEvent(e);
         }
-        //-------------------------------------------------
+        
         private void WebBrowser1_ScriptMessageReceived(object? sender, WebBrowserEventArgs e)
         {
-            LogWebBrowserEvent("ScriptMessageReceived",e);
+            LogWebBrowserEvent(e);
         }
-        //-------------------------------------------------
+        
         private void WebBrowser1_ScriptResult(object? sender, WebBrowserEventArgs e)
         {
-            LogWebBrowserEvent("ScriptResult",e);
+            LogWebBrowserEvent(e);
         }
-        //-------------------------------------------------
+        
         private void WebBrowser1_Navigated(object sender, WebBrowserEventArgs e)
         {
-            LogWebBrowserEvent("Navigated",e);
+            LogWebBrowserEvent(e);
             UrlTextBox.Text = WebBrowser1.GetCurrentURL();
         }
-        //-------------------------------------------------
+        
         private static bool CanNavigate = true;
         private void WebBrowser1_Navigating(object sender, WebBrowserEventArgs e)
         {
-            LogWebBrowserEvent("Navigating",e);
+            LogWebBrowserEvent(e);
             if (!CanNavigate)
                 e.Cancel = true;
         }
-        //-------------------------------------------------
+        
         private static bool HistoryCleared = false;
         private static bool PandaLoaded = false;
         private void WebBrowser1_Loaded(object sender, WebBrowserEventArgs e)
         {
-            LogWebBrowserEvent("Loaded",e);
+            LogWebBrowserEvent(e);
             UpdateHistoryButtons();
 
             if (!PandaLoaded)
@@ -354,33 +493,36 @@ namespace ControlsSample
                 }
             }
         }
-        //-------------------------------------------------
+        
         private void WebBrowser1_Error(object sender, WebBrowserEventArgs e)
         {
-            LogWebBrowserEvent("Error",e);
+            LogWebBrowserEvent(e);
         }
-        //-------------------------------------------------
+        
         private void WebBrowser1_NewWindow(object sender, WebBrowserEventArgs e)
         {
-            LogWebBrowserEvent("NewWindow",e);
+            LogWebBrowserEvent(e);
+            WebBrowser1.LoadURL(e.Url);
         }
-        //-------------------------------------------------
+        
         private void WebBrowser1_TitleChanged(object sender, WebBrowserEventArgs e)
         {
-            LogWebBrowserEvent("TitleChanged",e);
+            LogWebBrowserEvent(e);
+            HeaderLabel.Text = HeaderText + " : " + e.Text + " : "+
+                WebBrowser.GetBackendVersionString(WebBrowser1.Backend);
         }
-        //-------------------------------------------------
+        
         private void GoButton_Click(object sender, EventArgs e)
         {
             LoadUrl(UrlTextBox.Text);
         }
-        //-------------------------------------------------
+        
         private void ShowBrowserVersion()
         {
             var filename = PathAddBackslash(GetAppFolder() + "Html") + "version.html";
             WebBrowser1.LoadURL("file://" + filename.Replace('\\', '/'));
         }
-        //-------------------------------------------------
+        
         private void LoadUrl(string s) 
         {
             Log("==> LoadUrl: "+s);
@@ -411,7 +553,7 @@ namespace ControlsSample
             }
             WebBrowser1.LoadURL(s);
         }
-        //-------------------------------------------------
+        
         void LogProp(object? obj, string propName, string? prefix=null)
         {
             var s = prefix;
@@ -425,11 +567,12 @@ namespace ControlsSample
 
             Log(s + propName + " = " + propValue);
         }
-        //-------------------------------------------------
+        
         void LogInfo(string s="")
         {
             Log("======="+s);
-            
+
+
             LogProp(WebBrowser1, "HasSelection", "WebBrowser");
             LogProp(WebBrowser1, "SelectedText", "WebBrowser");
             LogProp(WebBrowser1, "SelectedSource", "WebBrowser");
@@ -448,6 +591,7 @@ namespace ControlsSample
             LogProp(WebBrowser1, "ZoomType", "WebBrowser");
             LogProp(WebBrowser1, "ZoomFactor", "WebBrowser");
 
+            Log("os = " + WebBrowser.GetBackendOS().ToString());
             Log("backend = " + WebBrowser1.Backend.ToString());
             Log("wxWidgetsVersion = " + WebBrowser.GetLibraryVersionString());
             Log("GetCurrentTitle() = " + WebBrowser1.GetCurrentTitle());
@@ -467,13 +611,13 @@ namespace ControlsSample
 
             Log("=======");
         }
-        //-------------------------------------------------
+        
         private void UpdateZoomButtons()
         {
             ZoomInButton.Enabled = WebBrowser1.CanZoomIn;
             ZoomOutButton.Enabled = WebBrowser1.CanZoomOut;
         }
-        //-------------------------------------------------
+        
         private void UpdateHistoryButtons()
         {
             if (!HistoryCleared)
@@ -485,51 +629,53 @@ namespace ControlsSample
             BackButton.Enabled = WebBrowser1.CanGoBack;
             ForwardButton.Enabled = WebBrowser1.CanGoForward;
         }
-        //-------------------------------------------------
+        
         public void TestNavigateToString1()
         {
             WebBrowser1.NavigateToString("<html><body>NavigateToString example 1</body></html>");
         }
-        //-------------------------------------------------
+        
         public void TestNavigateToString2()
         {
             WebBrowser1.NavigateToString("<html><body>NavigateToString example 2</body></html>","www.aa.com");
         }
-        //-------------------------------------------------
+        
         public void TestNavigateToStream()
         {
             var filename = PathAddBackslash(GetAppFolder() + "Html") + "version.html";
             FileStream stream = File.OpenRead(filename);
             WebBrowser1.NavigateToStream(stream);
         }
-        //-------------------------------------------------
+        
         private void ZoomInButton_Click(object sender, EventArgs e)
         {
             WebBrowser1.ZoomIn();
             UpdateZoomButtons();
         }
-        //-------------------------------------------------
+        
         private void ZoomOutButton_Click(object sender, EventArgs e)
         {
             WebBrowser1.ZoomOut();
             UpdateZoomButtons();
         }
-        //-------------------------------------------------
+        
         private void BackButton_Click(object sender, EventArgs e)
         {
             WebBrowser1.GoBack();
         }
-        //-------------------------------------------------
+        
         private void ForwardButton_Click(object sender, EventArgs e)
         {
             WebBrowser1.GoForward();
         }
-        //-------------------------------------------------
+        
         public WebBrowserPage()
         {
+            var myListener = new DebugTraceListener(this);
+            Trace.Listeners.Add(myListener);
             InitializeComponent();
         }
-        //-------------------------------------------------
+        
         private void ListBox1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var listbox = (ListBox)sender;
@@ -540,14 +686,24 @@ namespace ControlsSample
 
             string? name = listbox.Items[(int)index].ToString();
 
-            if (!TestActions.TryGetValue(name!, out Action? action))
+            if (!TestActions.TryGetValue(name!, out MethodCaller? action))
                 return;
             Log("DoAction: " + name);
-            action();
+            action.DoCall();
         }
-        //-------------------------------------------------
-        private readonly Dictionary<string, Action> TestActions = new();
-        private void AddTestAction(string? name=null, Action? action=null) 
+        
+        private void AddTestAction()
+        {
+            AddTestAction(null, new MethodCaller());
+        }
+        
+        private void AddTestAction(string? name = null, Action? action = null) 
+        {
+            AddTestAction(name, new MethodCaller(this, action));
+        }
+        
+        private readonly Dictionary<string, MethodCaller> TestActions = new();
+        private void AddTestAction(string? name=null, MethodCaller? action = null) 
         {
             if (name == null)
             {
@@ -558,7 +714,7 @@ namespace ControlsSample
             TestActions.Add(name, action!);
             ListBox1.Items.Add(name);
         }
-        //-------------------------------------------------
+        
         string PrepareUrl(string s)
         {
             s = s.Replace('\\', '/')
@@ -566,28 +722,32 @@ namespace ControlsSample
                 .Replace(" ", "%20");
             return s;
         }
-        //-------------------------------------------------
+        
         public string PrepareFileUrl(string filename)
         {
             string url = "file:///" + PrepareUrl(filename);
             return url;
         }
-        //-------------------------------------------------
+        
         private string GetPandaFileName()
         {
             return GetAppFolder() + "Html\\SampleArchive\\Html\\page1.html";
         }
-        //-------------------------------------------------
+        
         private string GetPandaUrl()
         {
             return PrepareFileUrl(GetPandaFileName());
         }
-        //-------------------------------------------------
+        
         private void AddTestActions()
         {
-            AddTestAction("Open Panda sample", () => { WebBrowser1.LoadURL(GetPandaUrl()); });
-            AddTestAction("Google", () => { WebBrowser1.LoadURL("www.google.com"); });
+            AddTestAction("Open Panda sample", () => { 
+                WebBrowser1.LoadURL(GetPandaUrl()); });
+            AddTestAction("Google", () => { WebBrowser1.LoadURL(
+                "https://www.google.com"); });
             AddTestAction("BrowserVersion", () => { ShowBrowserVersion(); });
+            AddTestAction("RestartWithIE", () => { RestartWithIE(); });
+            AddTestAction("RestartWithEdge", () => { RestartWithEdge(); });
             AddTestAction();
             AddTestAction("Info", () => { LogInfo(); });
             AddTestAction("Test", () => { Test(); });
@@ -628,12 +788,52 @@ namespace ControlsSample
             {
                 if (!item.Name.StartsWith("DoTest"))
                     continue;
-                
-                AddTestAction(item.Name, () => { });
+
+                MethodCaller mc = new(this,item);
+
+                AddTestAction(item.Name, mc);
             }
 
         }
-        //-------------------------------------------------
+        
+        private class MethodCaller 
+        {
+            
+            public MethodInfo? Method;
+            public object? Parent;
+            public Action? Action;
+            
+            public void DoCall()
+            {
+                if (Action != null)
+                {
+                    Action();
+                    return;
+                }
+
+                object[] prm = new object[0];
+                Method?.Invoke(Parent,prm);
+            }
+            
+            public MethodCaller()
+            {
+
+            }
+            
+            public MethodCaller(object? parent, Action? action) 
+            {
+                Parent = parent;
+                Action = action;
+            }
+            
+            public MethodCaller(object? parent, MethodInfo? methodinfo)
+            {
+                Parent = parent;
+                Method = methodinfo;
+            }
+            
+        }
+        
         public static string PathAddBackslash(string? path)
         {
             if (path == null)
@@ -660,7 +860,7 @@ namespace ControlsSample
                 return true;
             }
         }
-        //-------------------------------------------------
+        
         public static bool CmdLineTest = false;
         public static bool CmdLineLog = false;
         public static bool CmdLineNoMfcDedug = false;
@@ -684,25 +884,25 @@ namespace ControlsSample
                 boolFlag = (strFlag.ToLower() == strFlag);
             }
         }
-        //-------------------------------------------------
+        
         public static string GetAppFolder()
         {
             string location = Assembly.GetExecutingAssembly().Location;
             string s = Path.GetDirectoryName(location)!;
             return PathAddBackslash(s);
         }
-        //-------------------------------------------------
+        
         public static string StringFromStream(Stream stream)
         {
             return new StreamReader(stream, Encoding.UTF8).ReadToEnd();
         }
-        //-------------------------------------------------
+        
         public static string StringFromFile(string filename)
         {
             using FileStream stream = File.OpenRead(filename);
             return StringFromStream(stream);
         }
-        //-------------------------------------------------
+        
         public static string ResNamePrefix = "ControlsSample.";
         public static Stream GetMyResourceStream(string resName)
         {
@@ -727,7 +927,84 @@ namespace ControlsSample
                 return null;
             }
         }
-        //-------------------------------------------------
-
+        
+        internal void DoTestRunScriptString()
+        {
+            DoRunScript("function f(a){return a;}f('Hello World!');");
+        }
+        
+        internal void DoTestRunScriptInteger()
+        {
+            DoRunScript("function f(a){return a;}f(123);");
+        }
+        
+        internal void DoTestRunScriptDouble()
+        {
+            DoRunScript("function f(a){return a;}f(2.34);");
+        }
+        
+        internal void DoTestRunScriptBool()
+        {
+            DoRunScript("function f(a){return a;}f(false);");
+        }
+        
+        internal void DoTestRunScriptObject()
+        {
+            DoRunScript("function f(){var person = new Object();person.name = 'Foo'; " +
+                "person.lastName = 'Bar'; return person;}f();");
+        }
+        
+        internal void DoTestRunScriptArray()
+        {
+            DoRunScript("function f(){ return [\"foo\", \"bar\"]; }f();");
+        }
+        
+        internal void DoTestRunScriptDOM()
+        {
+            DoRunScript("document.write(\"Hello World!\");");
+        }
+        
+        internal void DoTestRunScriptUndefined()
+        {
+            DoRunScript("function f(){var person = new Object();}f();");
+        }
+        
+        internal void DoTestRunScriptNull()
+        {
+            DoRunScript("function f(){return null;}f();");
+        }
+        
+        internal void DoTestRunScriptDate()
+        {
+            DoRunScript("function f(){var d = new Date('10/08/2017 21:30:40');" +
+                "var tzoffset = d.getTimezoneOffset() * 60000;" +
+                "return new Date(d.getTime() - tzoffset);}f();");
+        }
+        
+        public void Nop() { }
+        
     }
+    
+    class DebugTraceListener : TraceListener
+    {
+        readonly WebBrowserPage Page;
+#pragma warning disable IDE0079
+#pragma warning disable CS8765
+        public override void Write(string message)
+        {
+            Page.Nop();
+        }
+        public override void WriteLine(string message)
+        {
+            Page.Nop();
+        }
+#pragma warning restore CS8765
+#pragma warning restore IDE0079
+        public DebugTraceListener(WebBrowserPage page)
+        {
+            Page = page;
+        }
+    }
+    
 }
+

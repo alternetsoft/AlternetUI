@@ -54,6 +54,10 @@ namespace NativeApi.Api
         public bool AddScriptMessageHandler(string name) => throw new Exception();
         public bool RemoveScriptMessageHandler(string name) => throw new Exception();
         public void RunScriptAsync(string javascript, IntPtr clientData) => throw new Exception();
+        public void CreateBackend() => throw new Exception();
+
+        public static int GetBackendOS() => throw new Exception();
+        public static void SetEdgePath(string path) => throw new Exception();
 
         public bool Editable { get; set; }
         public int Zoom { get; set; }
@@ -74,5 +78,6 @@ namespace NativeApi.Api
         public event NativeEventHandler<WebBrowserEventData>? FullScreenChanged { add => throw new Exception(); remove => throw new Exception(); }
         public event NativeEventHandler<WebBrowserEventData>? ScriptMessageReceived { add => throw new Exception(); remove => throw new Exception(); }
         public event NativeEventHandler<WebBrowserEventData>? ScriptResult { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<WebBrowserEventData>? BeforeBrowserCreate { add => throw new Exception(); remove => throw new Exception(); }
     }
 }

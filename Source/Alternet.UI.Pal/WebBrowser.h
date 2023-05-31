@@ -8,7 +8,6 @@
 #include "Control.h"
 #include "Exceptions.h"
 
-
 namespace Alternet::UI
 {
     enum WebBrowserBackend
@@ -18,6 +17,13 @@ namespace Alternet::UI
         WEBBROWSER_BACKEND_IELATEST=2,
         WEBBROWSER_BACKEND_EDGE=3,
         WEBBROWSER_BACKEND_WEBKIT=4,
+    };
+    enum WebBrowserBackendOS
+    {
+        WEBBROWSER_BACKEND_OS_UNKNOWN = 0,
+        WEBBROWSER_BACKEND_OS_OSX = 1,
+        WEBBROWSER_BACKEND_OS_GTK = 2,
+        WEBBROWSER_BACKEND_OS_MSW = 3,
     };
 
     class WebBrowser : public Control
@@ -30,9 +36,19 @@ namespace Alternet::UI
         static wxString WebViewBackendNameFromId(WebBrowserBackend id);
 
         WebBrowserBackend Backend;
+        wxWebView* webView;
+        wxWindow* webViewParent;
 
+        bool IsBackendIE();
         void RaiseEventEx(WebBrowserEvent eventID, wxWebViewEvent& event,bool canVeto=FALSE);
+        void RaiseSimpleEvent(WebBrowserEvent eventId, bool canVeto = FALSE);
+        
+#if defined(__WXMSW__)
+        bool IERunScript(const wxString& javascript, wxString* output);
+        int IEGetScriptErrorsSuppressed();
         void IEShowPrintPreviewDialog();
+        void IESetScriptErrorsSuppressed(bool value);
+#endif
     public:
         WebBrowserBackend GetBackend();
 
@@ -47,7 +63,6 @@ namespace Alternet::UI
         static bool IsBackendIEAvailable();
         static bool IsBackendEdgeAvailable();
         static bool IsBackendWebKitAvailable();
-        //static bool IsBackendWeb2KitAvailable();
         static void SetBackend(WebBrowserBackend value);
         static string GetBackendVersionString(WebBrowserBackend id);
         static string GetLibraryVersionString();
@@ -58,9 +73,10 @@ namespace Alternet::UI
 
         long Find(const string& text, int flags);
     protected:
-        virtual void OnWxWindowCreated() override;
+        void OnWxWindowCreated() override;
 
     private:
+        void OnBeforeBrowserCreate(wxWebViewEvent& event);
         void OnNavigating(wxWebViewEvent& event);
         void OnNavigated(wxWebViewEvent& event);
         void OnLoaded(wxWebViewEvent& event);

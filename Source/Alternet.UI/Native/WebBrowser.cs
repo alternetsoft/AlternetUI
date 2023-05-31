@@ -428,6 +428,24 @@ namespace Alternet.UI.Native
             NativeApi.WebBrowser_RunScriptAsync_(NativePointer, javascript, clientData);
         }
         
+        public void CreateBackend()
+        {
+            CheckDisposed();
+            NativeApi.WebBrowser_CreateBackend_(NativePointer);
+        }
+        
+        public static int GetBackendOS()
+        {
+            var n = NativeApi.WebBrowser_GetBackendOS_();
+            var m = n;
+            return m;
+        }
+        
+        public static void SetEdgePath(string path)
+        {
+            NativeApi.WebBrowser_SetEdgePath_(path);
+        }
+        
         public string GetCurrentTitle()
         {
             CheckDisposed();
@@ -540,6 +558,11 @@ namespace Alternet.UI.Native
                     var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
                     ScriptResult?.Invoke(this, ea); return ea.Result;
                 }
+                case NativeApi.WebBrowserEvent.BeforeBrowserCreate:
+                {
+                    var ea = new NativeEventArgs<WebBrowserEventData>(MarshalEx.PtrToStructure<WebBrowserEventData>(parameter));
+                    BeforeBrowserCreate?.Invoke(this, ea); return ea.Result;
+                }
                 default: throw new Exception("Unexpected WebBrowserEvent value: " + e);
             }
         }
@@ -553,6 +576,7 @@ namespace Alternet.UI.Native
         public event NativeEventHandler<WebBrowserEventData>? FullScreenChanged;
         public event NativeEventHandler<WebBrowserEventData>? ScriptMessageReceived;
         public event NativeEventHandler<WebBrowserEventData>? ScriptResult;
+        public event NativeEventHandler<WebBrowserEventData>? BeforeBrowserCreate;
         
         [SuppressUnmanagedCodeSecurity]
         private class NativeApi : NativeApiProvider
@@ -573,6 +597,7 @@ namespace Alternet.UI.Native
                 FullScreenChanged,
                 ScriptMessageReceived,
                 ScriptResult,
+                BeforeBrowserCreate,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -724,6 +749,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WebBrowser_RunScriptAsync_(IntPtr obj, string javascript, System.IntPtr clientData);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WebBrowser_CreateBackend_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WebBrowser_GetBackendOS_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WebBrowser_SetEdgePath_(string path);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string WebBrowser_GetCurrentTitle_(IntPtr obj);

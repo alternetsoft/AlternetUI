@@ -9,13 +9,13 @@ using Alternet.UI.Native;
 
 namespace Alternet.UI
 {
-    //-------------------------------------------------
+    
     [SuppressUnmanagedCodeSecurity]
     internal class WebBrowserNativeApi
     {
         private const string ModuleName = Native.NativeApiProvider.NativeModuleName;
 
-        //-------------------------------------------------
+        
         [DllImport(ModuleName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern long WebBrowser_Find_(IntPtr obj, string text, int flags);
 
@@ -53,8 +53,8 @@ namespace Alternet.UI
 
         [DllImport(ModuleName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int WebBrowser_GetZoomType_(IntPtr obj);
-        //-------------------------------------------------
+        
     }
 }
-//-------------------------------------------------
+
 

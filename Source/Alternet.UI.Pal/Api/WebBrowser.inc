@@ -86,6 +86,9 @@ void RemoveAllUserScripts();
 bool AddScriptMessageHandler(const string& name);
 bool RemoveScriptMessageHandler(const string& name);
 void RunScriptAsync(const string& javascript, void* clientData);
+void CreateBackend();
+static int GetBackendOS();
+static void SetEdgePath(const string& path);
 string GetCurrentTitle();
 string GetCurrentURL();
 void LoadURL(const string& url);
@@ -104,6 +107,7 @@ enum class WebBrowserEvent
     FullScreenChanged,
     ScriptMessageReceived,
     ScriptResult,
+    BeforeBrowserCreate,
 };
 typedef void* (*WebBrowserEventCallbackType)(WebBrowser* obj, WebBrowserEvent event, void* param);
 static void SetEventCallback(WebBrowserEventCallbackType value) { eventCallback = value; }

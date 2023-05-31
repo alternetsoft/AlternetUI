@@ -115,6 +115,7 @@ namespace Alternet::UI
         c_bool IsError;
         char16_t* Text;
         int IntVal;
+        void* ClientData;
     };
     #pragma pack(pop)
     

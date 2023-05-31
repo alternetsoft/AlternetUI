@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Policy;
@@ -11,7 +12,7 @@ using static Alternet.UI.EventTrace;
 
 namespace Alternet.UI
 {
-    //-------------------------------------------------
+    
     /// <summary>
     ///     <para>
     ///         This control may be used to render full featured web documents. 
@@ -20,15 +21,16 @@ namespace Alternet.UI
     ///     </para>
     ///     <para>
     ///         Each backend is a full rendering engine (Internet Explorer, Edge or WebKit). 
-    ///         This allows the correct viewing of complex web pages with full JavaScript and CSS 
-    ///         support. Under macOS and Unix platforms a single backend is provided (WebKit-based). 
-    ///         Under MSW both the old IE backends and the new Edge backend can be used. 
+    ///         This allows the correct viewing of complex web pages with full JavaScript 
+    ///         and CSS support. Under macOS and Unix platforms a single backend is provided 
+    ///         (WebKit-based). Under MSW both the old IE backends and the new Edge 
+    ///         backend can be used. 
     ///     </para>
     ///     
     /// </summary>
     /// <remarks>
     ///     <para>
-    ///         WebVrowser many asynchronous methods. They return immediately and 
+    ///         WebBrowser has many asynchronous methods. They return immediately and 
     ///         perform their work in the background. This includes functions such as Reload() 
     ///         and LoadURL(). 
     ///     </para>
@@ -41,7 +43,11 @@ namespace Alternet.UI
     /// </remarks>
     public partial class WebBrowser : Control, IWebBrowser
     {
-        //-------------------------------------------------
+        
+        private IWebBrowserMemoryFS? FMemoryFS;
+        new internal WebBrowserHandler Handler => (WebBrowserHandler)base.Handler;
+        internal IWebBrowserLite Browser => (IWebBrowserLite)base.Handler;
+        
         /// <summary>
         ///     Retrieves or modifies the state of the debug flag to control the 
         ///     allocation behavior of the debug heap manager. This is for debug purposes.
@@ -51,41 +57,24 @@ namespace Alternet.UI
         {
             WebBrowserNativeApi.WebBrowser_CrtSetDbgFlag_(value);
         }
-        //-------------------------------------------------
-        /// <summary>
-        ///     Executes a browser command with the specified name and parameters.
-        /// </summary>
-        /// <param name="cmdName">
-        ///     Name of the command to execute.
-        /// </param>
-        /// <param name="args">
-        ///     Parameters of the command.
-        /// </param>
+        
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/DoCommand/*'/>
         public string DoCommand(string cmdName, params object?[] args)
         {
             CheckDisposed();
             return Browser.DoCommand(cmdName, args);
         }
-        //-------------------------------------------------
-        /// <summary>
-        ///     Executes a browser command with the specified name and parameters. 
-        ///     This is static version of DoCommand.
-        /// </summary>
-        /// <param name="cmdName">
-        ///     Name of the command to execute.
-        /// </param>
-        /// <param name="args">
-        ///     Parameters of the command.
-        /// </param>
+        
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/DoCommandGlobal/*'/>
         public static string DoCommandGlobal(string cmdName, params object?[] args)
         {
             return WebBrowserHandler.DoCommandGlobal(cmdName, args);
         }
-        //-------------------------------------------------
+        
         static WebBrowser()
         {
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Creates a handler for the control.
         /// </summary>
@@ -98,10 +87,7 @@ namespace Alternet.UI
         {
             return new WebBrowserHandler();
         }
-        //-------------------------------------------------
-        new internal WebBrowserHandler Handler2 => (WebBrowserHandler)base.Handler;
-        internal IWebBrowserLite Browser => (IWebBrowserLite)base.Handler;
-        //-------------------------------------------------
+        
         private void ZoomInOut(int delta)
         {
             var CurrentZoom = Zoom;
@@ -110,36 +96,21 @@ namespace Alternet.UI
             CurrentZoom = (WebBrowserZoom)Enum.ToObject(typeof(WebBrowserZoom), zoom);
             Zoom = CurrentZoom;
         }
-        //-------------------------------------------------
-        /// <summary>
-        ///     Increases the zoom factor of the page. The zoom factor is an arbitrary 
-        ///     number that specifies how much to zoom (scale) the HTML document.
-        /// </summary>
-        /// <remarks>
-        ///     Zoom scale in IE will be converted into zoom levels if ZoomType property 
-        ///     is set to WebBrowserZoomType.Text value.
-        /// </remarks>
+        
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ZoomIn/*'/>
         public virtual void ZoomIn()
         {
             if (CanZoomIn)                
                 ZoomInOut(1);
         }
-        //-------------------------------------------------
-        /// <summary>
-        ///     Decreases the zoom factor of the page. The zoom factor is an arbitrary 
-        ///     number that specifies how much to zoom (scale) the HTML document.
-        /// </summary>
-        /// <remarks>
-        ///     Zoom scale in IE will be converted into zoom levels if ZoomType property 
-        ///     is set to WebBrowserZoomType.Text value.
-        /// </remarks>
+        
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ZoomOut/*'/>
         public virtual void ZoomOut()
         {
             if (CanZoomOut)
                 ZoomInOut(-1);
         }
-        //-------------------------------------------------
-        private IWebBrowserMemoryFS? FMemoryFS;
+        
         public IWebBrowserMemoryFS MemoryFS
         {
             get
@@ -148,46 +119,39 @@ namespace Alternet.UI
                 return FMemoryFS;
             }
         }
-        //-------------------------------------------------
+        
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanZoomIn/*'/>
         public virtual bool CanZoomIn { get => Zoom != WebBrowserZoom.Largest; }
-        //-------------------------------------------------
-        /// <summary>
-        ///     Gets a value indicating whether the zoom factor of the page can be decreased, 
-        ///     which allows the <see cref="M:ZoomOut"/> method to succeed.
-        /// </summary>
-        /// <returns>
-        ///     <see langword="true"/> if the web page can be zoomed out; 
-        ///     otherwise, <see langword="false"/>.
-        /// </returns>         
+        
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanZoomOut/*'/>
         public virtual bool CanZoomOut { get => Zoom != WebBrowserZoom.Tiny; }
-        //-------------------------------------------------
+        
         /*public static readonly RoutedEvent NavigatedEvent = 
             EventManager.RegisterRoutedEvent(
             "Navigated", 
             RoutingStrategy.Bubble,
             typeof(EventHandler<WebBrowserEventArgs>),
             typeof(WebBrowser));*/
-        //-------------------------------------------------
+        
         /*public static readonly RoutedEvent NavigatingEvent = 
             EventManager.RegisterRoutedEvent(
             "Navigating",
             RoutingStrategy.Bubble,
             typeof(EventHandler<WebBrowserEventArgs>),
             typeof(WebBrowser));*/
-        //-------------------------------------------------
+        
         /*public static readonly RoutedEvent LoadedEvent = EventManager.RegisterRoutedEvent(
             "Loaded",
             RoutingStrategy.Bubble,
             typeof(EventHandler<WebBrowserEventArgs>),
             typeof(WebBrowser));*/
-        //-------------------------------------------------
+        
         /*public static readonly RoutedEvent ErrorEvent = EventManager.RegisterRoutedEvent(
             "Error",
             RoutingStrategy.Bubble,
             typeof(EventHandler<WebBrowserEventArgs>),
             typeof(WebBrowser));*/
-        //-------------------------------------------------
+        
         //TODO: !KU help ?
         /*public static readonly RoutedEvent NewWindowEvent = 
             EventManager.RegisterRoutedEvent(
@@ -195,490 +159,233 @@ namespace Alternet.UI
             RoutingStrategy.Bubble,
             typeof(EventHandler<WebBrowserEventArgs>),
             typeof(WebBrowser));*/
-        //-------------------------------------------------
+        
         /*public static readonly RoutedEvent DocumentTitleChangedEvent = EventManager.RegisterRoutedEvent(
             "DocumentTitleChanged",
             RoutingStrategy.Bubble,
             typeof(EventHandler<WebBrowserEventArgs>),
             typeof(WebBrowser));*/
-        //-------------------------------------------------
+        
         /*public static readonly RoutedEvent FullScreenChangedEvent = EventManager.RegisterRoutedEvent(
             "FullScreenChanged",
             RoutingStrategy.Bubble,
             typeof(EventHandler<WebBrowserEventArgs>),
             typeof(WebBrowser));*/
-        //-------------------------------------------------
+        
         /*public static readonly RoutedEvent ScriptMessageReceivedEvent = 
             EventManager.RegisterRoutedEvent(
             "ScriptMessageReceived",
             RoutingStrategy.Bubble,
             typeof(EventHandler<WebBrowserEventArgs>),
             typeof(WebBrowser));*/
-        //-------------------------------------------------
+        
         /*public static readonly RoutedEvent ScriptResultEvent = EventManager.RegisterRoutedEvent(
             "ScriptResult",
             RoutingStrategy.Bubble,
             typeof(EventHandler<WebBrowserEventArgs>),
             typeof(WebBrowser));*/
-        //-------------------------------------------------
-        internal protected virtual void OnFullScreenChanged(WebBrowserEventArgs e)
+        
+        /// <summary>
+        ///     Raises the <see cref="E:FullScreenChanged"/> event.
+        /// </summary>
+        /// <param name="e">
+        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        /// </param>
+        protected virtual void OnFullScreenChanged(WebBrowserEventArgs e)
         {
-        }
-        //-------------------------------------------------
-        internal void RaiseFullScreenChanged(WebBrowserEventArgs e)
-        {
-            OnFullScreenChanged(e);
             FullScreenChanged?.Invoke(this, e);
         }
-        //-------------------------------------------------
+        
         internal void OnNativeFullScreenChanged(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
             WebBrowserEventArgs ea = new(e, WebBrowserEvent.FullScreenChanged);
-            RaiseFullScreenChanged(ea);
+            OnFullScreenChanged(ea);
         }
-        //-------------------------------------------------
-        internal protected virtual void OnScriptMessageReceived(WebBrowserEventArgs e) 
+        
+        /// <summary>
+        ///     Raises the <see cref="E:ScriptMessageReceived"/> event.
+        /// </summary>
+        /// <param name="e">
+        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        /// </param>
+        protected virtual void OnScriptMessageReceived(WebBrowserEventArgs e) 
         {
-        }
-        //-------------------------------------------------
-        public void RaiseScriptMessageReceived(WebBrowserEventArgs e) 
-        {
-            OnScriptMessageReceived(e);
             ScriptMessageReceived?.Invoke(this, e);
         }
-        //-------------------------------------------------
+        
         internal void OnNativeScriptMessageReceived(object? sender,
             Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
             WebBrowserEventArgs ea = new(e, WebBrowserEvent.ScriptMessageReceived);
-            RaiseScriptMessageReceived(ea);
+            OnScriptMessageReceived(ea);
         }
-        //-------------------------------------------------
-        internal protected virtual void OnNativeScriptResult(WebBrowserEventArgs e)
+        
+        /// <summary>
+        ///     Raises the <see cref="E:NativeScriptResult"/> event.
+        /// </summary>
+        /// <param name="e">
+        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        /// </param>
+        public virtual void OnScriptResult(WebBrowserEventArgs e)
         {
-
-        }
-        //-------------------------------------------------
-        internal void RaiseNativeScriptResult(WebBrowserEventArgs e)
-        {
-            OnNativeScriptResult(e);
             ScriptResult?.Invoke(this, e);
         }
-        //-------------------------------------------------
+        
         internal void OnNativeScriptResult(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
             WebBrowserEventArgs ea = new(e,WebBrowserEvent.ScriptResult);
-            RaiseNativeScriptResult(ea);
+            OnScriptResult(ea);
         }
-        //-------------------------------------------------
-        internal protected virtual void OnNavigated(WebBrowserEventArgs e)
+        
+        /// <summary>
+        ///     Raises the <see cref="E:Navigated"/> event.
+        /// </summary>
+        /// <param name="e">
+        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        /// </param>
+        protected virtual void OnNavigated(WebBrowserEventArgs e)
         {
-
-        }
-        //-------------------------------------------------
-        internal void RaiseNavigated(WebBrowserEventArgs e)
-        {
-            OnNavigated(e);
             Navigated?.Invoke(this, e);
         }
-        //-------------------------------------------------
+        
         internal void OnNativeNavigated(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
             WebBrowserEventArgs ea = new(e, WebBrowserEvent.Navigated);
-            RaiseNavigated(ea);
+            OnNavigated(ea);
         }
-        //-------------------------------------------------
-        internal protected virtual void OnNavigating(WebBrowserEventArgs e)
+        
+        /// <summary>
+        ///     Raises the <see cref="E:Navigating"/> event.
+        /// </summary>
+        /// <param name="e">
+        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        /// </param>
+        protected virtual void OnNavigating(WebBrowserEventArgs e)
         {
-
-        }
-        //-------------------------------------------------
-        internal void RaiseNavigating(WebBrowserEventArgs e)
-        {
-            OnNavigating(e);
             Navigating?.Invoke(this, e);
         }
-        //-------------------------------------------------
+        
         internal void OnNativeNavigating(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
             WebBrowserEventArgs ea = new(e, WebBrowserEvent.Navigating);
-            RaiseNavigating(ea);
+            OnNavigating(ea);
             e.Result = ea.CancelAsIntPtr();
         }
-        //-------------------------------------------------
-        internal protected virtual void OnLoaded(WebBrowserEventArgs e)
+        
+        /// <summary>
+        ///     Raises the <see cref="E:BeforeBrowserCreate"/> event.
+        /// </summary>
+        /// <param name="e">
+        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        /// </param>
+        protected virtual void OnBeforeBrowserCreate(WebBrowserEventArgs e)
         {
-
+            BeforeBrowserCreate?.Invoke(this, e);
         }
-        //-------------------------------------------------
-        internal void RaiseLoaded(WebBrowserEventArgs e)
+        
+        internal void OnNativeBeforeBrowserCreate(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
-            OnLoaded(e);
+            WebBrowserEventArgs ea = new(e, WebBrowserEvent.BeforeBrowserCreate);
+            OnBeforeBrowserCreate(ea);
+        }
+        
+        /// <summary>
+        ///     Raises the <see cref="E:Loaded"/> event.
+        /// </summary>
+        /// <param name="e">
+        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        /// </param>
+        protected virtual void OnLoaded(WebBrowserEventArgs e)
+        {
             Loaded?.Invoke(this, e);
         }
-        //-------------------------------------------------
+        
         internal void OnNativeLoaded(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
             WebBrowserEventArgs ea = new(e, WebBrowserEvent.Loaded);
-            RaiseLoaded(ea);
+            OnLoaded(ea);
         }
-        //-------------------------------------------------
-        internal protected virtual void OnError(WebBrowserEventArgs e) 
-        { 
-        }
-        //-------------------------------------------------
-        internal void RaiseError(WebBrowserEventArgs e) 
+        
+        /// <summary>
+        ///     Raises the <see cref="E:Error"/> event.
+        /// </summary>
+        /// <param name="e">
+        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        /// </param>
+        public virtual void OnError(WebBrowserEventArgs e) 
         {
-            OnError(e);
             Error?.Invoke(this, e);
         }
-        //-------------------------------------------------
+        
         internal void OnNativeError(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
             WebBrowserEventArgs ea = new(e, WebBrowserEvent.Error);
-            RaiseError(ea);
+            OnError(ea);
         }
-        //-------------------------------------------------
-        internal protected virtual void OnNewWindow(WebBrowserEventArgs e) 
-        { 
-        }
-        //-------------------------------------------------
-        internal void RaiseNewWindow(WebBrowserEventArgs e) 
+        
+        /// <summary>
+        ///     Raises the <see cref="E:NewWindow"/> event.
+        /// </summary>
+        /// <param name="e">
+        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        /// </param>
+        protected virtual void OnNewWindow(WebBrowserEventArgs e) 
         {
-            OnNewWindow(e);
             NewWindow?.Invoke(this, e);
         }
-        //-------------------------------------------------
+        
         internal void OnNativeNewWindow(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
             WebBrowserEventArgs ea = new(e, WebBrowserEvent.NewWindow);
-            RaiseNewWindow(ea);
+            OnNewWindow(ea);
         }
-        //-------------------------------------------------
-        internal protected virtual void OnDocumentTitleChanged(WebBrowserEventArgs e) 
-        { 
-        }
-        //-------------------------------------------------
-        internal void RaiseDocumentTitleChanged(WebBrowserEventArgs e) 
+        
+        /// <summary>
+        ///     Raises the <see cref="E:DocumentTitleChanged"/> event.
+        /// </summary>
+        /// <param name="e">
+        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        /// </param>
+        protected virtual void OnDocumentTitleChanged(WebBrowserEventArgs e) 
         {
-            OnDocumentTitleChanged(e);
             DocumentTitleChanged?.Invoke(this, e);
         }
-        //-------------------------------------------------
+        
         internal void OnNativeTitleChanged(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
             WebBrowserEventArgs ea = new(e, WebBrowserEvent.TitleChanged);
-            RaiseDocumentTitleChanged(ea);
+            OnDocumentTitleChanged(ea);
         }
-        //-------------------------------------------------
-        /// <summary>
-        ///     Occurs when the the page wants to enter or leave fullscreen. 
-        ///     Use the IntVal property of the event arguments to get the status. 
-        ///     Not implemented for the IE backend.
-        /// </summary>
+        
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/FullScreenChanged/*'/>
         public event EventHandler<WebBrowserEventArgs>? FullScreenChanged;
-        //-------------------------------------------------
-        /// <summary>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        /// </summary>
-        /// <remarks>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        /// </remarks>
-        /*
-        Process a wxEVT_WEBVIEW_SCRIPT_MESSAGE_RECEIVED event only available 
-        in wxWidgets 3.1.5 or later. For usage details see AddScriptMessageHandler().
-
-         */
-        //TODO: !KU help
+        
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/ScriptMessageReceived/*'/>
         public event EventHandler<WebBrowserEventArgs>? ScriptMessageReceived;
-        //-------------------------------------------------
-        /// <summary>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        /// </summary>
-        /// <remarks>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        /// </remarks>
-        /*
-        Process a wxEVT_WEBVIEW_SCRIPT_RESULT event only available in 
-        wxWidgets 3.1.6 or later. For usage details see RunScriptAsync(). 
-
-         */
-        //TODO: !KU help
+        
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/ScriptResult/*'/>
         public event EventHandler<WebBrowserEventArgs>? ScriptResult;
-        //-------------------------------------------------
-        /// <summary>
-        ///     <para>
-        ///         Occurs when the WebBrowser control has navigated to a new web page 
-        ///         and has begun loading it. This event may not be canceled. Note that 
-        ///         if the displayed HTML document has several frames, one such event will
-        ///         be generated per frame.
-        ///     </para>
-        ///     <para>
-        ///         Handle the Navigated event to receive notification when the WebBrowser 
-        ///         control has navigated to a new web page.
-        ///     </para>
-        /// </summary>
-        /// <remarks>
-        ///     <para>
-        ///         When the Navigated event occurs, the new web page has begun loading, 
-        ///         which means you can access the loaded content through the WebBrowser properties.
-        ///         Handle the Loaded event to receive notification when the
-        ///         WebBrowser control finishes loading the new document.
-        ///     </para>
-        ///     <para>
-        ///         You can also receive notification before navigation begins by handling the
-        ///         Navigating event. Handling this event lets you cancel navigation if 
-        ///         certain conditions have not been met.For example, the user has not 
-        ///         completely filled out a form.
-        ///     </para>
-        /// </remarks>
+        
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/Navigated/*'/>
         public event EventHandler<WebBrowserEventArgs>? Navigated;
-        //-------------------------------------------------
-        /// <summary>
-        ///     <para>
-        ///         Occurs before the WebBrowser control navigates to a new web page.
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        /// </summary>
-        /// <remarks>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        /// </remarks>
-
-        /*
-        Process a wxEVT_WEBVIEW_NAVIGATING event, generated before trying to get 
-        a resource. This event may be vetoed to prevent navigating to this resource. 
-        Note that if the displayed HTML document has several frames, one such event 
-        will be generated per frame.
-
-
-
-C#
-
-Copy
-public event System.Windows.Forms.WebBrowserNavigatingEventHandler Navigating;
-Event Type
-WebBrowserNavigatingEventHandler
-Examples
-The following code example demonstrates how to use a handler for the Navigating event to cancel navigation when a Web page form has not been filled in. The Document property is used to determine whether the form input field contains a value.
-
-This example requires that your form contains a WebBrowser control called webBrowser1 and that your form class has a ComVisibleAttribute making it accessible to COM.
-
-Remarks
-The WebBrowser control navigates to a new document whenever one of the following properties is set or methods is called:
-
-Url
-
-DocumentText
-
-DocumentStream
-
-Navigate
-
-GoBack
-
-GoForward
-
-GoHome
-
-GoSearch
-
-You can handle the Navigating event to cancel navigation if certain conditions have not been met, for example, when the user has not completely filled out a form. To cancel navigation, set the Cancel property of the WebBrowserNavigatingEventArgs object passed to the event handler to true. You can also use this object to retrieve the URL of the new document through the WebBrowserNavigatingEventArgs.Url property. If the new document will be displayed in a Web page frame, you can retrieve the name of the frame through the WebBrowserNavigatingEventArgs.TargetFrameName property.
-
-Handle the Navigated event to receive notification when the WebBrowser control finishes navigation and has begun loading the document at the new location. Handle the DocumentCompleted event to receive notification when the WebBrowser control finishes loading the new document.
-
-For more information about handling events, see Handling and Raising Events.
-
-         */
-        //TODO: !KU help
+        
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/Navigating/*'/>
         public event EventHandler<WebBrowserEventArgs>? Navigating;
-        //-------------------------------------------------
-        /// <summary>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        /// </summary>
-        /// <remarks>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        /// </remarks>
-        /*
-        Process a wxEVT_WEBVIEW_LOADED event generated when the document is fully 
-        loaded and displayed. Note that if the displayed HTML document has several 
-        frames, one such event will be generated per frame.
-
-
-Occurs when the WebBrowser control finishes loading a document.
-
-C#
-
-Copy
-public event System.Windows.Forms.WebBrowserDocumentCompletedEventHandler DocumentCompleted;
-Event Type
-WebBrowserDocumentCompletedEventHandler
-Examples
-The following code example demonstrates the use of this event to print a document after it has fully loaded.
-
-Remarks
-The WebBrowser control navigates to a new document whenever one of the following properties is set or methods is called:
-
-Url
-
-DocumentText
-
-DocumentStream
-
-Navigate
-
-GoBack
-
-GoForward
-
-GoHome
-
-GoSearch
-
-Handle the DocumentCompleted event to receive notification when the new document finishes loading. When the DocumentCompleted event occurs, the new document is fully loaded, which means you can access its contents through the Document, DocumentText, or DocumentStream property.
-
-To receive notification before navigation begins, handle the Navigating event. Handling this event lets you cancel navigation if certain conditions have not been met, for example, when the user has not completely filled out a form. Handle the Navigated event to receive notification when the WebBrowser control finishes navigation and has begun loading the document at the new location.
-
-For more information about handling events, see Handling and Raising Events.
-         */
+        
+        public event EventHandler<WebBrowserEventArgs>? BeforeBrowserCreate;
+        
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/Loaded/*'/>
         public event EventHandler<WebBrowserEventArgs>? Loaded;
-        //-------------------------------------------------
-        /// <summary>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        /// </summary>
-        /// <remarks>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        /// </remarks>
-        /*
-        Process a wxEVT_WEBVIEW_ERROR event generated when a navigation error occurs. 
-        The integer associated with this event will be a wxWebNavigationError item. 
-        The string associated with this event may contain a backend-specific 
-        more precise error message/code.
-
-         */
-        //TODO: !KU help
+        
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/Error/*'/>
         public event EventHandler<WebBrowserEventArgs>? Error;
-        //-------------------------------------------------
-        /// <summary>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        /// </summary>
-        /// <remarks>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        /// </remarks>
-        /*
-        Process a wxEVT_WEBVIEW_NEWWINDOW event, generated when a new window is created. 
-        You must handle this event if you want anything to happen, for example to 
-        load the page in a new window or tab.
-
-Occurs before a new browser window is opened.
-
-public event System.ComponentModel.CancelEventHandler NewWindow;
-Event Type
-CancelEventHandler
-
-Remarks
-The WebBrowser control opens a separate browser window when the appropriate overload of the Navigate method is called or when the user clicks the Open in New Window option of the browser shortcut menu when the mouse pointer hovers over a hyperlink. You can disable the shortcut menu by setting the IsWebBrowserContextMenuEnabled property to false.
-
-The NewWindow event occurs before the new browser window is opened. You can handle this event, for example, to prevent the window from opening when certain conditions have not been met.
-         */
-        //TODO: !KU help
+        
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/NewWindow/*'/>
         public event EventHandler<WebBrowserEventArgs>? NewWindow;
-        //-------------------------------------------------
-        /// <summary>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        /// </summary>
-        /// <remarks>
-        ///     <para>
-        ///     </para>
-        ///     <para>
-        ///     </para>
-        /// </remarks>
-        /*
-        Process a wxEVT_WEBVIEW_TITLE_CHANGED event, generated when 
-        the page title changes. Use GetString to get the title.
-
-Occurs when the DocumentTitle property value changes.
-
-C#
-
-Copy
-[System.ComponentModel.Browsable(false)]
-public event EventHandler DocumentTitleChanged;
-Event Type
-EventHandler
-Attributes
-BrowsableAttribute
-Examples
-The following code example demonstrates how to use a handler for the DocumentTitleChanged event to update the form title bar with the title of the current document. This example requires that your form contains a WebBrowser control called webBrowser1.
-
-For the complete code example, see How to: Add Web Browser Capabilities to a Windows Forms Application.
-
-C#
-
-Copy
-// Updates the title bar with the current document title.
-private void webBrowser1_DocumentTitleChanged(object sender, EventArgs e)
-{
-    this.Text = webBrowser1.DocumentTitle;
-}
-Remarks
-You can handle this event to update the title bar of your application with the current value of the DocumentTitle property.
-
-For more information about handling events, see Handling and Raising Events.
-         */
-        //TODO: !KU help
+        
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/DocumentTitleChanged/*'/>
         public event EventHandler<WebBrowserEventArgs>? DocumentTitleChanged;
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Loads the document at the location indicated by the specified 
         ///     <see cref="T:System.Uri"/> into the <see cref="T:WebBrowser"/> control, 
@@ -695,7 +402,7 @@ For more information about handling events, see Handling and Raising Events.
             else
                 LoadURL(url.ToString());
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Loads the document at the specified Uniform Resource Locator (URL) 
         ///     into the <see cref="T:WebBrowser"/> control, replacing 
@@ -709,44 +416,10 @@ For more information about handling events, see Handling and Raising Events.
         {
             LoadURL(urlString);
         }
-        //-------------------------------------------------
+        
         /// <summary>
-        /// 
+        ///     Gets or sets the Uri of the current document hosted in the WebBrowser.
         /// </summary>
-        /*
-Gets or sets the Uri of the current document hosted in the WebBrowser.
-
-C#
-
-Copy
-public Uri Source { get; set; }
-Property Value
-Uri
-The Uri for the current HTML document.
-
-Exceptions
-ObjectDisposedException
-The WebBrowser instance is no longer valid.
-
-InvalidOperationException
-A reference to the underlying native WebBrowser could not be retrieved.
-
-SecurityException
-Navigation from an application that is running in partial trust to a Uri that is not located at the site of origin.
-
-Examples
-The following example shows how to configure WebBrowser to navigate to an HTML document by using markup only.
-
-XAML
-
-Copy
-<!-- Web Browser Control that hosts a web page. -->  
-<WebBrowser x:Name="webBrowser" Source="http://msdn.com"   
-  Width="600" Height="600"  />  
-Remarks
-Setting the source property causes WebBrowser to navigate to the document specified by the Uri. If the Uri is null, a blank document is displayed ("about:blank").         
-        */
-        //TODO: !KU help
         public virtual Uri Source
         {
             get
@@ -758,7 +431,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
                 Navigate(value);
             }
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Allows to check if a specific backend is currently available.
         ///     This method allows to enable some extra functionality available with 
@@ -778,19 +451,15 @@ Setting the source property causes WebBrowser to navigate to the document specif
                 _ => false,
             };
         }
-        //-------------------------------------------------
+        
         /// <summary>
-        /// 
+        ///     Sets the backend that will be used for the new WebBrowser instances.
         /// </summary>
-        /*
-         
-        */
-        //TODO: !KU help
         public static void SetBackend(WebBrowserBackend value)
         {
             WebBrowserNativeApi.WebBrowser_SetBackend_((int)value);
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Retrieve the version information about the underlying library implementation.
         /// </summary>
@@ -798,7 +467,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
         {
             return WebBrowserNativeApi.WebBrowser_GetLibraryVersionString_();
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Retrieve the version information about the browser backend implementation.
         /// </summary>
@@ -806,26 +475,20 @@ Setting the source property causes WebBrowser to navigate to the document specif
         {
             return WebBrowserNativeApi.WebBrowser_GetBackendVersionString_((int)value);
         }
-        //-------------------------------------------------
+        
         /// <summary>
-        /// 
+        ///     Sets the default web page that will be used for the 
+        ///     new WebBrowser instances. Devault value is about:blank.
         /// </summary>
-        /*
-         
-        */
-        //TODO: !KU help
         public static void SetDefaultPage(string url)
         {
             WebBrowserNativeApi.WebBrowser_SetDefaultPage_(url);
         }
-        //-------------------------------------------------
+        
         /// <summary>
-        /// 
+        ///     Sets the best possible backend to be used for the 
+        ///     new WebBrowser instances.
         /// </summary>
-        /*
-         
-        */
-        //TODO: !KU help
         public static void SetLatestBackend()
         {
             if (IsBackendAvailable(WebBrowserBackend.Edge))
@@ -838,8 +501,14 @@ Setting the source property causes WebBrowser to navigate to the document specif
                 SetBackend(WebBrowserBackend.IELatest);
                 return;
             }
+            if (IsBackendAvailable(WebBrowserBackend.WebKit))
+            {
+                SetBackend(WebBrowserBackend.WebKit);
+                return;
+            }
+            SetBackend(WebBrowserBackend.Default);
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Gets a value indicating whether a previous page in navigation history 
         ///     is available, which allows the<see cref="M:GoBack" /> 
@@ -857,7 +526,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
                 return Browser.CanGoBack;
             }
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Gets a value indicating whether a subsequent page in navigation
         ///     history is available, which allows the
@@ -875,7 +544,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
                 return Browser.CanGoForward;
             }
         }
-        //-------------------------------------------------
+        
         ///<summary>
         ///    Navigates the control 
         ///    to the previous page in the navigation history, if one is available.
@@ -891,7 +560,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             CheckDisposed();
             return Browser.GoBack();
         }
-        //-------------------------------------------------
+        
         ///<summary>
         ///    Navigates the control 
         ///    to the subsequent page in the navigation history, if one is available.
@@ -907,7 +576,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             CheckDisposed();
             return Browser.GoForward();
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Stops the current page loading process, if any. Cancels any pending navigation 
         ///     and stops any dynamic page elements, such as background sounds and animations.
@@ -917,7 +586,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             CheckDisposed();
             Browser.Stop();
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Clear the history, this will also remove the visible page. This is not 
         ///     implemented on macOS and the WebKit2GTK+ backend.         
@@ -927,7 +596,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             CheckDisposed();
             Browser.ClearHistory();
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Enables or disables the history. This method will also clear the history.
         ///     This method is not implemented on macOS and the WebKit2GTK+ backend.
@@ -937,7 +606,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             CheckDisposed();
             Browser.EnableHistory(enable);
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Reloads the document currently displayed in the control by downloading
         ///     for an updated version from the server.
@@ -947,7 +616,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             CheckDisposed();
             Browser.Reload();
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Reloads the document currently displayed in the 
         ///     control using the specified refresh option.    
@@ -961,7 +630,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             CheckDisposed();
             Browser.Reload(noCache);
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Sets the displayed page source to the contents of the given string.
         /// </summary>
@@ -988,7 +657,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             }
             Browser.NavigateToString(html, baseUrl);
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Sets the displayed page source to the contents of the given string.
         /// </summary>
@@ -1006,7 +675,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             CheckDisposed();
             Browser.NavigateToString(html, String.Empty);
         }
-        //-------------------------------------------------
+        
         /// <summary>
         /// Navigate asynchronously to a Stream that contains the content for a document.
         /// </summary>
@@ -1032,7 +701,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
                 return new StreamReader(stream, Encoding.UTF8).ReadToEnd();
             }
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Gets or sets the zoom factor of the page. The zoom factor is an arbitrary 
         ///     number that specifies how much to zoom (scale) the HTML document.
@@ -1054,7 +723,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
                 Browser.ZoomFactor =value;
             }
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Gets or sets how the zoom factor is currently interpreted by the HTML engine.
         /// </summary>
@@ -1074,7 +743,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
                 Browser.ZoomType=value;
             }
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Retrieve whether the current HTML engine supports a zoom type.
         /// </summary>
@@ -1091,7 +760,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             CheckDisposed();
             return Browser.CanSetZoomType(zoomType);
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Selects the entire page.         
         /// </summary>
@@ -1100,7 +769,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             CheckDisposed();
             Browser.SelectAll(); 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Returns true if there is a current selection.         
         /// </summary>
@@ -1112,7 +781,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
                 return Browser.HasSelection;
             }
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Deletes the current selection.
         /// </summary>
@@ -1125,7 +794,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             CheckDisposed();
             Browser.DeleteSelection(); 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Gets or sets a value indicating the currently selected text in the control.
         /// </summary>
@@ -1137,7 +806,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
                 return Browser.SelectedText; 
             }
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Returns the currently selected source, if any. 
         /// </summary>
@@ -1149,7 +818,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
                 return Browser.SelectedSource; 
             }
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Clears the current selection. Specifies that no characters are 
         ///     selected in the control.        
@@ -1159,7 +828,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             CheckDisposed();
             Browser.ClearSelection(); 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Gets a value indicating whether the current selection can be cut, which allows 
         ///     the <see cref="M:Cut"/> method to succeed.
@@ -1176,7 +845,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
                 return Browser.CanCut; 
             }
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Gets a value indicating whether the current selection can be copied, which allows 
         ///     the <see cref="M:Copy"/> method to succeed.
@@ -1193,7 +862,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
                 return Browser.CanCopy; 
             } 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Gets a value indicating whether the current selection can be replaced with 
         ///     the contents of the Clipboard, which allows 
@@ -1211,7 +880,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
                 return Browser.CanPaste; 
             } 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Moves the current selection in the control to the Clipboard.
         /// </summary>
@@ -1220,7 +889,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             CheckDisposed();
             Browser.Cut(); 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Copies the current selection in the control to the Clipboard.
         /// </summary>
@@ -1229,7 +898,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             CheckDisposed();
             Browser.Copy(); 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Replaces the current selection in the control with the contents of the Clipboard.
         /// </summary>
@@ -1238,7 +907,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             CheckDisposed();
             Browser.Paste();
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Gets a value indicating whether the user can undo the previous operation 
         ///     in a control.
@@ -1255,7 +924,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
                 return Browser.CanUndo; 
             } 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Gets a value indicating whether the user can redo the previous operation 
         ///     in a control.
@@ -1272,7 +941,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
                 return Browser.CanRedo; 
             } 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         /// Undoes the last edit operation in the control.
         /// </summary>
@@ -1281,7 +950,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             CheckDisposed();
             Browser.Undo(); 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         /// Redos the last edit operation in the control.
         /// </summary>
@@ -1290,7 +959,7 @@ Setting the source property causes WebBrowser to navigate to the document specif
             CheckDisposed();
             Browser.Redo(); 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Finds a text on the current page and if found, the control will scroll 
         ///     the text into view and select it.
@@ -1312,7 +981,7 @@ This function will restart the search if the flags wxWEBVIEW_FIND_ENTIRE_WORD or
             CheckDisposed();
             return Browser.Find(text,prm); 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         /// 
         /// </summary>
@@ -1324,7 +993,7 @@ This function will restart the search if the flags wxWEBVIEW_FIND_ENTIRE_WORD or
         {
             Find("", null);
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Returns whether the control is currently busy (e.g. loading a web page).         
         /// </summary>
@@ -1336,7 +1005,7 @@ This function will restart the search if the flags wxWEBVIEW_FIND_ENTIRE_WORD or
                 return Browser.IsBusy; 
             } 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Opens a print dialog so that the user may change the current print and 
         ///     page settings and print the currently displayed page.         
@@ -1346,7 +1015,7 @@ This function will restart the search if the flags wxWEBVIEW_FIND_ENTIRE_WORD or
             CheckDisposed();
             Browser.Print(); 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Get the HTML source code of the currently displayed document or 
         ///     an empty string if no page is currently shown.
@@ -1359,7 +1028,7 @@ This function will restart the search if the flags wxWEBVIEW_FIND_ENTIRE_WORD or
                 return Browser.PageSource; 
             } 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Get the text of the current page.      
         /// </summary>
@@ -1370,7 +1039,7 @@ This function will restart the search if the flags wxWEBVIEW_FIND_ENTIRE_WORD or
                 return Browser.PageText; 
             }
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Removes all user scripts from the web view.
         /// </summary>
@@ -1379,7 +1048,7 @@ This function will restart the search if the flags wxWEBVIEW_FIND_ENTIRE_WORD or
             CheckDisposed();
             Browser.RemoveAllUserScripts(); 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         /// 
         /// </summary>
@@ -1416,7 +1085,7 @@ The Edge backend only supports a single message handler and the IE backend does 
             CheckDisposed();
             return Browser.AddScriptMessageHandler(name);
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Remove a script message handler with the given name that was previously 
         ///     added using AddScriptMessageHandler().
@@ -1431,7 +1100,7 @@ true if the handler could be removed, false if it could not be removed.
             CheckDisposed();
             return Browser.RemoveScriptMessageHandler(name); 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Enables or disables access to developer tools for the user. 
         ///     Developer tools are disabled by default. 
@@ -1450,7 +1119,7 @@ true if the handler could be removed, false if it could not be removed.
                 Browser.AccessToDevToolsEnabled = value;
             }
         }
-        //-------------------------------------------------
+        
         /// <summary>
         /// 
         /// </summary>
@@ -1481,7 +1150,7 @@ This is not implemented for IE. For Edge SetUserAgent() MUST be called before Cr
                 Browser.UserAgent = value;
             }
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Enables or disables the right click context menu. 
         ///     By default the standard context menu is enabled, this property 
@@ -1500,7 +1169,7 @@ This is not implemented for IE. For Edge SetUserAgent() MUST be called before Cr
                 Browser.ContextMenuEnabled = value;
             }
         }
-        //-------------------------------------------------
+        
         /// <summary>
         /// 
         /// </summary>
@@ -1516,7 +1185,7 @@ This is not implemented for IE. For Edge SetUserAgent() MUST be called before Cr
                 return Browser.Backend;
             }
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Gets or sets whether the control is currently editable. 
         ///     This property allows the user to edit the page even 
@@ -1537,7 +1206,7 @@ This is not implemented for IE. For Edge SetUserAgent() MUST be called before Cr
                 Browser.Editable = value;
             }
         }
-        //-------------------------------------------------
+        
         /// <summary>
         /// 
         /// </summary>
@@ -1571,195 +1240,55 @@ zoom	How much to zoom (scale) the HTML document.
                 Browser.Zoom = value;
             }
         }
-        //-------------------------------------------------
-        /// <summary>
-        /// 
-        /// </summary>
-        /*
-         
-        */
-        //TODO: !KU help
-        public virtual bool RunScript(string javascript)
+        
+        /*/// <include file="Interfaces/IWebBrowser.xml" path='doc/RunScript/*'/>
+         * internal virtual bool RunScript(string javascript)
         {
             return RunScript(javascript, out _);
-        }
-        //-------------------------------------------------
-        /// <summary>
-        ///     Runs the given JavaScript code.
-        /// </summary>
+        }*/
+        
         /*
-
-
-Note
-Because of various potential issues it's recommended to use RunScriptAsync() instead of this method. This is especially true if you plan to run code from a webview event and will also prevent unintended side effects on the UI outside of the webview.
-JavaScript code is executed inside the browser control and has full access to DOM and other browser-provided functionality. For example, this code
-
-webview->RunScript("document.write('Hello from wxWidgets!')");
-will replace the current page contents with the provided string.
-
-If output is non-null, it is filled with the result of executing this code on success, e.g. a JavaScript value such as a string, a number (integer or floating point), a boolean or JSON representation for non-primitive types such as arrays and objects. For example:
-
-wxString result;
-if ( webview->RunScript
-              (
-                "document.getElementById('some_id').innerHTML",
-                &result
-              ) )
-{
-    ... result contains the contents of the given element ...
-}
-//else: the element with this ID probably doesn't exist.
-This function has a few platform-specific limitations:
-
-When using WebKit v1 in wxGTK2, retrieving the result of JavaScript execution is unsupported and this function will always return false if output is non-null to indicate this. This functionality is fully supported when using WebKit v2 or later in wxGTK3.
-When using WebKit under macOS, code execution is limited to at most 10MiB of memory and 10 seconds of execution time.
-When using IE backend under MSW, scripts can only be executed when the current page is fully loaded (i.e. wxEVT_WEBVIEW_LOADED event was received). A script tag inside the page HTML is required in order to run JavaScript.
-Also notice that under MSW converting JavaScript objects to JSON is not supported in the default emulation mode. wxWebView implements its own object-to-JSON conversion as a fallback for this case, however it is not as full-featured, well-tested or performing as the implementation of this functionality in the browser control itself, so it is recommended to use MSWSetEmulationLevel() to change emulation level to a more modern one in which JSON conversion is done by the control itself.
-
-Parameters
-javascript	JavaScript code to execute.
-output	Pointer to a string to be filled with the result value or NULL if it is not needed. This parameter is new since wxWidgets version 3.1.1.
-Returns
-true if there is a result, false if there is an error.         
-        */
-        //TODO: !KU help
-        public virtual bool RunScript(string javascript,out string result)
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/RunScript/*'/>
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/RunScript2/*'/>
+         internal virtual bool RunScript(string javascript,out string result)
         {
             CheckDisposed();
             return Browser.RunScript(javascript,out result);
-        }
-        //-------------------------------------------------
+        }*/
+        
         /// <summary>
-        /// 
+        ///     Injects the specified script into the webpage's content.
         /// </summary>
-        /*
-         
-Executes a script function that is implemented by the currently loaded document.
-
-C#
-
-Copy
-public object InvokeScript (string scriptName);
-Parameters
-scriptName
-String
-The name of the script function to execute.
-
-Returns
-Object
-The object returned by the Active Scripting call.
-
-Exceptions
-ObjectDisposedException
-The WebBrowser instance is no longer valid.
-
-InvalidOperationException
-A reference to the underlying native WebBrowser could not be retrieved.
-
-COMException
-The script function does not exist.
-
-Examples
-The following example shows how to call a script function in a document from a WPF application by using InvokeScript(String). In this example, the script function has no parameters.
-
-The following is the HTML document that implements the script function that will be called from WPF.
-
-HTML
-
-Copy
-<html>  
-    <head>  
-        <script type="text/javascript">  
-            // Function Without Parameters  
-            function JavaScriptFunctionWithoutParameters()    
-            {  
-              outputID.innerHTML = "JavaScript function called!";  
-            }  
-        </script>  
-    </head>  
-    <body>  
-    <div id="outputID" style="color:Red; font-size:16">  
-        Hello from HTML document with script!  
-    </div>  
-    </body>  
-</html>  
-The following shows the WPF implementation to call the script function in the HTML document.
-
-C#
-
-Copy
-private void callScriptFunctionNoParamButton_Click(object sender, RoutedEventArgs e)  
-{  
-  // Make sure the HTML document has loaded before attempting to  
-  // invoke script of the document page. You could set loadCompleted  
-  // to true when the LoadCompleted event on the WebBrowser fires.  
-  if (this.loadCompleted)  
-  {  
-    try  
-    {  
-      this.webBrowser.InvokeScript("JavaScriptFunctionWithoutParameters");  
-    }  
-    catch (Exception ex)  
-    {  
-      string msg = "Could not call script: " +  
-                   ex.Message +  
-                  "\n\nPlease click the 'Load HTML Document with Script' button to load.";  
-      MessageBox.Show(msg);  
-    }  
-  }  
-}  
-Remarks
-InvokeScript(String) should not be called before the document that implements it has finished loading. You can detect when a document has finished loading by handling the LoadCompleted event.        
-        */
-        public virtual string? InvokeScript(string scriptName)
-        {
-            if (scriptName == null)
-                return null;
-            bool ok = RunScript(scriptName+"()",out string result);
-            if (!ok)
-                return null;
-            return result;
-        }
-        //-------------------------------------------------
-        /// <summary>
-        /// 
-        /// </summary>
-        /*
-Injects the specified script into the webpage's content.
-
-Parameters
-javascript	The javascript code to add.
-injectionTime	Specifies when the script will be executed.
-Returns
-Returns true if the script was added successfully.
-Note
-Please note that this is unsupported by the IE backend and the Edge backend does only support wxWEBVIEW_INJECT_AT_DOCUMENT_START.
-See also
-RemoveAllUserScripts()         
-        */
-        //TODO: !KU help
+        /// <param name="javascript">
+        ///     The javascript code to add.
+        /// </param>
+        /// <param name="injectDocStart">
+        ///     Specifies when the script will be executed.
+        /// </param>
+        /// <returns>
+        ///     Returns true if the script was added successfully.
+        /// </returns>
+        /// <remarks>
+        ///     Please note that this is unsupported by the IE backend. 
+        ///     The Edge backend does only support injecting at document start.
+        /// </remarks>
         public virtual bool AddUserScript(string javascript, bool injectDocStart)
         {
             CheckDisposed();
             return Browser.AddUserScript(javascript, injectDocStart);
         }
-        //-------------------------------------------------
+        
         /// <summary>
-        /// 
+        ///     Contains DateTime format for Javascript code.
+        ///     Used internally by InvokeScriptAsync().
         /// </summary>
-        /*
-         
-        */
-        //TODO: !KU help
         public static string StringFormatJs = "yyyy-MM-ddTHH:mm:ss.fffK";
-        //-------------------------------------------------
+        
         /// <summary>
-        /// 
+        ///     Converts object value to a string. Used internally by InvokeScriptAsync().
+        ///     Only primitive types are supported. String and DateTime values 
+        ///     are returned enclosed in single quotes.
         /// </summary>
-        /*
-         
-        */
-        //TODO: !KU help
         public virtual string? ToInvokeScriptArg(object? arg)
         {
             if (arg == null)
@@ -1797,8 +1326,8 @@ RemoveAllUserScripts()
                 case TypeCode.Decimal:
                     return ((decimal)arg).ToString(CultureInfo.InvariantCulture);
                 case TypeCode.DateTime:
-                //https://learn.microsoft.com/ru-ru/dotnet/standard/base-types/custom-date-and-time-format-strings
-                //https://javascript.info/date
+                    //https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
+                    //https://javascript.info/date
                     return "'" + ((System.DateTime)arg).ToString(WebBrowser.StringFormatJs, 
                         CultureInfo.InvariantCulture) + "'";
                 default:
@@ -1807,53 +1336,79 @@ RemoveAllUserScripts()
 
             return arg.ToString();
         }
-        //-------------------------------------------------
-        /// <summary>
-        /// 
-        /// </summary>
-        /*
-Executes a script function that is defined in the currently loaded document.
-
-C#
-
-Copy
-public object InvokeScript (string scriptName, params object[] args);
-Parameters
-scriptName
-String
-The name of the script function to execute.
-
-args
-Object[]
-The parameters to pass to the script function.
-
-Returns
-Object
-The object returned by the Active Scripting call.
         
+        /*/// <include file="Interfaces/IWebBrowser.xml" path='doc/InvokeScript/*'/>
+         * internal virtual string? InvokeScript(string scriptName)
+        {
+            if (scriptName == null)
+                return null;
+            bool ok = RunScript(scriptName + "()", out string result);
+            if (!ok)
+                return null;
+            return result;
+        }*/
+        
+        /*public virtual void InvokeScriptAsync(string scriptName, IntPtr? clientData = null)
+        {
+            if (scriptName == null)
+                return;
+            RunScriptAsync(scriptName + "()", clientData);
+        }*/
+        
+        /// <summary>
+        ///     Converts array of object values to comma delimited string. 
+        ///     Used internally by InvokeScriptAsync().
+        ///     Only primitive types are supported. String and DateTime values 
+        ///     are returned enclosed in single quotes.
+        /// </summary>
+        public string ToInvokeScriptArgs(object?[] args)
+        {
+            if (args == null || args.Length == 0)
+                return String.Empty;
 
+            string? s = ToInvokeScriptArg(args[0]);
 
-        */
-        //TODO: !KU help
-        public virtual string? InvokeScript(string scriptName, params object?[] args)
+            for (int i = 1; i < args.Length; i++)
+            {
+                var arg = ToInvokeScriptArg(args[i]);
+                s += (',' + arg);
+            }
+            return s;
+        }
+        
+        /*/// <include file="Interfaces/IWebBrowser.xml" path='doc/InvokeScript/*'/>
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/InvokeScript2/*'/>
+        internal virtual string? InvokeScript(string scriptName, params object?[] args)
         {
             if (scriptName == null)
                 return null;
             if (args == null || args.Length == 0)
                 return InvokeScript(scriptName);
 
-            string? s = ToInvokeScriptArg(args[0]);
+            string? s = ToInvokeScriptArgs(args);
 
-            for(int i=1;i<args.Length; i++)
+            bool ok = RunScript(scriptName + "(" + s + ")", out string result);
+            if (!ok)
+                return null;
+            return result;
+        }*/
+        
+        public virtual void InvokeScriptAsync(string scriptName, IntPtr clientData,
+            params object?[] args)
+        {
+            if (scriptName == null)
+                return;
+            if (args == null || args.Length == 0)
             {
-                var arg = ToInvokeScriptArg(args[i]);
-                s += (','+arg);
+                RunScriptAsync(scriptName + "()");
+                return;
             }
 
-            return InvokeScript(scriptName + "("+s+")");
+            string? s = ToInvokeScriptArgs(args!);
 
+            RunScriptAsync(scriptName + "(" + s + ")",clientData);
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Loads a web page from a URL.
         /// </summary>
@@ -1872,7 +1427,7 @@ The object returned by the Active Scripting call.
             CheckDisposed();
             Browser.LoadURL(url);
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Get the title of the current web page, or its URL/path if title is not available.
         /// </summary>
@@ -1881,7 +1436,7 @@ The object returned by the Active Scripting call.
             CheckDisposed();
             return Browser.GetCurrentTitle();
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Get the URL of the currently displayed document.    
         /// </summary>
@@ -1890,56 +1445,83 @@ The object returned by the Active Scripting call.
             CheckDisposed();
             return Browser.GetCurrentURL();
         }
-        //-------------------------------------------------
+        
+        /// <summary>
+        ///     Returns pointer to the native backend interface. For example, 
+        ///     for the IE backens it is IWebBrowser2 interface. 
+        ///     Under macOS it's a WebView pointer and under GTK it's a WebKitWebView.
+        /// </summary>
         public IntPtr GetNativeBackend()
         {
             CheckDisposed();
             return Browser.GetNativeBackend();
         }
-        //-------------------------------------------------
-        /// <summary>
-        ///     Runs the given JavaScript code asynchronously and returns the 
-        ///     result via a ScriptResult event.
-        /// </summary>
-        /// <remarks>
-        ///     The IE backend does not support async script execution.
-        /// </remarks>
-        /*
-        The script result value can be retrieved via 
-        wxWebViewEvent::GetString(). If the execution fails 
-        WebBrowserEventArgs.IsError will return true. 
-        In this case additional script execution error information maybe 
-        available via wxWebViewEvent::GetString().
-
-        Parameters
-        javascript	JavaScript code to execute.
-        clientData	Arbirary pointer to data that can be retrieved from the result event.
-        Note
         
-         */
-        //TODO: !KU help
-        public virtual void RunScriptAsync(string javascript, IntPtr clientData) 
+        /// <summary>
+        ///     Returns type of the OS for which the WebBrowser was compiled.
+        /// </summary>
+        public static WebBrowserBackendOS GetBackendOS() 
+        {
+            return (WebBrowserBackendOS)Enum.ToObject(typeof(WebBrowserBackendOS),
+                Native.WebBrowser.GetBackendOS());
+        }
+        
+        /// <summary>
+        ///     Sets path to a fixed version of the WebView2 Edge runtime.
+        /// </summary>
+        /// <param name="path">
+        ///     Path to an extracted fixed version of the WebView2 Edge runtime.
+        /// </param>
+        /// <param name="isRelative">
+        ///     <see langword = "true"/> if specified path is relative to the application 
+        ///     folder; otherwise, <see langword = "false"/>.
+        /// </param>
+        /// <example>
+        ///     <code>
+        ///         SetBackendPath("Edge",true);
+        ///     </code>
+        /// </example>
+        public static void SetBackendPath(string path,bool isRelative = false)
+        {
+            if (isRelative) 
+            {
+                string location = Assembly.GetExecutingAssembly().Location;
+                string s = Path.GetDirectoryName(location)!;
+                string s2 = Path.Combine(s, path);
+                path = s2;
+            }
+            
+            if (!Directory.Exists(path))
+                return;
+
+            var files = Directory.EnumerateFileSystemEntries(path,"*.dll");
+
+            foreach(string file in files)
+            {
+                Native.WebBrowser.SetEdgePath(path);
+                break;
+            }
+        }
+        
+        /// <summary>
+        ///     Returns true if the WebBrowser runs on 64 bit platform.
+        /// </summary>
+        public static bool Is64Bit
+        {
+            get
+            {
+                return Environment.Is64BitOperatingSystem;
+            }
+        }
+        
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/RunScriptAsync/*'/>
+        public virtual void RunScriptAsync(string javascript, IntPtr? clientData=null) 
         {
             CheckDisposed(); 
             Browser.RunScriptAsync(javascript, clientData);
         }
-        //-------------------------------------------------
-        /// <summary>
-        /// 
-        /// </summary>
-        /*
-        /// <remarks>
-        /// 
-        /// </remarks>
-         
-        */
-        //TODO: !KU help
-        public virtual void RunScriptAsync(string javascript)
-        {
-            RunScriptAsync(javascript, IntPtr.Zero);
-        }
-        //-------------------------------------------------
+        
     }
-    //-------------------------------------------------
+    
 }
-//-------------------------------------------------
+

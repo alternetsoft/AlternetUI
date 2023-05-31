@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <doc>
+	<!--	/// <include file="Interfaces/IWebBrowser.xml" path='doc//*'/>	-->
 	<!--==============================================-->
 	<summary>
 	</summary>
@@ -15,4 +16,538 @@
 		</returns>
 	</CanZoomIn>
 	<!--==============================================-->
+	<Events>
+		<!--==============================================-->
+		<Navigated>
+			 <summary>
+				 <para>
+					 Occurs when the WebBrowser control has navigated to a new web page 
+					 and has begun loading it. This event may not be canceled. Note that 
+					 if the displayed HTML document has several frames, one such event will
+					 be generated per frame.
+				 </para>
+				 <para>
+					 Handle the Navigated event to receive notification when the WebBrowser 
+					 control has navigated to a new web page.
+				 </para>
+			 </summary>
+			 <remarks>
+				 <para>
+					 When the Navigated event occurs, the new web page has begun loading, 
+					 which means you can access the loaded content through the WebBrowser properties.
+					 Handle the Loaded event to receive notification when the
+					 WebBrowser control finishes loading the new document.
+				 </para>
+				 <para>
+					 You can also receive notification before navigation begins by handling the
+					 Navigating event. Handling this event lets you cancel navigation if 
+					 certain conditions have not been met.For example, the user has not 
+					 completely filled out a form.
+				 </para>
+			 </remarks>
+		</Navigated>
+		<!--==============================================-->
+		<Navigating>
+			 <summary>
+				 <para>
+					 Occurs before the WebBrowser control navigates to a new web page.
+				 </para>
+				 <para>
+					 This event may be canceled to prevent navigating to this resource. 
+					 Note that if the displayed HTML document has several frames, one such event        
+					 will be generated per frame.
+				 </para>
+				 <para>
+					 You can handle the Navigating event to cancel navigation if certain conditions 
+					 have not been met, for example, when the user has not completely filled 
+					 out a form. To cancel navigation, set the Cancel property of the
+					 WebBrowserEventArgs object passed to the event handler to true. 
+				 </para>
+				 <para>
+					 Handle the Navigated event to receive notification when the WebBrowser 
+					 control finishes navigation and has begun loading the document at the
+					 new location.
+				 </para>
+				 <para>
+					 Handle the Loaded event to receive 
+					 notification when the WebBrowser control finishes loading the new document.
+				 </para>
+				 <para>
+					 You can also use WebBrowserEventArgs object to retrieve the URL of the 
+					 new document through the WebBrowserEventArgs.Url property.If the new 
+					 document will be displayed in a Web page frame, you can retrieve the 
+					 name of the frame through the WebBrowserEventArgs.TargetFrameName property.
+				 </para>
+			 </summary>
+		</Navigating>
+		<!--==============================================-->
+		<Loaded>
+			<summary>
+				<para>
+					Occurs when the WebBrowser control finishes loading a document.
+				</para>
+				<para>
+					Handle the Loaded event to receive notification when the new 
+					document finishes loading. When the Loaded event occurs, the
+					new document is fully loaded, which means you can access its
+					contents through WebBrowser properties and methods.
+				</para>
+				<para>
+					To receive notification before navigation begins, handle the 
+					Navigating event. Handling this event lets you cancel
+					navigation if certain conditions have not been met,
+					for example, when the user has not completely filled out a form.
+				</para>
+				<para>
+					Handle the Navigated event to receive notification when the 
+					WebBrowser control finishes navigation and has begun loading
+					the document at the new location.
+				</para>
+			</summary>
+			<remarks>
+				<para>
+					Note that if the displayed HTML document has several 
+					frames, one such event will be generated per frame.
+				</para>
+			</remarks>
+		</Loaded>
+		<!--==============================================-->
+		<Error>
+			<summary>
+				<para>
+					Occurs when a navigation error occurs.
+				</para>
+				<para>
+					The WebBrowserEventArgs.NavigationError will contain an error type. 
+					The WebBrowserEventArgs.Text may contain a backend-specific
+					more precise error message/code.
+				</para>
+			</summary>
+		</Error>
+		<!--==============================================-->
+		<NewWindow>
+			<summary>
+				<para>
+					Occurs when a new browser window is created.
+				</para>
+				<para>
+					You must handle this event if you want anything to happen, for example to 
+					load the page in a new window or tab.
+				</para>
+			</summary>
+		</NewWindow>
+		<!--==============================================-->
+		<DocumentTitleChanged>
+			<summary>
+				Occurs when the web page title changes. 
+				Use WebBrowserEventArgs.Text to get the title.
+			</summary>
+			<remarks>
+				You can handle this event to update the title bar of your 
+				application with the current title of the loaded document.
+			</remarks>
+		</DocumentTitleChanged>
+		<!--==============================================-->
+		<FullScreenChanged>
+			<summary>
+				Occurs when the the page wants to enter or leave fullscreen. 
+				Use the IntVal property of the event arguments to get the status. 
+				Not implemented for the IE backend.
+			</summary>
+		</FullScreenChanged>
+		<!--==============================================-->
+		<ScriptMessageReceived>
+			<summary>
+				Occurs when your application receives message from JS code of the loaded web page.
+				For usage details see AddScriptMessageHandler().
+			</summary>
+		</ScriptMessageReceived>
+		<!--==============================================-->
+		<ScriptResult>
+			<summary>
+				Occurs when your application receives results after RunScriptAsync() call.
+				For usage details see RunScriptAsync().
+			</summary>
+		</ScriptResult>
+		<!--==============================================-->
+	</Events>
+	<!--==============================================-->
+	<ZoomIn>
+        <summary>
+            Increases the zoom factor of the page. The zoom factor is an arbitrary 
+            number that specifies how much to zoom (scale) the HTML document.
+        </summary>
+        <remarks>
+            Zoom scale in IE will be converted into zoom levels if ZoomType property 
+            is set to WebBrowserZoomType.Text value.
+        </remarks>
+	</ZoomIn>
+	<!--==============================================-->
+	<ZoomOut>
+        <summary>
+            Decreases the zoom factor of the page. The zoom factor is an arbitrary 
+            number that specifies how much to zoom (scale) the HTML document.
+        </summary>
+        <remarks>
+            Zoom scale in IE will be converted into zoom levels if ZoomType property 
+            is set to WebBrowserZoomType.Text value.
+        </remarks>
+	</ZoomOut>
+	<!--==============================================-->
+	<NavigateToString>
+	</NavigateToString>
+	<!--==============================================-->
+	<NavigateToStream>
+	</NavigateToStream>
+	<!--==============================================-->
+	<Navigate>
+	</Navigate>
+	<!--==============================================-->
+	<ToInvokeScriptArg>
+	</ToInvokeScriptArg>
+	<!--==============================================-->
+	<InvokeScriptAsync>
+        <summary>
+            <para>
+            Executes the given JavaScript function asynchronously and returns the 
+			result via a ScriptResult event.
+            </para>
+            <para>
+                The script result value can be retrieved via 
+                WebBrowserEventArgs.Text parameter or ScriptResult event. If the execution fails
+                WebBrowserEventArgs.IsError will return true. 
+                In this case additional script execution error information maybe
+                available via WebBrowserEventArgs.Text.
+            </para>
+        </summary>
+        <param name="scriptName">
+            The name of the script function to execute.
+        </param>
+        <param name="args">
+            The parameters to pass to the script function.
+        </param>
+        <param name="clientData">
+            Arbirary pointer to data that can be retrieved from the result event.
+        </param>
+	</InvokeScriptAsync>
+	<!--==============================================-->
+	<Source>
+	</Source>
+	<!--==============================================-->
+	<CanZoomOut>
+        <summary>
+            Gets a value indicating whether the zoom factor of the page can be decreased, 
+            which allows the <see cref="M:ZoomOut"/> method to succeed.
+        </summary>
+        <returns>
+            <see langword="true"/> if the web page can be zoomed out; 
+            otherwise, <see langword="false"/>.
+        </returns>         
+	</CanZoomOut>
+	<!--==============================================-->
+	<AccessToDevToolsEnabled>
+		
+	</AccessToDevToolsEnabled>
+	<!--==============================================-->
+	<AddScriptMessageHandler>
+		
+	</AddScriptMessageHandler>
+	<!--==============================================-->
+	<AddUserScript>
+		
+	</AddUserScript>
+	<!--==============================================-->
+	<Backend>
+		
+	</Backend>
+	<!--==============================================-->
+	<CanCopy>
+		
+	</CanCopy>
+	<!--==============================================-->
+	<CanCut>
+		
+	</CanCut>
+	<!--==============================================-->
+	<CanGoBack>
+		
+	</CanGoBack>
+	<!--==============================================-->
+	<CanGoForward>
+		
+	</CanGoForward>
+	<!--==============================================-->
+	<CanPaste>
+		
+	</CanPaste>
+	<!--==============================================-->
+	<CanRedo>
+		
+	</CanRedo>
+	<!--==============================================-->
+	<CanSetZoomType>
+		
+	</CanSetZoomType>
+	<!--==============================================-->
+	<CanUndo>
+		
+	</CanUndo>
+	<!--==============================================-->
+	<ClearHistory>
+		
+	</ClearHistory>
+	<!--==============================================-->
+	<ClearSelection>
+		
+	</ClearSelection>
+	<!--==============================================-->
+	<ContextMenuEnabled>
+		
+	</ContextMenuEnabled>
+	<!--==============================================-->
+	<Copy>
+		
+	</Copy>
+	<!--==============================================-->
+	<Cut>
+		
+	</Cut>
+	<!--==============================================-->
+	<DeleteSelection>
+		
+	</DeleteSelection>
+	<!--==============================================-->
+	<DoCommandGlobal>
+        <summary>
+            Executes a browser command with the specified name and parameters. 
+            This is static version of DoCommand.
+        </summary>
+        <param name="cmdName">
+            Name of the command to execute.
+        </param>
+        <param name="args">
+            Parameters of the command.
+        </param>
+	</DoCommandGlobal>
+	<!--==============================================-->
+	<DoCommand>
+        <summary>
+            Executes a browser command with the specified name and parameters.
+        </summary>
+        <param name="cmdName">
+            Name of the command to execute.
+        </param>
+        <param name="args">
+            Parameters of the command.
+        </param>
+	</DoCommand>
+	<!--==============================================-->
+	<Editable>
+		
+	</Editable>
+	<!--==============================================-->
+	<EnableHistory>
+		
+	</EnableHistory>
+	<!--==============================================-->
+	<Find>
+		
+	</Find>
+	<!--==============================================-->
+	<GetCurrentTitle>
+		
+	</GetCurrentTitle>
+	<!--==============================================-->
+	<GetCurrentURL>
+		
+	</GetCurrentURL>
+	<!--==============================================-->
+	<GetNativeBackend>
+		
+	</GetNativeBackend>
+	<!--==============================================-->
+	<GoBack>
+		
+	</GoBack>
+	<!--==============================================-->
+	<GoForward>
+		
+	</GoForward>
+	<!--==============================================-->
+	<HasSelection>
+		
+	</HasSelection>
+	<!--==============================================-->
+	<IsBusy>
+		
+	</IsBusy>
+	<!--==============================================-->
+	<LoadURL>
+		
+	</LoadURL>
+	<!--==============================================-->
+	<PageSource>
+		
+	</PageSource>
+	<!--==============================================-->
+	<PageText>
+		
+	</PageText>
+	<!--==============================================-->
+	<Paste>
+		
+	</Paste>
+	<!--==============================================-->
+	<Print>
+		
+	</Print>
+	<!--==============================================-->
+	<Redo>
+		
+	</Redo>
+	<!--==============================================-->
+	<Reload>
+		
+	</Reload>
+	<!--==============================================-->
+	<RemoveAllUserScripts>
+		
+	</RemoveAllUserScripts>
+	<!--==============================================-->
+	<RemoveScriptMessageHandler>
+		
+	</RemoveScriptMessageHandler>
+	<!--==============================================-->
+	<RunScript2>
+        <param name="result">
+            <para>
+                Result of the script execution.
+            </para>
+            <para>
+                If output is non-null, it is filled with the result of 
+                executing this code on success, e.g.a JavaScript value
+                such as a string, a number (integer or floating point), a boolean
+                or JSON representation for non-primitive types such as arrays and objects. 
+            </para>
+        </param>
+	</RunScript2>
+	<RunScript>
+        <summary>
+            <para>
+                Runs the given JavaScript code. JavaScript code is executed inside the 
+                browser and has full access to DOM and other browser-provided functionality.
+            </para>
+            <para>
+                Because of various potential issues it's recommended to use RunScriptAsync() 
+                instead of this method.
+                This is especially true if you plan to run code from a WebBrowser event
+                and will also prevent unintended side effects on the UI outside of 
+                the WebBrowser.
+            </para>
+            <para>
+                For example, this code
+                WebBrowser.RunScript("document.write('Hello!')");
+                will replace the current page contents with the provided string.
+            </para>
+        </summary>
+        <param name="javascript">
+            JavaScript code to execute.
+        </param>
+        <returns>
+            true if there is a result, false if there is an error.
+        </returns>
+        <remarks>
+            <para>
+                This function has a few platform-specific limitations:
+            </para>
+            <para>
+                When using WebKit v1 (wxGTK2), retrieving the result of script execution 
+                is unsupported. This function will always return false if output 
+                is non-null to indicate this. 
+            </para>
+            <para>
+            RunScript() functionality is fully supported when using WebKit v2 or later (wxGTK3).
+            </para>
+            <para>
+                When using WebKit (macOS), code execution is limited to 
+                10MiB of memory and 10 seconds of execution time.
+            </para>
+            <para>
+                When using IE backend, scripts can only be executed when 
+                the current page is fully loaded and Loaded event was received.
+                A script tag inside the page HTML is required in order to run JavaScript.
+            </para>
+            <para>
+                Under MSW converting JavaScript objects to JSON is not 
+                supported in the IE backend.WebBrowser implements its
+                own conversion as a fallback for this case. 
+            
+                However it is not as full-featured or performing as 
+                the implementation of this functionality in the browser control
+                itself. It is recommended to use IELates or Edge backends
+                in which JSON conversion is done by the browser itself.
+            </para>
+        </remarks>
+	</RunScript>
+	<!--==============================================-->
+	<RunScriptAsync>
+        <summary>
+            <para>
+				Runs the given JavaScript code asynchronously and returns the 
+				result via a ScriptResult event.
+            </para>
+            <para>
+                The script result value can be retrieved via 
+                WebBrowserEventArgs.Text parameter or a ScriptResult event. If the execution fails
+                WebBrowserEventArgs.IsError will return true. 
+                In this case additional script execution error information maybe
+                available via WebBrowserEventArgs.Text.
+            </para>
+        </summary>
+        <param name="javascript">
+            JavaScript code to execute.
+        </param>
+        <param name="clientData">
+            Arbirary pointer to data that can be retrieved from the result event.
+        </param>
+	</RunScriptAsync>
+	<!--==============================================-->
+	<SelectAll>
+		
+	</SelectAll>
+	<!--==============================================-->
+	<SelectedSource>
+		
+	</SelectedSource>
+	<!--==============================================-->
+	<SelectedText>
+		
+	</SelectedText>
+	<!--==============================================-->
+	<Stop>
+		
+	</Stop>
+	<!--==============================================-->
+	<Undo>
+		
+	</Undo>
+	<!--==============================================-->
+	<UserAgent>
+		
+	</UserAgent>
+	<!--==============================================-->
+	<Zoom>
+		
+	</Zoom>
+	<!--==============================================-->
+	<ZoomFactor>
+		
+	</ZoomFactor>
+	<!--==============================================-->
+	<ZoomType>
+		
+	</ZoomType>
+	<!--==============================================-->
 </doc>
+
+

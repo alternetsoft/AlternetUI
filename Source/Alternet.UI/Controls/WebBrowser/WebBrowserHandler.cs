@@ -1,16 +1,20 @@
 using System;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Alternet.UI
 {
-    //-------------------------------------------------
+
+    
     internal partial class WebBrowserHandler :
         NativeControlHandler<WebBrowser, Native.WebBrowser>, IWebBrowserLite
     {
-        //-------------------------------------------------
+        
+        //internal Native.WebBrowser? FBrowser;
+        
         internal static bool IsBackendIEAvailable() => WebBrowserNativeApi.WebBrowser_IsBackendIEAvailable_();
         internal static bool IsBackendEdgeAvailable() => WebBrowserNativeApi.WebBrowser_IsBackendEdgeAvailable_();
         internal static bool IsBackendWebKitAvailable() => WebBrowserNativeApi.WebBrowser_IsBackendWebKitAvailable_();
-        //-------------------------------------------------
+        
         private IntPtr NativePointer => NativeControl.NativePointer;
         public void LoadURL(string url) => NativeControl.LoadURL(url);
         public string GetCurrentTitle() => NativeControl.GetCurrentTitle();
@@ -18,7 +22,7 @@ namespace Alternet.UI
         public IntPtr GetNativeBackend() => NativeControl.GetNativeBackend();
         public bool CanGoBack => NativeControl.CanGoBack;
         public bool CanGoForward => NativeControl.CanGoForward;
-        //-------------------------------------------------
+        
         private static void ArgsToDoCommandParams(object?[] args,out string? cmdParam1, 
             out string? cmdParam2)
         {
@@ -29,31 +33,31 @@ namespace Alternet.UI
             if (args.Length > 1 && args[1] != null)
                 cmdParam2 = args[1]?.ToString();
         }
-        //-------------------------------------------------
+        
         public static string DoCommandGlobal(string cmdName, params object?[] args)
         {
             ArgsToDoCommandParams(args, out string? cmdParam1, out string? cmdParam2);
             return Native.WebBrowser.DoCommandGlobal(cmdName, cmdParam1!, cmdParam2!);
         }
-        //-------------------------------------------------
+        
         public string DoCommand(string cmdName,params object?[] args)
         {
             ArgsToDoCommandParams(args, out string? cmdParam1, out string? cmdParam2);
             return NativeControl.DoCommand(cmdName, cmdParam1!,cmdParam2!);
         }
-        //-------------------------------------------------
+        
         public bool GoBack() 
         { 
             NativeControl.GoBack(); 
             return true;
         }
-        //-------------------------------------------------
+        
         public bool GoForward()
         {
             NativeControl.GoForward();
             return true;
         }
-        //-------------------------------------------------
+        
         public void Stop()=> NativeControl.Stop();
         public void ClearHistory()=> NativeControl.ClearHistory();
         public void SelectAll() => NativeControl.SelectAll();
@@ -62,17 +66,55 @@ namespace Alternet.UI
             NativeControl.ReloadDefault();
         public void Reload(bool noCache) =>
             NativeControl.Reload(noCache);
-        //-------------------------------------------------
-        public void RunScriptAsync(string javascript, IntPtr clientData)
+        
+        public bool IsIEBackend()
         {
-            NativeControl.RunScriptAsync(javascript, clientData);
+            return Backend == WebBrowserBackend.IE ||
+                Backend == WebBrowserBackend.IELatest;
         }
-        //-------------------------------------------------
+        
+        public bool RunScript(string javascript, out string result)
+        {
+            const string magicResult = "3140D0CF550442968B792551E6DCBEC1";
+
+            result = NativeControl.RunScript(javascript);
+            if (result.StartsWith(magicResult))
+            {
+                result = result.Remove(0, magicResult.Length);
+                return false;
+            }
+            return true;
+        }
+        
+        public void RunScriptAsync(string javascript, IntPtr? clientData=null)
+        {
+            if (IsIEBackend())
+            {
+                var ok = RunScript(javascript, out string result);
+                WebBrowserEventArgs e = new(WebBrowserEvent.ScriptResult.ToString());
+                e.Text = result;
+                e.IsError = !ok;
+
+                IntPtr data = IntPtr.Zero;
+                if (clientData != null)
+                    data = (IntPtr)clientData;
+
+                e.ClientData = data;
+                Control.OnScriptResult(e);
+                return;
+            }
+
+            if (clientData == null)
+                NativeControl.RunScriptAsync(javascript, IntPtr.Zero);
+            else
+                NativeControl.RunScriptAsync(javascript, (IntPtr)clientData);
+        }
+        
         public void NavigateToString(string text, string baseUrl)
         {
             NativeControl.SetPage(text, baseUrl);
         }
-        //-------------------------------------------------
+        
         public WebBrowserZoomType ZoomType
         {
             get
@@ -88,24 +130,24 @@ namespace Alternet.UI
                     WebBrowserNativeApi.WebBrowser_SetZoomType_(NativeControl.NativePointer, (int)value);
             }
         }
-        //-------------------------------------------------
+        
         public bool CanSetZoomType(WebBrowserZoomType value)
         {
             return WebBrowserNativeApi.WebBrowser_CanSetZoomType_(NativeControl.NativePointer, (int)value);
         }
-        //-------------------------------------------------
+        
         public float ZoomFactor
         {
             get => NativeControl.ZoomFactor;
             set=> NativeControl.ZoomFactor = value;
         }
-        //-------------------------------------------------
+        
         public bool Editable
         {
             get => NativeControl.Editable;
             set => NativeControl.Editable = value;
         }
-        //-------------------------------------------------
+        
         public WebBrowserZoom Zoom
         {
             get
@@ -118,16 +160,23 @@ namespace Alternet.UI
                 NativeControl.Zoom = (int)value;
             }
         }
-        //-------------------------------------------------
+        
         internal override Native.Control CreateNativeControl()
         {
-            return new Native.WebBrowser();
+            var FBrowser = new Native.WebBrowser();
+            return FBrowser;
         }
-        //-------------------------------------------------
+        
+        private protected override void OnNativeControlCreated()
+        {
+            base.OnNativeControlCreated();
+        }
+        
         protected override void OnAttach()
         {
             base.OnAttach();
 
+            NativeControl.BeforeBrowserCreate += Control.OnNativeBeforeBrowserCreate;
             NativeControl.Navigating += Control.OnNativeNavigating;
             NativeControl.Navigated += Control.OnNativeNavigated;
             NativeControl.Loaded += Control.OnNativeLoaded;
@@ -138,11 +187,12 @@ namespace Alternet.UI
             NativeControl.ScriptMessageReceived += Control.OnNativeScriptMessageReceived;
             NativeControl.ScriptResult += Control.OnNativeScriptResult;
         }
-        //-------------------------------------------------
+        
         protected override void OnDetach()
         {
             base.OnDetach();
 
+            NativeControl.BeforeBrowserCreate -= Control.OnNativeBeforeBrowserCreate;
             NativeControl.Navigating -= Control.OnNativeNavigating;
             NativeControl.Navigated -= Control.OnNativeNavigated;
             NativeControl.Loaded -= Control.OnNativeLoaded;
@@ -153,7 +203,7 @@ namespace Alternet.UI
             NativeControl.ScriptMessageReceived -= Control.OnNativeScriptMessageReceived;
             NativeControl.ScriptResult -= Control.OnNativeScriptResult;
         }
-        //-------------------------------------------------
+        
         public bool HasSelection => NativeControl.HasSelection;
         public void DeleteSelection() => NativeControl.DeleteSelection();
         public string SelectedText => NativeControl.SelectedText;
@@ -169,7 +219,7 @@ namespace Alternet.UI
         public bool CanRedo=> NativeControl.CanRedo;
         public void Undo()=> NativeControl.Undo();
         public void Redo()=> NativeControl.Redo();
-        //-------------------------------------------------
+        
         public long Find(string text, WebBrowserFindParams? prm = null)
         {
             int flags = 0;
@@ -177,45 +227,45 @@ namespace Alternet.UI
                 flags = prm.ToWebViewParams();
             return WebBrowserNativeApi.WebBrowser_Find_(NativePointer, text, flags);
         }
-        //-------------------------------------------------
+        
         public bool IsBusy=> NativeControl.IsBusy;
         public void Print()=> NativeControl.Print();
         public string PageSource => NativeControl.PageSource;
         public string PageText => NativeControl.PageText;
-        //-------------------------------------------------
+        
         public void RemoveAllUserScripts()
         {
             NativeControl.RemoveAllUserScripts();
         }
-        //-------------------------------------------------
+        
         public bool AddScriptMessageHandler(string name)
         {
             return NativeControl.AddScriptMessageHandler(name);
         }
-        //-------------------------------------------------
+        
         public bool RemoveScriptMessageHandler(string name)
         {
             return NativeControl.RemoveScriptMessageHandler(name);
         }
-        //-------------------------------------------------
+        
         public bool AccessToDevToolsEnabled
         {
             get=> NativeControl.AccessToDevToolsEnabled;
             set=> NativeControl.AccessToDevToolsEnabled=value;
         }
-        //-------------------------------------------------
+        
         public string UserAgent
         {
             get =>NativeControl.UserAgent;
             set =>NativeControl.UserAgent =value;
         }
-        //-------------------------------------------------
+        
         public bool ContextMenuEnabled
         {
             get => NativeControl.ContextMenuEnabled;
             set=> NativeControl.ContextMenuEnabled=value;
         }
-        //-------------------------------------------------
+        
         public WebBrowserBackend Backend
         {
             get
@@ -224,7 +274,7 @@ namespace Alternet.UI
                 return (WebBrowserBackend)Enum.ToObject(typeof(WebBrowserBackend), v);
             }
         }
-        //-------------------------------------------------
+        
         public bool AddUserScript(string javascript,bool injectDocStart)
         {
             const int wxWEBVIEW_INJECT_AT_DOCUMENT_START = 0;
@@ -237,15 +287,7 @@ namespace Alternet.UI
 
             return NativeControl.AddUserScript(javascript, injectionTime);
         }
-        //-------------------------------------------------
-        public bool RunScript(string javascript,out string result)
-        {
-            result = NativeControl.RunScript(javascript);
-            if (result == "3140D0CF550442968B792551E6DCBEC1")
-                return false;
-            return true;
-        }
-        //-------------------------------------------------
+        
     }
-    //-------------------------------------------------
+    
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    //-------------------------------------------------
+    
     internal enum WebBrowserEvent
     {
         Unknown,
@@ -20,27 +20,30 @@ namespace Alternet.UI
         FullScreenChanged,
         ScriptMessageReceived,
         ScriptResult,
+        BeforeBrowserCreate,
     }
-    //-------------------------------------------------
+    
     /// <summary>
     ///     Provides data for the WebBrowser events.
     /// </summary>
     public class WebBrowserEventArgs : CancelEventArgs
     {
-        private readonly bool FIsError = false;
+        private bool FIsError = false;
         private readonly int FIntVal = 0;
 
-        //-------------------------------------------------
+        
+        public IntPtr ClientData { get; set; }
+        
         /// <summary>
         ///     Gets the type of browser event.
         /// </summary>
         public string EventType { get; }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Gets the integer value for the received event.
         /// </summary>
         public int IntVal { get => FIntVal; }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Gets the type of error that can caused navigation to fail.
         /// </summary>
@@ -54,34 +57,34 @@ namespace Alternet.UI
                 return null;
             } 
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Gets the string value for the received event. 
         /// </summary>
-        public string? Text { get; }
-        //-------------------------------------------------
+        public string? Text { get; set; }
+        
         /// <summary>
         ///     Gets the URL being visited.
         /// </summary>
         public string? Url { get; }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Gets the name of the target frame which the url of this event has been 
         ///     or will be loaded into.         
         ///     This may return an empty string if the frame is not available.
         /// </summary>
-        public string? Target { get; }
-        //-------------------------------------------------
+        public string? TargetFrameName { get; }
+        
         /// <summary>
         ///     Gets the type of navigation action. Only valid for NewWindow events.
         /// </summary>
         public WebBrowserNavigationAction NavigationAction { get; }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Gets the name of the script handler. Only valid for ScriptMessageReceived events.
         /// </summary>
         public string? MessageHandler { get; }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Returns true the script execution failed. Only valid for ScriptResult events.
         /// </summary>
@@ -93,8 +96,12 @@ namespace Alternet.UI
                     return FIsError;
                 return false;
             }
+            set
+            {
+                FIsError = value;
+            }
         }
-        //-------------------------------------------------
+        
         /// <summary>
         ///     Initializes a new instance of the WebBrowserEventArgs class. 
         /// </summary>
@@ -108,17 +115,17 @@ namespace Alternet.UI
             }
             EventType = eventType;
         }
-        //-------------------------------------------------
+        
         internal IntPtr CancelAsIntPtr() 
         {
             return Cancel ? (IntPtr)1 : IntPtr.Zero;
         }
-        //-------------------------------------------------
+        
         internal WebBrowserEventArgs(Native.NativeEventArgs<Native.WebBrowserEventData> e, 
             WebBrowserEvent eventType= WebBrowserEvent.Unknown) : base()
         {
             Url = e.Data.Url;
-            Target = e.Data.Target;
+            TargetFrameName = e.Data.Target;
             NavigationAction = (WebBrowserNavigationAction)Enum.ToObject(
                 typeof(WebBrowserNavigationAction), e.Data.ActionFlags);
             MessageHandler = e.Data.MessageHandler;
@@ -126,9 +133,10 @@ namespace Alternet.UI
             EventType = eventType.ToString();
             Text = e.Data.Text;
             FIntVal = e.Data.IntVal;
+            ClientData = e.Data.ClientData;
         }
-        //-------------------------------------------------
+        
     }
-    //-------------------------------------------------
+    
 }
-//-------------------------------------------------
+

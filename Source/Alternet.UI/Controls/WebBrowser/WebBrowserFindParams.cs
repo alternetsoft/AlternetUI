@@ -6,81 +6,36 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    //-------------------------------------------------
     /// <summary>
-    /// 
+    ///     Find flags used when searching for text on web page.
     /// </summary>
-    /*
-wxWebViewFindFlags
-enum wxWebViewFindFlags
-Find flags used when searching for text on page.
-
-Enumerator
-wxWEBVIEW_FIND_WRAP 	
-Causes the search to restart when end or beginning reached.
-
-wxWEBVIEW_FIND_ENTIRE_WORD 	
-Matches an entire word when searching.
-
-wxWEBVIEW_FIND_MATCH_CASE 	
-Match case, i.e.
-
-case sensitive searching
-
-wxWEBVIEW_FIND_HIGHLIGHT_RESULT 	
-Highlights the search results.
-
-wxWEBVIEW_FIND_BACKWARDS 	
-Searches for phrase in backward direction.
-
-wxWEBVIEW_FIND_DEFAULT 	
-The default flag, which is simple searching.
-     */
     public class WebBrowserFindParams
     {
-        //-------------------------------------------------
         /// <summary>
-        /// 
+        ///     Causes the search to restart when end or beginning reached.
         /// </summary>
-        /*
-         
-        */
         public bool Wrap = false;
-        /// <summary>
-        /// 
-        /// </summary>
-        /*
-         
-        */
-        public bool EntireWord = false;
-        /// <summary>
-        /// 
-        /// </summary>
-        /*
-         
-        */
-        public bool MatchCase = false;
-        /// <summary>
-        /// 
-        /// </summary>
-        /*
-         
-        */
-        public bool HighlightResult=true;
-        /// <summary>
-        /// 
-        /// </summary>
-        /*
-         
-        */
-        public bool Backwards=false;
-        //-------------------------------------------------
-        /// <summary>
-        /// 
-        /// </summary>
-        /*
 
-         */
+        /// <summary>
+        ///     Matches an entire word when searching.
+        /// </summary>
+        public bool EntireWord = false;
+
+        /// <summary>
+        ///     Match case, i.e. case sensitive searching.
+        /// </summary>
+        public bool MatchCase = false;
+
+        /// <summary>
+        ///     Highlights the search results.
+        /// </summary>
+        public bool HighlightResult=true;
+
+        /// <summary>
+        ///     Searches for phrase in backward direction.
+        /// </summary>
+        public bool Backwards=false;
+
         internal int ToWebViewParams()
         {
             const int FindWrap = 0x0001;
@@ -99,7 +54,5 @@ The default flag, which is simple searching.
             if (Backwards) result |= FindBackwards;
             return result;
         }
-        //-------------------------------------------------
     }
-    //-------------------------------------------------
 }

@@ -351,6 +351,27 @@ ALTERNET_UI_API void WebBrowser_RunScriptAsync_(WebBrowser* obj, const char16_t*
         });
 }
 
+ALTERNET_UI_API void WebBrowser_CreateBackend_(WebBrowser* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->CreateBackend();
+        });
+}
+
+ALTERNET_UI_API int WebBrowser_GetBackendOS_()
+{
+    return MarshalExceptions<int>([&](){
+            return WebBrowser::GetBackendOS();
+        });
+}
+
+ALTERNET_UI_API void WebBrowser_SetEdgePath_(const char16_t* path)
+{
+    MarshalExceptions<void>([&](){
+            WebBrowser::SetEdgePath(path);
+        });
+}
+
 ALTERNET_UI_API char16_t* WebBrowser_GetCurrentTitle_(WebBrowser* obj)
 {
     return MarshalExceptions<char16_t*>([&](){

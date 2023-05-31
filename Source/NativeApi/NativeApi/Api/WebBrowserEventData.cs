@@ -17,5 +17,6 @@ namespace NativeApi.Api
         public bool IsError;
         public string Text;
         public int IntVal;
+        public IntPtr ClientData;
     }
 }
