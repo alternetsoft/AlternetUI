@@ -20,23 +20,17 @@
 #endif
 
 #if defined(__WXMSW__)
-//#include "wx/msw/registry.h"
-//#include "wx/msw/ole/safearray.h"
-//#include "wx/filesys.h"
-//#include "wx/dynlib.h"
-//#include "wx/scopeguard.h"
-//#include "wx/tokenzr.h"
-
-//#include "wx/msw/missing.h"
-//#include "wx/msw/private.h"
 #include "wx/private/jsscriptwrapper.h"
-
-//#include "initguid.h"
-//#include "exdispid.h"
 #include "mshtml.h"
 #include "wx/msw/private/comptr.h"
 #include "wx/msw/ole/automtn.h"
 #endif
+
+#include "wx/webviewarchivehandler.h"
+#include "wx/webviewfshandler.h"
+#include "wx/filesys.h"
+#include "wx/fs_arc.h"
+#include "wx/fs_mem.h"
 
 
 #include "wx/log.h"
@@ -736,9 +730,12 @@ namespace Alternet::UI
         return result;
     }
     
-    long WebBrowser::Find(const string& text, int flags) 
+    int WebBrowser::Find(const string& text, int flags) 
     {
-        return GetWebViewCtrl()->Find(wxStr(text), flags);
+        auto result = GetWebViewCtrl()->Find(wxStr(text), flags);
+        if (result == wxNOT_FOUND)
+            return -1;
+        return result;
     }
     
     bool WebBrowser::GetIsBusy() 

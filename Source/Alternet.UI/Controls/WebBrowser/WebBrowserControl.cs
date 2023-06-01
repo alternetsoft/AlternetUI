@@ -9,50 +9,20 @@ using System.Runtime.InteropServices;
 using System.Security.Policy;
 using System.Text;
 using static Alternet.UI.EventTrace;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Alternet.UI
 {
-    
-    /// <summary>
-    ///     <para>
-    ///         This control may be used to render full featured web documents. 
-    ///         It supports using multiple backends, corresponding to different 
-    ///         implementations of the same functionality.
-    ///     </para>
-    ///     <para>
-    ///         Each backend is a full rendering engine (Internet Explorer, Edge or WebKit). 
-    ///         This allows the correct viewing of complex web pages with full JavaScript 
-    ///         and CSS support. Under macOS and Unix platforms a single backend is provided 
-    ///         (WebKit-based). Under MSW both the old IE backends and the new Edge 
-    ///         backend can be used. 
-    ///     </para>
-    ///     
-    /// </summary>
-    /// <remarks>
-    ///     <para>
-    ///         WebBrowser has many asynchronous methods. They return immediately and 
-    ///         perform their work in the background. This includes functions such as Reload() 
-    ///         and LoadURL(). 
-    ///     </para>
-    ///     <para>
-    ///         To receive notification of the progress and completion of these functions
-    ///         you need to handle the events that are provided. 
-    ///         Specifically Loaded event notifies when the page or a sub-frame
-    ///         has finished loading and Error event notifies that an error has occurred.
-    ///     </para>
-    /// </remarks>
+
+    /// <include file="Interfaces/IWebBrowser.xml" path='doc/WebBrowser/*'/>
     public partial class WebBrowser : Control, IWebBrowser
     {
         
         private IWebBrowserMemoryFS? FMemoryFS;
         new internal WebBrowserHandler Handler => (WebBrowserHandler)base.Handler;
         internal IWebBrowserLite Browser => (IWebBrowserLite)base.Handler;
-        
-        /// <summary>
-        ///     Retrieves or modifies the state of the debug flag to control the 
-        ///     allocation behavior of the debug heap manager. This is for debug purposes.
-        ///     CrtSetDbgFlag(0) allows to turn off debug output with heap manager information.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CrtSetDbgFlag/*'/>
         public static void CrtSetDbgFlag(int value)
         {
             WebBrowserNativeApi.WebBrowser_CrtSetDbgFlag_(value);
@@ -74,15 +44,8 @@ namespace Alternet.UI
         static WebBrowser()
         {
         }
-        
-        /// <summary>
-        ///     Creates a handler for the control.
-        /// </summary>
-        /// <remarks>
-        ///     You typically should not call this method directly.
-        ///     The preferred method is to call the <see cref="Control.EnsureHandlerCreated"/> method, 
-        ///     which forces a handler to be created for the control.
-        /// </remarks>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CreateHandler/*'/>
         protected override ControlHandler CreateHandler()
         {
             return new WebBrowserHandler();
@@ -110,7 +73,8 @@ namespace Alternet.UI
             if (CanZoomOut)
                 ZoomInOut(-1);
         }
-        
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/MemoryFS/*'/>
         public IWebBrowserMemoryFS MemoryFS
         {
             get
@@ -151,8 +115,7 @@ namespace Alternet.UI
             RoutingStrategy.Bubble,
             typeof(EventHandler<WebBrowserEventArgs>),
             typeof(WebBrowser));*/
-        
-        //TODO: !KU help ?
+
         /*public static readonly RoutedEvent NewWindowEvent = 
             EventManager.RegisterRoutedEvent(
             "NewWindow",
@@ -371,7 +334,8 @@ namespace Alternet.UI
         
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/Navigating/*'/>
         public event EventHandler<WebBrowserEventArgs>? Navigating;
-        
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/BeforeBrowserCreate/*'/>
         public event EventHandler<WebBrowserEventArgs>? BeforeBrowserCreate;
         
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/Loaded/*'/>
@@ -383,18 +347,11 @@ namespace Alternet.UI
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/NewWindow/*'/>
         public event EventHandler<WebBrowserEventArgs>? NewWindow;
         
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/DocumentTitleChanged/*'/>
+        /// <include file="Interfaces/IWebBrowser.xml" 
+        ///     path='doc/Events/DocumentTitleChanged/*'/>
         public event EventHandler<WebBrowserEventArgs>? DocumentTitleChanged;
-        
-        /// <summary>
-        ///     Loads the document at the location indicated by the specified 
-        ///     <see cref="T:System.Uri"/> into the <see cref="T:WebBrowser"/> control, 
-        ///     replacing the previous document.
-        /// </summary>
-        /// <param name="url">
-        ///     A <see cref="T:System.Uri"/> representing the URL of the document to load.
-        ///     If this parameter is null, WebBrowser navigates to a blank document. 
-        /// </param>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Navigate_uri/*'/>
         public void Navigate(Uri url)
         {
             if (url == null)
@@ -402,24 +359,14 @@ namespace Alternet.UI
             else
                 LoadURL(url.ToString());
         }
-        
-        /// <summary>
-        ///     Loads the document at the specified Uniform Resource Locator (URL) 
-        ///     into the <see cref="T:WebBrowser"/> control, replacing 
-        ///     the previous document.
-        /// </summary>
-        /// <param name="urlString">
-        ///     The URL of the document to load. If this parameter is null, WebBrowser 
-        ///     navigates to a blank document.
-        /// </param>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Navigate_string/*'/>
         public void Navigate(string urlString)
         {
             LoadURL(urlString);
         }
-        
-        /// <summary>
-        ///     Gets or sets the Uri of the current document hosted in the WebBrowser.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Source/*'/>
         public virtual Uri Source
         {
             get
@@ -431,12 +378,8 @@ namespace Alternet.UI
                 Navigate(value);
             }
         }
-        
-        /// <summary>
-        ///     Allows to check if a specific backend is currently available.
-        ///     This method allows to enable some extra functionality available with 
-        ///     the specific backend.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/IsBackendAvailable/*'/>
         public static bool IsBackendAvailable(WebBrowserBackend value)
         {
             return value switch
@@ -451,44 +394,32 @@ namespace Alternet.UI
                 _ => false,
             };
         }
-        
-        /// <summary>
-        ///     Sets the backend that will be used for the new WebBrowser instances.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetBackend/*'/>
         public static void SetBackend(WebBrowserBackend value)
         {
             WebBrowserNativeApi.WebBrowser_SetBackend_((int)value);
         }
-        
-        /// <summary>
-        ///     Retrieve the version information about the underlying library implementation.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/GetLibraryVersionString/*'/>
         public static string GetLibraryVersionString()
         {
             return WebBrowserNativeApi.WebBrowser_GetLibraryVersionString_();
         }
-        
-        /// <summary>
-        ///     Retrieve the version information about the browser backend implementation.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/GetBackendVersionString/*'/>
         public static string GetBackendVersionString(WebBrowserBackend value)
         {
             return WebBrowserNativeApi.WebBrowser_GetBackendVersionString_((int)value);
         }
-        
-        /// <summary>
-        ///     Sets the default web page that will be used for the 
-        ///     new WebBrowser instances. Devault value is about:blank.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetDefaultPage/*'/>
         public static void SetDefaultPage(string url)
         {
             WebBrowserNativeApi.WebBrowser_SetDefaultPage_(url);
         }
-        
-        /// <summary>
-        ///     Sets the best possible backend to be used for the 
-        ///     new WebBrowser instances.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetLatestBackend/*'/>
         public static void SetLatestBackend()
         {
             if (IsBackendAvailable(WebBrowserBackend.Edge))
@@ -508,16 +439,8 @@ namespace Alternet.UI
             }
             SetBackend(WebBrowserBackend.Default);
         }
-        
-        /// <summary>
-        ///     Gets a value indicating whether a previous page in navigation history 
-        ///     is available, which allows the<see cref="M:GoBack" /> 
-        ///     method to succeed.
-        ///</summary>
-        ///<returns>
-        ///  <see langword = "true" /> if the control can navigate backward; otherwise, 
-        ///  <see langword = "false" />.
-        ///</returns>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanGoBack/*'/>
         public virtual bool CanGoBack
         {
             get
@@ -526,16 +449,8 @@ namespace Alternet.UI
                 return Browser.CanGoBack;
             }
         }
-        
-        /// <summary>
-        ///     Gets a value indicating whether a subsequent page in navigation
-        ///     history is available, which allows the
-        ///     <see cref="M:GoForward" /> method to succeed.
-        /// </summary>
-        /// <returns>
-	    ///     <see langword = "true" /> if the control can navigate forward; otherwise, 
-        ///     <see langword = "false" />.
-        /// </returns>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanGoForward/*'/>
         public virtual bool CanGoForward
         {
             get
@@ -544,15 +459,8 @@ namespace Alternet.UI
                 return Browser.CanGoForward;
             }
         }
-        
-        ///<summary>
-        ///    Navigates the control 
-        ///    to the previous page in the navigation history, if one is available.
-        ///</summary>
-        ///<returns>
-        ///  <see langword="true"/> if the navigation succeeds; 
-        ///  <see langword="false"/> if a previous page in the navigation history is not available.
-        ///</returns>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/GoBack/*'/>
         public virtual bool GoBack()
         {
             if (!CanGoBack)
@@ -560,15 +468,8 @@ namespace Alternet.UI
             CheckDisposed();
             return Browser.GoBack();
         }
-        
-        ///<summary>
-        ///    Navigates the control 
-        ///    to the subsequent page in the navigation history, if one is available.
-        ///</summary>
-        ///<returns>
-        ///  <see langword="true"/> if the navigation succeeds; 
-        ///  <see langword="false"/> if a subsequent page in the navigation history is not available.
-        ///</returns>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/GoForward/*'/>
         public virtual bool GoForward()
         {
             if (!CanGoForward)
@@ -576,78 +477,44 @@ namespace Alternet.UI
             CheckDisposed();
             return Browser.GoForward();
         }
-        
-        /// <summary>
-        ///     Stops the current page loading process, if any. Cancels any pending navigation 
-        ///     and stops any dynamic page elements, such as background sounds and animations.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Stop/*'/>
         public virtual void Stop()
         {
             CheckDisposed();
             Browser.Stop();
         }
-        
-        /// <summary>
-        ///     Clear the history, this will also remove the visible page. This is not 
-        ///     implemented on macOS and the WebKit2GTK+ backend.         
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ClearHistory/*'/>
         public virtual void ClearHistory()
         {
             CheckDisposed();
             Browser.ClearHistory();
         }
-        
-        /// <summary>
-        ///     Enables or disables the history. This method will also clear the history.
-        ///     This method is not implemented on macOS and the WebKit2GTK+ backend.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/EnableHistory/*'/>
         public virtual void EnableHistory(bool enable = true)
         {
             CheckDisposed();
             Browser.EnableHistory(enable);
         }
-        
-        /// <summary>
-        ///     Reloads the document currently displayed in the control by downloading
-        ///     for an updated version from the server.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Reload/*'/>
         public virtual void Reload()
         {
             CheckDisposed();
             Browser.Reload();
         }
-        
-        /// <summary>
-        ///     Reloads the document currently displayed in the 
-        ///     control using the specified refresh option.    
-        /// </summary>
-        /// <param name="noCache">
-        ///     <see langword="true"/> if the reload will not use browser cache; otherwise, 
-        ///     <see langword="false"/>. This parameter is ignored by the Edge backend.         
-        /// </param>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Reload_noCache/*'/>
         public virtual void Reload(bool noCache)
         {
             CheckDisposed();
             Browser.Reload(noCache);
         }
-        
-        /// <summary>
-        ///     Sets the displayed page source to the contents of the given string.
-        /// </summary>
-        /// <remarks>
-        ///     When using the IE backend you must wait for the current page to finish loading before 
-        ///     calling this method. The baseURL parameter is not used in the IE and
-        ///     and Edge backends.
-        /// </remarks>
-        /// <param name="html">
-        ///     The string that contains the HTML data to display. If this parameter is null, 
-        ///     WebBrowser navigates to a blank document. If this parameter is not in valid HTML 
-        ///     format, it will be displayed as plain text.
-        /// </param>
-        /// <param name="baseUrl">
-        ///     URL assigned to the HTML data, to be used to resolve relative paths, for instance.
-        /// </param>
-        public virtual void NavigateToString(string html, string baseUrl)
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/NavigateToString/*'/>
+        public virtual void NavigateToString(string html, string? baseUrl=null)
         {
             CheckDisposed();
             if (String.IsNullOrEmpty(html))
@@ -655,36 +522,10 @@ namespace Alternet.UI
                 LoadURL();
                 return;
             }
-            Browser.NavigateToString(html, baseUrl);
+            Browser.NavigateToString(html, baseUrl!);
         }
-        
-        /// <summary>
-        ///     Sets the displayed page source to the contents of the given string.
-        /// </summary>
-        /// <param name="html">
-        ///     The string that contains the HTML data to display. If this parameter is null, 
-        ///     WebBrowser navigates to a blank document. If this parameter is not in valid HTML 
-        ///     format, it will be displayed as plain text.
-        /// </param>
-        /// <remarks>
-        ///     When using the IE backend you must wait for the current page to finish 
-        ///     loading before calling this method. 
-        /// </remarks>
-        public virtual void NavigateToString(string html)
-        {
-            CheckDisposed();
-            Browser.NavigateToString(html, String.Empty);
-        }
-        
-        /// <summary>
-        /// Navigate asynchronously to a Stream that contains the content for a document.
-        /// </summary>
-        /// <param name="stream">
-        ///     The Stream that contains the content for a document.
-        ///     If this parameter is null, WebBrowser navigates to a blank document.
-        ///     If contents of the stream is not in a valid HTML format, it will 
-        ///     be displayed as plain text.
-        /// </param>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/NavigateToStream/*'/>
         public virtual void NavigateToStream(Stream stream)
         {
             if (stream == null)
@@ -701,15 +542,8 @@ namespace Alternet.UI
                 return new StreamReader(stream, Encoding.UTF8).ReadToEnd();
             }
         }
-        
-        /// <summary>
-        ///     Gets or sets the zoom factor of the page. The zoom factor is an arbitrary 
-        ///     number that specifies how much to zoom (scale) the HTML document.
-        /// </summary>
-        /// <remarks>
-        ///     Zoom scale in IE will be converted into zoom levels if ZoomType property 
-        ///     is set to WebBrowserZoomType.Text value.
-        /// </remarks>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ZoomFactor/*'/>
         public virtual float ZoomFactor
         {
             get
@@ -723,13 +557,8 @@ namespace Alternet.UI
                 Browser.ZoomFactor =value;
             }
         }
-        
-        /// <summary>
-        ///     Gets or sets how the zoom factor is currently interpreted by the HTML engine.
-        /// </summary>
-        /// <remarks>
-        ///     Invoke CanSetZoomType() first, some HTML renderers may not support all zoom types.
-        /// </remarks>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ZoomType/*'/>
         public virtual WebBrowserZoomType ZoomType
         {
             get
@@ -743,36 +572,22 @@ namespace Alternet.UI
                 Browser.ZoomType=value;
             }
         }
-        
-        /// <summary>
-        ///     Retrieve whether the current HTML engine supports a zoom type.
-        /// </summary>
-        /// <param name="zoomType">
-        ///     The zoom type to test.
-        /// </param>
-        /// <returns>
-        ///     Whether this type of zoom is supported by this HTML engine 
-        ///     (and thus can be set through ZoomType property).              
-        /// </returns>
-        /// 
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanSetZoomType/*'/>
         public virtual bool CanSetZoomType(WebBrowserZoomType zoomType)
         {
             CheckDisposed();
             return Browser.CanSetZoomType(zoomType);
         }
-        
-        /// <summary>
-        ///     Selects the entire page.         
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SelectAll/*'/>
         public virtual void SelectAll()
         {
             CheckDisposed();
             Browser.SelectAll(); 
         }
-        
-        /// <summary>
-        ///     Returns true if there is a current selection.         
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/HasSelection/*'/>
         public virtual bool HasSelection
         {
             get
@@ -781,23 +596,15 @@ namespace Alternet.UI
                 return Browser.HasSelection;
             }
         }
-        
-        /// <summary>
-        ///     Deletes the current selection.
-        /// </summary>
-        /// <remarks>
-        ///     Note that for the Webkit backend the selection must be editable, 
-        ///     either through the correct HTML attribute or Editable property.         
-        /// </remarks>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/DeleteSelection/*'/>
         public virtual void DeleteSelection() 
         {
             CheckDisposed();
             Browser.DeleteSelection(); 
         }
-        
-        /// <summary>
-        ///     Gets or sets a value indicating the currently selected text in the control.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SelectedText/*'/>
         public virtual string SelectedText
         {
             get 
@@ -806,10 +613,8 @@ namespace Alternet.UI
                 return Browser.SelectedText; 
             }
         }
-        
-        /// <summary>
-        ///     Returns the currently selected source, if any. 
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SelectedSource/*'/>
         public virtual string SelectedSource 
         { 
             get 
@@ -818,25 +623,15 @@ namespace Alternet.UI
                 return Browser.SelectedSource; 
             }
         }
-        
-        /// <summary>
-        ///     Clears the current selection. Specifies that no characters are 
-        ///     selected in the control.        
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ClearSelection/*'/>
         public virtual void ClearSelection() 
         {
             CheckDisposed();
             Browser.ClearSelection(); 
         }
-        
-        /// <summary>
-        ///     Gets a value indicating whether the current selection can be cut, which allows 
-        ///     the <see cref="M:Cut"/> method to succeed.
-        /// </summary>
-        /// <returns>
-        ///     <see langword="true"/> if the current selection can be cut; 
-        ///     otherwise, <see langword="false"/>.
-        /// </returns>         
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanCut/*'/>
         public virtual bool CanCut 
         {
             get 
@@ -845,15 +640,8 @@ namespace Alternet.UI
                 return Browser.CanCut; 
             }
         }
-        
-        /// <summary>
-        ///     Gets a value indicating whether the current selection can be copied, which allows 
-        ///     the <see cref="M:Copy"/> method to succeed.
-        /// </summary>
-        /// <returns>
-        ///     <see langword="true"/> if the current selection can be copied; 
-        ///     otherwise, <see langword="false"/>.
-        /// </returns>         
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanCopy/*'/>
         public virtual bool CanCopy 
         { 
             get 
@@ -862,16 +650,8 @@ namespace Alternet.UI
                 return Browser.CanCopy; 
             } 
         }
-        
-        /// <summary>
-        ///     Gets a value indicating whether the current selection can be replaced with 
-        ///     the contents of the Clipboard, which allows 
-        ///     the <see cref="M:Paste"/> method to succeed.
-        /// </summary>
-        /// <returns>
-        ///     <see langword="true"/> if the data can be pasted; 
-        ///     otherwise, <see langword="false"/>.
-        /// </returns>         
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanPaste/*'/>
         public virtual bool CanPaste 
         { 
             get 
@@ -880,42 +660,29 @@ namespace Alternet.UI
                 return Browser.CanPaste; 
             } 
         }
-        
-        /// <summary>
-        ///     Moves the current selection in the control to the Clipboard.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Cut/*'/>
         public virtual void Cut() 
         {
             CheckDisposed();
             Browser.Cut(); 
         }
-        
-        /// <summary>
-        ///     Copies the current selection in the control to the Clipboard.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Copy/*'/>
         public virtual void Copy() 
         {
             CheckDisposed();
             Browser.Copy(); 
         }
-        
-        /// <summary>
-        ///     Replaces the current selection in the control with the contents of the Clipboard.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Paste/*'/>
         public virtual void Paste() 
         {
             CheckDisposed();
             Browser.Paste();
         }
-        
-        /// <summary>
-        ///     Gets a value indicating whether the user can undo the previous operation 
-        ///     in a control.
-        /// </summary>
-        /// <returns>
-        ///     <see langword = "true"/> if the user can undo the previous operation performed 
-        ///     in a control; otherwise, <see langword = "false"/>.
-        /// </returns >
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanUndo/*'/>
         public bool CanUndo 
         { 
             get 
@@ -924,15 +691,8 @@ namespace Alternet.UI
                 return Browser.CanUndo; 
             } 
         }
-        
-        /// <summary>
-        ///     Gets a value indicating whether the user can redo the previous operation 
-        ///     in a control.
-        /// </summary>
-        /// <returns>
-        ///     <see langword = "true" /> if the user can redo the previous operation performed 
-        ///     in a control; otherwise, <see langword = "false" />.
-        /// </returns >
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanRedo/*'/>
         public virtual bool CanRedo 
         { 
             get 
@@ -941,62 +701,36 @@ namespace Alternet.UI
                 return Browser.CanRedo; 
             } 
         }
-        
-        /// <summary>
-        /// Undoes the last edit operation in the control.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Undo/*'/>
         public virtual void Undo() 
         {
             CheckDisposed();
             Browser.Undo(); 
         }
-        
-        /// <summary>
-        /// Redos the last edit operation in the control.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Redo/*'/>
         public virtual void Redo() 
         {
             CheckDisposed();
-            Browser.Redo(); 
+            Browser.Redo();
         }
-        
-        /// <summary>
-        ///     Finds a text on the current page and if found, the control will scroll 
-        ///     the text into view and select it.
-        /// </summary>
-        /*
 
-
-Parameters
-text	The phrase to search for.
-prm	    The parameters for the search.
-Returns
-If search phrase was not found in combination with the flags then wxNOT_FOUND is returned. If called for the first time with search phrase then the total number of results will be returned. Then for every time its called with the same search phrase it will return the number of the current match.
-Note
-This function will restart the search if the flags wxWEBVIEW_FIND_ENTIRE_WORD or wxWEBVIEW_FIND_MATCH_CASE are changed, since this will require a new search. To reset the search, for example resetting the highlights call the function with an empty search phrase.         
-        */
-        //TODO: !KU help
-        public virtual long Find(string text, WebBrowserFindParams? prm=null) 
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Find/*'/>
+        public virtual int Find(string text, WebBrowserFindParams? prm=null) 
         {
             CheckDisposed();
             return Browser.Find(text,prm); 
         }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /*
-         
-         */        
-        //TODO: !KU help
-        public virtual void FindClearResultSelection()
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/FindClearResult/*'/>
+        public virtual void FindClearResult()
         {
-            Find("", null);
+            CheckDisposed();
+            Browser.FindClearResult();
         }
-        
-        /// <summary>
-        ///     Returns whether the control is currently busy (e.g. loading a web page).         
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/IsBusy/*'/>
         public virtual bool IsBusy 
         { 
             get 
@@ -1005,21 +739,15 @@ This function will restart the search if the flags wxWEBVIEW_FIND_ENTIRE_WORD or
                 return Browser.IsBusy; 
             } 
         }
-        
-        /// <summary>
-        ///     Opens a print dialog so that the user may change the current print and 
-        ///     page settings and print the currently displayed page.         
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Print/*'/>
         public virtual void Print() 
         {
             CheckDisposed();
             Browser.Print(); 
         }
-        
-        /// <summary>
-        ///     Get the HTML source code of the currently displayed document or 
-        ///     an empty string if no page is currently shown.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/PageSource/*'/>
         public virtual string PageSource 
         { 
             get 
@@ -1028,10 +756,8 @@ This function will restart the search if the flags wxWEBVIEW_FIND_ENTIRE_WORD or
                 return Browser.PageSource; 
             } 
         }
-        
-        /// <summary>
-        ///     Get the text of the current page.      
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/PageText/*'/>
         public virtual string PageText { 
             get 
             {
@@ -1039,73 +765,29 @@ This function will restart the search if the flags wxWEBVIEW_FIND_ENTIRE_WORD or
                 return Browser.PageText; 
             }
         }
-        
-        /// <summary>
-        ///     Removes all user scripts from the web view.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/RemoveAllUserScripts/*'/>
         public virtual void RemoveAllUserScripts() 
         {
             CheckDisposed();
-            Browser.RemoveAllUserScripts(); 
+            Browser.RemoveAllUserScripts();
         }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        //https://docs.wxwidgets.org/3.2/classwx_web_view.html#a2597c3371ed654bf03262ec6d34a0126
-        /*
-Add a script message handler with the given name.
 
-To use the script message handler from javascript use window.<name>.postMessage(<messageBody>) where <name> corresponds the value of the name parameter. The <messageBody> will be available to the application via a wxEVT_WEBVIEW_SCRIPT_MESSAGE_RECEIVED event.
-
-Sample C++ code receiving a script message:
-
-// Install message handler with the name wx_msg
-m_webView->AddScriptMessageHandler('wx_msg');
-// Bind handler
-m_webView->Bind(wxEVT_WEBVIEW_SCRIPT_MESSAGE_RECEIVED, [](wxWebViewEvent& evt) {
-    wxLogMessage("Script message received; value = %s, handler = %s", evt.GetString(), evt.GetMessageHandler());
-});
-Sample javascript sending a script message:
-
-// Send sample message body
-window.wx_msg.postMessage('This is a message body');
-Parameters
-name	Name of the message handler that can be used from javascript
-Returns
-true if the handler could be added, false if it could not be added.
-See also
-RemoveScriptMessageHandler()
-Note
-The Edge backend only supports a single message handler and the IE backend does not support script message handlers.         
-        */
-        //TODO: !KU help
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/AddScriptMessageHandler/*'/>
         public virtual bool AddScriptMessageHandler(string name) 
         {
             CheckDisposed();
             return Browser.AddScriptMessageHandler(name);
         }
-        
-        /// <summary>
-        ///     Remove a script message handler with the given name that was previously 
-        ///     added using AddScriptMessageHandler().
-        /// </summary>
-        /*
-Returns
-true if the handler could be removed, false if it could not be removed.
-        */
-        //TODO: !KU help
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/RemoveScriptMessageHandler/*'/>
         public virtual bool RemoveScriptMessageHandler(string name) 
         {
             CheckDisposed();
             return Browser.RemoveScriptMessageHandler(name); 
         }
-        
-        /// <summary>
-        ///     Enables or disables access to developer tools for the user. 
-        ///     Developer tools are disabled by default. 
-        ///     This feature is not implemented for the IE backend.         
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/AccessToDevToolsEnabled/*'/>
         public virtual bool AccessToDevToolsEnabled
         {
             get
@@ -1119,24 +801,8 @@ true if the handler could be removed, false if it could not be removed.
                 Browser.AccessToDevToolsEnabled = value;
             }
         }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /*
-Returns the current user agent string for the web browser.         
 
-Specify a custom user agent string for the web view.
-
-Returns true the user agent could be set.
-
-If your first request should already use the custom user agent please 
-        use two step creation and call SetUserAgent() before Create().
-
-Note
-This is not implemented for IE. For Edge SetUserAgent() MUST be called before Create().
-        */
-        //TODO: !KU help
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/UserAgent/*'/>
         public virtual string UserAgent
         {
             get
@@ -1150,12 +816,8 @@ This is not implemented for IE. For Edge SetUserAgent() MUST be called before Cr
                 Browser.UserAgent = value;
             }
         }
-        
-        /// <summary>
-        ///     Enables or disables the right click context menu. 
-        ///     By default the standard context menu is enabled, this property 
-        ///     can be used to disable it or re-enable it later.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ContextMenuEnabled/*'/>
         public virtual bool ContextMenuEnabled
         {
             get
@@ -1169,14 +831,8 @@ This is not implemented for IE. For Edge SetUserAgent() MUST be called before Cr
                 Browser.ContextMenuEnabled = value;
             }
         }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /*
-         
-        */
-        //TODO: !KU help
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Backend/*'/>
         public virtual WebBrowserBackend Backend
         {
             get
@@ -1185,14 +841,8 @@ This is not implemented for IE. For Edge SetUserAgent() MUST be called before Cr
                 return Browser.Backend;
             }
         }
-        
-        /// <summary>
-        ///     Gets or sets whether the control is currently editable. 
-        ///     This property allows the user to edit the page even 
-        ///     if the contenteditable attribute is not set in HTML. 
-        ///     The exact capabilities vary with the backend being used.
-        ///     This feature is not implemented for macOS and the Edge backend.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Editable/*'/>
         public virtual bool Editable 
         {
             get
@@ -1206,27 +856,8 @@ This is not implemented for IE. For Edge SetUserAgent() MUST be called before Cr
                 Browser.Editable = value;
             }
         }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        /*
-Get the zoom level of the page.
 
-See GetZoomFactor() to get more precise zoom scale value other than as provided by wxWebViewZoom.
-
-Returns
-The current level of zoom.         
-
-Set the zoom level of the page.
-
-See SetZoomFactor() for more precise scaling other than the measured steps provided by wxWebViewZoom.
-
-Parameters
-zoom	How much to zoom (scale) the HTML document.
-
-        */
-        //TODO: !KU help
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Zoom/*'/>
         public virtual WebBrowserZoom Zoom 
         {
             get
@@ -1241,54 +872,64 @@ zoom	How much to zoom (scale) the HTML document.
             }
         }
         
-        /*/// <include file="Interfaces/IWebBrowser.xml" path='doc/RunScript/*'/>
-         * internal virtual bool RunScript(string javascript)
+        internal virtual bool RunScript(string javascript)
         {
             return RunScript(javascript, out _);
-        }*/
+        }
         
-        /*
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/RunScript/*'/>
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/RunScript2/*'/>
-         internal virtual bool RunScript(string javascript,out string result)
+        internal virtual bool RunScript(string javascript,out string result)
         {
             CheckDisposed();
-            return Browser.RunScript(javascript,out result);
-        }*/
-        
-        /// <summary>
-        ///     Injects the specified script into the webpage's content.
-        /// </summary>
-        /// <param name="javascript">
-        ///     The javascript code to add.
-        /// </param>
-        /// <param name="injectDocStart">
-        ///     Specifies when the script will be executed.
-        /// </param>
-        /// <returns>
-        ///     Returns true if the script was added successfully.
-        /// </returns>
-        /// <remarks>
-        ///     Please note that this is unsupported by the IE backend. 
-        ///     The Edge backend does only support injecting at document start.
-        /// </remarks>
-        public virtual bool AddUserScript(string javascript, bool injectDocStart)
+            return Handler.RunScript(javascript,out result);
+        }
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/AddUserScript/*'/>
+        public virtual bool AddUserScript(string javascript, bool injectDocStart=true)
         {
             CheckDisposed();
             return Browser.AddUserScript(javascript, injectDocStart);
         }
-        
-        /// <summary>
-        ///     Contains DateTime format for Javascript code.
-        ///     Used internally by InvokeScriptAsync().
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/StringFormatJs/*'/>
         public static string StringFormatJs = "yyyy-MM-ddTHH:mm:ss.fffK";
-        
+
         /// <summary>
-        ///     Converts object value to a string. Used internally by InvokeScriptAsync().
-        ///     Only primitive types are supported. String and DateTime values 
-        ///     are returned enclosed in single quotes.
+        ///     Converts the value into a JSON string. It is a simple convertor. 
+        ///     It is better to use System.Text.Json.JsonSerializer.Serialize method.
         /// </summary>
+        /// <param name="v">
+        ///     The value to convert. 
+        /// </param>
+        /// <returns>
+        ///     The JSON string representation of the value.
+        /// </returns>
+        /// <remarks>
+        ///     Do not call it for primitive values. It supposed to convert only
+        ///     TypeCode.Object values. Outputs result like this:
+        ///     {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"}
+        /// </remarks>
+        public virtual string ObjectToJSON(object? v)
+        {
+            if (v == null)
+                return "null";
+
+            string result = "{";
+
+            var t = v.GetType();
+            PropertyInfo[] props = t.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            foreach(var prop in props)
+            {
+                if (result.Length > 1)
+                    result += ", ";
+                var propValue = ToInvokeScriptArg(prop.GetValue(v));
+                result += prop.Name + ": " + propValue;
+            }
+
+            result += "}";
+            return result;
+        }
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ToInvokeScriptArg/*'/>
         public virtual string? ToInvokeScriptArg(object? arg)
         {
             if (arg == null)
@@ -1302,9 +943,7 @@ zoom	How much to zoom (scale) the HTML document.
                 case TypeCode.DBNull:
                     return "null";
                 case TypeCode.Object:
-                    //TODO: KU support object types in arg
-                    throw new ArgumentException(
-                        "Only primitive types are supported","arg");
+                    return ObjectToJSON(arg);
                 case TypeCode.Boolean:
                     return ((bool)arg).ToString().ToLower();
                 case TypeCode.Char:
@@ -1337,8 +976,7 @@ zoom	How much to zoom (scale) the HTML document.
             return arg.ToString();
         }
         
-        /*/// <include file="Interfaces/IWebBrowser.xml" path='doc/InvokeScript/*'/>
-         * internal virtual string? InvokeScript(string scriptName)
+        internal virtual string? InvokeScript(string scriptName)
         {
             if (scriptName == null)
                 return null;
@@ -1346,21 +984,9 @@ zoom	How much to zoom (scale) the HTML document.
             if (!ok)
                 return null;
             return result;
-        }*/
-        
-        /*public virtual void InvokeScriptAsync(string scriptName, IntPtr? clientData = null)
-        {
-            if (scriptName == null)
-                return;
-            RunScriptAsync(scriptName + "()", clientData);
-        }*/
-        
-        /// <summary>
-        ///     Converts array of object values to comma delimited string. 
-        ///     Used internally by InvokeScriptAsync().
-        ///     Only primitive types are supported. String and DateTime values 
-        ///     are returned enclosed in single quotes.
-        /// </summary>
+        }
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/ToInvokeScriptArgs/*'/>
         public string ToInvokeScriptArgs(object?[] args)
         {
             if (args == null || args.Length == 0)
@@ -1373,11 +999,9 @@ zoom	How much to zoom (scale) the HTML document.
                 var arg = ToInvokeScriptArg(args[i]);
                 s += (',' + arg);
             }
-            return s;
+            return s!;
         }
         
-        /*/// <include file="Interfaces/IWebBrowser.xml" path='doc/InvokeScript/*'/>
-        /// <include file="Interfaces/IWebBrowser.xml" path='doc/InvokeScript2/*'/>
         internal virtual string? InvokeScript(string scriptName, params object?[] args)
         {
             if (scriptName == null)
@@ -1391,8 +1015,9 @@ zoom	How much to zoom (scale) the HTML document.
             if (!ok)
                 return null;
             return result;
-        }*/
-        
+        }
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/InvokeScriptAsync/*'/>
         public virtual void InvokeScriptAsync(string scriptName, IntPtr clientData,
             params object?[] args)
         {
@@ -1408,79 +1033,44 @@ zoom	How much to zoom (scale) the HTML document.
 
             RunScriptAsync(scriptName + "(" + s + ")",clientData);
         }
-        
-        /// <summary>
-        ///     Loads a web page from a URL.
-        /// </summary>
-        /// <param name="url">
-        ///     A <see cref="T:System.String"/> representing the URL of the document to load.
-        ///     If this parameter is null, WebBrowser navigates to a blank document. 
-        /// </param>
-        /// <remarks>
-        ///     Web engines generally report errors asynchronously, so if you 
-        ///     want to know whether loading process was successful,         
-        ///     register to receive navigation error events.         
-        /// </remarks>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/LoadURL/*'/>
         public virtual void LoadURL(string? url = null)
         {
             url ??= "about:blank";
             CheckDisposed();
             Browser.LoadURL(url);
         }
-        
-        /// <summary>
-        ///     Get the title of the current web page, or its URL/path if title is not available.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/GetCurrentTitle/*'/>
         public virtual string GetCurrentTitle()
         {
             CheckDisposed();
             return Browser.GetCurrentTitle();
         }
-        
-        /// <summary>
-        ///     Get the URL of the currently displayed document.    
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/GetCurrentURL/*'/>
         public virtual string GetCurrentURL()
         {
             CheckDisposed();
             return Browser.GetCurrentURL();
         }
-        
-        /// <summary>
-        ///     Returns pointer to the native backend interface. For example, 
-        ///     for the IE backens it is IWebBrowser2 interface. 
-        ///     Under macOS it's a WebView pointer and under GTK it's a WebKitWebView.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/GetNativeBackend/*'/>
         public IntPtr GetNativeBackend()
         {
             CheckDisposed();
             return Browser.GetNativeBackend();
         }
-        
-        /// <summary>
-        ///     Returns type of the OS for which the WebBrowser was compiled.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/GetBackendOS/*'/>
         public static WebBrowserBackendOS GetBackendOS() 
         {
             return (WebBrowserBackendOS)Enum.ToObject(typeof(WebBrowserBackendOS),
                 Native.WebBrowser.GetBackendOS());
         }
-        
-        /// <summary>
-        ///     Sets path to a fixed version of the WebView2 Edge runtime.
-        /// </summary>
-        /// <param name="path">
-        ///     Path to an extracted fixed version of the WebView2 Edge runtime.
-        /// </param>
-        /// <param name="isRelative">
-        ///     <see langword = "true"/> if specified path is relative to the application 
-        ///     folder; otherwise, <see langword = "false"/>.
-        /// </param>
-        /// <example>
-        ///     <code>
-        ///         SetBackendPath("Edge",true);
-        ///     </code>
-        /// </example>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetBackendPath/*'/>
         public static void SetBackendPath(string path,bool isRelative = false)
         {
             if (isRelative) 
@@ -1502,10 +1092,8 @@ zoom	How much to zoom (scale) the HTML document.
                 break;
             }
         }
-        
-        /// <summary>
-        ///     Returns true if the WebBrowser runs on 64 bit platform.
-        /// </summary>
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Is64Bit/*'/>
         public static bool Is64Bit
         {
             get

@@ -10,9 +10,9 @@ namespace Alternet::UI
             });
     }
     
-    ALTERNET_UI_API long WebBrowser_Find_(WebBrowser* obj, const char16_t* text, int flags)
+    ALTERNET_UI_API int WebBrowser_Find_(WebBrowser* obj, const char16_t* text, int flags)
     {
-        return MarshalExceptions<long>([&]() {
+        return MarshalExceptions<int>([&]() {
             return obj->Find(text,flags);
             });
     }

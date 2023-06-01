@@ -45,7 +45,8 @@
 		<StackPanel Orientation="Horizontal">
 			<TextBox Width="300" Margin="0,10,0,5" Name="FindTextBox" Text="panda"/>
 			<Button Text="Find" Margin="0,10,0,5" Click="FindButton_Click"/>
-			<Button Text="Find Clear" Margin="0,10,0,5" Click="FindClearButton_Click"/>
+			<Button Text="Find Clear" Margin="0,10,0,5" Click="FindClearButton_Click"
+					Name="FindClear" Visible="false"/>
 		</StackPanel>
 		
 		<StackPanel Orientation="Horizontal" Name="FindOptionsPanel" Visible="false">

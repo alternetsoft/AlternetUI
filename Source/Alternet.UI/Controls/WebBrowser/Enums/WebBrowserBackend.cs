@@ -48,12 +48,30 @@ namespace Alternet.UI
         WebKit = 4,
         
     }
-    
+
+    /// <summary>
+    ///     All possible OS supported by the WebBrowser control.
+    /// </summary>
     public enum WebBrowserBackendOS 
     {
-        Unknown = 0,
-        MacOSX = 1,
+        /// <summary>
+        ///     Unknown OS
+        /// </summary>
+        Other = 0,
+
+        /// <summary>
+        ///     Apple macOS   
+        /// </summary>
+        MacOS = 1,
+
+        /// <summary>
+        ///     Linux or Unix OS
+        /// </summary>
         Unix = 2,
+
+        /// <summary>
+        ///     Microsoft Windows
+        /// </summary>
         Windows = 3,
     }
     

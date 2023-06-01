@@ -71,7 +71,7 @@ namespace Alternet::UI
         wxWebViewZoomType GetZoomType();
         void SetZoomType(wxWebViewZoomType zoomType);
 
-        long Find(const string& text, int flags);
+        int Find(const string& text, int flags);
     protected:
         void OnWxWindowCreated() override;
 

@@ -17,7 +17,7 @@ namespace Alternet.UI
 
         
         [DllImport(ModuleName, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern long WebBrowser_Find_(IntPtr obj, string text, int flags);
+        internal static extern int WebBrowser_Find_(IntPtr obj, string text, int flags);
 
         [DllImport(ModuleName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void WebBrowser_CrtSetDbgFlag_(int value);

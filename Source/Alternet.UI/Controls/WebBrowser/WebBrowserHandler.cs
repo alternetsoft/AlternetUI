@@ -33,7 +33,7 @@ namespace Alternet.UI
             if (args.Length > 1 && args[1] != null)
                 cmdParam2 = args[1]?.ToString();
         }
-        
+
         public static string DoCommandGlobal(string cmdName, params object?[] args)
         {
             ArgsToDoCommandParams(args, out string? cmdParam1, out string? cmdParam2);
@@ -110,9 +110,9 @@ namespace Alternet.UI
                 NativeControl.RunScriptAsync(javascript, (IntPtr)clientData);
         }
         
-        public void NavigateToString(string text, string baseUrl)
+        public void NavigateToString(string html, string? baseUrl = null)
         {
-            NativeControl.SetPage(text, baseUrl);
+            NativeControl.SetPage(html, baseUrl!);
         }
         
         public WebBrowserZoomType ZoomType
@@ -219,13 +219,19 @@ namespace Alternet.UI
         public bool CanRedo=> NativeControl.CanRedo;
         public void Undo()=> NativeControl.Undo();
         public void Redo()=> NativeControl.Redo();
-        
-        public long Find(string text, WebBrowserFindParams? prm = null)
+
+        public void FindClearResult()
+        {
+            Find("", null);
+        }
+
+        public int Find(string text, WebBrowserFindParams? prm = null)
         {
             int flags = 0;
             if (prm != null)
                 flags = prm.ToWebViewParams();
-            return WebBrowserNativeApi.WebBrowser_Find_(NativePointer, text, flags);
+            int result = WebBrowserNativeApi.WebBrowser_Find_(NativePointer, text, flags);
+            return result;
         }
         
         public bool IsBusy=> NativeControl.IsBusy;

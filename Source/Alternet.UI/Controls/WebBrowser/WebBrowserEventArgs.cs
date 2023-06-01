@@ -31,7 +31,10 @@ namespace Alternet.UI
         private bool FIsError = false;
         private readonly int FIntVal = 0;
 
-        
+
+        /// <summary>
+        ///     Gets the client data value for the received event.
+        /// </summary>
         public IntPtr ClientData { get; set; }
         
         /// <summary>
@@ -105,7 +108,6 @@ namespace Alternet.UI
         /// <summary>
         ///     Initializes a new instance of the WebBrowserEventArgs class. 
         /// </summary>
-        //TODO: !KU help
         public WebBrowserEventArgs(string? eventType=null) : base()
         {
             if(eventType==null)

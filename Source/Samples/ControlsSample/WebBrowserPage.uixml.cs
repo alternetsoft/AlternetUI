@@ -2,16 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Security.Policy;
-using System.Text;
 using System.Threading;
-using static System.Collections.Specialized.BitVector32;
-using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 using System.Diagnostics;
-using Microsoft.Win32;
 using System.Runtime.InteropServices;
 
 namespace ControlsSample
@@ -34,7 +28,6 @@ namespace ControlsSample
         {
             if(ScriptMessageHandlerAdded)
                 DoRunScript("window.wx_msg.postMessage('This is a message body');");
-            //WebBrowser1.RemoveScriptMessageHandler("wx_msg");
         }
         
         public bool IsIEBackend()
@@ -43,40 +36,17 @@ namespace ControlsSample
                 WebBrowser1.Backend == WebBrowserBackend.IELatest;
         }
         
-        private static string GetFileWithExt(string ext)
-        {
-            string sPath1 = Assembly.GetExecutingAssembly().Location;
-            string sPath2 = Path.ChangeExtension(sPath1, ext);
-            return sPath2;
-
-        }
-
-        private void RemoveFileWithExt(string ext)
-        {
-            var s = GetFileWithExt(ext);
-            if (File.Exists(s))
-                File.Delete(s);
-        }
-
-        private void CreateFileWithExt(string ext,string data="")
-        {
-            var s = GetFileWithExt(ext);
-            var streamWriter = File.CreateText(s);
-            streamWriter.WriteLine(data);
-            streamWriter.Close();
-        }
-
         public void RestartWithEdge()
         {
-            RemoveFileWithExt("ie");
-            CreateFileWithExt("edge");
+            CommonUtils.RemoveFileWithExt("ie");
+            CommonUtils.CreateFileWithExt("edge");
             Alternet.UI.Application.Current.Exit();
         }
 
         public void RestartWithIE()
         {
-            RemoveFileWithExt("edge");
-            CreateFileWithExt("ie");
+            CommonUtils.RemoveFileWithExt("edge");
+            CommonUtils.CreateFileWithExt("ie");
             Alternet.UI.Application.Current.Exit();
         }
 
@@ -122,7 +92,7 @@ namespace ControlsSample
 
                 void AddPandaFile(string name, string? mimeType = null)
                 {
-                    string sPath = GetAppFolder() + "Html\\SampleArchive\\" + name;
+                    string sPath = CommonUtils.GetAppFolder() + "Html\\SampleArchive\\" + name;
 
                     if (mimeType == null)
                         WebBrowser1.MemoryFS.AddOSFile(name, sPath);
@@ -141,10 +111,10 @@ namespace ControlsSample
 
             InitSchemes(WebBrowser1);
 
-            string archivePath = Path.Combine(GetAppFolder(), arcSubPath);
+            string archivePath = Path.Combine(CommonUtils.GetAppFolder(), arcSubPath);
             if (File.Exists(archivePath))
             {
-                string url = PrepareZipUrl(ZipSchemeName, archivePath, webPagePath);
+                string url = CommonUtils.PrepareZipUrl(ZipSchemeName, archivePath, webPagePath);
                 WebBrowser1.LoadURL(url);
             }
         }
@@ -152,20 +122,6 @@ namespace ControlsSample
         private void Test()
         {
             DoTestZip();
-        }
-        
-        //scheme:///C:/example/docs.zip;protocol=zip/main.htm
-        public string PrepareZipUrl(string schemeName,string arcPath,string fileInArchivePath)
-        {
-            static string prepareUrl(string s)
-            {
-                s = s.Replace('\\', '/');
-                return s;
-            }
-
-            string url = schemeName+":///" + prepareUrl(arcPath) + ";protocol=zip/" + 
-                prepareUrl(fileInArchivePath);
-            return url;
         }
         
         public static void SetBackendPathSmart(string folder)
@@ -188,8 +144,8 @@ namespace ControlsSample
             SetBackendPathSmart("Edge");
 
             string[] commandLineArgs = Environment.GetCommandLineArgs();
-            ParseCmdLine(commandLineArgs);
-            if (CmdLineNoMfcDedug)
+            CommonUtils.ParseCmdLine(commandLineArgs);
+            if (CommonUtils.CmdLineNoMfcDedug)
                 WebBrowser.CrtSetDbgFlag(0);
 
             
@@ -197,14 +153,14 @@ namespace ControlsSample
             LogToFile("Application started");
             LogToFile("======================================");
 
-            if (File.Exists(GetFileWithExt("ie")))
+            if (File.Exists(CommonUtils.GetFileWithExt("ie")))
             {
                 UseBackend = WebBrowserBackend.IELatest;
                 SetLatestBackend = false;
             }
             else
             {
-                if (File.Exists(GetFileWithExt("edge")))
+                if (File.Exists(CommonUtils.GetFileWithExt("edge")))
                 {
                     UseBackend = WebBrowserBackend.Edge;
                     SetLatestBackend = false;
@@ -227,7 +183,7 @@ namespace ControlsSample
         
         public static void HookExceptionEvents(Alternet.UI.Application a)
         {
-            if (!CmdLineTest)
+            if (!CommonUtils.CmdLineTest)
                 return;
             a.ThreadException += Application_ThreadException;
             a.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
@@ -251,10 +207,11 @@ namespace ControlsSample
                 AddTestActions();
                 if(IsIEBackend())
                     WebBrowser1.DoCommand("IE.SetScriptErrorsSuppressed","true");
-                if (CmdLineTest)
+                if (CommonUtils.CmdLineTest)
                 {
                     ListBox1.Visible = true;
                     FindOptionsPanel.Visible = true;
+                    FindClear.Visible = true;
                 }
                 site = value;
             }
@@ -281,13 +238,13 @@ namespace ControlsSample
         private void FindClearButton_Click(object sender, EventArgs e)
         {
             FindTextBox.Text = "";
-            WebBrowser1.FindClearResultSelection();
+            WebBrowser1.FindClearResult();
         }
         
         private void FindButton_Click(object sender, EventArgs e)
         {
             FindParamsFromControls();
-            long findResult = WebBrowser1.Find(FindTextBox.Text, FindParams);
+            int findResult = WebBrowser1.Find(FindTextBox.Text, FindParams);
             Log("Find Result = " + findResult.ToString());
         }
         
@@ -376,7 +333,7 @@ namespace ControlsSample
         static readonly string[] StringSplitToArrayChars = { Environment.NewLine };
         public static void LogToFile(string s)
         {
-            if (!CmdLineLog)
+            if (!CommonUtils.CmdLineTest && !CommonUtils.CmdLineLog)
                 return;
 
             string dt = System.DateTime.Now.ToString(WebBrowser.StringFormatJs);
@@ -435,7 +392,7 @@ namespace ControlsSample
                 Log($"  IsError = {e.IsError}");
             if (e.NavigationError != null)
                 Log($"  NavigationError = {e.NavigationError}");
-            if(e.ClientData!=null && e.ClientData!=IntPtr.Zero)
+            if(e.ClientData!=IntPtr.Zero)
                 Log($"  ClientData = {e.ClientData}");
             Log("======");
         }
@@ -508,8 +465,10 @@ namespace ControlsSample
         private void WebBrowser1_TitleChanged(object sender, WebBrowserEventArgs e)
         {
             LogWebBrowserEvent(e);
-            HeaderLabel.Text = HeaderText + " : " + e.Text + " : "+
-                WebBrowser.GetBackendVersionString(WebBrowser1.Backend);
+            var backendVersion = WebBrowser.GetBackendVersionString(WebBrowser1.Backend);
+            if (this.IsIEBackend())
+                backendVersion = "Internet Explorer";
+            HeaderLabel.Text = HeaderText + " : " + e.Text + " : "+ backendVersion;
         }
         
         private void GoButton_Click(object sender, EventArgs e)
@@ -519,7 +478,8 @@ namespace ControlsSample
         
         private void ShowBrowserVersion()
         {
-            var filename = PathAddBackslash(GetAppFolder() + "Html") + "version.html";
+            var filename = CommonUtils.PathAddBackslash(CommonUtils.GetAppFolder() + "Html") 
+                + "version.html";
             WebBrowser1.LoadURL("file://" + filename.Replace('\\', '/'));
         }
         
@@ -642,7 +602,7 @@ namespace ControlsSample
         
         public void TestNavigateToStream()
         {
-            var filename = PathAddBackslash(GetAppFolder() + "Html") + "version.html";
+            var filename = CommonUtils.PathAddBackslash(CommonUtils.GetAppFolder() + "Html") + "version.html";
             FileStream stream = File.OpenRead(filename);
             WebBrowser1.NavigateToStream(stream);
         }
@@ -671,7 +631,7 @@ namespace ControlsSample
         
         public WebBrowserPage()
         {
-            var myListener = new DebugTraceListener(this);
+            var myListener = new DebugTraceListener();
             Trace.Listeners.Add(myListener);
             InitializeComponent();
         }
@@ -715,28 +675,14 @@ namespace ControlsSample
             ListBox1.Items.Add(name);
         }
         
-        string PrepareUrl(string s)
-        {
-            s = s.Replace('\\', '/')
-                .Replace(":", "%3A")
-                .Replace(" ", "%20");
-            return s;
-        }
-        
-        public string PrepareFileUrl(string filename)
-        {
-            string url = "file:///" + PrepareUrl(filename);
-            return url;
-        }
-        
         private string GetPandaFileName()
         {
-            return GetAppFolder() + "Html\\SampleArchive\\Html\\page1.html";
+            return CommonUtils.GetAppFolder() + "Html\\SampleArchive\\Html\\page1.html";
         }
         
         private string GetPandaUrl()
         {
-            return PrepareFileUrl(GetPandaFileName());
+            return CommonUtils.PrepareFileUrl(GetPandaFileName());
         }
         
         private void AddTestActions()
@@ -833,101 +779,7 @@ namespace ControlsSample
             }
             
         }
-        
-        public static string PathAddBackslash(string? path)
-        {
-            if (path == null)
-                throw new ArgumentNullException("path");
-            path = path.TrimEnd();
-            if (PathEndsWithDirectorySeparator())
-                return path;
-            return path + GetDirectorySeparatorUsedInPath();
-            
-            char GetDirectorySeparatorUsedInPath()
-            {
-                if (path.Contains(Path.AltDirectorySeparatorChar))
-                    return Path.AltDirectorySeparatorChar;
-                return Path.DirectorySeparatorChar;
-            }
-            
-            bool PathEndsWithDirectorySeparator()
-            {
-                if (path.Length == 0)
-                    return false;
-                char c = path[path.Length - 1];
-                if (c != Path.DirectorySeparatorChar)
-                    return c == Path.AltDirectorySeparatorChar;
-                return true;
-            }
-        }
-        
-        public static bool CmdLineTest = false;
-        public static bool CmdLineLog = false;
-        public static bool CmdLineNoMfcDedug = false;
-        public static string? CmdLineExecCommands = null;
-        public static void ParseCmdLine(string[] args)
-        {
-            for (int i = 1; i < args.Length; i++)
-            {
-                string text = args[i];
-
-                fn("-log",out CmdLineLog);
-                fn("-nomfcdebug", out CmdLineNoMfcDedug);
-                fn("-test", out CmdLineTest);
-
-                if (text.StartsWith("-r=", StringComparison.CurrentCultureIgnoreCase))
-                    CmdLineExecCommands = text.Substring("-r=".Length).Trim();
-            }
-
-            static void fn(string strFlag,out bool boolFlag)
-            {
-                boolFlag = (strFlag.ToLower() == strFlag);
-            }
-        }
-        
-        public static string GetAppFolder()
-        {
-            string location = Assembly.GetExecutingAssembly().Location;
-            string s = Path.GetDirectoryName(location)!;
-            return PathAddBackslash(s);
-        }
-        
-        public static string StringFromStream(Stream stream)
-        {
-            return new StreamReader(stream, Encoding.UTF8).ReadToEnd();
-        }
-        
-        public static string StringFromFile(string filename)
-        {
-            using FileStream stream = File.OpenRead(filename);
-            return StringFromStream(stream);
-        }
-        
-        public static string ResNamePrefix = "ControlsSample.";
-        public static Stream GetMyResourceStream(string resName)
-        {
-            Stream stream = ProcessResPrefix("rsrc://")!;
-            if (stream != null)
-                return stream;
-            if (resName.StartsWith("file://"))
-                resName = resName.Remove(0, "file://".Length);
-            
-            resName = Path.Combine(GetAppFolder(), resName);
-            return File.OpenRead(resName);
-
-            Stream? ProcessResPrefix(string resPrefix)
-            {
-                if (resName.StartsWith(resPrefix))
-                {
-                    resName = resName.Remove(0, resPrefix.Length);
-                    resName = resName.Replace('/', '.');
-                    string name = ResNamePrefix + resName;
-                    return Assembly.GetExecutingAssembly().GetManifestResourceStream(name);
-                }
-                return null;
-            }
-        }
-        
+       
         internal void DoTestRunScriptString()
         {
             DoRunScript("function f(a){return a;}f('Hello World!');");
@@ -980,31 +832,33 @@ namespace ControlsSample
                 "var tzoffset = d.getTimezoneOffset() * 60000;" +
                 "return new Date(d.getTime() - tzoffset);}f();");
         }
-        
-        public void Nop() { }
-        
+
+        internal void DoTestAddUserScript()
+        {
+            WebBrowser1.RemoveAllUserScripts();
+            WebBrowser1.AddUserScript("alert('hello');");
+            WebBrowser1.Reload();
+        }
+
+        internal void DoTestSerializeObject()
+        {
+            WeatherForecast value = new();
+            value.Date = System.DateTime.Now;
+            value.TemperatureCelsius = 15;
+            value.Summary = "New York";
+
+            var s = WebBrowser1.ObjectToJSON(value);
+
+            Log(s);
+        }
     }
     
-    class DebugTraceListener : TraceListener
+    public class WeatherForecast
     {
-        readonly WebBrowserPage Page;
-#pragma warning disable IDE0079
-#pragma warning disable CS8765
-        public override void Write(string message)
-        {
-            Page.Nop();
-        }
-        public override void WriteLine(string message)
-        {
-            Page.Nop();
-        }
-#pragma warning restore CS8765
-#pragma warning restore IDE0079
-        public DebugTraceListener(WebBrowserPage page)
-        {
-            Page = page;
-        }
+        public System.DateTime Date { get; set; }
+        public int TemperatureCelsius { get; set; }
+        public string? Summary { get; set; }
+        public string? NullText { get; set; }
     }
-    
 }
 

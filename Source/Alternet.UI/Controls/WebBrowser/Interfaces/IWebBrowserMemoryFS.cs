@@ -7,10 +7,28 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    
+    /// <summary>
+    ///     Interface for access to memory protocol scheme.
+    ///     Implementations of this interface can store arbitrary data in memory 
+    ///     stream and make them accessible via an URL in <see cref="WebBrowser"/> control.
+    ///     
+    /// </summary>
     public interface IWebBrowserMemoryFS
     {
-        
+        /// <summary>
+        ///     Initializes memory protocol scheme for use with the 
+        ///     <see cref="WebBrowser"/> control. You need to call this method before
+        ///     any other methods of the interface.
+        /// </summary>
+        /// <param name="schemeName"></param>
+        /// <example>
+        ///     <code>
+        ///         WebBrowser1.MemoryFS.Init("memory");
+        ///         WebBrowser1.MemoryFS.AddTextFile("myFolder/index.html",
+        ///             "<html><body><b>sample html file</b></body></html>");
+        ///         WebBrowser1.LoadURL("memory:myFolder/index.html");
+        ///     </code>
+        /// </example>    
         void Init(string schemeName);
         
         /// <summary>

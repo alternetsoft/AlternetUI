@@ -7,10 +7,15 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    
+    /// <summary>
+    ///     All methods and properties of the <see cref="WebBrowser"/> control
+    ///     are defined in this interface.
+    /// </summary>    
     public interface IWebBrowser : IWebBrowserLite
     {
-        
+        /*/// <include file="IWebBrowser.xml" path='doc/RunScript/*'/>
+        bool RunScript(string javascript);*/
+
         /// <include file="IWebBrowser.xml" path='doc/Events/Navigated/*'/>
         event EventHandler<WebBrowserEventArgs> Navigated;
         
@@ -44,9 +49,6 @@ namespace Alternet.UI
         /// <include file="IWebBrowser.xml" path='doc/ZoomOut/*'/>
         void ZoomOut();
         
-        /// <include file="IWebBrowser.xml" path='doc/NavigateToString/*'/>
-        void NavigateToString(string text);
-        
         /// <include file="IWebBrowser.xml" path='doc/NavigateToStream/*'/>
         void NavigateToStream(Stream stream);
         
@@ -62,9 +64,6 @@ namespace Alternet.UI
         /// <include file="IWebBrowser.xml" path='doc/InvokeScriptAsync/*'/>
         void InvokeScriptAsync(string scriptName, IntPtr clientData, params object[] args);
         
-        /*/// <include file="IWebBrowser.xml" path='doc/RunScript/*'/>
-        bool RunScript(string javascript);*/
-        
         /// <include file="IWebBrowser.xml" path='doc/Source/*'/>
         Uri Source { get; set; }
         
@@ -75,10 +74,16 @@ namespace Alternet.UI
         bool CanZoomOut { get; }
         
     }
-    
+
+    /// <summary>
+    ///     Subset of the <see cref="WebBrowser"/> control's methods and properties.
+    /// </summary>    
     public interface IWebBrowserLite
     {
-        
+        /*/// <include file="IWebBrowser.xml" path='doc/RunScript/*'/>
+        /// <include file="IWebBrowser.xml" path='doc/RunScript2/*'/>
+        bool RunScript(string javascript, out string result);*/
+
         /// <include file="IWebBrowser.xml" path='doc/Editable/*'/>
         bool Editable { get; set; }
         
@@ -156,7 +161,7 @@ namespace Alternet.UI
         void LoadURL(string url);
         
         /// <include file="IWebBrowser.xml" path='doc/CanSetZoomType/*'/>
-        bool CanSetZoomType(WebBrowserZoomType value);
+        bool CanSetZoomType(WebBrowserZoomType zoomType);
         
         /// <include file="IWebBrowser.xml" path='doc/GetCurrentTitle/*'/>
         string GetCurrentTitle();
@@ -165,7 +170,7 @@ namespace Alternet.UI
         string GetCurrentURL();
         
         /// <include file="IWebBrowser.xml" path='doc/NavigateToString/*'/>
-        void NavigateToString(string text, string baseUrl);
+        void NavigateToString(string html, string? baseUrl=null);
         
         /// <include file="IWebBrowser.xml" path='doc/GoBack/*'/>
         bool GoBack();
@@ -196,8 +201,8 @@ namespace Alternet.UI
         
         /// <include file="IWebBrowser.xml" path='doc/Reload/*'/>
         void Reload();
-        
-        /// <include file="IWebBrowser.xml" path='doc/Reload/*'/>
+
+        /// <include file="IWebBrowser.xml" path='doc/Reload_noCache/*'/>
         void Reload(bool noCache);
         
         /// <include file="IWebBrowser.xml" path='doc/SelectAll/*'/>
@@ -213,8 +218,11 @@ namespace Alternet.UI
         void Redo();
         
         /// <include file="IWebBrowser.xml" path='doc/Find/*'/>
-        long Find(string text, WebBrowserFindParams? prm = null);
-        
+        int Find(string text, WebBrowserFindParams? prm = null);
+
+        /// <include file="IWebBrowser.xml" path='doc/FindClearResult/*'/>
+        void FindClearResult();
+
         /// <include file="IWebBrowser.xml" path='doc/Print/*'/>
         void Print();
         
@@ -226,10 +234,6 @@ namespace Alternet.UI
         
         /// <include file="IWebBrowser.xml" path='doc/RemoveScriptMessageHandler/*'/>
         bool RemoveScriptMessageHandler(string name);
-
-        /*/// <include file="IWebBrowser.xml" path='doc/RunScript/*'/>
-        /// <include file="IWebBrowser.xml" path='doc/RunScript2/*'/>
-        bool RunScript(string javascript, out string result);*/
 
         /// <include file="IWebBrowser.xml" path='doc/RunScriptAsync/*'/>
         void RunScriptAsync(string javascript, IntPtr? clientData);
