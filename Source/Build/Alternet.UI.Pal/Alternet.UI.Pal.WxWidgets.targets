@@ -78,4 +78,10 @@
         <CallTarget Targets="BuildWxWidgets_Linux" />
         <CallTarget Targets="BuildWxWidgets_MacOS" />
     </Target>
+
+    <Target Name="BuildWxWidgetsWithoutDownload">
+        <CallTarget Targets="BuildWxWidgets_Windows" />
+        <CallTarget Targets="BuildWxWidgets_Linux" />
+        <CallTarget Targets="BuildWxWidgets_MacOS" />
+    </Target>
 </Project>

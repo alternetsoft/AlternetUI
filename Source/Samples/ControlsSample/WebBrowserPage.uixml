@@ -17,6 +17,38 @@
 			/>
 			<Button Text="Go" Margin="0,10,0,5" Click="GoButton_Click" />
 		</StackPanel>
+		
+
+			<!--
+			<Toolbar Name="Toolbar1" ItemTextVisible="true" Height="40">
+			
+				Image="embres:MenuSample.Resources.Icons.Small.Calendar16.png" 
+		-->
+
+			<!--
+			
+			<ToolbarItem 
+				Text="Calendar" 
+						 ToolTip="Calendar Toolbar Item" />
+			<ToolbarItem Text="Photo" ToolTip="Photo Toolbar Item"/> 
+			<ToolbarItem Text="-" /> 
+			<ToolbarItem Text="Pencil Toggle"  
+						 ToolTip="Pencil Toolbar Item" IsCheckable="true"  Name="checkableToolbarItem" />
+			<ToolbarItem Text="-" /> 
+			<ToolbarItem Text="Graph Drop Down" ToolTip="Graph Toolbar Item" > 
+				<ToolbarItem.DropDownMenu> 
+					<ContextMenu> 
+						<MenuItem Text="_Open..." Name="openToolbarMenuItem" /> 
+						<MenuItem Text="_Save..." Name="saveToolbarMenuItem" /> 
+						<MenuItem Text="-" /> 
+						<MenuItem Text="E_xport..." Name="exportToolbarMenuItem" /> 
+					</ContextMenu> 
+				</ToolbarItem.DropDownMenu> 
+			</ToolbarItem> 
+			<ToolbarItem Text="-" Name="dynamicToolbarItemsSeparator"/> 
+			</Toolbar>
+		-->
+
 
 
 

@@ -47,6 +47,14 @@
       <None Remove="Html\SampleArchive\root.html" />
       <None Remove="Html\SampleArchive\Styles\default.css" />
       <None Remove="Html\version.html" />
+      <None Remove="Resources\Svg\arrow-left.svg" />
+      <None Remove="Resources\Svg\arrow-right.svg" />
+      <None Remove="Resources\Svg\arrow-rotate-right.svg" />
+      <None Remove="Resources\Svg\caret-right.svg" />
+      <None Remove="Resources\Svg\minus.svg" />
+      <None Remove="Resources\Svg\plus.svg" />
+      <None Remove="Resources\Svg\search.svg" />
+      <None Remove="Resources\Svg\xmark.svg" />
       <None Remove="WebBrowserPage.uixml" />
       <None Remove="ListBoxPage.uixml" />
       <None Remove="ListViewPage.uixml" />
@@ -139,6 +147,14 @@
 
     <ItemGroup>
       <Resource Include="Html\pageinresource.html" />
+      <Resource Include="Resources\Svg\arrow-left.svg" />
+      <Resource Include="Resources\Svg\arrow-right.svg" />
+      <Resource Include="Resources\Svg\arrow-rotate-right.svg" />
+      <Resource Include="Resources\Svg\caret-right.svg" />
+      <Resource Include="Resources\Svg\minus.svg" />
+      <Resource Include="Resources\Svg\plus.svg" />
+      <Resource Include="Resources\Svg\search.svg" />
+      <Resource Include="Resources\Svg\xmark.svg" />
     </ItemGroup>
 
     <ItemGroup>

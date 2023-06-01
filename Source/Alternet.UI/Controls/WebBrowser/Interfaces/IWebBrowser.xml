@@ -1,15 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <doc>
 	<!--	
-		/// <include file="Interfaces/IWebBrowser.xml" path='doc//*'/>	
-	
-		or 
-		
-		/// <include file="IWebBrowserMemoryFS.xml" path='doc/AddFile/summary'/>
-        /// <include file="IWebBrowserMemoryFS.xml" 
-        ///     path='doc/AddFile/param[@name="filename" or @name="stream" or @name="mimetype"]'/>
-
-		<seealso cref=""/>
+		/// <include file="Interfaces/IWebBrowser.xml" path='doc/_/*'/>	
 	-->
 	<!--==============================================-->
 	<WebBrowser>
@@ -23,7 +15,7 @@
 				Each backend is a full rendering engine (Internet Explorer, Edge or WebKit). 
 				This allows the correct viewing of complex web pages with full JavaScript 
 				and CSS support. Under macOS and Unix platforms a single backend is provided 
-				(WebKit-based). Under MSW both the old IE backends and the new Edge 
+				(WebKit-based). Under MSW both the old IE backend and the new Edge 
 				backend can be used. 
 			</para>
 			
@@ -37,8 +29,9 @@
 			<para>
 				To receive notification of the progress and completion of these functions
 				you need to handle the events that are provided. 
-				Specifically Loaded event notifies when the page or a sub-frame
-				has finished loading and Error event notifies that an error has occurred.
+				Specifically <see cref="Loaded"/> event notifies when the page or a sub-frame
+				has finished loading and <see cref="Error"/> event notifies that an 
+				error has occurred.
 			</para>
 		</remarks>
 	</WebBrowser>
@@ -82,7 +75,7 @@
 	<!--==============================================-->
 	<Is64Bit>
         <summary>
-            Returns true if the WebBrowser runs on a 64 bit platform.
+            Returns <see langword = "true"/> if the WebBrowser runs on a 64 bit platform.
         </summary>
 	</Is64Bit>
 	<!--==============================================-->
@@ -97,14 +90,14 @@
 					 be generated per frame.
 				 </para>
 				 <para>
-					 Handle the Navigated event to receive notification when the <see cref="WebBrowser"/> 
+					 Handle the Navigated event to receive notification when the WebBrowser
 					 control has navigated to a new web page.
 				 </para>
 			 </summary>
 			 <remarks>
 				 <para>
 					 When the Navigated event occurs, the new web page has begun loading, 
-					 which means you can access the loaded content through the WebBrowser properties.
+					 which means you can access the loaded content through the WebBrowser properties and methods.
 				 </para>
 				 <para>
 					 Handle the <see cref="Loaded"/> event to receive notification when the
@@ -122,7 +115,7 @@
 		<Navigating>
 			 <summary>
 				 <para>
-					 Occurs before the <see cref="WebBrowser"/> control navigates to a new web page.
+					 Occurs before the WebBrowser control navigates to a new web page.
 				 </para>
 				 <para>
 					 This event may be canceled to prevent navigating to this resource. 
@@ -132,8 +125,9 @@
 				 <para>
 					 You can handle the Navigating event to cancel navigation if certain conditions 
 					 have not been met, for example, when the user has not completely filled 
-					 out a form. To cancel navigation, set the Cancel property of the
-					 <see cref="WebBrowserEventArgs"/> object passed to the event handler to true. 
+					 out a form. To cancel navigation, set the 
+					 <see cref="WebBrowserEventArgs.Cancel"/> property of the events
+					  object passed to the event handler to <see langword = "true"/>. 
 				 </para>
 				 <para>
 					 Handle the <see cref="Navigated"/> event to receive notification when the WebBrowser 
@@ -156,7 +150,7 @@
 		<Loaded>
 			<summary>
 				<para>
-					Occurs when the <see cref="WebBrowser"/> control finishes loading a document.
+					Occurs when the WebBrowser control finishes loading a document.
 				</para>
 				<para>
 					Handle the Loaded event to receive notification when the new 
@@ -245,7 +239,7 @@
 		<!--==============================================-->
 		<BeforeBrowserCreate>
 			<summary>
-				Occurs after backend object is created, but before actual browser
+				Occurs after backend is created, but before actual browser
 				control creation. You should not normally use it.
 			</summary>
 		</BeforeBrowserCreate>
@@ -285,17 +279,20 @@
         </remarks>
         <param name="html">
             The string that contains the HTML data to display. If this parameter is null, 
-            WebBrowser navigates to a blank document. If this parameter is not in valid HTML 
+            WebBrowser navigates to a blank document. If value of this parameter is 
+			not in valid HTML 
             format, it will be displayed as plain text.
         </param>
         <param name="baseUrl">
             URL assigned to the HTML data, to be used to resolve relative paths, for instance.
         </param>
+		<seealso cref="NavigateToStream"/>
+		<seealso cref="LoadURL"/>
 	</NavigateToString>
 	<!--==============================================-->
 	<NavigateToStream>
         <summary>
-			Navigate asynchronously to a Stream that contains the content for a document.
+			Navigate to a Stream that contains the content for a document.
         </summary>
         <param name="stream">
             The Stream that contains the content for a document.
@@ -303,24 +300,29 @@
             If contents of the stream is not in a valid HTML format, it will 
             be displayed as plain text.
         </param>
+		<seealso cref="NavigateToString"/>
+		<seealso cref="LoadURL"/>
 	</NavigateToStream>
 	<!--==============================================-->
 	<Navigate_uri>
         <summary>
             Loads the document at the location indicated by the specified 
-            <see cref="T:System.Uri"/> into the <see cref="T:WebBrowser"/> control, 
+            <see cref="System.Uri"/> into the WebBrowser control, 
             replacing the previous document.
         </summary>
         <param name="url">
-            A <see cref="T:System.Uri"/> representing the URL of the document to load.
+            A <see cref="System.Uri"/> representing the URL of the document to load.
             If this parameter is null, WebBrowser navigates to a blank document. 
         </param>
+		<seealso cref="NavigateToStream"/>
+		<seealso cref="NavigateToString"/>
+		<seealso cref="LoadURL"/>
 	</Navigate_uri>
 	<!--==============================================-->
 	<Navigate_string>
         <summary>
             Loads the document at the specified Uniform Resource Locator (URL) 
-            into the <see cref="WebBrowser"/> control, replacing 
+            into the WebBrowser control, replacing 
             the previous document.
         </summary>
         <param name="urlString">
@@ -329,23 +331,28 @@
             (https, file or other). Not all browser backends support
             loading of the web pages without protocol prefix.
         </param>
+		<seealso cref="NavigateToStream"/>
+		<seealso cref="NavigateToString"/>
+		<seealso cref="LoadURL"/>
 	</Navigate_string>
 	<!--==============================================-->
 	<ToInvokeScriptArg>
         <summary>
-            Converts object value to a string. Used internally by <see cref="InvokeScriptAsync"/>.
-            Only primitive types are supported. String and DateTime values 
+            Converts the value to the JSON string. 
+			Used internally by <see cref="InvokeScriptAsync"/>.
+            String and DateTime values 
             are returned enclosed in single quotes.
         </summary>
 	</ToInvokeScriptArg>
 	<!--==============================================-->
 	<ToInvokeScriptArgs>
         <summary>
-            Converts array of object values to comma delimited string. 
+            Converts the array of object values to the comma delimited JSON string. 
             Used internally by <see cref="InvokeScriptAsync"/>.
-            Only primitive types are supported. String and DateTime values 
+            String and DateTime values 
             are returned enclosed in single quotes.
         </summary>
+		<seealso cref="ToInvokeScriptArg"/>
 	</ToInvokeScriptArgs>
 	<!--==============================================-->
 	<InvokeScriptAsync>
@@ -356,9 +363,10 @@
             </para>
             <para>
                 The script result value can be retrieved via 
-                <see cref="WebBrowserEventArgs.Text"/> parameter or ScriptResult event. If the execution fails
-                <see cref="WebBrowserEventArgs.IsError"/> will return true. 
-                In this case additional script execution error information maybe
+                <see cref="WebBrowserEventArgs.Text"/> parameter of ScriptResult event args. 
+				If the execution fails
+                <see cref="WebBrowserEventArgs.IsError"/> will return <see langword = "true"/>. 
+                In this case additional script execution error information may be
                 available via <see cref="WebBrowserEventArgs.Text"/>.
             </para>
         </summary>
@@ -373,6 +381,7 @@
 			You can use IntPtr.Zero, new IntPtr(SomeInt) or some useful data in 
 			this parameter.
         </param>
+		<seealso cref="RunScriptAsync"/>
 	</InvokeScriptAsync>
 	<!--==============================================-->
 	<Source>
@@ -403,10 +412,10 @@
 	<AddScriptMessageHandler>
         <summary>
             <para>
-                Add a script message handler with the given name.
+                Adds a script message handler with the given name.
             </para>
             <para>
-                To use the script message handler from javascript 
+                To use the script message handler from Javascript 
                 use window._name_.postMessage(_messageBody_)
                 where _name_ corresponds the value of the name parameter.
                 The _messageBody_ will be available to the application via
@@ -429,7 +438,7 @@
             <see langword="false"/> if it could not be added.
         </returns>
         <param name="name">
-            Name of the message handler that can be used from javascript
+            Name of the message handler that can be used from Javascript.
         </param>
         <remarks>
             The Edge backend only supports a single message handler and 
@@ -448,7 +457,7 @@
             Specifies when the script will be executed.
         </param>
         <returns>
-            Returns true if the script was added successfully.
+            Returns <see langword="true"/> if the script was added successfully.
         </returns>
         <remarks>
             Please note that this is unsupported by the IE backend. 
@@ -465,7 +474,7 @@
 	<CanCopy>
         <summary>
             Gets a value indicating whether the current selection can be copied, which allows 
-            the <see cref="M:Copy"/> method to succeed.
+            the <see cref="Copy"/> method to succeed.
         </summary>
         <returns>
             <see langword="true"/> if the current selection can be copied; 
@@ -487,7 +496,7 @@
 	<CanGoBack>
         <summary>
              Gets a value indicating whether a previous page in navigation history 
-             is available, which allows the<see cref="M:GoBack" /> 
+             is available, which allows the<see cref="GoBack" /> 
              method to succeed.
         </summary>
         <returns>
@@ -500,7 +509,7 @@
         <summary>
             Gets a value indicating whether a subsequent page in navigation
             history is available, which allows the
-            <see cref="M:GoForward" /> method to succeed.
+            <see cref="GoForward" /> method to succeed.
         </summary>
         <returns>
 	        <see langword = "true" /> if the control can navigate forward; otherwise, 
@@ -523,22 +532,22 @@
 	<CanRedo>
         <summary>
             Gets a value indicating whether the user can redo the previous operation 
-            in a control.
+            in the control.
         </summary>
         <returns>
             <see langword = "true" /> if the user can redo the previous operation performed 
-            in a control; otherwise, <see langword = "false" />.
+            in the control; otherwise, <see langword = "false" />.
         </returns >
 	</CanRedo>
 	<!--==============================================-->
 	<CanUndo>
         <summary>
             Gets a value indicating whether the user can undo the previous operation 
-            in a control.
+            in the control.
         </summary>
         <returns>
             <see langword = "true"/> if the user can undo the previous operation performed 
-            in a control; otherwise, <see langword = "false"/>.
+            in the control; otherwise, <see langword = "false"/>.
         </returns >
 	</CanUndo>
 	<!--==============================================-->
@@ -554,6 +563,8 @@
             Clears the current selection. Specifies that no characters are 
             selected in the control.        
         </summary>
+		<seealso cref="DeleteSelection"/>
+		<seealso cref="HasSelection"/>
 	</ClearSelection>
 	<!--==============================================-->
 	<ContextMenuEnabled>
@@ -584,12 +595,14 @@
             Note that for the Webkit backend the selection must be editable, 
             either through the correct HTML attribute or <see cref="Editable"/> property.         
         </remarks>
+		<seealso cref="ClearSelection"/>
+		<seealso cref="HasSelection"/>
 	</DeleteSelection>
 	<!--==============================================-->
 	<DoCommandGlobal>
         <summary>
-            Executes a browser command with the specified name and parameters. 
-            This is static version of <see cref="DoCommand"/>.
+            Executes the browser command with the specified name and parameters. 
+            This is the static version of <see cref="DoCommand"/>.
         </summary>
         <param name="cmdName">
             Name of the command to execute.
@@ -609,6 +622,7 @@
         <param name="args">
             Parameters of the command.
         </param>
+		<seealso cref="DoCommandGlobal"/>
 	</DoCommand>
 	<!--==============================================-->
 	<Editable>
@@ -653,11 +667,11 @@
         </returns>
         <remarks>
             <para>
-            This function will restart the search if the search params are changed, 
-            since this will require a new search.
+                This function will restart the search if the search params are changed, 
+                since this will require a new search.
             </para>
             <para>
-                To reset the search, for example resetting the highlights call 
+                To reset the search, for example resetting the highlighted text call 
                 <see cref="FindClearResult"/>.
             </para>
         </remarks>
@@ -667,6 +681,7 @@
         <summary>
             Resets the search and the highlighted results.
         </summary>
+		<seealso cref="Find"/>
 	</FindClearResult>
 	<!--==============================================-->
 	<GetCurrentTitle>
@@ -685,8 +700,8 @@
 	<GetNativeBackend>
         <summary>
             Returns pointer to the native backend interface. For example, 
-            for the IE backens it is IWebBrowser2 interface. 
-            Under macOS it's a WebView pointer and under GTK it's a WebKitWebView.
+            for the IE backens it is <c>IWebBrowser2</c> interface. 
+            Under macOS it is a <c>WebView</c> pointer and under GTK it is a <c>WebKitWebView</c>.
         </summary>
 	</GetNativeBackend>
 	<!--==============================================-->
@@ -744,6 +759,8 @@
             want to know whether loading process was successful,         
             register to receive navigation error events.         
         </remarks>
+		<seealso cref="NavigateToStream"/>
+		<seealso cref="NavigateToString"/>
 	</LoadURL>
 	<!--==============================================-->
 	<PageSource>
@@ -751,18 +768,21 @@
             Get the HTML source code of the currently displayed document or 
             an empty string if no page is currently shown.
         </summary>
+		<seealso cref="PageText"/>
 	</PageSource>
 	<!--==============================================-->
 	<PageText>
         <summary>
             Get the text of the current page.      
         </summary>
+		<seealso cref="PageSource"/>
 	</PageText>
 	<!--==============================================-->
 	<Paste>
         <summary>
             Replaces the current selection in the control with the contents of the Clipboard.
         </summary>
+		<seealso cref="CanPaste"/>
 	</Paste>
 	<!--==============================================-->
 	<Print>
@@ -776,6 +796,7 @@
         <summary>
             Redos the last edit operation in the control.
         </summary>
+		<seealso cref="CanRedo"/>
 	</Redo>
 	<!--==============================================-->
 	<Reload>
@@ -798,7 +819,7 @@
 	<!--==============================================-->
 	<RemoveAllUserScripts>
         <summary>
-            Removes all user scripts from the web view.
+            Removes all user scripts from the WebBrowser.
         </summary>
 	</RemoveAllUserScripts>
 	<!--==============================================-->
@@ -845,7 +866,7 @@
             </para>
             <para>
                 If output is non-null, it is filled with the result of 
-                executing this code on success, e.g.a JavaScript value
+                executing this code on success, e.g. a JavaScript value
                 such as a string, a number (integer or floating point), a boolean
                 or JSON representation for non-primitive types such as arrays and objects. 
             </para>
@@ -866,7 +887,7 @@
                 <see cref="WebBrowserEventArgs.Text"/> parameter or a <see cref="WebBrowser.ScriptResult"/> event. 
 				If the execution fails
                 <see cref="WebBrowserEventArgs.IsError"/> will return true. 
-                In this case additional script execution error information maybe
+                In this case additional script execution error information may be
                 available via <see cref="WebBrowserEventArgs.Text"/>.
             </para>
         </summary>
@@ -874,8 +895,8 @@
             JavaScript code to execute.
         </param>
         <param name="clientData">
-            Arbirary pointer to data that can be retrieved from the result event.
-			You can use IntPtr.Zero, new IntPtr(SomeInt) or some useful data in 
+            Arbirary pointer to data that can be used in the result event.
+			You can use IntPtr.Zero, new IntPtr(SomeInt) or pointer to some useful data in 
 			this parameter.
         </param>
         <remarks>
@@ -884,11 +905,8 @@
             </para>
             <para>
                 When using WebKit v1 (wxGTK2), retrieving the result of script execution 
-                is unsupported. This function will always return false if output 
-                is non-null to indicate this. 
-            </para>
-            <para>
-				Running scripts functionality is fully supported when using WebKit v2 or later (wxGTK3).
+                is unsupported. Running scripts functionality is fully supported when 
+				using WebKit v2 or later (wxGTK3).
             </para>
             <para>
                 When using WebKit (macOS), code execution is limited to 
@@ -896,7 +914,7 @@
             </para>
             <para>
                 When using IE backend, scripts can only be executed when 
-                the current page is fully loaded and Loaded event was received.
+                the current page is fully loaded and <see cref="Loaded"/> event was received.
                 A script tag inside the page HTML is required in order to run JavaScript.
             </para>
             <para>
@@ -905,17 +923,20 @@
                 own conversion as a fallback for this case. 
             
                 However it is not as full-featured or performing as 
-                the implementation of this functionality in the browser control
+                the implementation of this functionality in the browser 
                 itself. It is recommended to use IELatest or Edge backends
                 in which JSON conversion is done by the browser itself.
             </para>
         </remarks>
+		<seealso cref="InvokeScriptAsync"/>
 	</RunScriptAsync>
 	<!--==============================================-->
 	<SelectAll>
         <summary>
             Selects the entire page.         
         </summary>
+		<seealso cref="SelectedSource"/>
+		<seealso cref="SelectedText"/>
 	</SelectAll>
 	<!--==============================================-->
 	<SelectedSource>
@@ -924,12 +945,14 @@
 			of the web page or 
             an empty string if no selection exists.
         </summary>
+		<seealso cref="SelectedText"/>
 	</SelectedSource>
 	<!--==============================================-->
 	<SelectedText>
         <summary>
             Gets a value indicating the currently selected text in the control.
         </summary>
+		<seealso cref="SelectedSource"/>
 	</SelectedText>
 	<!--==============================================-->
 	<Stop>
@@ -943,6 +966,7 @@
         <summary>
             Undoes the last edit operation in the control.
         </summary>
+		<seealso cref="CanUndo"/>
 	</Undo>
 	<!--==============================================-->
 	<UserAgent>
@@ -952,7 +976,7 @@
             </para>
             <para>
                 If your first request should already use the custom user agent please 
-                use two step creation and set UserAgent before browser backend creation.
+                use two step creation and set UserAgent before browser creation.
             </para>
         </summary>
         <remarks>
@@ -1026,12 +1050,14 @@
             This method allows to enable some extra functionality available with 
             the specific backend.
         </summary>
+		<seealso cref="SetBackend"/>
 	</IsBackendAvailable>
 	<!--==============================================-->
 	<SetBackend>
         <summary>
             Sets the backend that will be used for the new WebBrowser instances.
         </summary>
+		<seealso cref="IsBackendAvailable"/>
 	</SetBackend>
 	<!--==============================================-->
 	<GetLibraryVersionString>
@@ -1063,7 +1089,7 @@
 	<StringFormatJs>
         <summary>
             Contains DateTime format for Javascript code.
-            Used internally by InvokeScriptAsync().
+            Used internally by <see cref="InvokeScriptAsync"/>.
         </summary>
 	</StringFormatJs>
 	<!--==============================================-->

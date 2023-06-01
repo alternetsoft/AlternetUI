@@ -213,6 +213,7 @@ namespace ControlsSample
                     FindOptionsPanel.Visible = true;
                     FindClear.Visible = true;
                 }
+
                 site = value;
             }
         }

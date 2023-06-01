@@ -1,10 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <doc>
+	<!--	
+		/// <include file="_" path='doc/_/summary'/>
+        /// <include file="_" 
+        ///     path='doc/AddFile/param[@name="_" or @name="_" or @name="_"]'/>
+	-->
 	<!--==============================================-->
 	<AddFile>
 		<summary>
 			<para>
-				Adds a file to the list of the files stored in memory. Stored data
+				Adds the file to the list of the files stored in memory. Stored data
 				(bitmap, text, raw data) will be copied into private memory stream
 				and available in WebBrowser under name "memory:" + filename.
 				Before using memory file system, you need to initialize it with
@@ -22,7 +27,8 @@
 		<param name="stream">Specifies stream with the file data.</param>
 		<param name="textdata">Specifies string with text file data.</param>
 		<param name="mimetype">Specifies added file's MIME type.</param>
-		<param name="osFilename">Specifies filename on the hard drive to read data from.</param>
+		<param name="osFilename">Specifies filename on the hard drive 
+			to read the data from.</param>
 		<!--==============================================-->
 	</AddFile>
 	<!--==============================================-->
