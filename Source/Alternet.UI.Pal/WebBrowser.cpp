@@ -125,7 +125,9 @@ namespace Alternet::UI
             backend = wxASCII_STR(wxWebViewBackendIE);
             if (!WebBrowser::IELatest)
             {
+#if defined(__WXMSW__)
                 wxWebViewIE::MSWSetEmulationLevel();
+#endif
                 WebBrowser::IELatest = true;
             }
             break;
@@ -146,8 +148,10 @@ namespace Alternet::UI
     
     void WebBrowser::SetEdgePath(const string& path)
     {
+#if defined(__WXMSW__)
 #ifdef wxUSE_WEBVIEW_EDGE
         wxWebViewEdge::MSWSetBrowserExecutableDir(wxStr(path));
+#endif
 #endif
     }
     

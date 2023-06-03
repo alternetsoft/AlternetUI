@@ -149,10 +149,10 @@ namespace Alternet.UI
             typeof(WebBrowser));*/
         
         /// <summary>
-        ///     Raises the <see cref="E:FullScreenChanged"/> event.
+        ///     Raises the <see cref="FullScreenChanged"/> event.
         /// </summary>
         /// <param name="e">
-        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        ///     An <see cref="WebBrowserEventArgs"/> that contains the event data.
         /// </param>
         protected virtual void OnFullScreenChanged(WebBrowserEventArgs e)
         {
@@ -164,12 +164,12 @@ namespace Alternet.UI
             WebBrowserEventArgs ea = new(e, WebBrowserEvent.FullScreenChanged);
             OnFullScreenChanged(ea);
         }
-        
+
         /// <summary>
-        ///     Raises the <see cref="E:ScriptMessageReceived"/> event.
+        ///     Raises the <see cref="ScriptMessageReceived"/> event.
         /// </summary>
         /// <param name="e">
-        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        ///     An <see cref="WebBrowserEventArgs"/> that contains the event data.
         /// </param>
         protected virtual void OnScriptMessageReceived(WebBrowserEventArgs e) 
         {
@@ -182,12 +182,12 @@ namespace Alternet.UI
             WebBrowserEventArgs ea = new(e, WebBrowserEvent.ScriptMessageReceived);
             OnScriptMessageReceived(ea);
         }
-        
+
         /// <summary>
-        ///     Raises the <see cref="E:NativeScriptResult"/> event.
+        ///     Raises the <see cref="ScriptResult"/> event.
         /// </summary>
         /// <param name="e">
-        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        ///     An <see cref="WebBrowserEventArgs"/> that contains the event data.
         /// </param>
         public virtual void OnScriptResult(WebBrowserEventArgs e)
         {
@@ -201,10 +201,10 @@ namespace Alternet.UI
         }
         
         /// <summary>
-        ///     Raises the <see cref="E:Navigated"/> event.
+        ///     Raises the <see cref="Navigated"/> event.
         /// </summary>
         /// <param name="e">
-        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        ///     An <see cref="WebBrowserEventArgs"/> that contains the event data.
         /// </param>
         protected virtual void OnNavigated(WebBrowserEventArgs e)
         {
@@ -218,10 +218,10 @@ namespace Alternet.UI
         }
         
         /// <summary>
-        ///     Raises the <see cref="E:Navigating"/> event.
+        ///     Raises the <see cref="Navigating"/> event.
         /// </summary>
         /// <param name="e">
-        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        ///     An <see cref="WebBrowserEventArgs"/> that contains the event data.
         /// </param>
         protected virtual void OnNavigating(WebBrowserEventArgs e)
         {
@@ -236,10 +236,10 @@ namespace Alternet.UI
         }
         
         /// <summary>
-        ///     Raises the <see cref="E:BeforeBrowserCreate"/> event.
+        ///     Raises the <see cref="BeforeBrowserCreate"/> event.
         /// </summary>
         /// <param name="e">
-        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        ///     An <see cref="WebBrowserEventArgs"/> that contains the event data.
         /// </param>
         protected virtual void OnBeforeBrowserCreate(WebBrowserEventArgs e)
         {
@@ -270,10 +270,10 @@ namespace Alternet.UI
         }
         
         /// <summary>
-        ///     Raises the <see cref="E:Error"/> event.
+        ///     Raises the <see cref="Error"/> event.
         /// </summary>
         /// <param name="e">
-        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        ///     An <see cref="WebBrowserEventArgs"/> that contains the event data.
         /// </param>
         public virtual void OnError(WebBrowserEventArgs e) 
         {
@@ -287,10 +287,10 @@ namespace Alternet.UI
         }
         
         /// <summary>
-        ///     Raises the <see cref="E:NewWindow"/> event.
+        ///     Raises the <see cref="NewWindow"/> event.
         /// </summary>
         /// <param name="e">
-        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        ///     An <see cref="WebBrowserEventArgs"/> that contains the event data.
         /// </param>
         protected virtual void OnNewWindow(WebBrowserEventArgs e) 
         {
@@ -304,10 +304,10 @@ namespace Alternet.UI
         }
         
         /// <summary>
-        ///     Raises the <see cref="E:DocumentTitleChanged"/> event.
+        ///     Raises the <see cref="DocumentTitleChanged"/> event.
         /// </summary>
         /// <param name="e">
-        ///     An <see cref="T:WebBrowserEventArgs"/> that contains the event data.
+        ///     An <see cref="WebBrowserEventArgs"/> that contains the event data.
         /// </param>
         protected virtual void OnDocumentTitleChanged(WebBrowserEventArgs e) 
         {
@@ -1086,11 +1086,13 @@ namespace Alternet.UI
 
             var files = Directory.EnumerateFileSystemEntries(path,"*.dll");
 
-            foreach(string file in files)
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
+            foreach (string file in files)
             {
                 Native.WebBrowser.SetEdgePath(path);
                 break;
             }
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/Is64Bit/*'/>

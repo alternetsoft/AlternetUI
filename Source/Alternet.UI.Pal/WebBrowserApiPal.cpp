@@ -62,11 +62,13 @@ namespace Alternet::UI
     
     ALTERNET_UI_API void WebBrowser_CrtSetDbgFlag_(int value)
     {
-        #ifdef _DEBUG
+#if defined(__WXMSW__)
+#ifdef _DEBUG
         MarshalExceptions<void>([&]() {
             _CrtSetDbgFlag(value);
             });
-        #endif.
+#endif
+#endif
     }
     
     ALTERNET_UI_API c_bool WebBrowser_IsBackendEdgeAvailable_()

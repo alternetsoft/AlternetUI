@@ -60,7 +60,7 @@ namespace Alternet.UI
         
         /// <include file="IWebBrowser.xml" path='doc/ToInvokeScriptArg/*'/>
         string? ToInvokeScriptArg(object arg);
-        
+
         /// <include file="IWebBrowser.xml" path='doc/InvokeScriptAsync/*'/>
         void InvokeScriptAsync(string scriptName, IntPtr clientData, params object[] args);
         
@@ -152,8 +152,7 @@ namespace Alternet.UI
         
         /// <include file="IWebBrowser.xml" path='doc/DoCommand/*'/>
         string DoCommand(string cmdName, params object?[] args);
-        
-        
+
         /// <include file="IWebBrowser.xml" path='doc/AddUserScript/*'/>
         bool AddUserScript(string javascript, bool injectDocStart);
         
