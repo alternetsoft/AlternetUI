@@ -18,8 +18,8 @@ It downloads the WebView2 SDK nuget package
 "AlternetUI/External/wxWidgets/3rdparty/webview2" (you should have 
 "3rdparty/webview2/build/native/include/WebView2.h" and other files after unpacking it).
 
-STEP 3. Edit files “\AlternetUI\External\wxWidgets\include\wx\msw\setup.h” and
-“\AlternetUI\External\wxWidgets\include\wx\univ\setup.h”. Change defines wxUSE_WEBVIEW_EDGE 
+STEP 3. Edit file “\AlternetUI\External\wxWidgets\include\wx\msw\setup.h”. 
+Change defines wxUSE_WEBVIEW_EDGE 
 and wxUSE_WEBVIEW_EDGE_STATIC like this:
 	#define wxUSE_WEBVIEW_EDGE 1
 	#define wxUSE_WEBVIEW_EDGE_STATIC 1
