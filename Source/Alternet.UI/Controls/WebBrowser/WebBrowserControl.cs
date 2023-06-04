@@ -13,13 +13,19 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Alternet.UI
 {
+    //public static void SetDefaultUserAgent
+    //public static void SetDefaultScriptMesageName
+    //public static void SetDefaultFSNameMemory
+    //public static void SetDefaultFSNameArchive
 
     /// <include file="Interfaces/IWebBrowser.xml" path='doc/WebBrowser/*'/>
     public partial class WebBrowser : Control, IWebBrowser
     {
         
         private IWebBrowserMemoryFS? FMemoryFS;
+
         new internal WebBrowserHandler Handler => (WebBrowserHandler)base.Handler;
+
         internal IWebBrowserLite Browser => (IWebBrowserLite)base.Handler;
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/CrtSetDbgFlag/*'/>
