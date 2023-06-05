@@ -13,8 +13,23 @@
         <Delete Files="$(WxWidgetsDownloadTargetPath)"/>
     </Target>
 
+    <Target Name="DownloadAndExtractWebView">
+        <DownloadFile Condition="!Exists($(WebViewDownloadTargetPath))"
+            SourceUrl="$(WebViewDownloadUrl)"
+            DestinationFolder="$(WebViewDownloadDirectory)" DestinationFileName="$(WebViewDownloadFileName)" />
+        <Unzip SourceFiles="$(WebViewDownloadTargetPath)" DestinationFolder="$(WebViewDirectory)" />
+        <Delete Files="$(WebViewDownloadTargetPath)"/>
+    </Target>
+
     <!-- Windows -->
     <Target Name="BuildWxWidgets_Windows" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+        <Exec WorkingDirectory="$(WxWidgetsDirectory)" 
+			Command="mkdir $(WxWidgetsWindowsBuildDirectoryNameParent)" 
+			Condition="!Exists($(WxWidgetsWindowsBuildDirectoryParent))"/>
+        <Exec WorkingDirectory="$(WxWidgetsWindowsBuildDirectoryParent)" 
+			Command="mkdir $(WxWidgetsWindowsBuildDirectoryName)" 
+			Condition="!Exists($(WxWidgetsWindowsBuildDirectory))"/>
+
         <!-- 32 Bit Release -->
         <Exec
             WorkingDirectory="$(WxWidgetsWindowsBuildDirectory)"
@@ -93,6 +108,7 @@
     <Target Name="BuildWxWidgets">
         <CallTarget Targets="CleanWxWidgets" />
         <CallTarget Targets="DownloadAndExtractWxWidgets" />
+        <CallTarget Targets="DownloadAndExtractWebView" />
         <CallTarget Targets="BuildWxWidgets_Windows" />
         <CallTarget Targets="BuildWxWidgets_Linux" />
         <CallTarget Targets="BuildWxWidgets_MacOS" />
@@ -101,7 +117,6 @@
     <Target Name="CleanWxWidgetsBuildDirectory">
         <RemoveDir Directories="$(WxWidgetsMacOSBuildDirectory)" Condition="Exists($(WxWidgetsMacOSBuildDirectory))"/>
         <RemoveDir Directories="$(WxWidgetsGtkBuildDirectory)" Condition="Exists($(WxWidgetsGtkBuildDirectory))"/>
-        <RemoveDir Directories="$(WxWidgetsWindowsBuildDirectory)" Condition="Exists($(WxWidgetsWindowsBuildDirectory))"/>
     </Target>
 
     <Target Name="BuildWxWidgetsWithoutDownload">

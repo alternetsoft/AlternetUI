@@ -12,7 +12,7 @@ to follow these steps:
 
 STEP 1. Run “AlternetUI/Source/Build/Scripts/Download WxWidgets.bat”.
 
-STEP 2. Run “AlternetUI/Source/Build/Scripts/Download WebView2.bat”. 
+STEP 2. Run “AlternetUI/Source/Build/Scripts/Download WebView.bat”. 
 It downloads the WebView2 SDK nuget package 
 (Version 1.0.1774.30 or newer) and extracts the package (it's a zip archive) to 
 "AlternetUI/External/wxWidgets/3rdparty/webview2" (you should have 
