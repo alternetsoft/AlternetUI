@@ -1134,6 +1134,34 @@ will replace the current page contents with the provided string.
         </summary>
 	</GetBackendVersionString>	
 	<!--==============================================-->
+	<SetDefaultUserAgent>
+		<summary>
+			Sets the default user agent that will be used for the
+			new WebBrowser instances.
+		</summary>
+	</SetDefaultUserAgent>
+	<!--==============================================-->
+	<SetDefaultScriptMesageName>
+		<summary>
+			Sets the default script message name that will be registered in all
+			new WebBrowser instances.
+		</summary>
+	</SetDefaultScriptMesageName>
+	<!--==============================================-->
+	<SetDefaultFSNameMemory>
+		<summary>
+			Sets the default protocol name for the memory file system
+			that will be used for the new WebBrowser instances.
+		</summary>
+	</SetDefaultFSNameMemory>
+	<!--==============================================-->
+	<SetDefaultFSNameArchive>
+		<summary>
+			Sets the default protocol name for the archive file system that will
+			be used for the new WebBrowser instances.
+		</summary>
+	</SetDefaultFSNameArchive>
+	<!--==============================================-->
 	<SetDefaultPage>
         <summary>
             Sets the default web page that will be used for the 

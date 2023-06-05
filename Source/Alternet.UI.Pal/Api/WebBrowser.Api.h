@@ -190,6 +190,34 @@ ALTERNET_UI_API void WebBrowser_SetZoom_(WebBrowser* obj, int value)
         });
 }
 
+ALTERNET_UI_API void WebBrowser_SetDefaultUserAgent_(const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            WebBrowser::SetDefaultUserAgent(value);
+        });
+}
+
+ALTERNET_UI_API void WebBrowser_SetDefaultScriptMesageName_(const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            WebBrowser::SetDefaultScriptMesageName(value);
+        });
+}
+
+ALTERNET_UI_API void WebBrowser_SetDefaultFSNameMemory_(const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            WebBrowser::SetDefaultFSNameMemory(value);
+        });
+}
+
+ALTERNET_UI_API void WebBrowser_SetDefaultFSNameArchive_(const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            WebBrowser::SetDefaultFSNameArchive(value);
+        });
+}
+
 ALTERNET_UI_API char16_t* WebBrowser_DoCommand_(WebBrowser* obj, const char16_t* cmdName, const char16_t* cmdParam1, const char16_t* cmdParam2)
 {
     return MarshalExceptions<char16_t*>([&](){

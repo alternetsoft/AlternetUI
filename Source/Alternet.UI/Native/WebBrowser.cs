@@ -281,6 +281,26 @@ namespace Alternet.UI.Native
             }
         }
         
+        public static void SetDefaultUserAgent(string value)
+        {
+            NativeApi.WebBrowser_SetDefaultUserAgent_(value);
+        }
+        
+        public static void SetDefaultScriptMesageName(string value)
+        {
+            NativeApi.WebBrowser_SetDefaultScriptMesageName_(value);
+        }
+        
+        public static void SetDefaultFSNameMemory(string value)
+        {
+            NativeApi.WebBrowser_SetDefaultFSNameMemory_(value);
+        }
+        
+        public static void SetDefaultFSNameArchive(string value)
+        {
+            NativeApi.WebBrowser_SetDefaultFSNameArchive_(value);
+        }
+        
         public string DoCommand(string cmdName, string cmdParam1, string cmdParam2)
         {
             CheckDisposed();
@@ -680,6 +700,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WebBrowser_SetZoom_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WebBrowser_SetDefaultUserAgent_(string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WebBrowser_SetDefaultScriptMesageName_(string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WebBrowser_SetDefaultFSNameMemory_(string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WebBrowser_SetDefaultFSNameArchive_(string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string WebBrowser_DoCommand_(IntPtr obj, string cmdName, string cmdParam1, string cmdParam2);

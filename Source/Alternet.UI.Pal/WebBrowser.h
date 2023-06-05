@@ -30,6 +30,11 @@ namespace Alternet::UI
     {
 #include "Api/WebBrowser.inc"
     private:
+        static wxString DefaultUserAgent;
+        static wxString DefaultScriptMesageName;
+        static wxString DefaultFSNameMemory;
+        static wxString DefaultFSNameArchive;
+        static wxString DefaultFSNameCustom;
         static WebBrowserBackend DefaultBackend;
         static wxString DefaultPage;
         static bool IELatest;
@@ -38,6 +43,11 @@ namespace Alternet::UI
         WebBrowserBackend Backend;
         wxWebView* webView;
         wxWindow* webViewParent;
+        bool DefaultUserAgentDone = false;
+        bool DefaultScriptMesageNameDone = false;
+        bool DefaultFSNameMemoryDone = false;
+        bool DefaultFSNameArchiveDone = false;
+        bool DefaultFSNameCustomDone = false;
 
         bool IsBackendIE();
         void RaiseEventEx(WebBrowserEvent eventID, wxWebViewEvent& event,bool canVeto=FALSE);
@@ -49,6 +59,8 @@ namespace Alternet::UI
         void IEShowPrintPreviewDialog();
         void IESetScriptErrorsSuppressed(bool value);
 #endif
+
+        void ProcessDefaultsOnCreate(bool before);
     public:
         WebBrowserBackend GetBackend();
 

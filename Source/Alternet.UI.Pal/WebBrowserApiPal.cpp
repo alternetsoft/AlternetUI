@@ -63,10 +63,12 @@ namespace Alternet::UI
     ALTERNET_UI_API void WebBrowser_CrtSetDbgFlag_(int value)
     {
 #if defined(__WXMSW__)
+#if defined(__VISUALC__)
 #ifdef _DEBUG
         MarshalExceptions<void>([&]() {
             _CrtSetDbgFlag(value);
             });
+#endif
 #endif
 #endif
     }

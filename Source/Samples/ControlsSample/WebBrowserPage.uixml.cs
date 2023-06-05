@@ -14,9 +14,7 @@ namespace ControlsSample
     {
         private static int ScriptRunCounter = 0;
         private bool ScriptMessageHandlerAdded = false;
-        private static WebBrowserBackend UseBackend = WebBrowserBackend.IELatest;
-        private static bool SetLatestBackend = true;
-        private static bool InitSchemesDone = false;
+        internal static WebBrowserBackend UseBackend = WebBrowserBackend.Default;
         private static readonly string ZipSchemeName = "zipfs";
         private static bool PandaInMemory = false;
 
@@ -35,7 +33,14 @@ namespace ControlsSample
             return WebBrowser1.Backend == WebBrowserBackend.IE ||
                 WebBrowser1.Backend == WebBrowserBackend.IELatest;
         }
-        
+
+        public void RestartWithDefault()
+        {
+            CommonUtils.RemoveFileWithExt("ie");
+            CommonUtils.RemoveFileWithExt("edge");
+            Alternet.UI.Application.Current.Exit();
+        }
+
         public void RestartWithEdge()
         {
             CommonUtils.RemoveFileWithExt("ie");
@@ -56,29 +61,19 @@ namespace ControlsSample
                 WebBrowser1.DoCommand("IE.ShowPrintPreviewDialog");
         }
         
-        private void InitSchemes(WebBrowser browser)
-        {
-            if (!IsIEBackend())
-                return;
-
-            if (InitSchemesDone)
-                return;
-            InitSchemesDone = true;
-            browser.MemoryFS.Init("memory");
-            browser.DoCommand("ZipScheme.Init", ZipSchemeName);
-        }
-        
         public void DoTestPandaFromMemory()
         {
-            if (!IsIEBackend())
+            if (WebBrowser1.Backend == WebBrowserBackend.Edge)
+            {
+                Log("Memory scheme not supported in Edge backend");
                 return;
+            }
 
             void PandaToMemory()
             {
                 if (PandaInMemory)
                     return;
                 PandaInMemory = true;
-                InitSchemes(WebBrowser1);
                 WebBrowser1.MemoryFS.AddTextFile("index.html", "<html><body><b>index.html</b></body></html>");
                 WebBrowser1.MemoryFS.AddTextFile("myFolder/index.html",
                     "<html><body><b>file in subfolder</b></body></html>");
@@ -106,10 +101,13 @@ namespace ControlsSample
         
         public void DoTestZip()
         {
+            if (WebBrowser1.Backend == WebBrowserBackend.Edge)
+            {
+                Log("Archive scheme not supported in Edge backend");
+                return;
+            }
             string arcSubPath = "Html\\SampleArchive.zip";
             string webPagePath = "root.html";
-
-            InitSchemes(WebBrowser1);
 
             string archivePath = Path.Combine(CommonUtils.GetAppFolder(), arcSubPath);
             if (File.Exists(archivePath))
@@ -140,6 +138,9 @@ namespace ControlsSample
         
         static WebBrowserPage()
         {
+            WebBrowser.SetDefaultFSNameMemory("memory");
+            WebBrowser.SetDefaultFSNameArchive(ZipSchemeName);
+            WebBrowser.SetDefaultUserAgent("Mozilla");
 
             SetBackendPathSmart("Edge");
 
@@ -154,19 +155,10 @@ namespace ControlsSample
             LogToFile("======================================");
 
             if (File.Exists(CommonUtils.GetFileWithExt("ie")))
-            {
                 UseBackend = WebBrowserBackend.IELatest;
-                SetLatestBackend = false;
-            }
             else
-            {
                 if (File.Exists(CommonUtils.GetFileWithExt("edge")))
-                {
                     UseBackend = WebBrowserBackend.Edge;
-                    SetLatestBackend = false;
-                }
-            }
-
 
             if (UseBackend==WebBrowserBackend.IE || UseBackend == WebBrowserBackend.IELatest
                 || UseBackend == WebBrowserBackend.Edge)
@@ -176,9 +168,6 @@ namespace ControlsSample
             }
 
             WebBrowser.SetBackend(UseBackend);
-            if (SetLatestBackend)
-                WebBrowser.SetLatestBackend();
-
         }
         
         public static void HookExceptionEvents(Alternet.UI.Application a)
@@ -552,6 +541,8 @@ namespace ControlsSample
             LogProp(WebBrowser1, "ZoomType", "WebBrowser");
             LogProp(WebBrowser1, "ZoomFactor", "WebBrowser");
 
+            ;
+            Log("isDebug = " + WebBrowser.DoCommandGlobal("IsDebug"));
             Log("os = " + WebBrowser.GetBackendOS().ToString());
             Log("backend = " + WebBrowser1.Backend.ToString());
             Log("wxWidgetsVersion = " + WebBrowser.GetLibraryVersionString());
@@ -560,6 +551,7 @@ namespace ControlsSample
             Log("IE = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.IE));
             Log("Edge = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge));
             Log("WebKit = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit));
+            Log("GetUsefulDefines" + WebBrowser.DoCommandGlobal("GetUsefulDefines"));
 
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
                 Log("Edge version = " + WebBrowser.GetBackendVersionString(WebBrowserBackend.Edge));
@@ -693,6 +685,7 @@ namespace ControlsSample
             AddTestAction("Google", () => { WebBrowser1.LoadURL(
                 "https://www.google.com"); });
             AddTestAction("BrowserVersion", () => { ShowBrowserVersion(); });
+            AddTestAction("RestartWithDefault", () => { RestartWithDefault(); });
             AddTestAction("RestartWithIE", () => { RestartWithIE(); });
             AddTestAction("RestartWithEdge", () => { RestartWithEdge(); });
             AddTestAction();
@@ -843,10 +836,12 @@ namespace ControlsSample
 
         internal void DoTestSerializeObject()
         {
-            WeatherForecast value = new();
-            value.Date = System.DateTime.Now;
-            value.TemperatureCelsius = 15;
-            value.Summary = "New York";
+            WeatherForecast value = new()
+            {
+                Date = System.DateTime.Now,
+                TemperatureCelsius = 15,
+                Summary = "New York"
+            };
 
             var s = WebBrowser1.ObjectToJSON(value);
 

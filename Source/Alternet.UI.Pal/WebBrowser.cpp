@@ -41,7 +41,35 @@ namespace Alternet::UI
     WebBrowserBackend WebBrowser::DefaultBackend = WEBBROWSER_BACKEND_DEFAULT;
     wxString WebBrowser::DefaultPage = "about:blank";
     bool WebBrowser::IELatest = false;
+
+    wxString WebBrowser::DefaultUserAgent = wxEmptyString;
+    wxString WebBrowser::DefaultScriptMesageName = wxEmptyString;
+    wxString WebBrowser::DefaultFSNameMemory = wxEmptyString;
+    wxString WebBrowser::DefaultFSNameArchive = wxEmptyString;
+    wxString WebBrowser::DefaultFSNameCustom = wxEmptyString;
+
+    void Nop() {};
+
+    void WebBrowser::SetDefaultUserAgent(const string& value) 
+    {
+        WebBrowser::DefaultUserAgent = wxStr(value);
+    }
+
+    void WebBrowser::SetDefaultScriptMesageName(const string& value) 
+    {
+        WebBrowser::DefaultScriptMesageName = wxStr(value);
+    }
     
+    void WebBrowser::SetDefaultFSNameMemory(const string& value) 
+    {
+        WebBrowser::DefaultFSNameMemory = wxStr(value);
+    }
+    
+    void WebBrowser::SetDefaultFSNameArchive(const string& value) 
+    {
+        WebBrowser::DefaultFSNameArchive = wxStr(value);
+    }
+
     void WebBrowser::SetBackend(WebBrowserBackend value)
     {
         WebBrowser::DefaultBackend = value;
@@ -164,12 +192,84 @@ namespace Alternet::UI
     {
         return GetWebViewCtrl()->GetNativeBackend();
     }
-    
+
+    void WebBrowser::ProcessDefaultsOnCreate(bool before)
+    {
+        auto realBackend = Backend; 
+        
+        auto isMacOS = WebBrowser::GetBackendOS() == WEBBROWSER_BACKEND_OS_OSX;
+        auto isIE = IsBackendIE();
+        auto isEdge = WebBrowser::GetBackend() == WEBBROWSER_BACKEND_EDGE;
+        auto isWebkit = WebBrowser::GetBackend() == WEBBROWSER_BACKEND_WEBKIT;
+
+        auto registerHandlerBeforeCreate = isMacOS && isWebkit;
+        auto registerHandlerSupported = !isEdge;
+        
+        // DefaultUserAgent
+        if (!isIE && !DefaultUserAgentDone && 
+            WebBrowser::DefaultUserAgent != wxEmptyString)
+        {
+            if ((isEdge && before) || !isEdge) 
+                SetUserAgent(wxStr(WebBrowser::DefaultUserAgent));
+            DefaultUserAgentDone = true;
+        }
+
+        // DefaultScriptMesageName
+        if (!isIE && !DefaultScriptMesageNameDone && 
+            WebBrowser::DefaultScriptMesageName != wxEmptyString)
+        {
+            AddScriptMessageHandler(wxStr(DefaultScriptMesageName));
+            DefaultScriptMesageNameDone = true;
+        }
+
+        // here we register handlers
+        if (!registerHandlerSupported)
+            return;
+        if (registerHandlerBeforeCreate && !before)
+            return;
+        if (!registerHandlerBeforeCreate && before)
+            return;
+        if (!DefaultFSNameMemoryDone && 
+            WebBrowser::DefaultFSNameMemory != wxEmptyString)
+        {
+            RegisterHandlerMemory(wxStr(WebBrowser::DefaultFSNameMemory));
+            DefaultFSNameMemoryDone = true;
+        }
+        if (!DefaultFSNameArchiveDone && 
+            WebBrowser::DefaultFSNameArchive != wxEmptyString)
+        {
+            RegisterHandlerZip(wxStr(WebBrowser::DefaultFSNameArchive));
+            DefaultFSNameArchiveDone = true;
+        }
+        if (!DefaultFSNameCustomDone && 
+            WebBrowser::DefaultFSNameCustom != wxEmptyString)
+        {
+            //wxWebView::RegisterHandler(wxSharedPtr< wxWebViewHandler > 	handler)
+            DefaultFSNameCustomDone = true;
+        }
+    }
+
     void WebBrowser::OnWxWindowCreated()
     {
         Control::OnWxWindowCreated();
+
+        try
+        {
+            ProcessDefaultsOnCreate(true);
+        }
+        catch (const std::exception&)
+        {
+        }
+       
         CreateBackend();
 
+        try
+        {
+            ProcessDefaultsOnCreate(false);
+        }
+        catch (const std::exception&)
+        {
+        }
     }
     
     void WebBrowser::CreateBackend()
@@ -187,23 +287,24 @@ namespace Alternet::UI
     
     wxWindow* WebBrowser::CreateWxWindowCore(wxWindow* parent)
     {
-        auto backend = WebViewBackendNameFromId(WebBrowser::DefaultBackend);
-
         Backend = WebBrowser::DefaultBackend;
-       /*
-        auto webView = new wxWebViewEdge(
-            parent,
-            -1,
-            WebBrowser::DefaultPage,
-            wxDefaultPosition,
-            wxDefaultSize,
-            0,
-            "");*/
 
+        if (Backend == WEBBROWSER_BACKEND_DEFAULT) 
+        {
+            if (WebBrowser::IsBackendEdgeAvailable())
+                Backend = WEBBROWSER_BACKEND_EDGE;
+            else
+            if (WebBrowser::IsBackendWebKitAvailable())
+                Backend = WEBBROWSER_BACKEND_WEBKIT;
+            else
+            if (WebBrowser::IsBackendIEAvailable())
+                Backend = WEBBROWSER_BACKEND_IELATEST;
+        }
 
-        webView = wxWebView::New(backend);
+        auto backendName = WebViewBackendNameFromId(Backend);
+
+        webView = wxWebView::New(backendName);
         webViewParent = parent;
-
         
         webView->Bind(wxEVT_WEBVIEW_NAVIGATING, &WebBrowser::OnNavigating, this);
         webView->Bind(wxEVT_WEBVIEW_NAVIGATED, &WebBrowser::OnNavigated, this);
@@ -215,12 +316,8 @@ namespace Alternet::UI
         webView->Bind(wxEVT_WEBVIEW_SCRIPT_MESSAGE_RECEIVED, &WebBrowser::OnScriptMessageReceived, this);
         webView->Bind(wxEVT_WEBVIEW_SCRIPT_RESULT, &WebBrowser::OnScriptResult, this);
         
-
-    
-        
         return webView;
     }
-
     
     WebBrowser::~WebBrowser()
     {
@@ -336,57 +433,33 @@ namespace Alternet::UI
         RaiseEventEx(WebBrowserEvent::TitleChanged,event);
     }
     
+    static bool FSAddedZip = false;
     void WebBrowser::RegisterHandlerZip(const string& schemeName)
     {
+        if (!FSAddedZip) 
+        {
+            wxFileSystem::AddHandler(new wxArchiveFSHandler);
+            FSAddedZip = true;
+        }
         webView->RegisterHandler(
             wxSharedPtr<wxWebViewHandler>(new wxWebViewArchiveHandler(wxStr(schemeName))));
     }
     
+    static bool FSAddedMemory = false;
     void WebBrowser::RegisterHandlerMemory(const string& schemeName)
     {
-        wxFileSystem::AddHandler(new wxMemoryFSHandler);
+        if (!FSAddedMemory) 
+        {
+            wxFileSystem::AddHandler(new wxMemoryFSHandler);
+            FSAddedMemory = true;
+        }
+
+        wxString s = wxStr(schemeName);
+
         webView->RegisterHandler(
-            wxSharedPtr<wxWebViewHandler>(new wxWebViewFSHandler(wxStr(schemeName))));
+            wxSharedPtr<wxWebViewHandler>(new wxWebViewFSHandler(s)));
     }
     
-    string WebBrowser::DoCommandGlobal(const string& cmdName, const string& cmdParam1, const string& cmdParam2)
-    {
-        string noresult = wxStr("");
-
-        return noresult;
-    }
-    
-    string WebBrowser::DoCommand(const string& cmdName, const string& cmdParam1, const string& cmdParam2)
-    {
-        string noresult = wxStr("");
-        
-        if (cmdName == wxStr("ZipScheme.Init"))
-        {
-            RegisterHandlerZip(cmdParam1);
-            return noresult;
-        }
-        if (cmdName == wxStr("MemoryScheme.Init"))
-        {
-            RegisterHandlerMemory(cmdParam1);
-            return noresult;
-        }
-        
-#if defined(__WXMSW__)
-        if (cmdName == wxStr("IE.ShowPrintPreviewDialog"))
-        {
-            IEShowPrintPreviewDialog();
-            return noresult;
-        }
-        if (cmdName == wxStr("IE.SetScriptErrorsSuppressed"))
-        {
-            bool supressErrors = (cmdParam1 == wxStr("true"));
-            IESetScriptErrorsSuppressed(supressErrors);
-            return noresult;
-        }
-#endif
-        return noresult;
-    }
-
 #if defined(__WXOSX__)
     
     int WebBrowser::GetBackendOS()
@@ -431,8 +504,6 @@ namespace Alternet::UI
         wxString s2 = s1 + output;
         return wxStr(s2);
     }
-
-
 
 #if defined(__WXMSW__)
     
@@ -552,7 +623,6 @@ namespace Alternet::UI
         wb->ExecWB(OLECMDID_PRINTPREVIEW,
             OLECMDEXECOPT_PROMPTUSER, NULL, NULL);
     }
-    
 #endif
     
     string WebBrowser::GetCurrentTitle()
@@ -764,7 +834,7 @@ namespace Alternet::UI
     
     void WebBrowser::SetUserAgent(const string& value) 
     { 
-        GetWebViewCtrl()->SetUserAgent(wxStr(value));
+        webView->SetUserAgent(wxStr(value));
     }
     
     string WebBrowser::GetPageSource() 
@@ -797,9 +867,6 @@ namespace Alternet::UI
         GetWebViewCtrl()->RemoveAllUserScripts();
     }
     
-    //https://docs.wxwidgets.org/3.2/classwx_web_view.html#a2597c3371ed654bf03262ec6d34a0126
-    //The Edge backend only supports a single message handler and the 
-    //IE backend does not support script message handlers.
     bool WebBrowser::AddScriptMessageHandler(const string& name)
     {
         return GetWebViewCtrl()->AddScriptMessageHandler(wxStr(name));
@@ -814,6 +881,124 @@ namespace Alternet::UI
     {
         return dynamic_cast<wxWebView*>(GetWxWindow());
     }
-    
+
+    wxString GetUsefulDefines() 
+    {
+        wxString result = "Defines: ";
+#ifdef wxUSE_UNSAFE_WXSTRING_CONV
+        result += " wxUSE_UNSAFE_WXSTRING_CONV";
+#endif
+#ifdef wxUSE_ZIPSTREAM
+        result += " wxUSE_ZIPSTREAM";
+#endif
+#ifdef wxUSE_DPI_AWARE_MANIFEST
+        result += " wxUSE_DPI_AWARE_MANIFEST";
+#endif
+#ifdef wxUSE_NO_MANIFEST
+        result += " wxUSE_NO_MANIFEST";
+#endif
+#ifdef wxUSE_RC_MANIFEST
+        result += " wxUSE_RC_MANIFEST";
+#endif
+#ifdef wxUSE_VC_CRTDBG
+        result += " wxUSE_VC_CRTDBG";
+#endif
+#ifdef wxUSE_UXTHEME
+        result += " wxUSE_UXTHEME";
+#endif
+#ifdef wxUSE_NANOSVG_EXTERNAL_ENABLE_IMPL
+        result += " wxUSE_NANOSVG_EXTERNAL_ENABLE_IMPL";
+#endif
+#ifdef wxUSE_NANOSVG_EXTERNAL
+        result += " wxUSE_NANOSVG_EXTERNAL";
+#endif
+#ifdef wxUSE_FS_ZIP
+        result += " wxUSE_FS_ZIP";
+#endif
+#ifdef wxUSE_FS_INET
+        result += " wxUSE_FS_INET";
+#endif
+#ifdef wxUSE_FS_ARCHIVE
+        result += " wxUSE_FS_ARCHIVE";
+#endif
+#ifdef wxUSE_SVG
+        result += " wxUSE_SVG";
+#endif
+#ifdef wxUSE_NANOSVG
+        result += " wxUSE_NANOSVG";
+#endif
+#ifdef wxUSE_MEMORY_TRACING
+        result += " wxUSE_MEMORY_TRACING";
+#endif
+#ifdef wxUSE_FILESYSTEM
+        result += " wxUSE_FILESYSTEM";
+#endif
+#ifdef wxUSE_EXCEPTIONS
+        result += " wxUSE_EXCEPTIONS";
+#endif
+#ifdef wxUSE_STD_STRING
+        result += " wxUSE_STD_STRING";
+#endif
+#ifdef wxUSE_STL
+        result += " wxUSE_STL";
+#endif
+#ifdef wxUSE_ARCHIVE_STREAMS
+        result += " wxUSE_ARCHIVE_STREAMS";
+#endif
+#ifdef wxNO_UNSAFE_WXSTRING_CONV
+        result += " wxNO_UNSAFE_WXSTRING_CONV";
+#endif
+        return result;
+    }
+
+    string WebBrowser::DoCommandGlobal(const string& cmdName, const string& cmdParam1, const string& cmdParam2)
+    {
+        if (cmdName == wxStr("GetUsefulDefines"))
+            return wxStr(GetUsefulDefines());
+        
+
+        if (cmdName == wxStr("IsDebug"))
+        {
+#ifdef _DEBUG
+            return wxStr("true");
+#else
+            return wxStr("false");
+#endif
+        }
+
+        return wxStr(wxEmptyString);
+    }
+
+    string WebBrowser::DoCommand(const string& cmdName, const string& cmdParam1, const string& cmdParam2)
+    {
+        string noresult = wxStr("");
+
+        if (cmdName == wxStr("ZipScheme.Init"))
+        {
+            RegisterHandlerZip(cmdParam1);
+            return noresult;
+        }
+        if (cmdName == wxStr("MemoryScheme.Init"))
+        {
+            RegisterHandlerMemory(cmdParam1);
+            return noresult;
+        }
+
+#if defined(__WXMSW__)
+        if (cmdName == wxStr("IE.ShowPrintPreviewDialog"))
+        {
+            IEShowPrintPreviewDialog();
+            return noresult;
+        }
+        if (cmdName == wxStr("IE.SetScriptErrorsSuppressed"))
+        {
+            bool supressErrors = (cmdParam1 == wxStr("true"));
+            IESetScriptErrorsSuppressed(supressErrors);
+            return noresult;
+        }
+#endif
+        return noresult;
+    }
+
 }
 

@@ -63,6 +63,10 @@ void SetEditable(bool value);
 int GetZoom();
 void SetZoom(int value);
 
+static void SetDefaultUserAgent(const string& value);
+static void SetDefaultScriptMesageName(const string& value);
+static void SetDefaultFSNameMemory(const string& value);
+static void SetDefaultFSNameArchive(const string& value);
 string DoCommand(const string& cmdName, const string& cmdParam1, const string& cmdParam2);
 static string DoCommandGlobal(const string& cmdName, const string& cmdParam1, const string& cmdParam2);
 void* GetNativeBackend();

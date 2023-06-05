@@ -13,10 +13,6 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Alternet.UI
 {
-    //public static void SetDefaultUserAgent
-    //public static void SetDefaultScriptMesageName
-    //public static void SetDefaultFSNameMemory
-    //public static void SetDefaultFSNameArchive
 
     /// <include file="Interfaces/IWebBrowser.xml" path='doc/WebBrowser/*'/>
     public partial class WebBrowser : Control, IWebBrowser
@@ -419,6 +415,34 @@ namespace Alternet.UI
             return WebBrowserNativeApi.WebBrowser_GetBackendVersionString_((int)value);
         }
 
+        /// <include file="Interfaces/IWebBrowser.xml" 
+        ///     path='doc/SetDefaultUserAgent/*'/>
+        public static void SetDefaultUserAgent(string value) 
+        {
+            Native.WebBrowser.SetDefaultUserAgent(value);
+        }
+
+        /// <include file="Interfaces/IWebBrowser.xml" 
+        ///     path='doc/SetDefaultScriptMesageName/*'/>
+        public static void SetDefaultScriptMesageName(string value)
+        {
+            Native.WebBrowser.SetDefaultScriptMesageName(value);
+        }
+
+        /// <include file="Interfaces/IWebBrowser.xml" 
+        ///     path='doc/SetDefaultFSNameMemory/*'/>
+        public static void SetDefaultFSNameMemory(string value)
+        {
+            Native.WebBrowser.SetDefaultFSNameMemory(value);
+        }
+
+        /// <include file="Interfaces/IWebBrowser.xml" 
+        ///     path='doc/SetDefaultFSNameArchive/*'/>
+        public static void SetDefaultFSNameArchive(string value)
+        {
+            Native.WebBrowser.SetDefaultFSNameArchive(value);
+        }
+
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetDefaultPage/*'/>
         public static void SetDefaultPage(string url)
         {
@@ -670,6 +694,8 @@ namespace Alternet.UI
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/Cut/*'/>
         public virtual void Cut() 
         {
+            if (!CanCut)
+                return;
             CheckDisposed();
             Browser.Cut(); 
         }
@@ -677,6 +703,8 @@ namespace Alternet.UI
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/Copy/*'/>
         public virtual void Copy() 
         {
+            if (!CanCopy)
+                return;
             CheckDisposed();
             Browser.Copy(); 
         }
@@ -684,6 +712,8 @@ namespace Alternet.UI
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/Paste/*'/>
         public virtual void Paste() 
         {
+            if (!CanPaste)
+                return;
             CheckDisposed();
             Browser.Paste();
         }
@@ -711,6 +741,8 @@ namespace Alternet.UI
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/Undo/*'/>
         public virtual void Undo() 
         {
+            if (!CanUndo)
+                return;
             CheckDisposed();
             Browser.Undo(); 
         }
@@ -718,6 +750,8 @@ namespace Alternet.UI
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/Redo/*'/>
         public virtual void Redo() 
         {
+            if (!CanRedo)
+                return;
             CheckDisposed();
             Browser.Redo();
         }

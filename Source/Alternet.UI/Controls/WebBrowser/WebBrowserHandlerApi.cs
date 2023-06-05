@@ -14,8 +14,19 @@ namespace Alternet.UI
     internal class WebBrowserNativeApi
     {
         private const string ModuleName = Native.NativeApiProvider.NativeModuleName;
+/*
+        [DllImport(ModuleName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void WebBrowser_SetDefaultUserAgent_(string value);
 
-        
+        [DllImport(ModuleName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void WebBrowser_SetDefault_ScriptMesageName(string value);
+
+        [DllImport(ModuleName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void WebBrowser_SetDefaultFSNameMemory_(string value);
+
+        [DllImport(ModuleName, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void WebBrowser_SetDefaultFSNameArchive_(string value);
+*/
         [DllImport(ModuleName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int WebBrowser_Find_(IntPtr obj, string text, int flags);
 
