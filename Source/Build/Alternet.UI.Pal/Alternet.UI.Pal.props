@@ -51,6 +51,13 @@
         <WxWidgetsWindowsBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsWindowsBuildDirectoryNameParent)\$(WxWidgetsWindowsBuildDirectoryName)</WxWidgetsWindowsBuildDirectory>
         <WxWidgetsWindowsBuildDirectoryParent>$(WxWidgetsDirectory)\$(WxWidgetsWindowsBuildDirectoryNameParent)</WxWidgetsWindowsBuildDirectoryParent>
 
+	<WxWidgetsWindowsBuildDirectory_vc_mswu>$(WxWidgetsWindowsBuildDirectory)\vc_mswu</WxWidgetsWindowsBuildDirectory_vc_mswu>
+	<WxWidgetsWindowsBuildDirectory_vc_x64_mswu>$(WxWidgetsWindowsBuildDirectory)\vc_x64_mswu</WxWidgetsWindowsBuildDirectory_vc_x64_mswu>
+	<WxWidgetsWindowsBuildDirectory_vc_mswud>$(WxWidgetsWindowsBuildDirectory)\vc_mswud</WxWidgetsWindowsBuildDirectory_vc_mswud>
+	<WxWidgetsWindowsBuildDirectory_vc_x64_mswud>$(WxWidgetsWindowsBuildDirectory)\vc_x64_mswud</WxWidgetsWindowsBuildDirectory_vc_x64_mswud>
+	<WxWidgetsWindowsBuildDirectory_vc_lib>$(WxWidgetsDirectory)\lib\vc_lib</WxWidgetsWindowsBuildDirectory_vc_lib>
+	<WxWidgetsWindowsBuildDirectory_vc_x64_lib>$(WxWidgetsDirectory)\lib\vc_x64_lib</WxWidgetsWindowsBuildDirectory_vc_x64_lib>
+
         <WxWidgetsGtkBuildDirectoryName>gtk-build</WxWidgetsGtkBuildDirectoryName>
         <WxWidgetsGtkBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsGtkBuildDirectoryName)</WxWidgetsGtkBuildDirectory>
 

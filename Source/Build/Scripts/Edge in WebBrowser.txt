@@ -11,20 +11,18 @@ For the installation, instead of running “Build WxWidgets.bat”, you need
 to follow these steps:
 
 STEP 1. Run “AlternetUI/Source/Build/Scripts/Download WxWidgets.bat”.
-
-STEP 2. Run “AlternetUI/Source/Build/Scripts/Download WebView.bat”. 
-It downloads the WebView2 SDK nuget package 
+It downloads the wxWidgets library and the WebView2 SDK nuget package 
 (Version 1.0.1774.30 or newer) and extracts the package (it's a zip archive) to 
 "AlternetUI/External/wxWidgets/3rdparty/webview2" (you should have 
 "3rdparty/webview2/build/native/include/WebView2.h" and other files after unpacking it).
 
-STEP 3. Edit file “\AlternetUI\External\wxWidgets\include\wx\msw\setup.h”. 
+STEP 2. Edit file “\AlternetUI\External\wxWidgets\include\wx\msw\setup.h”. 
 Change defines wxUSE_WEBVIEW_EDGE 
 and wxUSE_WEBVIEW_EDGE_STATIC like this:
 	#define wxUSE_WEBVIEW_EDGE 1
 	#define wxUSE_WEBVIEW_EDGE_STATIC 1
 
-STEP 4. Run "AlternetUI/Source/Build/Scripts/Build WxWidgets Without Download.bat".
+STEP 3. Run "AlternetUI/Source/Build/Scripts/Build WxWidgets Without Download.bat".
 
 ==========================
 Remarks:
