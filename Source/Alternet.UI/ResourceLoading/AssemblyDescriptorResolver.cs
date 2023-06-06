@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Alternet.Drawing;
+using System.Runtime.CompilerServices;
 
 namespace Alternet.UI
 {

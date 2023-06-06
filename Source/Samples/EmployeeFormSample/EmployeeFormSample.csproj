@@ -7,16 +7,15 @@
       <Nullable>enable</Nullable>
     </PropertyGroup>
 
-  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-    <TargetFrameworks>net6.0;net461</TargetFrameworks>
-  </PropertyGroup>
+	<PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+		<TargetFrameworks>net6.0;net462</TargetFrameworks>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-    <TargetFrameworks>net6.0</TargetFrameworks>
-    <RuntimeFrameworkVersion>6.0.0</RuntimeFrameworkVersion>
-  </PropertyGroup>
+	<PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
+		<TargetFrameworks>net6.0</TargetFrameworks>
+	</PropertyGroup>
 
-  <ItemGroup>
+	<ItemGroup>
       <Compile Remove="build\**" />
       <EmbeddedResource Remove="build\**" />
       <None Remove="build\**" />

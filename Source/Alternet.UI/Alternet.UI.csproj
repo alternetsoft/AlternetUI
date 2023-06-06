@@ -33,15 +33,15 @@
     <DefineConstants>$(DefineConstants);FEATURE_WINDOWS_SYSTEM_COLORS</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-    <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
-  </PropertyGroup>
+	<PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+		<TargetFrameworks>net6.0;net462</TargetFrameworks>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
-  </PropertyGroup>
+	<PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
+		<TargetFrameworks>net6.0</TargetFrameworks>
+	</PropertyGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <Compile Remove="build\**" />
     <EmbeddedResource Remove="build\**" />
     <None Remove="build\**" />
@@ -104,8 +104,8 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netcoreapp3.1\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\netcoreapp3.1" />
-    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\net46\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net46" />
+    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\net6.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net6.0" />
+	  <None Include="..\Alternet.UI.Build.Tasks\bin\Release\net462\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net462" />
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(';NETFRAMEWORK'))">
