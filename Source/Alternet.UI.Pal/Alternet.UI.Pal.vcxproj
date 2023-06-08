@@ -76,6 +76,7 @@
     <IntDir>obj\x86\$(Configuration)\</IntDir>
     <GenerateManifest>true</GenerateManifest>
     <TargetName>Alternet.UI.Pal</TargetName>
+    <IncludePath>..\..\External\wxWidgets\lib\vc_x86_lib\mswud\wx\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -83,12 +84,14 @@
     <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
     <GenerateManifest>true</GenerateManifest>
     <TargetName>Alternet.UI.Pal</TargetName>
+    <IncludePath>..\..\External\wxWidgets\lib\vc_x64_lib\mswud\wx\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)\bin\x86\$(Configuration)\</OutDir>
     <IntDir>obj\x86\$(Configuration)\</IntDir>
     <TargetName>Alternet.UI.Pal</TargetName>
+    <IncludePath>..\..\External\wxWidgets\lib\vc_x86_lib\mswu\wx\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -96,6 +99,7 @@
     <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
     <GenerateManifest>true</GenerateManifest>
     <TargetName>Alternet.UI.Pal</TargetName>
+    <IncludePath>..\..\External\wxWidgets\lib\vc_x64_lib\mswu\wx\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
