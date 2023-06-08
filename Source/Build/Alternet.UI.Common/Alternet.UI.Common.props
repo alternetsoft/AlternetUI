@@ -14,8 +14,8 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <DotNetPlatformMoniker>net40</DotNetPlatformMoniker>
-        <DotNetCorePlatformMoniker>netcoreapp3.1</DotNetCorePlatformMoniker>
+        <DotNetPlatformMoniker>net462</DotNetPlatformMoniker>
+        <DotNetCorePlatformMoniker>net6.0</DotNetCorePlatformMoniker>
     </PropertyGroup>
 
 </Project>

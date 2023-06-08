@@ -5,11 +5,11 @@
   </PropertyGroup>
 
 	<PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-		<TargetFrameworks>net6.0;net462</TargetFrameworks>
+		<TargetFrameworks>net7.0;net6.0;net462</TargetFrameworks>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-		<TargetFrameworks>net6.0</TargetFrameworks>
+		<TargetFrameworks>net7.0;net6.0</TargetFrameworks>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -30,10 +30,9 @@
 
   <Target Name="EmbedWellKnownApiInfo" BeforeTargets="PrepareForBuild" Condition="'$(TargetFramework)' != ''">
     <PropertyGroup>
-      <ApiInfoCollectorTargetFramework>net6.0</ApiInfoCollectorTargetFramework>
       <ApiInfoXmlFilePath>$(IntermediateOutputPath)\WellKnownApiInfo.xml</ApiInfoXmlFilePath>
-      <ApiInfoCollectorToolPath>$(MSBuildThisFileDirectory)\Alternet.UI.Build.Tasks.ApiInfoCollector\bin\$(Configuration)\$(ApiInfoCollectorTargetFramework)\Alternet.UI.Build.Tasks.ApiInfoCollector</ApiInfoCollectorToolPath>
-      <ApiInfoCollectorInputAssemblyPath>$(MSBuildThisFileDirectory)\..\Alternet.UI\bin\$(Configuration)\$(ApiInfoCollectorTargetFramework)\Alternet.UI.dll</ApiInfoCollectorInputAssemblyPath>
+      <ApiInfoCollectorToolPath>$(MSBuildThisFileDirectory)\Alternet.UI.Build.Tasks.ApiInfoCollector\bin\$(Configuration)\$(TargetFramework)\Alternet.UI.Build.Tasks.ApiInfoCollector</ApiInfoCollectorToolPath>
+      <ApiInfoCollectorInputAssemblyPath>$(MSBuildThisFileDirectory)\..\Alternet.UI\bin\$(Configuration)\$(TargetFramework)\Alternet.UI.dll</ApiInfoCollectorInputAssemblyPath>
     </PropertyGroup>
 
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">

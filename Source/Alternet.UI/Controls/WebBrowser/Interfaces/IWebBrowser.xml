@@ -56,7 +56,7 @@
     folder; otherwise, <see langword = "false"/>.
 </param>
 <example>
-<code>
+<code language="C#">
 SetBackendPath("Edge",true);
 </code>
 </example>
@@ -191,7 +191,7 @@ SetBackendPath("Edge",true);
 				<para>
 					The <see cref="WebBrowserEventArgs.NavigationError"/> will contain an error type. 
 					The <see cref="WebBrowserEventArgs.Text"/> may contain a backend-specific
-					more precise error message/code.
+					more precise error message or code.
 				</para>
 			</remarks>
 		</Error>
@@ -451,7 +451,7 @@ SetBackendPath("Edge",true);
         </para>
     </summary>
 <example>
-<code>
+<code language="C#">
 bool ScriptMessageHandlerAdded = false;
 ScriptMessageHandlerAdded = WebBrowser1.AddScriptMessageHandler("wx_msg");
 if(!ScriptMessageHandlerAdded)

@@ -3,6 +3,8 @@
 
     <Target Name="CleanWxWidgets">
         <RemoveDir Directories="$(WxWidgetsDirectory)" Condition="Exists($(WxWidgetsDirectory))"/>
+	<Delete Files="$(WxWidgetsDownloadTargetPath)" Condition="Exists($(WxWidgetsDownloadTargetPath))"/>
+	<Delete Files="$(WebViewDownloadTargetPath)" Condition="Exists($(WebViewDownloadTargetPath))"/>
     </Target>
 
     <Target Name="DownloadAndExtractWebView">
@@ -15,6 +17,7 @@
 
     <Target Name="DownloadAndExtractWxWidgets">
         <CallTarget Targets="CleanWxWidgets" />
+	
         <DownloadFile Condition="!Exists($(WxWidgetsDownloadTargetPath))"
             SourceUrl="$(WxWidgetsDownloadUrl)"
             DestinationFolder="$(WxWidgetsDownloadDirectory)" DestinationFileName="$(WxWidgetsDownloadFileName)" />

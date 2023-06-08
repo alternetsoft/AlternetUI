@@ -8,11 +8,11 @@
     </PropertyGroup>
 
 	<PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-		<TargetFrameworks>net6.0;net462</TargetFrameworks>
+		<TargetFrameworks>net7.0;net6.0;net462</TargetFrameworks>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-		<TargetFrameworks>net6.0</TargetFrameworks>
+		<TargetFrameworks>net7.0;net6.0</TargetFrameworks>
 	</PropertyGroup>
 
 	<ItemGroup>
