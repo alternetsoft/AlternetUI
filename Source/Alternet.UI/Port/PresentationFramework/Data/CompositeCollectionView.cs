@@ -60,7 +60,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Count includes the number of single item in the CompositeCollection
         /// and the counts from the collection views of any sub-collections
-        /// contained in <seealso cref="CollectionContainer"/>.
+        /// contained in <see cref="CollectionContainer"/>.
         /// Empty collection containers do not add to the count.
         /// </remarks>
         public override int Count
@@ -84,7 +84,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// Checks with all the collection views of any sub-collections
-        /// contained in <seealso cref="CollectionContainer"/>.
+        /// contained in <see cref="CollectionContainer"/>.
         /// </remarks>
         // This is faster than calling (Count == 0) because it stops at first item found
         public override bool IsEmpty
@@ -113,7 +113,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Return true if <seealso cref="CollectionView.CurrentItem"/> is beyond the end or the collection is empty.
+        /// Return true if <see cref="CollectionView.CurrentItem"/> is beyond the end or the collection is empty.
         /// </summary>
         public override bool IsCurrentAfterLast
         {
@@ -126,7 +126,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Return true if <seealso cref="CollectionView.CurrentItem"/> is before the beginning or the collection is empty.
+        /// Return true if <see cref="CollectionView.CurrentItem"/> is before the beginning or the collection is empty.
         /// </summary>
         public override bool IsCurrentBeforeFirst
         {
@@ -140,7 +140,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Indicates whether or not this ICollectionView can do any filtering.
-        /// When false, set <seealso cref="CollectionView.Filter"/> will throw an exception.
+        /// When false, set <see cref="CollectionView.Filter"/> will throw an exception.
         /// </summary>
         public override bool CanFilter
         {
@@ -210,11 +210,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Move <seealso cref="ICollectionView.CurrentItem"/> to the given item.
+        /// Move <see cref="ICollectionView.CurrentItem"/> to the given item.
         /// If the item is not found, move to BeforeFirst.
         /// </summary>
         /// <param name="item">Move Current to this item.</param>
-        /// <returns>true if <seealso cref="ICollectionView.CurrentItem"/> points to an item within the view.</returns>
+        /// <returns>true if <see cref="ICollectionView.CurrentItem"/> points to an item within the view.</returns>
         public override bool MoveCurrentTo(object item)
         {
             // if already on item, don't do anything
@@ -231,9 +231,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Move <seealso cref="ICollectionView.CurrentItem"/> to the first item.
+        /// Move <see cref="ICollectionView.CurrentItem"/> to the first item.
         /// </summary>
-        /// <returns>true if <seealso cref="ICollectionView.CurrentItem"/> points to an item within the view.</returns>
+        /// <returns>true if <see cref="ICollectionView.CurrentItem"/> points to an item within the view.</returns>
         public override bool MoveCurrentToFirst()
         {
             if (IsEmpty)
@@ -242,9 +242,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Move <seealso cref="ICollectionView.CurrentItem"/> to the last item.
+        /// Move <see cref="ICollectionView.CurrentItem"/> to the last item.
         /// </summary>
-        /// <returns>true if <seealso cref="ICollectionView.CurrentItem"/> points to an item within the view.</returns>
+        /// <returns>true if <see cref="ICollectionView.CurrentItem"/> points to an item within the view.</returns>
         public override bool MoveCurrentToLast()
         {
             bool oldIsCurrentAfterLast = IsCurrentAfterLast;
@@ -275,9 +275,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Move <seealso cref="ICollectionView.CurrentItem"/> to the next item.
+        /// Move <see cref="ICollectionView.CurrentItem"/> to the next item.
         /// </summary>
-        /// <returns>true if <seealso cref="ICollectionView.CurrentItem"/> points to an item within the view.</returns>
+        /// <returns>true if <see cref="ICollectionView.CurrentItem"/> points to an item within the view.</returns>
         public override bool MoveCurrentToNext()
         {
             if (IsCurrentAfterLast)
@@ -286,9 +286,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Move <seealso cref="ICollectionView.CurrentItem"/> to the previous item.
+        /// Move <see cref="ICollectionView.CurrentItem"/> to the previous item.
         /// </summary>
-        /// <returns>true if <seealso cref="ICollectionView.CurrentItem"/> points to an item within the view.</returns>
+        /// <returns>true if <see cref="ICollectionView.CurrentItem"/> points to an item within the view.</returns>
         public override bool MoveCurrentToPrevious()
         {
             if (IsCurrentBeforeFirst)
@@ -297,10 +297,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Move <seealso cref="CollectionView.CurrentItem"/> to the item at the given index.
+        /// Move <see cref="CollectionView.CurrentItem"/> to the item at the given index.
         /// </summary>
         /// <param name="position">Move CurrentItem to this index</param>
-        /// <returns>true if <seealso cref="CollectionView.CurrentItem"/> points to an item within the view.</returns>
+        /// <returns>true if <see cref="CollectionView.CurrentItem"/> points to an item within the view.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
         /// position is less than Before-First (-1) or greater than After-Last (Count)
         /// </exception>
@@ -352,7 +352,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// Since CompositeCollectionView does not support sorting and filtering,
-        /// this will simply raise a Reset event to <seealso cref="INotifyCollectionChanged.CollectionChanged"/> listeners.
+        /// this will simply raise a Reset event to <see cref="INotifyCollectionChanged.CollectionChanged"/> listeners.
         /// </remarks>
         protected override void RefreshOverride()
         {

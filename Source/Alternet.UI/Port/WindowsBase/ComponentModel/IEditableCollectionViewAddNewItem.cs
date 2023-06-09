@@ -19,14 +19,14 @@ namespace Alternet.UI
     public interface IEditableCollectionViewAddNewItem : IEditableCollectionView
 {
     /// <summary>
-    /// Return true if the view supports <seealso cref="AddNewItem"/>.
+    /// Return true if the view supports <see cref="AddNewItem"/>.
     /// </summary>
     bool    CanAddNewItem { get; }
 
     /// <summary>
     /// Add a new item to the underlying collection.  Returns the new item.
     /// After calling AddNewItem and changing the new item as desired, either
-    /// <seealso cref="IEditableCollectionView.CommitNew"/> or <seealso cref="IEditableCollectionView.CancelNew"/> should be
+    /// <see cref="IEditableCollectionView.CommitNew"/> or <see cref="IEditableCollectionView.CancelNew"/> should be
     /// called to complete the transaction.
     /// </summary>
     object  AddNewItem(object newItem);

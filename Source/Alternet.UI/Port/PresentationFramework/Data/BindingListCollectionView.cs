@@ -19,8 +19,9 @@ using System.Diagnostics;
 namespace Alternet.UI
 {
     ///<summary>
-    /// <seealso cref="ICollectionView"/> based on and associated to <seealso cref="IBindingList"/>
-    /// and <seealso cref="IBindingListView"/>, namely ADO DataViews.
+    /// <see cref="ICollectionView"/> based on and associated to 
+    /// <see cref="IBindingList"/>
+    /// and <see cref="IBindingListView"/>, namely ADO DataViews.
     ///</summary>
     public sealed class BindingListCollectionView : CollectionView, IComparer, IEditableCollectionView, ICollectionViewLiveShaping, IItemProperties
     {
@@ -94,10 +95,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Move <seealso cref="CollectionView.CurrentItem"/> to the item at the given index.
+        /// Move <see cref="CollectionView.CurrentItem"/> to the item at the given index.
         /// </summary>
         /// <param name="position">Move CurrentItem to this index</param>
-        /// <returns>true if <seealso cref="CollectionView.CurrentItem"/> points to an item within the view.</returns>
+        /// <returns>true if <see cref="CollectionView.CurrentItem"/> points to an item within the view.</returns>
         public override bool MoveCurrentToPosition(int position)
         {
             VerifyRefreshNotDeferred();
@@ -214,7 +215,7 @@ namespace Alternet.UI
         /// <remarks>
         /// <p>
         /// If the underlying SourceCollection only implements IBindingList,
-        /// then only one sort criteria in form of a <seealso cref="SortDescription"/>
+        /// then only one sort criteria in form of a <see cref="SortDescription"/>
         /// can be added, specifying a property and direction to sort by.
         /// Adding more than one SortDescription will cause a InvalidOperationException.
         /// One such class is Generic BindingList
@@ -222,13 +223,13 @@ namespace Alternet.UI
         /// <p>
         /// Classes like ADO's DataView (the view around a DataTable) do implement
         /// IBindingListView which can support sorting by more than one property
-        /// and also filtering <seealso cref="CustomFilter" />
+        /// and also filtering <see cref="CustomFilter" />
         /// </p>
         /// <p>
         /// Some IBindingList implementations do not support sorting; for those this property
         /// will return an empty and immutable / read-only SortDescription collection.
         /// Attempting to modify such a collection will cause NotSupportedException.
-        /// Use <seealso cref="CanSort"/> property on this CollectionView to test if sorting is supported
+        /// Use <see cref="CanSort"/> property on this CollectionView to test if sorting is supported
         /// before modifying the returned collection.
         /// </p>
         /// </remarks>
@@ -253,7 +254,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Test if this ICollectionView supports sorting before adding
-        /// to <seealso cref="SortDescriptions"/>.
+        /// to <see cref="SortDescriptions"/>.
         /// </summary>
         /// <remarks>
         /// ListCollectionView does implement an IComparer based sorting.
@@ -277,7 +278,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// BindingListCollectionView does not support callback-based filtering.
-        /// Use <seealso cref="CustomFilter" /> instead.
+        /// Use <see cref="CustomFilter" /> instead.
         /// </summary>
         public override bool CanFilter
         {
@@ -292,7 +293,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// Before assigning, test if this CollectionView supports custom filtering
-        /// <seealso cref="CanCustomFilter"/>.
+        /// <see cref="CanCustomFilter"/>.
         /// The actual syntax depends on the implementer of IBindingListView. ADO's DataView is
         /// a common example, see System.Data.DataView.RowFilter for its supported
         /// filter expression syntax.
@@ -317,7 +318,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Test if this CollectionView supports custom filtering before assigning
-        /// a filter string to <seealso cref="CustomFilter"/>.
+        /// a filter string to <see cref="CustomFilter"/>.
         /// </summary>
         public bool CanCustomFilter
         {
@@ -543,7 +544,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Return true if the view supports <seealso cref="AddNew"/>.
+        /// Return true if the view supports <see cref="AddNew"/>.
         /// </summary>
         public bool CanAddNew
         {
@@ -553,7 +554,7 @@ namespace Alternet.UI
         /// <summary>
         /// Add a new item to the underlying collection.  Returns the new item.
         /// After calling AddNew and changing the new item as desired, either
-        /// <seealso cref="CommitNew"/> or <seealso cref="CancelNew"/> should be
+        /// <see cref="CommitNew"/> or <see cref="CancelNew"/> should be
         /// called to complete the transaction.
         /// </summary>
         public object AddNew()
@@ -647,7 +648,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Complete the transaction started by <seealso cref="AddNew"/>.  The new
+        /// Complete the transaction started by <see cref="AddNew"/>.  The new
         /// item remains in the collection, and the view's sort, filter, and grouping
         /// specifications (if any) are applied to the new item.
         /// </summary>
@@ -695,7 +696,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Complete the transaction started by <seealso cref="AddNew"/>.  The new
+        /// Complete the transaction started by <see cref="AddNew"/>.  The new
         /// item is removed from the collection.
         /// </summary>
         public void CancelNew()
@@ -831,7 +832,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns true if an <seealso cref="AddNew"/> transaction is in progress.
+        /// Returns true if an <see cref="AddNew"/> transaction is in progress.
         /// </summary>
         public bool IsAddingNew
         {
@@ -839,7 +840,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// When an <seealso cref="AddNew"/> transaction is in progress, this property
+        /// When an <see cref="AddNew"/> transaction is in progress, this property
         /// returns the new item.  Otherwise it returns null.
         /// </summary>
         public object CurrentAddItem
@@ -864,8 +865,8 @@ namespace Alternet.UI
         #region Removing items
 
         /// <summary>
-        /// Return true if the view supports <seealso cref="Remove"/> and
-        /// <seealso cref="RemoveAt"/>.
+        /// Return true if the view supports <see cref="Remove"/> and
+        /// <see cref="RemoveAt"/>.
         /// </summary>
         public bool CanRemove
         {
@@ -953,8 +954,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Begins an editing transaction on the given item.  The transaction is
-        /// completed by calling either <seealso cref="CommitEdit"/> or
-        /// <seealso cref="CancelEdit"/>.  Any changes made to the item during
+        /// completed by calling either <see cref="CommitEdit"/> or
+        /// <see cref="CancelEdit"/>.  Any changes made to the item during
         /// the transaction are considered "pending", provided that the view supports
         /// the notion of "pending changes" for the given item.
         /// </summary>
@@ -985,7 +986,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Complete the transaction started by <seealso cref="EditItem"/>.
+        /// Complete the transaction started by <see cref="EditItem"/>.
         /// The pending changes (if any) to the item are committed.
         /// </summary>
         public void CommitEdit()
@@ -1024,7 +1025,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Complete the transaction started by <seealso cref="EditItem"/>.
+        /// Complete the transaction started by <see cref="EditItem"/>.
         /// The pending changes (if any) to the item are discarded.
         /// </summary>
         public void CancelEdit()
@@ -1062,7 +1063,7 @@ namespace Alternet.UI
         /// Returns true if the view supports the notion of "pending changes" on the
         /// current edit item.  This may vary, depending on the view and the particular
         /// item.  For example, a view might return true if the current edit item
-        /// implements <seealso cref="IEditableObject"/>, or if the view has special
+        /// implements <see cref="IEditableObject"/>, or if the view has special
         /// knowledge about the item that it can use to support rollback of pending
         /// changes.
         /// </summary>
@@ -1072,7 +1073,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns true if an <seealso cref="EditItem" /> transaction is in progress.
+        /// Returns true if an <see cref="EditItem" /> transaction is in progress.
         /// </summary>
         public bool IsEditingItem
         {
@@ -1080,7 +1081,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// When an <seealso cref="EditItem"/> transaction is in progress, this property
+        /// When an <see cref="EditItem"/> transaction is in progress, this property
         /// returns the affected item.  Otherwise it returns null.
         /// </summary>
         public object CurrentEditItem

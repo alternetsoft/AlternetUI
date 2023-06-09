@@ -171,7 +171,8 @@ namespace Alternet.UI
         /// each of its sources (during <see cref="CancelEdit"/>) to the state
         /// they had at the time of the most recent <see cref="BeginEdit"/>.
         /// This depends on whether the current sources provide a suitable
-        /// mechanism to implement the rollback, such as <seealso cref="IEditableObject"/>.
+        /// mechanism to implement the rollback, such as 
+        /// <see cref="IEditableObject"/>.
         /// </summary>
         public bool CanRestoreValues
         {

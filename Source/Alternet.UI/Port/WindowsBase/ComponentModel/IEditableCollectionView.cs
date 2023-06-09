@@ -15,7 +15,7 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Describes the desired position of the new item placeholder in an
-    /// <seealso cref="IEditableCollectionView"/>.
+    /// <see cref="IEditableCollectionView"/>.
     /// </summary>
     public enum NewItemPlaceholderPosition
 {
@@ -42,38 +42,38 @@ public interface IEditableCollectionView
     NewItemPlaceholderPosition NewItemPlaceholderPosition { get; set; }
 
     /// <summary>
-    /// Return true if the view supports <seealso cref="AddNew"/>.
+    /// Return true if the view supports <see cref="AddNew"/>.
     /// </summary>
     bool    CanAddNew { get; }
 
     /// <summary>
     /// Add a new item to the underlying collection.  Returns the new item.
     /// After calling AddNew and changing the new item as desired, either
-    /// <seealso cref="CommitNew"/> or <seealso cref="CancelNew"/> should be
+    /// <see cref="CommitNew"/> or <see cref="CancelNew"/> should be
     /// called to complete the transaction.
     /// </summary>
     object  AddNew();
 
     /// <summary>
-    /// Complete the transaction started by <seealso cref="AddNew"/>.  The new
+    /// Complete the transaction started by <see cref="AddNew"/>.  The new
     /// item remains in the collection, and the view's sort, filter, and grouping
     /// specifications (if any) are applied to the new item.
     /// </summary>
     void    CommitNew();
 
     /// <summary>
-    /// Complete the transaction started by <seealso cref="AddNew"/>.  The new
+    /// Complete the transaction started by <see cref="AddNew"/>.  The new
     /// item is removed from the collection.
     /// </summary>
     void    CancelNew();
 
     /// <summary>
-    /// Returns true if an <seealso cref="AddNew"/> transaction is in progress.
+    /// Returns true if an <see cref="AddNew"/> transaction is in progress.
     /// </summary>
     bool    IsAddingNew { get; }
 
     /// <summary>
-    /// When an <seealso cref="AddNew"/> transaction is in progress, this property
+    /// When an <see cref="AddNew"/> transaction is in progress, this property
     /// returns the new item.  Otherwise it returns null.
     /// </summary>
     object  CurrentAddItem { get; }
@@ -83,8 +83,8 @@ public interface IEditableCollectionView
     #region Removing items
 
     /// <summary>
-    /// Return true if the view supports <seealso cref="Remove"/> and
-    /// <seealso cref="RemoveAt"/>.
+    /// Return true if the view supports <see cref="Remove"/> and
+    /// <see cref="RemoveAt"/>.
     /// </summary>
     bool    CanRemove { get; }
 
@@ -106,21 +106,21 @@ public interface IEditableCollectionView
 
     /// <summary>
     /// Begins an editing transaction on the given item.  The transaction is
-    /// completed by calling either <seealso cref="CommitEdit"/> or
-    /// <seealso cref="CancelEdit"/>.  Any changes made to the item during
+    /// completed by calling either <see cref="CommitEdit"/> or
+    /// <see cref="CancelEdit"/>.  Any changes made to the item during
     /// the transaction are considered "pending", provided that the view supports
     /// the notion of "pending changes" for the given item.
     /// </summary>
     void    EditItem(object item);
 
     /// <summary>
-    /// Complete the transaction started by <seealso cref="EditItem"/>.
+    /// Complete the transaction started by <see cref="EditItem"/>.
     /// The pending changes (if any) to the item are committed.
     /// </summary>
     void    CommitEdit();
 
     /// <summary>
-    /// Complete the transaction started by <seealso cref="EditItem"/>.
+    /// Complete the transaction started by <see cref="EditItem"/>.
     /// The pending changes (if any) to the item are discarded.
     /// </summary>
     void    CancelEdit();
@@ -136,12 +136,12 @@ public interface IEditableCollectionView
     bool    CanCancelEdit { get; }
 
     /// <summary>
-    /// Returns true if an <seealso cref="EditItem"/> transaction is in progress.
+    /// Returns true if an <see cref="EditItem"/> transaction is in progress.
     /// </summary>
     bool    IsEditingItem { get; }
 
     /// <summary>
-    /// When an <seealso cref="EditItem"/> transaction is in progress, this property
+    /// When an <see cref="EditItem"/> transaction is in progress, this property
     /// returns the affected item.  Otherwise it returns null.
     /// </summary>
     object  CurrentEditItem { get; }

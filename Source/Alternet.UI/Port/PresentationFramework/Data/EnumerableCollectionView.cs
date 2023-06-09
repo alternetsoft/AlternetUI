@@ -99,11 +99,11 @@ namespace Alternet.UI
         /// Set/get a filter callback to filter out items in collection.
         /// This property will always accept a filter, but the collection view for the
         /// underlying InnerList or ItemsSource may not actually support filtering.
-        /// Please check <seealso cref="CanFilter"/>
+        /// Please check <see cref="CanFilter"/>
         /// </summary>
         /// <exception cref="NotSupportedException">
         /// Collections assigned to ItemsSource may not support filtering and could throw a NotSupportedException.
-        /// Use <seealso cref="CanSort"/> property to test if sorting is supported before adding
+        /// Use <see cref="CanSort"/> property to test if sorting is supported before adding
         /// to SortDescriptions.
         /// </exception>
         public override Predicate<object> Filter
@@ -114,7 +114,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Test if this ICollectionView supports filtering before assigning
-        /// a filter callback to <seealso cref="Filter"/>.
+        /// a filter callback to <see cref="Filter"/>.
         /// </summary>
         public override bool CanFilter
         {
@@ -127,13 +127,13 @@ namespace Alternet.UI
         /// <remarks>
         /// <p>
         /// Clear a sort criteria by assigning SortDescription.Empty to this property.
-        /// One or more sort criteria in form of <seealso cref="SortDescription"/>
+        /// One or more sort criteria in form of <see cref="SortDescription"/>
         /// can be used, each specifying a property and direction to sort by.
         /// </p>
         /// </remarks>
         /// <exception cref="NotSupportedException">
         /// Simpler implementations do not support sorting and will throw a NotSupportedException.
-        /// Use <seealso cref="CanSort"/> property to test if sorting is supported before adding
+        /// Use <see cref="CanSort"/> property to test if sorting is supported before adding
         /// to SortDescriptions.
         /// </exception>
         public override SortDescriptionCollection SortDescriptions
@@ -143,7 +143,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Test if this ICollectionView supports sorting before adding
-        /// to <seealso cref="SortDescriptions"/>.
+        /// to <see cref="SortDescriptions"/>.
         /// </summary>
         public override bool CanSort
         {
@@ -192,7 +192,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// The ordinal position of the <seealso cref="CurrentItem"/> within the (optionally
+        /// The ordinal position of the <see cref="CurrentItem"/> within the (optionally
         /// sorted and filtered) view.
         /// </summary>
         public override int CurrentPosition
@@ -378,7 +378,7 @@ namespace Alternet.UI
             return ((IEnumerable)_view).GetEnumerator();
         }
 
-        /// Re-create the view, using any <seealso cref="SortDescriptions"/>.
+        /// Re-create the view, using any <see cref="SortDescriptions"/>.
         protected override void RefreshOverride()
         {
             LoadSnapshot(SourceCollection);

@@ -33,7 +33,7 @@ public interface IItemProperties
 }
 
 /// <summary>
-/// Information about a property.  Returned by <seealso cref="IItemProperties.ItemProperties"/>
+/// Information about a property.  Returned by <see cref="IItemProperties.ItemProperties"/>
 /// </summary>
 public class ItemPropertyInfo
 {

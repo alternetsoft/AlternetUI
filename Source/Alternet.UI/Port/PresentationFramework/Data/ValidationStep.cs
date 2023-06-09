@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// <summary> Update the source with the new value </summary>
         UpdatedValue,
         /// <summary> Commit the source's new values.  This step does nothing
-        /// unless the source supports a commit mechanism such as <seealso cref="IEditableObject"/>
+        /// unless the source supports a commit mechanism such as <see cref="IEditableObject"/>
         /// </summary>
         CommittedValue,
     }

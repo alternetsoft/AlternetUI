@@ -58,7 +58,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Action indicates whether the <seealso cref="Error"/> is a new error
+        ///     Action indicates whether the <see cref="Error"/> is a new error
         ///     or a previous error that has now been cleared.
         /// </summary>
         public ValidationErrorEventAction Action
