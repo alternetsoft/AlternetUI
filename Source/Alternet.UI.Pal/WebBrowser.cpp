@@ -445,6 +445,13 @@ namespace Alternet::UI
             wxSharedPtr<wxWebViewHandler>(new wxWebViewArchiveHandler(wxStr(schemeName))));
     }
     
+    bool WebBrowser::IsBackendIE()
+    {
+        if (Backend == WEBBROWSER_BACKEND_IE || Backend == WEBBROWSER_BACKEND_IELATEST)
+            return TRUE;
+        return FALSE;
+    }
+
     static bool FSAddedMemory = false;
     void WebBrowser::RegisterHandlerMemory(const string& schemeName)
     {
@@ -573,13 +580,6 @@ namespace Alternet::UI
     int WebBrowser::GetBackendOS()
     {
         return WEBBROWSER_BACKEND_OS_MSW;
-    }
-    
-    bool WebBrowser::IsBackendIE() 
-    {
-        if (Backend == WEBBROWSER_BACKEND_IE || Backend == WEBBROWSER_BACKEND_IELATEST)
-            return TRUE;
-        return FALSE;
     }
     
     int WebBrowser::IEGetScriptErrorsSuppressed() 
