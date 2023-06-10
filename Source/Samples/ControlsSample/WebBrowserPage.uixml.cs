@@ -115,15 +115,20 @@ namespace ControlsSample
 
         private void LoadUrl(string s)
         {
+            if (s == null)
+            {
+                WebBrowser1.LoadURL();
+                return;
+            }
+
             if (s == "g")
                 s = "https://www.google.com";
 
-            if (!s.Contains("://"))
-                s = "https://" + s;
+            var url = WebBrowser.GetCorrectUri(s).ToString();
 
-            Log("==> LoadUrl: " + s);
+            Log("==> LoadUrl: " + url);
 
-            WebBrowser1.LoadURL(s);
+            WebBrowser1.LoadURL(url);
         }
 
         private void UpdateZoomButtons()

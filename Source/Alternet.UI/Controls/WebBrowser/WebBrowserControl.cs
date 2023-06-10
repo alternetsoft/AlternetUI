@@ -24,6 +24,31 @@ namespace Alternet.UI
 
         internal IWebBrowserLite Browser => (IWebBrowserLite)base.Handler;
 
+        public static Uri GetCorrectUri(string rawUrl)
+        {
+            Uri uri;
+
+            if (Uri.IsWellFormedUriString(rawUrl, UriKind.Absolute))
+                uri = new Uri(rawUrl);
+            else
+            if (!rawUrl.Contains(" ") && rawUrl.Contains("."))
+            {
+                // An invalid URI contains a dot and no spaces,
+                // try tacking http:// on the front.
+                uri = new Uri("http://" + rawUrl);
+            }
+            else
+            {
+                // Otherwise treat it as a web search.
+                uri = new Uri("https://bing.com/search?q=" +
+                    string.Join("+", Uri.EscapeDataString(rawUrl).Split(
+                        new string[] { "%20" },
+                        StringSplitOptions.RemoveEmptyEntries)));
+            }
+
+            return uri;
+        }
+
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/CrtSetDbgFlag/*'/>
         public static void CrtSetDbgFlag(int value)
         {

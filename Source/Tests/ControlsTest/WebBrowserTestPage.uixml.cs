@@ -420,7 +420,7 @@ namespace ControlsTest
         private void WebBrowser1_NewWindow(object sender, WebBrowserEventArgs e)
         {
             LogWebBrowserEvent(e);
-            WebBrowser1.LoadURL(e.Url);
+            LoadUrl(e.Url);
         }
 
         private void WebBrowser1_TitleChanged(object sender, WebBrowserEventArgs e)
@@ -445,10 +445,13 @@ namespace ControlsTest
             WebBrowser1.LoadURL("file://" + filename.Replace('\\', '/'));
         }
 
-        private void LoadUrl(string s)
+        private void LoadUrl(string? s)
         {
-            if (s == "g")
-                s = "https://www.google.com";
+            if (s == null)
+            {
+                WebBrowser1.LoadURL();
+                return;
+            }
 
             if (s == "i")
             {
@@ -474,11 +477,13 @@ namespace ControlsTest
                 return;
             }
 
-            if (!s.Contains("://"))
-                s = "https://" + s;
+            if (s == "g")
+                s = "https://www.google.com";
 
-            Log("==> LoadUrl: " + s);
-            WebBrowser1.LoadURL(s);
+            var url = WebBrowser.GetCorrectUri(s).ToString();
+
+            Log("==> LoadUrl: " + url);
+            WebBrowser1.LoadURL(url);
         }
 
         private void LogProp(object? obj, string propName, string? prefix = null)
