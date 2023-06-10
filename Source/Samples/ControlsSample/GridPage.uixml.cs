@@ -1,10 +1,10 @@
-﻿using Alternet.UI;
-using System;
+﻿using System;
 using System.Linq;
+using Alternet.UI;
 
 namespace ControlsSample
 {
-    partial class GridPage : Control
+    internal partial class GridPage : Control
     {
         private IPageSite? site;
 
@@ -22,6 +22,5 @@ namespace ControlsSample
                 site = value;
             }
         }
-
     }
 }

@@ -1,10 +1,10 @@
-using Alternet.UI;
 using System;
 using System.Linq;
+using Alternet.UI;
 
 namespace ControlsSample
 {
-    partial class CheckListBoxPage : Control
+    internal partial class CheckListBoxPage : Control
     {
         private IPageSite? site;
 

@@ -1,10 +1,10 @@
-﻿using Alternet.UI;
-using System;
+﻿using System;
 using System.Linq;
+using Alternet.UI;
 
 namespace ControlsSample
 {
-    partial class RadioButtonsPage : Control
+    internal partial class RadioButtonsPage : Control
     {
         private IPageSite? site;
 
@@ -22,7 +22,6 @@ namespace ControlsSample
                 site = value;
             }
         }
-
 
         private void RadioButton_CheckedChanged(object sender, EventArgs e)
         {

@@ -29,22 +29,14 @@
       <None Remove="CheckBoxesPage.uixml" />
       <None Remove="CheckListBoxPage.uixml" />
       <None Remove="ComboBoxPage.uixml" />
-      <None Remove="Edge\readme.txt" />
-      <None Remove="Edge\win-arm64\readme.txt" />
-      <None Remove="Edge\win-x64\readme.txt" />
-      <None Remove="Edge\win-x86\readme.txt" />
       <None Remove="ExampleContextMenu.uixml" />
       <None Remove="GridPage.uixml" />
-      <None Remove="Html\doc.zip" />
-      <None Remove="Html\pageinresource.html" />
-      <None Remove="Html\SampleArchive.zip" />
       <None Remove="Html\SampleArchive\Html\page1.html" />
       <None Remove="Html\SampleArchive\Html\page2.html" />
       <None Remove="Html\SampleArchive\Images\panda1.jpg" />
       <None Remove="Html\SampleArchive\Images\panda2.jpg" />
       <None Remove="Html\SampleArchive\root.html" />
       <None Remove="Html\SampleArchive\Styles\default.css" />
-      <None Remove="Html\version.html" />
       <None Remove="Resources\Svg\arrow-left.svg" />
       <None Remove="Resources\Svg\arrow-right.svg" />
       <None Remove="Resources\Svg\arrow-rotate-right.svg" />
@@ -79,24 +71,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="Edge\readme.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Edge\win-arm64\readme.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Edge\win-x64\readme.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Edge\win-x86\readme.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Html\doc.zip">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Html\SampleArchive.zip">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <Content Include="Html\SampleArchive\Html\page1.html">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
@@ -116,9 +90,6 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
       <Content Include="Html\SampleArchive\Styles\default.css">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Html\version.html">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
@@ -146,12 +117,18 @@
       </PackageReference>
     </ItemGroup>
 
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
     <ItemGroup>
         <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <Resource Include="Html\pageinresource.html" />
       <Resource Include="Resources\Svg\arrow-left.svg" />
       <Resource Include="Resources\Svg\arrow-right.svg" />
       <Resource Include="Resources\Svg\arrow-rotate-right.svg" />

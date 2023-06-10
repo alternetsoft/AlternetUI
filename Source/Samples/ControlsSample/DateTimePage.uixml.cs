@@ -1,10 +1,10 @@
-﻿using Alternet.UI;
-using System;
+﻿using System;
 using System.Linq;
+using Alternet.UI;
 
 namespace ControlsSample
 {
-    partial class DateTimePage : Control
+    internal partial class DateTimePage : Control
     {
         private IPageSite? site;
 

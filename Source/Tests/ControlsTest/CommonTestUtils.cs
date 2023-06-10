@@ -6,18 +6,52 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.UI;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace ControlsTest
 {
     internal static partial class CommonTestUtils
     {
-        public static bool CmdLineTest = false;
-        public static bool CmdLineLog = false;
-        public static bool CmdLineNoMfcDedug = false;
-        public static string? CmdLineExecCommands = null;
+        public static readonly string ResNamePrefix = "ControlsTest.";
 
-        public static void Nop() { }
+        private static readonly string MyLogFilePath =
+            Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, ".log");
+
+        private static readonly string[] StringSplitToArrayChars =
+        {
+            Environment.NewLine,
+        };
+
+        private static bool cmdLineTest = false;
+        private static bool cmdLineLog = false;
+        private static bool cmdLineNoMfcDedug = false;
+        private static string? cmdLineExecCommands = null;
+
+        public static bool CmdLineTest => cmdLineTest;
+
+        public static bool CmdLineLog => cmdLineLog;
+
+        public static bool CmdLineNoMfcDedug => cmdLineNoMfcDedug;
+
+        public static string? CmdLineExecCommands => cmdLineExecCommands;
+
+        public static void Nop()
+        {
+        }
+
+        public static void LogException(Exception e)
+        {
+            LogToFile("====== EXCEPTION:");
+            LogToFile(e.ToString());
+            LogToFile("======");
+        }
+
+        public static void DeleteLog()
+        {
+            if (File.Exists(MyLogFilePath))
+                File.Delete(MyLogFilePath);
+        }
 
         public static void ParseCmdLine(string[] args)
         {
@@ -25,24 +59,25 @@ namespace ControlsTest
             {
                 string text = args[i];
 
-                fn("-log", out CmdLineLog);
-                fn("-nomfcdebug", out CmdLineNoMfcDedug);
-                fn("-test", out CmdLineTest);
+                Fn("-log", out cmdLineLog);
+                Fn("-nomfcdebug", out cmdLineNoMfcDedug);
+                Fn("-test", out cmdLineTest);
 
-                if (text.StartsWith("-r=", StringComparison.CurrentCultureIgnoreCase))
-                    CmdLineExecCommands = text.Substring("-r=".Length).Trim();
-                
-                void fn(string strFlag, out bool boolFlag)
+                if (text.StartsWith(
+                        "-r=",
+                        StringComparison.CurrentCultureIgnoreCase))
+                    cmdLineExecCommands = text.Substring("-r=".Length).Trim();
+
+                void Fn(string strFlag, out bool boolFlag)
                 {
-                    boolFlag = (text.ToLower() == strFlag);
+                    boolFlag = text.ToLower() == strFlag;
                 }
             }
 
             if (!CmdLineTest)
             {
-                CmdLineTest = File.Exists(GetFileWithExt("test"));
+                cmdLineTest = File.Exists(GetFileWithExt("test"));
             }
-
         }
 
         public static string PathAddBackslash(string? path)
@@ -104,7 +139,6 @@ namespace ControlsTest
             return StringFromStream(stream);
         }
 
-        public static string ResNamePrefix = "ControlsSample.";
         public static Stream GetMyResourceStream(string resName)
         {
             Stream stream = ProcessResPrefix("rsrc://")!;
@@ -125,8 +159,24 @@ namespace ControlsTest
                     string name = ResNamePrefix + resName;
                     return Assembly.GetExecutingAssembly().GetManifestResourceStream(name);
                 }
+
                 return null;
             }
+        }
+
+        public static void LogToFile(string s)
+        {
+            if (!CommonTestUtils.CmdLineTest && !CommonTestUtils.CmdLineLog)
+                return;
+
+            string dt = System.DateTime.Now.ToString(WebBrowser.StringFormatJs);
+            string[] result = s.Split(StringSplitToArrayChars, StringSplitOptions.None);
+
+            string contents = string.Empty;
+
+            foreach (string s2 in result)
+                contents += $"{dt} :: {s2}{Environment.NewLine}";
+            File.AppendAllText(MyLogFilePath, contents);
         }
 
         public static string GetFileWithExt(string ext)
@@ -151,39 +201,39 @@ namespace ControlsTest
             streamWriter.Close();
         }
 
-        //scheme:///C:/example/docs.zip;protocol=zip/main.htm
+        // scheme:///C:/example/docs.zip;protocol=zip/main.htm
         public static string PrepareZipUrl(string schemeName, string arcPath, string fileInArchivePath)
         {
-            static string prepareUrl(string s)
+            static string PrepareUrl(string s)
             {
                 s = s.Replace('\\', '/');
                 return s;
             }
 
-            string url = schemeName + ":///" + prepareUrl(arcPath) + ";protocol=zip/" +
-                prepareUrl(fileInArchivePath);
+            string url = schemeName + ":///" + PrepareUrl(arcPath) + ";protocol=zip/" +
+                PrepareUrl(fileInArchivePath);
             return url;
         }
 
-    }
+        internal class DebugTraceListener : TraceListener
+        {
+            public DebugTraceListener()
+            {
+            }
 
-    class DebugTraceListener : TraceListener
-    {
 #pragma warning disable IDE0079
 #pragma warning disable CS8765
-        public override void Write(string message)
-        {
-            CommonTestUtils.Nop();
-        }
-        public override void WriteLine(string message)
-        {
-            CommonTestUtils.Nop();
-        }
+            public override void Write(string message)
+            {
+                CommonTestUtils.Nop();
+            }
+
+            public override void WriteLine(string message)
+            {
+                CommonTestUtils.Nop();
+            }
 #pragma warning restore CS8765
 #pragma warning restore IDE0079
-        public DebugTraceListener()
-        {
         }
     }
-
 }

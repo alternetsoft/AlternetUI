@@ -1,11 +1,11 @@
-﻿using Alternet.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Alternet.UI;
 
 namespace ControlsSample
 {
-    partial class SliderPage : Control
+    internal partial class SliderPage : Control
     {
         private IPageSite? site;
 

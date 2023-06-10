@@ -1,10 +1,10 @@
-﻿using Alternet.UI;
-using System;
+﻿using System;
 using System.Linq;
+using Alternet.UI;
 
 namespace ControlsSample
 {
-    partial class ListBoxPage : Control
+    internal partial class ListBoxPage : Control
     {
         private IPageSite? site;
 

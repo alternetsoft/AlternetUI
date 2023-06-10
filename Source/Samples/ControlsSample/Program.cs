@@ -1,7 +1,7 @@
-﻿using Alternet.UI;
-using System;
+﻿using System;
 using System.ComponentModel;
 using Alternet.Drawing;
+using Alternet.UI;
 
 namespace ControlsSample
 {
@@ -13,7 +13,6 @@ namespace ControlsSample
             var application = new Application();
             var window = new MainWindow();
 
-            WebBrowserPage.HookExceptionEvents(application);
             application.Run(window);
 
             window.Dispose();

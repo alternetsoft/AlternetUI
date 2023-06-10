@@ -1,10 +1,10 @@
-﻿using Alternet.UI;
-using System;
+﻿using System;
 using System.Linq;
+using Alternet.UI;
 
 namespace ControlsSample
 {
-    partial class TabControlPage : Control
+    internal partial class TabControlPage : Control
     {
         public TabControlPage()
         {
@@ -16,6 +16,9 @@ namespace ControlsSample
         }
 
         public IPageSite? Site { get; set; }
+
+        private static string GetPageTitle(TabPage? page) =>
+            page == null ? "<none>" : page.Title;
 
         private void ModifyFirstPageTitleButton_Click(object sender, System.EventArgs e)
         {
@@ -52,8 +55,6 @@ namespace ControlsSample
         {
             tabControl.Pages.Clear();
         }
-
-        static string GetPageTitle(TabPage? page) => page == null ? "<none>" : page.Title;
 
         private void TabControl_SelectedPageChanged(object sender, SelectedTabPageChangedEventArgs e)
         {
