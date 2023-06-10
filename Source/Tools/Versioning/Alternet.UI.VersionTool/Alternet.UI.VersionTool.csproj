@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Alternet.UI" Version="0.1.57-beta" />
+    <PackageReference Include="Alternet.UI" Version="0.1.68-beta" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Alternet.UI.Versioning\Alternet.UI.Versioning.csproj" />
