@@ -170,6 +170,36 @@ namespace Alternet.UI
             }
         }
 
+        public string Name
+        {
+            get => nativeApplication.Name;
+            set => nativeApplication.Name = value;
+        }
+
+        public string DisplayName
+        {
+            get => nativeApplication.DisplayName;
+            set => nativeApplication.DisplayName = value;
+        }
+
+        public string AppClassName
+        {
+            get => nativeApplication.AppClassName;
+            set => nativeApplication.AppClassName = value;
+        }
+
+        public string VendorName
+        {
+            get => nativeApplication.VendorName;
+            set => nativeApplication.VendorName = value;
+        }
+
+        public string VendorDisplayName
+        {
+            get => nativeApplication.VendorDisplayName;
+            set => nativeApplication.VendorDisplayName = value;
+        }
+
         internal Native.Clipboard NativeClipboard => nativeApplication.Clipboard;
 
         internal Native.Keyboard NativeKeyboard => nativeApplication.Keyboard;

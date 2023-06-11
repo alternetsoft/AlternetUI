@@ -79,6 +79,74 @@ namespace Alternet.UI.Native
             
         }
         
+        public string DisplayName
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Application_GetDisplayName_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Application_SetDisplayName_(NativePointer, value);
+            }
+        }
+        
+        public string AppClassName
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Application_GetAppClassName_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Application_SetAppClassName_(NativePointer, value);
+            }
+        }
+        
+        public string VendorName
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Application_GetVendorName_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Application_SetVendorName_(NativePointer, value);
+            }
+        }
+        
+        public string VendorDisplayName
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Application_GetVendorDisplayName_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Application_SetVendorDisplayName_(NativePointer, value);
+            }
+        }
+        
         public bool InUixmlPreviewerMode
         {
             get
@@ -206,6 +274,30 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Application_GetClipboard_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string Application_GetDisplayName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetDisplayName_(IntPtr obj, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string Application_GetAppClassName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetAppClassName_(IntPtr obj, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string Application_GetVendorName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetVendorName_(IntPtr obj, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string Application_GetVendorDisplayName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetVendorDisplayName_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Application_GetInUixmlPreviewerMode_(IntPtr obj);

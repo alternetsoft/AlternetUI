@@ -54,6 +54,62 @@ ALTERNET_UI_API Clipboard* Application_GetClipboard_(Application* obj)
         });
 }
 
+ALTERNET_UI_API char16_t* Application_GetDisplayName_(Application* obj)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetDisplayName());
+        });
+}
+
+ALTERNET_UI_API void Application_SetDisplayName_(Application* obj, const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetDisplayName(value);
+        });
+}
+
+ALTERNET_UI_API char16_t* Application_GetAppClassName_(Application* obj)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetAppClassName());
+        });
+}
+
+ALTERNET_UI_API void Application_SetAppClassName_(Application* obj, const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetAppClassName(value);
+        });
+}
+
+ALTERNET_UI_API char16_t* Application_GetVendorName_(Application* obj)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetVendorName());
+        });
+}
+
+ALTERNET_UI_API void Application_SetVendorName_(Application* obj, const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetVendorName(value);
+        });
+}
+
+ALTERNET_UI_API char16_t* Application_GetVendorDisplayName_(Application* obj)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetVendorDisplayName());
+        });
+}
+
+ALTERNET_UI_API void Application_SetVendorDisplayName_(Application* obj, const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetVendorDisplayName(value);
+        });
+}
+
 ALTERNET_UI_API c_bool Application_GetInUixmlPreviewerMode_(Application* obj)
 {
     return MarshalExceptions<c_bool>([&](){

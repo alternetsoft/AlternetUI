@@ -17,6 +17,10 @@ namespace NativeApi.Api
         public Keyboard Keyboard { get; }
         public Mouse Mouse { get; }
         public Clipboard Clipboard { get; }
+        public string DisplayName { get; set; }
+        public string AppClassName { get; set; }
+        public string VendorName { get; set; }
+        public string VendorDisplayName { get; set; }
 
         public bool InUixmlPreviewerMode { get; set; }
 
