@@ -170,30 +170,78 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the application name.
+        /// </summary>
+        /// <remarks>
+        /// It is used for paths, config, and other places the user doesn't see.
+        /// By default it is set to the executable program name.
+        /// </remarks>
         public string Name
         {
             get => nativeApplication.Name;
             set => nativeApplication.Name = value;
         }
 
+        /// <summary>
+        /// Gets or sets the application display name.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// The display name is the name shown to the user in titles, reports, etc.
+        /// while the application name is used for paths, config, and other
+        /// places the user doesn't see.
+        /// </para>
+        /// <para>
+        /// By default the application display name is the same as application
+        /// name or a capitalized version of the program if the application
+        /// name was not set either.
+        /// It's usually better to set it explicitly to something nicer.
+        /// </para>
+        /// </remarks>
         public string DisplayName
         {
             get => nativeApplication.DisplayName;
             set => nativeApplication.DisplayName = value;
         }
 
+        /// <summary>
+        /// Gets or sets the application class name.
+        /// </summary>
+        /// <remarks>
+        /// It should be set by the application itself, there are
+        /// no reasonable defaults.
+        /// </remarks>
         public string AppClassName
         {
             get => nativeApplication.AppClassName;
             set => nativeApplication.AppClassName = value;
         }
 
+        /// <summary>
+        /// Gets or sets the vendor name.
+        /// </summary>
+        /// <remarks>
+        /// It is used in some areas such as configuration, standard paths, etc.
+        /// It should be set by the application itself, there are
+        /// no reasonable defaults.
+        /// </remarks>
         public string VendorName
         {
             get => nativeApplication.VendorName;
             set => nativeApplication.VendorName = value;
         }
 
+        /// <summary>
+        /// Gets or sets the vendor display name.
+        /// </summary>
+        /// <remarks>
+        /// It is shown in titles, reports, dialogs to the user, while
+        /// the vendor name is used in some areas such as configuration,
+        /// standard paths, etc.
+        /// It should be set by the application itself, there are
+        /// no reasonable defaults.
+        /// </remarks>
         public string VendorDisplayName
         {
             get => nativeApplication.VendorDisplayName;
