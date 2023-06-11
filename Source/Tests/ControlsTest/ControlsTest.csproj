@@ -33,17 +33,28 @@
       <None Remove="Html\doc.zip" />
       <None Remove="Html\pageinresource.html" />
       <None Remove="Html\SampleArchive.zip" />
-      <None Remove="Html\SampleArchive\Html\page1.html" />
-      <None Remove="Html\SampleArchive\Html\page2.html" />
-      <None Remove="Html\SampleArchive\Images\panda1.jpg" />
-      <None Remove="Html\SampleArchive\Images\panda2.jpg" />
-      <None Remove="Html\SampleArchive\root.html" />
-      <None Remove="Html\SampleArchive\Styles\default.css" />
       <None Remove="Html\version.html" />
-      <None Remove="Resources\SamplePandaPdf.pdf" />
     </ItemGroup>
 
     <ItemGroup>
+      <Content Include="..\..\Samples\ControlsSample\Html\SampleArchive\Html\page1.html" Link="Html\SampleArchive\Html\page1.html">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\..\Samples\ControlsSample\Html\SampleArchive\Html\page2.html" Link="Html\SampleArchive\Html\page2.html">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\..\Samples\ControlsSample\Html\SampleArchive\Images\panda1.jpg" Link="Html\SampleArchive\Images\panda1.jpg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\..\Samples\ControlsSample\Html\SampleArchive\Images\panda2.jpg" Link="Html\SampleArchive\Images\panda2.jpg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\..\Samples\ControlsSample\Html\SampleArchive\root.html" Link="Html\SampleArchive\root.html">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\..\Samples\ControlsSample\Html\SampleArchive\Styles\default.css" Link="Html\SampleArchive\Styles\default.css">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
       <Content Include="Edge\readme.txt">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
@@ -62,31 +73,7 @@
       <Content Include="Html\SampleArchive.zip">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Include="Html\SampleArchive\Html\page1.html">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Html\SampleArchive\Html\page2.html">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Html\SampleArchive\Images\panda1.jpg">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Html\SampleArchive\Images\panda2.jpg">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Html\SampleArchive\Html\default.js">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Html\SampleArchive\root.html">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Html\SampleArchive\Styles\default.css">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
       <Content Include="Html\version.html">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Resources\SamplePandaPdf.pdf">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
@@ -123,6 +110,17 @@
       <None Update="Window1.uixml">
         <Generator>MSBuild:Compile</Generator>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Html\SampleArchive\Html\" />
+      <Folder Include="Html\SampleArchive\Images\" />
+      <Folder Include="Html\SampleArchive\Styles\" />
+      <Folder Include="Resources\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\Samples\ControlsSample\Html\SampleArchive\Html\default.js" Link="Html\SampleArchive\Html\default.js" />
     </ItemGroup>
 </Project>
 

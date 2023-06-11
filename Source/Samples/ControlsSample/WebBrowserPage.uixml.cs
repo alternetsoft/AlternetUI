@@ -8,6 +8,11 @@ namespace ControlsSample
 {
     internal partial class WebBrowserPage : Control
     {
+        private const string SItemPanda = "Panda Web Site";
+        private const string SItemGoogle = "Google Search";
+        private const string SItemPDF = "PDF Document";
+        private const string SItemImage = "View Image";
+
         private static string? headerText;
 
         private IPageSite? site;
@@ -36,6 +41,12 @@ namespace ControlsSample
                 headerText = HeaderLabel.Text;
                 WebBrowser1.ZoomType = WebBrowserZoomType.Layout;
                 site = value;
+                UrlTextBox.Items.Add(SItemPanda);
+                UrlTextBox.Items.Add(SItemGoogle);
+
+                if (WebBrowser1.Backend == WebBrowserBackend.Edge)
+                    UrlTextBox.Items.Add(SItemPDF);
+                UrlTextBox.Items.Add(SItemImage);
             }
         }
 
@@ -51,7 +62,7 @@ namespace ControlsSample
             Log("Find Result = " + findResult.ToString());
         }
 
-        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        private void UrlTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
@@ -113,6 +124,14 @@ namespace ControlsSample
             LoadUrl(UrlTextBox.Text);
         }
 
+        private void UrlTextBox_SelectedItemChanged(object? sender, EventArgs e)
+        {
+            if (UrlTextBox.SelectedIndex != null)
+            {
+                LoadUrl(UrlTextBox.Text);
+            }
+        }
+
         private void LoadUrl(string s)
         {
             if (s == null)
@@ -121,7 +140,22 @@ namespace ControlsSample
                 return;
             }
 
-            if (s == "g")
+            if (s == SItemPanda)
+                s = GetPandaUrl();
+
+            if (s == SItemImage)
+            {
+                s = CommonUtils.PrepareFileUrl(CommonUtils.GetAppFolder() +
+                "Html\\SampleArchive\\Images\\panda1.jpg");
+            }
+
+            if (s == SItemPDF)
+            {
+                s = CommonUtils.PrepareFileUrl(CommonUtils.GetAppFolder() +
+                    "Resources\\SamplePandaPdf.pdf");
+            }
+
+            if (s == "g" || s == "SItemGoogle")
                 s = "https://www.google.com";
 
             Log("==> LoadUrl: " + s);
