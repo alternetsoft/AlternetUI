@@ -480,10 +480,8 @@ namespace ControlsTest
             if (s == "g")
                 s = "https://www.google.com";
 
-            var url = WebBrowser.GetCorrectUri(s).ToString();
-
-            Log("==> LoadUrl: " + url);
-            WebBrowser1.LoadURL(url);
+            Log("==> LoadUrl: " + s);
+            WebBrowser1.LoadUrlOrSearch(s);
         }
 
         private void LogProp(object? obj, string propName, string? prefix = null)

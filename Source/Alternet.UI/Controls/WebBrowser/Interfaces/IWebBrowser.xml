@@ -795,7 +795,18 @@ if(ScriptMessageHandlerAdded)
         </summary>
 	</IsBusy>
 	<!--==============================================-->
-	<LoadURL>
+    <LoadUrlOrSearch>
+      <summary>
+        Loads a web page from a URL if it is in a valid format. 
+        Otherwise opens passed URL in the Google search.
+      </summary>
+      <param name="url">
+        A <see cref="System.String"/> representing the URL of the document to load.
+        If this parameter is null, WebBrowser navigates to a blank document.
+      </param>
+    </LoadUrlOrSearch>
+    <!--==============================================-->
+    <LoadURL>
         <summary>
             Loads a web page from a URL.
         </summary>
@@ -1012,9 +1023,6 @@ will replace the current page contents with the provided string.
             Stops the current page loading process, if any. Cancels any pending navigation 
             and stops any dynamic page elements, such as background sounds and animations.
         </summary>
-		<remarks>
-
-		</remarks>
 	</Stop>
 	<!--==============================================-->
 	<Undo>

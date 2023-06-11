@@ -124,11 +124,9 @@ namespace ControlsSample
             if (s == "g")
                 s = "https://www.google.com";
 
-            var url = WebBrowser.GetCorrectUri(s).ToString();
+            Log("==> LoadUrl: " + s);
 
-            Log("==> LoadUrl: " + url);
-
-            WebBrowser1.LoadURL(url);
+            WebBrowser1.LoadUrlOrSearch(s);
         }
 
         private void UpdateZoomButtons()
