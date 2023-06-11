@@ -47,6 +47,10 @@
     <None Remove="build\**" />
   </ItemGroup>
 
+	<ItemGroup>
+	  <Compile Remove="System\DateTime.cs" />
+	</ItemGroup>
+
   <ItemGroup>
     <None Remove="Application\ThreadException\Resources\ErrorImage.png" />
   </ItemGroup>
@@ -121,4 +125,23 @@
       <Generator>MSBuild:_GenerateResxSource</Generator>
     </EmbeddedResource>
   </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+
+	<ItemGroup>
+	  <Folder Include="System\" />
+	</ItemGroup>
 </Project>

@@ -166,9 +166,9 @@ namespace Alternet.UI.Native
                 Millisecond = millisecond;
             }
 
-            public static implicit operator Alternet.UI.DateTime(DateTime v) => new Alternet.UI.DateTime(v.Year, v.Month, v.Day, v.Hour, v.Minute, v.Second, v.Millisecond);
+            public static implicit operator System.DateTime(DateTime v) => new System.DateTime(v.Year, v.Month, v.Day, v.Hour, v.Minute, v.Second, v.Millisecond);
 
-            public static implicit operator DateTime(Alternet.UI.DateTime v) => new DateTime(v.Year, v.Month, v.Day, v.Hour, v.Minute, v.Second, v.Millisecond);
+            public static implicit operator DateTime(System.DateTime v) => new DateTime(v.Year, v.Month, v.Day, v.Hour, v.Minute, v.Second, v.Millisecond);
         }
     }
 }

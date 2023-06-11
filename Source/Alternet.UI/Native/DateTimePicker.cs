@@ -23,7 +23,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public Alternet.UI.DateTime Value
+        public DateTime Value
         {
             get
             {
