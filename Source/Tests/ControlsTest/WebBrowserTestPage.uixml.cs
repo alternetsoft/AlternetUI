@@ -688,6 +688,19 @@ namespace ControlsTest
             AddTestAction(
                 "EnableHistory=false",
                 () => { WebBrowser1.EnableHistory(false); });
+
+            if (WebBrowser1.Backend == WebBrowserBackend.Edge)
+            {
+                AddTestAction(
+                    "Load PDF",
+                    () =>
+                    {
+                        string sPdfPath = CommonTestUtils.GetAppFolder() +
+                            "Resources\\SamplePandaPdf.pdf";
+                        WebBrowser1.LoadURL(sPdfPath);
+                    });
+            }
+
             AddTestAction();
 
             var methods = GetType().GetRuntimeMethods();
