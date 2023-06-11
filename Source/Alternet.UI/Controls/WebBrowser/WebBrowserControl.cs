@@ -417,6 +417,13 @@ namespace Alternet.UI
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetBackend/*'/>
         public static void SetBackend(WebBrowserBackend value)
         {
+            if (value == WebBrowserBackend.IE || value == WebBrowserBackend.IELatest
+                || value == WebBrowserBackend.Edge)
+            {
+                if (WebBrowser.GetBackendOS() != WebBrowserBackendOS.Windows)
+                    value = WebBrowserBackend.Default;
+            }
+
             WebBrowserNativeApi.WebBrowser_SetBackend_((int)value);
         }
 

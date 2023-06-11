@@ -2,6 +2,6 @@
 {
     internal interface ITestPageSite
     {
-        void LogEvent(string message);
+        void LogEvent(string? pageId, string message);
     }
 }

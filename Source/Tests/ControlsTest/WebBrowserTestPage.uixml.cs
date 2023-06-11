@@ -13,18 +13,18 @@ namespace ControlsTest
     {
         private static readonly string ZipSchemeName = "zipfs";
         private static readonly Destructor MyDestructor = new ();
-
-        private static bool canNavigate = true;
-        private static bool historyCleared = false;
-        private static bool pandaLoaded = false;
-        private static string? headerText;
-        private static bool insideUnhandledException;
         private static WebBrowserBackend useBackend = WebBrowserBackend.Default;
-        private static int scriptRunCounter = 0;
-        private static bool pandaInMemory = false;
+        private static bool insideUnhandledException;
 
         private readonly WebBrowserFindParams findParams = new ();
         private readonly Dictionary<string, MethodCaller> testActions = new ();
+
+        private bool pandaInMemory = false;
+        private int scriptRunCounter = 0;
+        private bool canNavigate = true;
+        private bool historyCleared = false;
+        private bool pandaLoaded = false;
+        private string? headerText;
         private bool scriptMessageHandlerAdded = false;
         private ITestPageSite? site;
 
@@ -44,21 +44,6 @@ namespace ControlsTest
             CommonTestUtils.LogToFile("======================================");
             CommonTestUtils.LogToFile("Application started");
             CommonTestUtils.LogToFile("======================================");
-
-            if (File.Exists(CommonTestUtils.GetFileWithExt("ie")))
-                useBackend = WebBrowserBackend.IELatest;
-            else
-                if (File.Exists(CommonTestUtils.GetFileWithExt("edge")))
-                useBackend = WebBrowserBackend.Edge;
-
-            if (useBackend == WebBrowserBackend.IE || useBackend == WebBrowserBackend.IELatest
-                || useBackend == WebBrowserBackend.Edge)
-            {
-                if (WebBrowser.GetBackendOS() != WebBrowserBackendOS.Windows)
-                    useBackend = WebBrowserBackend.Default;
-            }
-
-            WebBrowser.SetBackend(useBackend);
         }
 
         public WebBrowserTestPage()
@@ -67,6 +52,18 @@ namespace ControlsTest
             Trace.Listeners.Add(myListener);
             InitializeComponent();
         }
+
+        public static WebBrowserBackend UseBackend
+        {
+            get => useBackend;
+            set
+            {
+                useBackend = value;
+                WebBrowser.SetBackend(useBackend);
+            }
+        }
+
+        public string? PageName { get; set; }
 
         public ITestPageSite? Site
         {
@@ -148,27 +145,6 @@ namespace ControlsTest
         {
             return WebBrowser1.Backend == WebBrowserBackend.IE ||
                 WebBrowser1.Backend == WebBrowserBackend.IELatest;
-        }
-
-        private void RestartWithDefault()
-        {
-            CommonTestUtils.RemoveFileWithExt("ie");
-            CommonTestUtils.RemoveFileWithExt("edge");
-            Alternet.UI.Application.Current.Exit();
-        }
-
-        private void RestartWithEdge()
-        {
-            CommonTestUtils.RemoveFileWithExt("ie");
-            CommonTestUtils.CreateFileWithExt("edge");
-            Alternet.UI.Application.Current.Exit();
-        }
-
-        private void RestartWithIE()
-        {
-            CommonTestUtils.RemoveFileWithExt("edge");
-            CommonTestUtils.CreateFileWithExt("ie");
-            Alternet.UI.Application.Current.Exit();
         }
 
         private void DoTestIEShowPrintPreviewDialog()
@@ -335,30 +311,30 @@ namespace ControlsTest
         private void Log(string s)
         {
             CommonTestUtils.LogToFile(s);
-            site?.LogEvent(s);
+            site?.LogEvent(PageName, s);
         }
 
         private void LogWebBrowserEvent(WebBrowserEventArgs e)
         {
-            Log("====== EVENT: " + e.EventType);
+            string s = "EVENT: " + e.EventType;
 
             if (!string.IsNullOrEmpty(e.Text))
-                Log($"  Text = '{e.Text}'");
+                s += $"; Text = '{e.Text}'";
             if (!string.IsNullOrEmpty(e.Url))
-                Log($"  Url = '{e.Url}'");
+                s += $"; Url = '{e.Url}'";
             if (!string.IsNullOrEmpty(e.TargetFrameName))
-                Log($"  Target = '{e.TargetFrameName}'");
+                s += $"; Target = '{e.TargetFrameName}'";
             if (e.NavigationAction != 0)
-                Log($"  ActionFlags = {e.NavigationAction}");
+                s += $"; ActionFlags = {e.NavigationAction}";
             if (!string.IsNullOrEmpty(e.MessageHandler))
-                Log($"  MessageHandler = '{e.MessageHandler}'");
+                s += $"; MessageHandler = '{e.MessageHandler}'";
             if (e.IsError)
-                Log($"  IsError = {e.IsError}");
+                s += $"; IsError = {e.IsError}";
             if (e.NavigationError != null)
-                Log($"  NavigationError = {e.NavigationError}");
+                s += $"; NavigationError = {e.NavigationError}";
             if (e.ClientData != IntPtr.Zero)
-                Log($"  ClientData = {e.ClientData}");
-            Log("======");
+                s += $"; ClientData = {e.ClientData}";
+            Log(s);
         }
 
         private void WebBrowser1_BeforeBrowserCreate(object? sender, WebBrowserEventArgs e)
@@ -659,9 +635,6 @@ namespace ControlsTest
                 "Google",
                 () => { WebBrowser1.LoadURL("https://www.google.com"); });
             AddTestAction("BrowserVersion", () => { ShowBrowserVersion(); });
-            AddTestAction("RestartWithDefault", () => { RestartWithDefault(); });
-            AddTestAction("RestartWithIE", () => { RestartWithIE(); });
-            AddTestAction("RestartWithEdge", () => { RestartWithEdge(); });
             AddTestAction();
             AddTestAction("Info", () => { LogInfo(); });
             AddTestAction("Test", () => { Test(); });
