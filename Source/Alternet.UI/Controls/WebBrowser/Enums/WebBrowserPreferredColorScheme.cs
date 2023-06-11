@@ -17,12 +17,12 @@ namespace Alternet.UI
         Auto,
 
         /// <summary>
-        ///     Light color scheme. 
+        ///     Light color scheme.
         /// </summary>
         Light,
 
         /// <summary>
-        ///     Dark color scheme. 
+        ///     Dark color scheme.
         /// </summary>
         Dark,
     }

@@ -395,7 +395,7 @@ namespace Alternet.UI
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/CrtSetDbgFlag/*'/>
         public static void CrtSetDbgFlag(int value)
         {
-            WebBrowserNativeApi.WebBrowser_CrtSetDbgFlag_(value);
+            WebBrowserHandlerApi.WebBrowser_CrtSetDbgFlag_(value);
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/IsBackendAvailable/*'/>
@@ -424,19 +424,19 @@ namespace Alternet.UI
                     value = WebBrowserBackend.Default;
             }
 
-            WebBrowserNativeApi.WebBrowser_SetBackend_((int)value);
+            WebBrowserHandlerApi.WebBrowser_SetBackend_((int)value);
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/GetLibraryVersionString/*'/>
         public static string GetLibraryVersionString()
         {
-            return WebBrowserNativeApi.WebBrowser_GetLibraryVersionString_();
+            return WebBrowserHandlerApi.WebBrowser_GetLibraryVersionString_();
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/GetBackendVersionString/*'/>
         public static string GetBackendVersionString(WebBrowserBackend value)
         {
-            return WebBrowserNativeApi.WebBrowser_GetBackendVersionString_((int)value);
+            return WebBrowserHandlerApi.WebBrowser_GetBackendVersionString_((int)value);
         }
 
         /// <include file="Interfaces/IWebBrowser.xml"
@@ -470,7 +470,7 @@ namespace Alternet.UI
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetDefaultPage/*'/>
         public static void SetDefaultPage(string url)
         {
-            WebBrowserNativeApi.WebBrowser_SetDefaultPage_(url);
+            WebBrowserHandlerApi.WebBrowser_SetDefaultPage_(url);
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetLatestBackend/*'/>

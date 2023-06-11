@@ -14,27 +14,27 @@ namespace Alternet.UI
         /// <summary>
         ///     Causes the search to restart when end or beginning reached.
         /// </summary>
-        public bool Wrap = false;
+        public bool Wrap { get; set; } = false;
 
         /// <summary>
         ///     Matches an entire word when searching.
         /// </summary>
-        public bool EntireWord = false;
+        public bool EntireWord { get; set; } = false;
 
         /// <summary>
         ///     Match case, i.e. case sensitive searching.
         /// </summary>
-        public bool MatchCase = false;
+        public bool MatchCase { get; set; } = false;
 
         /// <summary>
         ///     Highlights the search results.
         /// </summary>
-        public bool HighlightResult=true;
+        public bool HighlightResult { get; set; } = true;
 
         /// <summary>
         ///     Searches for phrase in backward direction.
         /// </summary>
-        public bool Backwards=false;
+        public bool Backwards { get; set; } = false;
 
         internal int ToWebViewParams()
         {

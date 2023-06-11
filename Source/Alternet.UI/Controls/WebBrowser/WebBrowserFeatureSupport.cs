@@ -8,19 +8,31 @@ namespace Alternet.UI
 {
     internal class WebBrowserFeatureSupport
     {
-        public bool? CanAddScriptMessageHandlerSingle;
-        public bool? CanAddScriptMessageHandlerMultiple;
-        public bool? CanAddUserScript;
-        public bool? CanAddUserScriptOnlyDocStart;
-        public bool? CanClearHistory;
-        public bool? CanAccessDevTools;
-        public bool? CanEnableHistory;
-        public bool? RegisterHandlerBeforeCreate;
-        public bool? ReloadFlagsIgnored;
-        public bool? CanSetEditable;
-        public bool? BaseUrlInSetPage;
-        public bool? CanSeUserAgent;
-        public bool? SetUserAgentBeforeCreate;
+        public bool? CanAddScriptMessageHandlerSingle { get; set; }
+
+        public bool? CanAddScriptMessageHandlerMultiple { get; set; }
+
+        public bool? CanAddUserScript { get; set; }
+
+        public bool? CanAddUserScriptOnlyDocStart { get; set; }
+
+        public bool? CanClearHistory { get; set; }
+
+        public bool? CanAccessDevTools { get; set; }
+
+        public bool? CanEnableHistory { get; set; }
+
+        public bool? RegisterHandlerBeforeCreate { get; set; }
+
+        public bool? ReloadFlagsIgnored { get; set; }
+
+        public bool? CanSetEditable { get; set; }
+
+        public bool? BaseUrlInSetPage { get; set; }
+
+        public bool? CanSeUserAgent { get; set; }
+
+        public bool? SetUserAgentBeforeCreate { get; set; }
 
         internal void InitIE()
         {

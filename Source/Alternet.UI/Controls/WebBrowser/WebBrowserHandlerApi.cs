@@ -9,24 +9,11 @@ using Alternet.UI.Native;
 
 namespace Alternet.UI
 {
-    
     [SuppressUnmanagedCodeSecurity]
-    internal class WebBrowserNativeApi
+    internal class WebBrowserHandlerApi
     {
         private const string ModuleName = Native.NativeApiProvider.NativeModuleName;
-/*
-        [DllImport(ModuleName, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void WebBrowser_SetDefaultUserAgent_(string value);
 
-        [DllImport(ModuleName, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void WebBrowser_SetDefault_ScriptMesageName(string value);
-
-        [DllImport(ModuleName, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void WebBrowser_SetDefaultFSNameMemory_(string value);
-
-        [DllImport(ModuleName, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void WebBrowser_SetDefaultFSNameArchive_(string value);
-*/
         [DllImport(ModuleName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int WebBrowser_Find_(IntPtr obj, string text, int flags);
 
@@ -35,6 +22,7 @@ namespace Alternet.UI
 
         [DllImport(ModuleName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int WebBrowser_GetBackend_(IntPtr obj);
+
         [DllImport(ModuleName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void WebBrowser_SetZoomType_(IntPtr obj, int zoomType);
 
@@ -64,8 +52,5 @@ namespace Alternet.UI
 
         [DllImport(ModuleName, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int WebBrowser_GetZoomType_(IntPtr obj);
-        
     }
 }
-
-
