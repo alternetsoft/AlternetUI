@@ -44,10 +44,22 @@ namespace ControlsSample
                 UrlTextBox.Items.Add(SItemPanda);
                 UrlTextBox.Items.Add(SItemGoogle);
 
-                if (WebBrowser1.Backend == WebBrowserBackend.Edge)
+                if (WebBrowser1.Backend != WebBrowserBackend.IE &&
+                    WebBrowser1.Backend != WebBrowserBackend.IELatest)
                     UrlTextBox.Items.Add(SItemPDF);
                 UrlTextBox.Items.Add(SItemImage);
             }
+        }
+
+        private static string GetPandaFileName()
+        {
+            return CommonUtils.GetAppFolder() +
+                "Html/SampleArchive/Html/page1.html";
+        }
+
+        private static string GetPandaUrl()
+        {
+            return CommonUtils.PrepareFileUrl(GetPandaFileName());
         }
 
         private void FindClearButton_Click(object sender, EventArgs e)
@@ -82,22 +94,13 @@ namespace ControlsSample
             UrlTextBox.Text = WebBrowser1.GetCurrentURL();
         }
 
-        private string GetPandaFileName()
-        {
-            return CommonUtils.GetAppFolder() +
-                "Html\\SampleArchive\\Html\\page1.html";
-        }
-
-        private string GetPandaUrl()
-        {
-            return CommonUtils.PrepareFileUrl(GetPandaFileName());
-        }
-
         private void WebBrowser1_Loaded(object sender, WebBrowserEventArgs e)
         {
             UpdateHistoryButtons();
             if (!pandaLoaded)
             {
+                WebBrowser1.PreferredColorScheme = WebBrowserPreferredColorScheme.Light;
+
                 pandaLoaded = true;
                 try
                 {
@@ -146,13 +149,13 @@ namespace ControlsSample
             if (s == SItemImage)
             {
                 s = CommonUtils.PrepareFileUrl(CommonUtils.GetAppFolder() +
-                "Html\\SampleArchive\\Images\\panda1.jpg");
+                "Html/SampleArchive/Images/panda1.jpg");
             }
 
             if (s == SItemPDF)
             {
                 s = CommonUtils.PrepareFileUrl(CommonUtils.GetAppFolder() +
-                    "Resources\\SamplePandaPdf.pdf");
+                    "Resources/SamplePandaPdf.pdf");
             }
 
             if (s == "g" || s == "SItemGoogle")

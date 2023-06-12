@@ -27,7 +27,7 @@ namespace ControlsSample
         public static string PathAddBackslash(string? path)
         {
             if (path == null)
-                throw new ArgumentNullException("path");
+                throw new ArgumentNullException(nameof(path));
             path = path.TrimEnd();
             if (PathEndsWithDirectorySeparator())
                 return path;
@@ -44,7 +44,8 @@ namespace ControlsSample
             {
                 if (path.Length == 0)
                     return false;
-                char c = path[path.Length - 1];
+                int index = path.Length - 1;
+                char c = path[index];
                 if (c != Path.DirectorySeparatorChar)
                     return c == Path.AltDirectorySeparatorChar;
                 return true;

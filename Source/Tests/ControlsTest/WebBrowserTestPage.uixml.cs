@@ -139,7 +139,7 @@ namespace ControlsTest
 
                 void AddPandaFile(string name, string? mimeType = null)
                 {
-                    string sPath = CommonTestUtils.GetAppFolder() + "Html\\SampleArchive\\" + name;
+                    string sPath = CommonTestUtils.GetAppFolder() + "Html/SampleArchive/" + name;
 
                     if (mimeType == null)
                         WebBrowser1.MemoryFS.AddOSFile(name, sPath);
@@ -337,7 +337,7 @@ namespace ControlsTest
                 return;
             }
 
-            string arcSubPath = "Html\\SampleArchive.zip";
+            string arcSubPath = "Html/SampleArchive.zip";
             string webPagePath = "root.html";
 
             string archivePath = Path.Combine(CommonTestUtils.GetAppFolder(), arcSubPath);
@@ -710,7 +710,7 @@ namespace ControlsTest
 
         private string GetPandaFileName()
         {
-            return CommonTestUtils.GetAppFolder() + "Html\\SampleArchive\\Html\\page1.html";
+            return CommonTestUtils.GetAppFolder() + "Html/SampleArchive/Html/page1.html";
         }
 
         private string GetPandaUrl()
@@ -784,15 +784,19 @@ namespace ControlsTest
             if (WebBrowser1.Backend == WebBrowserBackend.Edge)
             {
                 AddTestAction(
-                    "Test Mapping",
+                    "Test Edge Mapping",
                     () => { TestMapping(); });
+            }
+
+            if (!IsIEBackend())
+            {
                 AddTestAction(
                     "Load PDF",
                     () =>
                     {
                         string sPdfPath = CommonTestUtils.GetAppFolder() +
-                            "Resources\\SamplePandaPdf.pdf";
-                        WebBrowser1.LoadURL(sPdfPath);
+                            "Resources/SamplePandaPdf.pdf";
+                        WebBrowser1.LoadURL(CommonTestUtils.PrepareFileUrl(sPdfPath));
                     });
             }
 
