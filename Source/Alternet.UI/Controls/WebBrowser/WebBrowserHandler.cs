@@ -6,6 +6,14 @@ namespace Alternet.UI
     internal partial class WebBrowserHandler :
         NativeControlHandler<WebBrowser, Native.WebBrowser>, IWebBrowserLite
     {
+        public WebBrowserPreferredColorScheme PreferredColorScheme
+        {
+            get => (WebBrowserPreferredColorScheme)Enum.ToObject(
+                typeof(WebBrowserPreferredColorScheme),
+                NativeControl.PreferredColorScheme);
+            set => NativeControl.PreferredColorScheme = (int)value;
+        }
+
         public bool AccessToDevToolsEnabled
         {
             get => NativeControl.AccessToDevToolsEnabled;
@@ -174,9 +182,11 @@ namespace Alternet.UI
             if (IsIEBackend())
             {
                 var ok = RunScript(javascript, out string result);
-                WebBrowserEventArgs e = new (WebBrowserEvent.ScriptResult.ToString());
-                e.Text = result;
-                e.IsError = !ok;
+                WebBrowserEventArgs e = new (WebBrowserEvent.ScriptResult.ToString())
+                {
+                    Text = result,
+                    IsError = !ok,
+                };
 
                 IntPtr data = IntPtr.Zero;
                 if (clientData != null)

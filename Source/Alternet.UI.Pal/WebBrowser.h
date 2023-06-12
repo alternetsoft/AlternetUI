@@ -14,9 +14,9 @@ namespace Alternet::UI
     {
         WEBBROWSER_BACKEND_DEFAULT = 0,
         WEBBROWSER_BACKEND_IE = 1,
-        WEBBROWSER_BACKEND_IELATEST=2,
-        WEBBROWSER_BACKEND_EDGE=3,
-        WEBBROWSER_BACKEND_WEBKIT=4,
+        WEBBROWSER_BACKEND_IELATEST = 2,
+        WEBBROWSER_BACKEND_EDGE = 3,
+        WEBBROWSER_BACKEND_WEBKIT = 4,
     };
     enum WebBrowserBackendOS
     {
@@ -41,6 +41,7 @@ namespace Alternet::UI
         static wxString WebViewBackendNameFromId(WebBrowserBackend id);
 
         WebBrowserBackend Backend;
+        int preferredColorScheme = 0;
         wxWebView* webView;
         wxWindow* webViewParent;
         bool DefaultUserAgentDone = false;

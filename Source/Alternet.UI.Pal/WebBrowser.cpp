@@ -16,7 +16,6 @@
 
 #if defined(__WXMSW__)
 #include "wx/msw/webview_ie.h"
-#include "wx/msw/webview_edge.h"
 #endif
 
 #if defined(__WXMSW__)
@@ -31,9 +30,16 @@
 #include "wx/filesys.h"
 #include "wx/fs_arc.h"
 #include "wx/fs_mem.h"
-
-
 #include "wx/log.h"
+
+#if defined(__WXMSW__)
+#ifdef wxUSE_WEBVIEW_EDGE
+    #define _MSW_EGDE_
+    #include "wx/msw/webview_edge.h"
+    #include "../../External/WxWidgets/3rdparty/webview2/build/native/include/WebView2EnvironmentOptions.h"
+    #include "../../External/WxWidgets/3rdparty/webview2/build/native/include/WebView2.h"
+#endif
+#endif
 
 namespace Alternet::UI
 {
@@ -475,6 +481,7 @@ namespace Alternet::UI
     }
     
 #endif
+
 #if defined(__WXGTK__)
     
     int WebBrowser::GetBackendOS()
@@ -512,6 +519,7 @@ namespace Alternet::UI
         return wxStr(s2);
     }
 
+// This section is for MSW related code
 #if defined(__WXMSW__)
     
     static wxCOMPtr<IHTMLDocument2> IEGetDocument(void* native)
@@ -846,7 +854,50 @@ namespace Alternet::UI
     { 
         return wxStr(GetWebViewCtrl()->GetPageText());
     }
-    
+
+    int WebBrowser::GetPreferredColorScheme()
+    {
+        return preferredColorScheme;
+    }
+
+#if defined(_MSW_EGDE_)
+    static ICoreWebView2Profile* GetProfile(void* native) 
+    {
+        ICoreWebView2* wb = static_cast<ICoreWebView2*>(native);
+        if (wb == NULL)
+        {
+            wxLogApiError("WebBrowser::EdgeGetProfile 1", 0);
+            return NULL;
+        }
+        wxCOMPtr<ICoreWebView2_13> WebView13;
+        auto hr = wb->QueryInterface(IID_PPV_ARGS(&WebView13));
+        if (FAILED(hr))
+        {
+            wxLogApiError("WebBrowser::EdgeGetProfile 2", hr);
+            return NULL;
+        }
+        ICoreWebView2Profile* profile;
+        hr = WebView13->get_Profile(&profile);
+        if (FAILED(hr))
+        {
+            wxLogApiError("WebBrowser::EdgeGetProfile 3", hr);
+            return NULL;
+        }
+        return profile;
+    }
+#endif
+
+    void WebBrowser::SetPreferredColorScheme(int value)
+    {
+        preferredColorScheme = value;
+#if defined(_MSW_EGDE_)
+        if (Backend != WEBBROWSER_BACKEND_EDGE)
+            return;
+        wxCOMPtr<ICoreWebView2Profile> profile(GetProfile(GetNativeBackend()));
+        profile->put_PreferredColorScheme((COREWEBVIEW2_PREFERRED_COLOR_SCHEME)value);
+#endif
+    }
+
     string WebBrowser::GetUserAgent() 
     { 
         return wxStr(GetWebViewCtrl()->GetUserAgent());

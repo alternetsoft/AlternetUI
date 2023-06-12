@@ -28,6 +28,7 @@ namespace NativeApi.Api
         public string PageSource { get => throw new Exception(); }
         public string PageText { get => throw new Exception(); }
         public bool AccessToDevToolsEnabled { get; set; }
+        public int PreferredColorScheme { get; set; }
         public string UserAgent 
         { 
             get => throw new Exception(); 

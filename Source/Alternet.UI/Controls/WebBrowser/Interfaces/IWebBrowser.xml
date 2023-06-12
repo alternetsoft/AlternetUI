@@ -1185,8 +1185,28 @@ will replace the current page contents with the provided string.
             Sets the best possible backend to be used for the 
             new WebBrowser instances.
         </summary>
-	</SetLatestBackend>	
-	<!--==============================================-->
+	</SetLatestBackend>
+  <!--==============================================-->
+  <PreferredColorScheme>
+    <summary>
+      The PreferredColorScheme property sets the overall color scheme 
+      of the WebBrowser. 
+    </summary>
+    <remarks>
+      <para>
+        This property sets the color scheme for WebBrowser UI like dialogs, prompts
+        and menus. The default value is Auto, which will follow 
+        whatever color scheme the operating system is currently set to.
+      </para>
+      <para>
+        This property works only for the Edge backend.
+      </para>
+      <para>
+        Used this property inside of the <see cref="WebBrowser.Loaded"/> event.
+      </para>
+    </remarks>      
+  </PreferredColorScheme>
+  <!--==============================================-->
 	<StringFormatJs>
         <summary>
             Contains DateTime format for Javascript code.

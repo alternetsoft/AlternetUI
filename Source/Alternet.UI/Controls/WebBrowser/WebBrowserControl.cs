@@ -316,6 +316,23 @@ namespace Alternet.UI
             }
         }
 
+        /// <include file="Interfaces/IWebBrowser.xml" 
+        /// path='doc/PreferredColorScheme/*'/>
+        public virtual WebBrowserPreferredColorScheme PreferredColorScheme
+        {
+            get
+            {
+                CheckDisposed();
+                return Browser.PreferredColorScheme;
+            }
+
+            set
+            {
+                CheckDisposed();
+                Browser.PreferredColorScheme = value;
+            }
+        }
+
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/CanCopy/*'/>
         public virtual bool CanCopy
         {

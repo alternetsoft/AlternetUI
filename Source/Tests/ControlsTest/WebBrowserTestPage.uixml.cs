@@ -11,8 +11,9 @@ namespace ControlsTest
 {
     internal partial class WebBrowserTestPage : Control
     {
+        internal static readonly Destructor MyDestructor = new ();
+
         private static readonly string ZipSchemeName = "zipfs";
-        private static readonly Destructor MyDestructor = new ();
         private static WebBrowserBackend useBackend = WebBrowserBackend.Default;
         private static bool insideUnhandledException;
 
@@ -80,6 +81,7 @@ namespace ControlsTest
                 AddTestActions();
                 if (IsIEBackend())
                     WebBrowser1.DoCommand("IE.SetScriptErrorsSuppressed", "true");
+
                 if (CommonTestUtils.CmdLineTest)
                 {
                     ListBox1.Visible = true;
@@ -101,59 +103,13 @@ namespace ControlsTest
                 CurrentDomain_UnhandledException;
         }
 
-        private static void HandleException(Exception e)
-        {
-            CommonTestUtils.LogException(e);
-        }
-
-        private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
-        {
-            HandleException(e.Exception);
-        }
-
-        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            if (!insideUnhandledException)
-            {
-                insideUnhandledException = true;
-                HandleException((e.ExceptionObject as Exception)!);
-                insideUnhandledException = false;
-            }
-        }
-
-        private static void SetBackendPathSmart(string folder)
-        {
-            var os = Environment.OSVersion;
-            var platform = os.Platform;
-
-            if (platform != PlatformID.Win32NT)
-                return;
-
-            var pa = "win-" + RuntimeInformation.ProcessArchitecture.ToString().ToLower();
-            string edgePath = Path.Combine(folder, pa);
-
-            WebBrowser.SetBackendPath(edgePath, true);
-        }
-
-        private void DoTestMessageHandler()
-        {
-            if (scriptMessageHandlerAdded)
-                DoRunScript("window.wx_msg.postMessage('This is a message body');");
-        }
-
-        private bool IsIEBackend()
-        {
-            return WebBrowser1.Backend == WebBrowserBackend.IE ||
-                WebBrowser1.Backend == WebBrowserBackend.IELatest;
-        }
-
-        private void DoTestIEShowPrintPreviewDialog()
+        internal void DoTestIEShowPrintPreviewDialog()
         {
             if (IsIEBackend())
                 WebBrowser1.DoCommand("IE.ShowPrintPreviewDialog");
         }
 
-        private void DoTestPandaFromMemory()
+        internal void DoTestPandaFromMemory()
         {
             if (WebBrowser1.Backend == WebBrowserBackend.Edge)
             {
@@ -193,6 +149,170 @@ namespace ControlsTest
 
             PandaToMemory();
             WebBrowser1.LoadURL("memory:Html/page1.html");
+        }
+
+        internal void DoTestMessageHandler()
+        {
+            if (scriptMessageHandlerAdded)
+                DoRunScript("window.wx_msg.postMessage('This is a message body');");
+        }
+
+        internal void DoTestInvokeScript()
+        {
+            DoInvokeScript("alert", "hello");
+        }
+
+        internal void DoTestInvokeScript3()
+        {
+            DoInvokeScript("alert", 16325.62901F);
+            DoInvokeScript("alert", WebBrowser1.ToInvokeScriptArg(16325.62901F)?.ToString());
+            DoInvokeScript("alert", System.DateTime.Now);
+        }
+
+        internal void DoTestRunScriptString()
+        {
+            DoRunScript("function f(a){return a;}f('Hello World!');");
+        }
+
+        internal void DoTestRunScriptInteger()
+        {
+            DoRunScript("function f(a){return a;}f(123);");
+        }
+
+        internal void DoTestRunScriptDouble()
+        {
+            DoRunScript("function f(a){return a;}f(2.34);");
+        }
+
+        internal void DoTestRunScriptBool()
+        {
+            DoRunScript("function f(a){return a;}f(false);");
+        }
+
+        internal void DoTestRunScriptObject()
+        {
+            DoRunScript("function f(){var person = new Object();person.name = 'Foo'; " +
+                "person.lastName = 'Bar'; return person;}f();");
+        }
+
+        internal void DoTestRunScriptArray()
+        {
+            DoRunScript("function f(){ return [\"foo\", \"bar\"]; }f();");
+        }
+
+        internal void DoTestRunScriptDOM()
+        {
+            DoRunScript("document.write(\"Hello World!\");");
+        }
+
+        internal void DoTestRunScriptUndefined()
+        {
+            DoRunScript("function f(){var person = new Object();}f();");
+        }
+
+        internal void DoTestRunScriptNull()
+        {
+            DoRunScript("function f(){return null;}f();");
+        }
+
+        internal void DoTestRunScriptDate()
+        {
+            DoRunScript("function f(){var d = new Date('10/08/2017 21:30:40');" +
+                "var tzoffset = d.getTimezoneOffset() * 60000;" +
+                "return new Date(d.getTime() - tzoffset);}f();");
+        }
+
+        internal void DoTestAddUserScript()
+        {
+            WebBrowser1.RemoveAllUserScripts();
+            WebBrowser1.AddUserScript("alert('hello');");
+            WebBrowser1.Reload();
+        }
+
+        internal void DoTestSerializeObject()
+        {
+            WeatherForecast value = new ()
+            {
+                Date = System.DateTime.Now,
+                TemperatureCelsius = 15,
+                Summary = "New York",
+            };
+
+            var s = WebBrowser1.ObjectToJSON(value);
+
+            Log(s);
+        }
+
+        internal void DoTestInvokeScript2()
+        {
+            DoInvokeScript("document.URL.toUpperCase");
+        }
+
+        internal void DoTestRunScriptGetBrowser()
+        {
+            DoRunScript("get_browser()");
+        }
+
+        internal void TestNavigateToString1()
+        {
+            WebBrowser1.NavigateToString("<html><body>NavigateToString example 1</body></html>");
+        }
+
+        internal void TestNavigateToString2()
+        {
+            WebBrowser1.NavigateToString("<html><body>NavigateToString example 2</body></html>", "www.aa.com");
+        }
+
+        internal void TestNavigateToStream()
+        {
+            var filename = CommonTestUtils.PathAddBackslash(CommonTestUtils.GetAppFolder() + "Html") + "version.html";
+            FileStream stream = File.OpenRead(filename);
+            WebBrowser1.NavigateToStream(stream);
+        }
+
+        internal void DoTestRunScript2()
+        {
+            DoRunScript("alert('hello');");
+        }
+
+        private static void HandleException(Exception e)
+        {
+            CommonTestUtils.LogException(e);
+        }
+
+        private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            HandleException(e.Exception);
+        }
+
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (!insideUnhandledException)
+            {
+                insideUnhandledException = true;
+                HandleException((e.ExceptionObject as Exception)!);
+                insideUnhandledException = false;
+            }
+        }
+
+        private static void SetBackendPathSmart(string folder)
+        {
+            var os = Environment.OSVersion;
+            var platform = os.Platform;
+
+            if (platform != PlatformID.Win32NT)
+                return;
+
+            var pa = "win-" + RuntimeInformation.ProcessArchitecture.ToString().ToLower();
+            string edgePath = Path.Combine(folder, pa);
+
+            WebBrowser.SetBackendPath(edgePath, true);
+        }
+
+        private bool IsIEBackend()
+        {
+            return WebBrowser1.Backend == WebBrowserBackend.IE ||
+                WebBrowser1.Backend == WebBrowserBackend.IELatest;
         }
 
         private void DoTestZip()
@@ -269,33 +389,6 @@ namespace ControlsTest
             var clientData = GetNewClientData();
             Log($"RunScript {clientData} > {script}");
             WebBrowser1.RunScriptAsync(script, clientData);
-        }
-
-        private void DoTestInvokeScript()
-        {
-            DoInvokeScript("alert", "hello");
-        }
-
-        private void DoTestInvokeScript3()
-        {
-            DoInvokeScript("alert", 16325.62901F);
-            DoInvokeScript("alert", WebBrowser1.ToInvokeScriptArg(16325.62901F)?.ToString());
-            DoInvokeScript("alert", System.DateTime.Now);
-        }
-
-        private void DoTestInvokeScript2()
-        {
-            DoInvokeScript("document.URL.toUpperCase");
-        }
-
-        private void DoTestRunScriptGetBrowser()
-        {
-            DoRunScript("get_browser()");
-        }
-
-        private void DoTestRunScript2()
-        {
-            DoRunScript("alert('hello');");
         }
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
@@ -377,6 +470,8 @@ namespace ControlsTest
 
             if (!pandaLoaded)
             {
+                WebBrowser1.PreferredColorScheme = WebBrowserPreferredColorScheme.Light;
+
                 pandaLoaded = true;
                 try
                 {
@@ -537,23 +632,6 @@ namespace ControlsTest
             ForwardButton.Enabled = WebBrowser1.CanGoForward;
         }
 
-        private void TestNavigateToString1()
-        {
-            WebBrowser1.NavigateToString("<html><body>NavigateToString example 1</body></html>");
-        }
-
-        private void TestNavigateToString2()
-        {
-            WebBrowser1.NavigateToString("<html><body>NavigateToString example 2</body></html>", "www.aa.com");
-        }
-
-        private void TestNavigateToStream()
-        {
-            var filename = CommonTestUtils.PathAddBackslash(CommonTestUtils.GetAppFolder() + "Html") + "version.html";
-            FileStream stream = File.OpenRead(filename);
-            WebBrowser1.NavigateToStream(stream);
-        }
-
         private void ZoomInButton_Click(object sender, EventArgs e)
         {
             WebBrowser1.ZoomIn();
@@ -691,6 +769,11 @@ namespace ControlsTest
 
             if (WebBrowser1.Backend == WebBrowserBackend.Edge)
             {
+                /*
+                AddTestAction(
+                    "ColorScheme",
+                    () => { WebBrowser1.PreferredColorScheme = WebBrowserPreferredColorScheme.Light; });
+                */
                 AddTestAction(
                     "Load PDF",
                     () =>
@@ -715,78 +798,14 @@ namespace ControlsTest
             }
         }
 
-        private void DoTestRunScriptString()
+        internal sealed class Destructor
         {
-            DoRunScript("function f(a){return a;}f('Hello World!');");
-        }
-
-        private void DoTestRunScriptInteger()
-        {
-            DoRunScript("function f(a){return a;}f(123);");
-        }
-
-        private void DoTestRunScriptDouble()
-        {
-            DoRunScript("function f(a){return a;}f(2.34);");
-        }
-
-        private void DoTestRunScriptBool()
-        {
-            DoRunScript("function f(a){return a;}f(false);");
-        }
-
-        private void DoTestRunScriptObject()
-        {
-            DoRunScript("function f(){var person = new Object();person.name = 'Foo'; " +
-                "person.lastName = 'Bar'; return person;}f();");
-        }
-
-        private void DoTestRunScriptArray()
-        {
-            DoRunScript("function f(){ return [\"foo\", \"bar\"]; }f();");
-        }
-
-        private void DoTestRunScriptDOM()
-        {
-            DoRunScript("document.write(\"Hello World!\");");
-        }
-
-        private void DoTestRunScriptUndefined()
-        {
-            DoRunScript("function f(){var person = new Object();}f();");
-        }
-
-        private void DoTestRunScriptNull()
-        {
-            DoRunScript("function f(){return null;}f();");
-        }
-
-        private void DoTestRunScriptDate()
-        {
-            DoRunScript("function f(){var d = new Date('10/08/2017 21:30:40');" +
-                "var tzoffset = d.getTimezoneOffset() * 60000;" +
-                "return new Date(d.getTime() - tzoffset);}f();");
-        }
-
-        private void DoTestAddUserScript()
-        {
-            WebBrowser1.RemoveAllUserScripts();
-            WebBrowser1.AddUserScript("alert('hello');");
-            WebBrowser1.Reload();
-        }
-
-        private void DoTestSerializeObject()
-        {
-            WeatherForecast value = new ()
+            ~Destructor()
             {
-                Date = System.DateTime.Now,
-                TemperatureCelsius = 15,
-                Summary = "New York",
-            };
-
-            var s = WebBrowser1.ObjectToJSON(value);
-
-            Log(s);
+                CommonTestUtils.LogToFile("===================");
+                CommonTestUtils.LogToFile("Application finished");
+                CommonTestUtils.LogToFile("===================");
+            }
         }
 
         private class MethodCaller
@@ -821,16 +840,6 @@ namespace ControlsTest
 
                 object[] prm = new object[0];
                 method?.Invoke(parent, prm);
-            }
-        }
-
-        private sealed class Destructor
-        {
-            ~Destructor()
-            {
-                CommonTestUtils.LogToFile("===================");
-                CommonTestUtils.LogToFile("Application finished");
-                CommonTestUtils.LogToFile("===================");
             }
         }
 

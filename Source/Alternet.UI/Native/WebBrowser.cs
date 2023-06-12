@@ -213,6 +213,23 @@ namespace Alternet.UI.Native
             }
         }
         
+        public int PreferredColorScheme
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.WebBrowser_GetPreferredColorScheme_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.WebBrowser_SetPreferredColorScheme_(NativePointer, value);
+            }
+        }
+        
         public string UserAgent
         {
             get
@@ -676,6 +693,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WebBrowser_SetAccessToDevToolsEnabled_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WebBrowser_GetPreferredColorScheme_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WebBrowser_SetPreferredColorScheme_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string WebBrowser_GetUserAgent_(IntPtr obj);

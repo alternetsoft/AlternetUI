@@ -79,6 +79,9 @@ namespace Alternet.UI
     /// </summary>
     public interface IWebBrowserLite
     {
+        /// <include file="IWebBrowser.xml" path='doc/PreferredColorScheme/*'/>
+        WebBrowserPreferredColorScheme PreferredColorScheme { get; set; }
+
         /// <include file="IWebBrowser.xml" path='doc/Editable/*'/>
         bool Editable { get; set; }
 

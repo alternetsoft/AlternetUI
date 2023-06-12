@@ -48,6 +48,10 @@ bool GetAccessToDevToolsEnabled();
 void SetAccessToDevToolsEnabled(bool value);
 
 
+int GetPreferredColorScheme();
+void SetPreferredColorScheme(int value);
+
+
 string GetUserAgent();
 void SetUserAgent(const string& value);
 

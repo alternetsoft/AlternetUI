@@ -134,6 +134,20 @@ ALTERNET_UI_API void WebBrowser_SetAccessToDevToolsEnabled_(WebBrowser* obj, c_b
         });
 }
 
+ALTERNET_UI_API int WebBrowser_GetPreferredColorScheme_(WebBrowser* obj)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetPreferredColorScheme();
+        });
+}
+
+ALTERNET_UI_API void WebBrowser_SetPreferredColorScheme_(WebBrowser* obj, int value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetPreferredColorScheme(value);
+        });
+}
+
 ALTERNET_UI_API char16_t* WebBrowser_GetUserAgent_(WebBrowser* obj)
 {
     return MarshalExceptions<char16_t*>([&](){

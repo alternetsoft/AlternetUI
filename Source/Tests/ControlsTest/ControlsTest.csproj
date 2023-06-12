@@ -122,6 +122,12 @@
     <ItemGroup>
       <Content Include="..\..\Samples\ControlsSample\Html\SampleArchive\Html\default.js" Link="Html\SampleArchive\Html\default.js" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\Samples\ControlsSample\Resources\SamplePandaPdf.pdf" Link="Resources\SamplePandaPdf.pdf">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
 </Project>
 
 
