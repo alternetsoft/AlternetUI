@@ -5,9 +5,9 @@ namespace ControlsTest
 {
     public class PageContainer : Control
     {
-        private ListBox pagesListBox;
-        private Control activePageHolder;
-        private Grid grid;
+        private readonly ListBox pagesListBox;
+        private readonly Control activePageHolder;
+        private readonly Grid grid;
 
         public PageContainer()
         {

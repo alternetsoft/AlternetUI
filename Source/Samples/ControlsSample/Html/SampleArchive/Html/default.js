@@ -2,5 +2,7 @@
 
 function fn2(s)
 {
-    alert("Panda says hello!");
+    document.getElementById(s).innerHTML = "<b>Panda says hello!</b>";
 }
+
+    

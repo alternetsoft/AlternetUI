@@ -190,6 +190,12 @@ namespace Alternet.UI
         /// <include file="IWebBrowser.xml" path='doc/Cut/*'/>
         void Cut();
 
+        /// <include file="IWebBrowser.xml" path='doc/SetVirtualHostNameToFolderMapping/*'/>
+        public void SetVirtualHostNameToFolderMapping(
+            string hostName,
+            string folderPath,
+            WebBrowserHostResourceAccessKind accessKind);
+
         /// <include file="IWebBrowser.xml" path='doc/ClearHistory/*'/>
         void ClearHistory();
 

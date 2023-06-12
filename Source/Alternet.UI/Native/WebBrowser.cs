@@ -333,6 +333,12 @@ namespace Alternet.UI.Native
             return m;
         }
         
+        public void SetVirtualHostNameToFolderMapping(string hostName, string folderPath, int accessKind)
+        {
+            CheckDisposed();
+            NativeApi.WebBrowser_SetVirtualHostNameToFolderMapping_(NativePointer, hostName, folderPath, accessKind);
+        }
+        
         public System.IntPtr GetNativeBackend()
         {
             CheckDisposed();
@@ -741,6 +747,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string WebBrowser_DoCommandGlobal_(string cmdName, string cmdParam1, string cmdParam2);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WebBrowser_SetVirtualHostNameToFolderMapping_(IntPtr obj, string hostName, string folderPath, int accessKind);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WebBrowser_GetNativeBackend_(IntPtr obj);

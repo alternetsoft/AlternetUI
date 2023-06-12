@@ -749,8 +749,10 @@ if(ScriptMessageHandlerAdded)
             Returns pointer to the native backend interface. 
         </summary>
 		<remarks>
-            For the IE backens it is <c>IWebBrowser2</c> interface. 
-            Under macOS it is a <c>WebView</c> pointer and under GTK it is a <c>WebKitWebView</c>.
+            For the IE backens it is a <c>IWebBrowser2</c> interface.
+            For the Edge backend it is a <c>ICoreWebView2</c> interface.
+          Under macOS it is a <c>WebView</c> pointer and under GTK 
+          it is a <c>WebKitWebView</c>.
 		</remarks>
 	</GetNativeBackend>
 	<!--==============================================-->
@@ -1206,6 +1208,41 @@ will replace the current page contents with the provided string.
       </para>
     </remarks>      
   </PreferredColorScheme>
+  <!--==============================================-->
+  <SetVirtualHostNameToFolderMapping>
+    <summary>
+        Sets a mapping between a virtual host name and a folder path to make 
+        available to web sites via that host name.
+    </summary>
+    <param name="hostName">
+        A virtual host name.
+    </param>
+    <param name="folderPath">
+        A folder path name to be mapped to the virtual host name. 
+    </param>
+    <param name="accessKind">
+        The level of access to resources under the virtual host from other sites.
+    </param>
+    <remarks>
+      <para>
+        After setting the mapping, documents loaded in the WebBrowser can use HTTP or 
+        HTTPS URLs at the specified host name specified by hostName to 
+        access files in the local folder specified by folderPath.
+      </para>  
+      <para>
+        This property works only for the Edge backend.
+      </para>
+    </remarks>
+<example>
+<code language="C#">
+WebControl1.SetVirtualHostNameToFolderMapping(
+  "appassets.example", "assets", WebBrowserHostResourceAccessKind.DenyCors);
+WebControl1.Source = new Uri("https://appassets.example/index.html");
+</code>
+</example>
+    <seealso href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2.setvirtualhostnametofoldermapping">
+      WebView2.SetVirtualHostNameToFolderMapping</seealso>
+  </SetVirtualHostNameToFolderMapping>
   <!--==============================================-->
 	<StringFormatJs>
         <summary>

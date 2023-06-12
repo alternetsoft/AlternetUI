@@ -21,6 +21,7 @@ namespace ControlsTest
         private readonly Dictionary<string, MethodCaller> testActions = new ();
 
         private bool pandaInMemory = false;
+        private bool mappingSet = false;
         private int scriptRunCounter = 0;
         private bool canNavigate = true;
         private bool historyCleared = false;
@@ -268,6 +269,19 @@ namespace ControlsTest
             var filename = CommonTestUtils.PathAddBackslash(CommonTestUtils.GetAppFolder() + "Html") + "version.html";
             FileStream stream = File.OpenRead(filename);
             WebBrowser1.NavigateToStream(stream);
+        }
+
+        internal void TestMapping()
+        {
+            if (WebBrowser1.Backend != WebBrowserBackend.Edge)
+                return;
+            if (!mappingSet)
+            {
+                mappingSet = true;
+                WebBrowser1.SetVirtualHostNameToFolderMapping("assets.example", "Html", WebBrowserHostResourceAccessKind.DenyCors);
+            }
+
+            WebBrowser1.LoadURL("https://assets.example/SampleArchive/Html/page1.html");
         }
 
         internal void DoTestRunScript2()
@@ -769,11 +783,9 @@ namespace ControlsTest
 
             if (WebBrowser1.Backend == WebBrowserBackend.Edge)
             {
-                /*
                 AddTestAction(
-                    "ColorScheme",
-                    () => { WebBrowser1.PreferredColorScheme = WebBrowserPreferredColorScheme.Light; });
-                */
+                    "Test Mapping",
+                    () => { TestMapping(); });
                 AddTestAction(
                     "Load PDF",
                     () =>

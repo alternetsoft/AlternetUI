@@ -73,6 +73,7 @@ static void SetDefaultFSNameMemory(const string& value);
 static void SetDefaultFSNameArchive(const string& value);
 string DoCommand(const string& cmdName, const string& cmdParam1, const string& cmdParam2);
 static string DoCommandGlobal(const string& cmdName, const string& cmdParam1, const string& cmdParam2);
+void SetVirtualHostNameToFolderMapping(const string& hostName, const string& folderPath, int accessKind);
 void* GetNativeBackend();
 void GoBack();
 void GoForward();

@@ -5,6 +5,7 @@ using System.Text;
 
 namespace NativeApi.Api
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ok")]
     public class WebBrowser : Control
     {
         public static void SetDefaultUserAgent(string value) => throw new Exception();
@@ -29,6 +30,7 @@ namespace NativeApi.Api
         public string PageText { get => throw new Exception(); }
         public bool AccessToDevToolsEnabled { get; set; }
         public int PreferredColorScheme { get; set; }
+        
         public string UserAgent 
         { 
             get => throw new Exception(); 
@@ -40,6 +42,11 @@ namespace NativeApi.Api
             string cmdParam2) => throw new Exception();
         public static string DoCommandGlobal(string cmdName, string cmdParam1, 
             string cmdParam2) => throw new Exception();
+
+        public void SetVirtualHostNameToFolderMapping(
+            string hostName, 
+            string folderPath, 
+            int accessKind) => throw new Exception();
 
         public IntPtr GetNativeBackend() => throw new Exception();
         public void GoBack() => throw new Exception();

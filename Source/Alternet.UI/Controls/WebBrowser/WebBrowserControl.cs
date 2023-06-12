@@ -316,7 +316,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <include file="Interfaces/IWebBrowser.xml" 
+        /// <include file="Interfaces/IWebBrowser.xml"
         /// path='doc/PreferredColorScheme/*'/>
         public virtual WebBrowserPreferredColorScheme PreferredColorScheme
         {
@@ -528,6 +528,7 @@ namespace Alternet.UI
             if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
                 uri = new Uri(url);
             else
+#pragma warning disable CA1847 // Use char literal for a single character lookup
             if (!url.Contains(" ") && url.Contains("."))
             {
                 // An invalid URI contains a dot and no spaces,
@@ -542,6 +543,7 @@ namespace Alternet.UI
                         new string[] { "%20" },
                         StringSplitOptions.RemoveEmptyEntries)));
             }
+#pragma warning restore CA1847 // Use char literal for a single character lookup
 
             LoadURL(uri.ToString());
         }
@@ -1014,6 +1016,16 @@ namespace Alternet.UI
         {
             CheckDisposed();
             return Browser.GetCurrentURL();
+        }
+
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetVirtualHostNameToFolderMapping/*'/>
+        public virtual void SetVirtualHostNameToFolderMapping(
+            string hostName,
+            string folderPath,
+            WebBrowserHostResourceAccessKind accessKind)
+        {
+            CheckDisposed();
+            Browser.SetVirtualHostNameToFolderMapping(hostName, folderPath, accessKind);
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/GetNativeBackend/*'/>

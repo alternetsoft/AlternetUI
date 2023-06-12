@@ -120,7 +120,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\..\Samples\ControlsSample\Html\SampleArchive\Html\default.js" Link="Html\SampleArchive\Html\default.js" />
+      <Content Include="..\..\Samples\ControlsSample\Html\SampleArchive\Html\default.js" Link="Html\SampleArchive\Html\default.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>

@@ -177,6 +177,17 @@ namespace Alternet.UI
             return true;
         }
 
+        public virtual void SetVirtualHostNameToFolderMapping(
+            string hostName,
+            string folderPath,
+            WebBrowserHostResourceAccessKind accessKind)
+        {
+            NativeControl.SetVirtualHostNameToFolderMapping(
+                hostName,
+                folderPath,
+                (int)accessKind);
+        }
+
         public void RunScriptAsync(string javascript, IntPtr? clientData = null)
         {
             if (IsIEBackend())

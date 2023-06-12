@@ -246,6 +246,13 @@ ALTERNET_UI_API char16_t* WebBrowser_DoCommandGlobal_(const char16_t* cmdName, c
         });
 }
 
+ALTERNET_UI_API void WebBrowser_SetVirtualHostNameToFolderMapping_(WebBrowser* obj, const char16_t* hostName, const char16_t* folderPath, int accessKind)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetVirtualHostNameToFolderMapping(hostName, folderPath, accessKind);
+        });
+}
+
 ALTERNET_UI_API void* WebBrowser_GetNativeBackend_(WebBrowser* obj)
 {
     return MarshalExceptions<void*>([&](){

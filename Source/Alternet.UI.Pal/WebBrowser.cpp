@@ -861,6 +861,24 @@ namespace Alternet::UI
     }
 
 #if defined(_MSW_EGDE_)
+    static ICoreWebView2_3* GetWebView2_3(void* native)
+    {
+        ICoreWebView2* wb = static_cast<ICoreWebView2*>(native);
+        if (wb == NULL)
+        {
+            wxLogApiError("WebBrowser::GetWebView2_3 1", 0);
+            return NULL;
+        }
+        wxCOMPtr<ICoreWebView2_3> WebView3;
+        auto hr = wb->QueryInterface(IID_PPV_ARGS(&WebView3));
+        if (FAILED(hr))
+        {
+            wxLogApiError("WebBrowser::GetWebView2_3 2", hr);
+            return NULL;
+        }
+        return WebView3;
+    }
+
     static ICoreWebView2Profile* GetProfile(void* native) 
     {
         ICoreWebView2* wb = static_cast<ICoreWebView2*>(native);
@@ -887,6 +905,19 @@ namespace Alternet::UI
     }
 #endif
 
+    void WebBrowser::SetVirtualHostNameToFolderMapping(const string& hostName,
+        const string& folderPath, int accessKind) 
+    {
+#if defined(_MSW_EGDE_)
+        if (Backend != WEBBROWSER_BACKEND_EDGE)
+            return;
+        wxCOMPtr<ICoreWebView2_3> webView3(GetWebView2_3(GetNativeBackend()));
+        if (webView3 != NULL)
+            webView3->SetVirtualHostNameToFolderMapping(wxStr(hostName),
+                wxStr(folderPath), (COREWEBVIEW2_HOST_RESOURCE_ACCESS_KIND)accessKind);
+#endif
+    }
+
     void WebBrowser::SetPreferredColorScheme(int value)
     {
         preferredColorScheme = value;
@@ -894,7 +925,8 @@ namespace Alternet::UI
         if (Backend != WEBBROWSER_BACKEND_EDGE)
             return;
         wxCOMPtr<ICoreWebView2Profile> profile(GetProfile(GetNativeBackend()));
-        profile->put_PreferredColorScheme((COREWEBVIEW2_PREFERRED_COLOR_SCHEME)value);
+        if(profile != NULL)
+            profile->put_PreferredColorScheme((COREWEBVIEW2_PREFERRED_COLOR_SCHEME)value);
 #endif
     }
 

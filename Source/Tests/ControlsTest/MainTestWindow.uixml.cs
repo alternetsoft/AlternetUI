@@ -10,15 +10,6 @@ namespace ControlsTest
         {
             InitializeComponent();
 
-            var pages = pageContainer.Pages;
-
-            if (WebBrowser.IsBackendAvailable(WebBrowserBackend.IELatest))
-            {
-                WebBrowserTestPage.UseBackend = WebBrowserBackend.IELatest;
-                AddWebBrowserPage("Web Browser IE1");
-                AddWebBrowserPage("Web Browser IE2");
-            }
-
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
             {
                 WebBrowserTestPage.UseBackend = WebBrowserBackend.Edge;
@@ -31,6 +22,13 @@ namespace ControlsTest
                 WebBrowserTestPage.UseBackend = WebBrowserBackend.WebKit;
                 AddWebBrowserPage("Web Browser WebKit1");
                 AddWebBrowserPage("Web Browser WebKit2");
+            }
+
+            if (WebBrowser.IsBackendAvailable(WebBrowserBackend.IELatest))
+            {
+                WebBrowserTestPage.UseBackend = WebBrowserBackend.IELatest;
+                AddWebBrowserPage("Web Browser IE1");
+                AddWebBrowserPage("Web Browser IE2");
             }
 
             Grid.SetRow(eventsListBox, 1);
