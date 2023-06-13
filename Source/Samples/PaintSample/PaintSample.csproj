@@ -5,6 +5,7 @@
       <ApplicationManifest>app.manifest</ApplicationManifest>
       <LangVersion>latest</LangVersion>
       <Nullable>enable</Nullable>
+      <ApplicationIcon>../../../Media/AlternetUI.ico</ApplicationIcon>
     </PropertyGroup>
 
 	<PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
