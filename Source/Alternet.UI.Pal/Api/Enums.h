@@ -585,6 +585,15 @@ namespace Alternet::UI
         Multiple = 1,
     };
     
+    enum class WebViewZoom
+    {
+        Tiny = 0,
+        Small = 1,
+        Medium = 2,
+        Large = 3,
+        Largest = 4,
+    };
+    
     enum class ModalResult
     {
         None = 0,
