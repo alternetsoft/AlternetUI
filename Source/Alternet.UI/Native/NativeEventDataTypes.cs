@@ -93,6 +93,19 @@ namespace Alternet.UI.Native
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    class WebBrowserEventData
+    {
+        public string Url;
+        public string Target;
+        public int ActionFlags;
+        public string MessageHandler;
+        public bool IsError;
+        public string Text;
+        public int IntVal;
+        public System.IntPtr ClientData;
+    }
+    
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class CommandEventData
     {
         public string managedCommandId;

@@ -47,7 +47,7 @@ namespace Alternet::UI
 
         App* _app = nullptr;
 
-        string _name;
+      //  string _name;
 
         Keyboard* _keyboard = nullptr;
         Mouse* _mouse = nullptr;

@@ -14,6 +14,22 @@ Mouse* GetMouse();
 Clipboard* GetClipboard();
 
 
+string GetDisplayName();
+void SetDisplayName(const string& value);
+
+
+string GetAppClassName();
+void SetAppClassName(const string& value);
+
+
+string GetVendorName();
+void SetVendorName(const string& value);
+
+
+string GetVendorDisplayName();
+void SetVendorDisplayName(const string& value);
+
+
 bool GetInUixmlPreviewerMode();
 void SetInUixmlPreviewerMode(bool value);
 

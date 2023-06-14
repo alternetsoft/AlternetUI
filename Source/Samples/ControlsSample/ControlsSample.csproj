@@ -5,6 +5,7 @@
       <ApplicationManifest>app.manifest</ApplicationManifest>
       <LangVersion>latest</LangVersion>
       <Nullable>enable</Nullable>
+      <TargetFrameworks>net6.0;net461</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
@@ -32,6 +33,23 @@
       <None Remove="ComboBoxPage.uixml" />
       <None Remove="ExampleContextMenu.uixml" />
       <None Remove="GridPage.uixml" />
+      <None Remove="Html\SampleArchive\Html\default.js" />
+      <None Remove="Html\SampleArchive\Html\page1.html" />
+      <None Remove="Html\SampleArchive\Html\page2.html" />
+      <None Remove="Html\SampleArchive\Images\panda1.jpg" />
+      <None Remove="Html\SampleArchive\Images\panda2.jpg" />
+      <None Remove="Html\SampleArchive\root.html" />
+      <None Remove="Html\SampleArchive\Styles\default.css" />
+      <None Remove="Resources\SamplePandaPdf.pdf" />
+      <None Remove="Resources\Svg\arrow-left.svg" />
+      <None Remove="Resources\Svg\arrow-right.svg" />
+      <None Remove="Resources\Svg\arrow-rotate-right.svg" />
+      <None Remove="Resources\Svg\caret-right.svg" />
+      <None Remove="Resources\Svg\minus.svg" />
+      <None Remove="Resources\Svg\plus.svg" />
+      <None Remove="Resources\Svg\search.svg" />
+      <None Remove="Resources\Svg\xmark.svg" />
+      <None Remove="WebBrowserPage.uixml" />
       <None Remove="ListBoxPage.uixml" />
       <None Remove="ListViewPage.uixml" />
       <None Remove="MainWindow.uixml" />
@@ -69,11 +87,54 @@
       <EmbeddedResource Include="Resources\ImageListIcons\Small\LineGraph16.png" />
       <EmbeddedResource Include="Resources\ImageListIcons\Small\Pencil16.png" />
       <EmbeddedResource Include="Resources\ImageListIcons\Small\Photo16.png" />
-      <EmbeddedResource Include="Resources\Logo16x16.png" />
+      <EmbeddedResource Include="Resources\Logo16x16.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </EmbeddedResource>
     </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Html\SampleArchive\Html\default.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Html\SampleArchive\Html\page1.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Html\SampleArchive\Html\page2.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Html\SampleArchive\Images\panda1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Html\SampleArchive\Images\panda2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Html\SampleArchive\root.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Html\SampleArchive\Styles\default.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\SamplePandaPdf.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="Resources\Svg\arrow-left.svg" />
+      <Resource Include="Resources\Svg\arrow-right.svg" />
+      <Resource Include="Resources\Svg\arrow-rotate-right.svg" />
+      <Resource Include="Resources\Svg\caret-right.svg" />
+      <Resource Include="Resources\Svg\minus.svg" />
+      <Resource Include="Resources\Svg\plus.svg" />
+      <Resource Include="Resources\Svg\search.svg" />
+      <Resource Include="Resources\Svg\xmark.svg" />
     </ItemGroup>
 
     <ItemGroup>
@@ -107,7 +168,10 @@
       <UIXml Update="GridPage.uixml">
         <SubType>Designer</SubType>
       </UIXml>
-      <UIXml Update="NotifyIconPage.uixml">
+		<UIXml Update="WebBrowserPage.uixml">
+			<SubType>Designer</SubType>
+		</UIXml>
+		<UIXml Update="NotifyIconPage.uixml">
         <SubType>Designer</SubType>
         <Generator>MSBuild:Compile</Generator>
       </UIXml>

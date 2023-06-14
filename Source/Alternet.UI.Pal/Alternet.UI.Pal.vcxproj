@@ -76,6 +76,7 @@
     <IntDir>obj\x86\$(Configuration)\</IntDir>
     <GenerateManifest>true</GenerateManifest>
     <TargetName>Alternet.UI.Pal</TargetName>
+    <IncludePath>..\..\External\wxWidgets\lib\vc_x86_lib\mswud\wx\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -83,12 +84,14 @@
     <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
     <GenerateManifest>true</GenerateManifest>
     <TargetName>Alternet.UI.Pal</TargetName>
+    <IncludePath>..\..\External\wxWidgets\lib\vc_x64_lib\mswud\wx\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)\bin\x86\$(Configuration)\</OutDir>
     <IntDir>obj\x86\$(Configuration)\</IntDir>
     <TargetName>Alternet.UI.Pal</TargetName>
+    <IncludePath>..\..\External\wxWidgets\lib\vc_x86_lib\mswu\wx\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -96,6 +99,7 @@
     <IntDir>obj\$(Platform)\$(Configuration)\</IntDir>
     <GenerateManifest>true</GenerateManifest>
     <TargetName>Alternet.UI.Pal</TargetName>
+    <IncludePath>..\..\External\wxWidgets\lib\vc_x64_lib\mswu\wx\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -114,6 +118,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>Comctl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\External\wxWidgets\3rdparty\webview2\build\native\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -135,7 +140,7 @@
       <AdditionalManifestDependencies>
       </AdditionalManifestDependencies>
       <AdditionalDependencies>Comctl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\External\wxWidgets\3rdparty\webview2\build\native\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -159,6 +164,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>Comctl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\External\wxWidgets\3rdparty\webview2\build\native\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -184,6 +190,7 @@
       <AdditionalManifestDependencies>
       </AdditionalManifestDependencies>
       <AdditionalDependencies>Comctl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\External\wxWidgets\3rdparty\webview2\build\native\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -217,6 +224,7 @@
     <ClCompile Include="ListView.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="ManagedServerApi.cpp" />
+    <ClCompile Include="MemoryFSHandler.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuItem.cpp" />
     <ClCompile Include="MessageBox_.cpp" />
@@ -251,6 +259,8 @@
     <ClCompile Include="TreeView.cpp" />
     <ClCompile Include="UnmanagedDataObject.cpp" />
     <ClCompile Include="UnmanagedStream.cpp" />
+    <ClCompile Include="WebBrowser.cpp" />
+    <ClCompile Include="WebBrowserApiPal.cpp" />
     <ClCompile Include="WindowsVisualThemeSupport.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -288,6 +298,7 @@
     <ClInclude Include="Api\ListBox.Api.h" />
     <ClInclude Include="Api\ListView.Api.h" />
     <ClInclude Include="Api\MainMenu.Api.h" />
+    <ClInclude Include="Api\MemoryFSHandler.Api.h" />
     <ClInclude Include="Api\Menu.Api.h" />
     <ClInclude Include="Api\MenuItem.Api.h" />
     <ClInclude Include="Api\MessageBox_.Api.h" />
@@ -325,6 +336,7 @@
     <ClInclude Include="Api\TreeView.Api.h" />
     <ClInclude Include="Api\UnmanagedDataObject.Api.h" />
     <ClInclude Include="Api\UnmanagedStream.Api.h" />
+    <ClInclude Include="Api\WebBrowser.Api.h" />
     <ClInclude Include="Api\Window.Api.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Brush.h" />
@@ -366,6 +378,7 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="ManagedInputStream.h" />
     <ClInclude Include="ManagedOutputStream.h" />
+    <ClInclude Include="MemoryFSHandler.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuItem.h" />
     <ClInclude Include="MessageBox_.h" />
@@ -404,6 +417,7 @@
     <ClInclude Include="TypedEnumFlags.h" />
     <ClInclude Include="UnmanagedDataObject.h" />
     <ClInclude Include="UnmanagedStream.h" />
+    <ClInclude Include="WebBrowser.h" />
     <ClInclude Include="WindowsVisualThemeSupport.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
@@ -434,6 +448,7 @@
     <None Include="Api\ListBox.inc" />
     <None Include="Api\ListView.inc" />
     <None Include="Api\MainMenu.inc" />
+    <None Include="Api\MemoryFSHandler.inc" />
     <None Include="Api\Menu.inc" />
     <None Include="Api\MenuItem.inc" />
     <None Include="Api\MessageBox_.inc" />
@@ -467,6 +482,7 @@
     <None Include="Api\TreeView.inc" />
     <None Include="Api\UnmanagedDataObject.inc" />
     <None Include="Api\UnmanagedStream.inc" />
+    <None Include="Api\WebBrowser.inc" />
     <None Include="Api\Window.inc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

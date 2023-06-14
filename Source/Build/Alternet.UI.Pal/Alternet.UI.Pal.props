@@ -32,15 +32,35 @@
 
     <PropertyGroup>
         <ExternalComponentsDirectory>$(RootDirectoryPath)\External\</ExternalComponentsDirectory>
+
+        <WebViewDirectory>$(ExternalComponentsDirectory)\WxWidgets\3rdparty\webview2</WebViewDirectory>
+        <WebViewDownloadUrl>https://alternetsoftware.blob.core.windows.net/alternet-ui/microsoft.web.webview2.1.0.1774.30.zip</WebViewDownloadUrl>
+        <WebViewDownloadDirectory>$(ExternalComponentsDirectory)</WebViewDownloadDirectory>
+        <WebViewDownloadFileName>WebView.zip</WebViewDownloadFileName>
+        <WebViewDownloadTargetPath>$(WebViewDownloadDirectory)\$(WebViewDownloadFileName)</WebViewDownloadTargetPath>
+
         <WxWidgetsDirectory>$(ExternalComponentsDirectory)\WxWidgets</WxWidgetsDirectory>
-        <WxWidgetsDownloadUrl>https://yezo.blob.core.windows.net/alternet/WxWidgets/wxWidgets-3.1.6.zip</WxWidgetsDownloadUrl>
+        <WxWidgetsDownloadUrl>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-3.2.2.1.zip</WxWidgetsDownloadUrl>
         <WxWidgetsDownloadDirectory>$(ExternalComponentsDirectory)</WxWidgetsDownloadDirectory>
         <WxWidgetsDownloadFileName>WxWidgets.zip</WxWidgetsDownloadFileName>
         <WxWidgetsDownloadTargetPath>$(WxWidgetsDownloadDirectory)\$(WxWidgetsDownloadFileName)</WxWidgetsDownloadTargetPath>
         <VCVarsAllPath>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat</VCVarsAllPath>
-        <WxWidgetsWindowsBuildDirectory>$(WxWidgetsDirectory)\build\msw</WxWidgetsWindowsBuildDirectory>
+
+        <WxWidgetsWindowsBuildDirectoryNameParent>build</WxWidgetsWindowsBuildDirectoryNameParent>
+        <WxWidgetsWindowsBuildDirectoryName>msw</WxWidgetsWindowsBuildDirectoryName>
+        <WxWidgetsWindowsBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsWindowsBuildDirectoryNameParent)\$(WxWidgetsWindowsBuildDirectoryName)</WxWidgetsWindowsBuildDirectory>
+        <WxWidgetsWindowsBuildDirectoryParent>$(WxWidgetsDirectory)\$(WxWidgetsWindowsBuildDirectoryNameParent)</WxWidgetsWindowsBuildDirectoryParent>
+
+	<WxWidgetsWindowsBuildDirectory_vc_mswu>$(WxWidgetsWindowsBuildDirectory)\vc_mswu</WxWidgetsWindowsBuildDirectory_vc_mswu>
+	<WxWidgetsWindowsBuildDirectory_vc_x64_mswu>$(WxWidgetsWindowsBuildDirectory)\vc_x64_mswu</WxWidgetsWindowsBuildDirectory_vc_x64_mswu>
+	<WxWidgetsWindowsBuildDirectory_vc_mswud>$(WxWidgetsWindowsBuildDirectory)\vc_mswud</WxWidgetsWindowsBuildDirectory_vc_mswud>
+	<WxWidgetsWindowsBuildDirectory_vc_x64_mswud>$(WxWidgetsWindowsBuildDirectory)\vc_x64_mswud</WxWidgetsWindowsBuildDirectory_vc_x64_mswud>
+	<WxWidgetsWindowsBuildDirectory_vc_lib>$(WxWidgetsDirectory)\lib\vc_lib</WxWidgetsWindowsBuildDirectory_vc_lib>
+	<WxWidgetsWindowsBuildDirectory_vc_x64_lib>$(WxWidgetsDirectory)\lib\vc_x64_lib</WxWidgetsWindowsBuildDirectory_vc_x64_lib>
+
         <WxWidgetsGtkBuildDirectoryName>gtk-build</WxWidgetsGtkBuildDirectoryName>
         <WxWidgetsGtkBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsGtkBuildDirectoryName)</WxWidgetsGtkBuildDirectory>
+
         <WxWidgetsMacOSBuildDirectoryName>macos-build</WxWidgetsMacOSBuildDirectoryName>
         <WxWidgetsMacOSBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsMacOSBuildDirectoryName)</WxWidgetsMacOSBuildDirectory>
     </PropertyGroup>
