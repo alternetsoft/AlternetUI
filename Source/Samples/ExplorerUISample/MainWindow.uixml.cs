@@ -13,7 +13,7 @@ namespace ExplorerUISample
         {
             InitializeComponent();
 
-            var date = DateTime.Now.ToShortDateString();
+            var date = System.DateTime.Now.ToShortDateString();
             listView.Items.Add(new ListViewItem(new[] { "July Report 1", "1K", date }, 0));
             listView.Items.Add(new ListViewItem(new[] { "06.21 M&A Meeting Memo", "1.5K", date }, 2));
             listView.Items.Add(new ListViewItem(new[] { "RTC Chart - Mary", "12M", date }, 3));

@@ -1,9 +1,9 @@
-﻿using Alternet.UI;
-using System;
+﻿using System;
+using Alternet.UI;
 
 namespace ControlsSample
 {
-    partial class ComboBoxPage : Control
+    internal partial class ComboBoxPage : Control
     {
         private IPageSite? site;
 
@@ -26,7 +26,6 @@ namespace ControlsSample
             }
         }
 
-
         private void SetSelectedItemToNullButton_Click(object? sender, EventArgs e)
         {
             comboBox.SelectedItem = null;
@@ -39,7 +38,7 @@ namespace ControlsSample
 
         private void SetTextToEmptyStringButton_Click(object? sender, EventArgs e)
         {
-            comboBox.Text = "";
+            comboBox.Text = string.Empty;
         }
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
@@ -59,7 +58,7 @@ namespace ControlsSample
 
         private void ComboBox_TextChanged(object? sender, EventArgs e)
         {
-            var text = comboBox.Text == "" ? "\"\"" : comboBox.Text;
+            var text = comboBox.Text == string.Empty ? "\"\"" : comboBox.Text;
             site?.LogEvent($"ComboBox: TextChanged. Text: {text}");
         }
 
@@ -84,7 +83,7 @@ namespace ControlsSample
             comboBox.Items.Add("Item " + (comboBox.Items.Count + 1));
         }
 
-        bool CheckComboBoxIsEditable()
+        private bool CheckComboBoxIsEditable()
         {
             bool isEditable = comboBox.IsEditable;
 

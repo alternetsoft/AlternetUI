@@ -1,6 +1,6 @@
-﻿using Alternet.Drawing;
+﻿using System;
+using Alternet.Drawing;
 using Alternet.UI;
-using System;
 
 namespace ControlsSample
 {

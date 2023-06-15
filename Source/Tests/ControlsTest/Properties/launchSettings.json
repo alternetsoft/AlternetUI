@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "ControlsTest": {
+      "commandName": "Project",
+      "commandLineArgs": "-nomfcdebug",
+      "nativeDebugging": true
+    }
+  }
+}

@@ -89,11 +89,11 @@ namespace Alternet.UI
         /// Set/get a filter callback to filter out items in collection.
         /// This property will always accept a filter, but the collection view for the
         /// underlying InnerList or ItemsSource may not actually support filtering.
-        /// Please check <seealso cref="CanFilter"/>
+        /// Please check <see cref="CanFilter"/>
         /// </summary>
         /// <exception cref="NotSupportedException">
         /// Collections assigned to ItemsSource may not support filtering and could throw a NotSupportedException.
-        /// Use <seealso cref="CanSort"/> property to test if sorting is supported before adding
+        /// Use <see cref="CanSort"/> property to test if sorting is supported before adding
         /// to SortDescriptions.
         /// </exception>
         public override Predicate<object> Filter
@@ -104,7 +104,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Test if this ICollectionView supports filtering before assigning
-        /// a filter callback to <seealso cref="Filter"/>.
+        /// a filter callback to <see cref="Filter"/>.
         /// </summary>
         public override bool CanFilter
         {
@@ -117,13 +117,13 @@ namespace Alternet.UI
         /// <remarks>
         /// <p>
         /// Clear a sort criteria by assigning SortDescription.Empty to this property.
-        /// One or more sort criteria in form of <seealso cref="SortDescription"/>
+        /// One or more sort criteria in form of <see cref="SortDescription"/>
         /// can be used, each specifying a property and direction to sort by.
         /// </p>
         /// </remarks>
         /// <exception cref="NotSupportedException">
         /// Simpler implementations do not support sorting and will throw a NotSupportedException.
-        /// Use <seealso cref="CanSort"/> property to test if sorting is supported before adding
+        /// Use <see cref="CanSort"/> property to test if sorting is supported before adding
         /// to SortDescriptions.
         /// </exception>
         public override SortDescriptionCollection SortDescriptions
@@ -133,7 +133,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Test if this ICollectionView supports sorting before adding
-        /// to <seealso cref="SortDescriptions"/>.
+        /// to <see cref="SortDescriptions"/>.
         /// </summary>
         public override bool CanSort
         {
@@ -166,7 +166,7 @@ namespace Alternet.UI
             get { return ProxiedView.Groups; }
         }
 
-        /// Re-create the view, using any <seealso cref="SortDescriptions"/>.
+        /// Re-create the view, using any <see cref="SortDescriptions"/>.
         public override void Refresh()
         {
             IndexedEnumerable indexer = (IndexedEnumerable)Interlocked.Exchange(ref _indexer, null);
@@ -194,7 +194,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// The ordinal position of the <seealso cref="CurrentItem"/> within the (optionally
+        /// The ordinal position of the <see cref="CurrentItem"/> within the (optionally
         /// sorted and filtered) view.
         /// </summary>
         public override int CurrentPosition
@@ -418,7 +418,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Return true if the view supports <seealso cref="IEditableCollectionView.AddNew"/>.
+        /// Return true if the view supports <see cref="IEditableCollectionView.AddNew"/>.
         /// </summary>
         bool IEditableCollectionView.CanAddNew
         {
@@ -439,7 +439,7 @@ namespace Alternet.UI
         /// <summary>
         /// Add a new item to the underlying collection.  Returns the new item.
         /// After calling AddNew and changing the new item as desired, either
-        /// <seealso cref="IEditableCollectionView.CommitNew"/> or <seealso cref="IEditableCollectionView.CancelNew"/> should be
+        /// <see cref="IEditableCollectionView.CommitNew"/> or <see cref="IEditableCollectionView.CancelNew"/> should be
         /// called to complete the transaction.
         /// </summary>
         object IEditableCollectionView.AddNew()
@@ -457,7 +457,7 @@ namespace Alternet.UI
 
 
         /// <summary>
-        /// Complete the transaction started by <seealso cref="IEditableCollectionView.AddNew"/>.  The new
+        /// Complete the transaction started by <see cref="IEditableCollectionView.AddNew"/>.  The new
         /// item remains in the collection, and the view's sort, filter, and grouping
         /// specifications (if any) are applied to the new item.
         /// </summary>
@@ -475,7 +475,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Complete the transaction started by <seealso cref="IEditableCollectionView.AddNew"/>.  The new
+        /// Complete the transaction started by <see cref="IEditableCollectionView.AddNew"/>.  The new
         /// item is removed from the collection.
         /// </summary>
         void IEditableCollectionView.CancelNew()
@@ -492,7 +492,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns true if an <seealso cref="IEditableCollectionView.AddNew" /> transaction is in progress.
+        /// Returns true if an <see cref="IEditableCollectionView.AddNew" /> transaction is in progress.
         /// </summary>
         bool IEditableCollectionView.IsAddingNew
         {
@@ -511,7 +511,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// When an <seealso cref="IEditableCollectionView.AddNew"/> transaction is in progress, this property
+        /// When an <see cref="IEditableCollectionView.AddNew"/> transaction is in progress, this property
         /// returns the new item.  Otherwise it returns null.
         /// </summary>
         object IEditableCollectionView.CurrentAddItem
@@ -535,8 +535,8 @@ namespace Alternet.UI
         #region Removing items
 
         /// <summary>
-        /// Return true if the view supports <seealso cref="IEditableCollectionView.Remove"/> and
-        /// <seealso cref="IEditableCollectionView.RemoveAt"/>.
+        /// Return true if the view supports <see cref="IEditableCollectionView.Remove"/> and
+        /// <see cref="IEditableCollectionView.RemoveAt"/>.
         /// </summary>
         bool IEditableCollectionView.CanRemove
         {
@@ -594,8 +594,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Begins an editing transaction on the given item.  The transaction is
-        /// completed by calling either <seealso cref="IEditableCollectionView.CommitEdit"/> or
-        /// <seealso cref="IEditableCollectionView.CancelEdit"/>.  Any changes made to the item during
+        /// completed by calling either <see cref="IEditableCollectionView.CommitEdit"/> or
+        /// <see cref="IEditableCollectionView.CancelEdit"/>.  Any changes made to the item during
         /// the transaction are considered "pending", provided that the view supports
         /// the notion of "pending changes" for the given item.
         /// </summary>
@@ -613,7 +613,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Complete the transaction started by <seealso cref="IEditableCollectionView.EditItem"/>.
+        /// Complete the transaction started by <see cref="IEditableCollectionView.EditItem"/>.
         /// The pending changes (if any) to the item are committed.
         /// </summary>
         void IEditableCollectionView.CommitEdit()
@@ -630,7 +630,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Complete the transaction started by <seealso cref="IEditableCollectionView.EditItem"/>.
+        /// Complete the transaction started by <see cref="IEditableCollectionView.EditItem"/>.
         /// The pending changes (if any) to the item are discarded.
         /// </summary>
         void IEditableCollectionView.CancelEdit()
@@ -650,7 +650,7 @@ namespace Alternet.UI
         /// Returns true if the view supports the notion of "pending changes" on the
         /// current edit item.  This may vary, depending on the view and the particular
         /// item.  For example, a view might return true if the current edit item
-        /// implements <seealso cref="IEditableObject"/>, or if the view has special
+        /// implements <see cref="IEditableObject"/>, or if the view has special
         /// knowledge about the item that it can use to support rollback of pending
         /// changes.
         /// </summary>
@@ -671,7 +671,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns true if an <seealso cref="IEditableCollectionView.EditItem"/> transaction is in progress.
+        /// Returns true if an <see cref="IEditableCollectionView.EditItem"/> transaction is in progress.
         /// </summary>
         bool IEditableCollectionView.IsEditingItem
         {
@@ -690,7 +690,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// When an <seealso cref="IEditableCollectionView.EditItem"/> transaction is in progress, this property
+        /// When an <see cref="IEditableCollectionView.EditItem"/> transaction is in progress, this property
         /// returns the affected item.  Otherwise it returns null.
         /// </summary>
         object IEditableCollectionView.CurrentEditItem
@@ -716,7 +716,7 @@ namespace Alternet.UI
         #region IEditableCollectionViewAddNewItem
 
         /// <summary>
-        /// Return true if the view supports <seealso cref="IEditableCollectionViewAddNewItem.AddNewItem"/>.
+        /// Return true if the view supports <see cref="IEditableCollectionViewAddNewItem.AddNewItem"/>.
         /// </summary>
         bool IEditableCollectionViewAddNewItem.CanAddNewItem
         {
@@ -737,7 +737,7 @@ namespace Alternet.UI
         /// <summary>
         /// Add a new item to the underlying collection.  Returns the new item.
         /// After calling AddNewItem and changing the new item as desired, either
-        /// <seealso cref="IEditableCollectionView.CommitNew"/> or <seealso cref="IEditableCollectionView.CancelNew"/> should be
+        /// <see cref="IEditableCollectionView.CommitNew"/> or <see cref="IEditableCollectionView.CancelNew"/> should be
         /// called to complete the transaction.
         /// </summary>
         object IEditableCollectionViewAddNewItem.AddNewItem(object newItem)

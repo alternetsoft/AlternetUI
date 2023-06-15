@@ -1,8 +1,14 @@
 <Project>
-  <PropertyGroup Condition="'$(AlternetUIBuildTaskPath)' == ''">
-    <AlternetUIBuildTaskPath Condition="'$(MSBuildRuntimeType)' != 'Core'">$(AlternetUIBuildTaskAllPlatformsPath)\net461</AlternetUIBuildTaskPath>
-    <AlternetUIBuildTaskPath Condition="'$(MSBuildRuntimeType)' == 'Core'">$(AlternetUIBuildTaskAllPlatformsPath)\netcoreapp3.1</AlternetUIBuildTaskPath>
-  </PropertyGroup>
+
+<PropertyGroup Condition="'$(AlternetUIBuildTaskPath)' == ''">
+    <AlternetUIBuildTaskPath Condition="'$(MSBuildRuntimeType)' != 'Core'">$(AlternetUIBuildTaskAllPlatformsPath)\net462</AlternetUIBuildTaskPath>
+    <AlternetUIBuildTaskPath Condition="'$(MSBuildRuntimeType)' == 'Core'">$(AlternetUIBuildTaskAllPlatformsPath)\net6.0</AlternetUIBuildTaskPath>
+  </PropertyGroup>	
+		
+    <Target Name="WriteInfoMessages" BeforeTargets="Build" >
+		<Message Text="AlternetUIBuildTaskPath: $(AlternetUIBuildTaskPath)"/>
+		<Message Text="AlternetUIBuildTaskAllPlatformsPath: $(AlternetUIBuildTaskAllPlatformsPath)"/>
+	</Target>
 
   <!-- <ItemGroup> -->
     <!-- <None Remove="**\*.uixml" /> -->

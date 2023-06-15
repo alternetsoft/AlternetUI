@@ -17,7 +17,7 @@ namespace EmployeeFormSample
             {
                 FirstName = "Alice",
                 LastName = "Jameson",
-                BirthDate = new DateTime(1993, 10, 2).ToShortDateString(),
+                BirthDate = new System.DateTime(1993, 10, 2).ToShortDateString(),
                 Title = "Customer Success Manager",
                 Prefix = EmployeePrefix.Mrs,
                 Address = "143 Coolidge St.",
@@ -29,7 +29,7 @@ namespace EmployeeFormSample
                 Email = "AliceJ@mycompany.com",
                 Skype = "AliceJ12",
                 Department = Department.Sales,
-                HireDate = new DateTime(2018, 3, 5).ToShortDateString(),
+                HireDate = new System.DateTime(2018, 3, 5).ToShortDateString(),
                 Status = Status.Salaried
             };
 

@@ -37,7 +37,7 @@ namespace Alternet.UI
     /// Return true if the item belongs to this view.  No assumptions are
     /// made about the item. This method will behave similarly to IList.Contains().
     /// If the caller knows that the item belongs to the
-    /// underlying collection, it is more efficient to call <seealso cref="Filter"/>.
+    /// underlying collection, it is more efficient to call <see cref="Filter"/>.
     /// </summary>
     bool Contains (object item);
 
@@ -67,11 +67,11 @@ namespace Alternet.UI
     /// Simpler implementations do not support sorting and will return an empty
     /// and immutable / read-only SortDescription collection.
     /// Attempting to modify such a collection will cause NotSupportedException.
-    /// Use <seealso cref="CanSort"/> property on CollectionView to test if sorting is supported
+    /// Use <see cref="CanSort"/> property on CollectionView to test if sorting is supported
     /// before modifying the returned collection.
     /// </p>
     /// <p>
-    /// One or more sort criteria in form of <seealso cref="SortDescription"/>
+    /// One or more sort criteria in form of <see cref="SortDescription"/>
     /// can be added, each specifying a property and direction to sort by.
     /// </p>
     /// </remarks>
@@ -105,7 +105,7 @@ namespace Alternet.UI
     bool IsEmpty { get; }
 
     /// <summary>
-    /// Re-create the view, using any <seealso cref="SortDescriptions"/>.
+    /// Re-create the view, using any <see cref="SortDescriptions"/>.
     /// </summary>
     void Refresh();
 
@@ -123,57 +123,57 @@ namespace Alternet.UI
     object CurrentItem { get; }
 
     /// <summary>
-    /// The ordinal position of the <seealso cref="CurrentItem"/> within the (optionally
+    /// The ordinal position of the <see cref="CurrentItem"/> within the (optionally
     /// sorted and filtered) view.
     /// </summary>
     int CurrentPosition { get; }
 
     /// <summary>
-    /// Return true if <seealso cref="CurrentItem"/> is beyond the end (End-Of-File).
+    /// Return true if <see cref="CurrentItem"/> is beyond the end (End-Of-File).
     /// </summary>
     bool IsCurrentAfterLast { get; }
 
     /// <summary>
-    /// Return true if <seealso cref="CurrentItem"/> is before the beginning (Beginning-Of-File).
+    /// Return true if <see cref="CurrentItem"/> is before the beginning (Beginning-Of-File).
     /// </summary>
     bool IsCurrentBeforeFirst { get; }
 
     /// <summary>
-    /// Move <seealso cref="CurrentItem"/> to the first item.
+    /// Move <see cref="CurrentItem"/> to the first item.
     /// </summary>
-    /// <returns>true if <seealso cref="CurrentItem"/> points to an item within the view.</returns>
+    /// <returns>true if <see cref="CurrentItem"/> points to an item within the view.</returns>
     bool MoveCurrentToFirst();
 
     /// <summary>
-    /// Move <seealso cref="CurrentItem"/> to the last item.
+    /// Move <see cref="CurrentItem"/> to the last item.
     /// </summary>
-    /// <returns>true if <seealso cref="CurrentItem"/> points to an item within the view.</returns>
+    /// <returns>true if <see cref="CurrentItem"/> points to an item within the view.</returns>
     bool MoveCurrentToLast();
 
     /// <summary>
-    /// Move <seealso cref="CurrentItem"/> to the next item.
+    /// Move <see cref="CurrentItem"/> to the next item.
     /// </summary>
-    /// <returns>true if <seealso cref="CurrentItem"/> points to an item within the view.</returns>
+    /// <returns>true if <see cref="CurrentItem"/> points to an item within the view.</returns>
     bool MoveCurrentToNext();
 
     /// <summary>
-    /// Move <seealso cref="CurrentItem"/> to the previous item.
+    /// Move <see cref="CurrentItem"/> to the previous item.
     /// </summary>
-    /// <returns>true if <seealso cref="CurrentItem"/> points to an item within the view.</returns>
+    /// <returns>true if <see cref="CurrentItem"/> points to an item within the view.</returns>
     bool MoveCurrentToPrevious();
 
     /// <summary>
-    /// Move <seealso cref="CurrentItem"/> to the given item.
+    /// Move <see cref="CurrentItem"/> to the given item.
     /// </summary>
     /// <param name="item">Move CurrentItem to this item.</param>
-    /// <returns>true if <seealso cref="CurrentItem"/> points to an item within the view.</returns>
+    /// <returns>true if <see cref="CurrentItem"/> points to an item within the view.</returns>
     bool MoveCurrentTo( object item );
 
     /// <summary>
-    /// Move <seealso cref="CurrentItem"/> to the item at the given index.
+    /// Move <see cref="CurrentItem"/> to the item at the given index.
     /// </summary>
     /// <param name="position">Move CurrentItem to this index</param>
-    /// <returns>true if <seealso cref="CurrentItem"/> points to an item within the view.</returns>
+    /// <returns>true if <see cref="CurrentItem"/> points to an item within the view.</returns>
     bool MoveCurrentToPosition( int position);
 
 

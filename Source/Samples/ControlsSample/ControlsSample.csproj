@@ -5,16 +5,15 @@
       <ApplicationManifest>app.manifest</ApplicationManifest>
       <LangVersion>latest</LangVersion>
       <Nullable>enable</Nullable>
-      <TargetFrameworks>net6.0;net461</TargetFrameworks>
+      <ApplicationIcon>../../../Media/AlternetUI.ico</ApplicationIcon>
     </PropertyGroup>
 
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-        <TargetFrameworks>net6.0;net461</TargetFrameworks>
+        <TargetFrameworks>net7.0;net6.0;net462</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-        <TargetFrameworks>net6.0</TargetFrameworks>
-        <RuntimeFrameworkVersion>6.0.0</RuntimeFrameworkVersion>
+        <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>
@@ -91,6 +90,17 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </EmbeddedResource>
     </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Html\SampleArchive\Html\default.js">

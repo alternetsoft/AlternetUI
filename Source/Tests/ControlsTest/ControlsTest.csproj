@@ -1,0 +1,138 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+      <OutputType>WinExe</OutputType>
+      <Platforms>AnyCPU;x64;x86</Platforms>
+      <ApplicationManifest>app.manifest</ApplicationManifest>
+      <LangVersion>latest</LangVersion>
+      <Nullable>enable</Nullable>
+      <ApplicationIcon>../../../Media/AlternetUI.ico</ApplicationIcon>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+        <TargetFrameworks>net7.0;net6.0;net462</TargetFrameworks>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
+        <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="build\**" />
+      <EmbeddedResource Remove="build\**" />
+      <None Remove="build\**" />
+    </ItemGroup>
+
+    <ItemGroup Condition="$(DefineConstants.Contains(';NETFRAMEWORK'))">
+        <Reference Include="Microsoft.CSharp" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Edge\readme.txt" />
+      <None Remove="Edge\win-arm64\readme.txt" />
+      <None Remove="Edge\win-x64\readme.txt" />
+      <None Remove="Edge\win-x86\readme.txt" />
+      <None Remove="Html\doc.zip" />
+      <None Remove="Html\pageinresource.html" />
+      <None Remove="Html\SampleArchive.zip" />
+      <None Remove="Html\version.html" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\Samples\ControlsSample\Html\SampleArchive\Html\page1.html" Link="Html\SampleArchive\Html\page1.html">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\..\Samples\ControlsSample\Html\SampleArchive\Html\page2.html" Link="Html\SampleArchive\Html\page2.html">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\..\Samples\ControlsSample\Html\SampleArchive\Images\panda1.jpg" Link="Html\SampleArchive\Images\panda1.jpg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\..\Samples\ControlsSample\Html\SampleArchive\Images\panda2.jpg" Link="Html\SampleArchive\Images\panda2.jpg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\..\Samples\ControlsSample\Html\SampleArchive\root.html" Link="Html\SampleArchive\root.html">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\..\Samples\ControlsSample\Html\SampleArchive\Styles\default.css" Link="Html\SampleArchive\Styles\default.css">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Edge\readme.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Edge\win-arm64\readme.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Edge\win-x64\readme.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Edge\win-x86\readme.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Html\doc.zip">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Html\SampleArchive.zip">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Html\version.html">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="Html\pageinresource.html" />
+    </ItemGroup>
+
+    <ItemGroup>
+		<UIXml Update="MainTestWindow.uixml">
+			<SubType>Designer</SubType>
+        <Generator>MSBuild:Compile</Generator>
+
+		</UIXml>
+		<UIXml Update="WebBrowserTestPage.uixml">
+			<SubType>Designer</SubType>
+        <Generator>MSBuild:Compile</Generator>
+
+		</UIXml>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Window1.uixml">
+        <Generator>MSBuild:Compile</Generator>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Html\SampleArchive\Html\" />
+      <Folder Include="Html\SampleArchive\Images\" />
+      <Folder Include="Html\SampleArchive\Styles\" />
+      <Folder Include="Resources\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\Samples\ControlsSample\Html\SampleArchive\Html\default.js" Link="Html\SampleArchive\Html\default.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\..\Samples\ControlsSample\Resources\SamplePandaPdf.pdf" Link="Resources\SamplePandaPdf.pdf">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+</Project>
+
+
+
+

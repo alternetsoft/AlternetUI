@@ -1,11 +1,11 @@
-﻿using Alternet.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Alternet.UI;
 
 namespace ControlsSample
 {
-    partial class TreeViewPage : Control
+    internal partial class TreeViewPage : Control
     {
         private IPageSite? site;
 
@@ -24,6 +24,15 @@ namespace ControlsSample
                 AddItems(10);
                 site = value;
             }
+        }
+
+        private static TreeViewItem? GetLastItem(TreeViewItem? parent, ICollection<TreeViewItem> children)
+        {
+            if (!children.Any())
+                return parent;
+
+            var child = children.Last();
+            return GetLastItem(child, child.Items);
         }
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
@@ -55,6 +64,7 @@ namespace ControlsSample
                             }
                         }
                     }
+
                     treeView.Items.Add(item);
                 }
             }
@@ -173,15 +183,6 @@ namespace ControlsSample
 
         private void CollapseAllChildrenButton_Click(object sender, EventArgs e) => treeView.SelectedItem?.CollapseAll();
 
-        static TreeViewItem? GetLastItem(TreeViewItem? parent, ICollection<TreeViewItem> children)
-        {
-            if (!children.Any())
-                return parent;
-
-            var child = children.Last();
-            return GetLastItem(child, child.Items);
-        }
-
         private void EnsureLastItemVisibleButton_Click(object sender, System.EventArgs e) => GetLastItem(null, treeView.Items)?.EnsureVisible();
 
         private void ScrollLastItemIntoViewButton_Click(object sender, System.EventArgs e) => GetLastItem(null, treeView.Items)?.ScrollIntoView();
@@ -209,7 +210,7 @@ namespace ControlsSample
             {
                 item.EnsureVisible();
                 item.Text += "X";
-                
+
                 var imageIndex = item.ImageIndex + 1;
                 if (imageIndex >= treeView.ImageList!.Images.Count)
                     imageIndex = 0;

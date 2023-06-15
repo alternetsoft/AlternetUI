@@ -156,6 +156,10 @@ using System.Security;");
             var nativeDeclaringTypeName = TypeProvider.GetNativeName(property.DeclaringType!);
             bool isStatic = MemberProvider.IsStatic(property);
 
+
+            if (propertyTypeName == "Alternet.UI.DateTime")
+                propertyTypeName = "DateTime";
+
             w.WriteLine($"public {GetModifiers(property)}{propertyTypeName} {propertyName}");
             using (new BlockIndent(w))
             {

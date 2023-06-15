@@ -211,7 +211,7 @@ namespace Alternet.UI
         /// </summary>
         /// <exception cref="NotSupportedException">
         /// Simpler implementations do not support filtering and will throw a NotSupportedException.
-        /// Use <seealso cref="CanFilter"/> property to test if filtering is supported before
+        /// Use <see cref="CanFilter"/> property to test if filtering is supported before
         /// assigning a non-null value.
         /// </exception>
         public virtual Predicate<object> Filter
@@ -233,7 +233,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Indicates whether or not this ICollectionView can do any filtering.
-        /// When false, set <seealso cref="Filter"/> will throw an exception.
+        /// When false, set <see cref="Filter"/> will throw an exception.
         /// </summary>
         public virtual bool CanFilter
         {
@@ -251,11 +251,11 @@ namespace Alternet.UI
         /// Simpler implementations do not support sorting and will return an empty
         /// and immutable / read-only SortDescription collection.
         /// Attempting to modify such a collection will cause NotSupportedException.
-        /// Use <seealso cref="CanSort"/> property on CollectionView to test if sorting is supported
+        /// Use <see cref="CanSort"/> property on CollectionView to test if sorting is supported
         /// before modifying the returned collection.
         /// </p>
         /// <p>
-        /// One or more sort criteria in form of <seealso cref="SortDescription"/>
+        /// One or more sort criteria in form of <see cref="SortDescription"/>
         /// can be added, each specifying a property and direction to sort by.
         /// </p>
         /// </remarks>
@@ -266,7 +266,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Test if this ICollectionView supports sorting before adding
-        /// to <seealso cref="SortDescriptions"/>.
+        /// to <see cref="SortDescriptions"/>.
         /// </summary>
         public virtual bool CanSort
         {
@@ -300,7 +300,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Re-create the view, using any <seealso cref="SortDescriptions"/> and/or <seealso cref="Filter"/>.
+        /// Re-create the view, using any <see cref="SortDescriptions"/> and/or <see cref="Filter"/>.
         /// </summary>
         public virtual void Refresh()
         {
@@ -357,7 +357,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// The ordinal position of the <seealso cref="CurrentItem"/> within the (optionally
+        /// The ordinal position of the <see cref="CurrentItem"/> within the (optionally
         /// sorted and filtered) view.
         /// </summary>
         /// <returns>
@@ -381,7 +381,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Return true if <seealso cref="CurrentItem"/> is beyond the end (End-Of-File).
+        /// Return true if <see cref="CurrentItem"/> is beyond the end (End-Of-File).
         /// </summary>
         public virtual bool IsCurrentAfterLast
         {
@@ -395,7 +395,7 @@ namespace Alternet.UI
 
 
         /// <summary>
-        /// Return true if <seealso cref="CurrentItem"/> is before the beginning (Beginning-Of-File).
+        /// Return true if <see cref="CurrentItem"/> is before the beginning (Beginning-Of-File).
         /// </summary>
         public virtual bool IsCurrentBeforeFirst
         {
@@ -408,9 +408,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Move <seealso cref="CurrentItem"/> to the first item.
+        /// Move <see cref="CurrentItem"/> to the first item.
         /// </summary>
-        /// <returns>true if <seealso cref="CurrentItem"/> points to an item within the view.</returns>
+        /// <returns>true if <see cref="CurrentItem"/> points to an item within the view.</returns>
         public virtual bool MoveCurrentToFirst()
         {
             VerifyRefreshNotDeferred();
@@ -426,9 +426,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Move <seealso cref="CurrentItem"/> to the last item.
+        /// Move <see cref="CurrentItem"/> to the last item.
         /// </summary>
-        /// <returns>true if <seealso cref="CurrentItem"/> points to an item within the view.</returns>
+        /// <returns>true if <see cref="CurrentItem"/> points to an item within the view.</returns>
         public virtual bool MoveCurrentToLast()
         {
             VerifyRefreshNotDeferred();
@@ -444,9 +444,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Move <seealso cref="CurrentItem"/> to the next item.
+        /// Move <see cref="CurrentItem"/> to the next item.
         /// </summary>
-        /// <returns>true if <seealso cref="CurrentItem"/> points to an item within the view.</returns>
+        /// <returns>true if <see cref="CurrentItem"/> points to an item within the view.</returns>
         public virtual bool MoveCurrentToNext()
         {
             VerifyRefreshNotDeferred();
@@ -475,9 +475,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Move <seealso cref="CurrentItem"/> to the previous item.
+        /// Move <see cref="CurrentItem"/> to the previous item.
         /// </summary>
-        /// <returns>true if <seealso cref="CurrentItem"/> points to an item within the view.</returns>
+        /// <returns>true if <see cref="CurrentItem"/> points to an item within the view.</returns>
         public virtual bool MoveCurrentToPrevious()
         {
             VerifyRefreshNotDeferred();
@@ -506,11 +506,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Move <seealso cref="CurrentItem"/> to the given item.
+        /// Move <see cref="CurrentItem"/> to the given item.
         /// If the item is not found, move to BeforeFirst.
         /// </summary>
         /// <param name="item">Move CurrentItem to this item.</param>
-        /// <returns>true if <seealso cref="CurrentItem"/> points to an item within the view.</returns>
+        /// <returns>true if <see cref="CurrentItem"/> points to an item within the view.</returns>
         public virtual bool MoveCurrentTo(object item)
         {
             VerifyRefreshNotDeferred();
@@ -537,10 +537,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Move <seealso cref="CurrentItem"/> to the item at the given index.
+        /// Move <see cref="CurrentItem"/> to the item at the given index.
         /// </summary>
         /// <param name="position">Move CurrentItem to this index</param>
-        /// <returns>true if <seealso cref="CurrentItem"/> points to an item within the view.</returns>
+        /// <returns>true if <see cref="CurrentItem"/> points to an item within the view.</returns>
         public virtual bool MoveCurrentToPosition(int position)
         {
             VerifyRefreshNotDeferred();
@@ -841,7 +841,7 @@ namespace Alternet.UI
         #region Protected Methods
 
         /// <summary>
-        /// Re-create the view, using any <seealso cref="SortDescriptions"/> and/or <seealso cref="Filter"/>.
+        /// Re-create the view, using any <see cref="SortDescriptions"/> and/or <see cref="Filter"/>.
         /// </summary>
         protected virtual void RefreshOverride()
         {
@@ -995,7 +995,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// ask listeners (via <seealso cref="ICollectionView.CurrentChanging"/> event) if it's OK to change currency
+        /// ask listeners (via <see cref="ICollectionView.CurrentChanging"/> event) if it's OK to change currency
         /// </summary>
         /// <returns>false if a listener cancels the change, true otherwise</returns>
         protected bool OKToChangeCurrent()

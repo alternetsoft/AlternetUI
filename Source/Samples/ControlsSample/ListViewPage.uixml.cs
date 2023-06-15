@@ -1,11 +1,11 @@
-﻿using Alternet.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Alternet.UI;
 
 namespace ControlsSample
 {
-    partial class ListViewPage : Control
+    internal partial class ListViewPage : Control
     {
         private IPageSite? site;
 
@@ -140,7 +140,7 @@ namespace ControlsSample
             listView.SelectedItem?.BeginLabelEdit();
         }
 
-        ListViewItem? GetLastItem()
+        private ListViewItem? GetLastItem()
         {
             return listView.Items.LastOrDefault();
         }
@@ -160,7 +160,7 @@ namespace ControlsSample
         private void ListView_MouseLeftButtonDown(object sender, Alternet.UI.MouseButtonEventArgs e)
         {
             var result = listView.HitTest(e.GetPosition(listView));
-            
+
             string columnHeader;
             var columnIndex = result.Cell?.ColumnIndex;
             if (columnIndex != null)

@@ -1,10 +1,10 @@
-﻿using Alternet.UI;
-using System;
+﻿using System;
 using System.Linq;
+using Alternet.UI;
 
 namespace ControlsSample
 {
-    partial class NumericInputPage : Control
+    internal partial class NumericInputPage : Control
     {
         private IPageSite? site;
 
@@ -23,7 +23,6 @@ namespace ControlsSample
                 site = value;
             }
         }
-
 
         private void NumericUpDown_ValueChanged(object? sender, EventArgs e)
         {

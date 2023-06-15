@@ -1,0 +1,95 @@
+﻿<Control x:Class="ControlsTest.WebBrowserTestPage"
+        xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        xmlns:local="clr-namespace:ControlsTest;assembly=ControlsTest">
+	<StackPanel Orientation="Vertical" Padding="10">
+		<Label Text="Web Browser Control" Margin="0,0,5,0" VerticalAlignment="Center" Name="HeaderLabel"/>
+		<!--This is a comment. Comments are not displayed in the browser-->
+		
+		<StackPanel Orientation="Horizontal">
+
+			<Button Name="BackButton" Text="&#60;" Margin="0,10,0,5" Click="BackButton_Click"/>
+			<Button Name="ForwardButton" Text="&#62;" Margin="0,10,0,5" Click="ForwardButton_Click"/>
+			<Button Name="ZoomInButton" Text="+" Margin="0,10,0,5" Click="ZoomInButton_Click" />
+			<Button Name="ZoomOutButton" Text="-" Margin="0,10,0,5" Click="ZoomOutButton_Click" />
+			<TextBox Width="300" Margin="0,10,0,5" Name="UrlTextBox" 
+				 KeyDown="TextBox_KeyDown"
+			/>
+			<Button Text="Go" Margin="0,10,0,5" Click="GoButton_Click" />
+		</StackPanel>
+		
+
+			<!--
+			<Toolbar Name="Toolbar1" ItemTextVisible="true" Height="40">
+			
+				Image="embres:MenuSample.Resources.Icons.Small.Calendar16.png" 
+		-->
+
+			<!--
+			
+			<ToolbarItem 
+				Text="Calendar" 
+						 ToolTip="Calendar Toolbar Item" />
+			<ToolbarItem Text="Photo" ToolTip="Photo Toolbar Item"/> 
+			<ToolbarItem Text="-" /> 
+			<ToolbarItem Text="Pencil Toggle"  
+						 ToolTip="Pencil Toolbar Item" IsCheckable="true"  Name="checkableToolbarItem" />
+			<ToolbarItem Text="-" /> 
+			<ToolbarItem Text="Graph Drop Down" ToolTip="Graph Toolbar Item" > 
+				<ToolbarItem.DropDownMenu> 
+					<ContextMenu> 
+						<MenuItem Text="_Open..." Name="openToolbarMenuItem" /> 
+						<MenuItem Text="_Save..." Name="saveToolbarMenuItem" /> 
+						<MenuItem Text="-" /> 
+						<MenuItem Text="E_xport..." Name="exportToolbarMenuItem" /> 
+					</ContextMenu> 
+				</ToolbarItem.DropDownMenu> 
+			</ToolbarItem> 
+			<ToolbarItem Text="-" Name="dynamicToolbarItemsSeparator"/> 
+			</Toolbar>
+		-->
+
+
+
+
+		<StackPanel Orientation="Horizontal">
+			<WebBrowser 
+			Height="400"
+			Width="700"
+			Name="WebBrowser1"
+		    FullScreenChanged="WebBrowser1_FullScreenChanged"
+			ScriptMessageReceived="WebBrowser1_ScriptMessageReceived"
+			ScriptResult="WebBrowser1_ScriptResult"
+			Navigated="WebBrowser1_Navigated"
+            Navigating="WebBrowser1_Navigating"
+            Loaded="WebBrowser1_Loaded"
+            Error="WebBrowser1_Error"
+            NewWindow="WebBrowser1_NewWindow"
+            BeforeBrowserCreate="WebBrowser1_BeforeBrowserCreate"
+            DocumentTitleChanged="WebBrowser1_TitleChanged"			
+			/>
+
+			<ListBox Width="200" Height="400" Name="ListBox1" 
+					 MouseDoubleClick="ListBox1_MouseDoubleClick" />
+
+		</StackPanel>
+		
+		<StackPanel Orientation="Horizontal">
+			<TextBox Width="300" Margin="0,10,0,5" Name="FindTextBox" Text="panda"/>
+			<Button Text="Find" Margin="0,10,0,5" Click="FindButton_Click"/>
+			<Button Text="Find Clear" Margin="0,10,0,5" Click="FindClearButton_Click"
+					Name="FindClear" />
+		</StackPanel>
+		
+		<StackPanel Orientation="Horizontal" Name="FindOptionsPanel" >
+			<CheckBox Text="Wrap" Margin="0,10,0,5" Name="FindWrapCheckBox"/>
+			<CheckBox Text="Entire Word" Margin="0,10,0,5" Name="FindEntireWordCheckBox"/>
+			<CheckBox Text="Match Case" Margin="0,10,0,5" Name="FindMatchCaseCheckBox"/>
+			<CheckBox Text="Highlight" Margin="0,10,0,5" Name="FindHighlightResultCheckBox"/>
+			<CheckBox Text="Backwards" Margin="0,10,0,5" Name="FindBackwardsCheckBox"/>
+		</StackPanel>
+	</StackPanel>
+</Control>
+
+
+

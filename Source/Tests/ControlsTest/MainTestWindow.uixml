@@ -1,0 +1,16 @@
+﻿<Window x:Class="ControlsTest.MainTestWindow"
+        xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        xmlns:local="clr-namespace:ControlsTest;assembly=ControlsTest"
+        Title="Alternet UI Controls Test"
+        Width="1100" Height="800">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="100" />
+    </Grid.RowDefinitions>
+
+    <local:PageContainer Name="pageContainer"/>
+    <ListBox Name="eventsListBox" Grid.Row="1"/>
+  </Grid>
+</Window>

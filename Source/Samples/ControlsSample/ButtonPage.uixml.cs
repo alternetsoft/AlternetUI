@@ -2,7 +2,7 @@
 
 namespace ControlsSample
 {
-    partial class ButtonPage : Control
+    internal partial class ButtonPage : Control
     {
         private IPageSite? site;
 
