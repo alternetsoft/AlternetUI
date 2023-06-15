@@ -154,6 +154,8 @@ namespace Alternet::UI
 
         switch (id)
         {
+        case WEBBROWSER_BACKEND_DEFAULT:
+            break;
         case WEBBROWSER_BACKEND_IE:
             backend = wxASCII_STR(wxWebViewBackendIE);
             break;
