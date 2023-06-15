@@ -5,3 +5,4 @@ root = true
 generated_code = true
 # Default severity for all analyzer diagnostics
 dotnet_analyzer_diagnostic.severity = none
+dotnet_diagnostic.CS8669.severity = none
