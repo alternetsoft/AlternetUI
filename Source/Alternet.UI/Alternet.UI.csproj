@@ -53,6 +53,7 @@
 
   <ItemGroup>
     <None Remove="Application\ThreadException\Resources\ErrorImage.png" />
+    <None Remove="Xaml\.editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
@@ -133,11 +134,8 @@
       </PackageReference>
     </ItemGroup>
 
-  <ItemGroup>
+    <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
 
