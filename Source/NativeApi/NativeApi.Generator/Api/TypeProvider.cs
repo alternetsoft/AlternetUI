@@ -57,6 +57,15 @@ namespace ApiGenerator.Api
             return type.IsSubclassOf(typeof(NativeEventData));
         }
 
+        public static string GetManagedName(Type type, string defaultName)
+        {
+            var attributes = type.GetCustomAttributes(typeof(ManagedNameAttribute), false);
+            if (attributes.Length == 0)
+                return defaultName;
+
+            return attributes.Cast<ManagedNameAttribute>().Single().Name;
+        }
+
         public static string GetNativeName(Type type)
         {
             var nativeNameAttributes = type.GetCustomAttributes(typeof(NativeNameAttribute), false);

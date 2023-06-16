@@ -154,11 +154,15 @@ using System.Security;");
             var contextualProperty = property.ToContextualProperty();
             var propertyTypeName = types.GetTypeName(contextualProperty);
             var nativeDeclaringTypeName = TypeProvider.GetNativeName(property.DeclaringType!);
+            var managedDeclaringTypeName = TypeProvider.GetManagedName(
+                property.PropertyType!, 
+                propertyTypeName);
             bool isStatic = MemberProvider.IsStatic(property);
 
-
-            if (propertyTypeName == "Alternet.UI.DateTime")
-                propertyTypeName = "DateTime";
+            if (propertyTypeName != managedDeclaringTypeName) 
+            {
+                propertyTypeName = managedDeclaringTypeName;
+            }
 
             w.WriteLine($"public {GetModifiers(property)}{propertyTypeName} {propertyName}");
             using (new BlockIndent(w))
