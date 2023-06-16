@@ -245,9 +245,9 @@ namespace Alternet.UI
 
         public int Find(string text, WebBrowserFindParams? prm = null)
         {
-            int flags = 0;
-            if (prm != null)
-                flags = prm.ToWebViewParams();
+            prm ??= new ();
+
+            int flags = prm.ToWebViewParams();
             int result = WebBrowserHandlerApi.WebBrowser_Find_(NativePointer, text, flags);
             return result;
         }

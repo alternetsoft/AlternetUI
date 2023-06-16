@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// <summary>
         ///     Causes the search to restart when end or beginning reached.
         /// </summary>
-        public bool Wrap { get; set; } = false;
+        public bool Wrap { get; set; } = true;
 
         /// <summary>
         ///     Matches an entire word when searching.
