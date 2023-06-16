@@ -20,15 +20,18 @@ namespace Alternet.UI
     /// </summary>
     public class KeyGestureConverter : TypeConverter
     {
-        private const char MODIFIERS_DELIMITER = '+' ;
-        internal const char DISPLAYSTRING_SEPARATOR = ',' ;
+        private const char MODIFIERS_DELIMITER = '+';
+        internal const char DISPLAYSTRING_SEPARATOR = ',';
 
-        ///<summary>
-        ///CanConvertFrom()
-        ///</summary>
-        ///<param name="context">ITypeDescriptorContext</param>
-        ///<param name="sourceType">type to convert from</param>
-        ///<returns>true if the given type can be converted, false otherwise</returns>
+        private static KeyConverter keyConverter = new KeyConverter();
+        private static ModifierKeysConverter modifierKeysConverter = new ModifierKeysConverter();
+
+        /// <summary>
+        /// CanConvertFrom()
+        /// </summary>
+        /// <param name="context">ITypeDescriptorContext</param>
+        /// <param name="sourceType">type to convert from</param>
+        /// <returns>true if the given type can be converted, false otherwise</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             // We can only handle string.
@@ -43,12 +46,12 @@ namespace Alternet.UI
         }
 
 
-        ///<summary>
-        ///TypeConverter method override.
-        ///</summary>
-        ///<param name="context">ITypeDescriptorContext</param>
-        ///<param name="destinationType">Type to convert to</param>
-        ///<returns>true if conversion	is possible</returns>
+        /// <summary>
+        /// TypeConverter method override.
+        /// </summary>
+        /// <param name="context">ITypeDescriptorContext</param>
+        /// <param name="destinationType">Type to convert to</param>
+        /// <returns>true if conversion	is possible</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
@@ -60,8 +63,8 @@ namespace Alternet.UI
                     var keyGesture = context.Instance as KeyGesture;
                     if (keyGesture != null)
                     {
-                        return (ModifierKeysConverter.IsDefinedModifierKeys(keyGesture.Modifiers)
-                                && IsDefinedKey(keyGesture.Key));
+                        return ModifierKeysConverter.IsDefinedModifierKeys(keyGesture.Modifiers)
+                                && IsDefinedKey(keyGesture.Key);
                     }
                 }
             }
@@ -80,7 +83,7 @@ namespace Alternet.UI
             if (source != null && source is string)
             {
                 string fullName = ((string)source).Trim();
-                if (fullName == String.Empty)
+                if (fullName == string.Empty)
                     return new KeyGesture(Key.None);
 
                 string keyToken;
@@ -92,24 +95,25 @@ namespace Alternet.UI
                 if (index >= 0)
                 {
                     displayString = fullName.Substring(index + 1).Trim();
-                    fullName      = fullName.Substring(0, index).Trim();
+                    fullName = fullName.Substring(0, index).Trim();
                 }
                 else
                 {
-                    displayString = String.Empty;
+                    displayString = string.Empty;
                 }
 
                 // break apart key and modifiers
                 index = fullName.LastIndexOf(MODIFIERS_DELIMITER);
                 if (index >= 0)
-                {   // modifiers exists
+                {
+                    // modifiers exists
                     modifiersToken = fullName.Substring(0, index);
-                    keyToken       = fullName.Substring(index + 1);
+                    keyToken = fullName.Substring(index + 1);
                 }
                 else
                 {
-                    modifiersToken = String.Empty;
-                    keyToken       = fullName;
+                    modifiersToken = string.Empty;
+                    keyToken = fullName;
                 }
 
                 ModifierKeys modifiers = ModifierKeys.None;
@@ -121,9 +125,11 @@ namespace Alternet.UI
                     {
                         modifiers = (ModifierKeys)temp;
                     }
+
                     return new KeyGesture((Key)resultkey, modifiers, displayString);
                 }
             }
+
             throw GetConvertFromException(source);
         }
 
@@ -148,43 +154,42 @@ namespace Alternet.UI
                     if (keyGesture != null)
                     {
                         if (keyGesture.Key == Key.None)
-                            return String.Empty;
+                            return string.Empty;
 
-                        string strBinding = "" ;
+                        string strBinding = string.Empty;
                         string strKey = (string)keyConverter.ConvertTo(context, culture, keyGesture.Key, destinationType) as string;
-                        if (strKey != String.Empty)
+                        if (strKey != string.Empty)
                         {
                             strBinding += modifierKeysConverter.ConvertTo(context, culture, keyGesture.Modifiers, destinationType) as string;
-                            if (strBinding != String.Empty)
+                            if (strBinding != string.Empty)
                             {
                                 strBinding += MODIFIERS_DELIMITER;
                             }
+
                             strBinding += strKey;
 
-                            if (!String.IsNullOrEmpty(keyGesture.DisplayString))
+                            if (!string.IsNullOrEmpty(keyGesture.DisplayString))
                             {
                                 strBinding += DISPLAYSTRING_SEPARATOR + keyGesture.DisplayString;
                             }
                         }
+
                         return strBinding;
                     }
                 }
                 else
                 {
-                    return String.Empty;
+                    return string.Empty;
                 }
             }
-            throw GetConvertToException(value,destinationType);
+
+            throw GetConvertToException(value, destinationType);
         }
 
         // Check for Valid enum, as any int can be casted to the enum.
         internal static bool IsDefinedKey(Key key)
         {
-            return (key >= Key.None && key <= Key.Menu);
+            return key >= Key.None && key <= Key.Menu;
         }
-
-        private static KeyConverter keyConverter = new KeyConverter();
-        private static ModifierKeysConverter modifierKeysConverter = new ModifierKeysConverter();
     }
 }
-
