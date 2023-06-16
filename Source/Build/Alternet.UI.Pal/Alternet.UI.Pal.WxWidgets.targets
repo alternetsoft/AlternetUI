@@ -26,6 +26,20 @@
 	<CallTarget Targets="DownloadAndExtractWebView"/>
     </Target>
 
+    <Target Name="DownloadAndExtractWxWidgetsBinWindows">
+        <CallTarget Targets="CleanWxWidgets" />
+		
+		<Message Text="Download Started. Please wait for 446MB download" />	
+        <DownloadFile Condition="!Exists($(WxWidgetsDownloadTargetPath))"
+            SourceUrl="$(WxWidgetsBinDownloadUrlWindows)"
+            DestinationFolder="$(WxWidgetsDownloadDirectory)" DestinationFileName="$(WxWidgetsDownloadFileName)" />
+		<Message Text="Download Finished" />	
+		<Message Text="Unzip Started" />	
+        <Unzip SourceFiles="$(WxWidgetsDownloadTargetPath)" DestinationFolder="$(WxWidgetsDownloadDirectory)" />
+		<Message Text="Unzip Finished" />	
+        <Delete Files="$(WxWidgetsDownloadTargetPath)"/>
+    </Target>
+
     <!-- Windows -->
     <Target Name="BuildWxWidgets_Windows_x86">
         <!-- Windows 32 Bit Release -->

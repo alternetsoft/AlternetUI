@@ -39,6 +39,10 @@
         <WebViewDownloadFileName>WebView.zip</WebViewDownloadFileName>
         <WebViewDownloadTargetPath>$(WebViewDownloadDirectory)\$(WebViewDownloadFileName)</WebViewDownloadTargetPath>
 
+        <WxWidgetsBinDownloadUrlWindows>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.2.1.zip</WxWidgetsBinDownloadUrlWindows>
+        <WxWidgetsBinDownloadUrlMacOS></WxWidgetsBinDownloadUrlMacOS>
+        <WxWidgetsBinDownloadUrlLinux></WxWidgetsBinDownloadUrlLinux>
+
         <WxWidgetsDirectory>$(ExternalComponentsDirectory)\WxWidgets</WxWidgetsDirectory>
         <WxWidgetsDownloadUrl>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-3.2.2.1.zip</WxWidgetsDownloadUrl>
         <WxWidgetsDownloadDirectory>$(ExternalComponentsDirectory)</WxWidgetsDownloadDirectory>
