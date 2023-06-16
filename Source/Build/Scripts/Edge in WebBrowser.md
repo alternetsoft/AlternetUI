@@ -4,7 +4,13 @@ The Edge backend uses Microsoft's Edge WebView2.
 https://www.nuget.org/packages/Microsoft.Web.WebView2
 
 It is available for Windows 7 and newer. This backend does not support 
-custom schemes and virtual file systems. This backend is not enabled by default. 
+custom schemes and virtual file systems. 
+
+Instead of the installation process described in this file,
+you can download wxWidgets binary by running 
+**"AlternetUI/Source/Build/Scripts/Download.WxWidgets.Bin.Windows.bat"**.
+
+This backend is not enabled by default. 
 For the installation, instead of running "Build WxWidgets.bat", you need 
 to follow these steps:
 
@@ -14,14 +20,14 @@ It downloads the wxWidgets library and the WebView2 SDK nuget package
 "AlternetUI/External/wxWidgets/3rdparty/webview2" (you should have 
 "3rdparty/webview2/build/native/include/WebView2.h" and other files after unpacking it).
 
-**STEP 2**. Run **"AlternetUI/Source/Build/Scripts/Update WxWidgets Defines for Windows.bat"**.
+**STEP 2**. Run **"AlternetUI/Source/Build/Scripts/Update.WxWidgets.Defines.Windows.bat"**.
 It will edit file "\AlternetUI\External\wxWidgets\include\wx\msw\setup.h" and 
 changes defines wxUSE_WEBVIEW_EDGE and wxUSE_WEBVIEW_EDGE_STATIC like this:
 	#define wxUSE_WEBVIEW_EDGE 1
 	#define wxUSE_WEBVIEW_EDGE_STATIC 1
 You can do these changes manually, wihtout running the bat file.
 
-**STEP 3**. Run **"AlternetUI/Source/Build/Scripts/Build WxWidgets No Download.bat"**. 
+**STEP 3**. Run **"AlternetUI/Source/Build/Scripts/Build.WxWidgets.NoDownload.bat"**. 
 
 ## Remarks
 

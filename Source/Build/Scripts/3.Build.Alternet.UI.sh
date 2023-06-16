@@ -2,7 +2,8 @@
 set -euo pipefail
 
 pushd ../../Alternet.UI
-dotnet build --property WarningLevel=0
+export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
+dotnet build --nologo --property WarningLevel=0
 popd
 
 

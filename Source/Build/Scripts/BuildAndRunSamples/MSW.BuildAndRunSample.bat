@@ -7,7 +7,7 @@ set platform=x64
 :ok
 ECHO platform: %platform%
 
-dotnet build /p:Platform=%platform% "..\..\..\Samples\%arg1%\%arg1%.csproj" --property WarningLevel=0
-start /b dotnet run /p:Platform=%platform% --project "..\..\..\Samples\%arg1%\%arg1%.csproj" --property WarningLevel=0 --framework net6.0
+dotnet build /p:Platform=%platform% "..\..\..\Samples\%arg1%\%arg1%.csproj" --nologo --property WarningLevel=0
+start /b dotnet run /p:Platform=%platform% --project "..\..\..\Samples\%arg1%\%arg1%.csproj" --nologo --property WarningLevel=0 --framework net6.0
 
 rem start /b "..\..\..\Samples\%arg1%\bin\X64\debug\net6.0\%arg1%.exe"
