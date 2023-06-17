@@ -44,7 +44,18 @@ namespace Alternet.UI
 
             keyboardInputProvider = new KeyboardInputProvider(nativeApplication.Keyboard);
             mouseInputProvider = new MouseInputProvider(nativeApplication.Mouse);
+
+            if (SupressDiagnostics)
+                Native.Application.SuppressDiagnostics(-1);
         }
+
+        /// <summary>
+        /// Allows to suppress some debug messages.
+        /// </summary>
+        /// <remarks>
+        ///  Currently used to suppress GTK messages under Linux. Default value is true.
+        /// </remarks>
+        public static bool SupressDiagnostics { get; set; } = true;
 
         /// <summary>
         ///  Occurs when an untrapped thread exception is thrown.

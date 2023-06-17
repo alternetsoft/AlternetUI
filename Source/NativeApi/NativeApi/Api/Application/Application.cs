@@ -30,6 +30,8 @@ namespace NativeApi.Api
 
         public bool InvokeRequired { get; }
 
+        public static void SuppressDiagnostics(int flags) => throw new Exception();
+
         public void BeginInvoke([CallbackMarshal(freeAfterFirstCall: true)] Action action) => throw new Exception();
     }
 }

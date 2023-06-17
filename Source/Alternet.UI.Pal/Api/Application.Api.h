@@ -152,6 +152,13 @@ ALTERNET_UI_API void Application_Exit_(Application* obj)
         });
 }
 
+ALTERNET_UI_API void Application_SuppressDiagnostics_(int flags)
+{
+    MarshalExceptions<void>([&](){
+            Application::SuppressDiagnostics(flags);
+        });
+}
+
 ALTERNET_UI_API void Application_BeginInvoke_(Application* obj, PInvokeCallbackActionType action)
 {
     MarshalExceptions<void>([&](){

@@ -135,6 +135,13 @@ namespace Alternet::UI
         ParkingWindow::SetIdleCallback(IdleCallback);
     }
 
+    void Application::SuppressDiagnostics(int flags)
+    {
+#if defined(__WXGTK__)
+        wxApp::GTKSuppressDiagnostics(flags);
+#endif
+    }
+
     Application::~Application()
     {
         s_current = nullptr;

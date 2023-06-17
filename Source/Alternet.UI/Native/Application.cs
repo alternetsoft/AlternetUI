@@ -194,6 +194,11 @@ namespace Alternet.UI.Native
             NativeApi.Application_Exit_(NativePointer);
         }
         
+        public static void SuppressDiagnostics(int flags)
+        {
+            NativeApi.Application_SuppressDiagnostics_(flags);
+        }
+        
         public void BeginInvoke(System.Action action)
         {
             CheckDisposed();
@@ -316,6 +321,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_Exit_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SuppressDiagnostics_(int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_BeginInvoke_(IntPtr obj, PInvokeCallbackActionType action);
