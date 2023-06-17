@@ -10,7 +10,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace ControlsSample
 {
-    internal static partial class CommonUtils
+    internal static partial class ControlsSampleUtils
     {
         private static bool cmdLineNoMfcDedug = false;
 

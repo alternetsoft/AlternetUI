@@ -39,18 +39,18 @@ namespace ControlsTest
             SetBackendPathSmart("Edge");
 
             string[] commandLineArgs = Environment.GetCommandLineArgs();
-            CommonTestUtils.ParseCmdLine(commandLineArgs);
-            if (CommonTestUtils.CmdLineNoMfcDedug)
+            CommonUtils.ParseCmdLine(commandLineArgs);
+            if (CommonUtils.CmdLineNoMfcDedug)
                 WebBrowser.CrtSetDbgFlag(0);
 
-            CommonTestUtils.LogToFile("======================================");
-            CommonTestUtils.LogToFile("Application started");
-            CommonTestUtils.LogToFile("======================================");
+            CommonUtils.LogToFile("======================================");
+            CommonUtils.LogToFile("Application started");
+            CommonUtils.LogToFile("======================================");
         }
 
         public WebBrowserTestPage()
         {
-            var myListener = new CommonTestUtils.DebugTraceListener();
+            var myListener = new CommonUtils.DebugTraceListener();
             Trace.Listeners.Add(myListener);
             InitializeComponent();
         }
@@ -83,7 +83,7 @@ namespace ControlsTest
                 if (IsIEBackend())
                     WebBrowser1.DoCommand("IE.SetScriptErrorsSuppressed", "true");
 
-                if (CommonTestUtils.CmdLineTest)
+                if (CommonUtils.CmdLineTest)
                 {
                     ListBox1.Visible = true;
                     FindOptionsPanel.Visible = true;
@@ -96,7 +96,7 @@ namespace ControlsTest
 
         public static void HookExceptionEvents(Alternet.UI.Application a)
         {
-            if (!CommonTestUtils.CmdLineTest)
+            if (!CommonUtils.CmdLineTest)
                 return;
             a.ThreadException += Application_ThreadException;
             a.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
@@ -139,7 +139,7 @@ namespace ControlsTest
 
                 void AddPandaFile(string name, string? mimeType = null)
                 {
-                    string sPath = CommonTestUtils.GetAppFolder() + "Html/SampleArchive/" + name;
+                    string sPath = CommonUtils.GetAppFolder() + "Html/SampleArchive/" + name;
 
                     if (mimeType == null)
                         WebBrowser1.MemoryFS.AddOSFile(name, sPath);
@@ -266,7 +266,7 @@ namespace ControlsTest
 
         internal void TestNavigateToStream()
         {
-            var filename = CommonTestUtils.PathAddBackslash(CommonTestUtils.GetAppFolder() + "Html") + "version.html";
+            var filename = CommonUtils.PathAddBackslash(CommonUtils.GetAppFolder() + "Html") + "version.html";
             FileStream stream = File.OpenRead(filename);
             WebBrowser1.NavigateToStream(stream);
         }
@@ -291,7 +291,7 @@ namespace ControlsTest
 
         private static void HandleException(Exception e)
         {
-            CommonTestUtils.LogException(e);
+            CommonUtils.LogException(e);
         }
 
         private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
@@ -340,10 +340,10 @@ namespace ControlsTest
             string arcSubPath = "Html/SampleArchive.zip";
             string webPagePath = "root.html";
 
-            string archivePath = Path.Combine(CommonTestUtils.GetAppFolder(), arcSubPath);
+            string archivePath = Path.Combine(CommonUtils.GetAppFolder(), arcSubPath);
             if (File.Exists(archivePath))
             {
-                string url = CommonTestUtils.PrepareZipUrl(ZipSchemeName, archivePath, webPagePath);
+                string url = CommonUtils.PrepareZipUrl(ZipSchemeName, archivePath, webPagePath);
                 WebBrowser1.LoadURL(url);
             }
         }
@@ -417,7 +417,7 @@ namespace ControlsTest
 
         private void Log(string s)
         {
-            CommonTestUtils.LogToFile(s);
+            CommonUtils.LogToFile(s);
             site?.LogEvent(PageName, s);
         }
 
@@ -525,7 +525,7 @@ namespace ControlsTest
 
         private void ShowBrowserVersion()
         {
-            var filename = CommonTestUtils.PathAddBackslash(CommonTestUtils.GetAppFolder() + "Html")
+            var filename = CommonUtils.PathAddBackslash(CommonUtils.GetAppFolder() + "Html")
                 + "version.html";
             WebBrowser1.LoadURL("file://" + filename.Replace('\\', '/'));
         }
@@ -710,12 +710,12 @@ namespace ControlsTest
 
         private string GetPandaFileName()
         {
-            return CommonTestUtils.GetAppFolder() + "Html/SampleArchive/Html/page1.html";
+            return CommonUtils.GetAppFolder() + "Html/SampleArchive/Html/page1.html";
         }
 
         private string GetPandaUrl()
         {
-            return CommonTestUtils.PrepareFileUrl(GetPandaFileName());
+            return CommonUtils.PrepareFileUrl(GetPandaFileName());
         }
 
         private void AddTestActions()
@@ -752,7 +752,7 @@ namespace ControlsTest
             AddTestAction("Undo", () => { WebBrowser1.Undo(); });
             AddTestAction("Redo", () => { WebBrowser1.Redo(); });
             AddTestAction("Print", () => { WebBrowser1.Print(); });
-            AddTestAction("DeleteLog", () => { CommonTestUtils.DeleteLog(); });
+            AddTestAction("DeleteLog", () => { CommonUtils.DeleteLog(); });
             AddTestAction("ZoomFactor+", () => { WebBrowser1.ZoomFactor += 1; });
             AddTestAction("ZoomFactor-", () => { WebBrowser1.ZoomFactor -= 1; });
             AddTestAction();
@@ -794,9 +794,9 @@ namespace ControlsTest
                     "Load PDF",
                     () =>
                     {
-                        string sPdfPath = CommonTestUtils.GetAppFolder() +
+                        string sPdfPath = CommonUtils.GetAppFolder() +
                             "Resources/SamplePandaPdf.pdf";
-                        WebBrowser1.LoadURL(CommonTestUtils.PrepareFileUrl(sPdfPath));
+                        WebBrowser1.LoadURL(CommonUtils.PrepareFileUrl(sPdfPath));
                     });
             }
 
@@ -818,9 +818,9 @@ namespace ControlsTest
         {
             ~Destructor()
             {
-                CommonTestUtils.LogToFile("===================");
-                CommonTestUtils.LogToFile("Application finished");
-                CommonTestUtils.LogToFile("===================");
+                CommonUtils.LogToFile("===================");
+                CommonUtils.LogToFile("Application finished");
+                CommonUtils.LogToFile("===================");
             }
         }
 

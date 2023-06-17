@@ -6,12 +6,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Alternet.UI;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace ControlsTest
+namespace Alternet.UI
 {
-    internal static partial class CommonTestUtils
+    public static partial class CommonUtils
     {
         public static readonly string ResNamePrefix = "ControlsTest.";
 
@@ -23,6 +22,7 @@ namespace ControlsTest
             Environment.NewLine,
         };
 
+        private static string StringFormatJs = "yyyy-MM-ddTHH:mm:ss.fffK";
         private static bool cmdLineTest = false;
         private static bool cmdLineLog = false;
         private static bool cmdLineNoMfcDedug = false;
@@ -166,10 +166,10 @@ namespace ControlsTest
 
         public static void LogToFile(string s)
         {
-            if (!CommonTestUtils.CmdLineTest && !CommonTestUtils.CmdLineLog)
+            if (!CommonUtils.CmdLineTest && !CommonUtils.CmdLineLog)
                 return;
 
-            string dt = System.DateTime.Now.ToString(WebBrowser.StringFormatJs);
+            string dt = System.DateTime.Now.ToString(StringFormatJs);
             string[] result = s.Split(StringSplitToArrayChars, StringSplitOptions.None);
 
             string contents = string.Empty;
@@ -215,7 +215,7 @@ namespace ControlsTest
             return url;
         }
 
-        internal class DebugTraceListener : TraceListener
+        public class DebugTraceListener : TraceListener
         {
             public DebugTraceListener()
             {
@@ -225,12 +225,12 @@ namespace ControlsTest
 #pragma warning disable CS8765
             public override void Write(string message)
             {
-                CommonTestUtils.Nop();
+                CommonUtils.Nop();
             }
 
             public override void WriteLine(string message)
             {
-                CommonTestUtils.Nop();
+                CommonUtils.Nop();
             }
 #pragma warning restore CS8765
 #pragma warning restore IDE0079

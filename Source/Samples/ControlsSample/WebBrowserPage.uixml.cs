@@ -22,8 +22,8 @@ namespace ControlsSample
         static WebBrowserPage()
         {
             string[] commandLineArgs = Environment.GetCommandLineArgs();
-            CommonUtils.ParseCmdLine(commandLineArgs);
-            if (CommonUtils.CmdLineNoMfcDedug)
+            ControlsSampleUtils.ParseCmdLine(commandLineArgs);
+            if (ControlsSampleUtils.CmdLineNoMfcDedug)
                 WebBrowser.CrtSetDbgFlag(0);
         }
 
@@ -53,13 +53,13 @@ namespace ControlsSample
 
         private static string GetPandaFileName()
         {
-            return CommonUtils.GetAppFolder() +
+            return ControlsSampleUtils.GetAppFolder() +
                 "Html/SampleArchive/Html/page1.html";
         }
 
         private static string GetPandaUrl()
         {
-            return CommonUtils.PrepareFileUrl(GetPandaFileName());
+            return ControlsSampleUtils.PrepareFileUrl(GetPandaFileName());
         }
 
         private void FindClearButton_Click(object sender, EventArgs e)
@@ -148,13 +148,13 @@ namespace ControlsSample
 
             if (s == SItemImage)
             {
-                s = CommonUtils.PrepareFileUrl(CommonUtils.GetAppFolder() +
+                s = ControlsSampleUtils.PrepareFileUrl(ControlsSampleUtils.GetAppFolder() +
                 "Html/SampleArchive/Images/panda1.jpg");
             }
 
             if (s == SItemPDF)
             {
-                s = CommonUtils.PrepareFileUrl(CommonUtils.GetAppFolder() +
+                s = ControlsSampleUtils.PrepareFileUrl(ControlsSampleUtils.GetAppFolder() +
                     "Resources/SamplePandaPdf.pdf");
             }
 
