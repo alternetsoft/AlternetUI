@@ -3,7 +3,7 @@ set -euo pipefail
 SCRIPT_HOME=$(cd "$(dirname "$0")"; pwd -P)
 
 # Prepare variables.
-. "$SCRIPT_HOME/Set Artifact Paths for Linux.sh"
+. "$SCRIPT_HOME/Linux.Set.Artifact.Paths.sh"
 
 # Build
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true

@@ -1,3 +1,6 @@
+:: WARNING UPLOADS TO NUGET.ORG
+
+
 SETLOCAL EnableDelayedExpansion
 
 set SCRIPT_HOME=%~dp0.

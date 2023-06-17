@@ -1,3 +1,8 @@
+:: Requires Alternet.UI.Pal\bin\NuGet\*.nupkg
+:: Calls MSW.Publish.Build.Managed.bat
+:: Calls MSW.Publish.Build.Integration.bat
+:: =========================================
+
 SETLOCAL EnableDelayedExpansion
 
 set SCRIPT_HOME=%~dp0.
@@ -40,7 +45,7 @@ if not !ERRORLEVEL! EQU 0 (
 
 :: Build managed packages.
 
-call "%SCRIPT_HOME%\Build Managed.bat"
+call "%SCRIPT_HOME%\MSW.Publish.Build.Managed.bat"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
@@ -56,7 +61,7 @@ if not !ERRORLEVEL! EQU 0 (
 
 :: Build integration components.
 
-call "%SCRIPT_HOME%\Build Integration.bat"
+call "%SCRIPT_HOME%\MSW.Publish.Build.Integration.bat"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 

@@ -1,4 +1,4 @@
-:: USAGE: DeployPublicSource.bat SourceDirectory RepoDirectory CommitMessageFile ApiKey RepoName
+:: PARAMS:  SourceDirectory RepoDirectory CommitMessageFile ApiKey RepoName
 
 SETLOCAL EnableDelayedExpansion
 

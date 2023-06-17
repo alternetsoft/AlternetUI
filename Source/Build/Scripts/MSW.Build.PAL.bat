@@ -4,7 +4,7 @@ set SCRIPT_HOME=%~dp0.
 
 :: Prepare variables.
 
-call "%SCRIPT_HOME%\Set Artifact Paths.bat"
+call "%SCRIPT_HOME%\MSW.Set.Artifact.Paths.bat"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
