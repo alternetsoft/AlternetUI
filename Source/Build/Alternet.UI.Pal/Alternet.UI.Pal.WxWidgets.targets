@@ -1,12 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+    <!-- ========================================== -->
     <Target Name="CleanWxWidgets">
         <RemoveDir Directories="$(WxWidgetsDirectory)" Condition="Exists($(WxWidgetsDirectory))"/>
-	<Delete Files="$(WxWidgetsDownloadTargetPath)" Condition="Exists($(WxWidgetsDownloadTargetPath))"/>
-	<Delete Files="$(WebViewDownloadTargetPath)" Condition="Exists($(WebViewDownloadTargetPath))"/>
+		<Delete Files="$(WxWidgetsDownloadTargetPath)" Condition="Exists($(WxWidgetsDownloadTargetPath))"/>
+		<Delete Files="$(WebViewDownloadTargetPath)" Condition="Exists($(WebViewDownloadTargetPath))"/>
+		<Delete Files="$(WxWidgetsBinDownloadTargetPathMacOS)" Condition="Exists($(WxWidgetsBinDownloadTargetPathMacOS))"/>
+		<Delete Files="$(WxWidgetsBinDownloadTargetPathLinux)" Condition="Exists($(WxWidgetsBinDownloadTargetPathLinux))"/>
     </Target>
-
+    <!-- ========================================== -->
+    <Target Name="DownloadAndExtractWxWidgetsBinLinux">
+        <DownloadFile Condition="!Exists($(WxWidgetsBinDownloadTargetPathLinux))"
+            SourceUrl="$(WxWidgetsBinDownloadUrlLinux)"
+            DestinationFolder="$(WxWidgetsBinDownloadDirectoryLinux)" DestinationFileName="$(WxWidgetsBinDownloadFileNameLinux)" />
+        <Unzip SourceFiles="$(WxWidgetsBinDownloadTargetPathLinux)" 
+			DestinationFolder="$(WxWidgetsDirectory)" />
+        <Delete Files="$(WxWidgetsBinDownloadTargetPathLinux)"/>
+    </Target>
+    <!-- ========================================== -->
+    <Target Name="DownloadAndExtractWxWidgetsBinMacOS">
+        <DownloadFile Condition="!Exists($(WxWidgetsBinDownloadTargetPathMacOS))"
+            SourceUrl="$(WxWidgetsBinDownloadUrlMacOS)"
+            DestinationFolder="$(WxWidgetsBinDownloadDirectoryMacOS)" DestinationFileName="$(WxWidgetsBinDownloadFileNameMacOS)" />
+        <Unzip SourceFiles="$(WxWidgetsBinDownloadTargetPathMacOS)" 
+			DestinationFolder="$(WxWidgetsDirectory)" />
+        <Delete Files="$(WxWidgetsBinDownloadTargetPathMacOS)"/>
+    </Target>
+    <!-- ========================================== -->
     <Target Name="DownloadAndExtractWebView">
         <DownloadFile Condition="!Exists($(WebViewDownloadTargetPath))"
             SourceUrl="$(WebViewDownloadUrl)"
@@ -14,8 +35,8 @@
         <Unzip SourceFiles="$(WebViewDownloadTargetPath)" DestinationFolder="$(WebViewDirectory)" />
         <Delete Files="$(WebViewDownloadTargetPath)"/>
     </Target>
-
-    <Target Name="DownloadAndExtractWxWidgets">
+    <!-- ========================================== -->
+	<Target Name="DownloadAndExtractWxWidgets">
         <CallTarget Targets="CleanWxWidgets" />
 	
         <DownloadFile Condition="!Exists($(WxWidgetsDownloadTargetPath))"
@@ -25,21 +46,23 @@
         <Delete Files="$(WxWidgetsDownloadTargetPath)"/>
 	<CallTarget Targets="DownloadAndExtractWebView"/>
     </Target>
-
+    <!-- ========================================== -->
     <Target Name="DownloadAndExtractWxWidgetsBinWindows">
         <CallTarget Targets="CleanWxWidgets" />
 		
-		<Message Text="Download Started. Please wait for 446MB download" />	
         <DownloadFile Condition="!Exists($(WxWidgetsDownloadTargetPath))"
             SourceUrl="$(WxWidgetsBinDownloadUrlWindows)"
             DestinationFolder="$(WxWidgetsDownloadDirectory)" DestinationFileName="$(WxWidgetsDownloadFileName)" />
-		<Message Text="Download Finished" />	
-		<Message Text="Unzip Started" />	
         <Unzip SourceFiles="$(WxWidgetsDownloadTargetPath)" DestinationFolder="$(WxWidgetsDownloadDirectory)" />
-		<Message Text="Unzip Finished" />	
         <Delete Files="$(WxWidgetsDownloadTargetPath)"/>
     </Target>
-
+    <!-- ========================================== -->
+    <Target Name="DownloadAndExtractWxWidgetsBin">
+        <CallTarget Targets="DownloadAndExtractWxWidgetsBinWindows" />
+        <CallTarget Targets="DownloadAndExtractWxWidgetsBinMacOS" />
+        <CallTarget Targets="DownloadAndExtractWxWidgetsBinLinux" />
+    </Target>
+    <!-- ========================================== -->
     <!-- Windows -->
     <Target Name="BuildWxWidgets_Windows_x86">
         <!-- Windows 32 Bit Release -->

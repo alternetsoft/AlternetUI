@@ -32,41 +32,60 @@
 
     <PropertyGroup>
         <ExternalComponentsDirectory>$(RootDirectoryPath)\External\</ExternalComponentsDirectory>
-
+    <!-- ========================================== -->
         <WebViewDirectory>$(ExternalComponentsDirectory)\WxWidgets\3rdparty\webview2</WebViewDirectory>
         <WebViewDownloadUrl>https://alternetsoftware.blob.core.windows.net/alternet-ui/microsoft.web.webview2.1.0.1774.30.zip</WebViewDownloadUrl>
         <WebViewDownloadDirectory>$(ExternalComponentsDirectory)</WebViewDownloadDirectory>
         <WebViewDownloadFileName>WebView.zip</WebViewDownloadFileName>
         <WebViewDownloadTargetPath>$(WebViewDownloadDirectory)\$(WebViewDownloadFileName)</WebViewDownloadTargetPath>
-
-        <WxWidgetsBinDownloadUrlWindows>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.2.1.zip</WxWidgetsBinDownloadUrlWindows>
-        <WxWidgetsBinDownloadUrlMacOS></WxWidgetsBinDownloadUrlMacOS>
-        <WxWidgetsBinDownloadUrlLinux></WxWidgetsBinDownloadUrlLinux>
-
+    <!-- ========================================== -->
         <WxWidgetsDirectory>$(ExternalComponentsDirectory)\WxWidgets</WxWidgetsDirectory>
         <WxWidgetsDownloadUrl>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-3.2.2.1.zip</WxWidgetsDownloadUrl>
         <WxWidgetsDownloadDirectory>$(ExternalComponentsDirectory)</WxWidgetsDownloadDirectory>
         <WxWidgetsDownloadFileName>WxWidgets.zip</WxWidgetsDownloadFileName>
         <WxWidgetsDownloadTargetPath>$(WxWidgetsDownloadDirectory)\$(WxWidgetsDownloadFileName)</WxWidgetsDownloadTargetPath>
         <VCVarsAllPath>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat</VCVarsAllPath>
+    <!-- ========================================== -->
+        <WxWidgetsBinDownloadUrlWindowsZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.2.1.zip</WxWidgetsBinDownloadUrlWindowsZip>
+        <WxWidgetsBinDownloadUrlWindows7z>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.2.1.7z</WxWidgetsBinDownloadUrlWindows7z>
+        <WxWidgetsBinDownloadUrlWindows>$(WxWidgetsBinDownloadUrlWindowsZip)</WxWidgetsBinDownloadUrlWindows>
+    <!-- ========================================== -->
+        <WxWidgetsBinDownloadUrlMacOSZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-macos-3.2.2.1.zip</WxWidgetsBinDownloadUrlMacOSZip>
+        <WxWidgetsBinDownloadUrlMacOSLocalHost>http://kurin.azurewebsites.net/wxWidgets-bin-3.2.2.1-macos-build.zip</WxWidgetsBinDownloadUrlMacOSLocalHost>
+        <WxWidgetsBinDownloadUrlMacOSTest>http://kurin.azurewebsites.net/wxWidgets-bin-3.2.2.1-macos-build.zip</WxWidgetsBinDownloadUrlMacOSTest>
+        <WxWidgetsBinDownloadUrlMacOS>$(WxWidgetsBinDownloadUrlMacOSLocalHost)</WxWidgetsBinDownloadUrlMacOS>
 
+        <WxWidgetsBinDownloadDirectoryMacOS>$(ExternalComponentsDirectory)</WxWidgetsBinDownloadDirectoryMacOS>
+        <WxWidgetsBinDownloadFileNameMacOS>WxWidgetsBinMacOs.zip</WxWidgetsBinDownloadFileNameMacOS>
+        <WxWidgetsBinDownloadTargetPathMacOS>$(WxWidgetsBinDownloadDirectoryMacOS)\$(WxWidgetsBinDownloadFileNameMacOS)</WxWidgetsBinDownloadTargetPathMacOS>
+    <!-- ========================================== -->
+        <WxWidgetsBinDownloadUrlLinuxZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-linux-3.2.2.1.zip</WxWidgetsBinDownloadUrlLinuxZip>
+        <WxWidgetsBinDownloadUrlLinuxLocalHost>http://kurin.azurewebsites.net/wxWidgets-bin-3.2.2.1-gtk-build.zip</WxWidgetsBinDownloadUrlLinuxLocalHost>
+        <WxWidgetsBinDownloadUrlLinuxTest>http://kurin.azurewebsites.net/wxWidgets-bin-3.2.2.1-gtk-build.zip</WxWidgetsBinDownloadUrlLinuxTest>
+        <WxWidgetsBinDownloadUrlLinux>$(WxWidgetsBinDownloadUrlLinuxLocalHost)</WxWidgetsBinDownloadUrlLinux>
+
+        <WxWidgetsBinDownloadDirectoryLinux>$(ExternalComponentsDirectory)</WxWidgetsBinDownloadDirectoryLinux>
+        <WxWidgetsBinDownloadFileNameLinux>WxWidgetsBinLinux.zip</WxWidgetsBinDownloadFileNameLinux>
+        <WxWidgetsBinDownloadTargetPathLinux>$(WxWidgetsBinDownloadDirectoryLinux)\$(WxWidgetsBinDownloadFileNameLinux)</WxWidgetsBinDownloadTargetPathLinux>
+    <!-- ========================================== -->
         <WxWidgetsWindowsBuildDirectoryNameParent>build</WxWidgetsWindowsBuildDirectoryNameParent>
         <WxWidgetsWindowsBuildDirectoryName>msw</WxWidgetsWindowsBuildDirectoryName>
         <WxWidgetsWindowsBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsWindowsBuildDirectoryNameParent)\$(WxWidgetsWindowsBuildDirectoryName)</WxWidgetsWindowsBuildDirectory>
         <WxWidgetsWindowsBuildDirectoryParent>$(WxWidgetsDirectory)\$(WxWidgetsWindowsBuildDirectoryNameParent)</WxWidgetsWindowsBuildDirectoryParent>
-
+    <!-- ========================================== -->
 	<WxWidgetsWindowsBuildDirectory_vc_mswu>$(WxWidgetsWindowsBuildDirectory)\vc_mswu</WxWidgetsWindowsBuildDirectory_vc_mswu>
 	<WxWidgetsWindowsBuildDirectory_vc_x64_mswu>$(WxWidgetsWindowsBuildDirectory)\vc_x64_mswu</WxWidgetsWindowsBuildDirectory_vc_x64_mswu>
 	<WxWidgetsWindowsBuildDirectory_vc_mswud>$(WxWidgetsWindowsBuildDirectory)\vc_mswud</WxWidgetsWindowsBuildDirectory_vc_mswud>
 	<WxWidgetsWindowsBuildDirectory_vc_x64_mswud>$(WxWidgetsWindowsBuildDirectory)\vc_x64_mswud</WxWidgetsWindowsBuildDirectory_vc_x64_mswud>
 	<WxWidgetsWindowsBuildDirectory_vc_lib>$(WxWidgetsDirectory)\lib\vc_lib</WxWidgetsWindowsBuildDirectory_vc_lib>
 	<WxWidgetsWindowsBuildDirectory_vc_x64_lib>$(WxWidgetsDirectory)\lib\vc_x64_lib</WxWidgetsWindowsBuildDirectory_vc_x64_lib>
-
+    <!-- ========================================== -->
         <WxWidgetsGtkBuildDirectoryName>gtk-build</WxWidgetsGtkBuildDirectoryName>
         <WxWidgetsGtkBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsGtkBuildDirectoryName)</WxWidgetsGtkBuildDirectory>
-
+    <!-- ========================================== -->
         <WxWidgetsMacOSBuildDirectoryName>macos-build</WxWidgetsMacOSBuildDirectoryName>
         <WxWidgetsMacOSBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsMacOSBuildDirectoryName)</WxWidgetsMacOSBuildDirectory>
+    <!-- ========================================== -->
     </PropertyGroup>
 
 </Project>
