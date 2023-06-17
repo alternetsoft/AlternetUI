@@ -1,7 +1,5 @@
 #nullable disable
 
-using Alternet.Base.Collections;
-using Alternet.Drawing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +7,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using Alternet.Base.Collections;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -23,6 +23,7 @@ namespace Alternet.UI
         public Grid()
         {
             SetFlags(ShowGridLinesDefaultValue, Flags.ShowGridLinesPropertyValue);
+            
             // UserPaint = true;
         }
 
@@ -175,18 +176,18 @@ namespace Alternet.UI
             OnCellAttachedPropertyChanged(control);
         }
 
-        //public static bool GetIsSharedSizeScope(Control control)
-        //{
+        // public static bool GetIsSharedSizeScope(Control control)
+        // {
         //    if (control is null)
         //    {
         //        throw new ArgumentNullException(nameof(control));
         //    }
 
         //    return controlIsSharedSizeScopes.TryGetValue(control, out var value) ? value : false;
-        //}
+        // }
 
-        //public static void SetIsSharedSizeScope(Control control, bool value)
-        //{
+        // public static void SetIsSharedSizeScope(Control control, bool value)
+        // {
         //    if (control == null)
         //    {
         //        throw new ArgumentNullException(nameof(control));
@@ -194,19 +195,19 @@ namespace Alternet.UI
 
         //    controlIsSharedSizeScopes[control] = value;
         //    DefinitionBase.OnIsSharedSizeScopePropertyChanged(control, value);
-        //}
+        // }
 
-        //bool showGridLines = false;
+        // bool showGridLines = false;
 
-        //public bool ShowGridLines
-        //{
+        // public bool ShowGridLines
+        // {
         //    get { return (CheckFlagsAnd(Flags.ShowGridLinesPropertyValue)); }
         //    set
         //    {
         //        showGridLines = value;
         //        OnShowGridLinesPropertyChanged(this, value);
         //    }
-        //}
+        // }
 
         /// <summary>
         /// Gets a <see cref="ColumnDefinitionCollection"/> defined on this instance of <see cref="Grid"/>.
@@ -823,14 +824,14 @@ namespace Alternet.UI
                         cell.Next = extData.CellGroup3;
                         extData.CellGroup3 = i;
 
-                        //  remember if this cell belongs to auto row
+                        // remember if this cell belongs to auto row
                         hasGroup3CellsInAutoRows |= cell.IsAutoV;
                     }
                 }
                 else
                 {
                     if (cell.IsAutoU
-                        //  note below: if spans through Star column it is NOT Auto
+                        // note below: if spans through Star column it is NOT Auto
                         && !cell.IsStarU)
                     {
                         cell.Next = extData.CellGroup2;
@@ -2556,8 +2557,8 @@ namespace Alternet.UI
             // unrounded sizes, to avoid breaking assumptions in the previous phases
             if (UseLayoutRounding)
             {
-                //DpiScale dpiScale = GetDpi(); // todo yezo
-                //double dpi = columns ? dpiScale.DpiScaleX : dpiScale.DpiScaleY;
+                // DpiScale dpiScale = GetDpi(); // todo yezo
+                // double dpi = columns ? dpiScale.DpiScaleX : dpiScale.DpiScaleY;
                 var dpi = 1.0f;
                 double[] roundingErrors = RoundingErrors;
                 double roundedTakenSize = 0;
@@ -3462,6 +3463,7 @@ namespace Alternet.UI
                 {
                     definitionX = definitions[indexX.Value];
                 }
+
                 if (indexY != null)
                 {
                     definitionY = definitions[indexY.Value];
@@ -3503,6 +3505,7 @@ namespace Alternet.UI
                 {
                     definitionX = definitions[indexX.Value];
                 }
+
                 if (indexY != null)
                 {
                     definitionY = definitions[indexY.Value];
@@ -3727,6 +3730,7 @@ namespace Alternet.UI
                 {
                     definitionX = definitions[indexX.Value];
                 }
+
                 if (indexY != null)
                 {
                     definitionY = definitions[indexY.Value];

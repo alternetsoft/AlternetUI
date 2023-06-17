@@ -27,7 +27,7 @@
             {
                 Text = details,
                 ReadOnly = true,
-                Multiline = true
+                Multiline = true,
             };
             mainGrid.Children.Add(detailsTextBox);
 
@@ -35,7 +35,7 @@
             {
                 Text = "&Close",
                 HorizontalAlignment = HorizontalAlignment.Right,
-                Margin = new Thickness(0, 10, 0, 0)
+                Margin = new Thickness(0, 10, 0, 0),
             };
             closeButton.Click += (o, e) => Close();
             mainGrid.Children.Add(closeButton);

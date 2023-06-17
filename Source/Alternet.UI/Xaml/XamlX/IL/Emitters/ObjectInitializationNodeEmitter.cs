@@ -33,12 +33,12 @@ namespace XamlX.IL.Emitters
                         .Emit(OpCodes.Dup)
                         .EmitCall(supportInitType.FindMethod(m => m.Name == "BeginInit"));
             }
-            
-            
+
+
             var addToParentStack = context.RuntimeContext.ParentListField != null
                                    && !init.Type.IsValueType
                                    && context.GetOrCreateItem<XamlNeedsParentStackCache>().NeedsParentStack(node);
-            if(addToParentStack)
+            if (addToParentStack)
             {
                 using (var local = context.GetLocalOfType(init.Type))
                     codeGen
@@ -57,16 +57,16 @@ namespace XamlX.IL.Emitters
                     .Ldloc(context.ContextLocal)
                     .EmitCall(context.RuntimeContext.PopParentMethod, true);
             }
-            
+
             if (supportsInitialize)
                 codeGen
                     .EmitCall(supportInitType.FindMethod(m => m.Name == "EndInit"));
-            
-            
+
+
             return XamlILNodeEmitResult.Void(1);
         }
     }
-    
+
     class XamlNeedsParentStackCache : Dictionary<IXamlAstNode, bool>
     {
         public static void Verify(XamlContextBase ctx, IXamlAstNode node)

@@ -77,11 +77,11 @@ namespace Alternet.UI
         /// </summary>
         internal void OnBeforeLayout(Grid grid)
         {
-            //  reset layout state.
+            // reset layout state.
             _minSize = 0;
             LayoutWasUpdated = true;
 
-            //  defer verification for shared definitions
+            // defer verification for shared definitions
             if (_sharedState != null) { _sharedState.EnsureDeferredValidation(grid); }
         }
 
@@ -441,8 +441,8 @@ namespace Alternet.UI
         ///// b) contains only letters, digits and underscore ('_').
         ///// c) does not start with a digit.
         ///// </remarks>
-        //private static bool SharedSizeGroupPropertyValueValid(object value)
-        //{
+        // private static bool SharedSizeGroupPropertyValueValid(object value)
+        // {
         //    //  null is default value
         //    if (value == null)
         //    {
@@ -485,10 +485,10 @@ namespace Alternet.UI
         /// </remark>
         private void OnPrivateSharedSizeScopePropertyChanged(SharedSizeScope newValue)
         {
-            //DefinitionBase definition = this;
+            // DefinitionBase definition = this;
 
-            //if (definition.InParentLogicalTree)
-            //{
+            // if (definition.InParentLogicalTree)
+            // {
             //    SharedSizeScope privateSharedSizeScope = newValue;
 
             //    if (definition._sharedState != null)
@@ -510,7 +510,7 @@ namespace Alternet.UI
             //            definition._sharedState.AddMember(definition);
             //        }
             //    }
-            //}
+            // }
         }
 
         static Dictionary<Control, SharedSizeScope> privateSharedSizeScopes = new Dictionary<Control, SharedSizeScope>();

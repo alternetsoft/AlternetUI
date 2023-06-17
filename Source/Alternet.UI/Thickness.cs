@@ -194,6 +194,7 @@ namespace Alternet.UI
                 Thickness otherObj = (Thickness)obj;
                 return (this == otherObj);
             }
+
             return (false);
         }
 

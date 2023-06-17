@@ -83,20 +83,20 @@ namespace XamlX.Ast
 
         public override void VisitChildren(Visitor visitor)
         {
-            TargetType = (IXamlAstTypeReference) TargetType.Visit(visitor);
+            TargetType = (IXamlAstTypeReference)TargetType.Visit(visitor);
         }
 
         IXamlMember ResolveMember(IXamlType type)
         {
             var rv = type.Fields.FirstOrDefault(f => f.IsPublic && f.IsStatic && f.Name == Member) ??
-                   (IXamlMember) type.GetAllProperties().FirstOrDefault(p =>
+                   (IXamlMember)type.GetAllProperties().FirstOrDefault(p =>
                        p.Name == Member && p.Getter != null && p.Getter.IsPublic && p.Getter.IsStatic);
             if (rv == null)
                 throw new XamlParseException(
                     $"Unable to resolve {Member} as static field, property, constant or enum value", this);
             return rv;
         }
-        
+
         public XamlILNodeEmitResult Emit(XamlEmitContext<IXamlILEmitter, XamlILNodeEmitResult> context, IXamlILEmitter codeGen)
         {
             var type = TargetType.GetClrType();
@@ -132,7 +132,7 @@ namespace XamlX.Ast
                 return prop.Getter.ReturnType;
             throw new XamlParseException($"Unable to resolve {Member} as static field, property, constant or enum value", this);
         }
-        
+
         public IXamlAstTypeReference Type => new XamlAstClrTypeReference(this, ResolveReturnType(), false);
     }
 
@@ -155,7 +155,7 @@ namespace XamlX.Ast
         public XamlILNodeEmitResult Emit(XamlEmitContext<IXamlILEmitter, XamlILNodeEmitResult> context, IXamlILEmitter codeGen)
         {
             if (Constant is string)
-                codeGen.Emit(OpCodes.Ldstr, (string) Constant);
+                codeGen.Emit(OpCodes.Ldstr, (string)Constant);
             else if (Constant is long || Constant is ulong)
                 codeGen.Emit(OpCodes.Ldc_I8, TypeSystem.TypeSystemHelpers.ConvertLiteralToLong(Constant));
             else if (Constant is float f)
@@ -190,10 +190,10 @@ namespace XamlX.Ast
 
         public override void VisitChildren(Visitor visitor)
         {
-            Type = (IXamlAstTypeReference) Type.Visit(visitor);
+            Type = (IXamlAstTypeReference)Type.Visit(visitor);
         }
     }
-    
+
 #if !XAMLX_INTERNAL
     public
 #endif
@@ -216,7 +216,7 @@ namespace XamlX.Ast
 
         public override void VisitChildren(Visitor visitor)
         {
-            Type = (IXamlAstTypeReference) Type.Visit(visitor);
+            Type = (IXamlAstTypeReference)Type.Visit(visitor);
         }
     }
 

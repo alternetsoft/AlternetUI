@@ -14,7 +14,7 @@ namespace XamlX.Parsers.SystemXamlMarkupExtensionParser
     // We are trying to keep the code as close to the original as possible
     // so it would be easier to port future changes
     // That's why those mappings to shims are here
-    
+
     using XamlParserContext = XamlX.Parsers.SystemXamlMarkupExtensionParser.MeScannerContext;
     using XamlType = XamlX.Parsers.SystemXamlMarkupExtensionParser.MeScannerTypeName;
     using XamlMember = XamlX.Ast.XamlAstNamePropertyReference;
@@ -30,10 +30,10 @@ namespace XamlX.Parsers.SystemXamlMarkupExtensionParser
     enum MeTokenType
     {
         None,
-        Open         = '{',
-        Close        = '}',
-        EqualSign    = '=',
-        Comma        = ',',
+        Open = '{',
+        Close = '}',
+        EqualSign = '=',
+        Comma = ',',
         TypeName,      // String - Follows a '{' space delimited
         PropertyName,  // String - Preceeds a '='.  {},= delimited, can (but shouldn't) contain spaces.
         String,        // String - all other strings, {},= delimited can contain spaces.
@@ -47,7 +47,7 @@ namespace XamlX.Parsers.SystemXamlMarkupExtensionParser
     // 3) All strings are trimmed of whitespace front and back unless they were quoted.
     // 4) Quote characters can only appear at the start and end of strings.
     // 5) TypeNames cannot be quoted.
-    
+
     internal partial class MeScanner
     {
         public const char Space = ' ';
@@ -159,65 +159,65 @@ namespace XamlX.Parsers.SystemXamlMarkupExtensionParser
 
             switch (CurrentChar)
             {
-            case OpenCurlie:
-                if (NextChar == CloseCurlie)    // the {} escapes the ME.  return the string.
-                {
-                    _token = MeTokenType.String;
-                    _state = StringState.Value;
-                    readString = true;          // ReadString() will strip the leading {}
-                }
-                else
-                {
-                    _token = MeTokenType.Open;
-                    _state = StringState.Type;  // types follow '{'
-                }
-                break;
-
-            case Quote1:
-            case Quote2:
-                if (NextChar == OpenCurlie)
-                {
-                    Advance();                    // read ahead one character
-                    if (NextChar != CloseCurlie)  // check for the '}' of a {}
+                case OpenCurlie:
+                    if (NextChar == CloseCurlie)    // the {} escapes the ME.  return the string.
                     {
-                        isQuotedMarkupExtension = true;
+                        _token = MeTokenType.String;
+                        _state = StringState.Value;
+                        readString = true;          // ReadString() will strip the leading {}
                     }
-                    PushBack();                   // put back the read-ahead.
-                }
-                readString = true;  // read substring"
-                break;
+                    else
+                    {
+                        _token = MeTokenType.Open;
+                        _state = StringState.Type;  // types follow '{'
+                    }
+                    break;
 
-            case CloseCurlie:
-                _token = MeTokenType.Close;
-                _state = StringState.Value;
-                break;
+                case Quote1:
+                case Quote2:
+                    if (NextChar == OpenCurlie)
+                    {
+                        Advance();                    // read ahead one character
+                        if (NextChar != CloseCurlie)  // check for the '}' of a {}
+                        {
+                            isQuotedMarkupExtension = true;
+                        }
+                        PushBack();                   // put back the read-ahead.
+                    }
+                    readString = true;  // read substring"
+                    break;
 
-            case EqualSign:
-                _token = MeTokenType.EqualSign;
-                _state = StringState.Value;
-                _context.CurrentBracketModeParseParameters.IsConstructorParsingMode = false;
-                break;
+                case CloseCurlie:
+                    _token = MeTokenType.Close;
+                    _state = StringState.Value;
+                    break;
 
-            case Comma:
-                _token = MeTokenType.Comma;
-                _state = StringState.Value;
-                if (_context.CurrentBracketModeParseParameters.IsConstructorParsingMode)
-                {
-                    _context.CurrentBracketModeParseParameters.IsConstructorParsingMode =
-                        ++_context.CurrentBracketModeParseParameters.CurrentConstructorParam <
-                        _context.CurrentBracketModeParseParameters.MaxConstructorParams;
-                }
-                break;
+                case EqualSign:
+                    _token = MeTokenType.EqualSign;
+                    _state = StringState.Value;
+                    _context.CurrentBracketModeParseParameters.IsConstructorParsingMode = false;
+                    break;
 
-            default:
-                readString = true;
-                break;
+                case Comma:
+                    _token = MeTokenType.Comma;
+                    _state = StringState.Value;
+                    if (_context.CurrentBracketModeParseParameters.IsConstructorParsingMode)
+                    {
+                        _context.CurrentBracketModeParseParameters.IsConstructorParsingMode =
+                            ++_context.CurrentBracketModeParseParameters.CurrentConstructorParam <
+                            _context.CurrentBracketModeParseParameters.MaxConstructorParams;
+                    }
+                    break;
+
+                default:
+                    readString = true;
+                    break;
             }
 
-            if(readString)
+            if (readString)
             {
-                if (_context.CurrentType.IsMarkupExtension 
-                    && _context.CurrentBracketModeParseParameters != null 
+                if (_context.CurrentType.IsMarkupExtension
+                    && _context.CurrentBracketModeParseParameters != null
                     && _context.CurrentBracketModeParseParameters.IsConstructorParsingMode)
                 {
                     int currentCtrParam = _context.CurrentBracketModeParseParameters.CurrentConstructorParam;
@@ -230,18 +230,18 @@ namespace XamlX.Parsers.SystemXamlMarkupExtensionParser
 
                 switch (_state)
                 {
-                case StringState.Value:
-                    break;
+                    case StringState.Value:
+                        break;
 
-                case StringState.Type:
-                    _token = MeTokenType.TypeName;
-                    ResolveTypeName(str);
-                    break;
+                    case StringState.Type:
+                        _token = MeTokenType.TypeName;
+                        ResolveTypeName(str);
+                        break;
 
-                case StringState.Property:
-                    _token = MeTokenType.PropertyName;
-                    ResolvePropertyName(str);
-                    break;
+                    case StringState.Property:
+                        _token = MeTokenType.PropertyName;
+                        ResolvePropertyName(str);
+                        break;
                 }
                 _state = StringState.Value;
                 _tokenText = RemoveEscapes(str);
@@ -253,8 +253,8 @@ namespace XamlX.Parsers.SystemXamlMarkupExtensionParser
             if (value.StartsWith("{}", StringComparison.OrdinalIgnoreCase))
             {
                 value = value.Substring(2);
-            } 
-            
+            }
+
             if (!value.Contains("\\"))
             {
                 return value;
@@ -301,9 +301,9 @@ namespace XamlX.Parsers.SystemXamlMarkupExtensionParser
                 throw new XamlParseException(this, error);
             }
             var xamlType = typeName;
-            
+
             // Original System.Xaml resolves types in the tokenizer, we don't
-            
+
             /*
              
             // In curly form, we search for TypeName + 'Extension' before TypeName
@@ -324,33 +324,33 @@ namespace XamlX.Parsers.SystemXamlMarkupExtensionParser
             _tokenXamlType = xamlType;
             _tokenNamespace = typeName.Namespace;
         }
-/*
-        private void ResolvePropertyName(string longName)
-        {
-            XamlPropertyName propName = XamlPropertyName.Parse(longName);
-            if (propName == null)
-            {
-                throw new ArgumentException(SR.Get(SRID.MalformedPropertyName));
-            }
+        /*
+                private void ResolvePropertyName(string longName)
+                {
+                    XamlPropertyName propName = XamlPropertyName.Parse(longName);
+                    if (propName == null)
+                    {
+                        throw new ArgumentException(SR.Get(SRID.MalformedPropertyName));
+                    }
 
-            XamlMember prop = null;
-            XamlType declaringType;
-            XamlType tagType = _context.CurrentType;
-            string tagNamespace = _context.CurrentTypeNamespace;
+                    XamlMember prop = null;
+                    XamlType declaringType;
+                    XamlType tagType = _context.CurrentType;
+                    string tagNamespace = _context.CurrentTypeNamespace;
 
-            if (propName.IsDotted)
-            {
-                prop = _context.GetDottedProperty(tagType, tagNamespace, propName, false);
-            }
-            // Regular property p
-            else
-            {
-                string ns = _context.GetAttributeNamespace(propName, Namespace);
-                declaringType = _context.CurrentType;
-                prop = _context.GetNoDotAttributeProperty(declaringType, propName, Namespace, ns, false);
-            }
-            _tokenProperty = prop;
-        }*/
+                    if (propName.IsDotted)
+                    {
+                        prop = _context.GetDottedProperty(tagType, tagNamespace, propName, false);
+                    }
+                    // Regular property p
+                    else
+                    {
+                        string ns = _context.GetAttributeNamespace(propName, Namespace);
+                        declaringType = _context.CurrentType;
+                        prop = _context.GetNoDotAttributeProperty(declaringType, propName, Namespace, ns, false);
+                    }
+                    _tokenProperty = prop;
+                }*/
         void ResolvePropertyName(string longName) => _tokenProperty = _context.ResolvePropertyName(longName);
 
         private string ReadString()
@@ -364,12 +364,12 @@ namespace XamlX.Parsers.SystemXamlMarkupExtensionParser
             StringBuilder sb = new StringBuilder();
             char ch;
 
-            while(!IsAtEndOfInput)
+            while (!IsAtEndOfInput)
             {
                 ch = CurrentChar;
 
                 // handle escaping and quoting first.
-                if(escaped)
+                if (escaped)
                 {
                     sb.Append('\\');
                     sb.Append(ch);
@@ -432,65 +432,65 @@ namespace XamlX.Parsers.SystemXamlMarkupExtensionParser
                     bool done = false;
                     switch (ch)
                     {
-                    case Space:
-                        if (_state == StringState.Type)
-                        {
+                        case Space:
+                            if (_state == StringState.Type)
+                            {
+                                done = true;  // we are done.
+                                break;
+                            }
+                            sb.Append(ch);
+                            break;
+
+                        case OpenCurlie:
+                            braceCount++;
+                            sb.Append(ch);
+                            break;
+                        case CloseCurlie:
+                            if (braceCount == 0)
+                            {
+                                done = true;
+                            }
+                            else
+                            {
+                                braceCount--;
+                                sb.Append(ch);
+                            }
+                            break;
+                        case Comma:
                             done = true;  // we are done.
                             break;
-                        }
-                        sb.Append(ch);
-                        break;
 
-                    case OpenCurlie:
-                        braceCount++;
-                        sb.Append(ch);
-                        break;
-                    case CloseCurlie:
-                        if (braceCount == 0)
-                        {
-                            done = true;
-                        }
-                        else
-                        {
-                            braceCount--;
+                        case EqualSign:
+                            _state = StringState.Property;
+                            done = true;  // we are done.
+                            break;
+
+                        case Backslash:
+                            escaped = true;
+                            break;
+
+                        case Quote1:
+                        case Quote2:
+                            if (!atStart)
+                            {
+                                throw new XamlParseException(this, SR.Get(SRID.QuoteCharactersOutOfPlace));
+                            }
+                            quoteChar = ch;
+                            wasQuoted = true;
+                            break;
+
+                        default:  // All other character (including whitespace)
+                            if (_currentSpecialBracketCharacters != null && _currentSpecialBracketCharacters.StartsEscapeSequence(ch))
+                            {
+                                Stack<char> bracketCharacterStack =
+                                    _context.CurrentBracketModeParseParameters.BracketCharacterStack;
+                                bracketCharacterStack.Clear();
+                                bracketCharacterStack.Push(ch);
+                                _context.CurrentBracketModeParseParameters.IsBracketEscapeMode = true;
+                            }
+
                             sb.Append(ch);
-                        }
-                        break;
-                    case Comma:
-                        done = true;  // we are done.
-                        break;
-
-                    case EqualSign:
-                        _state = StringState.Property;
-                        done = true;  // we are done.
-                        break;
-
-                    case Backslash:
-                        escaped = true;
-                        break;
-
-                    case Quote1:
-                    case Quote2:
-                        if (!atStart)
-                        {
-                            throw new XamlParseException(this, SR.Get(SRID.QuoteCharactersOutOfPlace));
-                        }
-                        quoteChar = ch;
-                        wasQuoted = true;
-                        break;
-
-                    default:  // All other character (including whitespace)
-                        if (_currentSpecialBracketCharacters != null && _currentSpecialBracketCharacters.StartsEscapeSequence(ch))
-                        {
-                            Stack<char> bracketCharacterStack =
-                                _context.CurrentBracketModeParseParameters.BracketCharacterStack;
-                            bracketCharacterStack.Clear();
-                            bracketCharacterStack.Push(ch);
-                            _context.CurrentBracketModeParseParameters.IsBracketEscapeMode = true;
-                        }
-
-                        sb.Append(ch);
-                        break;
+                            break;
                     }
 
                     if (done)
@@ -570,7 +570,7 @@ namespace XamlX.Parsers.SystemXamlMarkupExtensionParser
 
             if (ch == KnownStrings.WhitespaceChars[0] ||
                 ch == KnownStrings.WhitespaceChars[1] ||
-                ch == KnownStrings.WhitespaceChars[2] || 
+                ch == KnownStrings.WhitespaceChars[2] ||
                 ch == KnownStrings.WhitespaceChars[3] ||
                 ch == KnownStrings.WhitespaceChars[4])
             {
@@ -621,31 +621,31 @@ namespace XamlX.Parsers.SystemXamlMarkupExtensionParser
             */
         }
     }
-/*
-    internal class BracketModeParseParameters
-    {
-        internal BracketModeParseParameters(XamlParserContext context)
+    /*
+        internal class BracketModeParseParameters
         {
-            CurrentConstructorParam = 0;
-            IsBracketEscapeMode = false;
-            BracketCharacterStack = new Stack<char>();
-            if (context.CurrentLongestConstructorOfMarkupExtension != null)
+            internal BracketModeParseParameters(XamlParserContext context)
             {
-                IsConstructorParsingMode = context.CurrentLongestConstructorOfMarkupExtension.Length > 0;
-                MaxConstructorParams = context.CurrentLongestConstructorOfMarkupExtension.Length;
+                CurrentConstructorParam = 0;
+                IsBracketEscapeMode = false;
+                BracketCharacterStack = new Stack<char>();
+                if (context.CurrentLongestConstructorOfMarkupExtension != null)
+                {
+                    IsConstructorParsingMode = context.CurrentLongestConstructorOfMarkupExtension.Length > 0;
+                    MaxConstructorParams = context.CurrentLongestConstructorOfMarkupExtension.Length;
+                }
+                else
+                {
+                    IsConstructorParsingMode = false;
+                    MaxConstructorParams = 0;
+                }
             }
-            else
-            {
-                IsConstructorParsingMode = false;
-                MaxConstructorParams = 0;
-            }
-        }
 
-        internal int CurrentConstructorParam { get; set; }
-        internal int MaxConstructorParams { get; set; }
-        internal bool IsConstructorParsingMode { get; set; }
-        internal bool IsBracketEscapeMode { get; set; }
-        internal Stack<char> BracketCharacterStack { get; set; }
-    }
-    */
+            internal int CurrentConstructorParam { get; set; }
+            internal int MaxConstructorParams { get; set; }
+            internal bool IsConstructorParsingMode { get; set; }
+            internal bool IsBracketEscapeMode { get; set; }
+            internal Stack<char> BracketCharacterStack { get; set; }
+        }
+        */
 }

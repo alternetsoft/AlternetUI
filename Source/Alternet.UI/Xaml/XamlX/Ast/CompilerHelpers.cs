@@ -23,9 +23,9 @@ namespace XamlX.Ast
 
         public XamlAstCompilerLocalNode(IXamlAstValueNode value) : this(value, value.Type.GetClrTypeReference())
         {
-            
+
         }
-        
+
         IXamlAstTypeReference IXamlAstValueNode.Type => _typeReference;
         public XamlILNodeEmitResult Emit(XamlEmitContextWithLocals<IXamlILEmitter, XamlILNodeEmitResult> context, IXamlILEmitter codeGen)
         {
@@ -53,7 +53,7 @@ namespace XamlX.Ast
         public override void VisitChildren(Visitor visitor)
         {
             base.VisitChildren(visitor);
-            Local = (XamlAstCompilerLocalNode) Local.Visit(visitor);
+            Local = (XamlAstCompilerLocalNode)Local.Visit(visitor);
         }
 
         public XamlILNodeEmitResult Emit(XamlEmitContextWithLocals<IXamlILEmitter, XamlILNodeEmitResult> context, IXamlILEmitter codeGen)
@@ -100,7 +100,7 @@ namespace XamlX.Ast
     {
         public IXamlAstImperativeNode Imperative { get; set; }
 
-        public XamlAstManipulationImperativeNode(IXamlLineInfo lineInfo, IXamlAstImperativeNode imperative) 
+        public XamlAstManipulationImperativeNode(IXamlLineInfo lineInfo, IXamlAstImperativeNode imperative)
             : base(lineInfo)
         {
             Imperative = imperative;
@@ -128,7 +128,7 @@ namespace XamlX.Ast
         public IXamlAstValueNode Value { get; set; }
         public IXamlAstManipulationNode Manipulation { get; set; }
 
-        public XamlAstImperativeValueManipulation(IXamlLineInfo lineInfo, 
+        public XamlAstImperativeValueManipulation(IXamlLineInfo lineInfo,
             IXamlAstValueNode value, IXamlAstManipulationNode manipulation) : base(lineInfo)
         {
             Value = value;
@@ -137,8 +137,8 @@ namespace XamlX.Ast
 
         public override void VisitChildren(Visitor visitor)
         {
-            Value = (XamlAstCompilerLocalNode) Value.Visit(visitor);
-            Manipulation = (IXamlAstManipulationNode) Manipulation.Visit(visitor);
+            Value = (XamlAstCompilerLocalNode)Value.Visit(visitor);
+            Manipulation = (IXamlAstManipulationNode)Manipulation.Visit(visitor);
         }
 
         public XamlILNodeEmitResult Emit(XamlEmitContext<IXamlILEmitter, XamlILNodeEmitResult> context, IXamlILEmitter codeGen)
@@ -182,8 +182,8 @@ namespace XamlX.Ast
 
         public override void VisitChildren(Visitor visitor)
         {
-            Value = (IXamlAstValueNode) Value.Visit(visitor);
-            Type = (IXamlAstTypeReference) Type.Visit(visitor);
+            Value = (IXamlAstValueNode)Value.Visit(visitor);
+            Type = (IXamlAstTypeReference)Type.Visit(visitor);
         }
 
         public XamlILNodeEmitResult Emit(XamlEmitContext<IXamlILEmitter, XamlILNodeEmitResult> context, IXamlILEmitter codeGen)
@@ -193,7 +193,7 @@ namespace XamlX.Ast
             if (t.IsValueType)
                 codeGen.Unbox_Any(t);
             else
-                codeGen.Castclass(t);            
+                codeGen.Castclass(t);
             return XamlILNodeEmitResult.Type(0, t);
         }
     }

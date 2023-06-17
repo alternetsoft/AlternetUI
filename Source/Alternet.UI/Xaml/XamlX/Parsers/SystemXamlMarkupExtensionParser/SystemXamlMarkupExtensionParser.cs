@@ -24,14 +24,13 @@ namespace XamlX.Parsers.SystemXamlMarkupExtensionParser
                 if (scanner.Token != MeTokenType.TypeName)
                     throw new MeScannerParseException("Unexpected token " + scanner.Token);
                 var extType = scanner.TokenType;
-                
+
                 extType.TypeReference.IsMarkupExtension = true;
                 currentTypeStack.Push(ctx.CurrentType);
                 ctx.CurrentType = extType;
 
                 var rv = new XamlAstObjectNode(li, extType.TypeReference);
-                
-                
+
                 while (true)
                 {
                     scanner.Read();
@@ -70,10 +69,10 @@ namespace XamlX.Parsers.SystemXamlMarkupExtensionParser
                 scanner.Read();
                 return ReadCurrent();
             }
-            
+
             IXamlAstValueNode ReadCurrent()
             {
-                
+
                 if (scanner.Token == MeTokenType.String)
                     return new XamlAstTextNode(li, scanner.TokenText);
                 if (scanner.Token == MeTokenType.Open)

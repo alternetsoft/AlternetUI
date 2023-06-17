@@ -112,7 +112,7 @@ namespace Alternet.UI
         /// <summary>
         /// The <see cref="MessageBox"/> box return value is No.
         /// </summary>
-        No
+        No,
     }
 
     /// <summary>
@@ -138,7 +138,7 @@ namespace Alternet.UI
         /// <summary>
         /// The <see cref="MessageBox"/> box default button is No.
         /// </summary>
-        No
+        No,
     }
 
     /// <summary>
@@ -190,6 +190,6 @@ namespace Alternet.UI
         /// <summary>
         /// The message box contains an Error icon.
         /// </summary>
-        Error
+        Error,
     }
 }
