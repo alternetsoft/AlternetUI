@@ -1,40 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+    <!-- ========================================== -->
     <PropertyGroup>
         <ScriptsWorkingDirectory>"$(MSBuildProjectDirectory)\..\Scripts" </ScriptsWorkingDirectory>
+		<UI_ROOT_ARTIFACTS_PATH>$(RootDirectoryPath)\Publish\Artifacts\Build\</UI_ROOT_ARTIFACTS_PATH>
+		<UI_WINDOWS_ARTIFACTS_PATH>$(UI_ROOT_ARTIFACTS_PATH)\Windows\UI\</UI_WINDOWS_ARTIFACTS_PATH>
+		<UI_MACOS_ARTIFACTS_PATH>$(UI_ROOT_ARTIFACTS_PATH)\macOS\UI\</UI_MACOS_ARTIFACTS_PATH>
+		<UI_LINUX_ARTIFACTS_PATH>=$(UI_ROOT_ARTIFACTS_PATH)\Linux\UI\</UI_LINUX_ARTIFACTS_PATH>
+		<UI_PAL_WINDOWS_ARTIFACTS_PATH>$(UI_WINDOWS_ARTIFACTS_PATH)\PAL</UI_PAL_WINDOWS_ARTIFACTS_PATH>
+		<UI_PAL_MACOS_ARTIFACTS_PATH>$(UI_MACOS_ARTIFACTS_PATH)\PAL</UI_PAL_MACOS_ARTIFACTS_PATH>
+		<UI_PAL_LINUX_ARTIFACTS_PATH>$(UI_LINUX_ARTIFACTS_PATH)\PAL</UI_PAL_LINUX_ARTIFACTS_PATH>
+		<UI_WINDOWS_PAL_BIN>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\Windows\Release</UI_WINDOWS_PAL_BIN>
+		<UI_MACOS_PAL_BIN>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\MacOS\Release</UI_MACOS_PAL_BIN>
+		<UI_LINUX_PAL_BIN>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\Linux\Release</UI_LINUX_PAL_BIN>
     </PropertyGroup>
+    <!-- ========================================== -->
 		
 </Project>
 
-<!-- 
-C:\DIMA\AlternetUI\Source\Build\Alternet.UI.Pal\Alternet.UI.Install.targets(19,3): error MSB6003: The specified 
-task ex ecutable "cmd.exe" could not be run. System.IO.DirectoryNotFoundException: The working directory ""
-C:\DIMA\AlternetUI\S ource\Build\Alternet.UI.Pal\..\..\..\/Source/Build/Scripts" " does not exist. [C:\DIMA\AlternetUI\Source\Build\Alternet .UI.Pal\Alternet.UI.Pal.proj]                                                                                           C:\DIMA\AlternetUI\Source\Build\Alternet.UI.Pal\Alternet.UI.Install.targets(19,3): error MSB6003:    at Microsoft.Build .Tasks.Exec.GetWorkingDirectory() [C:\DIMA\AlternetUI\Source\Build\Alternet.UI.Pal\Alternet.UI.Pal.proj]                C:\DIMA\AlternetUI\Source\Build\Alternet.UI.Pal\Alternet.UI.Install.targets(19,3): error MSB6003:    at Microsoft.Build .Utilities.ToolTask.GetProcessStartInfo(String pathToTool, String commandLineCommands, String responseFileSwitch) [C:\D IMA\AlternetUI\Source\Build\Alternet.UI.Pal\Alternet.UI.Pal.proj]                                                       C:\DIMA\AlternetUI\Source\Build\Alternet.UI.Pal\Alternet.UI.Install.targets(19,3): error MSB6003:    at Microsoft.Build .Utilities.ToolTask.ExecuteTool(String pathToTool, String responseFileCommands, String commandLineCommands) [C:\DIMA\Al ternetUI\Source\Build\Alternet.UI.Pal\Alternet.UI.Pal.proj]                                                             C:\DIMA\AlternetUI\Source\Build\Alternet.UI.Pal\Alternet.UI.Install.targets(19,3): error MSB6003:    at Microsoft.Build .Tasks.Exec.ExecuteTool(String pathToTool, String responseFileCommands, String commandLineCommands) [C:\DIMA\AlternetUI \Source\Build\Alternet.UI.Pal\Alternet.UI.Pal.proj]                                                                     C:\DIMA\AlternetUI\Source\Build\Alternet.UI.Pal\Alternet.UI.Install.targets(19,3): error MSB6003:    at Microsoft.Build .Utilities.ToolTask.Execute() [C:\DIMA\AlternetUI\Source\Build\Alternet.UI.Pal\Alternet.UI.Pal.proj]  
-
-
-
-export UI_ARTIFACTS_PATH=$SCRIPT_HOME/../../../Publish/Artifacts/Build/Linux/UI/
-export UI_PAL_ARTIFACTS_PATH="$UI_ARTIFACTS_PATH/PAL"
-
-export UI_ARTIFACTS_PATH=$SCRIPT_HOME/../../../Publish/Artifacts/Build/macOS/UI/
-export UI_PAL_ARTIFACTS_PATH="$UI_ARTIFACTS_PATH/PAL"
-
-
-:: CI artifact paths.
-set UI_ROOT_ARTIFACTS_PATH=%~dp0.\..\..\..\Publish\Artifacts\Build\
-
-set UI_WINDOWS_ARTIFACTS_PATH=%UI_ROOT_ARTIFACTS_PATH%\Windows\UI\
-set UI_MACOS_ARTIFACTS_PATH=%UI_ROOT_ARTIFACTS_PATH%\macOS\UI\
-set UI_LINUX_ARTIFACTS_PATH=%UI_ROOT_ARTIFACTS_PATH%\Linux\UI\
-
-set UI_PAL_WINDOWS_ARTIFACTS_PATH=%UI_WINDOWS_ARTIFACTS_PATH%\PAL
-set UI_PAL_MACOS_ARTIFACTS_PATH=%UI_MACOS_ARTIFACTS_PATH%\PAL
-set UI_PAL_LINUX_ARTIFACTS_PATH=%UI_LINUX_ARTIFACTS_PATH%\PAL
-
-:: Build bin directories.
-
-set UI_WINDOWS_PAL_BIN=%SCRIPT_HOME%\..\Alternet.UI.Pal\bin\Windows\Release
-set UI_MACOS_PAL_BIN=%SCRIPT_HOME%\..\Alternet.UI.Pal\bin\MacOS\Release
-set UI_LINUX_PAL_BIN=%SCRIPT_HOME%\..\Alternet.UI.Pal\bin\Linux\Release
--->

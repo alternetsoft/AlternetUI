@@ -59,8 +59,8 @@
     <!-- ========================================== -->
     <Target Name="DownloadAndExtractWxWidgetsBin">
         <CallTarget Targets="DownloadAndExtractWxWidgetsBinWindows" />
-        <CallTarget Targets="DownloadAndExtractWxWidgetsBinMacOS" />
-        <CallTarget Targets="DownloadAndExtractWxWidgetsBinLinux" />
+        <!--<CallTarget Targets="DownloadAndExtractWxWidgetsBinMacOS" />-->
+        <!--<CallTarget Targets="DownloadAndExtractWxWidgetsBinLinux" />-->
     </Target>
     <!-- ========================================== -->
     <!-- Windows -->
