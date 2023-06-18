@@ -157,7 +157,7 @@ namespace Alternet::UI
 
         _wxToolBar->Bind(wxEVT_TOOL, &Toolbar::OnToolbarCommand, this);
 
-        for (int i = 0; i < _items.size(); i++)
+        for (size_t i = 0; i < _items.size(); i++)
             InsertWxItem(i);
 
         _wxToolBar->Realize();

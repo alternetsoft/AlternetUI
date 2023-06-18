@@ -67,7 +67,7 @@ namespace Alternet::UI
         }
         else
         {
-            for (int i = 0; i < strings->GetCount(); i++)
+            for (size_t i = 0; i < strings->GetCount(); i++)
                 _items.emplace(_items.begin() + index + i, wxStr((*strings)[i]));
         }
 

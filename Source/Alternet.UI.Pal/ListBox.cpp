@@ -96,7 +96,7 @@ namespace Alternet::UI
         }
         else
         {
-            for (int i = 0; i < _selectedIndices.size(); i++)
+            for (size_t i = 0; i < _selectedIndices.size(); i++)
                 array->Add(_selectedIndices[i]);
         }
 

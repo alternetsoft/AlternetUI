@@ -71,7 +71,7 @@ namespace Alternet::UI
         if (sb->GetFieldsCount() != itemsCount)
             sb->SetFieldsCount(itemsCount);
 
-        for (int i = startIndex;
+        for (size_t i = startIndex;
             i < itemsCount && ((!count.has_value()) || i < startIndex + count.value());
             i++)
         {

@@ -41,7 +41,7 @@ namespace Alternet::UI
 
     void TabControl::OnWxWindowCreated()
     {
-        for (int i = 0; i < _pages.size(); i++)
+        for (size_t i = 0; i < _pages.size(); i++)
             InsertPage(i, _pages[i]);
     }
 

@@ -80,7 +80,7 @@ namespace Alternet::UI
 
         wxString result;
 
-        int i = 0;
+        size_t i = 0;
         for (auto fileName : fileNames.value())
         {
             result.Append(fileName);

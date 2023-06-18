@@ -137,7 +137,7 @@ namespace Alternet::UI
     int MainMenu::LogicalIndexToWxIndex(int logicalIndex)
     {
         int wxIndex = 0;
-        for (int i = 0; i < _items.size(); i++)
+        for (size_t i = 0; i < _items.size(); i++)
         {
             if (i == logicalIndex)
                 return wxIndex;

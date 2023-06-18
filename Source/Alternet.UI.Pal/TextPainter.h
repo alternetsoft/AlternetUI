@@ -54,7 +54,7 @@ namespace
 
             wxArrayString lines;
             wxString currentLine;
-            for (int i = 0; i < str.Length(); i++)
+            for (size_t i = 0; i < str.Length(); i++)
             {
                 auto c = str.GetChar(i);
 
@@ -116,7 +116,7 @@ namespace
         {
             auto length = text.Length();
             wxString word;
-            for (int i = 0; i < length; i++)
+            for (size_t i = 0; i < length; i++)
             {
                 auto ch = text[i];
                 if (isspace(ch))

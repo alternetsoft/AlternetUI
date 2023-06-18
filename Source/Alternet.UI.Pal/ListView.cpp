@@ -498,7 +498,7 @@ namespace Alternet::UI
         else
         {
             array->resize(_selectedIndices.size());
-            for (int i = 0; i < _selectedIndices.size(); i++)
+            for (size_t i = 0; i < _selectedIndices.size(); i++)
                 (*array)[i] = _selectedIndices[i];
         }
 

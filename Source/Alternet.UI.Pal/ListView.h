@@ -56,14 +56,14 @@ namespace Alternet::UI
 
         private:
 
-            void EnsureCellsReserved(int newCount)
+            void EnsureCellsReserved(size_t newCount)
             {
                 auto oldCount = _cells.size();
                 if (newCount <= oldCount)
                     return;
 
                 _cells.resize(newCount);
-                for (int i = oldCount; i < newCount; i++)
+                for (size_t i = oldCount; i < newCount; i++)
                 {
                     _cells[i].SetId(_index);
                     _cells[i].SetColumn(i);

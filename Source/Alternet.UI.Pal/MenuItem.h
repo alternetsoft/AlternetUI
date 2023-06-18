@@ -71,7 +71,7 @@ namespace Alternet::UI
         ModifierKeys _shortcutModifierKeys = ModifierKeys::None;
 
         Menu* _parentMenu = nullptr;
-        optional<int> _indexInParentMenu;
+        optional<size_t> _indexInParentMenu;
 
         optional<RoleBasedOverrideData> _roleBasedOverrideData;
 

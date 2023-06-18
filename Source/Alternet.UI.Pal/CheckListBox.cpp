@@ -60,7 +60,7 @@ namespace Alternet::UI
         }
         else
         {
-            for (int i = 0; i < _checkedIndices.size(); i++)
+            for (size_t i = 0; i < _checkedIndices.size(); i++)
                 array->Add(_checkedIndices[i]);
         }
 
