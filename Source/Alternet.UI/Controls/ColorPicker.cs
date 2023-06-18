@@ -1,5 +1,5 @@
-using Alternet.Drawing;
 using System;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -23,7 +23,7 @@ namespace Alternet.UI
                             null, // CoerseValueCallback
                             true, // IsAnimationProhibited
                             UpdateSourceTrigger.PropertyChanged
-                            //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
+                            // UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
                             ));
 
         /// <summary>

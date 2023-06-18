@@ -26,7 +26,7 @@ namespace XamlX.IL
         {
             EnableIlVerification = configuration.GetOrCreateExtra<ILEmitContextSettings>().EnableILVerification;
         }
-        
+
         protected override XamlILNodeEmitResult EmitNode(IXamlAstNode value, IXamlILEmitter codeGen)
         {
             CheckingILEmitter parent = null;
@@ -60,7 +60,7 @@ namespace XamlX.IL
 
         protected override XamlILNodeEmitResult EmitNodeCore(IXamlAstNode value, IXamlILEmitter codeGen, out bool foundEmitter)
         {
-            if(File!=null)
+            if (File != null)
                 codeGen.InsertSequencePoint(File, value.Line, value.Position);
 
             return base.EmitNodeCore(value, codeGen, out foundEmitter);

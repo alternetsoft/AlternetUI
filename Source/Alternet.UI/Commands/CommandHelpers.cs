@@ -14,85 +14,85 @@ namespace Alternet.UI
         //// Lots of specialized registration methods to avoid new'ing up more common stuff (like InputGesture's) at the callsite, as that's frequently
         //// repeated and increases code size.  Do it once, here.  
 
-        //internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler)
-        //{
+        // internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler)
+        // {
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, null, null);
-        //}
+        // }
 
-        //internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
+        // internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
         //                                            InputGesture inputGesture)
-        //{
+        // {
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, null, inputGesture);
-        //}
+        // }
 
         //internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
         //                                            Key key)
-        //{
+        // {
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, null, new KeyGesture(key));
-        //}
+        // }
 
-        //internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
+        // internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
         //                                            InputGesture inputGesture, InputGesture inputGesture2)
-        //{
+        // {
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, null, inputGesture, inputGesture2);
-        //}
+        // }
 
-        //internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
+        // internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
         //                                            CanExecuteRoutedEventHandler canExecuteRoutedEventHandler)
-        //{
+        // {
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, canExecuteRoutedEventHandler, null);
-        //}
+        // }
 
-        //internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
+        // internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
         //                                            CanExecuteRoutedEventHandler canExecuteRoutedEventHandler, InputGesture inputGesture)
-        //{
+        // {
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, canExecuteRoutedEventHandler, inputGesture);
         //}
 
         //internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
         //                                            CanExecuteRoutedEventHandler canExecuteRoutedEventHandler, Key key)
-        //{
+        // {
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, canExecuteRoutedEventHandler, new KeyGesture(key));
-        //}
+        // }
 
-        //internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
+        // internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
         //                                            CanExecuteRoutedEventHandler canExecuteRoutedEventHandler, InputGesture inputGesture, InputGesture inputGesture2)
-        //{
+        // {
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, canExecuteRoutedEventHandler, inputGesture, inputGesture2);
-        //}
+        // }
 
-        //internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
+        // internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
         //                                            CanExecuteRoutedEventHandler canExecuteRoutedEventHandler,
         //                                            InputGesture inputGesture, InputGesture inputGesture2, InputGesture inputGesture3, InputGesture inputGesture4)
-        //{
+        // {
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, canExecuteRoutedEventHandler,
         //                                  inputGesture, inputGesture2, inputGesture3, inputGesture4);
-        //}
+        // }
 
-        //internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, Key key, ModifierKeys modifierKeys,
+        // internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, Key key, ModifierKeys modifierKeys,
         //                                            ExecutedRoutedEventHandler executedRoutedEventHandler, CanExecuteRoutedEventHandler canExecuteRoutedEventHandler)
-        //{
+        // {
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, canExecuteRoutedEventHandler, new KeyGesture(key, modifierKeys));
-        //}
+        // }
 
         //internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
         //                                            string srid1, string srid2)
-        //{
+        // {
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, null,
         //                                          KeyGesture.CreateFromResourceStrings(SR.Get(srid1), SR.Get(srid2)));
-        //}
+        // }
 
-        //internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
+        // internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
         //                                            CanExecuteRoutedEventHandler canExecuteRoutedEventHandler, string srid1, string srid2)
-        //{
+        // {
         //    PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, canExecuteRoutedEventHandler,
         //                                          KeyGesture.CreateFromResourceStrings(SR.Get(srid1), SR.Get(srid2)));
-        //}
+        // }
 
         //// 'params' based method is private.  Call sites that use this bloat unwittingly due to implicit construction of the params array that goes into IL.
-        //private static void PrivateRegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
+        // private static void PrivateRegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
         //                                                  CanExecuteRoutedEventHandler canExecuteRoutedEventHandler, params InputGesture[] inputGestures)
-        //{
+        // {
         //    // Validate parameters
         //    Debug.Assert(controlType != null);
         //    Debug.Assert(command != null);
@@ -110,7 +110,7 @@ namespace Alternet.UI
         //            CommandManager.RegisterClassInputBinding(controlType, new InputBinding(command, inputGestures[i]));
         //        }
         //    }
-        //}
+        // }
 
         internal static bool CanExecuteCommandSource(ICommandSource commandSource)
         {
@@ -118,18 +118,18 @@ namespace Alternet.UI
             if (command != null)
             {
                 var parameter = commandSource.CommandParameter;
-                //var target = commandSource.CommandTarget;
+                // var target = commandSource.CommandTarget;
 
-                //RoutedCommand routed = command as RoutedCommand;
-                //if (routed != null)
-                //{
+                // RoutedCommand routed = command as RoutedCommand;
+                // if (routed != null)
+                // {
                 //    if (target == null)
                 //    {
                 //        target = commandSource as IInputElement;
                 //    }
                 //    return routed.CanExecute(parameter, target);
-                //}
-                //else
+                // }
+                // else
                 {
                     return command.CanExecute(parameter);
                 }
@@ -157,7 +157,7 @@ namespace Alternet.UI
                 var parameter = commandSource.CommandParameter;
                 var target = commandSource.CommandTarget;
 
-                /*RoutedCommand routed = command as RoutedCommand;
+                /* RoutedCommand routed = command as RoutedCommand;
                 if (routed != null)
                 {
                     if (target == null)
@@ -169,7 +169,8 @@ namespace Alternet.UI
                         routed.ExecuteCore(parameter, target, userInitiated);
                     }
                 }
-                else*/ if (command.CanExecute(parameter))
+                else */
+                if (command.CanExecute(parameter))
                 {
                     command.Execute(parameter);
                 }
@@ -186,7 +187,8 @@ namespace Alternet.UI
                     routed.Execute(parameter, target);
                 }
             }
-            else*/ if (command.CanExecute(parameter))
+            else*/
+            if (command.CanExecute(parameter))
             {
                 command.Execute(parameter);
             }

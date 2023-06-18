@@ -19,13 +19,13 @@ namespace Alternet.UI
             _parentIndex = -1;
         }
 
-        //string sharedSizeGroup;
+        // string sharedSizeGroup;
 
         ///// <summary>
         ///// SharedSizeGroup property.
         ///// </summary>
-        //public string SharedSizeGroup
-        //{
+        // public string SharedSizeGroup
+        // {
         //    get { return sharedSizeGroup; }
         //    set
         //    {
@@ -39,8 +39,8 @@ namespace Alternet.UI
         ///// <summary>
         ///// Callback to notify about entering model tree.
         ///// </summary>
-        //internal void OnEnterParentTree()
-        //{
+        // internal void OnEnterParentTree()
+        // {
         //    if (_sharedState == null)
         //    {
         //        //  start with getting SharedSizeGroup value.
@@ -57,7 +57,7 @@ namespace Alternet.UI
         //            //}
         //        }
         //    }
-        //}
+        // }
 
         /// <summary>
         /// Callback to notify about exitting model tree.

@@ -566,7 +566,7 @@ namespace Alternet.Drawing
 
             if (font is null)
                 throw new ArgumentNullException(nameof(font));
-        
+
             if (format is null)
                 throw new ArgumentNullException(nameof(format));
 
@@ -591,7 +591,7 @@ namespace Alternet.Drawing
             Push();
             var currentTransform = Transform;
             currentTransform.Multiply(transform);
-            Transform = currentTransform; 
+            Transform = currentTransform;
         }
 
         /// <summary>
@@ -631,7 +631,7 @@ namespace Alternet.Drawing
                 var clip = dc.Clip;
                 if (clip == null)
                     return null;
-                
+
                 return new Region(clip);
             }
 

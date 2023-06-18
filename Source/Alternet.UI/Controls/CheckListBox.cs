@@ -1,11 +1,10 @@
-﻿using Alternet.Base.Collections;
-using Alternet.Drawing;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Alternet.Base.Collections;
+using Alternet.Drawing;
 
-
-//TODO: CheckState, OnItemClick, fill xml comment remarks
+// TODO: CheckState, OnItemClick, fill xml comment remarks
 namespace Alternet.UI
 {
     /// <summary>
@@ -16,8 +15,8 @@ namespace Alternet.UI
     /// A <see cref="CheckListBox"/> control can provide single or multiple selections using the <see cref="ListBox.SelectionMode"/> property.
     /// The <see cref="Control.BeginUpdate"/> and <see cref="Control.EndUpdate"/> methods enable
     /// you to add a large number of items to the CheckListBox without the control being repainted each time an item is added to the list.
-    /// The <see cref="ListControl.Items"/>, <see cref="ListBox.SelectedItems"/>, <see cref="CheckedItems"/>, 
-    /// <see cref="ListBox.SelectedIndices"/>, and <see cref="CheckedIndices"/> properties provide access to the 
+    /// The <see cref="ListControl.Items"/>, <see cref="ListBox.SelectedItems"/>, <see cref="CheckedItems"/>,
+    /// <see cref="ListBox.SelectedIndices"/>, and <see cref="CheckedIndices"/> properties provide access to the
     /// collections that are used by the <see cref="CheckListBox"/>.
     /// </remarks>
     public class CheckListBox : ListBox

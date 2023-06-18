@@ -40,7 +40,7 @@ namespace XamlX.Parsers
                 {
                     stack.Peek().Children.Add(current = new Node());
                 }
-                else if(afterClosing && char.IsWhiteSpace(ch))
+                else if (afterClosing && char.IsWhiteSpace(ch))
                     continue;
                 else if (ch == ')')
                 {
@@ -50,7 +50,7 @@ namespace XamlX.Parsers
                 }
                 else if (afterClosing)
                     throw new ParseException("Invalid character after ')'", c);
-                else if(ch=='(')
+                else if (ch == '(')
                 {
                     stack.Push(current);
                     stack.Peek().Children.Add(current = new Node());
@@ -67,5 +67,5 @@ namespace XamlX.Parsers
             return stack.Pop().Children;
         }
     }
-    
+
 }

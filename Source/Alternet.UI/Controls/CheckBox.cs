@@ -31,7 +31,7 @@ namespace Alternet.UI
                             new CoerceValueCallback(CoerceIsChecked),
                             true, // IsAnimationProhibited
                             UpdateSourceTrigger.PropertyChanged
-                            //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
+                            // UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
                             ));
 
         /// <summary>

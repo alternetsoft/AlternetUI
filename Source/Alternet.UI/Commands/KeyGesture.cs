@@ -35,7 +35,7 @@ namespace Alternet.UI
         //  Constructors
         //
         //------------------------------------------------------
-#region Constructors
+        #region Constructors
         /// <summary>
         ///  constructor
         /// </summary>
@@ -89,16 +89,16 @@ namespace Alternet.UI
         /// <param name="validateGesture">If true, throws an exception if the key and modifier are not valid</param>
         private KeyGesture(Key key, ModifierKeys modifiers, string displayString, bool validateGesture)
         {
-            if(!ModifierKeysConverter.IsDefinedModifierKeys(modifiers))
+            if (!ModifierKeysConverter.IsDefinedModifierKeys(modifiers))
                 throw new InvalidEnumArgumentException("modifiers", (int)modifiers, typeof(ModifierKeys));
 
-            if(!IsDefinedKey(key))
+            if (!IsDefinedKey(key))
                 throw new InvalidEnumArgumentException("key", (int)key, typeof(Key));
 
             if (displayString == null)
                 throw new ArgumentNullException("displayString");
 
-            if(validateGesture && !IsValid(key, modifiers))
+            if (validateGesture && !IsValid(key, modifiers))
             {
                 throw new NotSupportedException(SR.Get(SRID.KeyGesture_Invalid, modifiers, key));
             }
@@ -107,14 +107,14 @@ namespace Alternet.UI
             _key = key;
             _displayString = displayString;
         }
-#endregion Constructors
+        #endregion Constructors
 
         //------------------------------------------------------
         //
         //  Public Methods
         //
         //------------------------------------------------------
-#region Public Methods
+        #region Public Methods
         /// <summary>
         /// Modifier
         /// </summary>
@@ -177,9 +177,9 @@ namespace Alternet.UI
         public override bool Matches(object targetElement, InputEventArgs inputEventArgs)
         {
             var keyEventArgs = inputEventArgs as KeyEventArgs;
-            if(keyEventArgs != null && IsDefinedKey(keyEventArgs.Key))
+            if (keyEventArgs != null && IsDefinedKey(keyEventArgs.Key))
             {
-                return ( ( (int)Key == (int)keyEventArgs.Key ) && ( this.Modifiers == Keyboard.Modifiers ) );
+                return (((int)Key == (int)keyEventArgs.Key) && (this.Modifiers == Keyboard.Modifiers));
             }
             return false;
         }
@@ -190,14 +190,14 @@ namespace Alternet.UI
             return (key >= Key.None && key <= Key.Menu);
         }
 
-#endregion Public Methods
+        #endregion Public Methods
 
         //------------------------------------------------------
         //
         //  Internal Methods
         //
         //------------------------------------------------------
-#region Internal Methods
+        #region Internal Methods
         ///<summary>
         /// Is Valid Keyboard input to process for commands
         ///</summary>
@@ -206,7 +206,7 @@ namespace Alternet.UI
             //
             //  Don't enforce any rules on the Function keys or on the number pad keys.
             //
-            if(!( ( key >= Key.F1 && key <= Key.F24 ) || ( key >= Key.NumPad0 && key <= Key.NumPadSlash) ))
+            if (!((key >= Key.F1 && key <= Key.F24) || (key >= Key.NumPad0 && key <= Key.NumPadSlash)))
             {
                 //
                 //  We check whether Control/Alt/Windows key is down for modifiers. We don't check
@@ -214,7 +214,7 @@ namespace Alternet.UI
                 //  Shift alone as modifier case, we defer to the next condition to avoid conflicing with
                 //  TextInput.
 
-                if(( modifiers & ( ModifierKeys.Control | ModifierKeys.Alt | ModifierKeys.Windows ) ) != 0)
+                if ((modifiers & (ModifierKeys.Control | ModifierKeys.Alt | ModifierKeys.Windows)) != 0)
                 {
                     //switch(key)
                     //{
@@ -227,10 +227,10 @@ namespace Alternet.UI
                     //        return false;
 
                     //    default:
-                            return true;
+                    return true;
                     //}
                 }
-                else if(( key >= Key.D0 && key <= Key.D9 ) || ( key >= Key.A && key <= Key.Z ))
+                else if ((key >= Key.D0 && key <= Key.D9) || (key >= Key.A && key <= Key.Z))
                 {
                     return false;
                 }
@@ -254,8 +254,8 @@ namespace Alternet.UI
                 int index = keyGestures.IndexOf(MULTIPLEGESTURE_DELIMITER);
                 if (index >= 0)
                 {   // multiple gestures exist
-                    keyGestureToken  = keyGestures.Substring(0, index);
-                    keyGestures   = keyGestures.Substring(index + 1);
+                    keyGestureToken = keyGestures.Substring(0, index);
+                    keyGestures = keyGestures.Substring(index + 1);
                 }
                 else
                 {
@@ -267,8 +267,8 @@ namespace Alternet.UI
                 index = displayStrings.IndexOf(MULTIPLEGESTURE_DELIMITER);
                 if (index >= 0)
                 {   // multiple display strings exist
-                    keyDisplayString  = displayStrings.Substring(0, index);
-                    displayStrings   = displayStrings.Substring(index + 1);
+                    keyDisplayString = displayStrings.Substring(0, index);
+                    displayStrings = displayStrings.Substring(index + 1);
                 }
                 else
                 {
@@ -297,21 +297,21 @@ namespace Alternet.UI
             return _keyGestureConverter.ConvertFromInvariantString(keyGestureToken) as KeyGesture;
         }
 
-#endregion Internal Methods
+        #endregion Internal Methods
 
         //------------------------------------------------------
         //
         //   Private Fields
         //
         //------------------------------------------------------
-#region Private Fields
-        private ModifierKeys   _modifiers = ModifierKeys.None;
-        private Key            _key = Key.None;
-        private string         _displayString;
+        #region Private Fields
+        private ModifierKeys _modifiers = ModifierKeys.None;
+        private Key _key = Key.None;
+        private string _displayString;
         private const char MULTIPLEGESTURE_DELIMITER = ';';
         private static TypeConverter _keyGestureConverter = new KeyGestureConverter();
         //private static bool    _classRegistered = false;
-#endregion Private Fields
+        #endregion Private Fields
     }
- }
+}
 

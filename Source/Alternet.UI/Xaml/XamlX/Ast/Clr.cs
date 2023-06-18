@@ -43,8 +43,8 @@ namespace XamlX.Ast
         public List<IXamlCustomAttribute> CustomAttributes { get; set; } = new List<IXamlCustomAttribute>();
         public IXamlType DeclaringType { get; set; }
         public Dictionary<IXamlType, IXamlType> TypeConverters { get; set; } = new Dictionary<IXamlType, IXamlType>();
-        
-        public XamlAstClrProperty(IXamlLineInfo lineInfo, IXamlProperty property, 
+
+        public XamlAstClrProperty(IXamlLineInfo lineInfo, IXamlProperty property,
             TransformerConfiguration cfg) : base(lineInfo)
         {
             Name = property.Name;
@@ -69,7 +69,7 @@ namespace XamlX.Ast
             }
         }
 
-        public XamlAstClrProperty(IXamlLineInfo lineInfo, string name, IXamlType declaringType, 
+        public XamlAstClrProperty(IXamlLineInfo lineInfo, string name, IXamlType declaringType,
             IXamlMethod getter, IEnumerable<IXamlPropertySetter> setters) : base(lineInfo)
         {
             Name = name;
@@ -117,7 +117,7 @@ namespace XamlX.Ast
         public bool AllowXNull { get; set; } = true;
         public bool AllowRuntimeNull { get; set; } = true;
     }
-    
+
 #if !XAMLX_INTERNAL
     public
 #endif
@@ -152,7 +152,7 @@ namespace XamlX.Ast
             VisitList(Values, visitor);
         }
     }
-    
+
 #if !XAMLX_INTERNAL
     public
 #endif
@@ -160,8 +160,8 @@ namespace XamlX.Ast
     {
         public XamlAstClrProperty Property { get; set; }
         public IXamlAstManipulationNode Manipulation { get; set; }
-        public XamlPropertyValueManipulationNode(IXamlLineInfo lineInfo, 
-            XamlAstClrProperty property, IXamlAstManipulationNode manipulation) 
+        public XamlPropertyValueManipulationNode(IXamlLineInfo lineInfo,
+            XamlAstClrProperty property, IXamlAstManipulationNode manipulation)
             : base(lineInfo)
         {
             Property = property;
@@ -170,7 +170,7 @@ namespace XamlX.Ast
 
         public override void VisitChildren(Visitor visitor)
         {
-            Manipulation = (IXamlAstManipulationNode) Manipulation.Visit(visitor);
+            Manipulation = (IXamlAstManipulationNode)Manipulation.Visit(visitor);
         }
     }
 
@@ -181,8 +181,8 @@ namespace XamlX.Ast
     {
         public IXamlWrappedMethod Method { get; set; }
         public List<IXamlAstValueNode> Arguments { get; set; }
-        public XamlMethodCallBaseNode(IXamlLineInfo lineInfo, 
-            IXamlWrappedMethod method, IEnumerable<IXamlAstValueNode> args) 
+        public XamlMethodCallBaseNode(IXamlLineInfo lineInfo,
+            IXamlWrappedMethod method, IEnumerable<IXamlAstValueNode> args)
             : base(lineInfo)
         {
             Method = method;
@@ -194,7 +194,7 @@ namespace XamlX.Ast
             VisitList(Arguments, visitor);
         }
     }
-    
+
 #if !XAMLX_INTERNAL
     public
 #endif
@@ -204,7 +204,7 @@ namespace XamlX.Ast
             : base(lineInfo, new XamlWrappedMethod(method), args)
         {
         }
-        
+
         public XamlNoReturnMethodCallNode(IXamlLineInfo lineInfo, IXamlWrappedMethod method, IEnumerable<IXamlAstValueNode> args)
             : base(lineInfo, method, args)
         {
@@ -227,7 +227,7 @@ namespace XamlX.Ast
             IEnumerable<IXamlAstValueNode> args)
             : this(lineInfo, new XamlWrappedMethod(method), args)
         {
-            
+
         }
 
         public IXamlAstTypeReference Type { get; }
@@ -266,10 +266,10 @@ namespace XamlX.Ast
 
         public override void VisitChildren(Visitor visitor)
         {
-            Value = (IXamlAstValueNode) Value.Visit(visitor);
+            Value = (IXamlAstValueNode)Value.Visit(visitor);
         }
     }
-    
+
 #if !XAMLX_INTERNAL
     public
 #endif
@@ -288,7 +288,7 @@ namespace XamlX.Ast
         public override void VisitChildren(Visitor visitor)
         {
             base.VisitChildren(visitor);
-            Manipulation = (IXamlAstManipulationNode) Manipulation?.Visit(visitor);
+            Manipulation = (IXamlAstManipulationNode)Manipulation?.Visit(visitor);
         }
     }
 
@@ -364,13 +364,13 @@ namespace XamlX.Ast
 
         public override void VisitChildren(Visitor visitor)
         {
-            Value = (IXamlAstValueNode) Value.Visit(visitor);
+            Value = (IXamlAstValueNode)Value.Visit(visitor);
         }
 
         public bool NeedsParentStack => ProvideValue?.Parameters.Count > 0;
         public IXamlAstTypeReference Type { get; }
     }
-    
+
 #if !XAMLX_INTERNAL
     public
 #endif
@@ -379,8 +379,8 @@ namespace XamlX.Ast
         public IXamlAstManipulationNode Manipulation { get; set; }
         public IXamlType Type { get; set; }
         public bool SkipBeginInit { get; set; }
-        public XamlObjectInitializationNode(IXamlLineInfo lineInfo, 
-            IXamlAstManipulationNode manipulation, IXamlType type) 
+        public XamlObjectInitializationNode(IXamlLineInfo lineInfo,
+            IXamlAstManipulationNode manipulation, IXamlType type)
             : base(lineInfo)
         {
             Manipulation = manipulation;
@@ -389,7 +389,7 @@ namespace XamlX.Ast
 
         public override void VisitChildren(Visitor visitor)
         {
-            Manipulation = (IXamlAstManipulationNode) Manipulation.Visit(visitor);
+            Manipulation = (IXamlAstManipulationNode)Manipulation.Visit(visitor);
         }
     }
 
@@ -408,8 +408,8 @@ namespace XamlX.Ast
 
         public IXamlAstTypeReference Type { get; }
     }
-    
-    
+
+
 #if !XAMLX_INTERNAL
     public
 #endif
@@ -432,7 +432,7 @@ namespace XamlX.Ast
         {
             _method = method;
             ParametersWithThis =
-                method.IsStatic ? method.Parameters : new[] {method.DeclaringType}.Concat(method.Parameters).ToList();
+                method.IsStatic ? method.Parameters : new[] { method.DeclaringType }.Concat(method.Parameters).ToList();
             ReturnType = method.ReturnType;
         }
 
@@ -467,7 +467,7 @@ namespace XamlX.Ast
         public IReadOnlyList<IXamlType> ParametersWithThis { get; }
         public void Emit(XamlEmitContextWithLocals<IXamlILEmitter, XamlILNodeEmitResult> context, IXamlILEmitter codeGen, bool swallowResult)
         {
-            int firstCast = -1; 
+            int firstCast = -1;
             for (var c = ParametersWithThis.Count - 1; c >= 0; c--)
             {
                 if (!_method.ParametersWithThis[c].Equals(ParametersWithThis[c]))
@@ -488,7 +488,7 @@ namespace XamlX.Ast
                     }
                 }
 
-                while (locals.Count!=0)
+                while (locals.Count != 0)
                 {
                     using (var l = locals.Pop())
                         codeGen.Ldloc(l.Local);
@@ -498,7 +498,7 @@ namespace XamlX.Ast
             context.Emit(_method, codeGen, swallowResult);
         }
     }
-    
+
 #if !XAMLX_INTERNAL
     public
 #endif
@@ -523,10 +523,10 @@ namespace XamlX.Ast
         public bool IsStatic => true;
         public IReadOnlyList<IXamlType> Parameters { get; }
         public IReadOnlyList<IXamlCustomAttribute> CustomAttributes => _method.CustomAttributes;
-        
+
         public void EmitCall(IXamlILEmitter codeGen)
         {
-            int firstCast = -1; 
+            int firstCast = -1;
             for (var c = Parameters.Count - 1; c >= 0; c--)
             {
                 if (!_baseParametersWithThis[c].Equals(Parameters[c]))
@@ -547,7 +547,7 @@ namespace XamlX.Ast
                     }
                 }
 
-                while (locals.Count!=0)
+                while (locals.Count != 0)
                 {
                     using (var l = locals.Pop())
                     {
@@ -577,8 +577,8 @@ namespace XamlX.Ast
     {
         public IXamlAstValueNode Value { get; set; }
         public IXamlAstTypeReference Type { get; }
-        
-        public XamlDeferredContentNode(IXamlAstValueNode value, 
+
+        public XamlDeferredContentNode(IXamlAstValueNode value,
             TransformerConfiguration config) : base(value)
         {
             Value = value;
@@ -589,7 +589,7 @@ namespace XamlX.Ast
 
         public override void VisitChildren(Visitor visitor)
         {
-            Value = (IXamlAstValueNode) Value.Visit(visitor);
+            Value = (IXamlAstValueNode)Value.Visit(visitor);
         }
 
         void CompileBuilder(ILEmitContext context)
@@ -598,7 +598,7 @@ namespace XamlX.Ast
             // Initialize the context
             il
                 .Ldarg_0();
-            context.RuntimeContext.Factory(il);    
+            context.RuntimeContext.Factory(il);
             il.Stloc(context.ContextLocal);
 
             // It might be better to save this in a closure
@@ -659,7 +659,7 @@ namespace XamlX.Ast
                 .Ldftn(buildMethod)
                 .Newobj(funcType.Constructors.FirstOrDefault(ct =>
                     ct.Parameters.Count == 2 && ct.Parameters[0].Equals(context.Configuration.WellKnownTypes.Object)));
-            
+
             // Allow to save values from the parent context, pass own service provider, etc, etc
             if (context.Configuration.TypeMappings.DeferredContentExecutorCustomization != null)
             {
@@ -667,7 +667,7 @@ namespace XamlX.Ast
                     .Ldloc(context.ContextLocal)
                     .EmitCall(context.Configuration.TypeMappings.DeferredContentExecutorCustomization);
             }
-            
+
             subType.CreateType();
             return XamlILNodeEmitResult.Type(0, funcType);
         }
@@ -675,7 +675,7 @@ namespace XamlX.Ast
 #if !XAMLX_INTERNAL
     public
 #endif
-    class XamlDeferredContentInitializeIntermediateRootNode 
+    class XamlDeferredContentInitializeIntermediateRootNode
         : XamlAstNode, IXamlAstValueNode, IXamlAstEmitableNode<IXamlILEmitter, XamlILNodeEmitResult>
     {
         public IXamlAstValueNode Value { get; set; }
@@ -684,10 +684,10 @@ namespace XamlX.Ast
         {
             Value = value;
         }
-        
+
         public override void VisitChildren(IXamlAstVisitor visitor)
         {
-            Value = (IXamlAstValueNode) Value.Visit(visitor);
+            Value = (IXamlAstValueNode)Value.Visit(visitor);
         }
 
         public IXamlAstTypeReference Type => Value.Type;

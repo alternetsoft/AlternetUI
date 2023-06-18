@@ -10,7 +10,7 @@ namespace XamlX.Parsers
 #endif
     sealed class XamlMarkupExtensionParser
     {
-        
+
         public class ParseException : Exception
         {
             public ParseException(string message, int position) : base(message + " at position " + position)
@@ -18,13 +18,13 @@ namespace XamlX.Parsers
 
             }
         }
-        
+
         class Node
         {
             public string Name { get; set; }
             public List<object> PositionalArguments { get; } = new List<object>();
             public List<(string name, object value)> NamedArguments { get; } = new List<(string name, object value)>();
-            
+
         }
 
         enum ParserState
@@ -44,7 +44,7 @@ namespace XamlX.Parsers
             {
                 if (node is string s)
                     return new XamlAstTextNode(info, s);
-                var n = (Node) node;
+                var n = (Node)node;
 
                 var type = typeResolver(n.Name);
                 type.IsMarkupExtension = true;
@@ -58,9 +58,9 @@ namespace XamlX.Parsers
                 return rv;
             }
 
-            return (XamlAstObjectNode) Convert(root);
+            return (XamlAstObjectNode)Convert(root);
         }
-        
+
         static Node ParseNode(string ext)
         {
             ext = ext.Trim();
@@ -70,7 +70,7 @@ namespace XamlX.Parsers
             var current = root;
             var stack = new Stack<(Node, string, ParserState)>();
             stack.Push((null, null, ParserState.RootEnd));
-            
+
             var state = ParserState.ParsingNodeName;
 
             string argument = null;
@@ -89,7 +89,7 @@ namespace XamlX.Parsers
             {
                 var finished = current;
                 (current, argumentName, state) = stack.Pop();
-                if(state != ParserState.RootEnd)
+                if (state != ParserState.RootEnd)
                     FinishArgument(finished);
             }
 
@@ -113,7 +113,7 @@ namespace XamlX.Parsers
             }
 
             bool insideEscapeSequence = false;
-            
+
             // We've already consumed the first '{' token by creating the root node
             for (var c = 1; c < ext.Length; c++)
             {
@@ -125,14 +125,14 @@ namespace XamlX.Parsers
                     escaped = true;
                     insideEscapeSequence = false;
                 }
-                
+
                 if (!escaped && ch == '\\')
                 {
                     insideEscapeSequence = true;
                     continue;
                 }
-                
-                
+
+
                 if (state == ParserState.RootEnd)
                 {
                     if (!char.IsWhiteSpace(ch))
@@ -154,10 +154,10 @@ namespace XamlX.Parsers
                     else
                         current.Name += ch;
                 }
-                else if(state == ParserState.ParsingPositionalArgument 
+                else if (state == ParserState.ParsingPositionalArgument
                         || state == ParserState.ParsingNamedArgumentValue)
                 {
-                    if (!escaped && ch == '{' && string.IsNullOrWhiteSpace(argument)) 
+                    if (!escaped && ch == '{' && string.IsNullOrWhiteSpace(argument))
                         NewNode();
                     else if (!escaped && ch == '}')
                     {
@@ -177,7 +177,7 @@ namespace XamlX.Parsers
                     else
                         argument += ch;
                 }
-                else if(state == ParserState.ParsingNamedArgumentName)
+                else if (state == ParserState.ParsingNamedArgumentName)
                 {
                     // Either after , or } from the previous argument value
                     if (argumentName == null && !escaped && ch == '}')
@@ -188,14 +188,14 @@ namespace XamlX.Parsers
                         throw new ParseException($"{ch} is not valid at the current state", c);
                     else if (!escaped && ch == '=')
                         state = ParserState.ParsingNamedArgumentValue;
-                    else if(string.IsNullOrEmpty(argumentName)
-                        && (ch== ',' || char.IsWhiteSpace(ch)))
+                    else if (string.IsNullOrEmpty(argumentName)
+                        && (ch == ',' || char.IsWhiteSpace(ch)))
                     {
                         // Do nothing, it's whitespace
                     }
                     else
                         argumentName += ch;
-                }   
+                }
             }
 
             if (state != ParserState.RootEnd)

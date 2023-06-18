@@ -22,7 +22,7 @@ namespace Alternet.Drawing
         DiagonalCross,
 
         /// <summary>
-        ///	Specifies horizontal and vertical lines that cross.
+        /// Specifies horizontal and vertical lines that cross.
         /// </summary>
         Cross,
 

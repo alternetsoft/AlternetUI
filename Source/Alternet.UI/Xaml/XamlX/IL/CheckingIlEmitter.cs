@@ -274,7 +274,7 @@ namespace XamlX.IL
         public IXamlLabel DefineLabel()
         {
             var label = _inner.DefineLabel();
-            _unmarkedLabels.Add(label, null);//, Environment.StackTrace);
+            _unmarkedLabels.Add(label, null);// , Environment.StackTrace);
             return label;
         }
 

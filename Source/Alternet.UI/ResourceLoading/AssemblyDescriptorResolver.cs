@@ -14,7 +14,7 @@ namespace Alternet.UI
 
     internal class AssemblyDescriptorResolver : IAssemblyDescriptorResolver
     {
-        private readonly Dictionary<string, IAssemblyDescriptor> _assemblyNameCache = new();
+        private readonly Dictionary<string, IAssemblyDescriptor> _assemblyNameCache = new ();
 
         public IAssemblyDescriptor GetAssembly(string name)
         {
@@ -32,11 +32,11 @@ namespace Alternet.UI
                 else
                 {
 #if NET6_0_OR_GREATER
-                if (!RuntimeFeature.IsDynamicCodeSupported)
-                {
-                    throw new InvalidOperationException(
-                        $"Assembly {name} needs to be referenced and explicitly loaded before loading resources");
-                }
+                    if (!RuntimeFeature.IsDynamicCodeSupported)
+                    {
+                        throw new InvalidOperationException(
+                            $"Assembly {name} needs to be referenced and explicitly loaded before loading resources");
+                    }
 #endif
                     name = Uri.UnescapeDataString(name);
                     _assemblyNameCache[name] = rv = new AssemblyDescriptor(Assembly.Load(name));

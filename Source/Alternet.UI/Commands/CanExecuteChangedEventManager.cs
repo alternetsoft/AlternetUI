@@ -232,7 +232,7 @@ namespace Alternet.UI
                 if (sinkToRemove != null)
                 {
                     list.Remove(sinkToRemove);
-                    sinkToRemove.Detach(isOnOriginalThread:true);
+                    sinkToRemove.Detach(isOnOriginalThread: true);
                     RemoveHandlerFromCWT(handler, _cwt);
                 }
 
@@ -404,8 +404,8 @@ namespace Alternet.UI
             {
                 get
                 {
-                    return  _source == null || !_source.IsAlive
-                        ||  _originalHandler == null || !_originalHandler.IsAlive;
+                    return _source == null || !_source.IsAlive
+                        || _originalHandler == null || !_originalHandler.IsAlive;
                 }
             }
 
@@ -455,10 +455,10 @@ namespace Alternet.UI
                 // listeners can distinguish which command is changing.
                 // We could do that for 3rd-party commands that delegate as
                 // well, but we don't for compat with 4.0.
-                //if (sender is CommandManager)
-                //{
+                // if (sender is CommandManager)
+                // {
                 //    sender = _source.Target;
-                //}
+                // }
 
                 // pass the event along to the original listener
                 EventHandler<EventArgs> handler = (EventHandler<EventArgs>)_originalHandler.Target;

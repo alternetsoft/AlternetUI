@@ -2,9 +2,9 @@ using System;
 
 namespace Alternet.UI
 {
-    ///<summary>
+    /// <summary>
     /// Allows an application author to define a method to be invoked.
-    ///</summary>
+    /// </summary>
     public class Command : ICommand
     {
         /// <summary>

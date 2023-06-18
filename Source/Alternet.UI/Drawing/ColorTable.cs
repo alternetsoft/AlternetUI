@@ -22,7 +22,7 @@ namespace Alternet.Drawing
 
         private static void FillWithProperties(
             Dictionary<string, Color> dictionary,
-            //[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] // requires .NET 5
+            // [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] // requires .NET 5
             Type typeWithColors)
         {
             foreach (PropertyInfo prop in typeWithColors.GetProperties(BindingFlags.Public | BindingFlags.Static))

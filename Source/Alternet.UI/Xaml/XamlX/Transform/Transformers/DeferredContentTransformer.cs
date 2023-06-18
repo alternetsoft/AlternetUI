@@ -30,7 +30,7 @@ namespace XamlX.Transform.Transformers
                     "this shouldn't happen in default Xaml configuration, probably some AST transformer have broken the structure",
                     node);
             manipulation.Value = new XamlDeferredContentInitializeIntermediateRootNode(manipulation.Value);
-            
+
             pa.Values[0] =
                 new XamlDeferredContentNode(pa.Values[0], context.Configuration);
             return node;
