@@ -49,22 +49,21 @@
 			Condition="$([MSBuild]::IsOsPlatform('Linux'))" />
 			
 		<CallTarget Targets="DownloadAndExtractWxWidgetsBin" Condition="!Exists($(WxWidgetsDirectory))"/>
-        <CallTarget Targets="BuildWxWidgets_Linux" Condition="$([MSBuild]::IsOsPlatform('Linux'))"/>
-        <CallTarget Targets="BuildWxWidgets_MacOS" Condition="$([MSBuild]::IsOsPlatform('OSX'))"/>
+        <CallTarget Targets="BuildWxWidgets_Linux" Condition="!Exists($(WxWidgetsGtkBuildDirectory))"/>
+        <CallTarget Targets="BuildWxWidgets_MacOS" Condition="!Exists($(WxWidgetsMacOSBuildDirectory))"/>
     <!-- ========================================== -->
 		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)" 
-			Command=".Source\Build\Scripts\OK.LinuxOrMacOs.Build.Alternet.UI.Pal.sh" 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Build/Alternet.UI.Pal" 
+			Command="dotnet msbuild Alternet.UI.Pal.proj" 
 			Condition="!$([MSBuild]::IsOsPlatform('Windows'))" />			
-    <!-- ========================================== -->
-		<CallTarget Targets="CopyArtefactsLinux" Condition="$([MSBuild]::IsOsPlatform('Linux'))"/>
-		<CallTarget Targets="CopyArtefactsMacOS" Condition="$([MSBuild]::IsOsPlatform('OSX'))"/>
 	<!-- ========================================== -->
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)" 
 			Command="Source\Build\Scripts\OK.MSW.Build.PAL.bat" 
 			Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
-	<!-- ========================================== -->
+    <!-- ========================================== -->
+		<CallTarget Targets="CopyArtefactsLinux" Condition="$([MSBuild]::IsOsPlatform('Linux'))"/>
+		<CallTarget Targets="CopyArtefactsMacOS" Condition="$([MSBuild]::IsOsPlatform('OSX'))"/>
 		<CallTarget Targets="CopyArtefactsWindows" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
 	<!-- ========================================== -->
 		<Exec 
