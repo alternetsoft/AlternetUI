@@ -6,40 +6,16 @@
 	-->
 
     <!-- ========================================== -->
-	<Target Name="CopyArtefactsWindows">
+	<Target Name="CopyArtefacts">
 		<RemoveDir
-            Directories="$(UI_PAL_WINDOWS_ARTIFACTS_PATH)" Condition="Exists($(UI_PAL_WINDOWS_ARTIFACTS_PATH))"/>
-		<MakeDir Directories="$(UI_PAL_WINDOWS_ARTIFACTS_PATH)"/>	
+            Directories="$(UI_PAL_ARTIFACTS_PATH)" Condition="Exists($(UI_PAL_ARTIFACTS_PATH))"/>
+		<MakeDir Directories="$(UI_PAL_ARTIFACTS_PATH)"/>	
 		<ItemGroup>
-					   <MySourceFilesWindows Include="$(UI_WINDOWS_PAL_BIN)\**\*.*"/>
+					   <MySourceFiles Include="$(UI_PAL_BIN)\**\*.*"/>
 		</ItemGroup>
 		<Copy
-			SourceFiles="@(MySourceFilesWindows)"
-			DestinationFolder="$(UI_PAL_WINDOWS_ARTIFACTS_PATH)\%(RecursiveDir)"	/>
-	</Target>
-    <!-- ========================================== -->
-	<Target Name="CopyArtefactsMacOS">
-		<RemoveDir
-            Directories="$(UI_PAL_MACOS_ARTIFACTS_PATH)" Condition="Exists($(UI_PAL_MACOS_ARTIFACTS_PATH))"/>
-		<MakeDir Directories="$(UI_PAL_MACOS_ARTIFACTS_PATH)"/>	
-		<ItemGroup>
-					   <MySourceFilesMacOS Include="$(UI_MACOS_PAL_BIN)\**\*.*"/>
-		</ItemGroup>
-		<Copy
-			SourceFiles="@(MySourceFilesMacOS)"
-			DestinationFolder="$(UI_PAL_MACOS_ARTIFACTS_PATH)\%(RecursiveDir)"	/>
-	</Target>
-    <!-- ========================================== -->
-	<Target Name="CopyArtefactsLinux">
-		<RemoveDir
-            Directories="$(UI_PAL_LINUX_ARTIFACTS_PATH)" Condition="Exists($(UI_PAL_LINUX_ARTIFACTS_PATH))"/>
-		<MakeDir Directories="$(UI_PAL_LINUX_ARTIFACTS_PATH)"/>	
-		<ItemGroup>
-					   <MySourceFilesLinux Include="$(UI_LINUX_PAL_BIN)\**\*.*"/>
-		</ItemGroup>
-		<Copy
-			SourceFiles="@(MySourceFilesLinux)"
-			DestinationFolder="$(UI_PAL_LINUX_ARTIFACTS_PATH)\%(RecursiveDir)"	/>
+			SourceFiles="@(MySourceFiles)"
+			DestinationFolder="$(UI_PAL_ARTIFACTS_PATH)\%(RecursiveDir)"	/>
 	</Target>
     <!-- ========================================== -->
     <Target Name="InstallAlternetUI">
@@ -54,29 +30,33 @@
     <!-- ========================================== -->
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Build/Alternet.UI.Pal" 
-			Command="dotnet msbuild Alternet.UI.Pal.proj" 
-			Condition="!$([MSBuild]::IsOsPlatform('Windows'))" />			
-	<!-- ========================================== -->
+			Command="dotnet msbuild -property:Configuration=Release Alternet.UI.Pal.proj" />			
 		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)" 
-			Command="Source\Build\Scripts\OK.MSW.Build.PAL.bat" 
-			Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
+			WorkingDirectory="$(RootDirectoryPath)/Source/Build/Alternet.UI.Pal" 
+			Command="dotnet msbuild -property:Configuration=Debug Alternet.UI.Pal.proj" />			
     <!-- ========================================== -->
-		<CallTarget Targets="CopyArtefactsLinux" Condition="$([MSBuild]::IsOsPlatform('Linux'))"/>
-		<CallTarget Targets="CopyArtefactsMacOS" Condition="$([MSBuild]::IsOsPlatform('OSX'))"/>
-		<CallTarget Targets="CopyArtefactsWindows" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
+		<CallTarget Targets="CopyArtefacts"/>
 	<!-- ========================================== -->
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="dotnet build --nologo --property WarningLevel=0" />
+			Command="dotnet build --configuration Debug --nologo --property WarningLevel=0" />
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
+			Command="dotnet build --configuration Release --nologo --property WarningLevel=0" />
     <!-- ========================================== -->
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
-			Command="dotnet build --nologo --property WarningLevel=0" />
+			Command="dotnet build --configuration Debug --nologo --property WarningLevel=0" />
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
+			Command="dotnet build --configuration Release --nologo --property WarningLevel=0" />
     <!-- ========================================== -->
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
-			Command="dotnet build --nologo --property WarningLevel=0" />
+			Command="dotnet build --configuration Debug --nologo --property WarningLevel=0" />
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
+			Command="dotnet build --configuration Release --nologo --property WarningLevel=0" />
     <!-- ========================================== -->
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Samples/ControlsSample" 
