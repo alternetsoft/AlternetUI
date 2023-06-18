@@ -61,7 +61,7 @@ namespace Alternet::UI
     {
     }
 
-    void StatusBar::ApplyItems(int startIndex, optional<int> count/* = nullopt*/)
+    void StatusBar::ApplyItems(size_t startIndex, optional<int> count/* = nullopt*/)
     {
         auto sb = GetWxStatusBar();
         if (sb == nullptr)

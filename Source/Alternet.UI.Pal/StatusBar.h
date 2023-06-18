@@ -36,6 +36,6 @@ namespace Alternet::UI
 
         bool _sizingGripperVisible = true;
 
-        void ApplyItems(int startIndex, optional<int> count = nullopt);
+        void ApplyItems(size_t startIndex, optional<int> count = nullopt);
     };
 }
