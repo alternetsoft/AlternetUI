@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <!-- ========================================== -->
+    <Target Name="InstallAlternetUI">
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)" 
+			Command="find . -name *.sh -exec chmod +x {} \;" 
+			Condition="$([MSBuild]::IsOsPlatform('Linux'))" UseCommandProcessor="true"/>
+			
+		<CallTarget Targets="DownloadAndExtractWxWidgetsBin" Condition="!Exists($(WxWidgetsDirectory))"/>
+        <CallTarget Targets="BuildWxWidgets_Linux" />
+        <CallTarget Targets="BuildWxWidgets_MacOS" />
+    <!-- ========================================== -->
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)" 
+			Command=".Source\Build\Scripts\OK.LinuxOrMacOs.Build.Alternet.UI.Pal.sh" 
+			Condition="!$([MSBuild]::IsOsPlatform('Windows'))" UseCommandProcessor="true"/>			
+		
+    <!-- ========================================== -->
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
+			Command="dotnet build --nologo --property WarningLevel=0" UseCommandProcessor="true"/>
+    <!-- ========================================== -->
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
+			Command="dotnet build --nologo --property WarningLevel=0" UseCommandProcessor="true"/>
+	<!-- ========================================== -->
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)" 
+			Command="Source\Build\Scripts\OK.MSW.Build.PAL.bat" 
+			Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
+	<!-- ========================================== -->
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
+			Command="dotnet build --nologo --property WarningLevel=0" UseCommandProcessor="true"/>
+    <!-- ========================================== -->
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Samples/ControlsSample" 
+			Command="dotnet build --nologo --property WarningLevel=0" UseCommandProcessor="true"/>
+    <!-- ========================================== -->
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Samples/ControlsSample" 
+			Command="dotnet run --nologo --property WarningLevel=0" UseCommandProcessor="true"/>
+    <!-- ========================================== -->
+    </Target>
+    <!-- ========================================== -->
+</Project>
+
+<!-- 
+if not exist "%UI_PAL_WINDOWS_ARTIFACTS_PATH%" (mkdir "%UI_PAL_WINDOWS_ARTIFACTS_PATH%")
+del /q /s "%UI_PAL_WINDOWS_ARTIFACTS_PATH%\*"
+xcopy /s /y "%UI_WINDOWS_PAL_BIN%\*.*" "%UI_PAL_WINDOWS_ARTIFACTS_PATH%"
+
+# Copy Alternet.UI.Pal build results.
+rm -rf "$UI_PAL_ARTIFACTS_PATH"
+mkdir -p "$UI_PAL_ARTIFACTS_PATH"
+cp -a "$SCRIPT_HOME/../Alternet.UI.Pal/bin/Linux/Release/." "$UI_PAL_ARTIFACTS_PATH"
+
+
+-->

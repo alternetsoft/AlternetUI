@@ -2,6 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <Import Project="Alternet.UI.Pal.Clean.targets"/>
 
+    <!-- ========================================== -->
     <Target Name="BuildManaged">
         <!--<MSBuild Projects="$(Bindings_ManagedProjectFilePath)" Targets="restore" />
         <MSBuild Projects="$(Bindings_ManagedProjectFilePath)"
@@ -14,22 +15,22 @@
         </ItemGroup> 
         <Delete Files="@(FilesToDelete)"/>-->
     </Target>
-
+    <!-- ========================================== -->
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
         <NativeBuildResultFiles Include="$(Bindings_NativeUnixProjectOutputDirectoryPath)/Alternet.UI.Pal.dylib"/>
     </ItemGroup>
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
         <NativeBuildResultFiles Include="$(Bindings_NativeUnixProjectOutputDirectoryPath)/Alternet.UI.Pal.so"/>
     </ItemGroup>
-
+    <!-- ========================================== -->
     <Target Name="BuildNative_Windows_X86" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
         <Exec Command="&quot;$(CppMsBuildPath)&quot; $(Bindings_NativeVcProjectFilePath) /t:Rebuild /p:Configuration=$(NativeBuildConfiguration);OutDir=$(OutputDirectoryPath_X86);Platform=x86" />
     </Target>
-    
+    <!-- ========================================== -->
     <Target Name="BuildNative_Windows_X64" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
         <Exec Command="&quot;$(CppMsBuildPath)&quot; $(Bindings_NativeVcProjectFilePath) /t:Rebuild /p:Configuration=$(NativeBuildConfiguration);OutDir=$(OutputDirectoryPath_X64);Platform=x64" />
     </Target>
-    
+    <!-- ========================================== -->
     <Target Name="BuildNative_Windows_CleanupAfterBuild" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
         <ItemGroup>
             <FilesToDelete Include="$(OutputDirectoryPath_X86)\*.exp"/>
@@ -46,11 +47,11 @@
         </ItemGroup>
         <Delete Files="@(FilesToDelete)"/>
     </Target>
-
+    <!-- ========================================== -->
     <Target Name="BuildNative_Windows" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
         <CallTarget Targets="BuildNative_Windows_X86;BuildNative_Windows_X64;BuildNative_Windows_CleanupAfterBuild" />
     </Target>
-
+    <!-- ========================================== -->
     <Target Name="BuildNative_Unix" Condition="'$(OS)' != 'Windows_NT'">
         <MakeDir Directories="$(Bindings_NativeUnixProjectOutputDirectoryPath)"/>
 
@@ -62,11 +63,12 @@
         
         <Copy SourceFiles="@(NativeBuildResultFiles)" DestinationFolder="$(OutputDirectoryPath_X64)" />
     </Target>
-
+    <!-- ========================================== -->
     <Target Name="BuildNative" DependsOnTargets="BuildNative_Windows;BuildNative_Unix">
     </Target>
-
+    <!-- ========================================== -->
     <Target Name="Build" DependsOnTargets="Clean">
         <CallTarget Targets="BuildManaged;BuildNative" />
     </Target>
+    <!-- ========================================== -->
 </Project>
