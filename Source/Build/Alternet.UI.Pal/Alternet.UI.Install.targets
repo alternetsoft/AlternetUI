@@ -59,14 +59,6 @@
     <!-- ========================================== -->
 		<CallTarget Targets="CopyArtefactsLinux" Condition="$([MSBuild]::IsOsPlatform('Linux'))"/>
 		<CallTarget Targets="CopyArtefactsMacOS" Condition="$([MSBuild]::IsOsPlatform('OSX'))"/>
-    <!-- ========================================== -->
-		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
-			Command="dotnet build --nologo --property WarningLevel=0" />
-    <!-- ========================================== -->
-		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
-			Command="dotnet build --nologo --property WarningLevel=0" />
 	<!-- ========================================== -->
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)" 
@@ -80,12 +72,20 @@
 			Command="dotnet build --nologo --property WarningLevel=0" />
     <!-- ========================================== -->
 		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
+			Command="dotnet build --nologo --property WarningLevel=0" />
+    <!-- ========================================== -->
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
+			Command="dotnet build --nologo --property WarningLevel=0" />
+    <!-- ========================================== -->
+		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Samples/ControlsSample" 
 			Command="dotnet build --nologo --property WarningLevel=0" />
     <!-- ========================================== -->
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Samples/ControlsSample" 
-			Command="dotnet run --nologo --property WarningLevel=0 --framerwork net6.0" />
+			Command="dotnet run --nologo --property WarningLevel=0 --framework net6.0" />
     <!-- ========================================== -->
     </Target>
     <!-- ========================================== -->
