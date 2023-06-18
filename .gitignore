@@ -20,3 +20,5 @@ Documentation/Alternet.UI.Documentation/log.txt
 .vscode/launch.json
 .vscode/tasks.json
 .project
+*.so
+test.bat
