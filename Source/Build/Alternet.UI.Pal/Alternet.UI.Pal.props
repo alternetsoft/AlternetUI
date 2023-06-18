@@ -51,18 +51,18 @@
         <WxWidgetsBinDownloadUrlWindows>$(WxWidgetsBinDownloadUrlWindowsZip)</WxWidgetsBinDownloadUrlWindows>
     <!-- ========================================== -->
         <WxWidgetsBinDownloadUrlMacOSZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-macos-3.2.2.1.zip</WxWidgetsBinDownloadUrlMacOSZip>
-        <WxWidgetsBinDownloadUrlMacOSLocalHost>http://kurin.azurewebsites.net/wxWidgets-bin-3.2.2.1-macos-build.zip</WxWidgetsBinDownloadUrlMacOSLocalHost>
-        <WxWidgetsBinDownloadUrlMacOSTest>http://kurin.azurewebsites.net/wxWidgets-bin-3.2.2.1-macos-build.zip</WxWidgetsBinDownloadUrlMacOSTest>
-        <WxWidgetsBinDownloadUrlMacOS>$(WxWidgetsBinDownloadUrlMacOSLocalHost)</WxWidgetsBinDownloadUrlMacOS>
+        <WxWidgetsBinDownloadUrlMacOSLocalHost></WxWidgetsBinDownloadUrlMacOSLocalHost>
+        <WxWidgetsBinDownloadUrlMacOSTest></WxWidgetsBinDownloadUrlMacOSTest>
+        <WxWidgetsBinDownloadUrlMacOS>$(WxWidgetsBinDownloadUrlMacOSZip)</WxWidgetsBinDownloadUrlMacOS>
 
         <WxWidgetsBinDownloadDirectoryMacOS>$(ExternalComponentsDirectory)</WxWidgetsBinDownloadDirectoryMacOS>
         <WxWidgetsBinDownloadFileNameMacOS>WxWidgetsBinMacOs.zip</WxWidgetsBinDownloadFileNameMacOS>
         <WxWidgetsBinDownloadTargetPathMacOS>$(WxWidgetsBinDownloadDirectoryMacOS)\$(WxWidgetsBinDownloadFileNameMacOS)</WxWidgetsBinDownloadTargetPathMacOS>
     <!-- ========================================== -->
         <WxWidgetsBinDownloadUrlLinuxZip>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-linux-3.2.2.1.zip</WxWidgetsBinDownloadUrlLinuxZip>
-        <WxWidgetsBinDownloadUrlLinuxLocalHost>http://kurin.azurewebsites.net/wxWidgets-bin-3.2.2.1-gtk-build.zip</WxWidgetsBinDownloadUrlLinuxLocalHost>
-        <WxWidgetsBinDownloadUrlLinuxTest>http://kurin.azurewebsites.net/wxWidgets-bin-3.2.2.1-gtk-build.zip</WxWidgetsBinDownloadUrlLinuxTest>
-        <WxWidgetsBinDownloadUrlLinux>$(WxWidgetsBinDownloadUrlLinuxLocalHost)</WxWidgetsBinDownloadUrlLinux>
+        <WxWidgetsBinDownloadUrlLinuxLocalHost></WxWidgetsBinDownloadUrlLinuxLocalHost>
+        <WxWidgetsBinDownloadUrlLinuxTest></WxWidgetsBinDownloadUrlLinuxTest>
+        <WxWidgetsBinDownloadUrlLinux>$(WxWidgetsBinDownloadUrlLinuxZip)</WxWidgetsBinDownloadUrlLinux>
 
         <WxWidgetsBinDownloadDirectoryLinux>$(ExternalComponentsDirectory)</WxWidgetsBinDownloadDirectoryLinux>
         <WxWidgetsBinDownloadFileNameLinux>WxWidgetsBinLinux.zip</WxWidgetsBinDownloadFileNameLinux>
