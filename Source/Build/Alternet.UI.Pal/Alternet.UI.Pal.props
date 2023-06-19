@@ -10,6 +10,12 @@
         <BinDirectoryPath>$(MSBuildProjectDirectory)\bin\</BinDirectoryPath>
         <OutputDirectoryPath_X86>$(BinDirectoryPath)\$(BuildPlatform)\$(ManagedBuildConfiguration)\x86\</OutputDirectoryPath_X86>
         <OutputDirectoryPath_X64>$(BinDirectoryPath)\$(BuildPlatform)\$(ManagedBuildConfiguration)\x64\</OutputDirectoryPath_X64>
+
+        <OutputDirectoryPath_X86_Release>$(BinDirectoryPath)\$(BuildPlatform)\Release\x86\</OutputDirectoryPath_X86_Release>
+        <OutputDirectoryPath_X86_Debug>$(BinDirectoryPath)\$(BuildPlatform)\Debug\x86\</OutputDirectoryPath_X86_Debug>
+        <OutputDirectoryPath_X64_Release>$(BinDirectoryPath)\$(BuildPlatform)\Release\x64\</OutputDirectoryPath_X64_Release>
+        <OutputDirectoryPath_X64_Debug>$(BinDirectoryPath)\$(BuildPlatform)\Debug\x64\</OutputDirectoryPath_X64_Debug>
+
         <BuildContentFilesDirectoryPath>$(MSBuildProjectDirectory)\Content</BuildContentFilesDirectoryPath>
     </PropertyGroup>
 
@@ -23,6 +29,9 @@
         <Bindings_NativeVcProjectFilePath>$(Bindings_NativeProjectDirectoryPath)\Alternet.UI.Pal.vcxproj</Bindings_NativeVcProjectFilePath>
         <Bindings_NativeUnixProjectOutputDirectoryPath>$(Bindings_NativeProjectDirectoryPath)\bin\x64\$(NativeBuildConfiguration)</Bindings_NativeUnixProjectOutputDirectoryPath>
         <Bindings_NativeUnixProjectBuildPath>$(Bindings_NativeProjectDirectoryPath)\build</Bindings_NativeUnixProjectBuildPath>
+
+        <Bindings_NativeUnixProjectOutputDirectoryPath_Release>$(Bindings_NativeProjectDirectoryPath)\bin\x64\Release</Bindings_NativeUnixProjectOutputDirectoryPath_Release>
+        <Bindings_NativeUnixProjectOutputDirectoryPath_Debug>$(Bindings_NativeProjectDirectoryPath)\bin\x64\Debug</Bindings_NativeUnixProjectOutputDirectoryPath_Debug>
     </PropertyGroup>
 
     <ItemGroup>

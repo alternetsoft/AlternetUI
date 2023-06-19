@@ -23,6 +23,20 @@
         <NativeBuildResultFiles Include="$(Bindings_NativeUnixProjectOutputDirectoryPath)/Alternet.UI.Pal.so"/>
     </ItemGroup>
     <!-- ========================================== -->
+    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
+        <NativeBuildResultFilesDebug Include="$(Bindings_NativeUnixProjectOutputDirectoryPath_Debug)/Alternet.UI.Pal.dylib"/>
+    </ItemGroup>
+    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
+        <NativeBuildResultFilesDebug Include="$(Bindings_NativeUnixProjectOutputDirectoryPath_Debug)/Alternet.UI.Pal.so"/>
+    </ItemGroup>
+    <!-- ========================================== -->
+    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
+        <NativeBuildResultFilesRelease Include="$(Bindings_NativeUnixProjectOutputDirectoryPath_Release)/Alternet.UI.Pal.dylib"/>
+    </ItemGroup>
+    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
+        <NativeBuildResultFilesRelease Include="$(Bindings_NativeUnixProjectOutputDirectoryPath_Release)/Alternet.UI.Pal.so"/>
+    </ItemGroup>
+    <!-- ========================================== -->
     <Target Name="BuildNative_Windows_X86" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
         <Exec Command="&quot;$(CppMsBuildPath)&quot; $(Bindings_NativeVcProjectFilePath) /t:Rebuild /p:Configuration=$(NativeBuildConfiguration);OutDir=$(OutputDirectoryPath_X86);Platform=x86" />
     </Target>
@@ -53,22 +67,38 @@
     </Target>
     <!-- ========================================== -->
     <Target Name="BuildNative_Unix" Condition="'$(OS)' != 'Windows_NT'">
-        <MakeDir Directories="$(Bindings_NativeUnixProjectOutputDirectoryPath)"/>
+	   <Message Text="--------------------------------------------------------" Importance="high" />
+	   <Message Text="BuildNative_Unix" Importance="high" />
 
-        <Exec Command="chmod +x $(Bindings_NativeUnixProjectBuildPath)/debug.sh"
+	   <Message Text="Bindings_NativeUnixProjectOutputDirectoryPath:" Importance="high" />
+	   <Message Text="$(Bindings_NativeUnixProjectOutputDirectoryPath_Release)" Importance="high" />
+	   <Message Text="$(Bindings_NativeUnixProjectOutputDirectoryPath_Debug)" Importance="high" />
+
+	   <Message Text="Bindings_NativeUnixProjectBuildPath:" Importance="high" />
+	   <Message Text="$(Bindings_NativeUnixProjectBuildPath)" Importance="high" />
+
+	   <Message Text="OutputDirectoryPath_X64:" Importance="high" />
+	   <Message Text="$(OutputDirectoryPath_X64_Release)" Importance="high" />
+	   <Message Text="$(OutputDirectoryPath_X64_Debug)" Importance="high" />
+
+        <MakeDir Directories="$(Bindings_NativeUnixProjectOutputDirectoryPath_Release)"/>
+        <MakeDir Directories="$(Bindings_NativeUnixProjectOutputDirectoryPath_Debug)"/>
+
+	   <Exec Command="chmod +x $(Bindings_NativeUnixProjectBuildPath)/debug.sh"
               WorkingDirectory="$(Bindings_NativeUnixProjectBuildPath)"/>
         
         <Exec Command="chmod +x $(Bindings_NativeUnixProjectBuildPath)/release.sh"
               WorkingDirectory="$(Bindings_NativeUnixProjectBuildPath)"/>
 
+		<Message Text="--------------------------------------------------------" Importance="high" />
                 <Exec Command="$(Bindings_NativeUnixProjectBuildPath)/debug.sh"
               WorkingDirectory="$(Bindings_NativeUnixProjectBuildPath)"/>
 
-        <Exec Command="$(Bindings_NativeUnixProjectBuildPath)/release.sh"
+        <Copy SourceFiles="@(NativeBuildResultFilesDebug)" DestinationFolder="$(OutputDirectoryPath_X64_Debug)" />
+		<Message Text="--------------------------------------------------------" Importance="high" />
+         <Exec Command="$(Bindings_NativeUnixProjectBuildPath)/release.sh"
               WorkingDirectory="$(Bindings_NativeUnixProjectBuildPath)"/>
-
-
-        <Copy SourceFiles="@(NativeBuildResultFiles)" DestinationFolder="$(OutputDirectoryPath_X64)" />
+        <Copy SourceFiles="@(NativeBuildResultFilesRelease)" DestinationFolder="$(OutputDirectoryPath_X64_Release)" />
     </Target>
     <!-- ========================================== -->
     <Target Name="BuildNative" DependsOnTargets="BuildNative_Windows;BuildNative_Unix">
