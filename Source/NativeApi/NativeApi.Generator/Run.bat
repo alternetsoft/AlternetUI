@@ -1,5 +1,5 @@
 @echo off
 dotnet build
-pushd bin\Debug\netcoreapp3.1\
+pushd bin\Debug\net6.0\
 start NativeApi.Generator.exe
 popd

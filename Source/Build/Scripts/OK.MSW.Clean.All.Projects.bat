@@ -1,1 +1,0 @@
-"Tools/DoForAllProjects.bat" "Tools/CleanProject.bat"
