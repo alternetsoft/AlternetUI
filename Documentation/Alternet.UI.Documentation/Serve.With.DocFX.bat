@@ -1,1 +1,3 @@
-docfx serve site 
+pushd site
+docfx serve
+popd
