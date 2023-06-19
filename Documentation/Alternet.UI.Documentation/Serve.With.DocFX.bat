@@ -1,1 +1,1 @@
-docfx site/docfx.json --serve
+docfx serve site 
