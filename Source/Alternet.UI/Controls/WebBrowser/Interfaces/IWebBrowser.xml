@@ -77,6 +77,15 @@ SetBackendPath("Edge",true);
         <summary>
             Returns <see langword = "true"/> if the WebBrowser runs on a 64 bit platform.
         </summary>
+		<!--
+		<summary>
+			Gets a value indicating whether the zoom factor of the page can be increased,
+			which allows the <see cref="ZoomIn"/> method to succeed.
+		</summary>
+		<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
 	</Is64Bit>
 	<!--==============================================-->
 	<Events>
@@ -421,6 +430,10 @@ SetBackendPath("Edge",true);
         <summary>
             Gets or sets the Uri of the current document hosted in the WebBrowser.
         </summary>
+		<!--<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
 	</Source>
 	<!--==============================================-->
 	<CanZoomOut>
@@ -442,6 +455,10 @@ SetBackendPath("Edge",true);
             Developer tools are disabled by default. 
             This feature is not implemented for the IE backend.         
 		</remarks>
+		<!--<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
 	</AccessToDevToolsEnabled>
 <!--==============================================-->
 <AddScriptMessageHandler>
@@ -506,6 +523,10 @@ if(ScriptMessageHandlerAdded)
         <summary>
             Gets the current WebBrowser backend.
         </summary>
+		<!--<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
 	</Backend>
 	<!--==============================================-->
 	<CanCopy>
@@ -616,6 +637,10 @@ if(ScriptMessageHandlerAdded)
             By default the standard context menu is enabled, this property 
             can be used to disable it or re-enable it later.
 	    </remarks>
+		<!--<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
 	</ContextMenuEnabled>
 	<!--==============================================-->
 	<Copy>
@@ -677,6 +702,10 @@ if(ScriptMessageHandlerAdded)
             The exact capabilities vary with the backend being used.
             This feature is not implemented for macOS and the Edge backend.
 		</remarks>
+		<!--<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
 	</Editable>
 	<!--==============================================-->
 	<EnableHistory>
@@ -788,6 +817,15 @@ if(ScriptMessageHandlerAdded)
         <summary>
             Returns <see langword="true"/> if there is a current selection.         
         </summary>
+		<!--
+		<summary>
+			Gets a value indicating whether the zoom factor of the page can be increased,
+			which allows the <see cref="ZoomIn"/> method to succeed.
+		</summary>
+		<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
 	</HasSelection>
 	<!--==============================================-->
 	<IsBusy>
@@ -795,6 +833,15 @@ if(ScriptMessageHandlerAdded)
             Returns whether the control is currently busy 
             (e.g. loading a web page).         
         </summary>
+		<!--
+	<summary>
+			Gets a value indicating whether the zoom factor of the page can be increased,
+			which allows the <see cref="ZoomIn"/> method to succeed.
+		</summary>		
+		<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
 	</IsBusy>
 	<!--==============================================-->
     <LoadUrlOrSearch>
@@ -827,16 +874,24 @@ if(ScriptMessageHandlerAdded)
 	<!--==============================================-->
 	<PageSource>
         <summary>
-            Get the HTML source code of the currently displayed document or 
+            Gets the HTML source code of the currently displayed document or 
             an empty string if no page is currently shown.
         </summary>
+		<!--<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
 		<seealso cref="PageText"/>
 	</PageSource>
 	<!--==============================================-->
 	<PageText>
         <summary>
-            Get the text of the current page.      
+            Gets the text of the current page.      
         </summary>
+		<!--<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
 		<seealso cref="PageSource"/>
 	</PageText>
 	<!--==============================================-->
@@ -1006,10 +1061,14 @@ will replace the current page contents with the provided string.
 	<!--==============================================-->
 	<SelectedSource>
         <summary>
-            Get the HTML source code of the currently selected portion 
+            Gets the HTML source code of the currently selected portion 
 			of the web page or 
             an empty string if no selection exists.
         </summary>
+		<!--<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
 		<seealso cref="SelectedText"/>
 	</SelectedSource>
 	<!--==============================================-->
@@ -1017,6 +1076,10 @@ will replace the current page contents with the provided string.
         <summary>
             Gets a value indicating the currently selected text in the control.
         </summary>
+		<!--<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
 		<seealso cref="SelectedSource"/>
 	</SelectedText>
 	<!--==============================================-->
@@ -1040,6 +1103,10 @@ will replace the current page contents with the provided string.
                 Gets or sets the custom user agent string for the WebBrowser control.
             </para>
         </summary>
+		<!--<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
         <remarks>
             <para>
                 If your first request should already use the custom user agent please 
@@ -1067,6 +1134,10 @@ will replace the current page contents with the provided string.
             Gets or sets the zoom factor of the page. The zoom factor is an arbitrary 
             number that specifies how much to zoom (scale) the HTML document.
         </summary>
+		<!--<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
         <remarks>
             Zoom scale in IE will be converted into zoom levels if <see cref="ZoomType"/> property 
             is set to <see cref="WebBrowserZoomType.Text"/> value.
@@ -1090,6 +1161,10 @@ will replace the current page contents with the provided string.
         <summary>
             Gets or sets how the zoom factor is currently interpreted by the HTML engine.
         </summary>
+		<!--<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
         <remarks>
             Invoke <see cref="CanSetZoomType"/> first, some HTML renderers may not 
 			support all zoom types.
@@ -1100,6 +1175,10 @@ will replace the current page contents with the provided string.
         <summary>
             Contains methods related to the memory scheme WebBrowser protocol.
         </summary>
+		<!--<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
 	</MemoryFS>
 	<!--==============================================-->
 	<CreateHandler>
@@ -1191,9 +1270,12 @@ will replace the current page contents with the provided string.
   <!--==============================================-->
   <PreferredColorScheme>
     <summary>
-      The PreferredColorScheme property sets the overall color scheme 
-      of the WebBrowser. 
+      Sets the overall color scheme of the WebBrowser. 
     </summary>
+		<!--<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
     <remarks>
       <para>
         This property sets the color scheme for WebBrowser UI like dialogs, prompts
@@ -1248,6 +1330,10 @@ WebControl1.Source = new Uri("https://appassets.example/index.html");
         <summary>
             Contains DateTime format for Javascript code.
         </summary>
+		<!--<returns>
+			<see langword="true"/> if the web page can be zoomed in;
+			otherwise, <see langword="false"/>.
+		</returns>-->
 	    <remarks>
             Used internally by <see cref="InvokeScriptAsync"/>.
 	    </remarks>
