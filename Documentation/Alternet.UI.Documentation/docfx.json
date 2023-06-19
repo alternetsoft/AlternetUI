@@ -1,6 +1,10 @@
 {
   "metadata": [
     {
+      "properties": 
+        {
+          "WarningLevel": "0"
+        },
       "src": [
         {
           "src": "../../Source/Alternet.UI",
