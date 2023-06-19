@@ -55,12 +55,19 @@
     <Target Name="BuildNative_Unix" Condition="'$(OS)' != 'Windows_NT'">
         <MakeDir Directories="$(Bindings_NativeUnixProjectOutputDirectoryPath)"/>
 
+        <Exec Command="chmod +x $(Bindings_NativeUnixProjectBuildPath)/debug.sh"
+              WorkingDirectory="$(Bindings_NativeUnixProjectBuildPath)"/>
+        
         <Exec Command="chmod +x $(Bindings_NativeUnixProjectBuildPath)/release.sh"
               WorkingDirectory="$(Bindings_NativeUnixProjectBuildPath)"/>
-        
+
+                <Exec Command="$(Bindings_NativeUnixProjectBuildPath)/debug.sh"
+              WorkingDirectory="$(Bindings_NativeUnixProjectBuildPath)"/>
+
         <Exec Command="$(Bindings_NativeUnixProjectBuildPath)/release.sh"
               WorkingDirectory="$(Bindings_NativeUnixProjectBuildPath)"/>
-        
+
+
         <Copy SourceFiles="@(NativeBuildResultFiles)" DestinationFolder="$(OutputDirectoryPath_X64)" />
     </Target>
     <!-- ========================================== -->

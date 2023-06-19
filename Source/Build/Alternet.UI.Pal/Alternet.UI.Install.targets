@@ -36,10 +36,7 @@
 		<Message Text="Exec Alternet.UI.Pal" Importance="high" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Build/Alternet.UI.Pal" 
-			Command="dotnet msbuild -property:Configuration=Debug Alternet.UI.Pal.proj" />			
-		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)/Source/Build/Alternet.UI.Pal" 
-			Command="dotnet msbuild -property:Configuration=Release Alternet.UI.Pal.proj" />			
+			Command="dotnet msbuild Alternet.UI.Pal.proj" />			
     <!-- ========================================== -->
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec CopyArtefacts" Importance="high" />
