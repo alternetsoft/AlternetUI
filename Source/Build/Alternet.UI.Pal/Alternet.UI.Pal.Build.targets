@@ -38,11 +38,13 @@
     </ItemGroup>
     <!-- ========================================== -->
     <Target Name="BuildNative_Windows_X86" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-        <Exec Command="&quot;$(CppMsBuildPath)&quot; $(Bindings_NativeVcProjectFilePath) /t:Rebuild /p:Configuration=$(NativeBuildConfiguration);OutDir=$(OutputDirectoryPath_X86);Platform=x86" />
+        <Exec Command="&quot;$(CppMsBuildPath)&quot; $(Bindings_NativeVcProjectFilePath) -p:Configuration=Debug;OutDir=$(OutputDirectoryPath_X86_Debug);Platform=x86" />
+        <Exec Command="&quot;$(CppMsBuildPath)&quot; $(Bindings_NativeVcProjectFilePath) -p:Configuration=Release;OutDir=$(OutputDirectoryPath_X86_Release);Platform=x86" />
     </Target>
     <!-- ========================================== -->
     <Target Name="BuildNative_Windows_X64" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-        <Exec Command="&quot;$(CppMsBuildPath)&quot; $(Bindings_NativeVcProjectFilePath) /t:Rebuild /p:Configuration=$(NativeBuildConfiguration);OutDir=$(OutputDirectoryPath_X64);Platform=x64" />
+        <Exec Command="&quot;$(CppMsBuildPath)&quot; $(Bindings_NativeVcProjectFilePath) -t:Rebuild -p:Configuration=Debug;OutDir=$(OutputDirectoryPath_X64_Debug);Platform=x64" />
+        <Exec Command="&quot;$(CppMsBuildPath)&quot; $(Bindings_NativeVcProjectFilePath) -t:Rebuild -p:Configuration=Release;OutDir=$(OutputDirectoryPath_X64_Release);Platform=x64" />
     </Target>
     <!-- ========================================== -->
     <Target Name="BuildNative_Windows_CleanupAfterBuild" Condition="$([MSBuild]::IsOsPlatform('Windows'))">

@@ -14,6 +14,9 @@
 		<Copy
 			SourceFiles="@(MySourceFiles)"
 			DestinationFolder="$(UI_PAL_ARTIFACTS_PATH)\%(RecursiveDir)"	/>
+		<Copy
+			SourceFiles="@(MySourceFiles)"
+			DestinationFolder="$(RootDirectoryPath)\Source\Alternet.UI.Pal\%(RecursiveDir)"	/>
 	</Target>
     <!-- ========================================== -->
     <Target Name="InstallAlternetUI">
@@ -34,9 +37,8 @@
     <!-- ========================================== -->
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec Alternet.UI.Pal" Importance="high" />
-		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)/Source/Build/Alternet.UI.Pal" 
-			Command="dotnet msbuild Alternet.UI.Pal.proj" />			
+		<CallTarget Targets="BuildNative_Windows"/>
+		<CallTarget Targets="BuildNative_Unix"/>
     <!-- ========================================== -->
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec CopyArtefacts" Importance="high" />

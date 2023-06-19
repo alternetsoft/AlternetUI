@@ -2,6 +2,12 @@ SETLOCAL EnableDelayedExpansion
 
 set SCRIPT_HOME=%~dp0.
 
+for /f "usebackq tokens=*" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe`) do (
+    set FOUND_MSBUILD_PATH=%%i)
+
+ECHO %FOUND_MSBUILD_PATH%
+
+
 :: Prepare variables.
 
 call "%SCRIPT_HOME%\MSW.Set.Artifact.Paths.bat"
@@ -10,8 +16,6 @@ if not !ERRORLEVEL! EQU 0 (
 
 :: Build Alternet.UI.
 
-for /f "usebackq tokens=*" %%i in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe`) do (
-    set FOUND_MSBUILD_PATH=%%i)
 
 dotnet msbuild /p:CppMsBuildPath="%FOUND_MSBUILD_PATH%" "%SCRIPT_HOME%\..\Alternet.UI.Pal\Alternet.UI.Pal.proj"
 if not !ERRORLEVEL! EQU 0 (
