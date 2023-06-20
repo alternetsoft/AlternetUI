@@ -54,7 +54,12 @@ namespace ControlsSample
 
         public static string PrepareFileUrl(string filename)
         {
-            string url = "file:///" + PrepareUrl(filename);
+            string url;
+
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                url = "file:///" + PrepareUrl(filename);
+            else
+                url = "file://" + PrepareUrl(filename);
             return url;
         }
 

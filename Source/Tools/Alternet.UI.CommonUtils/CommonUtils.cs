@@ -117,7 +117,12 @@ namespace Alternet.UI
 
         public static string PrepareFileUrl(string filename)
         {
-            string url = "file:///" + PrepareUrl(filename);
+            string url;
+
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                url = "file:///" + PrepareUrl(filename);
+            else
+                url = "file://" + PrepareUrl(filename);
             return url;
         }
 
@@ -210,7 +215,7 @@ namespace Alternet.UI
                 return s;
             }
 
-            string url = schemeName + ":///" + PrepareUrl(arcPath) + ";protocol=zip/" +
+            string url = schemeName + "://" + PrepareUrl(arcPath) + ";protocol=zip/" +
                 PrepareUrl(fileInArchivePath);
             return url;
         }

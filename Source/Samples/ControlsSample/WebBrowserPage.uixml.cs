@@ -51,15 +51,19 @@ namespace ControlsSample
             }
         }
 
-        private static string GetPandaFileName()
+        private string GetPandaFileName()
         {
-            return ControlsSampleUtils.GetAppFolder() +
+            var s = ControlsSampleUtils.GetAppFolder() +
                 "Html/SampleArchive/Html/page1.html";
+            // Log("GetPandaFileName: " + s);
+            return s;
         }
 
-        private static string GetPandaUrl()
+        private string GetPandaUrl()
         {
-            return ControlsSampleUtils.PrepareFileUrl(GetPandaFileName());
+            var s = ControlsSampleUtils.PrepareFileUrl(GetPandaFileName());
+            // Log("GetPandaUrl: " + s);
+            return s;
         }
 
         private void FindClearButton_Click(object sender, EventArgs e)
