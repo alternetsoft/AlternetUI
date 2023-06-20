@@ -4,6 +4,11 @@
     <Import Project="../Alternet.UI.Common/Alternet.UI.Common.props"/>
 
     <PropertyGroup>
+		<DotNetBuildCmd>dotnet build --nologo --property WarningLevel=0</DotNetBuildCmd>
+		<DotNetBuildDebugCmd>dotnet build --configuration Debug --nologo --property WarningLevel=0</DotNetBuildDebugCmd>
+		<DotNetBuildReleaseCmd>dotnet build --configuration Release --nologo --property WarningLevel=0</DotNetBuildReleaseCmd>
+		
+		<DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework net6.0</DotNetRunCmd>
         <ManagedBuildConfiguration>Release</ManagedBuildConfiguration>
         <NativeBuildConfiguration>Release</NativeBuildConfiguration>
         <RootDirectoryPath>$(MSBuildProjectDirectory)\..\..\..\</RootDirectoryPath>

@@ -3,11 +3,25 @@
     <!-- 
 	
 	-->
+
+    <!-- ========================================== -->
+	<Target Name="BuildControlsSample">
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Samples/ControlsSample" 
+			Command="$(DotNetBuildCmd)" />
+	</Target>		
+    <!-- ========================================== -->
+	<Target Name="RunControlsSample">
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Samples/ControlsSample" 
+			Command="$(DotNetRunCmd)" />
+	</Target>		
     <!-- ========================================== -->
 	<Target Name="CopyArtefacts">
-		<RemoveDir
-            Directories="$(UI_PAL_ARTIFACTS_PATH)" Condition="Exists($(UI_PAL_ARTIFACTS_PATH))"/>
+		<RemoveDir Directories="$(UI_PAL_ARTIFACTS_PATH)" Condition="Exists($(UI_PAL_ARTIFACTS_PATH))"/>
 		<MakeDir Directories="$(UI_PAL_ARTIFACTS_PATH)"/>	
+		<RemoveDir Directories="$(UI_PAL_B)" Condition="Exists($(UI_PAL_B))"/>
+		<MakeDir Directories="$(UI_PAL_B)"/>	
 		<ItemGroup>
 					   <MySourceFilesRelease Include="$(UI_PAL_BIN_RELEASE)\**\*.*"/>
 		</ItemGroup>
@@ -15,14 +29,15 @@
 					   <MySourceFilesDebug Include="$(UI_PAL_BIN_DEBUG)\**\*.*"/>
 		</ItemGroup>
 		<ItemGroup>
-					   <MySourceFiles Include="$(UI_PAL_BIN)\**\*.*"/>
+					   <MySourceFiles Include="$(UI_PAL_BIN_DEBUG)\**\*.*"/>
+					   <MySourceFiles Include="$(UI_PAL_BIN_RELEASE)\**\*.*"/>
 		</ItemGroup>
 		<Copy
 			SourceFiles="@(MySourceFilesRelease)"
 			DestinationFolder="$(UI_PAL_ARTIFACTS_PATH)\%(RecursiveDir)"	/>
 		<Copy
 			SourceFiles="@(MySourceFiles)"
-			DestinationFolder="$(RootDirectoryPath)\Source\Alternet.UI.Pal\bin\%(RecursiveDir)"	/>
+			DestinationFolder="$(UI_PAL_B)\%(RecursiveDir)"	/>
 	</Target>
     <!-- ========================================== -->
     <Target Name="InstallAlternetUI">
@@ -54,42 +69,36 @@
 		<Message Text="Exec Alternet.UI" Importance="high" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="dotnet build --configuration Debug --nologo --property WarningLevel=0" />
+			Command="$(DotNetBuildDebugCmd)" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="dotnet build --configuration Release --nologo --property WarningLevel=0" />
+			Command="$(DotNetBuildReleaseCmd)" />
     <!-- ========================================== -->
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec Alternet.UI.Build.Tasks.ApiInfoCollector" Importance="high" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
-			Command="dotnet build --configuration Debug --nologo --property WarningLevel=0" />
+			Command="$(DotNetBuildDebugCmd)" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
-			Command="dotnet build --configuration Release --nologo --property WarningLevel=0" />
+			Command="$(DotNetBuildReleaseCmd)" />
     <!-- ========================================== -->
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec Alternet.UI.Build.Tasks" Importance="high" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
-			Command="dotnet build --configuration Debug --nologo --property WarningLevel=0" />
+			Command="$(DotNetBuildDebugCmd)" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
-			Command="dotnet build --configuration Release --nologo --property WarningLevel=0" />
+			Command="$(DotNetBuildReleaseCmd)" />
     <!-- ========================================== -->
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec Build ControlsSample" Importance="high" />
-		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)/Source/Samples/ControlsSample" 
-			Command="dotnet build --nologo --property WarningLevel=0" />
-    <!-- ========================================== -->
-		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)/Source/Samples/ControlsSample" 
-			Command="dotnet run --nologo --property WarningLevel=0 --framework net6.0" />
+		<CallTarget Targets="BuildControlsSample"/>
+		<CallTarget Targets="RunControlsSample"/>		
     <!-- ========================================== -->
     </Target>
     <!-- ========================================== -->
-	
     <!-- ========================================== -->
 </Project>
 

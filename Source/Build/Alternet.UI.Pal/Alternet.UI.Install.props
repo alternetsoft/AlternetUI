@@ -14,6 +14,7 @@
 		<UI_WINDOWS_PAL_BIN>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\Windows\Release</UI_WINDOWS_PAL_BIN>
 		<UI_MACOS_PAL_BIN>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\MacOS\Release</UI_MACOS_PAL_BIN>
 		<UI_LINUX_PAL_BIN>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\Linux\Release</UI_LINUX_PAL_BIN>
+		<UI_PAL_B>$(RootDirectoryPath)\Source\Alternet.UI.Pal\bin</UI_PAL_B>
     </PropertyGroup>
     <!-- ========================================== -->
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
