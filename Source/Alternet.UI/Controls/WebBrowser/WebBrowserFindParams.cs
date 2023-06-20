@@ -7,33 +7,48 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     Find flags used when searching for text on web page.
+    ///     Find flags used when searching for text on web page in the WebBrowser control.
     /// </summary>
     public class WebBrowserFindParams
     {
         /// <summary>
         ///     Causes the search to restart when end or beginning reached.
         /// </summary>
+		/// <returns>
+		///	<see langword="true"/> if the search will be restarted when end or beginning reached; otherwise, <see langword="false"/>.
+		/// </returns>
         public bool Wrap { get; set; } = true;
 
         /// <summary>
         ///     Matches an entire word when searching.
         /// </summary>
+		/// <returns>
+		///	<see langword="true"/> if an entire word will be matched when search is performed; otherwise, <see langword="false"/>.
+		/// </returns>
         public bool EntireWord { get; set; } = false;
 
         /// <summary>
         ///     Match case, i.e. case sensitive searching.
         /// </summary>
+		/// <returns>
+		///	<see langword="true"/> if case sensitive searching will be performed; otherwise, <see langword="false"/>.
+		/// </returns>
         public bool MatchCase { get; set; } = false;
 
         /// <summary>
         ///     Highlights the search results.
         /// </summary>
+		/// <returns>
+		///	<see langword="true"/> if the search results will be highlighted; otherwise, <see langword="false"/>.
+		/// </returns>
         public bool HighlightResult { get; set; } = true;
 
         /// <summary>
         ///     Searches for phrase in backward direction.
         /// </summary>
+		/// <returns>
+		///	<see langword="true"/> if search is done in backward direction; otherwise, <see langword="false"/>.
+		/// </returns>
         public bool Backwards { get; set; } = false;
 
         internal int ToWebViewParams()

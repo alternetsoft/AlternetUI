@@ -9,19 +9,22 @@ namespace Alternet.UI
 {
     /// <summary>
     ///     Interface for access to memory protocol scheme.
+    /// </summary>
+	/// <remarks>
     ///     Implementations of this interface can store arbitrary data in memory
     ///     stream and make them accessible via an URL in
     ///     <see cref="WebBrowser"/> control.
-    /// </summary>
+	/// </remarks>
     public interface IWebBrowserMemoryFS
     {
         /// <summary>
         ///     Initializes memory protocol scheme for use with the
-        ///     <see cref="WebBrowser"/> control. You need to call this
-        ///     method before
-        ///     any other methods of the interface.
+        ///     <see cref="WebBrowser"/> control. 
         /// </summary>
-        /// <param name="schemeName"></param>
+		/// <remarks>
+		/// 	You need to call this method before any other methods of the interface.
+		/// </remarks>
+        /// <param name="schemeName">Name of the url protocol that will be used instead of http.</param>
         /// <example>
         ///     <code>
         ///         WebBrowser1.MemoryFS.Init("memory");
