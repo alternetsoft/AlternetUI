@@ -23,14 +23,7 @@
 		<RemoveDir Directories="$(UI_PAL_B)" Condition="Exists($(UI_PAL_B))"/>
 		<MakeDir Directories="$(UI_PAL_B)"/>	
 		<ItemGroup>
-					   <MySourceFilesRelease Include="$(UI_PAL_BIN_RELEASE)\**\*.*"/>
-		</ItemGroup>
-		<ItemGroup>
-					   <MySourceFilesDebug Include="$(UI_PAL_BIN_DEBUG)\**\*.*"/>
-		</ItemGroup>
-		<ItemGroup>
-					   <MySourceFiles Include="$(UI_PAL_BIN_DEBUG)\**\*.*"/>
-					   <MySourceFiles Include="$(UI_PAL_BIN_RELEASE)\**\*.*"/>
+					   <MySourceFiles Include="$(UI_PAL_BIN)\**\*.*"/>
 		</ItemGroup>
 		<Copy
 			SourceFiles="@(MySourceFilesRelease)"
