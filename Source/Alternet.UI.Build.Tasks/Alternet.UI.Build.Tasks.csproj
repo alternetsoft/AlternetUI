@@ -5,11 +5,11 @@
   </PropertyGroup>
 
 	<PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-		<TargetFrameworks>net6.0</TargetFrameworks>
+		<TargetFrameworks>net6.0;net7.0;net462;net481</TargetFrameworks>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-		<TargetFrameworks>net6.0</TargetFrameworks>
+		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -36,12 +36,15 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-      <ApiInfoCollectorCommand>$(ApiInfoCollectorToolPath) $(ApiInfoCollectorInputAssemblyPath) $(ApiInfoXmlFilePath)</ApiInfoCollectorCommand>
+      <ApiInfoCollectorCommand>&quot;$(ApiInfoCollectorToolPath).exe&quot; &quot;$(ApiInfoCollectorInputAssemblyPath)&quot; &quot;$(ApiInfoXmlFilePath)&quot;</ApiInfoCollectorCommand>
     </PropertyGroup>
     <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-      <ApiInfoCollectorCommand>dotnet $(ApiInfoCollectorToolPath).dll $(ApiInfoCollectorInputAssemblyPath) $(ApiInfoXmlFilePath)</ApiInfoCollectorCommand>
+      <ApiInfoCollectorCommand>dotnet &quot;$(ApiInfoCollectorToolPath).dll&quot; &quot;$(ApiInfoCollectorInputAssemblyPath)&quot; &quot;$(ApiInfoXmlFilePath)&quot;</ApiInfoCollectorCommand>
     </PropertyGroup>
 
+    <Message Text="============================"/>
+    <Message Text="$(ApiInfoCollectorCommand)" />
+    <Message Text="============================"/>
     <Exec Command="$(ApiInfoCollectorCommand)" />
 
     <ItemGroup>
