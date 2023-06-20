@@ -34,7 +34,7 @@ namespace ControlsTest
         {
             WebBrowser.SetDefaultFSNameMemory("memory");
             WebBrowser.SetDefaultFSNameArchive(ZipSchemeName);
-            WebBrowser.SetDefaultUserAgent("Mozilla");
+            //WebBrowser.SetDefaultUserAgent("Mozilla");
 
             SetBackendPathSmart("Edge");
 
