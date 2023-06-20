@@ -1,5 +1,5 @@
 :: WARNING UPLOADS TO NUGET.ORG
-
+:: PARAMS:  NuGetApiKey GitHubApiKey AzureDevOpsAccessToken
 
 SETLOCAL EnableDelayedExpansion
 
@@ -20,10 +20,6 @@ set PublicRepo=%PublishRoot%\Repo
 mkdir %PublicRepo%
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
-
-set NuGetApiKey=oy2nrayighgyc7lqilqazrqnfovhsgquxgdnfjjh6elebi
-set GitHubApiKey=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
-set AzureDevOpsAccessToken=um24u63qk5rsghmygvvwpaji44vz27gsevyu5z5h4pl7hpt3ofra
 
 :: NuGet packages.
 
@@ -46,12 +42,12 @@ if not !ERRORLEVEL! EQU 0 (
 :: VS Extensions
 
 set VSIXPublisherTool=C:\Program Files\Microsoft Visual Studio\2022\Community\VSSDK\VisualStudioIntegration\Tools\Bin\VsixPublisher.exe
-REM set VSIXPublishManifest2019=%SCRIPT_HOME%\..\..\Integration\VisualStudio\Publish\extension.VS2019.manifest.json
+:: REM set VSIXPublishManifest2019=%SCRIPT_HOME%\..\..\Integration\VisualStudio\Publish\extension.VS2019.manifest.json
 set VSIXPublishManifest2022=%SCRIPT_HOME%\..\..\Integration\VisualStudio\Publish\extension.VS2022.manifest.json
-REM set VSIXPackagePath2019=%PublishRoot%\Alternet.UI.Integration.VisualStudio.VS2019*.vsix
+:: REM set VSIXPackagePath2019=%PublishRoot%\Alternet.UI.Integration.VisualStudio.VS2019*.vsix
 set VSIXPackagePath2022=%PublishRoot%\Alternet.UI.Integration.VisualStudio.VS2022*.vsix
 
-REM for %%i in (%VSIXPackagePath2019%) do "%VSIXPublisherTool%" publish -payload "%%i" -publishManifest "%VSIXPublishManifest2019%" -personalAccessToken %AzureDevOpsAccessToken%
+:: REM for %%i in (%VSIXPackagePath2019%) do "%VSIXPublisherTool%" publish -payload "%%i" -publishManifest "%VSIXPublishManifest2019%" -personalAccessToken %AzureDevOpsAccessToken%
 for %%i in (%VSIXPackagePath2022%) do "%VSIXPublisherTool%" publish -payload "%%i" -publishManifest "%VSIXPublishManifest2022%" -personalAccessToken %AzureDevOpsAccessToken%
 
 :: Clean Up

@@ -1,4 +1,4 @@
-:: PARAMS:  SourceDirectory RepoDirectory CommitMessageFile ApiKey RepoName
+:: PARAMS:  SourceDirectory RepoDirectory CommitMessageFile ApiKey RepoName UserName UserEmail
 
 SETLOCAL EnableDelayedExpansion
 
@@ -9,6 +9,8 @@ set RepoDirectory=%2
 set CommitMessageFile=%3
 set ApiKey=%4
 set RepoName=%5
+set UserName=%6
+set UserEmail=%7
 
 set RepoUrl=https://%ApiKey%@github.com/alternetsoft/%RepoName%.git
 set VersionToolProject=%SCRIPT_HOME%\..\..\Tools\Versioning\Alternet.UI.VersionTool.Cli\Alternet.UI.VersionTool.Cli.csproj
@@ -51,7 +53,7 @@ git add -A
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-git -c "user.name=Yevgeni Zolotko" -c "user.email=yevgeni.zolotko@alternetsoft.com" commit -F "%CommitMessageFile%"
+git -c "user.name=%UserName%" -c "user.email=%UserEmail%" commit -F "%CommitMessageFile%"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
