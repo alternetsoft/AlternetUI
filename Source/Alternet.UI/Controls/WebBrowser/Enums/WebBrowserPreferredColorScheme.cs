@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     Preferred color scheme for WebControl.
+    ///     Preferred color scheme for the <see cref="WebBrowser"/> control.
     /// </summary>
     public enum WebBrowserPreferredColorScheme
     {

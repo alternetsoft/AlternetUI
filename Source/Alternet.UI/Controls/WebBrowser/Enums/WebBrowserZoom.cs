@@ -8,7 +8,7 @@ using System.Xml.Linq;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     The type of zooming that the WebBrowser control can perform.
+    ///     The type of zooming that the <see cref="WebBrowser"/> control can perform.
     /// </summary>
     public enum WebBrowserZoomType
     {

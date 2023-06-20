@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     All possible backends supported by the WebBrowser control.
+    ///     All possible backends supported by the <see cref="WebBrowser"/> control.
     /// </summary>
     public enum WebBrowserBackend
     {
