@@ -9,14 +9,20 @@
             Directories="$(UI_PAL_ARTIFACTS_PATH)" Condition="Exists($(UI_PAL_ARTIFACTS_PATH))"/>
 		<MakeDir Directories="$(UI_PAL_ARTIFACTS_PATH)"/>	
 		<ItemGroup>
+					   <MySourceFilesRelease Include="$(UI_PAL_BIN_RELEASE)\**\*.*"/>
+		</ItemGroup>
+		<ItemGroup>
+					   <MySourceFilesDebug Include="$(UI_PAL_BIN_DEBUG)\**\*.*"/>
+		</ItemGroup>
+		<ItemGroup>
 					   <MySourceFiles Include="$(UI_PAL_BIN)\**\*.*"/>
 		</ItemGroup>
 		<Copy
-			SourceFiles="@(MySourceFiles)"
+			SourceFiles="@(MySourceFilesRelease)"
 			DestinationFolder="$(UI_PAL_ARTIFACTS_PATH)\%(RecursiveDir)"	/>
 		<Copy
 			SourceFiles="@(MySourceFiles)"
-			DestinationFolder="$(RootDirectoryPath)\Source\Alternet.UI.Pal\%(RecursiveDir)"	/>
+			DestinationFolder="$(RootDirectoryPath)\Source\Alternet.UI.Pal\bin\%(RecursiveDir)"	/>
 	</Target>
     <!-- ========================================== -->
     <Target Name="InstallAlternetUI">

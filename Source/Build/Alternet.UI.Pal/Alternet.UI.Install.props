@@ -19,19 +19,22 @@
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
 		<UI_ARTIFACTS_PATH>$(UI_ROOT_ARTIFACTS_PATH)\Windows\UI\</UI_ARTIFACTS_PATH>
 		<UI_PAL_ARTIFACTS_PATH>$(UI_WINDOWS_ARTIFACTS_PATH)\PAL</UI_PAL_ARTIFACTS_PATH>
-		<UI_PAL_BIN>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\Windows\Release</UI_PAL_BIN>
+		<UI_PAL_BIN_RELEASE>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\Windows\Release</UI_PAL_BIN_RELEASE>
+		<UI_PAL_BIN_DEBUG>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\Windows\Debug</UI_PAL_BIN_DEBUG>
 	</PropertyGroup>		
     <!-- ========================================== -->
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
 		<UI_ARTIFACTS_PATH>$(UI_ROOT_ARTIFACTS_PATH)\macOS\UI\</UI_ARTIFACTS_PATH>
 		<UI_PAL_ARTIFACTS_PATH>$(UI_MACOS_ARTIFACTS_PATH)\PAL</UI_PAL_ARTIFACTS_PATH>
-		<UI_PAL_BIN>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\MacOS\Release</UI_PAL_BIN>
+		<UI_PAL_BIN_RELEASE>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\MacOS\Release</UI_PAL_BIN_RELEASE>
+		<UI_PAL_BIN_DEBUG>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\MacOS\Debug</UI_PAL_BIN_DEBUG>
 	</PropertyGroup>		
     <!-- ========================================== -->
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
 		<UI_ARTIFACTS_PATH>=$(UI_ROOT_ARTIFACTS_PATH)\Linux\UI\</UI_ARTIFACTS_PATH>
 		<UI_PAL_ARTIFACTS_PATH>$(UI_LINUX_ARTIFACTS_PATH)\PAL</UI_PAL_ARTIFACTS_PATH>
-		<UI_PAL_BIN>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\Linux\Release</UI_PAL_BIN>
+		<UI_PAL_BIN_RELEASE>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\Linux\Release</UI_PAL_BIN_RELEASE>
+		<UI_PAL_BIN_DEBUG>$(RootDirectoryPath)\Source\Build\Alternet.UI.Pal\bin\Linux\Debug</UI_PAL_BIN_DEBUG>
 	</PropertyGroup>		
     <!-- ========================================== -->
 </Project>
