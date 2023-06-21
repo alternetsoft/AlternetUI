@@ -11,6 +11,6 @@
     <license type="file">License.txt</license>
     <icon>icon.png</icon>
     <readme>readme.md</readme>
-    <copyright>Copyright © 2021 AlterNET Software</copyright>
+    <copyright>Copyright © 2021-2023 AlterNET Software</copyright>
   </metadata>
 </package>
