@@ -22,7 +22,7 @@ namespace Alternet.UI
             Environment.NewLine,
         };
 
-        private static string StringFormatJs = "yyyy-MM-ddTHH:mm:ss.fffK";
+        public static string StringFormatJs = "yyyy-MM-ddTHH:mm:ss.fffK";
         private static bool cmdLineTest = false;
         private static bool cmdLineLog = false;
         private static bool cmdLineNoMfcDedug = false;
@@ -51,6 +51,17 @@ namespace Alternet.UI
         {
             if (File.Exists(MyLogFilePath))
                 File.Delete(MyLogFilePath);
+        }
+
+        public static string ToString(string[] args)
+        {
+            string result = string.Empty;
+            for (int i = 1; i < args.Length; i++)
+            {
+                string text = args[i];
+                result += text;
+            }
+            return result;
         }
 
         public static void ParseCmdLine(string[] args)
