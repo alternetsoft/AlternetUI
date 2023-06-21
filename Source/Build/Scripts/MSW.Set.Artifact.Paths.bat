@@ -12,8 +12,8 @@ set UI_PAL_LINUX_ARTIFACTS_PATH=%UI_LINUX_ARTIFACTS_PATH%\PAL
 
 :: Build bin directories.
 
-set UI_WINDOWS_PAL_BIN=%SCRIPT_HOME%\..\Alternet.UI.Pal\bin\Windows\Release
-set UI_MACOS_PAL_BIN=%SCRIPT_HOME%\..\Alternet.UI.Pal\bin\MacOS\Release
-set UI_LINUX_PAL_BIN=%SCRIPT_HOME%\..\Alternet.UI.Pal\bin\Linux\Release
+set UI_WINDOWS_PAL_BIN=%SCRIPT_HOME%\..\Alternet.UI.Pal\bin\Windows\x64\Release
+set UI_MACOS_PAL_BIN=%SCRIPT_HOME%\..\Alternet.UI.Pal\bin\MacOS\x64\Release
+set UI_LINUX_PAL_BIN=%SCRIPT_HOME%\..\Alternet.UI.Pal\bin\Linux\x64\Release
 
 exit /b 0
