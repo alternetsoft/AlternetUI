@@ -34,8 +34,7 @@ namespace ControlsTest
         {
             WebBrowser.SetDefaultFSNameMemory("memory");
             WebBrowser.SetDefaultFSNameArchive(ZipSchemeName);
-            //WebBrowser.SetDefaultUserAgent("Mozilla");
-
+            // WebBrowser.SetDefaultUserAgent("Mozilla");
             SetBackendPathSmart("Edge");
 
             string[] commandLineArgs = Environment.GetCommandLineArgs();
@@ -309,6 +308,16 @@ namespace ControlsTest
             }
         }
 
+        private static string GetPandaFileName()
+        {
+            return CommonUtils.GetAppFolder() + "Html/SampleArchive/Html/page1.html";
+        }
+
+        private static string GetPandaUrl()
+        {
+            return CommonUtils.PrepareFileUrl(GetPandaFileName());
+        }
+
         private static void SetBackendPathSmart(string folder)
         {
             var os = Environment.OSVersion;
@@ -514,8 +523,12 @@ namespace ControlsTest
             var backendVersion = WebBrowser.GetBackendVersionString(WebBrowser1.Backend);
             if (this.IsIEBackend())
                 backendVersion = "Internet Explorer";
-            HeaderLabel.Text = headerText + " : " + e.Text + " : "
-                + backendVersion;
+
+            Assembly thisAssem = typeof(WebBrowser).Assembly;
+            AssemblyName thisAssemName = thisAssem.GetName();
+            Version? ver = thisAssemName.Version;
+
+            HeaderLabel.Text = $"{headerText} {ver} : {e.Text} : {backendVersion}";
         }
 
         private void GoButton_Click(object sender, EventArgs e)
@@ -707,17 +720,6 @@ namespace ControlsTest
             testActions.Add(name, action!);
             ListBox1.Items.Add(name);
         }
-
-        private string GetPandaFileName()
-        {
-            return CommonUtils.GetAppFolder() + "Html/SampleArchive/Html/page1.html";
-        }
-
-        private string GetPandaUrl()
-        {
-            return CommonUtils.PrepareFileUrl(GetPandaFileName());
-        }
-
         private void AddTestActions()
         {
             AddTestAction(
@@ -826,6 +828,8 @@ namespace ControlsTest
 
         private class MethodCaller
         {
+            private static readonly object[] Prm = Array.Empty<object>();
+
             private readonly MethodInfo? method;
             private readonly object? parent;
             private readonly Action? action;
@@ -854,8 +858,7 @@ namespace ControlsTest
                     return;
                 }
 
-                object[] prm = new object[0];
-                method?.Invoke(parent, prm);
+                method?.Invoke(parent, Prm);
             }
         }
 
