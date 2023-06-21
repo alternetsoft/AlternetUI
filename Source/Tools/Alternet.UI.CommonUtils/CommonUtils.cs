@@ -56,7 +56,7 @@ namespace Alternet.UI
         public static string ToString(string[] args)
         {
             string result = string.Empty;
-            for (int i = 1; i < args.Length; i++)
+            for (int i = 0; i < args.Length; i++)
             {
                 string text = args[i];
                 result += text;
@@ -66,7 +66,7 @@ namespace Alternet.UI
 
         public static void ParseCmdLine(string[] args)
         {
-            for (int i = 1; i < args.Length; i++)
+            for (int i = 0; i < args.Length; i++)
             {
                 string text = args[i];
 

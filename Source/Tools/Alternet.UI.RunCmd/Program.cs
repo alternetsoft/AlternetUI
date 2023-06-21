@@ -6,7 +6,9 @@ Console.WriteLine("Copyright © 2023 AlterNET Software");
 
 CommonUtils.ParseCmdLine(args);
 
-Console.WriteLine($"Arguments: {CommonUtils.ToString(args)}");
+var s = CommonUtils.ToString(args);
+
+Console.WriteLine($"Arguments: {s}");
 Console.WriteLine();
 
 

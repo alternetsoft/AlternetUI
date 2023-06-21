@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Alternet.UI.RunCmd": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=help"
+    }
+  }
+}
