@@ -26,7 +26,7 @@ namespace Alternet.UI
         private static bool cmdLineTest = false;
         private static bool cmdLineLog = false;
         private static bool cmdLineNoMfcDedug = false;
-        private static string? cmdLineExecCommands = null;
+        public static string? cmdLineExecCommands = null;
 
         public static bool CmdLineTest => cmdLineTest;
 
@@ -59,7 +59,7 @@ namespace Alternet.UI
             for (int i = 0; i < args.Length; i++)
             {
                 string text = args[i];
-                result += text;
+                result += "["+text+"] ";
             }
             return result;
         }
