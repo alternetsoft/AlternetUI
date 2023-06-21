@@ -64,7 +64,23 @@
         <Delete Files="@(FilesToDelete)"/>
     </Target>
     <!-- ========================================== -->
+	<Target Name="RunVSWhere">
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)" 
+			Command="&quot;%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe&quot; -latest -requires Microsoft.Component.MSBuild -find &quot;MSBuild\**\Bin\MSBuild.exe&quot;" 
+			ConsoleToMSBuild="true">
+			<Output TaskParameter="ConsoleOutput" ItemName="OutputOfRunVSWhere" />
+		</Exec>
+
+		<Message Text="RunVSWhere: %(OutputOfRunVSWhere.Identity)" Importance="high"  Condition="false"/>	
+		<PropertyGroup>
+					   <CppMsBuildPath>%(OutputOfRunVSWhere.Identity)</CppMsBuildPath>
+		</PropertyGroup>			 
+		<Message Text="FOUND_MSBUILD_PATH: $(FOUND_MSBUILD_PATH)" Importance="high" Condition="false"/>	
+	</Target>		
+    <!-- ========================================== -->
     <Target Name="BuildNative_Windows" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+		<CallTarget Targets="RunVSWhere" />	
         <CallTarget Targets="BuildNative_Windows_X86;BuildNative_Windows_X64;BuildNative_Windows_CleanupAfterBuild" />
     </Target>
     <!-- ========================================== -->
