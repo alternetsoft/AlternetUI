@@ -47,12 +47,21 @@
 	<CallTarget Targets="DownloadAndExtractWebView"/>
     </Target>
     <!-- ========================================== -->
-    <Target Name="DownloadAndExtractWxWidgetsBinWindows">
-        <CallTarget Targets="CleanWxWidgets" />
-		
-        <DownloadFile Condition="!Exists($(WxWidgetsDownloadTargetPath))"
+	<Target Name="DownloadWxWidgetsBinWindows">
+        <DownloadFile 
             SourceUrl="$(WxWidgetsBinDownloadUrlWindows)"
             DestinationFolder="$(WxWidgetsDownloadDirectory)" DestinationFileName="$(WxWidgetsDownloadFileName)" />
+	</Target>
+
+	<Target Name="DownloadWxWidgetsBinWindows2">
+        <Exec
+            WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
+            Command="dotnet run -- -r=download Url=&quot;$(WxWidgetsBinDownloadUrlWindows)&quot; Path=&quot;$(WxWidgetsDownloadDirectory)/$(WxWidgetsDownloadFileName)&quot;" />
+	</Target>
+    <!-- ========================================== -->
+    <Target Name="DownloadAndExtractWxWidgetsBinWindows">
+        <CallTarget Targets="CleanWxWidgets" />
+        <CallTarget Targets="DownloadWxWidgetsBinWindows2" Condition="!Exists($(WxWidgetsDownloadTargetPath))"/>
         <Unzip SourceFiles="$(WxWidgetsDownloadTargetPath)" DestinationFolder="$(WxWidgetsDownloadDirectory)" />
         <Delete Files="$(WxWidgetsDownloadTargetPath)"/>
     </Target>
