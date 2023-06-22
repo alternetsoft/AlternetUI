@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI", "Alternet.UI\Alternet.UI.csproj", "{04851FA9-146A-4D00-84C6-3D20040289D0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{79F2529C-C711-457A-9087-325C333CDE60} = {79F2529C-C711-457A-9087-325C333CDE60}
+		{8EB9020C-A880-4F8A-BA24-BC414E85F3A5} = {8EB9020C-A880-4F8A-BA24-BC414E85F3A5}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Alternet.UI.Pal", "Alternet.UI.Pal\Alternet.UI.Pal.vcxproj", "{79F2529C-C711-457A-9087-325C333CDE60}"
@@ -31,9 +32,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrawingSample", "Samples\DrawingSample\DrawingSample.csproj", "{9ED9FA1D-2AA3-4813-A100-DE02D541B759}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Build.Tasks", "Alternet.UI.Build.Tasks\Alternet.UI.Build.Tasks.csproj", "{D26BAA1B-E01F-4F84-9991-7C8E7C9387F2}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8EB9020C-A880-4F8A-BA24-BC414E85F3A5} = {8EB9020C-A880-4F8A-BA24-BC414E85F3A5}
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04. Tools", "04. Tools", "{329A8C06-CA7B-42DF-8261-84A5E289290B}"
 EndProject
@@ -54,14 +52,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.PublicSourceGenerator", "Tools\PublicSourceGenerator\Alternet.UI.PublicSourceGenerator.csproj", "{3E6A8209-1A60-4938-A9B5-D5BFE95D417B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomControlsSample", "Samples\CustomControlsSample\CustomControlsSample.csproj", "{5D0E5A4C-2598-474B-951F-1EFFA0BE605E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{79F2529C-C711-457A-9087-325C333CDE60} = {79F2529C-C711-457A-9087-325C333CDE60}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBindingSample", "Samples\DataBindingSample\DataBindingSample.csproj", "{8AE61E41-E815-4A77-9D8D-84821DECE00B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{79F2529C-C711-457A-9087-325C333CDE60} = {79F2529C-C711-457A-9087-325C333CDE60}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LayoutSample", "Samples\LayoutSample\LayoutSample.csproj", "{EA114610-DF42-47A3-83E3-9908EEA78125}"
 EndProject
@@ -83,10 +75,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThreadingSample", "Samples\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrintingSample", "Samples\PrintingSample\PrintingSample.csproj", "{6EA6A5B1-9350-4BE6-9FED-1741D0DA0553}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05. Tests", "05. Tests", "{03205F89-3DAE-4203-A718-8BEDE6A599CA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlsTest", "Tests\ControlsTest\ControlsTest.csproj", "{504321EE-710B-4218-BFBC-D20236F5D017}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{96B74777-AF68-438D-90CC-B80FA6A214B9}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -97,7 +85,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.CommonUtils", "Tools\Alternet.UI.CommonUtils\Alternet.UI.CommonUtils.csproj", "{BF266CED-AA64-41F8-B86C-72697B55B5A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alternet.UI.RunCmd", "Tools\Alternet.UI.RunCmd\Alternet.UI.RunCmd.csproj", "{095C1DB0-1DF4-4549-B21B-9327FF2EAD06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.RunCmd", "Tools\Alternet.UI.RunCmd\Alternet.UI.RunCmd.csproj", "{095C1DB0-1DF4-4549-B21B-9327FF2EAD06}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlsTest", "Samples\ControlsTest\ControlsTest.csproj", "{237A7C84-F2F8-485B-A153-D6B61805028F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -433,18 +423,6 @@ Global
 		{6EA6A5B1-9350-4BE6-9FED-1741D0DA0553}.Release|x64.Build.0 = Release|x64
 		{6EA6A5B1-9350-4BE6-9FED-1741D0DA0553}.Release|x86.ActiveCfg = Release|x86
 		{6EA6A5B1-9350-4BE6-9FED-1741D0DA0553}.Release|x86.Build.0 = Release|x86
-		{504321EE-710B-4218-BFBC-D20236F5D017}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{504321EE-710B-4218-BFBC-D20236F5D017}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{504321EE-710B-4218-BFBC-D20236F5D017}.Debug|x64.ActiveCfg = Debug|x64
-		{504321EE-710B-4218-BFBC-D20236F5D017}.Debug|x64.Build.0 = Debug|x64
-		{504321EE-710B-4218-BFBC-D20236F5D017}.Debug|x86.ActiveCfg = Debug|x86
-		{504321EE-710B-4218-BFBC-D20236F5D017}.Debug|x86.Build.0 = Debug|x86
-		{504321EE-710B-4218-BFBC-D20236F5D017}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{504321EE-710B-4218-BFBC-D20236F5D017}.Release|Any CPU.Build.0 = Release|Any CPU
-		{504321EE-710B-4218-BFBC-D20236F5D017}.Release|x64.ActiveCfg = Release|x64
-		{504321EE-710B-4218-BFBC-D20236F5D017}.Release|x64.Build.0 = Release|x64
-		{504321EE-710B-4218-BFBC-D20236F5D017}.Release|x86.ActiveCfg = Release|x86
-		{504321EE-710B-4218-BFBC-D20236F5D017}.Release|x86.Build.0 = Release|x86
 		{BF266CED-AA64-41F8-B86C-72697B55B5A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF266CED-AA64-41F8-B86C-72697B55B5A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF266CED-AA64-41F8-B86C-72697B55B5A1}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -469,6 +447,18 @@ Global
 		{095C1DB0-1DF4-4549-B21B-9327FF2EAD06}.Release|x64.Build.0 = Release|Any CPU
 		{095C1DB0-1DF4-4549-B21B-9327FF2EAD06}.Release|x86.ActiveCfg = Release|Any CPU
 		{095C1DB0-1DF4-4549-B21B-9327FF2EAD06}.Release|x86.Build.0 = Release|Any CPU
+		{237A7C84-F2F8-485B-A153-D6B61805028F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{237A7C84-F2F8-485B-A153-D6B61805028F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{237A7C84-F2F8-485B-A153-D6B61805028F}.Debug|x64.ActiveCfg = Debug|x64
+		{237A7C84-F2F8-485B-A153-D6B61805028F}.Debug|x64.Build.0 = Debug|x64
+		{237A7C84-F2F8-485B-A153-D6B61805028F}.Debug|x86.ActiveCfg = Debug|x86
+		{237A7C84-F2F8-485B-A153-D6B61805028F}.Debug|x86.Build.0 = Debug|x86
+		{237A7C84-F2F8-485B-A153-D6B61805028F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{237A7C84-F2F8-485B-A153-D6B61805028F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{237A7C84-F2F8-485B-A153-D6B61805028F}.Release|x64.ActiveCfg = Release|x64
+		{237A7C84-F2F8-485B-A153-D6B61805028F}.Release|x64.Build.0 = Release|x64
+		{237A7C84-F2F8-485B-A153-D6B61805028F}.Release|x86.ActiveCfg = Release|x86
+		{237A7C84-F2F8-485B-A153-D6B61805028F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -504,9 +494,9 @@ Global
 		{63D2E9D2-7075-4F02-ADE7-67D564498ACA} = {B3B7BFD7-CEFB-46C2-BAF5-710D858DE73B}
 		{D6666B5A-4210-4692-B048-74A5EB27F970} = {B3B7BFD7-CEFB-46C2-BAF5-710D858DE73B}
 		{6EA6A5B1-9350-4BE6-9FED-1741D0DA0553} = {B3B7BFD7-CEFB-46C2-BAF5-710D858DE73B}
-		{504321EE-710B-4218-BFBC-D20236F5D017} = {03205F89-3DAE-4203-A718-8BEDE6A599CA}
 		{BF266CED-AA64-41F8-B86C-72697B55B5A1} = {329A8C06-CA7B-42DF-8261-84A5E289290B}
 		{095C1DB0-1DF4-4549-B21B-9327FF2EAD06} = {329A8C06-CA7B-42DF-8261-84A5E289290B}
+		{237A7C84-F2F8-485B-A153-D6B61805028F} = {B3B7BFD7-CEFB-46C2-BAF5-710D858DE73B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BD17D7DB-AEF9-418B-81F8-8E0920FC6FF7}

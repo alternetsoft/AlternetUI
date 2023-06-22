@@ -40,9 +40,9 @@
             DocumentTitleChanged="WebBrowser1_TitleChanged"
 			/>
 
-    <!-- ==================================== -->
+    <!-- ==================================== -->    
     <StackPanel  Grid.Row="3" Grid.Column="0"  Orientation="Horizontal">
-        <TextBox Width="300" Margin="0,10,0,5" Name="FindTextBox" Text="panda"/>
+        <TextBox Width="300" Margin="0,10,0,5" Name="FindTextBox" Text="panda3"/>
         <Button Text="Find" Margin="0,10,0,5" Click="FindButton_Click"/>
       </StackPanel>
     <!-- ==================================== -->

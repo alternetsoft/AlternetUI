@@ -12,8 +12,8 @@ namespace ControlsSample
         private const string SItemGoogle = "Google Search";
         private const string SItemPDF = "PDF Document";
         private const string SItemImage = "View Image";
-
-        private static string? headerText;
+                                                     
+        private static string? headerText;    
 
         private IPageSite? site;
         private bool historyCleared = false;

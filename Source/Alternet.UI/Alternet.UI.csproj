@@ -33,23 +33,23 @@
     <DefineConstants>$(DefineConstants);FEATURE_WINDOWS_SYSTEM_COLORS</DefineConstants>
   </PropertyGroup>
 
-	<PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-		<TargetFrameworks>net7.0;net6.0;net462;net481</TargetFrameworks>
-	</PropertyGroup>
+  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+    <TargetFrameworks>net7.0;net6.0;net462;net481</TargetFrameworks>
+  </PropertyGroup>
 
-	<PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-		<TargetFrameworks>net7.0;net6.0</TargetFrameworks>
-	</PropertyGroup>
+  <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
+    <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
+  </PropertyGroup>
 
-	<ItemGroup>
+  <ItemGroup>
     <Compile Remove="build\**" />
     <EmbeddedResource Remove="build\**" />
     <None Remove="build\**" />
   </ItemGroup>
 
-	<ItemGroup>
-	  <Compile Remove="System\DateTime.cs" />
-	</ItemGroup>
+  <ItemGroup>
+    <Compile Remove="System\DateTime.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Remove="Application\ThreadException\Resources\ErrorImage.png" />
@@ -74,8 +74,8 @@
   <ItemGroup>
     <PackageReference Include="System.Memory" Version="4.5.4" />
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
-	  <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-	  <PackageReference Include="System.IO.Packaging" Version="6.0.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    <PackageReference Include="System.IO.Packaging" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(';NETCOREAPP'))">
@@ -109,37 +109,58 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-	  <None Include="..\Alternet.UI.Build.Tasks\bin\Release\net6.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net6.0" />
-	  <None Include="..\Alternet.UI.Build.Tasks\bin\Release\net7.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net7.0" />
-	  <None Include="..\Alternet.UI.Build.Tasks\bin\Release\net462\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net462" />
+    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\net6.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net6.0" />
+    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\net7.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net7.0" />
+    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\net462\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net462" />
+    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\net481\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net481" />
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(';NETFRAMEWORK'))">
     <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup Condition="$(DefineConstants.Contains(';NETCOREAPP'))">
-	  <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
   </ItemGroup>
 
-	<ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Update="Resources\Strings.resx">
       <Generator>MSBuild:_GenerateResxSource</Generator>
     </EmbeddedResource>
   </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 
-    <ItemGroup>
+  <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="System\" />
+  </ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="System\" />
-	</ItemGroup>
+  <!-- ================================================= -->
+  <Target Name="CreateAllClassesXml" AfterTargets="AfterBuild" 
+          Condition="'$(TargetFramework)' != ''">
+
+    <PropertyGroup>
+      <ApiInfoXmlFilePath>$(BaseOutputPath)\Alternet.UI.AllClasses.xml</ApiInfoXmlFilePath>
+      <ApiInfoCollectorToolPath>$(MSBuildThisFileDirectory)\..\Alternet.UI.Build.Tasks\\Alternet.UI.Build.Tasks.ApiInfoCollector\bin\$(Configuration)\net6.0\Alternet.UI.Build.Tasks.ApiInfoCollector</ApiInfoCollectorToolPath>
+      <ApiInfoCollectorInputAssemblyPath>$(BaseOutputPath)\$(Configuration)\net6.0\Alternet.UI.dll</ApiInfoCollectorInputAssemblyPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+      <ApiInfoCollectorCommand>&quot;$(ApiInfoCollectorToolPath).exe&quot; &quot;$(ApiInfoCollectorInputAssemblyPath)&quot; &quot;$(ApiInfoXmlFilePath)&quot;</ApiInfoCollectorCommand>
+    </PropertyGroup>
+    <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
+      <ApiInfoCollectorCommand>dotnet &quot;$(ApiInfoCollectorToolPath).dll&quot; &quot;$(ApiInfoCollectorInputAssemblyPath)&quot; &quot;$(ApiInfoXmlFilePath)&quot;</ApiInfoCollectorCommand>
+    </PropertyGroup>
+    <Message Text="=====>>>>>       $(ApiInfoCollectorCommand)" Importance="high" Condition="true"/>
+    <Exec Command="$(ApiInfoCollectorCommand)"/>
+  </Target>
+  <!-- ================================================= -->
 </Project>

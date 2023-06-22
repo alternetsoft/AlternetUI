@@ -6,7 +6,7 @@
       <LangVersion>latest</LangVersion>
       <Nullable>enable</Nullable>
       <ApplicationIcon>../../../Media/AlternetUI.ico</ApplicationIcon>
-    </PropertyGroup>
+    </PropertyGroup>                 
 
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
         <TargetFrameworks>net7.0;net6.0;net462</TargetFrameworks>
