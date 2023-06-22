@@ -144,6 +144,7 @@
   </ItemGroup>
 
   <!-- ================================================= -->
+  <!-- remove .. in path -->
   <Target Name="CreateAllClassesXml" AfterTargets="AfterBuild" 
           Condition="'$(TargetFramework)' != ''">
 
@@ -160,7 +161,7 @@
       <ApiInfoCollectorCommand>dotnet &quot;$(ApiInfoCollectorToolPath).dll&quot; &quot;$(ApiInfoCollectorInputAssemblyPath)&quot; &quot;$(ApiInfoXmlFilePath)&quot;</ApiInfoCollectorCommand>
     </PropertyGroup>
     <Message Text="=====>>>>>       $(ApiInfoCollectorCommand)" Importance="high" Condition="true"/>
-    <Exec Command="$(ApiInfoCollectorCommand)"/>
+    <Exec Command="$(ApiInfoCollectorCommand)" Condition="false"/>
   </Target>
   <!-- ================================================= -->
 </Project>
