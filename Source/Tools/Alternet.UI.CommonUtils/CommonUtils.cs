@@ -209,6 +209,26 @@ namespace Alternet.UI
                 File.Delete(s);
         }
 
+        public static bool ProcessStart(string filePath, string args, string folder)
+        {
+            Process process = new Process();
+            process.StartInfo.Verb = "open";
+            process.StartInfo.FileName = filePath;
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.Arguments = args;
+            process.StartInfo.WorkingDirectory = folder;
+            try
+            {
+                process.Start();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public static void CreateFileWithExt(string ext, string data = "")
         {
             var s = GetFileWithExt(ext);
