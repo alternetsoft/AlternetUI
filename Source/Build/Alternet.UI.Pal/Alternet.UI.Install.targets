@@ -16,7 +16,8 @@
 		</ItemGroup>
 		<PropertyGroup>
 			<RmDirCommand Condition="$([MSBuild]::IsOsPlatform('Windows'))">rmdir /s /q</RmDirCommand>
-			<RmDirCommand Condition="!$([MSBuild]::IsOsPlatform('Windows'))">rm -rf</RmDirCommand>
+			<RmDirCommand Condition="$([MSBuild]::IsOsPlatform('Linux'))">rm -rf</RmDirCommand>
+			<RmDirCommand Condition="$([MSBuild]::IsOsPlatform('OSX'))">rm -r</RmDirCommand>
 		</PropertyGroup>
 		<Message Text="Clean: %(CsProjFolders.FullPath)" Importance="high"
 		Condition="Exists(%(CsProjFolders.FullPath))"/>
