@@ -1,56 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <doc>
-	<!--==============================================-->
-	<WebBrowser>
-		<summary>
-			This control may be used to render full featured web documents. 
-			It supports using multiple backends, corresponding to different 
-			implementations of the same functionality.
-		</summary>
-		<remarks>
-			<para>
-				Each backend is a full rendering engine (Internet Explorer, Edge or WebKit). 
-				This allows the correct viewing of complex web pages with full JavaScript 
-				and CSS support. Under macOS and Unix platforms a single backend is provided 
-				(WebKit-based). Under MSW both the old IE backend and the new Edge 
-				backend can be used. 
-			</para>
-			<para>
-				WebBrowser has many asynchronous methods. They return immediately and 
-				perform their work in the background. This includes functions such as 
-				<see cref="Reload()"/> and <see cref="LoadURL"/>. 
-			</para>
-			<para>
-				To receive notification of the progress and completion of these functions
-				you need to handle the events that are provided. 
-				Specifically <see cref="Loaded"/> event notifies when the page or a sub-frame
-				has finished loading and <see cref="Error"/> event notifies that an 
-				error has occurred.
-			</para>
-		</remarks>
-	</WebBrowser>
-	<!--==============================================-->
-	<CanZoomIn>
-		<summary>
-			Gets a value indicating whether the zoom factor of the page can be increased,
-			which allows the <see cref="ZoomIn"/> method to succeed.
-		</summary>
-		<returns>
-			<see langword="true"/> if the web page can be zoomed in;
-			otherwise, <see langword="false"/>.
-		</returns>
-	</CanZoomIn>
+<!--==============================================-->
+<WebBrowser>
+<summary>
+This control may be used to render full featured web documents. 
+It supports using multiple backends, corresponding to different 
+implementations of the same functionality.
+</summary>
+<remarks>
+<para>
+Each backend is a full rendering engine (Internet Explorer, Edge or WebKit). 
+This allows the correct viewing of complex web pages with full JavaScript 
+and CSS support. Under macOS and Unix platforms a single backend is provided 
+(WebKit-based). Under MSW both the old IE backend and the new Edge 
+backend can be used. 
+</para>
+<para>
+WebBrowser has many asynchronous methods. They return immediately and 
+perform their work in the background. This includes functions such as 
+<see cref="Reload()"/> and <see cref="LoadURL"/>. 
+</para>
+<para>
+To receive notification of the progress and completion of these functions
+you need to handle the events that are provided. 
+Specifically <see cref="Loaded"/> event notifies when the page or a sub-frame
+has finished loading and <see cref="Error"/> event notifies that an 
+error has occurred.
+</para>
+</remarks>
+</WebBrowser>
+<!--==============================================-->
+<CanZoomIn>
+<summary>
+Gets a value indicating whether the zoom factor of the page can be increased,
+which allows the <see cref="ZoomIn"/> method to succeed.
+</summary>
+<returns>
+<see langword="true"/> if the web page can be zoomed in;
+otherwise, <see langword="false"/>.
+</returns>
+</CanZoomIn>
 <!--==============================================-->
 <SetBackendPath>
 <summary>
-    Sets path to a fixed version of the WebView2 Edge runtime.
+Sets path to a fixed version of the WebView2 Edge runtime.
 </summary>
 <param name="path">
-    Path to an extracted fixed version of the WebView2 Edge runtime.
+Path to an extracted fixed version of the WebView2 Edge runtime.
 </param>
 <param name="isRelative">
-    <see langword = "true"/> if specified path is relative to the application 
-    folder; otherwise, <see langword = "false"/>.
+<see langword = "true"/> if specified path is relative to the application 
+folder; otherwise, <see langword = "false"/>.
 </param>
 <example>
 <code language="C#">
@@ -59,894 +59,893 @@ SetBackendPath("Edge",true);
 </example>
 </SetBackendPath>
 <!--==============================================-->
-	<CrtSetDbgFlag>
-        <summary>
-            Retrieves or modifies the state of the debug flag to control the 
-            allocation behavior of the debug heap manager. 
-        </summary>
-		<remarks>
-			This is for debug purposes.
-            CrtSetDbgFlag(0) allows to turn off debug output with heap manager information.
-		</remarks>
-	</CrtSetDbgFlag>
-	<!--==============================================-->
-	<Is64Bit>
-        <summary>
-			Gets a value indicating whether the WebBrowser runs on a 64 bit platform.
-        </summary>
-		<returns>
-			<see langword="true"/> if the WebBrowser runs on a 64 bit platform;
-			otherwise, <see langword="false"/>.
-		</returns>
-	</Is64Bit>
-	<!--==============================================-->
-	<Events>
-		<!--==============================================-->
-		<Navigated>
-			 <summary>
-				Occurs when the WebBrowser control has navigated to a new web page 
-				and has begun loading it. 
-			 </summary>
-			 <remarks>
-				 <para>
-					 This event may not be canceled. Note that 
-					 if the displayed HTML document has several frames, one such event will
-					 be generated per frame.
-				 </para>
-				 <para>
-					 Handle the Navigated event to receive notification when the WebBrowser
-					 control has navigated to a new web page.
-				 </para>
-				 <para>
-					 When the Navigated event occurs, the new web page has begun loading, 
-					 which means you can access the loaded content through the WebBrowser properties and methods.
-				 </para>
-				 <para>
-					 Handle the <see cref="Loaded"/> event to receive notification when the
-					 WebBrowser control finishes loading the new document.
-				 </para>
-				 <para>
-					 You can also receive notification before navigation begins by handling the
-					 <see cref="Navigating"/> event. Handling this event lets you cancel navigation if 
-					 certain conditions have not been met. For example, the user has not 
-					 completely filled out a form.
-				 </para>
-			 </remarks>
-		</Navigated>
-		<!--==============================================-->
-		<Navigating>
-			 <summary>
-				Occurs before the WebBrowser control navigates to a new web page.
-			 </summary>
-            <remarks>		    
-				 <para>
-					 This event may be canceled to prevent navigating to this resource. 
-					 Note that if the displayed HTML document has several frames, one such 
-					 event will be generated per frame.
-				 </para>
-				 <para>
-					 You can handle the Navigating event to cancel navigation if certain 
-					 conditions 
-					 have not been met, for example, when the user has not completely filled 
-					 out a form. To cancel navigation, set the 
-					 <see cref="System.ComponentModel.CancelEventArgs.Cancel"/> property of the events
-					  object passed to the event handler to <see langword = "true"/>. 
-				 </para>
-				 <para>
-					 Handle the <see cref="Navigated"/> event to receive notification when the WebBrowser 
-					 control finishes navigation and has begun loading the document at the
-					 new location.
-				 </para>
-				 <para>
-					 Handle the <see cref="Loaded"/> event to receive 
-					 notification when the WebBrowser control finishes loading the new document.
-				 </para>
-				 <para>
-					 You can also use <see cref="WebBrowserEventArgs"/> object to retrieve the URL of the 
-					 new document through the <see cref="WebBrowserEventArgs.Url"/> property. If the new 
-					 document will be displayed in a Web page frame, you can retrieve the 
-					 name of the frame through the 
-					 <see cref="WebBrowserEventArgs.TargetFrameName"/> property.
-				 </para>
-			</remarks>	
-		</Navigating>
-		<!--==============================================-->
-		<Loaded>
-			<summary>
-				<para>
-					Occurs when the WebBrowser control finishes loading a document.
-				</para>
-			</summary>
-			<remarks>
-				<para>
-					Handle the Loaded event to receive notification when the new 
-					document finishes loading. When the Loaded event occurs, the
-					new document is fully loaded, which means you can access its
-					contents through WebBrowser properties and methods.
-				</para>
-				<para>
-					To receive notification before navigation begins, handle the 
-					<see cref="Navigating"/> event. Handling this event lets you cancel
-					navigation if certain conditions have not been met,
-					for example, when the user has not completely filled out a form.
-				</para>
-				<para>
-					Handle the <see cref="Navigated"/> event to receive notification when the 
-					WebBrowser control finishes navigation and has begun loading
-					the document at the new location.
-				</para>
-				<para>
-					Note that if the displayed HTML document has several 
-					frames, one such event will be generated per frame.
-				</para>
-			</remarks>
-		</Loaded>
-		<!--==============================================-->
-		<Error>
-			<summary>
-				<para>
-					Occurs when a navigation error occurs.
-				</para>
-			</summary>
-			<remarks>
-				<para>
-					The <see cref="WebBrowserEventArgs.NavigationError"/> will contain an error type. 
-					The <see cref="WebBrowserEventArgs.Text"/> may contain a backend-specific
-					more precise error message or code.
-				</para>
-			</remarks>
-		</Error>
-		<!--==============================================-->
-		<NewWindow>
-			<summary>
-				<para>
-					Occurs when a new browser window is created.
-				</para>
-			</summary>
-			<remarks>
-				<para>
-					You must handle this event if you want anything to happen, for example to 
-					load the page in a new window or tab.
-				</para>
-		    </remarks>
-		</NewWindow>
-		<!--==============================================-->
-		<DocumentTitleChanged>
-			<summary>
-				Occurs when the web page title changes. 
-				Use <see cref="WebBrowserEventArgs.Text"/> to get the title.
-			</summary>
-			<remarks>
-				You can handle this event to update the title bar of your 
-				application with the current title of the loaded document.
-			</remarks>
-		</DocumentTitleChanged>
-		<!--==============================================-->
-		<FullScreenChanged>
-			<summary>
-				Occurs when the the page wants to enter or leave fullscreen. 
-			</summary>
-			<remarks>
-				Use the <see cref="WebBrowserEventArgs.IntVal"/> property of the event 
-				arguments to get the status. 
-				Not implemented for the IE backend.
-		    </remarks>
-		</FullScreenChanged>
-		<!--==============================================-->
-		<ScriptMessageReceived>
-			<summary>
-				Occurs when your application receives message from JS code of the loaded web page.
-			</summary>
-			<remarks>
-				For usage details see <see cref="WebBrowser.AddScriptMessageHandler"/>.
-		    </remarks>
-		</ScriptMessageReceived>
-		<!--==============================================-->
-		<ScriptResult>
-			<summary>
-				Occurs when your application receives results after 
-				<see cref="M:Alternet.UI.WebBrowser.RunScriptAsync"/> call.
-			</summary>
-			<remarks>
-				For usage details see description of RunScriptAsync method.
-		    </remarks>
-		</ScriptResult>
-		<!--==============================================-->
-		<BeforeBrowserCreate>
-			<summary>
-				Occurs after backend is created, but before actual browser
-				control creation. 
-			</summary>
-			<remarks>
-                You should not normally use it.
-		    </remarks>
-		</BeforeBrowserCreate>
-		<!--==============================================-->
-	</Events>
-	<!--==============================================-->
-	<ZoomIn>
-        <summary>
-            Increases the zoom factor of the page. 
-        </summary>
-        <remarks>
-            <para>
-			    The zoom factor is an arbitrary 
-                number that specifies how much to zoom (scale) the HTML document.
-			</para>
-            <para>
-			    Zoom scale in IE will be converted into zoom levels if ZoomType property 
-                is set to <see cref="WebBrowserZoomType.Text"/> value.
-			</para>
-        </remarks>
-	</ZoomIn>
-	<!--==============================================-->
-	<ZoomOut>
-        <summary>
-            Decreases the zoom factor of the page. 
-        </summary>
-        <remarks>
-            <para>
-			    The zoom factor is an arbitrary 
-                number that specifies how much to zoom (scale) the HTML document.
-			</para>
-            <para>
-                Zoom scale in IE will be converted into zoom levels if ZoomType property 
-                is set to <see cref="WebBrowserZoomType.Text"/> value.
-			</para>
-        </remarks>
-	</ZoomOut>
-	<!--==============================================-->
-	<NavigateToString>
-        <summary>
-            Sets the displayed page source to the contents of the given string.
-        </summary>
-        <remarks>
-            When using the IE backend you must wait for the current page to finish loading before 
-            calling this method. The baseURL parameter is not used in the IE and
-            and Edge backends.
-        </remarks>
-        <param name="html">
-            The string that contains the HTML data to display. If this parameter is null, 
-            WebBrowser navigates to a blank document. If value of this parameter is 
-			not in valid HTML 
-            format, it will be displayed as plain text.
-        </param>
-        <param name="baseUrl">
-            URL assigned to the HTML data, to be used to resolve relative paths, for instance.
-        </param>
-		<seealso cref="WebBrowser.NavigateToStream"/>
-		<seealso cref="WebBrowser.LoadURL"/>
-	</NavigateToString>
-	<!--==============================================-->
-	<NavigateToStream>
-        <summary>
-			Navigate to a Stream that contains the content for a document.
-        </summary>
-        <param name="stream">
-            The Stream that contains the content for a document.
-            If this parameter is null, WebBrowser navigates to a blank document.
-            If contents of the stream is not in a valid HTML format, it will 
-            be displayed as plain text.
-        </param>
-		<seealso cref="WebBrowser.NavigateToString"/>
-		<seealso cref="WebBrowser.LoadURL"/>
-	</NavigateToStream>
-	<!--==============================================-->
-	<Navigate_uri>
-        <summary>
-            Loads the document at the location indicated by the specified 
-            <see cref="System.Uri"/> into the WebBrowser control, 
-            replacing the previous document.
-        </summary>
-        <param name="url">
-            A <see cref="System.Uri"/> representing the URL of the document to load.
-            If this parameter is null, WebBrowser navigates to a blank document. 
-        </param>
-		<seealso cref="NavigateToStream"/>
-		<seealso cref="NavigateToString"/>
-		<seealso cref="LoadURL"/>
-	</Navigate_uri>
-	<!--==============================================-->
-	<Navigate_string>
-        <summary>
-            Loads the document at the specified Uniform Resource Locator (URL) 
-            into the WebBrowser control, replacing 
-            the previous document.
-        </summary>
-        <param name="urlString">
-            The URL of the document to load. If this parameter is null, WebBrowser 
-            navigates to a blank document. You must always specify protocol prefix
-            (https, file or other). Not all browser backends support
-            loading of the web pages without protocol prefix.
-        </param>
-		<seealso cref="NavigateToStream"/>
-		<seealso cref="NavigateToString"/>
-		<seealso cref="LoadURL"/>
-	</Navigate_string>
-	<!--==============================================-->
-	<ToInvokeScriptArg>
-        <summary>
-            Converts the value to the JSON string. 
-        </summary>
-		<remarks>
-			Used internally by <see cref="InvokeScriptAsync"/>.
-            String and DateTime values 
-            are returned enclosed in single quotes.
-		</remarks>
-	</ToInvokeScriptArg>
-	<!--==============================================-->
-	<ToInvokeScriptArgs>
-        <summary>
-            Converts the array of object values to the comma delimited JSON string. 
-        </summary>
-		<remarks>
-            Used internally by <see cref="InvokeScriptAsync"/>.
-            String and DateTime values 
-            are returned enclosed in single quotes.
-		</remarks>
-		<seealso cref="ToInvokeScriptArg"/>
-	</ToInvokeScriptArgs>
-	<!--==============================================-->
-	<InvokeScriptAsync>
-        <summary>
-            <para>
-            Executes the given JavaScript function asynchronously and returns the 
-			result via a <see cref="ScriptResult"/> event.
-            </para>
-        </summary>
-		<remarks>
-            <para>
-                The script result value can be retrieved via 
-                <see cref="WebBrowserEventArgs.Text"/> parameter of ScriptResult event args. 
-				If the execution fails
-                <see cref="WebBrowserEventArgs.IsError"/> will return <see langword = "true"/>. 
-                In this case additional script execution error information may be
-                available via <see cref="WebBrowserEventArgs.Text"/>.
-            </para>
-		</remarks>
-        <param name="scriptName">
-            The name of the script function to execute.
-        </param>
-        <param name="args">
-            The parameters to pass to the script function.
-        </param>
-        <param name="clientData">
-            Arbirary pointer to data that can be retrieved from the result event.
-			You can use IntPtr.Zero, new IntPtr(SomeInt) or some useful data in 
-			this parameter.
-        </param>
-		<seealso cref="WebBrowser.RunScriptAsync"/>
-	</InvokeScriptAsync>
-	<!--==============================================-->
-	<Source>
-        <summary>
-            Gets or sets the Uri of the current document hosted in the WebBrowser.
-        </summary>
-		<returns>
-			A <see cref="System.Uri"/> representing the URL of the current document.
-		</returns>
-	</Source>
-	<!--==============================================-->
-	<CanZoomOut>
-        <summary>
-            Gets a value indicating whether the zoom factor of the page can be decreased, 
-            which allows the <see cref="ZoomOut"/> method to succeed.
-        </summary>
-        <returns>
-            <see langword="true"/> if the web page can be zoomed out; 
-            otherwise, <see langword="false"/>.
-        </returns>         
-	</CanZoomOut>
-	<!--==============================================-->
-	<AccessToDevToolsEnabled>
-        <summary>
-            Enables or disables access to developer tools for the user. 
-        </summary>
-		<remarks>
-            Developer tools are disabled by default. 
-            This feature is not implemented for the IE backend.         
-		</remarks>
-		<returns>
-			<see langword="true"/> if the developer tools are enabled for the user;
-			otherwise, <see langword="false"/>.
-		</returns>
-	</AccessToDevToolsEnabled>
+<CrtSetDbgFlag>
+<summary>
+Retrieves or modifies the state of the debug flag to control the 
+allocation behavior of the debug heap manager. 
+</summary>
+<remarks>
+This is for debug purposes.
+CrtSetDbgFlag(0) allows to turn off debug output with heap manager information.
+</remarks>
+</CrtSetDbgFlag>
+<!--==============================================-->
+<Is64Bit>
+<summary>
+Gets a value indicating whether the WebBrowser runs on a 64 bit platform.
+</summary>
+<returns>
+<see langword="true"/> if the WebBrowser runs on a 64 bit platform;
+otherwise, <see langword="false"/>.
+</returns>
+</Is64Bit>
+<!--==============================================-->
+<Events>
+<!--==============================================-->
+<Navigated>
+<summary>
+Occurs when the WebBrowser control has navigated to a new web page 
+and has begun loading it. 
+</summary>
+<remarks>
+ <para>
+	 This event may not be canceled. Note that 
+	 if the displayed HTML document has several frames, one such event will
+	 be generated per frame.
+ </para>
+ <para>
+	 Handle the Navigated event to receive notification when the WebBrowser
+	 control has navigated to a new web page.
+ </para>
+ <para>
+	 When the Navigated event occurs, the new web page has begun loading, 
+	 which means you can access the loaded content through the WebBrowser properties and methods.
+ </para>
+ <para>
+	 Handle the <see cref="Loaded"/> event to receive notification when the
+	 WebBrowser control finishes loading the new document.
+ </para>
+ <para>
+	 You can also receive notification before navigation begins by handling the
+	 <see cref="Navigating"/> event. Handling this event lets you cancel navigation if 
+	 certain conditions have not been met. For example, the user has not 
+	 completely filled out a form.
+ </para>
+</remarks>
+</Navigated>
+<!--==============================================-->
+<Navigating>
+<summary>
+Occurs before the WebBrowser control navigates to a new web page.
+</summary>
+<remarks>		    
+ <para>
+	 This event may be canceled to prevent navigating to this resource. 
+	 Note that if the displayed HTML document has several frames, one such 
+	 event will be generated per frame.
+ </para>
+ <para>
+	 You can handle the Navigating event to cancel navigation if certain 
+	 conditions 
+	 have not been met, for example, when the user has not completely filled 
+	 out a form. To cancel navigation, set the 
+	 <see cref="System.ComponentModel.CancelEventArgs.Cancel"/> property of the events
+	  object passed to the event handler to <see langword = "true"/>. 
+ </para>
+ <para>
+	 Handle the <see cref="Navigated"/> event to receive notification when the WebBrowser 
+	 control finishes navigation and has begun loading the document at the
+	 new location.
+ </para>
+ <para>
+	 Handle the <see cref="Loaded"/> event to receive 
+	 notification when the WebBrowser control finishes loading the new document.
+ </para>
+ <para>
+	 You can also use <see cref="WebBrowserEventArgs"/> object to retrieve the URL of the 
+	 new document through the <see cref="WebBrowserEventArgs.Url"/> property. If the new 
+	 document will be displayed in a Web page frame, you can retrieve the 
+	 name of the frame through the 
+	 <see cref="WebBrowserEventArgs.TargetFrameName"/> property.
+ </para>
+</remarks>	
+</Navigating>
+<!--==============================================-->
+<Loaded>
+<summary>
+<para>
+	Occurs when the WebBrowser control finishes loading a document.
+</para>
+</summary>
+<remarks>
+<para>
+	Handle the Loaded event to receive notification when the new 
+	document finishes loading. When the Loaded event occurs, the
+	new document is fully loaded, which means you can access its
+	contents through WebBrowser properties and methods.
+</para>
+<para>
+	To receive notification before navigation begins, handle the 
+	<see cref="Navigating"/> event. Handling this event lets you cancel
+	navigation if certain conditions have not been met,
+	for example, when the user has not completely filled out a form.
+</para>
+<para>
+	Handle the <see cref="Navigated"/> event to receive notification when the 
+	WebBrowser control finishes navigation and has begun loading
+	the document at the new location.
+</para>
+<para>
+	Note that if the displayed HTML document has several 
+	frames, one such event will be generated per frame.
+</para>
+</remarks>
+</Loaded>
+<!--==============================================-->
+<Error>
+<summary>
+<para>
+	Occurs when a navigation error occurs.
+</para>
+</summary>
+<remarks>
+<para>
+	The <see cref="WebBrowserEventArgs.NavigationError"/> will contain an error type. 
+	The <see cref="WebBrowserEventArgs.Text"/> may contain a backend-specific
+	more precise error message or code.
+</para>
+</remarks>
+</Error>
+<!--==============================================-->
+<NewWindow>
+<summary>
+<para>
+	Occurs when a new browser window is created.
+</para>
+</summary>
+<remarks>
+<para>
+	You must handle this event if you want anything to happen, for example to 
+	load the page in a new window or tab.
+</para>
+</remarks>
+</NewWindow>
+<!--==============================================-->
+<DocumentTitleChanged>
+<summary>
+Occurs when the web page title changes. 
+Use <see cref="WebBrowserEventArgs.Text"/> to get the title.
+</summary>
+<remarks>
+You can handle this event to update the title bar of your 
+application with the current title of the loaded document.
+</remarks>
+</DocumentTitleChanged>
+<!--==============================================-->
+<FullScreenChanged>
+<summary>
+Occurs when the the page wants to enter or leave fullscreen. 
+</summary>
+<remarks>
+Use the <see cref="WebBrowserEventArgs.IntVal"/> property of the event 
+arguments to get the status. 
+Not implemented for the IE backend.
+</remarks>
+</FullScreenChanged>
+<!--==============================================-->
+<ScriptMessageReceived>
+<summary>
+Occurs when your application receives message from JS code of the loaded web page.
+</summary>
+<remarks>
+For usage details see <see cref="WebBrowser.AddScriptMessageHandler"/>.
+</remarks>
+</ScriptMessageReceived>
+<!--==============================================-->
+<ScriptResult>
+<summary>
+Occurs when your application receives results after 
+<see cref="M:Alternet.UI.WebBrowser.RunScriptAsync"/> call.
+</summary>
+<remarks>
+For usage details see description of RunScriptAsync method.
+</remarks>
+</ScriptResult>
+<!--==============================================-->
+<BeforeBrowserCreate>
+<summary>
+Occurs after backend is created, but before actual browser
+control creation. 
+</summary>
+<remarks>
+You should not normally use it.
+</remarks>
+</BeforeBrowserCreate>
+<!--==============================================-->
+</Events>
+<!--==============================================-->
+<ZoomIn>
+<summary>
+Increases the zoom factor of the page. 
+</summary>
+<remarks>
+<para>
+The zoom factor is an arbitrary 
+number that specifies how much to zoom (scale) the HTML document.
+</para>
+<para>
+Zoom scale in IE will be converted into zoom levels if ZoomType property 
+is set to <see cref="WebBrowserZoomType.Text"/> value.
+</para>
+</remarks>
+</ZoomIn>
+<!--==============================================-->
+<ZoomOut>
+<summary>
+Decreases the zoom factor of the page. 
+</summary>
+<remarks>
+<para>
+The zoom factor is an arbitrary 
+number that specifies how much to zoom (scale) the HTML document.
+</para>
+<para>
+Zoom scale in IE will be converted into zoom levels if ZoomType property 
+is set to <see cref="WebBrowserZoomType.Text"/> value.
+</para>
+</remarks>
+</ZoomOut>
+<!--==============================================-->
+<NavigateToString>
+<summary>
+Sets the displayed page source to the contents of the given string.
+</summary>
+<remarks>
+When using the IE backend you must wait for the current page to finish loading before 
+calling this method. The baseURL parameter is not used in the IE and
+and Edge backends.
+</remarks>
+<param name="html">
+The string that contains the HTML data to display. If this parameter is null, 
+WebBrowser navigates to a blank document. If value of this parameter is 
+not in valid HTML 
+format, it will be displayed as plain text.
+</param>
+<param name="baseUrl">
+URL assigned to the HTML data, to be used to resolve relative paths, for instance.
+</param>
+<seealso cref="WebBrowser.NavigateToStream"/>
+<seealso cref="WebBrowser.LoadURL"/>
+</NavigateToString>
+<!--==============================================-->
+<NavigateToStream>
+<summary>
+Navigate to a Stream that contains the content for a document.
+</summary>
+<param name="stream">
+The Stream that contains the content for a document.
+If this parameter is null, WebBrowser navigates to a blank document.
+If contents of the stream is not in a valid HTML format, it will 
+be displayed as plain text.
+</param>
+<seealso cref="WebBrowser.NavigateToString"/>
+<seealso cref="WebBrowser.LoadURL"/>
+</NavigateToStream>
+<!--==============================================-->
+<Navigate_uri>
+<summary>
+Loads the document at the location indicated by the specified 
+<see cref="System.Uri"/> into the WebBrowser control, 
+replacing the previous document.
+</summary>
+<param name="url">
+A <see cref="System.Uri"/> representing the URL of the document to load.
+If this parameter is null, WebBrowser navigates to a blank document. 
+</param>
+<seealso cref="NavigateToStream"/>
+<seealso cref="NavigateToString"/>
+<seealso cref="LoadURL"/>
+</Navigate_uri>
+<!--==============================================-->
+<Navigate_string>
+<summary>
+Loads the document at the specified Uniform Resource Locator (URL) 
+into the WebBrowser control, replacing 
+the previous document.
+</summary>
+<param name="urlString">
+The URL of the document to load. If this parameter is null, WebBrowser 
+navigates to a blank document. You must always specify protocol prefix
+(https, file or other). Not all browser backends support
+loading of the web pages without protocol prefix.
+</param>
+<seealso cref="NavigateToStream"/>
+<seealso cref="NavigateToString"/>
+<seealso cref="LoadURL"/>
+</Navigate_string>
+<!--==============================================-->
+<ToInvokeScriptArg>
+<summary>
+Converts the value to the JSON string. 
+</summary>
+<remarks>
+Used internally by <see cref="InvokeScriptAsync"/>.
+String and DateTime values 
+are returned enclosed in single quotes.
+</remarks>
+</ToInvokeScriptArg>
+<!--==============================================-->
+<ToInvokeScriptArgs>
+<summary>
+Converts the array of object values to the comma delimited JSON string. 
+</summary>
+<remarks>
+Used internally by <see cref="InvokeScriptAsync"/>.
+String and DateTime values 
+are returned enclosed in single quotes.
+</remarks>
+<seealso cref="ToInvokeScriptArg"/>
+</ToInvokeScriptArgs>
+<!--==============================================-->
+<InvokeScriptAsync>
+<summary>
+<para>
+Executes the given JavaScript function asynchronously and returns the 
+result via a <see cref="ScriptResult"/> event.
+</para>
+</summary>
+<remarks>
+<para>
+The script result value can be retrieved via 
+<see cref="WebBrowserEventArgs.Text"/> parameter of ScriptResult event args. 
+If the execution fails
+<see cref="WebBrowserEventArgs.IsError"/> will return <see langword = "true"/>. 
+In this case additional script execution error information may be
+available via <see cref="WebBrowserEventArgs.Text"/>.
+</para>
+</remarks>
+<param name="scriptName">
+The name of the script function to execute.
+</param>
+<param name="args">
+The parameters to pass to the script function.
+</param>
+<param name="clientData">
+Arbirary pointer to data that can be retrieved from the result event.
+You can use IntPtr.Zero, new IntPtr(SomeInt) or some useful data in 
+this parameter.
+</param>
+<seealso cref="WebBrowser.RunScriptAsync"/>
+</InvokeScriptAsync>
+<!--==============================================-->
+<Source>
+<summary>
+Gets or sets the Uri of the current document hosted in the WebBrowser.
+</summary>
+<returns>
+A <see cref="System.Uri"/> representing the URL of the current document.
+</returns>
+</Source>
+<!--==============================================-->
+<CanZoomOut>
+<summary>
+Gets a value indicating whether the zoom factor of the page can be decreased, 
+which allows the <see cref="ZoomOut"/> method to succeed.
+</summary>
+<returns>
+<see langword="true"/> if the web page can be zoomed out; 
+otherwise, <see langword="false"/>.
+</returns>         
+</CanZoomOut>
+<!--==============================================-->
+<AccessToDevToolsEnabled>
+<summary>
+Enables or disables access to developer tools for the user. 
+</summary>
+<remarks>
+Developer tools are disabled by default. 
+This feature is not implemented for the IE backend.         
+</remarks>
+<returns>
+<see langword="true"/> if the developer tools are enabled for the user;
+otherwise, <see langword="false"/>.
+</returns>
+</AccessToDevToolsEnabled>
 <!--==============================================-->
 <AddScriptMessageHandler>
-    <summary>
-        <para>
-            Adds a script message handler with the given name.
-        </para>
-    </summary>
+<summary>
+<para>
+Adds a script message handler with the given name.
+</para>
+</summary>
 <example>
 <code language="C#">
 bool ScriptMessageHandlerAdded = false;
 ScriptMessageHandlerAdded = WebBrowser1.AddScriptMessageHandler("wx_msg");
 if(!ScriptMessageHandlerAdded)
-    Log("AddScriptMessageHandler not supported");
+Log("AddScriptMessageHandler not supported");
 if(ScriptMessageHandlerAdded)
-    WebBrowser1.RunScriptAsync(
-        "window.wx_msg.postMessage('This is a message body');");
+WebBrowser1.RunScriptAsync(
+"window.wx_msg.postMessage('This is a message body');");
 </code>
 </example>
-    <returns>
-        <see langword="true"/> if the handler could be added, 
-        <see langword="false"/> if it could not be added.
-    </returns>
-    <param name="name">
-        Name of the message handler that can be used from Javascript.
-    </param>
-    <remarks>
-        <para>
-            To use the script message handler from Javascript 
-            use window._name_.postMessage(_messageBody_)
-            where _name_ corresponds the value of the name parameter.
-            The _messageBody_ will be available to the application via
-            a <see cref="WebBrowser.ScriptMessageReceived"/> event.
-        </para>
-		<para>	
-            The Edge backend only supports a single message handler and 
-            the IE backend does not support script message handlers.
-        </para>
-    </remarks>
+<returns>
+<see langword="true"/> if the handler could be added, 
+<see langword="false"/> if it could not be added.
+</returns>
+<param name="name">
+Name of the message handler that can be used from Javascript.
+</param>
+<remarks>
+<para>
+To use the script message handler from Javascript 
+use window._name_.postMessage(_messageBody_)
+where _name_ corresponds the value of the name parameter.
+The _messageBody_ will be available to the application via
+a <see cref="WebBrowser.ScriptMessageReceived"/> event.
+</para>
+<para>	
+The Edge backend only supports a single message handler and 
+the IE backend does not support script message handlers.
+</para>
+</remarks>
 </AddScriptMessageHandler>
 <!--==============================================-->
-	<AddUserScript>
-        <summary>
-            Injects the specified script into the webpage's content.
-        </summary>
-        <param name="javascript">
-            The javascript code to add.
-        </param>
-        <param name="injectDocStart">
-            Specifies when the script will be executed.
-        </param>
-        <returns>
-            Returns <see langword="true"/> if the script was added successfully.
-        </returns>
-        <remarks>
-            Please note that this is unsupported by the IE backend. 
-            The Edge backend does only support injecting at document start.
-        </remarks>
-	</AddUserScript>
-	<!--==============================================-->
-	<Backend>
-        <summary>
-            Gets the current WebBrowser backend.
-        </summary>
-		<returns>
-			A <see cref="WebBrowserBackend"/> representing the current WebBrowser backend.
-		</returns>
-	</Backend>
-	<!--==============================================-->
-	<CanCopy>
-        <summary>
-            Gets a value indicating whether the current selection can be copied, which allows 
-            the <see cref="Copy"/> method to succeed.
-        </summary>
-        <returns>
-            <see langword="true"/> if the current selection can be copied; 
-            otherwise, <see langword="false"/>.
-        </returns>         
-	</CanCopy>
-	<!--==============================================-->
-	<CanCut>
-        <summary>
-            Gets a value indicating whether the current selection can be cut, which allows 
-            the <see cref="Cut"/> method to succeed.
-        </summary>
-        <returns>
-            <see langword="true"/> if the current selection can be cut; 
-            otherwise, <see langword="false"/>.
-        </returns>         
-	</CanCut>
-	<!--==============================================-->
-	<CanGoBack>
-        <summary>
-             Gets a value indicating whether a previous page in navigation history 
-             is available, which allows the<see cref="GoBack" /> 
-             method to succeed.
-        </summary>
-        <returns>
-          <see langword = "true" /> if the control can navigate backward; otherwise, 
-          <see langword = "false" />.
-        </returns>
-	</CanGoBack>
-	<!--==============================================-->
-	<CanGoForward>
-        <summary>
-            Gets a value indicating whether a subsequent page in navigation
-            history is available, which allows the
-            <see cref="GoForward" /> method to succeed.
-        </summary>
-        <returns>
-	        <see langword = "true" /> if the control can navigate forward; otherwise, 
-            <see langword = "false" />.
-        </returns>
-	</CanGoForward>
-	<!--==============================================-->
-	<CanPaste>
-        <summary>
-            Gets a value indicating whether the current selection can be replaced with 
-            the contents of the Clipboard, which allows 
-            the <see cref="Paste"/> method to succeed.
-        </summary>
-        <returns>
-            <see langword="true"/> if the data can be pasted; 
-            otherwise, <see langword="false"/>.
-        </returns>         
-	</CanPaste>
-	<!--==============================================-->
-	<CanRedo>
-        <summary>
-            Gets a value indicating whether the user can redo the previous operation 
-            in the control.
-        </summary>
-        <returns>
-            <see langword = "true" /> if the user can redo the previous operation performed 
-            in the control; otherwise, <see langword = "false" />.
-        </returns >
-	</CanRedo>
-	<!--==============================================-->
-	<CanUndo>
-        <summary>
-            Gets a value indicating whether the user can undo the previous operation 
-            in the control.
-        </summary>
-        <returns>
-            <see langword = "true"/> if the user can undo the previous operation performed 
-            in the control; otherwise, <see langword = "false"/>.
-        </returns >
-	</CanUndo>
-	<!--==============================================-->
-	<ClearHistory>
-        <summary>
-            Clear the history, this will also remove the visible page. 
-        </summary>
-	    <remarks>
-			This is not implemented on macOS and the WebKit2GTK+ backend.         
-	    </remarks>
-	</ClearHistory>
-	<!--==============================================-->
-	<ClearSelection>
-        <summary>
-            Clears the current selection.   
-        </summary>
-	    <remarks>
-            Specifies that no characters are selected in the control.      			
-	    </remarks>
-		<seealso cref="DeleteSelection"/>
-		<seealso cref="HasSelection"/>
-	</ClearSelection>
-	<!--==============================================-->
-	<ContextMenuEnabled>
-        <summary>
-            Enables or disables the right click context menu. 
-        </summary>
-	    <remarks>
-            By default the standard context menu is enabled, this property 
-            can be used to disable it or re-enable it later.
-	    </remarks>
-		<returns>
-			<see langword="true"/> if the right click context menu is enabled;
-			otherwise, <see langword="false"/>.
-		</returns>
-	</ContextMenuEnabled>
-	<!--==============================================-->
-	<Copy>
-        <summary>
-            Copies the current selection in the control to the Clipboard.
-        </summary>
-	</Copy>
-	<!--==============================================-->
-	<Cut>
-        <summary>
-            Moves the current selection in the control to the Clipboard.
-        </summary>
-	</Cut>
-	<!--==============================================-->
-	<DeleteSelection>
-        <summary>
-            Deletes the current selection.
-        </summary>
-        <remarks>
-            Note that for the Webkit backend the selection must be editable, 
-            either through the correct HTML attribute or <see cref="Editable"/> property.         
-        </remarks>
-		<seealso cref="ClearSelection"/>
-		<seealso cref="HasSelection"/>
-	</DeleteSelection>
-	<!--==============================================-->
-	<DoCommandGlobal>
-        <summary>
-            Executes the browser command with the specified name and parameters. 
-            This is the static version of <see cref="DoCommand"/>.
-        </summary>
-        <param name="cmdName">
-            Name of the command to execute.
-        </param>
-        <param name="args">
-            Parameters of the command.
-        </param>
-	</DoCommandGlobal>
-	<!--==============================================-->
-	<DoCommand>
-        <summary>
-            Executes a browser command with the specified name and parameters.
-        </summary>
-        <param name="cmdName">
-            Name of the command to execute.
-        </param>
-        <param name="args">
-            Parameters of the command.
-        </param>
-	</DoCommand>
-	<!--==============================================-->
-	<Editable>
-        <summary>
-            Gets or sets whether the control is currently editable. 
-        </summary>
-		<remarks>
-            This property allows the user to edit the page even 
-            if the contenteditable attribute is not set in HTML. 
-            The exact capabilities vary with the backend being used.
-            This feature is not implemented for macOS and the Edge backend.
-		</remarks>
-		<returns>
-			<see langword="true"/> if the control is currently editable;
-			otherwise, <see langword="false"/>.
-		</returns>
-	</Editable>
-	<!--==============================================-->
-	<EnableHistory>
-        <summary>
-            Enables or disables the history. 
-        </summary>
-		<remarks>
-            This method will also clear the history.
-            This method is not implemented on macOS and the WebKit2GTK+ backend.
-		</remarks>
-	</EnableHistory>
-	<!--==============================================-->
-	<Find>
-        <summary>
-            Finds a text on the current page and if found, the control will scroll 
-            the text into view and select it.
-        </summary>
-        <param name="prm">
-            The parameters for the search.
-        </param>
-        <param name="text">
-            The phrase to search for.
-        </param>
-        <returns>
-            <para>
-                If search phrase was not found in combination with the 
-                flags then -1 is returned.
-            </para>
-            <para>
-                If called for the first time with search phrase then the 
-                total number of results will be returned. Then for every 
-                time its called with the same search phrase it will 
-                return the number of the current match.
-            </para>
-        </returns>
-        <remarks>
-            <para>
-                This function will restart the search if the search params are changed, 
-                since this will require a new search.
-            </para>
-            <para>
-                To reset the search, for example resetting the highlighted text call 
-                <see cref="FindClearResult"/>.
-            </para>
-        </remarks>
-	</Find>
-	<!--==============================================-->
-	<FindClearResult>
-        <summary>
-            Resets the search and the highlighted results.
-        </summary>
-		<seealso cref="Find"/>
-	</FindClearResult>
-	<!--==============================================-->
-	<GetCurrentTitle>
-        <summary>
-            Get the title of the current web page, or its URL/path if 
-            title is not available.
-        </summary>
-	</GetCurrentTitle>
-	<!--==============================================-->
-	<GetCurrentURL>
-        <summary>
-            Get the URL of the currently displayed document.    
-        </summary>
-	</GetCurrentURL>
-	<!--==============================================-->
-	<GetNativeBackend>
-        <summary>
-            Returns pointer to the native backend interface. 
-        </summary>
-		<remarks>
-            For the IE backens it is a <c>IWebBrowser2</c> interface.
-            For the Edge backend it is a <c>ICoreWebView2</c> interface.
-          Under macOS it is a <c>WebView</c> pointer and under GTK 
-          it is a <c>WebKitWebView</c>.
-		</remarks>
-	</GetNativeBackend>
-	<!--==============================================-->
-	<GetBackendOS>
-        <summary>
-            Returns type of the OS for which the WebBrowser was compiled.
-        </summary>
-	</GetBackendOS>
-	<!--==============================================-->
-	<GoBack>
-        <summary>
-            Navigates the control 
-            to the previous page in the navigation history, if one is available.
-        </summary>
-        <returns>
-          <see langword="true"/> if the navigation succeeds; 
-          <see langword="false"/> if a previous page in the navigation history is not available.
-        </returns>
-	</GoBack>
-	<!--==============================================-->
-	<GoForward>
-        <summary>
-            Navigates the control 
-            to the subsequent page in the navigation history, if one is available.
-        </summary>
-        <returns>
-          <see langword="true"/> if the navigation succeeds; 
-          <see langword="false"/> if a subsequent page in the navigation history is not available.
-        </returns>
-	</GoForward>
-	<!--==============================================-->
-	<HasSelection>
-        <summary>
-			Gets a value indicating whether there is a current selection in the control.
-        </summary>
-		<returns>
-			<see langword="true"/> if there is a current selection;
-			otherwise, <see langword="false"/>.
-		</returns>		
-	</HasSelection>
-	<!--==============================================-->
-	<IsBusy>
-        <summary>
-			Gets a value indicating whether the control is currently busy (e.g. loading a web page).
-        </summary>
-		<returns>
-			<see langword="true"/> if the control is currently busy;
-			otherwise, <see langword="false"/>.
-		</returns>
-	</IsBusy>
-	<!--==============================================-->
-    <LoadUrlOrSearch>
-      <summary>
-        Loads a web page from a URL if it is in a valid format. 
-        Otherwise opens passed URL in the Google search.
-      </summary>
-      <param name="url">
-        A <see cref="System.String"/> representing the URL of the document to load.
-        If this parameter is null, WebBrowser navigates to a blank document.
-      </param>
-    </LoadUrlOrSearch>
-    <!--==============================================-->
-    <LoadURL>
-        <summary>
-            Loads a web page from a URL.
-        </summary>
-        <param name="url">
-            A <see cref="System.String"/> representing the URL of the document to load.
-            If this parameter is null, WebBrowser navigates to a blank document. 
-        </param>
-        <remarks>
-            Web engines generally report errors asynchronously, so if you 
-            want to know whether loading process was successful,         
-            register to receive navigation error events.         
-        </remarks>
-		<seealso cref="WebBrowser.NavigateToStream"/>
-		<seealso cref="WebBrowser.NavigateToString"/>
-	</LoadURL>
-	<!--==============================================-->
-	<PageSource>
-        <summary>
-            Gets the HTML source code of the currently displayed document or 
-            an empty string if no page is currently shown.
-        </summary>
-		<returns>
-			A <see cref="String"/> representing the HTML source code of the currently displayed document.
-		</returns>
-		<seealso cref="PageText"/>
-	</PageSource>
-	<!--==============================================-->
-	<PageText>
-        <summary>
-            Gets the text of the current page.      
-        </summary>
-		<returns>
-			A <see cref="String"/> representing the text of the current page.
-		</returns>
-		<seealso cref="PageSource"/>
-	</PageText>
-	<!--==============================================-->
-	<Paste>
-        <summary>
-            Replaces the current selection in the control with the contents of the Clipboard.
-        </summary>
-		<seealso cref="CanPaste"/>
-	</Paste>
-	<!--==============================================-->
-	<Print>
-        <summary>
-            Opens a print dialog so that the user may change the current print and 
-            page settings and print the currently displayed page.         
-        </summary>
-	</Print>
-	<!--==============================================-->
-	<Redo>
-        <summary>
-            Redos the last edit operation in the control.
-        </summary>
-		<seealso cref="CanRedo"/>
-	</Redo>
-	<!--==============================================-->
-	<Reload>
-        <summary>
-            Reloads the document currently displayed in the control by downloading
-            for an updated version from the server.
-        </summary>
-	</Reload>
-	<!--==============================================-->
-	<Reload_noCache>
-        <summary>
-            Reloads the document currently displayed in the 
-            control using the specified refresh option.    
-        </summary>
-        <param name="noCache">
-            <see langword="true"/> if the reload will not use browser cache; otherwise, 
-            <see langword="false"/>. This parameter is ignored by the Edge backend.         
-        </param>
-	</Reload_noCache>
-	<!--==============================================-->
-	<RemoveAllUserScripts>
-        <summary>
-            Removes all user scripts from the WebBrowser.
-        </summary>
-	</RemoveAllUserScripts>
-	<!--==============================================-->
-	<RemoveScriptMessageHandler>
-        <summary>
-            Remove a script message handler with the given name that was previously 
-            added using <see cref="AddScriptMessageHandler"/>.
-        </summary>
-        <returns>
-            <see langword="true"/> if the handler could be removed, 
-            <see langword="false"/> if it could not be removed.
-        </returns>
-	</RemoveScriptMessageHandler>
+<AddUserScript>
+<summary>
+Injects the specified script into the webpage's content.
+</summary>
+<param name="javascript">
+The javascript code to add.
+</param>
+<param name="injectDocStart">
+Specifies when the script will be executed.
+</param>
+<returns>
+Returns <see langword="true"/> if the script was added successfully.
+</returns>
+<remarks>
+Please note that this is unsupported by the IE backend. 
+The Edge backend does only support injecting at document start.
+</remarks>
+</AddUserScript>
+<!--==============================================-->
+<Backend>
+<summary>
+Gets the current WebBrowser backend.
+</summary>
+<returns>
+A <see cref="WebBrowserBackend"/> representing the current WebBrowser backend.
+</returns>
+</Backend>
+<!--==============================================-->
+<CanCopy>
+<summary>
+Gets a value indicating whether the current selection can be copied, which allows 
+the <see cref="Copy"/> method to succeed.
+</summary>
+<returns>
+<see langword="true"/> if the current selection can be copied; 
+otherwise, <see langword="false"/>.
+</returns>         
+</CanCopy>
+<!--==============================================-->
+<CanCut>
+<summary>
+Gets a value indicating whether the current selection can be cut, which allows 
+the <see cref="Cut"/> method to succeed.
+</summary>
+<returns>
+<see langword="true"/> if the current selection can be cut; 
+otherwise, <see langword="false"/>.
+</returns>         
+</CanCut>
+<!--==============================================-->
+<CanGoBack>
+<summary>
+Gets a value indicating whether a previous page in navigation history 
+is available, which allows the<see cref="GoBack" /> 
+method to succeed.
+</summary>
+<returns>
+<see langword = "true" /> if the control can navigate backward; otherwise, 
+<see langword = "false" />.
+</returns>
+</CanGoBack>
+<!--==============================================-->
+<CanGoForward>
+<summary>
+Gets a value indicating whether a subsequent page in navigation
+history is available, which allows the
+<see cref="GoForward" /> method to succeed.
+</summary>
+<returns>
+<see langword = "true" /> if the control can navigate forward; otherwise, 
+<see langword = "false" />.
+</returns>
+</CanGoForward>
+<!--==============================================-->
+<CanPaste>
+<summary>
+Gets a value indicating whether the current selection can be replaced with 
+the contents of the Clipboard, which allows 
+the <see cref="Paste"/> method to succeed.
+</summary>
+<returns>
+<see langword="true"/> if the data can be pasted; 
+otherwise, <see langword="false"/>.
+</returns>         
+</CanPaste>
+<!--==============================================-->
+<CanRedo>
+<summary>
+Gets a value indicating whether the user can redo the previous operation 
+in the control.
+</summary>
+<returns>
+<see langword = "true" /> if the user can redo the previous operation performed 
+in the control; otherwise, <see langword = "false" />.
+</returns >
+</CanRedo>
+<!--==============================================-->
+<CanUndo>
+<summary>
+Gets a value indicating whether the user can undo the previous operation 
+in the control.
+</summary>
+<returns>
+<see langword = "true"/> if the user can undo the previous operation performed 
+in the control; otherwise, <see langword = "false"/>.
+</returns >
+</CanUndo>
+<!--==============================================-->
+<ClearHistory>
+<summary>
+Clear the history, this will also remove the visible page. 
+</summary>
+<remarks>
+This is not implemented on macOS and the WebKit2GTK+ backend.         
+</remarks>
+</ClearHistory>
+<!--==============================================-->
+<ClearSelection>
+<summary>
+Clears the current selection.   
+</summary>
+<remarks>
+Specifies that no characters are selected in the control.      			
+</remarks>
+<seealso cref="DeleteSelection"/>
+<seealso cref="HasSelection"/>
+</ClearSelection>
+<!--==============================================-->
+<ContextMenuEnabled>
+<summary>
+Enables or disables the right click context menu. 
+</summary>
+<remarks>
+By default the standard context menu is enabled, this property 
+can be used to disable it or re-enable it later.
+</remarks>
+<returns>
+<see langword="true"/> if the right click context menu is enabled;
+otherwise, <see langword="false"/>.
+</returns>
+</ContextMenuEnabled>
+<!--==============================================-->
+<Copy>
+<summary>
+Copies the current selection in the control to the Clipboard.
+</summary>
+</Copy>
+<!--==============================================-->
+<Cut>
+<summary>
+Moves the current selection in the control to the Clipboard.
+</summary>
+</Cut>
+<!--==============================================-->
+<DeleteSelection>
+<summary>
+Deletes the current selection.
+</summary>
+<remarks>
+Note that for the Webkit backend the selection must be editable, 
+either through the correct HTML attribute or <see cref="Editable"/> property.         
+</remarks>
+<seealso cref="ClearSelection"/>
+<seealso cref="HasSelection"/>
+</DeleteSelection>
+<!--==============================================-->
+<DoCommandGlobal>
+<summary>
+Executes the browser command with the specified name and parameters. 
+This is the static version of <see cref="DoCommand"/>.
+</summary>
+<param name="cmdName">
+Name of the command to execute.
+</param>
+<param name="args">
+Parameters of the command.
+</param>
+</DoCommandGlobal>
+<!--==============================================-->
+<DoCommand>
+<summary>
+Executes a browser command with the specified name and parameters.
+</summary>
+<param name="cmdName">
+Name of the command to execute.
+</param>
+<param name="args">
+Parameters of the command.
+</param>
+</DoCommand>
+<!--==============================================-->
+<Editable>
+<summary>
+Gets or sets whether the control is currently editable. 
+</summary>
+<remarks>
+This property allows the user to edit the page even 
+if the contenteditable attribute is not set in HTML. 
+The exact capabilities vary with the backend being used.
+This feature is not implemented for macOS and the Edge backend.
+</remarks>
+<returns>
+<see langword="true"/> if the control is currently editable;
+otherwise, <see langword="false"/>.
+</returns>
+</Editable>
+<!--==============================================-->
+<EnableHistory>
+<summary>
+Enables or disables the history. 
+</summary>
+<remarks>
+This method will also clear the history.
+This method is not implemented on macOS and the WebKit2GTK+ backend.
+</remarks>
+</EnableHistory>
+<!--==============================================-->
+<Find>
+<summary>
+Finds a text on the current page and if found, the control will scroll 
+the text into view and select it.
+</summary>
+<param name="prm">
+The parameters for the search.
+</param>
+<param name="text">
+The phrase to search for.
+</param>
+<returns>
+<para>
+If search phrase was not found in combination with the 
+flags then -1 is returned.
+</para>
+<para>
+If called for the first time with search phrase then the 
+total number of results will be returned. Then for every 
+time its called with the same search phrase it will 
+return the number of the current match.
+</para>
+</returns>
+<remarks>
+<para>
+This function will restart the search if the search params are changed, 
+since this will require a new search.
+</para>
+<para>
+To reset the search, for example resetting the highlighted text call 
+<see cref="FindClearResult"/>.
+</para>
+</remarks>
+</Find>
+<!--==============================================-->
+<FindClearResult>
+<summary>
+Resets the search and the highlighted results.
+</summary>
+<seealso cref="Find"/>
+</FindClearResult>
+<!--==============================================-->
+<GetCurrentTitle>
+<summary>
+Get the title of the current web page, or its URL/path if 
+title is not available.
+</summary>
+</GetCurrentTitle>
+<!--==============================================-->
+<GetCurrentURL>
+<summary>
+Get the URL of the currently displayed document.    
+</summary>
+</GetCurrentURL>
+<!--==============================================-->
+<GetNativeBackend>
+<summary>
+Returns pointer to the native backend interface. 
+</summary>
+<remarks>
+For the IE backens it is a <c>IWebBrowser2</c> interface.
+For the Edge backend it is a <c>ICoreWebView2</c> interface.
+Under macOS it is a <c>WebView</c> pointer and under GTK 
+it is a <c>WebKitWebView</c>.
+</remarks>
+</GetNativeBackend>
+<!--==============================================-->
+<GetBackendOS>
+<summary>
+Returns type of the OS for which the WebBrowser was compiled.
+</summary>
+</GetBackendOS>
+<!--==============================================-->
+<GoBack>
+<summary>
+Navigates the control 
+to the previous page in the navigation history, if one is available.
+</summary>
+<returns>
+<see langword="true"/> if the navigation succeeds; 
+<see langword="false"/> if a previous page in the navigation history is not available.
+</returns>
+</GoBack>
+<!--==============================================-->
+<GoForward>
+<summary>
+Navigates the control 
+to the subsequent page in the navigation history, if one is available.
+</summary>
+<returns>
+<see langword="true"/> if the navigation succeeds; 
+<see langword="false"/> if a subsequent page in the navigation history is not available.
+</returns>
+</GoForward>
+<!--==============================================-->
+<HasSelection>
+<summary>
+Gets a value indicating whether there is a current selection in the control.
+</summary>
+<returns>
+<see langword="true"/> if there is a current selection;
+otherwise, <see langword="false"/>.
+</returns>		
+</HasSelection>
+<!--==============================================-->
+<IsBusy>
+<summary>
+Gets a value indicating whether the control is currently busy (e.g. loading a web page).
+</summary>
+<returns>
+<see langword="true"/> if the control is currently busy;
+otherwise, <see langword="false"/>.
+</returns>
+</IsBusy>
+<!--==============================================-->
+<LoadUrlOrSearch>
+<summary>
+Loads a web page from a URL if it is in a valid format. 
+Otherwise opens passed URL in the Google search.
+</summary>
+<param name="url">
+A <see cref="System.String"/> representing the URL of the document to load.
+If this parameter is null, WebBrowser navigates to a blank document.
+</param>
+</LoadUrlOrSearch>
+<!--==============================================-->
+<LoadURL>
+<summary>
+Loads a web page from a URL.
+</summary>
+<param name="url">
+A <see cref="System.String"/> representing the URL of the document to load.
+If this parameter is null, WebBrowser navigates to a blank document. 
+</param>
+<remarks>
+Web engines generally report errors asynchronously, so if you 
+want to know whether loading process was successful, register to receive navigation error events.         
+</remarks>
+<seealso cref="WebBrowser.NavigateToStream"/>
+<seealso cref="WebBrowser.NavigateToString"/>
+</LoadURL>
+<!--==============================================-->
+<PageSource>
+<summary>
+Gets the HTML source code of the currently displayed document or 
+an empty string if no page is currently shown.
+</summary>
+<returns>
+A <see cref="String"/> representing the HTML source code of the currently displayed document.
+</returns>
+<seealso cref="PageText"/>
+</PageSource>
+<!--==============================================-->
+<PageText>
+<summary>
+Gets the text of the current page.      
+</summary>
+<returns>
+A <see cref="String"/> representing the text of the current page.
+</returns>
+<seealso cref="PageSource"/>
+</PageText>
+<!--==============================================-->
+<Paste>
+<summary>
+Replaces the current selection in the control with the contents of the Clipboard.
+</summary>
+<seealso cref="CanPaste"/>
+</Paste>
+<!--==============================================-->
+<Print>
+<summary>
+Opens a print dialog so that the user may change the current print and 
+page settings and print the currently displayed page.         
+</summary>
+</Print>
+<!--==============================================-->
+<Redo>
+<summary>
+Redos the last edit operation in the control.
+</summary>
+<seealso cref="CanRedo"/>
+</Redo>
+<!--==============================================-->
+<Reload>
+<summary>
+Reloads the document currently displayed in the control by downloading
+for an updated version from the server.
+</summary>
+</Reload>
+<!--==============================================-->
+<Reload_noCache>
+<summary>
+Reloads the document currently displayed in the 
+control using the specified refresh option.    
+</summary>
+<param name="noCache">
+<see langword="true"/> if the reload will not use browser cache; otherwise, 
+<see langword="false"/>. This parameter is ignored by the Edge backend.         
+</param>
+</Reload_noCache>
+<!--==============================================-->
+<RemoveAllUserScripts>
+<summary>
+Removes all user scripts from the WebBrowser.
+</summary>
+</RemoveAllUserScripts>
+<!--==============================================-->
+<RemoveScriptMessageHandler>
+<summary>
+Remove a script message handler with the given name that was previously 
+added using <see cref="AddScriptMessageHandler"/>.
+</summary>
+<returns>
+<see langword="true"/> if the handler could be removed, 
+<see langword="false"/> if it could not be removed.
+</returns>
+</RemoveScriptMessageHandler>
 <!--==============================================-->
 <RunScript>
-    <summary>
-        <para>
-            Runs the given JavaScript code. 
-        </para>
-    </summary>
-	<remarks>
-        <para>
-			JavaScript code is executed inside the 
-            browser and has full access to DOM and other browser-provided functionality.
-        </para>
-        <para>
-            Because of various potential issues it's recommended to use <see cref="RunScriptAsync"/>
-            instead of this method.
-            This is especially true if you plan to run code from a WebBrowser event
-            and will also prevent unintended side effects on the UI outside of 
-            the WebBrowser.
-        </para>
-	</remarks>
+<summary>
+<para>
+Runs the given JavaScript code. 
+</para>
+</summary>
+<remarks>
+<para>
+JavaScript code is executed inside the 
+browser and has full access to DOM and other browser-provided functionality.
+</para>
+<para>
+Because of various potential issues it's recommended to use <see cref="RunScriptAsync"/>
+instead of this method.
+This is especially true if you plan to run code from a WebBrowser event
+and will also prevent unintended side effects on the UI outside of 
+the WebBrowser.
+</para>
+</remarks>
 <example>
 For example, this code
 <code>
@@ -954,368 +953,368 @@ WebBrowser.RunScript("document.write('Hello!')");
 </code>	
 will replace the current page contents with the provided string.
 </example>
-    <param name="javascript">
-        JavaScript code to execute.
-    </param>
-    <param name="result">
-        <para>
-            Result of the script execution.
-        </para>
-        <para>
-            If output is non-null, it is filled with the result of 
-            executing this code on success, e.g. a JavaScript value
-            such as a string, a number (integer or floating point), a boolean
-            or JSON representation for non-primitive types such as arrays and objects. 
-        </para>
-    </param>
-    <returns>
-        <see langword="true"/> if there is a result, <see langword="false"/> if there is an error.
-    </returns>
+<param name="javascript">
+JavaScript code to execute.
+</param>
+<param name="result">
+<para>
+Result of the script execution.
+</para>
+<para>
+If output is non-null, it is filled with the result of 
+executing this code on success, e.g. a JavaScript value
+such as a string, a number (integer or floating point), a boolean
+or JSON representation for non-primitive types such as arrays and objects. 
+</para>
+</param>
+<returns>
+<see langword="true"/> if there is a result, <see langword="false"/> if there is an error.
+</returns>
 </RunScript>
 <!--==============================================-->
-	<RunScriptAsync>
-        <summary>
-            <para>
-				Runs the given JavaScript code asynchronously and returns the 
-				result via a <see cref="WebBrowser.ScriptResult"/> event.
-            </para>
-        </summary>
-        <param name="javascript">
-            JavaScript code to execute.
-        </param>
-        <param name="clientData">
-            Arbirary pointer to data that can be used in the result event.
-			You can use IntPtr.Zero, new IntPtr(SomeInt) or pointer to some useful data in 
-			this parameter.
-        </param>
-        <remarks>
-            <para>
-                The script result value can be retrieved via 
-                <see cref="WebBrowserEventArgs.Text"/> parameter or a <see cref="WebBrowser.ScriptResult"/> event. 
-				If the execution fails
-                <see cref="WebBrowserEventArgs.IsError"/> will return true. 
-                In this case additional script execution error information may be
-                available via <see cref="WebBrowserEventArgs.Text"/>.
-            </para>
-            <para>
-                This function has a few platform-specific limitations:
-            </para>
-            <para>
-                When using WebKit v1 (wxGTK2), retrieving the result of script execution 
-                is unsupported. Running scripts functionality is fully supported when 
-				using WebKit v2 or later (wxGTK3).
-            </para>
-            <para>
-                When using WebKit (macOS), code execution is limited to 
-                10MiB of memory and 10 seconds of execution time.
-            </para>
-            <para>
-                When using IE backend, scripts can only be executed when 
-                the current page is fully loaded and <see cref="WebBrowser.Loaded"/> event was received.
-                A script tag inside the page HTML is required in order to run JavaScript.
-            </para>
-            <para>
-                Under MSW converting JavaScript objects to JSON is not 
-                supported in the IE backend. WebBrowser implements its
-                own conversion as a fallback for this case. 
-            
-                However it is not as full-featured or performing as 
-                the implementation of this functionality in the browser 
-                itself. It is recommended to use IELatest or Edge backends
-                in which JSON conversion is done by the browser itself.
-            </para>
-        </remarks>
-		<seealso cref="WebBrowser.InvokeScriptAsync"/>
-	</RunScriptAsync>
-	<!--==============================================-->
-	<SelectAll>
-        <summary>
-            Selects the entire page.         
-        </summary>
-		<seealso cref="SelectedSource"/>
-		<seealso cref="SelectedText"/>
-	</SelectAll>
-	<!--==============================================-->
-	<SelectedSource>
-        <summary>
-            Gets the HTML source code of the currently selected portion 
-			of the web page or 
-            an empty string if no selection exists.
-        </summary>
-		<returns>
-			A <see cref="String"/> representing the HTML source code of 
-			the currently selected portion of the web page.
-		</returns>
-		<seealso cref="SelectedText"/>
-	</SelectedSource>
-	<!--==============================================-->
-	<SelectedText>
-        <summary>
-            Gets a value indicating the currently selected text in the control.
-        </summary>
-		<returns>
-			A <see cref="String"/> representing the currently selected text in the control.
-		</returns>
-		<seealso cref="SelectedSource"/>
-	</SelectedText>
-	<!--==============================================-->
-	<Stop>
-        <summary>
-            Stops the current page loading process, if any. Cancels any pending navigation 
-            and stops any dynamic page elements, such as background sounds and animations.
-        </summary>
-	</Stop>
-	<!--==============================================-->
-	<Undo>
-        <summary>
-            Undoes the last edit operation in the control.
-        </summary>
-		<seealso cref="CanUndo"/>
-	</Undo>
-	<!--==============================================-->
-	<UserAgent>
-        <summary>
-            <para>
-                Gets or sets the custom user agent string for the WebBrowser control.
-            </para>
-        </summary>
-		<returns>
-				A <see cref="String"/> representing the custom user agent string for the WebBrowser control.
-		</returns>
-        <remarks>
-            <para>
-                If your first request should already use the custom user agent please 
-                use two step creation and set UserAgent before browser creation.
-            </para>
-            <para>
-                This is not implemented for IE. For the Edge backend set UserAgent 
-                BEFORE backend creation.         
-            </para>
-        </remarks>
-	</UserAgent>
-	<!--==============================================-->
-	<Zoom>
-        <summary>
-            Gets or sets the zoom level of the page.
-        </summary>
-        <remarks>
-            See <see cref="ZoomFactor"/> to get more precise zoom scale value other than 
-            as provided by this property.
-        </remarks>
-	</Zoom>
-	<!--==============================================-->
-	<ZoomFactor>
-        <summary>
-            Gets or sets the zoom factor of the page. 
-        </summary>
-		<returns>
-				A <see cref="System.Single"/> representing the the zoom factor of the page.
-		</returns>
-        <remarks>
-			<para>
-			The zoom factor is an arbitrary 
-            number that specifies how much to zoom (scale) the HTML document.
-			</para>
-			<para>
-            Zoom scale in IE will be converted into zoom levels if <see cref="ZoomType"/> property 
-            is set to <see cref="WebBrowserZoomType.Text"/> value.
-			</para>
-        </remarks>
-	</ZoomFactor>
-	<!--==============================================-->
-	<CanSetZoomType>
-        <summary>
-            Retrieve whether the current HTML engine supports a zoom type.
-        </summary>
-        <param name="zoomType">
-            The zoom type to test.
-        </param>
-        <returns>
-            Whether this type of zoom is supported by this HTML engine 
-            (and thus can be set through <see cref="ZoomType"/> property).              
-        </returns>
-	</CanSetZoomType>
-	<!--==============================================-->
-	<ZoomType>
-        <summary>
-            Gets or sets how the zoom factor is currently interpreted by the HTML engine.
-        </summary>
-		<returns>
-				A <see cref="WebBrowserZoomType"/> representing how the zoom factor 
-				is currently interpreted by the HTML engine.
-		</returns>
-        <remarks>
-            Invoke <see cref="CanSetZoomType"/> first, some HTML renderers may not 
-			support all zoom types.
-        </remarks>
-	</ZoomType>
-	<!--==============================================-->
-	<MemoryFS>
-        <summary>
-            Contains methods related to the memory scheme WebBrowser protocol.
-        </summary>
-		<returns>
-			A <see cref="IWebBrowserMemoryFS"/> containing methods 
-			related to the memory scheme handling.
-		</returns>
-	</MemoryFS>
-	<!--==============================================-->
-	<CreateHandler>
-        <summary>
-            Creates a handler for the control.
-        </summary>
-        <remarks>
-            You typically should not call this method directly.
-            The preferred method is to call the 
-            <see cref="Control.EnsureHandlerCreated"/> method, 
-            which forces a handler to be created for the control.
-        </remarks>
-	</CreateHandler>
-	<!--==============================================-->
-	<IsBackendAvailable>
-        <summary>
-            Allows to check if a specific backend is currently available.
-        </summary>
-		<remarks>
-            This method allows to enable some extra functionality available with 
-            the specific backend.
-		</remarks>
-		<seealso cref="SetBackend"/>
-	</IsBackendAvailable>
-	<!--==============================================-->
-	<SetBackend>
-        <summary>
-            Sets the backend that will be used for the new WebBrowser instances.
-        </summary>
-		<seealso cref="IsBackendAvailable"/>
-	</SetBackend>
-	<!--==============================================-->
-	<GetLibraryVersionString>
-        <summary>
-            Retrieve the version information about the underlying library implementation.
-        </summary>
-	</GetLibraryVersionString>
-	<!--==============================================-->
-	<GetBackendVersionString>
-        <summary>
-            Retrieve the version information about the browser backend implementation.
-        </summary>
-	</GetBackendVersionString>	
-	<!--==============================================-->
-	<SetDefaultUserAgent>
-		<summary>
-			Sets the default user agent that will be used for the
-			new WebBrowser instances.
-		</summary>
-	</SetDefaultUserAgent>
-	<!--==============================================-->
-	<SetDefaultScriptMesageName>
-		<summary>
-			Sets the default script message name that will be registered in all
-			new WebBrowser instances.
-		</summary>
-	</SetDefaultScriptMesageName>
-	<!--==============================================-->
-	<SetDefaultFSNameMemory>
-		<summary>
-			Sets the default protocol name for the memory file system
-			that will be used for the new WebBrowser instances.
-		</summary>
-	</SetDefaultFSNameMemory>
-	<!--==============================================-->
-	<SetDefaultFSNameArchive>
-		<summary>
-			Sets the default protocol name for the archive file system that will
-			be used for the new WebBrowser instances.
-		</summary>
-	</SetDefaultFSNameArchive>
-	<!--==============================================-->
-	<SetDefaultPage>
-        <summary>
-            Sets the default web page that will be used for the 
-            new WebBrowser instances. 
-        </summary>
-		<remarks>
-            Devault value is about:blank.
-		</remarks>
-	</SetDefaultPage>
-	<!--==============================================-->
-	<SetLatestBackend>
-        <summary>
-            Sets the best possible backend to be used for the 
-            new WebBrowser instances.
-        </summary>
-	</SetLatestBackend>
-  <!--==============================================-->
-  <PreferredColorScheme>
-    <summary>
-      Sets the overall color scheme of the WebBrowser. 
-    </summary>
-	<returns>
-			A <see cref="WebBrowserPreferredColorScheme"/> representing the overall color scheme of the WebBrowser. 
-	</returns>
-    <remarks>
-      <para>
-        This property sets the color scheme for WebBrowser UI like dialogs, prompts
-        and menus. The default value is Auto, which will follow 
-        whatever color scheme the operating system is currently set to.
-      </para>
-      <para>
-        This property works only for the Edge backend.
-      </para>
-      <para>
-			Use this property only inside the <see cref="WebBrowser.Loaded"/> event.
-      </para>
-    </remarks>      
-  </PreferredColorScheme>
-  <!--==============================================-->
-  <SetVirtualHostNameToFolderMapping>
-    <summary>
-        Sets a mapping between a virtual host name and a folder path to make 
-        available to web sites via that host name.
-    </summary>
-    <param name="hostName">
-        A virtual host name.
-    </param>
-    <param name="folderPath">
-        A folder path name to be mapped to the virtual host name. 
-    </param>
-    <param name="accessKind">
-        The level of access to resources under the virtual host from other sites.
-    </param>
-    <remarks>
-      <para>
-        After setting the mapping, documents loaded in the WebBrowser can use HTTP or 
-        HTTPS URLs at the specified host name specified by hostName to 
-        access files in the local folder specified by folderPath.
-      </para>  
-      <para>
-        This property works only for the Edge backend.
-      </para>
-    </remarks>
+<RunScriptAsync>
+<summary>
+<para>
+Runs the given JavaScript code asynchronously and returns the 
+result via a <see cref="WebBrowser.ScriptResult"/> event.
+</para>
+</summary>
+<param name="javascript">
+JavaScript code to execute.
+</param>
+<param name="clientData">
+Arbirary pointer to data that can be used in the result event.
+You can use IntPtr.Zero, new IntPtr(SomeInt) or pointer to some useful data in 
+this parameter.
+</param>
+<remarks>
+<para>
+The script result value can be retrieved via 
+<see cref="WebBrowserEventArgs.Text"/> parameter or a <see cref="WebBrowser.ScriptResult"/> event. 
+If the execution fails
+<see cref="WebBrowserEventArgs.IsError"/> will return true. 
+In this case additional script execution error information may be
+available via <see cref="WebBrowserEventArgs.Text"/>.
+</para>
+<para>
+This function has a few platform-specific limitations:
+</para>
+<para>
+When using WebKit v1 (wxGTK2), retrieving the result of script execution 
+is unsupported. Running scripts functionality is fully supported when 
+using WebKit v2 or later (wxGTK3).
+</para>
+<para>
+When using WebKit (macOS), code execution is limited to 
+10MiB of memory and 10 seconds of execution time.
+</para>
+<para>
+When using IE backend, scripts can only be executed when 
+the current page is fully loaded and <see cref="WebBrowser.Loaded"/> event was received.
+A script tag inside the page HTML is required in order to run JavaScript.
+</para>
+<para>
+Under MSW converting JavaScript objects to JSON is not 
+supported in the IE backend. WebBrowser implements its
+own conversion as a fallback for this case. 
+
+However it is not as full-featured or performing as 
+the implementation of this functionality in the browser 
+itself. It is recommended to use IELatest or Edge backends
+in which JSON conversion is done by the browser itself.
+</para>
+</remarks>
+<seealso cref="WebBrowser.InvokeScriptAsync"/>
+</RunScriptAsync>
+<!--==============================================-->
+<SelectAll>
+<summary>
+Selects the entire page.         
+</summary>
+<seealso cref="SelectedSource"/>
+<seealso cref="SelectedText"/>
+</SelectAll>
+<!--==============================================-->
+<SelectedSource>
+<summary>
+Gets the HTML source code of the currently selected portion 
+of the web page or 
+an empty string if no selection exists.
+</summary>
+<returns>
+A <see cref="String"/> representing the HTML source code of 
+the currently selected portion of the web page.
+</returns>
+<seealso cref="SelectedText"/>
+</SelectedSource>
+<!--==============================================-->
+<SelectedText>
+<summary>
+Gets a value indicating the currently selected text in the control.
+</summary>
+<returns>
+A <see cref="String"/> representing the currently selected text in the control.
+</returns>
+<seealso cref="SelectedSource"/>
+</SelectedText>
+<!--==============================================-->
+<Stop>
+<summary>
+Stops the current page loading process, if any. Cancels any pending navigation 
+and stops any dynamic page elements, such as background sounds and animations.
+</summary>
+</Stop>
+<!--==============================================-->
+<Undo>
+<summary>
+Undoes the last edit operation in the control.
+</summary>
+<seealso cref="CanUndo"/>
+</Undo>
+<!--==============================================-->
+<UserAgent>
+<summary>
+<para>
+Gets or sets the custom user agent string for the WebBrowser control.
+</para>
+</summary>
+<returns>
+A <see cref="String"/> representing the custom user agent string for the WebBrowser control.
+</returns>
+<remarks>
+<para>
+If your first request should already use the custom user agent please 
+use two step creation and set UserAgent before browser creation.
+</para>
+<para>
+This is not implemented for IE. For the Edge backend set UserAgent 
+BEFORE backend creation.         
+</para>
+</remarks>
+</UserAgent>
+<!--==============================================-->
+<Zoom>
+<summary>
+Gets or sets the zoom level of the page.
+</summary>
+<remarks>
+See <see cref="ZoomFactor"/> to get more precise zoom scale value other than 
+as provided by this property.
+</remarks>
+</Zoom>
+<!--==============================================-->
+<ZoomFactor>
+<summary>
+Gets or sets the zoom factor of the page. 
+</summary>
+<returns>
+A <see cref="System.Single"/> representing the the zoom factor of the page.
+</returns>
+<remarks>
+<para>
+The zoom factor is an arbitrary 
+number that specifies how much to zoom (scale) the HTML document.
+</para>
+<para>
+Zoom scale in IE will be converted into zoom levels if <see cref="ZoomType"/> property 
+is set to <see cref="WebBrowserZoomType.Text"/> value.
+</para>
+</remarks>
+</ZoomFactor>
+<!--==============================================-->
+<CanSetZoomType>
+<summary>
+Retrieve whether the current HTML engine supports a zoom type.
+</summary>
+<param name="zoomType">
+The zoom type to test.
+</param>
+<returns>
+Whether this type of zoom is supported by this HTML engine 
+(and thus can be set through <see cref="ZoomType"/> property).              
+</returns>
+</CanSetZoomType>
+<!--==============================================-->
+<ZoomType>
+<summary>
+Gets or sets how the zoom factor is currently interpreted by the HTML engine.
+</summary>
+<returns>
+A <see cref="WebBrowserZoomType"/> representing how the zoom factor 
+is currently interpreted by the HTML engine.
+</returns>
+<remarks>
+Invoke <see cref="CanSetZoomType"/> first, some HTML renderers may not 
+support all zoom types.
+</remarks>
+</ZoomType>
+<!--==============================================-->
+<MemoryFS>
+<summary>
+Contains methods related to the memory scheme WebBrowser protocol.
+</summary>
+<returns>
+A <see cref="IWebBrowserMemoryFS"/> containing methods 
+related to the memory scheme handling.
+</returns>
+</MemoryFS>
+<!--==============================================-->
+<CreateHandler>
+<summary>
+Creates a handler for the control.
+</summary>
+<remarks>
+You typically should not call this method directly.
+The preferred method is to call the 
+<see cref="Control.EnsureHandlerCreated"/> method, 
+which forces a handler to be created for the control.
+</remarks>
+</CreateHandler>
+<!--==============================================-->
+<IsBackendAvailable>
+<summary>
+Allows to check if a specific backend is currently available.
+</summary>
+<remarks>
+This method allows to enable some extra functionality available with 
+the specific backend.
+</remarks>
+<seealso cref="SetBackend"/>
+</IsBackendAvailable>
+<!--==============================================-->
+<SetBackend>
+<summary>
+Sets the backend that will be used for the new WebBrowser instances.
+</summary>
+<seealso cref="IsBackendAvailable"/>
+</SetBackend>
+<!--==============================================-->
+<GetLibraryVersionString>
+<summary>
+Retrieve the version information about the underlying library implementation.
+</summary>
+</GetLibraryVersionString>
+<!--==============================================-->
+<GetBackendVersionString>
+<summary>
+Retrieve the version information about the browser backend implementation.
+</summary>
+</GetBackendVersionString>	
+<!--==============================================-->
+<SetDefaultUserAgent>
+<summary>
+Sets the default user agent that will be used for the
+new WebBrowser instances.
+</summary>
+</SetDefaultUserAgent>
+<!--==============================================-->
+<SetDefaultScriptMesageName>
+<summary>
+Sets the default script message name that will be registered in all
+new WebBrowser instances.
+</summary>
+</SetDefaultScriptMesageName>
+<!--==============================================-->
+<SetDefaultFSNameMemory>
+<summary>
+Sets the default protocol name for the memory file system
+that will be used for the new WebBrowser instances.
+</summary>
+</SetDefaultFSNameMemory>
+<!--==============================================-->
+<SetDefaultFSNameArchive>
+<summary>
+Sets the default protocol name for the archive file system that will
+be used for the new WebBrowser instances.
+</summary>
+</SetDefaultFSNameArchive>
+<!--==============================================-->
+<SetDefaultPage>
+<summary>
+Sets the default web page that will be used for the 
+new WebBrowser instances. 
+</summary>
+<remarks>
+Devault value is about:blank.
+</remarks>
+</SetDefaultPage>
+<!--==============================================-->
+<SetLatestBackend>
+<summary>
+Sets the best possible backend to be used for the 
+new WebBrowser instances.
+</summary>
+</SetLatestBackend>
+<!--==============================================-->
+<PreferredColorScheme>
+<summary>
+Sets the overall color scheme of the WebBrowser. 
+</summary>
+<returns>
+A <see cref="WebBrowserPreferredColorScheme"/> representing the overall color scheme of the WebBrowser. 
+</returns>
+<remarks>
+<para>
+This property sets the color scheme for WebBrowser UI like dialogs, prompts
+and menus. The default value is Auto, which will follow 
+whatever color scheme the operating system is currently set to.
+</para>
+<para>
+This property works only for the Edge backend.
+</para>
+<para>
+Use this property only inside the <see cref="WebBrowser.Loaded"/> event.
+</para>
+</remarks>      
+</PreferredColorScheme>
+<!--==============================================-->
+<SetVirtualHostNameToFolderMapping>
+<summary>
+Sets a mapping between a virtual host name and a folder path to make 
+available to web sites via that host name.
+</summary>
+<param name="hostName">
+A virtual host name.
+</param>
+<param name="folderPath">
+A folder path name to be mapped to the virtual host name. 
+</param>
+<param name="accessKind">
+The level of access to resources under the virtual host from other sites.
+</param>
+<remarks>
+<para>
+After setting the mapping, documents loaded in the WebBrowser can use HTTP or 
+HTTPS URLs at the specified host name specified by hostName to 
+access files in the local folder specified by folderPath.
+</para>  
+<para>
+This property works only for the Edge backend.
+</para>
+</remarks>
 <example>
 <code language="C#">
 WebControl1.SetVirtualHostNameToFolderMapping(
-  "appassets.example", "assets", WebBrowserHostResourceAccessKind.DenyCors);
+"appassets.example", "assets", WebBrowserHostResourceAccessKind.DenyCors);
 WebControl1.Source = new Uri("https://appassets.example/index.html");
 </code>
 </example>
-    <seealso href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2.setvirtualhostnametofoldermapping">
-      WebView2.SetVirtualHostNameToFolderMapping</seealso>
-  </SetVirtualHostNameToFolderMapping>
-  <!--==============================================-->
-	<StringFormatJs>
-        <summary>
-            Contains DateTime format for Javascript code.
-        </summary>
-		<returns>
-					A <see cref="String"/> representing DateTime format used by WebBrowser for Javascript code.
-		</returns>
-	    <remarks>
-            Used internally by <see cref="InvokeScriptAsync"/>.
-	    </remarks>
-	</StringFormatJs>
-	<!--==============================================-->
+<seealso href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.web.webview2.core.corewebview2.setvirtualhostnametofoldermapping">
+WebView2.SetVirtualHostNameToFolderMapping</seealso>
+</SetVirtualHostNameToFolderMapping>
+<!--==============================================-->
+<StringFormatJs>
+<summary>
+Contains DateTime format for Javascript code.
+</summary>
+<returns>
+	A <see cref="String"/> representing DateTime format used by WebBrowser for Javascript code.
+</returns>
+<remarks>
+Used internally by <see cref="InvokeScriptAsync"/>.
+</remarks>
+</StringFormatJs>
+<!--==============================================-->
 </doc>
 
 
