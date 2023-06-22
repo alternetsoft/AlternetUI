@@ -5,11 +5,13 @@
   </PropertyGroup>
 
 	<PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-		<TargetFrameworks>net6.0;net7.0;net462;net481</TargetFrameworks>
-	</PropertyGroup>
+		<!-- <TargetFrameworks>net7.0;net6.0;net462;net481</TargetFrameworks> -->
+      <TargetFrameworks>netstandard2.0</TargetFrameworks>
+      
+    </PropertyGroup>
 
 	<PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0</TargetFrameworks>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -28,11 +30,13 @@
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
-  <Target Name="EmbedWellKnownApiInfo" BeforeTargets="PrepareForBuild" Condition="'$(TargetFramework)' != ''">
+  <!-- ================================================= -->
+  <Target Name="EmbedWellKnownApiInfo" BeforeTargets="PrepareForBuild"
+          Condition="'$(TargetFramework)' != ''">
     <PropertyGroup>
       <ApiInfoXmlFilePath>$(IntermediateOutputPath)\WellKnownApiInfo.xml</ApiInfoXmlFilePath>
-      <ApiInfoCollectorToolPath>$(MSBuildThisFileDirectory)\Alternet.UI.Build.Tasks.ApiInfoCollector\bin\$(Configuration)\$(TargetFramework)\Alternet.UI.Build.Tasks.ApiInfoCollector</ApiInfoCollectorToolPath>
-      <ApiInfoCollectorInputAssemblyPath>$(MSBuildThisFileDirectory)\..\Alternet.UI\bin\$(Configuration)\$(TargetFramework)\Alternet.UI.dll</ApiInfoCollectorInputAssemblyPath>
+      <ApiInfoCollectorToolPath>$(MSBuildThisFileDirectory)\Alternet.UI.Build.Tasks.ApiInfoCollector\bin\$(Configuration)\net6.0\Alternet.UI.Build.Tasks.ApiInfoCollector</ApiInfoCollectorToolPath>
+      <ApiInfoCollectorInputAssemblyPath>$(MSBuildThisFileDirectory)\..\Alternet.UI\bin\$(Configuration)\net6.0\Alternet.UI.dll</ApiInfoCollectorInputAssemblyPath>
     </PropertyGroup>
 
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
@@ -45,9 +49,10 @@
     <Message Text="============================"/>
     <Message Text="$(ApiInfoCollectorCommand)" />
     <Message Text="============================"/>
-    <Exec Command="$(ApiInfoCollectorCommand)" />
+    <Exec Command="$(ApiInfoCollectorCommand)" Condition="true"/>
+    <!-- ================================================= -->
 
-    <ItemGroup>
+    <ItemGroup Condition="true">
       <EmbeddedResource Include="$(ApiInfoXmlFilePath)" LogicalName="WellKnownApiInfo.xml" />
       <FileWrites Include="$(ApiInfoXmlFilePath)" />
     </ItemGroup>

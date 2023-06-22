@@ -7,13 +7,36 @@ namespace Alternet.UI.Build.Tasks
 {
     public class GenerateUIXmlCodeTask : Task
     {
+        private static readonly string MyLogFilePath =
+            Path.ChangeExtension(typeof(GenerateUIXmlCodeTask).Assembly.Location, ".log");
+
         private const string LogSubcategory = "Alternet.UI.UIXml.CodeGeneration";
+
+        private static readonly string[] StringSplitToArrayChars =
+        {
+            Environment.NewLine,
+        };
+
+        public static void LogToFile(string s)
+        {
+            string[] result = s.Split(StringSplitToArrayChars, StringSplitOptions.None);
+
+            string contents = string.Empty;
+
+            foreach (string s2 in result)
+                contents += $"{s2}{Environment.NewLine}";
+            File.AppendAllText(@"e:/a.log", contents);
+        }
 
         [Required]
         public ITaskItem[] InputFiles { get; set; } = default!;
 
         public override bool Execute()
         {
+            string xmlPath = WellKnownApiInfo.GetXmlPath();
+            bool xmlPathExists = File.Exists(xmlPath);
+            //LogToFile($"===> XmlPath({xmlPathExists}): {xmlPath}");
+
             try
             {
                 foreach (var inputFile in InputFiles)
@@ -66,6 +89,9 @@ namespace Alternet.UI.Build.Tasks
 
         private void LogDebug(string message) =>
             Log.LogMessage(LogSubcategory, null, null, null, 0, 0, 0, 0, MessageImportance.Low, message, null);
+
+        private void LogDebugHigh(string message) =>
+            Log.LogMessage(LogSubcategory, null, null, null, 0, 0, 0, 0, MessageImportance.High, message, null);
 
         private void LogError(ITaskItem? inputFile, string message, int lineNumber = 0, int columnNumber = 0) =>
             Log.LogError(LogSubcategory, null, null, inputFile?.ItemSpec, lineNumber, columnNumber, 0, 0, message, null);
