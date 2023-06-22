@@ -9,7 +9,7 @@ namespace Alternet.UI.Build.Tasks
 {
     internal class ApiInfoProvider
     {
-        private ApiInfo apiInfo;
+        private readonly ApiInfo apiInfo;
 
         public ApiInfoProvider(Stream dataStream)
         {
@@ -39,7 +39,7 @@ namespace Alternet.UI.Build.Tasks
 
         private class TypeInfo
         {
-            private HashSet<string> events;
+            private readonly HashSet<string> events;
 
             public TypeInfo(string fullName, IEnumerable<string> events)
             {
@@ -54,7 +54,7 @@ namespace Alternet.UI.Build.Tasks
 
         private class AssemblyInfo
         {
-            private Dictionary<string, TypeInfo> types;
+            private readonly Dictionary<string, TypeInfo> types;
 
             public AssemblyInfo(string name, IEnumerable<TypeInfo> types)
             {
@@ -74,7 +74,7 @@ namespace Alternet.UI.Build.Tasks
 
         private class ApiInfo
         {
-            private Dictionary<string, AssemblyInfo> assemblies;
+            private readonly Dictionary<string, AssemblyInfo> assemblies;
 
             public ApiInfo(IEnumerable<AssemblyInfo> assemblies)
             {

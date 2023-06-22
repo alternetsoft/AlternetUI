@@ -15,7 +15,7 @@ namespace Alternet.UI.Build.Tasks
         private static readonly XName classAttributeName = (XNamespace)UIXmlNamespace + "Class";
         private readonly Stream xmlContent;
         private readonly ApiInfoProvider apiInfoProvider;
-        private XDocument document;
+        private readonly XDocument document;
 
         private XDocument? sanitizedDocument;
 
@@ -194,9 +194,7 @@ namespace Alternet.UI.Build.Tasks
         {
             void RemoveClassAttribute()
             {
-                var attribute = document.Root.Attribute(classAttributeName);
-                if (attribute == null)
-                    throw new Exception(ClassAttributeNotFound);
+                var attribute = document.Root.Attribute(classAttributeName) ?? throw new Exception(ClassAttributeNotFound);
                 attribute.Remove();
             }
 
@@ -232,9 +230,7 @@ namespace Alternet.UI.Build.Tasks
 
         private string GetClassFullName()
         {
-            var attribute = document.Root.Attribute(classAttributeName);
-            if (attribute == null)
-                throw new Exception(ClassAttributeNotFound);
+            var attribute = document.Root.Attribute(classAttributeName) ?? throw new Exception(ClassAttributeNotFound);
             return attribute.Value;
         }
 
