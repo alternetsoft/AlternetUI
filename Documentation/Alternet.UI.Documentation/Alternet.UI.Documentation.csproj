@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net462</TargetFramework>
+	<UseLatestDocFx>false</UseLatestDocFx>
+        <TargetFramework Condition="!$(UseLatestDocFx)">net462</TargetFramework>
+        <TargetFramework Condition="$(UseLatestDocFx)">net6.0</TargetFramework>
     </PropertyGroup>
     <PropertyGroup>
         <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
@@ -36,14 +38,18 @@
     </ItemGroup>
     <Target Name="CopyMemberpage" AfterTargets="Build" Condition="!Exists('$(ProjectDir)\templates\memberpage')">
         <Exec Command="xcopy $(USERPROFILE)\.nuget\packages\memberpage\2.59.4\content $(ProjectDir)\templates\memberpage /E /H /C /I /Y" />
+	
     </Target>
     <Target Name="RestoreDocFx" AfterTargets="Build" Condition="!Exists('$(USERPROFILE)\.nuget\packages\docfx.console\2.59.4')">
         <Exec Command="dotnet restore $(ProjectDir)\utils\DocFXInstaller\DocFXInstaller.csproj" />
     </Target>
-    <Target Name="BuildDocumentation" AfterTargets="Build">
+    <Target Name="BuildDocumentation" AfterTargets="Build"  Condition="!$(UseLatestDocFx)">
         <Exec Command="$(USERPROFILE)\.nuget\packages\docfx.console\2.59.4\tools\docfx.exe" />
     </Target>
-    <Target Name="SplitSitemap" AfterTargets="BuildDocumentation">
+    <Target Name="BuildDocumentation2" AfterTargets="Build" Condition="$(UseLatestDocFx)">
+        <Exec Command="docfx docfx.json"/>
+    </Target>
+    <Target Name="SplitSitemap" AfterTargets="BuildDocumentation" Condition="!$(UseLatestDocFx)">
         <Exec Command="dotnet build $(ProjectDir)\..\..\Source\Tools\SitemapSplitter\SitemapSplitter.csproj" />
         <Exec Command="$(ProjectDir)\..\..\Source\Tools\SitemapSplitter\bin\Debug\net6.0\SitemapSplitter.exe split --SourceSiteMapPath=$(ProjectDir)\site\sitemap.xml --OutputDirectoryPath=$(ProjectDir)\site\ --ConfigFilePath=$(ProjectDir)\SitemapSplitter.config.xml" />
         <Exec Command="del $(ProjectDir)\site\sitemap.xml" />
