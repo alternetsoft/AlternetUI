@@ -1,7 +1,9 @@
 cd ..\Alternet.UI.Build.Tasks.ApiInfoCollector
-dotnet build
+dotnet build -c Debug
+dotnet build -c Release
 
 cd ..
-dotnet build
+dotnet build -c Debug
+dotnet build -c Release
 
 
