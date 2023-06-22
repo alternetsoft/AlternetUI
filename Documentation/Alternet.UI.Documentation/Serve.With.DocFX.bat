@@ -1,3 +1,3 @@
 pushd site
-docfx serve
+start docfx serve
 popd
