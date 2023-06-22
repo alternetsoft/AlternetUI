@@ -3,7 +3,31 @@
     <!-- 
 
 	-->
+    <!-- ========================================== -->
+	<Target Name="ClearProjectBin">
+		<Message Text="--------------------------------------------------------" Importance="high" />
+		<Message Text="Exec ClearProjectBin" Importance="high" />
+		<ItemGroup>
+			<CsProjFiles Include="$(RootDirectoryPath)\**\*.csproj"/>
+		</ItemGroup>
+		<ItemGroup>
+			<CsProjFolders Include="@(CsProjFiles->'%(RelativeDir)/bin')"/>
+			<CsProjFolders Include="@(CsProjFiles->'%(RelativeDir)/obj')"/>
+		</ItemGroup>
+		<PropertyGroup>
+			<RmDirCommand Condition="$([MSBuild]::IsOsPlatform('Windows'))">rmdir /s /q</RmDirCommand>
+			<RmDirCommand Condition="!$([MSBuild]::IsOsPlatform('Windows'))">rm -rf</RmDirCommand>
+		</PropertyGroup>
+		<Message Text="Clean: %(CsProjFolders.FullPath)" Importance="high"
+		Condition="Exists(%(CsProjFolders.FullPath))"/>
 
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)" 
+			Command="$(RmDirCommand) &quot;%(CsProjFolders.FullPath)&quot;" Condition="Exists(%(CsProjFolders.FullPath))"/>
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)" 
+			Command="$(RmDirCommand) &quot;%(CsProjFolders.FullPath)&quot;" Condition="Exists(%(CsProjFolders.FullPath))"/>
+	</Target>
     <!-- ========================================== -->
 	<Target Name="BuildControlsSample">
 		<Exec 
@@ -37,8 +61,10 @@
 		<Message Text="================================" Importance="high" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)" 
-			Command="find . -name *.sh -exec chmod +x {} \;" 
+			Command="find . -name &quot;*.sh&quot; -exec chmod +x {} \;" 
 			Condition="$([MSBuild]::IsOsPlatform('Linux'))" />
+			
+		<CallTarget Targets="ClearProjectBin"/>
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec DownloadAndExtractWxWidgetsBin" Importance="high" />
 		<CallTarget Targets="DownloadAndExtractWxWidgetsBin" Condition="!Exists($(WxWidgetsDirectory))"/>
