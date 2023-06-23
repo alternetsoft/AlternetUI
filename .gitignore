@@ -25,3 +25,5 @@ test.bat
 Documentation/Alternet.UI.Documentation/BuildResult.txt
 Source/Build/Alternet.UI.Pal/NuGet/License.txt
 Source/Build/Alternet.UI.Pal/NuGet/icon.png
+Source/Keys/Alternet.pfx
+Source/Keys/Key.snk
