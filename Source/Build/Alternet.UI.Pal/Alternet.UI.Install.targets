@@ -70,6 +70,28 @@
 			DestinationFolder="$(UI_PAL_B)\%(RecursiveDir)"	/>
 	</Target>
     <!-- ========================================== -->
+    <Target Name="BuildAlternetUIBuildTasks">
+		<Message Text="--------------------------------------------------------" Importance="high" />
+		<Message Text="Exec Build Alternet.UI.Build.Tasks" Importance="high" />
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
+			Command="$(DotNetBuildDebugCmd)" />
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
+			Command="$(DotNetBuildReleaseCmd)" />
+	</Target>
+    <!-- ========================================== -->
+    <Target Name="BuildAlternetUIBuildTasksApiInfoCollector">
+		<Message Text="--------------------------------------------------------" Importance="high" />
+		<Message Text="Exec Build Alternet.UI.Build.Tasks.ApiInfoCollector" Importance="high" />
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
+			Command="$(DotNetBuildDebugCmd)" />
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
+			Command="$(DotNetBuildReleaseCmd)" />
+	</Target>
+    <!-- ========================================== -->
     <Target Name="InstallAlternetUI">
 		<Message Text="========================" Importance="high" />
 		<Message Text="Alternet.UI Installation started" Importance="high" />
@@ -94,6 +116,8 @@
 		<CallTarget Targets="BuildNative_Windows"/>
 		<CallTarget Targets="BuildNative_Unix"/>
 	<!-- ========================================== -->
+		<CallTarget Targets="BuildAlternetUIBuildTasksApiInfoCollector"/>
+	<!-- ========================================== -->
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec Build Alternet.UI" Importance="high" />
 		<Exec 
@@ -103,23 +127,7 @@
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
 			Command="$(DotNetBuildReleaseCmd)" />
     <!-- ========================================== -->
-		<Message Text="--------------------------------------------------------" Importance="high" />
-		<Message Text="Exec Build Alternet.UI.Build.Tasks.ApiInfoCollector" Importance="high" />
-		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
-			Command="$(DotNetBuildDebugCmd)" />
-		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
-			Command="$(DotNetBuildReleaseCmd)" />
-    <!-- ========================================== -->
-		<Message Text="--------------------------------------------------------" Importance="high" />
-		<Message Text="Exec Build Alternet.UI.Build.Tasks" Importance="high" />
-		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
-			Command="$(DotNetBuildDebugCmd)" />
-		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
-			Command="$(DotNetBuildReleaseCmd)" />
+		<CallTarget Targets="BuildAlternetUIBuildTasks"/>
     <!-- ========================================== -->
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec CopyArtefacts" Importance="high" />
@@ -129,7 +137,6 @@
 		<Message Text="Exec Build ControlsSample" Importance="high" />
 		<CallTarget Targets="BuildControlsSample"/>
 		<CallTarget Targets="RunControlsSample"/>		
-		<CallTarget Targets="WaitEnter"/>		
 		<Message Text="Alternet.UI Installation done." Importance="high" />
   		<Message Text="========================" Importance="high" />
 	<!-- ========================================== -->
