@@ -46,3 +46,11 @@ if (CommonUtils.CmdLineExecCommands == "waitAnyKey")
     Console.ReadKey();
     return;
 }
+
+// waitEnter command
+if (CommonUtils.CmdLineExecCommands == "waitEnter")
+{
+    Console.WriteLine("Press ENTER to close this window...");
+    Console.ReadLine();
+    return;
+}
