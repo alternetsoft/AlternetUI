@@ -32,15 +32,15 @@ Step 3. Linux Machine Setup:
 - Make folder with Windows Alternet.UI installation accessible for Linux Machine.
 
 Step 4. Build:
-- Run Install.bat on Windows Machine. It collects artifacts in Publish\Artifacts\Build\Windows\UI\PAL.
-- Run Install.sh on macOs Machine. It collects artifacts in Publish\Artifacts\Build\macOS\UI\PAL.
-- Run Install.sh on Linux Machine. It collects artifacts in Publish\Artifacts\Build\Linux\UI\PAL.
+- Run Install.bat (or Install.ps1) on Windows Machine. It collects artifacts in Publish/Artifacts/Build/Windows.
+- Run Install.sh (or Install.ps1) on macOs Machine. It collects artifacts in Publish/Artifacts/Build/macOS.
+- Run Install.sh (or Install.ps1) on Linux Machine. It collects artifacts in Publish/Artifacts/Build/Linux.
 
-Step 5. Final Build on Windows Machine:
+Step 5. Build NuGet packages on Windows Machine (optional):
 - Collect all the artifacts from all the 3 previous builds in the locations as they were on the source machines.
-- Run Source/Build/Scripts/MSW.Build.PAL.NuGet.bat.
-- Run Source/Build/Scripts/MSW.Publish.bat.
-- The results will be in Publish\Packages.
+- Run Install.Scripts/MSW.Build.PAL.NuGet.bat.
+- Run Install.Scripts/MSW.Publish.bat.
+- The results will be in Publish/Packages.
 
 ------------
 
