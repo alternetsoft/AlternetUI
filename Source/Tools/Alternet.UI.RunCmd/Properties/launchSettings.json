@@ -2,7 +2,7 @@
   "profiles": {
     "Alternet.UI.RunCmd": {
       "commandName": "Project",
-      "commandLineArgs": "-r=runControlsSample"
+      "commandLineArgs": "-r=waitAnyKey"
     }
   }
 }
