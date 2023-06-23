@@ -13,7 +13,8 @@
     <Target Name="DownloadAndExtractWxWidgetsBinLinux">
         <DownloadFile Condition="!Exists($(WxWidgetsBinDownloadTargetPathLinux))"
             SourceUrl="$(WxWidgetsBinDownloadUrlLinux)"
-            DestinationFolder="$(WxWidgetsBinDownloadDirectoryLinux)" DestinationFileName="$(WxWidgetsBinDownloadFileNameLinux)" />
+            DestinationFolder="$(WxWidgetsBinDownloadDirectoryLinux)" 
+			DestinationFileName="$(WxWidgetsBinDownloadFileNameLinux)" />
         <Unzip SourceFiles="$(WxWidgetsBinDownloadTargetPathLinux)" 
 			DestinationFolder="$(WxWidgetsDirectory)" />
         <Delete Files="$(WxWidgetsBinDownloadTargetPathLinux)"/>
@@ -22,7 +23,8 @@
     <Target Name="DownloadAndExtractWxWidgetsBinMacOS">
         <DownloadFile Condition="!Exists($(WxWidgetsBinDownloadTargetPathMacOS))"
             SourceUrl="$(WxWidgetsBinDownloadUrlMacOS)"
-            DestinationFolder="$(WxWidgetsBinDownloadDirectoryMacOS)" DestinationFileName="$(WxWidgetsBinDownloadFileNameMacOS)" />
+            DestinationFolder="$(WxWidgetsBinDownloadDirectoryMacOS)" 
+			DestinationFileName="$(WxWidgetsBinDownloadFileNameMacOS)" />
         <Unzip SourceFiles="$(WxWidgetsBinDownloadTargetPathMacOS)" 
 			DestinationFolder="$(WxWidgetsDirectory)" />
         <Delete Files="$(WxWidgetsBinDownloadTargetPathMacOS)"/>
@@ -52,7 +54,7 @@
             SourceUrl="$(WxWidgetsBinDownloadUrlWindows)"
             DestinationFolder="$(WxWidgetsDownloadDirectory)" DestinationFileName="$(WxWidgetsDownloadFileName)" />
 	</Target>
-
+    <!-- ========================================== -->
 	<Target Name="DownloadWxWidgetsBinWindows2">
         <Exec
             WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"

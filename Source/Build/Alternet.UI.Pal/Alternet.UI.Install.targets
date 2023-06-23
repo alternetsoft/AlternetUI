@@ -40,7 +40,19 @@
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Samples/ControlsSample" 
 			Command="$(DotNetRunCmd)" />
-	</Target>		
+	</Target>
+    <!-- ========================================== -->
+	<Target Name="RunControlsSampleAsync">
+        <Exec
+            WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
+            Command="dotnet run -- -r=runControlsSample" />
+	</Target>
+    <!-- ========================================== -->
+	<Target Name="WaitAnyKey">
+        <Exec
+            WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
+            Command="dotnet run -- -r=waitAnyKey" />
+	</Target>
     <!-- ========================================== -->
 	<Target Name="CopyArtefacts">
 		<RemoveDir Directories="$(UI_PAL_ARTIFACTS_PATH)" Condition="Exists($(UI_PAL_ARTIFACTS_PATH))"/>
@@ -59,7 +71,8 @@
 	</Target>
     <!-- ========================================== -->
     <Target Name="InstallAlternetUI">
-		<Message Text="================================" Importance="high" />
+		<Message Text="========================" Importance="high" />
+		<Message Text="Alternet.UI Installation started" Importance="high" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)" 
 			Command="find . -name &quot;*.sh&quot; -exec chmod +x {} \;" 
@@ -67,61 +80,64 @@
 			
 		<CallTarget Targets="ClearProjectBin"/>
 		<Message Text="--------------------------------------------------------" Importance="high" />
-		<Message Text="Exec DownloadAndExtractWxWidgetsBin" Importance="high" />
+		<Message Text="Exec DownloadAndExtract WxWidgets Bin" Importance="high" />
 		<CallTarget Targets="DownloadAndExtractWxWidgetsBin" Condition="!Exists($(WxWidgetsDirectory))"/>
 		<Message Text="--------------------------------------------------------" Importance="high" />
-		<Message Text="Exec BuildWxWidgets_Linux" Importance="high" />
+		<Message Text="Exec Build WxWidgets Linux" Importance="high" />
         <CallTarget Targets="BuildWxWidgets_Linux" Condition="!Exists($(WxWidgetsGtkBuildDirectory))"/>
 		<Message Text="--------------------------------------------------------" Importance="high" />
-		<Message Text="Exec BuildWxWidgets_MacOS" Importance="high" />
+		<Message Text="Exec Build WxWidgets MacOS" Importance="high" />
         <CallTarget Targets="BuildWxWidgets_MacOS" Condition="!Exists($(WxWidgetsMacOSBuildDirectory))"/>
     <!-- ========================================== -->
 		<Message Text="--------------------------------------------------------" Importance="high" />
-		<Message Text="Exec Alternet.UI.Pal" Importance="high" />
+		<Message Text="Exec Build Alternet.UI.Pal" Importance="high" />
 		<CallTarget Targets="BuildNative_Windows"/>
 		<CallTarget Targets="BuildNative_Unix"/>
+	<!-- ========================================== -->
+		<Message Text="--------------------------------------------------------" Importance="high" />
+		<Message Text="Exec Build Alternet.UI" Importance="high" />
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
+			Command="$(DotNetBuildDebugCmd)" />
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
+			Command="$(DotNetBuildReleaseCmd)" />
+    <!-- ========================================== -->
+		<Message Text="--------------------------------------------------------" Importance="high" />
+		<Message Text="Exec Build Alternet.UI.Build.Tasks.ApiInfoCollector" Importance="high" />
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
+			Command="$(DotNetBuildDebugCmd)" />
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
+			Command="$(DotNetBuildReleaseCmd)" />
+    <!-- ========================================== -->
+		<Message Text="--------------------------------------------------------" Importance="high" />
+		<Message Text="Exec Build Alternet.UI.Build.Tasks" Importance="high" />
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
+			Command="$(DotNetBuildDebugCmd)" />
+		<Exec 
+			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
+			Command="$(DotNetBuildReleaseCmd)" />
     <!-- ========================================== -->
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec CopyArtefacts" Importance="high" />
 		<CallTarget Targets="CopyArtefacts"/>
-	<!-- ========================================== -->
-		<Message Text="--------------------------------------------------------" Importance="high" />
-		<Message Text="Exec Alternet.UI" Importance="high" />
-		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildDebugCmd)" />
-		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildReleaseCmd)" />
-    <!-- ========================================== -->
-		<Message Text="--------------------------------------------------------" Importance="high" />
-		<Message Text="Exec Alternet.UI.Build.Tasks.ApiInfoCollector" Importance="high" />
-		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
-			Command="$(DotNetBuildDebugCmd)" />
-		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
-			Command="$(DotNetBuildReleaseCmd)" />
-    <!-- ========================================== -->
-		<Message Text="--------------------------------------------------------" Importance="high" />
-		<Message Text="Exec Alternet.UI.Build.Tasks" Importance="high" />
-		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
-			Command="$(DotNetBuildDebugCmd)" />
-		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
-			Command="$(DotNetBuildReleaseCmd)" />
     <!-- ========================================== -->
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec Build ControlsSample" Importance="high" />
 		<CallTarget Targets="BuildControlsSample"/>
-		<CallTarget Targets="RunControlsSample"/>		
-    <!-- ========================================== -->
+		<CallTarget Targets="RunControlsSampleAsync"/>		
+		<CallTarget Targets="WaitAnyKey"/>		
+		<Message Text="Alternet.UI Installation done." Importance="high" />
+  		<Message Text="========================" Importance="high" />
+	<!-- ========================================== -->
     </Target>
     <!-- ========================================== -->
     <!-- ========================================== -->
 </Project>
 
 <!-- 
-  
+
 -->
