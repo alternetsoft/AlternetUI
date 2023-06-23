@@ -43,7 +43,7 @@
         <Copy SourceFiles="@(SourceIcon)" DestinationFiles="@(TargetIcon)" />
         <Copy SourceFiles="@(NugetPayload_License)" DestinationFiles="@(LicenseTarget)" />
 
-        <!-- Windows ---------------------------------------------------------------------->
+        <!-- Windows ============================ -->
         
         <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_X86)\native"/>
         <Copy SourceFiles="@(NugetPayload_Native_Windows_X86)" DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_X86)\native" />
@@ -51,12 +51,12 @@
         <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_X64)\native"/>
         <Copy SourceFiles="@(NugetPayload_Native_Windows_X64)" DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Windows_X64)\native" />
 
-        <!-- MacOS ------------------------------------------------------------------------>
+        <!-- MacOS  ============================ -->
 
         <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS)\native"/>
         <Copy SourceFiles="@(NugetPayload_Native_MacOS)" DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_MacOS)\native" />
 
-        <!-- Linux -------------------------------------------------------------------------->
+        <!-- Linux  ============================ -->
 
         <MakeDir Directories="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux)\native"/>
         <Copy SourceFiles="@(NugetPayload_Native_Linux)" DestinationFolder="$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux)\native" />
