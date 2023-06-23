@@ -55,10 +55,10 @@
 	</Target>
     <!-- ========================================== -->
 	<Target Name="CopyArtefacts">
-		<RemoveDir Directories="$(UI_PAL_ARTIFACTS_PATH)" Condition="Exists($(UI_PAL_ARTIFACTS_PATH))"/>
-		<MakeDir Directories="$(UI_PAL_ARTIFACTS_PATH)"/>	
-		<RemoveDir Directories="$(UI_PAL_B)" Condition="Exists($(UI_PAL_B))"/>
-		<MakeDir Directories="$(UI_PAL_B)"/>	
+		<!-- <RemoveDir Directories="$(UI_PAL_ARTIFACTS_PATH)" Condition="Exists($(UI_PAL_ARTIFACTS_PATH))"/> -->
+		<!-- <RemoveDir Directories="$(UI_PAL_B)" Condition="Exists($(UI_PAL_B))"/> -->
+		<MakeDir Directories="$(UI_PAL_ARTIFACTS_PATH)" Condition="!Exists($(UI_PAL_ARTIFACTS_PATH))"/>	
+		<MakeDir Directories="$(UI_PAL_B)" Condition="!Exists($(UI_PAL_B))"/>	
 		<ItemGroup>
 					   <MySourceFiles Include="$(UI_PAL_BIN)\**\*.*"/>
 		</ItemGroup>
