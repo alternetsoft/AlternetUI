@@ -6,6 +6,7 @@
 SETLOCAL EnableDelayedExpansion
 
 set SCRIPT_HOME=%~dp0.
+set CERT_PASSWORD=%1
 
 :: Set up publish folder.
 
@@ -45,7 +46,9 @@ if not !ERRORLEVEL! EQU 0 (
 
 :: Build managed packages.
 
-call "%SCRIPT_HOME%\MSW.Publish.Build.Managed.bat"
+echo ====================================
+
+call "%SCRIPT_HOME%\MSW.Publish.SubTool.1.Build.Managed.bat" %CERT_PASSWORD%
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
@@ -61,7 +64,9 @@ if not !ERRORLEVEL! EQU 0 (
 
 :: Build integration components.
 
-call "%SCRIPT_HOME%\MSW.Publish.Build.Integration.bat"
+echo ====================================
+
+call "%SCRIPT_HOME%\MSW.Publish.SubTool.2.Build.Integration.bat" %CERT_PASSWORD%
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
@@ -81,7 +86,9 @@ copy "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.Visua
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-dotnet run --project "%VersionToolProject%" -- append-version-suffix "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.VS2022.vsix"
+echo ====================================
+
+dotnet run --project "%VersionToolProject%" --property WarningLevel=0 -- append-version-suffix "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.VS2022.vsix"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
@@ -95,11 +102,15 @@ if not !ERRORLEVEL! EQU 0 (
 
 set PublicSourceGeneratorToolProject=%SCRIPT_HOME%\..\..\Tools\PublicSourceGenerator\Alternet.UI.PublicSourceGenerator.csproj
 
-dotnet run --project "%PublicSourceGeneratorToolProject%" -- components
+echo ====================================
+
+dotnet run --project "%PublicSourceGeneratorToolProject%" --property WarningLevel=0  -- components
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-dotnet run --project "%PublicSourceGeneratorToolProject%" -- samples
+echo ====================================
+
+dotnet run --project "%PublicSourceGeneratorToolProject%" --property WarningLevel=0  -- samples
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 

@@ -5,6 +5,10 @@ SETLOCAL EnableDelayedExpansion
 
 set SCRIPT_HOME=%~dp0.
 
+set NuGetApiKey=%1
+set GitHubApiKey=%2
+set AzureDevOpsAccessToken=%3
+
 :: Set up.
 
 set PublishRoot=%SCRIPT_HOME%\..\..\..\Publish\Artifacts\Deploy

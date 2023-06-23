@@ -5,7 +5,7 @@
     <Platforms>AnyCPU</Platforms>
     <LangVersion>latest</LangVersion>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\Keys\Key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile Condition="Exists('..\Keys\Key.snk')">..\Keys\Key.snk</AssemblyOriginatorKeyFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);XAMLX_INTERNAL</DefineConstants>
@@ -48,10 +48,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="System\DateTime.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Application\ThreadException\Resources\ErrorImage.png" />
     <None Remove="Xaml\.editorconfig" />
   </ItemGroup>
@@ -61,7 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\Keys\Key.snk" Link="Key.snk" />
+    <None Include="..\Keys\Key.snk" Link="Key.snk" Condition="Exists('..\Keys\Key.snk')"/>
   </ItemGroup>
 
   <!-- Uncomment this to debug in release build. -->
@@ -109,10 +105,10 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\net6.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net6.0" />
-    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\net7.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net7.0" />
-    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\net462\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net462" />
-    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\net481\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net481" />
+    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net6.0" />
+    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net7.0" />
+    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net462" />
+    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net481" />
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(';NETFRAMEWORK'))">
