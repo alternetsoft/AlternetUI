@@ -1,0 +1,100 @@
+{
+  "metadata": [
+    {
+      "properties": 
+        {
+          "WarningLevel": "0"
+        },
+      "src": [
+        {
+          "src": "../../Source/Alternet.UI",
+          "files": [ "**/*.csproj" ],
+          "exclude": [ "**/bin/**", "**/obj/**" ]
+        }
+      ],
+      "dest": "api",
+      "filter": "filterConfig.yml",
+      "disableGitFeatures": false
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": "navigation/**"
+      },
+      {
+        "files": [
+          "api/**.yml",
+          "api/index.md"
+        ]
+      },
+      {
+        "files": [
+          "articles/**.md",
+          "articles/**/toc.yml",
+          "introduction/**.md",
+          "introduction/**/toc.yml",
+          "tutorials/**.md",
+          "tutorials/**/toc.yml",
+          "how-to-guides/**.md",
+          "how-to-guides/**/toc.yml",
+          "toc.yml",
+          "*.md"
+        ],
+        "exclude": [
+          "articles/**/examples/**",
+          "introduction/**/examples/**",
+          "tutorials/**/examples/**",
+          "how-to-guides/**/examples/**"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "**/images/**"
+        ]
+      }
+    ],
+    "overwrite": [
+      {
+        "files": [
+          "apidoc/**"
+        ],
+        "exclude": [
+          "obj/**",
+          "site/**",
+          "apidoc/**/images/**",
+          "apidoc/**/examples/**"
+        ]
+      }
+    ],
+    "dest": "site",
+    "globalMetadataFiles": [],
+    "fileMetadataFiles": [],
+    "template": [
+      //"default",
+      //"templates/alternet",
+      //"templates/memberpage",
+      //"templates/memberpage-postprocess"
+    ],
+    "xrefservice": [ "https://xref.docs.microsoft.com/query?uid={uid}" ],
+    "postProcessors": [ "ExtractSearchIndex" ],
+    "markdownEngineName": "markdig",
+    "noLangKeyword": false,
+    "keepFileLink": false,
+    "cleanupCacheHistory": false,
+    "disableGitFeatures": false,
+    "globalMetadata": {
+      "_appLogoPath": "images/logo/logo.svg",
+      "_appFaviconPath": "images/logo/favicon.ico",
+      "_disableContribution": true,
+      "_enableNewTab": false,
+      "_appFooter": "Copyright AlterNET Software",
+      "_enableSearch": true
+    },
+    "sitemap": {
+      "baseUrl": "https://docs.alternet-ui.com/"
+    }
+  }
+}
