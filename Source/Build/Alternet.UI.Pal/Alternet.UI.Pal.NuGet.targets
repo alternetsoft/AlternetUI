@@ -63,6 +63,11 @@
 
     </Target>
 <!-- ========================================== -->
+    <Target Name="NuGet_Sign"  Condition="Exists($(SignKeyPath))">
+		<Exec Command="dotnet nuget sign &quot;$(NuGetDirectoryPath)\*.nupkg&quot; --certificate-path &quot;$(SignKeyPath)&quot; --timestamper http://timestamp.digicert.com --certificate-password $(SignPassword)" 
+			Condition="'$(SignPassword)' != ''"/>
+	</Target>
+<!-- ========================================== -->
     <Target Name="NuGet_Pack" >
         <DownloadFile Condition="!Exists($(NuGetExeFilePath))"
             SourceUrl="$(NuGetExeDownloadUrl)" DestinationFolder="$(NuGetExeDirectoryPath)" />
@@ -71,8 +76,11 @@
               Command="$(NuGetExeFilePath) pack $(NuGetNuspecFileName) -NoDefaultExcludes -Exclude .nuget\*;*.nupkg -properties version=$(Version)"
               WorkingDirectory="$(NuGetDirectoryPath)" />
 
-		<Exec Command="dotnet nuget sign &quot;$(NuGetDirectoryPath)\*.nupkg&quot; --certificate-path &quot;$(SignKeyPath)&quot; --timestamper http://timestamp.digicert.com --certificate-password $(SignPassword)" 
-		Condition="Exists($(SignKeyPath))"/>
+		<Message Text="WARNING: NuGet will not be signed: Provide file Source\Keys\Alternet.pfx" Importance="high" 
+			Condition="!Exists($(SignKeyPath))"/>
+		<Message Text="WARNING: NuGet will not be signed: Provide SignPassword as a parameter" Importance="high" 
+			Condition="'$(SignPassword)' == ''"/>
+        <CallTarget Targets="NuGet_Sign"/>
 
         <Exec Condition="!$([MSBuild]::IsOsPlatform('Windows'))"
               Command="mono $(NuGetExeFilePath) pack $(NuGetNuspecFileName) -NoDefaultExcludes -Exclude .nuget/*\;*.nupkg -properties version=$(Version)"
@@ -84,13 +92,21 @@
         <MakeDir Directories="$(NuGetOutputDirectoryPath)"/>
         <Copy SourceFiles="@(NugetBuildResults)" DestinationFolder="$(NuGetOutputDirectoryPath)" />
         <Copy SourceFiles="@(NugetBuildResults)" DestinationFolder="$(NuGetOutputDirectoryPathArtefacts)" />
+		
+		<Message Text="Nuget Alternet.UI.Pal created in Publish\Artifacts\NuGet\" Importance="high" />
+	
 	</Target>
 <!-- ========================================== -->
     <Target Name="NuGet" DependsOnTargets="NuGet_Clean">
+		<Message Text="========================" Importance="high" />
+		<Message Text="Create Nuget Alternet.UI.Pal started" Importance="high" />
+	
         <Error Text="To build the NuGet package, the build result files for all the platforms (Windows, MacOS, Linux) must be present in Bin directory."  
             Condition="@(NugetPayload_Native_Windows_X86->Count()) == 0 or @(NugetPayload_Native_Windows_X64->Count()) == 0 or @(NugetPayload_Native_MacOS->Count()) == 0 or @(NugetPayload_Native_Linux->Count()) == 0" />
 
         <CallTarget Targets="NuGet_PrepareSource;NuGet_Pack;NuGet_CopyBuildResults" />
+		<Message Text="Create Nuget Alternet.UI.Pal done." Importance="high" />
+		<Message Text="========================" Importance="high" />
     </Target>
 <!-- ========================================== -->
 </Project>

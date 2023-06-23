@@ -2,7 +2,8 @@ SETLOCAL EnableDelayedExpansion
 
 set SCRIPT_HOME=%~dp0.
 
-dotnet msbuild /t:Nuget "%SCRIPT_HOME%\..\Source\Build\Alternet.UI.Pal\Alternet.UI.Pal.proj"
+dotnet msbuild /p:SignPassword=%1 /t:Nuget "%SCRIPT_HOME%\..\Source\Build\Alternet.UI.Pal\Alternet.UI.Pal.proj"
+
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
