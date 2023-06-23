@@ -48,10 +48,10 @@
             Command="dotnet run -- -r=runControlsSample" />
 	</Target>
     <!-- ========================================== -->
-	<Target Name="WaitAnyKey">
+	<Target Name="WaitEnter">
         <Exec
             WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
-            Command="dotnet run -- -r=waitAnyKey" />
+            Command="dotnet run -- -r=waitEnter" />
 	</Target>
     <!-- ========================================== -->
 	<Target Name="CopyArtefacts">
@@ -128,8 +128,8 @@
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec Build ControlsSample" Importance="high" />
 		<CallTarget Targets="BuildControlsSample"/>
-		<CallTarget Targets="RunControlsSampleAsync"/>		
-		<CallTarget Targets="WaitAnyKey"/>		
+		<CallTarget Targets="RunControlsSample"/>		
+		<CallTarget Targets="WaitEnter"/>		
 		<Message Text="Alternet.UI Installation done." Importance="high" />
   		<Message Text="========================" Importance="high" />
 	<!-- ========================================== -->

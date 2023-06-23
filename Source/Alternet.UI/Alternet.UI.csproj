@@ -146,7 +146,7 @@
   <!-- ================================================= -->
   <!-- remove .. in path -->
   <Target Name="CreateAllClassesXml" AfterTargets="AfterBuild" 
-          Condition="'$(TargetFramework)' != ''">
+          Condition="'$(TargetFramework)' != '' AND false">
 
     <PropertyGroup>
       <ApiInfoXmlFilePath>$(BaseOutputPath)\Alternet.UI.AllClasses.xml</ApiInfoXmlFilePath>
