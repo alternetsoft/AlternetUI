@@ -11,15 +11,15 @@ dotnet nuget sign "%NUGET_PATH%" --certificate-path "%ALTERNET_PFX%" --timestamp
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
-exit 0
+goto endoffile
 
 :nugetnotsignedpwd
 
 echo WARNING: Alternety.UI NuGet was not signed (no password provided as a parameter)
-exit 0
+goto endoffile
 
 :nugetnotsignedkey
 
 echo WARNING: Alternety.UI NuGet was not signed (no Source\Keys\Alternet.pfx)
-exit 0
 
+:endoffile

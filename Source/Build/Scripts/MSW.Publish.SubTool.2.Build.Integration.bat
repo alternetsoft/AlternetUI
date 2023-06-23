@@ -53,17 +53,19 @@ set /p FOUND_MSBUILD_PATH_VS_2022= < tmpFile
 del tmpFile 
 
 echo ====================================
-:: Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio
+echo ====================================
+echo ====================================
+echo  Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio
 "%FOUND_MSBUILD_PATH_VS_2022%" /restore /p:VsTargetVersion=VS2022 /p:WarningLevel=0  "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
 
 echo ====================================
-:: Integration\Components\Alternet.UI.Integration.UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp
+echo  Integration\Components\Alternet.UI.Integration.UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp
 "%FOUND_MSBUILD_PATH_VS_2022%" /restore /t:Clean,Build /p:Configuration=Release /p:WarningLevel=0 "%SCRIPT_HOME%\..\..\Integration\Components\Alternet.UI.Integration.UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp.csproj"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 
 echo ====================================
-:: Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio
+echo  Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio
 "%FOUND_MSBUILD_PATH_VS_2022%" /restore /t:Clean,Build /p:Configuration=Release;DeployExtension=False /p:WarningLevel=0 "%SCRIPT_HOME%\..\..\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio\Alternet.UI.Integration.VisualStudio.csproj"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
@@ -71,7 +73,7 @@ if not !ERRORLEVEL! EQU 0 (
 :: Command Line Templates
 
 echo ====================================
-:: Integration\Templates\Alternet.UI.Templates
+echo  Integration\Templates\Alternet.UI.Templates
 dotnet msbuild /restore /t:Clean,Build,Pack /p:Configuration=Release /p:WarningLevel=0 "%SCRIPT_HOME%\..\..\Integration\Templates\Alternet.UI.Templates.csproj"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)

@@ -65,7 +65,7 @@ if not !ERRORLEVEL! EQU 0 (
 :: Build integration components.
 
 echo ====================================
-
+echo SubTool.2
 call "%SCRIPT_HOME%\MSW.Publish.SubTool.2.Build.Integration.bat" %CERT_PASSWORD%
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
@@ -113,5 +113,9 @@ echo ====================================
 dotnet run --project "%PublicSourceGeneratorToolProject%" --property WarningLevel=0  -- samples
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
+
+
+::copy "%SCRIPT_HOME%\..\..\Alternet.UI\bin\Release\Alternet.UI.*.nupkg" "%SCRIPT_HOME%\..\..\..\Publish\Packages"
+::copy "%SCRIPT_HOME%\..\..\Alternet.UI\bin\Release\Alternet.UI.*.snupkg" "%SCRIPT_HOME%\..\..\..\Publish\Packages"
 
 exit /b
