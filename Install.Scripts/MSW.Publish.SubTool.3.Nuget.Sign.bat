@@ -1,4 +1,7 @@
-set ALTERNET_PFX=%SCRIPT_HOME%\..\..\Keys\Alternet.pfx
+SETLOCAL EnableDelayedExpansion
+
+set SCRIPT_HOME=%~dp0.
+set ALTERNET_PFX=%SCRIPT_HOME%\..\Source\Keys\Alternet.pfx
 set CERT_PASSWORD=%2
 set NUGET_PATH=%1
 
