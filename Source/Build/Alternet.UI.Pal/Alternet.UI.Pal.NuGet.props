@@ -9,6 +9,7 @@
         <NuGetPackageName>Alternet.UI.Pal</NuGetPackageName>
         <NuGetNuspecFileName>$(NuGetDirectoryPath)/$(NuGetPackageName).nuspec</NuGetNuspecFileName>
         <NuGetOutputDirectoryPath>$(BinDirectoryPath)\NuGet</NuGetOutputDirectoryPath>
+        <NuGetOutputDirectoryPathArtefacts>$(RootDirectoryPath)\Publish\Artifacts\NuGet</NuGetOutputDirectoryPathArtefacts>
         <NuGetBuildResultFiles>$(NuGetDirectoryPath)/$(NuGetPackageName)*.nupkg</NuGetBuildResultFiles>
     </PropertyGroup>
 
