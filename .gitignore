@@ -23,3 +23,5 @@ Documentation/Alternet.UI.Documentation/log.txt
 *.so
 test.bat
 Documentation/Alternet.UI.Documentation/BuildResult.txt
+Source/Build/Alternet.UI.Pal/NuGet/License.txt
+Source/Build/Alternet.UI.Pal/NuGet/icon.png
