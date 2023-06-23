@@ -26,10 +26,10 @@
     <PropertyGroup>
         <NugetNativeDllFileName>Alternet.UI.Pal.*</NugetNativeDllFileName>
 
-        <NugetPayloadDirectoryPath_Windows_X86>$(BinDirectoryPath)\$(PlatformName_Windows)\$(ManagedBuildConfiguration)\x86\</NugetPayloadDirectoryPath_Windows_X86>
-        <NugetPayloadDirectoryPath_Windows_X64>$(BinDirectoryPath)\$(PlatformName_Windows)\$(ManagedBuildConfiguration)\x64\</NugetPayloadDirectoryPath_Windows_X64>
-        <NugetPayloadDirectoryPath_MacOS>$(BinDirectoryPath)\$(PlatformName_MacOS)\$(ManagedBuildConfiguration)\x64\</NugetPayloadDirectoryPath_MacOS>
-        <NugetPayloadDirectoryPath_Linux>$(BinDirectoryPath)\$(PlatformName_Linux)\$(ManagedBuildConfiguration)\x64\</NugetPayloadDirectoryPath_Linux>
+        <NugetPayloadDirectoryPath_Windows_X86>$(BinDirectoryPath)\$(PlatformName_Windows)\x86\$(ManagedBuildConfiguration)\</NugetPayloadDirectoryPath_Windows_X86>
+        <NugetPayloadDirectoryPath_Windows_X64>$(BinDirectoryPath)\$(PlatformName_Windows)\x64\$(ManagedBuildConfiguration)\</NugetPayloadDirectoryPath_Windows_X64>
+        <NugetPayloadDirectoryPath_MacOS>$(BinDirectoryPath)\$(PlatformName_MacOS)\x64\$(ManagedBuildConfiguration)\</NugetPayloadDirectoryPath_MacOS>
+        <NugetPayloadDirectoryPath_Linux>$(BinDirectoryPath)\$(PlatformName_Linux)\x64\$(ManagedBuildConfiguration)\</NugetPayloadDirectoryPath_Linux>
     </PropertyGroup>
 
     <PropertyGroup>
