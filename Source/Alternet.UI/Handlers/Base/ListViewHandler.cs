@@ -1,6 +1,6 @@
-using Alternet.Drawing;
 using System;
 using System.Collections.Generic;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -61,13 +61,13 @@ namespace Alternet.UI
         ///// <summary>
         ///// Gets or sets the custom sorting comparer for the control.
         ///// </summary>
-        //public abstract IComparer<ListViewItem>? CustomItemSortComparer { get; set; }
+        // public abstract IComparer<ListViewItem>? CustomItemSortComparer { get; set; }
 
         ///// <summary>
         ///// Gets or sets the sort mode for items in the control.
         ///// </summary>
         ///// <value>One of the <see cref="ListViewSortMode"/> values. The default is <see cref="ListViewSortMode.None"/>.</value>
-        //public abstract ListViewSortMode SortMode { get; set; }
+        // public abstract ListViewSortMode SortMode { get; set; }
 
         /// <summary>
         /// Removes all items and columns from the control.
@@ -79,6 +79,9 @@ namespace Alternet.UI
         /// cref="ListViewView.Details"/> view.
         /// </summary>
         public abstract bool ColumnHeaderVisible { get; set; }
+
+        /// <inheritdoc/>
+        protected override bool VisualChildNeedsNativeControl => true;
 
         /// <summary>
         /// Ensures that the specified item is visible within the control, scrolling the contents of the control, if necessary.
@@ -109,8 +112,5 @@ namespace Alternet.UI
         /// Gets or sets a list view item column title.
         /// </summary>
         public abstract void SetColumnTitle(int columnIndex, string title);
-
-        /// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;
     }
 }

@@ -44,25 +44,25 @@ namespace Alternet.UI
             NativeControl.ColumnClick += NativeControl_ColumnClick;
             NativeControl.BeforeItemLabelEdit += NativeControl_BeforeItemLabelEdit;
             NativeControl.AfterItemLabelEdit += NativeControl_AfterItemLabelEdit;
-            //NativeControl.CompareItemsForCustomSort += NativeControl_CompareItemsForCustomSort;
+
+            // NativeControl.CompareItemsForCustomSort += NativeControl_CompareItemsForCustomSort;
         }
 
-        //private void NativeControl_CompareItemsForCustomSort(
+        // private void NativeControl_CompareItemsForCustomSort(
         //    object? sender,
         //    Native.NativeEventArgs<Native.CompareListViewItemsEventData> e)
-        //{
+        // {
         //    int result = 0;
         //    if (CustomItemSortComparer != null)
         //    {
         //        var item1 = Control.Items[e.Data.item1Index];
         //        var item2 = Control.Items[e.Data.item2Index];
 
-        //        result = CustomItemSortComparer.Compare(item1, item2);
+        // result = CustomItemSortComparer.Compare(item1, item2);
         //    }
 
-        //    e.Result = (IntPtr)result;
-        //}
-
+        // e.Result = (IntPtr)result;
+        // }
         private void NativeControl_BeforeItemLabelEdit(
             object? sender,
             Native.NativeEventArgs<Native.ListViewItemLabelEditEventData> e)
@@ -71,7 +71,6 @@ namespace Alternet.UI
             Control.RaiseBeforeLabelEdit(ea);
             e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
         }
-
 
         private void NativeControl_AfterItemLabelEdit(
             object? sender,
@@ -142,7 +141,7 @@ namespace Alternet.UI
             {
                 var itemIndex = NativeControl.GetHitTestResultItemIndex(result);
                 var columnIndex = NativeControl.GetHitTestResultColumnIndex(result);
-                
+
                 var item = itemIndex == -1 ? null : Control.Items[itemIndex];
                 var cell = item == null || columnIndex == -1 ? null : item.Cells[columnIndex];
                 var location = (ListViewHitTestLocations)NativeControl.GetHitTestResultLocations(result);
@@ -163,16 +162,15 @@ namespace Alternet.UI
             NativeControl.GetItemBounds(itemIndex, (Native.ListViewItemBoundsPortion)portion);
 
         ///// <inheritdoc/>
-        //public override IComparer<ListViewItem>? CustomItemSortComparer { get; set; }
+        // public override IComparer<ListViewItem>? CustomItemSortComparer { get; set; }
 
         ///// <inheritdoc/>
-        //public override ListViewSortMode SortMode
-        //{
+        // public override ListViewSortMode SortMode
+        // {
         //    get => (ListViewSortMode)NativeControl.SortMode;
         //    set => NativeControl.SortMode = (Native.ListViewSortMode)value;
-        //}
-
-        bool clearing;
+        // }
+        private bool clearing;
 
         /// <inheritdoc/>
         public override void Clear()
@@ -202,7 +200,7 @@ namespace Alternet.UI
                 int i = NativeControl.FocusedItemIndex;
                 return i == -1 ? null : i;
             }
-            
+
             set => NativeControl.FocusedItemIndex = value ?? -1;
         }
 
@@ -233,12 +231,13 @@ namespace Alternet.UI
             Control.SelectionModeChanged -= Control_SelectionModeChanged;
 
             Control.SelectionChanged -= Control_SelectionChanged;
-            
+
             NativeControl.SelectionChanged -= NativeControl_SelectionChanged;
             NativeControl.ColumnClick -= NativeControl_ColumnClick;
             NativeControl.BeforeItemLabelEdit -= NativeControl_BeforeItemLabelEdit;
             NativeControl.AfterItemLabelEdit -= NativeControl_AfterItemLabelEdit;
-            //NativeControl.CompareItemsForCustomSort -= NativeControl_CompareItemsForCustomSort;
+
+            // NativeControl.CompareItemsForCustomSort -= NativeControl_CompareItemsForCustomSort;
 
             base.OnDetach();
         }
@@ -358,7 +357,7 @@ namespace Alternet.UI
             UpdateItemIndices(e.Index + 1);
         }
 
-        void UpdateItemIndices(int startIndex)
+        private void UpdateItemIndices(int startIndex)
         {
             for (int i = startIndex; i < Control.Items.Count; i++)
                 Control.Items[i].Index = i;

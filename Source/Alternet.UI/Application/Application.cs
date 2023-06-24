@@ -14,16 +14,16 @@ namespace Alternet.UI
     public partial class Application : IDisposable
     {
         private static Application? current;
+        private readonly List<Window> windows = new ();
         private UnhandledExceptionMode unhandledExceptionMode;
-        private readonly List<Window> windows = new List<Window>();
         private volatile bool isDisposed;
 
         private Native.Application nativeApplication;
 
         private VisualTheme visualTheme = StockVisualThemes.Native;
 
-        private KeyboardInputProvider keyboardInputProvider;
-        private MouseInputProvider mouseInputProvider;
+        private readonly KeyboardInputProvider keyboardInputProvider;
+        private readonly MouseInputProvider mouseInputProvider;
 
         private ThreadExceptionEventHandler? threadExceptionHandler;
 
@@ -39,7 +39,7 @@ namespace Alternet.UI
             SynchronizationContext.InstallIfNeeded();
 
             nativeApplication.Idle += NativeApplication_Idle;
-            nativeApplication.Name = Path.GetFileNameWithoutExtension(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            nativeApplication.Name = Path.GetFileNameWithoutExtension(System.Diagnostics.Process.GetCurrentProcess()?.MainModule?.FileName!);
             current = this;
 
             keyboardInputProvider = new KeyboardInputProvider(nativeApplication.Keyboard);
@@ -98,7 +98,7 @@ namespace Alternet.UI
         }
 
         [return: MaybeNull]
-        T HandleThreadExceptionsCore<T>(Func<T> func)
+        private T HandleThreadExceptionsCore<T>(Func<T> func)
         {
             if (unhandledExceptionMode == UnhandledExceptionMode.ThrowException)
                 return func();
@@ -114,7 +114,7 @@ namespace Alternet.UI
             }
         }
 
-        void HandleThreadExceptionsCore(Action action)
+        private void HandleThreadExceptionsCore(Action action)
         {
             if (unhandledExceptionMode == UnhandledExceptionMode.ThrowException)
             {

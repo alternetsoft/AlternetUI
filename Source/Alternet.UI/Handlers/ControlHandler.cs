@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Alternet.Drawing;
 using System.Linq;
 using Alternet.Base.Collections;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -124,7 +124,7 @@ namespace Alternet.UI
         /// Gets a rectangle which describes the client area inside of the <see cref="Control"/>,
         /// in device-independent units (1/96th inch per unit).
         /// </summary>
-        public virtual Rect ClientRectangle => new Rect(new Point(), ClientSize);
+        public virtual Rect ClientRectangle => new (new Point(), ClientSize);
 
         /// <summary>
         /// Gets a value indicating whether the mouse pointer is over the <see cref="Control"/>.
@@ -194,7 +194,7 @@ namespace Alternet.UI
         internal static ControlHandler? TryGetHandlerByNativeControl(Native.Control control) =>
             handlersByNativeControls.TryGetValue(control, out var handler) ? handler : null;
 
-        static Dictionary<Native.Control, ControlHandler> handlersByNativeControls = new Dictionary<Native.Control, ControlHandler>();
+        static Dictionary<Native.Control, ControlHandler> handlersByNativeControls = new ();
 
         /// <summary>
         /// This property may be overridden by control handlers to indicate that the handler needs
@@ -242,8 +242,7 @@ namespace Alternet.UI
             else
             {
                 var parent = TryFindClosestParentWithNativeControl();
-                if (parent != null)
-                    parent.Update();
+                parent?.Update();
             }
         }
 
@@ -258,8 +257,7 @@ namespace Alternet.UI
             else
             {
                 var parent = TryFindClosestParentWithNativeControl();
-                if (parent != null)
-                    parent.Invalidate();
+                parent?.Invalidate();
             }
         }
 
@@ -303,12 +301,12 @@ namespace Alternet.UI
                     horizontalPosition.Size,
                     verticalPosition.Size);
 
-                //var margin = control.Margin;
+                // var margin = control.Margin;
 
-                //var specifiedWidth = control.Width;
-                //var specifiedHeight = control.Height;
+                // var specifiedWidth = control.Width;
+                // var specifiedHeight = control.Height;
 
-                //control.Handler.Bounds = new RectangleF(
+                // control.Handler.Bounds = new RectangleF(
                 //    childrenLayoutBounds.Location + new SizeF(margin.Left, margin.Top),
                 //    new SizeF(
                 //        double.IsNaN(specifiedWidth) ? childrenLayoutBounds.Width - margin.Horizontal : specifiedWidth,
@@ -373,8 +371,7 @@ namespace Alternet.UI
         /// </summary>
         public void BeginUpdate()
         {
-            if (NativeControl != null)
-                NativeControl.BeginUpdate();
+            NativeControl?.BeginUpdate();
         }
 
         /// <summary>
@@ -382,8 +379,7 @@ namespace Alternet.UI
         /// </summary>
         public void EndUpdate()
         {
-            if (NativeControl != null)
-                NativeControl.EndUpdate();
+            NativeControl?.EndUpdate();
         }
 
         /// <summary>
@@ -401,8 +397,7 @@ namespace Alternet.UI
             try
             {
                 var parent = Control.Parent;
-                if (parent != null)
-                    parent.PerformLayout();
+                parent?.PerformLayout();
 
                 Control.InvokeOnLayout();
             }
@@ -454,6 +449,7 @@ namespace Alternet.UI
             if (nativeControl == null)
             {
                 nativeControl = TryFindClosestParentWithNativeControl()?.Handler.NativeControl;
+
                 // todo: visual offset for handleless controls
                 if (nativeControl == null)
                     throw new Exception(); // todo: maybe use parking window here?
@@ -689,7 +685,7 @@ namespace Alternet.UI
             Control.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
         }
 
-        void RaiseDragAndDropEvent(Native.NativeEventArgs<Native.DragEventData> e, Action<DragEventArgs> raiseAction)
+        private void RaiseDragAndDropEvent(Native.NativeEventArgs<Native.DragEventData> e, Action<DragEventArgs> raiseAction)
         {
             var data = e.Data;
             var ea = new DragEventArgs(
@@ -753,7 +749,7 @@ namespace Alternet.UI
         {
             if (NativeControl == null)
                 throw new InvalidOperationException();
-            
+
             return NativeControl.ScreenToDevice(point);
         }
 
@@ -766,7 +762,7 @@ namespace Alternet.UI
         {
             if (NativeControl == null)
                 throw new InvalidOperationException();
-            
+
             return NativeControl.DeviceToScreen(point);
         }
 
@@ -1021,8 +1017,7 @@ namespace Alternet.UI
         /// </summary>
         protected internal virtual void BeginInit()
         {
-            if (NativeControl != null)
-                NativeControl.BeginInit();
+            NativeControl?.BeginInit();
         }
 
         /// <summary>
@@ -1030,13 +1025,12 @@ namespace Alternet.UI
         /// </summary>
         protected internal virtual void EndInit()
         {
-            if (NativeControl != null)
-                NativeControl.EndInit();
+            NativeControl?.EndInit();
         }
 
         private void ApplyBorderColor()
         {
-            //if (NativeControl != null)
+            // if (NativeControl != null)
             //    NativeControl.BorderColor = GetBrushColor(Control.BorderBrush);
             Invalidate();
         }
@@ -1044,7 +1038,6 @@ namespace Alternet.UI
         private void TryInsertNativeControl(int childIndex, Control childControl)
         {
             // todo: use index
-
             var childNativeControl = childControl.Handler.NativeControl;
             if (childNativeControl == null)
                 return;
@@ -1053,11 +1046,9 @@ namespace Alternet.UI
                 return;
 
             var parentNativeControl = NativeControl;
-            if (parentNativeControl == null)
-                parentNativeControl = TryFindClosestParentWithNativeControl()?.Handler.NativeControl;
+            parentNativeControl ??= TryFindClosestParentWithNativeControl()?.Handler.NativeControl;
 
-            if (parentNativeControl != null)
-                parentNativeControl.AddChild(childNativeControl);
+            parentNativeControl?.AddChild(childNativeControl);
         }
 
         private void TryRemoveNativeControl(int childIndex, Control childControl)
@@ -1209,8 +1200,8 @@ namespace Alternet.UI
 
             bool hasVisualChildren = VisualChildren.Count > 0;
 
-            //using (var dc = new DrawingContext(NativeControl.OpenPaintDrawingContext()))
-            //{
+            // using (var dc = new DrawingContext(NativeControl.OpenPaintDrawingContext()))
+            // {
             //    if (Control.UserPaint)
             //    {
             //        Control.RaisePaint(new PaintEventArgs(dc, ClientRectangle));
@@ -1219,13 +1210,13 @@ namespace Alternet.UI
             //    {
             //        PaintSelfAndVisualChildren(dc);
             //    }
-            //}
-
+            // }
             if (Control.UserPaint)
             {
                 using (var dc = new DrawingContext(NativeControl.OpenPaintDrawingContext()))
                     Control.RaisePaint(new PaintEventArgs(dc, ClientRectangle));
             }
+
             if (NeedsPaint || hasVisualChildren)
             {
                 using (var dc = new DrawingContext(NativeControl.OpenPaintDrawingContext()))

@@ -1,8 +1,8 @@
-using Alternet.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Alternet.Base.Collections;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -24,7 +24,7 @@ namespace Alternet.UI
         private ImageList? smallImageList = null;
         private ImageList? largeImageList = null;
 
-        private HashSet<int> selectedIndices = new HashSet<int>();
+        private readonly HashSet<int> selectedIndices = new ();
 
         private ListViewSelectionMode selectionMode = ListViewSelectionMode.Single;
 
@@ -97,13 +97,13 @@ namespace Alternet.UI
         ///// <summary>
         ///// Gets or sets the custom sorting comparer for the control.
         ///// </summary>
-        //public IComparer<ListViewItem>? CustomItemSortComparer { get => Handler.CustomItemSortComparer; set => Handler.CustomItemSortComparer = value; }
+        // public IComparer<ListViewItem>? CustomItemSortComparer { get => Handler.CustomItemSortComparer; set => Handler.CustomItemSortComparer = value; }
 
         ///// <summary>
         ///// Gets or sets the sort mode for items in the control.
         ///// </summary>
         ///// <value>One of the <see cref="ListViewSortMode"/> values. The default is <see cref="ListViewSortMode.None"/>.</value>
-        //public ListViewSortMode SortMode { get => Handler.SortMode; set => Handler.SortMode = value; }
+        // public ListViewSortMode SortMode { get => Handler.SortMode; set => Handler.SortMode = value; }
 
         /// <summary>
         /// Removes all items and columns from the control.
