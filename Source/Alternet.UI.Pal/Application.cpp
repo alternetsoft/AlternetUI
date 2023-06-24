@@ -15,6 +15,9 @@ namespace Alternet::UI
 
     bool App::OnInit()
     {
+#if defined(__WXGTK__)
+        wxApp::GTKAllowDiagnosticsControl();
+#endif
         return wxApp::OnInit();
     }
 
