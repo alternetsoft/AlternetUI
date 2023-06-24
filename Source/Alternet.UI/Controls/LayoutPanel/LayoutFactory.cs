@@ -6,17 +6,22 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI.Controls.LayoutPanel
 {
-    public static class LayoutFactory
+    internal static class LayoutFactory
     {
-        public static IArrangedElement CreateContainerElement(Control container)
+        public static IArrangedElementLite FromControl(Control control)
+        {
+            return new ArrangedElementControl(control);
+        }
+
+        public static IArrangedElement CreateContainer(IArrangedElementLite? container = null)
         {
             IArrangedElement result = new ArrangedElement(null, container);
             return result;
         }
 
-        public static IArrangedElement AddChildElement(
+        public static IArrangedElement AddChild(
             IArrangedElement container,
-            Control control)
+            IArrangedElementLite? control = null)
         {
             IArrangedElement result = new ArrangedElement(container, control);
             result.Controls.Add(result);
@@ -24,12 +29,12 @@ namespace Alternet.UI.Controls.LayoutPanel
         }
 
         public static IArrangedElement CreateLayoutLeftFill(
-            Control leftControl,
-            Control fillControl)
+            IArrangedElement container,
+            IArrangedElementLite leftControl,
+            IArrangedElementLite fillControl)
         {
-            var container = CreateContainerElement(leftControl.Parent!);
-            var leftControlElement = AddChildElement(container, leftControl);
-            var fillControlElement = AddChildElement(container, fillControl);
+            var leftControlElement = AddChild(container, leftControl);
+            var fillControlElement = AddChild(container, fillControl);
             leftControlElement.Dock = DockStyle.Left;
             fillControlElement.Dock = DockStyle.Fill;
             return container;

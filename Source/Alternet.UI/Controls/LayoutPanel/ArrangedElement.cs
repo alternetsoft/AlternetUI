@@ -2,26 +2,23 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using Alternet.Drawing;
+using Alternet.UI.Controls.LayoutPanel;
 
 namespace Alternet.UI
 {
     internal class ArrangedElement : IArrangedElement
     {
-        private readonly Control control;
+        private readonly IArrangedElementLite control;
         private readonly IArrangedElement? parent;
         private IList<IArrangedElement>? controls;
         private Rect? explicitBounds;
 
-        public ArrangedElement(IArrangedElement? parent, Control control)
+        public ArrangedElement(IArrangedElement? parent, IArrangedElementLite? control)
         {
+            if (control == null)
+                control = new ArrangedElementDummy();
             this.control = control;
             this.parent = parent;
-        }
-
-        public void PerformLayoutDefault()
-        {
-            if (controls != null)
-                DefaultLayout.Instance.Layout(this, controls);
         }
 
         public bool Visible
@@ -36,6 +33,7 @@ namespace Alternet.UI
             set;
         }
 
+        public Size ClientSize => control.ClientSize;
         public Rect Bounds
         {
             get
@@ -92,9 +90,20 @@ namespace Alternet.UI
             set;
         }
 
-        public Rect DisplayRectangle => Bounds;
+        public Rect DisplayRectangle
+        {
+            get
+            {
+                Rect clientRect = new ();
+                Size clientSize = control.ClientSize;
+                clientRect.Width = clientSize.Width;
+                clientRect.Height = clientSize.Height;
+                return clientRect;
 
-        public IArrangedElement Parent
+            }
+        }
+
+        public IArrangedElement? Parent
         {
             get
             {
@@ -134,35 +143,31 @@ namespace Alternet.UI
             return control.GetPreferredSize(proposedSize);
         }
 
+        public void PerformLayout()
+        {
+            if (controls != null)
+                DefaultLayout.Instance.Layout(this, controls);
+        }
+
         public void SetBounds(double x, double y, double width, double height, BoundsSpecified specified)
         {
             var bounds = control.Bounds;
             Rect result = new (x, y, width, height);
 
             if ((specified & BoundsSpecified.X) == 0)
-            {
                 result.X = bounds.X;
-            }
 
             if ((specified & BoundsSpecified.Y) == 0)
-            {
                 result.Y = bounds.Y;
-            }
 
             if ((specified & BoundsSpecified.Width) == 0)
-            {
                 result.Width = bounds.Width;
-            }
 
             if ((specified & BoundsSpecified.Height) == 0)
-            {
                 result.Height = bounds.Height;
-            }
 
-            if (result.X != bounds.X || result.Y != bounds.Y || result.Width != bounds.Width || result.Height != bounds.Height)
-            {
+            if (result != bounds)
                 Bounds = result;
-            }
         }
     }
 }

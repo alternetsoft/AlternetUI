@@ -2,7 +2,7 @@
 
 namespace Alternet.UI
 {
-    public enum DockStyle
+    internal enum DockStyle
     {
         None = 0,
         Top = 1,

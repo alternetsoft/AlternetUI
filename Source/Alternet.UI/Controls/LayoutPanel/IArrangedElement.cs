@@ -29,21 +29,13 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public interface IArrangedElement
+    internal interface IArrangedElement : IArrangedElementLite
     {
         IList<IArrangedElement> Controls { get; }
 
-        bool Visible { get; set; }
-
         bool AutoSize { get; set; }
 
-        Rect Bounds { get; set; }
-
         Rect ExplicitBounds { get;}
-
-        Thickness Padding { get; set; }
-
-        Thickness Margin { get; set; }
 
         Size MinimumSize { get; set; }
 
@@ -53,18 +45,31 @@ namespace Alternet.UI
 
         Rect DisplayRectangle { get; }
 
-        IArrangedElement Parent { get; }
-
-        Size GetPreferredSize(Size proposedSize);
-
         double DistanceRight { get; set; }
 
         double DistanceBottom { get; set; }
+
+        IArrangedElement? Parent { get; }
 
         AutoSizeMode AutoSizeMode { get; set; }
 
         void SetBounds(double x, double y, double width, double height, BoundsSpecified specified);
 
-        void PerformLayoutDefault();
+        void PerformLayout();
+    }
+
+    internal interface IArrangedElementLite
+    {
+        bool Visible { get; set; }
+
+        Rect Bounds { get; set; }
+
+        Size ClientSize { get; }
+
+        Thickness Padding { get; set; }
+
+        Thickness Margin { get; set; }
+
+        Size GetPreferredSize(Size proposedSize);
     }
 }

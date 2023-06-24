@@ -3,7 +3,7 @@
 namespace Alternet.UI
 {
     [Flags]
-    public enum BoundsSpecified
+    internal enum BoundsSpecified
     {
         None = 0x00000000,
         X = 0x00000001,

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public enum AutoSizeMode
+    internal enum AutoSizeMode
     {
         GrowAndShrink = 0,
         GrowOnly = 1

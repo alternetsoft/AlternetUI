@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public class LayoutPanel : Control
+    internal class LayoutPanel : Control
     {
         protected override void OnLayout()
         {

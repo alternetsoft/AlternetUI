@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     [Flags]
-    public enum AnchorStyles
+    internal enum AnchorStyles
     {
         None = 0x00000000,
         Top = 0x00000001,
