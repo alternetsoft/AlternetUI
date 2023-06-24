@@ -37,14 +37,21 @@
     <TargetFrameworks>net7.0;net6.0;net462;net481</TargetFrameworks>
   </PropertyGroup>
 
+  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+    <TargetFrameworks Condition="Exists('c:\Alternet.UI.Option.UIOnlyNet6.txt')">net6.0</TargetFrameworks>
+  </PropertyGroup>
+
   <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
     <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="build\**" />
+    <Compile Remove="System\**" />
     <EmbeddedResource Remove="build\**" />
+    <EmbeddedResource Remove="System\**" />
     <None Remove="build\**" />
+    <None Remove="System\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,7 +64,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\Keys\Key.snk" Link="Key.snk" Condition="Exists('..\Keys\Key.snk')"/>
+    <None Include="..\Keys\Key.snk" Link="Key.snk" Condition="Exists('..\Keys\Key.snk')" />
   </ItemGroup>
 
   <!-- Uncomment this to debug in release build. -->
@@ -135,14 +142,10 @@
     <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="System\" />
-  </ItemGroup>
-
   <!-- ================================================= -->
   <!-- remove .. in path -->
   <Target Name="CreateAllClassesXml" AfterTargets="AfterBuild" 
-          Condition="'$(TargetFramework)' != '' AND false">
+          Condition="'$(TargetFramework)' == 'net6.0' AND false">
 
     <PropertyGroup>
       <ApiInfoXmlFilePath>$(BaseOutputPath)\Alternet.UI.AllClasses.xml</ApiInfoXmlFilePath>
@@ -151,13 +154,13 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-      <ApiInfoCollectorCommand>&quot;$(ApiInfoCollectorToolPath).exe&quot; &quot;$(ApiInfoCollectorInputAssemblyPath)&quot; &quot;$(ApiInfoXmlFilePath)&quot;</ApiInfoCollectorCommand>
+      <ApiInfoCollectorCommand>"$(ApiInfoCollectorToolPath).exe" "$(ApiInfoCollectorInputAssemblyPath)" "$(ApiInfoXmlFilePath)"</ApiInfoCollectorCommand>
     </PropertyGroup>
     <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-      <ApiInfoCollectorCommand>dotnet &quot;$(ApiInfoCollectorToolPath).dll&quot; &quot;$(ApiInfoCollectorInputAssemblyPath)&quot; &quot;$(ApiInfoXmlFilePath)&quot;</ApiInfoCollectorCommand>
+      <ApiInfoCollectorCommand>dotnet "$(ApiInfoCollectorToolPath).dll" "$(ApiInfoCollectorInputAssemblyPath)" "$(ApiInfoXmlFilePath)"</ApiInfoCollectorCommand>
     </PropertyGroup>
-    <Message Text="=====>>>>>       $(ApiInfoCollectorCommand)" Importance="high" Condition="true"/>
-    <Exec Command="$(ApiInfoCollectorCommand)" Condition="false"/>
+    <Message Text="=====&gt;&gt;&gt;&gt;&gt;       $(ApiInfoCollectorCommand)" Importance="high" Condition="true" />
+    <Exec Command="$(ApiInfoCollectorCommand)" Condition="false" />
   </Target>
   <!-- ================================================= -->
 </Project>
