@@ -37,10 +37,6 @@
     <TargetFrameworks>net7.0;net6.0;net462;net481</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-    <TargetFrameworks Condition="Exists('c:\Alternet.UI.Option.UIOnlyNet6.txt')">net6.0</TargetFrameworks>
-  </PropertyGroup>
-
   <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
     <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
   </PropertyGroup>
@@ -144,8 +140,7 @@
 
   <!-- ================================================= -->
   <!-- remove .. in path -->
-  <Target Name="CreateAllClassesXml" AfterTargets="AfterBuild" 
-          Condition="'$(TargetFramework)' == 'net6.0' AND false">
+  <Target Name="CreateAllClassesXml" AfterTargets="AfterBuild" Condition="'$(TargetFramework)' == 'net6.0' AND false">
 
     <PropertyGroup>
       <ApiInfoXmlFilePath>$(BaseOutputPath)\Alternet.UI.AllClasses.xml</ApiInfoXmlFilePath>
