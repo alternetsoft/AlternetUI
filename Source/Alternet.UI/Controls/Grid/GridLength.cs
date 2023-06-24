@@ -14,11 +14,11 @@ namespace Alternet.UI
     [TypeConverter(typeof(GridLengthConverter))]
     public struct GridLength : IEquatable<GridLength>
     {
-        //------------------------------------------------------
+        // ------------------------------------------------------
         //
         //  Constructors
         //
-        //------------------------------------------------------
+        // ------------------------------------------------------
 
         #region Constructors
 
@@ -77,12 +77,11 @@ namespace Alternet.UI
 
         #endregion Constructors
 
-        //------------------------------------------------------
+        // ------------------------------------------------------
         //
         //  Public Methods
         //
-        //------------------------------------------------------
-
+        // ------------------------------------------------------
         #region Public Methods 
 
         /// <summary>
@@ -186,12 +185,11 @@ namespace Alternet.UI
 
         #endregion Public Methods 
 
-        //------------------------------------------------------
+        // ------------------------------------------------------
         //
         //  Public Properties
         //
-        //------------------------------------------------------
-
+        // ------------------------------------------------------
         #region Public Properties
 
         /// <summary>
@@ -204,12 +202,11 @@ namespace Alternet.UI
 
         #endregion Public Properties
 
-        //------------------------------------------------------
+        // ------------------------------------------------------
         //
         //  Private Fields
         //
-        //------------------------------------------------------
-
+        // ------------------------------------------------------
         #region Private Fields 
         private double _unitValue;      //  unit value storage
         private GridUnitType _unitType; //  unit type storage

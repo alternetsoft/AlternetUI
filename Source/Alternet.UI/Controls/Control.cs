@@ -1,9 +1,9 @@
-using Alternet.Base.Collections;
-using Alternet.Drawing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Alternet.Base.Collections;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -13,7 +13,7 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public class Control : FrameworkElement, ISupportInitialize, IDisposable
     {
-        private static readonly Size DefaultSize = new Size(double.NaN, double.NaN);
+        private static readonly Size DefaultSize = new (double.NaN, double.NaN);
         private static Font? defaultFont;
         private static object?[] emptyArray = new object?[0];
         private Size size = DefaultSize;
@@ -289,7 +289,7 @@ namespace Alternet.UI
         /// Raises the <see cref="EnabledChanged"/> event and calls <see cref="OnEnabledChanged(EventArgs)"/>.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        void RaiseEnabledChanged(EventArgs e)
+        private void RaiseEnabledChanged(EventArgs e)
         {
             if (e == null)
                 throw new ArgumentNullException(nameof(e));

@@ -18,7 +18,7 @@ namespace XamlX.IL
             = new Dictionary<IXamlLabel, LabelInfo>();
 
         private readonly Dictionary<IXamlLocal, LocalInfo> _locals = new Dictionary<IXamlLocal, LocalInfo>();
-        
+
         public class LocalInfo
         {
             public int Number { get; set; }
@@ -29,7 +29,7 @@ namespace XamlX.IL
                 return "loc_" + Number + " (" + Type + ")";
             }
         }
-            
+
         public class LabelInfo
         {
             public int? Offset { get; set; }
@@ -38,7 +38,7 @@ namespace XamlX.IL
                 return Offset?.ToString() ?? "<Unmarked>";
             }
         }
-        
+
         public class RecordedInstruction
         {
             public OpCode OpCode { get; set; }
@@ -123,8 +123,8 @@ namespace XamlX.IL
 
         public IXamlLocal DefineLocal(IXamlType type)
         {
-            var rv= _inner.DefineLocal(type);
-            _locals[rv] = new LocalInfo {Number = _locals.Count, Type = type};
+            var rv = _inner.DefineLocal(type);
+            _locals[rv] = new LocalInfo { Number = _locals.Count, Type = type };
             return rv;
         }
 
@@ -174,13 +174,13 @@ namespace XamlX.IL
                 && _locals.TryGetValue(loc, out var localInfo))
                 operand = localInfo;
 
-            Instructions.Add(new RecordedInstruction {OpCode = code, Operand = operand});
+            Instructions.Add(new RecordedInstruction { OpCode = code, Operand = operand });
         }
 
         public override string ToString()
         {
             var sb = new StringBuilder();
-            for(var c=0; c<Instructions.Count; c++)
+            for (var c = 0; c < Instructions.Count; c++)
             {
                 var i = Instructions[c];
                 sb.AppendFormat("{0000}", c);

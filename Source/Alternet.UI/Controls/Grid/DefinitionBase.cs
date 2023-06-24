@@ -817,7 +817,7 @@ namespace Alternet.UI
                         //  Note: definitionBase.SizeCache is volatile but at this point
                         //  it contains up-to-date final size
                         Grid parentGrid = (Grid)definitionBase.LogicalParent;
-                        
+
                         parentGrid.PerformLayout();
                     }
 

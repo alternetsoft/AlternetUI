@@ -31,7 +31,7 @@ namespace XamlX.Transform.Transformers
                     // Pre-filter setters by non-last argument
                     var filteredSetters = property.Setters.Where(s => s.Parameters.Count == arguments.Count)
                         .ToList();
-                    
+
                     if (arguments.Count > 1)
                     {
                         for (var c = 0; c < arguments.Count - 1; c++)
@@ -92,17 +92,17 @@ namespace XamlX.Transform.Transformers
                             var valueArgIndex = arguments.Count - 1;
                             var valueArg = arguments[valueArgIndex];
                             var setterType = setter.Parameters[valueArgIndex];
-                            
-                            if(CanAssign(valueArg, setterType))
+
+                            if (CanAssign(valueArg, setterType))
                                 matchedSetters.Add(setter);
                             // Converted value have more priority than custom setters, so we just create a setter without an alternative
                             else if (XamlTransformHelpers.TryConvertValue(context, valueArg, setterType, property,
                                 out var converted))
                             {
-                                
+
                                 arguments[valueArgIndex] = converted;
                                 return new XamlPropertyAssignmentNode(valueNode,
-                                    property, new[] {setter}, arguments);
+                                    property, new[] { setter }, arguments);
                             }
                         }
 
@@ -133,7 +133,7 @@ namespace XamlX.Transform.Transformers
                     //   <ListItem/>
                     // </Foo.Bar>
                     // <SomeList/> would be foo.Bar = new SomeList() and <ListItem/> would be foo.Bar.Add(new ListItem());
-                    foreach(var ass in assignments.Skip(1))
+                    foreach (var ass in assignments.Skip(1))
                     {
                         ass.PossibleSetters = ass.PossibleSetters.Where(s => s.BinderParameters.AllowMultiple).ToList();
                         if (ass.PossibleSetters.Count == 0)
@@ -142,7 +142,7 @@ namespace XamlX.Transform.Transformers
                                 node);
                     }
                 }
-                
+
                 return new XamlManipulationGroupNode(valueNode, assignments);
 
             }
@@ -153,20 +153,20 @@ namespace XamlX.Transform.Transformers
         static IXamlAstValueNode FindAndRemoveKey(IXamlAstValueNode value)
         {
             IXamlAstValueNode keyNode = null;
-            
+
             bool IsKeyDirective(object node) => node is XamlAstXmlDirective d
                                                 && d.Namespace == XamlNamespaces.Xaml2006 &&
                                                 d.Name == "Key";
             void ProcessDirective(object d)
             {
-                var directive = (XamlAstXmlDirective) d;
+                var directive = (XamlAstXmlDirective)d;
                 if (directive.Values.Count != 1)
                     throw new XamlParseException("Invalid number of arguments for x:Key directive",
                         directive);
                 keyNode = directive.Values[0];
             }
 
-               
+
             void ProcessDirectiveCandidateList(IList nodes)
             {
                 var d = nodes.OfType<object>().FirstOrDefault(IsKeyDirective);
@@ -176,7 +176,7 @@ namespace XamlX.Transform.Transformers
                     nodes.Remove(d);
                 }
             }
-                
+
             IXamlAstManipulationNode VisitManipulationNode(IXamlAstManipulationNode man)
             {
                 if (IsKeyDirective(man))
@@ -184,7 +184,7 @@ namespace XamlX.Transform.Transformers
                     ProcessDirective(man);
                     return new XamlManipulationGroupNode(man);
                 }
-                if(man is XamlManipulationGroupNode grp)
+                if (man is XamlManipulationGroupNode grp)
                     ProcessDirectiveCandidateList(grp.Children);
                 if (man is XamlObjectInitializationNode init)
                     init.Manipulation = VisitManipulationNode(init.Manipulation);
@@ -192,7 +192,7 @@ namespace XamlX.Transform.Transformers
             }
 
             var probe = (value is XamlValueWithSideEffectNodeBase side) ? side.Value : value;
-                
+
             if (probe is XamlAstObjectNode astObject)
                 ProcessDirectiveCandidateList(astObject.Children);
             else if (value is XamlValueWithManipulationNode vman)

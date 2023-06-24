@@ -18,7 +18,7 @@ namespace Alternet.UI
             var output = new Native.UnmanagedDataObject();
             var adatpter = new UnmanagedDataObjectAdapter(output);
             adatpter.SetData(input);
-        
+
             return output;
         }
 

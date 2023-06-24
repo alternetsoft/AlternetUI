@@ -29,7 +29,7 @@ namespace Alternet.UI
         public ControlStateImages StateImages
         {
             get => Handler.StateImages;
-            
+
             set
             {
                 if (value == null)

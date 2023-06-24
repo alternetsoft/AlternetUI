@@ -3,16 +3,14 @@
 // See the LICENSE file in the project root for more information.
 
 //
-// 
-//
-// Description: The KeyBinding class is used by the developer to create Keyboard Input Bindings 
+// Description: The KeyBinding class is used by the developer to create Keyboard Input Bindings
 //
 //                  See spec at : http://avalon/coreui/Specs/Commanding(new).mht 
-// 
-//* KeyBinding class serves the purpose of Input Bindings for Keyboard Device.
-using Alternet.UI.Markup;
+//
+// * KeyBinding class serves the purpose of Input Bindings for Keyboard Device.
 using System;
 using System.ComponentModel;
+using Alternet.UI.Markup;
 
 namespace Alternet.UI
 {
@@ -56,7 +54,7 @@ namespace Alternet.UI
         /// <param name="command"></param>
         /// <param name="modifiers">modifiers</param>
         /// <param name="key">key</param>
-        public KeyBinding(ICommand command, Key key, ModifierKeys modifiers) : 
+        public KeyBinding(ICommand command, Key key, ModifierKeys modifiers) :
                             this(command, new KeyGesture(key, modifiers))
         {
         }
@@ -204,4 +202,4 @@ namespace Alternet.UI
 
         #endregion
     }
- }
+}

@@ -32,8 +32,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="command">Command</param>
         /// <param name="gesture">Input Gesture</param>
-        public InputBinding(ICommand command, InputGesture gesture) 
-        {   
+        public InputBinding(ICommand command, InputGesture gesture)
+        {
             if (command == null)
                 throw new ArgumentNullException("command");
 
@@ -67,7 +67,7 @@ namespace Alternet.UI
         [Localizability(LocalizationCategory.NeverLocalize)] // cannot be localized
         public ICommand Command
         {
-            get     
+            get
             {
                 return (ICommand)GetValue(CommandProperty);
             }
@@ -137,7 +137,7 @@ namespace Alternet.UI
             {
                 return _gesture;
             }
-            
+
             set
             {
                 if (value == null)
@@ -149,7 +149,7 @@ namespace Alternet.UI
                 }
             }
         }
-#endregion Public Methods
+        #endregion Public Methods
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -204,14 +204,14 @@ namespace Alternet.UI
         //
         //------------------------------------------------------
 
-#region Private Fields
-        private     InputGesture? _gesture = null;
+        #region Private Fields
+        private InputGesture? _gesture = null;
 
         internal static object _dataLock = new object();
 
         // Fields to implement DO's inheritance context
         private DependencyObject? _inheritanceContext = null;
         private bool _hasMultipleInheritanceContexts = false;
-#endregion Private Fields
+        #endregion Private Fields
     }
 }

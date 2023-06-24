@@ -15,7 +15,7 @@ namespace XamlX.Transform.Transformers
             if (node is XamlAstObjectNode ni)
             {
                 XamlAstXamlPropertyValueNode propertyNode = null;
-                
+
                 for (var c = ni.Children.Count - 1; c >= 0; c--)
                 {
                     var child = ni.Children[c];
@@ -39,7 +39,7 @@ namespace XamlX.Transform.Transformers
                                         "Content", ni.Type.GetClrType(), null,
                                         adders.Select(a => new XamlDirectCallPropertySetter(a)
                                         {
-                                            BinderParameters = {AllowMultiple = true}
+                                            BinderParameters = { AllowMultiple = true }
                                         })),
                                     new IXamlAstValueNode[0]);
                             }
@@ -48,7 +48,7 @@ namespace XamlX.Transform.Transformers
                         propertyNode.Values.Insert(0, valueNode);
                         ni.Children.RemoveAt(c);
                     }
-                    
+
                 }
 
                 if (propertyNode != null)
