@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     Find flags used when searching for text on web page in the WebBrowser control.
+    ///     Customization flags for text search operations in the WebBrowser control.
     /// </summary>
     public class WebBrowserFindParams
     {

@@ -44,16 +44,19 @@ namespace Alternet.UI
         void RemoveFile(string filename);
 
         /// <include file="IWebBrowserMemoryFS.xml" path='doc/AddFile/summary'/>
+        /// <include file="IWebBrowserMemoryFS.xml" path='doc/AddFile/remarks'/>
         /// <include file="IWebBrowserMemoryFS.xml"
         ///     path='doc/AddFile/param[@name="filename" or @name="binarydata" or @name="size" or @name="mimetype"]'/>
         void AddFileWithMimeType(string filename, IntPtr binarydata, int size, string mimetype);
 
         /// <include file="IWebBrowserMemoryFS.xml" path='doc/AddFile/summary'/>
+        /// <include file="IWebBrowserMemoryFS.xml" path='doc/AddFile/remarks'/>
         /// <include file="IWebBrowserMemoryFS.xml"
         ///     path='doc/AddFile/param[@name="filename" or @name="textdata" or @name="mimetype"]'/>
         void AddTextFileWithMimeType(string filename, string textdata, string mimetype);
 
         /// <include file="IWebBrowserMemoryFS.xml" path='doc/AddFile/summary'/>
+        /// <include file="IWebBrowserMemoryFS.xml" path='doc/AddFile/remarks'/>
         /// <include file="IWebBrowserMemoryFS.xml"
         ///     path='doc/AddFile/param[@name="filename"]'/>
         /// <include file="IWebBrowserMemoryFS.xml"
@@ -61,26 +64,31 @@ namespace Alternet.UI
         void AddTextFile(string filename, string textdata);
 
         /// <include file="IWebBrowserMemoryFS.xml" path='doc/AddFile/summary'/>
+        /// <include file="IWebBrowserMemoryFS.xml" path='doc/AddFile/remarks'/>
         /// <include file="IWebBrowserMemoryFS.xml"
         ///     path='doc/AddFile/param[@name="filename" or @name="binarydata" or @name="size"]'/>
         void AddFile(string filename, IntPtr binarydata, int size);
 
         /// <include file="IWebBrowserMemoryFS.xml" path='doc/AddFile/summary'/>
+        /// <include file="IWebBrowserMemoryFS.xml" path='doc/AddFile/remarks'/>
         /// <include file="IWebBrowserMemoryFS.xml"
         ///     path='doc/AddFile/param[@name="filename" or @name="stream" or @name="mimetype"]'/>
         void AddStreamWithMimeType(string filename, Stream stream, string mimetype);
 
         /// <include file="IWebBrowserMemoryFS.xml" path='doc/AddFile/summary'/>
+        /// <include file="IWebBrowserMemoryFS.xml" path='doc/AddFile/remarks'/>
         /// <include file="IWebBrowserMemoryFS.xml"
         ///     path='doc/AddFile/param[@name="filename" or @name="stream"]'/>
         void AddStream(string filename, Stream stream);
 
         /// <include file="IWebBrowserMemoryFS.xml" path='doc/AddFile/summary'/>
+        /// <include file="IWebBrowserMemoryFS.xml" path='doc/AddFile/remarks'/>
         /// <include file="IWebBrowserMemoryFS.xml"
         ///     path='doc/AddFile/param[@name="filename" or @name="osFilename"]'/>
         void AddOSFile(string filename, string osFilename);
 
         /// <include file="IWebBrowserMemoryFS.xml" path='doc/AddFile/summary'/>
+        /// <include file="IWebBrowserMemoryFS.xml" path='doc/AddFile/remarks'/>
         /// <include file="IWebBrowserMemoryFS.xml"
         ///     path='doc/AddFile/param[@name="filename" or @name="osFilename" or @name="mimetype"]'/>
         void AddOSFileWithMimeType(string filename, string osFilename, string mimetype);

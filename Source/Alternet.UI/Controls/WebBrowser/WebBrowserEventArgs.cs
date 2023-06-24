@@ -33,6 +33,9 @@ namespace Alternet.UI
         /// <summary>
         ///     Initializes a new instance of the WebBrowserEventArgs class.
         /// </summary>
+		/// <param name="eventType">
+		/// A <see cref="System.String"/> representing type of the event.
+		/// </param>
         public WebBrowserEventArgs(string? eventType = null)
             : base()
         {

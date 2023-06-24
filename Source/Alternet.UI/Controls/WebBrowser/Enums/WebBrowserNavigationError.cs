@@ -79,7 +79,7 @@ namespace Alternet.UI
         Request = 5,
         
         /// <summary>
-        /// The user cancelled (e.g. in a dialog) 
+        /// The user cancelled (e.g. in a dialog). 
         /// </summary>
         UserCancelled = 6,
         

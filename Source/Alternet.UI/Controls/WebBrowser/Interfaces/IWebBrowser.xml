@@ -64,10 +64,15 @@ SetBackendPath("Edge",true);
 Retrieves or modifies the state of the debug flag to control the 
 allocation behavior of the debug heap manager. 
 </summary>
+<param name="value">
+New debug flag state.
+</param>
 <remarks>
 This is for debug purposes.
 CrtSetDbgFlag(0) allows to turn off debug output with heap manager information.
 </remarks>
+<seealso href="https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/crtsetdbgflag?view=msvc-170">
+learn.microsoft.com</seealso>
 </CrtSetDbgFlag>
 <!--==============================================-->
 <Is64Bit>
@@ -184,9 +189,7 @@ Occurs before the WebBrowser control navigates to a new web page.
 <!--==============================================-->
 <Error>
 <summary>
-<para>
 	Occurs when a navigation error occurs.
-</para>
 </summary>
 <remarks>
 <para>
@@ -370,9 +373,14 @@ Converts the value to the JSON string.
 </summary>
 <remarks>
 Used internally by <see cref="InvokeScriptAsync"/>.
-String and DateTime values 
-are returned enclosed in single quotes.
+String and DateTime values are returned enclosed in single quotes.
 </remarks>
+<param name="args">
+Value for convertion to JSON format.
+</param>
+<returns>
+	A <see cref="String"/> representing value in JSON format.
+</returns>
 </ToInvokeScriptArg>
 <!--==============================================-->
 <ToInvokeScriptArgs>
@@ -381,9 +389,14 @@ Converts the array of object values to the comma delimited JSON string.
 </summary>
 <remarks>
 Used internally by <see cref="InvokeScriptAsync"/>.
-String and DateTime values 
-are returned enclosed in single quotes.
+String and DateTime values are returned enclosed in single quotes.
 </remarks>
+<param name="args">
+An array of object values for convertion to JSON format.
+</param>
+<returns>
+A <see cref="String"/> representing the array of object values in JSON format.
+</returns>
 <seealso cref="ToInvokeScriptArg"/>
 </ToInvokeScriptArgs>
 <!--==============================================-->
@@ -668,6 +681,9 @@ Name of the command to execute.
 <param name="args">
 Parameters of the command.
 </param>
+<returns>
+	A <see cref="String"/> representing the result of the Javascript code execution.
+</returns>
 </DoCommandGlobal>
 <!--==============================================-->
 <DoCommand>
@@ -680,6 +696,9 @@ Name of the command to execute.
 <param name="args">
 Parameters of the command.
 </param>
+<returns>
+	A <see cref="String"/> representing the result of the Javascript code execution.
+</returns>
 </DoCommand>
 <!--==============================================-->
 <Editable>
@@ -702,6 +721,9 @@ otherwise, <see langword="false"/>.
 <summary>
 Enables or disables the history. 
 </summary>
+<param name="enable">
+<see langword = "true"/> to enable history; otherwise, <see langword = "false"/>.
+</param>
 <remarks>
 This method will also clear the history.
 This method is not implemented on macOS and the WebKit2GTK+ backend.
@@ -752,15 +774,23 @@ Resets the search and the highlighted results.
 <!--==============================================-->
 <GetCurrentTitle>
 <summary>
-Get the title of the current web page, or its URL/path if 
-title is not available.
+Get the title of the current web page.
 </summary>
+<remarks>
+Returns URL/path if title of the current web page is not available.
+</remarks>
+<returns>
+A <see cref="String"/> representing the title of the current web page.
+</returns>
 </GetCurrentTitle>
 <!--==============================================-->
 <GetCurrentURL>
 <summary>
 Get the URL of the currently displayed document.    
 </summary>
+<returns>
+A <see cref="String"/> representing the URL of the currently displayed document.
+</returns>
 </GetCurrentURL>
 <!--==============================================-->
 <GetNativeBackend>
@@ -773,12 +803,18 @@ For the Edge backend it is a <c>ICoreWebView2</c> interface.
 Under macOS it is a <c>WebView</c> pointer and under GTK 
 it is a <c>WebKitWebView</c>.
 </remarks>
+<returns>
+A <see cref="IntPtr"/> value representing the native backend class or interface.
+</returns>
 </GetNativeBackend>
 <!--==============================================-->
 <GetBackendOS>
 <summary>
 Returns type of the OS for which the WebBrowser was compiled.
 </summary>
+<returns>
+	A <see cref="WebBrowserBackendOS"/> representing type of the OS for which the WebBrowser was compiled.
+</returns>
 </GetBackendOS>
 <!--==============================================-->
 <GoBack>
@@ -1169,16 +1205,22 @@ The preferred method is to call the
 <see cref="Control.EnsureHandlerCreated"/> method, 
 which forces a handler to be created for the control.
 </remarks>
+<returns>
+Handler for the control.
+</returns>
 </CreateHandler>
 <!--==============================================-->
 <IsBackendAvailable>
 <summary>
-Allows to check if a specific backend is currently available.
+Allows to check if a specific WebBrowser backend is currently available.
 </summary>
 <remarks>
-This method allows to enable some extra functionality available with 
-the specific backend.
+This method allows to enable some extra functionality implemented only in the specific backend.
 </remarks>
+<returns>
+<see langword="true"/> if a specific backend is currently available;
+otherwise, <see langword="false"/>.
+</returns>
 <seealso cref="SetBackend"/>
 </IsBackendAvailable>
 <!--==============================================-->
@@ -1186,6 +1228,9 @@ the specific backend.
 <summary>
 Sets the backend that will be used for the new WebBrowser instances.
 </summary>
+<param name="value">
+Specifies the WebBrowser backend.
+</param>
 <seealso cref="IsBackendAvailable"/>
 </SetBackend>
 <!--==============================================-->
@@ -1193,12 +1238,18 @@ Sets the backend that will be used for the new WebBrowser instances.
 <summary>
 Retrieve the version information about the underlying library implementation.
 </summary>
+<returns>
+A <see cref="String"/> representing the version information about the underlying wxWidgets library implementation.
+</returns>
 </GetLibraryVersionString>
 <!--==============================================-->
 <GetBackendVersionString>
 <summary>
 Retrieve the version information about the browser backend implementation.
 </summary>
+<returns>
+	A <see cref="String"/> representing the version information of the browser backend.
+</returns>
 </GetBackendVersionString>	
 <!--==============================================-->
 <SetDefaultUserAgent>
@@ -1206,6 +1257,13 @@ Retrieve the version information about the browser backend implementation.
 Sets the default user agent that will be used for the
 new WebBrowser instances.
 </summary>
+<param name="value">
+Default user agent.
+</param>
+<remarks>
+If you specify non empty value here, WebBrowser will use it when web page asks for the user agent type 
+instead of value which is normally returned by the WebBrowser backend.
+</remarks>
 </SetDefaultUserAgent>
 <!--==============================================-->
 <SetDefaultScriptMesageName>
@@ -1213,6 +1271,13 @@ new WebBrowser instances.
 Sets the default script message name that will be registered in all
 new WebBrowser instances.
 </summary>
+<param name="value">
+Default script message name.
+</param>
+<remarks>
+If you specify non empty value here, script messaging will be registered 
+for use in Javascript code of the loaded web pages.
+</remarks>
 </SetDefaultScriptMesageName>
 <!--==============================================-->
 <SetDefaultFSNameMemory>
@@ -1220,6 +1285,13 @@ new WebBrowser instances.
 Sets the default protocol name for the memory file system
 that will be used for the new WebBrowser instances.
 </summary>
+<param name="value">
+Protocol name for the memory file system.
+</param>
+<remarks>
+If you specify non empty value here, memory file system will be automatically 
+registered for use with the WebBrowser control.
+</remarks>
 </SetDefaultFSNameMemory>
 <!--==============================================-->
 <SetDefaultFSNameArchive>
@@ -1227,6 +1299,13 @@ that will be used for the new WebBrowser instances.
 Sets the default protocol name for the archive file system that will
 be used for the new WebBrowser instances.
 </summary>
+<param name="value">
+Protocol name for the archive file system.
+</param>
+<remarks>
+If you specify non empty value here, archive file system will be automatically 
+registered for use with the WebBrowser control.
+</remarks>
 </SetDefaultFSNameArchive>
 <!--==============================================-->
 <SetDefaultPage>
@@ -1235,8 +1314,11 @@ Sets the default web page that will be used for the
 new WebBrowser instances. 
 </summary>
 <remarks>
-Devault value is about:blank.
+Default page is automatically opened in WebBrowser after it is created. Devault value is about:blank. 
 </remarks>
+<param name="url">
+New default web page URL. 
+</param>
 </SetDefaultPage>
 <!--==============================================-->
 <SetLatestBackend>
