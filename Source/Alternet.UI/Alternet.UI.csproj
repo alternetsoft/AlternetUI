@@ -1,11 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\Version\Version.props" />
 
+<!-- ================================================= -->
+<!-- Alternet.UI.csproj -->
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile Condition="Exists('..\Keys\Key.snk')">..\Keys\Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\Keys\Key.snk" Link="Key.snk" Condition="Exists('..\Keys\Key.snk')" />
+  </ItemGroup>
+
+<!-- ================================================= -->
+
   <PropertyGroup>
     <Platforms>AnyCPU</Platforms>
     <LangVersion>latest</LangVersion>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile Condition="Exists('..\Keys\Key.snk')">..\Keys\Key.snk</AssemblyOriginatorKeyFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);XAMLX_INTERNAL</DefineConstants>
@@ -59,9 +69,6 @@
     <EmbeddedResource Include="Application\ThreadException\Resources\ErrorImage.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\Keys\Key.snk" Link="Key.snk" Condition="Exists('..\Keys\Key.snk')" />
-  </ItemGroup>
 
   <!-- Uncomment this to debug in release build. -->
   <!-- <PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -127,7 +134,7 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(Configuration)'=='Debug'">
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -140,11 +147,12 @@
 
   <!-- ================================================= -->
   <!-- remove .. in path -->
-  <Target Name="CreateAllClassesXml" AfterTargets="AfterBuild" Condition="'$(TargetFramework)' == 'net6.0' AND false">
+  <Target Name="CreateAllClassesXml" AfterTargets="AfterBuild" 
+	Condition="'$(TargetFramework)' == 'net6.0' AND false">
 
     <PropertyGroup>
       <ApiInfoXmlFilePath>$(BaseOutputPath)\Alternet.UI.AllClasses.xml</ApiInfoXmlFilePath>
-      <ApiInfoCollectorToolPath>$(MSBuildThisFileDirectory)\..\Alternet.UI.Build.Tasks\\Alternet.UI.Build.Tasks.ApiInfoCollector\bin\$(Configuration)\net6.0\Alternet.UI.Build.Tasks.ApiInfoCollector</ApiInfoCollectorToolPath>
+      <ApiInfoCollectorToolPath>$(MSBuildThisFileDirectory)\..\Alternet.UI.Build.Tasks\Alternet.UI.Build.Tasks.ApiInfoCollector\bin\$(Configuration)\net6.0\Alternet.UI.Build.Tasks.ApiInfoCollector</ApiInfoCollectorToolPath>
       <ApiInfoCollectorInputAssemblyPath>$(BaseOutputPath)\$(Configuration)\net6.0\Alternet.UI.dll</ApiInfoCollectorInputAssemblyPath>
     </PropertyGroup>
 
