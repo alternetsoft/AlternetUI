@@ -1,30 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+<Import Project="..\..\..\Version\Version.props" />
+<Import Project="..\..\..\Keys\Keys.props" />
+     
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <LangVersion>latest</LangVersion>
     <UseWindowsForms>true</UseWindowsForms>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\..\Keys\Key.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
+   </PropertyGroup>
 
-  <PropertyGroup>
-    <VsTargetVersion Condition="'$(VsTargetVersion)' == '' and '$(VisualStudioVersion)' == '16.0' ">VS2019</VsTargetVersion>
-  </PropertyGroup>
-  <Choose>
-    <When Condition="'$(VsTargetVersion)' == 'VS2019'">
       <PropertyGroup>
-        <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
+        <TargetFrameworks>net461;netcoreapp3.1;net6.0-windows;net7.0-windows</TargetFrameworks>
       </PropertyGroup>
-    </When>
-    <Otherwise>
-      <PropertyGroup>
-        <TargetFrameworks>net461;netcoreapp3.1;net6.0-windows</TargetFrameworks>
-      </PropertyGroup>
-    </Otherwise>
-  </Choose>
-  <ItemGroup>
-    <None Include="..\..\..\Keys\Key.snk" Link="Key.snk" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Alternet.UI.Integration.Remoting\Alternet.UI.Integration.Remoting.csproj" />
     <PackageReference Include="Serilog" Version="2.11.0" />

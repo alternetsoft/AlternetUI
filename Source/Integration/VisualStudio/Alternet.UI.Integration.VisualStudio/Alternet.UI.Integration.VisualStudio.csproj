@@ -1,18 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\..\Version\Version.props" />
+<Import Project="..\..\..\Version\Version.props" />
+<Import Project="..\..\..\Keys\Keys.props" />
+  
   <PropertyGroup>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <UseCodebase>true</UseCodebase>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <LangVersion>latest</LangVersion>   
   </PropertyGroup>
-  <PropertyGroup>
-    <LangVersion>latest</LangVersion>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\..\Keys\Key.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
+  
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -33,6 +33,7 @@
     <StartProgram Condition="'$(DevEnvDir)' != ''">$(DevEnvDir)devenv.exe</StartProgram>
     <StartArguments>/rootsuffix Exp</StartArguments>
   </PropertyGroup>
+  
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -41,6 +42,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
@@ -48,6 +50,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  
   <ItemGroup>
     <Compile Include="AlternetUIPackage.cs" />
     <Compile Include="Converters\EnumToIntConverter.cs" />
@@ -102,17 +105,11 @@
     </Compile>
     <Compile Include="Views\VsTheme.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\Keys\Key.snk">
-      <Link>Key.snk</Link>
-    </None>
-    <!--<None Include="source.extension.vsixmanifest">
-      <SubType>Designer</SubType>
-    </None>-->
-  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.VSSDK.Vsixsigntool" Version="16.2.29116.78" />
   </ItemGroup>
+
   <Target Name="SignPackage" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
     <PropertyGroup>
       <VsixSignTool>$(NuGetPackageRoot)Microsoft.VSSDK.Vsixsigntool\16.2.29116.78\tools\vssdk\vsixsigntool.exe</VsixSignTool>
@@ -122,15 +119,18 @@
     <Message Text="Signing $(TargetVsixContainer)" Importance="High" />
     <Exec Command="$(VsixSignCommand) $(MSBuildProjectDirectory)\$(TargetVsixContainer)" />
   </Target>
+
   <PropertyGroup>
     <VsTargetVersion>VS2022</VsTargetVersion>
     <OutputPath>bin\$(VsTargetVersion)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(VsTargetVersion)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
+
   <PropertyGroup>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <AssemblyName>Alternet.UI.Integration.VisualStudio.VS2022</AssemblyName>
   </PropertyGroup>
+
   <ItemGroup>
     <None Include="Manifests\VS2022\source.extension.vsixmanifest" Link="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
@@ -145,6 +145,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Composition" Version="17.2.41" />
     <PackageReference Include="Microsoft.VisualStudio.ProjectSystem" Version="17.2.402-pre" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="PInvoke.User32">
       <Version>0.7.124</Version>
@@ -159,27 +160,32 @@
       <Version>0.15.0</Version>
     </PackageReference>
   </ItemGroup>
+
   <ItemGroup>
     <Content Include="..\..\..\Licenses\License.txt">
       <Link>License.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+
     <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net461\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net461\**\*.pdb">
       <Link>UIXmlHostApp\DotNetFx\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+
     <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\netcoreapp3.1\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\netcoreapp3.1\**\*.pdb">
       <Link>UIXmlHostApp\netcoreapp3.1\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+
     <Content Include="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net6.0-windows\**\*.*" Exclude="..\..\Components\Alternet.UI.Integration.UIXmlHostApp\bin\$(Configuration)\net6.0-windows\**\*.pdb">
       <Link>UIXmlHostApp\net6.0\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+
     <Content Include="AlternetUI.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -210,6 +216,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
+
   <ItemGroup>
     <Page Include="Views\AlternetUIDesigner.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -224,6 +231,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\Components\Alternet.UI.Integration.IntelliSense\Alternet.UI.Integration.IntelliSense.csproj">
       <Project>{8e7ad240-6c45-4ed3-a72c-51ed2b9762cb}</Project>
@@ -248,11 +256,13 @@
       <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
     </ProjectReference>
   </ItemGroup>
+
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+
   <PropertyGroup Condition="false">
     <PostBuildEvent>if $(ConfigurationName) == Debug call "$(ProjectDir)..\Test\Scripts\Prepare.bat"</PostBuildEvent>
   </PropertyGroup>
