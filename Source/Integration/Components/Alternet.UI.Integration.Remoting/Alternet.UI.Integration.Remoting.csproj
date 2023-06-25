@@ -1,20 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\..\Version\Version.props" />
-
-<!-- ========================================== -->
-<!-- Alternet.UI.Integration.Remoting.csproj -->
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\..\Keys\Key.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="Exists('$(SolutionDir)Key.snk')">
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>$(SolutionDir)Key.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Include="..\..\..\Keys\Key.snk" Link="Key.snk" />
-  </ItemGroup>
-    <!-- ========================================== -->
+  <Import Project="..\..\..\Keys\Keys.props" />
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)\Key.snk</AssemblyOriginatorKeyFile>
+    <RealStrongKey>$(MSBuildThisFileDirectory)\RealStrongKey.snk</RealStrongKey>	
+  </PropertyGroup>
+
+  <PropertyGroup Condition="Exists('$(RealStrongKey)')">
+    <AssemblyOriginatorKeyFile>$(RealStrongKey)</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)\Key.snk" Link="Key.snk" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+
+  <Target Name="OutputKeyInfo" AfterTargets="AfterBuild" >
+  	<Message Text="AssemblyOriginatorKeyFile: $(AssemblyOriginatorKeyFile)" Importance="high" Condition="true"/>
+  </Target>	
+
+</Project>

@@ -1,15 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\Version\Version.props" />
-
-<!-- ================================================= -->
-<!-- Alternet.UI.csproj -->
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile Condition="Exists('..\Keys\Key.snk')">..\Keys\Key.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Include="..\Keys\Key.snk" Link="Key.snk" Condition="Exists('..\Keys\Key.snk')" />
-  </ItemGroup>
+  <Import Project="..\Keys\Keys.props" />
 
 <!-- ================================================= -->
 
