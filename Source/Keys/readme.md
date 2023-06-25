@@ -3,8 +3,8 @@ Store private keys in this folder. Do not add them to github.
 # REBUILDING ALTERNET SOFTWARE DLLs
 
 Before building the AlterNET Software dll's, you have to create a own strong name file, 
-which can be generated with the following command: sn -k Key.snk 
-You need then to copy the newly generated Key.snk file to the \Source\Key\ directory. 
+which can be generated with the following command: sn -k RealStrongKey.snk 
+You need then to copy the newly generated RealStrongKey.snk file to the \Source\Key\ directory. 
 The Sn.exe utility is located in your FrameworkSDK binary directory.
 Please read the 'Strong-Named Assemblies' topic in MSDN for more information.
 Once you complete these steps, you can distribute your compilied AlterNET Software dlls. 
