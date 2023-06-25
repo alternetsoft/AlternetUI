@@ -1,11 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\..\Version\Version.props" />
 
+<!-- ========================================== -->
+<!-- Alternet.UI.Integration.Remoting.csproj -->
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
     <SignAssembly>true</SignAssembly>
-    <LangVersion>latest</LangVersion>
-    <DefineConstants>ALTERNET_UI_INTEGRATION_REMOTING;$(DefineConstants)</DefineConstants>
     <AssemblyOriginatorKeyFile>..\..\..\Keys\Key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="Exists('$(SolutionDir)Key.snk')">
@@ -13,11 +12,18 @@
     <AssemblyOriginatorKeyFile>$(SolutionDir)Key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\..\..\Keys\Key.snk" Link="Key.snk" />
+  </ItemGroup>
+    <!-- ========================================== -->
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <DefineConstants>ALTERNET_UI_INTEGRATION_REMOTING;$(DefineConstants)</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
     <Compile Include="..\..\..\Alternet.UI\Port\Input\Key.cs" Link="Key.cs" />
     <Compile Include="..\..\..\Alternet.UI\Port\Input\ModifierKeys.cs" Link="ModifierKeys.cs" />
     <Compile Include="..\..\..\Alternet.UI\Port\Input\MouseButton.cs" Link="MouseButton.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\Keys\Key.snk" Link="Key.snk" />
   </ItemGroup>
 </Project>
