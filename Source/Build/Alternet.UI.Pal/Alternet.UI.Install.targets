@@ -11,7 +11,8 @@
 		BuildWxWidgetsWithoutDownload
 		BuildWxWidgetsWithoutDownload /p:ReleaseOnlyWxWidgetsBuild=true
 		BuildWxWidgets /p:ReleaseOnlyWxWidgetsBuild=true
-		
+
+	$([System.IO.Path]::GetFullPath('your path'))		
 	-->
     <!-- ========================================== -->
 	<Target Name="ClearProjectBin">
