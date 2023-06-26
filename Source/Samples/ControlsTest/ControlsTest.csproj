@@ -106,6 +106,11 @@
         <Generator>MSBuild:Compile</Generator>
 
 		</UIXml>
+      <UIXml Update="CustomDrawTestPage.uixml">
+        <SubType>Designer</SubType>
+        <Generator>MSBuild:Compile</Generator>
+
+      </UIXml>
     </ItemGroup>
 
     <ItemGroup>

@@ -31,6 +31,11 @@ namespace ControlsTest
                 AddWebBrowserPage("Web Browser IE2");
             }
 
+            pageContainer.Pages.Add(new PageContainer.Page(
+                "Custom Draw Test",
+                new CustomDrawTestPage { Site = this}));
+
+
             Grid.SetRow(eventsListBox, 1);
 
             pageContainer.SelectedIndex = 0;
