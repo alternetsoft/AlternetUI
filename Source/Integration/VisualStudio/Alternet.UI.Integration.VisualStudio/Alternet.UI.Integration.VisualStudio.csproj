@@ -2,6 +2,7 @@
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 <Import Project="..\..\..\Version\Version.props" />
 <Import Project="..\..\..\Keys\Keys.props" />
+<Import Project="..\..\..\Keys\Private.props" Condition="Exists('..\..\..\Keys\Private.props')"/>
   
   <PropertyGroup>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
@@ -106,6 +107,7 @@
     <Compile Include="Views\VsTheme.cs" />
   </ItemGroup>
 
+<!-- ========================================== -->
   <ItemGroup>
     <PackageReference Include="Microsoft.VSSDK.Vsixsigntool" Version="16.2.29116.78" />
   </ItemGroup>
@@ -113,12 +115,13 @@
   <Target Name="SignPackage" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
     <PropertyGroup>
       <VsixSignTool>$(NuGetPackageRoot)Microsoft.VSSDK.Vsixsigntool\16.2.29116.78\tools\vssdk\vsixsigntool.exe</VsixSignTool>
-      <!-- To get the hash, use 'certutil -p ****** -dump ./filename.pfx' -->
-      <VsixSignCommand>$(VsixSignTool) sign /f $(MSBuildThisFileDirectory)\..\..\..\Keys\Alternet.pfx  /p Alternet! /sha1 02c4f7817da47b568c3aa56dc3a3ebaf4ac59da0 /fd sha256 /tr http://timestamp.digicert.com</VsixSignCommand>
+      <!-- To get the hash, use 'certutil -p ****** -dump ./Alternet.pfx' -->
+      <VsixSignCommand>$(VsixSignTool) sign /f $(MSBuildThisFileDirectory)\..\..\..\Keys\Alternet.pfx  /p $(VsixSignPassword) /sha1 $(VsixSignSha) /fd sha256 /tr http://timestamp.digicert.com</VsixSignCommand>
     </PropertyGroup>
     <Message Text="Signing $(TargetVsixContainer)" Importance="High" />
     <Exec Command="$(VsixSignCommand) $(MSBuildProjectDirectory)\$(TargetVsixContainer)" />
   </Target>
+<!-- ========================================== -->
 
   <PropertyGroup>
     <VsTargetVersion>VS2022</VsTargetVersion>
