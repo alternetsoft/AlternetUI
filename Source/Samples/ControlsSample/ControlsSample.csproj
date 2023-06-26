@@ -16,10 +16,6 @@
         <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
     </PropertyGroup>
 
-  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-    <TargetFrameworks Condition="Exists('c:\Alternet.UI.Option.OnlyNet6.txt')">net6.0</TargetFrameworks>
-  </PropertyGroup>
-
   <ItemGroup>
       <Compile Remove="build\**" />
       <EmbeddedResource Remove="build\**" />
