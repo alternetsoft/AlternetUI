@@ -2,6 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <Import Project="Alternet.UI.Pal.NuGet.props"/>
 
+    <Import Project="..\..\Keys\Private.props"/>
 
 <!-- ========================================== -->
     <ItemGroup>
@@ -63,9 +64,9 @@
 
     </Target>
 <!-- ========================================== -->
-    <Target Name="NuGet_Sign"  Condition="Exists($(SignKeyPath))">
-		<Exec Command="dotnet nuget sign &quot;$(NuGetDirectoryPath)\*.nupkg&quot; --certificate-path &quot;$(SignKeyPath)&quot; --timestamper http://timestamp.digicert.com --certificate-password $(SignPassword)" 
-			Condition="'$(SignPassword)' != ''"/>
+    <Target Name="NuGet_Sign"  Condition="Exists($(SignKeyPath)) and '$(VsixSignPassword)' != ''">
+		<Exec Command="dotnet nuget sign &quot;$(NuGetDirectoryPath)\*.nupkg&quot; --certificate-path &quot;$(SignKeyPath)&quot; --timestamper http://timestamp.digicert.com --certificate-password $(VsixSignPassword)" 			/>
+		<Message Text="Exec NuGet_Sign" Importance="high" />
 	</Target>
 <!-- ========================================== -->
     <Target Name="NuGet_Pack" >
@@ -78,8 +79,8 @@
 
 		<Message Text="WARNING: NuGet will not be signed: Provide file Source\Keys\Alternet.pfx" Importance="high" 
 			Condition="!Exists($(SignKeyPath))"/>
-		<Message Text="WARNING: NuGet will not be signed: Provide SignPassword as a parameter" Importance="high" 
-			Condition="'$(SignPassword)' == ''"/>
+		<Message Text="WARNING: NuGet will not be signed: Provide SignPassword in Source\Keys\Private.props" 
+			Importance="high" Condition="'$(SignPassword)' == ''"/>
         <CallTarget Targets="NuGet_Sign"/>
 
         <Exec Condition="!$([MSBuild]::IsOsPlatform('Windows'))"
