@@ -28,3 +28,4 @@ Source/Build/Alternet.UI.Pal/NuGet/icon.png
 Source/Keys/Alternet.pfx
 Source/Keys/RealStrongKey.snk
 Source/Keys/Private.props
+Source/Keys/Run.CertUtil.Output.txt
