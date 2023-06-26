@@ -147,9 +147,9 @@
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec Build ControlsSample" Importance="high" />
 		<CallTarget Targets="BuildControlsSample"/>
-		<CallTarget Targets="RunControlsSample"/>		
 		<Message Text="Alternet.UI Installation done." Importance="high" />
   		<Message Text="========================" Importance="high" />
+		<CallTarget Targets="RunControlsSample"/>		
 	<!-- ========================================== -->
     </Target>
     <!-- ========================================== -->
