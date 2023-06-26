@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+ <!-- Copy this file to Private.props and fill out the values-->
+ 
+  <PropertyGroup>
+      <!-- To get the hash, use 'certutil -p ****** -dump ./Alternet.pfx' -->
+		<VsixSignSha></VsixSignSha>
+		<VsixSignPassword></VsixSignPassword>
+		<NuGetApiKey></NuGetApiKey>
+		<GitHubApiKey></GitHubApiKey>
+		<AzureDevOpsAccessToken></AzureDevOpsAccessToken>
+		<GitHubSourceDirectory></GitHubSourceDirectory>
+		<GitHubRepoDirectory></GitHubRepoDirectory>
+		<GitHubCommitMessageFile></GitHubCommitMessageFile>
+		<GitHubRepoName></GitHubRepoName>
+  </PropertyGroup>
+</Project>
