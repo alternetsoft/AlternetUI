@@ -50,4 +50,6 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 echo ====================================
 
-call MSW.Publish.SubTool.3.Nuget.Sign.bat "%SOURCE_DIR%\Alternet.UI\bin\Release\*.nupkg" %CERT_PASSWORD%
+:: call MSW.Publish.SubTool.3.Nuget.Sign.bat "%SOURCE_DIR%\Alternet.UI\bin\Release\*.nupkg" %CERT_PASSWORD%
+
+dotnet msbuild /t:DotNetNugetSign /p:NUGET_PATH="%SOURCE_DIR%\Alternet.UI\bin\Release\*.nupkg" "%SCRIPT_HOME%\Dotnet.Nuget.Sign.proj"

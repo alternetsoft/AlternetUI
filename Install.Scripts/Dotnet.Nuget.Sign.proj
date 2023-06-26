@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+<Import Project="..\Source\Keys\Private.props" Condition="Exists('..\Source\Keys\Private.props')"/>
+
+    <PropertyGroup>
+		<ALTERNET_PFX>$(MSBuildProjectDirectory)\..\Source\Keys\Alternet.pfx</ALTERNET_PFX>
+    </PropertyGroup>
+
+	<Target Name="DotNetNugetSignInfo1"  Condition="'$(VsixSignPassword)'==''">
+		<Message Text="WARNING: NuGet was not signed (no Source\Keys\Private.props with VsixSignPassword)" 
+			Importance="high"/>
+	</Target>
+
+	<Target Name="DotNetNugetSignInfo2" Condition="!Exists($(ALTERNET_PFX))">
+		<Message Text="WARNING: NuGet was not signed (no Source\Keys\Alternet.pfx)" Importance="high" />
+	</Target>
+	
+	<Target Name="DotNetNugetSign">
+			<CallTarget Targets="DotNetNugetSignInfo1;DotNetNugetSignInfo2;ExecDotNetNugetSign" />	
+	</Target>
+	
+	<Target Name="ExecDotNetNugetSign" Condition="'$(VsixSignPassword)'!='' and Exists($(ALTERNET_PFX))">
+        <Exec Command="dotnet nuget sign &quot;$(NUGET_PATH)&quot; --certificate-path &quot;$(ALTERNET_PFX)&quot; --timestamper http://timestamp.digicert.com --certificate-password $(VsixSignPassword)" />
+		<Message Text="NuGet signed: $(NUGET_PATH)" Importance="high" />
+	</Target>
+   
+</Project>
+
+<!-- 
+
+-->
