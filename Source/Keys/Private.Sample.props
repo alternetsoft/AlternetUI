@@ -4,12 +4,17 @@
  <!-- Copy this file to Private.props and fill out the values-->
  
   <PropertyGroup>
-      <!-- To get the hash, use 'certutil -p ****** -dump ./Alternet.pfx' -->
+           <!-- To get hash for the new prf file, Run.CertUtil.bat -->
+		   <!-- "Cert Hash(sha1)" property value at the bottom of the Run.CertUtil.Output.txt>
 		<VsixSignSha></VsixSignSha>
+	
 		<VsixSignPassword></VsixSignPassword>
+
 		<NuGetApiKey></NuGetApiKey>
-		<GitHubApiKey></GitHubApiKey>
+
 		<AzureDevOpsAccessToken></AzureDevOpsAccessToken>
+
+		<GitHubApiKey></GitHubApiKey>
 		<GitHubSourceDirectory></GitHubSourceDirectory>
 		<GitHubRepoDirectory></GitHubRepoDirectory>
 		<GitHubCommitMessageFile></GitHubCommitMessageFile>
