@@ -528,6 +528,7 @@ namespace Alternet.UI
             if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
                 uri = new Uri(url);
             else
+#pragma warning disable IDE0079
 #pragma warning disable CA1847 // Use char literal for a single character lookup
             if (!url.Contains(" ") && url.Contains("."))
             {
@@ -544,6 +545,7 @@ namespace Alternet.UI
                         StringSplitOptions.RemoveEmptyEntries)));
             }
 #pragma warning restore CA1847 // Use char literal for a single character lookup
+#pragma warning restore IDE0079
 
             LoadURL(uri.ToString());
         }
