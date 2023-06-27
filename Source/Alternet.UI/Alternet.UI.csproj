@@ -106,10 +106,12 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Release'">
-    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net6.0" />
+    <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\netstandard2.0" />
+<!--
     <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net7.0" />
     <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net462" />
     <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\net481" />
+-->	
   </ItemGroup>
 
   <ItemGroup Condition="$(DefineConstants.Contains(';NETFRAMEWORK'))">
