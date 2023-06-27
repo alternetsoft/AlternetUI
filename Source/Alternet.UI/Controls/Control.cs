@@ -15,7 +15,7 @@ namespace Alternet.UI
     {
         private static readonly Size DefaultSize = new (double.NaN, double.NaN);
         private static Font? defaultFont;
-        private static object?[] emptyArray = new object?[0];
+        private static readonly object?[] emptyArray = new object?[0];
         private Size size = DefaultSize;
         private Thickness margin;
         private Thickness padding;
