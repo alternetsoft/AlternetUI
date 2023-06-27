@@ -27,6 +27,7 @@ namespace VersionTool.Cli
             catch (Exception e)
             {
                 Console.Write(e.ToString());
+                //throw; // !! Uncomment this in order to debug
                 return 1;
             }
 
