@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal interface IControl : ISupportInitialize, IDisposable // FrameworkElement
+    internal interface IControl : ISupportInitialize, IDisposable, IFrameworkElement
     {
         event EventHandler? Click;
 
@@ -45,11 +46,11 @@ namespace Alternet.UI
 
         event EventHandler? LocationChanged;
 
-        event EventHandler<DragEventArgs>? DragDrop; // !!!!!
+        event EventHandler<DragEventArgs>? DragDrop;
 
-        event EventHandler<DragEventArgs>? DragOver; // !!!!!
+        event EventHandler<DragEventArgs>? DragOver;
 
-        event EventHandler<DragEventArgs>? DragEnter; // !!!!!
+        event EventHandler<DragEventArgs>? DragEnter;
 
         event EventHandler? DragLeave;
 
@@ -69,15 +70,13 @@ namespace Alternet.UI
 
         Brush? BorderBrush { get; set; }
 
-        public ControlHandler Handler { get; }
+        public ControlHandler Handler { get; } // !!!!!!
 
         bool IsDisposed { get; }
 
-        Collection<Control> Children { get; } // !!!!!
+        IList Children { get; }
 
-        IReadOnlyList<FrameworkElement> ContentElements { get; } // !!!!!
-
-        public Control? Parent { get; } // !!!!!
+        public IControl? Parent { get; }
 
         Size Size { get; set; }
 
@@ -133,7 +132,7 @@ namespace Alternet.UI
 
         void Hide();
 
-        DrawingContext CreateDrawingContext();
+        DrawingContext CreateDrawingContext(); // !!!!!
 
         void Invalidate();
 
@@ -169,11 +168,16 @@ namespace Alternet.UI
 
     }
 
-    // static Control? GetFocusedControl();
-    // static Font DefaultFont        {            get;        }
+    internal interface IControlStatic
+    {
+        Font DefaultFont { get; }
+
+        IControl? GetFocusedControl();
+    }
+
     internal interface IControlProtected
     {
-        IEnumerable<FrameworkElement> LogicalChildrenCollection { get; } // !!!!!
+        IEnumerable LogicalChildrenCollection { get; }
 
         void OnEnabledChanged(EventArgs e);
 
@@ -189,9 +193,9 @@ namespace Alternet.UI
 
         void OnLayout();
 
-        void OnChildInserted(int childIndex, Control childControl); // !!!!!
+        void OnChildInserted(int childIndex, IControl childControl);
 
-        void OnChildRemoved(int childIndex, Control childControl); // !!!!!
+        void OnChildRemoved(int childIndex, IControl childControl);
 
         void OnClick(EventArgs e);
 
