@@ -5,7 +5,8 @@
       <ApplicationManifest>app.manifest</ApplicationManifest>
       <LangVersion>latest</LangVersion>
       <Nullable>enable</Nullable>
-      <ApplicationIcon>../../../Media/AlternetUI.ico</ApplicationIcon>
+      <ApplicationIcon>../CommonData/Sample.ico</ApplicationIcon>
+      <UseStyleCop>false</UseStyleCop>
     </PropertyGroup>                 
 
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
@@ -91,14 +92,14 @@
       </EmbeddedResource>
     </ItemGroup>
 
-    <ItemGroup>
+    <ItemGroup Condition="$(UseStyleCop)">
       <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
     </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="$(UseStyleCop)">
     <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
