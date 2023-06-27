@@ -33,3 +33,5 @@ Install.Scripts/MSW.Publish.Results.txt
 Install.Scripts/TestDotNetNew/*.cs
 Install.Scripts/TestDotNetNew/*.csproj
 Install.Scripts/TestDotNetNew/*.uixml
+Install.Scripts/TestDotNetNew/Nuget.Help.txt
+*.exe
