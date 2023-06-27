@@ -375,7 +375,7 @@ Converts the value to the JSON string.
 Used internally by <see cref="InvokeScriptAsync"/>.
 String and DateTime values are returned enclosed in single quotes.
 </remarks>
-<param name="args">
+<param name="arg">
 Value for convertion to JSON format.
 </param>
 <returns>
