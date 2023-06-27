@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Alternet.UI.Controls.LayoutPanel
+namespace Alternet.UI
 {
     internal class ArrangedElementDummy : IArrangedElementLite
     {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using Alternet.Drawing;
-using Alternet.UI.Controls.LayoutPanel;
 
 namespace Alternet.UI
 {

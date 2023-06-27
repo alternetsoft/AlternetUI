@@ -4,22 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Alternet.UI.Controls.LayoutPanel
+namespace Alternet.UI
 {
-    internal static class LayoutFactory
+    public static class LayoutFactory
     {
-        public static IArrangedElementLite FromControl(Control control)
+        internal static IArrangedElementLite FromControl(Control control)
         {
             return new ArrangedElementControl(control);
         }
 
-        public static IArrangedElement CreateContainer(IArrangedElementLite? container = null)
+        internal static IArrangedElement CreateContainer(IArrangedElementLite? container = null)
         {
             IArrangedElement result = new ArrangedElement(null, container);
             return result;
         }
 
-        public static IArrangedElement AddChild(
+        internal static IArrangedElement AddChild(
             IArrangedElement container,
             IArrangedElementLite? control = null)
         {
@@ -28,7 +28,19 @@ namespace Alternet.UI.Controls.LayoutPanel
             return result;
         }
 
-        public static IArrangedElement CreateLayoutLeftFill(
+        public static void PerformLayoutLeftFill(
+            Control container,
+            Control leftControl,
+            Control fillControl)
+        {
+            IArrangedElement result = CreateLayoutLeftFill(
+                CreateContainer(FromControl(container)),
+                FromControl(leftControl),
+                FromControl(fillControl));
+            result.PerformLayout();
+        }
+
+        internal static IArrangedElement CreateLayoutLeftFill(
             IArrangedElement container,
             IArrangedElementLite leftControl,
             IArrangedElementLite fillControl)
