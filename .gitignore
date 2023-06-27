@@ -29,3 +29,4 @@ Source/Keys/Alternet.pfx
 Source/Keys/RealStrongKey.snk
 Source/Keys/Private.props
 Source/Keys/Run.CertUtil.Output.txt
+Install.Scripts/MSW.Publish.Results.txt
