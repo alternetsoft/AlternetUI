@@ -41,7 +41,6 @@ namespace Alternet.UI.Versioning
         {
             var files = new[]
             {
-                "Source/Integration/VisualStudio/Templates/AlternetUIApplicationTemplate.VS2019/ProjectTemplate.csproj",
                 "Source/Integration/VisualStudio/Templates/AlternetUIApplicationTemplate.VS2022/ProjectTemplate.csproj",
                 "Source/Integration/Templates/CSharp/Application/Alternet.UI.Templates.Application.CSharp.csproj"
             };
@@ -61,7 +60,6 @@ namespace Alternet.UI.Versioning
         {
             var files = new[]
             {
-                "Source/Integration/VisualStudio/Alternet.UI.Integration.VisualStudio/Manifests/VS2019/source.extension.vsixmanifest",
                 "Source/Integration/VisualStudio/Alternet.UI.Integration.VisualStudio/Manifests/VS2022/source.extension.vsixmanifest",
             };
 

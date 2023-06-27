@@ -2,7 +2,7 @@
   "profiles": {
     "set-build-number": {
       "commandName": "Project",
-      "commandLineArgs": "set-build-number 12"
+      "commandLineArgs": "set-build-number 22"
     },
     "append-version-suffix": {
       "commandName": "Project",
