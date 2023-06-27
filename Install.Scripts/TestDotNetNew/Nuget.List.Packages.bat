@@ -1,0 +1,1 @@
+nuget list -Source AlternetTest

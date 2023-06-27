@@ -1,0 +1,1 @@
+dotnet nuget remove source "AlternetTest"
