@@ -44,6 +44,13 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
                     Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\readme.md"),
                     Path.Combine(targetDirectoryPath, "readme.md"));
 
+                Directory.CreateDirectory(Path.Combine(targetDirectoryPath, "CommonData"));
+                File.Copy(
+                    Path.Combine(
+                        repository.RootPath,
+                        @"Source\Samples\CommonData\Sample.ico"),
+                    Path.Combine(targetDirectoryPath, @"CommonData\Sample.ico"));
+
                 File.Copy(
                     Path.Combine(repository.RootPath, @"Publish\PublicFiles\Samples\.gitignore"),
                     Path.Combine(targetDirectoryPath, ".gitignore"));
