@@ -1,1 +1,0 @@
-dotnet new --install Alternet.UI.Templates
