@@ -980,7 +980,7 @@ namespace Alternet.UI
             add { EventHandlersStoreAdd(FocusableChangedKey, value); }
             remove { EventHandlersStoreRemove(FocusableChangedKey, value); }
         }
-        internal static readonly EventPrivateKey FocusableChangedKey = new EventPrivateKey(); // Used by ContentElement
+        internal static readonly EventPrivateKey FocusableChangedKey = new (); // Used by ContentElement
 
         private static void OnFocusableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -1707,7 +1707,7 @@ namespace Alternet.UI
 
         private protected virtual bool GetIsEnabled() => false;
 
-        internal static readonly UncommonField<EventHandlersStore> EventHandlersStoreField = new UncommonField<EventHandlersStore>();
+        internal static readonly UncommonField<EventHandlersStore> EventHandlersStoreField = new ();
     }
 
     [Flags]
