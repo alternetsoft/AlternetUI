@@ -18,7 +18,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
 
-  <Target Name="OutputKeyInfo" AfterTargets="AfterBuild" >
+  <Target Name="OutputKeyInfo" AfterTargets="AfterBuild" Condition="false">
   	<Message Text="AssemblyOriginatorKeyFile: $(AssemblyOriginatorKeyFile)" Importance="high" Condition="true"/>
   </Target>	
 
