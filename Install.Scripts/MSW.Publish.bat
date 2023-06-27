@@ -6,7 +6,6 @@
 SETLOCAL EnableDelayedExpansion
 
 set SCRIPT_HOME=%~dp0.
-set CERT_PASSWORD=%1
 set SOURCE_DIR=%SCRIPT_HOME%\..\Source
 set PublishRoot=%SOURCE_DIR%\..\Publish\
 
@@ -70,6 +69,7 @@ copy "%SOURCE_DIR%\Integration\VisualStudio\Alternet.UI.Integration.VisualStudio
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 echo ====================================
+echo SET VSIX VERSION
 
 dotnet run --project "%VersionToolProject%" --property WarningLevel=0 -- append-version-suffix "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.VS2022.vsix"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
