@@ -93,4 +93,7 @@ echo ====================================
 dotnet run --project "%PublicSourceGeneratorToolProject%" --property WarningLevel=0  -- samples
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
+
+call PublicExamples.Zip.bat
+
 exit /b
