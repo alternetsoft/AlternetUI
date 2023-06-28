@@ -1,0 +1,19 @@
+Usage: --transport transport_spec --session-id sid --method method app
+
+--transport: transport used for communication with the IDE
+    'tcp-bson' (e. g. 'tcp-bson://127.0.0.1:30243/') - TCP-based transport with BSON serialization of messages 
+	defined in AlternetUI.Remote.Protocol
+    'file' (e. g. 'file://C://my/file.xaml' - pseudo-transport that triggers XAML updates on file changes, 
+	useful as a standalone previewer tool, always uses http preview method
+
+--session-id: session id to be sent to IDE process
+
+--method: the way the XAML is displayed"
+    'alternet-ui-remote' - binary image is sent via transport connection in FrameMessage
+    'win32' - XAML is displayed in win32 window (handle could be obtained from UpdateXamlResultMessage), 
+	      IDE is responsible to use user32!SetParent
+    'html' - Previewer starts an HTML server and displays XAML previewer as a web page
+
+--html-url - endpoint for HTML method to listen on, e. g. http://127.0.0.1:8081
+
+Example: --transport tcp-bson://127.0.0.1:30243/ --session-id 123 --method alternet-ui-remote MyApp.exe
