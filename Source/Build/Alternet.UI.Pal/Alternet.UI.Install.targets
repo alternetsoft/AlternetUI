@@ -15,30 +15,34 @@
 	$([System.IO.Path]::GetFullPath('your path'))		
 	-->
     <!-- ========================================== -->
+
+		<ItemGroup>
+			<CsProjFiles Include="$(RootDirectoryPath)\**\*.csproj"/>
+			<CsProjFiles Include="$(RootDirectoryPath)\**\*.vcxproj"/>
+		</ItemGroup>
+		<ItemGroup>
+			<BinFilesToDelete Include="@(CsProjFiles->'%(RelativeDir)/bin')" />
+			<BinFilesToDelete Include="@(CsProjFiles->'%(RelativeDir)/obj')"/>
+		</ItemGroup>
+
 	<Target Name="ClearProjectBin">
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec ClearProjectBin" Importance="high" />
-		<ItemGroup>
-			<CsProjFiles Include="$(RootDirectoryPath)\**\*.csproj"/>
-		</ItemGroup>
-		<ItemGroup>
-			<CsProjFolders Include="@(CsProjFiles->'%(RelativeDir)/bin')"/>
-			<CsProjFolders Include="@(CsProjFiles->'%(RelativeDir)/obj')"/>
-		</ItemGroup>
 		<PropertyGroup>
-			<RmDirCommand Condition="$([MSBuild]::IsOsPlatform('Windows'))">rmdir /s /q</RmDirCommand>
-			<RmDirCommand Condition="$([MSBuild]::IsOsPlatform('Linux'))">rm -rf</RmDirCommand>
-			<RmDirCommand Condition="$([MSBuild]::IsOsPlatform('OSX'))">rm -r</RmDirCommand>
+			<RmCommand Condition="$([MSBuild]::IsOsPlatform('Windows'))">del /q /s</RmCommand>
+			<RmCommand Condition="$([MSBuild]::IsOsPlatform('Linux'))">rm -r</RmCommand>
+			<RmCommand Condition="$([MSBuild]::IsOsPlatform('OSX'))">rm -r</RmCommand>
 		</PropertyGroup>
-		<Message Text="Clean: %(CsProjFolders.FullPath)" Importance="high"
-		Condition="Exists(%(CsProjFolders.FullPath))"/>
+		<Message Text="Clean: %(BinFilesToDelete.FullPath)" Importance="high"
+		Condition="Exists(%(BinFilesToDelete.FullPath))"/>
+		<RemoveDir Directories="%(BinFilesToDelete.FullPath)"  ContinueOnError="true"
+		Condition="Exists(%(BinFilesToDelete.FullPath))"/>
 
-		<Exec 
+		<!--<Exec 
 			WorkingDirectory="$(RootDirectoryPath)" 
-			Command="$(RmDirCommand) &quot;%(CsProjFolders.FullPath)&quot;" Condition="Exists(%(CsProjFolders.FullPath))"/>
-		<Exec 
-			WorkingDirectory="$(RootDirectoryPath)" 
-			Command="$(RmDirCommand) &quot;%(CsProjFolders.FullPath)&quot;" Condition="Exists(%(CsProjFolders.FullPath))"/>
+			Command="$(RmCommand) &quot;%(BinFilesToDelete.FullPath)/*&quot;" 
+			Condition="Exists(%(BinFilesToDelete.FullPath))"
+			/>-->
 	</Target>
     <!-- ========================================== -->
 	<Target Name="BuildControlsSample">
