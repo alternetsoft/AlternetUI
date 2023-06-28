@@ -9,7 +9,7 @@
    </PropertyGroup>
 
       <PropertyGroup>
-        <TargetFrameworks>net461;netcoreapp3.1;net6.0-windows;net7.0-windows</TargetFrameworks>
+        <TargetFrameworks>net462;net481;net6.0-windows;net7.0-windows</TargetFrameworks>
       </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Alternet.UI.Integration.Remoting\Alternet.UI.Integration.Remoting.csproj" />
