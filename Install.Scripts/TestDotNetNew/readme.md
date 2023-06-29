@@ -16,4 +16,6 @@ These files must be there:
 
 \* in file names is version number (for example 0.9.200-beta)
 
-**STEP 3.** Run script 00-Run.Steps.01-13.bat
+**STEP 3.** Run script 00-Run.Steps.01-13.bat. This script changes contents 
+of the "C:\AlternetTest\" folder by deletting all the contents and 
+installing beta nugets there.
