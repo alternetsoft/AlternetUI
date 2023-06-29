@@ -8,7 +8,7 @@
     <SortOrder>1000</SortOrder>
     <TemplateID>aaacf8ae-cce5-4162-8932-d4f34eec1938</TemplateID>
     <CreateNewFolder>true</CreateNewFolder>
-    <DefaultName>AlternetUIApplication</DefaultName>
+    <DefaultName>AlternetUIApp</DefaultName>
     <ProvideDefaultName>true</ProvideDefaultName>
     <CreateInPlace>true</CreateInPlace>
     <PromptForSaveOnCreation>true</PromptForSaveOnCreation>

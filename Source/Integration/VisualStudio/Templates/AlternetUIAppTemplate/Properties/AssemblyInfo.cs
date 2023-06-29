@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AlternetUIApplicationTemplate")]
+[assembly: AssemblyTitle("AlternetUIAppTemplate")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Alternet Software")]
-[assembly: AssemblyProduct("AlternetUIApplicationTemplate")]
-[assembly: AssemblyCopyright("Copyright © Alternet Software 2021")]
+[assembly: AssemblyProduct("AlternetUIAppTemplate")]
+[assembly: AssemblyCopyright("Copyright (c) Alternet Software 2021-2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
