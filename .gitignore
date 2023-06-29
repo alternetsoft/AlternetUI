@@ -35,3 +35,4 @@ Install.Scripts/TestDotNetNew/*.csproj
 Install.Scripts/TestDotNetNew/*.uixml
 Install.Scripts/TestDotNetNew/Nuget.Help.txt
 *.exe
+Documentation/Alternet.UI.Documentation/BuildNew.Result.txt
