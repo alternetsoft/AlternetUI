@@ -54,7 +54,7 @@
         <Exec Command="docfx docfxnew.json"/>
     </Target>
     <Target Name="SplitSitemap" AfterTargets="BuildDocumentation" Condition="true">
-        <Exec Command="dotnet build $(ProjectDir)\..\..\Source\Tools\SitemapSplitter\SitemapSplitter.csproj" />
+        <Exec Command="dotnet build --property WarningLevel=0 $(ProjectDir)\..\..\Source\Tools\SitemapSplitter\SitemapSplitter.csproj" />
         <Exec Command="$(ProjectDir)\..\..\Source\Tools\SitemapSplitter\bin\Debug\net6.0\SitemapSplitter.exe split --SourceSiteMapPath=$(ProjectDir)\site\sitemap.xml --OutputDirectoryPath=$(ProjectDir)\site\ --ConfigFilePath=$(ProjectDir)\SitemapSplitter.config.xml" />
         <Exec Command="del $(ProjectDir)\site\sitemap.xml" />
     </Target>
