@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// The typical use for a group box is to contain a logical group of <see cref="RadioButton"/> controls.
     /// If you have two group boxes, each of which contain several option buttons (also known as radio buttons),
     /// each group of buttons is mutually exclusive, setting one option value per group.
-    /// You can add controls to the <see cref="GroupBox"/> by using the <see cref="ICollection{T}.Add(T)"/>
+    /// You can add controls to the <see cref="GroupBox"/> by using the Add
     /// method of the <see cref="Control.Children"/> property.
     /// </remarks>
     public class GroupBox : Control

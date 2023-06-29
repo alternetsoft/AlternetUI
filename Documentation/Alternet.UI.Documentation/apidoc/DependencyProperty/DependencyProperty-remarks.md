@@ -25,7 +25,7 @@ remarks: *content
   
  An attached property is a property that enables any object to report
  information to the type that defines the attached property. In Alternet UI, any
- type that inherits from <xref:System.Windows.DependencyObject> can use an
+ type that inherits from <xref:Alternet.UI.DependencyObject> can use an
  attached property regardless of whether the type inherits from the type that
  defines the property. An attached property is a feature of the UIXML language.
  To set an attached property in UIXML, use the *ownerType*.*propertyName* syntax.

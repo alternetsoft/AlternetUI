@@ -8,7 +8,7 @@ The group box is a container control that can be used to define groups of contro
 The typical use for a group box is to contain a logical group of <xref:Alternet.UI.RadioButton> controls.
 If you have two group boxes, each of which contains several option buttons (also known as radio buttons),
 each group of buttons is mutually exclusive, setting one option value per group.
-You can add controls to the <xref:Alternet.UI.GroupBox> by using the <xref:System.Collections.ObjectModel.Collection`1.Add*>
+You can add controls to the <xref:Alternet.UI.GroupBox> by using the Add
 method of the <xref:Alternet.UI.Control.Children> property.
 
 Examples of how a <xref:Alternet.UI.GroupBox> can look on different platforms:

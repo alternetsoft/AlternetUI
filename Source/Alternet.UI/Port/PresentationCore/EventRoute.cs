@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// </summary>
     /// <remarks>
     ///     EventRoute constitues <para/>
-    ///     a non-null <see cref="RoutedEvent"/>
+    ///     a non-null <see cref="Alternet.UI.RoutedEvent"/>
     ///     and <para/>
     ///     an ordered list of (target object, handler list)
     ///     pairs <para/>
@@ -32,10 +32,10 @@ namespace Alternet.UI
 
         /// <summary>
         ///     Constructor for <see cref="EventRoute"/> given
-        ///     the associated <see cref="RoutedEvent"/>
+        ///     the associated <see cref="Alternet.UI.RoutedEvent"/>
         /// </summary>
         /// <param name="routedEvent">
-        ///     Non-null <see cref="RoutedEvent"/> to be associated with 
+        ///     Non-null <see cref="Alternet.UI.RoutedEvent"/> to be associated with 
         ///     this <see cref="EventRoute"/>
         /// </param>
         public EventRoute(RoutedEvent routedEvent)
@@ -101,12 +101,12 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         ///     NOTE: If the <see cref="RoutingStrategy"/> 
-        ///     of the associated <see cref="RoutedEvent"/> 
+        ///     of the associated <see cref="Alternet.UI.RoutedEvent"/> 
         ///     is <see cref="RoutingStrategy.Bubble"/>
         ///     the last handlers added are the 
         ///     last ones invoked <para/>
         ///     However if the <see cref="RoutingStrategy"/> 
-        ///     of the associated <see cref="RoutedEvent"/> 
+        ///     of the associated <see cref="Alternet.UI.RoutedEvent"/> 
         ///     is <see cref="RoutingStrategy.Tunnel"/>, 
         ///     the last handlers added are the 
         ///     first ones invoked 

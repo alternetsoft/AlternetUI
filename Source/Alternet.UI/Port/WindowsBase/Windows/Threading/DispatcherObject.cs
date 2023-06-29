@@ -9,12 +9,12 @@ namespace Alternet.UI.Threading
 {
     /// <summary>
     ///     A DispatcherObject is an object associated with a
-    ///     <see cref="Dispatcher"/>.  A DispatcherObject instance should
+    ///     Dispatcher.  A DispatcherObject instance should
     ///     only be access by the dispatcher's thread.
     /// </summary>
     /// <remarks>
     ///     Subclasses of <see cref="DispatcherObject"/> should enforce thread
-    ///     safety by calling <see cref="VerifyAccess"/> on all their public
+    ///     safety by calling VerifyAccess on all their public
     ///     methods to ensure the calling thread is the appropriate thread.
     ///     <para/>
     ///     DispatcherObject cannot be independently instantiated; that is,

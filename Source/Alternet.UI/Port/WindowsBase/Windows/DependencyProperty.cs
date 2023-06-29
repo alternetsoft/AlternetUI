@@ -660,7 +660,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="dependencyObject">DependencyObject to get metadata</param>
         /// <returns>Property metadata</returns>
-        public PropertyMetadata GetMetadata(DependencyObject dependencyObject)
+        public PropertyMetadata GetMetadata(Alternet.UI.DependencyObject dependencyObject)
         {
             if (dependencyObject != null)
             {
@@ -998,7 +998,7 @@ namespace Alternet.UI
         /// <param name="ownerType">Owner type of the property</param>
         /// <returns>Dependency property</returns>
         [FriendAccessAllowed]   // Built into Base, also used by Framework.
-        internal static DependencyProperty FromName(string name, Type ownerType)
+        public static DependencyProperty FromName(string name, Type ownerType)
         {
             DependencyProperty dp = null;
 
