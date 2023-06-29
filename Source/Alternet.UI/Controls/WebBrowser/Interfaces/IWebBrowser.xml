@@ -248,7 +248,7 @@ For usage details see <see cref="WebBrowser.AddScriptMessageHandler"/>.
 <ScriptResult>
 <summary>
 Occurs when your application receives results after 
-<see cref="WebBrowser.RunScriptAsync"/> call.
+RunScriptAsync call.
 </summary>
 <remarks>
 For usage details see description of RunScriptAsync method.
@@ -317,8 +317,6 @@ format, it will be displayed as plain text.
 <param name="baseUrl">
 URL assigned to the HTML data, to be used to resolve relative paths, for instance.
 </param>
-<seealso cref="WebBrowser.NavigateToStream"/>
-<seealso cref="WebBrowser.LoadURL"/>
 </NavigateToString>
 <!--==============================================-->
 <NavigateToStream>
@@ -331,8 +329,6 @@ If this parameter is null, WebBrowser navigates to a blank document.
 If contents of the stream is not in a valid HTML format, it will 
 be displayed as plain text.
 </param>
-<seealso cref="WebBrowser.NavigateToString"/>
-<seealso cref="WebBrowser.LoadURL"/>
 </NavigateToStream>
 <!--==============================================-->
 <Navigate_uri>
@@ -341,13 +337,11 @@ Loads the document at the location indicated by the specified
 <see cref="System.Uri"/> into the WebBrowser control, 
 replacing the previous document.
 </summary>
-<param name="url">
+<param name="source">
 A <see cref="System.Uri"/> representing the URL of the document to load.
 If this parameter is null, WebBrowser navigates to a blank document. 
 </param>
 <seealso cref="NavigateToStream"/>
-<seealso cref="NavigateToString"/>
-<seealso cref="LoadURL"/>
 </Navigate_uri>
 <!--==============================================-->
 <Navigate_string>
@@ -363,8 +357,6 @@ navigates to a blank document. You must always specify protocol prefix
 loading of the web pages without protocol prefix.
 </param>
 <seealso cref="NavigateToStream"/>
-<seealso cref="NavigateToString"/>
-<seealso cref="LoadURL"/>
 </Navigate_string>
 <!--==============================================-->
 <ToInvokeScriptArg>
@@ -428,7 +420,6 @@ Arbirary pointer to data that can be retrieved from the result event.
 You can use IntPtr.Zero, new IntPtr(SomeInt) or some useful data in 
 this parameter.
 </param>
-<seealso cref="WebBrowser.RunScriptAsync"/>
 </InvokeScriptAsync>
 <!--==============================================-->
 <Source>
@@ -891,8 +882,6 @@ If this parameter is null, WebBrowser navigates to a blank document.
 Web engines generally report errors asynchronously, so if you 
 want to know whether loading process was successful, register to receive navigation error events.         
 </remarks>
-<seealso cref="WebBrowser.NavigateToStream"/>
-<seealso cref="WebBrowser.NavigateToString"/>
 </LoadURL>
 <!--==============================================-->
 <PageSource>
@@ -1069,7 +1058,6 @@ itself. It is recommended to use IELatest or Edge backends
 in which JSON conversion is done by the browser itself.
 </para>
 </remarks>
-<seealso cref="WebBrowser.InvokeScriptAsync"/>
 </RunScriptAsync>
 <!--==============================================-->
 <SelectAll>

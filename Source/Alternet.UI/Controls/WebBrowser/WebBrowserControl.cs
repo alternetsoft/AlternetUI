@@ -672,12 +672,12 @@ namespace Alternet.UI
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/Navigate_uri/*'/>
-        public void Navigate(Uri url)
+        public void Navigate(Uri source)
         {
-            if (url == null)
+            if (source == null)
                 LoadURL();
             else
-                LoadURL(url.ToString());
+                LoadURL(source.ToString());
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/GoBack/*'/>
