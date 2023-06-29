@@ -4,7 +4,7 @@
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample"
          >
     <StackPanel Orientation="Vertical" Padding="10">
-        <GroupBox Title="List View">
+        <GroupBox Title="List View" Padding="10" >
             <StackPanel Orientation="Horizontal" Margin="5">
                 <ListView Width="300" Name="listView"
                           SelectionChanged="ListView_SelectionChanged"
@@ -13,7 +13,7 @@
                           MouseLeftButtonDown="ListView_MouseLeftButtonDown"
                           ColumnClick="ListView_ColumnClick"
                           />
-                <StackPanel Orientation="Vertical" Margin="5,0,0,0">
+                <StackPanel Orientation="Vertical" Margin="10,0,0,0">
                     <Button Text="Add Item" Name="addItemButton" Click="AddItemButton_Click"/>
                     <Button Text="Remove Item" Name="removeItemButton" Margin="0,3,0,0" Click="RemoveItemButton_Click"/>
                     <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0" Click="AddManyItemsButton_Click"/>
@@ -30,14 +30,14 @@
                     <CheckBox Text="Cancel BeforeLabelEdit Events" Name="cancelBeforeLabelEditEventsCheckBox" Margin="0,5,0,0" IsChecked="False" />
                     <CheckBox Text="Cancel AfterLabelEdit Events" Name="cancelAfterLabelEditEventsCheckBox" Margin="0,5,0,0" IsChecked="False" />
 
-                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
                         <Label Text="Grid Lines:" VerticalAlignment="Center"/>
                         <ComboBox IsEditable="false" Name="gridLinesComboBox" Margin="5,0,0,0" SelectedItemChanged="GridLinesComboBox_SelectedItemChanged"/>
                     </StackPanel>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Margin="10,0,0,0">
-                    <Button Text="Ensure Last Item is Visible" Name="ensureLastItemVisibleButton" Margin="0,5,0,0" Click="EnsureLastItemVisibleButton_Click" />
+                    <Button Text="Ensure Last Item is Visible" Name="ensureLastItemVisibleButton" Click="EnsureLastItemVisibleButton_Click" />
                     <Button Text="Focus Last Item" Name="focusLastItemButton" Margin="0,3,0,0" Click="FocusLastItemButton_Click" />
                     <Button Text="Modify Last Item" Name="modifyLastItemButton" Margin="0,3,0,0" Click="ModifyLastItemButton_Click" />
                     <Button Text="Add Last Item Sibling" Name="addLastItemSiblingButton" Margin="0,3,0,0" Click="AddLastItemSiblingButton_Click" />
@@ -53,7 +53,7 @@
                         <ComboBox IsEditable="false" Name="columnWidthModeComboBox" Margin="5,0,0,0" SelectedItemChanged="ColumnWidthModeComboBox_SelectedItemChanged"/>
                     </StackPanel>
 
-                    <Button Text="Modify Column 1 Title" Name="ModifyColumnTitleButton" Margin="0,3,0,0" Click="ModifyColumnTitleButton_Click"/>
+                    <Button Text="Modify Column 1 Title" Name="ModifyColumnTitleButton" Margin="0,3,0,3" Click="ModifyColumnTitleButton_Click"/>
                 </StackPanel>
             </StackPanel>
         </GroupBox>
