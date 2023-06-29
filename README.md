@@ -38,9 +38,11 @@ Step 4. Build:
 
 Step 5. Build NuGet packages on Windows Machine (optional):
 - Collect all the artifacts from all the 3 previous builds in the locations as they were on the source machines.
-- Run Install.Scripts/MSW.Build.PAL.NuGet.bat.
-- Run Install.Scripts/MSW.Publish.bat.
+- Run Install.Scripts/MSW.Publish.1.Build.Nuget.Pal.bat.
+- Run Install.Scripts/MSW.Publish.2.Build.NuGet.Managed.bat.
 - The results will be in Publish/Packages.
+
+
 
 ------------
 
