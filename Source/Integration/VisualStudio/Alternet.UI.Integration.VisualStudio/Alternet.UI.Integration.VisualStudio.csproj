@@ -249,7 +249,7 @@
     <ProjectReference Include="..\Templates\AlternetUIAppTemplate\AlternetUIAppTemplate.csproj">
       <Project>{27d4f11a-97b1-4801-9795-d5c6061252d0}</Project>
       <Name>AlternetUIAppTemplate</Name>
-      <VSIXSubPath>ItemTemplates</VSIXSubPath>
+      <VSIXSubPath>ProjectTemplates</VSIXSubPath>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <IncludeOutputGroupsInVSIX>TemplateProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
     </ProjectReference>

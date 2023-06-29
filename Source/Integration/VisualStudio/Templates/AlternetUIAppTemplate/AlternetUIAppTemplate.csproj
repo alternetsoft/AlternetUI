@@ -33,8 +33,8 @@
     <ProjectGuid>{27D4F11A-97B1-4801-9795-D5C6061252D0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AlternetUIApplicationTemplate</RootNamespace>
-    <AssemblyName>AlternetUIApplicationTemplate</AssemblyName>
+    <RootNamespace>AlternetUIAppTemplate</RootNamespace>
+    <AssemblyName>AlternetUIAppTemplate</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
