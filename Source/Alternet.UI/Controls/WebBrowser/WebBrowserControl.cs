@@ -316,6 +316,20 @@ namespace Alternet.UI
             }
         }
 
+        /// <include file="Interfaces/IWebBrowser.xml" path='doc/Url/*'/>
+        public string Url
+        {
+            get
+            {
+                return GetCurrentURL();
+            }
+
+            set
+            {
+                LoadURL(value);
+            }
+        }
+
         /// <include file="Interfaces/IWebBrowser.xml"
         /// path='doc/PreferredColorScheme/*'/>
         public virtual WebBrowserPreferredColorScheme PreferredColorScheme

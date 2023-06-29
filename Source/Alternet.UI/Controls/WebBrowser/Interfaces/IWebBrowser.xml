@@ -248,7 +248,7 @@ For usage details see <see cref="WebBrowser.AddScriptMessageHandler"/>.
 <ScriptResult>
 <summary>
 Occurs when your application receives results after 
-<see cref="M:Alternet.UI.WebBrowser.RunScriptAsync"/> call.
+<see cref="WebBrowser.RunScriptAsync"/> call.
 </summary>
 <remarks>
 For usage details see description of RunScriptAsync method.
@@ -439,6 +439,15 @@ Gets or sets the Uri of the current document hosted in the WebBrowser.
 A <see cref="System.Uri"/> representing the URL of the current document.
 </returns>
 </Source>
+<!--==============================================-->
+<Url>
+<summary>
+Gets or sets the URL of the current document hosted in the WebBrowser.
+</summary>
+<returns>
+A <see cref="String"/> representing the URL of the current document.
+</returns>
+</Url>
 <!--==============================================-->
 <CanZoomOut>
 <summary>

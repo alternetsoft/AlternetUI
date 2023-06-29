@@ -46,6 +46,9 @@ namespace Alternet.UI
         /// <include file="IWebBrowser.xml" path='doc/Source/*'/>
         Uri Source { get; set; }
 
+        /// <include file="IWebBrowser.xml" path='doc/Url/*'/>
+        string Url { get; set; }
+
         /// <include file="IWebBrowser.xml" path='doc/CanZoomIn/*'/>
         bool CanZoomIn { get; }
 
