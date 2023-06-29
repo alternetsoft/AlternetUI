@@ -1,0 +1,435 @@
+﻿article h1:first-child, article h2:first-child, article h3:first-child, article h4:first-child {
+    margin-top: 0;
+}
+
+body {
+    font-size: 16px;
+    font-family: Segoe UI, SegoeUI, SF Pro Text, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, Roboto, Oxygen-Sans, Ubuntu, Cantarell, Helvetica, Arial, sans-serif;
+    color: rgb(23, 23, 23);
+}
+
+.summary {
+    font-size: 16px;
+}
+
+article h1 {
+    padding-bottom: 25px;
+}
+
+    article h1 + h2, article h1 + h3, article h1 + h4 {
+        margin-top: 0px;
+    }
+
+article h1, article h2, article h3, article h4 {
+    margin-top: 25px;
+}
+
+article h3 {
+    padding-bottom: 10px;
+}
+
+.tabGroup section[role="tabpanel"] {
+    padding-top: 25px
+}
+
+.tabGroup {
+    margin-bottom: 10px;
+}
+
+.h1, h1 {
+    font-size: 40px;
+}
+
+.h2, h2 {
+    font-size: 34px;
+}
+
+.h5, h5 {
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+.h6, h6 {
+    font-size: 16px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.navbar-brand {
+    padding-right: 3em;
+    display: flex;
+    align-items: center;
+}
+
+.api-secondary-data {
+    font-size: 14px;
+    color: rgb(80, 80, 80);
+}
+
+.level0.summary {
+    margin: 25px 0 15px 0;
+}
+
+article h1, article h2, article h3, article h4 {
+    margin-top: 25px;
+    font-weight: 600;
+}
+
+#fields, #properties, #methods, #events, #constructors {
+    font-weight: 600;
+    font-size: 34px;
+}
+
+article h4 {
+    border-bottom: none;
+    padding-bottom: 5px;
+}
+
+.implements div:before {
+    content: '→';
+    margin-right: 5px;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+@media (min-width: 769px) {
+
+    .sidetoc.shiftup {
+        bottom: 50px;
+    }
+
+    .sidetoc {
+        background: none;
+        border: none;
+        font-size: 14px;
+        width: 20vw;
+    }
+
+    .sidefilter {
+        background: none;
+        border: none;
+        padding-right: 0;
+        margin-left: 0;
+        padding-left: 0;
+        width: 20vw;
+    }
+
+        .sidefilter form {
+            margin-right: 0;
+            padding-right: 0;
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        .sidefilter input {
+            border-radius: 2px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: #ddd;
+            box-shadow: inset 0 1px 2px #ddd;
+            font-size: 14px;
+            padding: 4px 4px 4px 25px;
+        }
+
+        .sidefilter .glyphicon {
+            padding-top: 3px;
+        }
+
+    .article.grid-right {
+        margin-left: 21vw;
+    }
+}
+
+body .toc {
+    background: none;
+}
+
+.toc ul {
+    font-size: 14px;
+    margin-left: 15px;
+}
+
+.toc {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+    .toc .nav > li > a {
+        color: rgb(23, 23, 23);
+        line-height: 25px;
+        margin-left: 0;
+        padding-left: 5px;
+    }
+
+        .toc .nav > li > a:hover {
+            text-decoration: underline;
+        }
+
+    .toc .nav > li.active > a {
+        background: rgb(242, 242, 242);
+        color: rgb(23, 23, 23);
+        font-weight: 600;
+    }
+
+@media (min-width: 1000px) {
+    .container {
+        width: 100%;
+        padding-left: 5vw;
+        padding-right: 5vw;
+    }
+}
+
+@media (min-width: 1600px) {
+    .container {
+        padding-left: 6vw;
+        padding-right: 6vw;
+    }
+}
+
+.table-bordered,
+.table-bordered > tbody > tr > td,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > td,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > thead > tr > th {
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+    .inheritedMembers, .table-bordered td, .table-bordered th {
+        font-size: 14px;
+    }
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background: none;
+}
+
+@media print, screen and (min-width: 768px) {
+    .table-bordered > tbody > tr > td:nth-of-type(1) {
+        width: 33% !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .table-responsive td {
+        white-space: normal !important;
+    }
+
+        .table-responsive td:first-of-type {
+            display: block;
+            padding: 10px 0 0px 0;
+            width: 100%;
+        }
+
+        .table-responsive td:not(:first-of-type) {
+            border: 0;
+            padding: 0;
+            display: block;
+        }
+
+    .table-responsive {
+        border: 0;
+    }
+}
+
+/* Code snippet */
+code {
+    color: rgb(23, 23, 23);
+    background-color: rgb(242, 242, 242);
+}
+
+.hljs-comment, .hljs-meta {
+    color: rgb(0, 128, 0)
+}
+
+.hljs-emphasis, .hljs-quote, .hljs-string, .hljs-strong, .hljs-template-variable, .hljs-variable {
+    color: rgb(163, 21, 21)
+}
+
+.hljs-keyword, .hljs-selector-tag, .hljs-type {
+    color: rgb(1, 1, 253)
+}
+
+.hljs-attribute, .hljs-bullet, .hljs-literal, .hljs-symbol {
+    color: #0451a5
+}
+
+.hljs-name, .hljs-section {
+    color: #0101fd
+}
+
+.hljs-tag {
+    color: #0101fd;
+}
+
+.hljs-attr, .hljs-selector-attr, .hljs-selector-class, .hljs-selector-id, .hljs-selector-pseudo, .hljs-title {
+    color: rgb(23, 23, 23)
+}
+
+.hljs-addition {
+    color: #55a532;
+    background-color: #eaffea
+}
+
+.hljs-deletion {
+    color: #bd2c00;
+    background-color: #ffecec
+}
+
+.toc .nav > li .expand-stub::before,
+.toc .nav > li.active > .expand-stub::before {
+    font-family: 'Material Icons';
+    content: "chevron_right";
+    vertical-align: middle;
+}
+
+.toc .nav > li.in > .expand-stub::before,
+.toc .nav > li.in.active > .expand-stub::before,
+.toc .nav > li.filtered > .expand-stub::before {
+    font-family: 'Material Icons';
+    content: "expand_more";
+    vertical-align: middle;
+}
+
+.toc .nav li > .expand-stub {
+    left: -13px;
+}
+
+.subnav {
+    border: none;
+    background: white;
+}
+
+.navbar-inverse {
+    background: white;
+    border-bottom-color: #E6E6E6;
+    border-bottom-width: 1px;
+}
+
+.navbar-nav li {
+    display: none;
+}
+
+.site-menu {
+    float: left;
+}
+
+    .site-menu ul {
+        margin: 0;
+        list-style-type: none;
+        padding: 0;
+        overflow: hidden;
+    }
+
+        .site-menu ul li {
+            float: left;
+        }
+
+            .site-menu ul li a {
+                display: block;
+                color: black;
+                text-align: center;
+                padding: 13px 13px;
+                font-size: 16px;
+                text-decoration: none;
+            }
+
+                .site-menu ul li a:hover:not(.menu-active) {
+                    color: black;
+                }
+
+            .site-menu ul li .menu-active {
+                font-weight: bold;
+            }
+
+.navbar-inverse .navbar-toggle {
+    border: none;
+}
+
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: #9B9B9B;
+    width: 35px;
+}
+
+    .navbar-inverse .navbar-toggle .icon-bar:nth-of-type(3) {
+        background-color: white;
+    }
+
+.navbar-inverse .navbar-toggle:hover {
+    background-color: white;
+}
+
+.navbar-form {
+    border-top: 0;
+}
+
+.videoWrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    /* 16:9 */
+    padding-top: 25px;
+    height: 0;
+}
+
+    .videoWrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+a {
+    color: rgb(0, 101, 179)
+}
+
+    a:visited {
+        color: rgb(98, 73, 145)
+    }
+
+.content a:hover {
+    text-decoration: underline;
+}
+
+div.NOTE {
+    margin-top: 10px;
+}
+
+article ul > li:not(li[role="presentation"]), article ol > li:not(li[role="presentation"]) {
+    padding-bottom: 10px;
+}
+
+article img {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.tabGroup section[role="tabpanel"] > .codeHeader, .tabGroup section[role="tabpanel"] > pre {
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+pre {
+    margin-top: 10px;
+}
+
+    pre > code .line-highlight {
+        background-color: transparent;
+        font-weight: bold;
+    }
+
+.content img[src$="-macos-window.png"] {
+    margin-top: -10px;
+    margin-bottom: -15px;
+}
+
+.licensing-info-link {
+    margin-right: 20px;
+}
