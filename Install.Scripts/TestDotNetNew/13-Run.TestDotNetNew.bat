@@ -3,4 +3,4 @@ call DotNet.Nuget.Locals.Clear.bat
 del /s /q obj
 del /s /q bin
 
-dotnet run
+dotnet run --project TestDotNetNew.csproj

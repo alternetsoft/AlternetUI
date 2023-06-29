@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="NugetDownloadExe" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <PropertyGroup>
+	<NugetExePath>$(MSBuildProjectDirectory)/nuget.exe</NugetExePath>
+	<NugetUrl>https://dist.nuget.org/win-x86-commandline/latest/nuget.exe</NugetUrl>
+    </PropertyGroup>
+
+    <Target Name="NugetDownloadExe">
+        <DownloadFile Condition="!Exists($(NugetExePath))"
+        	SourceUrl="$(NugetUrl)"
+        	DestinationFolder="$(MSBuildProjectDirectory)" 
+		DestinationFileName="nuget.exe" />
+    </Target>
+
+</Project>
