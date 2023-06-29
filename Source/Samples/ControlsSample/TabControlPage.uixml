@@ -8,21 +8,21 @@
                   SelectedPageChanged="TabControl_SelectedPageChanged">
         <TabControl.Pages>
           <TabPage Title="Page 1" Padding="5" >
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Padding="5">
               <Button Text="Page 1 Button 1" Margin="5"/>
               <Button Text="Page 1 Button 2" Margin="5"/>
               <Button Text="Page 1 Button 3" Margin="5"/>
             </StackPanel>
           </TabPage>
           <TabPage Title="Page 2" Padding="5" >
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Padding="5">
               <Button Text="Page 2 Button 1" Margin="5"/>
               <Button Text="Page 2 Button 2" Margin="5"/>
               <Button Text="Page 2 Button 3" Margin="5"/>
             </StackPanel>
           </TabPage>
           <TabPage Title="Page 3" Padding="5" >
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Padding="5">
               <Button Text="Page 3 Button 1" Margin="5"/>
               <Button Text="Page 3 Button 2" Margin="5"/>
               <Button Text="Page 3 Button 3" Margin="5"/>

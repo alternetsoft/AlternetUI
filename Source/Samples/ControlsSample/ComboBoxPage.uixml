@@ -8,7 +8,7 @@
                 <ComboBox Width="200" Name="comboBox" IsEditable="false" VerticalAlignment="Top"
                             SelectedItemChanged="ComboBox_SelectedItemChanged" TextChanged="ComboBox_TextChanged" />
 
-                <StackPanel Orientation="Vertical" Margin="5,0,0,5">
+                <StackPanel Orientation="Vertical" Margin="5,0,0,5" Padding="5,0,5,5">
                     <Button Text="Add Item" Name="addItemButton" Click="AddItemButton_Click"/>
                     <Button Text="Remove Item" Name="removeItemButton" Margin="0,3,0,0" Click="RemoveItemButton_Click"/>
                     <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0" Click="AddManyItemsButton_Click"/>
