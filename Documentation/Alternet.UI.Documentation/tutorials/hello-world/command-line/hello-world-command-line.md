@@ -5,7 +5,7 @@ The application will display a message box in response to a button click.
 
 ### Prerequisites
 
-1. Download and install [.NET SDK](https://dotnet.microsoft.com/download/dotnet). The minimum supported SDK version is .NET Core 3.1.
+1. Download and install [.NET SDK](https://dotnet.microsoft.com/download/dotnet). The minimum supported SDK version is .NET 6.0.
 1. Install AlterNET UI project templates by running
     ```dos
     dotnet new --install Alternet.UI.Templates
