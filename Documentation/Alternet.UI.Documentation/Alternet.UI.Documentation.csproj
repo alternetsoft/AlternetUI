@@ -53,7 +53,7 @@
 	<Message Text="Build Documentation New style" Importance="high" />
         <Exec Command="docfx docfxnew.json"/>
     </Target>
-    <Target Name="SplitSitemap" AfterTargets="BuildDocumentation" Condition="true">
+    <Target Name="SplitSitemap" AfterTargets="BuildDocumentation" Condition="Exists('$(ProjectDir)\site\sitemap.xml')">
         <Exec Command="dotnet build --property WarningLevel=0 $(ProjectDir)\..\..\Source\Tools\SitemapSplitter\SitemapSplitter.csproj" />
         <Exec Command="$(ProjectDir)\..\..\Source\Tools\SitemapSplitter\bin\Debug\net6.0\SitemapSplitter.exe split --SourceSiteMapPath=$(ProjectDir)\site\sitemap.xml --OutputDirectoryPath=$(ProjectDir)\site\ --ConfigFilePath=$(ProjectDir)\SitemapSplitter.config.xml" />
         <Exec Command="del $(ProjectDir)\site\sitemap.xml" />

@@ -12,6 +12,8 @@
           "exclude": [ "**/bin/**", "**/obj/**" ]
         }
       ],
+	"memberLayout": "separatePages", //samePage
+	"namespaceLayout": "flattened", //nested
       "dest": "api",
       "filter": "filterConfig.yml",
       "disableGitFeatures": false
@@ -73,8 +75,8 @@
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
-      //"default",
-      //"templates/alternet",
+      "default",
+      "templates/alternet_new",
       //"templates/memberpage",
       //"templates/memberpage-postprocess"
     ],
@@ -90,9 +92,7 @@
       "_appFaviconPath": "images/logo/favicon.ico",
       "_disableContribution": true,
       "_enableNewTab": false,
-      "_appFooter": "Copyright AlterNET Software",
-	"memberLayout": "separatePages", //samePage
-	"namespaceLayout": "flattened", //nested
+      "_appFooter": "Copyright (c) 2021-2023 AlterNET Software",
 	"maxParallelism" : 1,
       "_enableSearch": true
     },
