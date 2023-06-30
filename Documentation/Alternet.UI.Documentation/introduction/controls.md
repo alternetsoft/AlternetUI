@@ -28,6 +28,10 @@ These controls most often detect and respond to user input. The control classes 
 
 These controls provide a visual representation of data elements in different layouts or views.
 
+**Html display**: <xref:Alternet.UI.WebBrowser>.
+
+This control may be used to render full featured web documents.
+
 **Informational**: <xref:Alternet.UI.Label>, <xref:Alternet.UI.ProgressBar>.
 
 These controls are designed to present information to the user in a visual form.

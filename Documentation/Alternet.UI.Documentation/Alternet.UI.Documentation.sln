@@ -49,6 +49,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.Application", "apidoc\Application\examples\Alternet.UI.Documentation.Examples.Application.csproj", "{58E16B63-24FC-4C79-BA2B-5F14B954DDFB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Documentation.Examples.WebBrowser", "apidoc\WebBrowser\examples\Alternet.UI.Documentation.Examples.WebBrowser.csproj", "{D297B34D-78D3-474D-81A0-95DEBBB6AD59}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -119,6 +121,10 @@ Global
 		{58E16B63-24FC-4C79-BA2B-5F14B954DDFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{58E16B63-24FC-4C79-BA2B-5F14B954DDFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58E16B63-24FC-4C79-BA2B-5F14B954DDFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D297B34D-78D3-474D-81A0-95DEBBB6AD59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D297B34D-78D3-474D-81A0-95DEBBB6AD59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D297B34D-78D3-474D-81A0-95DEBBB6AD59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D297B34D-78D3-474D-81A0-95DEBBB6AD59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -145,6 +151,7 @@ Global
 		{F5385F33-2D1B-4156-97C9-E18E20C8A862} = {74977C1D-4C89-482A-AF1E-6024FB453117}
 		{69D33647-2171-4D97-8B3E-4EC6854B0543} = {74977C1D-4C89-482A-AF1E-6024FB453117}
 		{58E16B63-24FC-4C79-BA2B-5F14B954DDFB} = {74977C1D-4C89-482A-AF1E-6024FB453117}
+		{D297B34D-78D3-474D-81A0-95DEBBB6AD59} = {74977C1D-4C89-482A-AF1E-6024FB453117}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {85D8E652-2803-432F-B61C-02E2B3A618EC}
