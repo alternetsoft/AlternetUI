@@ -15,28 +15,88 @@
 	$([System.IO.Path]::GetFullPath('your path'))		
 	-->
     <!-- ========================================== -->
+    
+   <UsingTask TaskName="DeleteBinObjCs" 
+	TaskFactory="RoslynCodeTaskFactory"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <MyFolderPath ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+	  <Using Namespace="System"/>
+      <Using Namespace="System.IO"/>
+      <Code Type="Fragment" Language="cs"><![CDATA[
+    var path = Path.GetFullPath(MyFolderPath);
 
+    var files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
+                .Where(s => s.EndsWith(".csproj") || s.EndsWith(".vcxproj"));
+
+    foreach (string projFile in files)
+    {
+        var projPath = Path.GetDirectoryName(projFile);
+
+        var projPathBin = Path.Combine(projPath!, "bin");
+        var projPathObj = Path.Combine(projPath!, "obj");
+        var filesToDelete = new List<string>();
+
+        if (Directory.Exists(projPathBin))
+        {
+            var projPathBinFiles = Directory.EnumerateFiles(projPathBin, "*.*", SearchOption.AllDirectories);
+            filesToDelete.AddRange(projPathBinFiles);
+        }
+        
+        if (Directory.Exists(projPathObj))
+        {
+            var projPathObjFiles = Directory.EnumerateFiles(projPathObj, "*.*", SearchOption.AllDirectories);
+            filesToDelete.AddRange(projPathObjFiles);
+        }
+        
+        foreach (var s in filesToDelete)
+        {
+            Console.WriteLine("Deleting file: " + s);
+            try
+            {
+                File.Delete(s);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("WARNING. Error deleting file: " + s);
+            }
+        }
+            
+    }
+        ]]></Code>
+    </Task>
+  </UsingTask>
+    <!-- ========================================== -->
+	<!--
 		<ItemGroup>
 			<CsProjFiles Include="$(RootDirectoryPath)\**\*.csproj"/>
 			<CsProjFiles Include="$(RootDirectoryPath)\**\*.vcxproj"/>
 		</ItemGroup>
 		<ItemGroup>
-			<BinFilesToDelete Include="@(CsProjFiles->'%(RelativeDir)/bin')" />
-			<BinFilesToDelete Include="@(CsProjFiles->'%(RelativeDir)/obj')"/>
+			<BinMasksToDelete Include="@(CsProjFiles->'%(RelativeDir)\bin\**\*.*')" />
+			<BinMasksToDelete Include="@(CsProjFiles->'%(RelativeDir)\obj\**\*.*')"/>
 		</ItemGroup>
-
+		<ItemGroup>
+			<BinfilesToDelete Include="@(BinMasksToDelete->'%(FullPath)')" />
+		</ItemGroup>
+	-->
 	<Target Name="ClearProjectBin">
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec ClearProjectBin" Importance="high" />
-		<PropertyGroup>
+	
+		<DeleteBinObjCs MyFolderPath="$(RootDirectoryPath)"/>	
+		<!--<PropertyGroup>
 			<RmCommand Condition="$([MSBuild]::IsOsPlatform('Windows'))">del /q /s</RmCommand>
 			<RmCommand Condition="$([MSBuild]::IsOsPlatform('Linux'))">rm -r</RmCommand>
 			<RmCommand Condition="$([MSBuild]::IsOsPlatform('OSX'))">rm -r</RmCommand>
-		</PropertyGroup>
-		<Message Text="Clean: %(BinFilesToDelete.FullPath)" Importance="high"
-		Condition="Exists(%(BinFilesToDelete.FullPath))"/>
-		<RemoveDir Directories="%(BinFilesToDelete.FullPath)"  ContinueOnError="true"
-		Condition="Exists(%(BinFilesToDelete.FullPath))"/>
+		</PropertyGroup>-->
+		<!--<Message Text="Clean: @(BinFilesToDelete)" Importance="high"/>-->
+		<!--<RemoveDir Directories="%(BinFilesToDelete.FullPath)"  ContinueOnError="true"
+		Condition="Exists(%(BinFilesToDelete.FullPath))"/>-->
+		
+		 <!--<Delete Files="@(BinFilesToDelete)" />-->
 
 		<!--<Exec 
 			WorkingDirectory="$(RootDirectoryPath)" 
@@ -90,10 +150,10 @@
 		<Message Text="Exec Build Alternet.UI.Build.Tasks" Importance="high" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
-			Command="$(DotNetBuildDebugCmd)" />
+			Command="$(DotNetBuildDebugCmdNoRestore)" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
-			Command="$(DotNetBuildReleaseCmd)" />
+			Command="$(DotNetBuildReleaseCmdNoRestore)" />
 	</Target>
     <!-- ========================================== -->
     <Target Name="BuildAlternetUIBuildTasksApiInfoCollector">
@@ -101,10 +161,10 @@
 		<Message Text="Exec Build Alternet.UI.Build.Tasks.ApiInfoCollector" Importance="high" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
-			Command="$(DotNetBuildDebugCmd)" />
+			Command="$(DotNetBuildDebugCmdNoRestore)" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
-			Command="$(DotNetBuildReleaseCmd)" />
+			Command="$(DotNetBuildReleaseCmdNoRestore)" />
 	</Target>
     <!-- ========================================== -->
     <Target Name="InstallAlternetUI">
@@ -137,10 +197,10 @@
 		<Message Text="Exec Build Alternet.UI" Importance="high" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildDebugCmd)" />
+			Command="$(DotNetBuildDebugCmdNoRestore)" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildReleaseCmd)" />
+			Command="$(DotNetBuildReleaseCmdNoRestore)" />
     <!-- ========================================== -->
 		<CallTarget Targets="BuildAlternetUIBuildTasks"/>
     <!-- ========================================== -->

@@ -4,10 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI", "Alternet.UI\Alternet.UI.csproj", "{04851FA9-146A-4D00-84C6-3D20040289D0}"
-	ProjectSection(ProjectDependencies) = postProject
-		{79F2529C-C711-457A-9087-325C333CDE60} = {79F2529C-C711-457A-9087-325C333CDE60}
-		{8EB9020C-A880-4F8A-BA24-BC414E85F3A5} = {8EB9020C-A880-4F8A-BA24-BC414E85F3A5}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Alternet.UI.Pal", "Alternet.UI.Pal\Alternet.UI.Pal.vcxproj", "{79F2529C-C711-457A-9087-325C333CDE60}"
 EndProject
