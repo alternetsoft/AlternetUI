@@ -2,5 +2,5 @@
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:CustomControlsSample;assembly=CustomControlsSample">
-    <Grid Name="grid"/>
+    <Grid Name="grid" Margin="5" Padding="5"/>
 </Control>

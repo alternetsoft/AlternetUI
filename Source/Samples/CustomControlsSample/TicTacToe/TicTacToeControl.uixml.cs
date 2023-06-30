@@ -15,6 +15,7 @@ namespace CustomControlsSample
             InitializeComponent();
             CreateCells();
             InitializeGame();
+            Size = new Size(50*3,50*3);
         }
 
         List<TicTacToeCell> cells = new List<TicTacToeCell>();
@@ -24,7 +25,7 @@ namespace CustomControlsSample
             if (grid == null)
                 return;
 
-            var cellSize = 50;
+            var cellSize = 45;
 
             for (int i = 0; i < 3; i++)
                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(cellSize)});
@@ -39,8 +40,8 @@ namespace CustomControlsSample
                 {
                     var cell = new TicTacToeCell
                     {
-                        Width= cellSize,
-                        Height = cellSize
+                        Width= cellSize-2,
+                        Height = cellSize-2
                     };
 
                     cell.Click += Cell_Click;

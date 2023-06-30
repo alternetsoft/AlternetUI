@@ -54,7 +54,7 @@ namespace CustomControlsSample
             {
                 var bounds = ClientRectangle;
                 dc.FillRectangle(GetBackgroundBrush(), bounds);
-                dc.DrawRectangle(Pens.Gray, bounds.InflatedBy(-1, -1));
+                dc.DrawRectangle(Pens.Gray, bounds.InflatedBy(-3, -3));
 
                 var minBoundsSize = Math.Min(bounds.Width, bounds.Height);
 
