@@ -81,7 +81,8 @@
     <!-- ========================================== -->
     <Target Name="BuildNative_Windows" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
 		<CallTarget Targets="RunVSWhere" />	
-        <CallTarget Targets="BuildNative_Windows_X86;BuildNative_Windows_X64;BuildNative_Windows_CleanupAfterBuild" />
+        <CallTarget Targets="BuildNative_Windows_X86;BuildNative_Windows_X64" />
+		<!--;BuildNative_Windows_CleanupAfterBuild-->
     </Target>
     <!-- ========================================== -->
     <Target Name="BuildNative_Unix" Condition="!$([MSBuild]::IsOsPlatform('Windows'))">

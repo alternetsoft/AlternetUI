@@ -150,10 +150,10 @@
 		<Message Text="Exec Build Alternet.UI.Build.Tasks" Importance="high" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
-			Command="$(DotNetBuildDebugCmdNoRestore)" />
+			Command="$(DotNetBuildDebugCmdNoIncremental)" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks" 
-			Command="$(DotNetBuildReleaseCmdNoRestore)" />
+			Command="$(DotNetBuildReleaseCmdNoIncremental)" />
 	</Target>
     <!-- ========================================== -->
     <Target Name="BuildAlternetUIBuildTasksApiInfoCollector">
@@ -161,10 +161,10 @@
 		<Message Text="Exec Build Alternet.UI.Build.Tasks.ApiInfoCollector" Importance="high" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
-			Command="$(DotNetBuildDebugCmdNoRestore)" />
+			Command="$(DotNetBuildDebugCmdNoIncremental)" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector" 
-			Command="$(DotNetBuildReleaseCmdNoRestore)" />
+			Command="$(DotNetBuildReleaseCmdNoIncremental)" />
 	</Target>
     <!-- ========================================== -->
     <Target Name="InstallAlternetUI">
@@ -197,10 +197,10 @@
 		<Message Text="Exec Build Alternet.UI" Importance="high" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildDebugCmdNoRestore)" />
+			Command="$(DotNetBuildDebugCmdNoIncremental)" />
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)/Source/Alternet.UI" 
-			Command="$(DotNetBuildReleaseCmdNoRestore)" />
+			Command="$(DotNetBuildReleaseCmdNoIncremental)" />
     <!-- ========================================== -->
 		<CallTarget Targets="BuildAlternetUIBuildTasks"/>
     <!-- ========================================== -->

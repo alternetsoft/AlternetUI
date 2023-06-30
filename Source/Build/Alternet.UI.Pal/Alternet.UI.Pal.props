@@ -8,8 +8,8 @@
 		<DotNetBuildDebugCmd>dotnet build --configuration Debug --nologo --property WarningLevel=0</DotNetBuildDebugCmd>
 		<DotNetBuildReleaseCmd>dotnet build --configuration Release --nologo --property WarningLevel=0</DotNetBuildReleaseCmd>
 
-		<DotNetBuildDebugCmdNoRestore>$(DotNetBuildDebugCmd) --no-restore</DotNetBuildDebugCmdNoRestore>
-		<DotNetBuildReleaseCmdNoRestore>$(DotNetBuildReleaseCmd) --no-restore</DotNetBuildReleaseCmdNoRestore>
+		<DotNetBuildDebugCmdNoIncremental>$(DotNetBuildDebugCmd) --no-incremental</DotNetBuildDebugCmdNoIncremental>
+		<DotNetBuildReleaseCmdNoIncremental>$(DotNetBuildReleaseCmd) --no-incremental</DotNetBuildReleaseCmdNoIncremental>
 
 		<DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework net6.0</DotNetRunCmd>
         <ManagedBuildConfiguration>Release</ManagedBuildConfiguration>
