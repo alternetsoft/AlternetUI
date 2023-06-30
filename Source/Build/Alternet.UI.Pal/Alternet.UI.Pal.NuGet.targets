@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <Import Project="Alternet.UI.Pal.NuGet.props"/>
 
-    <Import Project="..\..\Keys\Private.props"/>
+    <Import Project="..\..\Keys\Private.props" Condition="Exists('..\..\Keys\Private.props')"/>
 
 <!-- ========================================== -->
     <ItemGroup>
