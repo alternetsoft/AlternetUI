@@ -1,9 +1,9 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="HelloWorldSample.MainWindow"
-        Title="My First Application"
+        Title="Alternet UI Data Binding Sample"
 		>
-	<Grid VerticalAlignment="Top" Margin="10">
+	<Grid VerticalAlignment="Top" Margin="10" Padding="10">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="*" />
@@ -13,9 +13,11 @@
 			<RowDefinition />
 		</Grid.RowDefinitions>
 
-		<Label Text="MyData:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,0,10,0" />
+		<Label Text="MyData:" Grid.Column="0" Grid.Row="0" 
+               VerticalAlignment="Top" Margin="0,0,10,0" />
 		<!--<TextBox Grid.Column="1" Grid.Row="0" Name="myDataTextBox" />-->
-		<TextBox Grid.Column="1" Grid.Row="0" Name="myDataTextBox" Text="{Binding MyDataProperty}" />
+		<TextBox Grid.Column="1" Grid.Row="0" Name="myDataTextBox" 
+                 Text="{Binding MyDataProperty}" Margin="0,0,0,10"/>
 
 		<Button Grid.Column="1" Grid.Row="1" Name="showData" Text="Show Data" Click="ShowDataButton_Click" />
 	</Grid>
