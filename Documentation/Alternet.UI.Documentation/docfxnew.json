@@ -75,8 +75,8 @@
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
-      "default",
-      "templates/alternet_new",
+      //"default",
+      //"templates/alternet_new",
       //"templates/memberpage",
       //"templates/memberpage-postprocess"
     ],
