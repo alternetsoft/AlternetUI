@@ -12,16 +12,17 @@
             <GroupBox Title="Horizontal Sliders" Grid.Column="0" Margin="0,0,10,0">
                 <StackPanel Orientation="Vertical" Margin="5" Name="horizontalSlidersPanel">
                     <Label Text="0 [0..10]" Margin="0,0,0,5" />
-                    <Slider Value="0" Margin="0,0,0,5" ValueChanged="Slider_ValueChanged" />
+                    <Slider Value="0" Margin="0,0,0,10" ValueChanged="Slider_ValueChanged" />
 
                     <Label Text="5 [0..20]" Margin="0,0,0,5" />
-                    <Slider Maximum="20" Value="5" Margin="0,0,0,5" ValueChanged="Slider_ValueChanged" />
+                    <Slider Maximum="20" Value="5" Margin="0,0,0,10" ValueChanged="Slider_ValueChanged" />
 
                     <Label Text="100 [0..100]" Margin="0,0,0,5" />
-                    <Slider Maximum="100" Value="100" Margin="0,0,0,5" ValueChanged="Slider_ValueChanged" />
+                    <Slider Maximum="100" Value="100" Margin="0,0,0,10" ValueChanged="Slider_ValueChanged" />
 
-                    <Label Text="125 [50..200]" Margin="0,10,0,5" />
-                    <Slider Minimum="50" Maximum="200" Value="125" Margin="0,0,0,5" ValueChanged="Slider_ValueChanged" />
+                    <Label Text="125 [50..200]" Margin="0,0,0,5" />
+                    <Slider Minimum="50" Maximum="200" Value="125" Margin="0,0,0,5" 
+                        ValueChanged="Slider_ValueChanged" />
                 </StackPanel>
             </GroupBox>
             <GroupBox Title="Vertical Sliders" Grid.Column="1" Margin="0,0,5,0">
@@ -38,21 +39,27 @@
                     </Grid.RowDefinitions>
 
                     <Label Text="0 [0..10]" Margin="0,0,0,5"
-                            Grid.Column="0" Grid.Row="0"/>
+                            Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
                     <Slider Value="0" Margin="0,0,0,5" ValueChanged="Slider_ValueChanged" Orientation="Vertical"
                             Grid.Column="0" Grid.Row="1"/>
 
-                    <Label Text="5 [0..20]" Margin="0,0,0,5" Grid.Column="1" Grid.Row="0"/>
-                    <Slider Maximum="20" Value="5" Margin="0,0,0,5" ValueChanged="Slider_ValueChanged" Orientation="Vertical"
+                    <Label Text="5 [0..20]" Margin="0,0,0,5" 
+                        Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center"/>
+                    <Slider Maximum="20" Value="5" Margin="0,0,0,5" ValueChanged="Slider_ValueChanged" 
+                            Orientation="Vertical"
                             Grid.Column="1" Grid.Row="1"/>
 
-                    <Label Text="100 [0..100]" Margin="0,0,0,5" Grid.Column="2" Grid.Row="0"/>
-                    <Slider Maximum="100" Value="100" Margin="0,0,0,5" ValueChanged="Slider_ValueChanged" Orientation="Vertical"
-                            Grid.Column="2" Grid.Row="1"/>
+                    <Label Text="100 [0..100]" Margin="0,0,0,5" 
+                        Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center"/>
+                    <Slider Maximum="100" Value="100" Margin="0,0,0,5" ValueChanged="Slider_ValueChanged" 
+                        Orientation="Vertical"
+                        Grid.Column="2" Grid.Row="1"/>
 
-                    <Label Text="125 [50..200]" Margin="0,0,0,5" Grid.Column="3" Grid.Row="0"/>
-                    <Slider Minimum="50" Maximum="200" Value="125" Margin="0,0,0,5" ValueChanged="Slider_ValueChanged" Orientation="Vertical"
-                            Grid.Column="3" Grid.Row="1"/>
+                    <Label Text="125 [50..200]" Margin="0,0,0,5" 
+                        Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center"/>
+                    <Slider Minimum="50" Maximum="200" Value="125" Margin="0,0,0,5" 
+                        ValueChanged="Slider_ValueChanged" Orientation="Vertical"
+                        Grid.Column="3" Grid.Row="1"/>
                 </Grid>
             </GroupBox>
         </Grid>
@@ -61,14 +68,16 @@
         
         <GroupBox Title="Linked Progress Bar">
             <StackPanel Orientation="Vertical" Margin="5">
-                <Slider Margin="0,0,0,5" Name="progressBarControlSlider" ValueChanged="ProgressBarControlSlider_ValueChanged" />
-                <ProgressBar Maximum="10" Margin="0,0,0,5" Name="progressBar" />
+                <Slider Margin="0,0,0,10" Name="progressBarControlSlider" 
+                    ValueChanged="ProgressBarControlSlider_ValueChanged" />
+                <ProgressBar Maximum="10" Margin="0,0,0,10" Name="progressBar" />
             </StackPanel>
         </GroupBox>
 
         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
             <Label Text="Tick Style:" VerticalAlignment="Center"/>
-            <ComboBox IsEditable="false" Name="tickStyleComboBox" Margin="5,0,0,0" SelectedItemChanged="TickStyleComboBox_SelectedItemChanged"/>
+            <ComboBox IsEditable="false" Name="tickStyleComboBox" Margin="5,0,0,0" 
+                SelectedItemChanged="TickStyleComboBox_SelectedItemChanged"/>
         </StackPanel>
     </StackPanel>
 </Control>

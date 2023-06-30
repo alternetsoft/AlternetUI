@@ -38,7 +38,9 @@ namespace ControlsSample
 
                 foreach (var item in Enum.GetValues(typeof(ListViewColumnWidthMode)))
                     columnWidthModeComboBox.Items.Add(item ?? throw new Exception());
-                columnWidthModeComboBox.SelectedIndex = 0;
+                columnWidthModeComboBox.SelectedIndex = 1;
+
+                listView.Columns[1].WidthMode = ListViewColumnWidthMode.AutoSize;
 
                 site = value;
             }

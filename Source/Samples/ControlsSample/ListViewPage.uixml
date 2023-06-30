@@ -49,11 +49,13 @@
                     <Button Text="Add Column" Name="AddColumnButton" Margin="0,3,0,0" Click="AddColumnButton_Click"/>
 
                     <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                        <Label Text="Column 1 width mode:" VerticalAlignment="Center"/>
-                        <ComboBox IsEditable="false" Name="columnWidthModeComboBox" Margin="5,0,0,0" SelectedItemChanged="ColumnWidthModeComboBox_SelectedItemChanged"/>
+                        <Label Text="Column 2 width mode:" VerticalAlignment="Center"/>
+                        <ComboBox IsEditable="false" Name="columnWidthModeComboBox" Margin="5,0,0,0" 
+                            SelectedItemChanged="ColumnWidthModeComboBox_SelectedItemChanged"/>
                     </StackPanel>
 
-                    <Button Text="Modify Column 1 Title" Name="ModifyColumnTitleButton" Margin="0,3,0,3" Click="ModifyColumnTitleButton_Click"/>
+                    <Button Text="Modify Column 2 Title" Name="ModifyColumnTitleButton" 
+                        Margin="0,3,0,3" Click="ModifyColumnTitleButton_Click"/>
                 </StackPanel>
             </StackPanel>
         </GroupBox>
