@@ -22,6 +22,7 @@ if (CommonUtils.CmdLineExecCommands == "download")
     // -r=download Url="https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.2.1.zip" Path="e:/file.zip"
     string docUrl = CommandLineArgs.Default.ArgAsString("Url");
     string filePath = CommandLineArgs.Default.ArgAsString("Path");
+    filePath = Path.GetFullPath(filePath);
     await CommonUtils.DownloadFileWithConsoleProgress(docUrl, filePath);
     return;
 }

@@ -25,8 +25,10 @@ namespace Alternet.UI
 
             string tempFilePath = PathAddBackslash(Path.GetDirectoryName(filePath))+
                 TempFileName;
-            File.Delete(tempFilePath);
-            File.Delete(filePath);
+            if(File.Exists(tempFilePath))
+                File.Delete(tempFilePath);
+            if (File.Exists(filePath))
+                File.Delete(filePath);
 
             try
             {
