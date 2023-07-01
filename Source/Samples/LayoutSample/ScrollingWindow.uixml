@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
 		xmlns:local="clr-namespace:LayoutSample"
         x:Class="LayoutSample.ScrollingWindow"
-        Title="Scrolling">
+        Title="Alternet UI Scrolling Sample">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition />

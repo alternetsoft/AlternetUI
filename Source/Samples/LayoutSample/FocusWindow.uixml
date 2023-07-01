@@ -2,9 +2,9 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
 		xmlns:local="clr-namespace:LayoutSample"
         x:Class="LayoutSample.FocusWindow"
-        Title="Focus">
+        Title="ALternet UI Focus Window Sample">
     <StackPanel Margin="10">
-        <GroupBox Margin="0,0,0,10">
+        <GroupBox Margin="0,0,0,10" Padding="5">
             <StackPanel>
                 <Label Text="TextBox1 (TabStop = true):" />
                 <TextBox Name="textBox1" Text="TextBox1" Margin="0,0,0,15" TabStop="true" GotFocus="TextBox1_GotFocus" LostFocus="TextBox1_LostFocus"/>
@@ -17,7 +17,7 @@
             </StackPanel>
         </GroupBox>
 
-        <GroupBox>
+        <GroupBox Padding="5">
             <StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
                     <Label Text="TextBox1.IsFocused: " Margin="0,0,2,0" />
@@ -25,7 +25,7 @@
                 </StackPanel>
 
                 <Button Text="Set Focus to TextBox1" Name="setFocusToTextBox1Button" Click="SetFocusToTextBox1Button_Click" Margin="0,0,0,5" />
-                <Label Text="Press 'N' key to focus next control." />
+                <Label Text="Press 'N' key to focus next control." Margin="0,0,0,5"/>
             </StackPanel>
         </GroupBox>
     </StackPanel>
