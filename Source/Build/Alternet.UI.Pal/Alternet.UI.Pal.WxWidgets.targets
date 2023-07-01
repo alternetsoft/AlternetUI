@@ -50,12 +50,14 @@
     </Target>
     <!-- ========================================== -->
 	<Target Name="DownloadWxWidgetsBinWindows">
+		 <MakeDir Directories="$(WxWidgetsDownloadDirectory)" Condition="!Exists('$(WxWidgetsDownloadDirectory)')"/>
         <DownloadFile 
             SourceUrl="$(WxWidgetsBinDownloadUrlWindows)"
             DestinationFolder="$(WxWidgetsDownloadDirectory)" DestinationFileName="$(WxWidgetsDownloadFileName)" />
 	</Target>
     <!-- ========================================== -->
 	<Target Name="DownloadWxWidgetsBinWindows2">
+		 <MakeDir Directories="$(WxWidgetsDownloadDirectory)" Condition="!Exists('$(WxWidgetsDownloadDirectory)')"/>
         <Exec
             WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
             Command="dotnet run -- -r=download Url=&quot;$(WxWidgetsBinDownloadUrlWindows)&quot; Path=&quot;$(WxWidgetsDownloadDirectory)/$(WxWidgetsDownloadFileName)&quot;" />
