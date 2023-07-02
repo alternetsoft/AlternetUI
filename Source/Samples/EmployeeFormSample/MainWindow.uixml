@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="EmployeeFormSample.MainWindow"
-		Title="Employee Details Form" Padding="10" Width="1000" Height="600">
+		Title="Alternet UI Employee Details Form" Padding="10" Width="1000" Height="600">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
@@ -34,7 +34,8 @@
 			</Border>
 
 			<Label Text="First Name" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
-			<TextBox Text="{Binding FirstName}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5"/>
+			<TextBox Text="{Binding FirstName}" Grid.Row="0" Grid.Column="1" Name="firstNameTextBox"
+                     VerticalAlignment="Center" Margin="0,0,0,5"/>
 
 			<Label Text="Last Name" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
 			<TextBox Text="{Binding LastName}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5"/>

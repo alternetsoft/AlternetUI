@@ -1,7 +1,10 @@
 using System;
+using System.ComponentModel;
+using System.Collections;
 using System.Linq;
 using Alternet.Drawing;
 using Alternet.UI;
+using Alternet.Base.Collections;
 
 namespace EmployeeFormSample
 {
@@ -33,11 +36,71 @@ namespace EmployeeFormSample
                 Status = Status.Salaried
             };
 
-            evaluationsListView.Items.Add(new ListViewItem(new[] { "2018-12-4", "2018 Employee Review", "James Smith" }));
-            evaluationsListView.Items.Add(new ListViewItem(new[] { "2019-12-10", "2019 Employee Review", "James Smith" }));
-            evaluationsListView.Items.Add(new ListViewItem(new[] { "2020-12-1", "2020 Employee Review", "James Smith" }));
-            evaluationsListView.Items.Add(new ListViewItem(new[] { "2021-12-20", "2021 Employee Review", "James Smith" }));
-            evaluationsListView.Items.Add(new ListViewItem(new[] { "2022-12-5", "2022 Employee Review", "James Smith" }));
+            evaluationsListView.Items.Add(new ListViewItem(new[] {
+                new DateTime(2018,12,4).ToShortDateString(), "2018 Employee Review", "James Smith" }));
+            evaluationsListView.Items.Add(new ListViewItem(new[] {
+                new DateTime(2019,12,10).ToShortDateString(), "2019 Employee Review", "James Smith" }));
+            evaluationsListView.Items.Add(new ListViewItem(new[] {
+                new DateTime(2020,12,1).ToShortDateString(), "2020 Employee Review", "James Smith" }));
+            evaluationsListView.Items.Add(new ListViewItem(new[] {
+                new DateTime(2021,12,20).ToShortDateString(), "2021 Employee Review", "James Smith" }));
+            evaluationsListView.Items.Add(new ListViewItem(new[] {
+                new DateTime(2022,12,5).ToShortDateString(), "2022 Employee Review", "James Smith" }));
+            evaluationsListView.Columns[0].WidthMode = ListViewColumnWidthMode.AutoSize;
+            evaluationsListView.Columns[1].WidthMode = ListViewColumnWidthMode.AutoSize;
+            evaluationsListView.Columns[2].WidthMode = ListViewColumnWidthMode.AutoSize;
+
+            LayoutUpdated += MainWindow_LayoutUpdated;
+
+            // On Linux height of the ComboBox is greater than height of the TextBox.
+            // We need to increase height of all window's TextBoxes.
+            AdjustTextBoxesHeight(this, prefixComboBox, firstNameTextBox);
+        }
+
+        private void MainWindow_LayoutUpdated(object sender, EventArgs e)
+        {
+        }
+
+        private void AdjustTextBoxesHeight(Control container, Control comboBox, Control? textBox)
+        {
+            var comboBoxHeight = comboBox.Bounds.Height;
+            double textBoxHeight = 0;
+            if (textBox != null)
+            {
+                textBoxHeight = textBox.Bounds.Height;
+                if (comboBoxHeight == textBoxHeight)
+                    return;
+            }
+            var maxHeight = Math.Max(comboBoxHeight, textBoxHeight);
+
+            container.SuspendLayout();
+
+            try
+            {
+                Collection<Control> editors = new Collection<Control>();
+                addTextEditors(container);
+
+                foreach (Control control in editors)
+                    control.Height = maxHeight;
+
+                void addTextEditors(Control container)
+                {
+                    foreach (Control control in container.Children)
+                    {
+                        if (control is TextBox || control is ComboBox)
+                        {
+                            if (control.Bounds.Height < maxHeight)
+                                editors.Add(control);
+                        }
+                        else
+                            addTextEditors(control);
+                    }
+                }
+            }
+            finally
+            {
+                container.ResumeLayout(true);
+            }
         }
 
         private void PopuplateComboBoxes()

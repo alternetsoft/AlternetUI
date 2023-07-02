@@ -36,7 +36,7 @@ namespace EmployeeFormSample
     {
         Sales,
         HR,
-        Engeneering,
+        Engineering,
         IT
     }
 
