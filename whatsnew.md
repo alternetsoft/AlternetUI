@@ -1,0 +1,22 @@
+# 0.9.201
+
+- Improved look of the Sample projects on Linux and macOS.
+- Improved behavior and fixed bugs in the Sample projects.
+- Added WebBrowser.Url property.
+- Fixed Border control painting on Linux.
+- Added UserPaintControl control.
+- Improvements in the installation scripts.
+
+# 0.9.200
+
+- Added WebBrowser control.
+- Added WebBrowser control demo page in the ControlsSample project.
+- Added ControlsTest project with WebBrowser.
+- Added Install.bat, Install.sh, Install.ps1 scripts. This greatly simplified the installation process.
+- Added complete Net 6, Net 7, and Net 4.81 support.
+- Removed Alternet.DateTime. Now you can use System.DateTime in all places. 
+- Added binary wxWidgets download instead of compilation during the installation. This speeds up the process of installation.
+- Removed VS2019 support.
+- Removed GTK debug messages on Linux.
+- Added Application properties: DisplayName, AppClassName, VendorName, VendorDisplayName.
+ 
