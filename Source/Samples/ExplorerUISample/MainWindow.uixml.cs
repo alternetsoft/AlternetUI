@@ -30,21 +30,26 @@ namespace ExplorerUISample
             meetings.Items.Add(new TreeViewItem("July", FolderImageIndex));
             maryM.Items.Add(meetings);
             treeView.Items.Add(maryM);
+            treeView.ExpandAll();            
 
             var imageList = LoadImageList();
             treeView.ImageList = imageList;
             listView.SmallImageList = imageList;
+            listView.Columns[0].WidthMode = ListViewColumnWidthMode.AutoSize;
+            listView.Columns[1].WidthMode = ListViewColumnWidthMode.AutoSize;
+            listView.Columns[2].WidthMode = ListViewColumnWidthMode.AutoSize;
+            Closed+=MainWindow_Closed;
         }
 
-        protected override void OnVisibleChanged(EventArgs e)
+        private void MainWindow_Closed(object? sender, WindowClosedEventArgs e)
         {
-            base.OnVisibleChanged(e);
-
-            if (listView == null)
-                return;
-
-            if (Visible)
-                new ProgressWindow().Show();
+            Application.Current.Exit();
+        }
+        
+        private void ShowProgress_Click(object sender, EventArgs e)
+        {
+            var progressWindow = new ProgressWindow();
+            progressWindow.Show();
         }
 
         private static ImageList LoadImageList()

@@ -2,9 +2,14 @@
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ExplorerUISample;assembly=ExplorerUISample"
-        Title="Alternet UI"
-        Width="600" Height="400">
-    <StackPanel Orientation="Horizontal" Margin="10">
+        Title="Alternet UI Explorer Sample"
+        Width="600" Height="400" >
+    <Window.Toolbar>
+        <Toolbar Name="toolbar" ItemImagesVisible="false">
+            <ToolbarItem Text="Show progress" Click="ShowProgress_Click"/>
+        </Toolbar>
+    </Window.Toolbar>
+        <StackPanel Orientation="Horizontal" Margin="10">
         <TreeView Name="treeView" Width="200" />
         <ListView Name="listView" View="Details" Width="364">
             <ListView.Columns>
