@@ -84,6 +84,7 @@ namespace Alternet::UI
 
     void ListView::InsertItem(wxListView* listView, wxListItem& item)
     {
+        #pragma warning(suppress: 4018)
         if (_view == ListViewView::Details && item.GetColumn() >= _columns.size())
             return;
 
