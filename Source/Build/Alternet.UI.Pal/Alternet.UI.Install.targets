@@ -92,7 +92,6 @@
                 Console.WriteLine("WARNING. Error deleting file: " + s);
             }
         }
-            
     }
         ]]></Code>
     </Task>
@@ -100,44 +99,14 @@
     <!-- ========================================== -->
 	<Target Name="ClearDocumentationBin">
 		<Message Text="--------------------------------------------------------" Importance="high" />
-		<Message Text="Exec ClearDocumentationBin" Importance="high" />
-	
+		<Message Text="Exec ClearDocumentationBin" Importance="high" />	
 		<DeleteBinObjCs MyFolderPath="$(RootDirectoryPath)\Documentation\Alternet.UI.Documentation\"/>	
 	</Target>	
-	<!--
-		<ItemGroup>
-			<CsProjFiles Include="$(RootDirectoryPath)\**\*.csproj"/>
-			<CsProjFiles Include="$(RootDirectoryPath)\**\*.vcxproj"/>
-		</ItemGroup>
-		<ItemGroup>
-			<BinMasksToDelete Include="@(CsProjFiles->'%(RelativeDir)\bin\**\*.*')" />
-			<BinMasksToDelete Include="@(CsProjFiles->'%(RelativeDir)\obj\**\*.*')"/>
-		</ItemGroup>
-		<ItemGroup>
-			<BinfilesToDelete Include="@(BinMasksToDelete->'%(FullPath)')" />
-		</ItemGroup>
-	-->
+    <!-- ========================================== -->
 	<Target Name="ClearProjectBin">
 		<Message Text="--------------------------------------------------------" Importance="high" />
 		<Message Text="Exec ClearProjectBin" Importance="high" />
-	
 		<DeleteBinObjCs MyFolderPath="$(RootDirectoryPath)"/>	
-		<!--<PropertyGroup>
-			<RmCommand Condition="$([MSBuild]::IsOsPlatform('Windows'))">del /q /s</RmCommand>
-			<RmCommand Condition="$([MSBuild]::IsOsPlatform('Linux'))">rm -r</RmCommand>
-			<RmCommand Condition="$([MSBuild]::IsOsPlatform('OSX'))">rm -r</RmCommand>
-		</PropertyGroup>-->
-		<!--<Message Text="Clean: @(BinFilesToDelete)" Importance="high"/>-->
-		<!--<RemoveDir Directories="%(BinFilesToDelete.FullPath)"  ContinueOnError="true"
-		Condition="Exists(%(BinFilesToDelete.FullPath))"/>-->
-		
-		 <!--<Delete Files="@(BinFilesToDelete)" />-->
-
-		<!--<Exec 
-			WorkingDirectory="$(RootDirectoryPath)" 
-			Command="$(RmCommand) &quot;%(BinFilesToDelete.FullPath)/*&quot;" 
-			Condition="Exists(%(BinFilesToDelete.FullPath))"
-			/>-->
 	</Target>
     <!-- ========================================== -->
 	<Target Name="BuildControlsSample">
@@ -251,10 +220,4 @@
 		<CallTarget Targets="RunControlsSample"/>		
 	<!-- ========================================== -->
     </Target>
-    <!-- ========================================== -->
-    <!-- ========================================== -->
 </Project>
-
-<!-- 
-
--->
