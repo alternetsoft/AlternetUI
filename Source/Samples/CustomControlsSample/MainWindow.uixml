@@ -8,7 +8,8 @@
         <GroupBox Title="Color Picker" Margin="0,0,0,10" Padding="10" >
             <StackPanel Orientation="Horizontal">
                 <Label Text="Native:" VerticalAlignment="Center" Margin="0,0,5,10" />
-                <ColorPicker Value="Red" HorizontalAlignment="Left" Margin="0,0,10,10"/>
+                <ColorPicker Value="Red" HorizontalAlignment="Left" Margin="0,0,10,10"
+                             Name="nativeColorPicker"/>
                 <Label Text="Custom:" VerticalAlignment="Center" Margin="0,0,5,10" />
                 <local:CustomColorPicker Value="Red" Name="colorPicker" 
                     HorizontalAlignment="Left" Margin="0,0,10,10"/>
@@ -30,7 +31,7 @@
                 <GroupBox Title="Custom" Padding="10">
                     <StackPanel Orientation="Horizontal">
                         <local:KnobControl Minimum="0" Maximum="100" Value="{Binding IntValue}" 
-                            Margin="0,0,5,0"/>
+                            Margin="0,0,10,0"/>
                         <local:GaugeControl Minimum="0" Maximum="100" Value="{Binding IntValue}" 
                             VerticalAlignment="Center" Margin="0,0,5,0" Width="100"/>
                     </StackPanel>

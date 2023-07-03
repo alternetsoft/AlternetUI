@@ -8,11 +8,15 @@ namespace CustomControlsSample
 {
     public class KnobHandler : SliderHandler
     {
+        private Brush gaugeBackgroundBrush = new SolidBrush(Color.Parse("#484854"));
+
+        private Pen gaugeBorderPen = new Pen(Color.Parse("#9EAABA"), 2);
+
         private Pen knobBorderPen = new Pen(Color.Black, 2);
 
         private Pen largeTickPen = new Pen(Color.Black, 2);
 
-        private Pen smallTickPen = new Pen(Color.Parse("#404040"), 2);
+        private Pen smallTickPen = new Pen(Color.Parse("#FFFFFF"), 2);
 
         private Pen knobPointerPen1 = new Pen(Color.Parse("#FC4154"), 3);
 
@@ -30,6 +34,27 @@ namespace CustomControlsSample
 
         public override void OnPaint(DrawingContext dc)
         {
+            var bounds = ClientRectangle;
+
+            var gaugeBounds = bounds.InflatedBy(-2, -2);
+            var scaleBounds = gaugeBounds.InflatedBy(-4, -4);
+
+            dc.FillRectangle(gaugeBackgroundBrush, gaugeBounds);
+
+
+            using var scaleGradientBrush = new LinearGradientBrush(new Point(0, 0), new Point(0, scaleBounds.Height),
+                new[]
+                {
+                        new GradientStop(Color.Parse("#1B222C"), 0),
+                        new GradientStop(Color.Parse("#80767E"), 0.5),
+                        new GradientStop(Color.Parse("#0C1013"), 1),
+                });
+
+            dc.FillRectangle(scaleGradientBrush, scaleBounds);
+
+            dc.DrawRectangle(gaugeBorderPen, gaugeBounds);
+
+
             var center = GetControlCenter();
             double controlRadius = GetControlRadius();
             var largeTickLength = controlRadius * 0.1;
@@ -90,7 +115,7 @@ namespace CustomControlsSample
 
         public override Size GetPreferredSize(Size availableSize)
         {
-            return new Size(75, 75);
+            return new Size(100, 100);
         }
 
         protected override void OnAttach()
@@ -122,7 +147,7 @@ namespace CustomControlsSample
         private double GetControlRadius()
         {
             var bounds = ClientRectangle;
-            var gaugePadding = 1;
+            var gaugePadding = 10;
             return Math.Min(bounds.Width, bounds.Height) / 2 - gaugePadding;
         }
 

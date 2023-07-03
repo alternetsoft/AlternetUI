@@ -56,7 +56,7 @@ namespace CustomControlsSample
 
             public override Size GetPreferredSize(Size availableSize)
             {
-                return new Size(20, 20);
+                return new Size(30, 30);
             }
 
             protected override void OnAttach()

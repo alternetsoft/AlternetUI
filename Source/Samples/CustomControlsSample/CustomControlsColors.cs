@@ -7,7 +7,7 @@ namespace CustomControlsSample
 {
     internal static class CustomControlsColors
     {
-        public static Brush BackgroundBrush = Brushes.LightCyan;
+        public static Brush BackgroundBrush = Brushes.LightGray;
 
         public static Brush BackgroundHoveredBrush = Brushes.LightYellow;
 

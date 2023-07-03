@@ -13,11 +13,12 @@ namespace CustomControlsSample
             InitializeComponent();
 
             DataContext = new Data();
+
         }
 
         class Data : INotifyPropertyChanged
         {
-            private int intValue;
+            private int intValue = 60;
 
             public event PropertyChangedEventHandler? PropertyChanged;
 

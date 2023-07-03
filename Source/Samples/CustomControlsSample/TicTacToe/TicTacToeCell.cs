@@ -53,7 +53,9 @@ namespace CustomControlsSample
             public override void OnPaint(DrawingContext dc)
             {
                 var bounds = ClientRectangle;
-                dc.FillRectangle(GetBackgroundBrush(), bounds);
+                var brush = GetBackgroundBrush();
+                if(brush !=null)
+                    dc.FillRectangle(brush, bounds);
                 dc.DrawRectangle(Pens.Gray, bounds.InflatedBy(-3, -3));
 
                 var minBoundsSize = Math.Min(bounds.Width, bounds.Height);
@@ -133,7 +135,7 @@ namespace CustomControlsSample
                 if (IsMouseOver)
                     return CustomControlsColors.BackgroundHoveredBrush;
 
-                return CustomControlsColors.BackgroundBrush;
+                return null;// CustomControlsColors.BackgroundBrush;
             }
         }
     }
