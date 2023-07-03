@@ -4,16 +4,6 @@
 
     <!-- ========================================== -->
     <Target Name="BuildManaged">
-        <!--<MSBuild Projects="$(Bindings_ManagedProjectFilePath)" Targets="restore" />
-        <MSBuild Projects="$(Bindings_ManagedProjectFilePath)"
-            Targets="Rebuild"
-            Properties="Configuration=$(ManagedBuildConfiguration);OutputPath=$(OutputDirectoryPath)/%(SupportedTargetFrameworkMoniker.Identity);TargetFramework=%(SupportedTargetFrameworkMoniker.Identity)" />
-
-        <ItemGroup>
-            <FilesToDelete Include="$(OutputDirectoryPath)\%(SupportedTargetFrameworkMoniker.Identity)\*.deps.json"/>
-            <FilesToDelete Include="$(OutputDirectoryPath)\%(SupportedTargetFrameworkMoniker.Identity)\*.pdb"/>
-        </ItemGroup> 
-        <Delete Files="@(FilesToDelete)"/>-->
     </Target>
     <!-- ========================================== -->
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
@@ -64,14 +54,10 @@
         <Delete Files="@(FilesToDelete)"/>
     </Target>
     <!-- ========================================== -->
-	<PropertyGroup>
-			<CppMsBuildPrerelease></CppMsBuildPrerelease>
-	</PropertyGroup>
-
-	<Target Name="RunVSWhereInternal">
+	<Target Name="RunVSWhere">
 		<Exec 
 			WorkingDirectory="$(RootDirectoryPath)" 
-			Command="&quot;%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe&quot; -latest $(CppMsBuildPrerelease) -requires Microsoft.Component.MSBuild -find &quot;MSBuild\**\Bin\MSBuild.exe&quot;" 
+			Command="&quot;%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe&quot; -latest -prerelease -requires Microsoft.Component.MSBuild -find &quot;MSBuild\**\Bin\MSBuild.exe&quot;" 
 			ConsoleToMSBuild="true">
 			<Output TaskParameter="ConsoleOutput" ItemName="OutputOfRunVSWhere" />
 		</Exec>
@@ -80,14 +66,6 @@
 				<CppMsBuildPath>%(OutputOfRunVSWhere.Identity)</CppMsBuildPath>
 		</PropertyGroup>			 
 	</Target>
-
-	<Target Name="RunVSWhere">
-		<CallTarget Targets="RunVSWhereInternal" />	
-		<PropertyGroup>
-				<CppMsBuildPrerelease>-prerelease</CppMsBuildPrerelease>
-		</PropertyGroup>			 
-		<CallTarget Targets="RunVSWhereInternal" Condition="'$(CppMsBuildPath)'==''"/>	
-	</Target>		
     <!-- ========================================== -->
     <Target Name="BuildNative_Windows" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
 		<CallTarget Targets="RunVSWhere" />	
