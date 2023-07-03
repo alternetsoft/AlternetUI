@@ -19,6 +19,7 @@ Steps needed to build AlterNET UI
 Step 1. Windows Machine Setup:
 - Install Visual Studio 2022, with C# Desktop development, C++ Desktop development workloads, VS Extenstion Development installed. Net 6.0, 7.0, 4.62, 4.81 targeting packs are required.
 - Clone the AlterNET UI repo.
+- Use the "C:\Alternet.UI" folder or any other root folder. The folder name should not contain any spaces or non-English letters.
 
 Step 2. macOS Machine Setup:
 - macOS 10.15 or newer is required.
@@ -32,6 +33,7 @@ Step 3. Linux Machine Setup:
 - Make folder with Windows Alternet.UI installation accessible for Linux Machine.
 
 Step 4. Build:
+- Exit Visual Studio before running Install script.
 - Run Install.sh (or Install.ps1) on macOs Machine. It collects artifacts in Publish/Artifacts/Build/macOS.
 - Run Install.sh (or Install.ps1) on Linux Machine. It collects artifacts in Publish/Artifacts/Build/Linux.
 - Run Install.bat (or Install.ps1) on Windows Machine. It collects artifacts in Publish/Artifacts/Build/Windows.
@@ -57,3 +59,4 @@ Steps needed to create new wxWidgets control
 - You will need to create the corresponding implementations of this methods in the MyNewControl.cpp.
 - Each of the controls is based on the corresponding wxWidgets control, see the existing controls for how they are implemented
 - To check what functionality is supported by wxWidgets, inspect the documentation at https://docs.wxwidgets.org/3.0/ .
+- After you created new UI control or added new event, call Install.Scripts\UpdateWellKnownApiInfo.bat.
