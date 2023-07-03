@@ -1,18 +1,18 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
 		xmlns:local="clr-namespace:LayoutSample"
-        x:Class="LayoutSample.FocusWindow"
+        x:Class="LayoutSample.FocusWindow" StartLocation="CenterScreen"
         Title="ALternet UI Focus Window Sample">
     <StackPanel Margin="10">
         <GroupBox Margin="0,0,0,10" Padding="5">
             <StackPanel>
-                <Label Text="TextBox1 (TabStop = true):" />
+                <Label Text="TextBox1 (TabStop = true):" Margin="0,0,0,3"/>
                 <TextBox Name="textBox1" Text="TextBox1" Margin="0,0,0,15" TabStop="true" GotFocus="TextBox1_GotFocus" LostFocus="TextBox1_LostFocus"/>
 
-                <Label Text="TextBox2 (TabStop = false):" />
+                <Label Text="TextBox2 (TabStop = false):" Margin="0,0,0,3"/>
                 <TextBox Name="textBox2" Text="TextBox2" Margin="0,0,0,15" TabStop="false"/>
 
-                <Label Text="TextBox3 (TabStop = true):" />
+                <Label Text="TextBox3 (TabStop = true):" Margin="0,0,0,3"/>
                 <TextBox Name="textBox3" Text="TextBox3" Margin="0,0,0,15" TabStop="true"/>
             </StackPanel>
         </GroupBox>

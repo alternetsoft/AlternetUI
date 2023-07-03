@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="CommonDialogsSample.MainWindow"
         Title="Common Dialogs Sample"
-        Width="800" Height="500">
+        Width="650" Height="470" StartLocation="CenterScreen">
   <StackPanel Orientation="Horizontal">
     <GroupBox Title="Common Dialogs" Margin="10" VerticalAlignment="Top">
       <StackPanel>
@@ -31,8 +31,8 @@
     </GroupBox>
     
     <StackPanel Orientation="Vertical">
-      <GroupBox Title="Message Box" Margin="10" Padding="10" VerticalAlignment="Top">
-        <Grid Padding="10">
+      <GroupBox Title="Message Box" Margin="10" VerticalAlignment="Top">
+        <Grid Margin="10">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -61,8 +61,8 @@
         </Grid>
       </GroupBox>
       
-      <GroupBox Title="Thread Exception Window:" Margin="10" Padding="10" VerticalAlignment="Top">
-        <Grid Padding="10">
+      <GroupBox Title="Thread Exception Window:" Margin="10" VerticalAlignment="Top">
+        <Grid Margin="10">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="180" />

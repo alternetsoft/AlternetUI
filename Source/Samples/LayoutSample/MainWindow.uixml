@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="LayoutSample.MainWindow"
-        Title="Alternet UI Layout Sample" Padding="10">
+        Title="Alternet UI Layout Sample" Padding="10" StartLocation="CenterScreen">
   <StackPanel>
 	  <Button Text="Grid Layout Properties" Margin="0,0,0,10" Click="ShowGridLayoutPropertiesButton_Click" />
 	  <Button Text="Stack Layout Properties" Margin="0,0,0,10" Click="ShowStackLayoutPropertiesButton_Click" />

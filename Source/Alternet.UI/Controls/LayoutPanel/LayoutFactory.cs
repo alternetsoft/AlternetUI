@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Base.Collections;
+using Alternet.UI.Native;
 
 namespace Alternet.UI
 {
@@ -50,6 +52,81 @@ namespace Alternet.UI
             leftControlElement.Dock = DockStyle.Left;
             fillControlElement.Dock = DockStyle.Fill;
             return container;
+        }
+
+        public static void AdjustTextBoxesHeight(Control container)
+        {
+            if (container == null)
+                return;
+
+            Control? comboBox = null;
+            Control? textBox = null;
+
+            FindTextEditors(container);
+            if (comboBox == null)
+                return;
+            AdjustTextBoxesHeight(container, comboBox, textBox);
+
+            void FindTextEditors(Control container)
+            {
+                if (comboBox != null && textBox != null)
+                    return;
+                foreach (Control control in container.Children)
+                {
+                    if (control is TextBox box)
+                        textBox = box;
+                    else
+                    if (control is ComboBox box1)
+                        comboBox = box1;
+                    else
+                        FindTextEditors(control);
+                    if (comboBox != null && textBox != null)
+                        return;
+                }
+            }
+        }
+
+        public static void AdjustTextBoxesHeight(Control container, Control comboBox, Control? textBox)
+        {
+            var comboBoxHeight = comboBox.Bounds.Height;
+            double textBoxHeight = 0;
+            if (textBox != null)
+            {
+                textBoxHeight = textBox.Bounds.Height;
+                if (comboBoxHeight == textBoxHeight)
+                    return;
+            }
+
+            var maxHeight = Math.Max(comboBoxHeight, textBoxHeight);
+
+            container.SuspendLayout();
+
+            try
+            {
+                var editors = new Collection<Control>();
+                AddTextEditors(container);
+
+                foreach (Control control in editors)
+                    control.Height = maxHeight;
+
+                void AddTextEditors(Control container)
+                {
+                    foreach (Control control in container.Children)
+                    {
+                        if (control is TextBox || control is ComboBox)
+                        {
+                            if (control.Bounds.Height < maxHeight)
+                                editors.Add(control);
+                        }
+                        else
+                            AddTextEditors(control);
+                    }
+                }
+            }
+            finally
+            {
+                container.ResumeLayout(true);
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="HelloWorldSample.MainWindow"
-        Title="My First Application"
+        Title="My First Application" StartLocation="CenterScreen"
         xmlns:drawing="clr-namespace:Alternet.Drawing;assembly=Alternet.UI">
     <StackPanel Orientation="Vertical">
         <Button Name="helloButton" Text="Say Hello" Margin="20" Click="HelloButton_Click" />

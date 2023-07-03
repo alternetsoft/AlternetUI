@@ -2,7 +2,8 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="LayoutSample.GridLayoutPropertiesWindow"
 		xmlns:local="clr-namespace:LayoutSample"
-        Title="Alternet UI Grid Layout Properties" Width="800" Height="700" Padding="10">
+        Title="Alternet UI Grid Layout Properties" Width="800" Height="600" 
+        StartLocation="CenterScreen" Padding="10">
 	
 	<ScrollViewer>
 	<Grid>

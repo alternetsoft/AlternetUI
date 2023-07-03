@@ -14,7 +14,7 @@ namespace EmployeeFormSample
         {
             InitializeComponent();
 
-            PopuplateComboBoxes();
+            PopulateComboBoxes();
 
             DataContext = new Employee
             {
@@ -54,58 +54,16 @@ namespace EmployeeFormSample
 
             // On Linux height of the ComboBox is greater than height of the TextBox.
             // We need to increase height of all window's TextBoxes.
-            AdjustTextBoxesHeight(this, prefixComboBox, firstNameTextBox);
+            LayoutFactory.AdjustTextBoxesHeight(this);
         }
 
         private void MainWindow_LayoutUpdated(object sender, EventArgs e)
         {
-        }
+        }        
 
-        private void AdjustTextBoxesHeight(Control container, Control comboBox, Control? textBox)
+        private void PopulateComboBoxes()
         {
-            var comboBoxHeight = comboBox.Bounds.Height;
-            double textBoxHeight = 0;
-            if (textBox != null)
-            {
-                textBoxHeight = textBox.Bounds.Height;
-                if (comboBoxHeight == textBoxHeight)
-                    return;
-            }
-            var maxHeight = Math.Max(comboBoxHeight, textBoxHeight);
-
-            container.SuspendLayout();
-
-            try
-            {
-                Collection<Control> editors = new Collection<Control>();
-                addTextEditors(container);
-
-                foreach (Control control in editors)
-                    control.Height = maxHeight;
-
-                void addTextEditors(Control container)
-                {
-                    foreach (Control control in container.Children)
-                    {
-                        if (control is TextBox || control is ComboBox)
-                        {
-                            if (control.Bounds.Height < maxHeight)
-                                editors.Add(control);
-                        }
-                        else
-                            addTextEditors(control);
-                    }
-                }
-            }
-            finally
-            {
-                container.ResumeLayout(true);
-            }
-        }
-
-        private void PopuplateComboBoxes()
-        {
-            void FillComboBoxWithEnumValues(ComboBox cb, Type enumType)
+            static void FillComboBoxWithEnumValues(ComboBox cb, Type enumType)
             {
                 cb.BeginInit();
                 cb.BeginUpdate();

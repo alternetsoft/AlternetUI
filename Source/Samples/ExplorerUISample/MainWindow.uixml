@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ExplorerUISample;assembly=ExplorerUISample"
         Title="Alternet UI Explorer Sample"
-        Width="600" Height="400" >
+        Width="600" Height="400" StartLocation="CenterScreen">
     <Window.Toolbar>
         <Toolbar Name="toolbar" ItemImagesVisible="false">
             <ToolbarItem Text="Show progress" Click="ShowProgress_Click"/>

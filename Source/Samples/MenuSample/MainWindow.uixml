@@ -3,7 +3,7 @@
         x:Class="MenuSample.MainWindow"
         Width="900"
         Height="750"
-        Title="Alternet UI Menu Sample"
+        Title="Alternet UI Menu Sample" StartLocation="CenterScreen"
         Padding="10">
     <Window.InputBindings>
         <KeyBinding Gesture="Ctrl+Shift+G" Command="{Binding ExportToPngCommand}" />

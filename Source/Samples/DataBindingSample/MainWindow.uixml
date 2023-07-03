@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="HelloWorldSample.MainWindow"
         Title="Alternet UI Data Binding Sample"
-		>
+		StartLocation="CenterScreen">
 	<Grid VerticalAlignment="Top" Margin="10" Padding="10">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />

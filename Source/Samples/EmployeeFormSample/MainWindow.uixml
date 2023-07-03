@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="EmployeeFormSample.MainWindow"
-		Title="Alternet UI Employee Details Form" Padding="10" Width="1000" Height="600">
+		Title="Alternet UI Employee Details Form" Padding="10" Width="900" Height="600" StartLocation="CenterScreen">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>

@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="ThreadingSample.MainWindow"
-        Title="Threading Sample" Padding="10">
+        Title="Threading Sample" Padding="10" StartLocation="CenterScreen">
   <StackPanel Orientation="Vertical">
     <GroupBox Title="Counter incremented from a separate thread">
       <StackPanel Orientation="Vertical" Padding="10">

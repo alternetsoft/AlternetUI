@@ -2,8 +2,8 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="PrintingSample.MainWindow"
         Title="Printing Sample"
-        Width="1050"
-        Height="600">
+        Width="900"
+        Height="600" StartLocation="CenterScreen">
     <Window.Menu>
         <MainMenu>
             <MenuItem Text="_File">
