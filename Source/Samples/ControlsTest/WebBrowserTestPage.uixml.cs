@@ -14,6 +14,7 @@ namespace ControlsTest
         internal static readonly Destructor MyDestructor = new ();
 
         private static readonly string ZipSchemeName = "zipfs";
+        private static readonly bool SetDefaultUserAgent = false;
         private static WebBrowserBackend useBackend = WebBrowserBackend.Default;
         private static bool insideUnhandledException;
 
@@ -34,7 +35,8 @@ namespace ControlsTest
         {
             WebBrowser.SetDefaultFSNameMemory("memory");
             WebBrowser.SetDefaultFSNameArchive(ZipSchemeName);
-            // WebBrowser.SetDefaultUserAgent("Mozilla");
+            if (SetDefaultUserAgent)
+                WebBrowser.SetDefaultUserAgent("Mozilla");
             SetBackendPathSmart("Edge");
 
             string[] commandLineArgs = Environment.GetCommandLineArgs();
@@ -524,9 +526,9 @@ namespace ControlsTest
             if (this.IsIEBackend())
                 backendVersion = "Internet Explorer";
 
-            Assembly thisAssem = typeof(WebBrowser).Assembly;
-            AssemblyName thisAssemName = thisAssem.GetName();
-            Version? ver = thisAssemName.Version;
+            Assembly thisAssembly = typeof(WebBrowser).Assembly;
+            AssemblyName thisAssemblyName = thisAssembly.GetName();
+            Version? ver = thisAssemblyName.Version;
 
             HeaderLabel.Text = $"{headerText} {ver} : {e.Text} : {backendVersion}";
         }
@@ -683,13 +685,13 @@ namespace ControlsTest
 
         private void ListBox1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var listbox = (ListBox)sender;
+            var listBox = (ListBox)sender;
 
-            int? index = listbox.SelectedIndex;
+            int? index = listBox.SelectedIndex;
             if (index == null)
                 return;
 
-            string? name = listbox.Items[(int)index].ToString();
+            string? name = listBox.Items[(int)index].ToString();
 
             if (!testActions.TryGetValue(name!, out MethodCaller? action))
                 return;
@@ -720,6 +722,7 @@ namespace ControlsTest
             testActions.Add(name, action!);
             ListBox1.Items.Add(name);
         }
+
         private void AddTestActions()
         {
             AddTestAction(
@@ -844,10 +847,10 @@ namespace ControlsTest
                 this.action = action;
             }
 
-            public MethodCaller(object? parent, MethodInfo? methodinfo)
+            public MethodCaller(object? parent, MethodInfo? methodInfo)
             {
                 this.parent = parent;
-                method = methodinfo;
+                method = methodInfo;
             }
 
             public void DoCall()
