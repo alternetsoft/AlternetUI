@@ -6,6 +6,7 @@
 - Fixed Border control painting on Linux.
 - Added UserPaintControl control.
 - Improvements in the installation scripts.
+- New static properties in Border control: DefaultBorderPen, DefaultBorderWidth, DefaultBorderColor.
 
 # 0.9.200
 
