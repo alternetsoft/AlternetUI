@@ -3,7 +3,7 @@
         x:Class="PaintSample.MainWindow"
 		Title="AlterNET UI Paint Sample"
 		xmlns:local="clr-namespace:PaintSample"
-		Width="800" Height="800" StartLocation="CenterScreen">
+		Width="750" Height="700" StartLocation="CenterScreen">
   <Window.Menu>
     <MainMenu>
       <MenuItem Text="_File">

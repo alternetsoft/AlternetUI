@@ -1,8 +1,8 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="MenuSample.MainWindow"
-        Width="900"
-        Height="750"
+        Width="800"
+        Height="650"
         Title="Alternet UI Menu Sample" StartLocation="CenterScreen"
         Padding="10">
     <Window.InputBindings>

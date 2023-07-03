@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:CustomControlsSample;assembly=CustomControlsSample"
         Title="Alternet UI Custom Controls Sample"
-        Width="800" Height="700" StartLocation="CenterScreen">
+        Width="700" Height="600" StartLocation="CenterScreen">
     <StackPanel Orientation="Vertical" Margin="10">
         <GroupBox Title="Color Picker" Margin="0,0,0,10" Padding="10" >
             <StackPanel Orientation="Horizontal">
