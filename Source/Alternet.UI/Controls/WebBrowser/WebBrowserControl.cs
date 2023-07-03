@@ -420,6 +420,14 @@ namespace Alternet.UI
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/DoCommandGlobal/*'/>
         public static string DoCommandGlobal(string cmdName, params object?[] args)
         {
+            if (cmdName == "UIVersion")
+            {
+                Assembly thisAssembly = typeof(Application).Assembly;
+                AssemblyName thisAssemblyName = thisAssembly.GetName();
+                Version ver = thisAssemblyName.Version;
+                return ver.ToString();
+            }
+
             return WebBrowserHandler.DoCommandGlobal(cmdName, args);
         }
 
