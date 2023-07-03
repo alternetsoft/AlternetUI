@@ -11,7 +11,8 @@ namespace Alternet.UI.Build.Tasks
 
         private static Stream GetProviderStreamOld()
         {
-            return typeof(WellKnownApiInfo).Assembly.GetManifestResourceStream("WellKnownApiInfo.xml");
+            Stream result = typeof(WellKnownApiInfo).Assembly.GetManifestResourceStream("WellKnownApiInfo.xml");
+            return result == null ? throw new Exception("WellKnownApiInfo.xml not loaded") : result;
         }
 
         public static string GetXmlPath()
@@ -39,11 +40,12 @@ namespace Alternet.UI.Build.Tasks
 
         private static Stream GetProviderStream()
         {
-            return GetProviderStreamOld();
+            Stream result = GetProviderStreamOld();
+            return result;
         }
 
         public static ApiInfoProvider Provider =>
             provider ??= new ApiInfoProvider(
-                GetProviderStream() ?? throw new Exception());
+                GetProviderStream() ?? throw new Exception("ApiInfoProvider not loaded"));
     }
 }

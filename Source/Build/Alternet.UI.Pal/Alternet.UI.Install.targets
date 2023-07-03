@@ -14,8 +14,37 @@
 
 	$([System.IO.Path]::GetFullPath('your path'))		
 	-->
-    <!-- ========================================== -->
-    
+
+<!-- ================================================= -->
+<Target Name="RunAppInfoCollector">
+	<PropertyGroup>
+		<AIC_SOURCEDIR>$(MSBuildThisFileDirectory)\..\..</AIC_SOURCEDIR>
+		<AIC_BUILDTASKSDIR>$(AIC_SOURCEDIR)\Alternet.UI.Build.Tasks</AIC_BUILDTASKSDIR>
+		<AIC_XML>$(AIC_BUILDTASKSDIR)\WellKnownApiInfo.xml</AIC_XML>
+		<AIC_TOOLPATH>$(AIC_BUILDTASKSDIR)\Alternet.UI.Build.Tasks.ApiInfoCollector</AIC_TOOLPATH>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AIC_UIDLLS Include="$(AIC_SOURCEDIR)\Alternet.UI\bin\**\net6.0\Alternet.UI.dll"/>
+	</ItemGroup>
+	<PropertyGroup>
+		<AIC_UIDLL>%(AIC_UIDLLS.Identity)</AIC_UIDLL>
+	</PropertyGroup>
+	<Message Text="--------------------------------------------------------" Importance="high" />
+	<Message Text="Exec RunAppInfoCollector" Importance="high" />
+	<Message Text="AIC_TOOLPATH: $(AIC_TOOLPATH)" Importance="high" />
+	<Message Text="AIC_UIDLL: $(AIC_UIDLL)" Importance="high" />
+	<Message Text="AIC_XML: $(AIC_XML)" Importance="high" />
+	
+	<Exec
+		WorkingDirectory="$(AIC_TOOLPATH)"
+		Command="dotnet run -f net6.0 -- &quot;$(AIC_UIDLL)&quot; &quot;$(AIC_XML)&quot;" />
+</Target> 
+<!-- ========================================== -->
+<Target Name="UpdateWellKnownApiInfo">
+		<CallTarget Targets="RunAppInfoCollector;BuildAlternetUIBuildTasks"/>
+</Target>
+<!-- ========================================== -->
    <UsingTask TaskName="DeleteBinObjCs" 
 	TaskFactory="RoslynCodeTaskFactory"
     AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">

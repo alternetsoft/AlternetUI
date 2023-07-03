@@ -2,26 +2,25 @@
 
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
+      <TargetFrameworks>netstandard2.0</TargetFrameworks>
   </PropertyGroup>
 
-	<PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-		<!-- <TargetFrameworks>net7.0;net6.0;net462;net481</TargetFrameworks> -->
-      <TargetFrameworks>netstandard2.0</TargetFrameworks>
-      
-    </PropertyGroup>
-
-	<PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-		<TargetFrameworks>netstandard2.0</TargetFrameworks>
-	</PropertyGroup>
-
-	<ItemGroup>
+  <ItemGroup>
     <Compile Remove="Alternet.UI.Build.Tasks.ApiInfoCollector\**" />
     <EmbeddedResource Remove="Alternet.UI.Build.Tasks.ApiInfoCollector\**" />
     <None Remove="Alternet.UI.Build.Tasks.ApiInfoCollector\**" />
   </ItemGroup>
 
   <ItemGroup>
+	<None Remove="WellKnownApiInfo.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\Tools\Language\IsExternalInit.cs" Link="IsExternalInit.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="WellKnownApiInfo.xml" LogicalName="WellKnownApiInfo.xml"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -31,8 +30,7 @@
   </ItemGroup>
 
   <!-- ================================================= -->
-  <Target Name="EmbedWellKnownApiInfo" BeforeTargets="PrepareForBuild"
-          Condition="'$(TargetFramework)' != ''">
+  <Target Name="EmbedWellKnownApiInfo" BeforeTargets="PrepareForBuild" Condition="false and '$(TargetFramework)' != ''">
     <PropertyGroup>
       <ApiInfoXmlFilePath>$(IntermediateOutputPath)\WellKnownApiInfo.xml</ApiInfoXmlFilePath>
       <ApiInfoCollectorToolPath>$(MSBuildThisFileDirectory)\Alternet.UI.Build.Tasks.ApiInfoCollector\bin\$(Configuration)\net6.0\Alternet.UI.Build.Tasks.ApiInfoCollector</ApiInfoCollectorToolPath>
@@ -40,16 +38,16 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-      <ApiInfoCollectorCommand>&quot;$(ApiInfoCollectorToolPath).exe&quot; &quot;$(ApiInfoCollectorInputAssemblyPath)&quot; &quot;$(ApiInfoXmlFilePath)&quot;</ApiInfoCollectorCommand>
+      <ApiInfoCollectorCommand>"$(ApiInfoCollectorToolPath).exe" "$(ApiInfoCollectorInputAssemblyPath)" "$(ApiInfoXmlFilePath)"</ApiInfoCollectorCommand>
     </PropertyGroup>
     <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-      <ApiInfoCollectorCommand>dotnet &quot;$(ApiInfoCollectorToolPath).dll&quot; &quot;$(ApiInfoCollectorInputAssemblyPath)&quot; &quot;$(ApiInfoXmlFilePath)&quot;</ApiInfoCollectorCommand>
+      <ApiInfoCollectorCommand>dotnet "$(ApiInfoCollectorToolPath).dll" "$(ApiInfoCollectorInputAssemblyPath)" "$(ApiInfoXmlFilePath)"</ApiInfoCollectorCommand>
     </PropertyGroup>
 
-    <Message Text="============================"/>
+    <Message Text="============================" />
     <Message Text="$(ApiInfoCollectorCommand)" />
-    <Message Text="============================"/>
-    <Exec Command="$(ApiInfoCollectorCommand)" Condition="true"/>
+    <Message Text="============================" />
+    <Exec Command="$(ApiInfoCollectorCommand)" Condition="true" />
     <!-- ================================================= -->
 
     <ItemGroup Condition="true">
