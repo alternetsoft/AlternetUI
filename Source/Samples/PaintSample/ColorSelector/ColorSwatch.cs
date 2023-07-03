@@ -77,13 +77,13 @@ namespace PaintSample
             }
             else
             {
-                var shadowRect = innerRect;
-                shadowRect.Offset(1, 1);
-                dc.FillRectangle(Brushes.Black, shadowRect);
+                //var shadowRect = innerRect;
+                //shadowRect.Offset(1, 1);
+                //dc.FillRectangle(Brushes.Black, shadowRect);
             }
 
             dc.FillRectangle(new SolidBrush(SwatchColor), innerRect);
-            dc.DrawRectangle(Pens.Black, innerRect);
+            dc.DrawRectangle(Pens.Gray, innerRect);
         }
     }
 }

@@ -115,13 +115,13 @@ namespace PaintSample
             }
             else
             {
-                var shadowRect = innerRect;
-                shadowRect.Offset(1, 1);
-                dc.FillRectangle(Brushes.Black, shadowRect);
+                //var shadowRect = innerRect;
+                //shadowRect.Offset(1, 1);
+                //dc.FillRectangle(Brushes.Gray, shadowRect);
             }
 
             dc.FillRectangle(IsToggled ? Brushes.White : Brushes.WhiteSmoke, innerRect);
-            dc.DrawRectangle(Pens.Black, innerRect);
+            dc.DrawRectangle(Pens.Gray, innerRect);
 
             var imageSize = new Size(image.PixelSize.Width, image.PixelSize.Height);
 

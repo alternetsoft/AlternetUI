@@ -27,8 +27,8 @@ namespace PaintSample
 
             baseTitle = Title;
 
-            border.BorderBrush = Brushes.Black;
-            border.Padding = new Thickness();
+            //border.BorderBrush = Brushes.Black;
+            //border.Padding = new Thickness();
 
             InitializeCommandButtons();
 

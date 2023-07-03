@@ -36,16 +36,16 @@ namespace PaintSample
 
             dc.FillRectangle(Brushes.LightGray, e.Bounds);
             dc.FillRectangle(backgroundHatchBrush, e.Bounds);
-            dc.DrawLine(Pens.Black, e.Bounds.TopRight + new Size(-1, 0), e.Bounds.BottomRight + new Size(-1, 0));
+            dc.DrawLine(Pens.Gray, e.Bounds.TopRight + new Size(-1, 0), e.Bounds.BottomRight + new Size(-1, 0));
 
             var innerRect = e.Bounds;
             innerRect.Inflate(-10, -10);
 
             dc.FillRectangle(new SolidBrush(SelectedColor), innerRect);
-            dc.DrawRectangle(Pens.Black, innerRect);
+            dc.DrawRectangle(Pens.Gray, innerRect);
 
-            dc.DrawLine(Pens.Black, innerRect.TopLeft + new Size(1, 1), innerRect.TopRight + new Size(-1, 1));
-            dc.DrawLine(Pens.Black, innerRect.TopLeft + new Size(1, 1), innerRect.BottomLeft + new Size(1, -1));
+            //dc.DrawLine(Pens.Black, innerRect.TopLeft + new Size(1, 1), innerRect.TopRight + new Size(-1, 1));
+            //dc.DrawLine(Pens.Black, innerRect.TopLeft + new Size(1, 1), innerRect.BottomLeft + new Size(1, -1));
         }
     }
 }
