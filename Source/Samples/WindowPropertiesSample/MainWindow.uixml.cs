@@ -92,14 +92,12 @@ namespace WindowPropertiesSample
 
         private void TestWindow_LocationChanged(object? sender, EventArgs e)
         {
-            LogEvent("LocationChanged");
-            UpdateWindowBounds();
+            LogEvent("LocationChanged. Bounds: "+testWindow?.Bounds.ToString());
         }
 
         private void TestWindow_SizeChanged(object? sender, EventArgs e)
         {
-            LogEvent("SizeChanged");
-            UpdateWindowBounds();
+            LogEvent("SizeChanged. Bounds: "+testWindow?.Bounds.ToString());
         }
 
         private void TestWindow_StateChanged(object? sender, EventArgs e)
@@ -111,11 +109,6 @@ namespace WindowPropertiesSample
         private void UpdateWindowState()
         {
             stateComboBox.SelectedItem = testWindow?.State;
-        }
-
-        private void UpdateWindowBounds()
-        {
-            LogEvent("Bounds: "+testWindow?.Bounds.ToString());
         }
 
         private void UpdateActiveWindowInfoLabel()

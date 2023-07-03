@@ -5,44 +5,42 @@
         Title="Alternet UI Custom Controls Sample"
         Width="700" Height="600" StartLocation="CenterScreen">
     <StackPanel Orientation="Vertical" Margin="10">
-        <GroupBox Title="Color Picker" Margin="0,0,0,10" Padding="10" >
+        
+		<GroupBox Title="Color Picker" Margin="0,0,0,10" Padding="10" >
             <StackPanel Orientation="Horizontal">
-                <Label Text="Native:" VerticalAlignment="Center" Margin="0,0,5,10" />
-                <ColorPicker Value="Red" HorizontalAlignment="Left" Margin="0,0,10,10"
+                <Label Text="Native:" VerticalAlignment="Center" Margin="0,0,5,5" />
+                <ColorPicker Value="Red" HorizontalAlignment="Left" Margin="0,0,10,5"
                              Name="nativeColorPicker"/>
-                <Label Text="Custom:" VerticalAlignment="Center" Margin="0,0,5,10" />
+                <Label Text="Custom:" VerticalAlignment="Center" Margin="0,0,5,5" />
                 <local:CustomColorPicker Value="Red" Name="colorPicker" 
-                    HorizontalAlignment="Left" Margin="0,0,10,10"/>
+                    HorizontalAlignment="Left" Margin="0,0,0,5"/>
             </StackPanel>
         </GroupBox>
 
-        <GroupBox Title="Sliders and Progress Bars" Margin="0,0,0,10" Padding="10">
-            <StackPanel Orientation="Horizontal">
-                <GroupBox Title="Native" Margin="0,0,10,0" Padding="10">
-                    <StackPanel Orientation="Horizontal">
-                        <Slider Minimum="0" Maximum="100" Value="{Binding IntValue}" TickFrequency="25" 
-                            VerticalAlignment="Center" Margin="0,0,5,0" Width="100"/>
-                        <ProgressBar Minimum="0" Maximum="100" Value="{Binding IntValue}" 
-                            VerticalAlignment="Center" Margin="0,0,10,0" Width="100"/>
-                        <Label Text="{Binding IntValue}" VerticalAlignment="Center" Width="40"/>
-                    </StackPanel>
-                </GroupBox>
-                
-                <GroupBox Title="Custom" Padding="10">
-                    <StackPanel Orientation="Horizontal">
-                        <local:KnobControl Minimum="0" Maximum="100" Value="{Binding IntValue}" 
-                            Margin="0,0,10,0"/>
-                        <local:GaugeControl Minimum="0" Maximum="100" Value="{Binding IntValue}" 
-                            VerticalAlignment="Center" Margin="0,0,5,0" Width="100"/>
-                    </StackPanel>
-                </GroupBox>
-            </StackPanel>
-        </GroupBox>
+			<GroupBox Title="Native Sliders and Progress Bars" Margin="0,0,10,0" Padding="10">
+				<StackPanel Orientation="Horizontal">
+					<Slider Minimum="0" Maximum="100" Value="{Binding IntValue}" TickFrequency="25" 
+						VerticalAlignment="Center" Margin="0,0,10,0" Width="200"/>
+					<ProgressBar Minimum="0" Maximum="100" Value="{Binding IntValue}" 
+						VerticalAlignment="Center" Margin="0,0,10,0" Width="200"/>
+					<Label Text="{Binding IntValue}" VerticalAlignment="Center"/>
+				</StackPanel>
+			</GroupBox>
+			
+			<GroupBox Title="Custom Sliders and Progress Bars" Padding="10">
+				<StackPanel Orientation="Horizontal">
+					<local:KnobControl Minimum="0" Maximum="100" Value="{Binding IntValue}" 
+						Margin="0,0,5,0"/>
+					<local:GaugeControl Minimum="0" Maximum="100" Value="{Binding IntValue}" 
+						VerticalAlignment="Center" Margin="5,0,0,0"/>
+				</StackPanel>
+			</GroupBox>
 
         <GroupBox Title="Tic Tac Toe" VerticalAlignment="Top" Padding="10">
             <StackPanel Orientation="Horizontal" Margin="10">
-                <local:TicTacToeControl Margin="10,10,10,30"/>
+                <local:TicTacToeControl Margin="10,10,10,10"/>
             </StackPanel>
         </GroupBox>
+		
     </StackPanel>
 </Window>

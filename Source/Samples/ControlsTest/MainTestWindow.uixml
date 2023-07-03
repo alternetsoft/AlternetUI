@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsTest;assembly=ControlsTest"
         Title="Alternet UI Controls Test"
-        Width="900" Height="800" StartLocation="CenterScreen">
+        Width="900" Height="700" StartLocation="CenterScreen">
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />

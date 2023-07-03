@@ -12,6 +12,7 @@ namespace ControlsSample
         public ProgressBarPage()
         {
             InitializeComponent();
+			VerticalProgressBarsGroupBox.Visible = WebBrowser.GetBackendOS() !=WebBrowserBackendOS.MacOS;
         }
 
         public IPageSite? Site

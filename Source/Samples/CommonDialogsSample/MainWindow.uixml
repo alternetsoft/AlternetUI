@@ -31,54 +31,30 @@
     </GroupBox>
     
     <StackPanel Orientation="Vertical">
-      <GroupBox Title="Message Box" Margin="10" VerticalAlignment="Top">
-        <Grid Margin="10">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-          </Grid.ColumnDefinitions>
-          <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-          </Grid.RowDefinitions>
+		<GroupBox Title="Message Box" Margin="10" VerticalAlignment="Top" Padding="5">
+			<StackPanel Orientation="Vertical" Padding="5">
+			  <Label Text="Buttons:" Margin="5,0,5,10" VerticalAlignment="Center"/>
+			  <ComboBox Name="messageBoxButtonsComboBox" IsEditable="false" Margin="5,0,0,10" />
 
-          <Label Grid.Row="0" Text="Buttons:" Margin="0,0,5,10" VerticalAlignment="Center"/>
-          <ComboBox Grid.Row="0" Grid.Column="1" Name="messageBoxButtonsComboBox" IsEditable="false" 
-            Margin="0,0,0,10" />
+			  <Label Text="Icon:" Margin="5,0,5,10" VerticalAlignment="Center"/>
+			  <ComboBox Name="messageBoxIconComboBox" IsEditable="false" Margin="5,0,0,10" />
 
-          <Label Grid.Row="1" Text="Icon:" Margin="0,0,5,10" VerticalAlignment="Center"/>
-          <ComboBox Grid.Row="1" Grid.Column="1" Name="messageBoxIconComboBox" IsEditable="false" 
-            Margin="0,0,0,10" />
+			  <Label Text="Default Button:" Margin="5,0,5,10" VerticalAlignment="Center"/>
+			  <ComboBox Name="messageBoxDefaultButtonComboBox" IsEditable="false" Margin="5,0,0,10" />
 
-          <Label Grid.Row="2" Text="Default Button:" Margin="0,0,5,10" VerticalAlignment="Center"/>
-          <ComboBox Grid.Row="2" Grid.Column="1" Name="messageBoxDefaultButtonComboBox" 
-            IsEditable="false" Margin="0,0,0,10" />
-
-          <Button Grid.Row="3" Grid.ColumnSpan="2" Text="Show Message Box" Name="showMessageBoxButton" 
-            Click="ShowMessageBoxButton_Click" Margin="0,0,0,10" />
-        </Grid>
-      </GroupBox>
+			  <Button Text="Show Message Box" Name="showMessageBoxButton" 
+				Click="ShowMessageBoxButton_Click" Margin="5,0,0,10" />
+				</StackPanel>
+		</GroupBox>
       
-      <GroupBox Title="Thread Exception Window:" Margin="10" VerticalAlignment="Top">
-        <Grid Margin="10">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="180" />
-          </Grid.ColumnDefinitions>
-          <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-          </Grid.RowDefinitions>
+      <GroupBox Title="Thread Exception Window" Margin="10" VerticalAlignment="Top" Padding="5">
+				<StackPanel Orientation="Vertical" Padding="5">
+					  <Label Text="Exception:" Margin="5,5,5,10" VerticalAlignment="Center"/>
+					  <ComboBox Name="exceptionTypeComboBox" IsEditable="false" Margin="5,0,0,10" />
 
-          <Label Grid.Row="0" Text="Exception:" Margin="0,0,5,10" VerticalAlignment="Center"/>
-          <ComboBox Grid.Row="0" Grid.Column="1" Name="exceptionTypeComboBox" IsEditable="false" 
-            Margin="0,0,0,10" />
-
-          <Button Grid.Row="1" Grid.ColumnSpan="2" Text="Throw Exception" Name="throwExceptionButton" 
-            Click="ThrowExceptionButton_Click" Margin="0,0,0,10"/>
-        </Grid>
+					  <Button Text="Throw Exception" Name="throwExceptionButton" 
+						Click="ThrowExceptionButton_Click" Margin="5,0,0,10"/>
+				</StackPanel>
       </GroupBox>
     </StackPanel>
   </StackPanel>

@@ -29,7 +29,7 @@
                 </StackPanel>
             </GroupBox>
             
-          <GroupBox Title="Vertical Progress Bars" Grid.Column="1" Margin="10">
+          <GroupBox Title="Vertical Progress Bars" Grid.Column="1" Margin="10" Name="VerticalProgressBarsGroupBox">
                 <Grid Name="verticalProgressBarsGrid">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

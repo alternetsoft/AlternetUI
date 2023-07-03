@@ -26,7 +26,7 @@ namespace CustomControlsSample.Gauge
 
         public override Size GetPreferredSize(Size availableSize)
         {
-            return new Size(100, 100);
+            return new Size(200, 100);
         }
 
         public override void OnPaint(DrawingContext dc)
