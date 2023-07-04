@@ -1,3 +1,4 @@
+using Alternet.Drawing;
 using Alternet.UI;
 using System;
 using System.Linq;
@@ -7,10 +8,16 @@ namespace MenuSample
 {
     public partial class MainWindow : Window
     {
+        Toolbar toolbar;
+        ToolbarItem dynamicToolbarItemsSeparator;
+        ToolbarItem checkableToolbarItem;
+        
         public MainWindow()
         {
-            InitializeComponent();
+            InitToolbar();
 
+            InitializeComponent();
+            
             SaveCommand = new Command(o => MessageBox.Show("Save"), o => saveEnabledMenuItem.Checked);
             ExportToPngCommand = new Command(o => MessageBox.Show("Export to PNG"));
             DataContext = this;
@@ -37,15 +44,65 @@ namespace MenuSample
         int dynamicToolbarItemsSeparatorIndex;
         int clockStatusBarPanelIndex;
 
+        private void InitToolbar()
+        {
+            toolbar = new ();
+
+            toolbar.BeginUpdate();
+
+            var calendarToolbarItem = new ToolbarItem("Calendar", ToolbarItem_Click);
+            calendarToolbarItem.ToolTip = "Calendar Toolbar Item";
+            calendarToolbarItem.Image = ImageSet.FromUrl("embres:MenuSample.Resources.Icons.Small.Calendar16.png");
+            toolbar.Items.Add(calendarToolbarItem);
+
+            var photoToolbarItem = new ToolbarItem("Photo");
+            photoToolbarItem.ToolTip = "Photo Toolbar Item";
+            photoToolbarItem.Image = ImageSet.FromUrl(
+                             "embres:MenuSample.Resources.Icons.Small.Photo16.png");
+            photoToolbarItem.Click += ToolbarItem_Click;
+            toolbar.Items.Add(photoToolbarItem);
+
+            toolbar.Items.Add(new ToolbarItem("-"));
+
+            checkableToolbarItem = new ToolbarItem("Pencil Toggle", ToggleToolbarItem_Click);
+            checkableToolbarItem.ToolTip = "Pencil Toolbar Item";
+            checkableToolbarItem.IsCheckable = true;
+            checkableToolbarItem.Image = ImageSet.FromUrl(
+                             "embres:MenuSample.Resources.Icons.Small.Pencil16.png");
+            toolbar.Items.Add(checkableToolbarItem);
+
+            toolbar.Items.Add(new ToolbarItem("-"));
+
+            var graphDropDownToolbarItem = new ToolbarItem("Graph Drop Down", ToolbarItem_Click);
+            graphDropDownToolbarItem.ToolTip = "Graph Toolbar Item";
+            graphDropDownToolbarItem.Image = ImageSet.FromUrl(
+                             "embres:MenuSample.Resources.Icons.Small.LineGraph16.png");
+
+            var contextMenu = new ContextMenu();
+
+            MenuItem openToolbarMenuItem = new("_Open...", ToolbarDropDownMenuItem_Click);
+            MenuItem saveToolbarMenuItem = new("_Save...", ToolbarDropDownMenuItem_Click);
+            MenuItem exportToolbarMenuItem = new("E_xport...", ToolbarDropDownMenuItem_Click);
+            contextMenu.Items.Add(openToolbarMenuItem);
+            contextMenu.Items.Add(saveToolbarMenuItem);
+            contextMenu.Items.Add(exportToolbarMenuItem);
+            graphDropDownToolbarItem.DropDownMenu = contextMenu;
+
+            toolbar.Items.Add(graphDropDownToolbarItem);
+
+            dynamicToolbarItemsSeparator = new ToolbarItem("-");
+            toolbar.Items.Add(dynamicToolbarItemsSeparator);
+
+            toolbar.EndUpdate();
+
+            Toolbar = toolbar;
+
+
+        }
+
         private void PlatformSpecificInitialize()
         {
-#if NETCOREAPP
-            bool runningUnderMacOS = System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
-                System.Runtime.InteropServices.OSPlatform.OSX);
-#else
-            bool runningUnderMacOS = false;
-#endif
-
+            bool runningUnderMacOS = WebBrowser.GetBackendOS() == WebBrowserBackendOS.MacOS;
             roleControlsPanel.Visible = runningUnderMacOS;
         }
 
@@ -237,12 +294,14 @@ namespace MenuSample
 
         private void ShowToolbarTextCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            toolbar.ItemTextVisible = showToolbarTextCheckBox.IsChecked;
+            if(toolbar != null)
+                toolbar.ItemTextVisible = showToolbarTextCheckBox.IsChecked;
         }
 
         private void ShowToolbarImagesCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            toolbar.ItemImagesVisible = showToolbarImagesCheckBox.IsChecked;
+            if (toolbar != null)
+                toolbar.ItemImagesVisible = showToolbarImagesCheckBox.IsChecked;
         }
 
         private void ToolbarDropDownMenuItem_Click(object sender, EventArgs e)
@@ -277,7 +336,8 @@ namespace MenuSample
 
         private void ShowSizingGripCheckBox_CheckedChanged(object sender, System.EventArgs e)
         {
-            statusBar.SizingGripVisible = showSizingGripCheckBox.IsChecked;
+            if(statusBar!=null)
+                statusBar.SizingGripVisible = showSizingGripCheckBox.IsChecked;
         }
     }
 }
