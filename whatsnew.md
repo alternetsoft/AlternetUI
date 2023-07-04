@@ -8,6 +8,7 @@
 - Added UserPaintControl control.
 - Improvements in the installation scripts.
 - New static properties in Border control: DefaultBorderPen, DefaultBorderWidth, DefaultBorderColor.
+- New methods Grid.SetRowColumn, Image.FromUrl, ImageSet.FromUrl
 
 # 0.9.200
 
