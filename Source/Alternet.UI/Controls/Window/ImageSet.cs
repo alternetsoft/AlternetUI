@@ -30,7 +30,8 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ImageSet"/> class from the specified data stream.
         /// </summary>
         /// <param name="stream">The data stream used to load the image.</param>
-        public ImageSet(Stream stream) : this()
+        public ImageSet(Stream stream)
+            : this()
         {
             using (var inputStream = new UI.Native.InputStream(stream))
                 NativeImageSet.LoadFromStream(inputStream);
@@ -45,6 +46,7 @@ namespace Alternet.UI
         private void Images_ItemRemoved(object? sender, CollectionChangeEventArgs<Image> e)
         {
             OnChanged();
+
             // todo
             throw new Exception();
         }
@@ -74,6 +76,23 @@ namespace Alternet.UI
         {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        public static ImageSet FromUrl(string url)
+        {
+                var s = (string)url;
+                var uri = s.StartsWith("/")
+                    ? new Uri(s, UriKind.Relative)
+                    : new Uri(s, UriKind.RelativeOrAbsolute);
+
+                if (uri.IsAbsoluteUri && uri.IsFile)
+                {
+                    using var stream = File.OpenRead(uri.LocalPath);
+                    return new ImageSet(stream);
+                }
+
+                var assets = new UI.ResourceLoader();
+                return new ImageSet(assets.Open(uri));
         }
 
         /// <summary>
