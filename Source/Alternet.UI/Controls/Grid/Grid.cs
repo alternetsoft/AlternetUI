@@ -60,6 +60,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets a value that indicates which row and column child control within a <see cref="Grid"/> should appear in.
+        /// </summary>
+        /// <param name="control">The control on which to set the column index.</param>
+        /// <param name="row">The 0-based row index to set.</param>
+        /// <param name="col">The 0-based column index to set.</param>
+        public static void SetRowColumn(Control control, int row, int col)
+        {
+            SetRow(control, row);
+            SetColumn(control, col);
+        }
+
+        /// <summary>
         /// Gets a value that indicates which column child control within a <see cref="Grid"/> should appear in.
         /// </summary>
         /// <param name="control">The control for which to get the column index.</param>
