@@ -129,6 +129,7 @@ namespace PrintingSample
             var document = new PrintDocument();
 
             document.PrintPage += Document_PrintPage;
+            
             dialog.Document = document;
             dialog.ShowModal();
         }
@@ -155,7 +156,9 @@ namespace PrintingSample
                 DrawAdditionalPage(e.DrawingContext, pageNumber, bounds);
             }
 
-            e.HasMorePages = pageNumber - 1 < additionalPagesCountNumericUpDown.Value;
+            var v = additionalPagesCountNumericUpDown.Value;
+
+            e.HasMorePages = pageNumber - 1 < v;
         }
 
         private void DrawAdditionalPage(DrawingContext dc, int pageNumber, Rect bounds)

@@ -31,7 +31,7 @@
 			</Grid.ColumnDefinitions>
 
 			<Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="5" Margin="20,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
-				<PictureBox Image="embres:EmployeeFormSample.Resources.EmployeePhoto.jpg" Width="92" Height="92" />
+				<PictureBox Width="92" Height="92" Name="employeeFoto"/>
 			</Border>
 
 			<Label Text="First Name" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>

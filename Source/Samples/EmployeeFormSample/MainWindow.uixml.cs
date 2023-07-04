@@ -14,6 +14,9 @@ namespace EmployeeFormSample
         {
             InitializeComponent();
 
+            employeeFoto.Image = Image.FromUrl(
+                "embres:EmployeeFormSample.Resources.EmployeePhoto.jpg");
+
             PopulateComboBoxes();
 
             DataContext = new Employee

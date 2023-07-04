@@ -178,6 +178,9 @@ namespace ControlsSample
 
         private void UpdateHistoryButtons()
         {
+            if (WebBrowser1 == null || BackButton == null || ForwardButton == null)
+                return;
+
             if (!historyCleared)
             {
                 historyCleared = true;
