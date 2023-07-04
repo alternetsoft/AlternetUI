@@ -12,17 +12,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref='ToolbarItem'/> class.
         /// </summary>
-        public ToolbarItem() :
-            this("")
+        public ToolbarItem()
+            : this(string.Empty)
         {
-
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref='ToolbarItem'/> class with the specified text for the toolbar item.
         /// </summary>
-        public ToolbarItem(string text) :
-            this(text, null)
+        public ToolbarItem(string text)
+            : this(text, null)
         {
         }
 
