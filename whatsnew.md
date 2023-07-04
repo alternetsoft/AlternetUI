@@ -2,6 +2,7 @@
 
 - Improved look of the Sample projects on Linux and macOS.
 - Improved behavior and fixed bugs in the Sample projects.
+- Fixed some of the UIXml previewer problems in Sample projects.
 - Added WebBrowser.Url property.
 - Fixed Border control painting on Linux.
 - Added UserPaintControl control.
