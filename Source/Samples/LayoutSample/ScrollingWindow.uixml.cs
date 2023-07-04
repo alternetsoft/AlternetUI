@@ -1,14 +1,25 @@
 using Alternet.UI;
 using System;
 using System.Linq;
+using Alternet.Drawing;
+using System.ComponentModel;
+using System.IO;
 
 namespace LayoutSample
 {
     public partial class ScrollingWindow : Window
     {
+        private ImageControl imageControl;
+
         public ScrollingWindow()
         {
+            imageControl = new();
+
             InitializeComponent();
+
+            imageControl.Zoom = 2;
+            imageControl.Image = Image.FromUrl("embres:LayoutSample.Resources.logo.png");
+            imageScrollViewer.Children.Add(imageControl);
 
             InitializeComboBoxes();
 
@@ -156,7 +167,8 @@ namespace LayoutSample
 
         private void UpdateImageZoom()
         {
-            imageControl.Zoom = zoomSlider.Value;
+            if(imageControl != null)
+                imageControl.Zoom = zoomSlider.Value;
         }
 
         private void ZoomSlider_ValueChanged(object sender, EventArgs e)

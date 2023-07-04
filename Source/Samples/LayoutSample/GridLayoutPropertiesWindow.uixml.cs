@@ -5,9 +5,30 @@ namespace LayoutSample
 {
     public partial class GridLayoutPropertiesWindow : Window
     {
+        private readonly AlignmentControl containerAlignmentControl;
+        private readonly GridLengthControl subjectColumnWidthControl;
+        private readonly GridLengthControl subjectRowHeightControl;
+
         public GridLayoutPropertiesWindow()
         {
             InitializeComponent();
+
+            subjectColumnWidthControl = new ();
+            subjectRowHeightControl = new();
+
+            subjectColumnWidthControl.Label = "Column Width:";
+            subjectColumnWidthControl.ValueChanged += SubjectColumnWidthControl_ValueChanged;
+            subjectColumnWidthControl.Margin = new Thickness(0,0,0,5);
+
+            subjectRowHeightControl.Label = "Row Height:";
+            subjectRowHeightControl.ValueChanged += SubjectRowHeightControl_ValueChanged;
+            subjectRowHeightControl.Margin = new Thickness(0,0,0,5);
+
+            gridStackPanel.Children.Add(subjectColumnWidthControl);
+            gridStackPanel.Children.Add(subjectRowHeightControl);
+
+            containerAlignmentControl = new AlignmentControl();
+            containerStackPanel.Children.Add(containerAlignmentControl);
 
             containerAlignmentControl.Control = subjectGroupBox;
             

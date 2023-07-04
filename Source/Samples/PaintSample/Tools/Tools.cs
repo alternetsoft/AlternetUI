@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PaintSample
 {
-    internal class Tools
+    public class Tools
     {
         private readonly Func<Document> getDocument;
         private readonly ISelectedColors selectedColors;

@@ -3,7 +3,7 @@ using System;
 
 namespace PaintSample
 {
-    internal class UndoService
+    public class UndoService
     {
         private Document? document;
 

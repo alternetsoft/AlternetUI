@@ -4,7 +4,7 @@ using System;
 
 namespace PaintSample
 {
-    internal sealed class AirbrushTool : Tool
+    public sealed class AirbrushTool : Tool
     {
         private State? state;
 

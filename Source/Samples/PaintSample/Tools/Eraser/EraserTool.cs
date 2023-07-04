@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace PaintSample
 {
-    internal sealed class EraserTool : PenLikeTool
+    public sealed class EraserTool : PenLikeTool
     {
         public EraserTool(Func<Document> getDocument, ISelectedColors selectedColors, UndoService undoService) :
             base(getDocument, selectedColors, undoService)

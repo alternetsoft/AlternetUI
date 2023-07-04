@@ -4,13 +4,10 @@
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample"
         Title="Alternet UI Controls Sample"
         Width="900" Height="700" StartLocation="CenterScreen">
-  <Grid>
+  <Grid Name="mainGrid">
     <Grid.RowDefinitions>
       <RowDefinition Height="*" />
       <RowDefinition Height="100" />
     </Grid.RowDefinitions>
-
-    <local:PageContainer Name="pageContainer"/>
-    <ListBox Name="eventsListBox" Grid.Row="1"/>
   </Grid>
 </Window>

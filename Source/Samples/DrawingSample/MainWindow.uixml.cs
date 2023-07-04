@@ -49,7 +49,7 @@ namespace DrawingSample
             return tabPage;
         }
 
-        private void TabControl_SelectedPageChanged(object? sender, EventArgs e)
+        private void TabControl_SelectedPageChanged(object? sender, SelectedTabPageChangedEventArgs e)
         {
             if (selectedPage != null)
                 ((DrawingPage)selectedPage.Tag!).OnDeactivated();

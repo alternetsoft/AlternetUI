@@ -4,7 +4,7 @@ using System.IO;
 
 namespace PaintSample
 {
-    internal class Document : IDisposable
+    public class Document : IDisposable
     {
         private bool isDisposed;
 

@@ -2,7 +2,7 @@ using Alternet.Drawing;
 
 namespace PaintSample
 {
-    internal interface ISelectedColors
+    public interface ISelectedColors
     {
         Color Stroke { get; }
     }

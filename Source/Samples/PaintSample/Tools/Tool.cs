@@ -3,7 +3,7 @@ using System;
 
 namespace PaintSample
 {
-    internal abstract class Tool
+    public abstract class Tool
     {
         private Control? canvas;
 

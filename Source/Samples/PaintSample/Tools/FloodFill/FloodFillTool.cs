@@ -4,7 +4,7 @@ using System;
 
 namespace PaintSample
 {
-    internal class FloodFillTool : Tool
+    public class FloodFillTool : Tool
     {
         public FloodFillTool(Func<Document> getDocument, ISelectedColors selectedColors, UndoService undoService) :
             base(getDocument, selectedColors, undoService)

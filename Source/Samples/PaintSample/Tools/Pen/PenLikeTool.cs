@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace PaintSample
 {
-    internal abstract class PenLikeTool : Tool
+    public abstract class PenLikeTool : Tool
     {
         private State? state;
 

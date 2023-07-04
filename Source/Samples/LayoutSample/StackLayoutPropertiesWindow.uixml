@@ -17,12 +17,11 @@
 				</StackPanel>
 			</GroupBox>
 			<GroupBox Title="Container" Padding="5" Margin="0,5,0,0">
-				<StackPanel Orientation="Vertical" Padding="5">
+				<StackPanel Orientation="Vertical" Padding="5" Name="containerStackPanel">
 					<Button Text="Increase Margin" Click="IncreaseContainerMarginButton_Click" Margin="0,0,0,5" />
 					<Button Text="Increase Padding" Click="IncreaseContainerPaddingButton_Click" Margin="0,0,0,5" />
 
 					<CheckBox Text="Horizontal Layout" CheckedChanged="HorizontalContainerLayoutCheckBox_CheckedChanged" Margin="0,0,0,5" />
-					<local:AlignmentControl Name="containerAlignmentControl"/>
 				</StackPanel>
 			</GroupBox>
 		</StackPanel>

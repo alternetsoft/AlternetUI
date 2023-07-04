@@ -1,7 +1,7 @@
 <Control xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="PaintSample.Toolbar"
-		xmlns:local="clr-namespace:PaintSample" Padding="10">
+		xmlns:local="clr-namespace:PaintSample;assembly:PaintSample" Padding="10">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />

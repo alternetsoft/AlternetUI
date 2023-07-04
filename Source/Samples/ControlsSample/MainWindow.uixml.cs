@@ -5,10 +5,17 @@ namespace ControlsSample
     internal partial class MainWindow : Window, IPageSite
     {
         private int lastEventNumber = 1;
+        private PageContainer pageContainer = new PageContainer();
+        private ListBox eventsListBox = new ListBox();
 
         public MainWindow()
         {
             InitializeComponent();
+
+            mainGrid.Children.Add(pageContainer);
+            mainGrid.Children.Add(eventsListBox);
+            Alternet.UI.Grid.SetRow(pageContainer, 0);
+            Alternet.UI.Grid.SetRow(eventsListBox, 1);
 
             var pages = pageContainer.Pages;
 

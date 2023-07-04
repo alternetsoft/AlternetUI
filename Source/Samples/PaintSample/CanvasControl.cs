@@ -3,7 +3,7 @@ using Alternet.UI;
 
 namespace PaintSample
 {
-    internal class CanvasControl : Control
+    public class CanvasControl : Control
     {
         private Document? document;
 

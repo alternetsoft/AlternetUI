@@ -5,10 +5,14 @@ namespace LayoutSample
 {
     public partial class StackLayoutPropertiesWindow : Window
     {
+        private AlignmentControl containerAlignmentControl;
+
         public StackLayoutPropertiesWindow()
         {
             InitializeComponent();
 
+            containerAlignmentControl = new AlignmentControl();
+            containerStackPanel.Children.Add(containerAlignmentControl);
             containerAlignmentControl.Control = subjectGroupBox;
         }
 

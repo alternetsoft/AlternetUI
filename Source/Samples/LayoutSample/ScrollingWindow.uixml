@@ -3,129 +3,128 @@
 		xmlns:local="clr-namespace:LayoutSample"
         x:Class="LayoutSample.ScrollingWindow"
         Title="Alternet UI Scrolling Sample" StartLocation="CenterScreen">
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <GroupBox Title="StackPanel" Padding="10" Grid.Row="0" Grid.Column="0">
-            <StackPanel Orientation="Horizontal">
-                <Border Width="200" Height="200" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <ScrollViewer>
-                        <StackPanel Name="stackPanel" Orientation="Vertical">
-                        </StackPanel>
-                    </ScrollViewer>
-                </Border>
-                <Grid Margin="10,0,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Label Text="Orientation:" Margin="0,0,5,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" />
-                    <ComboBox Name="orientationComboBox" VerticalAlignment="Center" Margin="0,0,0,5" IsEditable="false"
-                              SelectedItemChanged="OrientationComboBox_SelectedItemChanged"
-                              Grid.Column="1" Grid.Row="0" />
-
-                    <Label Text="Vertical Alignment:" Margin="0,0,5,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" />
-                    <ComboBox Name="stackPanelVerticalAlignmentComboBox" VerticalAlignment="Center" Margin="0,0,0,5" IsEditable="false"
-                              SelectedItemChanged="StackPanelVerticalAlignmentComboBox_SelectedItemChanged"
-                              Grid.Column="1" Grid.Row="1" />
-
-                    <Label Text="Horizontal Alignment:" Margin="0,0,5,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" />
-                    <ComboBox Name="stackPanelHorizontalAlignmentComboBox" VerticalAlignment="Center" Margin="0,0,0,5" IsEditable="false"
-                              SelectedItemChanged="StackPanelHorizontalAlignmentComboBox_SelectedItemChanged"
-                              Grid.Column="1" Grid.Row="2" />
-
-                    <Button Text="Add Control" Name="addControlToStackPanelButton" Margin="0,0,0,5"
-                            Click="AddControlToStackPanelButton_Click"
-                            Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"/>
-
-                    <Button Text="Remove Control" Name="removeControlFromStackPanelButton"
-                            Click="RemoveControlFromStackPanelButton_Click"
-                            Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
-                </Grid>
+  <Grid Margin="10">
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <GroupBox Title="StackPanel" Padding="10" Grid.Row="0" Grid.Column="0">
+      <StackPanel Orientation="Horizontal">
+        <Border Width="200" Height="200" VerticalAlignment="Top" HorizontalAlignment="Left">
+          <ScrollViewer>
+            <StackPanel Name="stackPanel" Orientation="Vertical">
             </StackPanel>
-        </GroupBox>
+          </ScrollViewer>
+        </Border>
+        <Grid Margin="10,0,0,0">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
 
-        <GroupBox Title="Grid" Padding="10" Grid.Row="1" Grid.Column="0">
-            <StackPanel Orientation="Horizontal">
-                <Border Width="200" Height="200" VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <ScrollViewer>
-                        <Grid Name="grid">
-                        </Grid>
-                    </ScrollViewer>
-                </Border>
-                <Grid Margin="10,0,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+          <Label Text="Orientation:" Margin="0,0,5,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" />
+          <ComboBox Name="orientationComboBox" VerticalAlignment="Center" Margin="0,0,0,5" IsEditable="false"
+                    SelectedItemChanged="OrientationComboBox_SelectedItemChanged"
+                    Grid.Column="1" Grid.Row="0" />
 
-                    <Label Text="Vertical Alignment:" Margin="0,0,5,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" />
-                    <ComboBox Name="gridVerticalAlignmentComboBox" VerticalAlignment="Center" Margin="0,0,0,5" IsEditable="false"
-                              SelectedItemChanged="GridVerticalAlignmentComboBox_SelectedItemChanged"
-                              Grid.Column="1" Grid.Row="0" />
+          <Label Text="Vertical Alignment:" Margin="0,0,5,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" />
+          <ComboBox Name="stackPanelVerticalAlignmentComboBox" VerticalAlignment="Center" Margin="0,0,0,5" IsEditable="false"
+                    SelectedItemChanged="StackPanelVerticalAlignmentComboBox_SelectedItemChanged"
+                    Grid.Column="1" Grid.Row="1" />
 
-                    <Label Text="Horizontal Alignment:" Margin="0,0,5,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" />
-                    <ComboBox Name="gridHorizontalAlignmentComboBox" VerticalAlignment="Center" Margin="0,0,0,5" IsEditable="false"
-                              SelectedItemChanged="GridHorizontalAlignmentComboBox_SelectedItemChanged"
-                              Grid.Column="1" Grid.Row="1" />
+          <Label Text="Horizontal Alignment:" Margin="0,0,5,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2" />
+          <ComboBox Name="stackPanelHorizontalAlignmentComboBox" VerticalAlignment="Center" Margin="0,0,0,5" IsEditable="false"
+                    SelectedItemChanged="StackPanelHorizontalAlignmentComboBox_SelectedItemChanged"
+                    Grid.Column="1" Grid.Row="2" />
 
-                    <Button Text="Add Column" Name="addColumnToGridButton" Margin="0,0,0,5"
-                            Click="AddColumnToGridButton_Click"
-                            Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"/>
+          <Button Text="Add Control" Name="addControlToStackPanelButton" Margin="0,0,0,5"
+                  Click="AddControlToStackPanelButton_Click"
+                  Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"/>
 
-                    <Button Text="Remove Column" Name="removeColumnFromGridButton" Margin="0,0,0,5"
-                            Click="RemoveColumnFromGridButton_Click"
-                            Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"/>
+          <Button Text="Remove Control" Name="removeControlFromStackPanelButton"
+                  Click="RemoveControlFromStackPanelButton_Click"
+                  Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
+        </Grid>
+      </StackPanel>
+    </GroupBox>
 
-                    <Button Text="Add Row" Name="addRowToGridButton" Margin="0,0,0,5"
-                            Click="AddRowToGridButton_Click"
-                            Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
+    <GroupBox Title="Grid" Padding="10" Grid.Row="1" Grid.Column="0">
+      <StackPanel Orientation="Horizontal">
+        <Border Width="200" Height="200" VerticalAlignment="Top" HorizontalAlignment="Left">
+          <ScrollViewer>
+            <Grid Name="grid">
+            </Grid>
+          </ScrollViewer>
+        </Border>
+        <Grid Margin="10,0,0,0">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
 
-                    <Button Text="Remove Row" Name="removeRowFromGridButton" Margin="0,0,0,5"
-                            Click="RemoveRowFromGridButton_Click"
-                            Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"/>
-                </Grid>
-            </StackPanel>
-        </GroupBox>
+          <Label Text="Vertical Alignment:" Margin="0,0,5,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" />
+          <ComboBox Name="gridVerticalAlignmentComboBox" VerticalAlignment="Center" Margin="0,0,0,5" IsEditable="false"
+                    SelectedItemChanged="GridVerticalAlignmentComboBox_SelectedItemChanged"
+                    Grid.Column="1" Grid.Row="0" />
 
-        <GroupBox Title="Drawing" Padding="10" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
-            <StackPanel Orientation="Vertical">
-                <Border VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <ScrollViewer Width="200" Height="200">
-                        <local:ImageControl Name="imageControl" Image="embres:LayoutSample.Resources.logo.png" Zoom="2"/>
-                    </ScrollViewer>
-                </Border>
-                <Grid Margin="0,10,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Label Text="Zoom:" Margin="0,0,5,0" VerticalAlignment="Center"/>
-                    <Slider Name="zoomSlider" ValueChanged="ZoomSlider_ValueChanged" Minimum="1" Value="2" Maximum="10" Grid.Column="1"/>
-                </Grid>
-            </StackPanel>
-        </GroupBox>
-    </Grid>
+          <Label Text="Horizontal Alignment:" Margin="0,0,5,0" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" />
+          <ComboBox Name="gridHorizontalAlignmentComboBox" VerticalAlignment="Center" Margin="0,0,0,5" IsEditable="false"
+                    SelectedItemChanged="GridHorizontalAlignmentComboBox_SelectedItemChanged"
+                    Grid.Column="1" Grid.Row="1" />
+
+          <Button Text="Add Column" Name="addColumnToGridButton" Margin="0,0,0,5"
+                  Click="AddColumnToGridButton_Click"
+                  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"/>
+
+          <Button Text="Remove Column" Name="removeColumnFromGridButton" Margin="0,0,0,5"
+                  Click="RemoveColumnFromGridButton_Click"
+                  Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"/>
+
+          <Button Text="Add Row" Name="addRowToGridButton" Margin="0,0,0,5"
+                  Click="AddRowToGridButton_Click"
+                  Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
+
+          <Button Text="Remove Row" Name="removeRowFromGridButton" Margin="0,0,0,5"
+                  Click="RemoveRowFromGridButton_Click"
+                  Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"/>
+        </Grid>
+      </StackPanel>
+    </GroupBox>
+
+    <GroupBox Title="Drawing" Padding="10" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
+      <StackPanel Orientation="Vertical">
+        <Border VerticalAlignment="Top" HorizontalAlignment="Left">
+          <ScrollViewer Width="200" Height="200" Name="imageScrollViewer">
+          </ScrollViewer>
+        </Border>
+        <Grid Margin="0,10,0,0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <Label Text="Zoom:" Margin="0,0,5,0" VerticalAlignment="Center"/>
+          <Slider Name="zoomSlider" ValueChanged="ZoomSlider_ValueChanged" Minimum="1" Value="2" Maximum="10" Grid.Column="1"/>
+        </Grid>
+      </StackPanel>
+    </GroupBox>
+  </Grid>
 </Window>

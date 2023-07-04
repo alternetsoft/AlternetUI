@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="PaintSample.MainWindow"
 		Title="AlterNET UI Paint Sample"
-		xmlns:local="clr-namespace:PaintSample"
+		xmlns:local="clr-namespace:PaintSample;assembly=PaintSample"
 		Width="750" Height="700" StartLocation="CenterScreen">
   <Window.Menu>
     <MainMenu>

@@ -4,7 +4,7 @@ using System;
 
 namespace PaintSample
 {
-    internal class CommandButton : Control
+    public class CommandButton : Control
     {
         private bool isPressed;
 

@@ -2,104 +2,99 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="LayoutSample.GridLayoutPropertiesWindow"
 		xmlns:local="clr-namespace:LayoutSample"
-        Title="Alternet UI Grid Layout Properties" Width="800" Height="600" 
+        Title="Alternet UI Grid Layout Properties" Width="800" Height="600"
         StartLocation="CenterScreen" Padding="10">
-	
-	<ScrollViewer>
-	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="*" />
-		</Grid.ColumnDefinitions>
 
-		<StackPanel Grid.Column="0" Margin="0,0,10,0">
-			<GroupBox Title="Button" Padding="5">
-				<StackPanel Orientation="Vertical" Padding="5">
-					<Button Text="Increase Margin" Click="IncreaseButtonMarginButton_Click" Margin="0,0,0,5" />
-					<Button Text="Increase Padding" Click="IncreaseButtonPaddingButton_Click" Margin="0,0,0,5" />
-				</StackPanel>
-			</GroupBox>
-			<GroupBox Title="Container" Padding="5" Margin="0,5,0,0">
-				<StackPanel Orientation="Vertical" Padding="5">
-					<Button Text="Increase Margin" Click="IncreaseContainerMarginButton_Click" Margin="0,0,0,5" />
-					<Button Text="Increase Padding" Click="IncreaseContainerPaddingButton_Click" Margin="0,0,0,5" />
+  <ScrollViewer>
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
 
-					<local:AlignmentControl Name="containerAlignmentControl"/>
-				</StackPanel>
-			</GroupBox>
-			<GroupBox Title="Grid" Padding="5" Margin="0,5,0,0">
-				<StackPanel Orientation="Vertical" Padding="5">
-					<local:GridLengthControl Name="subjectColumnWidthControl" Label="Column Width:" ValueChanged="SubjectColumnWidthControl_ValueChanged"
-						Margin="0,0,0,5"/>
-					<local:GridLengthControl Name="subjectRowHeightControl" Label="Row Height:" ValueChanged="SubjectRowHeightControl_ValueChanged"
-						Margin="0,0,0,5"/>
+      <StackPanel Grid.Column="0" Margin="0,0,10,0">
+        <GroupBox Title="Button" Padding="5">
+          <StackPanel Orientation="Vertical" Padding="5">
+            <Button Text="Increase Margin" Click="IncreaseButtonMarginButton_Click" Margin="0,0,0,5" />
+            <Button Text="Increase Padding" Click="IncreaseButtonPaddingButton_Click" Margin="0,0,0,5" />
+          </StackPanel>
+        </GroupBox>
+        <GroupBox Title="Container" Padding="5" Margin="0,5,0,0" Name="containerGroupBox">
+          <StackPanel Orientation="Vertical" Padding="5" Name="containerStackPanel">
+            <Button Text="Increase Margin" Click="IncreaseContainerMarginButton_Click" Margin="0,0,0,5" />
+            <Button Text="Increase Padding" Click="IncreaseContainerPaddingButton_Click" Margin="0,0,0,5" />
+          </StackPanel>
+        </GroupBox>
+        <GroupBox Title="Grid" Padding="5" Margin="0,5,0,0">
+          <StackPanel Orientation="Vertical" Padding="5" Name="gridStackPanel">
+            <Button Text="Add Column" Click="AddGridColumnButton_Click"
+                    Margin="0,0,0,5" />
+            <Button Text="Add Row" Click="AddGridRowButton_Click"
+                    Margin="0,0,0,5" />
+          </StackPanel>
+        </GroupBox>
+      </StackPanel>
 
-					<Button Text="Add Column" Click="AddGridColumnButton_Click" Margin="0,0,0,5" />
-					<Button Text="Add Row" Click="AddGridRowButton_Click" Margin="0,0,0,5" />
-				</StackPanel>
-			</GroupBox>
-		</StackPanel>
+      <GroupBox Grid.Column="1" Title="Subject Container" Name="subjectGroupBox" Padding="5" Margin="0,0,5,5">
+        <Grid Name="subjectGrid">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" Name="subjectGridColumn"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" Name="subjectGridRow"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
 
-		<GroupBox Grid.Column="1" Title="Subject Container" Name="subjectGroupBox" Padding="5" Margin="0,0,5,5">
-			<Grid Name="subjectGrid">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto" Name="subjectGridColumn"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto" Name="subjectGridRow"/>
-					<RowDefinition Height="*"/>
-				</Grid.RowDefinitions>
+          <Label Grid.Column="1" Text="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
+          <Label Grid.Column="2" Text="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Name="subjectColumnWidthLabel" />
+          <Label Grid.Column="3" Text="*" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-				<Label Grid.Column="1" Text="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" />
-				<Label Grid.Column="2" Text="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Name="subjectColumnWidthLabel" />
-				<Label Grid.Column="3" Text="*" HorizontalAlignment="Center" VerticalAlignment="Center" />
+          <Label Grid.Row="1" Text="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,3,0" />
+          <Label Grid.Row="2" Text="Auto" Name="subjectRowHeightLabel" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,3,0"/>
+          <Label Grid.Row="3" Text="*" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,3,0"/>
 
-				<Label Grid.Row="1" Text="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,3,0" />
-				<Label Grid.Row="2" Text="Auto" Name="subjectRowHeightLabel" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,3,0"/>
-				<Label Grid.Row="3" Text="*" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,3,0"/>
+          <Border Grid.Column="1" Grid.Row="1">
+            <Label Text="(1, 1)" />
+          </Border>
 
-				<Border Grid.Column="1" Grid.Row="1">
-					<Label Text="(1, 1)" />
-				</Border>
+          <Border Grid.Column="2" Grid.Row="1">
+            <Label Text="(2, 1)" />
+          </Border>
 
-				<Border Grid.Column="2" Grid.Row="1">
-					<Label Text="(2, 1)" />
-				</Border>
+          <Border Grid.Column="3" Grid.Row="1">
+            <Label Text="(3, 1)" />
+          </Border>
 
-				<Border Grid.Column="3" Grid.Row="1">
-					<Label Text="(3, 1)" />
-				</Border>
+          <Border Grid.Column="1" Grid.Row="2">
+            <Label Text="(1, 2)" />
+          </Border>
 
-				<Border Grid.Column="1" Grid.Row="2">
-					<Label Text="(1, 2)" />
-				</Border>
+          <Border Grid.Column="2" Grid.Row="2">
+            <Button Text="Subject Button" Name="subjectButton"/>
+          </Border>
 
-				<Border Grid.Column="2" Grid.Row="2">
-					<Button Text="Subject Button" Name="subjectButton"/>
-				</Border>
+          <Border Grid.Column="3" Grid.Row="2">
+            <Label Text="(3, 2)" />
+          </Border>
 
-				<Border Grid.Column="3" Grid.Row="2">
-					<Label Text="(3, 2)" />
-				</Border>
+          <Border Grid.Column="1" Grid.Row="3">
+            <Label Text="(1, 3)" />
+          </Border>
 
-				<Border Grid.Column="1" Grid.Row="3">
-					<Label Text="(1, 3)" />
-				</Border>
+          <Border Grid.Column="2" Grid.Row="3">
+            <Label Text="(2, 3)" />
+          </Border>
 
-				<Border Grid.Column="2" Grid.Row="3">
-					<Label Text="(2, 3)" />
-				</Border>
-
-				<Border Grid.Column="3" Grid.Row="3">
-					<Label Text="(3, 3)" />
-				</Border>
-			</Grid>
-		</GroupBox>
-	</Grid>
-	</ScrollViewer>
+          <Border Grid.Column="3" Grid.Row="3">
+            <Label Text="(3, 3)" />
+          </Border>
+        </Grid>
+      </GroupBox>
+    </Grid>
+  </ScrollViewer>
 </Window>

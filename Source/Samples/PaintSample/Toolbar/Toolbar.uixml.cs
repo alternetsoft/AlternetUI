@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace PaintSample
 {
-    internal partial class Toolbar : Control
+    public partial class Toolbar : Control
     {
         private List<ToolButton> toolButtons = new List<ToolButton>();
 
