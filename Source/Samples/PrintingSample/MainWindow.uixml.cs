@@ -11,6 +11,7 @@ namespace PrintingSample
         public MainWindow()
         {
             InitializeComponent();
+            DrawingArea.UserPaint = true;
         }
 
         private void DrawingArea_Paint(object? sender, PaintEventArgs e)

@@ -27,23 +27,26 @@
 
         <GroupBox Title="Settings" Margin="5" Grid.Column="0" Padding="5">
 			<StackPanel Orientation="Vertical">
-				<CheckBox Text="Origin At Margin" Name="originAtMarginCheckBox" IsChecked="True" 
-					CheckedChanged="OriginAtMarginCheckBox_CheckedChanged" Margin="0,0,0,5"/>
+				<CheckBox Text="Origin At Margin" Name="originAtMarginCheckBox" 
+                  IsChecked="True" CheckedChanged="OriginAtMarginCheckBox_CheckedChanged" 
+                  Margin="0,0,0,5"/>
 				<Label Text="Print Document Name:" VerticalAlignment="Center" Margin="0,0,0,5"/>
-				<TextBox Text="My Print Document" Name="printDocumentNameTextBox" Margin="0,0,0,5" 
-					VerticalAlignment="Center" />
-				<Label Text="Additional Pages Count:" VerticalAlignment="Center" Margin="0,0,0,5"/>
-				<NumericUpDown Value="1" Name="additionalPagesCountNumericUpDown" Margin="0,0,0,5" 
-					VerticalAlignment="Center" Minimum="0" Maximum="10"/>
+				<TextBox Text="My Print Document" Name="printDocumentNameTextBox" 
+                  Margin="0,0,0,5" VerticalAlignment="Center" />
+				<Label Text="Additional Pages Count:" VerticalAlignment="Center" 
+                  Margin="0,0,0,5"/>
+				<NumericUpDown Value="1" Name="additionalPagesCountNumericUpDown" 
+                  Margin="0,0,0,5" VerticalAlignment="Center" Minimum="0" Maximum="10"/>
 				<Label Text="Page Margin:" VerticalAlignment="Center" Margin="0,0,0,5"/>
-				<TextBox Text="10,10,10,10" Name="pageMarginTextBox" Margin="0,0,0,5" VerticalAlignment="Center"
-						 TextChanged="PageMarginTextBox_TextChanged"/>
-				<CheckBox Text="Print in Color" Name="printInColorCheckBox" Margin="0,0,0,5" IsChecked="True" />
+				<TextBox Text="10,10,10,10" Name="pageMarginTextBox" Margin="0,0,0,5" 
+                   VerticalAlignment="Center" TextChanged="PageMarginTextBox_TextChanged"/>
+				<CheckBox Text="Print in Color" Name="printInColorCheckBox" 
+                   Margin="0,0,0,5" IsChecked="True" />
 			</StackPanel>	
         </GroupBox>
 
         <GroupBox Title="Drawing Area" Grid.Column="1" Margin="5">
-            <Grid Paint="DrawingArea_Paint" UserPaint="True" Name="DrawingArea"/>
+            <Grid Paint="DrawingArea_Paint" Name="DrawingArea"/>
         </GroupBox>
 
     </Grid>
