@@ -8,9 +8,26 @@ namespace CustomControlsSample
 {
     internal partial class MainWindow : Window
     {
+        private readonly CustomColorPicker colorPicker;
+        private readonly TicTacToeControl ticTacToe;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            colorPicker = new()
+            {
+                Value = Color.Red,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Margin = new Thickness(0, 0, 0, 5)
+            };
+            colorPickerStackPanel.Children.Add(colorPicker);
+
+            ticTacToe = new()
+            {
+                Margin = new Thickness(10, 10, 10, 10)
+            };
+            ticTacToeStackPanel.Children.Add(ticTacToe);
 
             DataContext = new Data();
 
