@@ -20,7 +20,8 @@
         <MenuItem Text="_Redo" Name="redoMenuItem" Click="RedoMenuItem_Click" Shortcut="Ctrl+Y"/>
         <MenuItem Text="-" />
         <MenuItem Text="_Copy" Name="copyMenuItem" Click="CopyMenuItem_Click" Shortcut="Ctrl+C"/>
-        <MenuItem Text="_Paste" Name="pasteMenuItem" Click="PasteMenuItem_Click" Shortcut="Ctrl+V"/>
+        <MenuItem Text="_Paste" Name="pasteMenuItem" Click="PasteMenuItem_Click" 
+                  Shortcut="Ctrl+V"/>
       </MenuItem>
       <MenuItem Text="_Tools" Name="toolsMenu" />
       <MenuItem Text="_Help">
@@ -29,17 +30,13 @@
     </MainMenu>
   </Window.Menu>
 
-
-  <Grid>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="*" />
-				<RowDefinition Height="Auto" />
-			</Grid.RowDefinitions>
-			<local:Toolbar Name="toolbar" Grid.Row="0" Grid.Column="0"/>
-			<Border Name="border" Grid.Row="1" Grid.Column="0">
-				<local:CanvasControl Name="canvasControl" />
-			</Border>
-			<local:ColorSelector Name="colorSelector" Grid.Row="2" Grid.Column="0"/>
-		</Grid>
-	</Window>
+  <Grid Name="mainGrid">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Border Name="border" Grid.Row="1" Grid.Column="0">
+    </Border>
+  </Grid>
+</Window>

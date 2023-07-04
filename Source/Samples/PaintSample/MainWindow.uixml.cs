@@ -16,6 +16,10 @@ namespace PaintSample
 
         private UndoService? undoService;
 
+        private CanvasControl canvasControl;
+        private Toolbar toolbar;
+        private ColorSelector colorSelector;
+
         CommandButton? undoButton;
         CommandButton? redoButton;
 
@@ -25,10 +29,22 @@ namespace PaintSample
         {
             InitializeComponent();
 
-            baseTitle = Title;
+            canvasControl = new();
+            border.Children.Add(canvasControl);
 
-            //border.BorderBrush = Brushes.Black;
-            //border.Padding = new Thickness();
+            toolbar = new();
+            colorSelector = new();
+
+            Alternet.UI.Grid.SetRow(toolbar, 0);
+            Alternet.UI.Grid.SetColumn(toolbar, 0);
+
+            Alternet.UI.Grid.SetRow(colorSelector, 2);
+            Alternet.UI.Grid.SetColumn(colorSelector, 0);
+
+            mainGrid.Children.Add(toolbar);
+            mainGrid.Children.Add(colorSelector);
+
+            baseTitle = Title;
 
             InitializeCommandButtons();
 
