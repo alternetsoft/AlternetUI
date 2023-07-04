@@ -37,13 +37,31 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
-        private protected Image() : this(new Size())
+        private protected Image() 
+            : this(new Size())
         {
         }
 
         private protected Image(UI.Native.Image nativeImage)
         {
             this.nativeImage = nativeImage;
+        }
+
+        public static Image FromUrl(string url)
+        {
+            var s = url;
+            var uri = s.StartsWith("/")
+                ? new Uri(s, UriKind.Relative)
+                : new Uri(s, UriKind.RelativeOrAbsolute);
+
+            if (uri.IsAbsoluteUri && uri.IsFile)
+            {
+                using var stream = File.OpenRead(uri.LocalPath);
+                return new Bitmap(stream);
+            }
+
+            var assets = new Alternet.UI.ResourceLoader();
+            return new Bitmap(assets.Open(uri));
         }
 
         /// <summary>
