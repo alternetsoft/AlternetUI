@@ -30,6 +30,7 @@ namespace ControlsTest
         private string? headerText;
         private bool scriptMessageHandlerAdded = false;
         private ITestPageSite? site;
+        private WebBrowser WebBrowser1;
 
         static WebBrowserTestPage()
         {
@@ -54,6 +55,22 @@ namespace ControlsTest
             var myListener = new CommonUtils.DebugTraceListener();
             Trace.Listeners.Add(myListener);
             InitializeComponent();
+
+            WebBrowser1 = new ();
+            WebBrowser1.Width = 500;
+            WebBrowser1.Height = 300;
+            WebBrowser1.Margin = new (5, 0, 0, 0);
+            WebBrowser1.Navigated += WebBrowser1_Navigated;
+            WebBrowser1.Loaded += WebBrowser1_Loaded;
+            WebBrowser1.NewWindow += WebBrowser1_NewWindow;
+            WebBrowser1.DocumentTitleChanged += WebBrowser1_TitleChanged;
+            WebBrowser1.FullScreenChanged += WebBrowser1_FullScreenChanged;
+            WebBrowser1.ScriptMessageReceived += WebBrowser1_ScriptMessageReceived;
+            WebBrowser1.ScriptResult += WebBrowser1_ScriptResult;
+            WebBrowser1.Navigating += WebBrowser1_Navigating;
+            WebBrowser1.Error += WebBrowser1_Error;
+            WebBrowser1.BeforeBrowserCreate += WebBrowser1_BeforeBrowserCreate;
+            mainStackPanel.Children.Add(WebBrowser1);
         }
 
         public static WebBrowserBackend UseBackend
@@ -470,7 +487,7 @@ namespace ControlsTest
             LogWebBrowserEvent(e);
         }
 
-        private void WebBrowser1_ScriptResult(object? sender, WebBrowserEventArgs e)
+        private void WebBrowser1_ScriptResult(object sender, WebBrowserEventArgs e)
         {
             LogWebBrowserEvent(e);
         }

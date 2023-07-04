@@ -31,24 +31,11 @@
       <Button Text="Go" Margin="0,5,0,5" Click="GoButton_Click" Width="30"/>
     </StackPanel>
     <!-- ==================================== -->
-    <StackPanel  Grid.Row="2" Grid.Column="0" Margin="5,5,5,5"
+    <StackPanel  Grid.Row="2" Grid.Column="0" Margin="5,5,5,5" Name="mainStackPanel"
                  Orientation="Horizontal">
       <ListBox Name="ListBox1"  Width="180" Height="400"
                MouseDoubleClick="ListBox1_MouseDoubleClick" />
 
-      <WebBrowser Width="500" Height="300" Margin="5,0,0,0"
-        Name="WebBrowser1"
-        FullScreenChanged="WebBrowser1_FullScreenChanged"
-        ScriptMessageReceived="WebBrowser1_ScriptMessageReceived"
-        ScriptResult="WebBrowser1_ScriptResult"
-        Navigated="WebBrowser1_Navigated"
-        Navigating="WebBrowser1_Navigating"
-        Loaded="WebBrowser1_Loaded"
-        Error="WebBrowser1_Error"
-        NewWindow="WebBrowser1_NewWindow"
-        BeforeBrowserCreate="WebBrowser1_BeforeBrowserCreate"
-        DocumentTitleChanged="WebBrowser1_TitleChanged"
-			/>
     </StackPanel>
     <!-- ==================================== -->
     <StackPanel  Grid.Row="3" Grid.Column="0" Margin="5,5,5,5" Orientation="Horizontal">

@@ -18,6 +18,7 @@ namespace ControlsSample
         private IPageSite? site;
         private bool historyCleared = false;
         private bool pandaLoaded = false;
+        WebBrowser WebBrowser1;
 
         static WebBrowserPage()
         {
@@ -29,7 +30,16 @@ namespace ControlsSample
 
         public WebBrowserPage()
         {
+
             InitializeComponent();
+
+            WebBrowser1 = new ();
+            WebBrowser1.Navigated += WebBrowser1_Navigated;
+            WebBrowser1.Loaded += WebBrowser1_Loaded;
+            WebBrowser1.NewWindow += WebBrowser1_NewWindow;
+            WebBrowser1.DocumentTitleChanged += WebBrowser1_TitleChanged;
+            Alternet.UI.Grid.SetRowColumn(WebBrowser1, 2, 0);
+            mainGrid.Children.Add(WebBrowser1);
         }
 
         public IPageSite? Site
