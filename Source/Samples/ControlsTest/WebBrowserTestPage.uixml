@@ -21,14 +21,14 @@
     <!-- ==================================== -->
     <StackPanel  Grid.Row="1" Grid.Column="0" Margin="5,5,5,5" Orientation="Horizontal">
 
-      <Button Name="BackButton" Text="&#60;" Margin="0,5,5,5" Click="BackButton_Click" Width="30"/>
-      <Button Name="ForwardButton" Text="&#62;" Margin="0,5,5,5" Click="ForwardButton_Click" Width="30"/>
-      <Button Name="ZoomInButton" Text="+" Margin="0,5,5,5" Click="ZoomInButton_Click" Width="30"/>
-      <Button Name="ZoomOutButton" Text="-" Margin="0,5,5,5" Click="ZoomOutButton_Click" Width="30"/>
+      <Button Name="BackButton" Text="&#60;" Margin="0,5,5,5" Click="BackButton_Click" />
+      <Button Name="ForwardButton" Text="&#62;" Margin="0,5,5,5" Click="ForwardButton_Click"/>
+      <Button Name="ZoomInButton" Text="+" Margin="0,5,5,5" Click="ZoomInButton_Click" Visible="false"/>
+      <Button Name="ZoomOutButton" Text="-" Margin="0,5,5,5" Click="ZoomOutButton_Click" Visible="false"/>
       <TextBox Width="300" Margin="0,5,5,5" Name="UrlTextBox"
            KeyDown="TextBox_KeyDown"
 			/>
-      <Button Text="Go" Margin="0,5,0,5" Click="GoButton_Click" Width="30"/>
+      <Button Text="Go" Margin="0,5,0,5" Click="GoButton_Click"/>
     </StackPanel>
     <!-- ==================================== -->
     <StackPanel  Grid.Row="2" Grid.Column="0" Margin="5,5,5,5" Name="mainStackPanel"

@@ -20,7 +20,7 @@
         </Grid.RowDefinitions>
 
         <!-- ========================= -->
-        <ListView Width="450" Name="listView" Grid.Column="0" Grid.Row="0"
+        <ListView Width="350" Name="listView" Grid.Column="0" Grid.Row="0"
                     SelectionChanged="ListView_SelectionChanged"
                     BeforeLabelEdit="ListView_BeforeLabelEdit"
                     AfterLabelEdit="ListView_AfterLabelEdit"

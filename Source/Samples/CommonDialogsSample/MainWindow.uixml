@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="CommonDialogsSample.MainWindow"
         Title="Common Dialogs Sample"
-        Width="650" Height="470" StartLocation="CenterScreen">
+        Width="650" Height="550" StartLocation="CenterScreen">
   <StackPanel Orientation="Horizontal">
     <GroupBox Title="Common Dialogs" Margin="10" VerticalAlignment="Top">
       <StackPanel>

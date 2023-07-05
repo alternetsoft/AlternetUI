@@ -5,7 +5,7 @@
 
         <GroupBox Title="Tree View">
             <StackPanel Orientation="Horizontal" Margin="5">
-                <TreeView Width="350" Name="treeView"
+                <TreeView Width="240" Name="treeView"
                           SelectionChanged="TreeView_SelectionChanged"
                           ExpandedChanged="TreeView_ExpandedChanged"
                           BeforeLabelEdit="TreeView_BeforeLabelEdit"
