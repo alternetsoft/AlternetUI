@@ -28,7 +28,8 @@ namespace Alternet.UI
         /// The time duration before the <see cref="Tick"/> event is raised
         /// relative to the last occurrence of the <see cref="Tick"/> event.
         /// </param>
-        public Timer(TimeSpan interval) : this()
+        public Timer(TimeSpan interval)
+            : this()
         {
             Interval = interval;
         }
@@ -43,7 +44,8 @@ namespace Alternet.UI
         /// <param name="tickHandler">
         /// An <see cref="EventHandler"/> which is called when the specified timer interval has elapsed and the timer is enabled.
         /// </param>
-        public Timer(TimeSpan interval, EventHandler tickHandler) : this()
+        public Timer(TimeSpan interval, EventHandler tickHandler)
+            : this()
         {
             Interval = interval;
             Tick += tickHandler;
