@@ -8,6 +8,7 @@ namespace ControlsSample
     internal partial class TreeViewPage : Control
     {
         private IPageSite? site;
+        private int supressExpandEvents = 0;
 
         public TreeViewPage()
         {
@@ -21,9 +22,24 @@ namespace ControlsSample
             set
             {
                 treeView.ImageList = ResourceLoader.LoadImageLists().Small;
-                AddItems(10);
+                AddDefaultItems();
                 site = value;
             }
+        }
+
+        private void AddDefaultItems()
+        {
+
+            AddItems(10);
+        }
+
+        private void ResetItemsToDefault()
+        {
+            treeView.BeginUpdate();
+            treeView.ClearSelected();
+            treeView.Items.Clear();
+            AddDefaultItems();
+            treeView.EndUpdate();
         }
 
         private static TreeViewItem? GetLastItem(TreeViewItem? parent, ICollection<TreeViewItem> children)
@@ -37,7 +53,7 @@ namespace ControlsSample
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
         {
-            AddItems(5000);
+            AddItems(1000);
         }
 
         private void AddItems(int count)
@@ -83,6 +99,8 @@ namespace ControlsSample
 
         private void TreeView_ExpandedChanged(object? sender, TreeViewItemExpandedChangedEventArgs e)
         {
+            if (supressExpandEvents > 0)
+                return;
             site?.LogEvent($"TreeView: ExpandedChanged. Item: '{e.Item.Text}', IsExpanded: {e.Item.IsExpanded}");
         }
 
@@ -100,12 +118,16 @@ namespace ControlsSample
 
         private void TreeView_BeforeExpand(object? sender, TreeViewItemExpandedChangingEventArgs e)
         {
+            if (supressExpandEvents > 0)
+                return;
             e.Cancel = cancelBeforeExpandEventsCheckBox.IsChecked;
             site?.LogEvent($"TreeView: BeforeExpand. Item: '{e.Item.Text}'");
         }
 
         private void TreeView_BeforeCollapse(object? sender, TreeViewItemExpandedChangingEventArgs e)
         {
+            if (supressExpandEvents > 0)
+                return;
             e.Cancel = cancelBeforeCollapseEventsCheckBox.IsChecked;
             site?.LogEvent($"TreeView: BeforeCollapse. Item: '{e.Item.Text}'");
         }
@@ -124,35 +146,41 @@ namespace ControlsSample
 
         private void ShowRootLinesCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
+            ResetItemsToDefault();
             if (treeView != null)
                 treeView.ShowRootLines = showRootLinesCheckBox.IsChecked;
         }
 
         private void ShowLinesCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
+            ResetItemsToDefault();
             if (treeView != null)
                 treeView.ShowLines = showLinesCheckBox.IsChecked;
         }
 
         private void ShowExpandButtons_CheckedChanged(object? sender, EventArgs e)
         {
+            ResetItemsToDefault();
             if (treeView != null)
                 treeView.ShowExpandButtons = showExpandButtonsCheckBox.IsChecked;
         }
 
         private void FullRowSelectCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
+            ResetItemsToDefault();
             if (treeView != null)
                 treeView.FullRowSelect = fullRowSelectCheckBox.IsChecked;
         }
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
+            ResetItemsToDefault();
             treeView.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ? TreeViewSelectionMode.Multiple : TreeViewSelectionMode.Single;
         }
 
         private void AllowLabelEditingCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
+            ResetItemsToDefault();
             if (treeView != null)
                 treeView.AllowLabelEdit = allowLabelEditingCheckBox.IsChecked;
 
@@ -161,8 +189,12 @@ namespace ControlsSample
 
         private void RemoveItemButton_Click(object? sender, EventArgs e)
         {
-            foreach (var item in treeView.SelectedItems)
+            treeView.BeginUpdate();
+            IReadOnlyList<TreeViewItem> items = treeView.SelectedItems;
+            treeView.ClearSelected();
+            foreach (var item in items)
                 item.Remove();
+            treeView.EndUpdate();
         }
 
         private void AddItemButton_Click(object? sender, EventArgs e)
@@ -175,9 +207,19 @@ namespace ControlsSample
             treeView.SelectedItem?.BeginLabelEdit();
         }
 
-        private void ExpandAllButton_Click(object sender, EventArgs e) => treeView.ExpandAll();
+        private void ExpandAllButton_Click(object sender, EventArgs e)
+        {
+            supressExpandEvents++;
+            treeView.ExpandAll();
+            supressExpandEvents--;
+        }
 
-        private void CollapseAllButton_Click(object sender, EventArgs e) => treeView.CollapseAll();
+        private void CollapseAllButton_Click(object sender, EventArgs e)
+        {
+            supressExpandEvents++;
+            treeView.CollapseAll();
+            supressExpandEvents--;
+        }
 
         private void ExpandAllChildrenButton_Click(object sender, EventArgs e) => treeView.SelectedItem?.ExpandAll();
 
