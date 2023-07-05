@@ -17,7 +17,7 @@
             <CheckBox Text="Default" Name="defaultCheckBox" CheckedChanged="DefaultCheckBox_CheckedChanged" Margin="0,10,0,0" />
         </StackPanel>
 
-        <GroupBox Title="Button" Grid.Column="1">
+        <GroupBox Title="Button" Grid.Column="1" Margin="10">
             <Button Name="button" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="10" Click="Button_Click"/>
         </GroupBox>
     </Grid>
