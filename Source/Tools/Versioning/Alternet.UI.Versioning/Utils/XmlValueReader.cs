@@ -36,10 +36,9 @@ namespace Alternet.UI.Versioning
 
             var element = document.XPathSelectElement(elementSelector, xmlNamespaceResolver);
 
-            if (element == null)
-                return null;
-
-            return element.Attribute(attributeName).Value;
+            if (element is not null)
+                return element.Attribute(attributeName)?.Value;
+            return null;
         }
     }
 }

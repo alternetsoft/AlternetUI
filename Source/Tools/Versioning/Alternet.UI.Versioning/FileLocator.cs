@@ -9,7 +9,7 @@ namespace Alternet.UI.Versioning
 {
     internal class FileLocator
     {
-        Repository repository;
+        private readonly Repository repository;
 
         public FileLocator(Repository repository)
         {
@@ -41,7 +41,7 @@ namespace Alternet.UI.Versioning
         {
             var files = new[]
             {
-                "Source/Integration/VisualStudio/Templates/AlternetUIApplicationTemplate.VS2022/ProjectTemplate.csproj",
+                "Source/Integration/VisualStudio/Templates/AlternetUIAppTemplate/ProjectTemplate.csproj",
                 "Source/Integration/Templates/CSharp/Application/Alternet.UI.Templates.Application.CSharp.csproj"
             };
 
