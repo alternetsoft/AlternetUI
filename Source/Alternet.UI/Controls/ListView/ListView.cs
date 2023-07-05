@@ -19,169 +19,17 @@ namespace Alternet.UI
     /// </remarks>
     public class ListView : Control
     {
-        private ListViewView view = ListViewView.List;
-
-        private ImageList? smallImageList = null;
-        private ImageList? largeImageList = null;
-
         private readonly HashSet<int> selectedIndices = new ();
 
+        private ListViewView view = ListViewView.List;
+        private ImageList? smallImageList = null;
+        private ImageList? largeImageList = null;
         private ListViewSelectionMode selectionMode = ListViewSelectionMode.Single;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListView"/> class.
         /// </summary>
         public ListView()
-        {
-        }
-
-        /// <inheritdoc/>
-        public new ListViewHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (ListViewHandler)base.Handler;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the user can edit the labels of items in the control.
-        /// </summary>
-        /// <value><see langword="true"/> if the user can edit the labels of items at run time; otherwise, <see
-        /// langword="false"/>. The default is <see langword="false"/>.</value>
-        public bool AllowLabelEdit { get => Handler.AllowLabelEdit; set => Handler.AllowLabelEdit = value; }
-
-        /// <summary>
-        /// Gets or sets the first fully-visible item in the list view control.
-        /// </summary>
-        /// <value>A <see cref="ListViewItem"/> that represents the first fully-visible item in the list view control.</value>
-        public ListViewItem? TopItem { get => Handler.TopItem; }
-
-        /// <summary>
-        /// Gets or sets the grid line display mode for this list view.
-        /// </summary>
-        public ListViewGridLinesDisplayMode GridLinesDisplayMode { get => Handler.GridLinesDisplayMode; set => Handler.GridLinesDisplayMode = value; }
-
-        /// <summary>
-        /// Provides list view item information, at a given client point, in device-independent units (1/96th inch per
-        /// unit).
-        /// </summary>
-        /// <param name="point">The <see cref="Point"/> at which to retrieve item information.</param>
-        /// <returns>The hit test result information.</returns>
-        /// <remarks>
-        /// Use this method to determine whether a point is located in a <see cref="ListViewItem"/> and where within the
-        /// item the point is located, such as on the label or image area.
-        /// </remarks>
-        public ListViewHitTestInfo HitTest(Point point) => Handler.HitTest(point);
-
-        /// <summary>
-        /// Initiates the editing of the list view item label.
-        /// </summary>
-        /// <param name="itemIndex">The zero-based index of the item within the <see cref="ListView.Items"/> collection
-        /// whose label you want to edit.</param>
-        public void BeginLabelEdit(int itemIndex) => Handler.BeginLabelEdit(itemIndex);
-
-        /// <summary>
-        /// Retrieves the bounding rectangle for an item within the control.
-        /// </summary>
-        /// <param name="itemIndex">The zero-based index of the item within the <see cref="ListView.Items"/> collection
-        /// whose bounding rectangle you want to get.</param>
-        /// <param name="portion">One of the <see cref="ListViewItemBoundsPortion"/> values that represents a portion of
-        /// the item for which to retrieve the bounding rectangle.</param>
-        /// <returns>A <see cref="Rect"/> that represents the bounding rectangle for the specified portion of the
-        /// specified <see cref="ListViewItem"/>.</returns>
-        public Rect GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem) =>
-            Handler.GetItemBounds(itemIndex, portion);
-
-        ///// <summary>
-        ///// Gets or sets the custom sorting comparer for the control.
-        ///// </summary>
-        // public IComparer<ListViewItem>? CustomItemSortComparer { get => Handler.CustomItemSortComparer; set => Handler.CustomItemSortComparer = value; }
-
-        ///// <summary>
-        ///// Gets or sets the sort mode for items in the control.
-        ///// </summary>
-        ///// <value>One of the <see cref="ListViewSortMode"/> values. The default is <see cref="ListViewSortMode.None"/>.</value>
-        // public ListViewSortMode SortMode { get => Handler.SortMode; set => Handler.SortMode = value; }
-
-        /// <summary>
-        /// Removes all items and columns from the control.
-        /// </summary>
-        public void Clear() => Handler.Clear();
-
-        /// <summary>
-        /// Gets or sets a boolean value which specifies whether the column header is visible in <see
-        /// cref="ListViewView.Details"/> view.
-        /// </summary>
-        public bool ColumnHeaderVisible { get => Handler.ColumnHeaderVisible; set => Handler.ColumnHeaderVisible = value; }
-
-        /// <summary>
-        /// Occurs when the user clicks a column header within the list view control.
-        /// </summary>
-        public event EventHandler<ListViewColumnEventArgs>? ColumnClick;
-
-        /// <summary>
-        /// Occurs before the item label text is edited. This event can be canceled.
-        /// </summary>
-        public event EventHandler<ListViewItemLabelEditEventArgs>? BeforeLabelEdit;
-
-        /// <summary>
-        /// Occurs after the item label text is edited. This event can be canceled.
-        /// </summary>
-        public event EventHandler<ListViewItemLabelEditEventArgs>? AfterLabelEdit;
-
-        /// <summary>
-        /// Raises the <see cref="ColumnClick"/> event.
-        /// </summary>
-        /// <param name="e">An <see cref="ListViewColumnEventArgs"/> that contains the event data.</param>
-        public void RaiseColumnClick(ListViewColumnEventArgs e)
-        {
-            OnColumnClick(e);
-            ColumnClick?.Invoke(this, e);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="BeforeLabelEdit"/> event and calls <see cref="OnBeforeLabelEdit"/>.
-        /// </summary>
-        /// <param name="e">An <see cref="ListViewItemLabelEditEventArgs"/> that contains the event data.</param>
-        public void RaiseBeforeLabelEdit(ListViewItemLabelEditEventArgs e)
-        {
-            OnBeforeLabelEdit(e);
-            BeforeLabelEdit?.Invoke(this, e);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="AfterLabelEdit"/> event and calls <see cref="OnAfterLabelEdit"/>.
-        /// </summary>
-        /// <param name="e">An <see cref="ListViewItemLabelEditEventArgs"/> that contains the event data.</param>
-        public void RaiseAfterLabelEdit(ListViewItemLabelEditEventArgs e)
-        {
-            OnAfterLabelEdit(e);
-            AfterLabelEdit?.Invoke(this, e);
-        }
-
-        /// <summary>
-        /// Called when the user clicks a column header within the list view control.
-        /// </summary>
-        /// <param name="e">An <see cref="ListViewColumnEventArgs"/> that contains the event data.</param>
-        protected virtual void OnColumnClick(ListViewColumnEventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Called before a list view item label is edited.
-        /// </summary>
-        /// <param name="e">An <see cref="ListViewItemLabelEditEventArgs"/> that contains the event data.</param>
-        protected virtual void OnBeforeLabelEdit(ListViewItemLabelEditEventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Called after a list view item label is edited.
-        /// </summary>
-        /// <param name="e">An <see cref="ListViewItemLabelEditEventArgs"/> that contains the event data.</param>
-        protected virtual void OnAfterLabelEdit(ListViewItemLabelEditEventArgs e)
         {
         }
 
@@ -222,6 +70,57 @@ namespace Alternet.UI
         /// Occurs when the <see cref="LargeImageList"/> property value changes.
         /// </summary>
         public event EventHandler? LargeImageListChanged;
+
+        /// <summary>
+        /// Occurs when the user clicks a column header within the list view control.
+        /// </summary>
+        public event EventHandler<ListViewColumnEventArgs>? ColumnClick;
+
+        /// <summary>
+        /// Occurs before the item label text is edited. This event can be canceled.
+        /// </summary>
+        public event EventHandler<ListViewItemLabelEditEventArgs>? BeforeLabelEdit;
+
+        /// <summary>
+        /// Occurs after the item label text is edited. This event can be canceled.
+        /// </summary>
+        public event EventHandler<ListViewItemLabelEditEventArgs>? AfterLabelEdit;
+
+        /// <summary>
+        /// Gets or sets a boolean value which specifies whether the column header is visible in <see
+        /// cref="ListViewView.Details"/> view.
+        /// </summary>
+        public bool ColumnHeaderVisible { get => Handler.ColumnHeaderVisible; set => Handler.ColumnHeaderVisible = value; }
+
+        /// <summary>
+        /// Gets a <see cref="ListViewHandler"/> associated with this class.
+        /// </summary>
+        public new ListViewHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (ListViewHandler)base.Handler;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the user can edit the labels of items in the control.
+        /// </summary>
+        /// <value><see langword="true"/> if the user can edit the labels of items at run time; otherwise, <see
+        /// langword="false"/>. The default is <see langword="false"/>.</value>
+        public bool AllowLabelEdit { get => Handler.AllowLabelEdit; set => Handler.AllowLabelEdit = value; }
+
+        /// <summary>
+        /// Gets or sets the first fully-visible item in the list view control.
+        /// </summary>
+        /// <value>A <see cref="ListViewItem"/> that represents the first fully-visible item in the list view control.</value>
+        public ListViewItem? TopItem { get => Handler.TopItem; }
+
+        /// <summary>
+        /// Gets or sets the grid line display mode for this list view.
+        /// </summary>
+        public ListViewGridLinesDisplayMode GridLinesDisplayMode { get => Handler.GridLinesDisplayMode; set => Handler.GridLinesDisplayMode = value; }
 
         /// <summary>
         /// Gets a collection that contains the zero-based indexes of all currently selected items in the <see cref="ListView"/>.
@@ -542,16 +441,70 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Unselects all items in the <see cref="ListView"/>.
+        /// Provides list view item information, at a given client point, in device-independent units (1/96th inch per
+        /// unit).
         /// </summary>
+        /// <param name="point">The <see cref="Point"/> at which to retrieve item information.</param>
+        /// <returns>The hit test result information.</returns>
         /// <remarks>
-        /// Calling this method is equivalent to setting the <see cref="SelectedIndex"/> property to <c>null</c>.
-        /// You can use this method to quickly unselect all items in the list.
+        /// Use this method to determine whether a point is located in a <see cref="ListViewItem"/> and where within the
+        /// item the point is located, such as on the label or image area.
         /// </remarks>
-        public void ClearSelected()
+        public ListViewHitTestInfo HitTest(Point point) => Handler.HitTest(point);
+
+        /// <summary>
+        /// Initiates the editing of the list view item label.
+        /// </summary>
+        /// <param name="itemIndex">The zero-based index of the item within the <see cref="ListView.Items"/> collection
+        /// whose label you want to edit.</param>
+        public void BeginLabelEdit(int itemIndex) => Handler.BeginLabelEdit(itemIndex);
+
+        /// <summary>
+        /// Retrieves the bounding rectangle for an item within the control.
+        /// </summary>
+        /// <param name="itemIndex">The zero-based index of the item within the <see cref="ListView.Items"/> collection
+        /// whose bounding rectangle you want to get.</param>
+        /// <param name="portion">One of the <see cref="ListViewItemBoundsPortion"/> values that represents a portion of
+        /// the item for which to retrieve the bounding rectangle.</param>
+        /// <returns>A <see cref="Rect"/> that represents the bounding rectangle for the specified portion of the
+        /// specified <see cref="ListViewItem"/>.</returns>
+        public Rect GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem) =>
+            Handler.GetItemBounds(itemIndex, portion);
+
+        ///// <summary>
+        ///// Gets or sets the custom sorting comparer for the control.
+        ///// </summary>
+        // public IComparer<ListViewItem>? CustomItemSortComparer { get => Handler.CustomItemSortComparer; set => Handler.CustomItemSortComparer = value; }
+
+        ///// <summary>
+        ///// Gets or sets the sort mode for items in the control.
+        ///// </summary>
+        ///// <value>One of the <see cref="ListViewSortMode"/> values. The default is <see cref="ListViewSortMode.None"/>.</value>
+        // public ListViewSortMode SortMode { get => Handler.SortMode; set => Handler.SortMode = value; }
+
+        /// <summary>
+        /// Removes all items and columns from the control.
+        /// </summary>
+        public void Clear() => Handler.Clear();
+
+        /// <summary>
+        /// Raises the <see cref="ColumnClick"/> event.
+        /// </summary>
+        /// <param name="e">An <see cref="ListViewColumnEventArgs"/> that contains the event data.</param>
+        public void RaiseColumnClick(ListViewColumnEventArgs e)
         {
-            ClearSelectedCore();
-            RaiseSelectionChanged(EventArgs.Empty);
+            OnColumnClick(e);
+            ColumnClick?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="BeforeLabelEdit"/> event and calls <see cref="OnBeforeLabelEdit"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="ListViewItemLabelEditEventArgs"/> that contains the event data.</param>
+        public void RaiseBeforeLabelEdit(ListViewItemLabelEditEventArgs e)
+        {
+            OnBeforeLabelEdit(e);
+            BeforeLabelEdit?.Invoke(this, e);
         }
 
         /// <summary>
@@ -585,6 +538,53 @@ namespace Alternet.UI
         {
             OnSelectionChanged(e);
             SelectionChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="AfterLabelEdit"/> event and calls <see cref="OnAfterLabelEdit"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="ListViewItemLabelEditEventArgs"/> that contains the event data.</param>
+        public void RaiseAfterLabelEdit(ListViewItemLabelEditEventArgs e)
+        {
+            OnAfterLabelEdit(e);
+            AfterLabelEdit?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Unselects all items in the <see cref="ListView"/>.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method is equivalent to setting the <see cref="SelectedIndex"/> property to <c>null</c>.
+        /// You can use this method to quickly unselect all items in the list.
+        /// </remarks>
+        public void ClearSelected()
+        {
+            ClearSelectedCore();
+            RaiseSelectionChanged(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Called when the user clicks a column header within the list view control.
+        /// </summary>
+        /// <param name="e">An <see cref="ListViewColumnEventArgs"/> that contains the event data.</param>
+        protected virtual void OnColumnClick(ListViewColumnEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called before a list view item label is edited.
+        /// </summary>
+        /// <param name="e">An <see cref="ListViewItemLabelEditEventArgs"/> that contains the event data.</param>
+        protected virtual void OnBeforeLabelEdit(ListViewItemLabelEditEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called after a list view item label is edited.
+        /// </summary>
+        /// <param name="e">An <see cref="ListViewItemLabelEditEventArgs"/> that contains the event data.</param>
+        protected virtual void OnAfterLabelEdit(ListViewItemLabelEditEventArgs e)
+        {
         }
 
         /// <summary>

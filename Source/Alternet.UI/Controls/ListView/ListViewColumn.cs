@@ -20,7 +20,7 @@ namespace Alternet.UI
         private double width = 80;
         private ListViewColumnWidthMode widthMode;
         private ListView? listView;
-        private string title = "";
+        private string title = string.Empty;
         private int? index;
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Alternet.UI
         public int? Index
         {
             get => index;
-            
+
             internal set
             {
                 index = value;
@@ -79,7 +79,7 @@ namespace Alternet.UI
         public ListView? ListView
         {
             get => listView;
-            
+
             internal set
             {
                 listView = value;
@@ -103,7 +103,22 @@ namespace Alternet.UI
             }
         }
 
-        bool TryGetColumnIndex(
+        /// <summary>
+        /// Gets or set the width sizing behavior for this column.
+        /// </summary>
+        /// <value>A <see cref="ListViewColumnWidthMode"/> which specifies the width sizing behavior.
+        /// Default is <see cref="ListViewColumnWidthMode.Fixed"/>.</value>
+        public ListViewColumnWidthMode WidthMode
+        {
+            get => widthMode;
+            set
+            {
+                widthMode = value;
+                ApplyWidth();
+            }
+        }
+
+        private bool TryGetColumnIndex(
             [NotNullWhen(true)] out ListView? listView,
             [NotNullWhen(true)] out int? columnIndex)
         {
@@ -129,21 +144,6 @@ namespace Alternet.UI
         {
             ApplyWidth();
             ApplyTitle();
-        }
-
-        /// <summary>
-        /// Gets or set the width sizing behavior for this column.
-        /// </summary>
-        /// <value>A <see cref="ListViewColumnWidthMode"/> which specifies the width sizing behavior.
-        /// Default is <see cref="ListViewColumnWidthMode.Fixed"/>.</value>
-        public ListViewColumnWidthMode WidthMode
-        {
-            get => widthMode;
-            set
-            {
-                widthMode = value;
-                ApplyWidth();
-            }
         }
     }
 }
