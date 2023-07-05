@@ -64,6 +64,7 @@ namespace ControlsSample
         {
             if (ignoreEvents)
                 return;
+            
             var text = comboBox.Text == string.Empty ? "\"\"" : comboBox.Text;
             site?.LogEvent($"ComboBox: TextChanged. Text: {text}");
         }
@@ -96,7 +97,7 @@ namespace ControlsSample
             bool isEditable = comboBox.IsEditable;
 
             if (!isEditable)
-                MessageBox.Show("Cannot perform this operation on a non-editable ComboBox.");
+                site?.LogEvent("Cannot perform this operation on a non-editable ComboBox.");
 
             return isEditable;
         }
@@ -118,11 +119,13 @@ namespace ControlsSample
             var length = comboBox.TextSelectionLength;
             var selectedText = comboBox.Text.Substring(start, length);
             var message = $"ComboBox text selection is: [{start}..{start + length}], selected text: '{selectedText}'";
-            MessageBox.Show(message, "ComboBox Text Selection");
+            site?.LogEvent("ComboBox Text Selection: " + message);
         }
 
         private void SetTextToAbcButton_Click(object sender, System.EventArgs e)
         {
+            if (!CheckComboBoxIsEditable())
+                return;
             comboBox.Text = "abc";
         }
 

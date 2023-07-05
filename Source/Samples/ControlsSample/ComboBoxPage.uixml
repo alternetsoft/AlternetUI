@@ -14,7 +14,6 @@
                     <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0" Click="AddManyItemsButton_Click"/>
 
                     <Button Text="Set Text to Empty String" Name="setTextToEmptyStringButton" Margin="0,10,0,0" Click="SetTextToEmptyStringButton_Click"/>
-                    <Button Text="Set Text to 'abc'" Name="setTextToAbcButton" Margin="0,3,0,0" Click="SetTextToAbcButton_Click"/>
                     <Button Text="Set Text to 'One'" Name="setTextToOneButton" Margin="0,3,0,0" Click="SetTextToOneButton_Click"/>
                     
                     <Button Text="Set SelectedIndex to 2" Name="setSelectedIndexTo2Button" Margin="0,10,0,0" Click="SetSelectedIndexTo2_Click"/>
@@ -22,6 +21,7 @@
                     <CheckBox Text="Allow Text Editing" Name="allowTextEditingCheckBox" Margin="0,10,0,0" CheckedChanged="AllowTextEditingCheckBox_CheckedChanged"/>
                     <Button Text="Select Text Range [2..5]" Name="selectTextRangeButton" Margin="0,3,0,0" Click="SelectTextRangeButton_Click"/>
                     <Button Text="Get Text Selection" Name="getTextSelectionButton" Margin="0,3,0,0" Click="GetTextSelectionButton_Click"/>
+                    <Button Text="Set Text to 'abc'" Name="setTextToAbcButton" Margin="0,3,0,0" Click="SetTextToAbcButton_Click"/>
                 </StackPanel>
             </StackPanel>
         </GroupBox>
