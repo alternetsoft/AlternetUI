@@ -12,6 +12,7 @@ namespace Alternet::UI
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
         void OnCheckedChanged(wxCommandEvent& event);
+        void OnSelectionChanged(wxCommandEvent& event);
 
     protected:
         void OnWxWindowCreated() override;

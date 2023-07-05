@@ -8,7 +8,11 @@
 - Added UserPaintControl control.
 - Improvements in the installation scripts.
 - New static properties in Border control: DefaultBorderPen, DefaultBorderWidth, DefaultBorderColor.
-- New methods Grid.SetRowColumn, Image.FromUrl, ImageSet.FromUrl
+- New methods Grid.SetRowColumn, Image.FromUrl, ImageSet.FromUrl.
+- New properties ListBox.SelectedIndicesDescending, CheckListBox.CheckedIndicesDescending.
+- New methods ListBox.RemoveSelectedItems, ListBox.RemoveItems, CheckListBox.RemoveCheckedItems, 
+	ListBox.IsValidIndex, ListBox.GetValidIndexes.
+- CheckListBox now fires SelectionChanged event and keeps corect SelectedIndices.
 
 # 0.9.200
 

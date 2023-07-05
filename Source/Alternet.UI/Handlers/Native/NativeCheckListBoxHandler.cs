@@ -11,14 +11,14 @@ namespace Alternet.UI
         private bool receivingSelection;
         private bool applyingSelection;
 
+        public new CheckListBox Control => (CheckListBox)base.Control;
+
+        public new Native.CheckListBox NativeControl => (Native.CheckListBox)base.NativeControl!;
+
         internal override Native.Control CreateNativeControl()
         {
             return new Native.CheckListBox();
         }
-
-        public new Native.CheckListBox NativeControl => (Native.CheckListBox)base.NativeControl!;
-        
-        public new CheckListBox Control => (CheckListBox)base.Control;
 
         protected override void OnAttach()
         {

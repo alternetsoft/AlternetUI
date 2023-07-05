@@ -10,6 +10,7 @@ bool IsChecked(int item);
 public:
 enum class CheckListBoxEvent
 {
+    SelectionChanged,
     CheckedChanged,
 };
 typedef void* (*CheckListBoxEventCallbackType)(CheckListBox* obj, CheckListBoxEvent event, void* param);

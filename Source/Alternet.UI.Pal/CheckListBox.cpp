@@ -14,6 +14,7 @@ namespace Alternet::UI
             if (window != nullptr)
             {
                 window->Unbind(wxEVT_CHECKLISTBOX, &CheckListBox::OnCheckedChanged, this);
+                window->Unbind(wxEVT_LISTBOX, &CheckListBox::OnSelectionChanged, this);
             }
         }
     }
@@ -31,6 +32,7 @@ namespace Alternet::UI
             GetSelectionStyle());
 
         value->Bind(wxEVT_CHECKLISTBOX, &CheckListBox::OnCheckedChanged, this);
+        value->Bind(wxEVT_LISTBOX, &CheckListBox::OnSelectionChanged, this);
 
         return value;
     }
@@ -38,6 +40,11 @@ namespace Alternet::UI
     void CheckListBox::OnCheckedChanged(wxCommandEvent& event)
     {
         RaiseEvent(CheckListBoxEvent::CheckedChanged);
+    }
+
+    void CheckListBox::OnSelectionChanged(wxCommandEvent& event)
+    {
+        RaiseEvent(CheckListBoxEvent::SelectionChanged);
     }
 
     void CheckListBox::OnWxWindowCreated()

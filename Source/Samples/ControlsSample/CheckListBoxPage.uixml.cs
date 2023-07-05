@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Alternet.UI;
 
@@ -30,6 +31,7 @@ namespace ControlsSample
                 checkListBox.Items.Add("Nine");
                 checkListBox.Items.Add("Ten");
                 checkListBox.SelectionMode = ListBoxSelectionMode.Multiple;
+                checkListBox.SelectionChanged += CheckListBox_SelectionChanged;
                 site = value;
             }
         }
@@ -57,21 +59,52 @@ namespace ControlsSample
             }
         }
 
-        private void CheckListBox_CheckedChanged(object? sender, EventArgs e)
+        private string IndicesToStr(IReadOnlyList<int> indices)
         {
-            string checkedIndicesString = checkListBox.CheckedIndices.Count > 100 ? "too many indices to display" : string.Join(",", checkListBox.CheckedIndices);
-            site?.LogEvent($"ListBox: CheckedChanged. CheckedIndices: ({checkedIndicesString})");
+            string result = indices.Count > 100 ? 
+                "too many indices to display" : string.Join(",", indices);
+            return result;
         }
 
-        private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
+        private void CheckListBox_CheckedChanged(object? sender, EventArgs e)
         {
-            checkListBox.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ? ListBoxSelectionMode.Multiple : ListBoxSelectionMode.Single;
+            string checkedIndicesString = IndicesToStr(checkListBox.CheckedIndices);
+            site?.LogEvent(
+                $"CheckListBox: CheckedChanged. Checked: ({checkedIndicesString})");
+        }
+
+        private void CheckListBox_SelectionChanged(object sender, EventArgs e)
+        {
+            string selectedIndicesString = IndicesToStr(checkListBox.SelectedIndices);
+            site?.LogEvent(
+                $"CheckListBox: SelectionChanged. Selected: ({selectedIndicesString})");
+        }
+
+        private void AllowMultipleSelectionCheckBox_CheckedChanged(
+            object? sender, 
+            EventArgs e)
+        {
+            checkListBox.Parent?.BeginUpdate();
+            checkListBox.SelectionMode = 
+                allowMultipleSelectionCheckBox.IsChecked ? 
+                ListBoxSelectionMode.Multiple : ListBoxSelectionMode.Single;
+            checkListBox.Parent?.EndUpdate();
+        }
+
+        private void RemoveCheckedButton_Click(object? sender, EventArgs e)
+        {
+            RemoveItemsAndLog(checkListBox.CheckedIndicesDescending);
+        }
+
+        private void RemoveItemsAndLog(IReadOnlyList<int> items)
+        {
+            site?.LogEvent($"Remove items: ({IndicesToStr(items)})");
+            checkListBox.RemoveItems(items);
         }
 
         private void RemoveItemButton_Click(object? sender, EventArgs e)
         {
-            foreach (var item in checkListBox.SelectedItems.ToArray())
-                checkListBox.Items.Remove(item);
+            RemoveItemsAndLog(checkListBox.SelectedIndicesDescending);
         }
 
         private void AddItemButton_Click(object? sender, EventArgs e)
@@ -88,10 +121,7 @@ namespace ControlsSample
 
         private void CheckItemAtIndex2Button_Click(object sender, System.EventArgs e)
         {
-            int index = 2;
-            var count = checkListBox.Items.Count;
-            if (index < count)
-                checkListBox.CheckedIndex = index;
+            checkListBox.CheckItems(2);
         }
 
         private void UncheckAllButton_Click(object sender, System.EventArgs e)
@@ -101,10 +131,7 @@ namespace ControlsSample
 
         private void CheckItemAtIndices2And4Button_Click(object sender, System.EventArgs e)
         {
-            int maxIndex = 4;
-            var count = checkListBox.Items.Count;
-            if (maxIndex < count)
-                checkListBox.CheckedIndices = new[] { 2, maxIndex };
+            checkListBox.CheckItems(2,4);
         }
     }
 }

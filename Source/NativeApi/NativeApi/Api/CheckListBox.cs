@@ -5,6 +5,8 @@ namespace NativeApi.Api
 {
     public class CheckListBox : ListBox
     {
+        new public event EventHandler? SelectionChanged { add => throw new Exception(); remove => throw new Exception(); }
+        
         public event EventHandler? CheckedChanged { add => throw new Exception(); remove => throw new Exception(); }
 
         public int[] CheckedIndices { get => throw new Exception(); }

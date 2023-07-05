@@ -92,6 +92,10 @@ namespace Alternet.UI.Native
         {
             switch (e)
             {
+                case NativeApi.CheckListBoxEvent.SelectionChanged:
+                {
+                    SelectionChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 case NativeApi.CheckListBoxEvent.CheckedChanged:
                 {
                     CheckedChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
@@ -100,6 +104,7 @@ namespace Alternet.UI.Native
             }
         }
         
+        public event EventHandler? SelectionChanged;
         public event EventHandler? CheckedChanged;
         
         [SuppressUnmanagedCodeSecurity]
@@ -112,6 +117,7 @@ namespace Alternet.UI.Native
             
             public enum CheckListBoxEvent
             {
+                SelectionChanged,
                 CheckedChanged,
             }
             

@@ -6,6 +6,7 @@ namespace ControlsSample
     internal partial class ComboBoxPage : Control
     {
         private IPageSite? site;
+        bool ignoreEvents = false;
 
         public ComboBoxPage()
         {
@@ -19,10 +20,13 @@ namespace ControlsSample
             set
             {
                 site = value;
+
+                ignoreEvents = true;
                 comboBox.Items.Add("One");
                 comboBox.Items.Add("Two");
                 comboBox.Items.Add("Three");
                 comboBox.SelectedIndex = 1;
+                ignoreEvents = false;
             }
         }
 
@@ -58,12 +62,16 @@ namespace ControlsSample
 
         private void ComboBox_TextChanged(object? sender, EventArgs e)
         {
+            if (ignoreEvents)
+                return;
             var text = comboBox.Text == string.Empty ? "\"\"" : comboBox.Text;
             site?.LogEvent($"ComboBox: TextChanged. Text: {text}");
         }
 
         private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
+            if (ignoreEvents)
+                return;
             site?.LogEvent($"ComboBox: SelectedItemChanged. SelectedIndex: {(comboBox.SelectedIndex == null ? "<null>" : comboBox.SelectedIndex.ToString())}");
         }
 

@@ -88,6 +88,49 @@ namespace Alternet.UI
             }
         }
 
+        public void RemoveCheckedItems()
+        {
+            RemoveItems(CheckedIndicesDescending);
+        }
+
+        public void CheckItems(params int[] indexes)
+        {
+            CheckedIndices = GetValidIndexes(indexes);
+        }
+
+        public override void RemoveItems(IReadOnlyList<int> items)
+        {
+            if (items == null || items.Count == 0)
+                return;
+
+            BeginUpdate();
+            try
+            {
+                ClearSelected();
+                foreach (int index in items)
+                {
+                    if (index < Items.Count)
+                    {
+                        SetChecked(index, false);
+                        Items.RemoveAt(index);
+                    }
+                }
+            }
+            finally
+            {
+                EndUpdate();
+            }
+        }
+
+        public IReadOnlyList<int> CheckedIndicesDescending
+        {
+            get
+            {
+                int[] sortedCopy = CheckedIndices.OrderByDescending(i => i).ToArray();
+                return sortedCopy;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the zero-based index of the currently checked item in a <see cref="ListBox"/>.
         /// </summary>

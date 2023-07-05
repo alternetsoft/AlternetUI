@@ -64,13 +64,16 @@ namespace ControlsSample
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
+            listBox.Parent?.BeginUpdate();
+
             listBox.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ? ListBoxSelectionMode.Multiple : ListBoxSelectionMode.Single;
+
+            listBox.Parent?.EndUpdate();
         }
 
         private void RemoveItemButton_Click(object? sender, EventArgs e)
         {
-            foreach (var item in listBox.SelectedItems.ToArray())
-                listBox.Items.Remove(item);
+            listBox.RemoveSelectedItems();
         }
 
         private void AddItemButton_Click(object? sender, EventArgs e)
@@ -87,10 +90,7 @@ namespace ControlsSample
 
         private void SelectItemAtIndex2Button_Click(object sender, System.EventArgs e)
         {
-            int index = 2;
-            var count = listBox.Items.Count;
-            if (index < count)
-                listBox.SelectedIndex = index;
+            listBox.SelectItems(2);
         }
 
         private void DeselectAllButton_Click(object sender, System.EventArgs e)
@@ -100,10 +100,7 @@ namespace ControlsSample
 
         private void SelectItemAtIndices2And4Button_Click(object sender, System.EventArgs e)
         {
-            int maxIndex = 4;
-            var count = listBox.Items.Count;
-            if (maxIndex < count)
-                listBox.SelectedIndices = new[] { 2, maxIndex };
+            listBox.SelectItems(2, 4);
         }
     }
 }

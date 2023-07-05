@@ -111,6 +111,15 @@ namespace Alternet.UI
             }
         }
 
+        public IReadOnlyList<int> SelectedIndicesDescending
+        {
+            get
+            {
+                int[] sortedCopy = SelectedIndices.OrderByDescending(i => i).ToArray();
+                return sortedCopy;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the zero-based index of the currently selected item in a <see cref="ListBox"/>.
         /// </summary>
@@ -245,6 +254,55 @@ namespace Alternet.UI
                 selectionMode = value;
 
                 SelectionModeChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public void RemoveSelectedItems()
+        {
+            RemoveItems(SelectedIndicesDescending);
+        }
+
+        public IReadOnlyList<int> GetValidIndexes(params int[] indexes)
+        {
+            var validIndexes = new List<int>();
+
+            foreach (int index in indexes)
+            {
+                if (IsValidIndex(index))
+                    validIndexes.Add(index);
+            }
+
+            return validIndexes;
+        }
+
+        public void SelectItems(params int[] indexes)
+        {
+            SelectedIndices = GetValidIndexes(indexes);
+        }
+
+        public bool IsValidIndex(int index)
+        {
+            return index >= 0 && index < Items.Count;
+        }
+
+        public virtual void RemoveItems(IReadOnlyList<int> items)
+        {
+            if (items == null || items.Count == 0)
+                return;
+
+            BeginUpdate();
+            try
+            {
+                ClearSelected();
+                foreach (int index in items)
+                {
+                    if (index < Items.Count)
+                        Items.RemoveAt(index);
+                }
+            }
+            finally
+            {
+                EndUpdate();
             }
         }
 
