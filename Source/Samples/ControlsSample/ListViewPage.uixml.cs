@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Alternet.Drawing;
 using Alternet.UI;
 
 namespace ControlsSample
@@ -8,10 +9,29 @@ namespace ControlsSample
     internal partial class ListViewPage : Control
     {
         private IPageSite? site;
+        private int ignoreRecreate = 1;
 
         public ListViewPage()
         {
             InitializeComponent();
+
+            //LayoutFactory.SetDebugBackgroundToParents(listView);
+
+            this.LayoutUpdated += ListViewPage_LayoutUpdated;
+
+        }
+
+        private void ListViewPage_LayoutUpdated(object sender, EventArgs e)
+        {
+            /*var bounds1 = stackPanel1.Bounds;
+            var bounds2 = stackPanel2.Bounds;
+            var bounds3 = tabPage1.Bounds;
+            var bounds4 = tabPage2.Bounds;
+
+            var b = Math.Max(Math.Max(bounds1.Width, bounds2.Width), 
+                Math.Max(bounds3.Width, bounds4.Width));
+
+            tabControl.Width = Math.Max(b + 30, tabControl.Width);*/
         }
 
         public IPageSite? Site
@@ -24,9 +44,7 @@ namespace ControlsSample
                 listView.SmallImageList = imageLists.Small;
                 listView.LargeImageList = imageLists.Large;
 
-                InitializeColumns();
-
-                AddItems(50);
+                AddDefaultItems();
 
                 foreach (var item in Enum.GetValues(typeof(ListViewView)))
                     viewComboBox.Items.Add(item ?? throw new Exception());
@@ -40,26 +58,78 @@ namespace ControlsSample
                     columnWidthModeComboBox.Items.Add(item ?? throw new Exception());
                 columnWidthModeComboBox.SelectedIndex = 1;
 
-                listView.Columns[1].WidthMode = ListViewColumnWidthMode.AutoSize;
+                listView.Items.ItemInserted += Items_ItemInserted;
+                listView.Items.ItemRemoved += Items_ItemRemoved;
 
                 site = value;
+
+                ignoreRecreate--;
             }
         }
 
         private void InitializeColumns()
         {
-            listView.Columns.Add(new ListViewColumn("Column 1"));
-            listView.Columns.Add(new ListViewColumn("Column 2"));
+            listView?.Columns.Add(new ListViewColumn("Column 1"));
+            listView?.Columns.Add(new ListViewColumn("Column 2"));
+        }
+
+        private void AddDefaultItems()
+        {
+            InitializeColumns();
+            AddItems(50);
+            listView.Columns[1].WidthMode = ListViewColumnWidthMode.AutoSize;
         }
 
         private void ViewComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            listView.View = (ListViewView)(viewComboBox.SelectedItem ?? throw new InvalidOperationException());
+            BeginRecreateListView();
+            try
+            {
+                if (listView is not null)
+                    listView.View = (ListViewView)(viewComboBox.SelectedItem ?? throw new InvalidOperationException());
+            }
+            finally
+            {
+                EndRecreateListView();
+            }
+        }
+
+        private void BeginRecreateListView()
+        {
+            if (ignoreRecreate>0)
+                return;
+
+            ignoreRecreate++;
+            listView?.BeginUpdate();
+            listView?.Clear();            
+            //listView?.Parent?.BeginUpdate();
+            ignoreRecreate--;
+        }
+
+
+        private void EndRecreateListView()
+        {
+            if (ignoreRecreate>0)
+                return;
+            ignoreRecreate++;
+            AddDefaultItems();
+            listView?.EndUpdate();
+            //listView?.Parent?.EndUpdate();
+            ignoreRecreate--;
         }
 
         private void GridLinesComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            listView.GridLinesDisplayMode = (ListViewGridLinesDisplayMode)(gridLinesComboBox.SelectedItem ?? throw new InvalidOperationException());
+            BeginRecreateListView();
+            try
+            {
+                if (listView is not null)
+                    listView.GridLinesDisplayMode = (ListViewGridLinesDisplayMode)(gridLinesComboBox.SelectedItem ?? throw new InvalidOperationException());
+            }
+            finally
+            {
+                EndRecreateListView();
+            }
         }
 
         private void ColumnWidthModeComboBox_SelectedItemChanged(object? sender, EventArgs e)
@@ -74,6 +144,9 @@ namespace ControlsSample
 
         private void AddItems(int count)
         {
+            if (listView == null)
+                return;
+
             int start = listView.Items.Count + 1;
 
             listView.BeginUpdate();
@@ -92,11 +165,26 @@ namespace ControlsSample
         {
             string selectedIndicesString = listView.SelectedIndices.Count > 100 ? "too many indices to display" : string.Join(",", listView.SelectedIndices);
             site?.LogEvent($"ListView: SelectionChanged. SelectedIndices: ({selectedIndicesString})");
+
+            if (listView.SelectedItem == null)
+                return;
+            //var s = listView.SelectedItem.Index;
+            //site?.LogEvent(s.ToString());
         }
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            listView.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ? ListViewSelectionMode.Multiple : ListViewSelectionMode.Single;
+            BeginRecreateListView();
+
+            try
+            {
+                if (listView is not null)
+                    listView.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ? ListViewSelectionMode.Multiple : ListViewSelectionMode.Single;
+            }
+            finally
+            {
+                EndRecreateListView();
+            }
         }
 
         private void RemoveItemButton_Click(object? sender, EventArgs e)
@@ -131,8 +219,17 @@ namespace ControlsSample
 
         private void AllowLabelEditingCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            if (listView != null)
-                listView.AllowLabelEdit = allowLabelEditingCheckBox.IsChecked;
+            BeginRecreateListView();
+
+            try
+            {
+                if (listView is not null)
+                    listView.AllowLabelEdit = allowLabelEditingCheckBox.IsChecked;
+            }
+            finally
+            {
+                EndRecreateListView();
+            }
 
             beginSelectedLabelEditingButton.Enabled = allowLabelEditingCheckBox.IsChecked;
         }
@@ -206,9 +303,12 @@ namespace ControlsSample
             var item = GetLastItem();
             if (item != null)
             {
+                listView.BeginUpdate();
+                var itemIndex = listView.Items.IndexOf(item);
                 var newItem = new ListViewItem(item.Text + " Sibling", item.ImageIndex ?? 0);
-                listView.Items.Insert(listView.Items.IndexOf(item), newItem);
+                listView.Items.Insert(itemIndex, newItem);
                 newItem.EnsureVisible();
+                listView.EndUpdate();
             }
         }
 
@@ -230,7 +330,36 @@ namespace ControlsSample
 
         private void ColumnHeaderVisibleCheckBox_CheckedChanged(object sender, System.EventArgs e)
         {
-            listView.ColumnHeaderVisible = columnHeaderVisibleCheckBox.IsChecked;
+            BeginRecreateListView();
+
+            try
+            {
+                listView.ColumnHeaderVisible = columnHeaderVisibleCheckBox.IsChecked;
+            }
+            finally
+            {
+                EndRecreateListView();
+            }
+        }
+
+        private void LogItemCount(string s)
+        {
+            site?.LogEvent($"{s}; UI:{listView.Items.Count}; Native: {listView.NativeItemsCount}");
+        }
+
+        private void TestItemButton_Click(object? sender, EventArgs e)
+        {
+            LogItemCount("TestButton");
+        }
+
+        private void Items_ItemRemoved(object sender, Alternet.Base.Collections.CollectionChangeEventArgs<ListViewItem> e)
+        {
+            //LogItemCount("Items_ItemRemoved");
+        }
+
+        private void Items_ItemInserted(object sender, Alternet.Base.Collections.CollectionChangeEventArgs<ListViewItem> e)
+        {
+            //LogItemCount("Items_ItemInserted");
         }
     }
 }

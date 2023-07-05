@@ -631,7 +631,7 @@ namespace Alternet::UI
 
         auto listView = GetListView();
         listView->DeleteAllItems();
-
+        /*    Here we have exception. So it is commented for now when Control is recreated and there are items*/
         int index = 0;
         for (auto row : _rows)
         {
