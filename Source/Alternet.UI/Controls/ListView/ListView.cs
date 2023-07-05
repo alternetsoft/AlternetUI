@@ -104,6 +104,16 @@ namespace Alternet.UI
             }
         }
 
+        internal int NativeItemsCount
+        {
+            get
+            {
+                if (Handler is NativeListViewHandler)
+                    return ((NativeListViewHandler)Handler).NativeControl.ItemsCount;
+                return 0;
+            }
+        }
+
         /// <summary>
         /// Gets or sets a value indicating whether the user can edit the labels of items in the control.
         /// </summary>
