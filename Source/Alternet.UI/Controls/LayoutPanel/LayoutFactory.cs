@@ -10,68 +10,6 @@ namespace Alternet.UI
 {
     public static class LayoutFactory
     {
-        internal static IArrangedElementLite FromControl(Control control)
-        {
-            return new ArrangedElementControl(control);
-        }
-
-        internal static IArrangedElement CreateContainer(IArrangedElementLite? container = null)
-        {
-            IArrangedElement result = new ArrangedElement(null, container);
-            return result;
-        }
-
-        internal static IArrangedElement AddChild(
-            IArrangedElement container,
-            IArrangedElementLite? control = null)
-        {
-            IArrangedElement result = new ArrangedElement(container, control);
-            result.Controls.Add(result);
-            return result;
-        }
-
-        public static void PerformLayoutLeftFill(
-            Control container,
-            Control leftControl,
-            Control fillControl)
-        {
-            IArrangedElement result = CreateLayoutLeftFill(
-                CreateContainer(FromControl(container)),
-                FromControl(leftControl),
-                FromControl(fillControl));
-            result.PerformLayout();
-        }
-
-        internal static IArrangedElement CreateLayoutLeftFill(
-            IArrangedElement container,
-            IArrangedElementLite leftControl,
-            IArrangedElementLite fillControl)
-        {
-            var leftControlElement = AddChild(container, leftControl);
-            var fillControlElement = AddChild(container, fillControl);
-            leftControlElement.Dock = DockStyle.Left;
-            fillControlElement.Dock = DockStyle.Fill;
-            return container;
-        }
-
-        public static void SetDebugBackgroundToParents(Control? control)
-        {
-            static Control? SetParentBackground(Control? control, Brush brush)
-            {
-                if (control == null)
-                    return null;
-                Control? parent = control?.Parent;
-                if (parent != null)
-                    parent.Background = brush;
-                return parent;
-            }
-
-            control = SetParentBackground(control, new SolidBrush(Color.Green));
-            control = SetParentBackground(control, new SolidBrush(Color.Yellow));
-            control = SetParentBackground(control, new SolidBrush(Color.Blue));
-            SetParentBackground(control, new SolidBrush(Color.Red));
-        }
-
         public static void AdjustTextBoxesHeight(Control container)
         {
             if (container == null)
@@ -102,6 +40,69 @@ namespace Alternet.UI
                         return;
                 }
             }
+        }
+
+        public static void PerformLayoutLeftFill(
+            Control container,
+            Control leftControl,
+            Control fillControl)
+        {
+            IArrangedElement result = CreateLayoutLeftFill(
+                CreateContainer(FromControl(container)),
+                FromControl(leftControl),
+                FromControl(fillControl));
+            result.PerformLayout();
+        }
+
+        public static void SetDebugBackgroundToParents(Control? control)
+        {
+            static Control? SetParentBackground(Control? control, Brush brush)
+            {
+                if (control == null)
+                    return null;
+                Control? parent = control?.Parent;
+                if (parent != null)
+                    parent.Background = brush;
+                return parent;
+            }
+
+            control = SetParentBackground(control, new SolidBrush(Color.Green));
+            control = SetParentBackground(control, new SolidBrush(Color.Yellow));
+            control = SetParentBackground(control, new SolidBrush(Color.Blue));
+            SetParentBackground(control, new SolidBrush(Color.Red));
+        }
+
+        internal static IArrangedElementLite FromControl(Control control)
+        {
+            return new ArrangedElementControl(control);
+        }
+
+        internal static IArrangedElement CreateContainer(
+            IArrangedElementLite? container = null)
+        {
+            IArrangedElement result = new ArrangedElement(null, container);
+            return result;
+        }
+
+        internal static IArrangedElement AddChild(
+            IArrangedElement container,
+            IArrangedElementLite? control = null)
+        {
+            IArrangedElement result = new ArrangedElement(container, control);
+            result.Controls.Add(result);
+            return result;
+        }
+
+        internal static IArrangedElement CreateLayoutLeftFill(
+            IArrangedElement container,
+            IArrangedElementLite leftControl,
+            IArrangedElementLite fillControl)
+        {
+            var leftControlElement = AddChild(container, leftControl);
+            var fillControlElement = AddChild(container, fillControl);
+            leftControlElement.Dock = DockStyle.Left;
+            fillControlElement.Dock = DockStyle.Fill;
+            return container;
         }
 
         internal static void AdjustTextBoxesHeight(

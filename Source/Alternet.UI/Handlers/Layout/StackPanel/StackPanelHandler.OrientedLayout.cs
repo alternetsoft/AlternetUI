@@ -4,13 +4,21 @@ namespace Alternet.UI
 {
     internal partial class StackPanelHandler
     {
-        abstract class OrientedLayout
+        private abstract class OrientedLayout
         {
             protected OrientedLayout(StackPanelHandler handler)
             {
                 Handler = handler;
                 Control = handler.Control;
             }
+
+            public StackPanel Control { get; }
+
+            public StackPanelHandler Handler { get; }
+
+            public abstract void Layout();
+
+            public abstract Size GetPreferredSize(Size availableSize);
 
             public class AlignedPosition
             {
@@ -21,14 +29,9 @@ namespace Alternet.UI
                 }
 
                 public double Origin { get; }
+
                 public double Size { get; }
             }
-
-            public StackPanel Control { get; }
-            public StackPanelHandler Handler { get; }
-
-            public abstract void Layout();
-            public abstract Size GetPreferredSize(Size availableSize);
         }
     }
 }
