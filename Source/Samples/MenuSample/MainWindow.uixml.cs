@@ -64,7 +64,7 @@ namespace MenuSample
         {
             toolbar = new ();
 
-            toolbar.BeginUpdate();
+            //toolbar.BeginUpdate();
 
             var calendarToolbarItem = new ToolbarItem("Calendar", ToolbarItem_Click)
             {
@@ -117,7 +117,7 @@ namespace MenuSample
             dynamicToolbarItemsSeparator = new ToolbarItem("-");
             toolbar.Items.Add(dynamicToolbarItemsSeparator);
 
-            toolbar.EndUpdate();
+            //toolbar.EndUpdate();
 
             Toolbar = toolbar;
 

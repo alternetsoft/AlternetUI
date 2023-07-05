@@ -23,6 +23,10 @@ namespace CustomControlsSample
                 isPressed = value;
                 Refresh();
 
+                // Popup hangs complete Linux system
+                if (WebBrowser.GetBackendOS() == WebBrowserBackendOS.Unix)
+                    return;
+
                 if (isPressed)
                     OpenPopup();
             }

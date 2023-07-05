@@ -1,7 +1,8 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="EmployeeFormSample.MainWindow"
-		Title="Alternet UI Employee Details Form" Padding="10" Width="800" Height="500" StartLocation="CenterScreen">
+		Title="Alternet UI Employee Details Form" Padding="10" Width="800" Height="600" 
+		StartLocation="CenterScreen">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
@@ -49,10 +50,11 @@
 
 			<Label Text="Prefix" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,20"/>
 			<ComboBox SelectedItem="{Binding Prefix}" Name="prefixComboBox" Grid.Row="4" Grid.Column="1" IsEditable="false"
-					  VerticalAlignment="Center" Margin="0,0,0,20"/>
+					  VerticalAlignment="Center" Margin="0,0,0,10"/>
 
-			<Label Text="Address" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
-			<TextBox Text="{Binding Address}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="0,0,0,5"/>
+			<Label Text="Address" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,0,5"/>
+			<TextBox Text="{Binding Address}" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" 
+				VerticalAlignment="Center" Margin="0,0,0,5"/>
 
 			<Label Text="City" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,5"/>
 			<TextBox Text="{Binding City}" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" 
