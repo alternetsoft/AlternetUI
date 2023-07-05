@@ -343,8 +343,9 @@ namespace ControlsSample
         }
 
         private void LogItemCount(string s)
-        {
+        { /*
             site?.LogEvent($"{s}; UI:{listView.Items.Count}; Native: {listView.NativeItemsCount}");
+          */
         }
 
         private void TestItemButton_Click(object? sender, EventArgs e)
