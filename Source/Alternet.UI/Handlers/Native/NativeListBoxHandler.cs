@@ -10,12 +10,25 @@ namespace Alternet.UI
 
         private bool applyingSelection;
 
+        public new Native.ListBox NativeControl => (Native.ListBox)base.NativeControl!;
+
+        /// <inheritdoc/>
+        public override void EnsureVisible(int itemIndex)
+        {
+            NativeControl.EnsureVisible(itemIndex);
+        }
+
+        /// <inheritdoc/>
+        public override int? HitTest(Point position)
+        {
+            int index = NativeControl.ItemHitTest(position);
+            return index == -1 ? null : index;
+        }
+
         internal override Native.Control CreateNativeControl()
         {
             return new Native.ListBox();
         }
-
-        public new Native.ListBox NativeControl => (Native.ListBox)base.NativeControl!;
 
         protected override void OnAttach()
         {
@@ -126,19 +139,6 @@ namespace Alternet.UI
         private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<object> e)
         {
             NativeControl.RemoveItemAt(e.Index);
-        }
-
-        /// <inheritdoc/>
-        public override void EnsureVisible(int itemIndex)
-        {
-            NativeControl.EnsureVisible(itemIndex);
-        }
-
-        /// <inheritdoc/>
-        public override int? HitTest(Point position)
-        {
-            int index = NativeControl.ItemHitTest(position);
-            return index == -1 ? null : index;
         }
     }
 }

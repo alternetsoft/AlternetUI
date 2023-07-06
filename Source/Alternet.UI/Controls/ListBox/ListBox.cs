@@ -1,7 +1,7 @@
-using Alternet.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// </remarks>
     public class ListBox : ListControl
     {
-        private HashSet<int> selectedIndices = new HashSet<int>();
+        private readonly HashSet<int> selectedIndices = new ();
 
         private ListBoxSelectionMode selectionMode = ListBoxSelectionMode.Single;
 
@@ -41,7 +41,9 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? SelectionModeChanged;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a <see cref="ListBoxHandler"/> associated with this class.
+        /// </summary>
         public new ListBoxHandler Handler
         {
             get
@@ -50,21 +52,6 @@ namespace Alternet.UI
                 return (ListBoxHandler)base.Handler;
             }
         }
-
-        /// <summary>
-        /// Ensures that the item is visible within the control, scrolling the contents of the control, if necessary.
-        /// </summary>
-        /// <param name="itemIndex">The item index to scroll into visibility.</param>
-        public void EnsureVisible(int itemIndex) => Handler.EnsureVisible(itemIndex);
-
-        /// <summary>
-        /// Returns the zero-based index of the item at the specified coordinates.
-        /// </summary>
-        /// <param name="position">A <see cref="Point"/> object containing the coordinates used to obtain the item
-        /// index.</param>
-        /// <returns>The zero-based index of the item found at the specified coordinates; returns <see langword="null"/>
-        /// if no match is found.</returns>
-        public int? HitTest(Point position) => Handler.HitTest(position);
 
         /// <summary>
         /// Gets a collection that contains the zero-based indexes of all currently selected items in the <see cref="ListBox"/>.
@@ -85,6 +72,7 @@ namespace Alternet.UI
         /// you can use the <see cref="SelectedItems"/> property if you want to obtain all the selected items in a multiple-selection <see cref="ListBox"/>.
         /// </para>
         /// </remarks>
+        /// <seealso cref="SelectedIndicesDescending"/>
         public IReadOnlyList<int> SelectedIndices
         {
             get
@@ -111,6 +99,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets a collection that contains the zero-based indexes of all currently selected
+        /// items in the <see cref="ListBox"/>.
+        /// </summary>
+        /// <remarks>
+        /// Indexes are returned in the descending order (maximal index is the first).
+        /// </remarks>
+        /// <seealso cref="SelectedIndices"/>
+        /// <value>
+        /// An <see cref="IReadOnlyList{T}"/> containing the indexes of the currently selected items in the control.
+        /// If no items are currently selected, an empty <see cref="IReadOnlyList{T}"/> is returned.
+        /// </value>
         public IReadOnlyList<int> SelectedIndicesDescending
         {
             get
@@ -257,11 +257,32 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Removes selected items from the <see cref="ListBox"/>.
+        /// </summary>
         public void RemoveSelectedItems()
         {
             RemoveItems(SelectedIndicesDescending);
         }
 
+        /// <summary>
+        /// Ensures that the item is visible within the control, scrolling the contents of the control, if necessary.
+        /// </summary>
+        /// <param name="itemIndex">The item index to scroll into visibility.</param>
+        public void EnsureVisible(int itemIndex) => Handler.EnsureVisible(itemIndex);
+
+        /// <summary>
+        /// Returns the zero-based index of the item at the specified coordinates.
+        /// </summary>
+        /// <param name="position">A <see cref="Point"/> object containing the coordinates used to obtain the item
+        /// index.</param>
+        /// <returns>The zero-based index of the item found at the specified coordinates; returns <see langword="null"/>
+        /// if no match is found.</returns>
+        public int? HitTest(Point position) => Handler.HitTest(position);
+
+        /// <summary>
+        /// Gets only valid indexes from the list of indexes in the <see cref="ListBox"/>.
+        /// </summary>
         public IReadOnlyList<int> GetValidIndexes(params int[] indexes)
         {
             var validIndexes = new List<int>();
@@ -275,16 +296,25 @@ namespace Alternet.UI
             return validIndexes;
         }
 
+        /// <summary>
+        /// Selects items with specified indexes in the <see cref="ListBox"/>.
+        /// </summary>
         public void SelectItems(params int[] indexes)
         {
             SelectedIndices = GetValidIndexes(indexes);
         }
 
+        /// <summary>
+        /// Checks whether index is valid in the <see cref="ListBox"/>.
+        /// </summary>
         public bool IsValidIndex(int index)
         {
             return index >= 0 && index < Items.Count;
         }
 
+        /// <summary>
+        /// Removes items from the <see cref="ListBox"/>.
+        /// </summary>
         public virtual void RemoveItems(IReadOnlyList<int> items)
         {
             if (items == null || items.Count == 0)

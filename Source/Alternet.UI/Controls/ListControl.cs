@@ -1,6 +1,6 @@
-using Alternet.Base.Collections;
 using System;
 using System.Globalization;
+using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {

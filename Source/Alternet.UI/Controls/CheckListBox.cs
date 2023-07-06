@@ -23,7 +23,9 @@ namespace Alternet.UI
     {
         private HashSet<int> checkedIndices = new HashSet<int>();
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a <see cref="CheckListBoxHandler"/> associated with this class.
+        /// </summary>
         public new CheckListBoxHandler Handler
         {
             get

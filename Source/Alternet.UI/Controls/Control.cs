@@ -13,9 +13,41 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public class Control : FrameworkElement, ISupportInitialize, IDisposable
     {
+        /// <summary>
+        /// Identifies the <see cref="ToolTip"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ToolTipProperty =
+        DependencyProperty.Register(
+                "ToolTip", // Property name
+                typeof(string), // Property type
+                typeof(Control), // Property owner
+                new FrameworkPropertyMetadata( // Property metadata
+                        null, // default value
+                        FrameworkPropertyMetadataOptions.None,
+                        new PropertyChangedCallback(OnToolTipPropertyChanged),
+                        null,
+                        true, // IsAnimationProhibited
+                        UpdateSourceTrigger.PropertyChanged));//UpdateSourceTrigger.LostFocus
+
+        /// <summary>
+        /// Identifies the <see cref="Enabled"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty EnabledProperty =
+            DependencyProperty.Register(
+                    "Enabled", // Property name
+                    typeof(bool), // Property type
+                    typeof(Control), // Property owner
+                    new FrameworkPropertyMetadata( // Property metadata
+                            true, // default enabled
+                            FrameworkPropertyMetadataOptions.AffectsPaint, // Flags
+                            new PropertyChangedCallback(OnEnabledPropertyChanged),
+                            null, // coerce callback
+                            true, // IsAnimationProhibited
+                            UpdateSourceTrigger.PropertyChanged));// UpdateSourceTrigger.LostFocus
+
+        private static readonly object?[] EmptyArray = new object?[0];
         private static readonly Size DefaultSize = new (double.NaN, double.NaN);
         private static Font? defaultFont;
-        private static readonly object?[] emptyArray = new object?[0];
         private Size size = DefaultSize;
         private Thickness margin;
         private Thickness padding;
@@ -40,22 +72,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Identifies the <see cref="Enabled"/> dependency property.
+        /// Occurs when the <see cref="ToolTip"/> property value changes.
         /// </summary>
-        public static readonly DependencyProperty EnabledProperty =
-            DependencyProperty.Register(
-                    "Enabled", // Property name
-                    typeof(bool), // Property type
-                    typeof(Control), // Property owner
-                    new FrameworkPropertyMetadata( // Property metadata
-                            true, // default enabled
-                            FrameworkPropertyMetadataOptions.AffectsPaint, // Flags
-                            new PropertyChangedCallback(OnEnabledPropertyChanged),    // property changed callback
-                            null, // coerce callback
-                            true, // IsAnimationProhibited
-                            UpdateSourceTrigger.PropertyChanged
-                            //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
-                            ));
+        public event EventHandler? ToolTipChanged;
 
         /// <summary>
         /// Occurs when the control is clicked.
@@ -266,41 +285,6 @@ namespace Alternet.UI
         {
             get { return (bool)GetValue(EnabledProperty); }
             set { SetValue(EnabledProperty, value); }
-        }
-
-        /// <summary>
-        /// Called when the enabled of the <see cref="Enabled"/> property changes.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnEnabledChanged(EventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Callback for changes to the Enabled property
-        /// </summary>
-        private static void OnEnabledPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            Control control = (Control)d;
-            control.OnEnabledPropertyChanged((bool)e.OldValue, (bool)e.NewValue);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="EnabledChanged"/> event and calls <see cref="OnEnabledChanged(EventArgs)"/>.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        private void RaiseEnabledChanged(EventArgs e)
-        {
-            if (e == null)
-                throw new ArgumentNullException(nameof(e));
-
-            OnEnabledChanged(e);
-            EnabledChanged?.Invoke(this, e);
-        }
-
-        private void OnEnabledPropertyChanged(bool oldValue, bool newValue)
-        {
-            RaiseEnabledChanged(EventArgs.Empty);
         }
 
         /// <summary>
@@ -581,6 +565,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the user can give the focus to this control using the TAB key.
+        /// </summary>
+        public bool TabStop
+        {
+            get => Handler.TabStop;
+            set => Handler.TabStop = value;
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the control can accept data that the user drags onto it.
         /// </summary>
         /// <value><c>true</c> if drag-and-drop operations are allowed in the control; otherwise, <c>false</c>. The default is <c>false</c>.</value>
@@ -626,7 +619,7 @@ namespace Alternet.UI
         {
             if (method == null)
                 throw new ArgumentNullException(nameof(method));
-            return BeginInvoke(method, emptyArray);
+            return BeginInvoke(method, EmptyArray);
         }
 
         /// <summary>
@@ -638,14 +631,14 @@ namespace Alternet.UI
         {
             if (action == null)
                 throw new ArgumentNullException(nameof(action));
-            return BeginInvoke(action, emptyArray);
+            return BeginInvoke(action, EmptyArray);
         }
 
         /// <summary>
         /// Retrieves the return value of the asynchronous operation represented by the <see cref="IAsyncResult"/> passed.
         /// </summary>
         /// <param name="result">The <see cref="IAsyncResult"/> that represents a specific invoke asynchronous operation, returned when calling <see cref="BeginInvoke(Delegate)"/>.</param>
-        /// <returns>The <see cref="Object"/> generated by the asynchronous operation.</returns>
+        /// <returns>The <see cref="object"/> generated by the asynchronous operation.</returns>
         public object? EndInvoke(IAsyncResult result)
         {
             if (result == null)
@@ -658,7 +651,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="method">A delegate to a method that takes parameters of the same number and type that are contained in the <c>args</c> parameter.</param>
         /// <param name="args">An array of objects to pass as arguments to the specified method. This parameter can be <c>null</c> if the method takes no arguments.</param>
-        /// <returns>An <see cref="Object"/> that contains the return value from the delegate being invoked, or <c>null</c> if the delegate has no return value.</returns>
+        /// <returns>An <see cref="object"/> that contains the return value from the delegate being invoked, or <c>null</c> if the delegate has no return value.</returns>
         public object? Invoke(Delegate method, object?[] args)
         {
             if (method == null)
@@ -670,12 +663,12 @@ namespace Alternet.UI
         /// Executes the specified delegate on the thread that owns the control.
         /// </summary>
         /// <param name="method">A delegate that contains a method to be called in the control's thread context.</param>
-        /// <returns>An <see cref="Object"/> that contains the return value from the delegate being invoked, or <c>null</c> if the delegate has no return value.</returns>
+        /// <returns>An <see cref="object"/> that contains the return value from the delegate being invoked, or <c>null</c> if the delegate has no return value.</returns>
         public object? Invoke(Delegate method)
         {
             if (method == null)
                 throw new ArgumentNullException(nameof(method));
-            return Invoke(method, emptyArray);
+            return Invoke(method, EmptyArray);
         }
 
         /// <summary>
@@ -686,7 +679,7 @@ namespace Alternet.UI
         {
             if (action == null)
                 throw new ArgumentNullException(nameof(action));
-            Invoke(action, emptyArray);
+            Invoke(action, EmptyArray);
         }
 
         /// <summary>
@@ -942,15 +935,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the user can give the focus to this control using the TAB key.
-        /// </summary>
-        public bool TabStop
-        {
-            get => Handler.TabStop;
-            set => Handler.TabStop = value;
-        }
-
-        /// <summary>
         /// Gets a value indicating whether the control has input focus.
         /// </summary>
         public bool IsFocused => Handler.IsFocused;
@@ -979,6 +963,26 @@ namespace Alternet.UI
         public DragDropEffects DoDragDrop(object data, DragDropEffects allowedEffects)
         {
             return Handler.DoDragDrop(data, allowedEffects);
+        }
+
+        public void RecreateWindow()
+        {
+            Handler.NativeControl.RecreateWindow();
+        }
+
+        /// <summary>
+        /// Forces the re-creation of the handler for the control.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="RecreateHandler"/> method is called whenever re-execution of handler creation logic is needed.
+        /// For example, this may happen when visual theme changes.
+        /// </remarks>
+        internal void RecreateHandler()
+        {
+            if (handler != null)
+                DetachHandler();
+
+            Invalidate();
         }
 
         internal static void OnVisualStatePropertyChanged(Control control, DependencyPropertyChangedEventArgs e)
@@ -1133,21 +1137,6 @@ namespace Alternet.UI
         private protected override bool GetIsEnabled() => Enabled;
 
         /// <summary>
-        /// Forces the re-creation of the handler for the control.
-        /// </summary>
-        /// <remarks>
-        /// The <see cref="RecreateHandler"/> method is called whenever re-execution of handler creation logic is needed.
-        /// For example, this may happen when visual theme changes.
-        /// </remarks>
-        protected void RecreateHandler()
-        {
-            if (handler != null)
-                DetachHandler();
-
-            Invalidate();
-        }
-
-        /// <summary>
         /// Called before the current control handler is detached.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
@@ -1170,7 +1159,6 @@ namespace Alternet.UI
         /// </remarks>
         protected virtual ControlHandler CreateHandler() => GetEffectiveControlHandlerHactory().CreateControlHandler(this);
 
-        // todo: maybe reconsider naming?
         /// <summary>
         /// Releases the unmanaged resources used by the object and optionally releases the managed resources.
         /// </summary>
@@ -1181,7 +1169,7 @@ namespace Alternet.UI
             {
                 if (disposing)
                 {
-                    var children = Handler.AllChildren.ToArray();
+                    /*var children = Handler.AllChildren.ToArray();*/
 
                     SuspendLayout();
                     Children.Clear();
@@ -1189,8 +1177,7 @@ namespace Alternet.UI
                     ResumeLayout(performLayout: false);
 
                     // TODO
-                    //foreach (var child in children)
-                    //    child.Dispose();
+                    /* foreach (var child in children) child.Dispose();*/
 
                     DetachHandler();
                 }
@@ -1295,24 +1282,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Identifies the <see cref="ToolTip"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty ToolTipProperty =
-        DependencyProperty.Register(
-                "ToolTip", // Property name
-                typeof(string), // Property type
-                typeof(Control), // Property owner
-                new FrameworkPropertyMetadata( // Property metadata
-                        null, // default value
-                        FrameworkPropertyMetadataOptions.None,
-                        new PropertyChangedCallback(OnToolTipPropertyChanged),    // property changed callback
-                        null,
-                        true, // IsAnimationProhibited
-                        UpdateSourceTrigger.PropertyChanged
-                        //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
-                        ));
-
-        /// <summary>
         /// Callback for changes to the ToolTip property
         /// </summary>
         private static void OnToolTipPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -1336,8 +1305,37 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when the <see cref="ToolTip"/> property value changes.
+        /// Called when the enabled of the <see cref="Enabled"/> property changes.
         /// </summary>
-        public event EventHandler? ToolTipChanged;
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnEnabledChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Callback for changes to the Enabled property
+        /// </summary>
+        private static void OnEnabledPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            Control control = (Control)d;
+            control.OnEnabledPropertyChanged((bool)e.OldValue, (bool)e.NewValue);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="EnabledChanged"/> event and calls <see cref="OnEnabledChanged(EventArgs)"/>.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        private void RaiseEnabledChanged(EventArgs e)
+        {
+            if (e == null)
+                throw new ArgumentNullException(nameof(e));
+
+            OnEnabledChanged(e);
+            EnabledChanged?.Invoke(this, e);
+        }
+        private void OnEnabledPropertyChanged(bool oldValue, bool newValue)
+        {
+            RaiseEnabledChanged(EventArgs.Empty);
+        }
     }
 }

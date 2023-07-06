@@ -15,6 +15,19 @@ namespace Alternet.UI
 
         public new Native.CheckListBox NativeControl => (Native.CheckListBox)base.NativeControl!;
 
+        /// <inheritdoc/>
+        public override void EnsureVisible(int itemIndex)
+        {
+            NativeControl.EnsureVisible(itemIndex);
+        }
+
+        /// <inheritdoc/>
+        public override int? HitTest(Point position)
+        {
+            int index = NativeControl.ItemHitTest(position);
+            return index == -1 ? null : index;
+        }
+
         internal override Native.Control CreateNativeControl()
         {
             return new Native.CheckListBox();
@@ -91,7 +104,6 @@ namespace Alternet.UI
 
             ApplyCheckedIndices();
         }
-
 
         private void ApplySelectionMode()
         {
@@ -179,6 +191,7 @@ namespace Alternet.UI
                 receivingCheckedIndices = false;
             }
         }
+
         private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<object> e)
         {
             NativeControl.InsertItem(e.Index, Control.GetItemText(e.Item));
@@ -188,18 +201,5 @@ namespace Alternet.UI
         {
             NativeControl.RemoveItemAt(e.Index);
         }
-
-        /// <inheritdoc/>
-        public override void EnsureVisible(int itemIndex)
-        {
-            NativeControl.EnsureVisible(itemIndex);
-        }
-
-        /// <inheritdoc/>
-        public override int? HitTest(Point position)
-        {
-            int index = NativeControl.ItemHitTest(position);
-            return index == -1 ? null : index;
-        }
-    }
+     }
 }

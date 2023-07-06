@@ -9,8 +9,13 @@ namespace Alternet.UI
     /// </summary>
     public abstract class ListBoxHandler : ControlHandler
     {
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a <see cref="ListBox"/> this handler provides the implementation for.
+        /// </summary>
         public new ListBox Control => (ListBox)base.Control;
+
+        /// <inheritdoc/>
+        protected override bool VisualChildNeedsNativeControl => true;
 
         /// <summary>
         /// Ensures that the item is visible within the control, scrolling the contents of the control, if necessary.
@@ -22,7 +27,5 @@ namespace Alternet.UI
         /// </summary>
         public abstract int? HitTest(Point position);
 
-        /// <inheritdoc/>
-        protected override bool VisualChildNeedsNativeControl => true;
     }
 }
