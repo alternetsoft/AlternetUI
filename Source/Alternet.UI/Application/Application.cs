@@ -13,6 +13,7 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public partial class Application : IDisposable
     {
+        private static bool terminating = false;
         private static Application? current;
         private readonly List<Window> windows = new ();
         private UnhandledExceptionMode unhandledExceptionMode;
@@ -56,6 +57,8 @@ namespace Alternet.UI
         ///  Currently used to suppress GTK messages under Linux. Default value is true.
         /// </remarks>
         public static bool SupressDiagnostics { get; set; } = true;
+
+        public static bool Terminating { get => terminating; }
 
         /// <summary>
         ///  Occurs when an untrapped thread exception is thrown.
@@ -304,6 +307,7 @@ namespace Alternet.UI
             window.Show();
             nativeApplication.Run(((NativeWindowHandler)window.Handler).NativeControl);
             SynchronizationContext.Uninstall();
+            terminating = true;
         }
 
         /// <summary>

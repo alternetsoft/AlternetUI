@@ -18,7 +18,14 @@ namespace Alternet.UI.Native
 
         private static readonly Dictionary<IntPtr, NativeObject> instancesByNativePointers = new Dictionary<IntPtr, NativeObject>();
 
-        ~NativeObject() => Dispose(disposing: false);
+        ~NativeObject()
+        {
+#if NETFRAMEWORK  // Issue #27
+            if (Alternet.UI.Application.Terminating)
+                return;
+#endif
+            Dispose(disposing: false);
+        }
 
         public bool IsDisposed { get; private set; }
 

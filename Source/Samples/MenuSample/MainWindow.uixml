@@ -42,12 +42,6 @@
       </MenuItem>
     </MainMenu>
   </Window.Menu>
-  <Window.StatusBar>
-    <StatusBar Name="statusBar">
-      <StatusBarPanel Text="Ready" />
-      <StatusBarPanel Name="clockStatusBarPanel" />
-    </StatusBar>
-  </Window.StatusBar>
 
   
       <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="5" Margin="5">

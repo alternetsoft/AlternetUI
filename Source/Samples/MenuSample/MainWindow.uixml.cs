@@ -3,6 +3,7 @@ using Alternet.UI;
 using System;
 using System.Linq;
 using System.Security.Policy;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MenuSample
 {
@@ -11,10 +12,14 @@ namespace MenuSample
         Toolbar? toolbar;
         ToolbarItem? dynamicToolbarItemsSeparator;
         ToolbarItem? checkableToolbarItem;
+        StatusBar? statusBar;
+        StatusBarPanel? statusBarPanel1;
+        StatusBarPanel? clockStatusBarPanel;
 
         public MainWindow()
         {
             InitToolbar();
+            InitStatusbar();
 
             InitializeComponent();
 
@@ -29,7 +34,7 @@ namespace MenuSample
                 toolbar!.Items.IndexOf(dynamicToolbarItemsSeparator!);
             AddDynamicToolbarItem();
 
-            clockStatusBarPanelIndex = statusBar.Panels.IndexOf(clockStatusBarPanel);
+            clockStatusBarPanelIndex = statusBar!.Panels.IndexOf(clockStatusBarPanel!);
             AddDynamicStatusBarPanel();
 
             foreach (var value in Enum.GetValues(typeof(ToolbarItemImageToTextDisplayMode)))
@@ -51,7 +56,7 @@ namespace MenuSample
 
         private void TimerEvent(object? sender, EventArgs e)
         {
-            if (this.IsDisposed || clockStatusBarPanel.IsDisposed)
+            if (this.IsDisposed || clockStatusBarPanel!.IsDisposed)
                 return;
             clockStatusBarPanel.Text = System.DateTime.Now.ToString("HH:mm:ss");
         }
@@ -60,11 +65,23 @@ namespace MenuSample
         readonly int dynamicToolbarItemsSeparatorIndex;
         readonly int clockStatusBarPanelIndex;
 
+
+        private void InitStatusbar()
+        {
+            statusBar = new();
+            statusBarPanel1=new();
+            statusBarPanel1.Text = "Ready";
+            clockStatusBarPanel = new();
+
+            statusBar.Panels.Add(statusBarPanel1);
+            statusBar.Panels.Add(clockStatusBarPanel);
+
+            StatusBar = statusBar;
+
+        }
         private void InitToolbar()
         {
             toolbar = new ();
-
-            //toolbar.BeginUpdate();
 
             var calendarToolbarItem = new ToolbarItem("Calendar", ToolbarItem_Click)
             {
@@ -116,8 +133,6 @@ namespace MenuSample
 
             dynamicToolbarItemsSeparator = new ToolbarItem("-");
             toolbar.Items.Add(dynamicToolbarItemsSeparator);
-
-            //toolbar.EndUpdate();
 
             Toolbar = toolbar;
 
@@ -347,14 +362,14 @@ namespace MenuSample
 
         private void RemoveLastDynamicStatusBarPanelButton_Click(object sender, System.EventArgs e)
         {
-            if (statusBar.Panels.Count == clockStatusBarPanelIndex + 1)
+            if (statusBar!.Panels.Count == clockStatusBarPanelIndex + 1)
                 return;
             statusBar.Panels.RemoveAt(statusBar.Panels.Count - 1);
         }
 
         private void AddDynamicStatusBarPanel()
         {
-            int number = statusBar.Panels.Count - clockStatusBarPanelIndex;
+            int number = statusBar!.Panels.Count - clockStatusBarPanelIndex;
             string text = "Dynamic Panel " + number;
             statusBar.Panels.Add(new StatusBarPanel(text));
         }
