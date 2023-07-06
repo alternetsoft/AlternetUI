@@ -36,7 +36,13 @@ namespace PaintSample
             if (state != null)
                 throw new InvalidOperationException();
 
-            state = new State(new Pen(PenColor, Thickness), e.GetPosition(Canvas));
+            Pen pen = new(PenColor, Thickness)
+            {
+                LineCap = LineCap.Round,
+                LineJoin = LineJoin.Round
+            };
+
+            state = new State(pen, e.GetPosition(Canvas));
             Document.PreviewAction = Draw;
         }
 
@@ -74,14 +80,13 @@ namespace PaintSample
             }
         }
 
-        void DrawSinglePoint(DrawingContext dc)
+        void DrawSinglePoint(DrawingContext dc, Point point)
         {
             if (state == null)
                 throw new InvalidOperationException();
 
             var width = state.Pen.Width;
             Rect rect;
-            var point = state.Points.Single();
             if (width == 1)
                 rect = new Rect(point, new Size(width, width));
             else
@@ -99,9 +104,18 @@ namespace PaintSample
                 throw new InvalidOperationException();
 
             if (state.Points.Count == 1)
-                DrawSinglePoint(dc);
+                DrawSinglePoint(dc, state.Points.Single());
             else
-                dc.DrawLines(state.Pen, state.Points.ToArray());
+            {
+                Point? prevPoint = null;
+
+                foreach (Point p in state.Points)
+                {
+                    if(prevPoint != null)
+                        dc.DrawLine(state.Pen, (Point)prevPoint, p);
+                    prevPoint = p;
+                }
+            }
         }
 
         private void Cancel()
