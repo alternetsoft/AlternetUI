@@ -12,14 +12,10 @@ namespace MenuSample
         Toolbar? toolbar;
         ToolbarItem? dynamicToolbarItemsSeparator;
         ToolbarItem? checkableToolbarItem;
-        StatusBar? statusBar;
-        StatusBarPanel? statusBarPanel1;
-        StatusBarPanel? clockStatusBarPanel;
 
         public MainWindow()
         {
             InitToolbar();
-            InitStatusbar();
 
             InitializeComponent();
 
@@ -65,20 +61,6 @@ namespace MenuSample
         readonly int dynamicToolbarItemsSeparatorIndex;
         readonly int clockStatusBarPanelIndex;
 
-
-        private void InitStatusbar()
-        {
-            statusBar = new();
-            statusBarPanel1=new();
-            statusBarPanel1.Text = "Ready";
-            clockStatusBarPanel = new();
-
-            statusBar.Panels.Add(statusBarPanel1);
-            statusBar.Panels.Add(clockStatusBarPanel);
-
-            StatusBar = statusBar;
-
-        }
         private void InitToolbar()
         {
             toolbar = new ();
