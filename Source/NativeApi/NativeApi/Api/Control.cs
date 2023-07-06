@@ -80,6 +80,8 @@ namespace NativeApi.Api
         public void BeginUpdate() => throw new Exception();
         public void EndUpdate() => throw new Exception();
 
+        public void RecreateWindow() => throw new Exception();
+
         public static Control? HitTest(Point screenPoint) => throw new Exception();
 
         public Point ClientToScreen(Point point) => throw new Exception();

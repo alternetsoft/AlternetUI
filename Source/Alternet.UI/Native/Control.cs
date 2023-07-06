@@ -358,6 +358,12 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum)
+        {
+            CheckDisposed();
+            NativeApi.Control_SetScrollBar_(NativePointer, orientation, visible, value, largeChange, maximum);
+        }
+        
         public bool IsScrollBarVisible(ScrollBarOrientation orientation)
         {
             CheckDisposed();
@@ -466,6 +472,12 @@ namespace Alternet.UI.Native
             NativeApi.Control_EndUpdate_(NativePointer);
         }
         
+        public void RecreateWindow()
+        {
+            CheckDisposed();
+            NativeApi.Control_RecreateWindow_(NativePointer);
+        }
+        
         public static Control? HitTest(Alternet.Drawing.Point screenPoint)
         {
             var n = NativeApi.Control_HitTest_(screenPoint);
@@ -556,12 +568,6 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.Control_SendSizeEvent_(NativePointer);
-        }
-        
-        public void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum)
-        {
-            CheckDisposed();
-            NativeApi.Control_SetScrollBar_(NativePointer, orientation, visible, value, largeChange, maximum);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -809,6 +815,9 @@ namespace Alternet.UI.Native
             public static extern void Control_SetIsScrollable_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetScrollBar_(IntPtr obj, ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_IsScrollBarVisible_(IntPtr obj, ScrollBarOrientation orientation);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -854,6 +863,9 @@ namespace Alternet.UI.Native
             public static extern void Control_EndUpdate_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_RecreateWindow_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_HitTest_(NativeApiTypes.Point screenPoint);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -891,9 +903,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SendSizeEvent_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetScrollBar_(IntPtr obj, ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
             
         }
     }
