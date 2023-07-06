@@ -263,6 +263,13 @@ ALTERNET_UI_API void Control_SetIsScrollable_(Control* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API void Control_SetScrollBar_(Control* obj, ScrollBarOrientation orientation, c_bool visible, int value, int largeChange, int maximum)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetScrollBar(orientation, visible, value, largeChange, maximum);
+        });
+}
+
 ALTERNET_UI_API c_bool Control_IsScrollBarVisible_(Control* obj, ScrollBarOrientation orientation)
 {
     return MarshalExceptions<c_bool>([&](){
@@ -368,6 +375,13 @@ ALTERNET_UI_API void Control_EndUpdate_(Control* obj)
         });
 }
 
+ALTERNET_UI_API void Control_RecreateWindow_(Control* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->RecreateWindow();
+        });
+}
+
 ALTERNET_UI_API Control* Control_HitTest_(Point screenPoint)
 {
     return MarshalExceptions<Control*>([&](){
@@ -456,13 +470,6 @@ ALTERNET_UI_API void Control_SendSizeEvent_(Control* obj)
 {
     MarshalExceptions<void>([&](){
             obj->SendSizeEvent();
-        });
-}
-
-ALTERNET_UI_API void Control_SetScrollBar_(Control* obj, ScrollBarOrientation orientation, c_bool visible, int value, int largeChange, int maximum)
-{
-    MarshalExceptions<void>([&](){
-            obj->SetScrollBar(orientation, visible, value, largeChange, maximum);
         });
 }
 

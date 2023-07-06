@@ -80,6 +80,7 @@ void* GetHandle();
 bool GetIsScrollable();
 void SetIsScrollable(bool value);
 
+void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
 bool IsScrollBarVisible(ScrollBarOrientation orientation);
 int GetScrollBarValue(ScrollBarOrientation orientation);
 int GetScrollBarLargeChange(ScrollBarOrientation orientation);
@@ -95,6 +96,7 @@ DrawingContext* OpenPaintDrawingContext();
 DrawingContext* OpenClientDrawingContext();
 void BeginUpdate();
 void EndUpdate();
+void RecreateWindow();
 static Control* HitTest(const Point& screenPoint);
 Point ClientToScreen(const Point& point);
 Point ScreenToClient(const Point& point);
@@ -108,7 +110,6 @@ void EndInit();
 void Destroy();
 void SaveScreenshot(const string& fileName);
 void SendSizeEvent();
-void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
 public:
 enum class ControlEvent
 {

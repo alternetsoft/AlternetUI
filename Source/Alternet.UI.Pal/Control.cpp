@@ -476,6 +476,11 @@ namespace Alternet::UI
             child->UpdateWxWindowParent();
     }
 
+    void Control::RecreateWindow() 
+    {
+        RecreateWxWindowIfNeeded();
+    }
+
     void Control::RecreateWxWindowIfNeeded()
     {
         if (!IsWxWindowCreated())
