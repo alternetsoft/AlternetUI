@@ -30,8 +30,12 @@ namespace ControlsSample
                 checkListBox.Items.Add("Eight");
                 checkListBox.Items.Add("Nine");
                 checkListBox.Items.Add("Ten");
-                checkListBox.SelectionMode = ListBoxSelectionMode.Multiple;
+
+                // Do not comment this line or items will not be painted properly
+                checkListBox.RecreateWindow();
+
                 checkListBox.SelectionChanged += CheckListBox_SelectionChanged;
+                allowMultipleSelectionCheckBox.IsChecked = checkListBox.SelectionMode == ListBoxSelectionMode.Multiple;
                 site = value;
             }
         }
