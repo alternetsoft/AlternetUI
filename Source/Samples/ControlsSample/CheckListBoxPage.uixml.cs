@@ -82,7 +82,7 @@ namespace ControlsSample
                 $"CheckListBox: CheckedChanged. Checked: ({checkedIndicesString})");
         }
 
-        private void CheckListBox_SelectionChanged(object sender, EventArgs e)
+        private void CheckListBox_SelectionChanged(object? sender, EventArgs e)
         {
             string selectedIndicesString = IndicesToStr(checkListBox.SelectedIndices);
             site?.LogEvent(
