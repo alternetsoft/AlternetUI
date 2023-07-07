@@ -513,6 +513,10 @@ namespace Alternet::UI
     wxWindow* Window::CreateWxWindowCore(wxWindow* parent)
     {
         auto style = GetWindowStyle();
+
+        // This did not fixed repainting problems
+        // style = style | wxFULL_REPAINT_ON_RESIZE;
+
         _frame = new Frame(this, style);
 
         ApplyIcon(_frame);
