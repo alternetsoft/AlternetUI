@@ -3,6 +3,10 @@
     "Alternet.UI.RunCmd": {
       "commandName": "Project",
       "commandLineArgs": "-r=waitEnter"
+    },
+    "FilterLog": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=filterLog Filter=\"CS1591\" Log=\"..\\..\\..\\..\\..\\Alternet.UI\\Build.Result.Log\" Result=\"..\\..\\..\\..\\..\\Alternet.UI\\Find.Not.Documented.log\""
     }
   }
 }
