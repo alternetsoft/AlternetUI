@@ -20,7 +20,7 @@
 			<CallTarget Targets="DotNetNugetSignInfo1;DotNetNugetSignInfo2;ExecDotNetNugetSign" />	
 	</Target>
 	
-	<Target Name="ExecDotNetNugetSign" Condition="'$(VsixSignPassword)'!='' and Exists('$(ALTERNET_PFX'))">
+	<Target Name="ExecDotNetNugetSign" Condition="'$(VsixSignPassword)'!='' and Exists('$(ALTERNET_PFX)')">
         <Exec Command="dotnet nuget sign &quot;$(NUGET_PATH)&quot; --certificate-path &quot;$(ALTERNET_PFX)&quot; --timestamper http://timestamp.digicert.com --certificate-password $(VsixSignPassword)" />
 		<Message Text="NuGet signed: $(NUGET_PATH)" Importance="high" />
 	</Target>
