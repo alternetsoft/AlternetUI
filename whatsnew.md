@@ -1,5 +1,7 @@
-# 0.9.201
+# 0.9.201 (2023 July ?)
 
+- Fixed painting problems on window resize and move.
+- Fixed not working scrollbars in ListView, TreeView, ListBox, CheckedListBox.
 - Improved look of the Sample projects on Linux and macOS.
 - Improved behavior and fixed bugs in the Sample projects.
 - Fixed some of the UIXml previewer problems in Sample projects.
@@ -13,8 +15,9 @@
 - New methods ListBox.RemoveSelectedItems, ListBox.RemoveItems, CheckListBox.RemoveCheckedItems, 
 	ListBox.IsValidIndex, ListBox.GetValidIndexes.
 - CheckListBox now fires SelectionChanged event and keeps corect SelectedIndices.
+- Added HasBorder property to ListBox, CheckListBox.  
 
-# 0.9.200
+# 0.9.200 (2023 Jun 29)
 
 - Added WebBrowser control.
 - Added WebBrowser control demo page in the ControlsSample project.
