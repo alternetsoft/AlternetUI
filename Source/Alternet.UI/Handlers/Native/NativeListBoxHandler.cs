@@ -27,7 +27,7 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            return new Native.ListBox();
+            return new Native.NativeListBoxEx();
         }
 
         protected override void OnAttach()

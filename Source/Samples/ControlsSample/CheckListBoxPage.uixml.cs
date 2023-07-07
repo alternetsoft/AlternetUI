@@ -47,6 +47,11 @@ namespace ControlsSample
             site?.LogEvent($"HitTest result: Item: '{(result == null ? "<none>" : checkListBox.Items[result.Value])}'");
         }
 
+        private void HasBorderButton_Click(object? sender, EventArgs e)
+        {
+            checkListBox.HasBorder = !checkListBox.HasBorder;
+        }
+
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
         {
             int start = checkListBox.Items.Count + 1;

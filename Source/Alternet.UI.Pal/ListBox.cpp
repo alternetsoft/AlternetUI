@@ -2,6 +2,29 @@
 
 namespace Alternet::UI
 {
+    void* ListBox::CreateEx(int64_t styles)
+    {
+        return new ListBox(styles);
+    }
+
+    bool ListBox::GetHasBorder() 
+    {
+        return hasBorder;
+    }
+    
+    void ListBox::SetHasBorder(bool value)
+    {
+        if (hasBorder == value)
+            return;
+        hasBorder = value;
+        RecreateWindow();
+    }
+
+    ListBox::ListBox(int64_t styles)
+    {
+        createStyles = styles;
+    }
+
     ListBox::ListBox()
     {
     }
@@ -44,6 +67,11 @@ namespace Alternet::UI
 
     wxWindow* ListBox::CreateWxWindowCore(wxWindow* parent)
     {
+        long style = GetSelectionStyle() | GetBorderStyle();
+
+        if (!hasBorder)
+            style = style | wxBORDER_NONE;
+        
         auto value = new wxListBox(
             parent,
             wxID_ANY,
@@ -51,7 +79,7 @@ namespace Alternet::UI
             wxDefaultSize,
             0,
             NULL,
-            GetSelectionStyle());
+            style);
 
         value->Bind(wxEVT_LISTBOX, &ListBox::OnSelectionChanged, this);
 

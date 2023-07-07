@@ -372,6 +372,25 @@ namespace Alternet.UI
                 RaiseSelectionChanged(EventArgs.Empty);
         }
 
+        public bool HasBorder
+        {
+            get
+            {
+                CheckDisposed();
+                if (Handler is not NativeListBoxHandler handler)
+                    return true;
+                return handler.NativeControl.HasBorder;
+            }
+
+            set
+            {
+                CheckDisposed();
+                if (Handler is not NativeListBoxHandler handler)
+                    return;
+                handler.NativeControl.HasBorder = value;
+            }
+        }
+
         /// <summary>
         /// Raises the <see cref="SelectionChanged"/> event and calls <see cref="OnSelectionChanged(EventArgs)"/>.
         /// </summary>

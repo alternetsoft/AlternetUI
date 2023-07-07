@@ -22,6 +22,11 @@ namespace Alternet::UI
 
     wxWindow* CheckListBox::CreateWxWindowCore(wxWindow* parent)
     {
+        long style = GetSelectionStyle() | GetBorderStyle();
+
+        if (!hasBorder)
+            style = style | wxBORDER_NONE;
+
         auto value = new wxCheckListBox(
             parent,
             wxID_ANY,
@@ -29,7 +34,7 @@ namespace Alternet::UI
             wxDefaultSize,
             0,
             NULL,
-            GetSelectionStyle());
+            style);
 
         value->Bind(wxEVT_CHECKLISTBOX, &CheckListBox::OnCheckedChanged, this);
         value->Bind(wxEVT_LISTBOX, &CheckListBox::OnSelectionChanged, this);

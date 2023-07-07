@@ -33,6 +33,11 @@ namespace ControlsSample
             }
         }
 
+        private void HasBorderButton_Click(object? sender, EventArgs e)
+        {
+            listBox.HasBorder = !listBox.HasBorder;
+        }
+
         private void ListBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var result = listBox.HitTest(e.GetPosition(listBox));

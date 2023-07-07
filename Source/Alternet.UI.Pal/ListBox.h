@@ -8,6 +8,8 @@ namespace Alternet::UI
     {
 #include "Api/ListBox.inc"
     public:
+        ListBox(int64_t styles);
+
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
         void OnSelectionChanged(wxCommandEvent& event);
@@ -18,8 +20,8 @@ namespace Alternet::UI
         void OnBeforeDestroyWxWindow() override;
         long GetSelectionStyle();
 
+        bool hasBorder = true;
     private:
-
         std::vector<string> _items;
         std::vector<int> _selectedIndices;
 

@@ -35,6 +35,24 @@ namespace Alternet.UI
             }
         }
 
+        public bool HasBorder
+        {
+            get
+            {
+                CheckDisposed();
+                if (Handler is not NativeCheckListBoxHandler handler)
+                    return true;
+                return handler.NativeControl.HasBorder;
+            }
+
+            set
+            {
+                CheckDisposed();
+                if (Handler is not NativeCheckListBoxHandler handler)
+                    return;
+                handler.NativeControl.HasBorder = value;
+            }
+        }
         /// <summary>
         /// Occurs when the <see cref="CheckedIndex"/> property or the <see cref="CheckedIndices"/> collection has changed.
         /// </summary>

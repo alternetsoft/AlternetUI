@@ -15,6 +15,20 @@ ALTERNET_UI_API ListBox* ListBox_Create_()
         });
 }
 
+ALTERNET_UI_API c_bool ListBox_GetHasBorder_(ListBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetHasBorder();
+        });
+}
+
+ALTERNET_UI_API void ListBox_SetHasBorder_(ListBox* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetHasBorder(value);
+        });
+}
+
 ALTERNET_UI_API int ListBox_GetItemsCount_(ListBox* obj)
 {
     return MarshalExceptions<int>([&](){
@@ -61,6 +75,13 @@ ALTERNET_UI_API void ListBox_CloseSelectedIndicesArray_(ListBox* obj, void* arra
 {
     MarshalExceptions<void>([&](){
             obj->CloseSelectedIndicesArray(array);
+        });
+}
+
+ALTERNET_UI_API void* ListBox_CreateEx_(int64_t styles)
+{
+    return MarshalExceptions<void*>([&](){
+            return ListBox::CreateEx(styles);
         });
 }
 

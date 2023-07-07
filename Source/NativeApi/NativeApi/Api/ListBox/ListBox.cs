@@ -5,6 +5,9 @@ namespace NativeApi.Api
 {
     public class ListBox : Control
     {
+        public bool HasBorder { get; set; }
+        public static IntPtr CreateEx(long styles) => throw new Exception();
+
         public event EventHandler? SelectionChanged { add => throw new Exception(); remove => throw new Exception(); }
 
         public int ItemsCount { get; }
