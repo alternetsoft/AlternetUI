@@ -1,9 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+<!-- Also edit \Source\Samples\CommonData\TargetFrameworks.props -->	
+
   <PropertyGroup>
 	<UITargetFrameworksWindows>net7.0;net6.0;net462;net481</UITargetFrameworksWindows>
 	<UITargetFrameworksNonWindows>net7.0;net6.0</UITargetFrameworksNonWindows>
 
+	<!-- Also need to change in Alternet.UI.Integration.VisualStudio.csproj if you change this-->
+        <UIIntegrationUIXmlHostAppTargetFrameworks>net462;net481;net6.0-windows;net7.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
   </PropertyGroup>
 </Project>
 
