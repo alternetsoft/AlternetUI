@@ -436,7 +436,7 @@ namespace Alternet.UI.Native
         public event NativeEventHandler<TreeViewItemLabelEditEventData>? AfterItemLabelEdit;
         
         [SuppressUnmanagedCodeSecurity]
-        private class NativeApi : NativeApiProvider
+        public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             

@@ -247,7 +247,7 @@ namespace Alternet.UI.Native
         public event EventHandler? Idle;
         
         [SuppressUnmanagedCodeSecurity]
-        private class NativeApi : NativeApiProvider
+        public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             

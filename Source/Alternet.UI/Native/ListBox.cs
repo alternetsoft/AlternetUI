@@ -23,6 +23,23 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool HasBorder
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.ListBox_GetHasBorder_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ListBox_SetHasBorder_(NativePointer, value);
+            }
+        }
+        
         public int ItemsCount
         {
             get
@@ -76,6 +93,13 @@ namespace Alternet.UI.Native
                 }
             }
             
+        }
+        
+        public static System.IntPtr CreateEx(long styles)
+        {
+            var n = NativeApi.ListBox_CreateEx_(styles);
+            var m = n;
+            return m;
         }
         
         public void InsertItem(int index, string value)
@@ -156,7 +180,7 @@ namespace Alternet.UI.Native
         public event EventHandler? SelectionChanged;
         
         [SuppressUnmanagedCodeSecurity]
-        private class NativeApi : NativeApiProvider
+        public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
@@ -173,6 +197,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr ListBox_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool ListBox_GetHasBorder_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListBox_SetHasBorder_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ListBox_GetItemsCount_(IntPtr obj);
@@ -194,6 +224,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListBox_CloseSelectedIndicesArray_(IntPtr obj, System.IntPtr array);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr ListBox_CreateEx_(long styles);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListBox_InsertItem_(IntPtr obj, int index, string value);

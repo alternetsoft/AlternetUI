@@ -622,7 +622,7 @@ namespace Alternet.UI.Native
         public event NativeEventHandler<WebBrowserEventData>? BeforeBrowserCreate;
         
         [SuppressUnmanagedCodeSecurity]
-        private class NativeApi : NativeApiProvider
+        public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             

@@ -19,7 +19,7 @@ namespace ApiGenerator.Managed
             var type = apiType.Type;
 
             w.WriteLine("[SuppressUnmanagedCodeSecurity]");
-            w.WriteLine("class NativeApi : NativeApiProvider");
+            w.WriteLine("public class NativeApi : NativeApiProvider");
             w.WriteLine("{");
             w.Indent++;
             w.WriteLine("static NativeApi() => Initialize();");

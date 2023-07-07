@@ -78,7 +78,7 @@ namespace Alternet.UI.Native
         public event NativeEventHandler<TextInputEventData>? TextInput;
         
         [SuppressUnmanagedCodeSecurity]
-        private class NativeApi : NativeApiProvider
+        public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
