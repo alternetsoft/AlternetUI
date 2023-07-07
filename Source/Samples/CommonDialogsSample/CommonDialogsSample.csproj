@@ -1,4 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\CommonData\TargetFrameworks.props" />
+
     <PropertyGroup>
       <OutputType>WinExe</OutputType>
       <Platforms>AnyCPU;x64;x86</Platforms>
@@ -8,15 +11,8 @@
       <ApplicationIcon>../CommonData/Sample.ico</ApplicationIcon>
     </PropertyGroup>
 
-	<PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-		<TargetFrameworks>net7.0;net6.0;net462</TargetFrameworks>
-	</PropertyGroup>
 
-	<PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-		<TargetFrameworks>net7.0;net6.0</TargetFrameworks>
-	</PropertyGroup>
-
-	<ItemGroup>
+    <ItemGroup>
       <Compile Remove="build\**" />
       <EmbeddedResource Remove="build\**" />
       <None Remove="build\**" />

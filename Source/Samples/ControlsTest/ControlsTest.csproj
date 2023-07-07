@@ -1,4 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\CommonData\TargetFrameworks.props" />
+
     <PropertyGroup>
       <OutputType>WinExe</OutputType>
       <Platforms>AnyCPU;x64;x86</Platforms>

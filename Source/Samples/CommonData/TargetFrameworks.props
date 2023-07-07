@@ -4,4 +4,13 @@
 	<SamplesTargetFrameworksWindows>net7.0;net6.0;net462</SamplesTargetFrameworksWindows>
 	<SamplesTargetFrameworksNonWindows>net7.0;net6.0</SamplesTargetFrameworksNonWindows>
   </PropertyGroup>
+
+	<PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+		<TargetFrameworks>$(SamplesTargetFrameworksWindows)</TargetFrameworks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
+		<TargetFrameworks>$(SamplesTargetFrameworksNonWindows)</TargetFrameworks>
+	</PropertyGroup>
+
 </Project>
