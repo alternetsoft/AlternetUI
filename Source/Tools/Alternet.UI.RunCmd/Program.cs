@@ -16,8 +16,15 @@ CommandLineArgs.Default.ParseArgs(args);
 
 Console.WriteLine();
 
+bool IsCommand(string s)
+{
+    if (s is null || CommonUtils.CmdLineExecCommands is null)
+        return false;
+    return s.Equals(CommonUtils.CmdLineExecCommands, StringComparison.CurrentCultureIgnoreCase);
+}
+
 // download command
-if (CommonUtils.CmdLineExecCommands == "download")
+if (IsCommand("download"))
 {
     // -r=download Url="https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.2.2.1.zip" Path="e:/file.zip"
     string docUrl = CommandLineArgs.Default.ArgAsString("Url");
@@ -28,7 +35,7 @@ if (CommonUtils.CmdLineExecCommands == "download")
 }
 
 // runControlsSample command
-if (CommonUtils.CmdLineExecCommands == "runControlsSample")
+if (IsCommand("runControlsSample"))
 {
     string path = Path.Combine(
         CommonUtils.GetAppFolder(), 
@@ -41,7 +48,7 @@ if (CommonUtils.CmdLineExecCommands == "runControlsSample")
 }
 
 // waitAnyKey command
-if (CommonUtils.CmdLineExecCommands == "waitAnyKey")
+if (IsCommand("waitAnyKey"))
 {
     Console.WriteLine("Press any key to close this window...");
     Console.ReadKey();
@@ -49,7 +56,7 @@ if (CommonUtils.CmdLineExecCommands == "waitAnyKey")
 }
 
 // waitEnter command
-if (CommonUtils.CmdLineExecCommands == "waitEnter")
+if (IsCommand("waitEnter"))
 {
     Console.WriteLine("Press ENTER to close this window...");
     Console.ReadLine();
@@ -105,10 +112,41 @@ void DeleteBinObjFiles(string path)
     }
 }
 
-if (CommonUtils.CmdLineExecCommands == "deleteBinFolders")
+// deleteBinFolders command
+if (IsCommand("deleteBinFolders"))
 {
     string path = Path.Combine(
         CommonUtils.GetAppFolder(),"..", "..", "..", "..", "..");
     DeleteBinObjFiles(path);
+    return;
+}
+
+// filterLog command
+if (IsCommand("filterLog"))
+{
+    string logFilter = CommandLineArgs.Default.ArgAsString("Filter").ToLower();
+    string logPath = CommandLineArgs.Default.ArgAsString("Log");
+    string resultPath = CommandLineArgs.Default.ArgAsString("Result");
+    logPath = Path.GetFullPath(logPath);
+    resultPath = Path.GetFullPath(resultPath);
+
+    Console.WriteLine($"Command: filterLog");
+    Console.WriteLine($"logPath: {logPath}");
+    Console.WriteLine($"resultPath: {resultPath}");
+    Console.WriteLine($"logFilter: {logFilter}");
+
+    IEnumerable<string> lines = File.ReadLines(logPath);
+
+    string contents = string.Empty;
+
+    foreach (string s in lines)
+    {
+        if(s.ToLower().Contains(logFilter))
+        {
+            Console.WriteLine(s);
+            contents += $"{s}{Environment.NewLine}";
+        }
+    }
+    File.WriteAllText(resultPath, contents);
     return;
 }
