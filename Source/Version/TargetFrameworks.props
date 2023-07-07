@@ -4,11 +4,12 @@
 <!-- Also edit \Source\Samples\CommonData\TargetFrameworks.props -->	
 
   <PropertyGroup>
-	<UITargetFrameworksWindows>net7.0;net6.0;net462;net481</UITargetFrameworksWindows>
+	<TargetFramework48Version>net481</TargetFramework48Version>
+	<TargetFramework46Version>net462</TargetFramework46Version>
+	<UITargetFrameworksWindows>net7.0;net6.0;$(TargetFramework46Version);$(TargetFramework48Version)</UITargetFrameworksWindows>
 	<UITargetFrameworksNonWindows>net7.0;net6.0</UITargetFrameworksNonWindows>
 
-	<!-- Also need to change in Alternet.UI.Integration.VisualStudio.csproj if you change this-->
-        <UIIntegrationUIXmlHostAppTargetFrameworks>net462;net481;net6.0-windows;net7.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
+        <UIIntegrationUIXmlHostAppTargetFrameworks>$(TargetFramework46Version);$(TargetFramework48Version);net6.0-windows;net7.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
   </PropertyGroup>
 </Project>
 

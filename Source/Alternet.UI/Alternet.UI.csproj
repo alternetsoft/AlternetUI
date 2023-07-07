@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\Version\Version.props" />
+  <Import Project="..\Version\TargetFrameworks.props" />
   <Import Project="..\Keys\Keys.props" />
 
 <!-- ================================================= -->
@@ -35,11 +36,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-    <TargetFrameworks>net7.0;net6.0;net462;net481</TargetFrameworks>
+    <TargetFrameworks>$(UITargetFrameworksWindows)</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-    <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>$(UITargetFrameworksNonWindows)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
