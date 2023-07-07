@@ -13,7 +13,7 @@ namespace Alternet::UI
         void SetBitmap(const wxBitmap& value);
 
         static void EnsureImageHandlersInitialized();
-
+        static void wxInitAllImageHandlersV2();
     private:
 
         static wxBitmapType GetBitmapTypeFromFormat(const string& format);

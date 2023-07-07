@@ -1,6 +1,8 @@
 #include "ImageSet.h"
 #include "Api/InputStream.h"
 #include "ManagedInputStream.h"
+#include "wx/wxprec.h"
+#include "Image.h"
 
 namespace Alternet::UI
 {
@@ -20,7 +22,7 @@ namespace Alternet::UI
 		_bitmaps.push_back(image->GetBitmap());
 		InvalidateBitmapBundle();
 	}
-	
+
 	void ImageSet::LoadFromStream(void* stream)
 	{
 		InputStream inputStream(stream);
@@ -29,7 +31,7 @@ namespace Alternet::UI
 		static bool imageHandlersInitialized = false;
 		if (!imageHandlersInitialized)
 		{
-			wxInitAllImageHandlers();
+			Image::wxInitAllImageHandlersV2();
 			imageHandlersInitialized = true;
 		}
 
