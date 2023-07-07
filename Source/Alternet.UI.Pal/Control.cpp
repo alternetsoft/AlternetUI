@@ -96,15 +96,17 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
         wxWindow->Unbind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
 
-        wxWindow->Unbind(wxEVT_SCROLLWIN_TOP, &Control::OnScrollTop, this);
-        wxWindow->Unbind(wxEVT_SCROLLWIN_BOTTOM, &Control::OnScrollBottom, this);
-        wxWindow->Unbind(wxEVT_SCROLLWIN_LINEUP, &Control::OnScrollLineUp, this);
-        wxWindow->Unbind(wxEVT_SCROLLWIN_LINEDOWN, &Control::OnScrollLineDown, this);
-        wxWindow->Unbind(wxEVT_SCROLLWIN_PAGEUP, &Control::OnScrollPageUp, this);
-        wxWindow->Unbind(wxEVT_SCROLLWIN_PAGEDOWN, &Control::OnScrollPageDown, this);
-        wxWindow->Unbind(wxEVT_SCROLLWIN_THUMBTRACK, &Control::OnScrollThumbTrack, this);
-        wxWindow->Unbind(wxEVT_SCROLLWIN_THUMBRELEASE, &Control::OnScrollThumbRelease, this);
-
+        if (bindScrollEvents) 
+        {
+            wxWindow->Unbind(wxEVT_SCROLLWIN_TOP, &Control::OnScrollTop, this);
+            wxWindow->Unbind(wxEVT_SCROLLWIN_BOTTOM, &Control::OnScrollBottom, this);
+            wxWindow->Unbind(wxEVT_SCROLLWIN_LINEUP, &Control::OnScrollLineUp, this);
+            wxWindow->Unbind(wxEVT_SCROLLWIN_LINEDOWN, &Control::OnScrollLineDown, this);
+            wxWindow->Unbind(wxEVT_SCROLLWIN_PAGEUP, &Control::OnScrollPageUp, this);
+            wxWindow->Unbind(wxEVT_SCROLLWIN_PAGEDOWN, &Control::OnScrollPageDown, this);
+            wxWindow->Unbind(wxEVT_SCROLLWIN_THUMBTRACK, &Control::OnScrollThumbTrack, this);
+            wxWindow->Unbind(wxEVT_SCROLLWIN_THUMBRELEASE, &Control::OnScrollThumbRelease, this);
+        }
 
         RemoveWxWindowControlAssociation(wxWindow);
 
@@ -461,14 +463,17 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
         _wxWindow->Bind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
 
-        _wxWindow->Bind(wxEVT_SCROLLWIN_TOP, &Control::OnScrollTop, this);
-        _wxWindow->Bind(wxEVT_SCROLLWIN_BOTTOM, &Control::OnScrollBottom, this);
-        _wxWindow->Bind(wxEVT_SCROLLWIN_LINEUP, &Control::OnScrollLineUp, this);
-        _wxWindow->Bind(wxEVT_SCROLLWIN_LINEDOWN, &Control::OnScrollLineDown, this);
-        _wxWindow->Bind(wxEVT_SCROLLWIN_PAGEUP, &Control::OnScrollPageUp, this);
-        _wxWindow->Bind(wxEVT_SCROLLWIN_PAGEDOWN, &Control::OnScrollPageDown, this);
-        _wxWindow->Bind(wxEVT_SCROLLWIN_THUMBTRACK, &Control::OnScrollThumbTrack, this);
-        _wxWindow->Bind(wxEVT_SCROLLWIN_THUMBRELEASE, &Control::OnScrollThumbRelease, this);
+        if (bindScrollEvents)
+        {
+            _wxWindow->Bind(wxEVT_SCROLLWIN_TOP, &Control::OnScrollTop, this);
+            _wxWindow->Bind(wxEVT_SCROLLWIN_BOTTOM, &Control::OnScrollBottom, this);
+            _wxWindow->Bind(wxEVT_SCROLLWIN_LINEUP, &Control::OnScrollLineUp, this);
+            _wxWindow->Bind(wxEVT_SCROLLWIN_LINEDOWN, &Control::OnScrollLineDown, this);
+            _wxWindow->Bind(wxEVT_SCROLLWIN_PAGEUP, &Control::OnScrollPageUp, this);
+            _wxWindow->Bind(wxEVT_SCROLLWIN_PAGEDOWN, &Control::OnScrollPageDown, this);
+            _wxWindow->Bind(wxEVT_SCROLLWIN_THUMBTRACK, &Control::OnScrollThumbTrack, this);
+            _wxWindow->Bind(wxEVT_SCROLLWIN_THUMBRELEASE, &Control::OnScrollThumbRelease, this);
+        }
 
         AssociateControlWithWxWindow(_wxWindow, this);
 

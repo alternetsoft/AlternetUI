@@ -23,10 +23,12 @@ namespace Alternet::UI
     ListBox::ListBox(int64_t styles)
     {
         createStyles = styles;
+        bindScrollEvents = false;
     }
 
     ListBox::ListBox()
     {
+        bindScrollEvents = false;
     }
 
     ListBox::~ListBox()

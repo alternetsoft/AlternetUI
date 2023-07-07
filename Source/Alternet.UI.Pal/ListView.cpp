@@ -8,6 +8,7 @@ namespace Alternet::UI
 {
     ListView::ListView()
     {
+        bindScrollEvents = false;
     }
 
     ListView::~ListView()

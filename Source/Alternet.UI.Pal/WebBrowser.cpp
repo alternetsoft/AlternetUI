@@ -146,6 +146,7 @@ namespace Alternet::UI
     
     WebBrowser::WebBrowser()
     {
+        bindScrollEvents = false;
     }
     
     wxString WebBrowser::WebViewBackendNameFromId(WebBrowserBackend id)

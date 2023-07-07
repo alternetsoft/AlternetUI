@@ -42,6 +42,7 @@ namespace Alternet::UI
 
     protected:
         int64_t createStyles = 0;
+        bool bindScrollEvents = true;
 
         virtual void OnParentChanged();
         virtual void OnAnyParentChanged();

@@ -4,6 +4,7 @@ namespace Alternet::UI
 {
     TreeView::TreeView()
     {
+        bindScrollEvents = false;
         CreateWxWindow();
     }
 
