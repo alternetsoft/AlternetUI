@@ -3,9 +3,12 @@
 #include "IdManager.h"
 #include "NotifyIcon.h"
 #include "Button.h"
+#include "wx/gdicmn.h"
 
 namespace Alternet::UI
 {
+#define UseDebugPaintColors false
+
     Frame::Frame(Window* window, long style) : wxFrame(NULL, wxID_ANY, "", wxDefaultPosition, wxDefaultSize, style), _window(window)
     {
         _allFrames.push_back(this);
@@ -346,7 +349,7 @@ namespace Alternet::UI
         wxWindow->Unbind(wxEVT_CHAR_HOOK, &Window::OnCharHook, this);
 
         _frame = nullptr;
-        _panel = nullptr;
+        //_panel = nullptr;
     }
 
     void Window::ApplyBounds(const Rect& value)
@@ -514,8 +517,7 @@ namespace Alternet::UI
     {
         auto style = GetWindowStyle();
 
-        // This did not fixed repainting problems
-        // style = style | wxFULL_REPAINT_ON_RESIZE;
+         style = style | wxFULL_REPAINT_ON_RESIZE;
 
         _frame = new Frame(this, style);
 
@@ -531,9 +533,19 @@ namespace Alternet::UI
         _frame->Bind(wxEVT_MENU, &Window::OnCommand, this);
         _frame->Bind(wxEVT_CHAR_HOOK, &Window::OnCharHook, this);
 
-        _panel = new wxPanel(_frame);
+        //_panel = new wxPanel(_frame);
 
-        _frame->SetBackgroundColour(wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_BTNFACE));
+        /*_panel = new wxPanel(_frame,
+            wxID_ANY,
+            wxDefaultPosition,
+            wxDefaultSize,
+            wxTAB_TRAVERSAL | wxNO_BORDER | wxFULL_REPAINT_ON_RESIZE);*/
+
+        auto panelColor = wxSystemSettings::GetColour(wxSystemColour::wxSYS_COLOUR_BTNFACE);
+
+        if(UseDebugPaintColors)
+            panelColor = wxTheColourDatabase->Find("RED");
+        _frame->SetBackgroundColour(panelColor);
 
         return _frame;
     }
@@ -718,12 +730,12 @@ namespace Alternet::UI
 
     Color Window::RetrieveBackgroundColor()
     {
-        return _panel->GetBackgroundColour();
+        return _frame->GetBackgroundColour();
     }
 
     void Window::ApplyBackgroundColor(const Color& value)
     {
-        _panel->SetBackgroundColour(value);
+        //_frame->SetBackgroundColour(value);
     }
 
     ImageSet* Window::GetIcon()

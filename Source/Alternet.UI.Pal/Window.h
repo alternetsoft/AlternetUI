@@ -80,7 +80,7 @@ namespace Alternet::UI
         ModalResult _modalResult = ModalResult::None;
 
         Frame* _frame = nullptr;
-        wxPanel* _panel = nullptr;
+        //wxPanel* _panel = nullptr;
 
         void UpdateAcceleratorTable();
 
