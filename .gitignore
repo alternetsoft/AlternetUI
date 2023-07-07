@@ -37,3 +37,4 @@ Install.Scripts/TestDotNetNew/Nuget.Help.txt
 *.exe
 Documentation/Alternet.UI.Documentation/BuildNew.Result.txt
 Source/Samples/ControlsSample/ControlsSample.csproj.user
+Source/Alternet.UI/Find.Not.Documented.log
