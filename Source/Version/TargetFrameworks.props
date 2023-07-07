@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<UITargetFrameworksWindows>net7.0;net6.0;net462;net481</UITargetFrameworksWindows>
+	<UITargetFrameworksNonWindows>net7.0;net6.0</UITargetFrameworksNonWindows>
+
+  </PropertyGroup>
+</Project>
+
