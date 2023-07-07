@@ -153,12 +153,14 @@ namespace Alternet::UI
 
     wxWindow* TreeView::CreateWxWindowCore(wxWindow* parent)
     {
+        long style = GetStyle() | GetBorderStyle();
+
         auto value = new wxTreeCtrl(
             parent,
             wxID_ANY,
             wxDefaultPosition,
             wxDefaultSize,
-            GetStyle());
+            style);
 
         value->AddRoot("");
 

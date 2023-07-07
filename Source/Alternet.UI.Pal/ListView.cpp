@@ -172,12 +172,14 @@ namespace Alternet::UI
 
     wxWindow* ListView::CreateWxWindowCore(wxWindow* parent)
     {
+        long style = GetStyle() | GetBorderStyle();
+
         auto value = new wxListView(
             parent,
             wxID_ANY,
             wxDefaultPosition,
             wxDefaultSize,
-            GetStyle());
+            style);
 
 #ifdef __WXMSW__
         SetWindowTheme((HWND)value->GetHWND(), L"", NULL); // turn off "explorer style" item hover effects.

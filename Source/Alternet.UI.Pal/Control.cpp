@@ -34,6 +34,11 @@ namespace Alternet::UI
         DestroyWxWindow();
     }
 
+    long Control::GetBorderStyle()
+    {
+        return createStyles;
+    }
+
     bool Control::CanSetScrollbar()
     {
         return IsWxWindowCreated() && GetIsScrollable();

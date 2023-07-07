@@ -32,8 +32,11 @@ namespace Alternet::UI
 
     wxWindow* TextBox::CreateWxWindowCore(wxWindow* parent)
     {
+        long style = GetStyle() | GetBorderStyle();
+
         auto textCtrl = new TextCtrlEx(
-            parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, GetStyle());
+            parent, wxID_ANY, wxEmptyString, wxDefaultPosition, 
+            wxDefaultSize, style);
 
 #ifdef __WXOSX__
         // todo: port all platforms to the latest wx version, and then the ifdef can be removed.
