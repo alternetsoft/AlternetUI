@@ -81,16 +81,15 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 :: Generate public source.
 
-set PublicSourceGeneratorToolProject=%SOURCE_DIR%\Tools\PublicSourceGenerator\Alternet.UI.PublicSourceGenerator.csproj
-
 echo ====================================
 
-dotnet run --project "%PublicSourceGeneratorToolProject%" --property WarningLevel=0  -- components
+call "MSW.Publish.SubTool.3.Gen.Public.Components.bat"
+
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 echo ====================================
 
-dotnet run --project "%PublicSourceGeneratorToolProject%" --property WarningLevel=0  -- samples
+call "MSW.Publish.SubTool.4.Gen.Public.Samples.bat"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 

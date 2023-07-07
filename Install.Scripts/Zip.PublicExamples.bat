@@ -24,7 +24,7 @@ call Tools\CleanProject.bat "%PUBLIC_EXAMPLES_DIR%\PublicExamples\WindowProperti
 
 pushd %PUBLIC_EXAMPLES_DIR%
 
-del PublicExamples*.zip
+del /q PublicExamples*.zip
 "C:\Program Files\WinRar\WinRAR.exe" a -r -x@"%SCRIPT_HOME%\rarexclude.txt" PublicExamples.zip "PublicExamples\*.*"
 
 dotnet run --project "%VersionToolProject%" --property WarningLevel=0 -- append-version-suffix "%PUBLIC_EXAMPLES_DIR%\PublicExamples.zip"
