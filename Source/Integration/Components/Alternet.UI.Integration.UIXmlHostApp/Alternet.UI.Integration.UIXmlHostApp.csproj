@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 <Import Project="..\..\..\Version\Version.props" />
+<Import Project="..\..\..\Version\TargetFrameworks.props" />
 <Import Project="..\..\..\Keys\Keys.props" />
      
   <PropertyGroup>
@@ -9,7 +10,7 @@
    </PropertyGroup>
 
       <PropertyGroup>
-        <TargetFrameworks>net462;net481;net6.0-windows;net7.0-windows</TargetFrameworks>
+        <TargetFrameworks>$(UIIntegrationUIXmlHostAppTargetFrameworks)</TargetFrameworks>
       </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Alternet.UI.Integration.Remoting\Alternet.UI.Integration.Remoting.csproj" />

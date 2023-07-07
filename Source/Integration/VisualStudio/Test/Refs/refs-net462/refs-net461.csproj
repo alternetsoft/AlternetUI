@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>net462</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Alternet.UI">
-      <HintPath>bin\Debug\net461\Alternet.UI.dll</HintPath>
+      <HintPath>bin\Debug\net462\Alternet.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

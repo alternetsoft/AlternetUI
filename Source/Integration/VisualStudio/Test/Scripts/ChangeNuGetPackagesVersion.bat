@@ -12,13 +12,13 @@ if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 popd
 
-pushd "%ProjectsRoot%\nuget-netcoreapp3.1\"
+pushd "%ProjectsRoot%\nuget-net7.0\"
 dotnet add package Alternet.UI --version %NewVersion%
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 popd
 
-pushd "%ProjectsRoot%\nuget-net461\"
+pushd "%ProjectsRoot%\nuget-net462\"
 dotnet add package Alternet.UI --version %NewVersion%
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)

@@ -5,7 +5,7 @@ set ScriptHome=%~dp0.
 set SourceRoot=%ScriptHome%\..\..\..\..\
 set NuGetRoot=%ScriptHome%\..\NuGet\
 
-dotnet build "%NuGetRoot%\nuget-net461\nuget-net461.csproj"
+dotnet build "%NuGetRoot%\nuget-net461\nuget-net462.csproj"
 if not !ERRORLEVEL! EQU 0 (
     exit /b !ERRORLEVEL!)
 

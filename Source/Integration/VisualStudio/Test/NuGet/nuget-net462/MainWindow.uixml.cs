@@ -1,6 +1,6 @@
 using Alternet.UI;
 
-namespace nuget_netcoreapp3._1
+namespace nuget_net462
 {
     public partial class MainWindow : Window
     {

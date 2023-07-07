@@ -1,7 +1,7 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        x:Class="test_netcoreapp3_1.MainWindow"
-        Title="refs-netcoreapp3.1">
+        x:Class="test_net462.MainWindow"
+        Title="refs-net462">
   <StackPanel Margin="10">
     <Label Text="Hello!" />
   </StackPanel>

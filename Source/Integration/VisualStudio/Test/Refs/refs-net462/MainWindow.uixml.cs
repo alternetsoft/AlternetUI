@@ -1,6 +1,6 @@
 using Alternet.UI;
 
-namespace test_netcoreapp3_1
+namespace test_net462
 {
     public partial class MainWindow : Window
     {

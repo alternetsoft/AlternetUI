@@ -1,7 +1,7 @@
 using System;
 using Alternet.UI;
 
-namespace nuget_net461
+namespace test_net462
 {
     class Program
     {
