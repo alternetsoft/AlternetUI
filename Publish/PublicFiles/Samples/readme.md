@@ -24,6 +24,8 @@ In AlterNET UI Beta 5, we have added support for some missing functionality as w
 
 AlterNET UI Beta 6 adds many advanced features to the standard control set and several new controls: Toolbar and StatusBar. The amended controls include TreeView, ListView, ComboBox, ListBox, Slider, ProgressBar, TabControl, Window, and Button. 
 
+AlterNET UI Beta 9 adds WebBrowser control, improvements and bug fixes to other controls.
+
 For more info, see [alternet-ui.com](https://alternet-ui.com).
 
 An example of an application made with AlterNET UI running on different operating systems:
