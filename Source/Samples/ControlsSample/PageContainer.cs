@@ -5,21 +5,27 @@ namespace ControlsSample
 {
     public class PageContainer : Control
     {
-        private ListBox pagesListBox;
+        private TreeView pagesControl;
         private Control activePageHolder;
         private Grid grid;
 
         public PageContainer()
         {
             grid = new Grid();
+            //grid.Margin = new Thickness(5);
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { 
+                Width = new GridLength(1, GridUnitType.Star) });
             Children.Add(grid);
 
-            pagesListBox = new ListBox();
-            pagesListBox.SelectionChanged += PagesListBox_SelectionChanged;
-            grid.Children.Add(pagesListBox);
-            Grid.SetColumn(pagesListBox, 0);
+            pagesControl = new ();
+            pagesControl.FullRowSelect = true;
+            pagesControl.ShowRootLines = false;
+            pagesControl.ShowLines = false;
+
+            pagesControl.SelectionChanged += PagesListBox_SelectionChanged;
+            grid.Children.Add(pagesControl);
+            Grid.SetColumn(pagesControl, 0);
 
             activePageHolder = new Control();
             grid.Children.Add(activePageHolder);
@@ -30,10 +36,10 @@ namespace ControlsSample
 
         public int? SelectedIndex
         {
-            get => pagesListBox.SelectedIndex;
+            get => pagesControl?.SelectedItem?.Index;
             set
             {
-                pagesListBox.SelectedIndex = value;
+                pagesControl.SelectedItem = pagesControl.Items[(int)value!];
                 SetActivePageControl();
             }
         }
@@ -47,7 +53,7 @@ namespace ControlsSample
 
         private void Pages_ItemInserted(object? sender, CollectionChangeEventArgs<Page> e)
         {
-            pagesListBox.Items.Insert(e.Index, e.Item.Title);
+            pagesControl.Items.Insert(e.Index, new TreeViewItem(e.Item.Title));
         }
 
         private void SetActivePageControl()
@@ -55,9 +61,8 @@ namespace ControlsSample
             activePageHolder.SuspendLayout();
             activePageHolder.Children.Clear();
 
-            var selectedIndex = pagesListBox.SelectedIndex;
-            if (selectedIndex != null)
-                activePageHolder.Children.Add(Pages[selectedIndex.Value].Control);
+            if (SelectedIndex != null)
+                activePageHolder.Children.Add(Pages[SelectedIndex.Value].Control);
             activePageHolder.ResumeLayout();
         }
 

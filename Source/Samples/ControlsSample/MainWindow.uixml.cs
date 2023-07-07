@@ -5,17 +5,35 @@ namespace ControlsSample
     internal partial class MainWindow : Window, IPageSite
     {
         private int lastEventNumber = 1;
-        private PageContainer pageContainer = new PageContainer();
-        private ListBox eventsListBox = new ListBox();
+        private PageContainer pageContainer = new();
+        private TreeView eventsControl = new();
+        private Grid mainGrid = new();
+        private StackPanel mainPanel = new();
 
         public MainWindow()
         {
             InitializeComponent();
 
+            eventsControl.FullRowSelect = true;
+            eventsControl.ShowRootLines = false;
+            eventsControl.ShowLines = false;
+
+            mainGrid.RowDefinitions.Add(new RowDefinition 
+                { 
+                    Height = new GridLength(100, GridUnitType.Star) 
+                }
+            );
+            mainGrid.RowDefinitions.Add(new RowDefinition
+                {
+                    Height = new GridLength(150, GridUnitType.Pixel)
+                }
+            );
+
+
             mainGrid.Children.Add(pageContainer);
-            mainGrid.Children.Add(eventsListBox);
+            mainGrid.Children.Add(eventsControl);
             Alternet.UI.Grid.SetRow(pageContainer, 0);
-            Alternet.UI.Grid.SetRow(eventsListBox, 1);
+            Alternet.UI.Grid.SetRow(eventsControl, 1);
 
             var pages = pageContainer.Pages;
 
@@ -37,15 +55,17 @@ namespace ControlsSample
             pages.Add(new PageContainer.Page("Notify Icon", new NotifyIconPage { Site = this }));
             pages.Add(new PageContainer.Page("Web Browser", new WebBrowserPage { Site = this }));
 
-            Grid.SetRow(eventsListBox, 1);
-
             pageContainer.SelectedIndex = 0;
+
+            Children.Add(mainGrid);
         }
 
         void IPageSite.LogEvent(string message)
         {
-            eventsListBox.Items.Add($"{lastEventNumber++}. {message}");
-            eventsListBox.SelectedIndex = eventsListBox.Items.Count - 1;
+            var s = $"{lastEventNumber++}. {message}";
+            var item = new TreeViewItem(s);
+            eventsControl.Items.Add(item);
+            eventsControl.SelectedItem = item;
         }
     }
 }
