@@ -2,8 +2,8 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="MenuSample.MainWindow"
         Width="900"
-        Height="600" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-        Title="Alternet UI Menu Sample" StartLocation="CenterScreen" Padding="5"
+        Height="600" 
+        Title="Alternet UI Menu Sample" StartLocation="CenterScreen" 
         >
   <Window.InputBindings>
     <KeyBinding Gesture="Ctrl+Shift+G" Command="{Binding ExportToPngCommand}" />
@@ -49,7 +49,7 @@
     </StatusBar>
   </Window.StatusBar>  
   
-      <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="5" Margin="5">
+      <Grid>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="100*" />
         </Grid.ColumnDefinitions>
