@@ -1,6 +1,6 @@
 # 0.9.202 (2023 July ?)
 
-- Removed TextBox.EditControlOnly property. Added TextBox.HasBorder property. 
+-
 
 # 0.9.201 (2023 July 8)
 
@@ -19,7 +19,8 @@
 - New methods ListBox.RemoveSelectedItems, ListBox.RemoveItems, CheckListBox.RemoveCheckedItems, 
 	ListBox.IsValidIndex, ListBox.GetValidIndexes.
 - CheckListBox now fires SelectionChanged event and keeps corect SelectedIndices.
-- Added HasBorder property to ListBox, CheckListBox.  
+- Added HasBorder property to ListBox, CheckListBox.
+- Removed TextBox.EditControlOnly property. Added TextBox.HasBorder property. 
 
 # 0.9.200 (2023 Jun 29)
 
