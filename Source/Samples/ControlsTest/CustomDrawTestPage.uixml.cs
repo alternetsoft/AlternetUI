@@ -13,6 +13,7 @@ namespace ControlsTest
     internal partial class CustomDrawTestPage : Control
     {
         private ITestPageSite? site;
+        private CustomDrawControl? customDrawControl;
 
         static CustomDrawTestPage()
         {
@@ -21,6 +22,14 @@ namespace ControlsTest
         public CustomDrawTestPage()
         {
             InitializeComponent();
+
+            customDrawControl = new ()
+            {
+                Width = 500,
+                Height = 400,
+            };
+
+            mainPanel.Children.Add(customDrawControl);
         }
 
         public ITestPageSite? Site
@@ -30,7 +39,7 @@ namespace ControlsTest
             set
             {
                 site = value;
-                CustomDrawControl.Background = new SolidBrush(Color.Yellow);
+                customDrawControl!.Background = new SolidBrush(Color.Yellow);
             }
         }
     }

@@ -35,6 +35,8 @@ namespace ControlsSample
 
         private void ResetItemsToDefault()
         {
+            if (treeView == null)
+                return;
             treeView.BeginUpdate();
             treeView.ClearSelected();
             treeView.Items.Clear();

@@ -400,13 +400,13 @@ namespace ControlsTest
             findParams.Backwards = FindBackwardsCheckBox.IsChecked;
         }
 
-        private void FindClearButton_Click(object sender, EventArgs e)
+        private void FindClearButton_Click(object? sender, EventArgs e)
         {
             FindTextBox.Text = string.Empty;
             WebBrowser1.FindClearResult();
         }
 
-        private void FindButton_Click(object sender, EventArgs e)
+        private void FindButton_Click(object? sender, EventArgs e)
         {
             FindParamsFromControls();
             int findResult = WebBrowser1.Find(FindTextBox.Text, findParams);
@@ -434,7 +434,7 @@ namespace ControlsTest
             WebBrowser1.RunScriptAsync(script, clientData);
         }
 
-        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        private void TextBox_KeyDown(object? sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
@@ -488,25 +488,25 @@ namespace ControlsTest
             LogWebBrowserEvent(e);
         }
 
-        private void WebBrowser1_ScriptResult(object sender, WebBrowserEventArgs e)
+        private void WebBrowser1_ScriptResult(object? sender, WebBrowserEventArgs e)
         {
             LogWebBrowserEvent(e);
         }
 
-        private void WebBrowser1_Navigated(object sender, WebBrowserEventArgs e)
+        private void WebBrowser1_Navigated(object? sender, WebBrowserEventArgs e)
         {
             LogWebBrowserEvent(e);
             UrlTextBox.Text = WebBrowser1.GetCurrentURL();
         }
 
-        private void WebBrowser1_Navigating(object sender, WebBrowserEventArgs e)
+        private void WebBrowser1_Navigating(object? sender, WebBrowserEventArgs e)
         {
             LogWebBrowserEvent(e);
             if (!canNavigate)
                 e.Cancel = true;
         }
 
-        private void WebBrowser1_Loaded(object sender, WebBrowserEventArgs e)
+        private void WebBrowser1_Loaded(object? sender, WebBrowserEventArgs e)
         {
             LogWebBrowserEvent(e);
             UpdateHistoryButtons();
@@ -526,18 +526,18 @@ namespace ControlsTest
             }
         }
 
-        private void WebBrowser1_Error(object sender, WebBrowserEventArgs e)
+        private void WebBrowser1_Error(object? sender, WebBrowserEventArgs e)
         {
             LogWebBrowserEvent(e);
         }
 
-        private void WebBrowser1_NewWindow(object sender, WebBrowserEventArgs e)
+        private void WebBrowser1_NewWindow(object? sender, WebBrowserEventArgs e)
         {
             LogWebBrowserEvent(e);
             LoadUrl(e.Url);
         }
 
-        private void WebBrowser1_TitleChanged(object sender, WebBrowserEventArgs e)
+        private void WebBrowser1_TitleChanged(object? sender, WebBrowserEventArgs e)
         {
             LogWebBrowserEvent(e);
             var backendVersion = WebBrowser.GetBackendVersionString(WebBrowser1.Backend);
@@ -551,7 +551,7 @@ namespace ControlsTest
             HeaderLabel.Text = $"{headerText} {ver} : {e.Text} : {backendVersion}";
         }
 
-        private void GoButton_Click(object sender, EventArgs e)
+        private void GoButton_Click(object? sender, EventArgs e)
         {
             LoadUrl(UrlTextBox.Text);
         }
@@ -699,29 +699,29 @@ namespace ControlsTest
             ForwardButton.Enabled = WebBrowser1.CanGoForward;
         }
 
-        private void ZoomInButton_Click(object sender, EventArgs e)
+        private void ZoomInButton_Click(object? sender, EventArgs e)
         {
             WebBrowser1.ZoomIn();
             UpdateZoomButtons();
         }
 
-        private void ZoomOutButton_Click(object sender, EventArgs e)
+        private void ZoomOutButton_Click(object? sender, EventArgs e)
         {
             WebBrowser1.ZoomOut();
             UpdateZoomButtons();
         }
 
-        private void BackButton_Click(object sender, EventArgs e)
+        private void BackButton_Click(object? sender, EventArgs e)
         {
             WebBrowser1.GoBack();
         }
 
-        private void ForwardButton_Click(object sender, EventArgs e)
+        private void ForwardButton_Click(object? sender, EventArgs e)
         {
             WebBrowser1.GoForward();
         }
 
-        private void ListBox1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ListBox1_MouseDoubleClick(object? sender, MouseButtonEventArgs e)
         {
             var listBox = (ListBox)sender;
 

@@ -5,10 +5,14 @@ namespace ControlsTest
     internal partial class MainTestWindow : Window, ITestPageSite
     {
         private int lastEventNumber = 1;
+        private PageContainer pageContainer = new ();
 
         public MainTestWindow()
         {
             InitializeComponent();
+
+            mainGrid.Children.Add(pageContainer);
+            Grid.SetRow(pageContainer, 0);
 
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
             {

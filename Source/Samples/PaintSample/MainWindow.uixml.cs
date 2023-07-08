@@ -318,6 +318,12 @@ namespace PaintSample
         {
             PromptToSaveDocument(out var cancel);
             e.Cancel = cancel;
+            if (!cancel) 
+            {
+                this.Hide();
+                Application.Current.Exit();
+            }
+
             base.OnClosing(e);
         }
     }

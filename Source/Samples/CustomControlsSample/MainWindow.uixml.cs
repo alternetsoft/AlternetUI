@@ -10,9 +10,13 @@ namespace CustomControlsSample
     {
         private readonly CustomColorPicker colorPicker;
         private readonly TicTacToeControl ticTacToe;
+        private readonly KnobControl knobControl;
+        private readonly GaugeControl gaugeControl;
 
         public MainWindow()
         {
+            DataContext = new Data();
+
             InitializeComponent();
 
             colorPicker = new()
@@ -21,16 +25,47 @@ namespace CustomControlsSample
                 HorizontalAlignment = HorizontalAlignment.Left,
                 Margin = new Thickness(0, 0, 0, 5)
             };
-            colorPickerStackPanel.Children.Add(colorPicker);
 
             ticTacToe = new()
             {
                 Margin = new Thickness(10, 10, 10, 10)
             };
+
+            knobControl = new()
+            {
+                Minimum = 0,
+                Maximum = 100,
+                Margin = new Thickness(0, 0, 5, 0),
+            };
+
+            gaugeControl = new()
+            {
+                Minimum = 0,
+                Maximum = 100,
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(5,0,0,0),
+            };
+
+            Binding myBinding = new ("IntValue") 
+            { 
+                Mode = BindingMode.TwoWay,
+            };            
+
+            BindingOperations.SetBinding(
+                gaugeControl, 
+                GaugeControl.ValueProperty, 
+                myBinding);
+            BindingOperations.SetBinding(
+                knobControl,
+                KnobControl.ValueProperty,
+                myBinding);
+
+            SuspendLayout();
+            colorPickerStackPanel.Children.Add(colorPicker);
             ticTacToeStackPanel.Children.Add(ticTacToe);
-
-            DataContext = new Data();
-
+            slidersStackPanel.Children.Add(knobControl);
+            slidersStackPanel.Children.Add(gaugeControl);
+            ResumeLayout(true);
         }
 
         class Data : INotifyPropertyChanged

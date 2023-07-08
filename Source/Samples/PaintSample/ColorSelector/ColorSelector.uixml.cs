@@ -21,10 +21,16 @@ namespace PaintSample
         };
 
         private List<ColorSwatch> swatches = new List<ColorSwatch>();
+        private SelectedColorDisplay selectedColorDisplay = new ();
 
         public ColorSelector()
         {
             InitializeComponent();
+
+            selectedColorDisplay.Margin = new Thickness(0,0,5,0);
+            selectedColorDisplay.VerticalAlignment = VerticalAlignment.Center;
+
+            container.Children.Add(selectedColorDisplay);
 
             CreateSwatches();
             

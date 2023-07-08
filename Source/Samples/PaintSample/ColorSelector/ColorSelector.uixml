@@ -4,7 +4,6 @@
 		xmlns:local="clr-namespace:PaintSample" Padding="0,0,0,0">
 
 	<StackPanel Orientation="Horizontal" Name="container">
-		<local:SelectedColorDisplay Name="selectedColorDisplay" Margin="0,0,5,0" VerticalAlignment="Center"/>
 	</StackPanel>
 	
 </Control>
