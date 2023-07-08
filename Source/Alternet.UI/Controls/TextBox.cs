@@ -11,12 +11,9 @@ namespace Alternet.UI
     /// </remarks>
     public class TextBox : Control
     {
-        private bool editControlOnly = false;
+        private bool hasBorder = true;
 
-        /// <summary>
-        /// todo: use BorderStyle for this purpose later.
-        /// </summary>
-        public event EventHandler? EditControlOnlyChanged;
+        public event EventHandler? HasBorderChanged;
 
         /// <summary>
         /// Gets or sets the text contents of the text box.
@@ -115,25 +112,22 @@ namespace Alternet.UI
 
         private static object CoerceText(DependencyObject d, object value) => value == null ? string.Empty : value;
 
-        /// <summary>
-        /// todo: use BorderStyle for this purpose later.
-        /// </summary>
-        public bool EditControlOnly
+        public bool HasBorder
         {
             get
             {
                 CheckDisposed();
-                return editControlOnly;
+                return hasBorder;
             }
 
             set
             {
                 CheckDisposed();
-                if (editControlOnly == value)
+                if (hasBorder == value)
                     return;
 
-                editControlOnly = value;
-                EditControlOnlyChanged?.Invoke(this, EventArgs.Empty);
+                hasBorder = value;
+                HasBorderChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -218,7 +212,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override ControlHandler CreateHandler()
         {
-            if (EditControlOnly)
+            if (!hasBorder)
                 return new NativeTextBoxHandler();
 
             return base.CreateHandler();

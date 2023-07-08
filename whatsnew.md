@@ -1,6 +1,6 @@
-# 0.9.201 (2023 July ?)
+# 0.9.202 (2023 July ?)
 
-- 
+- Removed TextBox.EditControlOnly property. Added TextBox.HasBorder property. 
 
 # 0.9.201 (2023 July 8)
 

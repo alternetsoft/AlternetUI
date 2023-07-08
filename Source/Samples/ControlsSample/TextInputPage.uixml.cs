@@ -28,6 +28,12 @@ namespace ControlsSample
             site?.LogEvent("New TextBox value is: " + ((TextBox)sender!).Text);
         }
 
+        private void HasBorderButton_Click(object? sender, EventArgs e)
+        {
+            foreach (var textBox in textBoxesPanel.Children.OfType<TextBox>())
+                textBox.HasBorder = !textBox.HasBorder;
+        }
+
         private void AddLetterAButton_Click(object? sender, EventArgs e)
         {
             foreach (var textBox in textBoxesPanel.Children.OfType<TextBox>())

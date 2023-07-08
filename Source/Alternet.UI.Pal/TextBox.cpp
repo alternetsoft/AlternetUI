@@ -75,7 +75,7 @@ namespace Alternet::UI
     void TextBox::SetEditControlOnly(bool value)
     {
         _editControlOnly = value;
-        assert(!IsWxWindowCreated()); // todo: recreate window
+        RecreateWindow();
     }
 
     bool TextBox::GetReadOnly()

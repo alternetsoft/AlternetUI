@@ -8,7 +8,10 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            return new Native.TextBox() { Text = Control.Text, EditControlOnly = Control.EditControlOnly };
+            return new Native.TextBox() {
+                Text = Control.Text,
+                EditControlOnly = !Control.HasBorder,
+            };
         }
 
         protected override void OnAttach()
@@ -19,7 +22,7 @@ namespace Alternet.UI
             ApplyReadOnly();
             NativeControl.Text = Control.Text;
 
-            Control.EditControlOnlyChanged += Control_EditControlOnlyChanged;
+            Control.HasBorderChanged += Control_HasBorderChanged;
             Control.TextChanged += Control_TextChanged;
             Control.MultilineChanged += Control_MultilineChanged;
             Control.ReadOnlyChanged += Control_ReadOnlyChanged;
@@ -46,9 +49,9 @@ namespace Alternet.UI
             ApplyMultiline();
         }
 
-        private void Control_EditControlOnlyChanged(object? sender, System.EventArgs? e)
+        private void Control_HasBorderChanged(object? sender, System.EventArgs? e)
         {
-            NativeControl.EditControlOnly = Control.EditControlOnly;
+            NativeControl.EditControlOnly = !Control.HasBorder;
         }
 
         protected override void OnDetach()
@@ -56,7 +59,7 @@ namespace Alternet.UI
             base.OnDetach();
             Control.TextChanged -= Control_TextChanged;
             NativeControl.TextChanged -= NativeControl_TextChanged;
-            Control.EditControlOnlyChanged -= Control_EditControlOnlyChanged;
+            Control.HasBorderChanged -= Control_HasBorderChanged;
             Control.MultilineChanged -= Control_MultilineChanged;
             Control.ReadOnlyChanged -= Control_ReadOnlyChanged;
         }

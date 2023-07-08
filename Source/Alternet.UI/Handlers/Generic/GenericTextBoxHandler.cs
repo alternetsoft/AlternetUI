@@ -18,12 +18,12 @@ namespace Alternet.UI
             border = new Border
             {
                 Padding = new Thickness(5),
-                Background = Brushes.White
+                Background = Brushes.White,
             };
 
             VisualChildren.Add(border);
 
-            editTextBox = new TextBox { EditControlOnly = true, Background = Brushes.White };
+            editTextBox = new TextBox { HasBorder = false, Background = Brushes.White };
             border.Handler.VisualChildren.Add(editTextBox);
 
             editTextBox.Text = Control.Text;
