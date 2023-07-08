@@ -945,6 +945,8 @@ namespace Alternet.UI
         /// </remarks>
         public void Close()
         {
+            Visible = false;
+
             CheckDisposed();
 
             Handler.Close();
