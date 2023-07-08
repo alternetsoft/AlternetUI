@@ -76,7 +76,7 @@ namespace Alternet.UI
         /// Gets or sets a boolean value indicating whether this toolbar item is checkable.
         /// </summary>
         public bool IsCheckable { get => Handler.IsCheckable; set => Handler.IsCheckable = value; }
-        
+
         /// <inheritdoc />
         public override void RaiseClick(EventArgs e)
         {
@@ -195,7 +195,7 @@ namespace Alternet.UI
         private static void OnCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
            ToolbarItem b = (ToolbarItem)d;
-            b.OnCommandChanged((ICommand)e.OldValue, (ICommand)e.NewValue);
+           b.OnCommandChanged((ICommand)e.OldValue, (ICommand)e.NewValue);
         }
 
         private void OnCommandChanged(ICommand oldCommand, ICommand newCommand)

@@ -70,7 +70,6 @@ namespace MenuSample
                 ToolTip = "Calendar Toolbar Item",
                 Image = ImageSet.FromUrl("embres:MenuSample.Resources.Icons.Small.Calendar16.png")
             };
-            toolbar.Items.Add(calendarToolbarItem);
 
             var photoToolbarItem = new ToolbarItem("Photo")
             {
@@ -79,9 +78,6 @@ namespace MenuSample
                              "embres:MenuSample.Resources.Icons.Small.Photo16.png")
             };
             photoToolbarItem.Click += ToolbarItem_Click;
-            toolbar.Items.Add(photoToolbarItem);
-
-            toolbar.Items.Add(new ToolbarItem("-"));
 
             checkableToolbarItem = new ToolbarItem("Pencil Toggle", ToggleToolbarItem_Click)
             {
@@ -90,8 +86,11 @@ namespace MenuSample
                 Image = ImageSet.FromUrl(
                              "embres:MenuSample.Resources.Icons.Small.Pencil16.png")
             };
-            toolbar.Items.Add(checkableToolbarItem);
 
+            toolbar.Items.Add(calendarToolbarItem);
+            toolbar.Items.Add(photoToolbarItem);
+            toolbar.Items.Add(new ToolbarItem("-"));
+            toolbar.Items.Add(checkableToolbarItem);
             toolbar.Items.Add(new ToolbarItem("-"));
 
             var graphDropDownToolbarItem = new ToolbarItem("Graph Drop Down", ToolbarItem_Click)

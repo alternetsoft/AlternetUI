@@ -4,14 +4,9 @@ namespace Alternet.UI
 {
     internal class NativeToolbarItemHandler : ToolbarItemHandler
     {
-        internal override Native.Control CreateNativeControl()
-        {
-            return new Native.ToolbarItem();
-        }
+        Menu? dropDownMenu;
 
         public new Native.ToolbarItem NativeControl => (Native.ToolbarItem)base.NativeControl!;
-
-        Menu? dropDownMenu;
 
         public override Menu? DropDownMenu
         {
@@ -29,6 +24,11 @@ namespace Alternet.UI
 
         public override bool IsCheckable { get => NativeControl.IsCheckable; set => NativeControl.IsCheckable = value; }
 
+        internal override Native.Control CreateNativeControl()
+        {
+            return new Native.ToolbarItem();
+        }
+
         protected override void OnAttach()
         {
             base.OnAttach();
@@ -42,6 +42,17 @@ namespace Alternet.UI
             Control.CheckedChanged += Control_CheckedChanged;
 
             NativeControl.Click += NativeControl_Click;
+        }
+
+        protected override void OnDetach()
+        {
+            base.OnDetach();
+
+            Control.CheckedChanged -= Control_CheckedChanged;
+            Control.TextChanged -= Control_TextChanged;
+            Control.ImageChanged -= Control_ImageChanged;
+
+            NativeControl.Click -= NativeControl_Click;
         }
 
         private void Control_ImageChanged(object? sender, EventArgs e)
@@ -69,21 +80,10 @@ namespace Alternet.UI
             NativeControl.Image = Control.Image?.NativeImageSet ?? null;
         }
 
-        protected override void OnDetach()
-        {
-            base.OnDetach();
-
-            Control.CheckedChanged -= Control_CheckedChanged;
-            Control.TextChanged -= Control_TextChanged;
-            Control.ImageChanged -= Control_ImageChanged;
-
-            NativeControl.Click -= NativeControl_Click;
-        }
-
         private void NativeControl_Click(object? sender, EventArgs? e)
         {
             Control.Checked = NativeControl.Checked;
-            Control.RaiseClick(e ?? throw new ArgumentNullException());
+            Control.RaiseClick(e ?? throw new ArgumentNullException(nameof(e)));
         }
 
         private void Control_TextChanged(object? sender, EventArgs? e)

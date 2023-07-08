@@ -1,5 +1,5 @@
-using Alternet.Base.Collections;
 using System.Collections.Generic;
+using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
@@ -8,16 +8,6 @@ namespace Alternet.UI
     /// </summary>
     public class Toolbar : Control
     {
-        /// <inheritdoc/>
-        public new ToolbarHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (ToolbarHandler)base.Handler;
-            }
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Toolbar"/> class.
         /// </summary>
@@ -25,6 +15,15 @@ namespace Alternet.UI
         {
             Items.ItemInserted += Items_ItemInserted;
             Items.ItemRemoved += Items_ItemRemoved;
+        }
+
+        public new ToolbarHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (ToolbarHandler)base.Handler;
+            }
         }
 
         /// <summary>
@@ -48,13 +47,15 @@ namespace Alternet.UI
 
         private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<ToolbarItem> e)
         {
-            // This is required for data binding inheritance.
-            Children.Add(e.Item);
+            // This is required for data binding inheritance. ???
+            // This commented out as added additional dummy toolbar items
+            // Children.Add(e.Item);
         }
 
         private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<ToolbarItem> e)
         {
-            Children.Remove(e.Item);
+            // Commented out as Children.Add(e.Item) was commented
+            // Children.Remove(e.Item);
         }
 
         /// <summary>
