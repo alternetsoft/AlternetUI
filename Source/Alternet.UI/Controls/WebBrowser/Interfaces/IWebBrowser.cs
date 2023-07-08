@@ -153,7 +153,7 @@ namespace Alternet.UI
         IntPtr GetNativeBackend();
 
         /// <include file="IWebBrowser.xml" path='doc/DoCommand/*'/>
-        string DoCommand(string cmdName, params object?[] args);
+        string? DoCommand(string cmdName, params object?[] args);
 
         /// <include file="IWebBrowser.xml" path='doc/AddUserScript/*'/>
         bool AddUserScript(string javascript, bool injectDocStart);

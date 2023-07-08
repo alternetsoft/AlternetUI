@@ -13,6 +13,8 @@ namespace Alternet.UI
     [System.ComponentModel.DesignerCategory("Code")]
     public class Control : FrameworkElement, ISupportInitialize, IDisposable
     {
+        internal static int ScreenShotCounter = 0;
+
         /// <summary>
         /// Identifies the <see cref="ToolTip"/> dependency property.
         /// </summary>
@@ -916,6 +918,11 @@ namespace Alternet.UI
             return Handler.SetFocus();
         }
 
+        public void SaveScreenshot(string fileName)
+        {
+            Handler.SaveScreenshot(fileName);
+        }
+
         /// <summary>
         /// Returns the currently focused control, or <see langword="null"/> if no control is focused.
         /// </summary>
@@ -1333,6 +1340,7 @@ namespace Alternet.UI
             OnEnabledChanged(e);
             EnabledChanged?.Invoke(this, e);
         }
+
         private void OnEnabledPropertyChanged(bool oldValue, bool newValue)
         {
             RaiseEnabledChanged(EventArgs.Empty);

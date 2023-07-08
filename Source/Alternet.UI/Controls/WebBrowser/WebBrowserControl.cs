@@ -8,8 +8,8 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Policy;
 using System.Text;
-using static System.Net.Mime.MediaTypeNames;
 using static Alternet.UI.EventTrace;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -17,8 +17,21 @@ namespace Alternet.UI
     public partial class WebBrowser : Control, IWebBrowser
     {
         private static string stringFormatJs = "yyyy-MM-ddTHH:mm:ss.fffK";
+        private static Brush? uixmlPreviewerBrush = null;
 
         private IWebBrowserMemoryFS? fMemoryFS;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebBrowser"/> class.
+        /// </summary>
+        public WebBrowser()
+            : base()
+        {
+            if (Application.Current.InUixmlPreviewerMode)
+            {
+                UserPaint = true;
+            }
+        }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/Events/FullScreenChanged/*'/>
         public event EventHandler<WebBrowserEventArgs>? FullScreenChanged;
@@ -382,6 +395,16 @@ namespace Alternet.UI
 
         internal new WebBrowserHandler Handler => (WebBrowserHandler)base.Handler;
 
+        internal static Brush UixmlPreviewerBrush
+        {
+            get
+            {
+                if (uixmlPreviewerBrush == null)
+                    uixmlPreviewerBrush = new SolidBrush(Color.White);
+                return uixmlPreviewerBrush;
+            }
+        }
+
         internal IWebBrowserLite Browser => (IWebBrowserLite)base.Handler;
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/GetBackendOS/*'/>
@@ -408,24 +431,37 @@ namespace Alternet.UI
 
             var files = Directory.EnumerateFileSystemEntries(path, "*.dll");
 
-            #pragma warning disable IDE0059 // Unnecessary assignment of a value
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
             foreach (string file in files)
             {
                 Native.WebBrowser.SetEdgePath(path);
                 break;
             }
-            #pragma warning restore IDE0059 // Unnecessary assignment of a value
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/DoCommandGlobal/*'/>
-        public static string DoCommandGlobal(string cmdName, params object?[] args)
+        public static string? DoCommandGlobal(string cmdName, params object?[] args)
         {
+            if (cmdName == "Screenshot")
+            {
+                string location = Assembly.GetExecutingAssembly().Location;
+                string s = Path.GetDirectoryName(location)!;
+
+                var screenshotFilename = s + @"\screenshot.bmp";
+                if (args.Length == 0)
+                    return string.Empty;
+                Control? control = args[0] as Control;
+                control?.SaveScreenshot(screenshotFilename);
+                return screenshotFilename;
+            }
+
             if (cmdName == "UIVersion")
             {
                 Assembly thisAssembly = typeof(Application).Assembly;
                 AssemblyName thisAssemblyName = thisAssembly.GetName();
-                Version ver = thisAssemblyName.Version;
-                return ver.ToString();
+                Version? ver = thisAssemblyName?.Version;
+                return ver?.ToString();
             }
 
             return WebBrowserHandler.DoCommandGlobal(cmdName, args);
@@ -573,7 +609,7 @@ namespace Alternet.UI
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/DoCommand/*'/>
-        public string DoCommand(string cmdName, params object?[] args)
+        public string? DoCommand(string cmdName, params object?[] args)
         {
             CheckDisposed();
             return Browser.DoCommand(cmdName, args);
@@ -1072,13 +1108,13 @@ namespace Alternet.UI
            object? sender,
            Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
-            WebBrowserEventArgs ea = new (e, WebBrowserEvent.ScriptMessageReceived);
+            WebBrowserEventArgs ea = new(e, WebBrowserEvent.ScriptMessageReceived);
             OnScriptMessageReceived(ea);
         }
 
         internal void OnNativeFullScreenChanged(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
-            WebBrowserEventArgs ea = new (e, WebBrowserEvent.FullScreenChanged);
+            WebBrowserEventArgs ea = new(e, WebBrowserEvent.FullScreenChanged);
             OnFullScreenChanged(ea);
         }
 
@@ -1120,50 +1156,50 @@ namespace Alternet.UI
 
         internal void OnNativeScriptResult(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
-            WebBrowserEventArgs ea = new (e, WebBrowserEvent.ScriptResult);
+            WebBrowserEventArgs ea = new(e, WebBrowserEvent.ScriptResult);
             OnScriptResult(ea);
         }
 
         internal void OnNativeNavigated(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
-            WebBrowserEventArgs ea = new (e, WebBrowserEvent.Navigated);
+            WebBrowserEventArgs ea = new(e, WebBrowserEvent.Navigated);
             OnNavigated(ea);
         }
 
         internal void OnNativeNavigating(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
-            WebBrowserEventArgs ea = new (e, WebBrowserEvent.Navigating);
+            WebBrowserEventArgs ea = new(e, WebBrowserEvent.Navigating);
             OnNavigating(ea);
             e.Result = ea.CancelAsIntPtr();
         }
 
         internal void OnNativeBeforeBrowserCreate(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
-            WebBrowserEventArgs ea = new (e, WebBrowserEvent.BeforeBrowserCreate);
+            WebBrowserEventArgs ea = new(e, WebBrowserEvent.BeforeBrowserCreate);
             OnBeforeBrowserCreate(ea);
         }
 
         internal void OnNativeLoaded(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
-            WebBrowserEventArgs ea = new (e, WebBrowserEvent.Loaded);
+            WebBrowserEventArgs ea = new(e, WebBrowserEvent.Loaded);
             OnLoaded(ea);
         }
 
         internal void OnNativeError(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
-            WebBrowserEventArgs ea = new (e, WebBrowserEvent.Error);
+            WebBrowserEventArgs ea = new(e, WebBrowserEvent.Error);
             OnError(ea);
         }
 
         internal void OnNativeNewWindow(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
-            WebBrowserEventArgs ea = new (e, WebBrowserEvent.NewWindow);
+            WebBrowserEventArgs ea = new(e, WebBrowserEvent.NewWindow);
             OnNewWindow(ea);
         }
 
         internal void OnNativeTitleChanged(object? sender, Native.NativeEventArgs<Native.WebBrowserEventData> e)
         {
-            WebBrowserEventArgs ea = new (e, WebBrowserEvent.TitleChanged);
+            WebBrowserEventArgs ea = new(e, WebBrowserEvent.TitleChanged);
             OnDocumentTitleChanged(ea);
         }
 

@@ -93,7 +93,7 @@ namespace Alternet.UI.Integration
                     new Dictionary<string, object>
                     {
                         { "Message", "Error while updating UIXML preview." },
-                        { "Exception", e }
+                        { "Exception", e },
                     });
             }
         }
@@ -110,9 +110,15 @@ namespace Alternet.UI.Integration
 
         private string SaveWindowScreenshotToFile(Window window)
         {
-            var targetFilePath = Path.Combine(screenshotsDirectory, Guid.NewGuid().ToString("N") + ".bmp");
-            window.Handler.SaveScreenshot(targetFilePath);
-            return targetFilePath;
+            try
+            {
+                var targetFilePath = Path.Combine(screenshotsDirectory, Guid.NewGuid().ToString("N") + ".bmp");
+                window.Handler.SaveScreenshot(targetFilePath);
+                return targetFilePath;
+            }
+            finally
+            {
+            }
         }
 
         private void MoveWindowToScreenUnderneath(Window window, System.Drawing.Point ownerWindowLocation)

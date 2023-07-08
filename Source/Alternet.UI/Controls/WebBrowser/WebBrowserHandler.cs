@@ -111,7 +111,7 @@ namespace Alternet.UI
 
         private IntPtr NativePointer => NativeControl.NativePointer;
 
-        public static string DoCommandGlobal(string cmdName, params object?[] args)
+        public static string? DoCommandGlobal(string cmdName, params object?[] args)
         {
             ArgsToDoCommandParams(args, out string? cmdParam1, out string? cmdParam2);
             return Native.WebBrowser.DoCommandGlobal(cmdName, cmdParam1!, cmdParam2!);
@@ -125,7 +125,7 @@ namespace Alternet.UI
 
         public IntPtr GetNativeBackend() => NativeControl.GetNativeBackend();
 
-        public string DoCommand(string cmdName, params object?[] args)
+        public string? DoCommand(string cmdName, params object?[] args)
         {
             ArgsToDoCommandParams(args, out string? cmdParam1, out string? cmdParam2);
             return NativeControl.DoCommand(cmdName, cmdParam1!, cmdParam2!);

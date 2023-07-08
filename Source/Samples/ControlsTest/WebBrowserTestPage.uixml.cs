@@ -17,6 +17,7 @@ namespace ControlsTest
         private static readonly bool SetDefaultUserAgent = false;
         private static WebBrowserBackend useBackend = WebBrowserBackend.Default;
         private static bool insideUnhandledException;
+        private static EmptyWindow? emptyWindow = null;
 
         private readonly WebBrowserFindParams findParams = new ();
         private readonly Dictionary<string, MethodCaller> testActions = new ();
@@ -567,6 +568,26 @@ namespace ControlsTest
             if (s == null)
             {
                 WebBrowser1.LoadURL();
+                return;
+            }
+
+            if (s == "s")
+            {
+                WebBrowser.DoCommandGlobal("Screenshot", this);
+                return;
+            }
+
+            if (s == "s2" && emptyWindow == null)
+            {
+                emptyWindow = new ();
+                emptyWindow.Show();
+                return;
+            }
+
+            if (s == "s3")
+            {
+                if (emptyWindow is not null)
+                    WebBrowser.DoCommandGlobal("Screenshot", emptyWindow);
                 return;
             }
 

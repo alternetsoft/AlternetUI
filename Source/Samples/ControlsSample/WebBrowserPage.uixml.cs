@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using Alternet.UI;
 
 namespace ControlsSample
@@ -103,12 +104,12 @@ namespace ControlsSample
             site?.LogEvent(s);
         }
 
-        private void WebBrowser1_Navigated(object sender, WebBrowserEventArgs e)
+        private void WebBrowser1_Navigated(object? sender, WebBrowserEventArgs e)
         {
             UrlTextBox.Text = WebBrowser1.GetCurrentURL();
         }
 
-        private void WebBrowser1_Loaded(object sender, WebBrowserEventArgs e)
+        private void WebBrowser1_Loaded(object? sender, WebBrowserEventArgs e)
         {
             UpdateHistoryButtons();
             if (!pandaLoaded)
@@ -126,12 +127,12 @@ namespace ControlsSample
             }
         }
 
-        private void WebBrowser1_NewWindow(object sender, WebBrowserEventArgs e)
+        private void WebBrowser1_NewWindow(object? sender, WebBrowserEventArgs e)
         {
             WebBrowser1.LoadURL(e.Url);
         }
 
-        private void WebBrowser1_TitleChanged(object sender, WebBrowserEventArgs e)
+        private void WebBrowser1_TitleChanged(object? sender, WebBrowserEventArgs e)
         {
             HeaderLabel.Text = headerText + " : " + e.Text;
         }
@@ -154,6 +155,12 @@ namespace ControlsSample
             if (s == null)
             {
                 WebBrowser1.LoadURL();
+                return;
+            }
+
+            if (s == "s")
+            {
+                WebBrowser.DoCommandGlobal("Screenshot", this);
                 return;
             }
 

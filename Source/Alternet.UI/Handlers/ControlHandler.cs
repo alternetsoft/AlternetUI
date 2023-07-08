@@ -1240,10 +1240,18 @@ namespace Alternet.UI
 
         internal void SaveScreenshot(string fileName)
         {
-            if (NativeControl == null)
-                throw new InvalidOperationException();
+            Control.ScreenShotCounter++;
+            try
+            {
+                if (NativeControl == null)
+                    throw new InvalidOperationException();
 
-            NativeControl.SaveScreenshot(fileName);
+                NativeControl.SaveScreenshot(fileName);
+            }
+            finally
+            {
+                Control.ScreenShotCounter--;
+            }
         }
 
         /// <summary>

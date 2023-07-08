@@ -33,6 +33,7 @@
       <None Remove="Edge\win-arm64\readme.txt" />
       <None Remove="Edge\win-x64\readme.txt" />
       <None Remove="Edge\win-x86\readme.txt" />
+      <None Remove="EmptyWindow.uixml" />
       <None Remove="Html\doc.zip" />
       <None Remove="Html\pageinresource.html" />
       <None Remove="Html\SampleArchive.zip" />

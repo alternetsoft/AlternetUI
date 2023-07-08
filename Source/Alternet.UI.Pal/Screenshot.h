@@ -4,7 +4,7 @@
 
 namespace Alternet::UI
 {
-    int SaveScreenshot(wxWindow* wxWindow, string fileName)
+    int SaveScreenshot(wxWindow* xWindow, string fileName)
     {
         if (!wxStr(fileName).MakeLower().EndsWith(".bmp"))
             throwEx(u"Only .bmp file format is supported for screenshots.");
@@ -14,7 +14,16 @@ namespace Alternet::UI
 #else
         // Source: https://docs.microsoft.com/en-us/windows/win32/gdi/capturing-an-image?redirectedfrom=MSDN
 
-        HWND hWnd = wxWindow->GetHWND();
+        bool hasChildWindows = false;
+        wxWindowList& children = xWindow->GetChildren();
+        for (wxWindowList::Node* node = children.GetFirst(); node; node = node->GetNext())
+        {
+            wxWindow* current = (wxWindow*)node->GetData();
+
+            hasChildWindows = true;
+        }
+
+        HWND hWnd = xWindow->GetHWND();
         HDC hdcScreen;
         HDC hdcWindow;
         HDC hdcMemDC = NULL;
@@ -45,21 +54,30 @@ namespace Alternet::UI
         // This is the best stretch mode.
         SetStretchBltMode(hdcWindow, HALFTONE);
 
-        // The source DC is the entire screen, and the destination DC is the current window (HWND).
-        if (!StretchBlt(hdcWindow,
-            0, 0,
-            rcClient.right, rcClient.bottom,
-            hdcScreen,
-            0, 0,
-            GetSystemMetrics(SM_CXSCREEN),
-            GetSystemMetrics(SM_CYSCREEN),
-            SRCCOPY))
-        {
-            throwEx(u"StretchBlt has failed");
-        }
+        auto rectWidth = rcClient.right - rcClient.left;
+        auto rectHeight = rcClient.bottom - rcClient.top;
 
+        if (hasChildWindows) 
+        {
+            // The source DC is the entire screen, and the destination DC is the current window (HWND).
+            if (!StretchBlt(hdcWindow,
+                0, 0,
+                rcClient.right, rcClient.bottom,
+                hdcScreen,
+                0, 0,
+                GetSystemMetrics(SM_CXSCREEN),
+                GetSystemMetrics(SM_CYSCREEN),
+                SRCCOPY))
+            {
+                throwEx(u"StretchBlt has failed");
+            }
+        }
+        else 
+        {
+        }
+        
         // Create a compatible bitmap from the Window DC.
-        hbmScreen = CreateCompatibleBitmap(hdcWindow, rcClient.right - rcClient.left, rcClient.bottom - rcClient.top);
+        hbmScreen = CreateCompatibleBitmap(hdcWindow, rectWidth, rectHeight);
 
         if (!hbmScreen)
         {
@@ -69,15 +87,28 @@ namespace Alternet::UI
         // Select the compatible bitmap into the compatible memory DC.
         SelectObject(hdcMemDC, hbmScreen);
 
-        // Bit block transfer into our compatible memory DC.
-        if (!BitBlt(hdcMemDC,
-            0, 0,
-            rcClient.right - rcClient.left, rcClient.bottom - rcClient.top,
-            hdcWindow,
-            0, 0,
-            SRCCOPY))
+        if (hasChildWindows) 
         {
-            throwEx(u"BitBlt has failed");
+            // Bit block transfer into our compatible memory DC.
+            if (!BitBlt(hdcMemDC,
+                0, 0,
+                rcClient.right - rcClient.left, rcClient.bottom - rcClient.top,
+                hdcWindow,
+                0, 0,
+                SRCCOPY))
+            {
+                throwEx(u"BitBlt has failed");
+            }
+        }
+        else 
+        {
+            RECT rcBmp;
+            SetRect(&rcBmp, 0, 0, rectWidth, rectHeight);
+            HBRUSH backgroundBrush = CreateSolidBrush(GetSysColor(COLOR_BTNFACE));
+            HGDIOBJ oldBrush = SelectObject(hdcMemDC, backgroundBrush);
+            FillRect(hdcMemDC, &rcBmp, backgroundBrush);
+            SelectObject(hdcMemDC, oldBrush);
+            DeleteObject(backgroundBrush);
         }
 
         // Get the BITMAP from the HBITMAP.
