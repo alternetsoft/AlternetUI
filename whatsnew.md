@@ -1,6 +1,6 @@
 # 0.9.202 (2023 July ?)
 
--
+- Fixed bug in toolbar and statusbar when additional strange items appeared if items were added from code.
 
 # 0.9.201 (2023 July 8)
 
