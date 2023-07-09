@@ -15,9 +15,8 @@ namespace MenuSample
 
         public MainWindow()
         {
-            InitToolbar();
-
             InitializeComponent();
+            InitToolbar();
 
             SaveCommand = new Command(o => LogEvent("Save"), o => saveEnabledMenuItem.Checked);
             ExportToPngCommand = new Command(o => LogEvent("Export to PNG"));
@@ -63,7 +62,7 @@ namespace MenuSample
 
         private void InitToolbar()
         {
-            toolbar = new ();
+			toolbar = Toolbar;
 
             var calendarToolbarItem = new ToolbarItem("Calendar", ToolbarItem_Click)
             {
@@ -114,10 +113,7 @@ namespace MenuSample
 
             dynamicToolbarItemsSeparator = new ToolbarItem("-");
             toolbar.Items.Add(dynamicToolbarItemsSeparator);
-
-            Toolbar = toolbar;
-
-
+			
         }
 
         private void PlatformSpecificInitialize()
@@ -170,7 +166,10 @@ namespace MenuSample
             }
 
             var number = GetNextItemNumber();
-            parent.Items.Add(new MenuItem("Item " + number, DynamicMenuItem_Click) { Tag = number });
+            parent.Items.Add(new MenuItem("Item " + number, DynamicMenuItem_Click) 
+			{ 
+				Tag = number				
+			});
         }
 
         private void DynamicMenuItem_Click(object? sender, EventArgs e)
