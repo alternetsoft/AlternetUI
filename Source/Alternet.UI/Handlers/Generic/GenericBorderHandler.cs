@@ -6,15 +6,6 @@ namespace Alternet.UI
     {
         protected override bool NeedsPaint => true;
 
-        public override void OnPaint(DrawingContext drawingContext)
-        {
-            if (Control.Background != null)
-                drawingContext.FillRectangle(Control.Background, ClientRectangle);
-            
-            if (Control.BorderBrush != null)
-                drawingContext.DrawRectangle(new Pen(Control.BorderBrush), ClientRectangle);
-        }
-
         public override Rect ChildrenLayoutBounds
         {
             get
@@ -26,6 +17,15 @@ namespace Alternet.UI
                 bounds.Height -= 2;
                 return bounds; // todo: border thickness.
             }
+        }
+
+        public override void OnPaint(DrawingContext drawingContext)
+        {
+            if (Control.Background != null)
+                drawingContext.FillRectangle(Control.Background, DrawClientRectangle);
+
+            if (Control.BorderBrush != null)
+                drawingContext.DrawRectangle(Control.BorderBrush.AsPen, DrawClientRectangle);
         }
 
         public override Size GetPreferredSize(Size availableSize)

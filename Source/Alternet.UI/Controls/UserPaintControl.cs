@@ -15,15 +15,6 @@ namespace Alternet.UI
             UserPaint = true;
         }
 
-        public virtual Rect ClientRectangle
-        {
-            get
-            {
-                var size = ClientSize;
-                return new (0,0, size.Width-1,size.Height-1);
-            }
-        }
-
         protected override void OnPaint(PaintEventArgs e)
         {
         }

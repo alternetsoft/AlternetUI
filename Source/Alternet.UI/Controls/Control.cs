@@ -305,6 +305,16 @@ namespace Alternet.UI
             }
         }
 
+        internal virtual Rect DrawClientRectangle
+        {
+            get
+            {
+                var size = ClientSize;
+                return new (0, 0, size.Width - 1, size.Height - 1);
+            }
+        }
+
+
         /// <summary>
         /// Gets a <see cref="ControlHandler"/> associated with this class.
         /// </summary>

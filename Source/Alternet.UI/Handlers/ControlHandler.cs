@@ -126,6 +126,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual Rect ClientRectangle => new (new Point(), ClientSize);
 
+        public virtual Rect DrawClientRectangle => Control.DrawClientRectangle;
+
         /// <summary>
         /// Gets a value indicating whether the mouse pointer is over the <see cref="Control"/>.
         /// </summary>

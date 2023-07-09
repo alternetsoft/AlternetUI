@@ -55,7 +55,7 @@ namespace Alternet.UI
             base.OnPaint(e);
             var dc = e.DrawingContext;
 
-            dc.DrawRectangle(defaultBorderPen, ClientRectangle);
+            dc.DrawRectangle(defaultBorderPen, DrawClientRectangle);
         }
     }
 }
