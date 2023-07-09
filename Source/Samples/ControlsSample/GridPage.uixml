@@ -7,7 +7,7 @@
     <GroupBox Title="Grid" Margin="5" Padding="10">
       <StackPanel Orientation="Horizontal" Margin="5">
 
-        <Grid Name="mainGrid" Width="300" Height="200" Margin="0,0,0,5" >
+        <Grid Name="mainGrid" Width="300" Height="200" Margin="0,0,0,5" Padding="2">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="150"/>
