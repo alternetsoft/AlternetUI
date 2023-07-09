@@ -14,6 +14,7 @@ namespace Alternet.Drawing
     public abstract class Brush : IDisposable, IEquatable<Brush>
     {
         private bool isDisposed;
+        private Pen? asPen;
 
         internal Brush(UI.Native.Brush nativeBrush, bool immutable)
         {
@@ -24,6 +25,16 @@ namespace Alternet.Drawing
         private bool immutable;
 
         internal UI.Native.Brush NativeBrush { get; private set; }
+
+        public Pen AsPen
+        {
+            get
+            {
+                if (asPen == null)
+                    asPen = new Pen(this);
+                return asPen;
+            }
+        }
 
         /// <summary>
         /// Returns a value that indicates whether the two objects are equal.
