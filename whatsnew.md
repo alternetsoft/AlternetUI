@@ -1,8 +1,4 @@
-# 0.9.202 (2023 July ?)
-
-- Fixed bug in toolbar and statusbar when additional strange items appeared if items were added from code.
-
-# 0.9.201 (2023 July 8)
+# 0.9.201 (2023 July 9)
 
 - Fixed painting problems on window resize and move.
 - Fixed not working scrollbars in ListView, TreeView, ListBox, CheckedListBox.
@@ -21,6 +17,7 @@
 - CheckListBox now fires SelectionChanged event and keeps corect SelectedIndices.
 - Added HasBorder property to ListBox, CheckListBox.
 - Removed TextBox.EditControlOnly property. Added TextBox.HasBorder property. 
+- Fixed bug in toolbar and statusbar when additional strange items appeared if items were added from code.
 
 # 0.9.200 (2023 Jun 29)
 
