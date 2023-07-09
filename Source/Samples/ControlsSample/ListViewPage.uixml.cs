@@ -9,7 +9,7 @@ namespace ControlsSample
     internal partial class ListViewPage : Control
     {
         private IPageSite? site;
-        private int ignoreRecreate = 1;
+        private bool? slowSettingsEnabled;
 
         public ListViewPage()
         {
@@ -63,7 +63,6 @@ namespace ControlsSample
 
                 site = value;
 
-                ignoreRecreate--;
             }
         }
 
@@ -80,59 +79,51 @@ namespace ControlsSample
             listView.Columns[1].WidthMode = ListViewColumnWidthMode.AutoSize;
         }
 
+        private bool SlowRecreate
+        {
+            get
+            {
+                bool result = listView.Items.Count > 1000;
+                return result;
+            }
+        }
+
+        private void UpdateSlowRecreate()
+        {
+            var fastRecreate = !SlowRecreate;
+
+            if (slowSettingsEnabled != null && fastRecreate == (bool)slowSettingsEnabled)
+                return;
+
+            slowSettingsEnabled = fastRecreate;
+
+            viewComboBox.Enabled = fastRecreate;
+            gridLinesComboBox.Enabled = fastRecreate;
+            allowMultipleSelectionCheckBox.Enabled = fastRecreate;
+            allowLabelEditingCheckBox.Enabled = fastRecreate;
+            columnHeaderVisibleCheckBox.Enabled = fastRecreate;
+
+        }
+
         private void ViewComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            BeginRecreateListView();
-            try
-            {
-                if (listView is not null)
-                    listView.View = (ListViewView)(viewComboBox.SelectedItem ?? throw new InvalidOperationException());
-            }
-            finally
-            {
-                EndRecreateListView();
-            }
-        }
-
-        private void BeginRecreateListView()
-        {
-            if (ignoreRecreate>0)
+            if (SlowRecreate)
                 return;
-
-            ignoreRecreate++;
-            listView?.BeginUpdate();
-            listView?.Clear();            
-            //listView?.Parent?.BeginUpdate();
-            ignoreRecreate--;
-        }
-
-
-        private void EndRecreateListView()
-        {
-            if (ignoreRecreate>0)
-                return;
-            ignoreRecreate++;
-            AddDefaultItems();
-            listView?.EndUpdate();
-            //listView?.Parent?.EndUpdate();
-            ignoreRecreate--;
+            if (listView is not null)
+                listView.View = (ListViewView)(viewComboBox.SelectedItem ?? throw new InvalidOperationException());
         }
 
         private void GridLinesComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            BeginRecreateListView();
-            try
-            {
-                if (listView is not null)
-                    listView.GridLinesDisplayMode = (ListViewGridLinesDisplayMode)(gridLinesComboBox.SelectedItem ?? throw new InvalidOperationException());
-            }
-            finally
-            {
-                EndRecreateListView();
-            }
+            if (SlowRecreate)
+                return;
+            if (listView is not null)
+                listView.GridLinesDisplayMode = (ListViewGridLinesDisplayMode)(gridLinesComboBox.SelectedItem ?? throw new InvalidOperationException());
         }
 
-        private void ColumnWidthModeComboBox_SelectedItemChanged(object? sender, EventArgs e)
+        private void ColumnWidthModeComboBox_SelectedItemChanged(
+            object? sender,
+            EventArgs e)
         {
             listView.Columns[1].WidthMode = (ListViewColumnWidthMode)(columnWidthModeComboBox.SelectedItem ?? throw new InvalidOperationException());
         }
@@ -174,17 +165,10 @@ namespace ControlsSample
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            BeginRecreateListView();
-
-            try
-            {
-                if (listView is not null)
-                    listView.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ? ListViewSelectionMode.Multiple : ListViewSelectionMode.Single;
-            }
-            finally
-            {
-                EndRecreateListView();
-            }
+            if (SlowRecreate)
+                return;
+            if (listView is not null)
+                listView.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ? ListViewSelectionMode.Multiple : ListViewSelectionMode.Single;
         }
 
         private void RemoveItemButton_Click(object? sender, EventArgs e)
@@ -219,18 +203,10 @@ namespace ControlsSample
 
         private void AllowLabelEditingCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            BeginRecreateListView();
-
-            try
-            {
-                if (listView is not null)
-                    listView.AllowLabelEdit = allowLabelEditingCheckBox.IsChecked;
-            }
-            finally
-            {
-                EndRecreateListView();
-            }
-
+            if (SlowRecreate)
+                return;
+            if (listView is not null)
+                listView.AllowLabelEdit = allowLabelEditingCheckBox.IsChecked;
             beginSelectedLabelEditingButton.Enabled = allowLabelEditingCheckBox.IsChecked;
         }
 
@@ -276,7 +252,7 @@ namespace ControlsSample
                 var entireItemBounds = listView.GetItemBounds(index, ListViewItemBoundsPortion.EntireItem);
                 var iconBounds = listView.GetItemBounds(index, ListViewItemBoundsPortion.Icon);
                 var labelBounds = listView.GetItemBounds(index, ListViewItemBoundsPortion.Label);
-                
+
                 site?.LogEvent($"Item Bounds: {entireItemBounds}, Icon: {iconBounds}, Label: {labelBounds}");
             }
         }
@@ -330,16 +306,9 @@ namespace ControlsSample
 
         private void ColumnHeaderVisibleCheckBox_CheckedChanged(object sender, System.EventArgs e)
         {
-            BeginRecreateListView();
-
-            try
-            {
-                listView.ColumnHeaderVisible = columnHeaderVisibleCheckBox.IsChecked;
-            }
-            finally
-            {
-                EndRecreateListView();
-            }
+            if (SlowRecreate)
+                return;
+            listView.ColumnHeaderVisible = columnHeaderVisibleCheckBox.IsChecked;
         }
 
         private void LogItemCount(string s)
@@ -355,11 +324,13 @@ namespace ControlsSample
 
         private void Items_ItemRemoved(object sender, Alternet.Base.Collections.CollectionChangeEventArgs<ListViewItem> e)
         {
+            UpdateSlowRecreate();
             //LogItemCount("Items_ItemRemoved");
         }
 
         private void Items_ItemInserted(object sender, Alternet.Base.Collections.CollectionChangeEventArgs<ListViewItem> e)
         {
+            UpdateSlowRecreate();
             //LogItemCount("Items_ItemInserted");
         }
     }

@@ -48,7 +48,6 @@ namespace Alternet.UI
             Items.ItemRemoved += Items_ItemRemoved;
         }
 
-        /// <inheritdoc/>
         public new TreeViewHandler Handler
         {
             get

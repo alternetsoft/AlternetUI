@@ -9,10 +9,14 @@ namespace ControlsSample
     {
         private IPageSite? site;
         private int supressExpandEvents = 0;
+        private bool? slowSettingsEnabled;
 
         public TreeViewPage()
         {
             InitializeComponent();
+            
+            treeView.Items.ItemInserted += Items_ItemInserted;
+            treeView.Items.ItemRemoved += Items_ItemRemoved;
         }
 
         public IPageSite? Site
@@ -29,19 +33,7 @@ namespace ControlsSample
 
         private void AddDefaultItems()
         {
-
             AddItems(10);
-        }
-
-        private void ResetItemsToDefault()
-        {
-            if (treeView == null)
-                return;
-            treeView.BeginUpdate();
-            treeView.ClearSelected();
-            treeView.Items.Clear();
-            AddDefaultItems();
-            treeView.EndUpdate();
         }
 
         private static TreeViewItem? GetLastItem(TreeViewItem? parent, ICollection<TreeViewItem> children)
@@ -148,41 +140,35 @@ namespace ControlsSample
 
         private void ShowRootLinesCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            ResetItemsToDefault();
             if (treeView != null)
                 treeView.ShowRootLines = showRootLinesCheckBox.IsChecked;
         }
 
         private void ShowLinesCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            ResetItemsToDefault();
             if (treeView != null)
                 treeView.ShowLines = showLinesCheckBox.IsChecked;
         }
 
         private void ShowExpandButtons_CheckedChanged(object? sender, EventArgs e)
         {
-            ResetItemsToDefault();
             if (treeView != null)
                 treeView.ShowExpandButtons = showExpandButtonsCheckBox.IsChecked;
         }
 
         private void FullRowSelectCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            ResetItemsToDefault();
             if (treeView != null)
                 treeView.FullRowSelect = fullRowSelectCheckBox.IsChecked;
         }
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            ResetItemsToDefault();
             treeView.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ? TreeViewSelectionMode.Multiple : TreeViewSelectionMode.Single;
         }
 
         private void AllowLabelEditingCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            ResetItemsToDefault();
             if (treeView != null)
                 treeView.AllowLabelEdit = allowLabelEditingCheckBox.IsChecked;
 
@@ -263,6 +249,13 @@ namespace ControlsSample
             }
         }
 
+        private void ClearItemsButton_Click(object sender, System.EventArgs e)
+        {
+            treeView.BeginUpdate();
+            treeView.Items.Clear();
+            treeView.EndUpdate();
+        }
+
         private void AddLastItemSiblingButton_Click(object sender, System.EventArgs e)
         {
             var item = GetLastItem(null, treeView.Items);
@@ -273,6 +266,42 @@ namespace ControlsSample
                 collection.Insert(collection.IndexOf(item), newItem);
                 newItem.EnsureVisible();
             }
+        }
+
+        private bool SlowRecreate
+        {
+            get
+            {
+                bool result = treeView.Items.Count > 1000;
+                return result;
+            }
+        }
+
+        private void UpdateSlowRecreate()
+        {
+            var fastRecreate = !SlowRecreate;
+
+            if (slowSettingsEnabled != null && fastRecreate == (bool)slowSettingsEnabled)
+                return;
+
+            slowSettingsEnabled = fastRecreate;
+
+            showRootLinesCheckBox.Enabled = fastRecreate;
+            showLinesCheckBox.Enabled = fastRecreate;
+            showExpandButtonsCheckBox.Enabled = fastRecreate;
+            fullRowSelectCheckBox.Enabled = fastRecreate;
+            allowMultipleSelectionCheckBox.Enabled = fastRecreate;
+            allowLabelEditingCheckBox.Enabled = fastRecreate;
+        }
+
+        private void Items_ItemRemoved(object sender, Alternet.Base.Collections.CollectionChangeEventArgs<TreeViewItem> e)
+        {
+            UpdateSlowRecreate();
+        }
+
+        private void Items_ItemInserted(object sender, Alternet.Base.Collections.CollectionChangeEventArgs<TreeViewItem> e)
+        {
+            UpdateSlowRecreate();
         }
     }
 }

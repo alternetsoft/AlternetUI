@@ -21,7 +21,6 @@
 
         <!-- ========================= -->
         <ListView Width="350" Name="listView" Grid.Column="0" Grid.Row="0"
-                    SelectionChanged="ListView_SelectionChanged"
                     BeforeLabelEdit="ListView_BeforeLabelEdit"
                     AfterLabelEdit="ListView_AfterLabelEdit"
                     MouseLeftButtonDown="ListView_MouseLeftButtonDown"
@@ -56,6 +55,8 @@
                   <Label Text="Lines:" VerticalAlignment="Center"/>
                   <ComboBox IsEditable="false" Name="gridLinesComboBox" Margin="5,0,0,0" SelectedItemChanged="GridLinesComboBox_SelectedItemChanged"/>
                 </StackPanel>
+                <Button Text="View Selected" Margin="0,3,0,0" 
+                        Name="viewSelectedButton" Click="ListView_SelectionChanged"/>
                 <!--
                 <Button Text="Test" Name="testItemButton" Click="TestItemButton_Click"/>
                 -->
@@ -73,8 +74,10 @@
                 <Button Text="Add Last Item Sibling" Name="addLastItemSiblingButton" Margin="0,3,0,0" Enabled="true"
                     Click="AddLastItemSiblingButton_Click" />
 
-                <CheckBox Text="Column Header Visible" Name="columnHeaderVisibleCheckBox" Margin="0,5,0,0"
-                    IsChecked="True" CheckedChanged="ColumnHeaderVisibleCheckBox_CheckedChanged" />
+                <CheckBox Text="Column Header Visible" 
+                    Name="columnHeaderVisibleCheckBox" Margin="0,5,0,0"
+                    IsChecked="True"
+                    CheckedChanged="ColumnHeaderVisibleCheckBox_CheckedChanged" />
 
                 <CheckBox Text="Log Item Bounds on Click" Name="logItemBoundsOnClickCheckBox" Margin="0,5,0,0"
                     IsChecked="False" />

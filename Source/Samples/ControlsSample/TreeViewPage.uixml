@@ -6,7 +6,6 @@
         <GroupBox Title="Tree View">
             <StackPanel Orientation="Horizontal" Margin="5">
                 <TreeView Width="240" Name="treeView"
-                          SelectionChanged="TreeView_SelectionChanged"
                           ExpandedChanged="TreeView_ExpandedChanged"
                           BeforeLabelEdit="TreeView_BeforeLabelEdit"
                           AfterLabelEdit="TreeView_AfterLabelEdit"
@@ -48,6 +47,11 @@
                     <Button Text="Focus Last Item" Name="focusLastItemButton" Margin="0,3,0,0" Click="FocusLastItemButton_Click" />
                     <Button Text="Modify Last Item" Name="modifyLastItemButton" Margin="0,3,0,0" Click="ModifyLastItemButton_Click" />
                     <Button Text="Add Last Item Sibling" Name="addLastItemSiblingButton" Margin="0,3,0,0" Click="AddLastItemSiblingButton_Click" />
+                  <Button Text="Clear Items" Margin="0,3,0,0"
+                        Name="clearButton" Click="ClearItemsButton_Click"/>
+                  <Button Text="View Selected" Margin="0,3,0,0"
+                          Name="viewSelectedButton" Click="TreeView_SelectionChanged"/>
+
                 </StackPanel>
             </StackPanel>
         </GroupBox>
