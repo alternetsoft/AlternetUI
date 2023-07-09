@@ -11,6 +11,7 @@ namespace ControlsSample
         public DateTimePage()
         {
             InitializeComponent();
+            datePicker.Value = DateTime.Now.Date;
         }
 
         public IPageSite? Site
@@ -25,7 +26,7 @@ namespace ControlsSample
 
         private void DatePicker_DateChanged(object? sender, EventArgs e)
         {
-            dateLabel.Text = string.Format("Selected Date: {0}", datePicker.Value.ToString());
+            dateLabel.Text = $"Selected Value: {datePicker.Value}";
         }
     }
 }
