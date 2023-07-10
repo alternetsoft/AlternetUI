@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-	<SamplesTargetFrameworksWindows>net7.0;net6.0;net462</SamplesTargetFrameworksWindows>
+	<SamplesTargetFrameworksWindows>net7.0;net6.0;net462;net480</SamplesTargetFrameworksWindows>
 	<SamplesTargetFrameworksNonWindows>net7.0;net6.0</SamplesTargetFrameworksNonWindows>
   </PropertyGroup>
 
