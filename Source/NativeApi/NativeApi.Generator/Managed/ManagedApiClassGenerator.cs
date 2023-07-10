@@ -26,6 +26,7 @@ namespace ApiGenerator.Managed
             var typeName = type.Name;
 
             w.WriteLine("#nullable enable");
+            w.WriteLine("#pragma warning disable");
 
             w.WriteLine(@"
 using System;

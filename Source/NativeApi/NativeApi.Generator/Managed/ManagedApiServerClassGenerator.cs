@@ -21,6 +21,7 @@ namespace ApiGenerator.Managed
 
             var typeName = type.Name;
 
+            w.WriteLine(@"#pragma warning disable");
             w.WriteLine(@"
 using System;
 using System.Runtime.InteropServices;
