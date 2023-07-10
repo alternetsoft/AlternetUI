@@ -3,7 +3,8 @@
 		xmlns:local="clr-namespace:LayoutSample"
         x:Class="LayoutSample.ScrollingWindow"
         Title="Alternet UI Scrolling Sample" StartLocation="CenterScreen">
-  <Grid Margin="10">
+  <Control Padding="10">
+  <Grid>
     <Grid.RowDefinitions>
       <RowDefinition />
       <RowDefinition />
@@ -127,4 +128,5 @@
       </StackPanel>
     </GroupBox>
   </Grid>
+  </Control>  
 </Window>

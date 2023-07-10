@@ -3,10 +3,10 @@
         x:Class="LayoutSample.GridLayoutPropertiesWindow"
 		xmlns:local="clr-namespace:LayoutSample"
         Title="Alternet UI Grid Layout Properties" Width="800" Height="650"
-        StartLocation="CenterScreen" Padding="10">
+        StartLocation="CenterScreen" >
 
-  <ScrollViewer>
-    <Grid>
+  <ScrollViewer Padding="10">
+    <Grid >
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="*" />

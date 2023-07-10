@@ -2,8 +2,8 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="LayoutSample.StackLayoutPropertiesWindow"
 		xmlns:local="clr-namespace:LayoutSample" StartLocation="CenterScreen"
-        Title="Alternet UI Stack Layout Properties" Width="800" Height="500" Padding="10">
-	<Grid>
+        Title="Alternet UI Stack Layout Properties" Width="800" Height="500" >
+	<Grid Padding="10">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="*" />
