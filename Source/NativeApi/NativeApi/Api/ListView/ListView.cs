@@ -12,6 +12,8 @@ namespace NativeApi.Api
         
         public ImageList? LargeImageList { get; set; }
 
+        public event EventHandler? ControlRecreated { add => throw new Exception(); remove => throw new Exception(); }
+
         public void InsertItemAt(int index, string text, int columnIndex, int imageIndex) => throw new Exception();
 
         public void RemoveItemAt(int index) => throw new Exception();

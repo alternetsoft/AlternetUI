@@ -44,8 +44,18 @@ namespace Alternet.UI
             NativeControl.ColumnClick += NativeControl_ColumnClick;
             NativeControl.BeforeItemLabelEdit += NativeControl_BeforeItemLabelEdit;
             NativeControl.AfterItemLabelEdit += NativeControl_AfterItemLabelEdit;
+            NativeControl.ControlRecreated += NativeControl_ControlRecreated;
 
             // NativeControl.CompareItemsForCustomSort += NativeControl_CompareItemsForCustomSort;
+        }
+
+        private void NativeControl_ControlRecreated(object sender, EventArgs e)
+        {
+            NativeControl.BeginUpdate();
+            ApplyColumns();
+            ApplyItems();
+            ApplySelection();
+            NativeControl.EndUpdate();
         }
 
         // private void NativeControl_CompareItemsForCustomSort(
@@ -236,8 +246,9 @@ namespace Alternet.UI
             NativeControl.ColumnClick -= NativeControl_ColumnClick;
             NativeControl.BeforeItemLabelEdit -= NativeControl_BeforeItemLabelEdit;
             NativeControl.AfterItemLabelEdit -= NativeControl_AfterItemLabelEdit;
+            NativeControl.ControlRecreated -= NativeControl_ControlRecreated;
 
-            // NativeControl.CompareItemsForCustomSort -= NativeControl_CompareItemsForCustomSort;
+            /*NativeControl.CompareItemsForCustomSort -= NativeControl_CompareItemsForCustomSort;*/
 
             base.OnDetach();
         }
@@ -371,6 +382,19 @@ namespace Alternet.UI
             e.Item.ListView = null;
 
             UpdateItemIndices(e.Index);
+        }
+
+        private void ApplyColumns()
+        {
+            for (int i = 0; i < Control.Columns.Count; i++)
+            {
+                var col = Control.Columns[i];
+                NativeControl.InsertColumnAt(
+                    i,
+                    col.Title,
+                    col.Width,
+                    (Native.ListViewColumnWidthMode)col.WidthMode);
+            }
         }
 
         private void Columns_ItemInserted(object? sender, CollectionChangeEventArgs<ListViewColumn> e)

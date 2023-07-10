@@ -24,7 +24,7 @@ namespace Alternet::UI
         void ApplyLargeImageList(wxListView* value);
         void ApplySmallImageList(wxListView* value);
 
-
+      /*
         class Column
         {
         public:
@@ -72,16 +72,16 @@ namespace Alternet::UI
 
             std::vector<wxListItem> _cells;
             int _index;
-        };
+        };*/
 
         ImageList* _smallImageList = nullptr;
         ImageList* _largeImageList = nullptr;
 
-        std::vector<int> _selectedIndices;
+        //std::vector<int> _selectedIndices;
         ListViewSelectionMode _selectionMode = ListViewSelectionMode::Single;
 
-        std::vector<Row> _rows;
-        std::vector<Column> _columns;
+        //std::vector<Row> _rows;
+        //std::vector<Column> _columns;
         ListViewView _view = ListViewView::List;
 
         bool _allowLabelEdit = false;
@@ -104,23 +104,23 @@ namespace Alternet::UI
 
         void RecreateListView();
 
-        void ApplySelectedIndices();
-        void ReceiveSelectedIndices();
+        //void ApplySelectedIndices();
+        //void ReceiveSelectedIndices();
 
         std::vector<int> GetSelectedIndices();
         void SetSelectedIndices(const std::vector<int>& value);
 
         void DeselectAll(wxListView* listView);
 
-        void ApplyItems();
-        void ApplyColumns();
+        //void ApplyItems();
+        //void ApplyColumns();
 
         wxListView* GetListView();
 
-        void InsertColumn(wxListView* listView, const Column& column);
+        //void InsertColumn(wxListView* listView, const Column& column);
         void InsertItem(wxListView* listView, wxListItem& item);
 
-        Row& GetRow(int index);
+        //Row& GetRow(int index);
 
         long GetStyle();
 

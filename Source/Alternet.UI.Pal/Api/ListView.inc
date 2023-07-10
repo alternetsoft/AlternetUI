@@ -69,6 +69,7 @@ void SetColumnTitle(int columnIndex, const string& text);
 public:
 enum class ListViewEvent
 {
+    ControlRecreated,
     SelectionChanged,
     CompareItemsForCustomSort,
     ColumnClick,
