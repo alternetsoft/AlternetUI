@@ -1,7 +1,7 @@
 echo ================
 set SCRIPT_HOME=%~dp0
 
-mkdir "c:\AlternetTest"
+mkdir "c:\AlternetTest.6AB52"
 del /s /q "c:\AlternetTest.6AB52\*.*"
 for /d %%G in ("c:\AlternetTest.6AB52\*") do rd /s /q "%%G" 
 
