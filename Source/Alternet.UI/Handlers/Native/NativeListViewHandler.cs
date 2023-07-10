@@ -82,9 +82,9 @@ namespace Alternet.UI
 
             if (!e.Data.editCancelled && !ea.Cancel)
             {
-                skipSetItemText = true;
+                // skipSetItemText = true;
                 Control.Items[e.Data.itemIndex].Text = e.Data.label;
-                skipSetItemText = false;
+                // skipSetItemText = false;
             }
 
             e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
