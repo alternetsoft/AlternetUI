@@ -34,61 +34,6 @@ namespace Alternet.UI
         /// </summary>
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => base.LogicalChildrenCollection.Concat(ColumnDefinitions).Concat(RowDefinitions);
 
-        /// <summary>
-        /// Gets a value that indicates the total number of columns that child content spans within a <see cref="Grid"/>.
-        /// </summary>
-        /// <param name="control">The control for which to get the column span.</param>
-        /// <returns>The total number of columns that child content spans within a <see cref="Grid"/>.</returns>
-        public static int GetColumnSpan(Control control)
-        {
-            if (control is null)
-            {
-                throw new ArgumentNullException(nameof(control));
-            }
-
-            return controlColumnSpans.TryGetValue(control, out var value) ? value : 1;
-        }
-
-        /// <summary>
-        /// Sets a value that indicates the total number of columns that child content spans within a <see cref="Grid"/>.
-        /// </summary>
-        /// <param name="control">The control for which to set the column span.</param>
-        /// <param name="value">The total number of columns that child content spans within a <see cref="Grid"/>.</param>
-        public static void SetColumnSpan(Control control, int value)
-        {
-            if (control == null)
-            {
-                throw new ArgumentNullException(nameof(control));
-            }
-
-            if (!IsIntValueGreaterThanZero(value))
-                throw new ArgumentOutOfRangeException(nameof(value));
-
-            controlColumnSpans[control] = value;
-            OnCellAttachedPropertyChanged(control);
-        }
-
-        // public static bool GetIsSharedSizeScope(Control control)
-        // {
-        //    if (control is null)
-        //    {
-        //        throw new ArgumentNullException(nameof(control));
-        //    }
-
-        //    return controlIsSharedSizeScopes.TryGetValue(control, out var value) ? value : false;
-        // }
-
-        // public static void SetIsSharedSizeScope(Control control, bool value)
-        // {
-        //    if (control == null)
-        //    {
-        //        throw new ArgumentNullException(nameof(control));
-        //    }
-
-        //    controlIsSharedSizeScopes[control] = value;
-        //    DefinitionBase.OnIsSharedSizeScopePropertyChanged(control, value);
-        // }
-
         // bool showGridLines = false;
 
         // public bool ShowGridLines
@@ -1088,14 +1033,14 @@ namespace Alternet.UI
             if (PrivateCells[cell].IsAutoU
                 && !PrivateCells[cell].IsStarU)
             {
-                //  if cell belongs to at least one Auto column and not a single Star column
+                // if cell belongs to at least one Auto column and not a single Star column
                 //  then it should be calculated "to content", thus it is possible to "shortcut"
                 //  calculations and simply assign PositiveInfinity here.
                 cellMeasureWidth = double.PositiveInfinity;
             }
             else
             {
-                //  otherwise...
+                // otherwise...
                 cellMeasureWidth = GetMeasureSizeForRange(
                                         DefinitionsU,
                                         PrivateCells[cell].ColumnIndex,

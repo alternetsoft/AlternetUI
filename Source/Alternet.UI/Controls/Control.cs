@@ -60,6 +60,7 @@ namespace Alternet.UI
         private Brush? borderBrush;
         private VerticalAlignment verticalAlignment = VerticalAlignment.Stretch;
         private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Stretch;
+        private ControlExtendedProps? extendedProps = null;
 
         private bool visible = true;
         private Control? parent;
@@ -212,6 +213,16 @@ namespace Alternet.UI
         {
             get => Handler.ClientSize;
             set => Handler.ClientSize = value;
+        }
+
+        internal bool HasExtendedProps => extendedProps != null;
+        internal ControlExtendedProps ExtendedProps
+        {
+            get
+            {
+                extendedProps ??= new ();
+                return extendedProps;
+            }
         }
 
         /// <summary>
