@@ -924,6 +924,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
+            if (!IsDisposed)
+                Visible = false;
+
             base.Dispose(disposing);
 
             if (disposing)
