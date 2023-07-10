@@ -1,3 +1,5 @@
+ECHO You should call Install.bat before this script
+
 SETLOCAL EnableDelayedExpansion
 
 set SCRIPT_HOME=%~dp0.

@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// </summary>
     public class StackPanel : Control
     {
-        protected StackPanelOrientation orientation;
+        private StackPanelOrientation orientation;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Orientation"/> property changes.
@@ -17,7 +17,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value that indicates the dimension by which child controls are stacked.
         /// </summary>
-        public StackPanelOrientation Orientation
+        public virtual StackPanelOrientation Orientation
         {
             get => orientation;
 
