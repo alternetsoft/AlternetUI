@@ -6,6 +6,8 @@ namespace NativeApi.Api
 {
     public class TreeView : Control
     {
+        public bool HasBorder { get; set; }
+
         public ImageList? ImageList { get; set; }
 
         public IntPtr RootItem { get; }

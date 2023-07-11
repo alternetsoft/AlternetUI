@@ -24,6 +24,23 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool HasBorder
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TreeView_GetHasBorder_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TreeView_SetHasBorder_(NativePointer, value);
+            }
+        }
+        
         public ImageList? ImageList
         {
             get
@@ -461,6 +478,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr TreeView_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TreeView_GetHasBorder_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetHasBorder_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr TreeView_GetImageList_(IntPtr obj);

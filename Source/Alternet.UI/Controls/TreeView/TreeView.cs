@@ -48,6 +48,25 @@ namespace Alternet.UI
             Items.ItemRemoved += Items_ItemRemoved;
         }
 
+        public bool HasBorder
+        {
+            get
+            {
+                CheckDisposed();
+                if (Handler is not NativeTreeViewHandler handler)
+                    return true;
+                return handler.NativeControl.HasBorder;
+            }
+
+            set
+            {
+                CheckDisposed();
+                if (Handler is not NativeTreeViewHandler handler)
+                    return;
+                handler.NativeControl.HasBorder = value;
+            }
+        }
+
         public new TreeViewHandler Handler
         {
             get

@@ -3,57 +3,59 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample" Padding="10">
 
-        <GroupBox Title="Tree View">
-            <StackPanel Orientation="Horizontal" Margin="5">
-                <TreeView Width="240" Name="treeView"
-                          ExpandedChanged="TreeView_ExpandedChanged"
-                          BeforeLabelEdit="TreeView_BeforeLabelEdit"
-                          AfterLabelEdit="TreeView_AfterLabelEdit"
-                          BeforeExpand="TreeView_BeforeExpand"
-                          BeforeCollapse="TreeView_BeforeCollapse"
-                          MouseLeftButtonDown="TreeView_MouseLeftButtonDown"
+  <GroupBox Title="Tree View">
+    <StackPanel Orientation="Horizontal" Margin="5">
+      <TreeView Width="240" Name="treeView"
+                ExpandedChanged="TreeView_ExpandedChanged"
+                BeforeLabelEdit="TreeView_BeforeLabelEdit"
+                AfterLabelEdit="TreeView_AfterLabelEdit"
+                BeforeExpand="TreeView_BeforeExpand"
+                BeforeCollapse="TreeView_BeforeCollapse"
+                MouseLeftButtonDown="TreeView_MouseLeftButtonDown"
                 />
 
-                <StackPanel Orientation="Vertical" Margin="10,0,0,0" >
-                    <Button Text="Add Item" Name="addItemButton" Click="AddItemButton_Click" />
-                    <Button Text="Remove Item" Name="removeItemButton" Margin="0,3,0,0" Click="RemoveItemButton_Click" />
-                    <Button Text="Add 1000 Items" Name="addManyItemsButton" Margin="0,3,0,0" Click="AddManyItemsButton_Click" />
-                    <CheckBox Text="Allow Multiple Selection" Name="allowMultipleSelectionCheckBox" Margin="0,10,0,0" CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged" />
-                    <CheckBox Text="Enabled" Name="enabledCheckBox" Margin="0,5,0,0" CheckedChanged="EnabledCheckBox_CheckedChanged" IsChecked="True" />
-                    <CheckBox Text="Allow Label Editing" Name="allowLabelEditingCheckBox" Margin="0,5,0,0" CheckedChanged="AllowLabelEditingCheckBox_CheckedChanged" IsChecked="False" />
-                    <Button Text="Begin Selected Label Editing" Name="beginSelectedLabelEditingButton" Margin="0,3,0,0" Click="BeginSelectedLabelEditingButton_Click" Enabled="False" />
-                    <CheckBox Text="Show Root Lines" Name="showRootLinesCheckBox" Margin="0,10,0,0" CheckedChanged="ShowRootLinesCheckBox_CheckedChanged" IsChecked="True" />
-                    <CheckBox Text="Show Lines" Name="showLinesCheckBox" Margin="0,5,0,0" CheckedChanged="ShowLinesCheckBox_CheckedChanged" IsChecked="False" />
-                    <CheckBox Text="Show Expand Buttons" Name="showExpandButtonsCheckBox" Margin="0,5,0,0" CheckedChanged="ShowExpandButtons_CheckedChanged" IsChecked="True" />
-                    <CheckBox Text="Full Row Select" Name="fullRowSelectCheckBox" Margin="0,5,0,0" CheckedChanged="FullRowSelectCheckBox_CheckedChanged" IsChecked="False" />
+      <StackPanel Orientation="Vertical" Margin="10,0,0,0" >
+        <Button Text="Add Item" Name="addItemButton" Click="AddItemButton_Click" />
+        <Button Text="Remove Item" Name="removeItemButton" Margin="0,3,0,0" Click="RemoveItemButton_Click" />
+        <Button Text="Add 1000 Items" Name="addManyItemsButton" Margin="0,3,0,0" Click="AddManyItemsButton_Click" />
+        <CheckBox Text="Allow Multiple Selection" Name="allowMultipleSelectionCheckBox" Margin="0,10,0,0" CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged" />
+        <CheckBox Text="Enabled" Name="enabledCheckBox" Margin="0,5,0,0" CheckedChanged="EnabledCheckBox_CheckedChanged" IsChecked="True" />
+        <CheckBox Text="Allow Label Editing" Name="allowLabelEditingCheckBox" Margin="0,5,0,0" CheckedChanged="AllowLabelEditingCheckBox_CheckedChanged" IsChecked="False" />
+        <Button Text="Begin Selected Label Editing" Name="beginSelectedLabelEditingButton" Margin="0,3,0,0" Click="BeginSelectedLabelEditingButton_Click" Enabled="False" />
+        <CheckBox Text="Show Root Lines" Name="showRootLinesCheckBox" Margin="0,10,0,0" CheckedChanged="ShowRootLinesCheckBox_CheckedChanged" IsChecked="True" />
+        <CheckBox Text="Show Lines" Name="showLinesCheckBox" Margin="0,5,0,0" CheckedChanged="ShowLinesCheckBox_CheckedChanged" IsChecked="False" />
+        <CheckBox Text="Show Expand Buttons" Name="showExpandButtonsCheckBox" Margin="0,5,0,0" CheckedChanged="ShowExpandButtons_CheckedChanged" IsChecked="True" />
+        <CheckBox Text="Full Row Select" Name="fullRowSelectCheckBox" Margin="0,5,0,0" CheckedChanged="FullRowSelectCheckBox_CheckedChanged" IsChecked="False" />
 
-                    <CheckBox Text="Cancel BeforeExpand Events" Name="cancelBeforeExpandEventsCheckBox" Margin="0,10,0,0" 
-                              IsChecked="False" />
-                    <CheckBox Text="Cancel BeforeCollapse Events" Name="cancelBeforeCollapseEventsCheckBox" Margin="0,5,0,0" 
-                              IsChecked="False" />
-                    <CheckBox Text="Cancel BeforeLabelEdit Events" Name="cancelBeforeLabelEditEventsCheckBox" Margin="0,5,0,0"  
-                              IsChecked="False" />
-                    <CheckBox Text="Cancel AfterLabelEdit Events" Name="cancelAfterLabelEditEventsCheckBox" Margin="0,5,0,0" 
-                              IsChecked="False" />
-                </StackPanel>
-                <StackPanel Orientation="Vertical" Margin="10,0,0,0" >
-                    <Button Text="Expand All" Name="expandAllButton" Margin="0,0,0,0" Click="ExpandAllButton_Click" />
-                    <Button Text="Collapse All" Name="collapseAllButton" Margin="0,3,0,0" Click="CollapseAllButton_Click" />
-                    <Button Text="Expand All Children" Name="expandAllChildrenButton" Margin="0,3,0,0" Click="ExpandAllChildrenButton_Click" />
-                    <Button Text="Collapse All Children" Name="collapseAllChildrenButton" Margin="0,3,0,0" Click="CollapseAllChildrenButton_Click" />
+        <CheckBox Text="Cancel BeforeExpand Events" Name="cancelBeforeExpandEventsCheckBox" Margin="0,10,0,0"
+                  IsChecked="False" />
+        <CheckBox Text="Cancel BeforeCollapse Events" Name="cancelBeforeCollapseEventsCheckBox" Margin="0,5,0,0"
+                  IsChecked="False" />
+        <CheckBox Text="Cancel BeforeLabelEdit Events" Name="cancelBeforeLabelEditEventsCheckBox" Margin="0,5,0,0"
+                  IsChecked="False" />
+        <CheckBox Text="Cancel AfterLabelEdit Events" Name="cancelAfterLabelEditEventsCheckBox" Margin="0,5,0,0"
+                  IsChecked="False" />
+      </StackPanel>
+      <StackPanel Orientation="Vertical" Margin="10,0,0,0" >
+        <Button Text="Expand All" Name="expandAllButton" Margin="0,0,0,0" Click="ExpandAllButton_Click" />
+        <Button Text="Collapse All" Name="collapseAllButton" Margin="0,3,0,0" Click="CollapseAllButton_Click" />
+        <Button Text="Expand All Children" Name="expandAllChildrenButton" Margin="0,3,0,0" Click="ExpandAllChildrenButton_Click" />
+        <Button Text="Collapse All Children" Name="collapseAllChildrenButton" Margin="0,3,0,0" Click="CollapseAllChildrenButton_Click" />
 
-                    <Button Text="Ensure Last Item is Visible" Name="ensureLastItemVisibleButton" Margin="0,5,0,0" Click="EnsureLastItemVisibleButton_Click" />
-                    <Button Text="Scroll Last Item Into View" Name="scrollLastItemIntoViewButton" Margin="0,3,0,0" Click="ScrollLastItemIntoViewButton_Click" />
-                    <Button Text="Focus Last Item" Name="focusLastItemButton" Margin="0,3,0,0" Click="FocusLastItemButton_Click" />
-                    <Button Text="Modify Last Item" Name="modifyLastItemButton" Margin="0,3,0,0" Click="ModifyLastItemButton_Click" />
-                    <Button Text="Add Last Item Sibling" Name="addLastItemSiblingButton" Margin="0,3,0,0" Click="AddLastItemSiblingButton_Click" />
-                  <Button Text="Clear Items" Margin="0,3,0,0"
-                        Name="clearButton" Click="ClearItemsButton_Click"/>
-                  <Button Text="View Selected" Margin="0,3,0,0"
-                          Name="viewSelectedButton" Click="TreeView_SelectionChanged"/>
+        <Button Text="Ensure Last Item is Visible" Name="ensureLastItemVisibleButton" Margin="0,5,0,0" Click="EnsureLastItemVisibleButton_Click" />
+        <Button Text="Scroll Last Item Into View" Name="scrollLastItemIntoViewButton" Margin="0,3,0,0" Click="ScrollLastItemIntoViewButton_Click" />
+        <Button Text="Focus Last Item" Name="focusLastItemButton" Margin="0,3,0,0" Click="FocusLastItemButton_Click" />
+        <Button Text="Modify Last Item" Name="modifyLastItemButton" Margin="0,3,0,0" Click="ModifyLastItemButton_Click" />
+        <Button Text="Add Last Item Sibling" Name="addLastItemSiblingButton" Margin="0,3,0,0" Click="AddLastItemSiblingButton_Click" />
+        <Button Text="Clear Items" Margin="0,3,0,0"
+              Name="clearButton" Click="ClearItemsButton_Click"/>
+        <Button Text="Log Selected" Margin="0,3,0,0"
+                Name="viewSelectedButton" Click="TreeView_SelectionChanged"/>
+        <Button Text="Has Border" Margin="0,3,0,0" Name="hasBorderButton"
+                Click="HasBorderButton_Click"/>
 
-                </StackPanel>
-            </StackPanel>
-        </GroupBox>
-    
+      </StackPanel>
+    </StackPanel>
+  </GroupBox>
+
 </Control>

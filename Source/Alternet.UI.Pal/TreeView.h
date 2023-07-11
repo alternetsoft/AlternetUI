@@ -32,6 +32,7 @@ namespace Alternet::UI
 
         TreeViewSelectionMode _selectionMode = TreeViewSelectionMode::Single;
 
+        bool hasBorder = true;
         bool _allowLabelEdit = false;
         bool _fullRowSelect = false;
         bool _showRootLines = true;

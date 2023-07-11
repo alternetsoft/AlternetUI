@@ -8,6 +8,19 @@ namespace Alternet::UI
         CreateWxWindow();
     }
 
+    bool TreeView::GetHasBorder()
+    {
+        return hasBorder;
+    }
+
+    void TreeView::SetHasBorder(bool value)
+    {
+        if (hasBorder == value)
+            return;
+        hasBorder = value;
+        RecreateTreeCtrl();
+    }
+
     TreeView::~TreeView()
     {
         if (IsWxWindowCreated())
@@ -155,6 +168,9 @@ namespace Alternet::UI
     wxWindow* TreeView::CreateWxWindowCore(wxWindow* parent)
     {
         long style = GetStyle() | GetBorderStyle();
+
+        if (!hasBorder)
+            style = style | wxBORDER_NONE;
 
         auto value = new wxTreeCtrl(
             parent,

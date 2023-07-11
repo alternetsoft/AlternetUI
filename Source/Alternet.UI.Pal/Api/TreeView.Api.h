@@ -16,6 +16,20 @@ ALTERNET_UI_API TreeView* TreeView_Create_()
         });
 }
 
+ALTERNET_UI_API c_bool TreeView_GetHasBorder_(TreeView* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetHasBorder();
+        });
+}
+
+ALTERNET_UI_API void TreeView_SetHasBorder_(TreeView* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetHasBorder(value);
+        });
+}
+
 ALTERNET_UI_API ImageList* TreeView_GetImageList_(TreeView* obj)
 {
     return MarshalExceptions<ImageList*>([&](){

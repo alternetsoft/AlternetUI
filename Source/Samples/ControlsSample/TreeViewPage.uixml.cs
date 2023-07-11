@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Alternet.UI;
+using Alternet.Base.Collections;
 
 namespace ControlsSample
 {
@@ -209,13 +210,17 @@ namespace ControlsSample
             supressExpandEvents--;
         }
 
-        private void ExpandAllChildrenButton_Click(object sender, EventArgs e) => treeView.SelectedItem?.ExpandAll();
+        private void ExpandAllChildrenButton_Click(object sender, EventArgs e) => 
+            treeView.SelectedItem?.ExpandAll();
 
-        private void CollapseAllChildrenButton_Click(object sender, EventArgs e) => treeView.SelectedItem?.CollapseAll();
+        private void CollapseAllChildrenButton_Click(object sender, EventArgs e) => 
+            treeView.SelectedItem?.CollapseAll();
 
-        private void EnsureLastItemVisibleButton_Click(object sender, System.EventArgs e) => GetLastItem(null, treeView.Items)?.EnsureVisible();
+        private void EnsureLastItemVisibleButton_Click(object sender, System.EventArgs e) 
+            => GetLastItem(null, treeView.Items)?.EnsureVisible();
 
-        private void ScrollLastItemIntoViewButton_Click(object sender, System.EventArgs e) => GetLastItem(null, treeView.Items)?.ScrollIntoView();
+        private void ScrollLastItemIntoViewButton_Click(object sender, System.EventArgs e)
+            => GetLastItem(null, treeView.Items)?.ScrollIntoView();
 
         private void FocusLastItemButton_Click(object sender, System.EventArgs e)
         {
@@ -262,7 +267,8 @@ namespace ControlsSample
             if (item != null)
             {
                 var collection = item.Parent == null ? treeView.Items : item.Parent.Items;
-                var newItem = new TreeViewItem(item.Text + " Sibling", item.ImageIndex ?? 0);
+                var newItem = 
+                    new TreeViewItem(item.Text + " Sibling", item.ImageIndex ?? 0);
                 collection.Insert(collection.IndexOf(item), newItem);
                 newItem.EnsureVisible();
             }
@@ -292,14 +298,22 @@ namespace ControlsSample
             fullRowSelectCheckBox.Enabled = fastRecreate;
             allowMultipleSelectionCheckBox.Enabled = fastRecreate;
             allowLabelEditingCheckBox.Enabled = fastRecreate;
+            hasBorderButton.Enabled = fastRecreate;
         }
 
-        private void Items_ItemRemoved(object sender, Alternet.Base.Collections.CollectionChangeEventArgs<TreeViewItem> e)
+        private void HasBorderButton_Click(object sender, System.EventArgs e)
+        {
+            treeView.HasBorder = !treeView.HasBorder;
+        }
+
+        private void Items_ItemRemoved(object sender, 
+            CollectionChangeEventArgs<TreeViewItem> e)
         {
             UpdateSlowRecreate();
         }
 
-        private void Items_ItemInserted(object sender, Alternet.Base.Collections.CollectionChangeEventArgs<TreeViewItem> e)
+        private void Items_ItemInserted(object sender, 
+            CollectionChangeEventArgs<TreeViewItem> e)
         {
             UpdateSlowRecreate();
         }
