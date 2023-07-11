@@ -6,9 +6,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace ControlsSample
+namespace Alternet.UI
 {
     internal static partial class ControlsSampleUtils
     {
@@ -22,6 +21,14 @@ namespace ControlsSample
                 .Replace(":", "%3A")
                 .Replace(" ", "%20");
             return s;
+        }
+
+        public static void AddEnumValues(ComboBox comboBox, Type type,
+            object? selectValue = null)
+        {
+            foreach (var item in Enum.GetValues(type))
+                comboBox.Items.Add(item);
+            comboBox.SelectedItem = selectValue;
         }
 
         public static string PathAddBackslash(string? path)
