@@ -36,7 +36,7 @@
                 <StackPanel Orientation="Vertical" Margin="5" Name="stackPanel1">
                   <Button Text="Add Item" Name="addItemButton" Click="AddItemButton_Click"/>
                   <Button Text="Remove Item" Name="removeItemButton" Margin="0,3,0,0" Click="RemoveItemButton_Click"/>
-                  <Button Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0"
+                  <Button Text="Add 1000 Items" Name="addManyItemsButton" Margin="0,3,0,0"
                       Click="AddManyItemsButton_Click"/>
                   <Button Text="Clear" Name="ClearButton" Margin="0,3,0,0" Click="ClearButton_Click"/>
 
@@ -44,15 +44,23 @@
                   <Button Text="Modify Column Title" Name="ModifyColumnTitleButton"
                       Margin="0,3,0,0" Click="ModifyColumnTitleButton_Click"/>
 
-                  <Button Text="Show Last Item" Margin="0,10,0,0" Name="ensureLastItemVisibleButton" Click="EnsureLastItemVisibleButton_Click" />
+                  <Button Text="Show Last Item" Margin="0,10,0,0" 
+                          Name="ensureLastItemVisibleButton" 
+                          Click="EnsureLastItemVisibleButton_Click" />
                   <Button Text="Focus Last Item" Name="focusLastItemButton" Margin="0,3,0,0"
                       Click="FocusLastItemButton_Click" />
-                  <Button Text="Modify Last Item" Name="modifyLastItemButton" Margin="0,3,0,0"
+                  <Button Text="Modify Last Item" Name="modifyLastItemButton" 
+                          Margin="0,3,0,0"
                       Click="ModifyLastItemButton_Click" />
-                  <Button Text="Add Last Item Sibling" Name="addLastItemSiblingButton" Margin="0,3,0,0" Enabled="true"
+                  <Button Text="Add Last Item Sibling" Name="addLastItemSiblingButton" 
+                          Margin="0,3,0,0" Enabled="true"
                       Click="AddLastItemSiblingButton_Click" />
                   
-                  <Button Text="Edit Selected Label" Name="beginSelectedLabelEditingButton" Margin="0,10,0,0" Click="BeginSelectedLabelEditingButton_Click" Enabled="False" />
+                  <Button Text="Edit Selected Label" Name="beginSelectedLabelEditingButton" 
+                          Margin="0,10,0,0" Click="BeginSelectedLabelEditingButton_Click" 
+                          Enabled="False" />
+                  <Button Text="Has Border" Margin="0,3,0,0" 
+                          Name="hasBorderButton" Click="HasBorderButton_Click"/>
                   <Button Text="Log Selected" Margin="0,3,0,3"
                           Name="viewSelectedButton" Click="ListView_SelectionChanged"/>
                   <!--

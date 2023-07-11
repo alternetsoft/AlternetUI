@@ -6,6 +6,8 @@ namespace NativeApi.Api
 {
     public class ListView : Control
     {
+        public bool HasBorder { get; set; }
+
         public int ItemsCount { get; }
 
         public ImageList? SmallImageList { get; set; }

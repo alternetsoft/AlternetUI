@@ -49,7 +49,7 @@ namespace Alternet.UI
             // NativeControl.CompareItemsForCustomSort += NativeControl_CompareItemsForCustomSort;
         }
 
-        private void NativeControl_ControlRecreated(object sender, EventArgs e)
+        private void NativeControl_ControlRecreated(object? sender, EventArgs e)
         {
             NativeControl.BeginUpdate();
             ApplyColumns();
@@ -58,21 +58,22 @@ namespace Alternet.UI
             NativeControl.EndUpdate();
         }
 
-        // private void NativeControl_CompareItemsForCustomSort(
-        //    object? sender,
-        //    Native.NativeEventArgs<Native.CompareListViewItemsEventData> e)
-        // {
-        //    int result = 0;
-        //    if (CustomItemSortComparer != null)
-        //    {
-        //        var item1 = Control.Items[e.Data.item1Index];
-        //        var item2 = Control.Items[e.Data.item2Index];
+        /*private void NativeControl_CompareItemsForCustomSort(
+           object? sender,
+           Native.NativeEventArgs<Native.CompareListViewItemsEventData> e)
+        {
+            int result = 0;
+            if (CustomItemSortComparer != null)
+            {
+                var item1 = Control.Items[e.Data.item1Index];
+                var item2 = Control.Items[e.Data.item2Index];
 
-        // result = CustomItemSortComparer.Compare(item1, item2);
-        //    }
+                result = CustomItemSortComparer.Compare(item1, item2);
+            }
 
-        // e.Result = (IntPtr)result;
-        // }
+            e.Result = (IntPtr)result;
+        }*/
+
         private void NativeControl_BeforeItemLabelEdit(
             object? sender,
             Native.NativeEventArgs<Native.ListViewItemLabelEditEventData> e)
@@ -92,9 +93,9 @@ namespace Alternet.UI
 
             if (!e.Data.editCancelled && !ea.Cancel)
             {
-                // skipSetItemText = true;
+                /*skipSetItemText = true;*/
                 Control.Items[e.Data.itemIndex].Text = e.Data.label;
-                // skipSetItemText = false;
+                /*skipSetItemText = false;*/
             }
 
             e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
@@ -306,7 +307,7 @@ namespace Alternet.UI
 
             try
             {
-                Control.SelectedIndices = NativeControl.SelectedIndices;
+                Control.SelectedIndicesAreDirty();
             }
             finally
             {

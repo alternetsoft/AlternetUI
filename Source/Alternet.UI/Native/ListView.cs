@@ -24,6 +24,23 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool HasBorder
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.ListView_GetHasBorder_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ListView_SetHasBorder_(NativePointer, value);
+            }
+        }
+        
         public int ItemsCount
         {
             get
@@ -444,6 +461,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr ListView_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool ListView_GetHasBorder_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListView_SetHasBorder_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ListView_GetItemsCount_(IntPtr obj);

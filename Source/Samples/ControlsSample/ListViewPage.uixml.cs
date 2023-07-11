@@ -111,7 +111,7 @@ namespace ControlsSample
             allowMultipleSelectionCheckBox.Enabled = fastRecreate;
             allowLabelEditingCheckBox.Enabled = fastRecreate;
             columnHeaderVisibleCheckBox.Enabled = fastRecreate;
-
+            hasBorderButton.Enabled = fastRecreate;
         }
 
         private void ViewComboBox_SelectedItemChanged(object? sender, EventArgs e)
@@ -148,7 +148,7 @@ namespace ControlsSample
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
         {
-            AddItems(5000);
+            AddItems(1000);
         }
 
         private void AddItems(int count)
@@ -204,8 +204,10 @@ namespace ControlsSample
 
         private void RemoveItemButton_Click(object? sender, EventArgs e)
         {
-            foreach (var item in listView.SelectedItems.ToArray())
-                listView.Items.Remove(item);
+            int selectedIndex = listView.SelectedIndex ?? -1;
+            listView.RemoveSelectedItems();
+            if(listView.Items.Count > 0 && selectedIndex >= 0)
+                listView.SelectedIndex = Math.Min(selectedIndex, listView.Items.Count-1);
         }
 
         private void AddItemButton_Click(object? sender, EventArgs e)
@@ -260,6 +262,11 @@ namespace ControlsSample
 
         private void EnsureLastItemVisibleButton_Click(object sender, System.EventArgs e) 
             => GetLastItem()?.EnsureVisible();
+
+        private void HasBorderButton_Click(object sender, System.EventArgs e)
+        {
+            listView.HasBorder = !listView.HasBorder;
+        }
 
         private void FocusLastItemButton_Click(object sender, System.EventArgs e)
         {

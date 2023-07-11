@@ -19,7 +19,7 @@ namespace Alternet.UI
     /// </remarks>
     public class ListView : Control
     {
-        private readonly HashSet<int> selectedIndices = new ();
+        private HashSet<int>? selectedIndices = null;
 
         private ListViewView view = ListViewView.List;
         private ImageList? smallImageList = null;
@@ -29,7 +29,7 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ListView"/> class.
         /// </summary>
-        public ListView()
+        public ListView()       
         {
         }
 
@@ -156,7 +156,8 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return selectedIndices.ToArray();
+                UpdateSelectedIndices();
+                return selectedIndices!.ToArray();
             }
 
             set
@@ -174,6 +175,18 @@ namespace Alternet.UI
 
                 if (changed)
                     RaiseSelectionChanged(EventArgs.Empty);
+            }
+        }
+
+        private void UpdateSelectedIndices()
+        {
+            if (selectedIndices == null)
+            {
+                selectedIndices = new HashSet<int>();
+                if (Handler is not NativeListViewHandler handler)
+                    return;
+                var indices = handler.NativeControl.SelectedIndices;
+                selectedIndices.UnionWith(indices);
             }
         }
 
@@ -199,7 +212,10 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return selectedIndices.FirstOrDefault();
+                var selected = SelectedIndices;
+                if (selected.Count == 0)
+                    return null;
+                return selected[0];
             }
 
             set
@@ -237,7 +253,7 @@ namespace Alternet.UI
             {
                 CheckDisposed();
 
-                if (SelectedIndex == null)
+                if (SelectedIndex == null || (int)SelectedIndex < 0)
                     return null;
 
                 return Items[SelectedIndex.Value];
@@ -451,6 +467,82 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a collection that contains the zero-based indexes of all
+        /// currently selected items in the <see cref="ListView"/>.
+        /// </summary>
+        /// <remarks>
+        /// Indexes are returned in the descending order (maximal index is the first).
+        /// </remarks>
+        /// <seealso cref="SelectedIndices"/>
+        /// <value>
+        /// An <see cref="IReadOnlyList{T}"/> containing the indexes of the
+        /// currently selected items in the control.
+        /// If no items are currently selected, an empty <see cref="IReadOnlyList{T}"/>
+        /// is returned.
+        /// </value>
+        public IReadOnlyList<int> SelectedIndicesDescending
+        {
+            get
+            {
+                int[] sortedCopy = SelectedIndices.OrderByDescending(i => i).ToArray();
+                return sortedCopy;
+            }
+        }
+
+        public bool HasBorder
+        {
+            get
+            {
+                CheckDisposed();
+                if (Handler is not NativeListViewHandler handler)
+                    return true;
+                return handler.NativeControl.HasBorder;
+            }
+
+            set
+            {
+                CheckDisposed();
+                if (Handler is not NativeListViewHandler handler)
+                    return;
+                handler.NativeControl.HasBorder = value;
+            }
+        }
+
+        /// <summary>
+        /// Removes selected items from the <see cref="ListView"/>.
+        /// </summary>
+        public void RemoveSelectedItems()
+        {
+            RemoveItems(SelectedIndicesDescending);
+        }
+
+        /// <summary>
+        /// Removes items from the <see cref="ListView"/>.
+        /// </summary>
+        public void RemoveItems(IReadOnlyList<int> items)
+        {
+            if (items == null || items.Count == 0)
+                return;
+
+            BeginUpdate();
+            try
+            {
+                ClearSelected();
+                foreach (int index in items)
+                {
+                    if (index < Items.Count && index >= 0)
+                    {
+                        Items.RemoveAt(index);
+                    }
+                }
+            }
+            finally
+            {
+                EndUpdate();
+            }
+        }
+
+        /// <summary>
         /// Provides list view item information, at a given client point, in device-independent units (1/96th inch per
         /// unit).
         /// </summary>
@@ -606,18 +698,24 @@ namespace Alternet.UI
         {
         }
 
+        internal void SelectedIndicesAreDirty()
+        {
+            selectedIndices = null;
+        }
+
         private void ClearSelectedCore()
         {
-            selectedIndices.Clear();
+            selectedIndices?.Clear();
         }
 
         private bool SetSelectedCore(int index, bool value)
         {
+            UpdateSelectedIndices();
             bool changed;
             if (value)
-                changed = selectedIndices.Add(index);
+                changed = selectedIndices!.Add(index);
             else
-                changed = selectedIndices.Remove(index);
+                changed = selectedIndices!.Remove(index);
 
             return changed;
         }
