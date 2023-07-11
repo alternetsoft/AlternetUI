@@ -66,10 +66,10 @@ namespace Alternet.UI
                 return parent;
             }
 
+            control = SetParentBackground(control, new SolidBrush(Color.Red));
             control = SetParentBackground(control, new SolidBrush(Color.Green));
-            control = SetParentBackground(control, new SolidBrush(Color.Yellow));
             control = SetParentBackground(control, new SolidBrush(Color.Blue));
-            SetParentBackground(control, new SolidBrush(Color.Red));
+            SetParentBackground(control, new SolidBrush(Color.Yellow));
         }
 
         internal static IArrangedElementLite FromControl(Control control)
