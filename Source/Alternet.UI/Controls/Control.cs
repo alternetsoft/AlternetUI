@@ -316,7 +316,7 @@ namespace Alternet.UI
             }
         }
 
-        internal virtual Rect DrawClientRectangle
+        protected internal virtual Rect DrawClientRectangle
         {
             get
             {

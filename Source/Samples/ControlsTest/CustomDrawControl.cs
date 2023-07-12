@@ -11,14 +11,14 @@ namespace ControlsTest
 {
     public class CustomDrawControl : UserPaintControl
     {
-        private readonly Control leftControl = new();
-        private readonly Control fillControl = new();
+        private readonly Control leftControl = new ();
+        private readonly Control fillControl = new ();
 
         public CustomDrawControl()
             : base()
         {
-            leftControl.Bounds = new(0, 0, 50, 50);
-            fillControl.Bounds = new(0, 60, 50, 50);
+            leftControl.Bounds = new (0, 0, 50, 50);
+            fillControl.Bounds = new (0, 60, 50, 50);
             leftControl.Background = new SolidBrush(Color.Green);
             fillControl.Background = new SolidBrush(Color.Red);
         }
@@ -26,7 +26,7 @@ namespace ControlsTest
         protected override void OnPaint(PaintEventArgs e)
         {
             var dc = e.DrawingContext;
-            var bounds = ClientRectangle;
+            var bounds = DrawClientRectangle;
             LayoutFactory.PerformLayoutLeftFill(this, leftControl, fillControl);
 
             var brush = this.Background;

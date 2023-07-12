@@ -38,6 +38,22 @@
       <None Remove="Html\pageinresource.html" />
       <None Remove="Html\SampleArchive.zip" />
       <None Remove="Html\version.html" />
+      <None Remove="resources\Png\16\arrow-left-16.png" />
+      <None Remove="resources\Png\16\arrow-right-16.png" />
+      <None Remove="resources\Png\16\arrow-rotate-right-16.png" />
+      <None Remove="resources\Png\16\caret-right-16.png" />
+      <None Remove="resources\Png\16\minus-16.png" />
+      <None Remove="resources\Png\16\plus-16.png" />
+      <None Remove="resources\Png\16\search-16.png" />
+      <None Remove="resources\Png\16\xmark-16.png" />
+      <None Remove="resources\Png\24\arrow-left-24.png" />
+      <None Remove="resources\Png\24\arrow-right-24.png" />
+      <None Remove="resources\Png\24\arrow-rotate-right-24.png" />
+      <None Remove="resources\Png\24\caret-right-24.png" />
+      <None Remove="resources\Png\24\minus-24.png" />
+      <None Remove="resources\Png\24\plus-24.png" />
+      <None Remove="resources\Png\24\search-24.png" />
+      <None Remove="resources\Png\24\xmark-24.png" />
     </ItemGroup>
 
     <ItemGroup>
@@ -120,7 +136,7 @@
       <Folder Include="Html\SampleArchive\Html\" />
       <Folder Include="Html\SampleArchive\Images\" />
       <Folder Include="Html\SampleArchive\Styles\" />
-      <Folder Include="Resources\" />
+      <Folder Include="Resources\Png\16\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -133,6 +149,25 @@
       <Content Include="..\..\Samples\ControlsSample\Resources\SamplePandaPdf.pdf" Link="Resources\SamplePandaPdf.pdf">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="resources\Png\16\arrow-left-16.png" />
+      <EmbeddedResource Include="resources\Png\16\arrow-right-16.png" />
+      <EmbeddedResource Include="resources\Png\16\arrow-rotate-right-16.png" />
+      <EmbeddedResource Include="resources\Png\16\caret-right-16.png" />
+      <EmbeddedResource Include="resources\Png\16\minus-16.png" />
+      <EmbeddedResource Include="resources\Png\16\plus-16.png" />
+      <EmbeddedResource Include="resources\Png\16\search-16.png" />
+      <EmbeddedResource Include="resources\Png\16\xmark-16.png" />
+      <EmbeddedResource Include="resources\Png\24\arrow-left-24.png" />
+      <EmbeddedResource Include="resources\Png\24\arrow-right-24.png" />
+      <EmbeddedResource Include="resources\Png\24\arrow-rotate-right-24.png" />
+      <EmbeddedResource Include="resources\Png\24\caret-right-24.png" />
+      <EmbeddedResource Include="resources\Png\24\minus-24.png" />
+      <EmbeddedResource Include="resources\Png\24\plus-24.png" />
+      <EmbeddedResource Include="resources\Png\24\search-24.png" />
+      <EmbeddedResource Include="resources\Png\24\xmark-24.png" />
     </ItemGroup>
 </Project>
 

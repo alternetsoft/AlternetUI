@@ -150,5 +150,10 @@ namespace Alternet.UI
                 container.ResumeLayout(true);
             }
         }
+
+        public static void AddToolbar(Control control, Toolbar toolbar)
+        {
+
+        }
     }
 }
