@@ -13,14 +13,7 @@ namespace ControlsTest
 {
     internal partial class WebBrowserTestPage : Control
     {
-        private Button backButton;
-        private Button forwardButton;
-        private Button zoomInButton;
-        private Button zoomOutButton;
-        private Button goButton;
-        private TextBox urlTextBox;
-
-        internal static readonly Destructor MyDestructor = new ();
+        internal static readonly Destructor MyDestructor = new();
 
         private static readonly string ZipSchemeName = "zipfs";
         private static readonly bool SetDefaultUserAgent = false;
@@ -28,8 +21,28 @@ namespace ControlsTest
         private static bool insideUnhandledException;
         private static EmptyWindow? emptyWindow = null;
 
-        private readonly WebBrowserFindParams findParams = new ();
-        private readonly Dictionary<string, MethodCaller> testActions = new ();
+        private readonly WebBrowserFindParams findParams = new();
+        private readonly Dictionary<string, MethodCaller> testActions = new();
+
+        private StackPanel webBrowserToolbarPanel;
+        private Button backButton;
+        private Button forwardButton;
+        private Button zoomInButton;
+        private Button zoomOutButton;
+        private Button goButton;
+        private TextBox urlTextBox;
+        private StackPanel findOptionsPanel;
+        private CheckBox findWrapCheckBox;
+        private CheckBox findEntireWordCheckBox;
+        private CheckBox findMatchCaseCheckBox;
+        private CheckBox findHighlightResultCheckBox;
+        private CheckBox findBackwardsCheckBox;
+        private StackPanel findPanel;
+        private TextBox findTextBox;
+        private Button findButton;
+        private Button findClearButton;
+        private StackPanel mainStackPanel;
+        private ListBox listBox1;
 
         private bool pandaInMemory = false;
         private bool mappingSet = false;
@@ -66,17 +79,70 @@ namespace ControlsTest
             Trace.Listeners.Add(myListener);
             InitializeComponent();
 
+            AddToolbar();
+            AddMainPanel();
+            AddFindPanel();
+            AddFindOptionsPanel();
+        }
+
+        public void AddMainPanel()
+        {
+            mainStackPanel = new()
+            {
+                Margin = new Thickness(5, 5, 5, 5),
+                Orientation = StackPanelOrientation.Horizontal,
+            };
+            Grid.SetRowColumn(mainStackPanel, 2, 0);
+
+            listBox1 = new()
+            {
+                Width = 180,
+                Height = 400,
+            };
+            listBox1.MouseDoubleClick += ListBox1_MouseDoubleClick;
+            mainStackPanel.Children.Add(listBox1);
+
+            WebBrowser1 = new()
+            {
+                Width = 500,
+                Height = 300,
+                Margin = new(5, 0, 0, 0),
+            };
+            WebBrowser1.Navigated += WebBrowser1_Navigated;
+            WebBrowser1.Loaded += WebBrowser1_Loaded;
+            WebBrowser1.NewWindow += WebBrowser1_NewWindow;
+            WebBrowser1.DocumentTitleChanged += WebBrowser1_TitleChanged;
+            WebBrowser1.FullScreenChanged += WebBrowser1_FullScreenChanged;
+            WebBrowser1.ScriptMessageReceived += WebBrowser1_ScriptMessageReceived;
+            WebBrowser1.ScriptResult += WebBrowser1_ScriptResult;
+            WebBrowser1.Navigating += WebBrowser1_Navigating;
+            WebBrowser1.Error += WebBrowser1_Error;
+            WebBrowser1.BeforeBrowserCreate += WebBrowser1_BeforeBrowserCreate;
+            mainStackPanel.Children.Add(WebBrowser1);
+
+            webBrowserGrid.Children.Add(mainStackPanel);
+        }
+
+        public void AddToolbar()
+        {
             var imageSize = 16;
             var resPrefix = $"embres:ControlsTest.resources.Png._{imageSize}.";
 
-            backButton = new ()
+            webBrowserToolbarPanel = new()
+            {
+                Margin = new Thickness(5, 5, 5, 5),
+                Orientation = StackPanelOrientation.Horizontal,
+            };
+            Grid.SetRowColumn(webBrowserToolbarPanel,1, 0);
+
+            backButton = new()
             {
                 Margin = new Thickness(0, 5, 5, 5),
                 Image = Bitmap.FromUrl($"{resPrefix}arrow-left-{imageSize}.png"),
             };
             backButton.Click += BackButton_Click;
 
-            forwardButton = new ()
+            forwardButton = new()
             {
                 // Text = ">",
                 Margin = new Thickness(0, 5, 5, 5),
@@ -84,7 +150,7 @@ namespace ControlsTest
             };
             forwardButton.Click += ForwardButton_Click;
 
-            zoomInButton = new ()
+            zoomInButton = new()
             {
                 // Text = "+",
                 Margin = new Thickness(0, 5, 5, 5),
@@ -93,7 +159,7 @@ namespace ControlsTest
             };
             zoomInButton.Click += ZoomInButton_Click;
 
-            zoomOutButton = new ()
+            zoomOutButton = new()
             {
                 // Text = "-",
                 Margin = new Thickness(0, 5, 5, 5),
@@ -102,7 +168,7 @@ namespace ControlsTest
             };
             zoomOutButton.Click += ZoomOutButton_Click;
 
-            goButton = new ()
+            goButton = new()
             {
                 // Text = "Go",
                 Margin = new Thickness(0, 5, 0, 5),
@@ -110,7 +176,7 @@ namespace ControlsTest
             };
             goButton.Click += GoButton_Click;
 
-            urlTextBox = new ()
+            urlTextBox = new()
             {
                 Width = 300,
                 Margin = new Thickness(0, 5, 5, 5),
@@ -123,22 +189,91 @@ namespace ControlsTest
             webBrowserToolbarPanel.Children.Add(zoomOutButton);
             webBrowserToolbarPanel.Children.Add(urlTextBox);
             webBrowserToolbarPanel.Children.Add(goButton);
+            webBrowserGrid.Children.Add(webBrowserToolbarPanel);
 
-            WebBrowser1 = new ();
-            WebBrowser1.Width = 500;
-            WebBrowser1.Height = 300;
-            WebBrowser1.Margin = new (5, 0, 0, 0);
-            WebBrowser1.Navigated += WebBrowser1_Navigated;
-            WebBrowser1.Loaded += WebBrowser1_Loaded;
-            WebBrowser1.NewWindow += WebBrowser1_NewWindow;
-            WebBrowser1.DocumentTitleChanged += WebBrowser1_TitleChanged;
-            WebBrowser1.FullScreenChanged += WebBrowser1_FullScreenChanged;
-            WebBrowser1.ScriptMessageReceived += WebBrowser1_ScriptMessageReceived;
-            WebBrowser1.ScriptResult += WebBrowser1_ScriptResult;
-            WebBrowser1.Navigating += WebBrowser1_Navigating;
-            WebBrowser1.Error += WebBrowser1_Error;
-            WebBrowser1.BeforeBrowserCreate += WebBrowser1_BeforeBrowserCreate;
-            mainStackPanel.Children.Add(WebBrowser1);
+        }
+
+        public void AddFindPanel()
+        {
+            findPanel = new()
+            {
+                Margin = new Thickness(5, 5, 5, 5),
+                Orientation = StackPanelOrientation.Horizontal,
+            };
+            Grid.SetRowColumn(findPanel, 3, 0);
+
+            findTextBox = new()
+            {
+                Width = 300,
+                Margin = new Thickness(0, 10, 5, 5),
+                Text = "panda",
+            };
+            findPanel.Children.Add(findTextBox);
+
+            findButton = new()
+            {
+                Text = "Find",
+                Margin = new Thickness(0, 10, 5, 5),
+            };
+            findButton.Click += FindButton_Click;
+            findPanel.Children.Add(findButton);
+
+            findClearButton = new()
+            {
+                Text = "Find Clear",
+                Margin = new Thickness(0, 10, 5, 5),
+            };
+            findClearButton.Click += FindClearButton_Click;
+            findPanel.Children.Add(findClearButton);
+
+            webBrowserGrid.Children.Add(findPanel);
+        }
+
+        public void AddFindOptionsPanel()
+        {
+            findOptionsPanel = new()
+            {
+                Margin = new(5, 5, 5, 5),
+                Orientation = StackPanelOrientation.Horizontal,
+            };
+            Grid.SetRowColumn(findOptionsPanel, 4, 0);
+
+            findWrapCheckBox = new()
+            {
+                Text = "Wrap",
+                Margin = new Thickness(0, 5, 5, 5),
+            };
+            findOptionsPanel.Children.Add(findWrapCheckBox);
+
+            findEntireWordCheckBox = new()
+            {
+                Text = "Entire Word",
+                Margin = new Thickness(0, 5, 5, 5),
+            };
+            findOptionsPanel.Children.Add(findEntireWordCheckBox);
+
+            findMatchCaseCheckBox = new()
+            {
+                Text = "Match Case",
+                Margin = new Thickness(0, 5, 5, 5),
+            };
+            findOptionsPanel.Children.Add(findMatchCaseCheckBox);
+
+            findHighlightResultCheckBox = new()
+            {
+                Text = "Highlight",
+                Margin = new Thickness(0, 5, 5, 5),
+            };
+            findOptionsPanel.Children.Add(findHighlightResultCheckBox);
+
+            findBackwardsCheckBox = new()
+            {
+                Text = "Backwards",
+                Margin = new Thickness(0, 5, 5, 5),
+            };
+            findOptionsPanel.Children.Add(findBackwardsCheckBox);
+
+            webBrowserGrid.Children.Add(findOptionsPanel);
         }
 
         public static WebBrowserBackend UseBackend
@@ -171,9 +306,9 @@ namespace ControlsTest
 
                 if (CommonUtils.CmdLineTest)
                 {
-                    ListBox1.Visible = true;
-                    FindOptionsPanel.Visible = true;
-                    FindClear.Visible = true;
+                    listBox1.Visible = true;
+                    findOptionsPanel.Visible = true;
+                    findClearButton.Visible = true;
                 }
 
                 site = value;
@@ -318,7 +453,7 @@ namespace ControlsTest
 
         internal void DoTestSerializeObject()
         {
-            WeatherForecast value = new ()
+            WeatherForecast value = new()
             {
                 Date = System.DateTime.Now,
                 TemperatureCelsius = 15,
@@ -451,39 +586,39 @@ namespace ControlsTest
 
         private void FindParamsToControls()
         {
-            FindWrapCheckBox.IsChecked = findParams.Wrap;
-            FindEntireWordCheckBox.IsChecked = findParams.EntireWord;
-            FindMatchCaseCheckBox.IsChecked = findParams.MatchCase;
-            FindHighlightResultCheckBox.IsChecked = findParams.HighlightResult;
-            FindBackwardsCheckBox.IsChecked = findParams.Backwards;
+            findWrapCheckBox.IsChecked = findParams.Wrap;
+            findEntireWordCheckBox.IsChecked = findParams.EntireWord;
+            findMatchCaseCheckBox.IsChecked = findParams.MatchCase;
+            findHighlightResultCheckBox.IsChecked = findParams.HighlightResult;
+            findBackwardsCheckBox.IsChecked = findParams.Backwards;
         }
 
         private void FindParamsFromControls()
         {
-            findParams.Wrap = FindWrapCheckBox.IsChecked;
-            findParams.EntireWord = FindEntireWordCheckBox.IsChecked;
-            findParams.MatchCase = FindMatchCaseCheckBox.IsChecked;
-            findParams.HighlightResult = FindHighlightResultCheckBox.IsChecked;
-            findParams.Backwards = FindBackwardsCheckBox.IsChecked;
+            findParams.Wrap = findWrapCheckBox.IsChecked;
+            findParams.EntireWord = findEntireWordCheckBox.IsChecked;
+            findParams.MatchCase = findMatchCaseCheckBox.IsChecked;
+            findParams.HighlightResult = findHighlightResultCheckBox.IsChecked;
+            findParams.Backwards = findBackwardsCheckBox.IsChecked;
         }
 
         private void FindClearButton_Click(object? sender, EventArgs e)
         {
-            FindTextBox.Text = string.Empty;
+            findTextBox.Text = string.Empty;
             WebBrowser1.FindClearResult();
         }
 
         private void FindButton_Click(object? sender, EventArgs e)
         {
             FindParamsFromControls();
-            int findResult = WebBrowser1.Find(FindTextBox.Text, findParams);
+            int findResult = WebBrowser1.Find(findTextBox.Text, findParams);
             Log("Find Result = " + findResult.ToString());
         }
 
         private IntPtr GetNewClientData()
         {
             scriptRunCounter++;
-            IntPtr clientData = new (scriptRunCounter);
+            IntPtr clientData = new(scriptRunCounter);
             return clientData;
         }
 
@@ -646,7 +781,7 @@ namespace ControlsTest
 
             if (s == "s2" && emptyWindow == null)
             {
-                emptyWindow = new ();
+                emptyWindow = new();
                 emptyWindow.Show();
                 return;
             }
@@ -666,7 +801,7 @@ namespace ControlsTest
 
             if (s == "l")
             {
-                ListBox1.Visible = true;
+                listBox1.Visible = true;
                 return;
             }
 
@@ -820,12 +955,12 @@ namespace ControlsTest
         {
             if (name == null)
             {
-                ListBox1.Items.Add("----");
+                listBox1.Items.Add("----");
                 return;
             }
 
             testActions.Add(name, action!);
-            ListBox1.Items.Add(name);
+            listBox1.Items.Add(name);
         }
 
         private void AddTestActions()
@@ -918,7 +1053,7 @@ namespace ControlsTest
                 if (!item.Name.StartsWith("DoTest"))
                     continue;
 
-                MethodCaller mc = new (this, item);
+                MethodCaller mc = new(this, item);
 
                 AddTestAction(item.Name, mc);
             }
