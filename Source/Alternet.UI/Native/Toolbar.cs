@@ -98,6 +98,12 @@ namespace Alternet.UI.Native
             NativeApi.Toolbar_RemoveItemAt_(NativePointer, index);
         }
         
+        public void Realize()
+        {
+            CheckDisposed();
+            NativeApi.Toolbar_Realize_(NativePointer);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -133,6 +139,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Toolbar_RemoveItemAt_(IntPtr obj, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Toolbar_Realize_(IntPtr obj);
             
         }
     }

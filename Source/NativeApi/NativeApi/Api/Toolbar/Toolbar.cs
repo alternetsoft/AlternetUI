@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable
+using System;
 
 namespace NativeApi.Api
 {
@@ -15,5 +16,7 @@ namespace NativeApi.Api
         public bool ItemImagesVisible { get; set; }
 
         public ToolbarItemImageToTextDisplayMode ImageToTextDisplayMode { get; set; }
+
+        public void Realize() => throw new Exception();
     }
 }

@@ -17,6 +17,7 @@ void SetImageToTextDisplayMode(ToolbarItemImageToTextDisplayMode value);
 
 void InsertItemAt(int index, ToolbarItem* item);
 void RemoveItemAt(int index);
+void Realize();
 public:
 Toolbar();
 protected:

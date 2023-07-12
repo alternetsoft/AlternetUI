@@ -87,7 +87,7 @@ namespace ControlsTest
             AddFindPanel();
             AddFindOptionsPanel();
 
-            AddNewToolbar();
+            //AddNewToolbar();
         }
 
         public void AddMainPanel()

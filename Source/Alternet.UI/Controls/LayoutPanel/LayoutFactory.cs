@@ -151,7 +151,7 @@ namespace Alternet.UI
             }
         }
 
-        public static void AddToolbar(Control control, Toolbar toolbar)
+        internal static void AddToolbar(Control control, Toolbar toolbar)
         {
             var sizer = new Native.BoxSizer();
 
@@ -159,19 +159,8 @@ namespace Alternet.UI
             var nativeSizer = sizer.Handle;
             var nativeToolbar = toolbar.Handler.NativeControl.WxWidget;
 
-            nativeControl?.SetSizer(nativeSizer, true);
             sizer.AddWindow(nativeToolbar, 0, 0x2000, 0, IntPtr.Zero);
-
-            /*
-
-
-     wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
-      m_panel->SetSizer(sizer);
-  #if USE_UNMANAGED_TOOLBAR
-      if (m_extraToolBar)
-          sizer->Add(m_extraToolBar, 0, wxEXPAND, 0);
-
-             */
+            nativeControl?.SetSizerAndFit(nativeSizer, true);
         }
     }
 }

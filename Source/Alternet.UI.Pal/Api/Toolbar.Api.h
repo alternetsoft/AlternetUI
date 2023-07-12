@@ -79,3 +79,10 @@ ALTERNET_UI_API void Toolbar_RemoveItemAt_(Toolbar* obj, int index)
         });
 }
 
+ALTERNET_UI_API void Toolbar_Realize_(Toolbar* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->Realize();
+        });
+}
+

@@ -19,6 +19,11 @@ namespace Alternet::UI
         return new wxPanel();
     }
 
+    void Toolbar::Realize() 
+    {
+        _wxToolBar->Realize();
+    }
+
     void Toolbar::SetOwnerWindow(Window* window)
     {
         _ownerWindow = window;
