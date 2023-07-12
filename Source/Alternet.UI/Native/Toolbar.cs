@@ -86,6 +86,13 @@ namespace Alternet.UI.Native
             }
         }
         
+        public static System.IntPtr CreateEx(bool mainToolbar)
+        {
+            var n = NativeApi.Toolbar_CreateEx_(mainToolbar);
+            var m = n;
+            return m;
+        }
+        
         public void InsertItemAt(int index, ToolbarItem item)
         {
             CheckDisposed();
@@ -133,6 +140,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Toolbar_SetImageToTextDisplayMode_(IntPtr obj, ToolbarItemImageToTextDisplayMode value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Toolbar_CreateEx_(bool mainToolbar);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Toolbar_InsertItemAt_(IntPtr obj, int index, IntPtr item);

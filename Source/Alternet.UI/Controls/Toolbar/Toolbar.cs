@@ -69,5 +69,11 @@ namespace Alternet.UI
 
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Items;
+
+        /// <inheritdoc />
+        protected override ControlHandler CreateHandler()
+        {
+            return new NativeToolbarHandler(true);
+        }
     }
 }

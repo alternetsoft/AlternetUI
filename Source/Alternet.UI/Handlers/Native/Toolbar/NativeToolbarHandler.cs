@@ -5,6 +5,14 @@ namespace Alternet.UI
 {
     internal class NativeToolbarHandler : ToolbarHandler
     {
+        bool mainToolbar = false;
+
+        public NativeToolbarHandler(bool mainToolbar = true)
+            : base()
+        {
+            this.mainToolbar = mainToolbar;
+        }
+
         public new Native.Toolbar NativeControl => (Native.Toolbar)base.NativeControl!;
 
         public override bool ItemTextVisible
@@ -27,7 +35,7 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            return new Native.Toolbar();
+            return new Native.NativeToolbarEx(mainToolbar);
         }
 
         protected override void OnDetach()

@@ -5,6 +5,8 @@ namespace NativeApi.Api
 {
     public class Toolbar : Control
     {
+        public static IntPtr CreateEx(bool mainToolbar) => throw new Exception();
+
         public int ItemsCount { get; }
 
         public void InsertItemAt(int index, ToolbarItem item) => throw new Exception();

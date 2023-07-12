@@ -65,6 +65,13 @@ ALTERNET_UI_API void Toolbar_SetImageToTextDisplayMode_(Toolbar* obj, ToolbarIte
         });
 }
 
+ALTERNET_UI_API void* Toolbar_CreateEx_(c_bool mainToolbar)
+{
+    return MarshalExceptions<void*>([&](){
+            return Toolbar::CreateEx(mainToolbar);
+        });
+}
+
 ALTERNET_UI_API void Toolbar_InsertItemAt_(Toolbar* obj, int index, ToolbarItem* item)
 {
     MarshalExceptions<void>([&](){

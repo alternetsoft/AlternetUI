@@ -18,6 +18,7 @@ namespace ControlsTest
         private const int ImageSize = 16;
         private static readonly string ResPrefix =
             $"embres:ControlsTest.resources.Png._{ImageSize}.";
+
         private static readonly string ZipSchemeName = "zipfs";
         private static readonly bool SetDefaultUserAgent = false;
         private static WebBrowserBackend useBackend = WebBrowserBackend.Default;
@@ -27,6 +28,8 @@ namespace ControlsTest
         private readonly WebBrowserFindParams findParams = new();
         private readonly Dictionary<string, MethodCaller> testActions = new();
 
+        private CustomToolbar toolbar;
+        private Panel toolbarParent;
         private StackPanel webBrowserToolbarPanel;
         private Button backButton;
         private Button forwardButton;
@@ -56,7 +59,7 @@ namespace ControlsTest
         private string? headerText;
         private bool scriptMessageHandlerAdded = false;
         private ITestPageSite? site;
-        private WebBrowser WebBrowser1;
+        private WebBrowser webBrowser1;
 
         static WebBrowserTestPage()
         {
@@ -82,12 +85,12 @@ namespace ControlsTest
             Trace.Listeners.Add(myListener);
             InitializeComponent();
 
+            AddNewToolbar();
             AddToolbar();
             AddMainPanel();
             AddFindPanel();
             AddFindOptionsPanel();
 
-            //AddNewToolbar();
         }
 
         public void AddMainPanel()
@@ -107,30 +110,31 @@ namespace ControlsTest
             listBox1.MouseDoubleClick += ListBox1_MouseDoubleClick;
             mainStackPanel.Children.Add(listBox1);
 
-            WebBrowser1 = new()
+            webBrowser1 = new()
             {
                 Width = 500,
                 Height = 300,
                 Margin = new(5, 0, 0, 0),
             };
-            WebBrowser1.Navigated += WebBrowser1_Navigated;
-            WebBrowser1.Loaded += WebBrowser1_Loaded;
-            WebBrowser1.NewWindow += WebBrowser1_NewWindow;
-            WebBrowser1.DocumentTitleChanged += WebBrowser1_TitleChanged;
-            WebBrowser1.FullScreenChanged += WebBrowser1_FullScreenChanged;
-            WebBrowser1.ScriptMessageReceived += WebBrowser1_ScriptMessageReceived;
-            WebBrowser1.ScriptResult += WebBrowser1_ScriptResult;
-            WebBrowser1.Navigating += WebBrowser1_Navigating;
-            WebBrowser1.Error += WebBrowser1_Error;
-            WebBrowser1.BeforeBrowserCreate += WebBrowser1_BeforeBrowserCreate;
-            mainStackPanel.Children.Add(WebBrowser1);
+            webBrowser1.Navigated += WebBrowser1_Navigated;
+            webBrowser1.Loaded += WebBrowser1_Loaded;
+            webBrowser1.NewWindow += WebBrowser1_NewWindow;
+            webBrowser1.DocumentTitleChanged += WebBrowser1_TitleChanged;
+            webBrowser1.FullScreenChanged += WebBrowser1_FullScreenChanged;
+            webBrowser1.ScriptMessageReceived += WebBrowser1_ScriptMessageReceived;
+            webBrowser1.ScriptResult += WebBrowser1_ScriptResult;
+            webBrowser1.Navigating += WebBrowser1_Navigating;
+            webBrowser1.Error += WebBrowser1_Error;
+            webBrowser1.BeforeBrowserCreate += WebBrowser1_BeforeBrowserCreate;
+            mainStackPanel.Children.Add(webBrowser1);
 
             webBrowserGrid.Children.Add(mainStackPanel);
         }
 
         public void AddNewToolbar()
         {
-            Toolbar toolbar = new();
+            toolbarParent = new();
+            toolbar = new();
             ToolbarItem toolbarItem;
 
             toolbarItem = new ToolbarItem("Back", BackButton_Click)
@@ -168,9 +172,15 @@ namespace ControlsTest
             };
             toolbar.Items.Add(toolbarItem);
 
-            //mainStackPanel.Children.Add(toolbar);
+            toolbarParent.Children.Add(toolbar);
 
-            //LayoutFactory.AddToolbar(mainStackPanel, toolbar);
+            Grid.SetRowColumn(toolbarParent, 1, 0);
+            webBrowserGrid.Children.Add(toolbarParent);
+
+
+            //LayoutFactory.SetDebugBackgroundToParents(toolbar);
+
+            //LayoutFactory.AddToolbar(webBrowserGrid, toolbar);
 
             /*
             urlTextBox = new()
@@ -238,7 +248,7 @@ namespace ControlsTest
             webBrowserToolbarPanel.Children.Add(zoomOutButton);
             webBrowserToolbarPanel.Children.Add(urlTextBox);
             webBrowserToolbarPanel.Children.Add(goButton);
-            webBrowserGrid.Children.Add(webBrowserToolbarPanel);
+            //webBrowserGrid.Children.Add(webBrowserToolbarPanel);
 
         }
 
@@ -344,14 +354,14 @@ namespace ControlsTest
             set
             {
                 headerText = HeaderLabel.Text;
-                WebBrowser1.ZoomType = WebBrowserZoomType.Layout;
-                scriptMessageHandlerAdded = WebBrowser1.AddScriptMessageHandler("wx_msg");
+                webBrowser1.ZoomType = WebBrowserZoomType.Layout;
+                scriptMessageHandlerAdded = webBrowser1.AddScriptMessageHandler("wx_msg");
                 if (!scriptMessageHandlerAdded)
                     Log("AddScriptMessageHandler not supported");
                 FindParamsToControls();
                 AddTestActions();
                 if (IsIEBackend())
-                    WebBrowser1.DoCommand("IE.SetScriptErrorsSuppressed", "true");
+                    webBrowser1.DoCommand("IE.SetScriptErrorsSuppressed", "true");
 
                 if (CommonUtils.CmdLineTest)
                 {
@@ -377,12 +387,12 @@ namespace ControlsTest
         internal void DoTestIEShowPrintPreviewDialog()
         {
             if (IsIEBackend())
-                WebBrowser1.DoCommand("IE.ShowPrintPreviewDialog");
+                webBrowser1.DoCommand("IE.ShowPrintPreviewDialog");
         }
 
         internal void DoTestPandaFromMemory()
         {
-            if (WebBrowser1.Backend == WebBrowserBackend.Edge)
+            if (webBrowser1.Backend == WebBrowserBackend.Edge)
             {
                 Log("Memory scheme not supported in Edge backend");
                 return;
@@ -393,10 +403,10 @@ namespace ControlsTest
                 if (pandaInMemory)
                     return;
                 pandaInMemory = true;
-                WebBrowser1.MemoryFS.AddTextFile(
+                webBrowser1.MemoryFS.AddTextFile(
                     "index.html",
                     "<html><body><b>index.html</b></body></html>");
-                WebBrowser1.MemoryFS.AddTextFile(
+                webBrowser1.MemoryFS.AddTextFile(
                     "myFolder/index.html",
                     "<html><body><b>file in subfolder</b></body></html>");
 
@@ -412,14 +422,14 @@ namespace ControlsTest
                     string sPath = CommonUtils.GetAppFolder() + "Html/SampleArchive/" + name;
 
                     if (mimeType == null)
-                        WebBrowser1.MemoryFS.AddOSFile(name, sPath);
+                        webBrowser1.MemoryFS.AddOSFile(name, sPath);
                     else
-                        WebBrowser1.MemoryFS.AddOSFileWithMimeType(name, sPath, mimeType);
+                        webBrowser1.MemoryFS.AddOSFileWithMimeType(name, sPath, mimeType);
                 }
             }
 
             PandaToMemory();
-            WebBrowser1.LoadURL("memory:Html/page1.html");
+            webBrowser1.LoadURL("memory:Html/page1.html");
         }
 
         internal void DoTestMessageHandler()
@@ -436,7 +446,7 @@ namespace ControlsTest
         internal void DoTestInvokeScript3()
         {
             DoInvokeScript("alert", 16325.62901F);
-            DoInvokeScript("alert", WebBrowser1.ToInvokeScriptArg(16325.62901F)?.ToString());
+            DoInvokeScript("alert", webBrowser1.ToInvokeScriptArg(16325.62901F)?.ToString());
             DoInvokeScript("alert", System.DateTime.Now);
         }
 
@@ -495,9 +505,9 @@ namespace ControlsTest
 
         internal void DoTestAddUserScript()
         {
-            WebBrowser1.RemoveAllUserScripts();
-            WebBrowser1.AddUserScript("alert('hello');");
-            WebBrowser1.Reload();
+            webBrowser1.RemoveAllUserScripts();
+            webBrowser1.AddUserScript("alert('hello');");
+            webBrowser1.Reload();
         }
 
         internal void DoTestSerializeObject()
@@ -509,7 +519,7 @@ namespace ControlsTest
                 Summary = "New York",
             };
 
-            var s = WebBrowser1.ObjectToJSON(value);
+            var s = webBrowser1.ObjectToJSON(value);
 
             Log(s);
         }
@@ -526,32 +536,32 @@ namespace ControlsTest
 
         internal void TestNavigateToString1()
         {
-            WebBrowser1.NavigateToString("<html><body>NavigateToString example 1</body></html>");
+            webBrowser1.NavigateToString("<html><body>NavigateToString example 1</body></html>");
         }
 
         internal void TestNavigateToString2()
         {
-            WebBrowser1.NavigateToString("<html><body>NavigateToString example 2</body></html>", "www.aa.com");
+            webBrowser1.NavigateToString("<html><body>NavigateToString example 2</body></html>", "www.aa.com");
         }
 
         internal void TestNavigateToStream()
         {
             var filename = CommonUtils.PathAddBackslash(CommonUtils.GetAppFolder() + "Html") + "version.html";
             FileStream stream = File.OpenRead(filename);
-            WebBrowser1.NavigateToStream(stream);
+            webBrowser1.NavigateToStream(stream);
         }
 
         internal void TestMapping()
         {
-            if (WebBrowser1.Backend != WebBrowserBackend.Edge)
+            if (webBrowser1.Backend != WebBrowserBackend.Edge)
                 return;
             if (!mappingSet)
             {
                 mappingSet = true;
-                WebBrowser1.SetVirtualHostNameToFolderMapping("assets.example", "Html", WebBrowserHostResourceAccessKind.DenyCors);
+                webBrowser1.SetVirtualHostNameToFolderMapping("assets.example", "Html", WebBrowserHostResourceAccessKind.DenyCors);
             }
 
-            WebBrowser1.LoadURL("https://assets.example/SampleArchive/Html/page1.html");
+            webBrowser1.LoadURL("https://assets.example/SampleArchive/Html/page1.html");
         }
 
         internal void DoTestRunScript2()
@@ -605,13 +615,13 @@ namespace ControlsTest
 
         private bool IsIEBackend()
         {
-            return WebBrowser1.Backend == WebBrowserBackend.IE ||
-                WebBrowser1.Backend == WebBrowserBackend.IELatest;
+            return webBrowser1.Backend == WebBrowserBackend.IE ||
+                webBrowser1.Backend == WebBrowserBackend.IELatest;
         }
 
         private void DoTestZip()
         {
-            if (WebBrowser1.Backend == WebBrowserBackend.Edge)
+            if (webBrowser1.Backend == WebBrowserBackend.Edge)
             {
                 Log("Archive scheme not supported in Edge backend");
                 return;
@@ -624,7 +634,7 @@ namespace ControlsTest
             if (File.Exists(archivePath))
             {
                 string url = CommonUtils.PrepareZipUrl(ZipSchemeName, archivePath, webPagePath);
-                WebBrowser1.LoadURL(url);
+                webBrowser1.LoadURL(url);
             }
         }
 
@@ -654,13 +664,13 @@ namespace ControlsTest
         private void FindClearButton_Click(object? sender, EventArgs e)
         {
             findTextBox.Text = string.Empty;
-            WebBrowser1.FindClearResult();
+            webBrowser1.FindClearResult();
         }
 
         private void FindButton_Click(object? sender, EventArgs e)
         {
             FindParamsFromControls();
-            int findResult = WebBrowser1.Find(findTextBox.Text, findParams);
+            int findResult = webBrowser1.Find(findTextBox.Text, findParams);
             Log("Find Result = " + findResult.ToString());
         }
 
@@ -674,15 +684,15 @@ namespace ControlsTest
         private void DoInvokeScript(string scriptName, params object?[] args)
         {
             var clientData = GetNewClientData();
-            Log($"InvokeScript {scriptName}({WebBrowser1.ToInvokeScriptArgs(args)})");
-            WebBrowser1.InvokeScriptAsync(scriptName, clientData, args);
+            Log($"InvokeScript {scriptName}({webBrowser1.ToInvokeScriptArgs(args)})");
+            webBrowser1.InvokeScriptAsync(scriptName, clientData, args);
         }
 
         private void DoRunScript(string script)
         {
             var clientData = GetNewClientData();
             Log($"RunScript {clientData} > {script}");
-            WebBrowser1.RunScriptAsync(script, clientData);
+            webBrowser1.RunScriptAsync(script, clientData);
         }
 
         private void TextBox_KeyDown(object? sender, KeyEventArgs e)
@@ -747,7 +757,7 @@ namespace ControlsTest
         private void WebBrowser1_Navigated(object? sender, WebBrowserEventArgs e)
         {
             LogWebBrowserEvent(e);
-            urlTextBox.Text = WebBrowser1.GetCurrentURL();
+            urlTextBox.Text = webBrowser1.GetCurrentURL();
         }
 
         private void WebBrowser1_Navigating(object? sender, WebBrowserEventArgs e)
@@ -764,12 +774,12 @@ namespace ControlsTest
 
             if (!pandaLoaded)
             {
-                WebBrowser1.PreferredColorScheme = WebBrowserPreferredColorScheme.Light;
+                webBrowser1.PreferredColorScheme = WebBrowserPreferredColorScheme.Light;
 
                 pandaLoaded = true;
                 try
                 {
-                    WebBrowser1.LoadURL(GetPandaUrl());
+                    webBrowser1.LoadURL(GetPandaUrl());
                 }
                 catch (Exception)
                 {
@@ -791,7 +801,7 @@ namespace ControlsTest
         private void WebBrowser1_TitleChanged(object? sender, WebBrowserEventArgs e)
         {
             LogWebBrowserEvent(e);
-            var backendVersion = WebBrowser.GetBackendVersionString(WebBrowser1.Backend);
+            var backendVersion = WebBrowser.GetBackendVersionString(webBrowser1.Backend);
             if (this.IsIEBackend())
                 backendVersion = "Internet Explorer";
 
@@ -811,14 +821,14 @@ namespace ControlsTest
         {
             var filename = CommonUtils.PathAddBackslash(CommonUtils.GetAppFolder() + "Html")
                 + "version.html";
-            WebBrowser1.LoadURL("file://" + filename.Replace('\\', '/'));
+            webBrowser1.LoadURL("file://" + filename.Replace('\\', '/'));
         }
 
         private void LoadUrl(string? s)
         {
             if (s == null)
             {
-                WebBrowser1.LoadURL();
+                webBrowser1.LoadURL();
                 return;
             }
 
@@ -870,7 +880,7 @@ namespace ControlsTest
                 s = "https://www.google.com";
 
             Log("==> LoadUrl: " + s);
-            WebBrowser1.LoadUrlOrSearch(s);
+            webBrowser1.LoadUrlOrSearch(s);
         }
 
         private void LogProp(object? obj, string propName, string? prefix = null)
@@ -891,30 +901,30 @@ namespace ControlsTest
         {
             Log("=======" + s);
 
-            LogProp(WebBrowser1, "HasSelection", "WebBrowser");
-            LogProp(WebBrowser1, "SelectedText", "WebBrowser");
-            LogProp(WebBrowser1, "SelectedSource", "WebBrowser");
-            LogProp(WebBrowser1, "CanCut", "WebBrowser");
-            LogProp(WebBrowser1, "CanCopy", "WebBrowser");
-            LogProp(WebBrowser1, "CanPaste", "WebBrowser");
-            LogProp(WebBrowser1, "CanUndo", "WebBrowser");
-            LogProp(WebBrowser1, "CanRedo", "WebBrowser");
-            LogProp(WebBrowser1, "IsBusy", "WebBrowser");
-            LogProp(WebBrowser1, "PageSource", "WebBrowser");
-            LogProp(WebBrowser1, "UserAgent", "WebBrowser");
+            LogProp(webBrowser1, "HasSelection", "WebBrowser");
+            LogProp(webBrowser1, "SelectedText", "WebBrowser");
+            LogProp(webBrowser1, "SelectedSource", "WebBrowser");
+            LogProp(webBrowser1, "CanCut", "WebBrowser");
+            LogProp(webBrowser1, "CanCopy", "WebBrowser");
+            LogProp(webBrowser1, "CanPaste", "WebBrowser");
+            LogProp(webBrowser1, "CanUndo", "WebBrowser");
+            LogProp(webBrowser1, "CanRedo", "WebBrowser");
+            LogProp(webBrowser1, "IsBusy", "WebBrowser");
+            LogProp(webBrowser1, "PageSource", "WebBrowser");
+            LogProp(webBrowser1, "UserAgent", "WebBrowser");
 
-            LogProp(WebBrowser1, "PageText", "WebBrowser");
-            LogProp(WebBrowser1, "Zoom", "WebBrowser");
-            LogProp(WebBrowser1, "Editable", "WebBrowser");
-            LogProp(WebBrowser1, "ZoomType", "WebBrowser");
-            LogProp(WebBrowser1, "ZoomFactor", "WebBrowser");
+            LogProp(webBrowser1, "PageText", "WebBrowser");
+            LogProp(webBrowser1, "Zoom", "WebBrowser");
+            LogProp(webBrowser1, "Editable", "WebBrowser");
+            LogProp(webBrowser1, "ZoomType", "WebBrowser");
+            LogProp(webBrowser1, "ZoomFactor", "WebBrowser");
 
             Log("isDebug = " + WebBrowser.DoCommandGlobal("IsDebug"));
             Log("os = " + WebBrowser.GetBackendOS().ToString());
-            Log("backend = " + WebBrowser1.Backend.ToString());
+            Log("backend = " + webBrowser1.Backend.ToString());
             Log("wxWidgetsVersion = " + WebBrowser.GetLibraryVersionString());
-            Log("GetCurrentTitle() = " + WebBrowser1.GetCurrentTitle());
-            Log("GetCurrentURL() = " + WebBrowser1.GetCurrentURL());
+            Log("GetCurrentTitle() = " + webBrowser1.GetCurrentTitle());
+            Log("GetCurrentURL() = " + webBrowser1.GetCurrentURL());
             Log("IE = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.IE));
             Log("Edge = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge));
             Log("WebKit = " + WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit));
@@ -934,8 +944,8 @@ namespace ControlsTest
 
         private void UpdateZoomButtons()
         {
-            zoomInButton.Enabled = WebBrowser1.CanZoomIn;
-            zoomOutButton.Enabled = WebBrowser1.CanZoomOut;
+            zoomInButton.Enabled = webBrowser1.CanZoomIn;
+            zoomOutButton.Enabled = webBrowser1.CanZoomOut;
         }
 
         private void UpdateHistoryButtons()
@@ -943,33 +953,33 @@ namespace ControlsTest
             if (!historyCleared)
             {
                 historyCleared = true;
-                WebBrowser1.ClearHistory();
+                webBrowser1.ClearHistory();
             }
 
-            backButton.Enabled = WebBrowser1.CanGoBack;
-            forwardButton.Enabled = WebBrowser1.CanGoForward;
+            backButton.Enabled = webBrowser1.CanGoBack;
+            forwardButton.Enabled = webBrowser1.CanGoForward;
         }
 
         private void ZoomInButton_Click(object? sender, EventArgs e)
         {
-            WebBrowser1.ZoomIn();
+            webBrowser1.ZoomIn();
             UpdateZoomButtons();
         }
 
         private void ZoomOutButton_Click(object? sender, EventArgs e)
         {
-            WebBrowser1.ZoomOut();
+            webBrowser1.ZoomOut();
             UpdateZoomButtons();
         }
 
         private void BackButton_Click(object? sender, EventArgs e)
         {
-            WebBrowser1.GoBack();
+            webBrowser1.GoBack();
         }
 
         private void ForwardButton_Click(object? sender, EventArgs e)
         {
-            WebBrowser1.GoForward();
+            webBrowser1.GoForward();
         }
 
         private void ListBox1_MouseDoubleClick(object? sender, MouseButtonEventArgs e)
@@ -1016,66 +1026,66 @@ namespace ControlsTest
         {
             AddTestAction(
                 "Open Panda sample",
-                () => { WebBrowser1.LoadURL(GetPandaUrl()); });
+                () => { webBrowser1.LoadURL(GetPandaUrl()); });
             AddTestAction(
                 "Google",
-                () => { WebBrowser1.LoadURL("https://www.google.com"); });
+                () => { webBrowser1.LoadURL("https://www.google.com"); });
             AddTestAction("BrowserVersion", () => { ShowBrowserVersion(); });
             AddTestAction();
             AddTestAction("Info", () => { LogInfo(); });
             AddTestAction("Test", () => { Test(); });
             AddTestAction(
                 "TestErrorEvent",
-                () => { WebBrowser1.LoadURL("memoray:myFolder/indeax.html"); });
+                () => { webBrowser1.LoadURL("memoray:myFolder/indeax.html"); });
             AddTestAction();
-            AddTestAction("Stop", () => { WebBrowser1.Stop(); });
-            AddTestAction("ClearHistory", () => { WebBrowser1.ClearHistory(); });
-            AddTestAction("Reload", () => { WebBrowser1.Reload(); });
-            AddTestAction("Reload(true)", () => { WebBrowser1.Reload(true); });
-            AddTestAction("Reload(false)", () => { WebBrowser1.Reload(false); });
-            AddTestAction("SelectAll", () => { WebBrowser1.SelectAll(); });
+            AddTestAction("Stop", () => { webBrowser1.Stop(); });
+            AddTestAction("ClearHistory", () => { webBrowser1.ClearHistory(); });
+            AddTestAction("Reload", () => { webBrowser1.Reload(); });
+            AddTestAction("Reload(true)", () => { webBrowser1.Reload(true); });
+            AddTestAction("Reload(false)", () => { webBrowser1.Reload(false); });
+            AddTestAction("SelectAll", () => { webBrowser1.SelectAll(); });
             AddTestAction(
                 "DeleteSelection",
-                () => { WebBrowser1.DeleteSelection(); });
+                () => { webBrowser1.DeleteSelection(); });
             AddTestAction(
                 "ClearSelection",
-                () => { WebBrowser1.ClearSelection(); });
-            AddTestAction("Cut", () => { WebBrowser1.Cut(); });
-            AddTestAction("Copy", () => { WebBrowser1.Copy(); });
-            AddTestAction("Paste", () => { WebBrowser1.Paste(); });
-            AddTestAction("Undo", () => { WebBrowser1.Undo(); });
-            AddTestAction("Redo", () => { WebBrowser1.Redo(); });
-            AddTestAction("Print", () => { WebBrowser1.Print(); });
+                () => { webBrowser1.ClearSelection(); });
+            AddTestAction("Cut", () => { webBrowser1.Cut(); });
+            AddTestAction("Copy", () => { webBrowser1.Copy(); });
+            AddTestAction("Paste", () => { webBrowser1.Paste(); });
+            AddTestAction("Undo", () => { webBrowser1.Undo(); });
+            AddTestAction("Redo", () => { webBrowser1.Redo(); });
+            AddTestAction("Print", () => { webBrowser1.Print(); });
             AddTestAction("DeleteLog", () => { CommonUtils.DeleteLog(); });
-            AddTestAction("ZoomFactor+", () => { WebBrowser1.ZoomFactor += 1; });
-            AddTestAction("ZoomFactor-", () => { WebBrowser1.ZoomFactor -= 1; });
+            AddTestAction("ZoomFactor+", () => { webBrowser1.ZoomFactor += 1; });
+            AddTestAction("ZoomFactor-", () => { webBrowser1.ZoomFactor -= 1; });
             AddTestAction();
             AddTestAction("CanNavigate=false", () => { canNavigate = false; });
             AddTestAction("CanNavigate=true", () => { canNavigate = true; });
             AddTestAction(
                 "ContextMenuEnabled=true",
-                () => { WebBrowser1.ContextMenuEnabled = true; });
+                () => { webBrowser1.ContextMenuEnabled = true; });
             AddTestAction(
                 "ContextMenuEnabled=false",
-                () => { WebBrowser1.ContextMenuEnabled = false; });
-            AddTestAction("Editable=true", () => { WebBrowser1.Editable = true; });
+                () => { webBrowser1.ContextMenuEnabled = false; });
+            AddTestAction("Editable=true", () => { webBrowser1.Editable = true; });
             AddTestAction(
                 "Editable=false",
-                () => { WebBrowser1.Editable = false; });
+                () => { webBrowser1.Editable = false; });
             AddTestAction(
                 "AccessToDevToolsEnabled=true",
-                () => { WebBrowser1.AccessToDevToolsEnabled = true; });
+                () => { webBrowser1.AccessToDevToolsEnabled = true; });
             AddTestAction(
                 "AccessToDevToolsEnabled=false",
-                () => { WebBrowser1.AccessToDevToolsEnabled = false; });
+                () => { webBrowser1.AccessToDevToolsEnabled = false; });
             AddTestAction(
                 "EnableHistory=true",
-                () => { WebBrowser1.EnableHistory(true); });
+                () => { webBrowser1.EnableHistory(true); });
             AddTestAction(
                 "EnableHistory=false",
-                () => { WebBrowser1.EnableHistory(false); });
+                () => { webBrowser1.EnableHistory(false); });
 
-            if (WebBrowser1.Backend == WebBrowserBackend.Edge)
+            if (webBrowser1.Backend == WebBrowserBackend.Edge)
             {
                 AddTestAction(
                     "Test Edge Mapping",
@@ -1090,7 +1100,7 @@ namespace ControlsTest
                     {
                         string sPdfPath = CommonUtils.GetAppFolder() +
                             "Resources/SamplePandaPdf.pdf";
-                        WebBrowser1.LoadURL(CommonUtils.PrepareFileUrl(sPdfPath));
+                        webBrowser1.LoadURL(CommonUtils.PrepareFileUrl(sPdfPath));
                     });
             }
 

@@ -15,6 +15,7 @@ void SetItemImagesVisible(bool value);
 ToolbarItemImageToTextDisplayMode GetImageToTextDisplayMode();
 void SetImageToTextDisplayMode(ToolbarItemImageToTextDisplayMode value);
 
+static void* CreateEx(bool mainToolbar);
 void InsertItemAt(int index, ToolbarItem* item);
 void RemoveItemAt(int index);
 void Realize();

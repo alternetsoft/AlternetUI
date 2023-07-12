@@ -69,7 +69,7 @@ namespace Alternet::UI
         if (_parentToolbar == nullptr)
             return nullptr;
 
-        return _parentToolbar->GetWxToolBar();
+        return _parentToolbar->GetToolbar();
     }
 
     /*static*/ wxString ToolbarItem::CoerceWxToolText(const string& value)

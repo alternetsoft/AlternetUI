@@ -288,7 +288,7 @@ namespace Alternet::UI
     {
         if (value != nullptr)
             value->SetOwnerWindow(this);
-        _frame->SetToolBar(value == nullptr ? nullptr : value->GetWxToolBar());
+        _frame->SetToolBar(value == nullptr ? nullptr : value->GetToolbar());
     }
 
     StatusBar* Window::RetrieveStatusBar()
