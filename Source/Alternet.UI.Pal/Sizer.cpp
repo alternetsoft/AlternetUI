@@ -1,5 +1,4 @@
 #include "Sizer.h"
-#include "wx/sizer.h"
 
 namespace Alternet::UI
 {
@@ -11,4 +10,8 @@ namespace Alternet::UI
     {
     }
 
+    void* Sizer::AddWindow(void* window, int proportion, int flag, int border, void* userData)
+    {
+        return sizer->Add((wxWindow*)window, proportion, flag, border, (wxObject*)userData);
+    }
 }
