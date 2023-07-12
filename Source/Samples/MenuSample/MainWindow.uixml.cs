@@ -86,11 +86,11 @@ namespace MenuSample
                              "embres:MenuSample.Resources.Icons.Small.Pencil16.png")
             };
 
-            toolbar.Items.Add(calendarToolbarItem);
-            toolbar.Items.Add(photoToolbarItem);
-            toolbar.Items.Add(new ToolbarItem("-"));
-            toolbar.Items.Add(checkableToolbarItem);
-            toolbar.Items.Add(new ToolbarItem("-"));
+            toolbar?.Items.Add(calendarToolbarItem);
+            toolbar?.Items.Add(photoToolbarItem);
+            toolbar?.Items.Add(new ToolbarItem("-"));
+            toolbar?.Items.Add(checkableToolbarItem);
+            toolbar?.Items.Add(new ToolbarItem("-"));
 
             var graphDropDownToolbarItem = new ToolbarItem("Graph Drop Down", ToolbarItem_Click)
             {
@@ -109,10 +109,10 @@ namespace MenuSample
             contextMenu.Items.Add(exportToolbarMenuItem);
             graphDropDownToolbarItem.DropDownMenu = contextMenu;
 
-            toolbar.Items.Add(graphDropDownToolbarItem);
+            toolbar?.Items.Add(graphDropDownToolbarItem);
 
             dynamicToolbarItemsSeparator = new ToolbarItem("-");
-            toolbar.Items.Add(dynamicToolbarItemsSeparator);
+            toolbar?.Items.Add(dynamicToolbarItemsSeparator);
 			
         }
 
