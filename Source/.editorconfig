@@ -94,3 +94,4 @@ dotnet_diagnostic.SA1626.severity = none
 #HighDPI API settings not available in net 4.6
 dotnet_diagnostic.WFAC010.severity = none
 
+dotnet_diagnostic.SA1000.severity = none
