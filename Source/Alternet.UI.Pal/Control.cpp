@@ -1377,6 +1377,26 @@ namespace Alternet::UI
         return toDip(wxPoint(point.X, point.Y), GetWxWindow());
     }
 
+    void* Control::GetContainingSizer() 
+    {
+        return GetWxWindow()->GetContainingSizer();
+    }
+
+    void* Control::GetSizer()
+    {
+        return GetWxWindow()->GetSizer();
+    }
+
+    void Control::SetSizer(void* sizer, bool deleteOld)
+    {
+        GetWxWindow()->SetSizer((wxSizer*)sizer, deleteOld);
+    }
+
+    void Control::SetSizerAndFit(void* sizer, bool deleteOld)
+    {
+        GetWxWindow()->SetSizerAndFit((wxSizer*)sizer, deleteOld);
+    }
+
     bool Control::SetFocus()
     {
         auto window = GetWxWindow();

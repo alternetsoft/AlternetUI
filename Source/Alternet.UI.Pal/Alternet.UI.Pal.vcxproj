@@ -196,6 +196,7 @@
   <ItemGroup>
     <ClCompile Include="Api.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="BoxSizer.cpp" />
     <ClCompile Include="Brush.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CheckBox.cpp" />
@@ -210,8 +211,11 @@
     <ClCompile Include="DropTarget.cpp" />
     <ClCompile Include="Exceptions.cpp" />
     <ClCompile Include="FileDialog.cpp" />
+    <ClCompile Include="FlexGridSizer.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="GraphicsPath.cpp" />
+    <ClCompile Include="GridBagSizer.cpp" />
+    <ClCompile Include="GridSizer.cpp" />
     <ClCompile Include="GroupBox.cpp" />
     <ClCompile Include="HatchBrush.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -246,10 +250,13 @@
     <ClCompile Include="RadioButton.cpp" />
     <ClCompile Include="Region.cpp" />
     <ClCompile Include="SelectDirectoryDialog.cpp" />
+    <ClCompile Include="Sizer.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="SolidBrush.cpp" />
+    <ClCompile Include="StaticBoxSizer.cpp" />
     <ClCompile Include="StatusBar.cpp" />
     <ClCompile Include="StatusBarPanel.cpp" />
+    <ClCompile Include="StdDialogButtonSizer.cpp" />
     <ClCompile Include="TabControl.cpp" />
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -263,6 +270,7 @@
     <ClCompile Include="WebBrowserApiPal.cpp" />
     <ClCompile Include="WindowsVisualThemeSupport.cpp" />
     <ClCompile Include="Window.cpp" />
+    <ClCompile Include="WrapSizer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApiUtils.h" />
@@ -339,6 +347,7 @@
     <ClInclude Include="Api\WebBrowser.Api.h" />
     <ClInclude Include="Api\Window.Api.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="BoxSizer.h" />
     <ClInclude Include="Brush.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CheckBox.h" />
@@ -360,9 +369,12 @@
     <ClInclude Include="Exceptions.h" />
     <ClInclude Include="ExceptionsMarshal.h" />
     <ClInclude Include="FileDialog.h" />
+    <ClInclude Include="FlexGridSizer.h" />
     <ClInclude Include="FloodFill.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GraphicsPath.h" />
+    <ClInclude Include="GridBagSizer.h" />
+    <ClInclude Include="GridSizer.h" />
     <ClInclude Include="GroupBox.h" />
     <ClInclude Include="HatchBrush.h" />
     <ClInclude Include="IdManager.h" />
@@ -402,10 +414,13 @@
     <ClInclude Include="Region.h" />
     <ClInclude Include="Screenshot.h" />
     <ClInclude Include="SelectDirectoryDialog.h" />
+    <ClInclude Include="Sizer.h" />
     <ClInclude Include="Slider.h" />
     <ClInclude Include="SolidBrush.h" />
+    <ClInclude Include="StaticBoxSizer.h" />
     <ClInclude Include="StatusBar.h" />
     <ClInclude Include="StatusBarPanel.h" />
+    <ClInclude Include="StdDialogButtonSizer.h" />
     <ClInclude Include="TabControl.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="TextPainter.h" />
@@ -420,6 +435,7 @@
     <ClInclude Include="WebBrowser.h" />
     <ClInclude Include="WindowsVisualThemeSupport.h" />
     <ClInclude Include="Window.h" />
+    <ClInclude Include="WrapSizer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Api\Application.inc" />

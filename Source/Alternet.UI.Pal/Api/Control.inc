@@ -80,6 +80,10 @@ void* GetHandle();
 bool GetIsScrollable();
 void SetIsScrollable(bool value);
 
+void* GetContainingSizer();
+void* GetSizer();
+void SetSizer(void* sizer, bool deleteOld);
+void SetSizerAndFit(void* sizer, bool deleteOld);
 void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);
 bool IsScrollBarVisible(ScrollBarOrientation orientation);
 int GetScrollBarValue(ScrollBarOrientation orientation);

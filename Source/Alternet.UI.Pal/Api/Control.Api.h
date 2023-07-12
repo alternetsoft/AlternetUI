@@ -263,6 +263,34 @@ ALTERNET_UI_API void Control_SetIsScrollable_(Control* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API void* Control_GetContainingSizer_(Control* obj)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetContainingSizer();
+        });
+}
+
+ALTERNET_UI_API void* Control_GetSizer_(Control* obj)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetSizer();
+        });
+}
+
+ALTERNET_UI_API void Control_SetSizer_(Control* obj, void* sizer, c_bool deleteOld)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetSizer(sizer, deleteOld);
+        });
+}
+
+ALTERNET_UI_API void Control_SetSizerAndFit_(Control* obj, void* sizer, c_bool deleteOld)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetSizerAndFit(sizer, deleteOld);
+        });
+}
+
 ALTERNET_UI_API void Control_SetScrollBar_(Control* obj, ScrollBarOrientation orientation, c_bool visible, int value, int largeChange, int maximum)
 {
     MarshalExceptions<void>([&](){

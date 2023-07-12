@@ -359,6 +359,34 @@ namespace Alternet.UI.Native
             }
         }
         
+        public System.IntPtr GetContainingSizer()
+        {
+            CheckDisposed();
+            var n = NativeApi.Control_GetContainingSizer_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr GetSizer()
+        {
+            CheckDisposed();
+            var n = NativeApi.Control_GetSizer_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public void SetSizer(System.IntPtr sizer, bool deleteOld)
+        {
+            CheckDisposed();
+            NativeApi.Control_SetSizer_(NativePointer, sizer, deleteOld);
+        }
+        
+        public void SetSizerAndFit(System.IntPtr sizer, bool deleteOld)
+        {
+            CheckDisposed();
+            NativeApi.Control_SetSizerAndFit_(NativePointer, sizer, deleteOld);
+        }
+        
         public void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum)
         {
             CheckDisposed();
@@ -814,6 +842,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetIsScrollable_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Control_GetContainingSizer_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Control_GetSizer_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetSizer_(IntPtr obj, System.IntPtr sizer, bool deleteOld);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetSizerAndFit_(IntPtr obj, System.IntPtr sizer, bool deleteOld);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetScrollBar_(IntPtr obj, ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum);

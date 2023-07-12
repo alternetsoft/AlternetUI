@@ -113,6 +113,14 @@ namespace NativeApi.Api
 
         public bool IsScrollable { get; set; }
 
+        public IntPtr GetContainingSizer() => throw new Exception();
+
+        public IntPtr GetSizer() => throw new Exception();
+
+        public void SetSizer(IntPtr sizer, bool deleteOld) => throw new Exception();
+
+        public void SetSizerAndFit(IntPtr sizer, bool deleteOld) => throw new Exception();
+
         public void SetScrollBar(ScrollBarOrientation orientation, bool visible, int value, int largeChange, int maximum) => throw new Exception();
 
         public bool IsScrollBarVisible(ScrollBarOrientation orientation) => throw new Exception();
