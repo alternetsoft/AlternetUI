@@ -372,7 +372,10 @@ namespace Alternet.UI
                 RaiseSelectionChanged(EventArgs.Empty);
         }
 
-        public bool HasBorder
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        public virtual bool HasBorder
         {
             get
             {

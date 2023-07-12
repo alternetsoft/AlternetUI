@@ -112,6 +112,9 @@ namespace Alternet.UI
 
         private static object CoerceText(DependencyObject d, object value) => value == null ? string.Empty : value;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
         public bool HasBorder
         {
             get

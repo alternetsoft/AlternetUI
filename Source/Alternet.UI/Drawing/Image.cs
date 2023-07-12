@@ -37,7 +37,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
-        private protected Image() 
+        private protected Image()
             : this(new Size())
         {
         }
@@ -47,6 +47,18 @@ namespace Alternet.Drawing
             this.nativeImage = nativeImage;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Image"/> class
+        /// from the specified url.
+        /// </summary>
+        /// <param name="url">The file or embedded resource url used to load the image.
+        /// </param>
+        /// <example>
+        /// int ImageSize = 16;
+        /// string ResPrefix =
+        ///     $"embres:ControlsTest.resources.Png._{ImageSize}.";
+        /// button1.Image = Bitmap.FromUrl($"{ResPrefix}arrow-left-{ImageSize}.png");
+        /// </example>
         public static Image FromUrl(string url)
         {
             var s = url;

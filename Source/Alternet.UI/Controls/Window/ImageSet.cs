@@ -78,6 +78,18 @@ namespace Alternet.UI
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageSet"/> class
+        /// from the specified url.
+        /// </summary>
+        /// <param name="url">The file or embedded resource url used to load the image.
+        /// </param>
+        /// <example>
+        /// int ImageSize = 16;
+        /// string ResPrefix =
+        ///     $"embres:ControlsTest.resources.Png._{ImageSize}.";
+        /// ImageSet imageSet = ImageSet.FromUrl($"{ResPrefix}arrow-left-{ImageSize}.png");
+        /// </example>
         public static ImageSet FromUrl(string url)
         {
                 var s = (string)url;

@@ -29,7 +29,7 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ListView"/> class.
         /// </summary>
-        public ListView()       
+        public ListView()
         {
         }
 
@@ -104,16 +104,6 @@ namespace Alternet.UI
             }
         }
 
-        internal int NativeItemsCount
-        {
-            get
-            {
-                if (Handler is NativeListViewHandler)
-                    return ((NativeListViewHandler)Handler).NativeControl.ItemsCount;
-                return 0;
-            }
-        }
-
         /// <summary>
         /// Gets or sets a value indicating whether the user can edit the labels of items in the control.
         /// </summary>
@@ -175,18 +165,6 @@ namespace Alternet.UI
 
                 if (changed)
                     RaiseSelectionChanged(EventArgs.Empty);
-            }
-        }
-
-        private void UpdateSelectedIndices()
-        {
-            if (selectedIndices == null)
-            {
-                selectedIndices = new HashSet<int>();
-                if (Handler is not NativeListViewHandler handler)
-                    return;
-                var indices = handler.NativeControl.SelectedIndices;
-                selectedIndices.UnionWith(indices);
             }
         }
 
@@ -489,6 +467,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
         public bool HasBorder
         {
             get
@@ -505,6 +486,16 @@ namespace Alternet.UI
                 if (Handler is not NativeListViewHandler handler)
                     return;
                 handler.NativeControl.HasBorder = value;
+            }
+        }
+
+        internal int NativeItemsCount
+        {
+            get
+            {
+                if (Handler is NativeListViewHandler handler)
+                    return handler.NativeControl.ItemsCount;
+                return 0;
             }
         }
 
@@ -665,6 +656,11 @@ namespace Alternet.UI
             RaiseSelectionChanged(EventArgs.Empty);
         }
 
+        internal void SelectedIndicesAreDirty()
+        {
+            selectedIndices = null;
+        }
+
         /// <summary>
         /// Called when the user clicks a column header within the list view control.
         /// </summary>
@@ -698,14 +694,21 @@ namespace Alternet.UI
         {
         }
 
-        internal void SelectedIndicesAreDirty()
-        {
-            selectedIndices = null;
-        }
-
         private void ClearSelectedCore()
         {
             selectedIndices?.Clear();
+        }
+
+        private void UpdateSelectedIndices()
+        {
+            if (selectedIndices == null)
+            {
+                selectedIndices = new HashSet<int>();
+                if (Handler is not NativeListViewHandler handler)
+                    return;
+                var indices = handler.NativeControl.SelectedIndices;
+                selectedIndices.UnionWith(indices);
+            }
         }
 
         private bool SetSelectedCore(int index, bool value)

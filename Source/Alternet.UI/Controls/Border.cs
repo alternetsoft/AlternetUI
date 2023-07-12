@@ -47,6 +47,7 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
             if (defaultBorderPen == null)

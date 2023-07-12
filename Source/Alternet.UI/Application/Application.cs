@@ -58,6 +58,9 @@ namespace Alternet.UI
         /// </remarks>
         public static bool SupressDiagnostics { get; set; } = true;
 
+        /// <summary>
+        /// Gets whether <see cref="Run"/> method execution is finished.
+        /// </summary>
         public static bool Terminating { get => terminating; }
 
         /// <summary>

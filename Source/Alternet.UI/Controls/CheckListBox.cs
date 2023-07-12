@@ -35,7 +35,8 @@ namespace Alternet.UI
             }
         }
 
-        public bool HasBorder
+        /// <inheritdoc/>
+        public override bool HasBorder
         {
             get
             {

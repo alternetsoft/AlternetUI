@@ -993,9 +993,12 @@ namespace Alternet.UI
             return Handler.DoDragDrop(data, allowedEffects);
         }
 
+        /// <summary>
+        /// Forces the re-creation of the underlying native control.
+        /// </summary>
         public void RecreateWindow()
         {
-            Handler.NativeControl.RecreateWindow();
+            Handler.NativeControl?.RecreateWindow();
         }
 
         /// <summary>

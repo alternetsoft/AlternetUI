@@ -48,6 +48,9 @@ namespace Alternet.UI
             Items.ItemRemoved += Items_ItemRemoved;
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
         public bool HasBorder
         {
             get
