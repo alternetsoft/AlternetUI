@@ -342,6 +342,18 @@ namespace Alternet.UI.Native
             
         }
         
+        public System.IntPtr WxWidget
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Control_GetWxWidget_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
         public bool IsScrollable
         {
             get
@@ -836,6 +848,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Control_GetHandle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Control_GetWxWidget_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_GetIsScrollable_(IntPtr obj);

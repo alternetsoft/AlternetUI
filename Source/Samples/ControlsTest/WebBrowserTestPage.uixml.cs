@@ -15,6 +15,9 @@ namespace ControlsTest
     {
         internal static readonly Destructor MyDestructor = new();
 
+        private const int ImageSize = 16;
+        private static readonly string ResPrefix =
+            $"embres:ControlsTest.resources.Png._{ImageSize}.";
         private static readonly string ZipSchemeName = "zipfs";
         private static readonly bool SetDefaultUserAgent = false;
         private static WebBrowserBackend useBackend = WebBrowserBackend.Default;
@@ -83,6 +86,8 @@ namespace ControlsTest
             AddMainPanel();
             AddFindPanel();
             AddFindOptionsPanel();
+
+            AddNewToolbar();
         }
 
         public void AddMainPanel()
@@ -123,11 +128,59 @@ namespace ControlsTest
             webBrowserGrid.Children.Add(mainStackPanel);
         }
 
+        public void AddNewToolbar()
+        {
+            Toolbar toolbar = new();
+            ToolbarItem toolbarItem;
+
+            toolbarItem = new ToolbarItem("Back", BackButton_Click)
+            {
+                ToolTip = "Back",
+                Image = ImageSet.FromUrl($"{ResPrefix}arrow-left-{ImageSize}.png"),
+            };
+            toolbar.Items.Add(toolbarItem);
+
+            toolbarItem = new ToolbarItem("Forward", ForwardButton_Click)
+            {
+                ToolTip = "Forward",
+                Image = ImageSet.FromUrl($"{ResPrefix}arrow-right-{ImageSize}.png"),
+            };
+            toolbar.Items.Add(toolbarItem);
+
+            toolbarItem = new ToolbarItem("Zoom In", ZoomInButton_Click)
+            {
+                ToolTip = "Zoom In",
+                Image = ImageSet.FromUrl($"{ResPrefix}plus-{ImageSize}.png"),
+            };
+            toolbar.Items.Add(toolbarItem);
+
+            toolbarItem = new ToolbarItem("Zoom out", ZoomOutButton_Click)
+            {
+                ToolTip = "Zoom out",
+                Image = ImageSet.FromUrl($"{ResPrefix}minus-{ImageSize}.png"),
+            };
+            toolbar.Items.Add(toolbarItem);
+
+            toolbarItem = new ToolbarItem("Go", GoButton_Click)
+            {
+                ToolTip = "Go",
+                Image = ImageSet.FromUrl($"{ResPrefix}caret-right-{ImageSize}.png"),
+            };
+            toolbar.Items.Add(toolbarItem);
+
+            //mainStackPanel.Children.Add(toolbar);
+
+            //LayoutFactory.AddToolbar(mainStackPanel, toolbar);
+
+            /*
+            urlTextBox = new()
+                Width = 300,
+            urlTextBox.KeyDown += TextBox_KeyDown;
+             */
+        }
+
         public void AddToolbar()
         {
-            var imageSize = 16;
-            var resPrefix = $"embres:ControlsTest.resources.Png._{imageSize}.";
-
             webBrowserToolbarPanel = new()
             {
                 Margin = new Thickness(5, 5, 5, 5),
@@ -138,41 +191,37 @@ namespace ControlsTest
             backButton = new()
             {
                 Margin = new Thickness(0, 5, 5, 5),
-                Image = Bitmap.FromUrl($"{resPrefix}arrow-left-{imageSize}.png"),
+                Image = Bitmap.FromUrl($"{ResPrefix}arrow-left-{ImageSize}.png"),
             };
             backButton.Click += BackButton_Click;
 
             forwardButton = new()
             {
-                // Text = ">",
                 Margin = new Thickness(0, 5, 5, 5),
-                Image = Bitmap.FromUrl($"{resPrefix}arrow-right-{imageSize}.png"),
+                Image = Bitmap.FromUrl($"{ResPrefix}arrow-right-{ImageSize}.png"),
             };
             forwardButton.Click += ForwardButton_Click;
 
             zoomInButton = new()
             {
-                // Text = "+",
                 Margin = new Thickness(0, 5, 5, 5),
-                Image = Bitmap.FromUrl($"{resPrefix}plus-{imageSize}.png"),
+                Image = Bitmap.FromUrl($"{ResPrefix}plus-{ImageSize}.png"),
                 Visible = true,
             };
             zoomInButton.Click += ZoomInButton_Click;
 
             zoomOutButton = new()
             {
-                // Text = "-",
                 Margin = new Thickness(0, 5, 5, 5),
-                Image = Bitmap.FromUrl($"{resPrefix}minus-{imageSize}.png"),
+                Image = Bitmap.FromUrl($"{ResPrefix}minus-{ImageSize}.png"),
                 Visible = true,
             };
             zoomOutButton.Click += ZoomOutButton_Click;
 
             goButton = new()
             {
-                // Text = "Go",
                 Margin = new Thickness(0, 5, 0, 5),
-                Image = Bitmap.FromUrl($"{resPrefix}caret-right-{imageSize}.png"),
+                Image = Bitmap.FromUrl($"{ResPrefix}caret-right-{ImageSize}.png"),
             };
             goButton.Click += GoButton_Click;
 

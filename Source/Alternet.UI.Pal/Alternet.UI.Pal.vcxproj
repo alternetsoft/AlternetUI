@@ -276,6 +276,7 @@
     <ClInclude Include="ApiUtils.h" />
     <ClInclude Include="ApiTypes.h" />
     <ClInclude Include="Api\Application.Api.h" />
+    <ClInclude Include="Api\BoxSizer.Api.h" />
     <ClInclude Include="Api\Brush.Api.h" />
     <ClInclude Include="Api\Button.Api.h" />
     <ClInclude Include="Api\CheckBox.Api.h" />
@@ -291,8 +292,11 @@
     <ClInclude Include="Api\DrawingTypes.h" />
     <ClInclude Include="Api\Enums.h" />
     <ClInclude Include="Api\FileDialog.Api.h" />
+    <ClInclude Include="Api\FlexGridSizer.Api.h" />
     <ClInclude Include="Api\Font.Api.h" />
     <ClInclude Include="Api\GraphicsPath.Api.h" />
+    <ClInclude Include="Api\GridBagSizer.Api.h" />
+    <ClInclude Include="Api\GridSizer.Api.h" />
     <ClInclude Include="Api\GroupBox.Api.h" />
     <ClInclude Include="Api\HatchBrush.Api.h" />
     <ClInclude Include="Api\Image.Api.h" />
@@ -321,6 +325,7 @@
     <ClInclude Include="Api\PageSetupDialog.Api.h" />
     <ClInclude Include="Api\Panel.Api.h" />
     <ClInclude Include="Api\Pen.Api.h" />
+    <ClInclude Include="Api\Popup.Api.h" />
     <ClInclude Include="Api\PrintDialog.Api.h" />
     <ClInclude Include="Api\PrintDocument.Api.h" />
     <ClInclude Include="Api\PrinterSettings.Api.h" />
@@ -330,10 +335,13 @@
     <ClInclude Include="Api\RadioButton.Api.h" />
     <ClInclude Include="Api\Region.Api.h" />
     <ClInclude Include="Api\SelectDirectoryDialog.Api.h" />
+    <ClInclude Include="Api\Sizer.Api.h" />
     <ClInclude Include="Api\Slider.Api.h" />
     <ClInclude Include="Api\SolidBrush.Api.h" />
+    <ClInclude Include="Api\StaticBoxSizer.Api.h" />
     <ClInclude Include="Api\StatusBar.Api.h" />
     <ClInclude Include="Api\StatusBarPanel.Api.h" />
+    <ClInclude Include="Api\StdDialogButtonSizer.Api.h" />
     <ClInclude Include="Api\TabControl.Api.h" />
     <ClInclude Include="Api\TabPage.Api.h" />
     <ClInclude Include="Api\TextBox.Api.h" />
@@ -346,6 +354,7 @@
     <ClInclude Include="Api\UnmanagedStream.Api.h" />
     <ClInclude Include="Api\WebBrowser.Api.h" />
     <ClInclude Include="Api\Window.Api.h" />
+    <ClInclude Include="Api\WrapSizer.Api.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="BoxSizer.h" />
     <ClInclude Include="Brush.h" />
@@ -439,6 +448,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Api\Application.inc" />
+    <None Include="Api\BoxSizer.inc" />
     <None Include="Api\Brush.inc" />
     <None Include="Api\Button.inc" />
     <None Include="Api\CheckBox.inc" />
@@ -451,8 +461,11 @@
     <None Include="Api\DateTimePicker.inc" />
     <None Include="Api\DrawingContext.inc" />
     <None Include="Api\FileDialog.inc" />
+    <None Include="Api\FlexGridSizer.inc" />
     <None Include="Api\Font.inc" />
     <None Include="Api\GraphicsPath.inc" />
+    <None Include="Api\GridBagSizer.inc" />
+    <None Include="Api\GridSizer.inc" />
     <None Include="Api\GroupBox.inc" />
     <None Include="Api\HatchBrush.inc" />
     <None Include="Api\Image.inc" />
@@ -475,6 +488,7 @@
     <None Include="Api\PageSetupDialog.inc" />
     <None Include="Api\Panel.inc" />
     <None Include="Api\Pen.inc" />
+    <None Include="Api\Popup.inc" />
     <None Include="Api\PrintDialog.inc" />
     <None Include="Api\PrintDocument.inc" />
     <None Include="Api\PrinterSettings.inc" />
@@ -484,10 +498,13 @@
     <None Include="Api\RadioButton.inc" />
     <None Include="Api\Region.inc" />
     <None Include="Api\SelectDirectoryDialog.inc" />
+    <None Include="Api\Sizer.inc" />
     <None Include="Api\Slider.inc" />
     <None Include="Api\SolidBrush.inc" />
+    <None Include="Api\StaticBoxSizer.inc" />
     <None Include="Api\StatusBar.inc" />
     <None Include="Api\StatusBarPanel.inc" />
+    <None Include="Api\StdDialogButtonSizer.inc" />
     <None Include="Api\TabControl.inc" />
     <None Include="Api\TabPage.inc" />
     <None Include="Api\TextBox.inc" />
@@ -500,6 +517,7 @@
     <None Include="Api\UnmanagedStream.inc" />
     <None Include="Api\WebBrowser.inc" />
     <None Include="Api\Window.inc" />
+    <None Include="Api\WrapSizer.inc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="wxWidgets.props" />

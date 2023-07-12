@@ -8,14 +8,15 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal abstract class BoxSizer : Sizer
+    internal class BoxSizer : Sizer
     {
         static BoxSizer()
         {
         }
         
-        protected BoxSizer()
+        public BoxSizer()
         {
+            SetNativePointer(NativeApi.BoxSizer_Create_());
         }
         
         public BoxSizer(IntPtr nativePointer) : base(nativePointer)
@@ -27,6 +28,9 @@ namespace Alternet.UI.Native
         public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr BoxSizer_Create_();
             
         }
     }

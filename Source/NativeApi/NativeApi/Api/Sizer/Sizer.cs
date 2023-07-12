@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace NativeApi.Api
 {
-    public abstract class Sizer
+    public class Sizer
     {
-        public abstract IntPtr AddWindow(IntPtr window,
+        public IntPtr Handle { get => throw new Exception(); }
+
+        public IntPtr AddWindow(IntPtr window,
                              int proportion,
                              int flag,
                              int border,
-                             IntPtr userData);
+                             IntPtr userData) => throw new Exception();
         /*public abstract IntPtr AddSizer(IntPtr sizer,
                          int proportion,
                          int flag,

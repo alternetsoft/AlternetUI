@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NativeApi.Api
 {
-    public abstract class BoxSizer : Sizer
+    public class BoxSizer : Sizer
     {
     }
 }

@@ -77,6 +77,9 @@ bool GetIsFocused();
 void* GetHandle();
 
 
+void* GetWxWidget();
+
+
 bool GetIsScrollable();
 void SetIsScrollable(bool value);
 

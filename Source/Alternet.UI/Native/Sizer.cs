@@ -8,18 +8,31 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal abstract class Sizer : NativeObject
+    internal class Sizer : NativeObject
     {
         static Sizer()
         {
         }
         
-        protected Sizer()
+        public Sizer()
         {
+            SetNativePointer(NativeApi.Sizer_Create_());
         }
         
         public Sizer(IntPtr nativePointer) : base(nativePointer)
         {
+        }
+        
+        public System.IntPtr Handle
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Sizer_GetHandle_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
         }
         
         public System.IntPtr AddWindow(System.IntPtr window, int proportion, int flag, int border, System.IntPtr userData)
@@ -35,6 +48,12 @@ namespace Alternet.UI.Native
         public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Sizer_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Sizer_GetHandle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Sizer_AddWindow_(IntPtr obj, System.IntPtr window, int proportion, int flag, int border, System.IntPtr userData);

@@ -353,6 +353,11 @@ namespace Alternet::UI
         }
     }
 
+    void* Control::GetWxWidget() 
+    {
+        return GetWxWindow();
+    }
+
     wxWindow* Control::GetWxWindow()
     {
         if (_wxWindow == nullptr)

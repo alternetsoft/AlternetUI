@@ -249,6 +249,13 @@ ALTERNET_UI_API void* Control_GetHandle_(Control* obj)
         });
 }
 
+ALTERNET_UI_API void* Control_GetWxWidget_(Control* obj)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetWxWidget();
+        });
+}
+
 ALTERNET_UI_API c_bool Control_GetIsScrollable_(Control* obj)
 {
     return MarshalExceptions<c_bool>([&](){

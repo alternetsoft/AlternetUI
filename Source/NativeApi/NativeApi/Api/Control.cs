@@ -107,6 +107,8 @@ namespace NativeApi.Api
 
         public IntPtr Handle { get => throw new Exception(); }
 
+        public IntPtr WxWidget { get => throw new Exception(); }
+
         public void SaveScreenshot(string fileName) => throw new Exception();
 
         public void SendSizeEvent() => throw new Exception();
