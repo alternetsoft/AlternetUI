@@ -32,6 +32,8 @@ namespace Alternet::UI
         void RemoveWxItem(int index);
 
         bool _mainToolbar = true;
+        bool _noDivider = false;
+        bool _isVertical = false;
         std::vector<ToolbarItem*> _items;
         Window* _ownerWindow = nullptr;
 

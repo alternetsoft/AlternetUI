@@ -69,6 +69,40 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool NoDivider
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Toolbar_GetNoDivider_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Toolbar_SetNoDivider_(NativePointer, value);
+            }
+        }
+        
+        public bool IsVertical
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Toolbar_GetIsVertical_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Toolbar_SetIsVertical_(NativePointer, value);
+            }
+        }
+        
         public ToolbarItemImageToTextDisplayMode ImageToTextDisplayMode
         {
             get
@@ -134,6 +168,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Toolbar_SetItemImagesVisible_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Toolbar_GetNoDivider_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Toolbar_SetNoDivider_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Toolbar_GetIsVertical_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Toolbar_SetIsVertical_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern ToolbarItemImageToTextDisplayMode Toolbar_GetImageToTextDisplayMode_(IntPtr obj);

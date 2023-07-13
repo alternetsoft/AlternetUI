@@ -17,6 +17,9 @@ namespace NativeApi.Api
 
         public bool ItemImagesVisible { get; set; }
 
+        public bool NoDivider { get; set; }
+        public bool IsVertical { get; set; }
+
         public ToolbarItemImageToTextDisplayMode ImageToTextDisplayMode { get; set; }
 
         public void Realize() => throw new Exception();

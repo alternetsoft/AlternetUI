@@ -35,6 +35,32 @@ namespace Alternet.UI
             set => Handler.ImageToTextDisplayMode = value;
         }
 
+        public bool NoDivider
+        {
+            get
+            {
+                return Handler.NoDivider;
+            }
+
+            set
+            {
+                Handler.NoDivider = value;
+            }
+        }
+
+        public bool IsVertical
+        {
+            get
+            {
+                return Handler.IsVertical;
+            }
+
+            set
+            {
+                Handler.IsVertical = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets a boolean value indicating whether this toolbar item text is visible.
         /// </summary>

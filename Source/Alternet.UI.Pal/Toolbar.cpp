@@ -6,6 +6,32 @@
 
 namespace Alternet::UI
 {
+    bool Toolbar::GetNoDivider() 
+    {
+        return _noDivider;
+    }
+
+    void Toolbar::SetNoDivider(bool value)
+    {
+        if (value == _noDivider)
+            return;
+        _noDivider = value;
+        RecreateWxToolbar();
+    }
+
+    bool Toolbar::GetIsVertical() 
+    {
+        return _isVertical;
+    }
+    
+    void Toolbar::SetIsVertical(bool value) 
+    {
+        if (value == _isVertical)
+            return;
+        _isVertical = value;
+        RecreateWxToolbar();
+    }
+
     void* Toolbar::CreateEx(bool mainToolbar)
     {
         return new Toolbar(mainToolbar);
@@ -139,7 +165,15 @@ namespace Alternet::UI
     {
         auto getStyle = [&]
         {
-            auto style = wxTB_HORIZONTAL | wxTB_FLAT;
+            auto style = 0 | wxTB_FLAT;
+
+            if(_noDivider)
+                style |= wxTB_NODIVIDER;
+
+            if(_isVertical)
+                style |= wxTB_VERTICAL;
+            else
+                style |= wxTB_HORIZONTAL;
 
             if (_itemTextVisible)
                 style |= wxTB_TEXT;

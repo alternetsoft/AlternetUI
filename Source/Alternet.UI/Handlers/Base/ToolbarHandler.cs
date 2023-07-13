@@ -23,6 +23,17 @@ namespace Alternet.UI
         public abstract bool ItemImagesVisible { get; set; }
 
         /// <summary>
+        /// Gets or sets a boolean value indicating whether this toolbar has horizontal gray line which divides it from other controls.
+        /// </summary>
+        public abstract bool NoDivider { get; set; }
+
+        /// <summary>
+        /// Gets or sets a boolean value indicating whether this toolbar 
+        /// is positioned vertically.
+        /// </summary>
+        public abstract bool IsVertical { get; set; }
+
+        /// <summary>
         /// Gets or sets a value which specifies display modes for toolbar item image and text.
         /// </summary>
         public abstract ToolbarItemImageToTextDisplayMode ImageToTextDisplayMode { get; set; }

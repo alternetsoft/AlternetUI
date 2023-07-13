@@ -51,6 +51,34 @@ ALTERNET_UI_API void Toolbar_SetItemImagesVisible_(Toolbar* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API c_bool Toolbar_GetNoDivider_(Toolbar* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetNoDivider();
+        });
+}
+
+ALTERNET_UI_API void Toolbar_SetNoDivider_(Toolbar* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetNoDivider(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Toolbar_GetIsVertical_(Toolbar* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsVertical();
+        });
+}
+
+ALTERNET_UI_API void Toolbar_SetIsVertical_(Toolbar* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetIsVertical(value);
+        });
+}
+
 ALTERNET_UI_API ToolbarItemImageToTextDisplayMode Toolbar_GetImageToTextDisplayMode_(Toolbar* obj)
 {
     return MarshalExceptions<ToolbarItemImageToTextDisplayMode>([&](){

@@ -12,6 +12,14 @@ bool GetItemImagesVisible();
 void SetItemImagesVisible(bool value);
 
 
+bool GetNoDivider();
+void SetNoDivider(bool value);
+
+
+bool GetIsVertical();
+void SetIsVertical(bool value);
+
+
 ToolbarItemImageToTextDisplayMode GetImageToTextDisplayMode();
 void SetImageToTextDisplayMode(ToolbarItemImageToTextDisplayMode value);
 

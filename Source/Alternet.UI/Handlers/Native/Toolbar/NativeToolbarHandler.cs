@@ -15,6 +15,18 @@ namespace Alternet.UI
 
         public new Native.Toolbar NativeControl => (Native.Toolbar)base.NativeControl!;
 
+        public override bool NoDivider
+        {
+            get => NativeControl.NoDivider;
+            set => NativeControl.NoDivider = value;
+        }
+
+        public override bool IsVertical
+        {
+            get => NativeControl.IsVertical;
+            set => NativeControl.IsVertical = value;
+        }
+
         public override bool ItemTextVisible
         {
             get => NativeControl.ItemTextVisible;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public class CustomToolbar : Toolbar
+    public class ToolbarPanel : Toolbar
     {
         /// <inheritdoc />
         protected override ControlHandler CreateHandler()

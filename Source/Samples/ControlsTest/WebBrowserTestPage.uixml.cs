@@ -28,7 +28,7 @@ namespace ControlsTest
         private readonly WebBrowserFindParams findParams = new();
         private readonly Dictionary<string, MethodCaller> testActions = new();
 
-        private CustomToolbar toolbar;
+        private ToolbarPanel toolbar;
         private Panel toolbarParent;
         private StackPanel webBrowserToolbarPanel;
         private Button backButton;
@@ -90,7 +90,6 @@ namespace ControlsTest
             AddMainPanel();
             AddFindPanel();
             AddFindOptionsPanel();
-
         }
 
         public void AddMainPanel()
@@ -135,6 +134,7 @@ namespace ControlsTest
         {
             toolbarParent = new();
             toolbar = new();
+            toolbar.NoDivider = true;
             ToolbarItem toolbarItem;
 
             toolbarItem = new ToolbarItem("Back", BackButton_Click)
