@@ -11,8 +11,6 @@ namespace Alternet.UI
     /// </remarks>
     public class PictureBox : Control
     {
-        #region Image Dependency Property
-
         /// <summary>
         /// Identifies the <see cref="Image"/> dependency property.
         /// </summary>
@@ -81,7 +79,5 @@ namespace Alternet.UI
             get { return (Image?)GetValue(ImageProperty); }
             set { SetValue(ImageProperty, value); }
         }
-
-        #endregion
-    }
+   }
 }
