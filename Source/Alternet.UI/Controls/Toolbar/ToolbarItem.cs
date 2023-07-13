@@ -10,6 +10,46 @@ namespace Alternet.UI
     public class ToolbarItem : Control, ICommandSource
     {
         /// <summary>
+        /// Defines a <see cref="DependencyProperty"/> field for the
+        /// <see cref="Command"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty CommandProperty =
+            DependencyProperty.Register(
+                "Command",
+                typeof(ICommand),
+                typeof(ToolbarItem),
+                new FrameworkPropertyMetadata(
+                    null, new PropertyChangedCallback(OnCommandChanged)));
+
+        /// <summary>
+        /// Defines a <see cref="DependencyProperty"/> field for the
+        /// <see cref="CommandParameter"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty CommandParameterProperty =
+            DependencyProperty.Register(
+                "CommandParameter",
+                typeof(object),
+                typeof(ToolbarItem),
+                new PropertyMetadata(null));
+
+        /// <summary>
+        /// Defines a <see cref="DependencyProperty"/> field for the
+        /// <see cref="CommandTarget"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty CommandTargetProperty =
+            DependencyProperty.Register(
+                "CommandTarget",
+                typeof(IInputElement),
+                typeof(ToolbarItem),
+                new PropertyMetadata(null));
+
+        private string text = string.Empty;
+        private ImageSet? image = null;
+        private ImageSet? disabledImage = null;
+        private bool @checked;
+        bool preCommandEnabledValue = true;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref='ToolbarItem'/> class.
         /// </summary>
         public ToolbarItem()
@@ -18,7 +58,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='ToolbarItem'/> class with the specified text for the toolbar item.
+        /// Initializes a new instance of the <see cref='ToolbarItem'/> class
+        /// with the specified text for the toolbar item.
         /// </summary>
         public ToolbarItem(string text)
             : this(text, null)
@@ -26,7 +67,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='ToolbarItem'/> class with a specified properties for the toolbar item.
+        /// Initializes a new instance of the <see cref='ToolbarItem'/> class
+        /// with a specified properties for the toolbar item.
         /// </summary>
         public ToolbarItem(string text, EventHandler? onClick)
         {
@@ -35,7 +77,24 @@ namespace Alternet.UI
                 Click += onClick;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Occurs when the value of the <see cref="Image"/> property changes.
+        /// </summary>
+        public event EventHandler? ImageChanged;
+
+        /// <summary>
+        /// Occurs when the <see cref="Text"/> property changes.
+        /// </summary>
+        public event EventHandler? TextChanged;
+
+        /// <summary>
+        /// Occurs when the <see cref="Checked"/> property changes.
+        /// </summary>
+        public event EventHandler? CheckedChanged;
+
+        /// <summary>
+        /// Gets a <see cref='ToolbarItemHandler'/> associated with this class.
+        /// </summary>
         public new ToolbarItemHandler Handler
         {
             get
@@ -44,7 +103,6 @@ namespace Alternet.UI
                 return (ToolbarItemHandler)base.Handler;
             }
         }
-
 
         /// <inheritdoc/>
         public override IReadOnlyList<FrameworkElement> ContentElements
@@ -57,41 +115,32 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc />
-        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection
-        {
-            get
-            {
-                if (DropDownMenu != null)
-                    yield return DropDownMenu;
-            }
-        }
-
         /// <summary>
         /// Gets or sets a menu used as this toolbar item drop-down.
         /// </summary>
-        public Menu? DropDownMenu { get => Handler.DropDownMenu; set => Handler.DropDownMenu = value; }
-
-        /// <summary>
-        /// Gets or sets a boolean value indicating whether this toolbar item is checkable.
-        /// </summary>
-        public bool IsCheckable { get => Handler.IsCheckable; set => Handler.IsCheckable = value; }
-
-        /// <inheritdoc />
-        public override void RaiseClick(EventArgs e)
+        public Menu? DropDownMenu
         {
-            base.RaiseClick(e);
-            CommandHelpers.ExecuteCommandSource(this);
+            get => Handler.DropDownMenu;
+            set => Handler.DropDownMenu = value;
         }
 
-        string text = string.Empty;
+        /// <summary>
+        /// Gets or sets a boolean value indicating whether this toolbar
+        /// item is checkable.
+        /// </summary>
+        public bool IsCheckable
+        {
+            get => Handler.IsCheckable;
+            set => Handler.IsCheckable = value;
+        }
 
         /// <summary>
         /// Gets or sets a value indicating the caption of the toolbar item.
         /// </summary>
         /// <remarks>
         /// Setting this property to "-" makes the item a separator.
-        /// Use underscore (<c>_</c>) symbol before a character to make it an access key.
+        /// Use underscore (<c>_</c>) symbol before a character to make it
+        /// an access key.
         /// </remarks>
         public string Text
         {
@@ -112,8 +161,6 @@ namespace Alternet.UI
                 TextChanged?.Invoke(this, EventArgs.Empty);
             }
         }
-
-        private ImageSet? image = null;
 
         /// <summary>
         /// Gets or sets the image for the toolbar item.
@@ -137,27 +184,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the value of the <see cref="Image"/> property changes.
+        /// Gets or sets the disable image for the toolbar item.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        protected virtual void OnImageChanged(EventArgs e)
+        /// <value>
+        /// An <see cref="ImageSet"/> that represents the disabled image 
+        /// for the toolbar item.
+        /// </value>
+        public ImageSet? DisabledImage
         {
+            get => disabledImage;
+
+            set
+            {
+                if (disabledImage == value)
+                    return;
+
+                disabledImage = value;
+                OnImageChanged(EventArgs.Empty);
+                ImageChanged?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
-        /// Occurs when the value of the <see cref="Image"/> property changes.
-        /// </summary>
-        public event EventHandler? ImageChanged;
-
-        /// <summary>
-        /// Occurs when the <see cref="Text"/> property changes.
-        /// </summary>
-        public event EventHandler? TextChanged;
-
-        bool @checked;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether a check mark appears next to the text of the toolbar item.
+        /// Gets or sets a value indicating whether a check mark appears next to
+        /// the text of the toolbar item.
         /// </summary>
         public bool Checked
         {
@@ -180,19 +230,55 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public object? CommandParameter
+        {
+            get { return (object?)GetValue(CommandParameterProperty); }
+            set { SetValue(CommandParameterProperty, value); }
+        }
+
+        /// <inheritdoc/>
+        public IInputElement? CommandTarget
+        {
+            get { return (IInputElement?)GetValue(CommandTargetProperty); }
+            set { SetValue(CommandTargetProperty, value); }
+        }
+
+        /// <inheritdoc/>
         public ICommand? Command
         {
             get { return (ICommand?)GetValue(CommandProperty); }
             set { SetValue(CommandProperty, value); }
         }
 
-        /// <summary>
-        /// Defines a <see cref="DependencyProperty"/> field for the <see cref="Command"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register("Command", typeof(ICommand), typeof(ToolbarItem), new FrameworkPropertyMetadata(null, new PropertyChangedCallback(OnCommandChanged)));
+        /// <inheritdoc />
+        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection
+        {
+            get
+            {
+                if (DropDownMenu != null)
+                    yield return DropDownMenu;
+            }
+        }
 
-        private static void OnCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        /// <inheritdoc />
+        public override void RaiseClick(EventArgs e)
+        {
+            base.RaiseClick(e);
+            CommandHelpers.ExecuteCommandSource(this);
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="Image"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnImageChanged(EventArgs e)
+        {
+        }
+
+        private static void OnCommandChanged(
+            DependencyObject d,
+            DependencyPropertyChangedEventArgs e)
         {
            ToolbarItem b = (ToolbarItem)d;
            b.OnCommandChanged((ICommand)e.OldValue, (ICommand)e.NewValue);
@@ -219,11 +305,11 @@ namespace Alternet.UI
             }
         }
 
-        bool preCommandEnabledValue = true;
-
         private void UnhookCommand(ICommand command)
         {
-            CanExecuteChangedEventManager.RemoveHandler(command, OnCanExecuteChanged);
+            CanExecuteChangedEventManager.RemoveHandler(
+                command,
+                OnCanExecuteChanged);
             UpdateCanExecute();
         }
 
@@ -243,36 +329,5 @@ namespace Alternet.UI
             if (Command != null)
                 Enabled = CommandHelpers.CanExecuteCommandSource(this);
         }
-
-        /// <inheritdoc/>
-        public object? CommandParameter
-        {
-            get { return (object?)GetValue(CommandParameterProperty); }
-            set { SetValue(CommandParameterProperty, value); }
-        }
-
-        /// <summary>
-        /// Defines a <see cref="DependencyProperty"/> field for the <see cref="CommandParameter"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty CommandParameterProperty =
-            DependencyProperty.Register("CommandParameter", typeof(object), typeof(ToolbarItem), new PropertyMetadata(null));
-
-        /// <inheritdoc/>
-        public IInputElement? CommandTarget
-        {
-            get { return (IInputElement?)GetValue(CommandTargetProperty); }
-            set { SetValue(CommandTargetProperty, value); }
-        }
-
-        /// <summary>
-        /// Defines a <see cref="DependencyProperty"/> field for the <see cref="CommandTarget"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty CommandTargetProperty =
-            DependencyProperty.Register("CommandTarget", typeof(IInputElement), typeof(ToolbarItem), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Occurs when the <see cref="Checked"/> property changes.
-        /// </summary>
-        public event EventHandler? CheckedChanged;
     }
 }

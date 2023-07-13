@@ -24,6 +24,7 @@ namespace Alternet::UI
         bool separator = IsSeparator();
 
         wxBitmapBundle image;
+        wxBitmapBundle disabledImage = wxNullBitmap;
         if (_image != nullptr)
         {
             image = _image->GetBitmapBundle();
@@ -31,11 +32,17 @@ namespace Alternet::UI
         else
             image = wxBitmap(wxSize(16, 16));
 
+        if (_disabledImage != nullptr)
+        {
+            disabledImage = _disabledImage->GetBitmapBundle();
+        }
+
         _toolInfo = new ToolInfo();
 
         _toolInfo->id = separator ? wxID_SEPARATOR : IdManager::AllocateId();
         _toolInfo->text = CoerceWxToolText(_text);
         _toolInfo->image = image;
+        _toolInfo->disabledImage = disabledImage;
 
         auto toolTip = GetToolTip();
         if (toolTip.has_value())
@@ -201,7 +208,7 @@ namespace Alternet::UI
             return;
 
         auto info = GetToolInfo();
-        auto tool = toolbar->InsertTool(index, info->id, info->text, info->image, wxBitmapBundle(), info->kind, info->toolTipText);
+        auto tool = toolbar->InsertTool(index, info->id, info->text, info->image, _toolInfo->disabledImage, info->kind, info->toolTipText);
 
         if (info->dropDownMenu != nullptr)
             tool->SetDropdownMenu(info->dropDownMenu);
@@ -238,6 +245,23 @@ namespace Alternet::UI
         _image = value;
         if (_image != nullptr)
             _image->AddRef();
+        RecreateTool();
+    }
+
+    ImageSet* ToolbarItem::GetDisabledImage()
+    {
+        if (_disabledImage != nullptr)
+            _disabledImage->AddRef();
+        return _disabledImage;
+    }
+
+    void ToolbarItem::SetDisabledImage(ImageSet* value)
+    {
+        if (_disabledImage != nullptr)
+            _disabledImage->Release();
+        _disabledImage = value;
+        if (_disabledImage != nullptr)
+            _disabledImage->AddRef();
         RecreateTool();
     }
 

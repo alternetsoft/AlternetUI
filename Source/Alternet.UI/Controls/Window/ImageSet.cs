@@ -33,8 +33,8 @@ namespace Alternet.UI
         public ImageSet(Stream stream)
             : this()
         {
-            using (var inputStream = new UI.Native.InputStream(stream))
-                NativeImageSet.LoadFromStream(inputStream);
+            using var inputStream = new UI.Native.InputStream(stream);
+            NativeImageSet.LoadFromStream(inputStream);
         }
 
         private void Images_ItemInserted(object? sender, CollectionChangeEventArgs<Image> e)
@@ -105,6 +105,26 @@ namespace Alternet.UI
 
                 var assets = new UI.ResourceLoader();
                 return new ImageSet(assets.Open(uri));
+        }
+
+        public static ImageSet? FromImageDisabled(Image? image)
+        {
+            if (image == null)
+                return null;
+
+            ImageSet result = new();
+            result.Images.Add(Image.GetDisabled(image)!);
+            return result;
+        }
+
+        public static ImageSet? FromImage(Image? image)
+        {
+            if (image == null)
+                return null;
+
+            ImageSet result = new();
+            result.Images.Add(image);
+            return result;
         }
 
         /// <summary>

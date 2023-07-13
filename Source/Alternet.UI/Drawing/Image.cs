@@ -5,27 +5,32 @@ using System.IO;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Describes an image to be drawn on a <see cref="DrawingContext"/> or displayed in a UI control.
+    /// Describes an image to be drawn on a <see cref="DrawingContext"/> or
+    /// displayed in a UI control.
     /// </summary>
     [TypeConverter(typeof(ImageConverter))]
     public abstract class Image : IDisposable
     {
+        private static Brush? disabledBrush = null;
+
         private bool isDisposed;
         private UI.Native.Image nativeImage;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Image"/> class from the specified data stream.
+        /// Initializes a new instance of the <see cref="Image"/> class from
+        /// the specified data stream.
         /// </summary>
         /// <param name="stream">The data stream used to load the image.</param>
         private protected Image(Stream stream)
         {
             nativeImage = new UI.Native.Image();
-            using (var inputStream = new UI.Native.InputStream(stream))
-                NativeImage.LoadFromStream(inputStream);
+            using var inputStream = new UI.Native.InputStream(stream);
+            NativeImage.LoadFromStream(inputStream);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Image"/> class with the specified size.
+        /// Initializes a new instance of the <see cref="Image"/> class
+        /// with the specified size.
         /// </summary>
         /// <param name="size">The size used to create the image.</param>
         private protected Image(Size size)
@@ -34,6 +39,23 @@ namespace Alternet.Drawing
             NativeImage.Initialize(size);
         }
 
+        // Color.FromArgb(171, 71, 71, 71)
+        // Color.FromArgb(128, 0, 0, 0)
+        public static Brush DisabledBrush
+        {
+            get
+            {
+                if (disabledBrush == null)
+                    disabledBrush = new SolidBrush(Color.FromArgb(171, 71, 71, 71));
+                return disabledBrush;
+            }
+
+            set
+            {
+                disabledBrush = value;
+            }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
@@ -48,10 +70,31 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets the size of the image in device-independent units (1/96th inch
+        /// per unit).
+        /// </summary>
+        public Size Size => NativeImage.Size;
+
+        /// <summary>
+        /// Gets the size of the image in pixels.
+        /// </summary>
+        public Int32Size PixelSize => NativeImage.PixelSize;
+
+        internal UI.Native.Image NativeImage
+        {
+            get
+            {
+                CheckDisposed();
+                return nativeImage;
+            }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class
         /// from the specified url.
         /// </summary>
-        /// <param name="url">The file or embedded resource url used to load the image.
+        /// <param name="url">The file or embedded resource url used
+        /// to load the image.
         /// </param>
         /// <example>
         /// int ImageSize = 16;
@@ -76,29 +119,50 @@ namespace Alternet.Drawing
             return new Bitmap(assets.Open(uri));
         }
 
-        /// <summary>
-        /// Gets the size of the image in device-independent units (1/96th inch per unit).
-        /// </summary>
-        public Size Size => NativeImage.Size;
-
-        /// <summary>
-        /// Gets the size of the image in pixels.
-        /// </summary>
-        public Int32Size PixelSize => NativeImage.PixelSize;
-
-        internal UI.Native.Image NativeImage
+        public static Image? GetDisabled(Image? image)
         {
-            get
-            {
-                CheckDisposed();
-                return nativeImage;
-            }
+            if (image == null)
+                return null;
+
+            Bitmap bitmap = new(image);
+            var size = bitmap.Size;
+            using var dc = DrawingContext.FromImage(bitmap);
+            dc.FillRectangle(
+                DisabledBrush,
+                new(0, 0, size.Width, size.Height));
+            return bitmap;
         }
 
-        private void CheckDisposed()
+        /// <summary>
+        /// Saves this image to the specified stream in the specified format.
+        /// </summary>
+        /// <param name="stream">The <see cref="Stream"/> where the image will be
+        /// saved.</param>
+        /// <param name="format">An <see cref="ImageFormat"/> that specifies
+        /// the format of the saved image.</param>
+        public void Save(Stream stream, ImageFormat format)
         {
-            if (isDisposed)
-                throw new ObjectDisposedException(null);
+            if (stream is null)
+                throw new ArgumentNullException(nameof(stream));
+
+            if (format is null)
+                throw new ArgumentNullException(nameof(format));
+
+            var outputStream = new UI.Native.OutputStream(stream);
+            NativeImage.SaveToStream(outputStream, format.ToString());
+        }
+
+        /// <summary>
+        /// Saves this <see cref="Image"/> to the specified file.
+        /// </summary>
+        /// <param name="fileName">A string that contains the name of the file
+        /// to which to save this <see cref="Image"/>.</param>
+        public void Save(string fileName)
+        {
+            if (fileName is null)
+                throw new ArgumentNullException(nameof(fileName));
+
+            NativeImage.SaveToFile(fileName);
         }
 
         /// <summary>
@@ -111,7 +175,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Releases the unmanaged resources used by the <see cref="Image"/> and optionally releases the managed resources.
+        /// Releases the unmanaged resources used by the <see cref="Image"/>
+        /// and optionally releases the managed resources.
         /// </summary>
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
@@ -128,33 +193,10 @@ namespace Alternet.Drawing
             }
         }
 
-        /// <summary>
-        /// Saves this image to the specified stream in the specified format.
-        /// </summary>
-        /// <param name="stream">The <see cref="Stream"/> where the image will be saved.</param>
-        /// <param name="format">An <see cref="ImageFormat"/> that specifies the format of the saved image.</param>
-        public void Save(Stream stream, ImageFormat format)
+        private void CheckDisposed()
         {
-            if (stream is null)
-                throw new ArgumentNullException(nameof(stream));
-
-            if (format is null)
-                throw new ArgumentNullException(nameof(format));
-
-            var outputStream = new UI.Native.OutputStream(stream);
-            NativeImage.SaveToStream(outputStream, format.ToString());
-        }
-
-        /// <summary>
-        /// Saves this <see cref="Image"/> to the specified file.
-        /// </summary>
-        /// <param name="fileName">A string that contains the name of the file to which to save this <see cref="Image"/>.</param>
-        public void Save(string fileName)
-        {
-            if (fileName is null)
-                throw new ArgumentNullException(nameof(fileName));
-
-            NativeImage.SaveToFile(fileName);
+            if (isDisposed)
+                throw new ObjectDisposedException(null);
         }
     }
 }

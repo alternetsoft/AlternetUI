@@ -21,6 +21,10 @@ bool GetIsCheckable();
 void SetIsCheckable(bool value);
 
 
+ImageSet* GetDisabledImage();
+void SetDisabledImage(ImageSet* value);
+
+
 ImageSet* GetImage();
 void SetImage(ImageSet* value);
 

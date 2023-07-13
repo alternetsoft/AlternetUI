@@ -7,7 +7,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using Alternet.Drawing;
 using Alternet.UI;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace ControlsTest
 {
@@ -30,11 +29,11 @@ namespace ControlsTest
 
         private ToolbarPanel toolbar;
         private StackPanel webBrowserToolbarPanel;
-        private Button backButton;
-        private Button forwardButton;
-        private Button zoomInButton;
-        private Button zoomOutButton;
-        private Button goButton;
+        private ToolbarItem zoomInBtn;
+        private ToolbarItem zoomOutBtn;
+        private ToolbarItem backBtn;
+        private ToolbarItem forwardBtn;
+
         private TextBox urlTextBox;
         private StackPanel findOptionsPanel;
         private CheckBox findWrapCheckBox;
@@ -84,21 +83,21 @@ namespace ControlsTest
             Trace.Listeners.Add(myListener);
             InitializeComponent();
 
-            AddNewToolbar();
-            AddToolbar();
-            AddMainPanel();
-            AddFindPanel();
-            AddFindOptionsPanel();
+            AddNewToolbar(1);
+            AddToolbar(2);
+            AddMainPanel(3);
+            AddFindPanel(4);
+            AddFindOptionsPanel(5);
         }
 
-        public void AddMainPanel()
+        public void AddMainPanel(int rowIndex)
         {
             mainStackPanel = new()
             {
                 Margin = new Thickness(5, 5, 5, 5),
                 Orientation = StackPanelOrientation.Horizontal,
             };
-            Grid.SetRowColumn(mainStackPanel, 2, 0);
+            Grid.SetRowColumn(mainStackPanel, rowIndex, 0);
 
             listBox1 = new()
             {
@@ -129,56 +128,45 @@ namespace ControlsTest
             webBrowserGrid.Children.Add(mainStackPanel);
         }
 
-        public void AddNewToolbar()
+        public void AddNewToolbar(int rowIndex)
         {
+            ToolbarItem Add(
+                string text,
+                EventHandler? onClick,
+                string imageUrl)
+            {
+                var resultImage =
+                    Image.FromUrl(imageUrl);
+                var result = new ToolbarItem(text, onClick)
+                {
+                    ToolTip = text,
+                    Image = ImageSet.FromImage(resultImage),
+                    DisabledImage = ImageSet.FromImageDisabled(resultImage),
+                };
+                toolbar.Toolbar.Items.Add(result);
+                return result;
+            }
+
+            string ImgName(string s)
+            {
+                return $"{ResPrefix}{s}-{ImageSize}.png";
+            }
+
             toolbar = new();
+            toolbar.Margin = new Thickness(5, 5, 0, 5);
+
             toolbar.Toolbar.ItemTextVisible = false;
             toolbar.Toolbar.ImageToTextDisplayMode =
                 ToolbarItemImageToTextDisplayMode.Vertical;
-            ToolbarItem toolbarItem;
 
-            toolbarItem = new ToolbarItem("Back", BackButton_Click)
-            {
-                ToolTip = "Back",
-                Image = ImageSet.FromUrl($"{ResPrefix}arrow-left-{ImageSize}.png"),
-            };
-            toolbar.Toolbar.Items.Add(toolbarItem);
+            backBtn = Add("Back", BackButton_Click, ImgName("arrow-left"));
+            forwardBtn = Add("Forward", ForwardBtn_Click, ImgName("arrow-right"));
+            zoomInBtn = Add("Zoom in", ZoomInButton_Click, ImgName("plus"));
+            zoomOutBtn = Add("Zoom out", ZoomOutButton_Click, ImgName("minus"));
+            var goButton = Add("Go", GoButton_Click, ImgName("caret-right"));
 
-            toolbarItem = new ToolbarItem("Forward", ForwardButton_Click)
-            {
-                ToolTip = "Forward",
-                Image = ImageSet.FromUrl($"{ResPrefix}arrow-right-{ImageSize}.png"),
-            };
-            toolbar.Toolbar.Items.Add(toolbarItem);
-
-            toolbarItem = new ToolbarItem("Zoom In", ZoomInButton_Click)
-            {
-                ToolTip = "Zoom In",
-                Image = ImageSet.FromUrl($"{ResPrefix}plus-{ImageSize}.png"),
-            };
-            toolbar.Toolbar.Items.Add(toolbarItem);
-
-            toolbarItem = new ToolbarItem("Zoom out", ZoomOutButton_Click)
-            {
-                ToolTip = "Zoom out",
-                Image = ImageSet.FromUrl($"{ResPrefix}minus-{ImageSize}.png"),
-            };
-            toolbar.Toolbar.Items.Add(toolbarItem);
-
-            toolbarItem = new ToolbarItem("Go", GoButton_Click)
-            {
-                ToolTip = "Go",
-                Image = ImageSet.FromUrl($"{ResPrefix}caret-right-{ImageSize}.png"),
-            };
-            toolbar.Toolbar.Items.Add(toolbarItem);
-
-            Grid.SetRowColumn(toolbar, 1, 0);
+            Grid.SetRowColumn(toolbar, rowIndex, 0);
             webBrowserGrid.Children.Add(toolbar);
-
-
-            //LayoutFactory.SetDebugBackgroundToParents(toolbar);
-
-            //LayoutFactory.AddToolbar(webBrowserGrid, toolbar);
 
             /*
             urlTextBox = new()
@@ -187,16 +175,17 @@ namespace ControlsTest
              */
         }
 
-        public void AddToolbar()
+        public void AddToolbar(int rowIndex)
         {
             webBrowserToolbarPanel = new()
             {
                 Margin = new Thickness(5, 5, 5, 5),
+                HorizontalAlignment = HorizontalAlignment.Stretch,
                 Orientation = StackPanelOrientation.Horizontal,
             };
-            Grid.SetRowColumn(webBrowserToolbarPanel,1, 0);
+            Grid.SetRowColumn(webBrowserToolbarPanel, rowIndex, 0);
 
-            backButton = new()
+            /*backButton = new()
             {
                 Margin = new Thickness(0, 5, 5, 5),
                 Image = Bitmap.FromUrl($"{ResPrefix}arrow-left-{ImageSize}.png"),
@@ -231,33 +220,34 @@ namespace ControlsTest
                 Margin = new Thickness(0, 5, 0, 5),
                 Image = Bitmap.FromUrl($"{ResPrefix}caret-right-{ImageSize}.png"),
             };
-            goButton.Click += GoButton_Click;
+            goButton.Click += GoButton_Click;*/
 
             urlTextBox = new()
             {
-                Width = 300,
                 Margin = new Thickness(0, 5, 5, 5),
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                Width = 500,
             };
             urlTextBox.KeyDown += TextBox_KeyDown;
 
-            webBrowserToolbarPanel.Children.Add(backButton);
+            /*webBrowserToolbarPanel.Children.Add(backButton);
             webBrowserToolbarPanel.Children.Add(forwardButton);
             webBrowserToolbarPanel.Children.Add(zoomInButton);
-            webBrowserToolbarPanel.Children.Add(zoomOutButton);
+            webBrowserToolbarPanel.Children.Add(zoomOutButton);*/
             webBrowserToolbarPanel.Children.Add(urlTextBox);
-            webBrowserToolbarPanel.Children.Add(goButton);
-            //webBrowserGrid.Children.Add(webBrowserToolbarPanel);
+            /*webBrowserToolbarPanel.Children.Add(goButton);*/
+            webBrowserGrid.Children.Add(webBrowserToolbarPanel);
 
         }
 
-        public void AddFindPanel()
+        public void AddFindPanel(int rowIndex)
         {
             findPanel = new()
             {
                 Margin = new Thickness(5, 5, 5, 5),
                 Orientation = StackPanelOrientation.Horizontal,
             };
-            Grid.SetRowColumn(findPanel, 3, 0);
+            Grid.SetRowColumn(findPanel, rowIndex, 0);
 
             findTextBox = new()
             {
@@ -286,14 +276,14 @@ namespace ControlsTest
             webBrowserGrid.Children.Add(findPanel);
         }
 
-        public void AddFindOptionsPanel()
+        public void AddFindOptionsPanel(int rowIndex)
         {
             findOptionsPanel = new()
             {
                 Margin = new(5, 5, 5, 5),
                 Orientation = StackPanelOrientation.Horizontal,
             };
-            Grid.SetRowColumn(findOptionsPanel, 4, 0);
+            Grid.SetRowColumn(findOptionsPanel, rowIndex, 0);
 
             findWrapCheckBox = new()
             {
@@ -942,8 +932,8 @@ namespace ControlsTest
 
         private void UpdateZoomButtons()
         {
-            zoomInButton.Enabled = webBrowser1.CanZoomIn;
-            zoomOutButton.Enabled = webBrowser1.CanZoomOut;
+            zoomInBtn.Enabled = webBrowser1.CanZoomIn;
+            zoomOutBtn.Enabled = webBrowser1.CanZoomOut;
         }
 
         private void UpdateHistoryButtons()
@@ -954,8 +944,8 @@ namespace ControlsTest
                 webBrowser1.ClearHistory();
             }
 
-            backButton.Enabled = webBrowser1.CanGoBack;
-            forwardButton.Enabled = webBrowser1.CanGoForward;
+            backBtn.Enabled = webBrowser1.CanGoBack;
+            forwardBtn.Enabled = webBrowser1.CanGoForward;
         }
 
         private void ZoomInButton_Click(object? sender, EventArgs e)
@@ -975,7 +965,7 @@ namespace ControlsTest
             webBrowser1.GoBack();
         }
 
-        private void ForwardButton_Click(object? sender, EventArgs e)
+        private void ForwardBtn_Click(object? sender, EventArgs e)
         {
             webBrowser1.GoForward();
         }

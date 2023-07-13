@@ -16,6 +16,8 @@ namespace NativeApi.Api
 
         public bool IsCheckable { get => throw new Exception(); set => throw new Exception(); }
 
+        public ImageSet? DisabledImage { get => throw new Exception(); set => throw new Exception(); }
+
         public ImageSet? Image { get => throw new Exception(); set => throw new Exception(); }
     }
 }

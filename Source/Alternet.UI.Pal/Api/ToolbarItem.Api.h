@@ -87,6 +87,20 @@ ALTERNET_UI_API void ToolbarItem_SetIsCheckable_(ToolbarItem* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API ImageSet* ToolbarItem_GetDisabledImage_(ToolbarItem* obj)
+{
+    return MarshalExceptions<ImageSet*>([&](){
+            return obj->GetDisabledImage();
+        });
+}
+
+ALTERNET_UI_API void ToolbarItem_SetDisabledImage_(ToolbarItem* obj, ImageSet* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetDisabledImage(value);
+        });
+}
+
 ALTERNET_UI_API ImageSet* ToolbarItem_GetImage_(ToolbarItem* obj)
 {
     return MarshalExceptions<ImageSet*>([&](){

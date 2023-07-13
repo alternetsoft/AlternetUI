@@ -78,6 +78,8 @@ namespace Alternet.UI
         private void ApplyImage()
         {
             NativeControl.Image = Control.Image?.NativeImageSet ?? null;
+            NativeControl.DisabledImage =
+                Control.DisabledImage?.NativeImageSet ?? null;
         }
 
         private void NativeControl_Click(object? sender, EventArgs? e)

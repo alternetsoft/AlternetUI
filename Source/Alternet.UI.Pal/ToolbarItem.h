@@ -22,6 +22,7 @@ namespace Alternet::UI
             wxString text;
             wxString toolTipText;
             wxBitmapBundle image;
+            wxBitmapBundle disabledImage;
             wxItemKind kind = wxItemKind::wxITEM_NORMAL;
             wxMenu* dropDownMenu = nullptr;
         };
@@ -55,6 +56,7 @@ namespace Alternet::UI
 
     private:
         ImageSet* _image = nullptr;
+        ImageSet* _disabledImage = nullptr;
 
         enum class ToolbarItemFlags
         {

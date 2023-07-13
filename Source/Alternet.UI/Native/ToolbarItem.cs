@@ -110,6 +110,24 @@ namespace Alternet.UI.Native
             }
         }
         
+        public ImageSet? DisabledImage
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.ToolbarItem_GetDisabledImage_(NativePointer);
+                var m = NativeObject.GetFromNativePointer<ImageSet>(n, p => new ImageSet(p));
+                ReleaseNativeObjectPointer(n);
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.ToolbarItem_SetDisabledImage_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
+            }
+        }
+        
         public ImageSet? Image
         {
             get
@@ -209,6 +227,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ToolbarItem_SetIsCheckable_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr ToolbarItem_GetDisabledImage_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ToolbarItem_SetDisabledImage_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr ToolbarItem_GetImage_(IntPtr obj);
