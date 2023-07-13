@@ -29,7 +29,6 @@ namespace ControlsTest
         private readonly Dictionary<string, MethodCaller> testActions = new();
 
         private ToolbarPanel toolbar;
-        private Panel toolbarParent;
         private StackPanel webBrowserToolbarPanel;
         private Button backButton;
         private Button forwardButton;
@@ -132,9 +131,10 @@ namespace ControlsTest
 
         public void AddNewToolbar()
         {
-            toolbarParent = new();
             toolbar = new();
-            toolbar.NoDivider = true;
+            toolbar.Toolbar.ItemTextVisible = false;
+            toolbar.Toolbar.ImageToTextDisplayMode =
+                ToolbarItemImageToTextDisplayMode.Vertical;
             ToolbarItem toolbarItem;
 
             toolbarItem = new ToolbarItem("Back", BackButton_Click)
@@ -142,40 +142,38 @@ namespace ControlsTest
                 ToolTip = "Back",
                 Image = ImageSet.FromUrl($"{ResPrefix}arrow-left-{ImageSize}.png"),
             };
-            toolbar.Items.Add(toolbarItem);
+            toolbar.Toolbar.Items.Add(toolbarItem);
 
             toolbarItem = new ToolbarItem("Forward", ForwardButton_Click)
             {
                 ToolTip = "Forward",
                 Image = ImageSet.FromUrl($"{ResPrefix}arrow-right-{ImageSize}.png"),
             };
-            toolbar.Items.Add(toolbarItem);
+            toolbar.Toolbar.Items.Add(toolbarItem);
 
             toolbarItem = new ToolbarItem("Zoom In", ZoomInButton_Click)
             {
                 ToolTip = "Zoom In",
                 Image = ImageSet.FromUrl($"{ResPrefix}plus-{ImageSize}.png"),
             };
-            toolbar.Items.Add(toolbarItem);
+            toolbar.Toolbar.Items.Add(toolbarItem);
 
             toolbarItem = new ToolbarItem("Zoom out", ZoomOutButton_Click)
             {
                 ToolTip = "Zoom out",
                 Image = ImageSet.FromUrl($"{ResPrefix}minus-{ImageSize}.png"),
             };
-            toolbar.Items.Add(toolbarItem);
+            toolbar.Toolbar.Items.Add(toolbarItem);
 
             toolbarItem = new ToolbarItem("Go", GoButton_Click)
             {
                 ToolTip = "Go",
                 Image = ImageSet.FromUrl($"{ResPrefix}caret-right-{ImageSize}.png"),
             };
-            toolbar.Items.Add(toolbarItem);
+            toolbar.Toolbar.Items.Add(toolbarItem);
 
-            toolbarParent.Children.Add(toolbar);
-
-            Grid.SetRowColumn(toolbarParent, 1, 0);
-            webBrowserGrid.Children.Add(toolbarParent);
+            Grid.SetRowColumn(toolbar, 1, 0);
+            webBrowserGrid.Children.Add(toolbar);
 
 
             //LayoutFactory.SetDebugBackgroundToParents(toolbar);

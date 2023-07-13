@@ -151,7 +151,7 @@ namespace Alternet.UI
             }
         }
 
-        public static void AddToolbar(Control control, Toolbar toolbar)
+        internal static void AddToolbar(Control control, Toolbar toolbar)
         {
             var sizer = new Native.BoxSizer();
 
