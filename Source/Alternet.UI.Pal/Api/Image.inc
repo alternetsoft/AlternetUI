@@ -11,6 +11,7 @@ void Initialize(const Size& size);
 void CopyFrom(Image* otherImage);
 void SaveToStream(void* stream, const string& format);
 void SaveToFile(const string& fileName);
+bool GrayScale();
 public:
 Image();
 protected:

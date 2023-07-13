@@ -15,5 +15,7 @@ namespace NativeApi.Api
 
         public Size Size { get; }
         public Int32Size PixelSize { get; }
+
+        public bool GrayScale() => throw new Exception();
     }
 }

@@ -141,7 +141,7 @@ namespace ControlsTest
                 {
                     ToolTip = text,
                     Image = ImageSet.FromImage(resultImage),
-                    DisabledImage = ImageSet.FromImageDisabled(resultImage),
+                    DisabledImage = ImageSet.FromImageGrayScale(resultImage),
                 };
                 toolbar.Toolbar.Items.Add(result);
                 return result;

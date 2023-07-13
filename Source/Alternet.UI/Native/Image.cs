@@ -77,6 +77,14 @@ namespace Alternet.UI.Native
             NativeApi.Image_SaveToFile_(NativePointer, fileName);
         }
         
+        public bool GrayScale()
+        {
+            CheckDisposed();
+            var n = NativeApi.Image_GrayScale_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -106,6 +114,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Image_SaveToFile_(IntPtr obj, string fileName);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Image_GrayScale_(IntPtr obj);
             
         }
     }

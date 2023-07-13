@@ -37,6 +37,26 @@ namespace Alternet.UI
             NativeImageSet.LoadFromStream(inputStream);
         }
 
+        public static ImageSet? FromImageGrayScale(Image? image)
+        {
+            if (image == null)
+                return null;
+
+            ImageSet result = new();
+            result.Images.Add(image!.ToGrayScale());
+            return result;
+        }
+
+        public static ImageSet? FromImage(Image? image)
+        {
+            if (image == null)
+                return null;
+
+            ImageSet result = new();
+            result.Images.Add(image);
+            return result;
+        }
+
         private void Images_ItemInserted(object? sender, CollectionChangeEventArgs<Image> e)
         {
             NativeImageSet.AddImage(e.Item.NativeImage);
@@ -105,26 +125,6 @@ namespace Alternet.UI
 
                 var assets = new UI.ResourceLoader();
                 return new ImageSet(assets.Open(uri));
-        }
-
-        public static ImageSet? FromImageDisabled(Image? image)
-        {
-            if (image == null)
-                return null;
-
-            ImageSet result = new();
-            result.Images.Add(Image.GetDisabled(image)!);
-            return result;
-        }
-
-        public static ImageSet? FromImage(Image? image)
-        {
-            if (image == null)
-                return null;
-
-            ImageSet result = new();
-            result.Images.Add(image);
-            return result;
         }
 
         /// <summary>

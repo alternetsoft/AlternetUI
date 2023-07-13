@@ -41,7 +41,7 @@ namespace Alternet.Drawing
 
         // Color.FromArgb(171, 71, 71, 71)
         // Color.FromArgb(128, 0, 0, 0)
-        public static Brush DisabledBrush
+        internal static Brush DisabledBrush
         {
             get
             {
@@ -119,12 +119,18 @@ namespace Alternet.Drawing
             return new Bitmap(assets.Open(uri));
         }
 
-        public static Image? GetDisabled(Image? image)
+        public bool GrayScale()
         {
-            if (image == null)
-                return null;
+            return NativeImage.GrayScale();
+        }
 
-            Bitmap bitmap = new(image);
+        public Image ToGrayScale()
+        {
+            Bitmap bitmap = new(this);
+
+            if (bitmap.GrayScale())
+                return bitmap;
+
             var size = bitmap.Size;
             using var dc = DrawingContext.FromImage(bitmap);
             dc.FillRectangle(

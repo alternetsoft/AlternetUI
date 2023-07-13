@@ -66,3 +66,10 @@ ALTERNET_UI_API void Image_SaveToFile_(Image* obj, const char16_t* fileName)
         });
 }
 
+ALTERNET_UI_API c_bool Image_GrayScale_(Image* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GrayScale();
+        });
+}
+

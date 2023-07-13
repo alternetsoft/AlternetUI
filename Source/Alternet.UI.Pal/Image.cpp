@@ -4,7 +4,7 @@
 #include "ManagedInputStream.h"
 #include "ManagedOutputStream.h"
 #include "wx/wxprec.h"
-
+#include "wx/rawbmp.h"
 
 namespace Alternet::UI
 {
@@ -89,10 +89,9 @@ namespace Alternet::UI
         }
         else
         {
-            _bitmap = wxBitmap(fromDip(size, nullptr));
+            _bitmap = wxBitmap(fromDip(size, nullptr), 32);
         }
     }
-
 
     /*static*/ void Image::EnsureImageHandlersInitialized()
     {
@@ -155,5 +154,47 @@ namespace Alternet::UI
             return Int32Size(0, 0);
 
         return _bitmap.GetSize();
+    }
+
+    bool Image::GrayScale()
+    {
+        Int32Size size = GetPixelSize();
+        if (size.Width == 0 || size.Height == 0)
+            return false;
+
+        //wxBitmap bmp(width, height, 32); // explicit depth important under MSW
+        wxAlphaPixelData data(_bitmap);
+        if (!data)
+        {
+            // ... raw access to bitmap data unavailable, do something else ...
+            return false;
+        }
+
+        /*if (data.GetWidth() < 20 || data.GetHeight() < 20)
+        {
+            // ... complain: the bitmap it too small ...
+            return;
+        }*/
+
+        wxAlphaPixelData::Iterator p(data);
+
+        // we draw a (10, 10)-(20, 20) rect manually using the given r, g, b
+        //p.Offset(data, 10, 10);
+
+        for (int y = 0; y < size.Height; ++y)
+        {
+            wxAlphaPixelData::Iterator rowStart = p;
+
+            for (int x = 0; x < size.Width; ++x, ++p)
+            {
+                p.Red() = 150;
+                p.Green() = 150;
+                p.Blue() = 150;
+            }
+
+            p = rowStart;
+            p.OffsetY(data, 1);
+        }
+        return true;
     }
 }
