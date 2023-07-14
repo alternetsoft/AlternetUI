@@ -777,6 +777,13 @@ namespace Alternet::UI
         return SizeToClientSize(GetBounds().GetSize());
     }
 
+    Size Control::GetDPI() 
+    {
+        auto window = GetWxWindow();
+        auto size = window->GetDPI();
+        return Size(size.x, size.y);
+    }
+
     void Control::SetClientSize(const Size& value)
     {
         SetBounds(Rect(GetBounds().GetLocation(), ClientSizeToSize(value)));

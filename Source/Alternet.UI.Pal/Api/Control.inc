@@ -92,6 +92,7 @@ bool IsScrollBarVisible(ScrollBarOrientation orientation);
 int GetScrollBarValue(ScrollBarOrientation orientation);
 int GetScrollBarLargeChange(ScrollBarOrientation orientation);
 int GetScrollBarMaximum(ScrollBarOrientation orientation);
+Size GetDPI();
 void SetMouseCapture(bool value);
 void AddChild(Control* control);
 void RemoveChild(Control* control);

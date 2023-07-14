@@ -437,6 +437,14 @@ namespace Alternet.UI.Native
             return m;
         }
         
+        public Alternet.Drawing.Size GetDPI()
+        {
+            CheckDisposed();
+            var n = NativeApi.Control_GetDPI_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
         public void SetMouseCapture(bool value)
         {
             CheckDisposed();
@@ -884,6 +892,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Size Control_GetDPI_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetMouseCapture_(IntPtr obj, bool value);

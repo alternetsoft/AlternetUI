@@ -333,6 +333,13 @@ ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientat
         });
 }
 
+ALTERNET_UI_API Size_C Control_GetDPI_(Control* obj)
+{
+    return MarshalExceptions<Size_C>([&](){
+            return obj->GetDPI();
+        });
+}
+
 ALTERNET_UI_API void Control_SetMouseCapture_(Control* obj, c_bool value)
 {
     MarshalExceptions<void>([&](){

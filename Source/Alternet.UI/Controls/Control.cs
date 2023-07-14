@@ -216,6 +216,7 @@ namespace Alternet.UI
         }
 
         internal bool HasExtendedProps => extendedProps != null;
+
         internal ControlExtendedProps ExtendedProps
         {
             get
@@ -999,6 +1000,24 @@ namespace Alternet.UI
         public void RecreateWindow()
         {
             Handler.NativeControl?.RecreateWindow();
+        }
+
+        /// <summary>
+        /// Returns the DPI of the display used by this control.
+        /// </summary>
+        /// <remarks>
+        /// The returned value is different for different windows on
+        /// systems with support for per-monitor DPI values,
+        /// such as Microsoft Windows.
+        /// </remarks>
+        /// <returns>
+        /// A <see cref="Size"/> value that represents DPI of the display
+        /// used by this control. If the DPI is not available,
+        /// returns Size(0,0) object.
+        /// </returns>
+        public Size GetDPI()
+        {
+            return Handler.GetDPI();
         }
 
         /// <summary>

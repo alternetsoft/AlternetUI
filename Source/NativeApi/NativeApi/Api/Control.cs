@@ -7,6 +7,8 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public Size GetDPI() => throw new Exception();
+
         public event EventHandler? Paint { add => throw new Exception(); remove => throw new Exception(); }
 
         public event EventHandler? MouseEnter { add => throw new Exception(); remove => throw new Exception(); }

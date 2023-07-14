@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Alternet.Base.Collections;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -8,6 +9,11 @@ namespace Alternet.UI
     /// </summary>
     public class Toolbar : Control
     {
+        public static int DefaultImageSize96dpi = 16;
+        public static int DefaultImageSize144dpi = 24;
+        public static int DefaultImageSize192dpi = 32;
+        public static int DefaultImageSize288dpi = 48;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Toolbar"/> class.
         /// </summary>
@@ -95,6 +101,25 @@ namespace Alternet.UI
 
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Items;
+
+        public int GetDefaultImageSize()
+        {
+            Size deviceDpi = GetDPI();
+            return GetDefaultImageSize(deviceDpi.Width);
+        }
+
+        public static int GetDefaultImageSize(double deviceDpi)
+        {
+            decimal deviceDpiRatio = (decimal)deviceDpi / 96m;
+
+            if (deviceDpi <= 96 || deviceDpiRatio < 1.5m)
+                return DefaultImageSize96dpi;
+            if (deviceDpiRatio < 2m)
+                return DefaultImageSize144dpi;
+            if (deviceDpiRatio < 3m)
+                return DefaultImageSize192dpi;
+            return DefaultImageSize288dpi;
+        }
 
         /// <inheritdoc />
         protected override ControlHandler CreateHandler()

@@ -87,6 +87,13 @@ namespace Alternet.UI
             }
         }
 
+        public Size GetDPI()
+        {
+            if (NativeControl == null)
+                return new Size(0,0);
+            return NativeControl.GetDPI();
+        }
+
         internal IntPtr GetHandle()
         {
             if (NativeControl == null)

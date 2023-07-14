@@ -907,6 +907,8 @@ namespace ControlsTest
             LogProp(webBrowser1, "ZoomType", "WebBrowser");
             LogProp(webBrowser1, "ZoomFactor", "WebBrowser");
 
+            Log("GetDefaultImageSize = " + toolbar.Toolbar.GetDefaultImageSize());
+            Log("DPI = " + webBrowser1.GetDPI().ToString());
             Log("isDebug = " + WebBrowser.DoCommandGlobal("IsDebug"));
             Log("os = " + WebBrowser.GetBackendOS().ToString());
             Log("backend = " + webBrowser1.Backend.ToString());
