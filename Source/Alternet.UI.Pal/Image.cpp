@@ -197,4 +197,137 @@ namespace Alternet::UI
         }
         return true;
     }
+
+    /*
+    https://docs.wxwidgets.org/trunk/classwx_pixel_data.html
+    https://stackoverflow.com/questions/2265910/convert-an-image-to-grayscale
+
+    Variant 1:
+    ==========
+    for (x = 0; x < c.Width; x++)
+             {
+                 for (y = 0; y < c.Height; y++)
+                 {
+                     Color pixelColor = c.GetPixel(x, y);
+                     Color newColor = Color.FromArgb(pixelColor.R, 0, 0);
+                     c.SetPixel(x, y, newColor); // Now greyscale
+                 }
+             }
+    Variant 2:
+    ==========
+    for (int i = 0; i < c.Width; i++)
+    {
+        for (int x = 0; x < c.Height; x++)
+        {
+            Color oc = c.GetPixel(i, x);
+            int grayScale = (int)((oc.R * 0.3) + (oc.G * 0.59) + (oc.B * 0.11));
+            Color nc = Color.FromArgb(oc.A, grayScale, grayScale, grayScale);
+            d.SetPixel(i, x, nc);
+        }
+    }
+
+    Variant 3:
+    ==========
+    for (int y = 0; y < bt.Height; y++)
+    {
+        for (int x = 0; x < bt.Width; x++)
+        {
+            Color c = bt.GetPixel(x, y);
+
+            int r = c.R;
+            int g = c.G;
+            int b = c.B;
+            int avg = (r + g + b) / 3;
+            bt.SetPixel(x, y, Color.FromArgb(avg,avg,avg));
+        }
+    }
+
+    Variant 4:
+    ==========
+    /// <summary>
+    /// Change the RGB color to the Grayscale version
+    /// </summary>
+    /// <param name="color">The source color</param>
+    /// <param name="volume">Gray scale volume between -255 - 255</param>
+    /// <returns></returns>
+    public virtual Color Grayscale(Color color, short volume = 0)
+    {
+        if (volume == 0) return color;
+        var r = color.R;
+        var g = color.G;
+        var b = color.B;
+        var mean = (r + g + b) / 3F;
+        var n = volume / 255F;
+        var o = 1 - n;
+        return Color.FromArgb(color.A, Convert.ToInt32(r * o + mean * n), Convert.ToInt32(g * o + mean * n), Convert.ToInt32(b * o + mean * n));
+    }
+
+    public virtual Image Grayscale(Image source, short volume = 0)
+    {
+        if (volume == 0) return source;
+        Bitmap bmp = new Bitmap(source);
+        for (int x = 0; x < bmp.Width; x++)
+            for (int y = 0; y < bmp.Height; y++)
+            {
+                Color c = bmp.GetPixel(x, y);
+                if (c.A > 0)
+                    bmp.SetPixel(x, y, Grayscale(c,volume));
+            }
+        return bmp;
+    }
+
+    Variant 5
+    =========
+    public static Bitmap MakeGrayscale2(Bitmap original)
+    {
+       unsafe
+       {
+          //create an empty bitmap the same size as original
+          Bitmap newBitmap = new Bitmap(original.Width, original.Height);
+
+          //lock the original bitmap in memory
+          BitmapData originalData = original.LockBits(
+             new Rectangle(0, 0, original.Width, original.Height),
+             ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
+
+          //lock the new bitmap in memory
+          BitmapData newData = newBitmap.LockBits(
+             new Rectangle(0, 0, original.Width, original.Height),
+             ImageLockMode.WriteOnly, PixelFormat.Format24bppRgb);
+
+          //set the number of bytes per pixel
+          int pixelSize = 3;
+
+          for (int y = 0; y < original.Height; y++)
+          {
+             //get the data from the original image
+             byte* oRow = (byte*)originalData.Scan0 + (y * originalData.Stride);
+
+             //get the data from the new image
+             byte* nRow = (byte*)newData.Scan0 + (y * newData.Stride);
+
+             for (int x = 0; x < original.Width; x++)
+             {
+                //create the grayscale version
+                byte grayScale =
+                   (byte)((oRow[x * pixelSize] * .11) + //B
+                   (oRow[x * pixelSize + 1] * .59) +  //G
+                   (oRow[x * pixelSize + 2] * .3)); //R
+
+                //set the new image's pixel to the grayscale version
+                nRow[x * pixelSize] = grayScale; //B
+                nRow[x * pixelSize + 1] = grayScale; //G
+                nRow[x * pixelSize + 2] = grayScale; //R
+             }
+          }
+
+          //unlock the bitmaps
+          newBitmap.UnlockBits(newData);
+          original.UnlockBits(originalData);
+
+          return newBitmap;
+       }
+    }
+
+    */
 }
