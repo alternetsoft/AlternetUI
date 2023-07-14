@@ -105,6 +105,7 @@ namespace Alternet.UI
             OnTextChanged(e);
         }
 
-        private static object CoerceText(DependencyObject d, object value) => value == null ? string.Empty : value;
+        private static object CoerceText(DependencyObject d, object value) 
+            => value ?? string.Empty;
     }
 }

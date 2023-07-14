@@ -29,12 +29,7 @@ namespace Alternet.UI
         /// <exception cref="ArgumentNullException"></exception>
         public TextChangedEventArgs(RoutedEvent id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException("id");
-            }
-
-            RoutedEvent = id;
+            RoutedEvent = id ?? throw new ArgumentNullException(nameof(id));
         }
     }
 }
