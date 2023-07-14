@@ -61,7 +61,7 @@
                           Enabled="False" />
                   <Button Text="Has Border" Margin="0,3,0,0" 
                           Name="hasBorderButton" Click="HasBorderButton_Click"/>
-                  <Button Text="Log Selected" Margin="0,3,0,3"
+                  <Button Text="Log Selected" Margin="0,3,0,10"
                           Name="viewSelectedButton" Click="ListView_SelectionChanged"/>
                   <!--
                 <Button Text="Test" Name="testItemButton" Click="TestItemButton_Click"/>

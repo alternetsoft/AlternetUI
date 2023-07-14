@@ -18,10 +18,15 @@ namespace ControlsSample
             eventsControl.ShowRootLines = false;
             eventsControl.ShowLines = false;
 
-            mainGrid.RowDefinitions.Add(new RowDefinition 
-                { 
-                    Height = new GridLength(100, GridUnitType.Star) 
-                }
+            mainGrid.RowDefinitions.Add(new RowDefinition
+            {
+                Height = new GridLength(1, GridUnitType.Auto)
+            }
+            );
+            mainGrid.RowDefinitions.Add(new RowDefinition
+            {
+                Height = new GridLength(100, GridUnitType.Star)
+            }
             );
             mainGrid.RowDefinitions.Add(new RowDefinition
                 {
@@ -29,11 +34,32 @@ namespace ControlsSample
                 }
             );
 
+            var headerPanel = new HorizontalStackPanel() 
+            {
+                HorizontalAlignment = HorizontalAlignment.Center,
+            };
+            var linkLabel = new LinkLabel()
+            {
+                Text = "Home Page",
+                Margin = new Thickness(5),
+                Url = @"https://www.alternet-ui.com/",
+            };
+            var linkLabel2 = new LinkLabel()
+            {
+                Text = "Documentation",
+                Margin = new Thickness(5),
+                Url = @"https://docs.alternet-ui.com/introduction/getting-started.html",
+            };
+            headerPanel.Children.Add(linkLabel);
+            headerPanel.Children.Add(linkLabel2);
+            //LayoutFactory.SetDebugBackgroundToParents(linkLabel2);
 
+            mainGrid.Children.Add(headerPanel);
             mainGrid.Children.Add(pageContainer);
             mainGrid.Children.Add(eventsControl);
-            Alternet.UI.Grid.SetRow(pageContainer, 0);
-            Alternet.UI.Grid.SetRow(eventsControl, 1);
+            Alternet.UI.Grid.SetRow(headerPanel, 0);
+            Alternet.UI.Grid.SetRow(pageContainer, 1);
+            Alternet.UI.Grid.SetRow(eventsControl, 2);
 
             var pages = pageContainer.Pages;
 

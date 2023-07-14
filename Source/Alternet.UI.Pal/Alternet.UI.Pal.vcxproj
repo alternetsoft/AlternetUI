@@ -224,6 +224,7 @@
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="LinearGradientBrush.cpp" />
+    <ClCompile Include="LinkLabel.cpp" />
     <ClCompile Include="ListBox.cpp" />
     <ClCompile Include="ListView.cpp" />
     <ClCompile Include="MainMenu.cpp" />
@@ -307,6 +308,7 @@
     <ClInclude Include="Api\Keyboard.Api.h" />
     <ClInclude Include="Api\Label.Api.h" />
     <ClInclude Include="Api\LinearGradientBrush.Api.h" />
+    <ClInclude Include="Api\LinkLabel.Api.h" />
     <ClInclude Include="Api\ListBox.Api.h" />
     <ClInclude Include="Api\ListView.Api.h" />
     <ClInclude Include="Api\MainMenu.Api.h" />
@@ -393,6 +395,7 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Label.h" />
     <ClInclude Include="LinearGradientBrush.h" />
+    <ClInclude Include="LinkLabel.h" />
     <ClInclude Include="ListBox.h" />
     <ClInclude Include="ListView.h" />
     <ClInclude Include="MacOSMenu.h" />
@@ -474,6 +477,7 @@
     <None Include="Api\Keyboard.inc" />
     <None Include="Api\Label.inc" />
     <None Include="Api\LinearGradientBrush.inc" />
+    <None Include="Api\LinkLabel.inc" />
     <None Include="Api\ListBox.inc" />
     <None Include="Api\ListView.inc" />
     <None Include="Api\MainMenu.inc" />
