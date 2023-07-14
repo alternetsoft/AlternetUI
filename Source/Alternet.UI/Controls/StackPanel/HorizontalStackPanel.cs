@@ -19,7 +19,10 @@ namespace Alternet.UI
         {
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a value that indicates the dimension by which child
+        /// controls are stacked.
+        /// </summary>
         public override StackPanelOrientation Orientation
         {
             get => StackPanelOrientation.Horizontal;

@@ -15,7 +15,8 @@ namespace Alternet.UI
         public event EventHandler? OrientationChanged;
 
         /// <summary>
-        /// Gets or sets a value that indicates the dimension by which child controls are stacked.
+        /// Gets or sets a value that indicates the dimension by which child 
+        /// controls are stacked.
         /// </summary>
         public virtual StackPanelOrientation Orientation
         {
