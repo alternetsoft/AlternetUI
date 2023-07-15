@@ -45,6 +45,11 @@ namespace Alternet.UI
             set => NativeControl.ImageToTextDisplayMode = (Native.ToolbarItemImageToTextDisplayMode)value;
         }
 
+        public override void Realize()
+        {
+            NativeControl.Realize();
+        }
+        
         internal override Native.Control CreateNativeControl()
         {
             return new Native.NativeToolbarEx(mainToolbar);

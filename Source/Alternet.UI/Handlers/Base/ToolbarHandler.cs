@@ -33,6 +33,8 @@ namespace Alternet.UI
         /// </summary>
         public abstract bool IsVertical { get; set; }
 
+        public abstract void Realize();
+
         /// <summary>
         /// Gets or sets a value which specifies display modes for toolbar item image and text.
         /// </summary>

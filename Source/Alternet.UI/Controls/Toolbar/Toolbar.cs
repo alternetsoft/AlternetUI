@@ -108,6 +108,11 @@ namespace Alternet.UI
             return GetDefaultImageSize(deviceDpi.Width);
         }
 
+        public void Realize()
+        {
+            Handler.Realize();
+        }
+
         public static int GetDefaultImageSize(double deviceDpi)
         {
             decimal deviceDpiRatio = (decimal)deviceDpi / 96m;
