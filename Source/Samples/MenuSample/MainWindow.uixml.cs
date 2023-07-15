@@ -9,6 +9,7 @@ namespace MenuSample
 {
     public partial class MainWindow : Window
     {
+        private const string ResPrefix = "embres:MenuSample.Resources.Icons.Small.";
         Toolbar? toolbar;
         ToolbarItem? dynamicToolbarItemsSeparator;
         ToolbarItem? checkableToolbarItem;
@@ -42,6 +43,47 @@ namespace MenuSample
             this.Closing += MainWindow_Closing;
 
             //LayoutFactory.SetDebugBackgroundToParents(eventsListBox);
+            AddVertToolbar();
+            AddBottomToolbar();
+        }
+
+        private ToolbarPanel CreateVertToolbar()
+        {
+            var vertToolbar = new ToolbarPanel()
+            {
+            };
+            vertToolbar.Toolbar.IsVertical = true;
+            vertToolbar.Toolbar.ItemTextVisible = false;
+            vertToolbar.Toolbar.ImageToTextDisplayMode = ToolbarItemImageToTextDisplayMode.Vertical;
+
+            var item1 = new ToolbarItem("Calendar", ToolbarItem_Click)
+            {
+                ToolTip = "Calendar Toolbar Item",
+                Image = ImageSet.FromUrl($"{ResPrefix}Calendar16.png")
+            };
+
+            var item2 = new ToolbarItem("Photo", ToolbarItem_Click)
+            {
+                ToolTip = "Photo Toolbar Item",
+                Image = ImageSet.FromUrl($"{ResPrefix}Photo16.png")
+            };
+            vertToolbar.Toolbar.Items.Add(item1);
+            vertToolbar.Toolbar.Items.Add(item2);
+
+            return vertToolbar;
+        }
+
+        private void AddVertToolbar()
+        {
+            var vertToolbar = CreateVertToolbar();
+            vertToolbar.Margin = new(5, 0, 0, 0);
+            Grid.SetRowColumn(vertToolbar, 1, 0);
+            mainGrid.Children.Add(vertToolbar);
+
+            var vertToolbar2 = CreateVertToolbar();
+            vertToolbar2.Margin = new(0, 0, 5, 0);
+            Grid.SetRowColumn(vertToolbar2, 1, 2);
+            mainGrid.Children.Add(vertToolbar2);
         }
 
         private void MainWindow_Closing(object? sender, WindowClosingEventArgs e)
@@ -60,30 +102,58 @@ namespace MenuSample
         readonly int dynamicToolbarItemsSeparatorIndex;
         readonly int clockStatusBarPanelIndex;
 
+        private void AddBottomToolbar()
+        {
+            var bottomToolbar = new ToolbarPanel();
+            bottomToolbar.Margin = new(5, 0, 5, 0);
+            bottomToolbar.Toolbar.NoDivider = true;
+            bottomToolbar.Toolbar.ImageToTextDisplayMode = 
+                ToolbarItemImageToTextDisplayMode.Vertical;
+
+            var item1 = new ToolbarItem("Calendar", ToolbarItem_Click)
+            {
+                ToolTip = "Calendar Toolbar Item",
+                Image = ImageSet.FromUrl($"{ResPrefix}Calendar16.png")
+            };
+
+            var item2 = new ToolbarItem("Photo", ToolbarItem_Click)
+            {
+                ToolTip = "Photo Toolbar Item",
+                Image = ImageSet.FromUrl($"{ResPrefix}Photo16.png")
+            };
+            bottomToolbar.Toolbar.Items.Add(item1);
+            bottomToolbar.Toolbar.Items.Add(item2);
+            Grid.SetRowColumn(bottomToolbar, 3, 0);
+            Grid.SetColumnSpan(bottomToolbar, 3);
+            mainGrid.Children.Add(bottomToolbar);
+
+        }
+
         private void InitToolbar()
         {
-			toolbar = Toolbar;
+            var toolbarPanel = new ToolbarPanel();
+            toolbarPanel.Margin = new(5, 0, 5, 0);
+            toolbar = toolbarPanel.Toolbar;
+            toolbar.NoDivider = true;
 
             var calendarToolbarItem = new ToolbarItem("Calendar", ToolbarItem_Click)
             {
                 ToolTip = "Calendar Toolbar Item",
-                Image = ImageSet.FromUrl("embres:MenuSample.Resources.Icons.Small.Calendar16.png")
+                Image = ImageSet.FromUrl($"{ResPrefix}Calendar16.png")
             };
 
-            var photoToolbarItem = new ToolbarItem("Photo")
+            var photoToolbarItem = new ToolbarItem("Photo", ToolbarItem_Click)
             {
                 ToolTip = "Photo Toolbar Item",
-                Image = ImageSet.FromUrl(
-                             "embres:MenuSample.Resources.Icons.Small.Photo16.png")
+                Image = ImageSet.FromUrl($"{ResPrefix}Photo16.png")
             };
-            photoToolbarItem.Click += ToolbarItem_Click;
 
-            checkableToolbarItem = new ToolbarItem("Pencil Toggle", ToggleToolbarItem_Click)
+            checkableToolbarItem = 
+                new ToolbarItem("Pencil Toggle", ToggleToolbarItem_Click)
             {
                 ToolTip = "Pencil Toolbar Item",
                 IsCheckable = true,
-                Image = ImageSet.FromUrl(
-                             "embres:MenuSample.Resources.Icons.Small.Pencil16.png")
+                Image = ImageSet.FromUrl($"{ResPrefix}Pencil16.png")
             };
 
             toolbar?.Items.Add(calendarToolbarItem);
@@ -92,18 +162,21 @@ namespace MenuSample
             toolbar?.Items.Add(checkableToolbarItem);
             toolbar?.Items.Add(new ToolbarItem("-"));
 
-            var graphDropDownToolbarItem = new ToolbarItem("Graph Drop Down", ToolbarItem_Click)
+            var graphDropDownToolbarItem = 
+                new ToolbarItem("Graph Drop Down", ToolbarItem_Click)
             {
                 ToolTip = "Graph Toolbar Item",
-                Image = ImageSet.FromUrl(
-                             "embres:MenuSample.Resources.Icons.Small.LineGraph16.png")
+                Image = ImageSet.FromUrl($"{ResPrefix}LineGraph16.png")
             };
 
             var contextMenu = new ContextMenu();
 
-            MenuItem openToolbarMenuItem = new ("_Open...", ToolbarDropDownMenuItem_Click);
-            MenuItem saveToolbarMenuItem = new ("_Save...", ToolbarDropDownMenuItem_Click);
-            MenuItem exportToolbarMenuItem = new ("E_xport...", ToolbarDropDownMenuItem_Click);
+            MenuItem openToolbarMenuItem = 
+                new ("_Open...", ToolbarDropDownMenuItem_Click);
+            MenuItem saveToolbarMenuItem = 
+                new ("_Save...", ToolbarDropDownMenuItem_Click);
+            MenuItem exportToolbarMenuItem = 
+                new ("E_xport...", ToolbarDropDownMenuItem_Click);
             contextMenu.Items.Add(openToolbarMenuItem);
             contextMenu.Items.Add(saveToolbarMenuItem);
             contextMenu.Items.Add(exportToolbarMenuItem);
@@ -113,7 +186,10 @@ namespace MenuSample
 
             dynamicToolbarItemsSeparator = new ToolbarItem("-");
             toolbar?.Items.Add(dynamicToolbarItemsSeparator);
-			
+
+            Grid.SetRowColumn(toolbarPanel,0,0);
+            Grid.SetColumnSpan(toolbarPanel, 3);
+            mainGrid.Children.Add(toolbarPanel);
         }
 
         private void PlatformSpecificInitialize()

@@ -3,17 +3,20 @@
         x:Class="MenuSample.MainWindow"
         Width="900"
         Height="600" 
-        Title="Alternet UI Menu Sample" StartLocation="CenterScreen" 
-        >
+        Title="Alternet UI Menu Sample" StartLocation="CenterScreen">
+  
   <Window.InputBindings>
     <KeyBinding Gesture="Ctrl+Shift+G" Command="{Binding ExportToPngCommand}" />
   </Window.InputBindings>
   <Window.Menu>
     <MainMenu>
       <MenuItem Text="_File">
-        <MenuItem Text="_Open..." Name="openMenuItem" Click="OpenMenuItem_Click" Shortcut="Ctrl+O" />
-        <MenuItem Text="_Save..." Name="saveMenuItem" Command="{Binding SaveCommand}" Shortcut="Ctrl+S"/>
-        <MenuItem Text="_Save Enabled" Name="saveEnabledMenuItem" Click="SaveEnabledMenuItem_Click" Checked="True" />
+        <MenuItem Text="_Open..." Name="openMenuItem" 
+                  Click="OpenMenuItem_Click" Shortcut="Ctrl+O" />
+        <MenuItem Text="_Save..." Name="saveMenuItem" 
+                  Command="{Binding SaveCommand}" Shortcut="Ctrl+S"/>
+        <MenuItem Text="_Save Enabled" Name="saveEnabledMenuItem" 
+                  Click="SaveEnabledMenuItem_Click" Checked="True" />
         <MenuItem Text="-" Name="separatorMenuItem" />
         <MenuItem Text="_Export">
           <MenuItem Text="Export to P_DF" Name="exportToPdfMenuItem"
@@ -42,10 +45,6 @@
       </MenuItem>
     </MainMenu>
   </Window.Menu>
-  <Window.Toolbar>
-	<Toolbar>
-	</Toolbar>
- </Window.Toolbar>
  <Window.StatusBar>
     <StatusBar Name="statusBar">
       <StatusBarPanel Text="Ready" />
@@ -53,20 +52,29 @@
     </StatusBar>
   </Window.StatusBar>  
   
-      <Grid>
+    <Grid Name="mainGrid">
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="100*" />
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto"/>
-          <RowDefinition />
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-      <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
+      <Border Grid.Column="1" Grid.Row="1" Margin="5" >
+      <ScrollViewer >  
+      <StackPanel Orientation="Horizontal" Name="mainPanel" Margin="10"
+                  >
         <GroupBox Title="Menu" Margin="5" VerticalAlignment="Top" Padding="5">
           <StackPanel Padding="10"  >
-            <Button Text="Add Dynamic Menu Item" Name="addDynamicMenuItemMenuItem"
-                    Click="AddDynamicMenuItemMenuItem_Click" Margin="0,0,0,10" />
+            <Button Text="Add Dynamic Menu Item" 
+                    Name="addDynamicMenuItemMenuItem"
+                    Click="AddDynamicMenuItemMenuItem_Click" 
+                    Margin="0,0,0,10" />
             <Button Text="Remove Last Dynamic Menu Item"
                     Name="removeLastDynamicMenuItemMenuItem"
                     Click="RemoveLastDynamicMenuItemMenuItem_Click"
@@ -77,7 +85,8 @@
                     Click="ToggleSeparatorMenuItem_Click" Margin="0,0,0,10" />
             <StackPanel Name="roleControlsPanel">
               <Button Text="Set About Item Role to None"
-                      Name="setAboutMenuItemRoleToNone" Click="SetAboutMenuItemRoleToNone_Click" Margin="0,0,0,10" />
+                      Name="setAboutMenuItemRoleToNone" 
+                      Click="SetAboutMenuItemRoleToNone_Click" Margin="0,0,0,10" />
               <Button Text="Set Options Item Role to None"
                       Click="SetOptionsMenuItemRoleToNone_Click"
                       Margin="0,0,0,10" />
@@ -121,7 +130,8 @@
             <Label Text="Image to Text Display Mode:" Margin="5,5,0,5"/>
             <ComboBox IsEditable="false"
                 Name="imageToTextDisplayModeComboBox"
-    SelectedItemChanged="ImageToTextDisplayModeComboBox_SelectedItemChanged"
+                SelectedItemChanged=
+                      "ImageToTextDisplayModeComboBox_SelectedItemChanged"
                 Margin="5,5,0,5"/>
           </StackPanel>
         </GroupBox>
@@ -144,9 +154,10 @@
         </GroupBox>
 
       </StackPanel>
+      </ScrollViewer>
+      </Border>  
 
-      <ListBox Name="eventsListBox" Grid.Column="0" Grid.Row="1"/>
+      <ListBox Name="eventsListBox" Grid.Column="1" Grid.Row="2" Margin="5"/>
     </Grid>
-
   
 </Window>
