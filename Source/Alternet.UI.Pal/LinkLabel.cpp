@@ -39,7 +39,7 @@ namespace Alternet::UI
 	wxWindow* LinkLabel::CreateWxWindowCore(wxWindow* parent)
 	{
 		auto staticText = new wxHyperlinkCtrl(
-			parent, wxID_ANY, wxEmptyString, wxEmptyString);
+			parent, wxID_ANY, " ", wxEmptyString);
 		return staticText;
 	}
 
