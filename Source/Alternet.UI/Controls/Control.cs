@@ -202,12 +202,14 @@ namespace Alternet.UI
         /// </summary>
         /// <value>
         /// The default <see cref="Font"/> for UI controls. The value returned will
-        /// vary depending on the user's operating system and the local settings of their system.
+        /// vary depending on the user's operating system and the local settings
+        /// of their system.
         /// </value>
-        public static Font DefaultFont => defaultFont == null ? defaultFont = Font.CreateDefaultFont() : defaultFont;
+        public static Font DefaultFont => defaultFont ??= Font.CreateDefaultFont();
 
         /// <summary>
-        /// Gets or sets size of the <see cref="Control"/>'s client area, in device-independent units (1/96th inch per unit).
+        /// Gets or sets size of the <see cref="Control"/>'s client area, in
+        /// device-independent units (1/96th inch per unit).
         /// </summary>
         public Size ClientSize
         {
@@ -248,6 +250,38 @@ namespace Alternet.UI
         {
             get => Handler.Bounds;
             set => Handler.Bounds = value;
+        }
+
+        public double Left
+        {
+            get
+            {
+                return Bounds.Left;
+            }
+
+            set
+            {
+                var bounds = Bounds;
+                if (bounds.Left == value)
+                    return;
+                Bounds = new Rect(value, bounds.Top, bounds.Width, bounds.Height);
+            }
+        }
+
+        public double Top
+        {
+            get
+            {
+                return Bounds.Top;
+            }
+
+            set
+            {
+                var bounds = Bounds;
+                if (bounds.Top == value)
+                    return;
+                Bounds = new Rect(bounds.Left, value, bounds.Width, bounds.Height);
+            }
         }
 
         /// <summary>
@@ -777,6 +811,46 @@ namespace Alternet.UI
         /// Causes the control to redraw the invalidated regions.
         /// </summary>
         public void Update() => Handler.Update();
+
+        /// <summary>
+        /// Sets the specified bounds of the control to the specified
+        /// location and size.
+        /// </summary>
+        /// <param name="x">The new <see cref="Left"/> property value of
+        /// the control.</param>
+        /// <param name="y">The new <see cref="Top"/> property value
+        /// of the control.</param>
+        /// <param name="width">The new <see cref="Width"/> property value
+        /// of the control.</param>
+        /// <param name="height">The new <see cref="Height"/> property value
+        /// of the control.</param>
+        /// <param name="specified">The new Width property value
+        /// of the control.</param>
+        public void SetBounds(
+            double x,
+            double y,
+            double width,
+            double height,
+            BoundsSpecified specified)
+        {
+            var bounds = Bounds;
+            Rect result = new(x, y, width, height);
+
+            if ((specified & BoundsSpecified.X) == 0)
+                result.X = bounds.X;
+
+            if ((specified & BoundsSpecified.Y) == 0)
+                result.Y = bounds.Y;
+
+            if ((specified & BoundsSpecified.Width) == 0)
+                result.Width = bounds.Width;
+
+            if ((specified & BoundsSpecified.Height) == 0)
+                result.Height = bounds.Height;
+
+            if (result != bounds)
+                Bounds = result;
+        }
 
         /// <summary>
         /// Forces the control to invalidate itself and immediately redraw itself and any child controls.
