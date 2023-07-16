@@ -5,7 +5,7 @@ namespace Alternet::UI
 {
     BoxSizer::BoxSizer()
     {
-        sizer = new wxBoxSizer(wxVERTICAL);
+        sizer = new wxBoxSizer(wxHORIZONTAL);
     }
 
     BoxSizer::~BoxSizer()

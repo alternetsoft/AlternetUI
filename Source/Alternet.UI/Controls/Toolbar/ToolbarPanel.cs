@@ -21,8 +21,11 @@ namespace Alternet.UI
             toolbar = new()
             {
                 NoDivider = true,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Stretch,
             };
             Children.Add(toolbar);
+            //LayoutFactory.AddToolbarSizer(this, Toolbar);
         }
 
         /// <summary>
@@ -34,6 +37,32 @@ namespace Alternet.UI
         public Toolbar Toolbar
         {
             get => toolbar;
+        }
+
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        protected override void OnLayout()
+        {
+            base.OnLayout();
+            if (Toolbar.IsVertical)
+            {
+                Toolbar.SetBounds(
+                    0,
+                    0,
+                    0,
+                    Bounds.Height - Padding.Bottom - Padding.Top,
+                    BoundsSpecified.Height);
+            }
+            else
+            {
+                Toolbar.SetBounds(
+                    0,
+                    0,
+                    Bounds.Width - Padding.Left - Padding.Right,
+                    0,
+                    BoundsSpecified.Width);
+            }
         }
 
         internal class CustomToolbar : Toolbar

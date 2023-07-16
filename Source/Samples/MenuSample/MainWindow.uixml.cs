@@ -13,6 +13,7 @@ namespace MenuSample
         Toolbar? toolbar;
         ToolbarItem? dynamicToolbarItemsSeparator;
         ToolbarItem? checkableToolbarItem;
+        private bool IsDebugBackground = true;
 
         public MainWindow()
         {
@@ -42,7 +43,6 @@ namespace MenuSample
 
             this.Closing += MainWindow_Closing;
 
-            //LayoutFactory.SetDebugBackgroundToParents(eventsListBox);
             AddVertToolbar();
             AddBottomToolbar();
         }
@@ -75,15 +75,26 @@ namespace MenuSample
 
         private void AddVertToolbar()
         {
-            var vertToolbar = CreateVertToolbar();
-            vertToolbar.Margin = new(5, 0, 0, 0);
-            Grid.SetRowColumn(vertToolbar, 1, 0);
-            mainGrid.Children.Add(vertToolbar);
+            void Add(int colIndex)
+            {
+                var vertToolbar = CreateVertToolbar();
+                vertToolbar.Margin = new(5, 0, 5, 0);
+                Grid.SetRowColumn(vertToolbar, 1, colIndex);
+                Grid.SetRowSpan(vertToolbar, 2);
+                mainGrid.Children.Add(vertToolbar);
+                SetDebugBackground(vertToolbar.Toolbar);
+            }
 
-            var vertToolbar2 = CreateVertToolbar();
-            vertToolbar2.Margin = new(0, 0, 5, 0);
-            Grid.SetRowColumn(vertToolbar2, 1, 2);
-            mainGrid.Children.Add(vertToolbar2);
+            Add(0);
+            Add(2);
+        }
+
+        private void SetDebugBackground(Control control)
+        {
+            if (!IsDebugBackground)
+                return;
+            control.Background = new SolidBrush(Color.Purple);
+            LayoutFactory.SetDebugBackgroundToParents(control);
         }
 
         private void MainWindow_Closing(object? sender, WindowClosingEventArgs e)
@@ -110,6 +121,8 @@ namespace MenuSample
             bottomToolbar.Toolbar.ImageToTextDisplayMode = 
                 ToolbarItemImageToTextDisplayMode.Vertical;
 
+            SetDebugBackground(bottomToolbar.Toolbar);
+
             var item1 = new ToolbarItem("Calendar", ToolbarItem_Click)
             {
                 ToolTip = "Calendar Toolbar Item",
@@ -126,7 +139,7 @@ namespace MenuSample
             Grid.SetRowColumn(bottomToolbar, 3, 0);
             Grid.SetColumnSpan(bottomToolbar, 3);
             mainGrid.Children.Add(bottomToolbar);
-
+            bottomToolbar.Toolbar.Realize();
         }
 
         private void InitToolbar()
@@ -134,6 +147,7 @@ namespace MenuSample
             var toolbarPanel = new ToolbarPanel();
             toolbarPanel.Margin = new(5, 0, 5, 0);
             toolbar = toolbarPanel.Toolbar;
+            SetDebugBackground(toolbar);
             toolbar.NoDivider = true;
 
             var calendarToolbarItem = new ToolbarItem("Calendar", ToolbarItem_Click)
@@ -190,6 +204,7 @@ namespace MenuSample
             Grid.SetRowColumn(toolbarPanel,0,0);
             Grid.SetColumnSpan(toolbarPanel, 3);
             mainGrid.Children.Add(toolbarPanel);
+            toolbarPanel.Toolbar.Realize();
         }
 
         private void PlatformSpecificInitialize()

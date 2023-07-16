@@ -849,7 +849,7 @@ namespace Alternet.UI
                 result.Height = bounds.Height;
 
             if (result != bounds)
-                Bounds = result;
+                Handler.Bounds = result;
         }
 
         /// <summary>
