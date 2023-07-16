@@ -67,7 +67,11 @@ namespace Alternet.Drawing
         /// </summary>
         public static Rect FromCenter(Point center, Size size)
         {
-            return new Rect(center.X - size.Width / 2, center.Y - size.Height / 2, size.Width, size.Height);
+            return new Rect(
+                center.X - (size.Width / 2),
+                center.Y - (size.Height / 2),
+                size.Width,
+                size.Height);
         }
 
         /// <summary>
@@ -83,7 +87,7 @@ namespace Alternet.Drawing
 
             Rect value;
 
-            String firstToken = th.NextTokenRequired();
+            string firstToken = th.NextTokenRequired();
 
             // The token will already have had whitespace trimmed so we can do a
             // simple string compare.
@@ -125,7 +129,7 @@ namespace Alternet.Drawing
 
             // Helper to get the numeric list separator for a given culture.
             char separator = TokenizerHelper.GetNumericListSeparator(provider);
-            return String.Format(provider,
+            return string.Format(provider,
                                  "{1:" + format + "}{0}{2:" + format + "}{0}{3:" + format + "}{0}{4:" + format + "}",
                                  separator,
                                  x,
@@ -163,7 +167,7 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public Point Location
         {
-            readonly get => new Point(X, Y);
+            readonly get => new(X, Y);
             set
             {
                 X = value.X;
@@ -177,7 +181,7 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public Size Size
         {
-            readonly get => new Size(Width, Height);
+            readonly get => new(Width, Height);
             set
             {
                 Width = value.Width;
