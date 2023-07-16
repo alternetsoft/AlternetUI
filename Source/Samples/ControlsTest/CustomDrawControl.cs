@@ -21,19 +21,26 @@ namespace ControlsTest
             fillControl.Bounds = new (0, 60, 50, 50);
             leftControl.Background = new SolidBrush(Color.Green);
             fillControl.Background = new SolidBrush(Color.Red);
+            Children.Add(leftControl);
+            Children.Add(fillControl);
+        }
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            LayoutFactory.PerformLayoutLeftFill(this, leftControl, fillControl);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             var dc = e.DrawingContext;
             var bounds = DrawClientRectangle;
-            LayoutFactory.PerformLayoutLeftFill(this, leftControl, fillControl);
 
             var brush = this.Background;
             if (brush != null)
                 dc.FillRectangle(brush, bounds);
-            dc.FillRectangle(leftControl.Background!, leftControl.Bounds);
-            dc.FillRectangle(fillControl.Background!, fillControl.Bounds);
+            //dc.FillRectangle(leftControl.Background!, leftControl.Bounds);
+            //dc.FillRectangle(fillControl.Background!, fillControl.Bounds);
         }
 
     }

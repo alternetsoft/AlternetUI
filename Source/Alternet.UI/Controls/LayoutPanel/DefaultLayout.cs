@@ -43,98 +43,156 @@ namespace Alternet.UI
         {
         }
 
-        public void InitLayout(IArrangedElement control, BoundsSpecified specified)
+        public void InitLayout(Control control, BoundsSpecified specified)
         {
-            IArrangedElement parent = control.Parent;
-            if (parent != null)
+            Control? parent = control.Parent;
+            if (parent == null)
+                return;
+
+            Rect space = GetDisplayRectangle(parent);
+
+            Rect bounds = control.Bounds;
+            if ((specified & (BoundsSpecified.Width | BoundsSpecified.X))
+                != BoundsSpecified.None)
             {
-                Rect bounds = control.Bounds;
-                if ((specified & (BoundsSpecified.Width | BoundsSpecified.X)) != BoundsSpecified.None)
-                    control.DistanceRight = parent.DisplayRectangle.Right - bounds.X - bounds.Width;
-                if ((specified & (BoundsSpecified.Height | BoundsSpecified.Y)) != BoundsSpecified.None)
-                    control.DistanceBottom = parent.DisplayRectangle.Bottom - bounds.Y - bounds.Height;
+                LayoutPanel.SetDistanceRight(
+                    control,
+                    space.Right - bounds.X - bounds.Width);
+            }
+
+            if ((specified & (BoundsSpecified.Height | BoundsSpecified.Y))
+                != BoundsSpecified.None)
+            {
+                LayoutPanel.SetDistanceBottom(
+                    control,
+                    space.Bottom - bounds.Y - bounds.Height);
             }
         }
 
-        private static void LayoutDockedChildren(
-            IArrangedElement parent,
-            IList<IArrangedElement> controls)
+        private static Rect GetDisplayRectangle(Control control)
         {
-            Rect space = parent.DisplayRectangle;
-            IArrangedElement mdi = null;
+            var size = control.ClientSize;
+            Rect result = new(0, 0, size.Width - 1, size.Height - 1);
+            result.Offset(control.Padding.Left, control.Padding.Top);
+            result.Inflate(-control.Padding.Left, -control.Padding.Top);
+            result.Inflate(-control.Padding.Right, -control.Padding.Bottom);
+            return result;
+        }
 
-            // Deal with docking; go through in reverse, MS docs say that lowest Z-order is closest to edge
-            for (int i = controls.Count - 1; i >= 0; i--)
+        private static void LayoutDockedChildren(Control parent)
+        {
+            Rect space = GetDisplayRectangle(parent);
+
+            // Deal with docking; go through in reverse, MS docs say that
+            // lowest Z-order is closest to edge
+            for (int i = parent.Children.Count - 1; i >= 0; i--)
             {
-                IArrangedElement child = (IArrangedElement)controls[i];
+                Control child = parent.Children[i];
                 Size child_size = child.Bounds.Size;
 
-                if (!child.Visible || child.Dock == DockStyle.None)
+                DockStyle dock = LayoutPanel.GetDock(child);
+                bool autoSize = LayoutPanel.GetAutoSize(child);
+
+                if (!child.Visible || dock == DockStyle.None)
                     continue;
 
-                // MdiClient never fills the whole area like other controls, have to do it later
-                /*if (child is MdiClient)
-                {
-                    mdi = child;
-                    continue;
-                }*/
-
-                switch (child.Dock)
+                switch (dock)
                 {
                     case DockStyle.None:
-                        // Do nothing
                         break;
 
                     case DockStyle.Left:
-                        if (child.AutoSize)
-                            child_size = child.GetPreferredSize(new Size(0, space.Height));
-                        child.SetBounds(space.Left, space.Y, child_size.Width, space.Height, BoundsSpecified.None);
+                        if (autoSize)
+                        {
+                            child_size =
+                                child.GetPreferredSize(
+                                    new Size(child_size.Width, space.Height));
+                        }
+
+                        child.SetBounds(
+                            space.Left,
+                            space.Y,
+                            child_size.Width,
+                            space.Height,
+                            BoundsSpecified.All);
                         space.X += child_size.Width;
                         space.Width -= child_size.Width;
                         break;
 
                     case DockStyle.Top:
-                        if (child.AutoSize)
-                            child_size = child.GetPreferredSize(new Size(space.Width, 0));
-                        child.SetBounds(space.Left, space.Y, space.Width, child_size.Height, BoundsSpecified.None);
+                        if (autoSize)
+                        {
+                            child_size =
+                                child.GetPreferredSize(
+                                    new Size(space.Width, child_size.Height));
+                        }
+
+                        child.SetBounds(
+                            space.Left,
+                            space.Y,
+                            space.Width,
+                            child_size.Height,
+                            BoundsSpecified.All);
                         space.Y += child_size.Height;
                         space.Height -= child_size.Height;
                         break;
 
                     case DockStyle.Right:
-                        if (child.AutoSize)
-                            child_size = child.GetPreferredSize(new Size(0, space.Height));
-                        child.SetBounds(space.Right - child_size.Width, space.Y, child_size.Width, space.Height, BoundsSpecified.None);
+                        if (autoSize)
+                        {
+                            child_size =
+                                child.GetPreferredSize(
+                                    new Size(child_size.Width, space.Height));
+                        }
+
+                        child.SetBounds(
+                            space.Right - child_size.Width,
+                            space.Y,
+                            child_size.Width,
+                            space.Height,
+                            BoundsSpecified.All);
                         space.Width -= child_size.Width;
                         break;
 
                     case DockStyle.Bottom:
-                        if (child.AutoSize)
-                            child_size = child.GetPreferredSize(new Size(space.Width, 0));
-                        child.SetBounds(space.Left, space.Bottom - child_size.Height, space.Width, child_size.Height, BoundsSpecified.None);
+                        if (autoSize)
+                        {
+                            child_size =
+                                child.GetPreferredSize(
+                                    new Size(space.Width, child_size.Height));
+                        }
+
+                        child.SetBounds(
+                            space.Left,
+                            space.Bottom - child_size.Height,
+                            space.Width,
+                            child_size.Height,
+                            BoundsSpecified.All);
                         space.Height -= child_size.Height;
                         break;
 
                     case DockStyle.Fill:
-                        child.SetBounds(space.Left, space.Top, space.Width, space.Height, BoundsSpecified.None);
+                        child.SetBounds(
+                            space.Left,
+                            space.Top,
+                            space.Width,
+                            space.Height,
+                            BoundsSpecified.All);
                         break;
                 }
             }
-
-            // MdiClient gets whatever space is left
-            if (mdi != null)
-                mdi.SetBounds(space.Left, space.Top, space.Width, space.Height, BoundsSpecified.None);
         }
 
-        private static void LayoutAnchoredChildren(
-            IArrangedElement parent,
-            IList<IArrangedElement> controls)
+        /*private static void LayoutAnchoredChildren(Control parent)
         {
-            Rect space = parent.DisplayRectangle;
+            Rect space = GetDisplayRectangle(parent);
 
-            foreach (IArrangedElement child in controls)
+            foreach (Control child in parent.Children)
             {
-                if (!child.Visible || child.Dock != DockStyle.None)
+                bool autoSize = LayoutPanel.GetAutoSize(child);
+                DockStyle dock = LayoutPanel.GetDock(child);
+
+                if (!child.Visible || dock != DockStyle.None)
                     continue;
 
                 AnchorStyles anchor = child.Anchor;
@@ -144,34 +202,39 @@ namespace Alternet.UI
                 var width = bounds.Width;
                 var height = bounds.Height;
 
+                double childDistanceRight = LayoutPanel.GetDistanceRight(child);
+                double childDistanceBottom = LayoutPanel.GetDistanceBottom(child);
+
                 if ((anchor & AnchorStyles.Right) != 0)
                 {
                     if ((anchor & AnchorStyles.Left) != 0)
-                        width = space.Right - child.DistanceRight - left;
+                        width = space.Right - childDistanceRight - left;
                     else
-                        left = space.Right - child.DistanceRight - width;
+                        left = space.Right - childDistanceRight - width;
                 }
                 else if ((anchor & AnchorStyles.Left) == 0)
                 {
-                    // left+=diff_width/2 will introduce rounding errors (diff_width removed from svn after r51780)
+                    // left+=diff_width/2 will introduce rounding errors
+                    // (diff_width removed from svn after r51780)
                     // This calculates from scratch every time:
-                    left += (space.Width - (left + width + child.DistanceRight)) / 2;
-                    child.DistanceRight = space.Width - (left + width);
+                    left += (space.Width - (left + width + childDistanceRight)) / 2;
+                    childDistanceRight = space.Width - (left + width);
                 }
 
                 if ((anchor & AnchorStyles.Bottom) != 0)
                 {
                     if ((anchor & AnchorStyles.Top) != 0)
-                        height = space.Bottom - child.DistanceBottom - top;
+                        height = space.Bottom - childDistanceBottom - top;
                     else
-                        top = space.Bottom - child.DistanceBottom - height;
+                        top = space.Bottom - childDistanceBottom - height;
                 }
                 else if ((anchor & AnchorStyles.Top) == 0)
                 {
-                    // top += diff_height/2 will introduce rounding errors (diff_height removed from after r51780)
+                    // top += diff_height/2 will introduce rounding
+                    // errors (diff_height removed from after r51780)
                     // This calculates from scratch every time:
-                    top += (space.Height - (top + height + child.DistanceBottom)) / 2;
-                    child.DistanceBottom = space.Height - (top + height);
+                    top += (space.Height - (top + height + childDistanceBottom)) / 2;
+                    childDistanceBottom = space.Height - (top + height);
                 }
 
                 // Sanity
@@ -180,22 +243,23 @@ namespace Alternet.UI
                 if (height < 0)
                     height = 0;
 
-                if (child.AutoSize)
+                if (autoSize)
                 {
                     Size proposed_size = Size.Empty;
-                    if ((anchor & (AnchorStyles.Left | AnchorStyles.Right)) == (AnchorStyles.Left | AnchorStyles.Right))
+                    if ((anchor & AnchorStyles.LeftRight) == AnchorStyles.LeftRight)
                         proposed_size.Width = width;
-                    if ((anchor & (AnchorStyles.Top | AnchorStyles.Bottom)) == (AnchorStyles.Top | AnchorStyles.Bottom))
+                    if ((anchor & AnchorStyles.TopBottom) == AnchorStyles.TopBottom)
                         proposed_size.Height = height;
 
-                    Size preferred_size = GetPreferredControlSize(child, proposed_size);
+                    Size preferred_size =
+                        GetPreferredControlSize(child, proposed_size);
 
-                    if ((anchor & (AnchorStyles.Left | AnchorStyles.Right)) != AnchorStyles.Right)
-                        child.DistanceRight += width - preferred_size.Width;
+                    if ((anchor & AnchorStyles.LeftRight) != AnchorStyles.Right)
+                        childDistanceRight += width - preferred_size.Width;
                     else
                         left += width - preferred_size.Width;
-                    if ((anchor & (AnchorStyles.Top | AnchorStyles.Bottom)) != AnchorStyles.Bottom)
-                        child.DistanceBottom += height - preferred_size.Height;
+                    if ((anchor & AnchorStyles.TopBottom) != AnchorStyles.Bottom)
+                        childDistanceBottom += height - preferred_size.Height;
                     else
                         top += height - preferred_size.Height;
 
@@ -206,22 +270,23 @@ namespace Alternet.UI
                     child.SetBounds(left, top, width, height, BoundsSpecified.None);
                 }
             }
-        }
+        }*/
 
-        public bool Layout(
-            IArrangedElement container,
-            IList<IArrangedElement> controls)
+        public void Layout(Control container)
         {
-            LayoutDockedChildren(container, controls);
-            LayoutAnchoredChildren(container, controls);
-            return container.AutoSize;
+            LayoutDockedChildren(container);
+            //LayoutAnchoredChildren(container, controls);
+            //return container.AutoSize;
         }
 
-        private static Size GetPreferredControlSize(IArrangedElement child, Size proposed)
+        /*private static Size GetPreferredControlSize(Control child, Size proposed)
         {
             var preferredsize = child.GetPreferredSize(proposed);
             double width, height;
-            if (child.AutoSizeMode == AutoSizeMode.GrowAndShrink)
+
+            AutoSizeMode autoSizeMode = LayoutPanel.GetAutoSizeMode(child);
+
+            if (autoSizeMode == AutoSizeMode.GrowAndShrink)
             {
                 width = preferredsize.Width;
                 height = preferredsize.Height;
@@ -237,20 +302,19 @@ namespace Alternet.UI
             }
 
             return new Size(width, height);
-        }
+        }*/
 
-        internal Size GetPreferredSize(
-            IArrangedElement container,
-            Size proposedConstraints)
+        /*internal Size GetPreferredSize(Control container, Size proposedConstraints)
         {
-            var parent = (IArrangedElement)container;
+            var parent = container;
             var controls = parent.Controls;
             Size retsize = Size.Empty;
 
             // Add up the requested sizes for Docked controls
             for (int i = controls.Count - 1; i >= 0; i--)
             {
-                IArrangedElement child = (IArrangedElement)controls[i];
+                Control child = controls[i];
+
                 if (!child.Visible || child.Dock == DockStyle.None)
                     continue;
 
@@ -271,27 +335,33 @@ namespace Alternet.UI
                 }
             }
 
-            // See if any non-Docked control is positioned lower or more right than our size
-            foreach (IArrangedElement child in parent.Controls)
+            // See if any non-Docked control is positioned lower or more
+            // right than our size
+            foreach (Control child in parent.Children)
             {
+
                 if (!child.Visible || child.Dock != DockStyle.None)
                     continue;
 
                 // If its anchored to the bottom or right, that doesn't really count
-                if ((child.Anchor & (AnchorStyles.Bottom | AnchorStyles.Top)) == AnchorStyles.Bottom ||
-                    (child.Anchor & (AnchorStyles.Right | AnchorStyles.Left)) == AnchorStyles.Right)
+                if ((child.Anchor & AnchorStyles.BottomTop) == AnchorStyles.Bottom ||
+                    (child.Anchor & AnchorStyles.RightLeft) == AnchorStyles.Right)
                     continue;
 
                 Rect child_bounds = child.Bounds;
                 if (child.AutoSize)
                 {
+
                     Size proposed_child_size = Size.Empty;
-                    if ((child.Anchor & (AnchorStyles.Left | AnchorStyles.Right)) == (AnchorStyles.Left | AnchorStyles.Right))
+                    if ((child.Anchor & AnchorStyles.LeftRight) == AnchorStyles.LeftRight)
                     {
-                        proposed_child_size.Width = proposedConstraints.Width - child.DistanceRight - (child_bounds.Left - parent.DisplayRectangle.Left);
+                        proposed_child_size.Width =
+                            proposedConstraints.Width -
+                            child.DistanceRight -
+                            (child_bounds.Left - parent.DisplayRectangle.Left);
                     }
 
-                    if ((child.Anchor & (AnchorStyles.Top | AnchorStyles.Bottom)) == (AnchorStyles.Top | AnchorStyles.Bottom))
+                    if ((child.Anchor & AnchorStyles.TopBottom) == AnchorStyles.TopBottom)
                     {
                         proposed_child_size.Height = proposedConstraints.Height - child.DistanceBottom - (child_bounds.Top - parent.DisplayRectangle.Top);
                     }
@@ -301,14 +371,19 @@ namespace Alternet.UI
                 }
 
                 // This is the non-sense Microsoft uses (Padding vs DisplayRectangle)
-                retsize.Width = Math.Max(retsize.Width, child_bounds.Right - parent.Padding.Left + child.Margin.Right);
-                retsize.Height = Math.Max(retsize.Height, child_bounds.Bottom - parent.Padding.Top + child.Margin.Bottom);
+                retsize.Width =
+                    Math.Max(
+                        retsize.Width,
+                        child_bounds.Right - parent.Padding.Left + child.Margin.Right);
+                retsize.Height = Math.Max(
+                    retsize.Height,
+                    child_bounds.Bottom - parent.Padding.Top + child.Margin.Bottom);
 
                 // retsize.Width = Math.Max (retsize.Width, child_bounds.Right - parent.DisplayRectangle.Left + child.Margin.Right);
                 // retsize.Height = Math.Max (retsize.Height, child_bounds.Bottom - parent.DisplayRectangle.Top + child.Margin.Bottom);
             }
 
             return retsize;
-        }
+        }*/
     }
 }

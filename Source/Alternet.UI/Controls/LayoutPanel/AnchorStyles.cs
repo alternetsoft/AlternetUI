@@ -14,5 +14,7 @@ namespace Alternet.UI
         Bottom = 0x00000002,
         Left = 0x00000004,
         Right = 0x00000008,
+        LeftRight = 0x00000004 | 0x00000008,
+        TopBottom = 0x00000001 | 0x00000002,
     }
 }

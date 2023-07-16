@@ -9,6 +9,6 @@ namespace Alternet.UI
     internal enum AutoSizeMode
     {
         GrowAndShrink = 0,
-        GrowOnly = 1
+        GrowOnly = 1,
     }
 }
