@@ -43,8 +43,8 @@ namespace MenuSample
 
             this.Closing += MainWindow_Closing;
 
-            AddVertToolbar();
-            AddBottomToolbar();
+            //AddVertToolbar();
+            //AddBottomToolbar();
         }
 
         private ToolbarPanel CreateVertToolbar()
@@ -119,8 +119,8 @@ namespace MenuSample
         private void AddBottomToolbar()
         {
             var bottomToolbar = new ToolbarPanel();
-            bottomToolbar.Margin = new(5, 0, 5, 0);
             bottomToolbar.Toolbar.NoDivider = true;
+            bottomToolbar.Margin = new(5, 0, 5, 0);
             bottomToolbar.Toolbar.ImageToTextDisplayMode = 
                 ToolbarItemImageToTextDisplayMode.Vertical;
 
@@ -143,15 +143,16 @@ namespace MenuSample
             Grid.SetColumnSpan(bottomToolbar, 3);
             mainGrid.Children.Add(bottomToolbar);
             bottomToolbar.Toolbar.Realize();
+            //bottomToolbar.Toolbar.RecreateWindow();
         }
 
         private void InitToolbar()
         {
-            var toolbarPanel = new ToolbarPanel();
-            toolbarPanel.Margin = new(5, 0, 5, 0);
-            toolbar = toolbarPanel.Toolbar;
-            SetDebugBackground(toolbar);
-            toolbar.NoDivider = true;
+            //var toolbarPanel = new ToolbarPanel();
+            //toolbarPanel.Margin = new(5, 0, 5, 0);
+            toolbar = Toolbar;
+            //SetDebugBackground(toolbar);
+            //toolbar.NoDivider = true;
 
             var calendarToolbarItem = new ToolbarItem("Calendar", ToolbarItem_Click)
             {
@@ -204,10 +205,10 @@ namespace MenuSample
             dynamicToolbarItemsSeparator = new ToolbarItem("-");
             toolbar?.Items.Add(dynamicToolbarItemsSeparator);
 
-            Grid.SetRowColumn(toolbarPanel,0,0);
-            Grid.SetColumnSpan(toolbarPanel, 3);
-            mainGrid.Children.Add(toolbarPanel);
-            toolbarPanel.Toolbar.Realize();
+            //Grid.SetRowColumn(toolbarPanel,0,0);
+            //Grid.SetColumnSpan(toolbarPanel, 3);
+            //mainGrid.Children.Add(toolbarPanel);
+            //toolbarPanel.Toolbar.Realize();
         }
 
         private void PlatformSpecificInitialize()

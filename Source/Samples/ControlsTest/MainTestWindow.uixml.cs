@@ -9,6 +9,8 @@ namespace ControlsTest
 
         public MainTestWindow()
         {
+            Icon = ImageSet.FromUrlOrNull("embres:ControlsTest.Sample.ico");
+
             InitializeComponent();
 
             mainGrid.Children.Add(pageContainer);

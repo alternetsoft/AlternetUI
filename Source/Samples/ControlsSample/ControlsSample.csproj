@@ -7,7 +7,6 @@
       <ApplicationManifest>app.manifest</ApplicationManifest>
       <LangVersion>latest</LangVersion>
       <Nullable>enable</Nullable>
-      <ApplicationIcon>../CommonData/Sample.ico</ApplicationIcon>
       <UseStyleCop>false</UseStyleCop>
     </PropertyGroup>                 
 

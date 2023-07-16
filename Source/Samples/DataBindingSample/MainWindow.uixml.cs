@@ -8,6 +8,8 @@ namespace HelloWorldSample
     {
         public MainWindow()
         {
+            Icon = ImageSet.FromUrlOrNull("embres:DataBindingSample.Sample.ico");
+
             InitializeComponent();
 
             //Binding myBinding = new Binding("MyDataProperty") { Mode = BindingMode.TwoWay };

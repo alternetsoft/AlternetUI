@@ -17,6 +17,8 @@ namespace DragAndDropSample
 
         public MainWindow()
         {
+            Icon = ImageSet.FromUrlOrNull("embres:DragAndDropSample.Sample.ico");
+
             InitializeComponent();
 
             testBitmap = new Bitmap(new Size(64, 64));

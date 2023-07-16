@@ -3,20 +3,22 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ExplorerUISample;assembly=ExplorerUISample"
         Title="Alternet UI Explorer Sample"
-        Width="600" Height="400" StartLocation="CenterScreen">
-    <Window.Toolbar>
-        <Toolbar Name="toolbar" ItemImagesVisible="false">
-            <ToolbarItem Text="Show progress" Click="ShowProgress_Click"/>
-        </Toolbar>
-    </Window.Toolbar>
-        <StackPanel Orientation="Horizontal" Margin="10">
-        <TreeView Name="treeView" Width="200" />
-        <ListView Name="listView" View="Details" Width="364">
-            <ListView.Columns>
-                <ListViewColumn Title="Name" />
-                <ListViewColumn Title="Size" />
-                <ListViewColumn Title="Last Modified" />
-            </ListView.Columns>
-        </ListView>
+        Width="700" Height="450" StartLocation="CenterScreen" 
+        HorizontalAlignment="Stretch">
+    <StackPanel Orientation="Vertical" Padding="10" HorizontalAlignment="Stretch">
+      <StackPanel Orientation="Horizontal" Margin="10">
+        <Button Text="Show progress" Click="ShowProgress_Click"/>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Stretch">
+          <TreeView Name="treeView" Width="200" Margin="0,0,10,0"/>
+          <ListView Name="listView" View="Details" 
+                    Width="400" HorizontalAlignment="Stretch">
+              <ListView.Columns>
+                  <ListViewColumn Title="Name" />
+                  <ListViewColumn Title="Size" />
+                  <ListViewColumn Title="Last Modified" />
+              </ListView.Columns>
+          </ListView>
+      </StackPanel>
     </StackPanel>
-</Window>
+  </Window>

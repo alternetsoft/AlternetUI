@@ -13,4 +13,10 @@
     <TargetFrameworks>$(SamplesTargetFrameworksNonWindows)</TargetFrameworks>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="$(MSBuildThisFileDirectory)\Sample.ico" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)\Sample.ico" />
+  </ItemGroup>
+
+
 </Project>

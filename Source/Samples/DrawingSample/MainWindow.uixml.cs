@@ -21,6 +21,8 @@ namespace DrawingSample
 
         public MainWindow()
         {
+            Icon = ImageSet.FromUrlOrNull("embres:DrawingSample.Sample.ico");
+
             InitializeComponent();
             InitializePages();
         }

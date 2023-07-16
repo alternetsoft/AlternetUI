@@ -10,6 +10,7 @@ namespace CommonDialogsSample
 
         public MainWindow()
         {
+            Icon = ImageSet.FromUrlOrNull("embres:CommonDialogsSample.Sample.ico");
             InitializeComponent();
 
             InitializeEnumComboBox<MessageBoxButtons>(messageBoxButtonsComboBox);

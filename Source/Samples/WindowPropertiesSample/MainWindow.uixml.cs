@@ -26,6 +26,7 @@ namespace WindowPropertiesSample
             sizeToContentModeComboBox.SelectedItem = WindowSizeToContentMode.WidthAndHeight;
 
             UpdateControls();
+            Icon = Icons.Icon2;
         }
 
         private void CreateAndShowWindowButton_Click(object sender, EventArgs e)

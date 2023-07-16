@@ -127,6 +127,19 @@ namespace Alternet.UI
                 return new ImageSet(assets.Open(uri));
         }
 
+        public static ImageSet FromUrlOrNull(string url)
+        {
+            try
+            {
+                var result = ImageSet.FromUrl(url);
+                return result;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// Releases the unmanaged resources used by the <see cref="ImageList"/> and optionally releases the managed resources.
         /// </summary>

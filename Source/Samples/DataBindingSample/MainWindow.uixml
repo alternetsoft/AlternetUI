@@ -3,22 +3,13 @@
         x:Class="HelloWorldSample.MainWindow"
         Title="Alternet UI Data Binding Sample"
 		StartLocation="CenterScreen">
-	<Grid VerticalAlignment="Top" Margin="10" Padding="10">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="*" />
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition />
-			<RowDefinition />
-		</Grid.RowDefinitions>
+	<StackPanel Orientation="Vertical" Padding="10" Margin="10">
 
-		<Label Text="MyData:" Grid.Column="0" Grid.Row="0" 
-               VerticalAlignment="Top" Margin="0,0,10,0" />
-		<!--<TextBox Grid.Column="1" Grid.Row="0" Name="myDataTextBox" />-->
-		<TextBox Grid.Column="1" Grid.Row="0" Name="myDataTextBox" 
-                 Text="{Binding MyDataProperty}" Margin="0,0,0,10"/>
+		<Label Text="MyData:" Margin="0,0,10,0" />
+		<TextBox Name="myDataTextBox" 
+                 Text="{Binding MyDataProperty}" Margin="0,5,0,10"/>
 
-		<Button Grid.Column="1" Grid.Row="1" Name="showData" Text="Show Data" Click="ShowDataButton_Click" />
-	</Grid>
+		<Button Name="showData" Text="Show Data" Click="ShowDataButton_Click" 
+                Margin="0,5,0,10"/>
+	</StackPanel>
 </Window>

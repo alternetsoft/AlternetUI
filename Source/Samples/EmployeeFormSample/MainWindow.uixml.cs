@@ -12,6 +12,8 @@ namespace EmployeeFormSample
     {
         public MainWindow()
         {
+            Icon = ImageSet.FromUrlOrNull("embres:EmployeeFormSample.Sample.ico");
+
             InitializeComponent();
 
             employeeFoto.Image = Image.FromUrl(
@@ -40,15 +42,20 @@ namespace EmployeeFormSample
             };
 
             evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2018,12,4).ToShortDateString(), "2018 Employee Review", "James Smith" }));
+                new DateTime(2018,12,4).ToShortDateString(), 
+                "2018 Employee Review", "James Smith" }));
             evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2019,12,10).ToShortDateString(), "2019 Employee Review", "James Smith" }));
+                new DateTime(2019,12,10).ToShortDateString(), 
+                "2019 Employee Review", "James Smith" }));
             evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2020,12,1).ToShortDateString(), "2020 Employee Review", "James Smith" }));
+                new DateTime(2020,12,1).ToShortDateString(), 
+                "2020 Employee Review", "James Smith" }));
             evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2021,12,20).ToShortDateString(), "2021 Employee Review", "James Smith" }));
+                new DateTime(2021,12,20).ToShortDateString(), 
+                "2021 Employee Review", "James Smith" }));
             evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2022,12,5).ToShortDateString(), "2022 Employee Review", "James Smith" }));
+                new DateTime(2022,12,5).ToShortDateString(), 
+                "2022 Employee Review", "James Smith" }));
             evaluationsListView.Columns[0].WidthMode = ListViewColumnWidthMode.AutoSize;
             evaluationsListView.Columns[1].WidthMode = ListViewColumnWidthMode.AutoSize;
             evaluationsListView.Columns[2].WidthMode = ListViewColumnWidthMode.AutoSize;

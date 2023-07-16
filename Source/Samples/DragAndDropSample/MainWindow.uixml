@@ -2,7 +2,8 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="DragAndDropSample.MainWindow"
         Title="Drag and Drop Sample" StartLocation="CenterScreen">
-  <Grid Margin="10">
+  <Control Padding="10">
+  <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
@@ -50,4 +51,5 @@
 
     <ListBox Name="eventsListBox" Grid.Row="2"/>
   </Grid>
+  </Control>  
 </Window>

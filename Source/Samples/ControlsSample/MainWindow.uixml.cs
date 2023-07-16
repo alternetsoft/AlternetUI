@@ -1,4 +1,5 @@
 ﻿using Alternet.UI;
+using Alternet.Drawing;
 
 namespace ControlsSample
 {
@@ -12,6 +13,7 @@ namespace ControlsSample
 
         public MainWindow()
         {
+            Icon = ImageSet.FromUrlOrNull("embres:ControlsSample.Sample.ico");
             InitializeComponent();
 
             eventsControl.FullRowSelect = true;

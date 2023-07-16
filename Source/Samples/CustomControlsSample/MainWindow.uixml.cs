@@ -15,6 +15,8 @@ namespace CustomControlsSample
 
         public MainWindow()
         {
+            Icon = ImageSet.FromUrlOrNull("embres:CustomControlsSample.Sample.ico");
+
             DataContext = new Data();
 
             InitializeComponent();
