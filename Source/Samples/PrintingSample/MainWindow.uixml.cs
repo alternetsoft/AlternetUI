@@ -10,6 +10,7 @@ namespace PrintingSample
 
         public MainWindow()
         {
+            Icon = ImageSet.FromUrlOrNull("embres:PrintingSample.Sample.ico");
             InitializeComponent();
             DrawingArea.UserPaint = true;
         }

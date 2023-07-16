@@ -9,6 +9,8 @@ namespace HelloWorldSample
     {
         public MainWindow()
         {
+            Icon = ImageSet.FromUrlOrNull("embres:HelloWorldSample.Sample.ico");
+
             InitializeComponent();
         }
 

@@ -27,6 +27,8 @@ namespace PaintSample
 
         public MainWindow()
         {
+            Icon = ImageSet.FromUrlOrNull("embres:PaintSample.Sample.ico");
+
             InitializeComponent();
 
             canvasControl = new();

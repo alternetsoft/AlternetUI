@@ -8,6 +8,7 @@ namespace InputSample
     {
         public MainWindow()
         {
+            Icon = ImageSet.FromUrlOrNull("embres:InputSample.Sample.ico");
             InitializeComponent();
         }
 

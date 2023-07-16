@@ -9,6 +9,8 @@ namespace ThreadingSample
     {
         public MainWindow()
         {
+            Icon = ImageSet.FromUrlOrNull("embres:ThreadingSample.Sample.ico");
+
             InitializeComponent();
 
             StartCounterThreads();

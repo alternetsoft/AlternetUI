@@ -3,7 +3,8 @@
         x:Class="LayoutSample.StackLayoutPropertiesWindow"
 		xmlns:local="clr-namespace:LayoutSample" StartLocation="CenterScreen"
         Title="Alternet UI Stack Layout Properties" Width="800" Height="500" >
-	<Grid Padding="10">
+	<Control Padding="10">
+	<Grid >
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="*" />
@@ -35,4 +36,5 @@
 			</StackPanel>
 		</GroupBox>
 	</Grid>
+    </Control>  
 </Window>

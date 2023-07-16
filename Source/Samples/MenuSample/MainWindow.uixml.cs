@@ -3,7 +3,6 @@ using Alternet.UI;
 using System;
 using System.Linq;
 using System.Security.Policy;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace MenuSample
 {
@@ -17,6 +16,7 @@ namespace MenuSample
 
         public MainWindow()
         {
+            Icon = ImageSet.FromUrlOrNull("embres:MenuSample.Sample.ico");
             InitializeComponent();
             InitToolbar();
 
@@ -43,8 +43,11 @@ namespace MenuSample
 
             this.Closing += MainWindow_Closing;
 
-            //AddVertToolbar();
-            //AddBottomToolbar();
+            if(WebBrowser.GetBackendOS() == WebBrowserBackendOS.Windows)
+            {
+                AddVertToolbar();
+                AddBottomToolbar();
+            }
         }
 
         private ToolbarPanel CreateVertToolbar()
