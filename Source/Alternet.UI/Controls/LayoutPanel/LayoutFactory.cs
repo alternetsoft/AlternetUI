@@ -8,8 +8,26 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Contains layout related static methods.
+    /// </summary>
     public static class LayoutFactory
     {
+        /// <summary>
+        /// Increases height of all <see cref="TextBox"/> controls in the specified
+        /// container to height of the <see cref="ComboBox"/> control, if it
+        /// is present in the container.
+        /// </summary>
+        /// <remarks>
+        /// Used in Linux where height of the <see cref="ComboBox"/>
+        /// control is bigger than <see cref="TextBox"/> control.
+        /// </remarks>
+        /// <remarks>
+        /// All <see cref="TextBox"/> of the child controls are also affected
+        /// as this procedure works recursively.
+        /// </remarks>
+        /// <param name="container">Specifies container control in which
+        /// operation is performed</param>
         public static void AdjustTextBoxesHeight(Control container)
         {
             if (container == null)
@@ -47,13 +65,17 @@ namespace Alternet.UI
             Control leftControl,
             Control fillControl)
         {
-            IArrangedElement result = CreateLayoutLeftFill(
-                CreateContainer(FromControl(container)),
-                FromControl(leftControl),
-                FromControl(fillControl));
-            result.PerformLayout();
+            LayoutPanel.SetDock(leftControl,DockStyle.Left);
+            LayoutPanel.SetDock(fillControl,DockStyle.Fill);
+            DefaultLayout.Instance.Layout(container);
         }
 
+        /// <summary>
+        /// Sets background of the control's parents to Red, Green, Blue and
+        /// Yellow colors.
+        /// </summary>
+        /// <param name="control">Specifies the control which parent's background
+        /// is changed</param>
         public static void SetDebugBackgroundToParents(Control? control)
         {
             static Control? SetParentBackground(Control? control, Brush brush)
@@ -70,39 +92,6 @@ namespace Alternet.UI
             control = SetParentBackground(control, new SolidBrush(Color.Green));
             control = SetParentBackground(control, new SolidBrush(Color.Blue));
             SetParentBackground(control, new SolidBrush(Color.Yellow));
-        }
-
-        internal static IArrangedElementLite FromControl(Control control)
-        {
-            return new ArrangedElementControl(control);
-        }
-
-        internal static IArrangedElement CreateContainer(
-            IArrangedElementLite? container = null)
-        {
-            IArrangedElement result = new ArrangedElement(null, container);
-            return result;
-        }
-
-        internal static IArrangedElement AddChild(
-            IArrangedElement container,
-            IArrangedElementLite? control = null)
-        {
-            IArrangedElement result = new ArrangedElement(container, control);
-            result.Controls.Add(result);
-            return result;
-        }
-
-        internal static IArrangedElement CreateLayoutLeftFill(
-            IArrangedElement container,
-            IArrangedElementLite leftControl,
-            IArrangedElementLite fillControl)
-        {
-            var leftControlElement = AddChild(container, leftControl);
-            var fillControlElement = AddChild(container, fillControl);
-            leftControlElement.Dock = DockStyle.Left;
-            fillControlElement.Dock = DockStyle.Fill;
-            return container;
         }
 
         internal static void AdjustTextBoxesHeight(
@@ -151,7 +140,7 @@ namespace Alternet.UI
             }
         }
 
-        internal static void AddToolbar(Control control, Toolbar toolbar)
+        /*internal static void AddToolbar(Control control, Toolbar toolbar)
         {
             var sizer = new Native.BoxSizer();
 
@@ -161,6 +150,6 @@ namespace Alternet.UI
 
             sizer.AddWindow(nativeToolbar, 0, 0x2000, 0, IntPtr.Zero);
             nativeControl?.SetSizerAndFit(nativeSizer, true);
-        }
+        }*/
     }
 }
