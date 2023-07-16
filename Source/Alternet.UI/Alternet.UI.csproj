@@ -54,6 +54,8 @@
 
   <ItemGroup>
     <None Remove="Application\ThreadException\Resources\ErrorImage.png" />
+    <None Remove="Build.Result.Log" />
+    <None Remove="Find.Not.Documented.log" />
     <None Remove="Xaml\.editorconfig" />
   </ItemGroup>
 
