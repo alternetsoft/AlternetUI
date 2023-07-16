@@ -11,24 +11,30 @@ namespace ControlsTest
 {
     public class CustomDrawControl : UserPaintControl
     {
-        private readonly Control leftControl = new ();
-        private readonly Control fillControl = new ();
+        private readonly Control leftControl = new();
+        private readonly Control fillControl = new();
 
         public CustomDrawControl()
             : base()
         {
-            leftControl.Bounds = new (0, 0, 50, 50);
-            fillControl.Bounds = new (0, 60, 50, 50);
+            leftControl.Size = new(50, 50);
+            fillControl.Size = new(50, 50);
             leftControl.Background = new SolidBrush(Color.Green);
             fillControl.Background = new SolidBrush(Color.Red);
             Children.Add(leftControl);
             Children.Add(fillControl);
         }
 
+        internal ITestPageSite? Site {get;set;}
+
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
+            Site?.LogEvent("cdc", $"l: {leftControl.Bounds}");
+            Site?.LogEvent("cdc", $"f: {fillControl.Bounds}");
             LayoutFactory.PerformLayoutLeftFill(this, leftControl, fillControl);
+            Site?.LogEvent("cdc", $"l: {leftControl.Bounds}");
+            Site?.LogEvent("cdc", $"f: {fillControl.Bounds}");
         }
 
         protected override void OnPaint(PaintEventArgs e)

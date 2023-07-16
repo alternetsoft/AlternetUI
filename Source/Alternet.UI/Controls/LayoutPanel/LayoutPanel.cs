@@ -135,6 +135,25 @@ namespace Alternet.UI
             return control.ExtendedProps.AutoSizeMode;
         }
 
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        protected override void OnChildInserted(int childIndex, Control childControl)
+        {
+            base.OnChildInserted(childIndex, childControl);
+        }
+
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
+        protected override void OnChildRemoved(int childIndex, Control childControl)
+        {
+            base.OnChildRemoved(childIndex, childControl);
+        }
+
+        /// <summary>
+        /// <inheritdoc />
+        /// </summary>
         protected override void OnLayout()
         {
             base.OnLayout();

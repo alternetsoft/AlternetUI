@@ -39,6 +39,7 @@ namespace ControlsTest
             set
             {
                 site = value;
+                customDrawControl.Site = value;
                 customDrawControl!.Background = new SolidBrush(Color.Yellow);
             }
         }

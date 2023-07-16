@@ -18,7 +18,7 @@ namespace ControlsTest
             {
                 WebBrowserTestPage.UseBackend = WebBrowserBackend.Edge;
                 AddWebBrowserPage("Web Browser Edge1");
-                AddWebBrowserPage("Web Browser Edge2");
+                //AddWebBrowserPage("Web Browser Edge2");
             }
 
             if (WebBrowser.IsBackendAvailable(WebBrowserBackend.WebKit))
@@ -28,7 +28,8 @@ namespace ControlsTest
                 AddWebBrowserPage("Web Browser WebKit2");
             }
 
-            if (WebBrowser.IsBackendAvailable(WebBrowserBackend.IELatest))
+            if (WebBrowser.IsBackendAvailable(WebBrowserBackend.IELatest) &&
+                !WebBrowser.IsBackendAvailable(WebBrowserBackend.Edge))
             {
                 WebBrowserTestPage.UseBackend = WebBrowserBackend.IELatest;
                 AddWebBrowserPage("Web Browser IE1");
