@@ -13,7 +13,7 @@ namespace MenuSample
         Toolbar? toolbar;
         ToolbarItem? dynamicToolbarItemsSeparator;
         ToolbarItem? checkableToolbarItem;
-        private bool IsDebugBackground = true;
+        private bool IsDebugBackground = false;
 
         public MainWindow()
         {
@@ -75,18 +75,21 @@ namespace MenuSample
 
         private void AddVertToolbar()
         {
-            void Add(int colIndex)
+            ToolbarPanel Add(int colIndex)
             {
                 var vertToolbar = CreateVertToolbar();
-                vertToolbar.Margin = new(5, 0, 5, 0);
                 Grid.SetRowColumn(vertToolbar, 1, colIndex);
                 Grid.SetRowSpan(vertToolbar, 2);
                 mainGrid.Children.Add(vertToolbar);
                 SetDebugBackground(vertToolbar.Toolbar);
+                return vertToolbar;
             }
 
-            Add(0);
-            Add(2);
+            var vertToolbar = Add(0);
+            vertToolbar.Margin = new(5, 0, 0, 0);
+
+            var vertToolbar2 = Add(2);
+            vertToolbar2.Margin = new(0, 0, 5, 0);
         }
 
         private void SetDebugBackground(Control control)
