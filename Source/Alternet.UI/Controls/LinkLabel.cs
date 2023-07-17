@@ -9,6 +9,14 @@ namespace Alternet.UI
     public class LinkLabel : Control
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="LinkLabel"/> class.
+        /// </summary>
+        public LinkLabel()
+            : base()
+        {
+        }
+
+        /// <summary>
         /// Gets or sets the text displayed on this label.
         /// </summary>
         [DefaultValue("")]
