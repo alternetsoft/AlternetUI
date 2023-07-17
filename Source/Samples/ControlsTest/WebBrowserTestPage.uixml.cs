@@ -27,12 +27,14 @@ namespace ControlsTest
         private readonly WebBrowserFindParams findParams = new();
         private readonly Dictionary<string, MethodCaller> testActions = new();
 
-        private ToolbarPanel toolbar;
         private StackPanel webBrowserToolbarPanel;
-        private ToolbarItem zoomInBtn;
-        private ToolbarItem zoomOutBtn;
-        private ToolbarItem backBtn;
-        private ToolbarItem forwardBtn;
+
+        /*private ToolbarPanel toolbar;*/
+        private Button zoomInButton;
+        private Button zoomOutButton;
+        private Button backButton;
+        private Button goButton;
+        private Button forwardButton;
 
         private TextBox urlTextBox;
         private StackPanel findOptionsPanel;
@@ -130,7 +132,7 @@ namespace ControlsTest
 
         public void AddNewToolbar(int rowIndex)
         {
-            ToolbarItem Add(
+            /*ToolbarItem Add(
                 string text,
                 EventHandler? onClick,
                 string imageUrl)
@@ -166,7 +168,7 @@ namespace ControlsTest
             var goButton = Add("Go", GoButton_Click, ImgName("caret-right"));
 
             Grid.SetRowColumn(toolbar, rowIndex, 0);
-            webBrowserGrid.Children.Add(toolbar);
+            webBrowserGrid.Children.Add(toolbar);*/
 
             /*
             urlTextBox = new()
@@ -185,7 +187,7 @@ namespace ControlsTest
             };
             Grid.SetRowColumn(webBrowserToolbarPanel, rowIndex, 0);
 
-            /*backButton = new()
+            backButton = new()
             {
                 Margin = new Thickness(0, 5, 5, 5),
                 Image = Bitmap.FromUrl($"{ResPrefix}arrow-left-{ImageSize}.png"),
@@ -197,7 +199,7 @@ namespace ControlsTest
                 Margin = new Thickness(0, 5, 5, 5),
                 Image = Bitmap.FromUrl($"{ResPrefix}arrow-right-{ImageSize}.png"),
             };
-            forwardButton.Click += ForwardButton_Click;
+            forwardButton.Click += ForwardBtn_Click;
 
             zoomInButton = new()
             {
@@ -220,22 +222,22 @@ namespace ControlsTest
                 Margin = new Thickness(0, 5, 0, 5),
                 Image = Bitmap.FromUrl($"{ResPrefix}caret-right-{ImageSize}.png"),
             };
-            goButton.Click += GoButton_Click;*/
+            goButton.Click += GoButton_Click;
 
             urlTextBox = new()
             {
                 Margin = new Thickness(0, 5, 5, 5),
                 HorizontalAlignment = HorizontalAlignment.Stretch,
-                Width = 500,
+                Width = 200,
             };
             urlTextBox.KeyDown += TextBox_KeyDown;
 
-            /*webBrowserToolbarPanel.Children.Add(backButton);
+            webBrowserToolbarPanel.Children.Add(backButton);
             webBrowserToolbarPanel.Children.Add(forwardButton);
             webBrowserToolbarPanel.Children.Add(zoomInButton);
-            webBrowserToolbarPanel.Children.Add(zoomOutButton);*/
+            webBrowserToolbarPanel.Children.Add(zoomOutButton);
             webBrowserToolbarPanel.Children.Add(urlTextBox);
-            /*webBrowserToolbarPanel.Children.Add(goButton);*/
+            webBrowserToolbarPanel.Children.Add(goButton);
             webBrowserGrid.Children.Add(webBrowserToolbarPanel);
 
         }
@@ -907,7 +909,7 @@ namespace ControlsTest
             LogProp(webBrowser1, "ZoomType", "WebBrowser");
             LogProp(webBrowser1, "ZoomFactor", "WebBrowser");
 
-            Log("GetDefaultImageSize = " + toolbar.Toolbar.GetDefaultImageSize());
+            //Log("GetDefaultImageSize = " + Toolbar.GetDefaultImageSize());
             Log("DPI = " + webBrowser1.GetDPI().ToString());
             Log("isDebug = " + WebBrowser.DoCommandGlobal("IsDebug"));
             Log("os = " + WebBrowser.GetBackendOS().ToString());
@@ -934,8 +936,8 @@ namespace ControlsTest
 
         private void UpdateZoomButtons()
         {
-            zoomInBtn.Enabled = webBrowser1.CanZoomIn;
-            zoomOutBtn.Enabled = webBrowser1.CanZoomOut;
+            zoomInButton.Enabled = webBrowser1.CanZoomIn;
+            zoomOutButton.Enabled = webBrowser1.CanZoomOut;
         }
 
         private void UpdateHistoryButtons()
@@ -946,8 +948,8 @@ namespace ControlsTest
                 webBrowser1.ClearHistory();
             }
 
-            backBtn.Enabled = webBrowser1.CanGoBack;
-            forwardBtn.Enabled = webBrowser1.CanGoForward;
+            backButton.Enabled = webBrowser1.CanGoBack;
+            forwardButton.Enabled = webBrowser1.CanGoForward;
         }
 
         private void ZoomInButton_Click(object? sender, EventArgs e)
