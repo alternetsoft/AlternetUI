@@ -9,10 +9,89 @@ namespace Alternet.UI
     /// </summary>
     public class Toolbar : Control
     {
+        /// <summary>
+        /// Defines the default size of toolbar images for displays
+        /// with 96 DPI.
+        /// </summary>
+        /// <remarks>
+        /// The size is the width and height of the image in pixels.
+        /// You can use it to change the default size of toolbar buttons
+        /// for more comfortable use.
+        /// </remarks>
+        /// <remarks>
+        /// DPI stands for dots per inch and affects on clarity and crispness
+        /// of the display. DPI is determined by the size of the screen and
+        /// its resolution.
+        /// </remarks>
+        /// <remarks>
+        /// Default property value is 16. Suggested values are 16, 24, 32, 48.
+        /// </remarks>
+#pragma warning disable SA1401
         public static int DefaultImageSize96dpi = 16;
+#pragma warning restore SA1401
+
+        /// <summary>
+        /// Defines the default size of toolbar images for displays
+        /// with 144 DPI.
+        /// </summary>
+        /// <remarks>
+        /// The size is the width and height of the image in pixels.
+        /// You can use it to change the default size of toolbar buttons
+        /// for more comfortable use.
+        /// </remarks>
+        /// <remarks>
+        /// DPI stands for dots per inch and affects on clarity and crispness
+        /// of the display. DPI is determined by the size of the screen and
+        /// its resolution.
+        /// </remarks>
+        /// <remarks>
+        /// Default property value is 24. Suggested values are 16, 24, 32, 48.
+        /// </remarks>
+#pragma warning disable SA1401
         public static int DefaultImageSize144dpi = 24;
+#pragma warning restore SA1401
+
+        /// <summary>
+        /// Defines the default size of toolbar images for displays
+        /// with 192 DPI.
+        /// </summary>
+        /// <remarks>
+        /// The size is the width and height of the image in pixels.
+        /// You can use it to change the default size of toolbar buttons
+        /// for more comfortable use.
+        /// </remarks>
+        /// <remarks>
+        /// DPI stands for dots per inch and affects on clarity and crispness
+        /// of the display. DPI is determined by the size of the screen and
+        /// its resolution.
+        /// </remarks>
+        /// <remarks>
+        /// Default property value is 32. Suggested values are 16, 24, 32, 48.
+        /// </remarks>
+#pragma warning disable SA1401
         public static int DefaultImageSize192dpi = 32;
+#pragma warning restore SA1401
+
+        /// <summary>
+        /// Defines the default size of toolbar images for displays
+        /// with 288 DPI.
+        /// </summary>
+        /// <remarks>
+        /// The size is the width and height of the image in pixels.
+        /// You can use it to change the default size of toolbar buttons
+        /// for more comfortable use.
+        /// </remarks>
+        /// <remarks>
+        /// DPI stands for dots per inch and affects on clarity and crispness
+        /// of the display. DPI is determined by the size of the screen and
+        /// its resolution.
+        /// </remarks>
+        /// <remarks>
+        /// Default property value is 48. Suggested values are 16, 24, 32, 48.
+        /// </remarks>
+#pragma warning disable SA1401
         public static int DefaultImageSize288dpi = 48;
+#pragma warning restore SA1401
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Toolbar"/> class.
@@ -23,7 +102,7 @@ namespace Alternet.UI
             Items.ItemRemoved += Items_ItemRemoved;
         }
 
-        public new ToolbarHandler Handler
+        internal new ToolbarHandler Handler
         {
             get
             {
