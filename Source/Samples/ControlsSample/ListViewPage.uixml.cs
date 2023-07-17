@@ -22,11 +22,21 @@ namespace ControlsSample
 
             //LayoutFactory.SetDebugBackgroundToParents(listView);
 
-            LayoutUpdated += ListViewPage_LayoutUpdated;
+            //LayoutUpdated += ListViewPage_LayoutUpdated;
+            //this.SizeChanged += ListViewPage_SizeChanged;
+            ActionsButton.Enabled = false;
+            SettingsButton.Enabled = true;
+        }
+
+        private void ListViewPage_SizeChanged(object sender, EventArgs e)
+        {
+            //stackPanel1.PerformLayout();
+            //stackPanel2.PerformLayout();
         }
 
         private void LogLayout(string s)
         {
+            /*
             Log("================");
             Log(s);
             Log($"stackPanel1.Bounds: {stackPanel1.Bounds}");
@@ -34,16 +44,17 @@ namespace ControlsSample
             Log($"tabPage1.Bounds: {tabPage1.Bounds}");
             Log($"tabPage2.Bounds: {tabPage2.Bounds}");
             Log("================");
+            */
         }
 
         private void ListViewPage_LayoutUpdated(object sender, EventArgs e)
         {
             //LogLayout("ListViewPage");
 
-            maxPanelWidth = Math.Max(maxPanelWidth, stackPanel2.Bounds.Width);
-            maxPanelWidth = Math.Max(maxPanelWidth, stackPanel1.Bounds.Width);
-            stackPanel1.Width = maxPanelWidth;
-            stackPanel2.Width = maxPanelWidth;
+            //maxPanelWidth = Math.Max(maxPanelWidth, stackPanel2.Bounds.Width);
+            //maxPanelWidth = Math.Max(maxPanelWidth, stackPanel1.Bounds.Width);
+            //stackPanel1.Width = maxPanelWidth;
+            //stackPanel2.Width = maxPanelWidth;
         }
 
         public IPageSite? Site
@@ -144,6 +155,23 @@ namespace ControlsSample
 
             foreach (var column in listView!.Columns)
                 column.WidthMode = mode;
+        }
+
+        private void ActionsButton_Click(object? sender, EventArgs e)
+        {
+            scrollViewer2.Visible = false;
+            scrollViewer1.Visible = true;
+
+            ActionsButton.Enabled = false;
+            SettingsButton.Enabled = true;
+        }
+
+        private void SettingsButton_Click(object? sender, EventArgs e)
+        {
+            scrollViewer1.Visible = false;
+            scrollViewer2.Visible = true;
+            ActionsButton.Enabled = true;
+            SettingsButton.Enabled = false;
         }
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
