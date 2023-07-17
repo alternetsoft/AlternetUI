@@ -5,20 +5,33 @@
         Title="Alternet UI Explorer Sample"
         Width="700" Height="450" StartLocation="CenterScreen" 
         HorizontalAlignment="Stretch">
-    <StackPanel Orientation="Vertical" Padding="10" HorizontalAlignment="Stretch">
-      <StackPanel Orientation="Horizontal" Margin="10">
-        <Button Text="Show progress" Click="ShowProgress_Click"/>
-      </StackPanel>
-      <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Stretch">
-          <TreeView Name="treeView" Width="200" Margin="0,0,10,0"/>
-          <ListView Name="listView" View="Details" 
-                    Width="400" HorizontalAlignment="Stretch">
-              <ListView.Columns>
-                  <ListViewColumn Title="Name" />
-                  <ListViewColumn Title="Size" />
-                  <ListViewColumn Title="Last Modified" />
-              </ListView.Columns>
-          </ListView>
-      </StackPanel>
-    </StackPanel>
+    <Control Padding="10" HorizontalAlignment="Stretch">
+
+      <Grid Name="mainGrid" Margin="0,0,0,5" Padding="2" 
+            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="200"/>
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="100*"/>
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <TreeView Name="treeView" Width="200" Margin="0,0,10,0"
+                  Grid.Row="0" Grid.Column="0"/>
+        <ListView Name="listView" View="Details"
+                  HorizontalAlignment="Stretch"
+                  Grid.Row="0" Grid.Column="1">
+          <ListView.Columns>
+            <ListViewColumn Title="Name" />
+            <ListViewColumn Title="Size" />
+            <ListViewColumn Title="Modified" />
+          </ListView.Columns>
+        </ListView>
+        <StackPanel Orientation="Horizontal" Margin="0,10,0,0"
+                    Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+          <Button Text="Show progress" Click="ShowProgress_Click"/>
+        </StackPanel>
+      </Grid>
+    </Control>
   </Window>
