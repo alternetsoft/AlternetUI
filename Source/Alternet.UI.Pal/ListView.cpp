@@ -31,11 +31,16 @@ namespace Alternet::UI
             auto window = GetWxWindow();
             if (window != nullptr)
             {
-                window->Unbind(wxEVT_LIST_ITEM_SELECTED, &ListView::OnItemSelected, this);
-                window->Unbind(wxEVT_LIST_ITEM_DESELECTED, &ListView::OnItemDeselected, this);
-                window->Unbind(wxEVT_LIST_COL_CLICK, &ListView::OnColumnHeaderClicked, this);
-                window->Unbind(wxEVT_LIST_BEGIN_LABEL_EDIT, &ListView::OnBeginLabelEdit, this);
-                window->Unbind(wxEVT_LIST_END_LABEL_EDIT, &ListView::OnEndLabelEdit, this);
+                window->Unbind(wxEVT_LIST_ITEM_SELECTED, 
+                    &ListView::OnItemSelected, this);
+                window->Unbind(wxEVT_LIST_ITEM_DESELECTED, 
+                    &ListView::OnItemDeselected, this);
+                window->Unbind(wxEVT_LIST_COL_CLICK, 
+                    &ListView::OnColumnHeaderClicked, this);
+                window->Unbind(wxEVT_LIST_BEGIN_LABEL_EDIT, 
+                    &ListView::OnBeginLabelEdit, this);
+                window->Unbind(wxEVT_LIST_END_LABEL_EDIT, 
+                    &ListView::OnEndLabelEdit, this);
             }
         }
 
@@ -52,9 +57,10 @@ namespace Alternet::UI
         }
     }
 
-    void ListView::InsertColumnAt(int index, const string& header, double width, ListViewColumnWidthMode widthMode)
+    void ListView::InsertColumnAt(int index, const string& header, 
+        double width, ListViewColumnWidthMode widthMode)
     {
-        if (IsWxWindowCreated() && _view == ListViewView::Details)
+        if (_view == ListViewView::Details)
         {
             auto w = GetWxColumnWidth(width, widthMode);
             GetListView()->InsertColumn(index, wxStr(header), 0, w);
@@ -63,7 +69,7 @@ namespace Alternet::UI
 
     void ListView::RemoveColumnAt(int index)
     {
-        if (IsWxWindowCreated() && _view == ListViewView::Details)
+        if (_view == ListViewView::Details)
             GetListView()->DeleteColumn(index);
     }
 
