@@ -33,9 +33,12 @@ namespace Alternet::UI
 
     wxWindow* TabControl::CreateWxWindowCore(wxWindow* parent)
     {
-        auto notebook = new wxNotebook(parent, -1, wxDefaultPosition, wxDefaultSize, GetStyle());
-        notebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, &TabControl::OnSelectedPageChanged, this);
-        notebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGING, &TabControl::OnSelectedPageChanging, this);
+        auto notebook = new wxNotebook(parent, -1, wxDefaultPosition, 
+            wxDefaultSize, GetStyle());
+        notebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, 
+            &TabControl::OnSelectedPageChanged, this);
+        notebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGING, 
+            &TabControl::OnSelectedPageChanging, this);
         return notebook;
     }
 
