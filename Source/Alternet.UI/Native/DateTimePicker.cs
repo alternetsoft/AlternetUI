@@ -41,6 +41,23 @@ namespace Alternet.UI.Native
             }
         }
         
+        public int ValueKind
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.DateTimePicker_GetValueKind_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.DateTimePicker_SetValueKind_(NativePointer, value);
+            }
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -98,6 +115,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DateTimePicker_SetValue_(IntPtr obj, NativeApiTypes.DateTime value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int DateTimePicker_GetValueKind_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DateTimePicker_SetValueKind_(IntPtr obj, int value);
             
         }
     }

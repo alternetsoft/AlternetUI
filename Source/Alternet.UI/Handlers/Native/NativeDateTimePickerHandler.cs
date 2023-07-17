@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +9,20 @@ namespace Alternet.UI
 {
     internal class NativeDateTimePickerHandler : NativeControlHandler<DateTimePicker, Native.DateTimePicker>
     {
+        public DateTimePickerKind Kind
+        {
+            get
+            {
+                return (DateTimePickerKind)Enum.ToObject(
+                    typeof(DateTimePickerKind), NativeControl.ValueKind);
+            }
+
+            set
+            {
+                NativeControl.ValueKind = (int)value;
+            }
+        }
+
         internal override Native.Control CreateNativeControl()
         {
             return new Native.DateTimePicker();

@@ -1,12 +1,25 @@
 #include "DateTimePicker.h"
-#include "wx/datetime.h"
 
 namespace Alternet::UI
 {
     DateTimePicker::DateTimePicker() :
-        _value(*this, DateTime(), &Control::IsWxWindowCreated, &DateTimePicker::RetrieveValue, &DateTimePicker::ApplyValue)
+        _value(*this, DateTime(), &Control::IsWxWindowCreated,
+            &DateTimePicker::RetrieveValue, &DateTimePicker::ApplyValue)
     {
         GetDelayedValues().Add({ &_value });
+    }
+
+    int DateTimePicker::GetValueKind() 
+    {
+        return _valueKind;
+    }
+
+    void DateTimePicker::SetValueKind(int value)
+    {
+        if (_valueKind == value)
+            return;
+        _valueKind = value;
+        RecreateWxWindowIfNeeded();
     }
 
     DateTimePicker::~DateTimePicker()
@@ -32,11 +45,22 @@ namespace Alternet::UI
         _value.Set(value);
     }
 
+    bool DateTimePicker::IsTimePicker() 
+    {
+        return (_valueKind == 1);
+    }
+
     wxWindow* DateTimePicker::CreateWxWindowCore(wxWindow* parent)
     {
-        auto value = new wxDatePickerCtrl(parent, wxID_ANY);
-        value->Bind(wxEVT_DATE_CHANGED, &DateTimePicker::OnDateTimePickerValueChanged, this);
-        value->Bind(wxEVT_TIME_CHANGED, &DateTimePicker::OnDateTimePickerValueChanged, this);
+        wxWindow* value = nullptr;
+        if(IsTimePicker())
+            value = new wxTimePickerCtrl(parent, wxID_ANY);
+        else
+            value = new wxDatePickerCtrl(parent, wxID_ANY);
+        value->Bind(wxEVT_DATE_CHANGED, 
+            &DateTimePicker::OnDateTimePickerValueChanged, this);
+        value->Bind(wxEVT_TIME_CHANGED, 
+            &DateTimePicker::OnDateTimePickerValueChanged, this);
         return value;
     }
 
@@ -45,18 +69,29 @@ namespace Alternet::UI
         RaiseEvent(DateTimePickerEvent::ValueChanged);
     }
 
-    wxDatePickerCtrl* DateTimePicker::GetDateTimePickerCtrl()
+    wxDatePickerCtrl* DateTimePicker::GetDatePickerCtrl()
     {
         return dynamic_cast<wxDatePickerCtrl*>(GetWxWindow());
     }
 
+    wxTimePickerCtrl* DateTimePicker::GetTimePickerCtrl()
+    {
+        return dynamic_cast<wxTimePickerCtrl*>(GetWxWindow());
+    }
+
     DateTime DateTimePicker::RetrieveValue()
     {
-        return GetDateTimePickerCtrl()->GetValue();
+        if(IsTimePicker())
+            return GetTimePickerCtrl()->GetValue();
+        return GetDatePickerCtrl()->GetValue();
     }
 
     void DateTimePicker::ApplyValue(const DateTime& value)
     {
-        GetDateTimePickerCtrl()->SetValue(value);
+        if (IsTimePicker())
+            GetTimePickerCtrl()->SetTime(value.Hour,value.Minute,value.Second);
+        else
+            GetDatePickerCtrl()->SetValue(value);
     }
+
 }

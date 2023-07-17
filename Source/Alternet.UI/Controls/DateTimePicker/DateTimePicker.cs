@@ -48,6 +48,22 @@ namespace Alternet.UI
             set { SetValue(ValueProperty, value); }
         }
 
+        public DateTimePickerKind Kind
+        {
+            get
+            {
+                return Handler.Kind;
+            }
+
+            set
+            {
+                Handler.Kind = value;
+            }
+        }
+
+        internal new NativeDateTimePickerHandler Handler =>
+            (NativeDateTimePickerHandler)base.Handler;
+
         /// <summary>
         /// Raises the <see cref="ValueChanged"/> event and calls <see cref="OnValueChanged(EventArgs)"/>.
         /// </summary>

@@ -2,6 +2,8 @@
 #include "Common.h"
 #include "ApiTypes.h"
 #include "Control.h"
+#include "wx/datetime.h"
+#include "wx/timectrl.h"
 
 namespace Alternet::UI
 {
@@ -15,13 +17,14 @@ namespace Alternet::UI
         void OnDateTimePickerValueChanged(wxDateEvent& event);
 
     private:
-        wxDatePickerCtrl* GetDateTimePickerCtrl();
+        wxDatePickerCtrl* GetDatePickerCtrl();
+        wxTimePickerCtrl* GetTimePickerCtrl();
+        bool IsTimePicker();
 
         DelayedValue<DateTimePicker, DateTime> _value;
+        int _valueKind;
 
         DateTime RetrieveValue();
-
         void ApplyValue(const DateTime& value);
-
     };
 }

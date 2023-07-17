@@ -4,6 +4,10 @@ public:
 DateTime GetValue();
 void SetValue(const DateTime& value);
 
+
+int GetValueKind();
+void SetValueKind(int value);
+
 public:
 enum class DateTimePickerEvent
 {

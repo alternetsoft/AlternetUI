@@ -9,5 +9,7 @@ namespace NativeApi.Api
         public event EventHandler? ValueChanged { add => throw new Exception(); remove => throw new Exception(); }
 
         public Alternet.UI.DateTime Value { get; set; }
+
+        public int ValueKind { get; set; }
     }
 }

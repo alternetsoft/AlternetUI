@@ -5,11 +5,20 @@
   <StackPanel Orientation="Vertical" Padding="10">
     <GroupBox Title="Date Time Input">
       <StackPanel Orientation="Vertical" Margin="5" Name="textBoxesPanel">
+        <Label Text="Date:" Margin="0,0,0,5"/>
         <DateTimePicker 
           Width="200" HorizontalAlignment="Left"
           Margin="0,0,0,5" Name="datePicker" 
           ValueChanged="DatePicker_DateChanged"/>
         <Label Text="Selected Value" Margin="0,10,0,5" Name="dateLabel"/>
+
+        <Label Text="Time:" Margin="0,10,0,5"/>
+        <DateTimePicker Kind="Time"
+          Width="200" HorizontalAlignment="Left"
+          Margin="0,0,0,5" Name="timePicker"
+          ValueChanged="TimePicker_Changed"/>
+        <Label Text="Selected Value" Margin="0,10,0,5" Name="timeLabel"/>
+
       </StackPanel>
     </GroupBox>
   </StackPanel>
