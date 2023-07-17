@@ -8,6 +8,8 @@ namespace Alternet.Drawing
     public sealed class Font : IDisposable, IEquatable<Font>
     {
         private bool isDisposed;
+        private Font asBold;
+        private Font asUnderlined;
 
         private int? hashCode;
 
@@ -46,6 +48,38 @@ namespace Alternet.Drawing
         {
             NativeFont = nativeFont;
         }
+
+        /// <summary>
+        /// Returns bold version of the font.
+        /// </summary>
+        public Font AsBold
+        {
+            get
+            {
+                if(asBold == null)
+                {
+                    asBold = new(FontFamily, SizeInPoints, FontStyle.Bold);
+                }
+                return asBold;
+            }
+        }
+
+        /// <summary>
+        /// Returns underlined version of the font.
+        /// </summary>
+        public Font AsUnderlined
+        {
+            get
+            {
+                if (asUnderlined == null)
+                {
+                    asUnderlined = new(FontFamily, SizeInPoints, 
+                        FontStyle.Underlined);
+                }
+                return asUnderlined;
+            }
+        }
+
 
         /// <summary>
         /// Gets style information for this <see cref="Font"/>.
