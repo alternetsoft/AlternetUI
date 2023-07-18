@@ -11,6 +11,8 @@ namespace ControlsSample
         public NumericInputPage()
         {
             InitializeComponent();
+
+            NumericUpDown edit1 = numberUpDown1;
         }
 
         public IPageSite? Site
