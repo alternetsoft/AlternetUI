@@ -24,19 +24,24 @@ namespace Alternet.UI
                     typeof(DateTimePicker), // Property owner
                     new FrameworkPropertyMetadata(
                             DateTime.MinValue, // default value
-                            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.AffectsPaint,
-                            new PropertyChangedCallback(OnValuePropertyChanged),    // property changed callback
+                            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | 
+                                FrameworkPropertyMetadataOptions.AffectsPaint,
+                            new PropertyChangedCallback(OnValuePropertyChanged),
                             null, // CoerseValueCallback
                             true, // IsAnimationProhibited
                             UpdateSourceTrigger.PropertyChanged
-                            //UpdateSourceTrigger.LostFocus   // DefaultUpdateSourceTrigger
+                            /*UpdateSourceTrigger.LostFocus   */
+                            /*DefaultUpdateSourceTrigger*/
                             ));
 
         /// <summary>
-        /// Occurs when the <see cref="Value"/> property has been changed in some way.
+        /// Occurs when the <see cref="Value"/> property has been changed in
+        /// some way.
         /// </summary>
-        /// <remarks>For the <see cref="ValueChanged"/> event to occur, the <see cref="Value"/> property can be changed in code,
-        /// by clicking the up or down button, or by the user entering a new value that is read by the control.</remarks>
+        /// <remarks>For the <see cref="ValueChanged"/> event to occur, the
+        /// <see cref="Value"/> property can be changed in code,
+        /// by clicking the up or down button, or by the user entering a new
+        /// value that is read by the control.</remarks>
         public event EventHandler? ValueChanged;
 
         /// <summary>
@@ -58,6 +63,19 @@ namespace Alternet.UI
             set
             {
                 Handler.Kind = value;
+            }
+        }
+
+        public DateTimePickerPopupKind PopupKind
+        {
+            get
+            {
+                return Handler.PopupKind;
+            }
+
+            set
+            {
+                Handler.PopupKind = value;
             }
         }
 

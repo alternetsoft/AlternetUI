@@ -8,6 +8,10 @@ void SetValue(const DateTime& value);
 int GetValueKind();
 void SetValueKind(int value);
 
+
+int GetPopupKind();
+void SetPopupKind(int value);
+
 public:
 enum class DateTimePickerEvent
 {

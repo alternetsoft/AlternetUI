@@ -211,29 +211,48 @@ namespace Alternet::UI
         int Hour = 0, Minute = 0, Second = 0, Millisecond = 0;
 
         DateTime()
-            :DateTime(wxDateTime::Today())
+            :DateTime(wxDateTime::Now())
         {
         }
 
         DateTime(const wxDateTime& c)
         {
             wxDateTime::Tm cc = c.GetTm();
-            Year = cc.year;
-            Month = cc.mon;
-            Day = cc.mday;
+
+            Year = cc.year; // tm_year field is the offset from 1900
+            Month = cc.mon + 1; // mon should be < 12
+            Day = cc.mday; // mday - Day of the month in 1..31 range
             Hour = cc.hour;
             Minute = cc.min;
             Second = cc.sec;
             Millisecond = cc.msec;
         }
 
-        operator DateTime_C() { return DateTime_C{ Year, (uint8_t)(Month + 1), Day, Hour, Minute, Second, Millisecond }; }
+        operator DateTime_C() { 
+            return DateTime_C{ Year, Month, // was (uint8_t)(Month + 1)
+                Day, Hour, Minute, Second, Millisecond }; }
 
-        bool operator==(const DateTime& rhs) { return Hour == rhs.Hour && Minute == rhs.Minute && Second == rhs.Second && Millisecond == rhs.Millisecond && Year == rhs.Year && Month == rhs.Month && Day == rhs.Day; }
+        bool operator==(const DateTime& rhs) { 
+            return Hour == rhs.Hour && Minute == rhs.Minute && Second == rhs.Second 
+                && Millisecond == rhs.Millisecond && Year == rhs.Year && 
+                Month == rhs.Month && Day == rhs.Day; }
         bool operator!=(const DateTime& rhs) { return !(*this == rhs); }
 
-        operator wxDateTime() const { return wxDateTime(Day, (wxDateTime::Month)(Month - 1), Year, Hour, Minute, Second, Millisecond); }
-    };
+        operator wxDateTime() const { 
+
+            /*
+            inline wxDateTime::wxDateTime(wxDateTime_t day,
+                Month        month,
+                int          year,
+                wxDateTime_t hour,
+                wxDateTime_t minute,
+                wxDateTime_t second,
+                wxDateTime_t millisec)
+            */
+
+            return wxDateTime(Day, (wxDateTime::Month)(Month - 1), 
+                Year, Hour, Minute, Second, Millisecond); }
+        };
 
     class ParkingWindow
     {

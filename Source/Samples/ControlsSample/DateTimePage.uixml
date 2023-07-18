@@ -4,22 +4,40 @@
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
   <StackPanel Orientation="Vertical" Padding="10">
     <GroupBox Title="Date Time Input">
-      <StackPanel Orientation="Vertical" Margin="5" Name="textBoxesPanel">
-        <Label Text="Date:" Margin="0,0,0,5"/>
-        <DateTimePicker 
-          Width="200" HorizontalAlignment="Left"
-          Margin="0,0,0,5" Name="datePicker" 
-          ValueChanged="DatePicker_DateChanged"/>
-        <Label Text="Selected Value" Margin="0,10,0,5" Name="dateLabel"/>
+      <HorizontalStackPanel>
+        <VerticalStackPanel Margin="5" Name="textBoxesPanel">
+          <Label Text="Date:" Margin="0,0,0,5"/>
+          <DateTimePicker
+            Width="200" HorizontalAlignment="Left"
+            Margin="0,0,0,5" Name="datePicker"
+            ValueChanged="DatePicker_DateChanged"/>
+          <Label Text="Selected Value" Margin="0,10,0,5" Name="dateLabel"/>
 
-        <Label Text="Time:" Margin="0,10,0,5"/>
-        <DateTimePicker Kind="Time"
-          Width="200" HorizontalAlignment="Left"
-          Margin="0,0,0,5" Name="timePicker"
-          ValueChanged="TimePicker_Changed"/>
-        <Label Text="Selected Value" Margin="0,10,0,5" Name="timeLabel"/>
-
-      </StackPanel>
+          <Label Text="Time:" Margin="0,10,0,5"/>
+          <DateTimePicker Kind="Time"
+            Width="200" HorizontalAlignment="Left"
+            Margin="0,0,0,5" Name="timePicker"
+            ValueChanged="TimePicker_Changed"/>
+          <Label Text="Selected Value" Margin="0,10,0,5" Name="timeLabel"/>
+        </VerticalStackPanel>
+        <VerticalStackPanel Margin="5" Padding="5">
+          <GroupBox Title="Date Editor" Margin="0,0,0,5">
+            <VerticalStackPanel Margin="5">
+              <RadioButton Text="Default" Margin="0,0,0,5" IsChecked="True" 
+                           Name="DefaultRadioButton" 
+                           CheckedChanged="Popup_CheckedChanged" />
+              <RadioButton Text="Spin" Margin="0,0,0,5"  
+                           Name="SpinRadioButton" 
+                           CheckedChanged="Popup_CheckedChanged" />
+              <RadioButton Text="DropDown" Margin="0,0,0,5" 
+                           Name="DropDownRadioButton" 
+                           CheckedChanged="Popup_CheckedChanged" />
+            </VerticalStackPanel>
+          </GroupBox>
+          <Button Text="Set Now" Click="SetNow_Click" Margin="0,0,0,5"/>
+          <Button Text="Set Now Date" Click="SetNowDate_Click" Margin="0,0,0,5"/>
+        </VerticalStackPanel>  
+      </HorizontalStackPanel>
     </GroupBox>
   </StackPanel>
-  </Control>
+</Control>

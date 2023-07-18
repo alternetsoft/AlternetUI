@@ -23,6 +23,7 @@ namespace Alternet::UI
 
         DelayedValue<DateTimePicker, DateTime> _value;
         int _valueKind;
+        int _popupKind;
 
         DateTime RetrieveValue();
         void ApplyValue(const DateTime& value);

@@ -9,6 +9,19 @@ namespace Alternet::UI
         GetDelayedValues().Add({ &_value });
     }
 
+    int DateTimePicker::GetPopupKind() 
+    {
+        return _popupKind;
+    }
+
+    void DateTimePicker::SetPopupKind(int value)
+    {
+        if (_popupKind == value)
+            return;
+        _popupKind = value;
+        RecreateWxWindowIfNeeded();
+    }
+
     int DateTimePicker::GetValueKind() 
     {
         return _valueKind;
@@ -55,8 +68,28 @@ namespace Alternet::UI
         wxWindow* value = nullptr;
         if(IsTimePicker())
             value = new wxTimePickerCtrl(parent, wxID_ANY);
-        else
-            value = new wxDatePickerCtrl(parent, wxID_ANY);
+        else 
+        {
+            long style = wxDP_DEFAULT;
+
+            if (_popupKind == 1)
+                style = wxDP_SPIN;
+            if (_popupKind == 2)
+                style = wxDP_DROPDOWN;
+
+            style = style | wxDP_SHOWCENTURY;
+
+            wxDateTime v = _value.GetDelayed();
+            
+            value = new wxDatePickerCtrl(parent,
+                wxID_ANY,
+                v,
+                wxDefaultPosition,
+                wxDefaultSize,
+                style,
+                wxDefaultValidator
+            );
+        }
         value->Bind(wxEVT_DATE_CHANGED, 
             &DateTimePicker::OnDateTimePickerValueChanged, this);
         value->Bind(wxEVT_TIME_CHANGED, 
@@ -83,7 +116,9 @@ namespace Alternet::UI
     {
         if(IsTimePicker())
             return GetTimePickerCtrl()->GetValue();
-        return GetDatePickerCtrl()->GetValue();
+        wxDateTime wxresult = GetDatePickerCtrl()->GetValue();
+        DateTime result = DateTime(wxresult);
+        return result;
     }
 
     void DateTimePicker::ApplyValue(const DateTime& value)
@@ -91,7 +126,10 @@ namespace Alternet::UI
         if (IsTimePicker())
             GetTimePickerCtrl()->SetTime(value.Hour,value.Minute,value.Second);
         else
-            GetDatePickerCtrl()->SetValue(value);
+        {
+            wxDateTime wxValue = value;
+            GetDatePickerCtrl()->SetValue(wxValue);
+        }
     }
 
 }

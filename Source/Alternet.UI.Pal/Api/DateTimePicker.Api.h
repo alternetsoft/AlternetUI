@@ -43,6 +43,20 @@ ALTERNET_UI_API void DateTimePicker_SetValueKind_(DateTimePicker* obj, int value
         });
 }
 
+ALTERNET_UI_API int DateTimePicker_GetPopupKind_(DateTimePicker* obj)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetPopupKind();
+        });
+}
+
+ALTERNET_UI_API void DateTimePicker_SetPopupKind_(DateTimePicker* obj, int value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetPopupKind(value);
+        });
+}
+
 ALTERNET_UI_API void DateTimePicker_SetEventCallback_(DateTimePicker::DateTimePickerEventCallbackType callback)
 {
     DateTimePicker::SetEventCallback(callback);

@@ -9,6 +9,20 @@ namespace Alternet.UI
 {
     internal class NativeDateTimePickerHandler : NativeControlHandler<DateTimePicker, Native.DateTimePicker>
     {
+        public DateTimePickerPopupKind PopupKind
+        {
+            get
+            {
+                return (DateTimePickerPopupKind)Enum.ToObject(
+                    typeof(DateTimePickerPopupKind), NativeControl.PopupKind);
+            }
+
+            set
+            {
+                NativeControl.PopupKind = (int)value;
+            }
+        }
+
         public DateTimePickerKind Kind
         {
             get

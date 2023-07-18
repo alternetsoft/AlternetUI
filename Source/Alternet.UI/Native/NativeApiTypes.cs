@@ -152,10 +152,22 @@ namespace Alternet.UI.Native
         [StructLayout(LayoutKind.Sequential)]
         public struct DateTime
         {
-            public int Year, Month, Day;
-            public int Hour, Minute, Second, Millisecond;
+            public int Year; /* 1-9999 */
+            public int Month; /* 1-12 */
+            public int Day; /* 1-31 */
+            public int Hour; /* 0-23 */
+            public int Minute; /* 0-59 */
+            public int Second; /* 0-59 */
+            public int Millisecond; /* 0-999 */
 
-            public DateTime(int year, int month, int day, int hour, int minute, int second, int millisecond)
+            public DateTime(
+                int year,
+                int month,
+                int day,
+                int hour,
+                int minute,
+                int second,
+                int millisecond)
             {
                 Year = year;
                 Month = month;
@@ -166,9 +178,13 @@ namespace Alternet.UI.Native
                 Millisecond = millisecond;
             }
 
-            public static implicit operator System.DateTime(DateTime v) => new System.DateTime(v.Year, v.Month, v.Day, v.Hour, v.Minute, v.Second, v.Millisecond);
+            public static implicit operator System.DateTime(DateTime v) =>
+                new(v.Year, v.Month, v.Day, v.Hour, v.Minute,
+                v.Second, v.Millisecond);
 
-            public static implicit operator DateTime(System.DateTime v) => new DateTime(v.Year, v.Month, v.Day, v.Hour, v.Minute, v.Second, v.Millisecond);
+            public static implicit operator DateTime(System.DateTime v) =>
+                new(v.Year, v.Month, v.Day, v.Hour, v.Minute, v.Second,
+                    v.Millisecond);
         }
     }
 }
