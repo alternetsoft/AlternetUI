@@ -37,6 +37,13 @@ namespace Alternet.UI
             }
         }
 
+        public void SetRange(DateTime min, DateTime max, bool useMin, bool useMax)
+        {
+            NativeControl.MinValue = min;
+            NativeControl.MaxValue = max;
+            NativeControl.SetRange(useMin, useMax);
+        }
+
         internal override Native.Control CreateNativeControl()
         {
             return new Native.DateTimePicker();

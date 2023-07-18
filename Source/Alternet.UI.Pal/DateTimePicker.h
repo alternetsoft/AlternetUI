@@ -22,6 +22,8 @@ namespace Alternet::UI
         bool IsTimePicker();
 
         DelayedValue<DateTimePicker, DateTime> _value;
+        DateTime _minValue = DateTime();
+        DateTime _maxValue = DateTime();
         int _valueKind;
         int _popupKind;
 

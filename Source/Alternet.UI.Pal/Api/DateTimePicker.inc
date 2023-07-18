@@ -5,6 +5,14 @@ DateTime GetValue();
 void SetValue(const DateTime& value);
 
 
+DateTime GetMinValue();
+void SetMinValue(const DateTime& value);
+
+
+DateTime GetMaxValue();
+void SetMaxValue(const DateTime& value);
+
+
 int GetValueKind();
 void SetValueKind(int value);
 
@@ -12,6 +20,7 @@ void SetValueKind(int value);
 int GetPopupKind();
 void SetPopupKind(int value);
 
+void SetRange(bool useMinValue, bool useMaxValue);
 public:
 enum class DateTimePickerEvent
 {

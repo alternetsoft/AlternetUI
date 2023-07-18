@@ -112,6 +112,42 @@ namespace Alternet::UI
         return dynamic_cast<wxTimePickerCtrl*>(GetWxWindow());
     }
 
+    DateTime DateTimePicker::GetMinValue()
+    {
+        return _minValue;
+    }
+    
+    void DateTimePicker::SetMinValue(const DateTime& value)
+    {
+        _minValue = value;
+    }
+    
+    DateTime DateTimePicker::GetMaxValue()
+    {
+        return _maxValue;
+    }
+
+    void DateTimePicker::SetMaxValue(const DateTime& value)
+    {
+        _maxValue = value;
+    }
+
+    void DateTimePicker::SetRange(bool useMinValue, bool useMaxValue)
+    {
+        if (IsTimePicker())
+            return;
+
+        wxDateTime wxdt1 = wxInvalidDateTime;
+        if (useMinValue)
+            wxdt1 = _minValue;
+
+        wxDateTime wxdt2 = wxInvalidDateTime;
+        if (useMaxValue)
+            wxdt2 = _maxValue;
+
+        GetDatePickerCtrl()->SetRange(wxdt1, wxdt2);        
+    }
+
     DateTime DateTimePicker::RetrieveValue()
     {
         if(IsTimePicker())

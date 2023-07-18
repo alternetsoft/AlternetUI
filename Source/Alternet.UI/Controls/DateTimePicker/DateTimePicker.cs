@@ -1,12 +1,11 @@
-﻿using Alternet.Base.Collections;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alternet.Base.Collections;
 
 namespace Alternet.UI
 {
@@ -43,6 +42,8 @@ namespace Alternet.UI
 
         private DateTime max = DateTime.MaxValue;
         private DateTime min = DateTime.MinValue;
+        private bool useMinDate = false;
+        private bool useMaxDate = false;
 
         /// <summary>
         /// Occurs when the <see cref="Value"/> property has been changed in
@@ -139,6 +140,55 @@ namespace Alternet.UI
                     if (Value > max)
                         Value = max;
                 }
+            }
+        }
+
+        public bool UseMinDate
+        {
+            get
+            {
+                return useMinDate;
+            }
+
+            set
+            {
+                if (useMinDate == value)
+                    return;
+                useMinDate = value;
+                SetRange();
+            }
+        }
+
+        public bool UseMinMaxDate
+        {
+            get
+            {
+                return useMinDate && useMaxDate;
+            }
+
+            set
+            {
+                if (useMinDate == value && useMaxDate == value)
+                    return;
+                useMinDate = value;
+                useMaxDate = value;
+                SetRange();
+            }
+        }
+
+        public bool UseMaxDate
+        {
+            get
+            {
+                return useMaxDate;
+            }
+
+            set
+            {
+                if (useMaxDate == value)
+                    return;
+                useMaxDate = value;
+                SetRange();
             }
         }
 
@@ -271,7 +321,7 @@ namespace Alternet.UI
 
         private void SetRange(DateTime min, DateTime max)
         {
-
+            Handler.SetRange(min, max, useMinDate, useMaxDate);
         }
 
         private void SetRange()

@@ -29,6 +29,34 @@ ALTERNET_UI_API void DateTimePicker_SetValue_(DateTimePicker* obj, DateTime valu
         });
 }
 
+ALTERNET_UI_API DateTime_C DateTimePicker_GetMinValue_(DateTimePicker* obj)
+{
+    return MarshalExceptions<DateTime_C>([&](){
+            return obj->GetMinValue();
+        });
+}
+
+ALTERNET_UI_API void DateTimePicker_SetMinValue_(DateTimePicker* obj, DateTime value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetMinValue(value);
+        });
+}
+
+ALTERNET_UI_API DateTime_C DateTimePicker_GetMaxValue_(DateTimePicker* obj)
+{
+    return MarshalExceptions<DateTime_C>([&](){
+            return obj->GetMaxValue();
+        });
+}
+
+ALTERNET_UI_API void DateTimePicker_SetMaxValue_(DateTimePicker* obj, DateTime value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetMaxValue(value);
+        });
+}
+
 ALTERNET_UI_API int DateTimePicker_GetValueKind_(DateTimePicker* obj)
 {
     return MarshalExceptions<int>([&](){
@@ -54,6 +82,13 @@ ALTERNET_UI_API void DateTimePicker_SetPopupKind_(DateTimePicker* obj, int value
 {
     MarshalExceptions<void>([&](){
             obj->SetPopupKind(value);
+        });
+}
+
+ALTERNET_UI_API void DateTimePicker_SetRange_(DateTimePicker* obj, c_bool useMinValue, c_bool useMaxValue)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetRange(useMinValue, useMaxValue);
         });
 }
 
