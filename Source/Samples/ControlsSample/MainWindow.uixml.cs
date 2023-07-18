@@ -38,7 +38,7 @@ namespace ControlsSample
 
             var headerPanel = new HorizontalStackPanel() 
             {
-                HorizontalAlignment = HorizontalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Right,
             };
             var linkLabel = new LinkLabel()
             {
@@ -49,7 +49,7 @@ namespace ControlsSample
             var linkLabel2 = new LinkLabel()
             {
                 Text = "Documentation",
-                Margin = new Thickness(5),
+                Margin = new Thickness(5,5,10,5),
                 Url = @"https://docs.alternet-ui.com/introduction/getting-started.html",
             };
             headerPanel.Children.Add(linkLabel);
