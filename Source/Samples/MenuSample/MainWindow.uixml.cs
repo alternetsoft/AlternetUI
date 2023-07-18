@@ -48,6 +48,9 @@ namespace MenuSample
                 AddVertToolbar();
                 AddBottomToolbar();
             }
+
+            contextMenuBorder.BorderColor = Color.Red;
+            contextMenuBorder.BorderWidth = new Thickness(0, 1, 0, 1);
         }
 
         private ToolbarPanel CreateVertToolbar()
