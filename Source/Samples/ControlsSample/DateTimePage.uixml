@@ -5,7 +5,7 @@
   <StackPanel Orientation="Vertical" Padding="10">
     <GroupBox Title="Date Time Input">
       <HorizontalStackPanel>
-        
+
         <VerticalStackPanel Margin="5" Name="textBoxesPanel">
           <Label Text="Date:" Margin="0,0,0,5"/>
           <DateTimePicker
@@ -21,18 +21,18 @@
             ValueChanged="TimePicker_Changed"/>
           <Label Text="Selected Value" Margin="0,10,0,5" Name="timeLabel"/>
         </VerticalStackPanel>
-        
+
         <VerticalStackPanel Margin="5" Padding="5">
           <GroupBox Title="Date Editor" Margin="0,0,0,5">
             <VerticalStackPanel Margin="5">
-              <RadioButton Text="Default" Margin="0,0,0,5" IsChecked="True" 
-                           Name="DefaultRadioButton" 
+              <RadioButton Text="Default" Margin="0,0,0,5" IsChecked="True"
+                           Name="DefaultRadioButton"
                            CheckedChanged="Popup_CheckedChanged" />
-              <RadioButton Text="Spin" Margin="0,0,0,5"  
-                           Name="SpinRadioButton" 
+              <RadioButton Text="Spin" Margin="0,0,0,5"
+                           Name="SpinRadioButton"
                            CheckedChanged="Popup_CheckedChanged" />
-              <RadioButton Text="DropDown" Margin="0,0,0,5" 
-                           Name="DropDownRadioButton" 
+              <RadioButton Text="DropDown" Margin="0,0,0,5"
+                           Name="DropDownRadioButton"
                            CheckedChanged="Popup_CheckedChanged" />
             </VerticalStackPanel>
           </GroupBox>
@@ -41,6 +41,18 @@
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5" Padding="5">
+          <GroupBox Title="Date Editor" Margin="0,0,0,5">
+            <VerticalStackPanel Margin="5">
+              <Button Text="Any date" Margin="0,0,0,5"
+                      Click="RangeAnyDate_Click" />
+              <Button Text="&lt;= Tomorrow" Margin="0,0,0,5"
+                      Click="RangeTomorrow_Click" />
+              <Button Text="&gt;= Yesterday" Margin="0,0,0,5"
+                      Click="RangeYesterday_Click" />
+              <Button Text="Yesterday..Tomorrow" Margin="0,0,0,5"
+                      Click="RangeYesterdayTomorrow_Click" />
+            </VerticalStackPanel>
+          </GroupBox>
           <Button Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton"
                   Click="HasBorderButton_Click" Visible="false"/>
         </VerticalStackPanel>

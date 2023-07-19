@@ -146,8 +146,6 @@ namespace Alternet.UI
 
                     max = value;
                     SetRange();
-                    if (Value > max)
-                        Value = max;
                 }
             }
         }
@@ -229,8 +227,6 @@ namespace Alternet.UI
                         throw new ArgumentOutOfRangeException(nameof(MinDate));
                     min = value;
                     SetRange();
-                    if (Value < min)
-                        Value = min;
                 }
             }
         }
@@ -335,6 +331,18 @@ namespace Alternet.UI
 
         private void SetRange()
         {
+            if (UseMinDate)
+            {
+                if (Value < min)
+                    Value = min;
+            }
+
+            if (UseMaxDate)
+            {
+                if (Value > max)
+                    Value = max;
+            }
+
             SetRange(EffectiveMinDate(min), EffectiveMaxDate(max));
         }
     }

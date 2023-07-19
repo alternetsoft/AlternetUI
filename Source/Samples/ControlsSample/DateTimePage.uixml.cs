@@ -58,6 +58,33 @@ namespace ControlsSample
             //timePicker.HasBorder = !timePicker.HasBorder;
         }
 
+        private void RangeAnyDate_Click(object? sender, EventArgs e)
+        {
+            datePicker.UseMinMaxDate = false;
+        }
+
+        private void RangeTomorrow_Click(object? sender, EventArgs e)
+        {
+            datePicker.UseMinMaxDate = false;
+            datePicker.MaxDate = DateTime.Today.AddDays(1);
+            datePicker.UseMaxDate = true;
+        }
+
+        private void RangeYesterday_Click(object? sender, EventArgs e)
+        {
+            datePicker.UseMinMaxDate = false;
+            datePicker.MinDate = DateTime.Today.AddDays(-1);
+            datePicker.UseMinDate = true;
+        }
+
+        private void RangeYesterdayTomorrow_Click(object? sender, EventArgs e)
+        {
+            datePicker.UseMinMaxDate = false;
+            datePicker.MaxDate = DateTime.Today.AddDays(1);
+            datePicker.MinDate = DateTime.Today.AddDays(-1);
+            datePicker.UseMinMaxDate = true;
+        }
+
         private void Popup_CheckedChanged(object? sender, EventArgs e)
         {
             if (SpinRadioButton.IsChecked)
