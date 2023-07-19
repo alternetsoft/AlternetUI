@@ -10,7 +10,8 @@ namespace Alternet.UI
 
         private bool applyingSelection;
 
-        public new Native.ListBox NativeControl => (Native.ListBox)base.NativeControl!;
+        internal new Native.ListBox NativeControl =>
+            (Native.ListBox)base.NativeControl!;
 
         /// <inheritdoc/>
         public override void EnsureVisible(int itemIndex)
@@ -27,7 +28,7 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            return new Native.NativeListBoxEx();
+            return new NativeListBox();
         }
 
         protected override void OnAttach()
@@ -139,6 +140,19 @@ namespace Alternet.UI
         private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<object> e)
         {
             NativeControl.RemoveItemAt(e.Index);
+        }
+
+        private class NativeListBox : Native.ListBox
+        {
+            public NativeListBox()
+            {
+                SetNativePointer(NativeApi.ListBox_CreateEx_(1));
+            }
+
+            public NativeListBox(IntPtr nativePointer)
+                : base(nativePointer)
+            {
+            }
         }
     }
 }

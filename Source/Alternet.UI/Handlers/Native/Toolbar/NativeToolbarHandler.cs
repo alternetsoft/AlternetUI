@@ -49,10 +49,10 @@ namespace Alternet.UI
         {
             NativeControl.Realize();
         }
-        
+
         internal override Native.Control CreateNativeControl()
         {
-            return new Native.NativeToolbarEx(mainToolbar);
+            return new FloatingToolbar(mainToolbar);
         }
 
         protected override void OnDetach()
@@ -94,6 +94,19 @@ namespace Alternet.UI
         private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<ToolbarItem> e)
         {
             NativeControl.RemoveItemAt(e.Index);
+        }
+
+        private class FloatingToolbar : Native.Toolbar
+        {
+            public FloatingToolbar(bool mainToolbar)
+            {
+                SetNativePointer(NativeApi.Toolbar_CreateEx_(mainToolbar));
+            }
+
+            public FloatingToolbar(IntPtr nativePointer)
+                : base(nativePointer)
+            {
+            }
         }
     }
 }
