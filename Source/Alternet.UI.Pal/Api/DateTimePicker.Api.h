@@ -15,6 +15,20 @@ ALTERNET_UI_API DateTimePicker* DateTimePicker_Create_()
         });
 }
 
+ALTERNET_UI_API c_bool DateTimePicker_GetHasBorder_(DateTimePicker* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetHasBorder();
+        });
+}
+
+ALTERNET_UI_API void DateTimePicker_SetHasBorder_(DateTimePicker* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetHasBorder(value);
+        });
+}
+
 ALTERNET_UI_API DateTime_C DateTimePicker_GetValue_(DateTimePicker* obj)
 {
     return MarshalExceptions<DateTime_C>([&](){

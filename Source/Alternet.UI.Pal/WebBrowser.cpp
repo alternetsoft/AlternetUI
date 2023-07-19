@@ -282,18 +282,36 @@ namespace Alternet::UI
         {
         }
     }
-    
+
+    bool WebBrowser::GetHasBorder()
+    {
+        return hasBorder;
+    }
+
+    void WebBrowser::SetHasBorder(bool value)
+    {
+        if (hasBorder == value)
+            return;
+        hasBorder = value;
+        RecreateWxWindowIfNeeded();
+    }
+
     void WebBrowser::CreateBackend()
     {
         RaiseSimpleEvent(WebBrowserEvent::BeforeBrowserCreate);
+
+        long style = GetBorderStyle();
+
+        if (!hasBorder)
+            style = style | wxBORDER_NONE;
+
         webView->Create(
             webViewParent,
-            -1,
+            wxID_ANY,
             WebBrowser::DefaultPage,
             wxDefaultPosition,
             wxDefaultSize,
-            0,
-            "");
+            style);
     }
     
     wxWindow* WebBrowser::CreateWxWindowCore(wxWindow* parent)

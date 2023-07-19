@@ -15,6 +15,20 @@ ALTERNET_UI_API WebBrowser* WebBrowser_Create_()
         });
 }
 
+ALTERNET_UI_API c_bool WebBrowser_GetHasBorder_(WebBrowser* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetHasBorder();
+        });
+}
+
+ALTERNET_UI_API void WebBrowser_SetHasBorder_(WebBrowser* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetHasBorder(value);
+        });
+}
+
 ALTERNET_UI_API c_bool WebBrowser_GetCanGoBack_(WebBrowser* obj)
 {
     return MarshalExceptions<c_bool>([&](){

@@ -21,6 +21,7 @@ namespace Alternet::UI
         wxTimePickerCtrl* GetTimePickerCtrl();
         bool IsTimePicker();
 
+        bool hasBorder = true;
         DelayedValue<DateTimePicker, DateTime> _value;
         DateTime _minValue = DateTime();
         DateTime _maxValue = DateTime();

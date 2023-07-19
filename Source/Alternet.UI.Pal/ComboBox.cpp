@@ -3,7 +3,8 @@
 namespace Alternet::UI
 {
     // Linux performance note: combo box with many items is really slow on Linux.
-    // This seems to be a known problem, see https://gitlab.gnome.org/GNOME/gtk/-/issues/1910
+    // This seems to be a known problem, 
+    // see https://gitlab.gnome.org/GNOME/gtk/-/issues/1910
 
     constexpr bool UseChoiceControlForReadOnlyComboBox = true;
 //#ifdef __WXMSW__
@@ -13,10 +14,25 @@ namespace Alternet::UI
 //#endif
 
     ComboBox::ComboBox() :
-        _selectedIndex(*this, -1, &Control::IsWxWindowCreated, &ComboBox::RetrieveSelectedIndex, &ComboBox::ApplySelectedIndex),
-        _text(*this, u"", &ComboBox::IsUsingComboBoxControl, &ComboBox::RetrieveText, &ComboBox::ApplyText)
+        _selectedIndex(*this, -1, &Control::IsWxWindowCreated, 
+            &ComboBox::RetrieveSelectedIndex, &ComboBox::ApplySelectedIndex),
+        _text(*this, u"", &ComboBox::IsUsingComboBoxControl, &ComboBox::RetrieveText, 
+            &ComboBox::ApplyText)
     {
         GetDelayedValues().Add({ &_selectedIndex, &_text });
+    }
+
+    bool ComboBox::GetHasBorder()
+    {
+        return hasBorder;
+    }
+
+    void ComboBox::SetHasBorder(bool value)
+    {
+        if (hasBorder == value)
+            return;
+        hasBorder = value;
+        RecreateWxWindowIfNeeded();
     }
 
     ComboBox::~ComboBox()
@@ -31,7 +47,8 @@ namespace Alternet::UI
             else if (IsUsingComboBoxControl())
             {
                 auto window = GetComboBox();
-                window->Unbind(wxEVT_COMBOBOX, &ComboBox::OnSelectedItemChanged, this);
+                window->Unbind(wxEVT_COMBOBOX, 
+                    &ComboBox::OnSelectedItemChanged, this);
                 window->Unbind(wxEVT_TEXT, &ComboBox::OnTextChanged, this);
             }
         }
@@ -92,15 +109,32 @@ namespace Alternet::UI
 
     wxWindow* ComboBox::CreateWxWindowCore(wxWindow* parent)
     {
+        long style = GetBorderStyle();
+
+        if (!hasBorder)
+            style = style | wxBORDER_NONE;
+
         if (!_isEditable && UseChoiceControlForReadOnlyComboBox)
         {
-            // On non-Windows systems wxChoice looks different than read-only wxComboBox.
-            auto value = new wxChoice(parent, wxID_ANY);
+            // On non-Windows systems wxChoice looks different than 
+            // read-only wxComboBox.
+            auto value = new wxChoice(
+                parent,
+                wxID_ANY,
+                wxDefaultPosition,
+                wxDefaultSize,
+                0,
+                NULL,
+                style,
+                wxDefaultValidator);
+
             value->Bind(wxEVT_CHOICE, &ComboBox::OnSelectedItemChanged, this);
             return value;
         }
         else
         {
+            auto comboStyle = _isEditable ? wxCB_DROPDOWN : wxCB_READONLY;
+            style = style | comboStyle;
             auto value = new wxComboBox(
                 parent,
                 wxID_ANY,
@@ -109,7 +143,7 @@ namespace Alternet::UI
                 wxDefaultSize,
                 0,
                 NULL,
-                _isEditable ? wxCB_DROPDOWN : wxCB_READONLY);
+                style);
 
             value->Bind(wxEVT_COMBOBOX, &ComboBox::OnSelectedItemChanged, this);
             value->Bind(wxEVT_TEXT, &ComboBox::OnTextChanged, this);

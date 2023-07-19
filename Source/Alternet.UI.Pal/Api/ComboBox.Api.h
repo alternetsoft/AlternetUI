@@ -15,6 +15,20 @@ ALTERNET_UI_API ComboBox* ComboBox_Create_()
         });
 }
 
+ALTERNET_UI_API c_bool ComboBox_GetHasBorder_(ComboBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetHasBorder();
+        });
+}
+
+ALTERNET_UI_API void ComboBox_SetHasBorder_(ComboBox* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetHasBorder(value);
+        });
+}
+
 ALTERNET_UI_API int ComboBox_GetItemsCount_(ComboBox* obj)
 {
     return MarshalExceptions<int>([&](){

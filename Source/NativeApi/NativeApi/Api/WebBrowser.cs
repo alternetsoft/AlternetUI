@@ -1,18 +1,25 @@
-﻿using ApiCommon;
+﻿#pragma warning disable
+using ApiCommon;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace NativeApi.Api
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ok")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", 
+        "CA1822:Mark members as static", Justification = "ok")]
     public class WebBrowser : Control
     {
-        public static void SetDefaultUserAgent(string value) => throw new Exception();
+        public bool HasBorder { get; set; }
+
+        public static void SetDefaultUserAgent(string value) => 
+            throw new Exception();
         public static void SetDefaultScriptMesageName(string value) 
             => throw new Exception();
-        public static void SetDefaultFSNameMemory(string value) => throw new Exception();
-        public static void SetDefaultFSNameArchive(string value) => throw new Exception();
+        public static void SetDefaultFSNameMemory(string value) => 
+            throw new Exception();
+        public static void SetDefaultFSNameArchive(string value) => 
+            throw new Exception();
 
         public bool CanGoBack { get; }
         public bool CanGoForward { get; }

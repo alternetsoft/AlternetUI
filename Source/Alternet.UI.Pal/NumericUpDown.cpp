@@ -3,11 +3,27 @@
 namespace Alternet::UI
 {
     NumericUpDown::NumericUpDown():
-        _value(*this, 0, &Control::IsWxWindowCreated, &NumericUpDown::RetrieveValue, &NumericUpDown::ApplyValue),
-        _maximum(*this, 100, &Control::IsWxWindowCreated, &NumericUpDown::RetrieveMaximum, &NumericUpDown::ApplyMaximum),
-        _minimum(*this, 0, &Control::IsWxWindowCreated, &NumericUpDown::RetrieveMinimum, &NumericUpDown::ApplyMinimum)
+        _value(*this, 0, &Control::IsWxWindowCreated, 
+            &NumericUpDown::RetrieveValue, &NumericUpDown::ApplyValue),
+        _maximum(*this, 100, &Control::IsWxWindowCreated, 
+            &NumericUpDown::RetrieveMaximum, &NumericUpDown::ApplyMaximum),
+        _minimum(*this, 0, &Control::IsWxWindowCreated, 
+            &NumericUpDown::RetrieveMinimum, &NumericUpDown::ApplyMinimum)
     {
         GetDelayedValues().Add({&_minimum, &_maximum, &_value });
+    }
+
+    bool NumericUpDown::GetHasBorder()
+    {
+        return hasBorder;
+    }
+
+    void NumericUpDown::SetHasBorder(bool value)
+    {
+        if (hasBorder == value)
+            return;
+        hasBorder = value;
+        RecreateWxWindowIfNeeded();
     }
 
     NumericUpDown::~NumericUpDown()
@@ -17,7 +33,8 @@ namespace Alternet::UI
             auto window = GetWxWindow();
             if (window != nullptr)
             {
-                window->Unbind(wxEVT_SPINCTRL, &NumericUpDown::OnSpinCtrlValueChanged, this);
+                window->Unbind(wxEVT_SPINCTRL, 
+                    &NumericUpDown::OnSpinCtrlValueChanged, this);
             }
         }
     }
@@ -54,18 +71,18 @@ namespace Alternet::UI
 
     wxWindow* NumericUpDown::CreateWxWindowCore(wxWindow* parent)
     {
-/*
-wxSpinCtrl(wxWindow *parent,
-               wxWindowID id = wxID_ANY,
-               const wxString& value = wxEmptyString,
-               const wxPoint& pos = wxDefaultPosition,
-               const wxSize& size = wxDefaultSize,
-               long style = wxSP_ARROW_KEYS,
-               int min = 0, int max = 100, int initial = 0,
-               const wxString& name = wxT("wxSpinCtrl"))
-*/
+        long style = wxSP_ARROW_KEYS | GetBorderStyle();
 
-        auto value = new wxSpinCtrl(parent);
+        if (!hasBorder)
+            style = style | wxBORDER_NONE;
+
+        auto value = new wxSpinCtrl(parent,
+            wxID_ANY,
+            wxEmptyString,
+            wxDefaultPosition,
+            wxDefaultSize,
+            style);
+
         value->Bind(wxEVT_SPINCTRL, &NumericUpDown::OnSpinCtrlValueChanged, this);
 
         return value;

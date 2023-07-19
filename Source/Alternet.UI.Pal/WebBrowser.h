@@ -44,6 +44,7 @@ namespace Alternet::UI
 
         WebBrowserBackend Backend;
         int preferredColorScheme = 0;
+        bool hasBorder = true;
         wxWebView* webView;
         wxWindow* webViewParent;
         bool DefaultUserAgentDone = false;

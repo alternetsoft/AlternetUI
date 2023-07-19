@@ -20,6 +20,7 @@ namespace Alternet::UI
     private:
         bool IsUsingComboBoxControl();
         bool IsUsingChoiceControl();
+        bool hasBorder = true;
 
         std::vector<string> _items;
 

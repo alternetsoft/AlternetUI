@@ -9,6 +9,19 @@ namespace Alternet::UI
         GetDelayedValues().Add({ &_value });
     }
 
+    bool DateTimePicker::GetHasBorder()
+    {
+        return hasBorder;
+    }
+
+    void DateTimePicker::SetHasBorder(bool value)
+    {
+        if (hasBorder == value)
+            return;
+        hasBorder = value;
+        RecreateWxWindowIfNeeded();
+    }
+
     int DateTimePicker::GetPopupKind() 
     {
         return _popupKind;
@@ -65,22 +78,36 @@ namespace Alternet::UI
 
     wxWindow* DateTimePicker::CreateWxWindowCore(wxWindow* parent)
     {
+        long style = GetBorderStyle();
+
+        if (!hasBorder)
+            style = style | wxBORDER_NONE;
+
+        wxDateTime v = _value.GetDelayed();
         wxWindow* value = nullptr;
-        if(IsTimePicker())
-            value = new wxTimePickerCtrl(parent, wxID_ANY);
+
+        if (IsTimePicker()) 
+        {
+            style = style | wxTP_DEFAULT;
+            value = new wxTimePickerCtrl(parent,
+                wxID_ANY,
+                wxDefaultDateTime,
+                wxDefaultPosition,
+                wxDefaultSize,
+                style,
+                wxDefaultValidator);
+        }
         else 
         {
-            long style = wxDP_DEFAULT;
+            long popupStyle = wxDP_DEFAULT;
 
             if (_popupKind == 1)
-                style = wxDP_SPIN;
+                popupStyle = wxDP_SPIN;
             if (_popupKind == 2)
-                style = wxDP_DROPDOWN;
+                popupStyle = wxDP_DROPDOWN;
 
-            style = style | wxDP_SHOWCENTURY;
+            style = style | wxDP_SHOWCENTURY | popupStyle;
 
-            wxDateTime v = _value.GetDelayed();
-            
             value = new wxDatePickerCtrl(parent,
                 wxID_ANY,
                 v,

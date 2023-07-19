@@ -7,6 +7,8 @@ namespace NativeApi.Api
 {
     public class DateTimePicker : Control
     {
+        public bool HasBorder { get; set; }
+
         public event EventHandler? ValueChanged 
         { 
             add => throw new Exception(); 

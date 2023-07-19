@@ -1,12 +1,17 @@
-﻿using System;
+﻿#pragma warning disable
+using System;
 
 namespace NativeApi.Api
 {
     public class ComboBox : Control
     {
-        public event EventHandler? SelectedItemChanged { add => throw new Exception(); remove => throw new Exception(); }
+        public bool HasBorder { get; set; }
 
-        public event EventHandler? TextChanged { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler? SelectedItemChanged { 
+            add => throw new Exception(); remove => throw new Exception(); }
+
+        public event EventHandler? TextChanged { 
+            add => throw new Exception(); remove => throw new Exception(); }
 
         public int ItemsCount { get; }
 
@@ -14,13 +19,16 @@ namespace NativeApi.Api
 
         public int SelectedIndex { get; set; }
 
-        public string Text { get => throw new Exception(); set => throw new Exception(); }
+        public string Text { get => throw new Exception(); 
+            set => throw new Exception(); }
 
         public void InsertItem(int index, string value) => throw new Exception();
 
         public IntPtr CreateItemsInsertion() => throw new Exception();
-        public void AddItemToInsertion(IntPtr insertion, string item) => throw new Exception();
-        public void CommitItemsInsertion(IntPtr insertion, int index) => throw new Exception();
+        public void AddItemToInsertion(IntPtr insertion, string item) => 
+            throw new Exception();
+        public void CommitItemsInsertion(IntPtr insertion, int index) => 
+            throw new Exception();
 
         public void RemoveItemAt(int index) => throw new Exception();
 

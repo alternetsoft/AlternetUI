@@ -14,6 +14,7 @@ namespace Alternet::UI
 
     private:
         wxSpinCtrl* GetSpinCtrl();
+        bool hasBorder = true;
 
         DelayedValue<NumericUpDown, int> _value;
         DelayedValue<NumericUpDown, int> _minimum;
