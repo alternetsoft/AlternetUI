@@ -59,6 +59,7 @@
 #include "Api/StdDialogButtonSizer.Api.h"
 #include "Api/WrapSizer.Api.h"
 #include "Api/Slider.Api.h"
+#include "Api/SplitterPanel.Api.h"
 #include "Api/StatusBar.Api.h"
 #include "Api/StatusBarPanel.Api.h"
 #include "Api/TabControl.Api.h"

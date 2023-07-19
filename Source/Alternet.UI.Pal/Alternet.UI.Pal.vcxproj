@@ -254,6 +254,7 @@
     <ClCompile Include="Sizer.cpp" />
     <ClCompile Include="Slider.cpp" />
     <ClCompile Include="SolidBrush.cpp" />
+    <ClCompile Include="SplitterPanel.cpp" />
     <ClCompile Include="StaticBoxSizer.cpp" />
     <ClCompile Include="StatusBar.cpp" />
     <ClCompile Include="StatusBarPanel.cpp" />
@@ -340,6 +341,7 @@
     <ClInclude Include="Api\Sizer.Api.h" />
     <ClInclude Include="Api\Slider.Api.h" />
     <ClInclude Include="Api\SolidBrush.Api.h" />
+    <ClInclude Include="Api\SplitterPanel.Api.h" />
     <ClInclude Include="Api\StaticBoxSizer.Api.h" />
     <ClInclude Include="Api\StatusBar.Api.h" />
     <ClInclude Include="Api\StatusBarPanel.Api.h" />
@@ -429,6 +431,7 @@
     <ClInclude Include="Sizer.h" />
     <ClInclude Include="Slider.h" />
     <ClInclude Include="SolidBrush.h" />
+    <ClInclude Include="SplitterPanel.h" />
     <ClInclude Include="StaticBoxSizer.h" />
     <ClInclude Include="StatusBar.h" />
     <ClInclude Include="StatusBarPanel.h" />
@@ -505,6 +508,7 @@
     <None Include="Api\Sizer.inc" />
     <None Include="Api\Slider.inc" />
     <None Include="Api\SolidBrush.inc" />
+    <None Include="Api\SplitterPanel.inc" />
     <None Include="Api\StaticBoxSizer.inc" />
     <None Include="Api\StatusBar.inc" />
     <None Include="Api\StatusBarPanel.inc" />
