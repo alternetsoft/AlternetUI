@@ -54,7 +54,8 @@ namespace ControlsSample
 
         private void HasBorderButton_Click(object? sender, EventArgs e)
         {
-
+            //datePicker.HasBorder = !datePicker.HasBorder;
+            //timePicker.HasBorder = !timePicker.HasBorder;
         }
 
         private void Popup_CheckedChanged(object? sender, EventArgs e)

@@ -144,6 +144,18 @@ namespace Alternet.UI
             set { SetValue(MaximumProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        internal bool HasBorder
+        {
+            get => Handler.HasBorder;
+            set => Handler.HasBorder = value;
+        }
+
+        internal new NativeNumericUpDownHandler Handler =>
+            (NativeNumericUpDownHandler)base.Handler;
+
         private static object CoerceValue(DependencyObject d, object value)
         {
             var o = (NumericUpDown)d;

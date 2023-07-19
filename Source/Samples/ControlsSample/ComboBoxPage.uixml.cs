@@ -62,7 +62,7 @@ namespace ControlsSample
 
         private void HasBorderButton_Click(object? sender, EventArgs e)
         {
-
+            //comboBox.HasBorder = !comboBox.HasBorder;
         }
 
         private void ComboBox_TextChanged(object? sender, EventArgs e)

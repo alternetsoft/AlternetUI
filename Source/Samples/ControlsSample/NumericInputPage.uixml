@@ -30,7 +30,7 @@
           <Button Text="Increase All" Margin="0,0,0,5" Name="increaseAllButton"
                   Click="IncreaseAllButton_Click" />
           <Button Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton"
-                  Click="HasBorderButton_Click" Enabled="false"/>
+                  Click="HasBorderButton_Click" Visible="false"/>
         </StackPanel>
       </HorizontalStackPanel>
     </GroupBox>

@@ -34,21 +34,11 @@ namespace Alternet.UI
     /// </remarks>
     public class ComboBox : ListControl
     {
-        private string text = "";
+        private string text = string.Empty;
 
         private int? selectedIndex;
 
         private bool isEditable = true;
-
-        /// <inheritdoc/>
-        public new ComboBoxHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (ComboBoxHandler)base.Handler;
-            }
-        }
 
         /// <summary>
         /// Gets the starting index of text selected in the combo box.
@@ -144,6 +134,15 @@ namespace Alternet.UI
 
                 RaiseTextChanged(EventArgs.Empty);
             }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        internal bool HasBorder
+        {
+            get => Handler.HasBorder;
+            set => Handler.HasBorder = value;
         }
 
         /// <summary>
@@ -318,6 +317,15 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnTextChanged(EventArgs e)
         {
+        }
+
+        internal new ComboBoxHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (ComboBoxHandler)base.Handler;
+            }
         }
 
         private int? FindStringInternal(string str, IList<object> items, int? startIndex, bool exact, bool ignoreCase)

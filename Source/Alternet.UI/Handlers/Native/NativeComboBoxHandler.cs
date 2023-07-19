@@ -5,12 +5,18 @@ namespace Alternet.UI
 {
     internal class NativeComboBoxHandler : ComboBoxHandler
     {
-        internal override Native.Control CreateNativeControl()
+        public override bool HasBorder
         {
-            return new Native.ComboBox();
-        }
+            get
+            {
+                return NativeControl.HasBorder;
+            }
 
-        public new Native.ComboBox NativeControl => (Native.ComboBox)base.NativeControl!;
+            set
+            {
+                NativeControl.HasBorder = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override int TextSelectionStart => NativeControl.TextSelectionStart;
@@ -18,11 +24,20 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override int TextSelectionLength => NativeControl.TextSelectionLength;
 
+        internal new Native.ComboBox NativeControl =>
+            (Native.ComboBox)base.NativeControl!;
+
         /// <inheritdoc/>
-        public override void SelectTextRange(int start, int length) => NativeControl.SelectTextRange(start, length);
+        public override void SelectTextRange(int start, int length) =>
+            NativeControl.SelectTextRange(start, length);
 
         /// <inheritdoc/>
         public override void SelectAllText() => NativeControl.SelectAllText();
+
+        internal override Native.Control CreateNativeControl()
+        {
+            return new Native.ComboBox();
+        }
 
         protected override void OnAttach()
         {
@@ -33,7 +48,8 @@ namespace Alternet.UI
             ApplySelectedItem();
             ApplyText();
 
-            Control.Items.ItemRangeAdditionFinished += Items_ItemRangeAdditionFinished;
+            Control.Items.ItemRangeAdditionFinished +=
+                Items_ItemRangeAdditionFinished;
             Control.Items.ItemInserted += Items_ItemInserted;
             Control.Items.ItemRemoved += Items_ItemRemoved;
             Control.IsEditableChanged += Control_IsEditableChanged;
@@ -44,17 +60,10 @@ namespace Alternet.UI
             NativeControl.TextChanged += NativeControl_TextChanged;
         }
 
-        private void Control_IsEditableChanged(object? sender, EventArgs e)
-        {
-            ApplyIsEditable();
-            
-            if (Control.Parent != null)
-                Control.Parent.PerformLayout(); // preferred size may change, so relayout parent.
-        }
-
         protected override void OnDetach()
         {
-            Control.Items.ItemRangeAdditionFinished -= Items_ItemRangeAdditionFinished;
+            Control.Items.ItemRangeAdditionFinished -=
+                Items_ItemRangeAdditionFinished;
             Control.Items.ItemInserted -= Items_ItemInserted;
             Control.Items.ItemRemoved -= Items_ItemRemoved;
             Control.IsEditableChanged -= Control_IsEditableChanged;
@@ -68,6 +77,14 @@ namespace Alternet.UI
         private void NativeControl_SelectedItemChanged(object? sender, EventArgs e)
         {
             ReceiveSelectedItem();
+        }
+
+        private void Control_IsEditableChanged(object? sender, EventArgs e)
+        {
+            ApplyIsEditable();
+
+            // preferred size may change, so relayout parent.
+            Control.Parent?.PerformLayout();
         }
 
         private void Control_SelectedItemChanged(object? sender, EventArgs e)
@@ -105,7 +122,12 @@ namespace Alternet.UI
 
             var insertion = NativeControl.CreateItemsInsertion();
             for (var i = 0; i < items.Count; i++)
-                NativeControl.AddItemToInsertion(insertion, Control.GetItemText(control.Items[i]));
+            {
+                NativeControl.AddItemToInsertion(
+                    insertion,
+                    Control.GetItemText(control.Items[i]));
+            }
+
             NativeControl.CommitItemsInsertion(insertion, 0);
         }
 
@@ -130,22 +152,33 @@ namespace Alternet.UI
             Control.Text = NativeControl.Text;
         }
 
-        private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<object> e)
+        private void Items_ItemInserted(
+            object? sender,
+            CollectionChangeEventArgs<object> e)
         {
             if (!Control.Items.RangeOperationInProgress)
                 NativeControl.InsertItem(e.Index, Control.GetItemText(e.Item));
         }
 
-        private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<object> e)
+        private void Items_ItemRemoved(
+            object? sender,
+            CollectionChangeEventArgs<object> e)
         {
             NativeControl.RemoveItemAt(e.Index);
         }
 
-        private void Items_ItemRangeAdditionFinished(object? sender, RangeAdditionFinishedEventArgs<object> e)
+        private void Items_ItemRangeAdditionFinished(
+            object? sender,
+            RangeAdditionFinishedEventArgs<object> e)
         {
             var insertion = NativeControl.CreateItemsInsertion();
             foreach (var item in e.Items)
-                NativeControl.AddItemToInsertion(insertion, Control.GetItemText(item));
+            {
+                NativeControl.AddItemToInsertion(
+                    insertion,
+                    Control.GetItemText(item));
+            }
+
             NativeControl.CommitItemsInsertion(insertion, e.InsertionIndex);
         }
     }

@@ -105,6 +105,15 @@ namespace Alternet.UI
             set { SetValue(ValueProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        internal bool HasBorder
+        {
+            get => Handler.HasBorder;
+            set => Handler.HasBorder = value;
+        }
+
         /// <summary>Gets or sets the maximum date and time that can be
         /// selected in the control.</summary>
         /// <returns>The maximum date and time that can be selected

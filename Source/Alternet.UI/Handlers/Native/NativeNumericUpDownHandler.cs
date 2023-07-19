@@ -1,9 +1,17 @@
 using System;
+using System.Runtime.InteropServices;
 
 namespace Alternet.UI
 {
-    internal class NativeNumericUpDownHandler : NativeControlHandler<NumericUpDown, Native.NumericUpDown>
+    internal class NativeNumericUpDownHandler : 
+        NativeControlHandler<NumericUpDown, Native.NumericUpDown>
     {
+        public bool HasBorder
+        {
+            get => NativeControl.HasBorder;
+            set => NativeControl.HasBorder = value;
+        }
+
         internal override Native.Control CreateNativeControl()
         {
             return new Native.NumericUpDown();

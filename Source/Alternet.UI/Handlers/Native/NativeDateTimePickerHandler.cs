@@ -9,6 +9,15 @@ namespace Alternet.UI
 {
     internal class NativeDateTimePickerHandler : NativeControlHandler<DateTimePicker, Native.DateTimePicker>
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        public bool HasBorder
+        {
+            get => NativeControl.HasBorder;
+            set => NativeControl.HasBorder = value;
+        }
+
         public DateTimePickerPopupKind PopupKind
         {
             get
