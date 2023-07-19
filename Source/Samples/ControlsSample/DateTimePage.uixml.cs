@@ -52,6 +52,11 @@ namespace ControlsSample
             timePicker.Value = DateTime.Today;
         }
 
+        private void HasBorderButton_Click(object? sender, EventArgs e)
+        {
+
+        }
+
         private void Popup_CheckedChanged(object? sender, EventArgs e)
         {
             if (SpinRadioButton.IsChecked)

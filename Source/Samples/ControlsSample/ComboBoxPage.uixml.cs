@@ -60,6 +60,11 @@ namespace ControlsSample
             }
         }
 
+        private void HasBorderButton_Click(object? sender, EventArgs e)
+        {
+
+        }
+
         private void ComboBox_TextChanged(object? sender, EventArgs e)
         {
             if (ignoreEvents)

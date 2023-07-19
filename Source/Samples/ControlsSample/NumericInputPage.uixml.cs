@@ -31,18 +31,23 @@ namespace ControlsSample
             site?.LogEvent("New NumericUpDown value is: " + ((NumericUpDown)sender!).Value);
         }
 
-        private void ProgressBarControlNumericUpDown_ValueChanged(object? sender, EventArgs e)
+        private void ProgressBarControlNumericUpDown_ValueChanged(
+            object? sender, 
+            EventArgs e)
         {
             progressBar.Value = (int)progressBarControlNumericUpDown.Value;
         }
 
+        private void HasBorderButton_Click(object? sender, EventArgs e)
+        {
+
+        }
+
         private void IncreaseAllButton_Click(object? sender, EventArgs e)
         {
-            foreach (var numericUpDown in numericUpDownsPanel.Children.OfType<NumericUpDown>())
-            {
-                if (numericUpDown.Value < numericUpDown.Maximum)
-                    numericUpDown.Value++;
-            }
+            foreach (var numericUpDown in 
+                numericUpDownsPanel.Children.OfType<NumericUpDown>())
+                numericUpDown.Increment();
         }
     }
 }
