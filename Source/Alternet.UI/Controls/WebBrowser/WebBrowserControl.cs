@@ -116,6 +116,25 @@ namespace Alternet.UI
             }
         }
 
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        public bool HasBorder
+        {
+            get
+            {
+                CheckDisposed();
+                return Handler.HasBoder;
+            }
+
+            set
+            {
+                CheckDisposed();
+                Handler.HasBoder = value;
+            }
+        }
+
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/ZoomType/*'/>
         public virtual WebBrowserZoomType ZoomType
         {

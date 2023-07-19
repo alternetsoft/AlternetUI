@@ -6,6 +6,12 @@ namespace Alternet.UI
     internal partial class WebBrowserHandler :
         NativeControlHandler<WebBrowser, Native.WebBrowser>, IWebBrowserLite
     {
+        public bool HasBoder
+        {
+            get => NativeControl.HasBorder;
+            set => NativeControl.HasBorder = value;
+        }
+
         public WebBrowserPreferredColorScheme PreferredColorScheme
         {
             get => (WebBrowserPreferredColorScheme)Enum.ToObject(

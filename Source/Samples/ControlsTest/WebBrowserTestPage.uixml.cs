@@ -1052,6 +1052,8 @@ namespace ControlsTest
             AddTestAction("ZoomFactor+", () => { webBrowser1.ZoomFactor += 1; });
             AddTestAction("ZoomFactor-", () => { webBrowser1.ZoomFactor -= 1; });
             AddTestAction();
+            AddTestAction("HasBorder", () => {
+                webBrowser1.HasBorder = !webBrowser1.HasBorder; });
             AddTestAction("CanNavigate=false", () => { canNavigate = false; });
             AddTestAction("CanNavigate=true", () => { canNavigate = true; });
             AddTestAction(
