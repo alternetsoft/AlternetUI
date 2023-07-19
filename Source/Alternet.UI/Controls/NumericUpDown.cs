@@ -171,6 +171,12 @@ namespace Alternet.UI
             ValueChanged?.Invoke(this, e);
         }
 
+        public void Increment(decimal value = 1)
+        {
+            if (Value < Maximum)
+                Value += value;
+        }
+
         /// <summary>
         /// Called when the value of the <see cref="Value"/> property changes.
         /// </summary>
@@ -214,7 +220,7 @@ namespace Alternet.UI
         /// Raises the <see cref="MinimumChanged"/> event and calls <see cref="OnMinimumChanged(EventArgs)"/>.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        void RaiseMinimumChanged(EventArgs e)
+        private void RaiseMinimumChanged(EventArgs e)
         {
             if (e == null)
                 throw new ArgumentNullException(nameof(e));
@@ -249,7 +255,7 @@ namespace Alternet.UI
         /// Raises the <see cref="MaximumChanged"/> event and calls <see cref="OnMaximumChanged(EventArgs)"/>.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        void RaiseMaximumChanged(EventArgs e)
+        private void RaiseMaximumChanged(EventArgs e)
         {
             if (e == null)
                 throw new ArgumentNullException(nameof(e));
