@@ -9,6 +9,9 @@ namespace Alternet.UI
 {
     internal class LayoutPanel : Control
     {
+        internal new NativeLayoutPanelHandler Handler =>
+            (NativeLayoutPanelHandler)base.Handler;
+
         public static void SetDock(Control control, DockStyle value)
         {
             if (control == null)
@@ -135,25 +138,25 @@ namespace Alternet.UI
             return control.ExtendedProps.AutoSizeMode;
         }
 
-        /// <summary>
         /// <inheritdoc />
-        /// </summary>
+        protected override ControlHandler CreateHandler()
+        {
+            return new NativeLayoutPanelHandler();
+        }
+
+        /// <inheritdoc />
         protected override void OnChildInserted(int childIndex, Control childControl)
         {
             base.OnChildInserted(childIndex, childControl);
         }
 
-        /// <summary>
         /// <inheritdoc />
-        /// </summary>
         protected override void OnChildRemoved(int childIndex, Control childControl)
         {
             base.OnChildRemoved(childIndex, childControl);
         }
 
-        /// <summary>
         /// <inheritdoc />
-        /// </summary>
         protected override void OnLayout()
         {
             base.OnLayout();
