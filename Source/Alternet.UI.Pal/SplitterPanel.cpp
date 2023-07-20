@@ -222,8 +222,10 @@ namespace Alternet::UI
 	bool SplitterPanel::SplitHorizontally(Control* window1, Control* window2, 
 		int sashPosition)
 	{
-		return GetSplitterWindow()->SplitHorizontally(window1->GetWxWindow(),
-			window2->GetWxWindow(), sashPosition);
+		auto wx1 = window1->GetWxWindow();
+		auto wx2 = window2->GetWxWindow();
+		auto result = GetSplitterWindow()->SplitHorizontally(wx1, wx2, sashPosition);
+		return result;
 	}
 
 	bool SplitterPanel::SplitVertically(Control* window1, Control* window2, 

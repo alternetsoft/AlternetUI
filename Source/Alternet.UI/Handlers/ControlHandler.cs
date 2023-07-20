@@ -166,19 +166,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the collection of visual child controls contained within the control.
+        /// Gets the collection of visual child controls contained within
+        /// the control.
         /// </summary>
-        public Collection<Control> VisualChildren { get; } = new Collection<Control>();
+        public virtual Collection<Control> VisualChildren { get; } =
+            new Collection<Control>();
 
         /// <summary>
-        /// Gets the collection of all elements of <see cref="Control.Children"/> and <see cref="VisualChildren"/> collections.
+        /// Gets the collection of all elements of <see cref="Control.Children"/>
+        /// and <see cref="VisualChildren"/> collections.
         /// </summary>
-        public IEnumerable<Control> AllChildren => VisualChildren.Concat(Control.Children);
+        public virtual IEnumerable<Control> AllChildren
+            => VisualChildren.Concat(Control.Children);
 
         /// <summary>
-        /// Gets the collection of all elements of <see cref="AllChildren"/> collection included in layout (i.e. visible).
+        /// Gets the collection of all elements of <see cref="AllChildren"/>
+        /// collection included in layout (i.e. visible).
         /// </summary>
-        public IEnumerable<Control> AllChildrenIncludedInLayout => AllChildren.Where(x => x.Visible);
+        public virtual IEnumerable<Control> AllChildrenIncludedInLayout
+            => AllChildren.Where(x => x.Visible);
 
         internal Native.Control? NativeControl
         {

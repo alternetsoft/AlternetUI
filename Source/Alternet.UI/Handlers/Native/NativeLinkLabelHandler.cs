@@ -2,14 +2,6 @@ namespace Alternet.UI
 {
     internal class NativeLinkLabelHandler : NativeControlHandler<LinkLabel, Native.LinkLabel>
     {
-        internal override Native.Control CreateNativeControl()
-        {
-            return new Native.LinkLabel()
-            {
-                Text = Control.Text
-            };
-        }
-
         public string Url
         {
             get
@@ -22,6 +14,14 @@ namespace Alternet.UI
                 if (NativeControl.Url != value)
                     NativeControl.Url = value;
             }
+        }
+
+        internal override Native.Control CreateNativeControl()
+        {
+            return new Native.LinkLabel()
+            {
+                Text = Control.Text,
+            };
         }
 
         protected override void OnAttach()

@@ -14,7 +14,7 @@ namespace Alternet.UI
 
         event EventHandler? BorderBrushChanged;
 
-        event EventHandler<PaintEventArgs>? Paint; // !!!!!
+        //event EventHandler<PaintEventArgs>? Paint; // !!!!!
 
         event EventHandler? MarginChanged;
 
@@ -68,15 +68,15 @@ namespace Alternet.UI
 
         bool Enabled { get; set; }
 
-        Brush? BorderBrush { get; set; }
+        //Brush? BorderBrush { get; set; }
 
-        public ControlHandler Handler { get; } // !!!!!!
+        //public ControlHandler Handler { get; } // !!!!!!
 
         bool IsDisposed { get; }
 
-        IList Children { get; }
+        //IList Children { get; }
 
-        public IControl? Parent { get; }
+        //public IControl? Parent { get; }
 
         Size Size { get; set; }
 
@@ -90,11 +90,11 @@ namespace Alternet.UI
 
         Thickness Padding { get; set; }
 
-        Brush? Background { get; set; } // !!!!!
+        //Brush? Background { get; set; } // !!!!!
 
-        Brush? Foreground { get; set; } // !!!!!
+        //Brush? Foreground { get; set; } // !!!!!
 
-        Font? Font { get; set; } // !!!!!
+        //Font? Font { get; set; } // !!!!!
 
         bool TabStop { get; set; }
 
@@ -132,7 +132,7 @@ namespace Alternet.UI
 
         void Hide();
 
-        DrawingContext CreateDrawingContext(); // !!!!!
+        //DrawingContext CreateDrawingContext(); // !!!!!
 
         void Invalidate();
 

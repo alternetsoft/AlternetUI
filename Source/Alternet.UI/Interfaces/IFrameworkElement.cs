@@ -9,17 +9,17 @@ namespace Alternet.UI
 {
     internal interface IFrameworkElement : IUIElement
     {
-        public event DependencyPropertyChangedEventHandler DataContextChanged;
+        // public event DependencyPropertyChangedEventHandler DataContextChanged;
 
         string? Name { get; set; }
 
-        IReadOnlyList<IFrameworkElement> ContentElements { get; }
+        //IReadOnlyList<IFrameworkElement> ContentElements { get; }
 
         public object? DataContext { get; set; }
 
-        IFrameworkElement? TryFindElement(string name);
+        //IFrameworkElement? TryFindElement(string name);
 
-        IUIElement FindElement(string name);
+        //IUIElement FindElement(string name);
     }
 
     internal interface IFrameworkElementInternalStatic
@@ -30,7 +30,9 @@ namespace Alternet.UI
 
         EventPrivateKey InheritedPropertyChangedKey { get; }
 
-        bool GetFrameworkParent(IFrameworkElement current, out IFrameworkElement feParent);
+        bool GetFrameworkParent(
+            IFrameworkElement current, 
+            out IFrameworkElement feParent);
 
         DependencyObject GetFrameworkParent(object current);
 
@@ -48,7 +50,9 @@ namespace Alternet.UI
 
     internal interface IFrameworkElementInternal
     {
-        Expression? GetExpressionCore(DependencyProperty dp, PropertyMetadata metadata);
+        Expression? GetExpressionCore(
+            DependencyProperty dp, 
+            PropertyMetadata metadata);
 
         bool HasLogicalChildren { get; }
 
@@ -68,9 +72,13 @@ namespace Alternet.UI
 
         void OnAncestorChanged();
 
-        void RaiseInheritedPropertyChangedEvent(ref InheritablePropertyChangeInfo info);
+        void RaiseInheritedPropertyChangedEvent(
+            ref InheritablePropertyChangeInfo info);
 
-        FrugalObjectList<DependencyProperty> InvalidateTreeDependentProperties(TreeChangeInfo parentTreeState, bool isSelfInheritanceParent, bool wasSelfInheritanceParent);
+        FrugalObjectList<DependencyProperty> InvalidateTreeDependentProperties(
+            TreeChangeInfo parentTreeState, 
+            bool isSelfInheritanceParent, 
+            bool wasSelfInheritanceParent);
 
         bool IsInitialized { get; set; }
 
@@ -82,7 +90,9 @@ namespace Alternet.UI
 
         InheritanceBehavior InheritanceBehavior { get; set; }
 
-        void ChangeLogicalParent(DependencyObject? oldParent, DependencyObject? newParent);
+        void ChangeLogicalParent(
+            DependencyObject? oldParent, 
+            DependencyObject? newParent);
 
         bool ReadInternalFlag(InternalFlags reqFlag);
 
@@ -90,7 +100,10 @@ namespace Alternet.UI
 
         void AdjustBranchSource(RoutedEventArgs args);
 
-        bool BuildRouteCoreHelper(EventRoute route, RoutedEventArgs args, bool shouldAddIntermediateElementsToRoute);
+        bool BuildRouteCoreHelper(
+            EventRoute route, 
+            RoutedEventArgs args, 
+            bool shouldAddIntermediateElementsToRoute);
 
         bool IgnoreModelParentBuildRoute(RoutedEventArgs args);
 

@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Provides a framework-level set of properties, events, and methods for AlterNET UI elements.
     /// This class represents the provided framework-level implementation that is built on the core-level APIs that are defined by <see cref="UIElement"/>.
     /// </summary>
-    public class FrameworkElement : UIElement
+    public class FrameworkElement : UIElement, IFrameworkElement
     {
         /// <summary>
         /// Gets or sets the identifying name of the control.

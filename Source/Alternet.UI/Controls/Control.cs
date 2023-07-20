@@ -8,10 +8,12 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines the base class for controls, which are components with visual representation.
+    /// Defines the base class for controls, which are components with 
+    /// visual representation.
     /// </summary>
     [System.ComponentModel.DesignerCategory("Code")]
-    public class Control : FrameworkElement, ISupportInitialize, IDisposable
+    public class Control : FrameworkElement, ISupportInitialize, IDisposable,
+        IControl
     {
         internal static int ScreenShotCounter = 0;
 
@@ -777,6 +779,13 @@ namespace Alternet.UI
         /// After the <see cref="Show"/> method is called, the <see cref="Visible"/> property
         /// returns a value of <c>true</c> until the <see cref="Hide"/> method is called.</remarks>
         public void Show() => Visible = true;
+
+        public Control? GetChildOrNull(int index)
+        {
+            if (index >= Children.Count || index < 0)
+                return null;
+            return Children[index];
+        }
 
         /// <summary>
         /// Conceals the control from the user.

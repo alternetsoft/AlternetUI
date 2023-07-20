@@ -1,13 +1,13 @@
-using Alternet.UI.Internal.KnownBoxes;
 using System;
 using System.Diagnostics;
+using Alternet.UI.Internal.KnownBoxes;
 
 namespace Alternet.UI
 {
     /// <summary>
     /// <see cref="UIElement"/> is a base class for core level implementations building on elements and basic presentation characteristics.
     /// </summary>
-    public class UIElement : DependencyObject, IInputElement
+    public class UIElement : DependencyObject, IInputElement, IUIElement
     {
         static UIElement()
         {
