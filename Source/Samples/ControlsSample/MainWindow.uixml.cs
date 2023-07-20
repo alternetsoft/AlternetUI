@@ -37,20 +37,20 @@ namespace ControlsSample
                 }
             );
 
-            var headerPanel = new HorizontalStackPanel() 
+            var headerPanel = new HorizontalStackPanel()
             {
                 HorizontalAlignment = HorizontalAlignment.Right,
             };
             var linkLabel = new LinkLabel()
             {
                 Text = "Home Page",
-                Margin = new Thickness(5),
+                Margin = new Thickness(5,0,5,10),
                 Url = @"https://www.alternet-ui.com/",
             };
             var linkLabel2 = new LinkLabel()
             {
                 Text = "Documentation",
-                Margin = new Thickness(5,5,10,5),
+                Margin = new Thickness(5,0,10,10),
                 Url = @"https://docs.alternet-ui.com/introduction/getting-started.html",
             };
             headerPanel.Children.Add(linkLabel);
