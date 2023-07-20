@@ -130,6 +130,10 @@ namespace Alternet.UI
             set { bottom = value; }
         }
 
+        public static implicit operator Thickness(double d) => new Thickness(d);
+
+        public static implicit operator Thickness(int d) => new Thickness(d);
+
         /// <summary>
         /// Overloaded operator to compare two Thicknesses for equality.
         /// </summary>
