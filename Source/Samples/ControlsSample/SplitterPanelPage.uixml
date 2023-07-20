@@ -16,24 +16,24 @@
     </SplitterPanel>
 
     <VerticalStackPanel Grid.Column="1" Margin="10,0,0,0" >
-      <Button Text="Split Horizontal" 
+      <Button Text="Split Horizontal" Click="SplitHorizontalButton_Click"
               Margin="0,0,0,5" Enabled="false"/>
-      <Button Text="Split Vertical" 
+      <Button Text="Split Vertical" Click="SplitVerticalButton_Click"
               Margin="0,0,0,5" Enabled="false"/>
-      <Button Text="Unsplit" 
+      <Button Text="Unsplit" Click="UnsplitButton_Click"
               Margin="0,0,0,5" Enabled="false"/>
-      <Button Text="Sash Visible" 
+      <Button Text="Sash Visible" Click="SashVisibleButton_Click"
               Margin="0,0,0,5" Enabled="false"/>
-      <Button Text="Set Min Pane Size" 
+      <Button Text="Set Min Pane Size" Click="SetMinPaneSizeButton_Click"
               Margin="0,0,0,5" Enabled="false"/>
-      <Button Text="Set Sash Position" 
+      <Button Text="Set Sash Position" Click="SetSashPositionButton_Click"
               Margin="0,0,0,5" Enabled="false"/>
-      <Button Text="Sash Gravity = 0.0" 
-              Margin="0,0,0,5" Enabled="false"/>
-      <Button Text="Sash Gravity = 0.5" 
-              Margin="0,0,0,5" Enabled="false"/>
-      <Button Text="Sash Gravity = 1.0" 
-              Margin="0,0,0,5" Enabled="false"/>
+      <Button Text="Sash Gravity = 0.0" Click="SashGravity00Button_Click"
+              Margin="0,0,0,5" Enabled="true"/>
+      <Button Text="Sash Gravity = 0.5" Click="SashGravity05Button_Click"
+              Margin="0,0,0,5" Enabled="true"/>
+      <Button Text="Sash Gravity = 1.0" Click="SashGravity10Button_Click"
+              Margin="0,0,0,5" Enabled="true"/>
     </VerticalStackPanel>
 
   </Grid>
