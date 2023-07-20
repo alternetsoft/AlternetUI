@@ -419,7 +419,7 @@ namespace Alternet.UI
             get
             {
                 if (uixmlPreviewerBrush == null)
-                    uixmlPreviewerBrush = new SolidBrush(Color.White);
+                    uixmlPreviewerBrush = Brushes.White;
                 return uixmlPreviewerBrush;
             }
         }

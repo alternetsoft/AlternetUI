@@ -88,10 +88,10 @@ namespace Alternet.UI
                 return parent;
             }
 
-            control = SetParentBackground(control, new SolidBrush(Color.Red));
-            control = SetParentBackground(control, new SolidBrush(Color.Green));
-            control = SetParentBackground(control, new SolidBrush(Color.Blue));
-            SetParentBackground(control, new SolidBrush(Color.Yellow));
+            control = SetParentBackground(control, Brushes.Red);
+            control = SetParentBackground(control, Brushes.Green);
+            control = SetParentBackground(control, Brushes.Blue);
+            SetParentBackground(control, Brushes.Yellow);
         }
 
         internal static void AdjustTextBoxesHeight(
