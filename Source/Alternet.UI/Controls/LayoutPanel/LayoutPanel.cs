@@ -66,7 +66,7 @@ namespace Alternet.UI
             return control.ExtendedProps.MinimumSize;
         }
 
-        public static void SetAnchor(Control control, AnchorStyles value)
+        internal static void SetAnchor(Control control, AnchorStyles value)
         {
             if (control == null)
                 throw new ArgumentNullException(nameof(control));
@@ -74,7 +74,7 @@ namespace Alternet.UI
             control.ExtendedProps.Anchor = value;
         }
 
-        public static AnchorStyles GetAnchor(Control control)
+        internal static AnchorStyles GetAnchor(Control control)
         {
             if (control == null)
                 throw new ArgumentNullException(nameof(control));
@@ -84,7 +84,7 @@ namespace Alternet.UI
             return control.ExtendedProps.Anchor;
         }
 
-        public static void SetDistanceRight(Control control, double value)
+        internal static void SetDistanceRight(Control control, double value)
         {
             if (control == null)
                 throw new ArgumentNullException(nameof(control));
@@ -92,7 +92,7 @@ namespace Alternet.UI
             control.ExtendedProps.DistanceRight = value;
         }
 
-        public static double GetDistanceRight(Control control)
+        internal static double GetDistanceRight(Control control)
         {
             if (control == null)
                 throw new ArgumentNullException(nameof(control));
@@ -102,7 +102,7 @@ namespace Alternet.UI
             return control.ExtendedProps.DistanceRight;
         }
 
-        public static void SetDistanceBottom(Control control, double value)
+        internal static void SetDistanceBottom(Control control, double value)
         {
             if (control == null)
                 throw new ArgumentNullException(nameof(control));
@@ -110,7 +110,7 @@ namespace Alternet.UI
             control.ExtendedProps.DistanceBottom = value;
         }
 
-        public static double GetDistanceBottom(Control control)
+        internal static double GetDistanceBottom(Control control)
         {
             if (control == null)
                 throw new ArgumentNullException(nameof(control));
@@ -120,7 +120,7 @@ namespace Alternet.UI
             return control.ExtendedProps.DistanceBottom;
         }
 
-        public static void SetAutoSizeMode(Control control, AutoSizeMode value)
+        internal static void SetAutoSizeMode(Control control, AutoSizeMode value)
         {
             if (control == null)
                 throw new ArgumentNullException(nameof(control));
@@ -128,7 +128,7 @@ namespace Alternet.UI
             control.ExtendedProps.AutoSizeMode = value;
         }
 
-        public static AutoSizeMode GetAutoSizeMode(Control control)
+        internal static AutoSizeMode GetAutoSizeMode(Control control)
         {
             if (control == null)
                 throw new ArgumentNullException(nameof(control));
