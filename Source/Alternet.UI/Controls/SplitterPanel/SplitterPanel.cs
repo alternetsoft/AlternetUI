@@ -14,6 +14,120 @@ namespace Alternet.UI
         private Control? control1;
         private Control? control2;
 
+        internal long Styles
+        {
+            get
+            {
+                return Handler.Styles;
+            }
+
+            set
+            {
+                Handler.Styles = value;
+            }
+        }
+
+        public int MinimumPaneSize
+        {
+            get
+            {
+                return Handler.MinimumPaneSize;
+            }
+
+            set
+            {
+                Handler.MinimumPaneSize = value;
+            }
+        }
+
+        public double SashGravity
+        {
+            get
+            {
+                return Handler.SashGravity;
+            }
+
+            set
+            {
+                Handler.SashGravity = value;
+            }
+        }
+
+        public int SashSize
+        {
+            get
+            {
+                return Handler.SashSize;
+            }
+
+            set
+            {
+                Handler.SashSize = value;
+            }
+        }
+
+        public bool SashVisible
+        {
+            get
+            {
+                return Handler.SashVisible;
+            }
+
+            set
+            {
+                Handler.SashVisible = value;
+            }
+        }
+
+        public bool IsSplit
+        {
+            get
+            {
+                return Handler.IsSplit;
+            }
+
+        }
+
+        public int SashPosition
+        {
+            get
+            {
+                return Handler.SashPosition;
+            }
+
+            set
+            {
+                Handler.SashPosition = value;
+            }
+        }
+
+        public bool RedrawOnSashPosition
+        {
+            get
+            {
+                return Handler.RedrawOnSashPosition;
+            }
+
+            set
+            {
+                Handler.RedrawOnSashPosition = value;
+            }
+        }
+
+        public int DefaultSashSize
+        {
+            get
+            {
+                return Handler.DefaultSashSize;
+            }
+
+        }
+
+        public void UpdateSize()
+        {
+            Handler.UpdateSize();
+        }
+
         internal new NativeSplitterPanelHandler Handler =>
             (NativeSplitterPanelHandler)base.Handler;
 

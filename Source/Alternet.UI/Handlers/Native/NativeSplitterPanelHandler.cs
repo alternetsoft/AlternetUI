@@ -9,6 +9,120 @@ namespace Alternet.UI
         public new Native.SplitterPanel NativeControl =>
             (Native.SplitterPanel)base.NativeControl!;
 
+        public long Styles
+        {
+            get
+            {
+                return NativeControl.Styles;
+            }
+
+            set
+            {
+                NativeControl.Styles = value;
+            }
+        }
+
+        public int MinimumPaneSize
+        {
+            get
+            {
+                return NativeControl.MinimumPaneSize;
+            }
+
+            set
+            {
+                NativeControl.MinimumPaneSize = value;
+            }
+        }
+
+        public double SashGravity
+        {
+            get
+            {
+                return NativeControl.SashGravity;
+            }
+
+            set
+            {
+                NativeControl.SashGravity = value;
+            }
+        }
+
+        public int SashSize
+        {
+            get
+            {
+                return NativeControl.SashSize;
+            }
+
+            set
+            {
+                NativeControl.SashSize = value;
+            }
+        }
+
+        public bool SashVisible
+        {
+            get
+            {
+                return NativeControl.SashVisible;
+            }
+
+            set
+            {
+                NativeControl.SashVisible = value;
+            }
+        }
+
+        public bool IsSplit
+        {
+            get
+            {
+                return NativeControl.IsSplit;
+            }
+
+        }
+
+        public int SashPosition
+        {
+            get
+            {
+                return NativeControl.SashPosition;
+            }
+
+            set
+            {
+                NativeControl.SashPosition = value;
+            }
+        }
+
+        public bool RedrawOnSashPosition
+        {
+            get
+            {
+                return NativeControl.RedrawOnSashPosition;
+            }
+
+            set
+            {
+                NativeControl.RedrawOnSashPosition = value;
+            }
+        }
+
+        public int DefaultSashSize
+        {
+            get
+            {
+                return NativeControl.DefaultSashSize;
+            }
+
+        }
+
+        public void UpdateSize()
+        {
+            NativeControl.UpdateSize();
+        }
+
         public override IEnumerable<Control> AllChildrenIncludedInLayout
             => Enumerable.Empty<Control>();
 

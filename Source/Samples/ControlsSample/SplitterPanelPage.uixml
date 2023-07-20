@@ -16,7 +16,24 @@
     </SplitterPanel>
 
     <VerticalStackPanel Grid.Column="1" Margin="10,0,0,0" >
-      <Button Text="Sample button"/>
+      <Button Text="Split Horizontal" 
+              Margin="0,0,0,5" Enabled="false"/>
+      <Button Text="Split Vertical" 
+              Margin="0,0,0,5" Enabled="false"/>
+      <Button Text="Unsplit" 
+              Margin="0,0,0,5" Enabled="false"/>
+      <Button Text="Sash Visible" 
+              Margin="0,0,0,5" Enabled="false"/>
+      <Button Text="Set Min Pane Size" 
+              Margin="0,0,0,5" Enabled="false"/>
+      <Button Text="Set Sash Position" 
+              Margin="0,0,0,5" Enabled="false"/>
+      <Button Text="Sash Gravity = 0.0" 
+              Margin="0,0,0,5" Enabled="false"/>
+      <Button Text="Sash Gravity = 0.5" 
+              Margin="0,0,0,5" Enabled="false"/>
+      <Button Text="Sash Gravity = 1.0" 
+              Margin="0,0,0,5" Enabled="false"/>
     </VerticalStackPanel>
 
   </Grid>
