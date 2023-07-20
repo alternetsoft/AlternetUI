@@ -41,17 +41,20 @@ namespace ControlsSample
             {
                 HorizontalAlignment = HorizontalAlignment.Right,
             };
+
+            var homePage = @"https://www.alternet-ui.com/";
+            var docsHomePage = @"https://docs.alternet-ui.com/";
             var linkLabel = new LinkLabel()
             {
                 Text = "Home Page",
                 Margin = new Thickness(5,0,5,10),
-                Url = @"https://www.alternet-ui.com/",
+                Url = homePage,
             };
             var linkLabel2 = new LinkLabel()
             {
                 Text = "Documentation",
                 Margin = new Thickness(5,0,10,10),
-                Url = @"https://docs.alternet-ui.com/introduction/getting-started.html",
+                Url = $"{docsHomePage}introduction/getting-started.html",
             };
             headerPanel.Children.Add(linkLabel);
             headerPanel.Children.Add(linkLabel2);
