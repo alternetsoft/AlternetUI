@@ -9,6 +9,7 @@ namespace ControlsSample
         private PageContainer pageContainer = new();
         private TreeView eventsControl = new();
         private Grid mainGrid = new();
+        private Control mainGridParent = new();
         private StackPanel mainPanel = new();
 
         public MainWindow()
@@ -56,6 +57,7 @@ namespace ControlsSample
             headerPanel.Children.Add(linkLabel2);
             //LayoutFactory.SetDebugBackgroundToParents(linkLabel2);
 
+            eventsControl.Margin = new(0,10,0,0);
             mainGrid.Children.Add(headerPanel);
             mainGrid.Children.Add(pageContainer);
             mainGrid.Children.Add(eventsControl);
@@ -85,7 +87,9 @@ namespace ControlsSample
 
             pageContainer.SelectedIndex = 0;
 
-            Children.Add(mainGrid);
+            mainGridParent.Padding = 10;
+            mainGridParent.Children.Add(mainGrid);
+            Children.Add(mainGridParent);
         }
 
         void IPageSite.LogEvent(string message)
