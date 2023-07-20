@@ -20,6 +20,10 @@ namespace Alternet::UI
         bool _redrawOnSashPosition = true;
 
         wxSplitterWindow* GetSplitterWindow();
-
+        void OnSplitterSashPosChanged(wxSplitterEvent& event);
+        void OnSplitterSashPosChanging(wxSplitterEvent& event);
+        void OnSplitterSashPosResize(wxSplitterEvent& event);
+        void OnSplitterDoubleClicked(wxSplitterEvent& event);
+        void OnSplitterUnsplit(wxSplitterEvent& event);
     };
 }

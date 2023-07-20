@@ -19,10 +19,16 @@ namespace Alternet::UI
 			auto window = GetWxWindow();
 			if (window != nullptr)
 			{
-				/*window->Unbind(wxEVT_DATE_CHANGED, 
-				&DateTimePicker::OnDateTimePickerValueChanged, this);*/
-				/*window->Unbind(wxEVT_TIME_CHANGED, 
-				&DateTimePicker::OnDateTimePickerValueChanged, this);*/
+				window->Unbind(wxEVT_SPLITTER_SASH_POS_CHANGED,
+					&SplitterPanel::OnSplitterSashPosChanged, this);
+				window->Unbind(wxEVT_SPLITTER_SASH_POS_CHANGING,
+					&SplitterPanel::OnSplitterSashPosChanging, this);
+				window->Unbind(wxEVT_SPLITTER_SASH_POS_RESIZE,
+					&SplitterPanel::OnSplitterSashPosResize, this);
+				window->Unbind(wxEVT_SPLITTER_DOUBLECLICKED,
+					&SplitterPanel::OnSplitterDoubleClicked, this);
+				window->Unbind(wxEVT_SPLITTER_UNSPLIT,
+					&SplitterPanel::OnSplitterUnsplit, this);
 			}
 		}
 	}
@@ -32,6 +38,18 @@ namespace Alternet::UI
 		return dynamic_cast<wxSplitterWindow*>(GetWxWindow());
 	}
 
+	/*
+	#define wxSP_NOBORDER         0x0000
+	#define wxSP_THIN_SASH        0x0000    // NB: the default is 3D sash
+	#define wxSP_NOSASH           0x0010
+	#define wxSP_PERMIT_UNSPLIT   0x0040
+	#define wxSP_LIVE_UPDATE      0x0080
+	#define wxSP_3DSASH           0x0100
+	#define wxSP_3DBORDER         0x0200
+	#define wxSP_NO_XP_THEME      0x0400
+	#define wxSP_BORDER           wxSP_3DBORDER
+	#define wxSP_3D               (wxSP_3DBORDER | wxSP_3DSASH)
+	*/
 	wxWindow* SplitterPanel::CreateWxWindowCore(wxWindow* parent) 
 	{
 		long styles = GetStyles();
@@ -44,10 +62,42 @@ namespace Alternet::UI
 			wxDefaultPosition,
 			wxDefaultSize,
 			styles);
-		
-		/*value->Bind(wxEVT_DATE_CHANGED,
-			&DateTimePicker::OnDateTimePickerValueChanged, this);*/
+
+		value->Bind(wxEVT_SPLITTER_SASH_POS_CHANGED,
+			&SplitterPanel::OnSplitterSashPosChanged, this);
+		value->Bind(wxEVT_SPLITTER_SASH_POS_CHANGING,
+			&SplitterPanel::OnSplitterSashPosChanging, this);
+		value->Bind(wxEVT_SPLITTER_SASH_POS_RESIZE,
+			&SplitterPanel::OnSplitterSashPosResize, this);
+		value->Bind(wxEVT_SPLITTER_DOUBLECLICKED,
+			&SplitterPanel::OnSplitterDoubleClicked, this);
+		value->Bind(wxEVT_SPLITTER_UNSPLIT,
+			&SplitterPanel::OnSplitterUnsplit, this);
 		return value;
+	}
+
+	void SplitterPanel::OnSplitterSashPosChanged(wxSplitterEvent& event)
+	{
+		RaiseEvent(SplitterPanelEvent::SplitterSashPosChanged);
+	}
+
+	void SplitterPanel::OnSplitterSashPosChanging(wxSplitterEvent& event)
+	{
+		RaiseEvent(SplitterPanelEvent::SplitterSashPosChanging);
+	}
+
+	void SplitterPanel::OnSplitterSashPosResize(wxSplitterEvent& event)
+	{
+	}
+
+	void SplitterPanel::OnSplitterDoubleClicked(wxSplitterEvent& event)
+	{
+		RaiseEvent(SplitterPanelEvent::SplitterDoubleClick);
+	}
+
+	void SplitterPanel::OnSplitterUnsplit(wxSplitterEvent& event)
+	{
+		RaiseEvent(SplitterPanelEvent::Unsplit);
 	}
 
 	int64_t SplitterPanel::GetStyles() 
