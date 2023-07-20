@@ -84,6 +84,9 @@ namespace ControlsSample
             pages.Add(new PageContainer.Page("Date Time", new DateTimePage { Site = this }));
             pages.Add(new PageContainer.Page("Notify Icon", new NotifyIconPage { Site = this }));
             pages.Add(new PageContainer.Page("Web Browser", new WebBrowserPage { Site = this }));
+            pages.Add(new PageContainer.Page(
+                "Splitter Panel", 
+                new SplitterPanelPage { Site = this }));
 
             pageContainer.SelectedIndex = 0;
 
