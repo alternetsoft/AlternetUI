@@ -369,7 +369,8 @@ namespace Alternet::UI
     }
     
     #define scast(v) (const_cast<char16_t*>(v.c_str()))
-    void WebBrowser::RaiseEventEx(WebBrowserEvent eventId, wxWebViewEvent& event, bool canVeto)
+    void WebBrowser::RaiseEventEx(WebBrowserEvent eventId, wxWebViewEvent& event, 
+        bool canVeto)
     {
         WebBrowserEventData data = { 0 };
 
