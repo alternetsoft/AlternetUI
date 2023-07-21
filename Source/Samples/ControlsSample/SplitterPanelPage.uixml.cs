@@ -42,7 +42,40 @@ namespace ControlsSample
             splitterPanel.Children.Add(control2);
             splitterPanel.Children.Add(control3);
 
+            splitterPanel.SplitterDoubleClick += SplitterPanel_SplitterDoubleClick;
+            splitterPanel.SplitterMoved += SplitterPanel_SplitterMoved;
+            splitterPanel.Unsplit += SplitterPanel_Unsplit;
+            splitterPanel.SplitterMoving += SplitterPanel_SplitterMoving;
+
             splitterPanel.SplitVertical(control1, control2);
+        }
+
+        private void SplitterPanel_SplitterMoving(object? sender, EventArgs e)
+        {
+            const string s = "Splitter Panel: Splitter Moving";
+
+            if (site == null)
+                return;
+
+            if (site.LastEventMessage == s)
+                return;
+
+            site?.LogEvent(s);
+        }
+
+        private void SplitterPanel_Unsplit(object? sender, EventArgs e)
+        {
+            site?.LogEvent("Splitter Panel: Unsplit");
+        }
+
+        private void SplitterPanel_SplitterMoved(object? sender, EventArgs e)
+        {
+            site?.LogEvent("Splitter Panel: Splitter Moved");
+        }
+
+        private void SplitterPanel_SplitterDoubleClick(object? sender, EventArgs e)
+        {
+            site?.LogEvent("Splitter Panel: Double click");
         }
 
         public IPageSite? Site

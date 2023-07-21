@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Base.Collections;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Alternet.UI
 {
@@ -33,6 +34,26 @@ namespace Alternet.UI
 
         private Control? control1;
         private Control? control2;
+
+        /// <summary>
+        /// Occurs when the splitter sash is double clicked.
+        /// </summary>
+        public event EventHandler? SplitterDoubleClick;
+
+        /// <summary>
+        /// Occurs when the splitter sash is moved.
+        /// </summary>
+        public event EventHandler? SplitterMoved;
+
+        /// <summary>
+        /// Occurs when the splitter sash is in the process of moving.
+        /// </summary>
+        public event EventHandler? SplitterMoving;
+
+        /// <summary>
+        /// Occurs when the control is unsplit.
+        /// </summary>
+        public event EventHandler? Unsplit;
 
         /// <summary>
         /// Returns the left/top or only pane.
@@ -548,6 +569,70 @@ namespace Alternet.UI
 
             UpdateSize();
             return r;
+        }
+
+        internal void RaiseSplitterDoubleClick(EventArgs e)
+        {
+            OnSplitterDoubleClick(e);
+            SplitterDoubleClick?.Invoke(this, e);
+        }
+
+        internal void RaiseSplitterMoved(EventArgs e)
+        {
+            OnSplitterMoved(e);
+            SplitterMoved?.Invoke(this, e);
+        }
+
+        internal void RaiseSplitterMoving(EventArgs e)
+        {
+            OnSplitterMoving(e);
+            SplitterMoving?.Invoke(this, e);
+        }
+
+        internal void RaiseUnsplit(EventArgs e)
+        {
+            OnUnsplit(e);
+            Unsplit?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Called when the splitter sash is double clicked.
+        /// </summary>
+        /// <param name="e">
+        /// An <see cref="EventArgs"/> that contains the event data.
+        /// </param>
+        protected virtual void OnSplitterDoubleClick(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the splitter sash is moved.
+        /// </summary>
+        /// <param name="e">
+        /// An <see cref="EventArgs"/> that contains the event data.
+        /// </param>
+        protected virtual void OnSplitterMoved(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the splitter sash is in the process of moving.
+        /// </summary>
+        /// <param name="e">
+        /// An <see cref="EventArgs"/> that contains the event data.
+        /// </param>
+        protected virtual void OnSplitterMoving(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the control is unsplit.
+        /// </summary>
+        /// <param name="e">
+        /// An <see cref="EventArgs"/> that contains the event data.
+        /// </param>
+        protected virtual void OnUnsplit(EventArgs e)
+        {
         }
 
         /// <inheritdoc />

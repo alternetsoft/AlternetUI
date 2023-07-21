@@ -128,16 +128,17 @@ namespace Alternet.UI
             {
                 return NativeControl.DefaultSashSize;
             }
-
         }
+
+        public override IEnumerable<Control> AllChildrenIncludedInLayout
+            => Enumerable.Empty<Control>();
+
+        public new SplitterPanel Control => (SplitterPanel)(base.Control);
 
         public void UpdateSize()
         {
             NativeControl.UpdateSize();
         }
-
-        public override IEnumerable<Control> AllChildrenIncludedInLayout
-            => Enumerable.Empty<Control>();
 
         internal override Native.Control CreateNativeControl()
         {
@@ -170,20 +171,24 @@ namespace Alternet.UI
 
         private void NativeControl_SplitterDoubleClick(object sender, EventArgs e)
         {
+            Control.RaiseSplitterDoubleClick(e);
         }
 
         private void NativeControl_Unsplit(object sender, EventArgs e)
         {
+            Control.RaiseUnsplit(e);
         }
 
         private void NativeControl_SplitterSashPosChanged(object sender, EventArgs e)
         {
+            Control.RaiseSplitterMoved(e);
         }
 
         private void NativeControl_SplitterSashPosChanging(
             object sender,
             EventArgs e)
         {
+            Control.RaiseSplitterMoving(e);
         }
     }
 }

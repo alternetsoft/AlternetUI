@@ -5,6 +5,7 @@ namespace ControlsSample
 {
     internal partial class MainWindow : Window, IPageSite
     {
+        private string? lastEventMessage = null;
         private int lastEventNumber = 1;
         private PageContainer pageContainer = new();
         private TreeView eventsControl = new();
@@ -98,8 +99,12 @@ namespace ControlsSample
             Children.Add(mainGridParent);
         }
 
+        string? IPageSite.LastEventMessage => lastEventMessage;
+
         void IPageSite.LogEvent(string message)
         {
+            lastEventMessage = message;
+
             var s = $"{lastEventNumber++}. {message}";
             var item = new TreeViewItem(s);
             eventsControl.Items.Add(item);
