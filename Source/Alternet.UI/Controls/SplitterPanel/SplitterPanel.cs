@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Base.Collections;
@@ -16,8 +17,15 @@ namespace Alternet.UI
     /// </summary>
     public class SplitterPanel : Control
     {
+        private const int wxSPLIT_HORIZONTAL = 1;
+        private const int wxSPLIT_VERTICAL = 2;
+
         private Control? control1;
         private Control? control2;
+
+        public Control? Control1 => control1;
+
+        public Control? Control2 => control2;
 
         /// <summary>
         /// Gets or sets the minimum pane size in pixels (defaults to zero).
@@ -38,6 +46,46 @@ namespace Alternet.UI
             set
             {
                 Handler.MinimumPaneSize = value;
+            }
+        }
+
+        public bool IsSplitVertical
+        {
+            get
+            {
+                var result = IsSplit && Handler.SplitMode == wxSPLIT_VERTICAL;
+                return result;
+            }
+
+            set
+            {
+                if (!IsSplit || IsSplitVertical == value)
+                    return;
+                if (value)
+                    Handler.SplitMode = wxSPLIT_VERTICAL;
+                else
+                    Handler.SplitMode = wxSPLIT_HORIZONTAL;
+                UpdateSize();
+            }
+        }
+
+        public bool IsSplitHorizontal
+        {
+            get
+            {
+                var result = IsSplit && Handler.SplitMode == wxSPLIT_HORIZONTAL;
+                return result;
+            }
+
+            set
+            {
+                if (!IsSplit || IsSplitHorizontal == value)
+                    return;
+                if(value)
+                    Handler.SplitMode = wxSPLIT_HORIZONTAL;
+                else
+                    Handler.SplitMode = wxSPLIT_VERTICAL;
+                UpdateSize();
             }
         }
 
@@ -113,7 +161,7 @@ If true, the sash is always invisible, else it is shown when the window is split
         }
 
         /*
-      Returns true if the window is split, false otherwise.   
+      Returns true if the window is split, false otherwise.
          */
         public bool IsSplit
         {
@@ -151,9 +199,6 @@ GetSashPosition()
             }
         }
 
-        /*
-         
-         */
         public bool RedrawOnSashPosition
         {
             get
@@ -207,6 +252,9 @@ The default sash size is platform-dependent because it conforms to the current p
             }
         }
 
+        internal new NativeSplitterPanelHandler Handler =>
+            (NativeSplitterPanelHandler)base.Handler;
+
         /*
          Causes any pending sizing of the sash and child panes to take place immediately.
 Such resizing normally takes place in idle time, in order to wait for layout to be completed. However, this can cause unacceptable flicker as the panes are resized after the window has been shown. To work around this, you can perform window layout (for example by sending a size event to the parent window), and then call this function, before showing the top-level window.
@@ -216,9 +264,6 @@ Such resizing normally takes place in idle time, in order to wait for layout to 
         {
             Handler.UpdateSize();
         }
-
-        internal new NativeSplitterPanelHandler Handler =>
-            (NativeSplitterPanelHandler)base.Handler;
 
         /// <summary>
         /// <inheritdoc />
@@ -248,9 +293,21 @@ Remarks
 This should be called if you wish to initially view only a single pane in the splitter window.
          
          */
-        public void InitializeOnePane(Control window)
+        public bool InitializeUnsplitted(Control window)
         {
-            Handler.NativeControl.Initialize(window.Handler.NativeControl);
+            if (window == null)
+                return false;
+            if (window.Parent != this)
+                return false;
+
+            Native.Control? nc1 = window.Handler.NativeControl;
+            if (nc1 == null)
+                return false;
+
+            Handler.NativeControl.Initialize(nc1);
+            control1 = window;
+            control2 = null;
+            return true;
         }
 
         /*
@@ -259,11 +316,35 @@ It is in general better to use it instead of calling Unsplit() and then resplitt
 Both parameters should be non-NULL and winOld must specify one of the windows managed by the splitter. If the parameters are incorrect or the window couldn't be replaced, false is returned. Otherwise the function will return true, but please notice that it will not delete the replaced window and you may wish to do it yourself.
          
          */
-        public bool ReplaceControl(Control winOld, Control winNew)
+        public bool ReplaceControl(Control? winOld, Control? winNew)
         {
-            return Handler.NativeControl.Replace(
-                winOld.Handler.NativeControl,
-                winNew.Handler.NativeControl);
+            if (winOld == null || winNew == null)
+                return false;
+            if (control1 != winOld && control2 != winOld)
+                return false;
+            if (winNew.Parent != this)
+                return false;
+
+            Native.Control? nc1 = winOld.Handler.NativeControl;
+            Native.Control? nc2 = winNew.Handler.NativeControl;
+
+            if (nc1 == null || nc2 == null)
+                return false;
+
+            var result = Handler.NativeControl.Replace(nc1, nc2);
+
+            if (result)
+            {
+                winOld.Visible = false;
+                winNew.Visible = true;
+
+                if (control1 == winOld)
+                    control1 = winNew;
+                if (control2 == winOld)
+                    control2 = winNew;
+            }
+
+            return result;
         }
 
         /*
@@ -287,12 +368,16 @@ See also
 SplitVertically(), IsSplit(), Unsplit()
 
          */
-        public bool SplitHorizontally(
+        public bool SplitHorizontal(
             Control? window1,
             Control? window2,
             int sashPosition = 0)
         {
+            if (IsSplit)
+                return false;
             if(window1 == null || window2 == null)
+                return false;
+            if (window1.Parent != this || window2.Parent != this)
                 return false;
 
             Native.Control? nc1 = window1.Handler.NativeControl;
@@ -301,10 +386,15 @@ SplitVertically(), IsSplit(), Unsplit()
             if (nc1 == null || nc2 == null)
                 return false;
 
-            return Handler.NativeControl.SplitHorizontally(
-                nc1,
-                nc2,
-                sashPosition);
+            var r = Handler.NativeControl.SplitHorizontally(nc1, nc2, sashPosition);
+
+            if (r)
+            {
+                control1 = window1;
+                control2 = window2;
+            }
+
+            return r;
         }
 
         /*
@@ -322,38 +412,68 @@ Returns
 true if successful, false otherwise (the window was already split).
 Remarks
 This should be called if you wish to initially view two panes. It can also be called at any subsequent time, but the application should check that the window is not currently split using IsSplit().
-See also
-SplitHorizontally(), IsSplit(), Unsplit().
          
          */
-        public bool SplitVertically(
+        public bool SplitVertical(
             Control? window1,
             Control? window2,
             int sashPosition = 0)
         {
+            if (IsSplit)
+                return false;
             if (window1 == null || window2 == null)
                 return false;
+            if (window1.Parent != this || window2.Parent != this)
+                return false;
 
-            return Handler.NativeControl.SplitVertically(
-                window1.Handler.NativeControl,
-                window2.Handler.NativeControl,
-                sashPosition);
+            Native.Control? nc1 = window1.Handler.NativeControl;
+            Native.Control? nc2 = window2.Handler.NativeControl;
+
+            if (nc1 == null || nc2 == null)
+                return false;
+
+            var r = Handler.NativeControl.SplitVertically(nc1, nc2, sashPosition);
+            if (r)
+            {
+                control1 = window1;
+                control2 = window2;
+            }
+
+            return r;
         }
 
-        /*
-toRemove
-The pane to remove, or NULL to remove the right or bottom pane.
-
-Returns
-true if successful, false otherwise (the window was not split).
-Remarks
-This call will not actually delete the pane being removed; it calls OnUnsplit() which can be overridden for the desired behaviour. By default, the pane being removed is hidden.
-See also
-SplitHorizontally(), SplitVertically(), IsSplit(), OnUnsplit()
-         */
-        public bool DoUnsplit(Control toRemove)
+        /// <summary>
+        /// Leaves only one control inside the <see cref="SplitterPanel"/>.
+        /// </summary>
+        /// <param name="toRemove">The pane to remove, or NULL to remove the
+        /// right or bottom pane.</param>
+        /// <returns>true if successful, false otherwise
+        /// (the <see cref="SplitterPanel"/> was not unsplit).</returns>
+        /// <remarks>
+        /// This call will not actually delete the control being removed.
+        /// By default, the control being removed is hidden.
+        /// </remarks>
+        public bool DoUnsplit(Control? toRemove = null)
         {
-            return Handler.NativeControl.DoUnsplit(toRemove.Handler.NativeControl);
+            if (!IsSplit)
+                return true;
+            if (toRemove == null)
+                toRemove = control2;
+            if (toRemove == null)
+                return false;
+            Native.Control? nc1 = toRemove.Handler.NativeControl;
+            if (nc1 == null)
+                return false;
+            var r = Handler.NativeControl.DoUnsplit(nc1);
+            if (r)
+            {
+                if (control1 == toRemove)
+                    control1 = null;
+                if (control2 == toRemove)
+                    control2 = null;
+            }
+            UpdateSize();
+            return r;
         }
 
         /// <inheritdoc />

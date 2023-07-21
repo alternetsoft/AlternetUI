@@ -22,6 +22,19 @@ namespace Alternet.UI
             }
         }
 
+        public int SplitMode
+        {
+            get
+            {
+                return NativeControl.SplitMode;
+            }
+
+            set
+            {
+                NativeControl.SplitMode = value;
+            }
+        }
+
         public int MinimumPaneSize
         {
             get
