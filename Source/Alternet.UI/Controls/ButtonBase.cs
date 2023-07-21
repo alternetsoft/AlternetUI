@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// </summary>
     public abstract class ButtonBase : Control
     {
-        private string text = "";
+        private string text = string.Empty;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Text"/> property changes.
