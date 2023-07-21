@@ -7,7 +7,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Base.Collections;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Alternet.UI
 {
