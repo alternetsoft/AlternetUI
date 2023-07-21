@@ -17,6 +17,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when a link is clicked within the control.
+        /// </summary>
+        public event CancelEventHandler? LinkClicked;
+
+        /// <summary>
         /// Gets or sets the text displayed on this label.
         /// </summary>
         [DefaultValue("")]
@@ -117,6 +122,24 @@ namespace Alternet.UI
                 throw new ArgumentNullException(nameof(e));
 
             OnTextChanged(e);
+        }
+
+        internal void RaiseLinkClicked(CancelEventArgs e)
+        {
+            OnLinkClicked(e);
+            if (!e.Cancel)
+                LinkClicked?.Invoke(this, e);
+        }
+
+
+        /// <summary>
+        /// Called when a link is clicked within the control.
+        /// </summary>
+        /// <param name="e">
+        /// An <see cref="CancelEventArgs"/> that contains the event data.
+        /// </param>
+        protected virtual void OnLinkClicked(CancelEventArgs e)
+        {
         }
 
         private static object CoerceText(DependencyObject d, object value)

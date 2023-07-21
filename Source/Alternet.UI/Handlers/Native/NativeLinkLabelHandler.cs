@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace Alternet.UI
 {
     internal class NativeLinkLabelHandler : NativeControlHandler<LinkLabel, Native.LinkLabel>
@@ -31,12 +33,21 @@ namespace Alternet.UI
             NativeControl.Text = Control.Text;
 
             Control.TextChanged += Control_TextChanged;
+            NativeControl.HyperlinkClick += NativeControl_HyperlinkClick;
+        }
+
+        private void NativeControl_HyperlinkClick(
+            object sender,
+            System.ComponentModel.CancelEventArgs e)
+        {
+            Control.RaiseLinkClicked(e);
         }
 
         protected override void OnDetach()
         {
             base.OnDetach();
             Control.TextChanged -= Control_TextChanged;
+            NativeControl.HyperlinkClick -= NativeControl_HyperlinkClick;
         }
 
         private void Control_TextChanged(object? sender, System.EventArgs? e)

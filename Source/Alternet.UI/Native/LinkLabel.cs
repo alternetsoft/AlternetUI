@@ -12,6 +12,7 @@ namespace Alternet.UI.Native
     {
         static LinkLabel()
         {
+            SetEventCallback();
         }
         
         public LinkLabel()
@@ -57,11 +58,58 @@ namespace Alternet.UI.Native
             }
         }
         
+        static GCHandle eventCallbackGCHandle;
+        
+        static void SetEventCallback()
+        {
+            if (!eventCallbackGCHandle.IsAllocated)
+            {
+                var sink = new NativeApi.LinkLabelEventCallbackType((obj, e, parameter) =>
+                UI.Application.HandleThreadExceptions(() =>
+                {
+                    var w = NativeObject.GetFromNativePointer<LinkLabel>(obj, p => new LinkLabel(p));
+                    if (w == null) return IntPtr.Zero;
+                    return w.OnEvent(e, parameter);
+                }
+                ));
+                eventCallbackGCHandle = GCHandle.Alloc(sink);
+                NativeApi.LinkLabel_SetEventCallback_(sink);
+            }
+        }
+        
+        IntPtr OnEvent(NativeApi.LinkLabelEvent e, IntPtr parameter)
+        {
+            switch (e)
+            {
+                case NativeApi.LinkLabelEvent.HyperlinkClick:
+                {
+                    {
+                        var cea = new CancelEventArgs();
+                        HyperlinkClick?.Invoke(this, cea);
+                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                    }
+                }
+                default: throw new Exception("Unexpected LinkLabelEvent value: " + e);
+            }
+        }
+        
+        public event EventHandler<CancelEventArgs>? HyperlinkClick;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
+            
+            [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+            public delegate IntPtr LinkLabelEventCallbackType(IntPtr obj, LinkLabelEvent e, IntPtr param);
+            
+            public enum LinkLabelEvent
+            {
+                HyperlinkClick,
+            }
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void LinkLabel_SetEventCallback_(LinkLabelEventCallbackType callback);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr LinkLabel_Create_();

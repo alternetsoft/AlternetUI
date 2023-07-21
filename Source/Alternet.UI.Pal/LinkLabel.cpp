@@ -14,6 +14,24 @@ namespace Alternet::UI
 
 	LinkLabel::~LinkLabel()
 	{
+		if (IsWxWindowCreated())
+		{
+			auto window = GetWxWindow();
+			if (window != nullptr)
+			{
+				window->Unbind(wxEVT_HYPERLINK,
+					&LinkLabel::OnHyperlinkClick, this);
+			}
+		}
+
+	}
+
+	void LinkLabel::OnHyperlinkClick(wxHyperlinkEvent& event)
+	{
+		bool cancel = RaiseEvent(LinkLabelEvent::HyperlinkClick);
+
+		if (!cancel)
+			event.Skip();
 	}
 
 	string LinkLabel::GetText()
@@ -38,8 +56,11 @@ namespace Alternet::UI
 
 	wxWindow* LinkLabel::CreateWxWindowCore(wxWindow* parent)
 	{
+		// Text must be " " (space) to avoid exception on Linux
 		auto staticText = new wxHyperlinkCtrl(
 			parent, wxID_ANY, " ", wxEmptyString);
+		staticText->Bind(wxEVT_HYPERLINK,
+			&LinkLabel::OnHyperlinkClick, this);
 		return staticText;
 	}
 

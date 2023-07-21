@@ -43,3 +43,8 @@ ALTERNET_UI_API void LinkLabel_SetUrl_(LinkLabel* obj, const char16_t* value)
         });
 }
 
+ALTERNET_UI_API void LinkLabel_SetEventCallback_(LinkLabel::LinkLabelEventCallbackType callback)
+{
+    LinkLabel::SetEventCallback(callback);
+}
+

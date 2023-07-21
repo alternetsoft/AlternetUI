@@ -9,6 +9,18 @@ string GetUrl();
 void SetUrl(const string& value);
 
 public:
+enum class LinkLabelEvent
+{
+    HyperlinkClick,
+};
+typedef void* (*LinkLabelEventCallbackType)(LinkLabel* obj, LinkLabelEvent event, void* param);
+static void SetEventCallback(LinkLabelEventCallbackType value) { eventCallback = value; }
+protected:
+bool RaiseEvent(LinkLabelEvent event, void* parameter = nullptr) { if (EventsSuspended()) return false; if (eventCallback != nullptr) return eventCallback(this, event, parameter) != nullptr; else return false; }
+void* RaiseEventWithPointerResult(LinkLabelEvent event, void* parameter = nullptr) { if (EventsSuspended()) return nullptr; if (eventCallback != nullptr) return eventCallback(this, event, parameter); else return nullptr; }
+private:
+inline static LinkLabelEventCallbackType eventCallback = nullptr;
+public:
 LinkLabel();
 protected:
 virtual ~LinkLabel();

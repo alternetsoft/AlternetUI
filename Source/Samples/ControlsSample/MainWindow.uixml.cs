@@ -12,6 +12,8 @@ namespace ControlsSample
         private Grid mainGrid = new();
         private Control mainGridParent = new();
         private StackPanel mainPanel = new();
+        private LinkLabel? linkLabel;
+        private LinkLabel? linkLabel2;
 
         public MainWindow()
         {
@@ -45,18 +47,22 @@ namespace ControlsSample
 
             var homePage = @"https://www.alternet-ui.com/";
             var docsHomePage = @"https://docs.alternet-ui.com/";
-            var linkLabel = new LinkLabel()
+            linkLabel = new LinkLabel()
             {
                 Text = "Home Page",
                 Margin = new Thickness(5,0,5,10),
                 Url = homePage,
             };
-            var linkLabel2 = new LinkLabel()
+            linkLabel.LinkClicked += LinkLabel_LinkClicked;
+            
+            linkLabel2 = new LinkLabel()
             {
                 Text = "Documentation",
                 Margin = new Thickness(5,0,10,10),
                 Url = $"{docsHomePage}introduction/getting-started.html",
             };
+            linkLabel2.LinkClicked += LinkLabel_LinkClicked;
+
             headerPanel.Children.Add(linkLabel);
             headerPanel.Children.Add(linkLabel2);
             //LayoutFactory.SetDebugBackgroundToParents(linkLabel2);
@@ -99,9 +105,19 @@ namespace ControlsSample
             Children.Add(mainGridParent);
         }
 
+        private void LinkLabel_LinkClicked(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var linkLabel = (LinkLabel)sender;
+            //if(linkLabel == linkLabel2)
+            //    e.Cancel = true;
+            LogEvent(linkLabel.Url);
+        }
+
         string? IPageSite.LastEventMessage => lastEventMessage;
 
-        void IPageSite.LogEvent(string message)
+        void IPageSite.LogEvent(string message) => LogEvent(message);
+
+        void LogEvent(string message)
         {
             lastEventMessage = message;
 
