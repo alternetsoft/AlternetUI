@@ -41,7 +41,7 @@
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5" Padding="5">
-          <GroupBox Title="Date Editor" Margin="0,0,0,5">
+          <GroupBox Title="Date Range" Margin="0,0,0,5">
             <VerticalStackPanel Margin="5">
               <Button Text="Any date" Margin="0,0,0,5"
                       Click="RangeAnyDate_Click" />
