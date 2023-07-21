@@ -11,6 +11,15 @@ namespace Alternet.UI
     /// </summary>
     public abstract class ControlHandler
     {
+        private static Dictionary<Native.Control, ControlHandler>
+            handlersByNativeControls = new();
+
+        internal static ControlHandler? TryGetHandlerByNativeControl(
+            Native.Control control) =>
+                handlersByNativeControls.TryGetValue(
+                    control,
+                    out var handler) ? handler : null;
+
         private int layoutSuspendCount;
 
         private bool inLayout;
@@ -205,11 +214,6 @@ namespace Alternet.UI
         }
 
         internal bool NativeControlCreated => nativeControl != null;
-
-        internal static ControlHandler? TryGetHandlerByNativeControl(Native.Control control) =>
-            handlersByNativeControls.TryGetValue(control, out var handler) ? handler : null;
-
-        static Dictionary<Native.Control, ControlHandler> handlersByNativeControls = new ();
 
         /// <summary>
         /// This property may be overridden by control handlers to indicate that the handler needs

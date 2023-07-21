@@ -113,5 +113,13 @@ namespace Alternet.UI
             Thickness result = pens.Width;
             Padding = result;
         }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().              
+                CreateBorderHandler(this);
+        }
+
     }
 }

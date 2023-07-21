@@ -11,7 +11,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref='MenuItem'/> class.
         /// </summary>
         public MenuItem() :
-            this("")
+            this(string.Empty)
         {
 
         }
@@ -282,5 +282,11 @@ namespace Alternet.UI
         /// Occurs when the <see cref="Checked"/> property changes.
         /// </summary>
         public event EventHandler? CheckedChanged;
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateMenuItemHandler(this);
+        }
     }
 }

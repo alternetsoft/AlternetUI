@@ -205,10 +205,10 @@ namespace Alternet.UI
             return DefaultImageSize288dpi;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         protected override ControlHandler CreateHandler()
         {
-            return new NativeToolbarHandler(true);
+            return GetEffectiveControlHandlerHactory().CreateToolbarHandler(this);
         }
     }
 }

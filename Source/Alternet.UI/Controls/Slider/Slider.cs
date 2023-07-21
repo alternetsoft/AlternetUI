@@ -388,7 +388,7 @@ namespace Alternet.UI
         /// Raises the <see cref="MaximumChanged"/> event and calls <see cref="OnMaximumChanged(EventArgs)"/>.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
-        void RaiseMaximumChanged(EventArgs e)
+        private void RaiseMaximumChanged(EventArgs e)
         {
             if (e == null)
                 throw new ArgumentNullException(nameof(e));
@@ -401,5 +401,12 @@ namespace Alternet.UI
         {
             RaiseMaximumChanged(EventArgs.Empty);
         }
-     }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateSliderHandler(this);
+        }
+
+    }
 }

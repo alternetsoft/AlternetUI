@@ -107,5 +107,11 @@ namespace Alternet.UI
 
         private static object CoerceText(DependencyObject d, object value) 
             => value ?? string.Empty;
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateLabelHandler(this);
+        }
     }
 }

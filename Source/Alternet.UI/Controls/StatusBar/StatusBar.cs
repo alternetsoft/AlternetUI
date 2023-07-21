@@ -50,10 +50,18 @@ namespace Alternet.UI
             // Children.Add(e.Item);
         }
 
-        private void Panels_ItemRemoved(object? sender, CollectionChangeEventArgs<StatusBarPanel> e)
+        private void Panels_ItemRemoved(
+            object? sender,
+            CollectionChangeEventArgs<StatusBarPanel> e)
         {
             // Commented out as Children.Add(e.Item) was commented
             // Children.Remove(e.Item);
+        }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateStatusBarHandler(this);
         }
     }
 }

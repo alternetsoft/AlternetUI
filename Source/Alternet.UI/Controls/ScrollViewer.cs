@@ -7,5 +7,11 @@ namespace Alternet.UI
     /// </summary>
     public class ScrollViewer : Control
     {
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateScrollViewerHandler(this);
+        }
     }
 }

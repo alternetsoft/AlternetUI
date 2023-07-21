@@ -198,7 +198,8 @@ namespace Alternet.UI
                 if (activeWindow == null)
                     return null;
 
-                var handler = TryGetHandlerByNativeControl(activeWindow) ?? throw new InvalidOperationException();
+                var handler = TryGetHandlerByNativeControl(activeWindow) ??
+                    throw new InvalidOperationException();
                 return ((NativeWindowHandler)handler).Control;
             }
         }

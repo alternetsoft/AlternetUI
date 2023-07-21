@@ -79,5 +79,12 @@ namespace Alternet.UI
             get { return (Image?)GetValue(ImageProperty); }
             set { SetValue(ImageProperty, value); }
         }
-   }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreatePictureBoxHandler(this);
+        }
+
+    }
 }

@@ -45,5 +45,12 @@ namespace Alternet.UI
 
             ((NativeContextMenuHandler)Handler).Show(control, position);
         }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateContextMenuHandler(this);
+        }
     }
 }

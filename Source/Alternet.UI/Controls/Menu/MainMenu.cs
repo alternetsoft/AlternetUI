@@ -13,5 +13,11 @@ namespace Alternet.UI
         public MainMenu()
         {
         }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateMainMenuHandler(this);
+        }
     }
 }

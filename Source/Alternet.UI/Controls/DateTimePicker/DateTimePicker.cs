@@ -345,5 +345,13 @@ namespace Alternet.UI
 
             SetRange(EffectiveMinDate(min), EffectiveMaxDate(max));
         }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateDateTimePickerHandler(this);
+        }
+
     }
 }

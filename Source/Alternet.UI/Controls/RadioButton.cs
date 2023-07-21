@@ -65,5 +65,13 @@ namespace Alternet.UI
             OnCheckedChanged(e);
             CheckedChanged?.Invoke(this, e);
         }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateRadioButtonHandler(this);
+        }
+
     }
 }

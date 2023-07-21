@@ -647,5 +647,11 @@ namespace Alternet.UI
 
             return changed;
         }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateTreeViewHandler(this);
+        }
     }
 }

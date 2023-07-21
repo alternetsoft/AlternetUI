@@ -76,5 +76,13 @@ namespace Alternet.UI
         {
             RaiseValueChanged(EventArgs.Empty);
         }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateColorPickerHandler(this);
+        }
+
     }
 }

@@ -214,5 +214,13 @@ namespace Alternet.UI
                 MaximumChanged?.Invoke(this, EventArgs.Empty);
             }
         }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateProgressBarHandler(this);
+        }
+
     }
 }

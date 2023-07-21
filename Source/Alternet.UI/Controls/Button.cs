@@ -58,7 +58,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
         public new ButtonHandler Handler
         {
             get
@@ -87,5 +86,11 @@ namespace Alternet.UI
         /// The default is <see langword="false"/>.
         /// </value>
         public bool IsCancel { get => Handler.IsCancel; set => Handler.IsCancel = value; }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateButtonHandler(this);
+        }
     }
 }

@@ -218,7 +218,7 @@ namespace Alternet.UI
             if (!hasBorder)
                 return new NativeTextBoxHandler();
 
-            return base.CreateHandler();
+            return GetEffectiveControlHandlerHactory().CreateTextBoxHandler(this);
         }
     }
 }

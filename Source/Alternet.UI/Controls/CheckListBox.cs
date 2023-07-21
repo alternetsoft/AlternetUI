@@ -245,5 +245,13 @@ namespace Alternet.UI
 
             return changed;
         }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateCheckListBoxHandler(this);
+        }
+
     }
 }

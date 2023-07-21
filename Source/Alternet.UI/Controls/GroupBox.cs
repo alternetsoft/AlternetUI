@@ -64,5 +64,11 @@ namespace Alternet.UI
             OnTitleChanged(e);
             TitleChanged?.Invoke(this, e);
         }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateGroupBoxHandler(this);
+        }
     }
 }

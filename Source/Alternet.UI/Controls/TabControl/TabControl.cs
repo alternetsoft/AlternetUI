@@ -135,5 +135,11 @@ namespace Alternet.UI
 
         /// <inheritdoc />
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Pages;
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateTabControlHandler(this);
+        }
     }
 }

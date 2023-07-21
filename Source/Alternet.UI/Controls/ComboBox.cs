@@ -374,5 +374,11 @@ namespace Alternet.UI
 
             return null;
         }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateComboBoxHandler(this);
+        }
     }
 }

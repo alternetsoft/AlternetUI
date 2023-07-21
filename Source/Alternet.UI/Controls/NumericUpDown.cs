@@ -280,5 +280,13 @@ namespace Alternet.UI
         {
             RaiseMaximumChanged(EventArgs.Empty);
         }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateNumericUpDownHandler(this);
+        }
+
     }
 }

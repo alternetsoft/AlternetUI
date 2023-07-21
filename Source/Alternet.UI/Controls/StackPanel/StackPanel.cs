@@ -39,5 +39,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnOrientationChanged(EventArgs e) => OrientationChanged?.Invoke(this, e);
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateStackPanelHandler(this);
+        }
+
     }
 }

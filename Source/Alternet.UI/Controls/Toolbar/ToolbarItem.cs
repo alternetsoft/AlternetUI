@@ -329,5 +329,12 @@ namespace Alternet.UI
             if (Command != null)
                 Enabled = CommandHelpers.CanExecuteCommandSource(this);
         }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateToolbarItemHandler(this);
+        }
     }
 }

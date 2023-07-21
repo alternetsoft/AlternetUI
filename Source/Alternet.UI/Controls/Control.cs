@@ -1290,7 +1290,10 @@ namespace Alternet.UI
         /// You typically should not call the <see cref="CreateHandler"/> method directly.
         /// The preferred method is to call the <see cref="EnsureHandlerCreated"/> method, which forces a handler to be created for the control.
         /// </remarks>
-        protected virtual ControlHandler CreateHandler() => GetEffectiveControlHandlerHactory().CreateControlHandler(this);
+        protected virtual ControlHandler CreateHandler()
+        {
+            return new GenericControlHandler();
+        }
 
         /// <summary>
         /// Releases the unmanaged resources used by the object and optionally releases the managed resources.

@@ -13,7 +13,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref='StatusBarPanel'/> class.
         /// </summary>
         public StatusBarPanel() :
-            this("")
+            this(string.Empty)
         {
 
         }
@@ -65,5 +65,12 @@ namespace Alternet.UI
         /// Occurs when the <see cref="Text"/> property changes.
         /// </summary>
         public event EventHandler? TextChanged;
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateStatusBarPanelHandler(this);
+        }
     }
 }
