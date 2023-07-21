@@ -17,14 +17,31 @@ namespace Alternet.UI
     /// </summary>
     public class SplitterPanel : Control
     {
-        private const int wxSPLIT_HORIZONTAL = 1;
-        private const int wxSPLIT_VERTICAL = 2;
+        private const int SPLITHORIZONTAL = 1;
+        private const int SPLITVERTICAL = 2;
+
+        private const int SPNOBORDER = 0x0000;
+        private const int SPTHINSASH = 0x0000;    // the default is 3D sash
+        private const int SPNOSASH = 0x0010;
+        private const int SPPERMITUNSPLIT = 0x0040;
+        private const int SPLIVEUPDATE = 0x0080;
+        private const int SP3DSASH = 0x0100;
+        private const int SP3DBORDER = 0x0200;
+        private const int SPNOXPTHEME = 0x0400;
+        private const int SPBORDER = SP3DBORDER;
+        private const int SP3D = SP3DBORDER | SP3DSASH;
 
         private Control? control1;
         private Control? control2;
 
+        /// <summary>
+        /// Returns the left/top or only pane.
+        /// </summary>
         public Control? Control1 => control1;
 
+        /// <summary>
+        /// Returns the right/bottom pane.
+        /// </summary>
         public Control? Control2 => control2;
 
         /// <summary>
@@ -49,11 +66,21 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether the control is split vertically.
+        /// </summary>
+        /// <returns>
+        /// Returns true if the control is split vertically, false otherwise.
+        /// </returns>
+        /// <remarks>
+        /// If control is already split, you can use this property to change
+        /// the split mode  (for example from horizontal to vertical).
+        /// </remarks>
         public bool IsSplitVertical
         {
             get
             {
-                var result = IsSplit && Handler.SplitMode == wxSPLIT_VERTICAL;
+                var result = IsSplit && Handler.SplitMode == SPLITVERTICAL;
                 return result;
             }
 
@@ -62,18 +89,28 @@ namespace Alternet.UI
                 if (!IsSplit || IsSplitVertical == value)
                     return;
                 if (value)
-                    Handler.SplitMode = wxSPLIT_VERTICAL;
+                    Handler.SplitMode = SPLITVERTICAL;
                 else
-                    Handler.SplitMode = wxSPLIT_HORIZONTAL;
+                    Handler.SplitMode = SPLITHORIZONTAL;
                 UpdateSize();
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether the control is split horizontally.
+        /// </summary>
+        /// <returns>
+        /// Returns true if the control is split horizontally, false otherwise.
+        /// </returns>
+        /// <remarks>
+        /// If control is already split, you can use this property to change
+        /// the split mode (for example from vertical to horizontal).
+        /// </remarks>
         public bool IsSplitHorizontal
         {
             get
             {
-                var result = IsSplit && Handler.SplitMode == wxSPLIT_HORIZONTAL;
+                var result = IsSplit && Handler.SplitMode == SPLITHORIZONTAL;
                 return result;
             }
 
@@ -82,9 +119,9 @@ namespace Alternet.UI
                 if (!IsSplit || IsSplitHorizontal == value)
                     return;
                 if(value)
-                    Handler.SplitMode = wxSPLIT_HORIZONTAL;
+                    Handler.SplitMode = SPLITHORIZONTAL;
                 else
-                    Handler.SplitMode = wxSPLIT_VERTICAL;
+                    Handler.SplitMode = SPLITVERTICAL;
                 UpdateSize();
             }
         }
@@ -119,10 +156,12 @@ namespace Alternet.UI
             }
         }
 
-        /*
-         * 
-  Returns the default sash size in pixels or 0 if it is invisible.
-         */
+        /// <summary>
+        /// Gets or sets the default sash size in pixels.
+        /// </summary>
+        /// <remarks>
+        /// Returns 0 if sash is invisible.
+        /// </remarks>
         public int SashSize
         {
             get
@@ -136,17 +175,21 @@ namespace Alternet.UI
             }
         }
 
-        /*
-Sets whether the sash should be invisible, even when the window is split.
-When the sash is invisible, it doesn't appear on the screen at all and, in particular, doesn't allow the user to resize the windows.
-Remarks
-Only sets the internal variable; does not update the display.
-Parameters
-invisible
-If true, the sash is always invisible, else it is shown when the window is split.
-
-         
-         */
+        /// <summary>
+        /// Gets or sets whether the sash should be invisible, even when
+        /// the control is split.
+        /// </summary>
+        /// <remarks>
+        /// When the sash is invisible, it doesn't appear on the screen at
+        /// all and, in particular, doesn't allow the user to resize the windows.
+        /// </remarks>
+        /// <remarks>
+        /// Only sets the internal variable; does not update the display.
+        /// </remarks>
+        /// <returns>
+        /// If false, the sash is always invisible, else it
+        /// is shown when the window is split.
+        /// </returns>
         public bool SashVisible
         {
             get
@@ -160,32 +203,30 @@ If true, the sash is always invisible, else it is shown when the window is split
             }
         }
 
-        /*
-      Returns true if the window is split, false otherwise.
-         */
+        /// <summary>
+        /// Gets whether the control is split.
+        /// </summary>
+        /// <returns>
+        /// Returns true if the control is split, false otherwise.
+        /// </returns>
         public bool IsSplit
         {
             get
             {
                 return Handler.IsSplit;
             }
-
         }
 
-        /*
-Sets the sash position.
-Parameters
-position
-The sash position in pixels.
-redraw
-If true, resizes the panes and redraws the sash and border.
-
-Remarks
-Does not currently check for an out-of-range value.
-See also
-GetSashPosition()
-         
-         */
+        /// <summary>
+        /// Gets or sets the sash position in pixels.
+        /// </summary>
+        /// <remarks>
+        /// If <see cref="RedrawOnSashPosition"/> is true, resizes the
+        /// panes and redraws the sash and border.
+        /// </remarks>
+        /// <remarks>
+        /// Does not currently check for an out-of-range value.
+        /// </remarks>
         public int SashPosition
         {
             get
@@ -195,10 +236,16 @@ GetSashPosition()
 
             set
             {
+                if (value < 0)
+                    value = 0;
                 Handler.SashPosition = value;
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether to resize the panes and redraw the sash and
+        /// border on <see cref="SashPosition"/> property change.
+        /// </summary>
         public bool RedrawOnSashPosition
         {
             get
@@ -212,33 +259,27 @@ GetSashPosition()
             }
         }
 
-        /*
-Returns the default sash size in pixels.
-The size of the sash is its width for a vertically split window and its height for a horizontally split one. Its other direction is the same as the client size of the window in the corresponding direction.
-The default sash size is platform-dependent because it conforms to the current platform look-and-feel and cannot be changed.
-         
-         */
+        /// <summary>
+        /// Gets the default sash size in pixels.
+        /// </summary>
+        /// <remarks>
+        /// The size of the sash is its width for a vertically split window
+        /// and its height for a horizontally split one. Its other
+        /// direction is the same as the client size of the window in
+        /// the corresponding direction.
+        /// </remarks>
+        /// <remarks>
+        /// The default sash size is platform-dependent because it
+        /// conforms to the current platform look-and-feel and cannot be changed.
+        /// </remarks>
         public int DefaultSashSize
         {
             get
             {
                 return Handler.DefaultSashSize;
             }
-
         }
 
-        /*
-             #define wxSP_NOBORDER         0x0000
-             #define wxSP_THIN_SASH        0x0000    // NB: the default is 3D sash
-             #define wxSP_NOSASH           0x0010
-             #define wxSP_PERMIT_UNSPLIT   0x0040
-             #define wxSP_LIVE_UPDATE      0x0080
-             #define wxSP_3DSASH           0x0100
-             #define wxSP_3DBORDER         0x0200
-             #define wxSP_NO_XP_THEME      0x0400
-             #define wxSP_BORDER           wxSP_3DBORDER
-             #define wxSP_3D               (wxSP_3DBORDER | wxSP_3DSASH)
-             */
         internal long CreateStyles
         {
             get
@@ -255,44 +296,37 @@ The default sash size is platform-dependent because it conforms to the current p
         internal new NativeSplitterPanelHandler Handler =>
             (NativeSplitterPanelHandler)base.Handler;
 
-        /*
-         Causes any pending sizing of the sash and child panes to take place immediately.
-Such resizing normally takes place in idle time, in order to wait for layout to be completed. However, this can cause unacceptable flicker as the panes are resized after the window has been shown. To work around this, you can perform window layout (for example by sending a size event to the parent window), and then call this function, before showing the top-level window.
-
-         */
+        /// <summary>
+        /// Causes any pending sizing of the sash and child panes to
+        /// take place immediately.
+        /// </summary>
+        /// <remarks>
+        /// Such resizing normally takes place in idle time, in order to wait
+        /// for layout to be completed. However, this can cause unacceptable
+        /// flicker as the panes are resized after the control has been shown.
+        /// To work around this, you can perform control layout (for example
+        /// by sending a size event to the parent control), and then call
+        /// this function, before showing the top-level window.
+        /// </remarks>
         public void UpdateSize()
         {
             Handler.UpdateSize();
         }
 
         /// <summary>
-        /// <inheritdoc />
+        /// Initializes the <see cref="SplitterPanel"/> to have one pane.
+        /// The child control is shown if it is currently hidden.
         /// </summary>
-        protected override void OnChildInserted(int childIndex, Control childControl)
-        {
-            base.OnChildInserted(childIndex, childControl);
-            /*int count = Children.Count;
-            if (count > 2)
-            {
-                throw new Exception(
-                    "More than two child controls are not allowed");
-            }
-
-            Control newControl1 = GetChildOrNull(0);
-            Control newControl2 = GetChildOrNull(1);*/
-        }
-
-        /*
-Initializes the splitter window to have one pane.
-The child window is shown if it is currently hidden.
-Parameters
-window
-The pane for the unsplit window.
-
-Remarks
-This should be called if you wish to initially view only a single pane in the splitter window.
-         
-         */
+        /// <param name="window">The pane for the unsplit control.
+        /// Pass only child controls of the <see cref="SplitterPanel"/> in
+        /// this parameter.</param>
+        /// <returns>
+        /// true if initialization successfull.
+        /// </returns>
+        /// <remarks>
+        /// This should be called if you wish to initially view only a single
+        /// pane in the control.
+        /// </remarks>
         public bool InitializeUnsplitted(Control window)
         {
             if (window == null)
@@ -306,16 +340,42 @@ This should be called if you wish to initially view only a single pane in the sp
 
             Handler.NativeControl.Initialize(nc1);
             control1 = window;
+            control1.Visible = true;
             control2 = null;
             return true;
         }
 
-        /*
-This function replaces one of the windows managed by the wxSplitterWindow with another one.
-It is in general better to use it instead of calling Unsplit() and then resplitting the window back because it will provoke much less flicker (if any). It is valid to call this function whether the splitter has two windows or only one.
-Both parameters should be non-NULL and winOld must specify one of the windows managed by the splitter. If the parameters are incorrect or the window couldn't be replaced, false is returned. Otherwise the function will return true, but please notice that it will not delete the replaced window and you may wish to do it yourself.
-         
-         */
+        /// <summary>
+        /// Replaces one of the controls managed by the
+        /// <see cref="SplitterPanel"/> with another one.
+        /// </summary>
+        /// <param name="winOld">
+        /// Subcontrol which needs to be replaced.
+        /// </param>
+        /// <param name="winNew">
+        /// New subcontrol to replace the old one. Pass here only child
+        /// controls of the<see cref="SplitterPanel"/>.
+        /// </param>
+        /// <returns>
+        /// If the parameters are incorrect or the subcontrol couldn't be
+        /// replaced, false is returned. Otherwise the function will return true.
+        /// </returns>
+        /// <remarks>
+        /// It is in general better to use it instead of calling
+        /// <see cref="DoUnsplit"/> and then resplitting the window back
+        /// because it will provoke much less flicker (if any).
+        /// </remarks>
+        /// <remarks>
+        /// It is valid to call this function whether the
+        /// <see cref="SplitterPanel"/> has two subcontrols or only one.
+        /// </remarks>
+        /// <remarks>
+        /// This function will not delete the replaced control but hide it.
+        /// </remarks>
+        /// <remarks>
+        /// Both parameters should be non-NULL and winOld must specify one
+        /// of the controls managed by the <see cref="SplitterPanel"/>.
+        /// </remarks>
         public bool ReplaceControl(Control? winOld, Control? winNew)
         {
             if (winOld == null || winNew == null)
@@ -347,27 +407,28 @@ Both parameters should be non-NULL and winOld must specify one of the windows ma
             return result;
         }
 
-        /*
-Initializes the top and bottom panes of the splitter window.
-The child windows are shown if they are currently hidden.
-Parameters
-window1
-The top pane.
-window2
-The bottom pane.
-sashPosition
-The initial position of the sash. If this value is positive, it specifies the size of the upper pane. If it is negative, its absolute value gives the size of the lower pane. Finally, specify 0 (default) to choose the default position (half of the total window height).
-
-
-
-Returns
-true if successful, false otherwise (the window was already split).
-Remarks
-This should be called if you wish to initially view two panes. It can also be called at any subsequent time, but the application should check that the window is not currently split using IsSplit().
-See also
-SplitVertically(), IsSplit(), Unsplit()
-
-         */
+        /// <summary>
+        /// Initializes the top and bottom panes of the
+        /// <see cref="SplitterPanel"/>. The child controls are shown
+        /// if they are currently hidden.
+        /// </summary>
+        /// <param name="window1">The top pane.</param>
+        /// <param name="window2">The bottom pane.</param>
+        /// <param name="sashPosition">
+        /// The initial position of the sash. If this value is positive, it
+        /// specifies the size of the upper pane. If it is negative, its
+        /// absolute value gives the size of the lower pane.
+        /// Specify 0 (default) to choose the default position
+        /// (half of the total control height).
+        /// </param>
+        /// <returns>
+        /// true if successful, false otherwise (the control was already split).
+        /// </returns>
+        /// <remarks>
+        /// Call it if you want to initially view two panes. It can also be
+        /// called at any time, but the application should check that the
+        /// control is not currently split using <see cref="IsSplit"/>.
+        /// </remarks>
         public bool SplitHorizontal(
             Control? window1,
             Control? window2,
@@ -392,28 +453,38 @@ SplitVertically(), IsSplit(), Unsplit()
             {
                 control1 = window1;
                 control2 = window2;
+                control1.Visible = true;
+                control2.Visible = true;
             }
 
             return r;
         }
 
-        /*
-Initializes the left and right panes of the splitter window.
-The child windows are shown if they are currently hidden.
-Parameters
-window1
-The left pane.
-window2
-The right pane.
-sashPosition
-The initial position of the sash. If this value is positive, it specifies the size of the left pane. If it is negative, it is absolute value gives the size of the right pane. Finally, specify 0 (default) to choose the default position (half of the total window width).
-
-Returns
-true if successful, false otherwise (the window was already split).
-Remarks
-This should be called if you wish to initially view two panes. It can also be called at any subsequent time, but the application should check that the window is not currently split using IsSplit().
-         
-         */
+        /// <summary>
+        /// Initializes the left and right panes of the <see cref="SplitterPanel"/>.
+        /// The child controls are shown if they are currently hidden.
+        /// </summary>
+        /// <param name="window1">
+        /// The left pane.
+        /// </param>
+        /// <param name="window2">
+        /// The right pane.
+        /// </param>
+        /// <param name="sashPosition">
+        /// The initial position of the sash. If this value is positive, it
+        /// specifies the size of the left pane. If it is negative, it
+        /// is absolute value gives the size of the right pane.
+        /// Specify 0 (default value) to choose the default position
+        /// (half of the total window width).
+        /// </param>
+        /// <returns>
+        /// true if successful, false otherwise (the control was already split).
+        /// </returns>
+        /// <remarks>
+        /// Call it if you want to initially view two panes. It can also be
+        /// called at any time, but the application should check that the
+        /// control is not currently split using <see cref="IsSplit"/>.
+        /// </remarks>
         public bool SplitVertical(
             Control? window1,
             Control? window2,
@@ -437,6 +508,8 @@ This should be called if you wish to initially view two panes. It can also be ca
             {
                 control1 = window1;
                 control2 = window2;
+                control1.Visible = true;
+                control2.Visible = true;
             }
 
             return r;
@@ -457,8 +530,7 @@ This should be called if you wish to initially view two panes. It can also be ca
         {
             if (!IsSplit)
                 return true;
-            if (toRemove == null)
-                toRemove = control2;
+            toRemove ??= control2;
             if (toRemove == null)
                 return false;
             Native.Control? nc1 = toRemove.Handler.NativeControl;
@@ -471,9 +543,20 @@ This should be called if you wish to initially view two panes. It can also be ca
                     control1 = null;
                 if (control2 == toRemove)
                     control2 = null;
+                toRemove.Visible = false;
             }
+
             UpdateSize();
             return r;
+        }
+
+        /// <inheritdoc />
+        protected override void OnChildInserted(int childIndex, Control childControl)
+        {
+            base.OnChildInserted(childIndex, childControl);
+            /*
+            Control newControl1 = GetChildOrNull(0);
+            Control newControl2 = GetChildOrNull(1);*/
         }
 
         /// <inheritdoc />
