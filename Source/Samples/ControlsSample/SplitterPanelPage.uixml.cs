@@ -13,6 +13,8 @@ namespace ControlsSample
         private ListBox? control1;
         private ListBox? control2;
         private ListBox? control3;
+        private ListBox? control4;
+        SplitterPanel splitterPanel2;
 
         static SplitterPanelPage()
         {
@@ -35,23 +37,35 @@ namespace ControlsSample
             control3 = new()
             {
                 Margin = 5,
+            };
+
+            control4 = new()
+            {
+                Margin = 5,
                 Visible = false,
             };
+
+            splitterPanel2 = new(); 
 
             control1.Items.Add("Control 1");
             control2.Items.Add("Control 2");
             control3.Items.Add("Control 3");
+            control4.Items.Add("Control 4");
 
             splitterPanel.Children.Add(control1);
-            splitterPanel.Children.Add(control2);
-            splitterPanel.Children.Add(control3);
+            splitterPanel.Children.Add(splitterPanel2);
+
+            splitterPanel2.Children.Add(control2);
+            splitterPanel2.Children.Add(control3);
+            splitterPanel2.Children.Add(control4);
 
             splitterPanel.SplitterDoubleClick += SplitterPanel_SplitterDoubleClick;
             splitterPanel.SplitterMoved += SplitterPanel_SplitterMoved;
             splitterPanel.Unsplit += SplitterPanel_Unsplit;
             splitterPanel.SplitterMoving += SplitterPanel_SplitterMoving;
 
-            splitterPanel.SplitVertical(control1, control2);
+            splitterPanel.SplitVertical(control1, splitterPanel2);
+            splitterPanel2.SplitHorizontal(control2, control3);
         }
 
         private void SplitterPanel_SplitterMoving(object? sender, EventArgs e)
@@ -94,26 +108,27 @@ namespace ControlsSample
 
         private void ReplaceControlButton_Click(object? sender, EventArgs e)
         {
-            if (!splitterPanel.IsSplit)
+            if (!splitterPanel2.IsSplit)
                 return;
-            if (splitterPanel.Control2 == control2)
+            if (splitterPanel2.Control2 == control3)
             {
-                splitterPanel.ReplaceControl(control2, control3);
+                splitterPanel2.ReplaceControl(control3, control4);
             }
             else
             {
-                splitterPanel.ReplaceControl(control3, control2);
+                splitterPanel2.ReplaceControl(control4, control3);
             }
         }
 
         private void SplitHorizontalButton_Click(object? sender, EventArgs e)
         {
+            splitterPanel.SashPosition = 150;
             if (splitterPanel.IsSplit)
             {
                 splitterPanel.IsSplitHorizontal = true;
                 return;
             }
-            splitterPanel.SplitHorizontal(control1, control2);
+            splitterPanel.SplitHorizontal(control1, splitterPanel2);
         }
 
         private void SplitVerticalButton_Click(object? sender, EventArgs e)
@@ -123,7 +138,7 @@ namespace ControlsSample
                 splitterPanel.IsSplitVertical = true;
                 return;
             }
-            splitterPanel.SplitVertical(control1, control2);
+            splitterPanel.SplitVertical(control1, splitterPanel2);
         }
 
         private void UnsplitButton_Click(object? sender, EventArgs e)

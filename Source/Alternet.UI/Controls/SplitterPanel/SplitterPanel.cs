@@ -22,6 +22,8 @@ namespace Alternet.UI
 
         private Control? control1;
         private Control? control2;
+        private SplitterPanelSplitMethod splitMethod =
+            SplitterPanelSplitMethod.Manual;
 
         /// <summary>
         /// Occurs when the splitter sash is double clicked.
@@ -48,8 +50,32 @@ namespace Alternet.UI
         /// <see cref="SplitterPanel"/> controls.
         /// </summary>
         public static SplitterPanelCreateStyle DefaultCreateStyle { get; set; }
-            = SplitterPanelCreateStyle.NoBorder | SplitterPanelCreateStyle.ThinSash 
+            = SplitterPanelCreateStyle.NoBorder | SplitterPanelCreateStyle.ThinSash
                 | SplitterPanelCreateStyle.LiveUpdate;
+
+        /// <summary>
+        /// Gets or sets <see cref="SplitterPanel"/> automatic behavior when
+        /// child controls are added.
+        /// </summary>
+        /// <remarks>
+        /// Automatic splitting is performed only when new controls are added
+        /// to the <see cref="SplitterPanel"/>. By default automatic splitting
+        /// is turned off.
+        /// </remarks>
+        public virtual SplitterPanelSplitMethod SplitMethod
+        {
+            get
+            {
+                return splitMethod;
+            }
+
+            set
+            {
+                if (splitMethod == value)
+                    return;
+                splitMethod = value;
+            }
+        }
 
         /// <summary>
         /// Returns the left/top or only pane.
@@ -217,6 +243,7 @@ namespace Alternet.UI
             set
             {
                 Handler.SashVisible = value;
+                UpdateSize();
             }
         }
 
@@ -352,7 +379,7 @@ namespace Alternet.UI
         /// This should be called if you wish to initially view only a single
         /// pane in the control.
         /// </remarks>
-        public bool InitializeUnsplitted(Control window)
+        public bool InitUnsplitted(Control window)
         {
             if (window == null)
                 return false;
@@ -643,9 +670,7 @@ namespace Alternet.UI
         protected override void OnChildInserted(int childIndex, Control childControl)
         {
             base.OnChildInserted(childIndex, childControl);
-            /*
-            Control newControl1 = GetChildOrNull(0);
-            Control newControl2 = GetChildOrNull(1);*/
+            UpdateChildControls();
         }
 
         /// <inheritdoc />
@@ -658,6 +683,13 @@ namespace Alternet.UI
         protected override ControlHandler CreateHandler()
         {
             return new NativeSplitterPanelHandler();
+        }
+
+        private void UpdateChildControls()
+        {
+            /*
+            Control newControl1 = GetChildOrNull(0);
+            Control newControl2 = GetChildOrNull(1);*/
         }
     }
 }
