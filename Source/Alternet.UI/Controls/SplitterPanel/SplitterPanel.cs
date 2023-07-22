@@ -214,7 +214,10 @@ namespace Alternet.UI
 
             set
             {
+                if (Handler.SashSize == value)
+                    return;
                 Handler.SashSize = value;
+                UpdateSize();
             }
         }
 
@@ -242,6 +245,8 @@ namespace Alternet.UI
 
             set
             {
+                if (Handler.SashVisible == value)
+                    return;
                 Handler.SashVisible = value;
                 UpdateSize();
             }
@@ -687,9 +692,31 @@ namespace Alternet.UI
 
         private void UpdateChildControls()
         {
-            /*
-            Control newControl1 = GetChildOrNull(0);
-            Control newControl2 = GetChildOrNull(1);*/
+            if (SplitMethod == SplitterPanelSplitMethod.Manual)
+                return;
+            if (IsSplit || control1 != null)
+                return;
+            Control? newControl1 = GetVisibleChildOrNull(0);
+            Control? newControl2 = GetVisibleChildOrNull(1);
+            if (newControl1 == null)
+                return;
+
+            switch (SplitMethod)
+            {
+                case SplitterPanelSplitMethod.Horizontal:
+                    if (newControl2 == null)
+                        return;
+                    SplitHorizontal(newControl1, newControl2, SashPosition);
+                    return;
+                case SplitterPanelSplitMethod.Vertical:
+                    if (newControl2 == null)
+                        return;
+                    SplitVertical(newControl1, newControl2, SashPosition);
+                    return;
+                case SplitterPanelSplitMethod.Unsplitted:
+                    InitUnsplitted(newControl1);
+                    return;
+            }
         }
     }
 }
