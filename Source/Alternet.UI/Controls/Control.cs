@@ -775,17 +775,71 @@ namespace Alternet.UI
         /// <summary>
         /// Displays the control to the user.
         /// </summary>
-        /// <remarks>Showing the control is equivalent to setting the <see cref="Visible"/> property to <c>true</c>.
+        /// <remarks>Showing the control is equivalent to setting the 
+        /// <see cref="Visible"/> property to <c>true</c>.
         /// After the <see cref="Show"/> method is called, the <see cref="Visible"/> property
         /// returns a value of <c>true</c> until the <see cref="Hide"/> method is called.</remarks>
         public void Show() => Visible = true;
 
-        public Control? GetChildOrNull(int index)
+        /// <summary>
+        /// Gets the child control at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the child control
+        /// to get.</param>
+        /// <returns>The child control at the specified index in the
+        /// <see cref="Children"/> list.</returns>
+        public Control? GetChildOrNull(int index = 0)
         {
             if (index >= Children.Count || index < 0)
                 return null;
             return Children[index];
         }
+
+        /// <summary>
+        /// Returns enumeration with the list of visible child controls.
+        /// </summary>
+        /// <seealso cref="GetVisibleChildOrNull"/>
+        public IEnumerable<Control> GetVisibleChildren()
+        {
+            return Children.Where(x => x.Visible);
+        }
+
+        /// <summary>
+        /// Gets the child control at the specified index in the
+        /// list of visible child controls.
+        /// </summary>
+        /// <param name="index">The zero-based index of the child control
+        /// to get.</param>
+        /// <returns>The child control at the specified index in the
+        /// visible child controls list.</returns>
+        /// <seealso cref="GetVisibleChildren"/>
+        public Control? GetVisibleChildOrNull(int index = 0)
+        {
+            var childs = GetVisibleChildren();
+            foreach (Control control in childs)
+            {
+                if (!control.Visible)
+                    continue;
+                if(index == 0)
+                    return control;
+                index--;
+            }
+
+            return null;
+        }
+
+        /*
+        public virtual IEnumerable<Control> AllChildren
+                    => VisualChildren.Concat(Control.Children);
+
+                /// <summary>
+                /// Gets the collection of all elements of <see cref="AllChildren"/>
+                /// collection included in layout (i.e. visible).
+                /// </summary>
+                public virtual IEnumerable<Control> AllChildrenIncludedInLayout
+                    => AllChildren.Where(x => x.Visible); 
+
+         */
 
         /// <summary>
         /// Conceals the control from the user.
