@@ -20,17 +20,6 @@ namespace Alternet.UI
         private const int SPLITHORIZONTAL = 1;
         private const int SPLITVERTICAL = 2;
 
-        private const int SPNOBORDER = 0x0000;
-        private const int SPTHINSASH = 0x0000;    // the default is 3D sash
-        private const int SPNOSASH = 0x0010;
-        private const int SPPERMITUNSPLIT = 0x0040;
-        private const int SPLIVEUPDATE = 0x0080;
-        private const int SP3DSASH = 0x0100;
-        private const int SP3DBORDER = 0x0200;
-        private const int SPNOXPTHEME = 0x0400;
-        private const int SPBORDER = SP3DBORDER;
-        private const int SP3D = SP3DBORDER | SP3DSASH;
-
         private Control? control1;
         private Control? control2;
 
@@ -53,6 +42,14 @@ namespace Alternet.UI
         /// Occurs when the control is unsplit.
         /// </summary>
         public event EventHandler? Unsplit;
+
+        /// <summary>
+        /// Defines default visual style for the newly created
+        /// <see cref="SplitterPanel"/> controls.
+        /// </summary>
+        public static SplitterPanelCreateStyle DefaultCreateStyle { get; set; }
+            = SplitterPanelCreateStyle.NoBorder | SplitterPanelCreateStyle.ThinSash 
+                | SplitterPanelCreateStyle.LiveUpdate;
 
         /// <summary>
         /// Returns the left/top or only pane.
@@ -151,8 +148,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// Gravity is real factor which controls position of sash while
-        /// resizing SplitterPanel. Gravity tells how much will left/top
-        /// control grow while resizing.
+        /// resizing <see cref="SplitterPanel"/>. Gravity tells how much will
+        /// left/top control grow while resizing.
         /// </remarks>
         /// <remarks>
         /// Default value of sash gravity is 0.0.
@@ -300,16 +297,24 @@ namespace Alternet.UI
             }
         }
 
-        internal long CreateStyles
+        /// <summary>
+        /// Defines visual style of the <see cref="SplitterPanel"/> controls.
+        /// </summary>
+        /// <remarks>
+        /// When this property is changed, control is recreated.
+        /// </remarks>
+        public SplitterPanelCreateStyle CreateStyle
         {
             get
             {
-                return Handler.Styles;
+                return (SplitterPanelCreateStyle)Enum.ToObject(
+                    typeof(SplitterPanelCreateStyle),
+                    Handler.Styles);
             }
 
             set
             {
-                Handler.Styles = value;
+                Handler.Styles = (int)value;
             }
         }
 

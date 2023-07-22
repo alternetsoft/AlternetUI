@@ -14,6 +14,10 @@ namespace ControlsSample
         private ListBox? control2;
         private ListBox? control3;
 
+        static SplitterPanelPage()
+        {
+        }
+
         public SplitterPanelPage()
         {
             InitializeComponent();

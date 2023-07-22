@@ -142,7 +142,7 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            return new Native.SplitterPanel();
+            return new NativeSplitterPanel(SplitterPanel.DefaultCreateStyle);
         }
 
         protected override void OnAttach()
@@ -189,6 +189,15 @@ namespace Alternet.UI
             EventArgs e)
         {
             Control.RaiseSplitterMoving(e);
+        }
+
+        public class NativeSplitterPanel : Native.SplitterPanel
+        {
+            public NativeSplitterPanel(SplitterPanelCreateStyle style)
+                : base()
+            {
+                SetNativePointer(NativeApi.SplitterPanel_CreateEx_((int)style));
+            }
         }
     }
 }
