@@ -12,7 +12,7 @@ namespace ControlsSample
     {
         private IPageSite? site;
         private bool? slowSettingsEnabled;
-        private double maxPanelWidth = 0;
+        //private double maxPanelWidth = 0;
 
         public ListViewPage()
         {
@@ -28,26 +28,26 @@ namespace ControlsSample
             SettingsButton.Enabled = true;
         }
 
-        private void ListViewPage_SizeChanged(object sender, EventArgs e)
+        private void ListViewPage_SizeChanged(object? sender, EventArgs e)
         {
             //stackPanel1.PerformLayout();
             //stackPanel2.PerformLayout();
         }
 
-        private void LogLayout(string s)
+        internal void LogLayout(string s)
         {
-            /*
             Log("================");
             Log(s);
+            /*
             Log($"stackPanel1.Bounds: {stackPanel1.Bounds}");
             Log($"stackPanel2.Bounds: {stackPanel2.Bounds}");
             Log($"tabPage1.Bounds: {tabPage1.Bounds}");
             Log($"tabPage2.Bounds: {tabPage2.Bounds}");
-            Log("================");
             */
+            Log("================");
         }
 
-        private void ListViewPage_LayoutUpdated(object sender, EventArgs e)
+        private void ListViewPage_LayoutUpdated(object? sender, EventArgs e)
         {
             //LogLayout("ListViewPage");
 
@@ -269,16 +269,21 @@ namespace ControlsSample
             site?.LogEvent($"ListView: ColumnClick. Column title: '{s}'");
         }
 
-        private void AllowLabelEditingCheckBox_CheckedChanged(object? sender, EventArgs e)
+        private void AllowLabelEditingCheckBox_CheckedChanged(
+            object? sender, 
+            EventArgs e)
         {
             if (SlowRecreate)
                 return;
             if (listView is not null)
                 listView.AllowLabelEdit = allowLabelEditingCheckBox.IsChecked;
-            beginSelectedLabelEditingButton.Enabled = allowLabelEditingCheckBox.IsChecked;
+            beginSelectedLabelEditingButton.Enabled = 
+                allowLabelEditingCheckBox.IsChecked;
         }
 
-        private void BeginSelectedLabelEditingButton_Click(object sender, EventArgs e)
+        private void BeginSelectedLabelEditingButton_Click(
+            object? sender, 
+            EventArgs e)
         {
             listView.SelectedItem?.BeginLabelEdit();
         }
@@ -288,7 +293,9 @@ namespace ControlsSample
             return listView.Items.LastOrDefault();
         }
 
-        private void EnsureLastItemVisibleButton_Click(object sender, System.EventArgs e) 
+        private void EnsureLastItemVisibleButton_Click(
+            object? sender, 
+            System.EventArgs e) 
             => GetLastItem()?.EnsureVisible();
 
         private void HasBorderButton_Click(object sender, System.EventArgs e)
@@ -296,7 +303,9 @@ namespace ControlsSample
             listView.HasBorder = !listView.HasBorder;
         }
 
-        private void FocusLastItemButton_Click(object sender, System.EventArgs e)
+        private void FocusLastItemButton_Click(
+            object? sender, 
+            System.EventArgs e)
         {
             var item = GetLastItem();
             if (item != null)
@@ -307,7 +316,9 @@ namespace ControlsSample
             }
         }
 
-        private void ListView_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ListView_MouseLeftButtonDown(
+            object? sender, 
+            MouseButtonEventArgs e)
         {
             var result = listView.HitTest(e.GetPosition(listView));
 
@@ -338,7 +349,7 @@ namespace ControlsSample
             }
         }
 
-        private void ModifyLastItemButton_Click(object sender, System.EventArgs e)
+        private void ModifyLastItemButton_Click(object? sender, System.EventArgs e)
         {
             var item = GetLastItem();
             if (item != null)
@@ -359,7 +370,9 @@ namespace ControlsSample
             }
         }
 
-        private void AddLastItemSiblingButton_Click(object sender, System.EventArgs e)
+        private void AddLastItemSiblingButton_Click(
+            object? sender, 
+            System.EventArgs e)
         {
             var item = GetLastItem();
             if (item != null)
@@ -374,38 +387,40 @@ namespace ControlsSample
             }
         }
 
-        private void ClearButton_Click(object sender, System.EventArgs e)
+        private void ClearButton_Click(object? sender, System.EventArgs e)
         {
             listView.Clear();
             InitializeColumns();
         }
 
-        private void AddColumnButton_Click(object sender, System.EventArgs e)
+        private void AddColumnButton_Click(object? sender, System.EventArgs e)
         {
             listView.Columns.Add(
                 new ListViewColumn($"New Column {listView.Columns.Count}"));
         }
 
-        private void ModifyColumnTitleButton_Click(object sender, System.EventArgs e)
+        private void ModifyColumnTitleButton_Click(
+            object? sender, 
+            System.EventArgs e)
         {
             foreach(var column in listView.Columns)
                 column.Title += column.Index;
         }
 
-        private void ColumnHeaderVisibleCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void ColumnHeaderVisibleCheckBox_CheckedChanged(object? sender, System.EventArgs e)
         {
             if (SlowRecreate)
                 return;
             listView.ColumnHeaderVisible = columnHeaderVisibleCheckBox.IsChecked;
         }
 
-        private void Items_ItemRemoved(object sender,
+        private void Items_ItemRemoved(object? sender,
             CollectionChangeEventArgs<ListViewItem> e)
         {
             UpdateSlowRecreate();
         }
 
-        private void Items_ItemInserted(object sender,
+        private void Items_ItemInserted(object? sender,
             CollectionChangeEventArgs<ListViewItem> e)
         {
             UpdateSlowRecreate();
