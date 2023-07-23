@@ -54,6 +54,7 @@ namespace Alternet.UI
                 handler.NativeControl.HasBorder = value;
             }
         }
+
         /// <summary>
         /// Occurs when the <see cref="CheckedIndex"/> property or the <see cref="CheckedIndices"/> collection has changed.
         /// </summary>
@@ -109,16 +110,23 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Removes checked items from the <see cref="CheckListBox"/>.
+        /// </summary>
         public void RemoveCheckedItems()
         {
             RemoveItems(CheckedIndicesDescending);
         }
 
+        /// <summary>
+        /// Checks items with specified indexes in the <see cref="CheckListBox"/>.
+        /// </summary>
         public void CheckItems(params int[] indexes)
         {
             CheckedIndices = GetValidIndexes(indexes);
         }
 
+        /// <inheritdoc/>
         public override void RemoveItems(IReadOnlyList<int> items)
         {
             if (items == null || items.Count == 0)
@@ -143,11 +151,26 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets a collection that contains the zero-based indexes of
+        /// all currently checked items in the <see cref="CheckListBox"/>.
+        /// </summary>
+        /// <remarks>
+        /// Indexes are returned in the descending order (maximal index
+        /// is the first).
+        /// </remarks>
+        /// <value>
+        /// An <see cref="IReadOnlyList{T}"/> containing the indexes of the
+        /// currently checked items in the control.
+        /// If no items are currently selected, an empty
+        /// <see cref="IReadOnlyList{T}"/> is returned.
+        /// </value>
         public IReadOnlyList<int> CheckedIndicesDescending
         {
             get
             {
-                int[] sortedCopy = CheckedIndices.OrderByDescending(i => i).ToArray();
+                int[] sortedCopy = 
+                    CheckedIndices.OrderByDescending(i => i).ToArray();
                 return sortedCopy;
             }
         }

@@ -5,7 +5,7 @@ namespace Alternet.UI
 {
     internal class NativeComboBoxHandler : ComboBoxHandler
     {
-        public override bool HasBorder
+        internal override bool HasBorder
         {
             get
             {

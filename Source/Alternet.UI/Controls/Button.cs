@@ -58,6 +58,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets a <see cref="ButtonHandler"/> associated with this class.
+        /// </summary>
         public new ButtonHandler Handler
         {
             get

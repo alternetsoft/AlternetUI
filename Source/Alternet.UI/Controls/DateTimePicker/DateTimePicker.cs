@@ -95,9 +95,9 @@ namespace Alternet.UI
             }
         }
 
-
         /// <summary>
-        /// Gets or sets the value assigned to the color picker as a selected color.
+        /// Gets or sets the value assigned to the <see cref="DateTimePicker"/>
+        /// as a selected <see cref="DateTime"/>.
         /// </summary>
         public DateTime Value
         {
@@ -150,6 +150,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether to use <see cref="MinDate"/> for the date range
+        /// limitation.
+        /// </summary>
         public bool UseMinDate
         {
             get
@@ -166,6 +170,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether to use <see cref="MaxDate"/> and
+        /// <see cref="MinDate"/> for the date range limitation.
+        /// </summary>
         public bool UseMinMaxDate
         {
             get
@@ -183,6 +191,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether to use <see cref="MaxDate"/> for the date range
+        /// limitation.
+        /// </summary>
         public bool UseMaxDate
         {
             get
@@ -231,6 +243,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether to edit date part or time part of
+        /// the <see cref="DateTime"/> value.
+        /// </summary>
         public DateTimePickerKind Kind
         {
             get

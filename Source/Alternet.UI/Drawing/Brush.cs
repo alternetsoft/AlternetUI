@@ -24,8 +24,12 @@ namespace Alternet.Drawing
 
         private bool immutable;
 
-        internal UI.Native.Brush NativeBrush { get; private set; }
-
+        /// <summary>
+        /// Creates <see cref="Pen"/> with this brush as a parameter.
+        /// </summary>
+        /// <remarks>
+        /// Pen created only once and saved internally in the brush instance.
+        /// </remarks>
         public Pen AsPen
         {
             get
@@ -35,6 +39,8 @@ namespace Alternet.Drawing
                 return asPen;
             }
         }
+
+        internal UI.Native.Brush NativeBrush { get; private set; }
 
         /// <summary>
         /// Returns a value that indicates whether the two objects are equal.

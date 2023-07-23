@@ -37,6 +37,11 @@ namespace Alternet.UI
             NativeImageSet.LoadFromStream(inputStream);
         }
 
+        /// <summary>
+        /// Creates grayscaled <see cref="ImageSet"/> instance from
+        /// the <see cref="Image"/> instance.
+        /// </summary>
+        /// <param name="image">The image used to load the data.</param>
         public static ImageSet? FromImageGrayScale(Image? image)
         {
             if (image == null)
@@ -47,6 +52,12 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Creates <see cref="ImageSet"/> instance from
+        /// the <see cref="Image"/> instance.
+        /// </summary>
+        /// <param name="image">The image used to load the data.</param>
+        /// <returns></returns>
         public static ImageSet? FromImage(Image? image)
         {
             if (image == null)
@@ -57,13 +68,17 @@ namespace Alternet.UI
             return result;
         }
 
-        private void Images_ItemInserted(object? sender, CollectionChangeEventArgs<Image> e)
+        private void Images_ItemInserted(
+            object? sender,
+            CollectionChangeEventArgs<Image> e)
         {
             NativeImageSet.AddImage(e.Item.NativeImage);
             OnChanged();
         }
 
-        private void Images_ItemRemoved(object? sender, CollectionChangeEventArgs<Image> e)
+        private void Images_ItemRemoved(
+            object? sender,
+            CollectionChangeEventArgs<Image> e)
         {
             OnChanged();
 
@@ -127,6 +142,17 @@ namespace Alternet.UI
                 return new ImageSet(assets.Open(uri));
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImageSet"/> class
+        /// from the specified url.
+        /// </summary>
+        /// <param name="url">The file or embedded resource url used to 
+        /// load the image.
+        /// </param>
+        /// <remarks>
+        /// Returns null if error occurs during image load.
+        /// No exceptions are raised.
+        /// </remarks>
         public static ImageSet FromUrlOrNull(string url)
         {
             try

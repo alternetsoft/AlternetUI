@@ -7,8 +7,8 @@ namespace Alternet.UI
     /// </summary>
     public class Border : UserPaintControl
     {
-        private static BorderPens defaultPens = new();
-        private BorderPens pens = defaultPens.Clone();
+        private static readonly BorderPens DefaultPens = new();
+        private readonly BorderPens pens = DefaultPens.Clone();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Border"/> class.
@@ -18,25 +18,44 @@ namespace Alternet.UI
             UpdatePadding();
         }
 
+        /// <summary>
+        /// Gets or sets the default border width for
+        /// the <see cref="Border"/> control.
+        /// </summary>
+        /// <remarks>
+        /// You can specify different widths for the left, top, bottom and right
+        /// edges of the border.
+        /// </remarks>
         public static Thickness DefaultBorderWidth
         {
-            get => defaultPens.Width;
-            set => defaultPens.Width = value;
+            get => DefaultPens.Width;
+            set => DefaultPens.Width = value;
         }
 
+        /// <summary>
+        /// Gets or sets the default border color for
+        /// the <see cref="Border"/> control.
+        /// </summary>
         public static Color DefaultBorderColor
         {
             get
             {
-                return defaultPens.Color;
+                return DefaultPens.Color;
             }
 
             set
             {
-                defaultPens.Color = value;
+                DefaultPens.Color = value;
             }
         }
 
+        /// <summary>
+        /// Gets or sets the border width for the <see cref="Border"/> control.
+        /// </summary>
+        /// <remarks>
+        /// You can specify different widths for the left, top, bottom and right
+        /// edges of the border.
+        /// </remarks>
         public Thickness BorderWidth
         {
             get => pens.Width;
@@ -45,7 +64,7 @@ namespace Alternet.UI
                 if (pens.Width == value)
                     return;
                 if (value == null)
-                    pens.Width = defaultPens.Width;
+                    pens.Width = DefaultPens.Width;
                 else
                 {
                     var v = (Thickness)value;
@@ -55,11 +74,19 @@ namespace Alternet.UI
                     if (v.Right > 1) v.Right = 1;
                     pens.Width = v;
                 }
+
                 UpdatePadding();
                 Refresh();
             }
         }
 
+        /// <summary>
+        /// Gets or sets the border color for the <see cref="Border"/> control.
+        /// </summary>
+        /// <remarks>
+        /// If this property is null, <see cref="DefaultBorderColor"/> is used
+        /// for the border color.
+        /// </remarks>
         public Color? BorderColor
         {
             get
@@ -70,7 +97,7 @@ namespace Alternet.UI
             set
             {
                 if (value == null)
-                    pens.Color = defaultPens.Color;
+                    pens.Color = DefaultPens.Color;
                 else
                     pens.Color = (Color)value;
                 Refresh();
@@ -82,6 +109,13 @@ namespace Alternet.UI
         {
             return base.GetPreferredSize(availableSize) +
                 new Size(pens.Width.Horizontal, pens.Width.Vertical);
+        }
+
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().
+                CreateBorderHandler(this);
         }
 
         /// <inheritdoc/>
@@ -113,13 +147,5 @@ namespace Alternet.UI
             Thickness result = pens.Width;
             Padding = result;
         }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().              
-                CreateBorderHandler(this);
-        }
-
     }
 }

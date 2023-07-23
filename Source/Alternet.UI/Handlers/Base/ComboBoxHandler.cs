@@ -10,9 +10,13 @@ namespace Alternet.UI
     /// </summary>
     public abstract class ComboBoxHandler : ControlHandler
     {
+        /// <summary>
+        /// Returns <see cref="ComboBox"/> instance with which this handler
+        /// is associated.
+        /// </summary>
         public new ComboBox Control => (ComboBox)base.Control;
 
-        public abstract bool HasBorder { get; set; }
+        internal abstract bool HasBorder { get; set; }
 
         /// <summary>
         /// Gets the starting index of text selected in the combo box.

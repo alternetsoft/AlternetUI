@@ -9,51 +9,37 @@ namespace Alternet.UI
     public class LinkLabel : Control
     {
         /// <summary>
+        /// Identifies the <see cref="Text"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TextProperty =
+        DependencyProperty.Register(
+                "Text",
+                typeof(string),
+                typeof(LinkLabel),
+                new FrameworkPropertyMetadata(
+                        string.Empty,
+                        FrameworkPropertyMetadataOptions.AffectsLayout | FrameworkPropertyMetadataOptions.AffectsPaint,
+                        new PropertyChangedCallback(OnTextPropertyChanged),
+                        new CoerceValueCallback(CoerceText)
+                        ));
+
+        /// <summary>
+        /// Event for "Text has changed"
+        /// </summary>
+        public static readonly RoutedEvent TextChangedEvent =
+            EventManager.RegisterRoutedEvent(
+                "TextChanged",
+                RoutingStrategy.Bubble,
+                typeof(TextChangedEventHandler),
+                typeof(LinkLabel));
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="LinkLabel"/> class.
         /// </summary>
         public LinkLabel()
             : base()
         {
         }
-
-        /// <summary>
-        /// Occurs when a link is clicked within the control.
-        /// </summary>
-        public event CancelEventHandler? LinkClicked;
-
-        /// <summary>
-        /// Gets or sets the text displayed on this label.
-        /// </summary>
-        [DefaultValue("")]
-        [Localizability(LocalizationCategory.Text)]
-        public string Text
-        {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
-        }
-
-        internal new NativeLinkLabelHandler Handler =>
-            (NativeLinkLabelHandler)base.Handler;
-
-        public string Url
-        {
-            get { return Handler.Url; }
-            set { Handler.Url = value; }
-        }
-
-        protected override ControlHandler CreateHandler()
-        {
-            return new NativeLinkLabelHandler();
-        }
-
-        /// <summary>
-        /// Event for "Text has changed"
-        /// </summary>
-        public static readonly RoutedEvent TextChangedEvent = EventManager.RegisterRoutedEvent(
-            "TextChanged",
-            RoutingStrategy.Bubble,
-            typeof(TextChangedEventHandler),
-            typeof(LinkLabel));
 
         /// <summary>
         /// Occurs when the value of the <see cref="Text"/> property changes.
@@ -72,46 +58,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Identifies the <see cref="Text"/> dependency property.
+        /// Occurs when a link is clicked within the control.
         /// </summary>
-        public static readonly DependencyProperty TextProperty =
-        DependencyProperty.Register(
-                "Text", // Property name
-                typeof(string), // Property type
-                typeof(LinkLabel), // Property owner
-                new FrameworkPropertyMetadata( // Property metadata
-                        string.Empty, // default value
-                        FrameworkPropertyMetadataOptions.AffectsLayout | FrameworkPropertyMetadataOptions.AffectsPaint,// Flags
-                        new PropertyChangedCallback(OnTextPropertyChanged),    // property changed callback
-                        new CoerceValueCallback(CoerceText)
-                        ));
+        public event CancelEventHandler? LinkClicked;
 
         /// <summary>
-        /// Callback for changes to the Text property
+        /// Gets or sets the text displayed on this label.
         /// </summary>
-        private static void OnTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        [DefaultValue("")]
+        [Localizability(LocalizationCategory.Text)]
+        public string Text
         {
-            LinkLabel label = (LinkLabel)d;
-            label.OnTextPropertyChanged((string)e.OldValue, (string)e.NewValue);
-        }
-
-        private void OnTextPropertyChanged(string oldText, string newText)
-        {
-            OnTextChanged(new TextChangedEventArgs(TextChangedEvent));
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
         }
 
         /// <summary>
-        /// Called when content in this Control changes.
-        /// Raises the TextChanged event.
+        /// Gets or sets the URL associated with the hyperlink.
         /// </summary>
-        /// <param name="e"></param>
-        protected virtual void OnTextChanged(TextChangedEventArgs e)
+        public string Url
         {
-            RaiseEvent(e);
+            get { return Handler.Url; }
+            set { Handler.Url = value; }
         }
 
+        internal new NativeLinkLabelHandler Handler =>
+            (NativeLinkLabelHandler)base.Handler;
+
         /// <summary>
-        /// Raises the <see cref="TextChanged"/> event and calls 
+        /// Raises the <see cref="TextChanged"/> event and calls
         /// <see cref="OnTextChanged(TextChangedEventArgs)"/>.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event
@@ -131,8 +106,23 @@ namespace Alternet.UI
                 LinkClicked?.Invoke(this, e);
         }
 
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return new NativeLinkLabelHandler();
+        }
 
         /// <summary>
+        /// Called when content in this Control changes.
+        /// Raises the TextChanged event.
+        /// </summary>
+        /// <param name="e"></param>
+        protected virtual void OnTextChanged(TextChangedEventArgs e)
+        {
+            RaiseEvent(e);
+        }
+
+         /// <summary>
         /// Called when a link is clicked within the control.
         /// </summary>
         /// <param name="e">
@@ -144,5 +134,23 @@ namespace Alternet.UI
 
         private static object CoerceText(DependencyObject d, object value)
             => value ?? string.Empty;
+
+        /// <summary>
+        /// Callback for changes to the Text property
+        /// </summary>
+        private static void OnTextPropertyChanged(
+            DependencyObject d,
+            DependencyPropertyChangedEventArgs e)
+        {
+            LinkLabel label = (LinkLabel)d;
+            label.OnTextPropertyChanged((string)e.OldValue, (string)e.NewValue);
+        }
+
+#pragma warning disable IDE0060 // Remove unused parameter
+        private void OnTextPropertyChanged(string oldText, string newText)
+#pragma warning restore IDE0060 // Remove unused parameter
+        {
+            OnTextChanged(new TextChangedEventArgs(TextChangedEvent));
+        }
     }
 }

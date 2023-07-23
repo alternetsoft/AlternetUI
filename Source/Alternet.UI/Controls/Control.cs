@@ -246,7 +246,8 @@ namespace Alternet.UI
         public object? Tag { get; set; }
 
         /// <summary>
-        /// Gets or sets the <see cref="Control"/> bounds relative to the parent, in device-independent units (1/96th inch per unit).
+        /// Gets or sets the <see cref="Control"/> bounds relative to the parent,
+        /// in device-independent units (1/96th inch per unit).
         /// </summary>
         public virtual Rect Bounds
         {
@@ -254,6 +255,10 @@ namespace Alternet.UI
             set => Handler.Bounds = value;
         }
 
+        /// <summary>
+        /// Gets or sets the distance between the left edge of the control
+        /// and the left edge of its container's client area.
+        /// </summary>
         public double Left
         {
             get
@@ -270,6 +275,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the distance between the top edge of the control
+        /// and the top edge of its container's client area.
+        /// </summary>
         public double Top
         {
             get
@@ -361,7 +370,6 @@ namespace Alternet.UI
                 return new (0, 0, size.Width - 1, size.Height - 1);
             }
         }
-
 
         /// <summary>
         /// Gets a <see cref="ControlHandler"/> associated with this class.
@@ -1077,6 +1085,12 @@ namespace Alternet.UI
             return Handler.SetFocus();
         }
 
+        /// <summary>
+        /// Saves screenshot of this control.
+        /// </summary>
+        /// <param name="fileName">Name of the file to which screenshot
+        /// will be saved.</param>
+        /// <remarks>This function works only on Windows.</remarks>
         public void SaveScreenshot(string fileName)
         {
             Handler.SaveScreenshot(fileName);

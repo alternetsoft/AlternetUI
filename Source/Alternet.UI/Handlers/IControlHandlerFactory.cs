@@ -67,7 +67,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates a <see cref="ControlHandler"/> for
-        /// <see cref=""/> control.
+        /// <see cref="ProgressBar"/> control.
         /// </summary>
         ControlHandler CreateProgressBarHandler(Control control);
 
@@ -121,7 +121,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates a <see cref="ControlHandler"/> for
-        /// <see cref="MenuItem/> control.
+        /// <see cref="MenuItem"/> control.
         /// </summary>
         ControlHandler CreateMenuItemHandler(Control control);
 

@@ -116,7 +116,5 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public ControlHandler CreateScrollViewerHandler(Control control) =>
             StockControlHandlerFactories.Native.CreateScrollViewerHandler(control);
-
-        /// <inheritdoc/>
     }
 }
