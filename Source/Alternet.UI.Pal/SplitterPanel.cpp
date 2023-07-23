@@ -71,21 +71,50 @@ namespace Alternet::UI
 
 	void SplitterPanel::OnSplitterSashPosChanging(wxSplitterEvent& event)
 	{
-		RaiseEvent(SplitterPanelEvent::SplitterSashPosChanging);
+		bool c = RaiseEvent(SplitterPanelEvent::SplitterSashPosChanging);
+		if (c || !_canMoveSplitter)
+			event.Veto();
+	}
+	
+	bool SplitterPanel::GetCanMoveSplitter()
+	{
+		return _canMoveSplitter;
+	}
+
+	void SplitterPanel::SetCanMoveSplitter(bool value) 
+	{
+		_canMoveSplitter = value;
+	}
+
+	bool SplitterPanel::GetCanDoubleClick() 
+	{
+		return _canDoubleClick;
+	}
+
+	void SplitterPanel::SetCanDoubleClick(bool value)
+	{
+		_canDoubleClick = value;
 	}
 
 	void SplitterPanel::OnSplitterSashPosResize(wxSplitterEvent& event)
 	{
+		bool c = RaiseEvent(SplitterPanelEvent::SplitterSashPosResize);
+		if (c)
+			event.Veto();
 	}
 
 	void SplitterPanel::OnSplitterDoubleClicked(wxSplitterEvent& event)
 	{
-		RaiseEvent(SplitterPanelEvent::SplitterDoubleClick);
+		bool c = RaiseEvent(SplitterPanelEvent::SplitterDoubleClick);
+		if (c || !_canDoubleClick)
+			event.Veto();
 	}
 
 	void SplitterPanel::OnSplitterUnsplit(wxSplitterEvent& event)
 	{
-		RaiseEvent(SplitterPanelEvent::Unsplit);
+		bool c = RaiseEvent(SplitterPanelEvent::Unsplit);
+		if (c)
+			event.Veto();
 	}
 
 	int64_t SplitterPanel::GetStyles() 

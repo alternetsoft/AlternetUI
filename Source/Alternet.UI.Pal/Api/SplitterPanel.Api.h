@@ -107,6 +107,34 @@ ALTERNET_UI_API c_bool SplitterPanel_GetIsSplit_(SplitterPanel* obj)
         });
 }
 
+ALTERNET_UI_API c_bool SplitterPanel_GetCanDoubleClick_(SplitterPanel* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetCanDoubleClick();
+        });
+}
+
+ALTERNET_UI_API void SplitterPanel_SetCanDoubleClick_(SplitterPanel* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetCanDoubleClick(value);
+        });
+}
+
+ALTERNET_UI_API c_bool SplitterPanel_GetCanMoveSplitter_(SplitterPanel* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetCanMoveSplitter();
+        });
+}
+
+ALTERNET_UI_API void SplitterPanel_SetCanMoveSplitter_(SplitterPanel* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetCanMoveSplitter(value);
+        });
+}
+
 ALTERNET_UI_API int SplitterPanel_GetSashPosition_(SplitterPanel* obj)
 {
     return MarshalExceptions<int>([&](){

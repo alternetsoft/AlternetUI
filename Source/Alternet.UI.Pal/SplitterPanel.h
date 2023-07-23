@@ -18,6 +18,8 @@ namespace Alternet::UI
     private:
         int64_t _styles = wxSP_3D;
         bool _redrawOnSashPosition = true;
+        bool _canDoubleClick = true;
+        bool _canMoveSplitter = true;
 
         wxSplitterWindow* GetSplitterWindow();
         void OnSplitterSashPosChanged(wxSplitterEvent& event);

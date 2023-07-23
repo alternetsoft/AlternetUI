@@ -4,17 +4,18 @@ using System.Linq;
 using Alternet.UI;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
+using System.ComponentModel;
 
 namespace ControlsSample
 {
     internal partial class SplitterPanelPage : Control
     {
         private IPageSite? site;
-        private ListBox? control1;
-        private ListBox? control2;
-        private ListBox? control3;
-        private ListBox? control4;
-        SplitterPanel splitterPanel2;
+        private readonly ListBox? control1;
+        private readonly ListBox? control2;
+        private readonly ListBox? control3;
+        private readonly ListBox? control4;
+        private readonly SplitterPanel splitterPanel2;
 
         static SplitterPanelPage()
         {
@@ -45,7 +46,11 @@ namespace ControlsSample
                 Visible = false,
             };
 
-            splitterPanel2 = new(); 
+            splitterPanel2 = new()
+            {
+                CanDoubleClick = false,
+                CanMoveSplitter = true
+            };
 
             control1.Items.Add("Control 1");
             control2.Items.Add("Control 2");
@@ -63,15 +68,14 @@ namespace ControlsSample
             splitterPanel.SplitterMoved += SplitterPanel_SplitterMoved;
             splitterPanel.Unsplit += SplitterPanel_Unsplit;
             splitterPanel.SplitterMoving += SplitterPanel_SplitterMoving;
+            splitterPanel.SplitterResize += SplitterPanel_SplitterResize;
 
             splitterPanel.SplitVertical(control1, splitterPanel2);
             splitterPanel2.SplitHorizontal(control2, control3);
         }
 
-        private void SplitterPanel_SplitterMoving(object? sender, EventArgs e)
+        private void LogEventOnce(string s)
         {
-            const string s = "Splitter Panel: Splitter Moving";
-
             if (site == null)
                 return;
 
@@ -81,7 +85,17 @@ namespace ControlsSample
             site?.LogEvent(s);
         }
 
-        private void SplitterPanel_Unsplit(object? sender, EventArgs e)
+        private void SplitterPanel_SplitterResize(object? sender, CancelEventArgs e)
+        {
+            LogEventOnce("Splitter Panel: Splitter Resize");
+        }
+
+        private void SplitterPanel_SplitterMoving(object? sender, CancelEventArgs e)
+        {
+            LogEventOnce("Splitter Panel: Splitter Moving");
+        }
+
+        private void SplitterPanel_Unsplit(object? sender, CancelEventArgs e)
         {
             site?.LogEvent("Splitter Panel: Unsplit");
         }
@@ -91,8 +105,11 @@ namespace ControlsSample
             site?.LogEvent("Splitter Panel: Splitter Moved");
         }
 
-        private void SplitterPanel_SplitterDoubleClick(object? sender, EventArgs e)
+        private void SplitterPanel_SplitterDoubleClick(
+            object? sender, 
+            CancelEventArgs e)
         {
+            e.Cancel = true;
             site?.LogEvent("Splitter Panel: Double click");
         }
 

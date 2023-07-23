@@ -138,6 +138,40 @@ namespace Alternet.UI.Native
             
         }
         
+        public bool CanDoubleClick
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.SplitterPanel_GetCanDoubleClick_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.SplitterPanel_SetCanDoubleClick_(NativePointer, value);
+            }
+        }
+        
+        public bool CanMoveSplitter
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.SplitterPanel_GetCanMoveSplitter_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.SplitterPanel_SetCanMoveSplitter_(NativePointer, value);
+            }
+        }
+        
         public int SashPosition
         {
             get
@@ -286,7 +320,19 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.SplitterPanelEvent.SplitterSashPosChanging:
                 {
-                    SplitterSashPosChanging?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    {
+                        var cea = new CancelEventArgs();
+                        SplitterSashPosChanging?.Invoke(this, cea);
+                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                    }
+                }
+                case NativeApi.SplitterPanelEvent.SplitterSashPosResize:
+                {
+                    {
+                        var cea = new CancelEventArgs();
+                        SplitterSashPosResize?.Invoke(this, cea);
+                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                    }
                 }
                 case NativeApi.SplitterPanelEvent.SplitterSashPosChanged:
                 {
@@ -294,20 +340,29 @@ namespace Alternet.UI.Native
                 }
                 case NativeApi.SplitterPanelEvent.Unsplit:
                 {
-                    Unsplit?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    {
+                        var cea = new CancelEventArgs();
+                        Unsplit?.Invoke(this, cea);
+                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                    }
                 }
                 case NativeApi.SplitterPanelEvent.SplitterDoubleClick:
                 {
-                    SplitterDoubleClick?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    {
+                        var cea = new CancelEventArgs();
+                        SplitterDoubleClick?.Invoke(this, cea);
+                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
+                    }
                 }
                 default: throw new Exception("Unexpected SplitterPanelEvent value: " + e);
             }
         }
         
-        public event EventHandler? SplitterSashPosChanging;
+        public event EventHandler<CancelEventArgs>? SplitterSashPosChanging;
+        public event EventHandler<CancelEventArgs>? SplitterSashPosResize;
         public event EventHandler? SplitterSashPosChanged;
-        public event EventHandler? Unsplit;
-        public event EventHandler? SplitterDoubleClick;
+        public event EventHandler<CancelEventArgs>? Unsplit;
+        public event EventHandler<CancelEventArgs>? SplitterDoubleClick;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -320,6 +375,7 @@ namespace Alternet.UI.Native
             public enum SplitterPanelEvent
             {
                 SplitterSashPosChanging,
+                SplitterSashPosResize,
                 SplitterSashPosChanged,
                 Unsplit,
                 SplitterDoubleClick,
@@ -369,6 +425,18 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool SplitterPanel_GetIsSplit_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool SplitterPanel_GetCanDoubleClick_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void SplitterPanel_SetCanDoubleClick_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool SplitterPanel_GetCanMoveSplitter_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void SplitterPanel_SetCanMoveSplitter_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int SplitterPanel_GetSashPosition_(IntPtr obj);

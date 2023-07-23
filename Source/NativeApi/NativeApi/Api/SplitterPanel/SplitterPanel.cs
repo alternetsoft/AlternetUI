@@ -19,6 +19,9 @@ namespace NativeApi.Api
 
         public bool IsSplit { get; }
 
+        public bool CanDoubleClick { get; set; }
+        public bool CanMoveSplitter { get; set; }
+
         public int SashPosition { get; set; }
         public bool RedrawOnSashPosition { get; set; }
 
@@ -38,12 +41,22 @@ namespace NativeApi.Api
 
         public void UpdateSize() => throw new Exception();
 
+        [NativeEvent(cancellable: true)]
         public event EventHandler? SplitterSashPosChanging
             { add => throw new Exception(); remove => throw new Exception(); }
+
+        [NativeEvent(cancellable: true)]
+        public event EventHandler? SplitterSashPosResize
+        { add => throw new Exception(); remove => throw new Exception(); }
+
         public event EventHandler? SplitterSashPosChanged
             { add => throw new Exception(); remove => throw new Exception(); }
+
+        [NativeEvent(cancellable: true)]
         public event EventHandler? Unsplit
             { add => throw new Exception(); remove => throw new Exception(); }
+
+        [NativeEvent(cancellable: true)]
         public event EventHandler? SplitterDoubleClick
             { add => throw new Exception(); remove => throw new Exception(); }
     }

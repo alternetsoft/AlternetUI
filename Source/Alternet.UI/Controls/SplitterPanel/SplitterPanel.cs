@@ -28,7 +28,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the splitter sash is double clicked.
         /// </summary>
-        public event EventHandler? SplitterDoubleClick;
+        public event CancelEventHandler? SplitterDoubleClick;
 
         /// <summary>
         /// Occurs when the splitter sash is moved.
@@ -38,12 +38,17 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the splitter sash is in the process of moving.
         /// </summary>
-        public event EventHandler? SplitterMoving;
+        public event CancelEventHandler? SplitterMoving;
 
         /// <summary>
         /// Occurs when the control is unsplit.
         /// </summary>
-        public event EventHandler? Unsplit;
+        public event CancelEventHandler? Unsplit;
+
+        /// <summary>
+        /// Occurs when the splitter sash is resized.
+        /// </summary>
+        public event CancelEventHandler? SplitterResize;
 
         /// <summary>
         /// Defines default visual style for the newly created
@@ -74,6 +79,40 @@ namespace Alternet.UI
                 if (splitMethod == value)
                     return;
                 splitMethod = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether splitter sash can be dragged by mouse.
+        /// </summary>
+        /// <remarks>Default value is true.</remarks>
+        public bool CanMoveSplitter
+        {
+            get
+            {
+                return Handler.CanMoveSplitter;
+            }
+
+            set
+            {
+                Handler.CanMoveSplitter = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether double click unsplits the control.
+        /// </summary>
+        /// <remarks>Default value is true.</remarks>
+        public bool CanDoubleClick
+        {
+            get
+            {
+                return Handler.CanDoubleClick;
+            }
+
+            set
+            {
+                Handler.CanDoubleClick = value;
             }
         }
 
@@ -607,7 +646,7 @@ namespace Alternet.UI
             return r;
         }
 
-        internal void RaiseSplitterDoubleClick(EventArgs e)
+        internal void RaiseSplitterDoubleClick(CancelEventArgs e)
         {
             OnSplitterDoubleClick(e);
             SplitterDoubleClick?.Invoke(this, e);
@@ -619,13 +658,19 @@ namespace Alternet.UI
             SplitterMoved?.Invoke(this, e);
         }
 
-        internal void RaiseSplitterMoving(EventArgs e)
+        internal void RaiseSplitterResize(CancelEventArgs e)
+        {
+            OnSplitterResize(e);
+            SplitterResize?.Invoke(this, e);
+        }
+
+        internal void RaiseSplitterMoving(CancelEventArgs e)
         {
             OnSplitterMoving(e);
             SplitterMoving?.Invoke(this, e);
         }
 
-        internal void RaiseUnsplit(EventArgs e)
+        internal void RaiseUnsplit(CancelEventArgs e)
         {
             OnUnsplit(e);
             Unsplit?.Invoke(this, e);
@@ -635,9 +680,9 @@ namespace Alternet.UI
         /// Called when the splitter sash is double clicked.
         /// </summary>
         /// <param name="e">
-        /// An <see cref="EventArgs"/> that contains the event data.
+        /// An <see cref="CancelEventArgs"/> that contains the event data.
         /// </param>
-        protected virtual void OnSplitterDoubleClick(EventArgs e)
+        protected virtual void OnSplitterDoubleClick(CancelEventArgs e)
         {
         }
 
@@ -652,12 +697,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the splitter sash is moved.
+        /// </summary>
+        /// <param name="e">
+        /// An <see cref="CancelEventArgs"/> that contains the event data.
+        /// </param>
+        protected virtual void OnSplitterResize(CancelEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called when the splitter sash is in the process of moving.
         /// </summary>
         /// <param name="e">
-        /// An <see cref="EventArgs"/> that contains the event data.
+        /// An <see cref="CancelEventArgs"/> that contains the event data.
         /// </param>
-        protected virtual void OnSplitterMoving(EventArgs e)
+        protected virtual void OnSplitterMoving(CancelEventArgs e)
         {
         }
 
@@ -665,9 +720,9 @@ namespace Alternet.UI
         /// Called when the control is unsplit.
         /// </summary>
         /// <param name="e">
-        /// An <see cref="EventArgs"/> that contains the event data.
+        /// An <see cref="CancelEventArgs"/> that contains the event data.
         /// </param>
-        protected virtual void OnUnsplit(EventArgs e)
+        protected virtual void OnUnsplit(CancelEventArgs e)
         {
         }
 

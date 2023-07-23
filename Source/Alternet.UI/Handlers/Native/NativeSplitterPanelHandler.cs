@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace Alternet.UI
@@ -93,7 +94,6 @@ namespace Alternet.UI
             {
                 return NativeControl.IsSplit;
             }
-
         }
 
         public int SashPosition
@@ -133,7 +133,33 @@ namespace Alternet.UI
         public override IEnumerable<Control> AllChildrenIncludedInLayout
             => Enumerable.Empty<Control>();
 
-        public new SplitterPanel Control => (SplitterPanel)(base.Control);
+        public new SplitterPanel Control => (SplitterPanel)base.Control;
+
+        public bool CanDoubleClick
+        {
+            get
+            {
+                return NativeControl.CanDoubleClick;
+            }
+
+            set
+            {
+                NativeControl.CanDoubleClick = value;
+            }
+        }
+
+        public bool CanMoveSplitter
+        {
+            get
+            {
+                return NativeControl.CanMoveSplitter;
+            }
+
+            set
+            {
+                NativeControl.CanMoveSplitter = value;
+            }
+        }
 
         public void UpdateSize()
         {
@@ -155,6 +181,8 @@ namespace Alternet.UI
                 NativeControl_SplitterSashPosChanged;
             NativeControl.Unsplit += NativeControl_Unsplit;
             NativeControl.SplitterDoubleClick += NativeControl_SplitterDoubleClick;
+            NativeControl.SplitterSashPosResize +=
+                NativeControl_SplitterSashPosResize;
         }
 
         protected override void OnDetach()
@@ -167,26 +195,39 @@ namespace Alternet.UI
                 NativeControl_SplitterSashPosChanged;
             NativeControl.Unsplit -= NativeControl_Unsplit;
             NativeControl.SplitterDoubleClick -= NativeControl_SplitterDoubleClick;
+            NativeControl.SplitterSashPosResize -=
+                NativeControl_SplitterSashPosResize;
         }
 
-        private void NativeControl_SplitterDoubleClick(object sender, EventArgs e)
+        private void NativeControl_SplitterSashPosResize(
+            object? sender,
+            CancelEventArgs e)
+        {
+            Control.RaiseSplitterResize(e);
+        }
+
+        private void NativeControl_SplitterDoubleClick(
+            object? sender,
+            CancelEventArgs e)
         {
             Control.RaiseSplitterDoubleClick(e);
         }
 
-        private void NativeControl_Unsplit(object sender, EventArgs e)
+        private void NativeControl_Unsplit(object? sender, CancelEventArgs e)
         {
             Control.RaiseUnsplit(e);
         }
 
-        private void NativeControl_SplitterSashPosChanged(object sender, EventArgs e)
+        private void NativeControl_SplitterSashPosChanged(
+            object? sender,
+            EventArgs e)
         {
             Control.RaiseSplitterMoved(e);
         }
 
         private void NativeControl_SplitterSashPosChanging(
-            object sender,
-            EventArgs e)
+            object? sender,
+            CancelEventArgs e)
         {
             Control.RaiseSplitterMoving(e);
         }

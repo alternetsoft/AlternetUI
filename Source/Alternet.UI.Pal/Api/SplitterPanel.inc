@@ -28,6 +28,14 @@ void SetSashVisible(bool value);
 bool GetIsSplit();
 
 
+bool GetCanDoubleClick();
+void SetCanDoubleClick(bool value);
+
+
+bool GetCanMoveSplitter();
+void SetCanMoveSplitter(bool value);
+
+
 int GetSashPosition();
 void SetSashPosition(int value);
 
@@ -55,6 +63,7 @@ public:
 enum class SplitterPanelEvent
 {
     SplitterSashPosChanging,
+    SplitterSashPosResize,
     SplitterSashPosChanged,
     Unsplit,
     SplitterDoubleClick,
