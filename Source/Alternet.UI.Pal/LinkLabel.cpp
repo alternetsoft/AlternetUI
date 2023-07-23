@@ -28,9 +28,9 @@ namespace Alternet::UI
 
 	void LinkLabel::OnHyperlinkClick(wxHyperlinkEvent& event)
 	{
-		bool cancel = RaiseEvent(LinkLabelEvent::HyperlinkClick);
+		bool c = RaiseEvent(LinkLabelEvent::HyperlinkClick);
 
-		if (!cancel)
+		if (!c)
 			event.Skip();
 	}
 
