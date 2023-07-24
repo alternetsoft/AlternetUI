@@ -102,7 +102,7 @@ namespace Alternet::UI
 	void SplitterPanel::OnSplitterSashPosChanged(wxSplitterEvent& event)
 	{
 		ToEventData(event);
-		RaiseEvent(SplitterPanelEvent::SplitterSashPosChanged);
+		RaiseEventEx(SplitterPanelEvent::SplitterSashPosChanged, event, true);
 		FromEventData(event);
 	}
 
@@ -152,28 +152,24 @@ namespace Alternet::UI
 	void SplitterPanel::OnSplitterSashPosResize(wxSplitterEvent& event)
 	{
 		ToEventData(event);
-		bool c = RaiseEvent(SplitterPanelEvent::SplitterSashPosResize);
+		RaiseEventEx(SplitterPanelEvent::SplitterSashPosResize, event, true);
 		FromEventData(event);
-		if (c)
-			event.Veto();
 	}
 
 	void SplitterPanel::OnSplitterDoubleClicked(wxSplitterEvent& event)
 	{
 		ToEventData(event);
-		bool c = RaiseEvent(SplitterPanelEvent::SplitterDoubleClick);
+		RaiseEventEx(SplitterPanelEvent::SplitterDoubleClick, event, true);
 		FromEventData(event);
-		if (c || !_canDoubleClick)
+		if (!_canDoubleClick)
 			event.Veto();
 	}
 
 	void SplitterPanel::OnSplitterUnsplit(wxSplitterEvent& event)
 	{
 		ToEventData(event);
-		bool c = RaiseEvent(SplitterPanelEvent::Unsplit);
+		RaiseEventEx(SplitterPanelEvent::Unsplit, event, true);
 		FromEventData(event);
-		if (c)
-			event.Veto();
 	}
 
 	int64_t SplitterPanel::GetStyles() 

@@ -49,7 +49,8 @@ namespace ControlsSample
             splitterPanel2 = new()
             {
                 CanDoubleClick = false,
-                CanMoveSplitter = true
+                CanMoveSplitter = true,
+                MinPaneSize = 20,
             };
 
             control1.Items.Add("Control 1");
@@ -70,24 +71,30 @@ namespace ControlsSample
             splitterPanel.SplitterMoving += SplitterPanel_SplitterMoving;
             splitterPanel.SplitterResize += SplitterPanel_SplitterResize;
 
+            splitterPanel2.SplitterMoving += SplitterPanel2_SplitterMoving;
+
             splitterPanel.SplitVertical(control1, splitterPanel2);
             splitterPanel2.SplitHorizontal(control2, control3);
+
         }
 
-        private void LogEventOnce(string s)
+        private void LogEventOnce(string s, bool once = true)
         {
             if (site == null)
                 return;
 
-            if (site.LastEventMessage == s)
+            if (site.LastEventMessage == s && once)
                 return;
 
             site?.LogEvent(s);
         }
 
-        private void SplitterPanel_SplitterResize(object? sender, CancelEventArgs e)
+        private void SplitterPanel_SplitterResize(
+            object? sender,
+            SplitterPanelEventArgs e)
         {
-            LogEventOnce("Splitter Panel: Splitter Resize");
+            LogEventOnce("Splitter Panel: Splitter Resize", 
+                LogMovingOnceCheckbox.IsChecked);
         }
 
         private void SplitterPanel_SplitterMoving(
@@ -99,32 +106,63 @@ namespace ControlsSample
                 e.SashPosition = 20;
                 e.Cancel = true;
             }
+            if (e.SashPosition > splitterPanel.MaxSashPosition - 100)
+            {
+                e.SashPosition = splitterPanel.MaxSashPosition - 100;
+                e.Cancel = true;
+            }
 
             if (LogMovingOnceCheckbox.IsChecked)
             {
                 LogEventOnce("Splitter Panel: Splitter Moving");
                 return;
             }
-            var s = $"Sash Pos: {e.SashPosition}";
+            var s = $"Sash Pos: {e.SashPosition}/{splitterPanel.MaxSashPosition}/"+
+                $"W:{splitterPanel.ClientSize.Width}, "+
+                $"H:{splitterPanel.ClientSize.Height}";
             LogEventOnce("Splitter Panel: Splitter Moving. "+s);
         }
 
-        private void SplitterPanel_Unsplit(object? sender, CancelEventArgs e)
+        private void SplitterPanel2_SplitterMoving(
+            object? sender,
+            SplitterPanelEventArgs e)
+        {
+            if (e.SashPosition < 20)
+            {
+                e.SashPosition = 20;
+                e.Cancel = true;
+            }
+
+            if (LogMovingOnceCheckbox.IsChecked)
+            {
+                LogEventOnce("Splitter Panel: Splitter 2 Moving");
+                return;
+            }
+            var s = $"Sash Pos: {e.SashPosition}/{splitterPanel2.MaxSashPosition}/"+
+                $"{splitterPanel2.ClientSize.Height}";
+            LogEventOnce("Splitter Panel: Splitter 2 Moving. " + s);
+        }
+
+        private void SplitterPanel_Unsplit(
+            object? sender,
+            SplitterPanelEventArgs e)
         {
             site?.LogEvent("Splitter Panel: Unsplit");
         }
 
-        private void SplitterPanel_SplitterMoved(object? sender, EventArgs e)
+        private void SplitterPanel_SplitterMoved(
+            object? sender,
+            SplitterPanelEventArgs e)
         {
             site?.LogEvent("Splitter Panel: Splitter Moved");
         }
 
         private void SplitterPanel_SplitterDoubleClick(
-            object? sender, 
-            CancelEventArgs e)
+            object? sender,
+            SplitterPanelEventArgs e)
         {
             e.Cancel = true;
-            site?.LogEvent("Splitter Panel: Double click");
+            site?.LogEvent($"Splitter Panel: Double click. X: {e.X}, Y: {e.Y}");
         }
 
         public IPageSite? Site
@@ -184,10 +222,10 @@ namespace ControlsSample
 
         private void SetMinPaneSizeButton_Click(object? sender, EventArgs e)
         {
-            if(splitterPanel.MinimumPaneSize == 150)
-                splitterPanel.MinimumPaneSize = 0;
+            if(splitterPanel.MinPaneSize == 150)
+                splitterPanel.MinPaneSize = 0;
             else
-                splitterPanel.MinimumPaneSize = 150;
+                splitterPanel.MinPaneSize = 150;
         }
 
         private void SetSashPositionButton_Click(object? sender, EventArgs e)

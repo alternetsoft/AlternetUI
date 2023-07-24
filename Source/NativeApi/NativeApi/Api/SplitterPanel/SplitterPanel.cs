@@ -48,18 +48,20 @@ namespace NativeApi.Api
             { add => throw new Exception(); remove => throw new Exception(); }
 
         [NativeEvent(cancellable: true)]
-        public event EventHandler? SplitterSashPosResize
-        { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<SplitterPanelEventData>? 
+            SplitterSashPosResize
+            { add => throw new Exception(); remove => throw new Exception(); }
 
-        public event EventHandler? SplitterSashPosChanged
+        public event NativeEventHandler<SplitterPanelEventData>? 
+            SplitterSashPosChanged
             { add => throw new Exception(); remove => throw new Exception(); }
 
         [NativeEvent(cancellable: true)]
-        public event EventHandler? Unsplit
+        public event NativeEventHandler<SplitterPanelEventData>? Unsplit
             { add => throw new Exception(); remove => throw new Exception(); }
 
         [NativeEvent(cancellable: true)]
-        public event EventHandler? SplitterDoubleClick
+        public event NativeEventHandler<SplitterPanelEventData>? SplitterDoubleClick
             { add => throw new Exception(); remove => throw new Exception(); }
     }
 }

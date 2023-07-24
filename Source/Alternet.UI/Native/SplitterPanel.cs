@@ -325,41 +325,33 @@ namespace Alternet.UI.Native
                 }
                 case NativeApi.SplitterPanelEvent.SplitterSashPosResize:
                 {
-                    {
-                        var cea = new CancelEventArgs();
-                        SplitterSashPosResize?.Invoke(this, cea);
-                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
-                    }
+                    var ea = new NativeEventArgs<SplitterPanelEventData>(MarshalEx.PtrToStructure<SplitterPanelEventData>(parameter));
+                    SplitterSashPosResize?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.SplitterPanelEvent.SplitterSashPosChanged:
                 {
-                    SplitterSashPosChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                    var ea = new NativeEventArgs<SplitterPanelEventData>(MarshalEx.PtrToStructure<SplitterPanelEventData>(parameter));
+                    SplitterSashPosChanged?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.SplitterPanelEvent.Unsplit:
                 {
-                    {
-                        var cea = new CancelEventArgs();
-                        Unsplit?.Invoke(this, cea);
-                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
-                    }
+                    var ea = new NativeEventArgs<SplitterPanelEventData>(MarshalEx.PtrToStructure<SplitterPanelEventData>(parameter));
+                    Unsplit?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.SplitterPanelEvent.SplitterDoubleClick:
                 {
-                    {
-                        var cea = new CancelEventArgs();
-                        SplitterDoubleClick?.Invoke(this, cea);
-                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
-                    }
+                    var ea = new NativeEventArgs<SplitterPanelEventData>(MarshalEx.PtrToStructure<SplitterPanelEventData>(parameter));
+                    SplitterDoubleClick?.Invoke(this, ea); return ea.Result;
                 }
                 default: throw new Exception("Unexpected SplitterPanelEvent value: " + e);
             }
         }
         
         public event NativeEventHandler<SplitterPanelEventData>? SplitterSashPosChanging;
-        public event EventHandler<CancelEventArgs>? SplitterSashPosResize;
-        public event EventHandler? SplitterSashPosChanged;
-        public event EventHandler<CancelEventArgs>? Unsplit;
-        public event EventHandler<CancelEventArgs>? SplitterDoubleClick;
+        public event NativeEventHandler<SplitterPanelEventData>? SplitterSashPosResize;
+        public event NativeEventHandler<SplitterPanelEventData>? SplitterSashPosChanged;
+        public event NativeEventHandler<SplitterPanelEventData>? Unsplit;
+        public event NativeEventHandler<SplitterPanelEventData>? SplitterDoubleClick;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider

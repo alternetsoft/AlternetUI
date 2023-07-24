@@ -200,35 +200,45 @@ namespace Alternet.UI
 
         private void NativeControl_SplitterSashPosResize(
             object? sender,
-            CancelEventArgs e)
+            Native.NativeEventArgs<Native.SplitterPanelEventData> e)
         {
-            Control.RaiseSplitterResize(e);
+            SplitterPanelEventArgs ea = new(e);
+            Control.RaiseSplitterResize(ea);
+            e.Result = ea.CancelAsIntPtr();
         }
 
         private void NativeControl_SplitterDoubleClick(
             object? sender,
-            CancelEventArgs e)
+            Native.NativeEventArgs<Native.SplitterPanelEventData> e)
         {
-            Control.RaiseSplitterDoubleClick(e);
+            SplitterPanelEventArgs ea = new(e);
+            Control.RaiseSplitterDoubleClick(ea);
+            e.Result = ea.CancelAsIntPtr();
         }
 
-        private void NativeControl_Unsplit(object? sender, CancelEventArgs e)
+        private void NativeControl_Unsplit(
+            object? sender,
+            Native.NativeEventArgs<Native.SplitterPanelEventData> e)
         {
-            Control.RaiseUnsplit(e);
+            SplitterPanelEventArgs ea = new(e);
+            Control.RaiseUnsplit(ea);
+            e.Result = ea.CancelAsIntPtr();
         }
 
         private void NativeControl_SplitterSashPosChanged(
             object? sender,
-            EventArgs e)
+            Native.NativeEventArgs<Native.SplitterPanelEventData> e)
         {
-            Control.RaiseSplitterMoved(e);
+            SplitterPanelEventArgs ea = new(e);
+            Control.RaiseSplitterMoved(ea);
+            e.Result = ea.CancelAsIntPtr();
         }
 
         private void NativeControl_SplitterSashPosChanging(
             object? sender,
             Native.NativeEventArgs<Native.SplitterPanelEventData> e)
         {
-            SplitterPanelEventArgs ea = new SplitterPanelEventArgs(e);
+            SplitterPanelEventArgs ea = new(e);
             Control.RaiseSplitterMoving(ea);
             e.Result = ea.CancelAsIntPtr();
         }

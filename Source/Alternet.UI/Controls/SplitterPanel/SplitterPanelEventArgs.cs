@@ -12,6 +12,13 @@ namespace Alternet.UI
     /// </summary>
     public class SplitterPanelEventArgs : CancelEventArgs
     {
+        /// <summary>
+        /// Creates <see cref="SplitterPanelEventArgs"/> instance.
+        /// </summary>
+        public SplitterPanelEventArgs()
+        {
+        }
+
         internal SplitterPanelEventArgs(
             Native.NativeEventArgs<Native.SplitterPanelEventData> e)
         {
@@ -61,9 +68,9 @@ namespace Alternet.UI
         /// </remarks>
         public int Y { get; }
 
-        internal int OldSize { get; set; }
+        public int OldSize { get; set; }
 
-        internal int NewSize { get; set; }
+        public int NewSize { get; set; }
 
         internal IntPtr CancelAsIntPtr()
         {

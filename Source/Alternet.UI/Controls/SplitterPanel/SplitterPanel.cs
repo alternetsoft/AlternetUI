@@ -28,12 +28,12 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the splitter sash is double clicked.
         /// </summary>
-        public event CancelEventHandler? SplitterDoubleClick;
+        public event EventHandler<SplitterPanelEventArgs>? SplitterDoubleClick;
 
         /// <summary>
         /// Occurs when the splitter sash is moved.
         /// </summary>
-        public event EventHandler? SplitterMoved;
+        public event EventHandler<SplitterPanelEventArgs>? SplitterMoved;
 
         /// <summary>
         /// Occurs when the splitter sash is in the process of moving.
@@ -43,12 +43,12 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the control is unsplit.
         /// </summary>
-        public event CancelEventHandler? Unsplit;
+        public event EventHandler<SplitterPanelEventArgs>? Unsplit;
 
         /// <summary>
         /// Occurs when the splitter sash is resized.
         /// </summary>
-        public event CancelEventHandler? SplitterResize;
+        public event EventHandler<SplitterPanelEventArgs>? SplitterResize;
 
         /// <summary>
         /// Defines default visual style for the newly created
@@ -135,7 +135,7 @@ namespace Alternet.UI
         /// of the panes. To prevent this behaviour (and veto out-of-range
         /// sash dragging), set a minimum size (for example 20 pixels).
         /// </remarks>
-        public int MinimumPaneSize
+        public int MinPaneSize
         {
             get
             {
@@ -327,6 +327,32 @@ namespace Alternet.UI
                 if (value < 0)
                     value = 0;
                 Handler.SashPosition = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets maximal splitter sash position if control is splitted or -1
+        /// if it's unsplitted.
+        /// </summary>
+        public int MaxSashPosition
+        {
+            get
+            {
+                double v;
+                if (IsSplitHorizontal)
+                    v = ClientSize.Height;
+                else
+                if (IsSplitVertical)
+                    v = ClientSize.Width;
+                else
+                    return -1;
+
+                var inPixels = ScreenToDevice(new(v, 0));
+
+                int result = inPixels.X - MinPaneSize;
+                if (result < -1)
+                    result = -1;
+                return result;
             }
         }
 
@@ -646,19 +672,19 @@ namespace Alternet.UI
             return r;
         }
 
-        internal void RaiseSplitterDoubleClick(CancelEventArgs e)
+        internal void RaiseSplitterDoubleClick(SplitterPanelEventArgs e)
         {
             OnSplitterDoubleClick(e);
             SplitterDoubleClick?.Invoke(this, e);
         }
 
-        internal void RaiseSplitterMoved(EventArgs e)
+        internal void RaiseSplitterMoved(SplitterPanelEventArgs e)
         {
             OnSplitterMoved(e);
             SplitterMoved?.Invoke(this, e);
         }
 
-        internal void RaiseSplitterResize(CancelEventArgs e)
+        internal void RaiseSplitterResize(SplitterPanelEventArgs e)
         {
             OnSplitterResize(e);
             SplitterResize?.Invoke(this, e);
@@ -670,7 +696,7 @@ namespace Alternet.UI
             SplitterMoving?.Invoke(this, e);
         }
 
-        internal void RaiseUnsplit(CancelEventArgs e)
+        internal void RaiseUnsplit(SplitterPanelEventArgs e)
         {
             OnUnsplit(e);
             Unsplit?.Invoke(this, e);
@@ -680,9 +706,9 @@ namespace Alternet.UI
         /// Called when the splitter sash is double clicked.
         /// </summary>
         /// <param name="e">
-        /// An <see cref="CancelEventArgs"/> that contains the event data.
+        /// An <see cref="SplitterPanelEventArgs"/> that contains the event data.
         /// </param>
-        protected virtual void OnSplitterDoubleClick(CancelEventArgs e)
+        protected virtual void OnSplitterDoubleClick(SplitterPanelEventArgs e)
         {
         }
 
@@ -690,9 +716,9 @@ namespace Alternet.UI
         /// Called when the splitter sash is moved.
         /// </summary>
         /// <param name="e">
-        /// An <see cref="EventArgs"/> that contains the event data.
+        /// An <see cref="SplitterPanelEventArgs"/> that contains the event data.
         /// </param>
-        protected virtual void OnSplitterMoved(EventArgs e)
+        protected virtual void OnSplitterMoved(SplitterPanelEventArgs e)
         {
         }
 
@@ -700,9 +726,9 @@ namespace Alternet.UI
         /// Called when the splitter sash is moved.
         /// </summary>
         /// <param name="e">
-        /// An <see cref="CancelEventArgs"/> that contains the event data.
+        /// An <see cref="SplitterPanelEventArgs"/> that contains the event data.
         /// </param>
-        protected virtual void OnSplitterResize(CancelEventArgs e)
+        protected virtual void OnSplitterResize(SplitterPanelEventArgs e)
         {
         }
 
@@ -710,7 +736,7 @@ namespace Alternet.UI
         /// Called when the splitter sash is in the process of moving.
         /// </summary>
         /// <param name="e">
-        /// An <see cref="CancelEventArgs"/> that contains the event data.
+        /// An <see cref="SplitterPanelEventArgs"/> that contains the event data.
         /// </param>
         protected virtual void OnSplitterMoving(SplitterPanelEventArgs e)
         {
@@ -720,9 +746,9 @@ namespace Alternet.UI
         /// Called when the control is unsplit.
         /// </summary>
         /// <param name="e">
-        /// An <see cref="CancelEventArgs"/> that contains the event data.
+        /// An <see cref="SplitterPanelEventArgs"/> that contains the event data.
         /// </param>
-        protected virtual void OnUnsplit(CancelEventArgs e)
+        protected virtual void OnUnsplit(SplitterPanelEventArgs e)
         {
         }
 
