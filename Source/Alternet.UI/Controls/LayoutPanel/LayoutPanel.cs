@@ -7,7 +7,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class LayoutPanel : Control
+    public class LayoutPanel : Control
     {
         internal new NativeLayoutPanelHandler Handler =>
             (NativeLayoutPanelHandler)base.Handler;
