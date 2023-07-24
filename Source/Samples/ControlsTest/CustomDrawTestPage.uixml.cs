@@ -13,7 +13,7 @@ namespace ControlsTest
     internal partial class CustomDrawTestPage : Control
     {
         private ITestPageSite? site;
-        private CustomDrawControl? customDrawControl;
+        private CustomDrawControl customDrawControl;
 
         static CustomDrawTestPage()
         {

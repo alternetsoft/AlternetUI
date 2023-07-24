@@ -4,15 +4,16 @@
         xmlns:local="clr-namespace:ControlsTest;assembly=ControlsTest">
 
 
-  <Grid Visible="true" Margin="5,5,5,5" HorizontalAlignment="Stretch" Name="webBrowserGrid">
+  <Grid Visible="true" Margin="5,5,5,5" 
+        HorizontalAlignment="Stretch" Name="webBrowserGrid">
     <Grid.ColumnDefinitions>
-      <ColumnDefinition/>
+      <ColumnDefinition Width="100*"/>
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition />
       <RowDefinition />
       <RowDefinition />
-      <RowDefinition Height="100"/>
+      <RowDefinition Height="100*"/>
       <RowDefinition />
       <RowDefinition />
     </Grid.RowDefinitions>

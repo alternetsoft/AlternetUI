@@ -47,7 +47,7 @@ namespace ControlsTest
         private TextBox findTextBox;
         private Button findButton;
         private Button findClearButton;
-        private StackPanel mainStackPanel;
+        private SplitterPanel mainPanel;
         private ListBox listBox1;
 
         private bool pandaInMemory = false;
@@ -94,26 +94,24 @@ namespace ControlsTest
 
         public void AddMainPanel(int rowIndex)
         {
-            mainStackPanel = new()
+            mainPanel = new()
             {
-                Margin = new Thickness(5, 5, 5, 5),
-                Orientation = StackPanelOrientation.Horizontal,
+                Margin = 5,
             };
-            Grid.SetRowColumn(mainStackPanel, rowIndex, 0);
+            Grid.SetRowColumn(mainPanel, rowIndex, 0);
 
             listBox1 = new()
             {
-                Width = 180,
-                Height = 400,
+                //Width = 180,
+                //Height = 400,
             };
             listBox1.MouseDoubleClick += ListBox1_MouseDoubleClick;
-            mainStackPanel.Children.Add(listBox1);
 
             webBrowser1 = new()
             {
-                Width = 500,
-                Height = 300,
-                Margin = new(5, 0, 0, 0),
+                //Width = 500,
+                //Height = 300,
+                //Margin = new(5, 0, 0, 0),
             };
             webBrowser1.Navigated += WebBrowser1_Navigated;
             webBrowser1.Loaded += WebBrowser1_Loaded;
@@ -125,9 +123,12 @@ namespace ControlsTest
             webBrowser1.Navigating += WebBrowser1_Navigating;
             webBrowser1.Error += WebBrowser1_Error;
             webBrowser1.BeforeBrowserCreate += WebBrowser1_BeforeBrowserCreate;
-            mainStackPanel.Children.Add(webBrowser1);
+            mainPanel.Children.Add(webBrowser1);
+            mainPanel.Children.Add(listBox1);
 
-            webBrowserGrid.Children.Add(mainStackPanel);
+            mainPanel.SplitVertical(webBrowser1, listBox1, 650);
+
+            webBrowserGrid.Children.Add(mainPanel);
         }
 
         public void AddNewToolbar(int rowIndex)
