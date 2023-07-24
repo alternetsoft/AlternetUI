@@ -33,9 +33,9 @@ namespace Alternet.UI
         /// <summary>
         ///     Initializes a new instance of the WebBrowserEventArgs class.
         /// </summary>
-		/// <param name="eventType">
-		/// A <see cref="System.String"/> representing type of the event.
-		/// </param>
+        /// <param name="eventType">
+        /// A <see cref="string"/> representing type of the event.
+        /// </param>
         public WebBrowserEventArgs(string? eventType = null)
             : base()
         {
@@ -68,17 +68,19 @@ namespace Alternet.UI
         /// <summary>
         ///     Gets the client data value for the received event.
         /// </summary>
-		/// <returns>
-		///	A <see cref="System.IntPtr"/> representing the client data value for the received event.
-		/// </returns>
+        /// <returns>
+        /// A <see cref="System.IntPtr"/> representing the client data value
+        /// for the received event.
+        /// </returns>
         public IntPtr ClientData { get; set; }
 
         /// <summary>
         ///     Gets the type of the <see cref="WebBrowser"/> event.
         /// </summary>
-		/// <returns>
-		///	A <see cref="String"/> representing the type of the <see cref="WebBrowser"/> event.
-		/// </returns>
+        /// <returns>
+        /// A <see cref="string"/> representing the type of
+        /// the <see cref="WebBrowser"/> event.
+        /// </returns>
         public string EventType { get; }
 
         /// <summary>
@@ -89,9 +91,10 @@ namespace Alternet.UI
         /// <summary>
         ///     Gets the type of error that can caused navigation to fail.
         /// </summary>
-		/// <returns>
-		///	A <see cref="WebBrowserNavigationError"/> representing the type of error that can caused navigation to fail.
-		/// </returns>
+        /// <returns>
+        /// A <see cref="WebBrowserNavigationError"/> representing the type of
+        /// error that can caused navigation to fail.
+        /// </returns>
         public WebBrowserNavigationError? NavigationError
         {
             get
@@ -108,63 +111,66 @@ namespace Alternet.UI
         /// <summary>
         ///     Gets the text data of the received event.
         /// </summary>
-		/// <returns>
-		///	A <see cref="String"/> representing the text data of the received event.
-		/// </returns>
+        /// <returns>
+        /// A <see cref="string"/> representing the text data of the received event.
+        /// </returns>
         public string? Text { get; set; }
 
         /// <summary>
         ///     Gets the URL being visited.
         /// </summary>
-		/// <returns>
-		///	A <see cref="String"/> representing the URL being visited.
-		/// </returns>
+        /// <returns>
+        /// A <see cref="string"/> representing the URL being visited.
+        /// </returns>
         public string? Url { get; }
 
         /// <summary>
         ///     Gets the name of the target frame which the url of this event
         ///     has been or will be loaded into.
         /// </summary>
-		/// <remarks>
+        /// <remarks>
         ///     This may return an empty string if the frame is not available.
-		/// </remarks>
-		/// <returns>
-		///	A <see cref="String"/> representing the name of the target frame which the url of this event
-        ///     has been or will be loaded into.
-		/// </returns>
+        /// </remarks>
+        /// <returns>
+        /// A <see cref="string"/> representing the name of the target frame
+        /// which the url of this event
+        /// has been or will be loaded into.
+        /// </returns>
         public string? TargetFrameName { get; }
 
         /// <summary>
-        ///     Gets the type of navigation action. 
+        ///     Gets the type of navigation action.
         /// </summary>
-		/// <remarks>
-		/// Only valid for NewWindow events.
-		/// </remarks>
-		/// <returns>
-		///	A <see cref="WebBrowserNavigationAction"/> representing the type of navigation action.
-		/// </returns>
+        /// <remarks>
+        /// Only valid for NewWindow events.
+        /// </remarks>
+        /// <returns>
+        /// A <see cref="WebBrowserNavigationAction"/> representing the type
+        /// of navigation action.
+        /// </returns>
         public WebBrowserNavigationAction NavigationAction { get; }
 
         /// <summary>
-        ///     Gets the name of the script handler. 
+        ///     Gets the name of the script handler.
         /// </summary>
-		/// <remarks>
-		/// 	Only valid for ScriptMessageReceived events.
-		/// </remarks>
-		/// <returns>
-		///	A <see cref="String"/> representing the name of the script handler.
-		/// </returns>
+        /// <remarks>
+        /// Only valid for ScriptMessageReceived events.
+        /// </remarks>
+        /// <returns>
+        /// A <see cref="string"/> representing the name of the script handler.
+        /// </returns>
         public string? MessageHandler { get; }
 
         /// <summary>
-        ///     Returns true the script execution failed. 
+        ///     Returns true the script execution failed.
         /// </summary>
-		/// <remarks>
-		/// 	Only valid for ScriptResult events.
-		/// </remarks>
-		/// <returns>
-		///	<see langword="true"/> if the script execution failed; otherwise, <see langword="false"/>.	
-		/// </returns>
+        /// <remarks>
+        /// Only valid for ScriptResult events.
+        /// </remarks>
+        /// <returns>
+        /// <see langword="true"/> if the script execution failed; otherwise,
+        /// <see langword="false"/>.
+        /// </returns>
         public virtual bool IsError
         {
             get

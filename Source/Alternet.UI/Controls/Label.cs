@@ -25,8 +25,15 @@ namespace Alternet.UI
         [Localizability(LocalizationCategory.Text)]
         public string Text
         {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
+            get
+            {
+                return (string)GetValue(TextProperty);
+            }
+
+            set
+            {
+                SetValue(TextProperty, value);
+            }
         }
 
         /// <summary>
