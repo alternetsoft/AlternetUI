@@ -22,6 +22,7 @@ namespace Alternet.UI
 
         private Control? control1;
         private Control? control2;
+        private bool initAutoSplit = false;
         private SplitterPanelSplitMethod splitMethod =
             SplitterPanelSplitMethod.Manual;
 
@@ -752,11 +753,19 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
+        protected override void OnLayout()
+        {
+            if (initAutoSplit)
+                return;
+            initAutoSplit = true;
+            InitAutoSplit();
+        }
+
         /// <inheritdoc />
         protected override void OnChildInserted(int childIndex, Control childControl)
         {
             base.OnChildInserted(childIndex, childControl);
-            UpdateChildControls();
         }
 
         /// <inheritdoc />
@@ -771,7 +780,7 @@ namespace Alternet.UI
             return new NativeSplitterPanelHandler();
         }
 
-        private void UpdateChildControls()
+        private void InitAutoSplit()
         {
             if (SplitMethod == SplitterPanelSplitMethod.Manual)
                 return;

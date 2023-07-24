@@ -5,32 +5,37 @@
         Title="Alternet UI Explorer Sample"
         Width="700" Height="450" StartLocation="CenterScreen" 
         HorizontalAlignment="Stretch">
-    <Control Padding="10" HorizontalAlignment="Stretch">
+  <Window.StatusBar>
+    <StatusBar Name="statusBar">
+      <StatusBarPanel Text=" " />
+    </StatusBar>
+  </Window.StatusBar>
+
+  <Control Padding="10" HorizontalAlignment="Stretch">
 
       <Grid Name="mainGrid" Margin="0,0,0,5" Padding="2" 
             VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="200"/>
-          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="100*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
           <RowDefinition Height="100*"/>
           <RowDefinition />
         </Grid.RowDefinitions>
         
-        <TreeView Name="treeView" Width="200" Margin="0,0,10,0"
-                  Grid.Row="0" Grid.Column="0"/>
+        <SplitterPanel SplitMethod="Vertical" MinPaneSize="150"
+                       Grid.Row="0" Grid.Column="0">
+          <TreeView Name="treeView"/>
         
-        <ListView Name="listView" View="Details"
-                  HorizontalAlignment="Stretch"
-                  Grid.Row="0" Grid.Column="1">
-          <ListView.Columns>
-            <ListViewColumn Title="Name" />
-            <ListViewColumn Title="Size" />
-            <ListViewColumn Title="Modified" />
-          </ListView.Columns>
-        </ListView>
-        
+          <ListView Name="listView" View="Details"
+                    HorizontalAlignment="Stretch">
+            <ListView.Columns>
+              <ListViewColumn Title="Name" />
+              <ListViewColumn Title="Size" />
+              <ListViewColumn Title="Modified" />
+            </ListView.Columns>
+          </ListView>
+        </SplitterPanel>
         <StackPanel Orientation="Horizontal" Margin="0,10,0,0"
                     Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
           <Button Text="Show progress" Click="ShowProgress_Click"/>
