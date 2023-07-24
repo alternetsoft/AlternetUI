@@ -15,7 +15,7 @@ namespace Alternet.UI
     public class Control : FrameworkElement, ISupportInitialize, IDisposable,
         IControl
     {
-        internal static int ScreenShotCounter = 0;
+        internal static int ScreenShotCounter { get; set; } = 0;
 
         /// <summary>
         /// Identifies the <see cref="ToolTip"/> dependency property.
@@ -50,8 +50,10 @@ namespace Alternet.UI
                             UpdateSourceTrigger.PropertyChanged));// UpdateSourceTrigger.LostFocus
 
         private static readonly object?[] EmptyArray = new object?[0];
-        private static readonly Size DefaultSize = new (double.NaN, double.NaN);
+        private static readonly Size DefaultSize = new(double.NaN, double.NaN);
         private static Font? defaultFont;
+
+        private Collection<Control>? children;
         private Size size = DefaultSize;
         private Thickness margin;
         private Thickness padding;
@@ -225,7 +227,7 @@ namespace Alternet.UI
         {
             get
             {
-                extendedProps ??= new ();
+                extendedProps ??= new();
                 return extendedProps;
             }
         }
@@ -367,7 +369,7 @@ namespace Alternet.UI
             get
             {
                 var size = ClientSize;
-                return new (0, 0, size.Width - 1, size.Height - 1);
+                return new(0, 0, size.Width - 1, size.Height - 1);
             }
         }
 
@@ -402,10 +404,36 @@ namespace Alternet.UI
         /// After adding the controls to the parent control, call the <see cref="ResumeLayout"/> method. Doing so will increase the performance of applications with many controls.</para>
         /// </remarks>
         [Content]
-        public Collection<Control> Children { get; } = new Collection<Control>();
+        public Collection<Control> Children
+        {
+            get
+            {
+                children ??= new Collection<Control>();
+                return children;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether there are any items in the <see cref="Children"/> list.
+        /// </summary>
+        public bool HasChildren
+        {
+            get
+            {
+                return children != null && children.Count > 0;
+            }
+        }
 
         /// <inheritdoc/>
-        public override IReadOnlyList<FrameworkElement> ContentElements => Children;
+        public override IReadOnlyList<FrameworkElement> ContentElements
+        {
+            get
+            {
+                if (children == null)
+                    return Array.Empty<FrameworkElement>();
+                return children;
+            }
+        }
 
         /// <summary>
         /// Gets the parent container of the control.
