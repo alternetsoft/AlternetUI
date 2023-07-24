@@ -14,7 +14,7 @@ namespace Alternet.UI
 
         event EventHandler? BorderBrushChanged;
 
-        //event EventHandler<PaintEventArgs>? Paint; // !!!!!
+        /*event EventHandler<PaintEventArgs>? Paint; */
 
         event EventHandler? MarginChanged;
 
@@ -215,7 +215,7 @@ namespace Alternet.UI
 
         IControlHandlerFactory GetEffectiveControlHandlerHactory();
 
-        ControlHandler CreateHandler(); // !!!!!
+        ControlHandler CreateHandler();
 
         void CheckDisposed();
 
@@ -223,11 +223,11 @@ namespace Alternet.UI
 
         void OnPaddingChanged(EventArgs e);
 
-        void OnPaint(PaintEventArgs e); // !!!!!
+        void OnPaint(PaintEventArgs e);
 
         void OnHandlerAttached(EventArgs e);
 
-        void OnDragDrop(DragEventArgs e); // !!!!!
+        void OnDragDrop(DragEventArgs e);
 
         void OnDragOver(DragEventArgs e);
 
