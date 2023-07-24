@@ -98,6 +98,10 @@ namespace ControlsSample
                 "Splitter Panel", 
                 new SplitterPanelPage { Site = this }));
 
+            pages.Add(new PageContainer.Page(
+                "Layout Panel",
+                new LayoutPanelPage { Site = this }));
+
             pageContainer.SelectedIndex = 0;
 
             mainGridParent.Padding = 10;

@@ -60,16 +60,6 @@ namespace Alternet.UI
             }
         }
 
-        public static void PerformLayoutLeftFill(
-            Control container,
-            Control leftControl,
-            Control fillControl)
-        {
-            LayoutPanel.SetDock(leftControl,DockStyle.Left);
-            LayoutPanel.SetDock(fillControl,DockStyle.Fill);
-            DefaultLayout.Instance.Layout(container);
-        }
-
         /// <summary>
         /// Sets background of the control's parents to Red, Green, Blue and
         /// Yellow colors.

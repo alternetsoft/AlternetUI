@@ -14,7 +14,7 @@ namespace Alternet.UI
 
         public override void OnLayout()
         {
-
+            DefaultLayout.Layout(Control);
         }
 
         internal override Native.Control CreateNativeControl()

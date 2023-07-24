@@ -272,7 +272,7 @@ namespace Alternet.UI
             }
         }*/
 
-        public void Layout(Control container)
+        public static void Layout(Control container)
         {
             LayoutDockedChildren(container);
             //LayoutAnchoredChildren(container, controls);
