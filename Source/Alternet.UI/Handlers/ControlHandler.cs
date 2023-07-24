@@ -99,7 +99,7 @@ namespace Alternet.UI
         public Size GetDPI()
         {
             if (NativeControl == null)
-                return new Size(0,0);
+                return Size.Empty;
             return NativeControl.GetDPI();
         }
 
