@@ -4,6 +4,7 @@
 #include "Object.h"
 #include "wx/splitter.h"
 #include "Control.h"
+#include "Api/NativeEventDataTypes.h"
 
 namespace Alternet::UI
 {
@@ -20,6 +21,13 @@ namespace Alternet::UI
         bool _redrawOnSashPosition = true;
         bool _canDoubleClick = true;
         bool _canMoveSplitter = true;
+        SplitterPanelEventData _eventData = SplitterPanelEventData();
+
+        void ToEventData(wxSplitterEvent& event);
+        void FromEventData(wxSplitterEvent& event);
+
+        void RaiseEventEx(SplitterPanelEvent eventId, wxSplitterEvent& event,
+            bool canVeto);
 
         wxSplitterWindow* GetSplitterWindow();
         void OnSplitterSashPosChanged(wxSplitterEvent& event);

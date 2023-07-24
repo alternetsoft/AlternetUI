@@ -175,8 +175,7 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            NativeControl.SplitterSashPosChanging +=
-                NativeControl_SplitterSashPosChanging;
+            NativeControl.SplitterSashPosChanging +=   NativeControl_SplitterSashPosChanging;
             NativeControl.SplitterSashPosChanged +=
                 NativeControl_SplitterSashPosChanged;
             NativeControl.Unsplit += NativeControl_Unsplit;
@@ -227,9 +226,11 @@ namespace Alternet.UI
 
         private void NativeControl_SplitterSashPosChanging(
             object? sender,
-            CancelEventArgs e)
+            Native.NativeEventArgs<Native.SplitterPanelEventData> e)
         {
-            Control.RaiseSplitterMoving(e);
+            SplitterPanelEventArgs ea = new SplitterPanelEventArgs(e);
+            Control.RaiseSplitterMoving(ea);
+            e.Result = ea.CancelAsIntPtr();
         }
 
         public class NativeSplitterPanel : Native.SplitterPanel

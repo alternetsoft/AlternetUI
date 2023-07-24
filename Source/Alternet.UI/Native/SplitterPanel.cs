@@ -320,11 +320,8 @@ namespace Alternet.UI.Native
             {
                 case NativeApi.SplitterPanelEvent.SplitterSashPosChanging:
                 {
-                    {
-                        var cea = new CancelEventArgs();
-                        SplitterSashPosChanging?.Invoke(this, cea);
-                        return cea.Cancel ? new IntPtr(1) : IntPtr.Zero;
-                    }
+                    var ea = new NativeEventArgs<SplitterPanelEventData>(MarshalEx.PtrToStructure<SplitterPanelEventData>(parameter));
+                    SplitterSashPosChanging?.Invoke(this, ea); return ea.Result;
                 }
                 case NativeApi.SplitterPanelEvent.SplitterSashPosResize:
                 {
@@ -358,7 +355,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public event EventHandler<CancelEventArgs>? SplitterSashPosChanging;
+        public event NativeEventHandler<SplitterPanelEventData>? SplitterSashPosChanging;
         public event EventHandler<CancelEventArgs>? SplitterSashPosResize;
         public event EventHandler? SplitterSashPosChanged;
         public event EventHandler<CancelEventArgs>? Unsplit;

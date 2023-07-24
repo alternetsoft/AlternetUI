@@ -36,6 +36,8 @@
               Margin="0,0,0,5" Enabled="true"/>
       <Button Text="Sash Gravity = 1.0" Click="SashGravity10Button_Click"
               Margin="0,0,0,5" Enabled="true"/>
+      <CheckBox Text="Log moving once" Name="LogMovingOnceCheckbox" 
+                IsChecked="true" Margin="0,0,0,5" />
     </VerticalStackPanel>
 
   </Grid>

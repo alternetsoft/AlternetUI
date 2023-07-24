@@ -38,7 +38,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the splitter sash is in the process of moving.
         /// </summary>
-        public event CancelEventHandler? SplitterMoving;
+        public event EventHandler<SplitterPanelEventArgs>? SplitterMoving;
 
         /// <summary>
         /// Occurs when the control is unsplit.
@@ -664,7 +664,7 @@ namespace Alternet.UI
             SplitterResize?.Invoke(this, e);
         }
 
-        internal void RaiseSplitterMoving(CancelEventArgs e)
+        internal void RaiseSplitterMoving(SplitterPanelEventArgs e)
         {
             OnSplitterMoving(e);
             SplitterMoving?.Invoke(this, e);
@@ -712,7 +712,7 @@ namespace Alternet.UI
         /// <param name="e">
         /// An <see cref="CancelEventArgs"/> that contains the event data.
         /// </param>
-        protected virtual void OnSplitterMoving(CancelEventArgs e)
+        protected virtual void OnSplitterMoving(SplitterPanelEventArgs e)
         {
         }
 

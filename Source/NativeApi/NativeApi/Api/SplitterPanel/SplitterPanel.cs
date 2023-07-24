@@ -1,5 +1,6 @@
 ﻿#pragma warning disable
 using ApiCommon;
+using NativeApi.Api;
 using System;
 
 namespace NativeApi.Api
@@ -42,7 +43,8 @@ namespace NativeApi.Api
         public void UpdateSize() => throw new Exception();
 
         [NativeEvent(cancellable: true)]
-        public event EventHandler? SplitterSashPosChanging
+        public event NativeEventHandler<SplitterPanelEventData>? 
+            SplitterSashPosChanging
             { add => throw new Exception(); remove => throw new Exception(); }
 
         [NativeEvent(cancellable: true)]
@@ -61,3 +63,6 @@ namespace NativeApi.Api
             { add => throw new Exception(); remove => throw new Exception(); }
     }
 }
+
+
+ 

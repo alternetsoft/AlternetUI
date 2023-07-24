@@ -64,16 +64,69 @@ namespace Alternet::UI
 		return value;
 	}
 
+	void SplitterPanel::ToEventData(wxSplitterEvent& event)
+	{
+		auto eventType = event.GetEventType();
+
+		if (eventType == wxEVT_SPLITTER_SASH_POS_CHANGED
+			|| eventType == wxEVT_SPLITTER_SASH_POS_CHANGING
+			|| eventType == wxEVT_SPLITTER_SASH_POS_RESIZE)
+		_eventData.SashPosition = event.GetSashPosition();
+
+		if (eventType == wxEVT_SPLITTER_SASH_POS_RESIZE) 
+		{
+			_eventData.OldSize = event.GetOldSize();
+			_eventData.NewSize = event.GetNewSize();
+		}
+
+		if (eventType == wxEVT_SPLITTER_DOUBLECLICKED)
+		{
+			_eventData.X = event.GetX();
+			_eventData.Y = event.GetY();
+		}
+	}
+
+	void SplitterPanel::FromEventData(wxSplitterEvent& event)
+	{
+		auto eventType = event.GetEventType();
+
+		if (eventType == wxEVT_SPLITTER_SASH_POS_CHANGED
+			|| eventType == wxEVT_SPLITTER_SASH_POS_CHANGING
+			|| eventType == wxEVT_SPLITTER_SASH_POS_RESIZE)
+			event.SetSashPosition(_eventData.SashPosition);
+
+		if (eventType == wxEVT_SPLITTER_SASH_POS_RESIZE)
+			event.SetSize(_eventData.OldSize, _eventData.NewSize);
+	}
+
 	void SplitterPanel::OnSplitterSashPosChanged(wxSplitterEvent& event)
 	{
+		ToEventData(event);
 		RaiseEvent(SplitterPanelEvent::SplitterSashPosChanged);
+		FromEventData(event);
 	}
 
 	void SplitterPanel::OnSplitterSashPosChanging(wxSplitterEvent& event)
 	{
-		bool c = RaiseEvent(SplitterPanelEvent::SplitterSashPosChanging);
-		if (c || !_canMoveSplitter)
+		ToEventData(event);
+		RaiseEventEx(SplitterPanelEvent::SplitterSashPosChanging, event, true);
+		FromEventData(event);
+		if (!_canMoveSplitter)
 			event.Veto();
+	}
+
+	void SplitterPanel::RaiseEventEx(SplitterPanelEvent eventId, 
+		wxSplitterEvent& event, bool canVeto)
+	{
+		if (canVeto)
+		{
+			auto result = RaiseEventWithPointerResult(eventId, &_eventData);
+
+			if (result != 0)
+				event.Veto();
+		}
+		else
+			RaiseEvent(eventId, &_eventData);
 	}
 	
 	bool SplitterPanel::GetCanMoveSplitter()
@@ -98,21 +151,27 @@ namespace Alternet::UI
 
 	void SplitterPanel::OnSplitterSashPosResize(wxSplitterEvent& event)
 	{
+		ToEventData(event);
 		bool c = RaiseEvent(SplitterPanelEvent::SplitterSashPosResize);
+		FromEventData(event);
 		if (c)
 			event.Veto();
 	}
 
 	void SplitterPanel::OnSplitterDoubleClicked(wxSplitterEvent& event)
 	{
+		ToEventData(event);
 		bool c = RaiseEvent(SplitterPanelEvent::SplitterDoubleClick);
+		FromEventData(event);
 		if (c || !_canDoubleClick)
 			event.Veto();
 	}
 
 	void SplitterPanel::OnSplitterUnsplit(wxSplitterEvent& event)
 	{
+		ToEventData(event);
 		bool c = RaiseEvent(SplitterPanelEvent::Unsplit);
+		FromEventData(event);
 		if (c)
 			event.Veto();
 	}

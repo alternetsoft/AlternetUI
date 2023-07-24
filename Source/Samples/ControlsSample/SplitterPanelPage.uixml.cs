@@ -90,9 +90,23 @@ namespace ControlsSample
             LogEventOnce("Splitter Panel: Splitter Resize");
         }
 
-        private void SplitterPanel_SplitterMoving(object? sender, CancelEventArgs e)
+        private void SplitterPanel_SplitterMoving(
+            object? sender, 
+            SplitterPanelEventArgs e)
         {
-            LogEventOnce("Splitter Panel: Splitter Moving");
+            if (e.SashPosition < 20)
+            {
+                e.SashPosition = 20;
+                e.Cancel = true;
+            }
+
+            if (LogMovingOnceCheckbox.IsChecked)
+            {
+                LogEventOnce("Splitter Panel: Splitter Moving");
+                return;
+            }
+            var s = $"Sash Pos: {e.SashPosition}";
+            LogEventOnce("Splitter Panel: Splitter Moving. "+s);
         }
 
         private void SplitterPanel_Unsplit(object? sender, CancelEventArgs e)
