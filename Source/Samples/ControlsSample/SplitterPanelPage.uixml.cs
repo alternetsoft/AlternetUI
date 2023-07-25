@@ -72,6 +72,10 @@ namespace ControlsSample
             splitterPanel.SplitterResize += SplitterPanel_SplitterResize;
 
             splitterPanel2.SplitterMoving += SplitterPanel2_SplitterMoving;
+            splitterPanel2.SplitterDoubleClick += SplitterPanel_SplitterDoubleClick;
+            splitterPanel2.SplitterMoved += SplitterPanel_SplitterMoved;
+            splitterPanel2.Unsplit += SplitterPanel_Unsplit;
+            splitterPanel2.SplitterResize += SplitterPanel_SplitterResize;
 
             splitterPanel.SplitVertical(control1, splitterPanel2);
             splitterPanel2.SplitHorizontal(control2, control3);
@@ -93,7 +97,8 @@ namespace ControlsSample
             object? sender,
             SplitterPanelEventArgs e)
         {
-            LogEventOnce("Splitter Panel: Splitter Resize", 
+            var index = sender == splitterPanel ? 1 : 2;
+            LogEventOnce($"Splitter Panel {index}: Splitter Resize", 
                 LogMovingOnceCheckbox.IsChecked);
         }
 
@@ -114,13 +119,13 @@ namespace ControlsSample
 
             if (LogMovingOnceCheckbox.IsChecked)
             {
-                LogEventOnce("Splitter Panel: Splitter Moving");
+                LogEventOnce("Splitter Panel 1: Splitter Moving");
                 return;
             }
             var s = $"Sash Pos: {e.SashPosition}/{splitterPanel.MaxSashPosition}/"+
                 $"W:{splitterPanel.ClientSize.Width}, "+
                 $"H:{splitterPanel.ClientSize.Height}";
-            LogEventOnce("Splitter Panel: Splitter Moving. "+s);
+            LogEventOnce("Splitter Panel 1: Splitter Moving. "+s);
         }
 
         private void SplitterPanel2_SplitterMoving(
@@ -135,26 +140,28 @@ namespace ControlsSample
 
             if (LogMovingOnceCheckbox.IsChecked)
             {
-                LogEventOnce("Splitter Panel: Splitter 2 Moving");
+                LogEventOnce("Splitter Panel 2: Splitter Moving");
                 return;
             }
             var s = $"Sash Pos: {e.SashPosition}/{splitterPanel2.MaxSashPosition}/"+
                 $"{splitterPanel2.ClientSize.Height}";
-            LogEventOnce("Splitter Panel: Splitter 2 Moving. " + s);
+            LogEventOnce("Splitter Panel 2: Splitter Moving. " + s);
         }
 
         private void SplitterPanel_Unsplit(
             object? sender,
             SplitterPanelEventArgs e)
         {
-            site?.LogEvent("Splitter Panel: Unsplit");
+            var index = sender == splitterPanel ? 1 : 2;
+            site?.LogEvent($"Splitter Panel {index}: Unsplit");
         }
 
         private void SplitterPanel_SplitterMoved(
             object? sender,
             SplitterPanelEventArgs e)
         {
-            site?.LogEvent("Splitter Panel: Splitter Moved");
+            var index = sender == splitterPanel ? 1 : 2;
+            site?.LogEvent($"Splitter Panel {index}: Splitter Moved");
         }
 
         private void SplitterPanel_SplitterDoubleClick(
@@ -162,7 +169,9 @@ namespace ControlsSample
             SplitterPanelEventArgs e)
         {
             e.Cancel = true;
-            site?.LogEvent($"Splitter Panel: Double click. X: {e.X}, Y: {e.Y}");
+            var index = sender == splitterPanel ? 1 : 2;
+            site?.LogEvent($"Splitter Panel {index}: Double click. " +
+                $"X: {e.X}, Y: {e.Y}");
         }
 
         public IPageSite? Site
