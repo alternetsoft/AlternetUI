@@ -35,7 +35,7 @@
           </HorizontalStackPanel>
           <!-- ========================= -->
           <GroupBox Name="scrollViewer1" VerticalAlignment="Stretch">
-              <StackPanel Orientation="Vertical" Margin="5"
+              <StackPanel Orientation="Vertical" Padding="5"
                           VerticalAlignment="Stretch" Name="stackPanel1">
                 <Button Text="Add Item" Name="addItemButton"
                         Click="AddItemButton_Click"/>
@@ -76,7 +76,7 @@
 
           <GroupBox Name="scrollViewer2" Visible="false"
                   VerticalAlignment="Stretch" >
-              <StackPanel Orientation="Vertical" Margin="5"
+              <StackPanel Orientation="Vertical" Padding="5"
                           VerticalAlignment="Stretch" Name="stackPanel2">
                 <CheckBox Text="Multiple Selection"
                           Name="allowMultipleSelectionCheckBox"
