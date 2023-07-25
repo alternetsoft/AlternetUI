@@ -10,6 +10,18 @@ namespace Alternet.Drawing
     /// <summary>Converts colors from one data type to another. Access this class through the <see cref="T:System.ComponentModel.TypeDescriptor" />.</summary>
     public class ColorConverter : TypeConverter
     {
+        private static string ColorConstantsLock = "colorConstants";
+
+        private static Hashtable? colorConstants;
+
+        private static string SystemColorConstantsLock = "systemColorConstants";
+
+        private static Hashtable? systemColorConstants;
+
+        private static string ValuesLock = "values";
+
+        private static TypeConverter.StandardValuesCollection? values;
+
         private static Hashtable Colors
         {
             get
@@ -57,7 +69,7 @@ namespace Alternet.Drawing
         /// <param name="sourceType">The type from which you want to convert. </param>
         /// <returns>
         ///     <see langword="true" /> if this object can perform the conversion; otherwise, <see langword="false" />.</returns>
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
         {
             return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
         }
@@ -67,19 +79,9 @@ namespace Alternet.Drawing
         /// <param name="destinationType">A <see cref="T:System.Type" /> that represents the type to which you want to convert. </param>
         /// <returns>
         ///     <see langword="true" /> if this converter can perform the operation; otherwise, <see langword="false" />.</returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
+        public override bool CanConvertTo(ITypeDescriptorContext? context, Type destinationType)
         {
             return destinationType == typeof(InstanceDescriptor) || base.CanConvertTo(context, destinationType);
-        }
-
-        internal static object? GetNamedColor(string name)
-        {
-            object? obj = ColorConverter.Colors[name];
-            if (obj != null)
-            {
-                return obj;
-            }
-            return ColorConverter.SystemColors[name];
         }
 
         /// <summary>Converts the given object to the converter's native type.</summary>
@@ -88,7 +90,7 @@ namespace Alternet.Drawing
         /// <param name="value">The object to convert. </param>
         /// <returns>An <see cref="T:System.Object" /> representing the converted value.</returns>
         /// <exception cref="T:System.ArgumentException">The conversion cannot be performed.</exception>
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        public override object ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
         {
             string? text = value as string;
             if (text != null)
@@ -147,8 +149,10 @@ namespace Alternet.Drawing
                                     obj = Color.FromArgb(array2[0], array2[1], array2[2], array2[3]);
                                     break;
                             }
+
                             flag = true;
                         }
+
                         if (obj != null && flag)
                         {
                             int num = ((Color)obj).ToArgb();
@@ -166,13 +170,16 @@ namespace Alternet.Drawing
                             }
                         }
                     }
+
                     if (obj == null)
                     {
                         throw new ArgumentException("Invalid Color:" + text2);
                     }
                 }
+
                 return obj;
             }
+
             return base.ConvertFrom(context, culture, value);
         }
 
@@ -185,11 +192,15 @@ namespace Alternet.Drawing
         /// <exception cref="T:System.ArgumentNullException">
         ///         <paramref name="destinationType" /> is <see langword="null" />.</exception>
         /// <exception cref="T:System.NotSupportedException">The conversion cannot be performed.</exception>
-        public override object? ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        public override object? ConvertTo(
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
+            object? value,
+            Type destinationType)
         {
             if (destinationType == null)
             {
-                throw new ArgumentNullException("destinationType");
+                throw new ArgumentNullException(nameof(destinationType));
             }
             if (value is Color)
             {
@@ -219,15 +230,20 @@ namespace Alternet.Drawing
                     if (left.A < 255)
                     {
                         array = new string[4];
-                        array[num++] = converter.ConvertToString(context, culture, left.A);
+                        array[num++] =
+                            converter.ConvertToString(context, culture, left.A);
                     }
                     else
                     {
                         array = new string[3];
                     }
-                    array[num++] = converter.ConvertToString(context, culture, left.R);
-                    array[num++] = converter.ConvertToString(context, culture, left.G);
-                    array[num++] = converter.ConvertToString(context, culture, left.B);
+
+                    array[num++] =
+                        converter.ConvertToString(context, culture, left.R);
+                    array[num++] =
+                        converter.ConvertToString(context, culture, left.G);
+                    array[num++] =
+                        converter.ConvertToString(context, culture, left.B);
                     return string.Join(separator, array);
                 }
                 else if (destinationType == typeof(InstanceDescriptor))
@@ -249,78 +265,71 @@ namespace Alternet.Drawing
                     }
                     else if (color.A != 255)
                     {
-                        memberInfo = typeof(Color).GetMethod("FromArgb", new Type[]
-                        {
-                            typeof(int),
-                            typeof(int),
-                            typeof(int),
-                            typeof(int)
-                        });
+                        Type[] memberInfoTypes =
+                            new Type[]
+                            {
+                                typeof(int),
+                                typeof(int),
+                                typeof(int),
+                                typeof(int),
+                            };
+                        memberInfo = typeof(Color).GetMethod(
+                            "FromArgb",
+                            types: memberInfoTypes);
                         arguments = new object[]
                         {
                             color.A,
                             color.R,
                             color.G,
-                            color.B
+                            color.B,
                         };
                     }
                     else if (color.IsNamedColor)
                     {
-                        memberInfo = typeof(Color).GetMethod("FromName", new Type[]
-                        {
-                            typeof(string)
-                        });
+                        memberInfo = typeof(Color).GetMethod(
+                            "FromName",
+                            new Type[] { typeof(string) });
                         arguments = new object[]
                         {
-                            color.Name
+                            color.Name,
                         };
                     }
                     else
                     {
-                        memberInfo = typeof(Color).GetMethod("FromArgb", new Type[]
-                        {
-                            typeof(int),
-                            typeof(int),
-                            typeof(int)
-                        });
+                        Type[] memberInfoTypes2 =
+                            new Type[]
+                            {
+                                typeof(int),
+                                typeof(int),
+                                typeof(int),
+                            };
+                        memberInfo = typeof(Color).GetMethod(
+                            "FromArgb",
+                            memberInfoTypes2);
                         arguments = new object[]
                         {
                             color.R,
                             color.G,
-                            color.B
+                            color.B,
                         };
                     }
+
                     if (memberInfo != null)
                     {
                         return new InstanceDescriptor(memberInfo, arguments);
                     }
+
                     return null;
                 }
             }
-            return base.ConvertTo(context, culture, value, destinationType);
-        }
 
-        private static void FillConstants(Hashtable hash, Type enumType)
-        {
-            MethodAttributes methodAttributes = MethodAttributes.FamANDAssem | MethodAttributes.Family | MethodAttributes.Static;
-            foreach (PropertyInfo propertyInfo in enumType.GetProperties())
-            {
-                if (propertyInfo.PropertyType == typeof(Color))
-                {
-                    MethodInfo? getMethod = propertyInfo.GetGetMethod();
-                    if (getMethod != null && (getMethod.Attributes & methodAttributes) == methodAttributes)
-                    {
-                        object[]? index = null;
-                        hash[propertyInfo.Name] = propertyInfo.GetValue(null, index);
-                    }
-                }
-            }
+            return base.ConvertTo(context, culture, value, destinationType);
         }
 
         /// <summary>Retrieves a collection containing a set of standard values for the data type for which this validator is designed. This will return <see langword="null" /> if the data type does not support a standard set of values.</summary>
         /// <param name="context">A formatter context. Use this object to extract additional information about the environment from which this converter is being invoked. Always check whether this value is <see langword="null" />. Also, properties on the context object may return <see langword="null" />. </param>
         /// <returns>A collection containing <see langword="null" /> or a standard set of valid values. The default implementation always returns <see langword="null" />.</returns>
-        public override TypeConverter.StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
+        public override TypeConverter.StandardValuesCollection GetStandardValues(ITypeDescriptorContext? context)
         {
             if (ColorConverter.values == null)
             {
@@ -345,11 +354,13 @@ namespace Alternet.Drawing
                                 }
                             }
                         }
+
                         arrayList.Sort(0, arrayList.Count, new ColorConverter.ColorComparer());
                         ColorConverter.values = new TypeConverter.StandardValuesCollection(arrayList.ToArray());
                     }
                 }
             }
+
             return ColorConverter.values;
         }
 
@@ -357,22 +368,39 @@ namespace Alternet.Drawing
         /// <param name="context">A <see cref="T:System.ComponentModel.TypeDescriptor" /> through which additional context can be provided. </param>
         /// <returns>
         ///     <see langword="true" /> if <see cref="Alternet.Drawing.ColorConverter.GetStandardValues" /> must be called to find a common set of values the object supports; otherwise, <see langword="false" />.</returns>
-        public override bool GetStandardValuesSupported(ITypeDescriptorContext context)
+        public override bool GetStandardValuesSupported(
+            ITypeDescriptorContext? context)
         {
             return true;
         }
 
-        private static string ColorConstantsLock = "colorConstants";
+        internal static object? GetNamedColor(string name)
+        {
+            object? obj = ColorConverter.Colors[name];
+            if (obj != null)
+            {
+                return obj;
+            }
 
-        private static Hashtable? colorConstants;
+            return ColorConverter.SystemColors[name];
+        }
 
-        private static string SystemColorConstantsLock = "systemColorConstants";
-
-        private static Hashtable? systemColorConstants;
-
-        private static string ValuesLock = "values";
-
-        private static TypeConverter.StandardValuesCollection? values;
+        private static void FillConstants(Hashtable hash, Type enumType)
+        {
+            MethodAttributes methodAttributes = MethodAttributes.FamANDAssem | MethodAttributes.Family | MethodAttributes.Static;
+            foreach (PropertyInfo propertyInfo in enumType.GetProperties())
+            {
+                if (propertyInfo.PropertyType == typeof(Color))
+                {
+                    MethodInfo? getMethod = propertyInfo.GetGetMethod();
+                    if (getMethod != null && (getMethod.Attributes & methodAttributes) == methodAttributes)
+                    {
+                        object[]? index = null;
+                        hash[propertyInfo.Name] = propertyInfo.GetValue(null, index);
+                    }
+                }
+            }
+        }
 
         private class ColorComparer : IComparer
         {
