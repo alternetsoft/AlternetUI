@@ -47,7 +47,17 @@ namespace Alternet.UI
         /// Gets or sets the area of the control (for example, along the top) where the tabs are aligned.
         /// </summary>
         /// <value>One of the <see cref="TabAlignment"/> values. The default is <see cref="TabAlignment.Top"/>.</value>
-        public TabAlignment TabAlignment { get => Handler.TabAlignment; set => Handler.TabAlignment = value; }
+        public TabAlignment TabAlignment
+        { 
+            get => Handler.TabAlignment;
+            set
+            {
+               // Disabled Left and Right as under Windows they are buggy
+                if (value == TabAlignment.Left || value == TabAlignment.Right)
+                    return;
+                Handler.TabAlignment = value;
+            } 
+        }
 
         /// <summary>
         /// Gets the collection of tab pages in this tab control.
