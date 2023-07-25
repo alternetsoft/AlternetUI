@@ -53,10 +53,16 @@ namespace ControlsSample
                 MinPaneSize = 20,
             };
 
-            control1.Items.Add("Control 1");
-            control2.Items.Add("Control 2");
-            control3.Items.Add("Control 3");
-            control4.Items.Add("Control 4");
+            void Repeat(int times, Action action)
+            {
+                for(int i=0; i < times; i++)        
+                    action();
+            }
+
+            Repeat(3, ()=>control1.Items.Add("Control 1"));
+            Repeat(3, ()=>control2.Items.Add("Control 2"));
+            Repeat(3, ()=>control3.Items.Add("Control 3"));
+            Repeat(3, ()=>control4.Items.Add("Control 4"));
 
             splitterPanel.Children.Add(control1);
             splitterPanel.Children.Add(splitterPanel2);

@@ -7,7 +7,7 @@
     <GroupBox Title="Integer Numeric Input" Padding="5" >
       <HorizontalStackPanel >
         <VerticalStackPanel Margin="5" Name="numericUpDownsPanel"
-                    Width="100">
+                    Width="250">
           <Label Text="[-50..10]" Margin="0,0,0,5" />
           <NumericUpDown Margin="0,0,0,5" Maximum="10" Minimum="-50" Value="-5"
                          Name="numberUpDown1"

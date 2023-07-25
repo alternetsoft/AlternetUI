@@ -33,11 +33,11 @@
       <GroupBox>
         <VerticalStackPanel>
           <Button Text="Resize Pane 1" Click="SashGravity10Button_Click"
-                  Margin="0,0,0,5" Enabled="true"/>
+                  Margin="5" Enabled="true"/>
           <Button Text="Resize Pane 2" Click="SashGravity00Button_Click"
-                  Margin="0,0,0,5" Enabled="true"/>
+                  Margin="5" Enabled="true"/>
           <Button Text="Resize Panes Equal" Click="SashGravity05Button_Click"
-                  Margin="0,0,0,5" Enabled="true"/>
+                  Margin="5" Enabled="true"/>
         </VerticalStackPanel>  
       </GroupBox>  
       <CheckBox Text="Log moving once" Name="LogMovingOnceCheckbox" 

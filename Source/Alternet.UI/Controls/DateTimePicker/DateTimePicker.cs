@@ -260,6 +260,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether to show calendar popup or edit date with spin control.
+        /// </summary>
         public DateTimePickerPopupKind PopupKind
         {
             get
@@ -269,6 +272,10 @@ namespace Alternet.UI
 
             set
             {
+                if(WebBrowser.GetBackendOS() != WebBrowserBackendOS.Windows)
+                {
+                    value = DateTimePickerPopupKind.Default;
+                }
                 Handler.PopupKind = value;
             }
         }
