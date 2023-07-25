@@ -38,13 +38,49 @@ namespace Alternet::UI
 		return dynamic_cast<wxSplitterWindow*>(GetWxWindow());
 	}
 
+	class wxSplitterWindow2 : public wxSplitterWindow
+	{
+	public:
+		bool SetCursor(const wxCursor& cursor) override;
+		
+		wxSplitterWindow2(wxWindow* parent, wxWindowID id,
+			const wxPoint& pos,
+			const wxSize& size,
+			long style,
+			const wxString& name);
+	};
+
+	wxSplitterWindow2::wxSplitterWindow2(wxWindow* parent, wxWindowID id = wxID_ANY,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxSP_3D,
+		const wxString& name = wxT("splitter")) 
+	{
+		wxSplitterWindow::Init();
+		
+		wxSplitterWindow::Create(parent, id,
+			pos,
+			size,
+			style,
+			name);
+	}
+
+	bool wxSplitterWindow2::SetCursor(const wxCursor& cursor) 
+	{
+#if defined(__WXGTK__)
+		return false;
+#else
+		return wxSplitterWindow::SetCursor(cursor);
+#endif
+	}
+
 	wxWindow* SplitterPanel::CreateWxWindowCore(wxWindow* parent) 
 	{
 		long styles = GetStyles();
 
 		wxWindow* value = nullptr;
 
-		value = new wxSplitterWindow(
+		value = new wxSplitterWindow2(
 			parent,
 			wxID_ANY,
 			wxDefaultPosition,
