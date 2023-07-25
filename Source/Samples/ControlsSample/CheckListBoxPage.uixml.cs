@@ -8,6 +8,7 @@ namespace ControlsSample
     internal partial class CheckListBoxPage : Control
     {
         private IPageSite? site;
+        private int newItemIndex = 0;
 
         public CheckListBoxPage()
         {
@@ -35,16 +36,20 @@ namespace ControlsSample
                 checkListBox.RecreateWindow();
 
                 checkListBox.SelectionChanged += CheckListBox_SelectionChanged;
-                allowMultipleSelectionCheckBox.IsChecked = checkListBox.SelectionMode == ListBoxSelectionMode.Multiple;
+                allowMultipleSelectionCheckBox.IsChecked = 
+                    checkListBox.SelectionMode == ListBoxSelectionMode.Multiple;
                 site = value;
             }
         }
 
-        private void CheckListBox_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void CheckListBox_MouseLeftButtonDown(
+            object? sender, 
+            MouseButtonEventArgs e)
         {
             var result = checkListBox.HitTest(e.GetPosition(checkListBox));
-
-            site?.LogEvent($"HitTest result: Item: '{(result == null ? "<none>" : checkListBox.Items[result.Value])}'");
+            var item = (result == null ? 
+                "<none>" : checkListBox.Items[result.Value]);
+            site?.LogEvent($"HitTest result: Item: '{item}'");
         }
 
         private void HasBorderButton_Click(object? sender, EventArgs e)
@@ -52,15 +57,19 @@ namespace ControlsSample
             checkListBox.HasBorder = !checkListBox.HasBorder;
         }
 
+        private int GenItemIndex()
+        {
+            newItemIndex++;
+            return newItemIndex;
+        }
+
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
         {
-            int start = checkListBox.Items.Count + 1;
-
             checkListBox.BeginUpdate();
             try
             {
-                for (int i = start; i < start + 5000; i++)
-                    checkListBox.Items.Add("Item " + i);
+                for (int i = 0; i < 5000; i++)
+                    checkListBox.Items.Add("Item " + GenItemIndex());
             }
             finally
             {
@@ -84,9 +93,10 @@ namespace ControlsSample
 
         private void CheckListBox_SelectionChanged(object? sender, EventArgs e)
         {
-            string selectedIndicesString = IndicesToStr(checkListBox.SelectedIndices);
+            string selectedIndicesStr = 
+                IndicesToStr(checkListBox.SelectedIndices);
             site?.LogEvent(
-                $"CheckListBox: SelectionChanged. Selected: ({selectedIndicesString})");
+                $"CheckListBox: SelectionChanged. Selected: ({selectedIndicesStr})");
         }
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(
@@ -118,29 +128,35 @@ namespace ControlsSample
 
         private void AddItemButton_Click(object? sender, EventArgs e)
         {
-            checkListBox.Items.Add("Item " + (checkListBox.Items.Count + 1));
+            checkListBox.Items.Add("Item " + GenItemIndex());
         }
 
-        private void EnsureLastItemVisibleButton_Click(object sender, System.EventArgs e)
+        private void EnsureLastItemVisibleButton_Click(
+            object? sender, 
+            EventArgs e)
         {
             var count = checkListBox.Items.Count;
             if (count > 0)
                 checkListBox.EnsureVisible(count - 1);
         }
 
-        private void CheckItemAtIndex2Button_Click(object sender, System.EventArgs e)
+        private void CheckItemAtIndex2Button_Click(
+            object? sender, 
+            EventArgs e)
         {
-            checkListBox.CheckItems(2);
+            checkListBox.CheckItems(new int[] { 2 });
         }
 
-        private void UncheckAllButton_Click(object sender, System.EventArgs e)
+        private void UncheckAllButton_Click(object? sender, EventArgs e)
         {
             checkListBox.ClearChecked();
         }
 
-        private void CheckItemAtIndices2And4Button_Click(object sender, System.EventArgs e)
+        private void CheckItemAtIndices2And4Button_Click(
+            object? sender, 
+            EventArgs e)
         {
-            checkListBox.CheckItems(2,4);
+            checkListBox.CheckItems(new int[] { 2, 4 });
         }
     }
 }
