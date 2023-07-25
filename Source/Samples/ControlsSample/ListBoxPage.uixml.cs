@@ -70,7 +70,7 @@ namespace ControlsSample
             }
         }
 
-        private string IndicesToStr(IReadOnlyList<int> indices)
+        private static string IndicesToStr(IReadOnlyList<int> indices)
         {
             string result = indices.Count > 100 ?
                 "too many indices to display" : string.Join(",", indices);

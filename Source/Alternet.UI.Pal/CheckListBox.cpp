@@ -13,12 +13,13 @@ namespace Alternet::UI
             auto window = GetWxWindow();
             if (window != nullptr)
             {
-                window->Unbind(wxEVT_CHECKLISTBOX, &CheckListBox::OnCheckedChanged, this);
-                window->Unbind(wxEVT_LISTBOX, &CheckListBox::OnSelectionChanged, this);
+                window->Unbind(wxEVT_CHECKLISTBOX, 
+                    &CheckListBox::OnCheckedChanged, this);
+                window->Unbind(wxEVT_LISTBOX, 
+                    &CheckListBox::OnSelectionChanged, this);
             }
         }
     }
-
 
     wxWindow* CheckListBox::CreateWxWindowCore(wxWindow* parent)
     {
@@ -55,13 +56,14 @@ namespace Alternet::UI
     void CheckListBox::OnWxWindowCreated()
     {
         ListBox::OnWxWindowCreated();
+        ApplyCheckedIndices();
     }
 
     void CheckListBox::OnBeforeDestroyWxWindow()
     {
+        ReceiveCheckedIndices();
         ListBox::OnBeforeDestroyWxWindow();
     }
-
 
     void* CheckListBox::OpenCheckedIndicesArray()
     {
@@ -93,7 +95,6 @@ namespace Alternet::UI
     {
         return (*((wxArrayInt*)array))[index];
     }
-
 
     void CheckListBox::ClearChecked()
     {

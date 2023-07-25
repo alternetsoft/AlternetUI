@@ -192,12 +192,16 @@ namespace Alternet.UI
             }
         }
 
-        private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<object> e)
+        private void Items_ItemInserted(
+            object? sender,
+            CollectionChangeEventArgs<object> e)
         {
             NativeControl.InsertItem(e.Index, Control.GetItemText(e.Item));
         }
 
-        private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<object> e)
+        private void Items_ItemRemoved(
+            object? sender,
+            CollectionChangeEventArgs<object> e)
         {
             NativeControl.RemoveItemAt(e.Index);
         }
