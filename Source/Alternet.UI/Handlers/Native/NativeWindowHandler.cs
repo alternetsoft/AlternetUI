@@ -198,7 +198,7 @@ namespace Alternet.UI
                 if (activeWindow == null)
                     return null;
 
-                var handler = TryGetHandlerByNativeControl(activeWindow) ??
+                var handler = NativeControlToHandler(activeWindow) ??
                     throw new InvalidOperationException();
                 return ((NativeWindowHandler)handler).Control;
             }
@@ -218,7 +218,7 @@ namespace Alternet.UI
             get
             {
                 return NativeControl.OwnedWindows.Select(
-                    x => ((NativeWindowHandler)(TryGetHandlerByNativeControl(x) ?? throw new Exception())).Control).ToArray();
+                    x => ((NativeWindowHandler)(NativeControlToHandler(x) ?? throw new Exception())).Control).ToArray();
             }
         }
 

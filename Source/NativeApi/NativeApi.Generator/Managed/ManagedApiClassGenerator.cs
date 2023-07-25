@@ -46,6 +46,9 @@ using System.Security;");
             w.WriteLine("{");
             w.Indent++;
 
+            if(typeName == "Control")
+                w.WriteLine("internal object? handler;");
+
             var events = MemberProvider.GetEvents(type).ToArray();
 
             WriteStaticConstructor(w, types, type, events.Length > 0);

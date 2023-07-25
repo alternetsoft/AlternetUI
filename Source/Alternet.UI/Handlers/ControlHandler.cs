@@ -11,14 +11,21 @@ namespace Alternet.UI
     /// </summary>
     public abstract class ControlHandler
     {
+        /*
         private static Dictionary<Native.Control, ControlHandler>
             handlersByNativeControls = new();
+        */
 
-        internal static ControlHandler? TryGetHandlerByNativeControl(
-            Native.Control control) =>
-                handlersByNativeControls.TryGetValue(
-                    control,
-                    out var handler) ? handler : null;
+        internal static ControlHandler? NativeControlToHandler(
+            Native.Control control)
+        {
+            /*
+              handlersByNativeControls.TryGetValue(
+                  control,
+                  out var handler) ? handler : null;
+            */
+            return (ControlHandler)control.handler;
+        }
 
         private int layoutSuspendCount;
 
@@ -204,7 +211,8 @@ namespace Alternet.UI
                     if (NeedsNativeControl())
                     {
                         nativeControl = CreateNativeControl();
-                        handlersByNativeControls.Add(nativeControl, this);
+                        //handlersByNativeControls.Add(nativeControl, this);
+                        nativeControl.handler = this;
                         OnNativeControlCreated();
                     }
                 }
@@ -915,7 +923,8 @@ namespace Alternet.UI
 
         private static void DisposeNativeControlCore(Native.Control nativeControl)
         {
-            handlersByNativeControls.Remove(nativeControl);
+            //handlersByNativeControls.Remove(nativeControl);
+            nativeControl.handler = null;
             nativeControl.Dispose();
         }
 
@@ -1282,7 +1291,7 @@ namespace Alternet.UI
             if (focusedNativeControl == null)
                 return null;
 
-            var handler = TryGetHandlerByNativeControl(focusedNativeControl);
+            var handler = NativeControlToHandler(focusedNativeControl);
             if (handler == null)
                 return null;
 

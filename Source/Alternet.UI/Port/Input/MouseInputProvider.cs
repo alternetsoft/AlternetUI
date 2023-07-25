@@ -83,7 +83,7 @@ namespace Alternet.UI
             if (!c.IsMouseCaptured)
                 return null;
 
-            return ControlHandler.TryGetHandlerByNativeControl(c)?.Control;
+            return ControlHandler.NativeControlToHandler(c)?.Control;
         }
 
         protected virtual void Dispose(bool disposing)

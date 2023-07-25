@@ -696,7 +696,7 @@ namespace Alternet.UI
             if (focusedNativeControl == null)
                 return;
 
-            var handler = ControlHandler.TryGetHandlerByNativeControl(focusedNativeControl);
+            var handler = ControlHandler.NativeControlToHandler(focusedNativeControl);
             if (handler == null)
                 return;
 
@@ -719,7 +719,7 @@ namespace Alternet.UI
             if (controlUnderMouse == null)
                 return null;
 
-            var handler = ControlHandler.TryGetHandlerByNativeControl(controlUnderMouse);
+            var handler = ControlHandler.NativeControlToHandler(controlUnderMouse);
             if (handler == null)
                 return null;
 
