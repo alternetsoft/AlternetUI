@@ -68,8 +68,36 @@ namespace Alternet.UI
         /// </remarks>
         public int Y { get; }
 
+        /// <summary>
+        /// Returns the old size before the update.
+        /// </summary>
+        /// <remarks>
+        /// May only be called while processing
+        /// <see cref="SplitterPanel.SplitterMoving"/>,
+        /// <see cref="SplitterPanel.SplitterMoved"/> and
+        /// <see cref="SplitterPanel.SplitterResize"/> events.
+        /// </remarks>
+        /// <remarks>
+        /// The size value is already adjusted to the orientation of the
+        /// sash. For a vertical sash it's the width and for a horizontal
+        /// sash it's the height.
+        /// </remarks>
         public int OldSize { get; set; }
 
+        /// <summary>
+        /// Returns the new size after the update.
+        /// </summary>
+        /// <remarks>
+        /// May only be called while processing
+        /// <see cref="SplitterPanel.SplitterMoving"/>,
+        /// <see cref="SplitterPanel.SplitterMoved"/> and
+        /// <see cref="SplitterPanel.SplitterResize"/> events.
+        /// </remarks>
+        /// <remarks>
+        /// The size value is already adjusted to the orientation of the
+        /// sash. For a vertical sash it's the width and for a horizontal
+        /// sash it's the height.
+        /// </remarks>
         public int NewSize { get; set; }
 
         internal IntPtr CancelAsIntPtr()
