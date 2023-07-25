@@ -1,0 +1,14 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="Alternet.UI.Documentation.Examples.SplitterPanel.MainWindow"
+        Title="Alternet.UI.Documentation.Examples.SplitterPanel" Width="800" Height="600">
+
+	<VerticalStackPanel Name="mainPanel" Margin="10">	
+    		<!-- <CreateUixmlDeclaration> -->
+		    <SplitterPanel Name="panel" SplitMethod="Vertical" MinPaneSize="150">
+		      <ListBox Name="listBox1"/>
+		      <ListBox Name="listBox2"/>
+		    </SplitterPanel>
+		    <!-- </CreateUixmlDeclaration> -->
+	</VerticalStackPanel>
+</Window>
