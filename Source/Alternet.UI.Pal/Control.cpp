@@ -6,6 +6,17 @@
 
 namespace Alternet::UI
 {
+
+    wxWidgetExtender* wxWidgetExtender::AsExtender(wxWindow* control)
+    {
+        return dynamic_cast<wxWidgetExtender*>(control);
+    }
+
+    wxWidgetExtender::wxWidgetExtender()
+    {
+
+    }
+
     /*static*/ Control::ControlsByWxWindowsMap Control::s_controlsByWxWindowsMap;
 
     Control::Control() :
@@ -1038,8 +1049,31 @@ namespace Alternet::UI
 
     /*static*/ Control* Control::TryFindControlByWxWindow(wxWindow* wxWindow)
     {
+        wxWidgetExtender* extender = wxWidgetExtender::AsExtender(wxWindow);
+        if (extender != nullptr)
+            return extender->_palControl;
+
         ControlsByWxWindowsMap::const_iterator i = s_controlsByWxWindowsMap.find(wxWindow);
         return i == s_controlsByWxWindowsMap.end() ? NULL : i->second;
+    }
+
+    /*static*/ void Control::AssociateControlWithWxWindow(
+        wxWindow* wxWindow, Control* control)
+    {
+        wxWidgetExtender* extender = wxWidgetExtender::AsExtender(wxWindow);
+        if (extender == nullptr)
+            s_controlsByWxWindowsMap[wxWindow] = control;
+        else
+            extender->_palControl = control;
+    }
+
+    /*static*/ void Control::RemoveWxWindowControlAssociation(wxWindow* wxWindow)
+    {
+        wxWidgetExtender* extender = wxWidgetExtender::AsExtender(wxWindow);
+        if (extender == nullptr)
+            s_controlsByWxWindowsMap.erase(wxWindow);
+        else
+            extender->_palControl = nullptr;
     }
 
     /*static*/ DragDropEffects Control::GetDragDropEffects(wxDragResult input)
@@ -1294,16 +1328,6 @@ namespace Alternet::UI
     {
         _flags.Set(ControlFlags::UserPaint, value);
         RecreateWxWindowIfNeeded();
-    }
-
-    /*static*/ void Control::AssociateControlWithWxWindow(wxWindow* wxWindow, Control* control)
-    {
-        s_controlsByWxWindowsMap[wxWindow] = control;
-    }
-
-    /*static*/ void Control::RemoveWxWindowControlAssociation(wxWindow* wxWindow)
-    {
-        s_controlsByWxWindowsMap.erase(wxWindow);
     }
 
     wxWindow* wxFindWindowAtPoint(wxWindow* win, const wxPoint& pt)

@@ -10,6 +10,16 @@ namespace Alternet::UI
 {
     class Window;
 
+    class wxWidgetExtender
+    {
+    public:
+        Control* _palControl = nullptr;
+
+        wxWidgetExtender();
+        static wxWidgetExtender* AsExtender(wxWindow* control);
+
+    };
+
     class Control : public Object
     {
 #include "Api/Control.inc"

@@ -12,7 +12,7 @@ namespace Alternet::UI
     class Window;
     class Button;
 
-    class Frame : public wxFrame
+    class Frame : public wxFrame, public wxWidgetExtender
     {
     public:
         Frame(Window* window, long style);

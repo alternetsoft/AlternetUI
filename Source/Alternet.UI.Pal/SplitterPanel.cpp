@@ -38,7 +38,7 @@ namespace Alternet::UI
 		return dynamic_cast<wxSplitterWindow*>(GetWxWindow());
 	}
 
-	class wxSplitterWindow2 : public wxSplitterWindow
+	class wxSplitterWindow2 : public wxSplitterWindow, public wxWidgetExtender
 	{
 	public:
 		bool SetCursor(const wxCursor& cursor) override;
