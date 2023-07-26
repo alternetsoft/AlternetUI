@@ -62,7 +62,6 @@ namespace Alternet::UI
             _items.emplace(_items.begin() + index, value);
     }
 
-
     void* ComboBox::CreateItemsInsertion()
     {
         return new wxArrayString();
@@ -107,6 +106,39 @@ namespace Alternet::UI
             _items.clear();
     }
 
+    class wxChoice2 : public wxChoice, public wxWidgetExtender
+    {
+    public:
+        wxChoice2(wxWindow* parent,
+            wxWindowID id,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            int n = 0, const wxString choices[] = NULL,
+            long style = 0,
+            const wxValidator& validator = wxDefaultValidator,
+            const wxString& name = wxASCII_STR(wxChoiceNameStr))
+        {
+            Create(parent, id, pos, size, n, choices, style, validator, name);
+        }
+    };
+
+    class wxComboBox2 : public wxComboBox, public wxWidgetExtender
+    {
+    public:
+        wxComboBox2(wxWindow* parent, wxWindowID id,
+            const wxString& value = wxEmptyString,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            int n = 0, const wxString choices[] = NULL,
+            long style = 0,
+            const wxValidator& validator = wxDefaultValidator,
+            const wxString& name = wxASCII_STR(wxComboBoxNameStr))
+        {
+            Create(parent, id, value, pos, size, n, choices, style, validator, name);
+
+        }
+    };
+
     wxWindow* ComboBox::CreateWxWindowCore(wxWindow* parent)
     {
         long style = GetBorderStyle();
@@ -118,7 +150,7 @@ namespace Alternet::UI
         {
             // On non-Windows systems wxChoice looks different than 
             // read-only wxComboBox.
-            auto value = new wxChoice(
+            auto value = new wxChoice2(
                 parent,
                 wxID_ANY,
                 wxDefaultPosition,
@@ -135,7 +167,7 @@ namespace Alternet::UI
         {
             auto comboStyle = _isEditable ? wxCB_DROPDOWN : wxCB_READONLY;
             style = style | comboStyle;
-            auto value = new wxComboBox(
+            auto value = new wxComboBox2(
                 parent,
                 wxID_ANY,
                 "",
