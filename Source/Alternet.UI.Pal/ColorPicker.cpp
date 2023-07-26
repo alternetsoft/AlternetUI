@@ -30,9 +30,29 @@ namespace Alternet::UI
         _value.Set(value);
     }
 
+    class wxColourPickerCtrl2 : public wxColourPickerCtrl, public wxWidgetExtender
+    {
+    public:
+        wxColourPickerCtrl2(wxWindow* parent, wxWindowID id,
+            const wxColour& col = *wxBLACK, const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize, long style = wxCLRP_DEFAULT_STYLE,
+            const wxValidator& validator = wxDefaultValidator,
+            const wxString& name = wxASCII_STR(wxColourPickerCtrlNameStr))
+        {
+            Create(parent, id, col, pos, size, style, validator, name);
+        }
+    };
+
     wxWindow* ColorPicker::CreateWxWindowCore(wxWindow* parent)
     {
-        auto value = new wxColourPickerCtrl(parent, wxID_ANY);
+        auto value = new wxColourPickerCtrl2(parent, wxID_ANY,
+            *wxBLACK,
+            wxDefaultPosition,
+            wxDefaultSize,
+            wxCLRP_DEFAULT_STYLE,
+            wxDefaultValidator,
+            wxASCII_STR(wxColourPickerCtrlNameStr));
+
         value->Bind(wxEVT_COLOURPICKER_CHANGED, &ColorPicker::OnColourPickerValueChanged, this);
         return value;
     }

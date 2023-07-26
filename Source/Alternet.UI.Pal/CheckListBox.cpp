@@ -21,6 +21,23 @@ namespace Alternet::UI
         }
     }
 
+    class wxCheckListBox2 : public wxCheckListBox, public wxWidgetExtender
+    {
+    public:
+        wxCheckListBox2(wxWindow* parent,
+            wxWindowID id,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            int nStrings = 0,
+            const wxString choices[] = NULL,
+            long style = 0,
+            const wxValidator& validator = wxDefaultValidator,
+            const wxString& name = wxASCII_STR(wxListBoxNameStr))
+        {
+            Create(parent, id, pos, size, nStrings, choices, style, validator, name);
+        }
+    };
+
     wxWindow* CheckListBox::CreateWxWindowCore(wxWindow* parent)
     {
         long style = GetSelectionStyle() | GetBorderStyle();
@@ -28,7 +45,7 @@ namespace Alternet::UI
         if (!hasBorder)
             style = style | wxBORDER_NONE;
 
-        auto value = new wxCheckListBox(
+        auto value = new wxCheckListBox2(
             parent,
             wxID_ANY,
             wxDefaultPosition,
