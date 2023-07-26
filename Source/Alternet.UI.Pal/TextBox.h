@@ -28,7 +28,7 @@ namespace Alternet::UI
 
         long GetStyle();
 
-        class TextCtrlEx : public wxTextCtrl
+        class TextCtrlEx : public wxTextCtrl, public wxWidgetExtender
         {
         public:
             TextCtrlEx(wxWindow* parent, wxWindowID id,

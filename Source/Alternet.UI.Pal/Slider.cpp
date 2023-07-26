@@ -125,9 +125,28 @@ namespace Alternet::UI
         _tickFrequency.Set(value);
     }
 
+    class wxSlider2 : public wxSlider, public wxWidgetExtender
+    {
+    public:
+        wxSlider2(wxWindow* parent,
+            wxWindowID id,
+            int value,
+            int minValue,
+            int maxValue,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxSL_HORIZONTAL,
+            const wxValidator& validator = wxDefaultValidator,
+            const wxString& name = wxASCII_STR(wxSliderNameStr))
+        {
+            Create(parent, id, value, minValue, maxValue,
+                pos, size, style, validator, name);
+        }
+    };
+
     wxWindow* Slider::CreateWxWindowCore(wxWindow* parent)
     {
-        auto value = new wxSlider(
+        auto value = new wxSlider2(
             parent,
             wxID_ANY,
             _value.Get(),

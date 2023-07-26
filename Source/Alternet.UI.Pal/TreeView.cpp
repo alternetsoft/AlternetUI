@@ -165,6 +165,20 @@ namespace Alternet::UI
         value->SetImageList(_imageList == nullptr ? nullptr : _imageList->GetImageList());
     }
 
+    class wxTreeCtrl2 : public wxTreeCtrl, public wxWidgetExtender
+    {
+    public:
+        wxTreeCtrl2(wxWindow* parent, wxWindowID id = wxID_ANY,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT,
+            const wxValidator& validator = wxDefaultValidator,
+            const wxString& name = wxASCII_STR(wxTreeCtrlNameStr))
+        {
+            Create(parent, id, pos, size, style, validator, name);
+        }
+    };
+
     wxWindow* TreeView::CreateWxWindowCore(wxWindow* parent)
     {
         long style = GetStyle() | GetBorderStyle();
@@ -172,7 +186,7 @@ namespace Alternet::UI
         if (!hasBorder)
             style = style | wxBORDER_NONE;
 
-        auto value = new wxTreeCtrl(
+        auto value = new wxTreeCtrl2(
             parent,
             wxID_ANY,
             wxDefaultPosition,
