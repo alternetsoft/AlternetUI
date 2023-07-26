@@ -76,6 +76,38 @@ namespace Alternet::UI
         return (_valueKind == 1);
     }
 
+    class wxTimePickerCtrl2 : public wxTimePickerCtrl, public wxWidgetExtender
+    {
+    public:
+        wxTimePickerCtrl2(wxWindow* parent,
+            wxWindowID id,
+            const wxDateTime& dt = wxDefaultDateTime,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxTP_DEFAULT,
+            const wxValidator& validator = wxDefaultValidator,
+            const wxString& name = wxTimePickerCtrlNameStr)
+        {
+            Create(parent, id, dt, pos, size, style, validator, name);
+        }
+    };
+
+    class wxDatePickerCtrl2 : public wxDatePickerCtrl, public wxWidgetExtender
+    {
+    public:
+        wxDatePickerCtrl2(wxWindow* parent,
+            wxWindowID id,
+            const wxDateTime& dt = wxDefaultDateTime,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxDP_DEFAULT | wxDP_SHOWCENTURY,
+            const wxValidator& validator = wxDefaultValidator,
+            const wxString& name = wxDatePickerCtrlNameStr)
+        {
+            Create(parent, id, dt, pos, size, style, validator, name);
+        }
+    };
+
     wxWindow* DateTimePicker::CreateWxWindowCore(wxWindow* parent)
     {
         long style = GetBorderStyle();
@@ -89,7 +121,7 @@ namespace Alternet::UI
         if (IsTimePicker()) 
         {
             style = style | wxTP_DEFAULT;
-            value = new wxTimePickerCtrl(parent,
+            value = new wxTimePickerCtrl2(parent,
                 wxID_ANY,
                 wxDefaultDateTime,
                 wxDefaultPosition,
@@ -108,7 +140,7 @@ namespace Alternet::UI
 
             style = style | wxDP_SHOWCENTURY | popupStyle;
 
-            value = new wxDatePickerCtrl(parent,
+            value = new wxDatePickerCtrl2(parent,
                 wxID_ANY,
                 v,
                 wxDefaultPosition,

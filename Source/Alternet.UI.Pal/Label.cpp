@@ -22,9 +22,24 @@ namespace Alternet::UI
 		_text.Set(value);
 	}
 
+	class wxStaticText2 : public wxStaticText, public wxWidgetExtender
+	{
+	public:
+		wxStaticText2(wxWindow* parent,
+			wxWindowID id,
+			const wxString& label,
+			const wxPoint& pos = wxDefaultPosition,
+			const wxSize& size = wxDefaultSize,
+			long style = 0,
+			const wxString& name = wxASCII_STR(wxStaticTextNameStr))
+		{
+			Create(parent, id, label, pos, size, style, name);
+		}
+	};
+
 	wxWindow* Label::CreateWxWindowCore(wxWindow* parent)
 	{
-		auto staticText = new wxStaticText(
+		auto staticText = new wxStaticText2(
 			parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
 		return staticText;
 	}

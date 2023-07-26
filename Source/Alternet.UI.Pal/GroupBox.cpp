@@ -22,9 +22,29 @@ namespace Alternet::UI
         _title.Set(value);
     }
 
+    class wxStaticBox2 : public wxStaticBox, public wxWidgetExtender
+    {
+    public:
+        wxStaticBox2(wxWindow* parent, wxWindowID id,
+            const wxString& label,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = 0,
+            const wxString& name = wxASCII_STR(wxStaticBoxNameStr))            
+        {
+            Create(parent, id, label, pos, size, style, name);
+        }
+    };
+
     wxWindow* GroupBox::CreateWxWindowCore(wxWindow* parent)
     {
-        auto staticBox = new wxStaticBox(parent, wxID_ANY, "");
+        auto staticBox = new wxStaticBox2(parent, wxID_ANY,
+            "",
+            wxDefaultPosition,
+            wxDefaultSize,
+            0,
+            wxASCII_STR(wxStaticBoxNameStr));
+
         return staticBox;
     }
 
