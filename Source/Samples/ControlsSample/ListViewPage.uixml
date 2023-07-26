@@ -69,7 +69,7 @@
                         Name="beginSelectedLabelEditingButton"
                         Margin="0,10,0,10"
                         Click="BeginSelectedLabelEditingButton_Click"
-                        Enabled="False" />
+                        Enabled="true" />
               </StackPanel>
           </GroupBox>
           <!-- ========================= -->
