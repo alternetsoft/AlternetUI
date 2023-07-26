@@ -7,6 +7,7 @@ namespace ControlsSample
     {
         private IPageSite? site;
         bool ignoreEvents = false;
+        private int newItemIndex = 0;
 
         public ComboBoxPage()
         {
@@ -47,12 +48,11 @@ namespace ControlsSample
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
         {
-            int start = comboBox.Items.Count + 1;
             comboBox.BeginUpdate();
             try
             {
-                for (int i = start; i < start + 5000; i++)
-                    comboBox.Items.Add("Item " + i);
+                for (int i = 0; i < 500; i++)
+                    comboBox.Items.Add("Item " + GenItemIndex());
             }
             finally
             {
@@ -92,9 +92,15 @@ namespace ControlsSample
                 comboBox.Items.RemoveAt(comboBox.SelectedIndex ?? comboBox.Items.Count - 1);
         }
 
+        private int GenItemIndex()
+        {
+            newItemIndex++;
+            return newItemIndex;
+        }
+
         private void AddItemButton_Click(object? sender, EventArgs e)
         {
-            comboBox.Items.Add("Item " + (comboBox.Items.Count + 1));
+            comboBox.Items.Add("Item " + GenItemIndex());
         }
 
         private bool CheckComboBoxIsEditable()

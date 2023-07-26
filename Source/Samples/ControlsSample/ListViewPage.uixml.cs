@@ -12,6 +12,7 @@ namespace ControlsSample
     {
         private IPageSite? site;
         private bool? slowSettingsEnabled;
+        private int newItemIndex = 0;
         //private double maxPanelWidth = 0;
 
         public ListViewPage()
@@ -179,22 +180,27 @@ namespace ControlsSample
             AddItems(1000);
         }
 
+        private int GenItemIndex()
+        {
+            newItemIndex++;
+            return newItemIndex;
+        }
+
         private void AddItems(int count)
         {
             if (listView == null)
                 return;
 
-            int start = listView.Items.Count + 1;
-
             listView.BeginUpdate();
             try
             {
-                for (int i = start; i < start + count; i++)
+                for (int i = 0; i < count; i++)
                 {
+                    var ix = GenItemIndex();
                     listView.Items.Add(
                         new ListViewItem(new[] { 
-                            "Item " + i, 
-                            "Some Info " + i 
+                            "Item " + ix, 
+                            "Some Info " + ix 
                         }, i % 4));
                 }
             }
@@ -240,7 +246,7 @@ namespace ControlsSample
 
         private void AddItemButton_Click(object? sender, EventArgs e)
         {
-            var item = new ListViewItem("Item " + (listView.Items.Count + 1), 1);
+            var item = new ListViewItem("Item " + GenItemIndex(), 1);
             listView.Items.Add(item);
             item.EnsureVisible();
         }

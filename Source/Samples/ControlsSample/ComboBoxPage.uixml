@@ -15,7 +15,7 @@
                             Click="AddItemButton_Click"/>
                     <Button Text="Remove Item" Name="removeItemButton" 
                             Margin="0,3,0,0" Click="RemoveItemButton_Click"/>
-                    <Button Text="Add 5000 Items" Name="addManyItemsButton" 
+                    <Button Text="Add 500 Items" Name="addManyItemsButton" 
                             Margin="0,3,0,0" Click="AddManyItemsButton_Click"/>
 
                     <Button Text="Text = Empty String" 
