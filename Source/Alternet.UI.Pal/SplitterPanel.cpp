@@ -56,13 +56,7 @@ namespace Alternet::UI
 		long style = wxSP_3D,
 		const wxString& name = wxT("splitter")) 
 	{
-		wxSplitterWindow::Init();
-		
-		wxSplitterWindow::Create(parent, id,
-			pos,
-			size,
-			style,
-			name);
+		Create(parent, id,pos,size,style,name);
 	}
 
 	bool wxSplitterWindow2::SetCursor(const wxCursor& cursor) 

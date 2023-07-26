@@ -24,9 +24,42 @@ namespace Alternet::UI
         _text.Set(value);
     }
 
+    class wxCheckBox2 : public wxCheckBox, public wxWidgetExtender
+    {
+    public:
+        wxCheckBox2(wxWindow* parent,
+            wxWindowID id,
+            const wxString& label,
+            const wxPoint& pos,
+            const wxSize& size,
+            long style,
+            const wxValidator& validator,
+            const wxString& name);
+    };
+
+    wxCheckBox2::wxCheckBox2(wxWindow* parent,
+        wxWindowID id,
+        const wxString& label,
+        const wxPoint& pos = wxDefaultPosition,
+        const wxSize& size = wxDefaultSize,
+        long style = 0,
+        const wxValidator& validator = wxDefaultValidator,
+        const wxString& name = wxASCII_STR(wxCheckBoxNameStr))
+    {
+        Create(parent, id, label, pos, size, style, validator, name);
+    }
+
     wxWindow* CheckBox::CreateWxWindowCore(wxWindow* parent)
     {
-        auto checkBox = new wxCheckBox(parent, wxID_ANY, wxStr(_text.Get()));
+        auto checkBox = new wxCheckBox2(parent,
+            wxID_ANY,
+            wxStr(_text.Get()),
+            wxDefaultPosition,
+            wxDefaultSize,
+            0,
+            wxDefaultValidator,
+            wxASCII_STR(wxCheckBoxNameStr));
+
         checkBox->Bind(wxEVT_CHECKBOX, &CheckBox::OnCheckedChanged, this);
         return checkBox;
     }
