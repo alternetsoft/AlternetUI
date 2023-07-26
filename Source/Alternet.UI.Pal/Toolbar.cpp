@@ -161,6 +161,20 @@ namespace Alternet::UI
             GetToolbar()->Realize();
     }
 
+    class wxToolBar2 : public wxToolBar, public wxWidgetExtender
+    {
+    public:
+        wxToolBar2(wxWindow* parent,
+            wxWindowID id,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxTB_DEFAULT_STYLE,
+            const wxString& name = wxASCII_STR(wxToolBarNameStr))
+        {
+            Create(parent, id, pos, size, style, name);
+        }
+    };
+
     wxWindow* Toolbar::CreateWxWindowCore(wxWindow* parent)
     {
         auto getStyle = [&]
@@ -196,7 +210,7 @@ namespace Alternet::UI
             result = _ownerWindow->GetFrame()->CreateToolBar(getStyle());
         }
         else
-            result = new wxToolBar(parent,
+            result = new wxToolBar2(parent,
                 wxID_ANY,
                 wxDefaultPosition,
                 wxDefaultSize,

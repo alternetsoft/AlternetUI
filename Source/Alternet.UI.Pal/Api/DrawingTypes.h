@@ -254,6 +254,25 @@ namespace Alternet::UI
                 Year, Hour, Minute, Second, Millisecond); }
         };
 
+    class wxFrame2 : public wxFrame
+    {
+    public:
+        wxFrame2()
+        {
+        }
+
+        wxFrame2(wxWindow* parent,
+            wxWindowID id,
+            const wxString& title,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxDEFAULT_FRAME_STYLE,
+            const wxString& name = wxASCII_STR(wxFrameNameStr))
+        {
+            Create(parent, id, title, pos, size, style, name);
+        }
+    };
+
     class ParkingWindow
     {
     public:
@@ -271,13 +290,14 @@ namespace Alternet::UI
                 s_parkingWindow = nullptr;
             }
         }
-
+       
         inline static wxWindow* GetWindow()
         {
             if (s_parkingWindow == nullptr)
             {
                 s_parkingWindow = new wxFrame();
-                s_parkingWindow->Create(0, wxID_ANY, _T("AlterNET UI Parking Window"));
+                s_parkingWindow->Create(0, wxID_ANY, 
+                    _T("AlterNET UI Parking Window"));
                 s_parkingWindow->Bind(wxEVT_CLOSE_WINDOW, &ParkingWindow::OnClose);
                 s_parkingWindow->Bind(wxEVT_IDLE, &ParkingWindow::OnIdle);
             }

@@ -7,16 +7,6 @@
 namespace Alternet::UI
 {
 
-    wxWidgetExtender* wxWidgetExtender::AsExtender(wxWindow* control)
-    {
-        return dynamic_cast<wxWidgetExtender*>(control);
-    }
-
-    wxWidgetExtender::wxWidgetExtender()
-    {
-
-    }
-
     /*static*/ Control::ControlsByWxWindowsMap Control::s_controlsByWxWindowsMap;
 
     Control::Control() :

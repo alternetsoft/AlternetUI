@@ -44,8 +44,6 @@
 namespace Alternet::UI
 {
 
-
-
     WebBrowserBackend WebBrowser::DefaultBackend = WEBBROWSER_BACKEND_DEFAULT;
     wxString WebBrowser::DefaultPage = "about:blank";
     bool WebBrowser::IELatest = false;
@@ -313,7 +311,7 @@ namespace Alternet::UI
             wxDefaultSize,
             style);
     }
-    
+
     wxWindow* WebBrowser::CreateWxWindowCore(wxWindow* parent)
     {
         Backend = WebBrowser::DefaultBackend;

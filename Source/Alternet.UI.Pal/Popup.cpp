@@ -14,9 +14,19 @@ namespace Alternet::UI
         _popupWindows.erase(std::find(_popupWindows.begin(), _popupWindows.end(), GetWxWindow()));
     }
 
+    class wxPopupTransientWindow2 : public wxPopupTransientWindow, 
+        public wxWidgetExtender
+    {
+    public:
+        wxPopupTransientWindow2(wxWindow* parent, int style = wxBORDER_NONE)
+        {
+            Create(parent, style);
+        }
+    };
+
     wxWindow* Popup::CreateWxWindowCore(wxWindow* parent)
     {
-        return new wxPopupTransientWindow(parent);
+        return new wxPopupTransientWindow2(parent);
     }
 
     void Popup::UpdateWxWindowParent()
