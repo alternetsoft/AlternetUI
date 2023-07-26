@@ -176,6 +176,21 @@ namespace Alternet::UI
             ApplyLargeImageList(GetListView());
     }
 
+    class wxListView2 : public wxListView, public wxWidgetExtender
+    {
+    public:
+        wxListView2(wxWindow* parent,
+            wxWindowID winid = wxID_ANY,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxLC_REPORT,
+            const wxValidator& validator = wxDefaultValidator,
+            const wxString& name = wxASCII_STR(wxListCtrlNameStr))
+        {
+            Create(parent, winid, pos, size, style, validator, name);
+        }
+    };
+
     wxWindow* ListView::CreateWxWindowCore(wxWindow* parent)
     {
         long style = GetStyle() | GetBorderStyle();
@@ -183,7 +198,7 @@ namespace Alternet::UI
         if (!hasBorder)
             style = style | wxBORDER_NONE;
 
-        auto value = new wxListView(
+        auto value = new wxListView2(
             parent,
             wxID_ANY,
             wxDefaultPosition,

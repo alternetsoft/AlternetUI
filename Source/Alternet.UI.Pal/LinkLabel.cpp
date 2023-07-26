@@ -54,10 +54,25 @@ namespace Alternet::UI
 		_url.Set(value);
 	}
 
+	class wxHyperlinkCtrl2 : public wxHyperlinkCtrl, public wxWidgetExtender
+	{
+	public:
+		wxHyperlinkCtrl2(wxWindow* parent,
+			wxWindowID id,
+			const wxString& label, const wxString& url,
+			const wxPoint& pos = wxDefaultPosition,
+			const wxSize& size = wxDefaultSize,
+			long style = wxHL_DEFAULT_STYLE,
+			const wxString& name = wxASCII_STR(wxHyperlinkCtrlNameStr))
+		{
+			Create(parent, id, label, url, pos, size, style, name);
+		}
+	};
+
 	wxWindow* LinkLabel::CreateWxWindowCore(wxWindow* parent)
 	{
 		// Text must be " " (space) to avoid exception on Linux
-		auto staticText = new wxHyperlinkCtrl(
+		auto staticText = new wxHyperlinkCtrl2(
 			parent, wxID_ANY, " ", wxEmptyString);
 		staticText->Bind(wxEVT_HYPERLINK,
 			&LinkLabel::OnHyperlinkClick, this);

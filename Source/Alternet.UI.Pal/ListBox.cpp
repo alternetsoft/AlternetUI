@@ -67,6 +67,21 @@ namespace Alternet::UI
             _items.clear();
     }
 
+    class wxListBox2 : public wxListBox, public wxWidgetExtender
+    {
+    public:
+        wxListBox2(wxWindow* parent, wxWindowID id,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            int n = 0, const wxString choices[] = NULL,
+            long style = 0,
+            const wxValidator& validator = wxDefaultValidator,
+            const wxString& name = wxASCII_STR(wxListBoxNameStr))
+        {
+            Create(parent, id, pos, size, n, choices, style, validator, name);
+        }
+    };
+
     wxWindow* ListBox::CreateWxWindowCore(wxWindow* parent)
     {
         long style = GetSelectionStyle() | GetBorderStyle();
@@ -74,7 +89,7 @@ namespace Alternet::UI
         if (!hasBorder)
             style = style | wxBORDER_NONE;
         
-        auto value = new wxListBox(
+        auto value = new wxListBox2(
             parent,
             wxID_ANY,
             wxDefaultPosition,
