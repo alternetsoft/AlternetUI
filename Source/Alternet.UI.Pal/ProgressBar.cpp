@@ -62,9 +62,25 @@ namespace Alternet::UI
         ApplyIndeterminate();
     }
 
+    class wxGauge2 : public wxGauge, public wxWidgetExtender
+    {
+    public:
+        wxGauge2(wxWindow* parent,
+            wxWindowID id,
+            int range,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxGA_HORIZONTAL,
+            const wxValidator& validator = wxDefaultValidator,
+            const wxString& name = wxASCII_STR(wxGaugeNameStr))
+        {
+            Create(parent, id, range, pos, size, style, validator, name);
+        }
+    };
+
     wxWindow* ProgressBar::CreateWxWindowCore(wxWindow* parent)
     {
-        auto gauge = new wxGauge(
+        auto gauge = new wxGauge2(
             parent,
             wxID_ANY,
             _maximum.Get() - _minimum,

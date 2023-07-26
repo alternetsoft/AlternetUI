@@ -69,6 +69,22 @@ namespace Alternet::UI
         _value.Set(value);
     }
 
+    class wxSpinCtrl2 : public wxSpinCtrl, public wxWidgetExtender
+    {
+    public:
+        wxSpinCtrl2(wxWindow* parent,
+            wxWindowID id = wxID_ANY,
+            const wxString& value = wxEmptyString,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxSP_ARROW_KEYS,
+            int min = 0, int max = 100, int initial = 0,
+            const wxString& name = wxT("wxSpinCtrl"))
+        {
+            Create(parent, id, value, pos, size, style, min, max, initial, name);
+        }
+    };
+
     wxWindow* NumericUpDown::CreateWxWindowCore(wxWindow* parent)
     {
         long style = wxSP_ARROW_KEYS | GetBorderStyle();
@@ -76,7 +92,7 @@ namespace Alternet::UI
         if (!hasBorder)
             style = style | wxBORDER_NONE;
 
-        auto value = new wxSpinCtrl(parent,
+        auto value = new wxSpinCtrl2(parent,
             wxID_ANY,
             wxEmptyString,
             wxDefaultPosition,

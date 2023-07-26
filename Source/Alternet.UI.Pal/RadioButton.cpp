@@ -30,9 +30,25 @@ namespace Alternet::UI
         _text.Set(value);
     }
 
+    class wxRadioButton2 : public wxRadioButton, public wxWidgetExtender
+    {
+    public:
+        wxRadioButton2(wxWindow* parent,
+            wxWindowID id,
+            const wxString& label,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = 0,
+            const wxValidator& validator = wxDefaultValidator,
+            const wxString& name = wxASCII_STR(wxRadioButtonNameStr))
+        {
+            Create(parent, id, label, pos, size, style, validator, name);
+        }
+    };
+
     wxWindow* RadioButton::CreateWxWindowCore(wxWindow* parent)
     {
-        auto radioButton = new wxRadioButton(
+        auto radioButton = new wxRadioButton2(
             parent,
             wxID_ANY,
             wxStr(_text.Get()),
