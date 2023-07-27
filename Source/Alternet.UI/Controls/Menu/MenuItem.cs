@@ -250,6 +250,11 @@ namespace Alternet.UI
             set { SetValue(CommandTargetProperty, value); }
         }
 
+        public static implicit operator MenuItem(string s)
+        {
+            return new(s);
+        }
+
         /// <inheritdoc />
         public override void RaiseClick(EventArgs e)
         {
