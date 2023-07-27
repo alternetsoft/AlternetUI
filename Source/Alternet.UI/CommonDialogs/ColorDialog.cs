@@ -3,7 +3,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Displays a dialog window from which the user can select a directory.
+    /// Displays a dialog window from which the user can select a color.
     /// </summary>
     public sealed class ColorDialog : CommonDialog
     {
@@ -15,13 +15,6 @@ namespace Alternet.UI
         public ColorDialog()
         {
             nativeDialog = new Native.ColorDialog();
-        }
-
-        private protected override ModalResult ShowModalCore(Window? owner)
-        {
-            CheckDisposed();
-            var nativeOwner = owner == null ? null : ((NativeWindowHandler)owner.Handler).NativeControl;
-            return (ModalResult)nativeDialog.ShowModal(nativeOwner);
         }
 
         /// <summary>
@@ -55,6 +48,14 @@ namespace Alternet.UI
                 CheckDisposed();
                 nativeDialog.Title = value;
             }
+        }
+
+        private protected override ModalResult ShowModalCore(Window? owner)
+        {
+            CheckDisposed();
+            var nativeOwner = owner == null ?
+                null : ((NativeWindowHandler)owner.Handler).NativeControl;
+            return (ModalResult)nativeDialog.ShowModal(nativeOwner);
         }
     }
 }
