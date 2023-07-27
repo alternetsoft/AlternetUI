@@ -79,12 +79,15 @@ namespace Alternet.UI
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
             if (source is string)
-            {
-                string modifiersToken = ((string)source).Trim();
-                ModifierKeys modifiers = GetModifierKeys(modifiersToken, CultureInfo.InvariantCulture);
-                return modifiers;
-            }
+                return FromString((string)source);
             throw GetConvertFromException(source);
+        }
+
+        public static ModifierKeys FromString(string source)
+        {
+            string modifiersToken = ((string)source).Trim();
+            ModifierKeys modifiers = GetModifierKeys(modifiersToken, CultureInfo.InvariantCulture);
+            return modifiers;
         }
 
         /// <summary>
@@ -146,7 +149,9 @@ namespace Alternet.UI
             throw GetConvertToException(value,destinationType);
         }
 
-        private ModifierKeys GetModifierKeys(string modifiersToken, CultureInfo culture)
+        private static ModifierKeys GetModifierKeys(
+            string modifiersToken, 
+            CultureInfo culture)
         {
             ModifierKeys modifiers = ModifierKeys.None;
             if (modifiersToken.Length != 0)

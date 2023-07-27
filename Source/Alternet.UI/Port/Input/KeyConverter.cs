@@ -79,19 +79,23 @@ namespace Alternet.UI
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
             if (source is string)
-            {
-                string fullName = ((string)source).Trim();
-                object key = GetKey(fullName, CultureInfo.InvariantCulture);
-                if (key != null)
-                {
-                    return ((Key)key);
-                }
-                else
-                {
-                    throw new NotSupportedException(SR.Get(SRID.Unsupported_Key, fullName));
-                }
-            }
+                return FromString((string)source);
             throw GetConvertFromException(source);
+        }
+
+        public static Key FromString(string source)
+        {
+            string fullName = ((string)source).Trim();
+            object key = GetKey(fullName, CultureInfo.InvariantCulture);
+            if (key != null)
+            {
+                return ((Key)key);
+            }
+            else
+            {
+                throw new NotSupportedException(
+                    SR.Get(SRID.Unsupported_Key, fullName));
+            }
         }
 
         /// <summary>
@@ -135,7 +139,7 @@ namespace Alternet.UI
             throw GetConvertToException(value, destinationType);
         }
 
-        private object GetKey(string keyToken, CultureInfo culture)
+        private static object GetKey(string keyToken, CultureInfo culture)
         {
             if (keyToken.Length == 0)
             {
