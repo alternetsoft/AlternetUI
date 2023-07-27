@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using Alternet.Drawing;
 using Alternet.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ControlsTest
 {
@@ -60,6 +61,8 @@ namespace ControlsTest
         private bool scriptMessageHandlerAdded = false;
         private ITestPageSite? site;
         private WebBrowser webBrowser1;
+        private Label HeaderLabel;
+        private Grid webBrowserGrid;
 
         static WebBrowserTestPage()
         {
@@ -83,7 +86,51 @@ namespace ControlsTest
         {
             var myListener = new CommonUtils.DebugTraceListener();
             Trace.Listeners.Add(myListener);
-            InitializeComponent();
+
+            webBrowserGrid = new()
+            {
+                Margin = 5,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+            };
+
+            webBrowserGrid.RowDefinitions.Add(new RowDefinition
+            {
+                Height = new GridLength(),
+            });
+            webBrowserGrid.RowDefinitions.Add(new RowDefinition
+            {
+                Height = new GridLength(),
+            });
+            webBrowserGrid.RowDefinitions.Add(new RowDefinition
+            {
+                Height = new GridLength(),
+            });
+            webBrowserGrid.RowDefinitions.Add(new RowDefinition
+            {
+                Height = new GridLength(100, GridUnitType.Star),
+            });
+            webBrowserGrid.RowDefinitions.Add(new RowDefinition
+            {
+                Height = new GridLength(),
+            });
+            webBrowserGrid.RowDefinitions.Add(new RowDefinition
+            {
+                Height = new GridLength(),
+            });
+            webBrowserGrid.ColumnDefinitions.Add(new ColumnDefinition
+            {
+                Width = new GridLength(100, GridUnitType.Star),
+            });
+
+            Children.Add(webBrowserGrid);
+
+            HeaderLabel = new()
+            {
+                Text = "Web Browser Control",
+                Margin = 5,
+                VerticalAlignment = VerticalAlignment.Center,
+            };
+            webBrowserGrid.Children.Add(HeaderLabel);
 
             AddNewToolbar(1);
             AddToolbar(2);
