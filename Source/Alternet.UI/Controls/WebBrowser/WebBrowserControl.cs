@@ -8,7 +8,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Policy;
 using System.Text;
-using static Alternet.UI.EventTrace;
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -115,7 +114,6 @@ namespace Alternet.UI
                 Browser.ZoomFactor = value;
             }
         }
-
 
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
