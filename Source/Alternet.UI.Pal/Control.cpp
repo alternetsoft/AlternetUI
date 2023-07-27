@@ -734,11 +734,29 @@ namespace Alternet::UI
 
     Font* Control::GetFont()
     {
-        return nullptr;
+        auto w = GetWxWindow();
+        auto wxfont = w->GetFont();
+        if (_font == nullptr) 
+        {
+            _font = new Font();
+        }
+        _font->SetWxFont(wxfont);
+
+        return _font;
     }
 
     void Control::SetFont(Font* value)
     {
+        if (value == nullptr)
+            return;
+
+        if (_font == nullptr)
+        {
+            _font = new Font();
+        }
+        _font->SetWxFont(value->GetWxFont());
+        auto w = GetWxWindow();
+        w->SetFont(value->GetWxFont());
     }
 
     void Control::BeginUpdate()

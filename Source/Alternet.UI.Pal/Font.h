@@ -10,6 +10,8 @@ namespace Alternet::UI
 #include "Api/Font.inc"
     public:
         wxFont GetWxFont();
+        void SetWxFont(wxFont font);
+        void SetWxFontInfo(wxFontInfo fontInfo);
 
     private:
         wxFont _font;

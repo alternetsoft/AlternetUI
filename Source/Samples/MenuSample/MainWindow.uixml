@@ -102,7 +102,8 @@
             <Border Name="contextMenuBorder"
                     MouseRightButtonUp="ContextMenuBorder_MouseRightButtonUp"
                     Margin="0,0,0,5">
-              <Label Margin="5" Text="Right-click shows the context menu"/>
+              <Label Margin="5" Text="Right-click shows the context menu"
+                     Name="contextMenuLabel"/>
             </Border>
           </StackPanel>
         </GroupBox>

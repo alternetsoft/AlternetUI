@@ -40,6 +40,16 @@ namespace Alternet::UI
         _font = wxSystemSettings::GetFont(wxSystemFont::wxSYS_DEFAULT_GUI_FONT);
     }
 
+    void Font::SetWxFontInfo(wxFontInfo fontInfo)
+    {
+        _font = wxFont(fontInfo);
+    }
+
+    void Font::SetWxFont(wxFont font)
+    {
+        _font = font;
+    }
+
     wxFont Font::GetWxFont()
     {
         return _font;

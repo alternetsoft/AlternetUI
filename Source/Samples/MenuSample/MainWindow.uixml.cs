@@ -51,6 +51,9 @@ namespace MenuSample
 
             contextMenuBorder.BorderColor = Color.Red;
             contextMenuBorder.BorderWidth = new Thickness(0, 1, 0, 1);
+
+            contextMenuLabel.Font = Control.DefaultFont.AsBold;
+            contextMenuBorder.PerformLayout();
         }
 
         private ToolbarPanel CreateVertToolbar()

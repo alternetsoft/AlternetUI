@@ -36,9 +36,21 @@ namespace ControlsSample
             button.Text = textTextBox.Text;
         }
 
-        private void DisabledCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void DisabledCheckBox_CheckedChanged(
+            object? sender, 
+            System.EventArgs e)
         {
             ApplyDisabled();
+        }
+
+        private void BoldCheckBox_CheckedChanged(
+            object? sender,
+            System.EventArgs e)
+        {
+            if(boldCheckBox.IsChecked)
+                button.Font = Control.DefaultFont.AsBold;
+            else
+                button.Font = Control.DefaultFont;
         }
 
         private void ApplyDisabled()
