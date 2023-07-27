@@ -6,6 +6,7 @@ namespace Alternet.UI
 {
     internal class NativeCheckListBoxHandler : CheckListBoxHandler
     {
+        private bool recreateCalled = false;
         private bool applyingCheckedIndices;
         private bool receivingCheckedIndices;
         private bool receivingSelection;
@@ -196,6 +197,13 @@ namespace Alternet.UI
             object? sender,
             CollectionChangeEventArgs<object> e)
         {
+            // Do not comment this or items will not be painted properly
+            if (!recreateCalled)
+            {
+                recreateCalled = true;
+                NativeControl.RecreateWindow();
+            }
+
             NativeControl.InsertItem(e.Index, Control.GetItemText(e.Item));
         }
 

@@ -258,8 +258,10 @@ namespace Alternet::UI
         auto listBox = GetListBox();
         listBox->Clear();
 
-        for (auto item : _items)
+        for (auto item : _items) 
+        {
             listBox->Append(wxStr(item));
+        }
 
         EndUpdate();
 

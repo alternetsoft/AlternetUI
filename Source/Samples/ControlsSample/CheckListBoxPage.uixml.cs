@@ -32,9 +32,6 @@ namespace ControlsSample
                 checkListBox.Items.Add("Nine");
                 checkListBox.Items.Add("Ten");
 
-                // Do not comment this line or items will not be painted properly
-                checkListBox.RecreateWindow();
-
                 checkListBox.SelectionChanged += CheckListBox_SelectionChanged;
                 allowMultipleSelectionCheckBox.IsChecked = 
                     checkListBox.SelectionMode == ListBoxSelectionMode.Multiple;

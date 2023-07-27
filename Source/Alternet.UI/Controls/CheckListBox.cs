@@ -288,6 +288,12 @@ namespace Alternet.UI
                 CreateCheckListBoxHandler(this);
         }
 
+        /// <inheritdoc/>
+        protected override void OnHandlerAttached(EventArgs e)
+        {
+            base.OnHandlerAttached(e);
+        }
+
         private void ClearCheckedCore()
         {
             checkedIndices.Clear();
