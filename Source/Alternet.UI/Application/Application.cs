@@ -143,7 +143,7 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? VisualThemeChanged;
 
-        internal event EventHandler? Idle;
+        public event EventHandler? Idle;
 
         /// <summary>
         /// Gets the <see cref="Application"/> object for the currently runnning application.
