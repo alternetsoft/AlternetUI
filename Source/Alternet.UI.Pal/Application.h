@@ -24,6 +24,8 @@ namespace Alternet::UI
         void Run();
 
         int FilterEvent(wxEvent& event) override;
+        void ProcessMouseEvent(wxMouseEvent& e, bool& handled);
+        void ProcessKeyEvent(wxKeyEvent& e, bool& handled);
 
         void SetOwner(Application* value);
     private:
