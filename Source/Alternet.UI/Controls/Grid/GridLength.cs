@@ -54,22 +54,18 @@ namespace Alternet.UI
         /// or <c>value</c> parameter is <c>double.NegativeInfinity</c>
         /// or <c>value</c> parameter is <c>double.PositiveInfinity</c>.
         /// </exception>
-        public GridLength(double value, GridUnitType type)
+        public GridLength(double value = 0, GridUnitType type = GridUnitType.Auto)
         {
             if (DoubleUtil.IsNaN(value))
-            {
                 throw new ArgumentException();
-            }
+
             if (double.IsInfinity(value))
-            {
                 throw new ArgumentException();
-            }
+
             if (type != GridUnitType.Auto
                 && type != GridUnitType.Pixel
                 && type != GridUnitType.Star)
-            {
                 throw new ArgumentException();
-            }
 
             _unitValue = (type == GridUnitType.Auto) ? 0 : value;
             _unitType = type;
