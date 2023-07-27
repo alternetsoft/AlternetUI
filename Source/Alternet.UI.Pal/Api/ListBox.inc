@@ -27,6 +27,7 @@ public:
 enum class ListBoxEvent
 {
     SelectionChanged,
+    ControlRecreated,
 };
 typedef void* (*ListBoxEventCallbackType)(ListBox* obj, ListBoxEvent event, void* param);
 static void SetEventCallback(ListBoxEventCallbackType value) { eventCallback = value; }

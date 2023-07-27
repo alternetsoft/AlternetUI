@@ -101,12 +101,17 @@ namespace Alternet.UI.Native
                 {
                     CheckedChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.CheckListBoxEvent.ControlRecreated:
+                {
+                    ControlRecreated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected CheckListBoxEvent value: " + e);
             }
         }
         
         public event EventHandler? SelectionChanged;
         public event EventHandler? CheckedChanged;
+        public event EventHandler? ControlRecreated;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -120,6 +125,7 @@ namespace Alternet.UI.Native
             {
                 SelectionChanged,
                 CheckedChanged,
+                ControlRecreated,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]

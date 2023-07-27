@@ -10,6 +10,8 @@ namespace NativeApi.Api
 
         public event EventHandler? SelectionChanged { add => throw new Exception(); remove => throw new Exception(); }
 
+        public event EventHandler? ControlRecreated { add => throw new Exception(); remove => throw new Exception(); }
+
         public int ItemsCount { get; }
 
         public ListBoxSelectionMode SelectionMode { get; set; }

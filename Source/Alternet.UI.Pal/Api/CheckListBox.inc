@@ -12,6 +12,7 @@ enum class CheckListBoxEvent
 {
     SelectionChanged,
     CheckedChanged,
+    ControlRecreated,
 };
 typedef void* (*CheckListBoxEventCallbackType)(CheckListBox* obj, CheckListBoxEvent event, void* param);
 static void SetEventCallback(CheckListBoxEventCallbackType value) { eventCallback = value; }

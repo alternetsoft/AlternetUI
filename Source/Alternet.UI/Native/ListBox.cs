@@ -174,11 +174,16 @@ namespace Alternet.UI.Native
                 {
                     SelectionChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.ListBoxEvent.ControlRecreated:
+                {
+                    ControlRecreated?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected ListBoxEvent value: " + e);
             }
         }
         
         public event EventHandler? SelectionChanged;
+        public event EventHandler? ControlRecreated;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -191,6 +196,7 @@ namespace Alternet.UI.Native
             public enum ListBoxEvent
             {
                 SelectionChanged,
+                ControlRecreated,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]

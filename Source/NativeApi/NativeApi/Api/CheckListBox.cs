@@ -9,6 +9,8 @@ namespace NativeApi.Api
         
         public event EventHandler? CheckedChanged { add => throw new Exception(); remove => throw new Exception(); }
 
+        public event EventHandler? ControlRecreated { add => throw new Exception(); remove => throw new Exception(); }
+
         public int[] CheckedIndices { get => throw new Exception(); }
 
         public void ClearChecked() => throw new Exception();
