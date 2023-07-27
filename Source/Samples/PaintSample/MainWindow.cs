@@ -19,17 +19,96 @@ namespace PaintSample
         private CanvasControl canvasControl;
         private Toolbar toolbar;
         private ColorSelector colorSelector;
+        private Border border;
+        private Grid mainGrid;
 
         CommandButton? undoButton;
         CommandButton? redoButton;
+
+        MenuItem toolsMenu;
+        MenuItem helpMainMenu;
+        MenuItem aboutMenuItem;
+        MenuItem editMainMenu;
+        MenuItem undoMenuItem;
+        MenuItem redoMenuItem;
+        MenuItem copyMenuItem;
+        MenuItem pasteMenuItem;
+        MenuItem fileMainMenu;
+        MenuItem newMenuItem;
+        MenuItem openMenuItem;
+        MenuItem saveMenuItem;
+        MenuItem saveAsMenuItem;
+        MenuItem exitMenuItem;
 
         string? baseTitle;
 
         public MainWindow()
         {
+            Title = "AlterNET UI Paint Sample";
+            Width = 750;
+            Height = 700;
+            StartLocation = WindowStartLocation.CenterScreen;
+
+            var menu = new MainMenu();
+            Menu = menu;
+
+            fileMainMenu = "_File";
+            Menu.Items.Add(fileMainMenu);
+
+            newMenuItem = new("_New", NewMenuItem_Click, "Ctrl+N");
+            fileMainMenu.Items.Add(newMenuItem);
+            openMenuItem = new("_Open...", OpenMenuItem_Click, "Ctrl+O");
+            fileMainMenu.Items.Add(openMenuItem);
+            fileMainMenu.Items.Add("-");
+            saveMenuItem = new("_Save", SaveMenuItem_Click, "Ctrl+S");
+            fileMainMenu.Items.Add(saveMenuItem);
+            saveAsMenuItem = new(
+                "_Save As...", 
+                SaveAsMenuItem_Click, 
+                "Ctrl+Shift+S");
+            fileMainMenu.Items.Add(saveAsMenuItem);
+            fileMainMenu.Items.Add("-");
+            exitMenuItem = new("E_xit", ExitMenuItem_Click);
+            fileMainMenu.Items.Add(exitMenuItem);
+
+            editMainMenu = "_Edit";
+            Menu.Items.Add(editMainMenu);
+
+            undoMenuItem = new("_Undo", UndoMenuItem_Click, "Ctrl+Z");
+            editMainMenu.Items.Add(undoMenuItem);
+            redoMenuItem = new("_Redo", RedoMenuItem_Click, "Ctrl+Y");
+            editMainMenu.Items.Add(redoMenuItem);
+            editMainMenu.Items.Add("-");
+            copyMenuItem = new("_Copy", CopyMenuItem_Click, "Ctrl+C");
+            editMainMenu.Items.Add(copyMenuItem);
+            pasteMenuItem = new("_Paste", PasteMenuItem_Click, "Ctrl+V");
+            editMainMenu.Items.Add(pasteMenuItem);
+
+            toolsMenu = new("_Tools");
+            Menu.Items.Add(toolsMenu);
+
+            helpMainMenu = new("_Help");            
+            Menu.Items.Add(helpMainMenu);
+
+            aboutMenuItem = new("_About", AboutMenuItem_Click);
+            helpMainMenu.Items.Add(aboutMenuItem);
+
+
+            mainGrid = new();
+            Children.Add(mainGrid);
+
+            mainGrid.RowDefinitions.Add(new RowDefinition { 
+                Height = new GridLength() });
+            mainGrid.RowDefinitions.Add(new RowDefinition { 
+                Height = new GridLength(100, GridUnitType.Star) });
+            mainGrid.RowDefinitions.Add(new RowDefinition { 
+                Height = new GridLength() });
+
             Icon = ImageSet.FromUrlOrNull("embres:PaintSample.Sample.ico");
 
-            InitializeComponent();
+            border = new();
+            mainGrid.Children.Add(border);
+            Alternet.UI.Grid.SetRowColumn(border, 1, 0);
 
             canvasControl = new();
             border.Children.Add(canvasControl);
@@ -190,28 +269,28 @@ namespace PaintSample
             UndoService.Redo();
         }
 
-        private void ExitMenuItem_Click(object sender, EventArgs e)
+        private void ExitMenuItem_Click(object? sender, EventArgs e)
         {
             Close();
         }
 
-        private void UndoMenuItem_Click(object sender, EventArgs e)
+        private void UndoMenuItem_Click(object? sender, EventArgs e)
         {
             Undo();
         }
 
-        private void RedoMenuItem_Click(object sender, EventArgs e)
+        private void RedoMenuItem_Click(object? sender, EventArgs e)
         {
             Redo();
         }
 
-        private void CopyMenuItem_Click(object sender, EventArgs e)
+        private void CopyMenuItem_Click(object? sender, EventArgs e)
         {
             Clipboard.SetBitmap(Document.Bitmap);
             UpdateControls();
         }
 
-        private void PasteMenuItem_Click(object sender, EventArgs e)
+        private void PasteMenuItem_Click(object? sender, EventArgs e)
         {
             if (Clipboard.ContainsBitmap)
             {
@@ -221,12 +300,12 @@ namespace PaintSample
             }
         }
 
-        private void AboutMenuItem_Click(object sender, System.EventArgs e)
+        private void AboutMenuItem_Click(object? sender, System.EventArgs e)
         {
             MessageBox.Show("AlterNET UI Paint Sample Application", "About");
         }
 
-        private void NewMenuItem_Click(object sender, EventArgs e)
+        private void NewMenuItem_Click(object? sender, EventArgs e)
         {
             PromptToSaveDocument(out var cancel);
             if (cancel)
@@ -235,7 +314,7 @@ namespace PaintSample
             CreateNewDocument();
         }
 
-        private void OpenMenuItem_Click(object sender, EventArgs e)
+        private void OpenMenuItem_Click(object? sender, EventArgs e)
         {
             PromptToSaveDocument(out var cancel);
             if (cancel)
@@ -265,7 +344,7 @@ namespace PaintSample
             return dialog.FileName;
         }
 
-        private void SaveMenuItem_Click(object sender, EventArgs e)
+        private void SaveMenuItem_Click(object? sender, EventArgs e)
         {
             Save();
         }
@@ -281,7 +360,7 @@ namespace PaintSample
             Document.Save(fileName);
         }
 
-        private void SaveAsMenuItem_Click(object sender, EventArgs e)
+        private void SaveAsMenuItem_Click(object? sender, EventArgs e)
         {
             var fileName = PromptForSaveFileName();
             if (fileName == null)
@@ -323,7 +402,7 @@ namespace PaintSample
             if (!cancel) 
             {
                 this.Hide();
-                Application.Current.Exit();
+                Alternet.UI.Application.Current.Exit();
             }
 
             base.OnClosing(e);
