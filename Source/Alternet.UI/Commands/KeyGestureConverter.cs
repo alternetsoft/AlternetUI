@@ -12,6 +12,7 @@ using System;
 using System.ComponentModel;    // for TypeConverter
 using System.Globalization;     // for CultureInfo
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace Alternet.UI
 {
@@ -71,6 +72,58 @@ namespace Alternet.UI
             return false;
         }
 
+        public static KeyGesture? FromString(string source)
+        {
+            string fullName = ((string)source).Trim();
+            if (fullName == string.Empty)
+                return new KeyGesture(Key.None);
+
+            string keyToken;
+            string modifiersToken;
+            string displayString;
+
+            // break apart display string
+            int index = fullName.IndexOf(DISPLAYSTRING_SEPARATOR);
+            if (index >= 0)
+            {
+                displayString = fullName.Substring(index + 1).Trim();
+                fullName = fullName.Substring(0, index).Trim();
+            }
+            else
+            {
+                displayString = string.Empty;
+            }
+
+            // break apart key and modifiers
+            index = fullName.LastIndexOf(MODIFIERS_DELIMITER);
+            if (index >= 0)
+            {
+                // modifiers exists
+                modifiersToken = fullName.Substring(0, index);
+                keyToken = fullName.Substring(index + 1);
+            }
+            else
+            {
+                modifiersToken = string.Empty;
+                keyToken = fullName;
+            }
+
+            ModifierKeys modifiers = ModifierKeys.None;
+            object resultkey = KeyConverter.FromString(keyToken);
+            if (resultkey != null)
+            {
+                object temp = ModifierKeysConverter.FromString(modifiersToken);
+                if (temp != null)
+                {
+                    modifiers = (ModifierKeys)temp;
+                }
+
+                return new KeyGesture((Key)resultkey, modifiers, displayString);
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// ConvertFrom()
         /// </summary>
@@ -82,52 +135,9 @@ namespace Alternet.UI
         {
             if (source != null && source is string)
             {
-                string fullName = ((string)source).Trim();
-                if (fullName == string.Empty)
-                    return new KeyGesture(Key.None);
-
-                string keyToken;
-                string modifiersToken;
-                string displayString;
-
-                // break apart display string
-                int index = fullName.IndexOf(DISPLAYSTRING_SEPARATOR);
-                if (index >= 0)
-                {
-                    displayString = fullName.Substring(index + 1).Trim();
-                    fullName = fullName.Substring(0, index).Trim();
-                }
-                else
-                {
-                    displayString = string.Empty;
-                }
-
-                // break apart key and modifiers
-                index = fullName.LastIndexOf(MODIFIERS_DELIMITER);
-                if (index >= 0)
-                {
-                    // modifiers exists
-                    modifiersToken = fullName.Substring(0, index);
-                    keyToken = fullName.Substring(index + 1);
-                }
-                else
-                {
-                    modifiersToken = string.Empty;
-                    keyToken = fullName;
-                }
-
-                ModifierKeys modifiers = ModifierKeys.None;
-                object resultkey = keyConverter.ConvertFrom(context, culture, keyToken);
-                if (resultkey != null)
-                {
-                    object temp = modifierKeysConverter.ConvertFrom(context, culture, modifiersToken);
-                    if (temp != null)
-                    {
-                        modifiers = (ModifierKeys)temp;
-                    }
-
-                    return new KeyGesture((Key)resultkey, modifiers, displayString);
-                }
+                object? result = FromString((string)source);
+                if (result != null)
+                    return result;
             }
 
             throw GetConvertFromException(source);

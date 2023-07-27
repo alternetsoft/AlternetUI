@@ -312,6 +312,14 @@ namespace Alternet.UI
         private static TypeConverter _keyGestureConverter = new KeyGestureConverter();
         //private static bool    _classRegistered = false;
         #endregion Private Fields
+
+        public static implicit operator KeyGesture(string s)
+        {
+            KeyGesture result = KeyGestureConverter.FromString(s);
+            if (result == null)
+                throw new FormatException();
+            return result;
+        }
     }
 }
 
