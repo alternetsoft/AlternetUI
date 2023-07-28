@@ -90,6 +90,39 @@ namespace Alternet.UI
         public event EventHandler? Idle;
 
         /// <summary>
+        /// Returns true if operating system is Windows.
+        /// </summary>
+        internal static bool IsWindowsOS
+        {
+            get
+            {
+                return WebBrowser.GetBackendOS() == WebBrowserBackendOS.Windows;
+            }
+        }
+
+        /// <summary>
+        /// Returns true if operating system is Linux.
+        /// </summary>
+        internal static bool IsLinuxOS
+        {
+            get
+            {
+                return WebBrowser.GetBackendOS() == WebBrowserBackendOS.Unix;
+            }
+        }
+
+        /// <summary>
+        /// Returns true if operating system is Apple macOS.
+        /// </summary>
+        internal static bool IsMacOs
+        {
+            get
+            {
+                return WebBrowser.GetBackendOS() == WebBrowserBackendOS.MacOS;
+            }
+        }
+
+        /// <summary>
         /// Allows to suppress some debug messages.
         /// </summary>
         /// <remarks>
