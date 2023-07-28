@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
@@ -7,7 +8,8 @@ using System.Threading;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides methods and properties to manage an application, such as methods to start and stop an application,
+    /// Provides methods and properties to manage an application, such as
+    /// methods to start and stop an application,
     /// and properties to get information about an application.
     /// </summary>
     [System.ComponentModel.DesignerCategory("Code")]
@@ -15,19 +17,16 @@ namespace Alternet.UI
     {
         private static bool terminating = false;
         private static Application? current;
-        private readonly List<Window> windows = new ();
-        private UnhandledExceptionMode unhandledExceptionMode;
-        private volatile bool isDisposed;
 
-        private Native.Application nativeApplication;
-
-        private VisualTheme visualTheme = StockVisualThemes.Native;
-
+        private readonly List<Window> windows = new();
         private readonly KeyboardInputProvider keyboardInputProvider;
         private readonly MouseInputProvider mouseInputProvider;
 
+        private UnhandledExceptionMode unhandledExceptionMode;
+        private volatile bool isDisposed;
+        private Native.Application nativeApplication;
+        private VisualTheme visualTheme = StockVisualThemes.Native;
         private ThreadExceptionEventHandler? threadExceptionHandler;
-
         private bool inOnThreadException;
 
         /// <summary>
@@ -40,10 +39,12 @@ namespace Alternet.UI
             SynchronizationContext.InstallIfNeeded();
 
             nativeApplication.Idle += NativeApplication_Idle;
-            nativeApplication.Name = Path.GetFileNameWithoutExtension(System.Diagnostics.Process.GetCurrentProcess()?.MainModule?.FileName!);
+            nativeApplication.Name = Path.GetFileNameWithoutExtension(
+                Process.GetCurrentProcess()?.MainModule?.FileName!);
             current = this;
 
-            keyboardInputProvider = new KeyboardInputProvider(nativeApplication.Keyboard);
+            keyboardInputProvider = new KeyboardInputProvider(
+                nativeApplication.Keyboard);
             mouseInputProvider = new MouseInputProvider(nativeApplication.Mouse);
 
             if (SupressDiagnostics)
@@ -51,26 +52,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Allows to suppress some debug messages.
-        /// </summary>
-        /// <remarks>
-        ///  Currently used to suppress GTK messages under Linux. Default value is true.
-        /// </remarks>
-        public static bool SupressDiagnostics { get; set; } = true;
-
-        /// <summary>
-        /// Gets whether <see cref="Run"/> method execution is finished.
-        /// </summary>
-        public static bool Terminating { get => terminating; }
-
-        /// <summary>
         ///  Occurs when an untrapped thread exception is thrown.
         /// </summary>
         /// <remarks>
-        /// This event allows your application to handle otherwise unhandled exceptions that occur in UI threads. Attach
-        /// your event handler to the <see cref="ThreadException"/> event to deal with these exceptions, which will
-        /// leave your application in an unknown state. Where possible, exceptions should be handled by a structured
-        /// exception handling block. You can change whether this callback is used for unhandled Windows Forms thread
+        /// This event allows your application to handle otherwise
+        /// unhandled exceptions that occur in UI threads. Attach
+        /// your event handler to the <see cref="ThreadException"/> event
+        /// to deal with these exceptions, which will
+        /// leave your application in an unknown state. Where possible,
+        /// exceptions should be handled by a structured
+        /// exception handling block. You can change whether this callback
+        /// is used for unhandled Windows Forms thread
         /// exceptions by setting <see cref="SetUnhandledExceptionMode"/>.
         /// </remarks>
         public event ThreadExceptionEventHandler ThreadException
@@ -86,67 +78,34 @@ namespace Alternet.UI
             }
         }
 
-        [return: MaybeNull]
-        internal static T HandleThreadExceptions<T>(Func<T> func)
-        {
-            if (current == null)
-                return func();
-
-            return current.HandleThreadExceptionsCore(func);
-        }
-
-        internal static void HandleThreadExceptions(Action action)
-        {
-            if (current == null)
-                action();
-            else
-                current.HandleThreadExceptionsCore(action);
-        }
-
-        [return: MaybeNull]
-        private T HandleThreadExceptionsCore<T>(Func<T> func)
-        {
-            if (unhandledExceptionMode == UnhandledExceptionMode.ThrowException)
-                return func();
-
-            try
-            {
-                return func();
-            }
-            catch (Exception e)
-            {
-                OnThreadException(e);
-                return default!;
-            }
-        }
-
-        private void HandleThreadExceptionsCore(Action action)
-        {
-            if (unhandledExceptionMode == UnhandledExceptionMode.ThrowException)
-            {
-                action();
-                return;
-            }
-
-            try
-            {
-                action();
-            }
-            catch (Exception e)
-            {
-                OnThreadException(e);
-            }
-        }
-
         /// <summary>
         /// Occurs when the <see cref="VisualTheme"/> property changes.
         /// </summary>
         public event EventHandler? VisualThemeChanged;
 
+        /// <summary>
+        /// Occurs when the application finishes processing and is
+        /// about to enter the idle state.
+        /// </summary>
         public event EventHandler? Idle;
 
         /// <summary>
-        /// Gets the <see cref="Application"/> object for the currently runnning application.
+        /// Allows to suppress some debug messages.
+        /// </summary>
+        /// <remarks>
+        ///  Currently used to suppress GTK messages under Linux. Default
+        ///  value is true.
+        /// </remarks>
+        public static bool SupressDiagnostics { get; set; } = true;
+
+        /// <summary>
+        /// Gets whether <see cref="Run"/> method execution is finished.
+        /// </summary>
+        public static bool Terminating { get => terminating; }
+
+        /// <summary>
+        /// Gets the <see cref="Application"/> object for the currently
+        /// runnning application.
         /// </summary>
         public static Application Current
         {
@@ -154,23 +113,30 @@ namespace Alternet.UI
             {
                 // todo: maybe make it thread static?
                 // todo: maybe move this to native?
-                return current ?? throw new InvalidOperationException(ErrorMessages.CurrentApplicationIsNotSet);
+                return current ?? throw new InvalidOperationException(
+                    ErrorMessages.CurrentApplicationIsNotSet);
             }
         }
 
         /// <summary>
         /// Gets the instantiated windows in an application.
         /// </summary>
-        /// <value>A <see cref="IReadOnlyList{Window}"/> that contains references to all window objects in the current application.</value>
+        /// <value>A <see cref="IReadOnlyList{Window}"/> that contains
+        /// references to all window objects in the current application.</value>
         public IReadOnlyList<Window> Windows => windows;
 
         /// <summary>
         /// Gets whether <see cref="Dispose(bool)"/> has been called.
         /// </summary>
-        public bool IsDisposed { get => isDisposed; private set => isDisposed = value; }
+        public bool IsDisposed
+        {
+            get => isDisposed;
+            private set => isDisposed = value;
+        }
 
         /// <summary>
-        /// Gets or sets a <see cref="UI.VisualTheme"/> that is used by UI controls in the application.
+        /// Gets or sets a <see cref="UI.VisualTheme"/> that is used by
+        /// UI controls in the application.
         /// </summary>
         public VisualTheme VisualTheme
         {
@@ -282,7 +248,8 @@ namespace Alternet.UI
         /// <summary>
         /// Instructs the application how to respond to unhandled exceptions.
         /// </summary>
-        /// <param name="mode">An <see cref="UnhandledExceptionMode"/> value describing how the application should
+        /// <param name="mode">An <see cref="UnhandledExceptionMode"/>
+        /// value describing how the application should
         /// behave if an exception is thrown without being caught.</param>
         public void SetUnhandledExceptionMode(UnhandledExceptionMode mode)
         {
@@ -290,7 +257,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Informs all message pumps that they must terminate, and then closes all application windows after the messages have been processed.
+        /// Informs all message pumps that they must terminate, and then closes
+        /// all application windows after the messages have been processed.
         /// </summary>
         public void Exit()
         {
@@ -298,17 +266,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Starts an application UI event loop and makes the specified window visible.
+        /// Starts an application UI event loop and makes the specified window
+        /// visible.
         /// Begins running a UI event processing loop on the current thread.
         /// </summary>
-        /// <param name="window">A <see cref="Window"/> that opens automatically when an application starts.</param>
-        /// <remarks>Typically, the main function of an application calls this method and passes to it the main window of the application.</remarks>
+        /// <param name="window">A <see cref="Window"/> that opens automatically
+        /// when an application starts.</param>
+        /// <remarks>Typically, the main function of an application calls this
+        /// method and passes to it the main window of the application.</remarks>
         public void Run(Window window)
         {
             if (window == null) throw new ArgumentNullException(nameof(window));
             CheckDisposed();
             window.Show();
-            nativeApplication.Run(((NativeWindowHandler)window.Handler).NativeControl);
+            nativeApplication.Run(
+                ((NativeWindowHandler)window.Handler).NativeControl);
             SynchronizationContext.Uninstall();
             terminating = true;
         }
@@ -322,6 +294,23 @@ namespace Alternet.UI
             GC.SuppressFinalize(this);
         }
 
+        [return: MaybeNull]
+        internal static T HandleThreadExceptions<T>(Func<T> func)
+        {
+            if (current == null)
+                return func();
+
+            return current.HandleThreadExceptionsCore(func);
+        }
+
+        internal static void HandleThreadExceptions(Action action)
+        {
+            if (current == null)
+                action();
+            else
+                current.HandleThreadExceptionsCore(action);
+        }
+
         internal void OnThreadException(Exception exception)
         {
             if (inOnThreadException)
@@ -330,12 +319,16 @@ namespace Alternet.UI
             inOnThreadException = true;
             try
             {
-                if (unhandledExceptionMode == UnhandledExceptionMode.ThrowException || System.Diagnostics.Debugger.IsAttached)
+                if (unhandledExceptionMode ==
+                    UnhandledExceptionMode.ThrowException
+                    || System.Diagnostics.Debugger.IsAttached)
                     throw exception;
 
                 if (threadExceptionHandler is not null)
                 {
-                    threadExceptionHandler(Thread.CurrentThread, new ThreadExceptionEventArgs(exception));
+                    threadExceptionHandler(
+                        Thread.CurrentThread,
+                        new ThreadExceptionEventArgs(exception));
                 }
                 else
                 {
@@ -385,9 +378,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Releases the unmanaged resources used by the object and optionally releases the managed resources.
+        /// Releases the unmanaged resources used by the object and
+        /// optionally releases the managed resources.
         /// </summary>
-        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        /// <param name="disposing"><c>true</c> to release both managed and
+        /// unmanaged resources; <c>false</c> to release only unmanaged
+        /// resources.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!isDisposed)
@@ -407,7 +403,44 @@ namespace Alternet.UI
             }
         }
 
-        private void NativeApplication_Idle(object? sender, EventArgs e) => Idle?.Invoke(this, EventArgs.Empty);
+        [return: MaybeNull]
+        private T HandleThreadExceptionsCore<T>(Func<T> func)
+        {
+            if (unhandledExceptionMode == UnhandledExceptionMode.ThrowException)
+                return func();
+
+            try
+            {
+                return func();
+            }
+            catch (Exception e)
+            {
+                OnThreadException(e);
+                return default!;
+            }
+        }
+
+        private void HandleThreadExceptionsCore(Action action)
+        {
+            if (unhandledExceptionMode == UnhandledExceptionMode.ThrowException)
+            {
+                action();
+                return;
+            }
+
+            try
+            {
+                action();
+            }
+            catch (Exception e)
+            {
+                OnThreadException(e);
+            }
+        }
+
+        private void NativeApplication_Idle(
+            object? sender,
+            EventArgs e) => Idle?.Invoke(this, EventArgs.Empty);
 
         private void OnVisualThemeChanged()
         {
