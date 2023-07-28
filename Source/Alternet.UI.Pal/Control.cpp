@@ -736,10 +736,7 @@ namespace Alternet::UI
     {
         auto w = GetWxWindow();
         auto wxfont = w->GetFont();
-        if (_font == nullptr) 
-        {
-            _font = new Font();
-        }
+        auto _font = new Font();
         _font->SetWxFont(wxfont);
 
         return _font;
@@ -749,12 +746,6 @@ namespace Alternet::UI
     {
         if (value == nullptr)
             return;
-
-        if (_font == nullptr)
-        {
-            _font = new Font();
-        }
-        _font->SetWxFont(value->GetWxFont());
         auto w = GetWxWindow();
         w->SetFont(value->GetWxFont());
     }

@@ -127,7 +127,7 @@ namespace Alternet::UI
 
     private:
 
-        Font* _font = nullptr;
+        //Font* _font = nullptr;
 
         bool CanSetScrollbar();
 
