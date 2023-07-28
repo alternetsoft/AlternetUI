@@ -9,6 +9,7 @@ namespace Alternet.UI
     public sealed class FontDialog : CommonDialog
     {
         private Native.FontDialog nativeDialog;
+        private Font font = Control.DefaultFont;
 
         /// <summary>
         /// Initializes a new instance of <see cref="FontDialog"/>.
@@ -155,14 +156,14 @@ namespace Alternet.UI
         {
             get
             {
-                CheckDisposed();
-                return new(nativeDialog.Font);
+                return font;
             }
 
             set
             {
-                CheckDisposed();
-                nativeDialog.Font = value.NativeFont;
+                if (value == null)
+                    return;
+                font = value;
             }
         }
 
@@ -205,6 +206,8 @@ namespace Alternet.UI
             CheckDisposed();
             var nativeOwner = owner == null ?
                 null : ((NativeWindowHandler)owner.Handler).NativeControl;
+            //nativeDialog.Font = font.NativeFont;
+
             return (ModalResult)nativeDialog.ShowModal(nativeOwner);
         }
     }

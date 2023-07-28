@@ -24,10 +24,31 @@ namespace Alternet::UI
         optional<string> _title;
 
         Window* _owner = nullptr;
-        Font* _font = nullptr;
 
         wxFontDialog* _dialog = nullptr;
 
         wxFontData& GetFontData();
+
+        bool _allowSymbols = true;
+        bool _showHelp = false;
+        bool _enableEffects = true;
+        int _restrictSelection = 0;
+        int _minRange = 0;
+        int _maxRange = 0;
+        Color _color = Color();
+        //wxFont _wxfont = wxFont();
+
+        bool DialogGetAllowSymbols();
+        void DialogSetAllowSymbols(bool value);
+        bool DialogGetShowHelp();
+        void DialogSetShowHelp(bool value);
+        bool DialogGetEnableEffects();
+        void DialogSetEnableEffects(bool value);
+        int DialogGetRestrictSelection();
+        void DialogSetRestrictSelection(int value);
+        void DialogSetRange(int minRange, int maxRange);
+        Color DialogGetColor();
+        void DialogSetColor(const Color& value);
+        wxFont DialogGetFont();
     };
 }

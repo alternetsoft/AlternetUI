@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Alternet.Drawing;
 using Alternet.UI;
 
 namespace CommonDialogsSample
@@ -20,6 +21,8 @@ namespace CommonDialogsSample
             InitEnumComboBox<MessageBoxIcon>(messageBoxIconComboBox);
             InitEnumComboBox<TestExceptionType>(exceptionTypeComboBox);
             this.ResumeLayout();
+
+            //sampleLabel.Font = Control.DefaultFont;
         }
 
         enum TestExceptionType
@@ -172,14 +175,28 @@ namespace CommonDialogsSample
 
             var dialog = new FontDialog();
 
+            //if (sampleLabel.Background is SolidBrush solidBrush)
+            //{
+            //    dialog.Color = solidBrush.Color;
+            //}
+
+            //dialog.Font = sampleLabel.Font!;
+
             if (setCustomTitleCheckBox.IsChecked)
                 dialog.Title = CustomTitle;
+
+            dialog.ShowHelp = false;
 
             var result = dialog.ShowModal(this);
 
             if (result == ModalResult.Accepted)
+            {
+                //var font = dialog.Font;
+                //sampleLabel.Font = font;
+                //sampleLabel.Background = new SolidBrush(dialog.Color);
                 ResultMessage =
-                    "Font Dialog Result: Accepted, Font = " + dialog.Font;
+                    "Font Dialog Result: Accepted";//, Font = " + font;
+            }
             else
                 ResultMessage = "Font Dialog Result: " + result.ToString();
         }
@@ -198,14 +215,22 @@ namespace CommonDialogsSample
 
             var dialog = new ColorDialog();
 
+            if(sampleLabel.Background is SolidBrush solidBrush)
+            {
+                dialog.Color = solidBrush.Color;
+            }
+
             if (setCustomTitleCheckBox.IsChecked)
                 dialog.Title = CustomTitle;
 
             var result = dialog.ShowModal(this);
 
             if (result == ModalResult.Accepted)
+            {
                 ResultMessage =
                     "Color Dialog Result: Accepted, Color = " + dialog.Color;
+                sampleLabel.Background = new SolidBrush(dialog.Color);
+            }
             else
                 ResultMessage = "Color Dialog Result: " + result.ToString();
         }

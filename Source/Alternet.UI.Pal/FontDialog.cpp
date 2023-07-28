@@ -2,79 +2,144 @@
 
 namespace Alternet::UI
 {
+
+    bool FontDialog::GetAllowSymbols()
+    {
+        return _allowSymbols;
+    }
+
+    void FontDialog::SetAllowSymbols(bool value)
+    {
+        _allowSymbols = value;
+    }
+
+    bool FontDialog::GetShowHelp()
+    {
+        return _showHelp;
+    }
+
+    void FontDialog::SetShowHelp(bool value)
+    {
+        _showHelp = value;
+    }
+
+    bool FontDialog::GetEnableEffects()
+    {
+        return _enableEffects;
+    }
+
+    void FontDialog::SetEnableEffects(bool value)
+    {
+        _enableEffects = value;
+    }
+
+    int FontDialog::GetRestrictSelection()
+    {
+        return _restrictSelection;
+    }
+
+    void FontDialog::SetRestrictSelection(int value)
+    {
+        _restrictSelection = value;
+    }
+
+    void FontDialog::SetRange(int minRange, int maxRange)
+    {
+        _minRange = minRange;
+        _maxRange = _maxRange;
+    }
+
+    Color FontDialog::GetColor()
+    {
+        return _color;
+    }
+
+    void FontDialog::SetColor(const Color& value)
+    {
+        _color = value;
+    }
+
+    Font* FontDialog::GetFont()
+    {
+        //Font* font = new Font();
+        //font->SetWxFont(_wxfont);
+        //return font;
+        return nullptr;
+    }
+
+    void FontDialog::SetFont(Font* value)
+    {
+        if (value == nullptr)
+            return;
+        //_wxfont = value->GetWxFont();
+    }
+
     wxFontData& FontDialog::GetFontData() 
     {
         wxFontData& data = GetDialog()->GetFontData();
         return data;
     }
 
-    bool FontDialog::GetAllowSymbols()
+    bool FontDialog::DialogGetAllowSymbols()
     {
         return GetFontData().GetAllowSymbols();
     }
 
-    void FontDialog::SetAllowSymbols(bool value)
+    void FontDialog::DialogSetAllowSymbols(bool value)
     {
         GetFontData().SetAllowSymbols(value);
     }
 
-    bool FontDialog::GetShowHelp()
+    bool FontDialog::DialogGetShowHelp()
     {
         return GetFontData().GetShowHelp();
     }
 
-    void FontDialog::SetShowHelp(bool value)
+    void FontDialog::DialogSetShowHelp(bool value)
     {
         GetFontData().SetShowHelp(value);
     }
 
-    bool FontDialog::GetEnableEffects()
+    bool FontDialog::DialogGetEnableEffects()
     {
         return GetFontData().GetEnableEffects();
     }
 
-    void FontDialog::SetEnableEffects(bool value)
+    void FontDialog::DialogSetEnableEffects(bool value)
     {
         GetFontData().EnableEffects(value);
     }
 
-    int FontDialog::GetRestrictSelection()
+    int FontDialog::DialogGetRestrictSelection()
     {
         return GetFontData().GetRestrictSelection();
     }
 
-    void FontDialog::SetRestrictSelection(int value)
+    void FontDialog::DialogSetRestrictSelection(int value)
     {
         GetFontData().RestrictSelection(value);
     }
 
-    void FontDialog::SetRange(int minRange, int maxRange) 
+    void FontDialog::DialogSetRange(int minRange, int maxRange)
     {
         GetFontData().SetRange(minRange, maxRange);
     }
 
-    Color FontDialog::GetColor() 
+    Color FontDialog::DialogGetColor()
     {
         return GetFontData().GetColour();
     }
 
-    void FontDialog::SetColor(const Color& value)
+    void FontDialog::DialogSetColor(const Color& value)
     {
         GetFontData().SetColour(value);
     }
 
-    Font* FontDialog::GetFont() 
+    wxFont FontDialog::DialogGetFont()
     {
         wxFontData& _data = GetDialog()->GetFontData();
-        auto font = new Font();
-        font->SetWxFont(_data.GetChosenFont());
-        return font;
-    }
-
-    void FontDialog::SetFont(Font* value)
-    {
-        wxFontData& _data = GetDialog()->GetFontData();
-        _data.SetInitialFont(value->GetWxFont());
+        auto wxf = _data.GetChosenFont();
+        return wxf;
     }
 
     optional<string> FontDialog::GetTitle()
@@ -95,10 +160,25 @@ namespace Alternet::UI
         if (ownerChanged)
             RecreateDialog();
 
+#if defined(__WXMSW__)
+        DialogSetAllowSymbols(_allowSymbols);
+        DialogSetShowHelp(_showHelp);
+        DialogSetEnableEffects(_enableEffects);
+        DialogSetRestrictSelection(_restrictSelection);
+        DialogSetRange(_minRange, _maxRange);
+#endif
+        DialogSetColor(_color);
+
+       // GetFontData().SetInitialFont(_wxfont);
+
         auto result = GetDialog()->ShowModal();
 
         if (result == wxID_OK)
         {
+            wxFont font = DialogGetFont();
+
+            //_wxfont = font;
+            _color = DialogGetColor();
             return ModalResult::Accepted;
         }
         else if (result == wxID_CANCEL)
@@ -155,3 +235,4 @@ namespace Alternet::UI
             _dialog->SetTitle(wxStr(_title.value()));
     }
 }
+

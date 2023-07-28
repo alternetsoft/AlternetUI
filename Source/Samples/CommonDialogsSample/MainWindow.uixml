@@ -2,73 +2,85 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="CommonDialogsSample.MainWindow"
         Title="Common Dialogs Sample"
-        Width="650" Height="550" StartLocation="CenterScreen">
+        Width="850" Height="550" StartLocation="CenterScreen">
   <Window.StatusBar>
     <StatusBar Name="statusBar">
       <StatusBarPanel Name="statusPanel" />
     </StatusBar>
   </Window.StatusBar>
 
-  <StackPanel Orientation="Horizontal">
-    <GroupBox Title="Common Dialogs" Margin="10" VerticalAlignment="Top">
-      <StackPanel>
-        <CheckBox Text="Set Initial Directory to User Home Dir" 
-          Name="setInitialDirectoryCheckBox" Margin="5" />
+  <VerticalStackPanel>
+    <StackPanel Orientation="Horizontal">
+      <GroupBox Title="Common Dialogs" Margin="10" VerticalAlignment="Top">
+        <StackPanel>
+          <CheckBox Text="Set Initial Directory to User Home Dir" 
+            Name="setInitialDirectoryCheckBox" Margin="5" />
 
-        <CheckBox Text="Set Title to 'Custom Title'" 
-                  Name="setCustomTitleCheckBox" Margin="5" />
+          <CheckBox Text="Set Title to 'Custom Title'" 
+                    Name="setCustomTitleCheckBox" Margin="5" />
 
-        <CheckBox Text="Set Filter" Name="setFilterCheckBox" Margin="5" />
+          <CheckBox Text="Set Filter" Name="setFilterCheckBox" Margin="5" />
 
-        <GroupBox Title="Open File Dialog" Margin="10">
-          <StackPanel>
-            <CheckBox Text="Allow Multiple Selection" 
-                      Name="allowMultipleSelectionCheckBox" Margin="5" />
-            <Button Text="Show Open File Dialog" Name="showOpenFileDialogButton" 
-            Click="ShowOpenFileDialogButton_Click" Margin="5"/>
-          </StackPanel>
-        </GroupBox>
+          <GroupBox Title="Open File Dialog" Margin="10">
+            <StackPanel>
+              <CheckBox Text="Allow Multiple Selection" 
+                        Name="allowMultipleSelectionCheckBox" Margin="5" />
+              <Button Text="Show Open File Dialog" Name="showOpenFileDialogButton" 
+              Click="ShowOpenFileDialogButton_Click" Margin="5"/>
+            </StackPanel>
+          </GroupBox>
 
-        <Button Text="Save File Dialog" Name="showSaveFileDialogButton" 
-          Click="ShowSaveFileDialogButton_Click" Margin="5"/>
-        <Button Text="Select Directory Dialog" Name="showSelectDirectoryDialogButton" 
-          Click="ShowSelectDirectoryDialogButton_Click" Margin="5"/>
-        <Button Text="Color Dialog" Name="showColorDialogButton" 
-          Click="ShowColorDialogButton_Click" Margin="5"/>
-        <Button Text="Font Dialog" Name="showFontDialogButton"
-          Click="ShowFontDialogButton_Click" Margin="5"/>
-      </StackPanel>
-    </GroupBox>
-    
-    <StackPanel Orientation="Vertical">
-		<GroupBox Title="Message Box" Margin="10" VerticalAlignment="Top" Padding="5">
-			<StackPanel Orientation="Vertical" Padding="5">
-			  <Label Text="Buttons:" Margin="5,0,5,10" VerticalAlignment="Center"/>
-			  <ComboBox Name="messageBoxButtonsComboBox" IsEditable="false" Margin="5,0,0,10" />
-
-			  <Label Text="Icon:" Margin="5,0,5,10" VerticalAlignment="Center"/>
-			  <ComboBox Name="messageBoxIconComboBox" IsEditable="false" Margin="5,0,0,10" />
-
-			  <Label Text="Default Button:" Margin="5,0,5,10" VerticalAlignment="Center"/>
-			  <ComboBox Name="messageBoxDefaultButtonComboBox" IsEditable="false" Margin="5,0,0,10" />
-
-			  <Button Text="Show Message Box" Name="showMessageBoxButton" 
-				Click="ShowMessageBoxButton_Click" Margin="5,0,0,10" />
-				</StackPanel>
-		</GroupBox>
-      
-      <GroupBox Title="Thread Exception Window" Margin="10" VerticalAlignment="Top" Padding="5">
-				<StackPanel Orientation="Vertical" Padding="5">
-					  <Label Text="Exception:" Margin="5,5,5,10" VerticalAlignment="Center"/>
-					  <ComboBox Name="exceptionTypeComboBox" IsEditable="false" Margin="5,0,0,10" />
-
-					  <Button Text="Throw Exception" Name="throwExceptionButton" 
-						Click="ThrowExceptionButton_Click" Margin="5,0,0,10"/>
-				</StackPanel>
+          <Button Text="Save File Dialog" Name="showSaveFileDialogButton" 
+            Click="ShowSaveFileDialogButton_Click" Margin="5"/>
+          <Button Text="Select Directory Dialog" Name="showSelectDirectoryDialogButton" 
+            Click="ShowSelectDirectoryDialogButton_Click" Margin="5"/>
+        </StackPanel>
       </GroupBox>
+    
+      <StackPanel Orientation="Vertical">
+		  <GroupBox Title="Message Box" Margin="10" VerticalAlignment="Top" Padding="5">
+			  <StackPanel Orientation="Vertical" Padding="5">
+			    <Label Text="Buttons:" Margin="5,0,5,10" VerticalAlignment="Center"/>
+			    <ComboBox Name="messageBoxButtonsComboBox" IsEditable="false" Margin="5,0,0,10" />
+
+			    <Label Text="Icon:" Margin="5,0,5,10" VerticalAlignment="Center"/>
+			    <ComboBox Name="messageBoxIconComboBox" IsEditable="false" Margin="5,0,0,10" />
+
+			    <Label Text="Default Button:" Margin="5,0,5,10" VerticalAlignment="Center"/>
+			    <ComboBox Name="messageBoxDefaultButtonComboBox" IsEditable="false" Margin="5,0,0,10" />
+
+			    <Button Text="Show Message Box" Name="showMessageBoxButton" 
+				  Click="ShowMessageBoxButton_Click" Margin="5,0,0,10" />
+				  </StackPanel>
+		  </GroupBox>
+      
+        <GroupBox Title="Thread Exception Window" Margin="10" VerticalAlignment="Top" Padding="5">
+				  <StackPanel Orientation="Vertical" Padding="5">
+					    <Label Text="Exception:" Margin="5,5,5,10" VerticalAlignment="Center"/>
+					    <ComboBox Name="exceptionTypeComboBox" IsEditable="false" Margin="5,0,0,10" />
+
+					    <Button Text="Throw Exception" Name="throwExceptionButton" 
+						  Click="ThrowExceptionButton_Click" Margin="5,0,0,10"/>
+				  </StackPanel>
+        </GroupBox>
+      </StackPanel>
+
+      <VerticalStackPanel>
+        <GroupBox Title="Font And Color Dialogs" Margin="10" VerticalAlignment="Top">
+          <StackPanel>
+            <Button Text="Color Dialog" Name="showColorDialogButton"
+              Click="ShowColorDialogButton_Click" Margin="5"/>
+            <Button Text="Font Dialog" Name="showFontDialogButton"
+              Click="ShowFontDialogButton_Click" Margin="5"/>
+          </StackPanel>
+        </GroupBox>  
+      
+      </VerticalStackPanel>
     </StackPanel>
-  </StackPanel>
-	
-	
-	
+
+    <Label Text="Sample Label" Name="sampleLabel" Margin="10" 
+           HorizontalAlignment="Center"/>
+
+  </VerticalStackPanel>
+
 </Window>
