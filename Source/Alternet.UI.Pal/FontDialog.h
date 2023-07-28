@@ -27,5 +27,7 @@ namespace Alternet::UI
         Font* _font = nullptr;
 
         wxFontDialog* _dialog = nullptr;
+
+        wxFontData& GetFontData();
     };
 }

@@ -2,6 +2,66 @@
 
 namespace Alternet::UI
 {
+    wxFontData& FontDialog::GetFontData() 
+    {
+        wxFontData& data = GetDialog()->GetFontData();
+        return data;
+    }
+
+    bool FontDialog::GetAllowSymbols()
+    {
+        return GetFontData().GetAllowSymbols();
+    }
+
+    void FontDialog::SetAllowSymbols(bool value)
+    {
+        GetFontData().SetAllowSymbols(value);
+    }
+
+    bool FontDialog::GetShowHelp()
+    {
+        return GetFontData().GetShowHelp();
+    }
+
+    void FontDialog::SetShowHelp(bool value)
+    {
+        GetFontData().SetShowHelp(value);
+    }
+
+    bool FontDialog::GetEnableEffects()
+    {
+        return GetFontData().GetEnableEffects();
+    }
+
+    void FontDialog::SetEnableEffects(bool value)
+    {
+        GetFontData().EnableEffects(value);
+    }
+
+    int FontDialog::GetRestrictSelection()
+    {
+        return GetFontData().GetRestrictSelection();
+    }
+
+    void FontDialog::SetRestrictSelection(int value)
+    {
+        GetFontData().RestrictSelection(value);
+    }
+
+    void FontDialog::SetRange(int minRange, int maxRange) 
+    {
+        GetFontData().SetRange(minRange, maxRange);
+    }
+
+    Color FontDialog::GetColor() 
+    {
+        return GetFontData().GetColour();
+    }
+
+    void FontDialog::SetColor(const Color& value)
+    {
+        GetFontData().SetColour(value);
+    }
 
     Font* FontDialog::GetFont() 
     {
@@ -39,7 +99,6 @@ namespace Alternet::UI
 
         if (result == wxID_OK)
         {
-            //_color = GetDialog()->GetColourData().GetColour();
             return ModalResult::Accepted;
         }
         else if (result == wxID_CANCEL)
@@ -79,7 +138,6 @@ namespace Alternet::UI
 
     FontDialog::FontDialog()
     {
-        //_color = Color(*wxBLACK);
     }
 
     FontDialog::~FontDialog()
@@ -90,9 +148,6 @@ namespace Alternet::UI
     void FontDialog::CreateDialog()
     {
         auto owner = _owner != nullptr ? _owner->GetWxWindow() : nullptr;
-
-        //_data = new wxColourData();
-        //_data->SetColour(_color);
 
         _dialog = new wxFontDialog(owner);
 
