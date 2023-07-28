@@ -9,6 +9,7 @@
 #include "Api/ComboBox.Api.h"
 #include "Api/ColorDialog.Api.h"
 #include "Api/FileDialog.Api.h"
+#include "Api/FontDialog.Api.h"
 #include "Api/SelectDirectoryDialog.Api.h"
 #include "Api/Control.Api.h"
 #include "Api/DateTimePicker.Api.h"

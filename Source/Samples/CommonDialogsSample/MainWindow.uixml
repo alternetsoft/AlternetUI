@@ -3,30 +3,40 @@
         x:Class="CommonDialogsSample.MainWindow"
         Title="Common Dialogs Sample"
         Width="650" Height="550" StartLocation="CenterScreen">
+  <Window.StatusBar>
+    <StatusBar Name="statusBar">
+      <StatusBarPanel Name="statusPanel" />
+    </StatusBar>
+  </Window.StatusBar>
+
   <StackPanel Orientation="Horizontal">
     <GroupBox Title="Common Dialogs" Margin="10" VerticalAlignment="Top">
       <StackPanel>
-        <CheckBox Text="Set Initial Directory to User Home Directory" 
-          Name="setInitialDirectoryCheckBox" Margin="10" />
+        <CheckBox Text="Set Initial Directory to User Home Dir" 
+          Name="setInitialDirectoryCheckBox" Margin="5" />
 
-        <CheckBox Text="Set Title to 'Custom Title'" Name="setCustomTitleCheckBox" Margin="10" />
+        <CheckBox Text="Set Title to 'Custom Title'" 
+                  Name="setCustomTitleCheckBox" Margin="5" />
 
-        <CheckBox Text="Set Filter" Name="setFilterCheckBox" Margin="10" />
+        <CheckBox Text="Set Filter" Name="setFilterCheckBox" Margin="5" />
 
         <GroupBox Title="Open File Dialog" Margin="10">
           <StackPanel>
-            <CheckBox Text="Allow Multiple Selection" Name="allowMultipleSelectionCheckBox" Margin="10" />
+            <CheckBox Text="Allow Multiple Selection" 
+                      Name="allowMultipleSelectionCheckBox" Margin="5" />
             <Button Text="Show Open File Dialog" Name="showOpenFileDialogButton" 
-            Click="ShowOpenFileDialogButton_Click" Margin="10"/>
+            Click="ShowOpenFileDialogButton_Click" Margin="5"/>
           </StackPanel>
         </GroupBox>
 
-        <Button Text="Show Save File Dialog" Name="showSaveFileDialogButton" 
-          Click="ShowSaveFileDialogButton_Click" Margin="10"/>
-        <Button Text="Show Select Directory Dialog" Name="showSelectDirectoryDialogButton" 
-          Click="ShowSelectDirectoryDialogButton_Click" Margin="10"/>
-        <Button Text="Show Color Dialog" Name="showColorDialogButton" 
-          Click="ShowColorDialogButton_Click" Margin="10"/>
+        <Button Text="Save File Dialog" Name="showSaveFileDialogButton" 
+          Click="ShowSaveFileDialogButton_Click" Margin="5"/>
+        <Button Text="Select Directory Dialog" Name="showSelectDirectoryDialogButton" 
+          Click="ShowSelectDirectoryDialogButton_Click" Margin="5"/>
+        <Button Text="Color Dialog" Name="showColorDialogButton" 
+          Click="ShowColorDialogButton_Click" Margin="5"/>
+        <Button Text="Font Dialog" Name="showFontDialogButton"
+          Click="ShowFontDialogButton_Click" Margin="5"/>
       </StackPanel>
     </GroupBox>
     

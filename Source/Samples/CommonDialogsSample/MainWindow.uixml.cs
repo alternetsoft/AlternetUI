@@ -10,13 +10,16 @@ namespace CommonDialogsSample
 
         public MainWindow()
         {
+            this.SuspendLayout();
             Icon = ImageSet.FromUrlOrNull("embres:CommonDialogsSample.Sample.ico");
             InitializeComponent();
 
-            InitializeEnumComboBox<MessageBoxButtons>(messageBoxButtonsComboBox);
-            InitializeEnumComboBox<MessageBoxDefaultButton>(messageBoxDefaultButtonComboBox);
-            InitializeEnumComboBox<MessageBoxIcon>(messageBoxIconComboBox);
-            InitializeEnumComboBox<TestExceptionType>(exceptionTypeComboBox);
+            InitEnumComboBox<MessageBoxButtons>(messageBoxButtonsComboBox);
+            InitEnumComboBox<MessageBoxDefaultButton>
+                (messageBoxDefaultButtonComboBox);
+            InitEnumComboBox<MessageBoxIcon>(messageBoxIconComboBox);
+            InitEnumComboBox<TestExceptionType>(exceptionTypeComboBox);
+            this.ResumeLayout();
         }
 
         enum TestExceptionType
@@ -26,7 +29,7 @@ namespace CommonDialogsSample
             FileNotFoundException,
         }
 
-        void InitializeEnumComboBox<TEnum>(ComboBox comboBox)
+        void InitEnumComboBox<TEnum>(ComboBox comboBox)
         {
             comboBox.Items.Clear();
 
@@ -41,8 +44,10 @@ namespace CommonDialogsSample
             return Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
         }
 
-        private void ShowOpenFileDialogButton_Click(object sender, EventArgs e)
+        private void ShowOpenFileDialogButton_Click(object? sender, EventArgs e)
         {
+            ResultMessage = "";
+
             var dialog = new OpenFileDialog();
 
             SetFileDialogProperties(dialog);
@@ -54,12 +59,14 @@ namespace CommonDialogsSample
             if (result == ModalResult.Accepted)
             {
                 if (dialog.AllowMultipleSelection)
-                    MessageBox.Show("Accepted, FileNames = " + String.Join(", ", dialog.FileNames), "Dialog Result");
+                    MessageBox.Show("Accepted, FileNames = " + 
+                        String.Join(", ", dialog.FileNames), "Dialog Result");
                 else
-                    MessageBox.Show("Accepted, FileName = " + dialog.FileName, "Dialog Result");
+                    ResultMessage = "Open File Dialog Result:" +
+                        "Accepted, FileName = " + Path.GetFileName(dialog.FileName);
             }
             else
-                MessageBox.Show(result.ToString(), "Dialog Result");
+                ResultMessage = "Open File Dialog Result:" + result.ToString();
         }
 
         private void SetFileDialogProperties(FileDialog dialog)
@@ -77,8 +84,11 @@ namespace CommonDialogsSample
             }
         }
 
-        private void ShowSaveFileDialogButton_Click(object sender, System.EventArgs e)
+        private void ShowSaveFileDialogButton_Click(
+            object? sender, 
+            EventArgs e)
         {
+            ResultMessage = "";
             var dialog = new SaveFileDialog();
 
             SetFileDialogProperties(dialog);
@@ -86,13 +96,18 @@ namespace CommonDialogsSample
             var result = dialog.ShowModal(this);
 
             if (result == ModalResult.Accepted)
-                MessageBox.Show("Accepted, FileName = " + dialog.FileName, "Dialog Result");
+                ResultMessage = "Save File Dialog Result:" +
+                    "Accepted, FileName = " + Path.GetFileName(dialog.FileName);
             else
-                MessageBox.Show(result.ToString(), "Dialog Result");
+                ResultMessage = "Save File Dialog Result:" + result.ToString(); 
         }
 
-        private void ShowSelectDirectoryDialogButton_Click(object sender, System.EventArgs e)
+        private void ShowSelectDirectoryDialogButton_Click(
+            object? sender, 
+            EventArgs e)
         {
+            ResultMessage = "";
+
             var dialog = new SelectDirectoryDialog();
 
             if (setInitialDirectoryCheckBox.IsChecked)
@@ -104,23 +119,26 @@ namespace CommonDialogsSample
             var result = dialog.ShowModal(this);
 
             if (result == ModalResult.Accepted)
-                MessageBox.Show("Accepted, FileName = " + dialog.DirectoryName, "Dialog Result");
+                ResultMessage = "Select Dir Dialog Result:" +
+                    "Accepted, FileName = " + Path.GetFileName(dialog.DirectoryName);
             else
-                MessageBox.Show(result.ToString(), "Dialog Result");
+                ResultMessage = "Select Dir Dialog Result:" + result.ToString();
         }
 
-        private void ShowMessageBoxButton_Click(object sender, System.EventArgs e)
+        private void ShowMessageBoxButton_Click(object? sender, System.EventArgs e)
         {
             try
             {
+                ResultMessage = "";
                 var result = MessageBox.Show(
                     "Message Box Text",
                     "Message Box Caption",
                     (MessageBoxButtons)messageBoxButtonsComboBox.SelectedItem!,
                     (MessageBoxIcon)messageBoxIconComboBox.SelectedItem!,
-                    (MessageBoxDefaultButton)messageBoxDefaultButtonComboBox.SelectedItem!);
+                    (MessageBoxDefaultButton)
+                        messageBoxDefaultButtonComboBox.SelectedItem!);
 
-                MessageBox.Show("Result: " + result, "Message Box Result");
+                ResultMessage = "Message Box Result: " + result;
             }
             catch (ArgumentException ex)
             {
@@ -128,7 +146,7 @@ namespace CommonDialogsSample
             }
         }
 
-        private void ThrowExceptionButton_Click(object sender, EventArgs e)
+        private void ThrowExceptionButton_Click(object? sender, EventArgs e)
         {
             if (System.Diagnostics.Debugger.IsAttached)
             {
@@ -138,15 +156,46 @@ namespace CommonDialogsSample
 
             throw (TestExceptionType)exceptionTypeComboBox.SelectedItem! switch
             {
-                TestExceptionType.InvalidOperationException => new InvalidOperationException("Test message"),
-                TestExceptionType.FormatException => new FormatException("Test message"),
-                TestExceptionType.FileNotFoundException => new FileNotFoundException("Test message", "MyFileName.dat"),
+                TestExceptionType.InvalidOperationException => 
+                    new InvalidOperationException("Test message"),
+                TestExceptionType.FormatException => 
+                    new FormatException("Test message"),
+                TestExceptionType.FileNotFoundException => 
+                    new FileNotFoundException("Test message", "MyFileName.dat"),
                 _ => throw new Exception(),
             };
         }
 
-        private void ShowColorDialogButton_Click(object sender, System.EventArgs e)
+        private void ShowFontDialogButton_Click(object? sender, System.EventArgs e)
         {
+            ResultMessage = "";
+
+            var dialog = new FontDialog();
+
+            if (setCustomTitleCheckBox.IsChecked)
+                dialog.Title = CustomTitle;
+
+            var result = dialog.ShowModal(this);
+
+            if (result == ModalResult.Accepted)
+                ResultMessage =
+                    "Font Dialog Result: Accepted, Font = " + dialog.Font;
+            else
+                ResultMessage = "Font Dialog Result: " + result.ToString();
+        }
+
+        private string ResultMessage
+        {
+            set
+            {
+                statusPanel.Text = value;
+            }
+        }
+
+        private void ShowColorDialogButton_Click(object? sender, System.EventArgs e)
+        {
+            ResultMessage = "";
+
             var dialog = new ColorDialog();
 
             if (setCustomTitleCheckBox.IsChecked)
@@ -155,9 +204,10 @@ namespace CommonDialogsSample
             var result = dialog.ShowModal(this);
 
             if (result == ModalResult.Accepted)
-                MessageBox.Show("Accepted, Color = " + dialog.Color, "Dialog Result");
+                ResultMessage =
+                    "Color Dialog Result: Accepted, Color = " + dialog.Color;
             else
-                MessageBox.Show(result.ToString(), "Dialog Result");
+                ResultMessage = "Color Dialog Result: " + result.ToString();
         }
     }
 }
