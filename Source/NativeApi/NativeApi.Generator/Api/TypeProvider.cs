@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 
 namespace ApiGenerator.Api
 {
@@ -59,21 +60,39 @@ namespace ApiGenerator.Api
 
         public static string GetManagedName(Type type, string defaultName)
         {
-            var attributes = type.GetCustomAttributes(typeof(ManagedNameAttribute), false);
-            if (attributes.Length == 0)
-                return defaultName;
-
-            return attributes.Cast<ManagedNameAttribute>().Single().Name;
+            return GetCustomManagedName<ManagedNameAttribute>(
+                type,
+                defaultName);
         }
 
         public static string GetManagedExternName(Type type, string defaultName)
         {
-            var attributes = type.GetCustomAttributes(typeof(ManagedExternNameAttribute), false);
+            return GetCustomManagedName<ManagedExternNameAttribute>(
+                type, 
+                defaultName);
+        }
+
+        public static string GetCustomManagedName<T>(Type type, string defaultName)
+            where T : Attribute
+        {
+            object? GetPropValue(object src, string propName) => 
+                src.GetType()?.GetProperty(propName)?.GetValue(src, null);
+
+            bool typeIsArray = type.IsArray;
+
+            if (typeIsArray)
+                type = type.GetElementType()!;
+
+            var attributes = type.GetCustomAttributes(typeof(T), false);
             if (attributes.Length == 0)
                 return defaultName;
 
-            return attributes.Cast<ManagedExternNameAttribute>().Single().Name;
-        }
+            var attr = attributes.Cast<T>().Single();
+            var s = (string)GetPropValue(attr, "Name")!;
+            if (typeIsArray)
+                s += "[]";
+            return s;
+        }        
 
         public static string GetNativeName(Type type)
         {

@@ -263,7 +263,14 @@ using System.Security;");
         {
             var method = apiMethod.Method;
             var methodName = method.Name;
-            var returnTypeName = types.GetTypeName(method.ReturnParameter.ToContextualParameter());
+
+            var tp = method.ReturnParameter.ToContextualParameter();
+            var returnTypeName = types.GetTypeName(tp);
+            var tpType = tp.GetType();
+
+            var managedDeclaringTypeName = TypeProvider.GetManagedName(
+                tpType!,
+                returnTypeName);
 
             var signatureParametersString = new StringBuilder();
             var callParametersString = new StringBuilder();
@@ -280,9 +287,21 @@ using System.Security;");
             {
                 var parameter = parameters[i];
 
-                var parameterType = types.GetTypeName(parameter.ToContextualParameter());
-                signatureParametersString.Append(parameterType + " " + parameter.Name);
-                callParametersString.Append(GetManagedToNativeArgument(parameter, types, pinvokeTypes));
+                var cparameter = parameter.ToContextualParameter();
+
+                var parameterType = 
+                    types.GetTypeName(cparameter);
+
+                var cparameterType = cparameter.GetType();
+
+                var managedParameterTypeName = TypeProvider.GetManagedName(
+                    cparameterType!,
+                    parameterType);
+
+                signatureParametersString.Append(managedParameterTypeName 
+                    + " " + parameter.Name);
+                callParametersString.Append(GetManagedToNativeArgument(
+                    parameter, types, pinvokeTypes));
 
                 if (parameter.ParameterType.IsArray)
                 {
@@ -296,7 +315,7 @@ using System.Security;");
                 }
             }
 
-            w.WriteLine($"public {GetModifiers(method)}{returnTypeName} {methodName}({signatureParametersString})");
+            w.WriteLine($"public {GetModifiers(method)}{managedDeclaringTypeName} {methodName}({signatureParametersString})");
             w.WriteLine("{");
             w.Indent++;
 
@@ -470,9 +489,13 @@ using System.Security;");
                 var elementType = type.OriginalType.GetElementType().ToContextualType();
 
                 var inputTypeName = types.GetTypeName(elementType);
+                
                 var outputTypeName = pinvokeTypes.GetTypeName(elementType);
 
-                if (inputTypeName != outputTypeName)
+                var outputTypeNameOverride = 
+                    TypeProvider.GetManagedExternName(elementType!,outputTypeName);
+
+                if (inputTypeName != outputTypeNameOverride)
                     return $"Array.ConvertAll<{inputTypeName}, {outputTypeName}>({name}, x => x)";
                 else
                     return name;

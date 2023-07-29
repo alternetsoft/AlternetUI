@@ -70,13 +70,17 @@ namespace ApiGenerator.Managed
             var propertyName = property.Name;
             var propertyTypeName = types.GetTypeName(property.ToContextualProperty());
 
+            var managedDeclaringTypeName = TypeProvider.GetManagedExternName(
+                property.PropertyType!,
+                propertyTypeName);
+
             bool isStatic = MemberProvider.IsStatic(property);
 
             if (property.GetMethod != null)
             {
                 WriteDllImport(w);
                 var argument = isStatic ? "" : "IntPtr obj";
-                w.WriteLine($"public static extern {propertyTypeName} {declaringTypeName}_Get{propertyName}_({argument});");
+                w.WriteLine($"public static extern {managedDeclaringTypeName} {declaringTypeName}_Get{propertyName}_({argument});");
                 w.WriteLine();
             }
 
@@ -84,7 +88,7 @@ namespace ApiGenerator.Managed
             {
                 WriteDllImport(w);
                 var thisArgument = isStatic ? "" : "IntPtr obj, ";
-                w.WriteLine($"public static extern void {declaringTypeName}_Set{propertyName}_({thisArgument}{propertyTypeName} value);");
+                w.WriteLine($"public static extern void {declaringTypeName}_Set{propertyName}_({thisArgument}{managedDeclaringTypeName} value);");
                 w.WriteLine();
             }
         }
@@ -95,6 +99,10 @@ namespace ApiGenerator.Managed
             var declaringTypeName = TypeProvider.GetNativeName(method.DeclaringType!);
             var methodName = method.Name;
             var returnTypeName = types.GetTypeName(method.ReturnParameter.ToContextualParameter());
+
+            var returnTypeNameOverride = TypeProvider.GetManagedExternName(
+                method.ReturnParameter.ParameterType!,
+                returnTypeName);
 
             var signatureParametersString = new StringBuilder();
             var parameters = method.GetParameters();
@@ -115,13 +123,19 @@ namespace ApiGenerator.Managed
                 var parameter = parameters[i];
 
                 var parameterType = types.GetParameterTypeName(parameter);
-                signatureParametersString.Append($"{MemberProvider.GetPInvokeAttributes(parameter)}{parameterType} {parameter.Name}");
+
+                var parameterTypeNameOverride = TypeProvider.GetManagedExternName(
+                    parameter.ParameterType!,
+                    parameterType);
+
+                signatureParametersString.Append($"{MemberProvider.GetPInvokeAttributes(parameter)}{parameterTypeNameOverride} {parameter.Name}");
 
                 if (parameter.ParameterType.IsArray)
                 {
                     signatureParametersString.Append(", ");
 
-                    var sizeParameterName = MemberProvider.GetArraySizeParameterName(parameter.Name!);
+                    var sizeParameterName = 
+                        MemberProvider.GetArraySizeParameterName(parameter.Name!);
                     signatureParametersString.Append("int " + sizeParameterName);
                 }
 
@@ -130,7 +144,7 @@ namespace ApiGenerator.Managed
             }
 
             WriteDllImport(w);
-            w.WriteLine($"public static extern {returnTypeName} {declaringTypeName}_{methodName}_({signatureParametersString});");
+            w.WriteLine($"public static extern {returnTypeNameOverride} {declaringTypeName}_{methodName}_({signatureParametersString});");
             w.WriteLine();
         }
 
