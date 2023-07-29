@@ -95,16 +95,16 @@ namespace Alternet.UI.Native
             public static extern IntPtr Image_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Size Image_GetSize_(IntPtr obj);
+            public static extern Alternet.Drawing.Size Image_GetSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Int32Size Image_GetPixelSize_(IntPtr obj);
+            public static extern Alternet.Drawing.Int32Size Image_GetPixelSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Image_LoadFromStream_(IntPtr obj, IntPtr stream);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_Initialize_(IntPtr obj, NativeApiTypes.Size size);
+            public static extern void Image_Initialize_(IntPtr obj, Alternet.Drawing.Size size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Image_CopyFrom_(IntPtr obj, IntPtr otherImage);

@@ -6,7 +6,7 @@ namespace Alternet.UI.Native
     [SuppressUnmanagedCodeSecurity]
     internal static class NativeApiTypes
     {
-        [StructLayout(LayoutKind.Sequential)]
+        /*[StructLayout(LayoutKind.Sequential)]
         public struct Int32Size
         {
             public int Width, Height;
@@ -22,9 +22,9 @@ namespace Alternet.UI.Native
 
             public static implicit operator Int32Size(Alternet.Drawing.Int32Size v)
                 => new(v.Width, v.Height);
-        }
+        }*/
 
-        [StructLayout(LayoutKind.Sequential)]
+        /*[StructLayout(LayoutKind.Sequential)]
         public struct Size
         {
             public double Width;
@@ -41,9 +41,9 @@ namespace Alternet.UI.Native
 
             public static implicit operator Size(Alternet.Drawing.Size v) =>
                 new(v.Width, v.Height);
-        }
+        }*/
 
-        [StructLayout(LayoutKind.Sequential)]
+        /*[StructLayout(LayoutKind.Sequential)]
         public struct Int32Point
         {
             public int X;
@@ -60,9 +60,9 @@ namespace Alternet.UI.Native
 
             public static implicit operator
                 Int32Point(Alternet.Drawing.Int32Point v) => new(v.X, v.Y);
-        }
+        }*/
 
-        [StructLayout(LayoutKind.Sequential)]
+        /*[StructLayout(LayoutKind.Sequential)]
         public struct Point
         {
             public double X;
@@ -79,9 +79,9 @@ namespace Alternet.UI.Native
 
             public static implicit operator Point(Alternet.Drawing.Point v)
                 => new(v.X, v.Y);
-        }
+        }*/
 
-        [StructLayout(LayoutKind.Sequential)]
+        /*[StructLayout(LayoutKind.Sequential)]
         public struct Int32Rect
         {
             public int X;
@@ -103,9 +103,9 @@ namespace Alternet.UI.Native
 
             public static implicit operator Int32Rect(Alternet.Drawing.Int32Rect v)
                 => new(v.X, v.Y, v.Width, v.Height);
-        }
+        }*/
 
-        [StructLayout(LayoutKind.Sequential)]
+        /*[StructLayout(LayoutKind.Sequential)]
         public struct Rect
         {
             public double X;
@@ -126,9 +126,9 @@ namespace Alternet.UI.Native
 
             public static implicit operator Rect(Alternet.Drawing.Rect v) =>
                 new(v.X, v.Y, v.Width, v.Height);
-        }
+        }*/
 
-        [StructLayout(LayoutKind.Sequential)]
+        /*[StructLayout(LayoutKind.Sequential)]
         public struct Thickness
         {
             public double Left;
@@ -149,7 +149,7 @@ namespace Alternet.UI.Native
 
             public static implicit operator Thickness(UI.Thickness v) =>
                 new(v.Left, v.Top, v.Right, v.Bottom);
-        }
+        }*/
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Color

@@ -164,16 +164,16 @@ namespace Alternet.UI.Native
             public static extern void PageSettings_SetLandscape_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Thickness PageSettings_GetMargins_(IntPtr obj);
+            public static extern Alternet.UI.Thickness PageSettings_GetMargins_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSettings_SetMargins_(IntPtr obj, NativeApiTypes.Thickness value);
+            public static extern void PageSettings_SetMargins_(IntPtr obj, Alternet.UI.Thickness value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Size PageSettings_GetCustomPaperSize_(IntPtr obj);
+            public static extern Alternet.Drawing.Size PageSettings_GetCustomPaperSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSettings_SetCustomPaperSize_(IntPtr obj, NativeApiTypes.Size value);
+            public static extern void PageSettings_SetCustomPaperSize_(IntPtr obj, Alternet.Drawing.Size value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PageSettings_GetUseCustomPaperSize_(IntPtr obj);

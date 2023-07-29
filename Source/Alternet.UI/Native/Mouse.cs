@@ -122,7 +122,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr Mouse_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Point Mouse_GetPosition_(IntPtr obj);
+            public static extern Alternet.Drawing.Point Mouse_GetPosition_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern MouseButtonState Mouse_GetButtonState_(IntPtr obj, MouseButton button);

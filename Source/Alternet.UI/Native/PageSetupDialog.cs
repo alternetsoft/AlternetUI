@@ -167,10 +167,10 @@ namespace Alternet.UI.Native
             public static extern void PageSetupDialog_SetDocument_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Thickness PageSetupDialog_GetMinMargins_(IntPtr obj);
+            public static extern Alternet.UI.Thickness PageSetupDialog_GetMinMargins_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PageSetupDialog_SetMinMargins_(IntPtr obj, NativeApiTypes.Thickness value);
+            public static extern void PageSetupDialog_SetMinMargins_(IntPtr obj, Alternet.UI.Thickness value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PageSetupDialog_GetMinMarginsValueSet_(IntPtr obj);

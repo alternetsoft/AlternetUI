@@ -49,7 +49,7 @@ namespace Alternet.UI.Native
         public void AddLines(Alternet.Drawing.Point[] points)
         {
             CheckDisposed();
-            NativeApi.GraphicsPath_AddLines_(NativePointer, Array.ConvertAll<Alternet.Drawing.Point, NativeApiTypes.Point>(points, x => x), points.Length);
+            NativeApi.GraphicsPath_AddLines_(NativePointer, points, points.Length);
         }
         
         public void AddLine(Alternet.Drawing.Point pt1, Alternet.Drawing.Point pt2)
@@ -139,37 +139,37 @@ namespace Alternet.UI.Native
             public static extern void GraphicsPath_Initialize_(IntPtr obj, IntPtr dc);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddLines_(IntPtr obj, NativeApiTypes.Point[] points, int pointsCount);
+            public static extern void GraphicsPath_AddLines_(IntPtr obj, Alternet.Drawing.Point[] points, int pointsCount);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddLine_(IntPtr obj, NativeApiTypes.Point pt1, NativeApiTypes.Point pt2);
+            public static extern void GraphicsPath_AddLine_(IntPtr obj, Alternet.Drawing.Point pt1, Alternet.Drawing.Point pt2);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddLineTo_(IntPtr obj, NativeApiTypes.Point pt);
+            public static extern void GraphicsPath_AddLineTo_(IntPtr obj, Alternet.Drawing.Point pt);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddEllipse_(IntPtr obj, NativeApiTypes.Rect rect);
+            public static extern void GraphicsPath_AddEllipse_(IntPtr obj, Alternet.Drawing.Rect rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddBezier_(IntPtr obj, NativeApiTypes.Point startPoint, NativeApiTypes.Point controlPoint1, NativeApiTypes.Point controlPoint2, NativeApiTypes.Point endPoint);
+            public static extern void GraphicsPath_AddBezier_(IntPtr obj, Alternet.Drawing.Point startPoint, Alternet.Drawing.Point controlPoint1, Alternet.Drawing.Point controlPoint2, Alternet.Drawing.Point endPoint);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddBezierTo_(IntPtr obj, NativeApiTypes.Point controlPoint1, NativeApiTypes.Point controlPoint2, NativeApiTypes.Point endPoint);
+            public static extern void GraphicsPath_AddBezierTo_(IntPtr obj, Alternet.Drawing.Point controlPoint1, Alternet.Drawing.Point controlPoint2, Alternet.Drawing.Point endPoint);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddArc_(IntPtr obj, NativeApiTypes.Point center, double radius, double startAngle, double sweepAngle);
+            public static extern void GraphicsPath_AddArc_(IntPtr obj, Alternet.Drawing.Point center, double radius, double startAngle, double sweepAngle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddRectangle_(IntPtr obj, NativeApiTypes.Rect rect);
+            public static extern void GraphicsPath_AddRectangle_(IntPtr obj, Alternet.Drawing.Rect rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_AddRoundedRectangle_(IntPtr obj, NativeApiTypes.Rect rect, double cornerRadius);
+            public static extern void GraphicsPath_AddRoundedRectangle_(IntPtr obj, Alternet.Drawing.Rect rect, double cornerRadius);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Rect GraphicsPath_GetBounds_(IntPtr obj);
+            public static extern Alternet.Drawing.Rect GraphicsPath_GetBounds_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GraphicsPath_StartFigure_(IntPtr obj, NativeApiTypes.Point point);
+            public static extern void GraphicsPath_StartFigure_(IntPtr obj, Alternet.Drawing.Point point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void GraphicsPath_CloseFigure_(IntPtr obj);

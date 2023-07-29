@@ -562,7 +562,7 @@ namespace Alternet.UI.Native
             public static extern void ListView_SetSelected_(IntPtr obj, int index, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr ListView_ItemHitTest_(IntPtr obj, NativeApiTypes.Point point);
+            public static extern System.IntPtr ListView_ItemHitTest_(IntPtr obj, Alternet.Drawing.Point point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern ListViewHitTestLocations ListView_GetHitTestResultLocations_(IntPtr obj, System.IntPtr hitTestResult);
@@ -580,7 +580,7 @@ namespace Alternet.UI.Native
             public static extern void ListView_BeginLabelEdit_(IntPtr obj, int itemIndex);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Rect ListView_GetItemBounds_(IntPtr obj, int itemIndex, ListViewItemBoundsPortion portion);
+            public static extern Alternet.Drawing.Rect ListView_GetItemBounds_(IntPtr obj, int itemIndex, ListViewItemBoundsPortion portion);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListView_Clear_(IntPtr obj);

@@ -180,7 +180,7 @@ namespace Alternet.UI.Native
             public static extern void TabControl_SetPageTitle_(IntPtr obj, int index, string title);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Size TabControl_GetTotalPreferredSizeFromPageSize_(IntPtr obj, NativeApiTypes.Size pageSize);
+            public static extern Alternet.Drawing.Size TabControl_GetTotalPreferredSizeFromPageSize_(IntPtr obj, Alternet.Drawing.Size pageSize);
             
         }
     }

@@ -39,7 +39,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr RadialGradientBrush_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RadialGradientBrush_Initialize_(IntPtr obj, NativeApiTypes.Point center, double radius, NativeApiTypes.Point gradientOrigin, NativeApiTypes.Color[] gradientStopsColors, int gradientStopsColorsCount, System.Double[] gradientStopsOffsets, int gradientStopsOffsetsCount);
+            public static extern void RadialGradientBrush_Initialize_(IntPtr obj, Alternet.Drawing.Point center, double radius, Alternet.Drawing.Point gradientOrigin, NativeApiTypes.Color[] gradientStopsColors, int gradientStopsColorsCount, System.Double[] gradientStopsOffsets, int gradientStopsOffsetsCount);
             
         }
     }

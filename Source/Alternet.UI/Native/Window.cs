@@ -610,16 +610,16 @@ namespace Alternet.UI.Native
             public static extern void Window_SetModalResult_(IntPtr obj, ModalResult value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Size Window_GetMinimumSize_(IntPtr obj);
+            public static extern Alternet.Drawing.Size Window_GetMinimumSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetMinimumSize_(IntPtr obj, NativeApiTypes.Size value);
+            public static extern void Window_SetMinimumSize_(IntPtr obj, Alternet.Drawing.Size value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Size Window_GetMaximumSize_(IntPtr obj);
+            public static extern Alternet.Drawing.Size Window_GetMaximumSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetMaximumSize_(IntPtr obj, NativeApiTypes.Size value);
+            public static extern void Window_SetMaximumSize_(IntPtr obj, Alternet.Drawing.Size value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Window_GetModal_(IntPtr obj);

@@ -254,7 +254,7 @@ namespace Alternet.UI.Native
             public static extern void ListBox_EnsureVisible_(IntPtr obj, int itemIndex);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_ItemHitTest_(IntPtr obj, NativeApiTypes.Point position);
+            public static extern int ListBox_ItemHitTest_(IntPtr obj, Alternet.Drawing.Point position);
             
         }
     }

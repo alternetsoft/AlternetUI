@@ -72,7 +72,7 @@ namespace Alternet.UI.Native
             public static extern void Menu_RemoveItemAt_(IntPtr obj, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_ShowContextMenu_(IntPtr obj, IntPtr control, NativeApiTypes.Point position);
+            public static extern void Menu_ShowContextMenu_(IntPtr obj, IntPtr control, Alternet.Drawing.Point position);
             
         }
     }

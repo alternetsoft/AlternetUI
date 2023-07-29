@@ -570,7 +570,7 @@ namespace Alternet.UI.Native
             public static extern void TreeView_CollapseAll_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr TreeView_ItemHitTest_(IntPtr obj, NativeApiTypes.Point point);
+            public static extern System.IntPtr TreeView_ItemHitTest_(IntPtr obj, Alternet.Drawing.Point point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern TreeViewHitTestLocations TreeView_GetHitTestResultLocations_(IntPtr obj, System.IntPtr hitTestResult);

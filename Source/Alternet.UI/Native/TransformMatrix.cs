@@ -281,10 +281,10 @@ namespace Alternet.UI.Native
             public static extern void TransformMatrix_Invert_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Point TransformMatrix_TransformPoint_(IntPtr obj, NativeApiTypes.Point point);
+            public static extern Alternet.Drawing.Point TransformMatrix_TransformPoint_(IntPtr obj, Alternet.Drawing.Point point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Size TransformMatrix_TransformSize_(IntPtr obj, NativeApiTypes.Size size);
+            public static extern Alternet.Drawing.Size TransformMatrix_TransformSize_(IntPtr obj, Alternet.Drawing.Size size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TransformMatrix_IsEqualTo_(IntPtr obj, IntPtr other);
