@@ -66,6 +66,15 @@ namespace ApiGenerator.Api
             return attributes.Cast<ManagedNameAttribute>().Single().Name;
         }
 
+        public static string GetManagedExternName(Type type, string defaultName)
+        {
+            var attributes = type.GetCustomAttributes(typeof(ManagedExternNameAttribute), false);
+            if (attributes.Length == 0)
+                return defaultName;
+
+            return attributes.Cast<ManagedExternNameAttribute>().Single().Name;
+        }
+
         public static string GetNativeName(Type type)
         {
             var nativeNameAttributes = type.GetCustomAttributes(typeof(NativeNameAttribute), false);
