@@ -10,23 +10,33 @@ namespace ApiGenerator
     {
         public static void Main(string[] args)
         {
+            bool UseNativeGenerator = true;
+
             var paths = new Paths(Path.GetFullPath(@"..\..\..\..\..\..\"));
 
             var classTypes = TypeProvider.GetClassTypes();
             ManagedGenerator.GenerateClasses(paths, classTypes);
-            NativeGenerator.GenerateClasses(paths, classTypes);
+            if(UseNativeGenerator)
+                NativeGenerator.GenerateClasses(paths, classTypes);
 
             var enumTypes = TypeProvider.GetEnumTypes();
-            NativeGenerator.GenerateEnums(paths, enumTypes);
+            if (UseNativeGenerator)
+                NativeGenerator.GenerateEnums(paths, enumTypes);
             ManagedGenerator.GenerateEnums(paths, enumTypes);
 
             var nativeEventDataTypes = TypeProvider.GetNativeEventDataTypes();
-            NativeGenerator.GenerateNativeEventDataTypes(paths, nativeEventDataTypes);
+            if (UseNativeGenerator)
+                NativeGenerator.GenerateNativeEventDataTypes(paths, nativeEventDataTypes);
             ManagedGenerator.GenerateNativeEventDataTypes(paths, nativeEventDataTypes);
 
             var managedServerClassTypes = TypeProvider.GetManagedServerClassTypes();
             ManagedGenerator.GenerateManagedServerClasses(paths, managedServerClassTypes);
-            NativeGenerator.GenerateManagedServerClasses(paths, managedServerClassTypes);
+            if (UseNativeGenerator)
+            {
+                NativeGenerator.GenerateManagedServerClasses(
+                    paths,
+                    managedServerClassTypes);
+            }
 
             Console.WriteLine("All done.");
         }
