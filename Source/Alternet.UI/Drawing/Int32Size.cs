@@ -8,6 +8,11 @@ using System.Runtime.InteropServices;
 
 namespace Alternet.Drawing
 {
+    /*
+        Please do not remove StructLayout(LayoutKind.Sequential) atrtribute.
+        Also do not change order of the fields.
+    */
+
     /// <summary>
     /// Represents the size of a rectangular region with an ordered pair
     /// of width and height.

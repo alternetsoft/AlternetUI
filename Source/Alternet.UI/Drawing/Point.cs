@@ -11,6 +11,11 @@ using Alternet.UI.Markup;
 
 namespace Alternet.Drawing
 {
+    /*
+        Please do not remove StructLayout(LayoutKind.Sequential) atrtribute.
+        Also do not change order of the fields.
+    */
+
     /// <summary>
     /// Represents an ordered pair of x and y coordinates that define a point in a two-dimensional plane.
     /// </summary>
@@ -53,7 +58,7 @@ namespace Alternet.Drawing
         {
             IFormatProvider formatProvider = TypeConverterHelper.InvariantEnglishUS;
 
-            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
+            TokenizerHelper th = new(source, formatProvider);
 
             Point value;
 
@@ -82,11 +87,12 @@ namespace Alternet.Drawing
         {
             // Helper to get the numeric list separator for a given culture.
             char separator = TokenizerHelper.GetNumericListSeparator(provider);
-            return String.Format(provider,
-                                 "{1:" + format + "}{0}{2:" + format + "}",
-                                 separator,
-                                 X,
-                                 Y);
+            return string.Format(
+                provider,
+                "{1:" + format + "}{0}{2:" + format + "}",
+                separator,
+                X,
+                Y);
         }
 
         /* TODO: uncommment when Double System.Numerics is availble. See https://github.com/dotnet/runtime/issues/24168

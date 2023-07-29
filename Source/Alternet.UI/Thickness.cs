@@ -5,6 +5,11 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
+    /*
+     Please do not remove StructLayout(LayoutKind.Sequential) atrtribute.
+     Also do not change order of the fields.
+    */
+
     /// <summary>
     /// Thickness is a value type used to describe the thickness of frame around
     /// a rectangle.

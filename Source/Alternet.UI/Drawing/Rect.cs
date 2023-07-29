@@ -11,6 +11,11 @@ using Alternet.UI.Markup;
 
 namespace Alternet.Drawing
 {
+    /*
+        Please do not remove StructLayout(LayoutKind.Sequential) atrtribute.
+        Also do not change order of the fields.
+    */
+
     /// <summary>
     /// Stores the location and size of a rectangular region.
     /// </summary>

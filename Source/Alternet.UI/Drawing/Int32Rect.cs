@@ -1,21 +1,26 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Alternet.UI;
-using Alternet.UI.Markup;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using Alternet.UI;
+using Alternet.UI.Markup;
 
 namespace Alternet.Drawing
 {
+    /*
+     Please do not remove StructLayout(LayoutKind.Sequential) atrtribute.
+     Also do not change order of the fields.
+    */
+
     /// <summary>
     /// Stores the location and size of a rectangular region.
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    //[TypeConverter("System.Drawing.RectangleConverter, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    // [TypeConverter("System.Drawing.RectangleConverter, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     public struct Int32Rect : IEquatable<Int32Rect>
     {
         /// <summary>
@@ -55,7 +60,7 @@ namespace Alternet.Drawing
         /// Creates a new <see cref='Drawing.Int32Rect'/> with the specified location and size.
         /// </summary>
         public static Int32Rect FromLTRB(int left, int top, int right, int bottom) =>
-            new Int32Rect(left, top, unchecked(right - left), unchecked(bottom - top));
+            new(left, top, unchecked(right - left), unchecked(bottom - top));
 
         /// <summary>
         /// Parse - returns an instance converted from the provided string using
