@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.Runtime.InteropServices;
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -10,6 +11,7 @@ namespace Alternet.UI
     /// It contains four doubles each corresponding to a side:
     /// Left, Top, Right, Bottom.
     /// </summary>
+    [StructLayout(LayoutKind.Sequential)]
     public struct Thickness : IEquatable<Thickness>
     {
         private double left;
