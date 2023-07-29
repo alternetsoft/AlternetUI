@@ -1,12 +1,13 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Alternet.UI;
-using Alternet.UI.Markup;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using System.Runtime.InteropServices;
+using Alternet.UI;
+using Alternet.UI.Markup;
 
 namespace Alternet.Drawing
 {
@@ -14,6 +15,7 @@ namespace Alternet.Drawing
     /// Represents the size of a rectangular region with an ordered pair of width and height.
     /// </summary>
     [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
     //[System.Runtime.CompilerServices.TypeForwardedFrom("System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     //[TypeConverter("System.Drawing.SizeFConverter, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     public struct Size : IEquatable<Size>
