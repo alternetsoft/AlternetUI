@@ -7,6 +7,16 @@ namespace ApiGenerator.Managed
 {
     internal static class ManagedGenerator
     {
+        public static void WriteAllTextSmart(string path, string contents)
+        {
+            if (File.Exists(path))
+            {
+                string s = File.ReadAllText(path);
+                if (s == contents)
+                    return;
+            }
+            File.WriteAllText(path, contents);
+        }
         public static void GenerateClasses(Paths paths, IEnumerable<Type> types)
         {
             Console.WriteLine("Generating managed client code...");
@@ -17,7 +27,7 @@ namespace ApiGenerator.Managed
                 var apiClass = apiClassGenerator.Generate(
                     ApiTypeFactory.Create(type, ApiTypeCreationMode.ManagedApiClass),
                     ApiTypeFactory.Create(type, ApiTypeCreationMode.ManagedPInvokeClass));
-                File.WriteAllText(Path.Combine(paths.ManagedApiSourcePath, type.Name + ".cs"), apiClass);
+                WriteAllTextSmart(Path.Combine(paths.ManagedApiSourcePath, type.Name + ".cs"), apiClass);
             }
         }
 
@@ -31,18 +41,18 @@ namespace ApiGenerator.Managed
                 var apiClass = apiClassGenerator.Generate(
                     ApiTypeFactory.Create(type, ApiTypeCreationMode.ManagedApiClass),
                     ApiTypeFactory.Create(type, ApiTypeCreationMode.ManagedPInvokeClass));
-                File.WriteAllText(Path.Combine(paths.ManagedServerApiSourcePath, type.Name + ".Generated.cs"), apiClass);
+                WriteAllTextSmart(Path.Combine(paths.ManagedServerApiSourcePath, type.Name + ".Generated.cs"), apiClass);
             }
         }
 
         public static void GenerateNativeEventDataTypes(Paths paths, IEnumerable<Type> types)
         {
-            File.WriteAllText(Path.Combine(paths.ManagedApiSourcePath, "NativeEventDataTypes.cs"), ManagedNativeEventDataTypesGenerator.Generate(types));
+            WriteAllTextSmart(Path.Combine(paths.ManagedApiSourcePath, "NativeEventDataTypes.cs"), ManagedNativeEventDataTypesGenerator.Generate(types));
         }
 
         public static void GenerateEnums(Paths paths, IEnumerable<Type> types)
         {
-            File.WriteAllText(Path.Combine(paths.ManagedApiSourcePath, "Enums.cs"), ManagedEnumsGenerator.Generate(types));
+            WriteAllTextSmart(Path.Combine(paths.ManagedApiSourcePath, "Enums.cs"), ManagedEnumsGenerator.Generate(types));
         }
     }
 }

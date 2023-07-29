@@ -8,6 +8,17 @@ namespace ApiGenerator.Native
 {
     internal static class NativeGenerator
     {
+        public static void WriteAllTextSmart(string path, string contents)
+        {
+            if (File.Exists(path))
+            {
+                string s = File.ReadAllText(path);
+                if (s == contents)
+                    return;
+            }
+            File.WriteAllText(path, contents);
+        }
+
         public static void GenerateClasses(Paths paths, IEnumerable<Type> types)
         {
             var cApiIndexBuilder = new StringBuilder();
@@ -18,7 +29,7 @@ namespace ApiGenerator.Native
                 GenerateCApi(paths, type, cApiIndexBuilder);
             }
 
-            File.WriteAllText(Path.Combine(paths.NativeSourcePath, "Api.cpp"), cApiIndexBuilder.ToString());
+            WriteAllTextSmart(Path.Combine(paths.NativeSourcePath, "Api.cpp"), cApiIndexBuilder.ToString());
         }
 
         public static void GenerateManagedServerClasses(Paths paths, IEnumerable<Type> types)
@@ -31,33 +42,33 @@ namespace ApiGenerator.Native
                 GenerateManagedServerCApi(paths, type, cApiIndexBuilder);
             }
 
-            File.WriteAllText(
+            WriteAllTextSmart(
                 Path.Combine(paths.NativeSourcePath, "ManagedServerApi.cpp"),
                 cApiIndexBuilder.ToString() + cppApiIndexBuilder.ToString());
         }
 
         public static void GenerateEnums(Paths paths, IEnumerable<Type> types)
         {
-            File.WriteAllText(Path.Combine(paths.NativeApiSourcePath, "Enums.h"), CppEnumsGenerator.Generate(types));
+            WriteAllTextSmart(Path.Combine(paths.NativeApiSourcePath, "Enums.h"), CppEnumsGenerator.Generate(types));
         }
 
         public static void GenerateNativeEventDataTypes(Paths paths, IEnumerable<Type> types)
         {
-            File.WriteAllText(Path.Combine(paths.NativeApiSourcePath, "NativeEventDataTypes.h"), CppNativeEventDataTypesGenerator.Generate(types));
+            WriteAllTextSmart(Path.Combine(paths.NativeApiSourcePath, "NativeEventDataTypes.h"), CppNativeEventDataTypesGenerator.Generate(types));
         }
 
         private static void GenerateCppApi(Paths paths, Type type)
         {
             var code = CppApiGenerator.Generate(ApiTypeFactory.Create(type, ApiTypeCreationMode.NativeCppApi));
             var fileName = TypeProvider.GetNativeName(type) + ".inc";
-            File.WriteAllText(Path.Combine(paths.NativeApiSourcePath, fileName), code);
+            WriteAllTextSmart(Path.Combine(paths.NativeApiSourcePath, fileName), code);
         }
 
         private static void GenerateManagedServerCppApi(Paths paths, Type type, StringBuilder indexBuilder)
         {
             var code = CppManagedServerApiGenerator.Generate(ApiTypeFactory.Create(type, ApiTypeCreationMode.NativeCppApi));
             var fileName = TypeProvider.GetNativeName(type) + ".h";
-            File.WriteAllText(Path.Combine(paths.NativeApiSourcePath, fileName), code);
+            WriteAllTextSmart(Path.Combine(paths.NativeApiSourcePath, fileName), code);
             indexBuilder.AppendLine($"#include \"Api/{fileName}\"");
         }
 
@@ -77,7 +88,7 @@ namespace ApiGenerator.Native
         {
             var code = CApiGenerator.Generate(ApiTypeFactory.Create(type, ApiTypeCreationMode.NativeCApi));
             var fileName = TypeProvider.GetNativeName(type) + ".Api.h";
-            File.WriteAllText(Path.Combine(paths.NativeApiSourcePath, fileName), code);
+            WriteAllTextSmart(Path.Combine(paths.NativeApiSourcePath, fileName), code);
             indexBuilder.AppendLine($"#include \"Api/{fileName}\"");
         }
 
@@ -85,7 +96,7 @@ namespace ApiGenerator.Native
         {
             var code = CManagedServerApiGenerator.Generate(ApiTypeFactory.Create(type, ApiTypeCreationMode.NativeCApi));
             var fileName = TypeProvider.GetNativeName(type) + ".Api.h";
-            File.WriteAllText(Path.Combine(paths.NativeApiSourcePath, fileName), code);
+            WriteAllTextSmart(Path.Combine(paths.NativeApiSourcePath, fileName), code);
             indexBuilder.AppendLine($"#include \"Api/{fileName}\"");
         }
     }
