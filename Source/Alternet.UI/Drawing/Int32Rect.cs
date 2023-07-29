@@ -6,6 +6,7 @@ using Alternet.UI.Markup;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace Alternet.Drawing
 {
@@ -13,6 +14,7 @@ namespace Alternet.Drawing
     /// Stores the location and size of a rectangular region.
     /// </summary>
     [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
     //[TypeConverter("System.Drawing.RectangleConverter, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     public struct Int32Rect : IEquatable<Int32Rect>
     {

@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace Alternet.Drawing
 {
@@ -12,7 +13,8 @@ namespace Alternet.Drawing
     /// of width and height.
     /// </summary>
     [Serializable]
-/*[TypeConverter("System.Drawing.SizeConverter, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]*/
+    [StructLayout(LayoutKind.Sequential)]
+    /*[TypeConverter("System.Drawing.SizeConverter, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]*/
     public struct Int32Size : IEquatable<Int32Size>
     {
         /// <summary>
