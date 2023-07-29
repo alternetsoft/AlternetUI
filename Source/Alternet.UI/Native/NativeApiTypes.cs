@@ -17,15 +17,18 @@ namespace Alternet.UI.Native
                 Height = height;
             }
 
-            public static implicit operator Drawing.Int32Size(Int32Size v) => new Drawing.Int32Size(v.Width, v.Height);
+            public static implicit operator Alternet.Drawing.Int32Size(Int32Size v)
+                => new(v.Width, v.Height);
 
-            public static implicit operator Int32Size(Drawing.Int32Size v) => new Int32Size(v.Width, v.Height);
+            public static implicit operator Int32Size(Alternet.Drawing.Int32Size v)
+                => new(v.Width, v.Height);
         }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Size
         {
-            public double Width, Height;
+            public double Width;
+            public double Height;
 
             public Size(double width, double height)
             {
@@ -33,15 +36,18 @@ namespace Alternet.UI.Native
                 Height = height;
             }
 
-            public static implicit operator Drawing.Size(Size v) => new Drawing.Size(v.Width, v.Height);
+            public static implicit operator
+                Alternet.Drawing.Size(Size v) => new (v.Width, v.Height);
 
-            public static implicit operator Size(Drawing.Size v) => new Size(v.Width, v.Height);
+            public static implicit operator Size(Alternet.Drawing.Size v) =>
+                new(v.Width, v.Height);
         }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Int32Point
         {
-            public int X, Y;
+            public int X;
+            public int Y;
 
             public Int32Point(int x, int y)
             {
@@ -49,15 +55,18 @@ namespace Alternet.UI.Native
                 Y = y;
             }
 
-            public static implicit operator Drawing.Int32Point(Int32Point v) => new Drawing.Int32Point(v.X, v.Y);
+            public static implicit operator
+                Alternet.Drawing.Int32Point(Int32Point v) => new(v.X, v.Y);
 
-            public static implicit operator Int32Point(Drawing.Int32Point v) => new Int32Point(v.X, v.Y);
+            public static implicit operator
+                Int32Point(Alternet.Drawing.Int32Point v) => new(v.X, v.Y);
         }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Point
         {
-            public double X, Y;
+            public double X;
+            public double Y;
 
             public Point(double x, double y)
             {
@@ -65,15 +74,20 @@ namespace Alternet.UI.Native
                 Y = y;
             }
 
-            public static implicit operator Drawing.Point(Point v) => new Drawing.Point(v.X, v.Y);
+            public static implicit operator Alternet.Drawing.Point(Point v) =>
+                new(v.X, v.Y);
 
-            public static implicit operator Point(Drawing.Point v) => new Point(v.X, v.Y);
+            public static implicit operator Point(Alternet.Drawing.Point v)
+                => new(v.X, v.Y);
         }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Int32Rect
         {
-            public int X, Y, Width, Height;
+            public int X;
+            public int Y;
+            public int Width;
+            public int Height;
 
             public Int32Rect(int x, int y, int width, int height)
             {
@@ -83,15 +97,21 @@ namespace Alternet.UI.Native
                 Height = height;
             }
 
-            public static implicit operator Drawing.Int32Rect(Int32Rect v) => new Drawing.Int32Rect(v.X, v.Y, v.Width, v.Height);
+            public static implicit operator
+                Alternet.Drawing.Int32Rect(Int32Rect v) =>
+                    new(v.X, v.Y, v.Width, v.Height);
 
-            public static implicit operator Int32Rect(Drawing.Int32Rect v) => new Int32Rect(v.X, v.Y, v.Width, v.Height);
+            public static implicit operator Int32Rect(Alternet.Drawing.Int32Rect v)
+                => new(v.X, v.Y, v.Width, v.Height);
         }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Rect
         {
-            public double X, Y, Width, Height;
+            public double X;
+            public double Y;
+            public double Width;
+            public double Height;
 
             public Rect(double x, double y, double width, double height)
             {
@@ -101,15 +121,20 @@ namespace Alternet.UI.Native
                 Height = height;
             }
 
-            public static implicit operator Drawing.Rect(Rect v) => new Drawing.Rect(v.X, v.Y, v.Width, v.Height);
+            public static implicit operator Alternet.Drawing.Rect(Rect v) =>
+                new(v.X, v.Y, v.Width, v.Height);
 
-            public static implicit operator Rect(Drawing.Rect v) => new Rect(v.X, v.Y, v.Width, v.Height);
+            public static implicit operator Rect(Alternet.Drawing.Rect v) =>
+                new(v.X, v.Y, v.Width, v.Height);
         }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Thickness
         {
-            public double Left, Top, Right, Bottom;
+            public double Left;
+            public double Top;
+            public double Right;
+            public double Bottom;
 
             public Thickness(double left, double top, double right, double bottom)
             {
@@ -119,21 +144,26 @@ namespace Alternet.UI.Native
                 Bottom = bottom;
             }
 
-            public static implicit operator UI.Thickness(Thickness v) => new UI.Thickness(v.Left, v.Top, v.Right, v.Bottom);
+            public static implicit operator UI.Thickness(Thickness v) =>
+                new(v.Left, v.Top, v.Right, v.Bottom);
 
-            public static implicit operator Thickness(UI.Thickness v) => new Thickness(v.Left, v.Top, v.Right, v.Bottom);
+            public static implicit operator Thickness(UI.Thickness v) =>
+                new(v.Left, v.Top, v.Right, v.Bottom);
         }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Color
         {
-            public byte R, G, B, A;
+            public byte R;
+            public byte G;
+            public byte B;
+            public byte A;
 
             private readonly byte state;
 
-            public bool IsEmpty => state == 0;
+            public readonly bool IsEmpty => state == 0;
 
-            public static readonly Color Empty = new Color();
+            public static readonly Color Empty = new();
 
             public Color(byte r, byte g, byte b, byte a)
             {
@@ -144,9 +174,14 @@ namespace Alternet.UI.Native
                 state = 1;
             }
 
-            public static implicit operator Drawing.Color(Color v) => v.IsEmpty ? Drawing.Color.Empty : Drawing.Color.FromArgb(v.A, v.R, v.G, v.B);
+            public static implicit operator
+                Alternet.Drawing.Color(Color v) =>
+                v.IsEmpty ? Alternet.Drawing.Color.Empty :
+                Alternet.Drawing.Color.FromArgb(v.A, v.R, v.G, v.B);
 
-            public static implicit operator Color(Drawing.Color color) => color.IsEmpty ? Color.Empty : new Color(color.R, color.G, color.B, color.A);
+            public static implicit operator Color(Alternet.Drawing.Color color) =>
+                color.IsEmpty ? Color.Empty :
+                new Color(color.R, color.G, color.B, color.A);
         }
 
         [StructLayout(LayoutKind.Sequential)]

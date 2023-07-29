@@ -23,6 +23,6 @@ namespace Alternet.Drawing
         /// <summary>
         /// Specifies high quality interpolation.
         /// </summary>
-        HighQuality
+        HighQuality,
     }
 }

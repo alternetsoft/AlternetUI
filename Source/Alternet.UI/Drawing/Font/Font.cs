@@ -225,8 +225,7 @@ namespace Alternet.Drawing
         public override int GetHashCode()
         {
             CheckDisposed();
-            if (hashCode == null)
-                hashCode = NativeFont.Serialize().GetHashCode();
+            hashCode ??= NativeFont.Serialize().GetHashCode();
             return hashCode.Value;
         }
 
