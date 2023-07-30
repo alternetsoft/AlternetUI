@@ -96,6 +96,17 @@ namespace Alternet.Drawing
             UI.Native.Font.Families.Select(x => new FontFamily(x)).ToArray();
 
         /// <summary>
+        /// Returns a string array that contains all names of the
+        /// <see cref="FontFamily"/>
+        /// objects currently available in the system.
+        /// </summary>
+        /// <value>
+        /// A string array of <see cref="FontFamily"/> names currently available
+        /// in the system.
+        /// </value>
+        public static string[] FamiliesNames => UI.Native.Font.Families;
+
+        /// <summary>
         /// Gets the name of this <see cref="FontFamily"/>.
         /// </summary>
         /// <value>A string that represents the name of this
@@ -105,7 +116,10 @@ namespace Alternet.Drawing
                 (UI.Native.GenericFontFamily)(GenericFamily ??
                 throw new Exception()));
 
-        internal GenericFontFamily? GenericFamily { get; }
+        /// <summary>
+        /// Gets generic font family type.
+        /// </summary>
+        public GenericFontFamily? GenericFamily { get; }
 
         /// <summary>
         /// Gets whether font family is installed on this computer.

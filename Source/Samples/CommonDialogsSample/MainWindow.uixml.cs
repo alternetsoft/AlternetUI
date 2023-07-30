@@ -8,6 +8,7 @@ namespace CommonDialogsSample
     public partial class MainWindow : Window
     {
         private const string CustomTitle = @"Custom Title";
+        private FontInfo fontInfo = Control.DefaultFont;
 
         public MainWindow()
         {
@@ -22,7 +23,17 @@ namespace CommonDialogsSample
             InitEnumComboBox<TestExceptionType>(exceptionTypeComboBox);
             this.ResumeLayout();
 
-            //sampleLabel.Font = Control.DefaultFont;
+        }
+
+        internal void LogFontFamilies()
+        {
+            var s = string.Empty;
+            foreach (string s2 in FontFamily.FamiliesNames)
+            {
+                s += s2 + Environment.NewLine;
+            }
+
+            File.WriteAllText("e:/families.txt", s);
         }
 
         enum TestExceptionType
@@ -175,12 +186,7 @@ namespace CommonDialogsSample
 
             var dialog = new FontDialog();
 
-            //if (sampleLabel.Background is SolidBrush solidBrush)
-            //{
-            //    dialog.Color = solidBrush.Color;
-            //}
-
-            //dialog.Font = sampleLabel.Font!;
+            dialog.FontInfo = fontInfo;
 
             if (setCustomTitleCheckBox.IsChecked)
                 dialog.Title = CustomTitle;
@@ -191,11 +197,11 @@ namespace CommonDialogsSample
 
             if (result == ModalResult.Accepted)
             {
-                //var font = dialog.Font;
-                //sampleLabel.Font = font;
-                //sampleLabel.Background = new SolidBrush(dialog.Color);
+                fontInfo = dialog.FontInfo;
+                sampleLabel.Font = fontInfo;
                 ResultMessage =
-                    "Font Dialog Result: Accepted";//, Font = " + font;
+                    "Font Dialog Result: Accepted, Font = " + 
+                    dialog.FontInfo.ToString();
             }
             else
                 ResultMessage = "Font Dialog Result: " + result.ToString();

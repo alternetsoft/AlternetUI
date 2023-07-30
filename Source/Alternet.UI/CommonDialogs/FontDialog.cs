@@ -9,7 +9,7 @@ namespace Alternet.UI
     public sealed class FontDialog : CommonDialog
     {
         private Native.FontDialog nativeDialog;
-        private Font font = Control.DefaultFont;
+        private FontInfo fontInfo = Control.DefaultFont;
 
         /// <summary>
         /// Initializes a new instance of <see cref="FontDialog"/>.
@@ -152,18 +152,16 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the font selected by the font dialog window.
         /// </summary>
-        public Font Font
+        public FontInfo FontInfo
         {
             get
             {
-                return font;
+                return fontInfo;
             }
 
             set
             {
-                if (value == null)
-                    return;
-                font = value;
+                fontInfo = value;
             }
         }
 
@@ -206,9 +204,26 @@ namespace Alternet.UI
             CheckDisposed();
             var nativeOwner = owner == null ?
                 null : ((NativeWindowHandler)owner.Handler).NativeControl;
-            //nativeDialog.Font = font.NativeFont;
 
-            return (ModalResult)nativeDialog.ShowModal(nativeOwner);
+            string fontName = fontInfo.FontFamily.Name;
+            var style = (UI.Native.FontStyle)fontInfo.Style;
+            var genericFamily = Font.ToNativeGenericFamily(
+                fontInfo.FontFamily.GenericFamily);
+
+            nativeDialog.SetInitialFont(
+                genericFamily,
+                fontName,
+                fontInfo.SizeInPoints,
+                style);
+
+            var result = (ModalResult)nativeDialog.ShowModal(nativeOwner);
+
+            fontInfo.Style = (FontStyle)nativeDialog.ResultFontStyle;
+            fontInfo.SizeInPoints = nativeDialog.ResultFontSizeInPoints;
+            fontInfo.FontFamily = new FontFamily(nativeDialog.ResultFontName);
+
+            return result;
+
         }
     }
 }

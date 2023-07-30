@@ -10,7 +10,14 @@ namespace Alternet::UI
     {
     }
 
-    void Font::Initialize(GenericFontFamily genericFamily, optional<string> familyName, double emSize, FontStyle style)
+    void Font::Initialize(GenericFontFamily genericFamily,
+        optional<string> familyName, double emSize, FontStyle style)
+    {
+        _font = InitializeWxFont(genericFamily, familyName, emSize, style);
+    }
+
+    wxFont Font::InitializeWxFont(GenericFontFamily genericFamily, 
+        optional<string> familyName, double emSize, FontStyle style)
     {
         wxFontInfo fontInfo(emSize);
 
@@ -32,7 +39,7 @@ namespace Alternet::UI
         if ((style & FontStyle::Underlined) != (FontStyle)0)
             fontInfo.Underlined();
 
-        _font = wxFont(fontInfo);
+        return wxFont(fontInfo);
     }
 
     void Font::InitializeWithDefaultFont()
@@ -62,19 +69,24 @@ namespace Alternet::UI
 
     FontStyle Font::GetStyle()
     {
+        return GetFontStyle(_font);
+    }
+
+    FontStyle Font::GetFontStyle(wxFont font)
+    {
         auto style = FontStyle::Regular;
-        auto wxStyle = _font.GetStyle();
-        if (wxStyle & wxFontStyle::wxFONTSTYLE_ITALIC)
+        auto wxStyle = font.GetStyle();
+        if (wxStyle == wxFontStyle::wxFONTSTYLE_ITALIC)
             style |= FontStyle::Italic;
 
-        auto weight = _font.GetWeight();
-        if (weight & wxFontWeight::wxFONTWEIGHT_BOLD)
+        auto weight = font.GetWeight();
+        if (weight > wxFontWeight::wxFONTWEIGHT_NORMAL)
             style |= FontStyle::Bold;
 
-        if (_font.GetStrikethrough())
+        if (font.GetStrikethrough())
             style |= FontStyle::Strikethrough;
 
-        if (_font.GetUnderlined())
+        if (font.GetUnderlined())
             style |= FontStyle::Underlined;
 
         return style;

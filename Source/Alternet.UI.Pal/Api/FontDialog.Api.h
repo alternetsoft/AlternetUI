@@ -3,7 +3,6 @@
 #pragma once
 
 #include "FontDialog.h"
-#include "Font.h"
 #include "Window.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
@@ -87,17 +86,24 @@ ALTERNET_UI_API void FontDialog_SetColor_(FontDialog* obj, Color value)
         });
 }
 
-ALTERNET_UI_API Font* FontDialog_GetFont_(FontDialog* obj)
+ALTERNET_UI_API char16_t* FontDialog_GetResultFontName_(FontDialog* obj)
 {
-    return MarshalExceptions<Font*>([&](){
-            return obj->GetFont();
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetResultFontName());
         });
 }
 
-ALTERNET_UI_API void FontDialog_SetFont_(FontDialog* obj, Font* value)
+ALTERNET_UI_API double FontDialog_GetResultFontSizeInPoints_(FontDialog* obj)
 {
-    MarshalExceptions<void>([&](){
-            obj->SetFont(value);
+    return MarshalExceptions<double>([&](){
+            return obj->GetResultFontSizeInPoints();
+        });
+}
+
+ALTERNET_UI_API FontStyle FontDialog_GetResultFontStyle_(FontDialog* obj)
+{
+    return MarshalExceptions<FontStyle>([&](){
+            return obj->GetResultFontStyle();
         });
 }
 
@@ -126,6 +132,13 @@ ALTERNET_UI_API void FontDialog_SetRange_(FontDialog* obj, int minRange, int max
 {
     MarshalExceptions<void>([&](){
             obj->SetRange(minRange, maxRange);
+        });
+}
+
+ALTERNET_UI_API void FontDialog_SetInitialFont_(FontDialog* obj, GenericFontFamily genericFamily, const char16_t* familyName, double emSizeInPoints, FontStyle style)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetInitialFont(genericFamily, ToOptional(familyName), emSizeInPoints, style);
         });
 }
 

@@ -14,6 +14,11 @@ namespace Alternet::UI
     public:
     
     private:
+        GenericFontFamily _genericFamily;
+        optional<string> _familyName;
+        double _fontSizeInPoints;
+        FontStyle _fontStyle;
+
         void RecreateDialog();
 
         wxFontDialog* GetDialog();

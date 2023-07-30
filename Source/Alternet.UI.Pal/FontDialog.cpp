@@ -2,6 +2,31 @@
 
 namespace Alternet::UI
 {
+    void FontDialog::SetInitialFont(GenericFontFamily genericFamily, 
+        optional<string> familyName, double emSizeInPoints, FontStyle style)
+    {
+        _genericFamily = genericFamily;
+        _familyName = familyName;
+        _fontSizeInPoints = emSizeInPoints;
+        _fontStyle = style;
+    }
+
+    string FontDialog::GetResultFontName() 
+    {
+        if (_familyName.has_value())
+            return _familyName.value();
+        return wxStr(wxEmptyString);
+    }
+
+    double FontDialog::GetResultFontSizeInPoints() 
+    {
+        return _fontSizeInPoints;
+    }
+
+    FontStyle FontDialog::GetResultFontStyle() 
+    {
+        return _fontStyle;
+    }
 
     bool FontDialog::GetAllowSymbols()
     {
@@ -57,21 +82,6 @@ namespace Alternet::UI
     void FontDialog::SetColor(const Color& value)
     {
         _color = value;
-    }
-
-    Font* FontDialog::GetFont()
-    {
-        //Font* font = new Font();
-        //font->SetWxFont(_wxfont);
-        //return font;
-        return nullptr;
-    }
-
-    void FontDialog::SetFont(Font* value)
-    {
-        if (value == nullptr)
-            return;
-        //_wxfont = value->GetWxFont();
     }
 
     wxFontData& FontDialog::GetFontData() 
@@ -169,15 +179,28 @@ namespace Alternet::UI
 #endif
         DialogSetColor(_color);
 
-       // GetFontData().SetInitialFont(_wxfont);
+        auto font = Font::InitializeWxFont(_genericFamily, _familyName, 
+            _fontSizeInPoints, _fontStyle);
+
+        GetFontData().SetInitialFont(font);
 
         auto result = GetDialog()->ShowModal();
 
         if (result == wxID_OK)
         {
             wxFont font = DialogGetFont();
+            /*
+            auto weight = font.GetWeight();
 
-            //_wxfont = font;
+            if (weight < wxFONTWEIGHT_NORMAL)
+                font.SetWeight(wxFONTWEIGHT_NORMAL);
+            if (weight > wxFONTWEIGHT_NORMAL)
+                font.SetWeight(wxFONTWEIGHT_BOLD);
+            */
+            _familyName = wxStr(font.GetFaceName());
+            _fontSizeInPoints = font.GetFractionalPointSize();
+            _fontStyle = Font::GetFontStyle(font);
+
             _color = DialogGetColor();
             return ModalResult::Accepted;
         }

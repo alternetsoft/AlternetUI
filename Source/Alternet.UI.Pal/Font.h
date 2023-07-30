@@ -13,6 +13,9 @@ namespace Alternet::UI
         void SetWxFont(wxFont font);
         void SetWxFontInfo(wxFontInfo fontInfo);
 
+        static FontStyle GetFontStyle(wxFont font);
+        static wxFont InitializeWxFont(GenericFontFamily genericFamily,
+            optional<string> familyName, double emSize, FontStyle style);
     private:
         wxFont _font;
 

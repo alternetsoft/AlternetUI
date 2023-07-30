@@ -19,7 +19,11 @@ namespace NativeApi.Api
 
         public void SetRange(int minRange, int maxRange) { }
 
-        public Font Font { get; set; }
+        public void SetInitialFont(GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, FontStyle style) => throw new Exception();
+
+        public string ResultFontName { get; }
+        public double ResultFontSizeInPoints { get; }
+        public FontStyle ResultFontStyle { get; }
 
         public string? Title { get ; set; }
     }

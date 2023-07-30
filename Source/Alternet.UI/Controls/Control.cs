@@ -209,7 +209,7 @@ namespace Alternet.UI
         /// vary depending on the user's operating system and the local settings
         /// of their system.
         /// </value>
-        public static Font DefaultFont => defaultFont ??= Font.CreateDefaultFont();
+        public static Font DefaultFont => Font.Default;
 
         /// <summary>
         /// Gets or sets size of the <see cref="Control"/>'s client area, in

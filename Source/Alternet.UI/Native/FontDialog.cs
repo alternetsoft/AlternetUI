@@ -108,22 +108,40 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Font Font
+        public string ResultFontName
         {
             get
             {
                 CheckDisposed();
-                var n = NativeApi.FontDialog_GetFont_(NativePointer);
-                var m = NativeObject.GetFromNativePointer<Font>(n, p => new Font(p))!;
-                ReleaseNativeObjectPointer(n);
+                var n = NativeApi.FontDialog_GetResultFontName_(NativePointer);
+                var m = n;
                 return m;
             }
             
-            set
+        }
+        
+        public double ResultFontSizeInPoints
+        {
+            get
             {
                 CheckDisposed();
-                NativeApi.FontDialog_SetFont_(NativePointer, value.NativePointer);
+                var n = NativeApi.FontDialog_GetResultFontSizeInPoints_(NativePointer);
+                var m = n;
+                return m;
             }
+            
+        }
+        
+        public FontStyle ResultFontStyle
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.FontDialog_GetResultFontStyle_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
         }
         
         public string? Title
@@ -155,6 +173,12 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.FontDialog_SetRange_(NativePointer, minRange, maxRange);
+        }
+        
+        public void SetInitialFont(GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, FontStyle style)
+        {
+            CheckDisposed();
+            NativeApi.FontDialog_SetInitialFont_(NativePointer, genericFamily, familyName, emSizeInPoints, style);
         }
         
         
@@ -197,10 +221,13 @@ namespace Alternet.UI.Native
             public static extern void FontDialog_SetColor_(IntPtr obj, NativeApiTypes.Color value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr FontDialog_GetFont_(IntPtr obj);
+            public static extern string FontDialog_GetResultFontName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void FontDialog_SetFont_(IntPtr obj, IntPtr value);
+            public static extern double FontDialog_GetResultFontSizeInPoints_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern FontStyle FontDialog_GetResultFontStyle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string? FontDialog_GetTitle_(IntPtr obj);
@@ -213,6 +240,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void FontDialog_SetRange_(IntPtr obj, int minRange, int maxRange);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FontDialog_SetInitialFont_(IntPtr obj, GenericFontFamily genericFamily, string? familyName, double emSizeInPoints, FontStyle style);
             
         }
     }

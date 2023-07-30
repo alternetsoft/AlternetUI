@@ -8,6 +8,8 @@ namespace Alternet.Drawing
     /// </summary>
     public sealed class Font : IDisposable, IEquatable<Font>
     {
+        private static Font? defaultFont;
+
         private bool isDisposed;
         private Font? asBold;
         private Font? asUnderlined;
@@ -62,9 +64,7 @@ namespace Alternet.Drawing
 
             NativeFont = new UI.Native.Font();
             NativeFont.Initialize(
-                family.GenericFamily == null ?
-                    UI.Native.GenericFontFamily.None :
-                    (UI.Native.GenericFontFamily)family.GenericFamily,
+                ToNativeGenericFamily(family.GenericFamily),
                 family.Name,
                 emSize,
                 (UI.Native.FontStyle)style);
@@ -74,6 +74,16 @@ namespace Alternet.Drawing
         {
             NativeFont = nativeFont;
         }
+
+        /// <summary>
+        /// Gets the default font used in the application.
+        /// </summary>
+        /// <value>
+        /// The default <see cref="Font"/> for the application. The value returned will
+        /// vary depending on the user's operating system and the local settings
+        /// of their system.
+        /// </value>
+        public static Font Default => defaultFont ??= Font.CreateDefaultFont();
 
         /// <summary>
         /// Returns bold version of the font.
@@ -276,6 +286,14 @@ namespace Alternet.Drawing
                 return false;
 
             return Equals(font);
+        }
+
+        internal static UI.Native.GenericFontFamily ToNativeGenericFamily(
+            GenericFontFamily? value)
+        {
+            return value == null ?
+                UI.Native.GenericFontFamily.None :
+                (UI.Native.GenericFontFamily)value;
         }
 
         internal static Font CreateDefaultFont()
