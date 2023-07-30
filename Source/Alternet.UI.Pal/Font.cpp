@@ -113,6 +113,8 @@ namespace Alternet::UI
             return wxFontFamily::wxFONTFAMILY_ROMAN;
         case GenericFontFamily::Monospace:
             return wxFontFamily::wxFONTFAMILY_TELETYPE;
+        case GenericFontFamily::Default:
+            return wxFontFamily::wxFONTFAMILY_DEFAULT;
         default:
             throwExInvalidOp;
         }

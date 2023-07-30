@@ -55,6 +55,7 @@ namespace Alternet::UI
         SansSerif = 1,
         Serif = 2,
         Monospace = 3,
+        Default = 4,
     };
     
     enum class InterpolationMode

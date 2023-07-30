@@ -11,8 +11,18 @@ namespace Alternet.Drawing
         private bool isDisposed;
         private Font? asBold;
         private Font? asUnderlined;
-
         private int? hashCode;
+
+        /// <summary>
+        /// Initializes a new <see cref="Font"/> using a <see cref="FontInfo"/>.
+        /// </summary>
+        public Font(FontInfo fontInfo)
+            : this(
+                  fontInfo.FontFamily,
+                  fontInfo.SizeInPoints,
+                  fontInfo.Style)
+        {
+        }
 
         /// <summary>
         /// Initializes a new <see cref="Font"/> using a specified font familty

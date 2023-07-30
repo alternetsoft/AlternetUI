@@ -54,6 +54,7 @@ namespace Alternet.UI.Native
         SansSerif = 1,
         Serif = 2,
         Monospace = 3,
+        Default = 4,
     }
     
     enum InterpolationMode

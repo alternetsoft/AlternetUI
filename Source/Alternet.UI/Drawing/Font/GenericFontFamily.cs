@@ -1,4 +1,3 @@
-
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -20,5 +19,10 @@ namespace Alternet.Drawing
         /// A generic Monospace <see cref="FontFamily"/> object.
         /// </summary>
         Monospace,
+
+        /// <summary>
+        /// Default <see cref="FontFamily"/> object.
+        /// </summary>
+        Default,
     }
 }

@@ -61,6 +61,14 @@ namespace Alternet.Drawing
             new FontFamily(GenericFontFamily.Serif);
 
         /// <summary>
+        /// Gets a generic default <see cref="FontFamily"/>.
+        /// </summary>
+        /// <value>A <see cref="FontFamily"/> that represents a generic default
+        /// font.</value>
+        public static FontFamily GenericDefault { get; } =
+            new FontFamily(GenericFontFamily.Default);
+
+        /// <summary>
         /// Gets a generic sans serif <see cref="FontFamily"/>.
         /// </summary>
         /// <value>A <see cref="FontFamily"/> that represents a generic

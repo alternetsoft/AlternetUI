@@ -7,5 +7,6 @@ namespace NativeApi.Api
         SansSerif,
         Serif,
         Monospace,
+        Default,
     }
 }
