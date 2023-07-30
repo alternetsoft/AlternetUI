@@ -92,7 +92,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns true if operating system is Windows.
         /// </summary>
-        internal static bool IsWindowsOS
+        public static bool IsWindowsOS
         {
             get
             {
@@ -103,7 +103,7 @@ namespace Alternet.UI
         /// <summary>
         /// Returns true if operating system is Linux.
         /// </summary>
-        internal static bool IsLinuxOS
+        public static bool IsLinuxOS
         {
             get
             {
@@ -114,11 +114,25 @@ namespace Alternet.UI
         /// <summary>
         /// Returns true if operating system is Apple macOS.
         /// </summary>
-        internal static bool IsMacOs
+        public static bool IsMacOs
         {
             get
             {
                 return WebBrowser.GetBackendOS() == WebBrowserBackendOS.MacOS;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value that indicates whether a debugger is attached to the process.
+        /// </summary>
+        /// <value>
+        /// true if a debugger is attached; otherwise, false.
+        /// </value>
+        public static bool IsDebuggerAttached
+        {
+            get
+            {
+                return System.Diagnostics.Debugger.IsAttached;
             }
         }
 
