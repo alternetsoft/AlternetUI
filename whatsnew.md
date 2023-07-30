@@ -1,3 +1,26 @@
+# 0.9.300 (2023 August ??)
+
+- Added LinkLabel, SplitterPanel, LayoutPanel controls.
+- Added FontDialog.
+- Added time editor to DateTimePicker. Added PopupKind, different MinDate and MaxDate properties.
+- General UI work speedup. Speedup in control creation, in events processing, in drawing (no more rect, 
+point, size, thickness conversions), in NativeApi.Generator (less full recompilation of PAL dll is needed). 
+Also removed different static dictionaries used to convert native controls to UI controls. 
+- Improved Border control. Added BorderWidth and BorderColor properties. Now it is possible to specify 
+whether to draw individual border side (BorderWidth is Thickness). Currently values are limited to 0 and 1.
+- Fixed ListView, TabControl, CheckListBox bugs.
+- Improved ListView speed with large number of items.
+- Improved Toolbars.
+- Added Image GrayScale methods.
+- Improved Samples.
+- Control.Font now works.
+- Added TreeView.HasBorder, ToolbarItem.DisabledImages, Control.GetDPI(), Toolbar.GetDefaultImageSize, 
+Control.SetBounds(), Control.Width and Height, Font.AsBold, Font.AsUnderlined, NumericUpDown.Increment, 
+WebBrowser.HasBorder, Control.GetVisibleChildren, Control.HasChildren, Control.GetVisibleChild, Application.Idle
+and other properties and methods.
+- Improved work on Linux and MacOs.
+
+
 # 0.9.201 (2023 July 9)
 
 - Fixed painting problems on window resize and move.
