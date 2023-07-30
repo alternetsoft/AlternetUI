@@ -16,6 +16,71 @@ void SetReadOnly(bool value);
 bool GetMultiline();
 void SetMultiline(bool value);
 
+
+bool GetIsRichEdit();
+void SetIsRichEdit(bool value);
+
+
+bool GetIsModified();
+void SetIsModified(bool value);
+
+
+bool GetCanCopy();
+
+
+bool GetCanCut();
+
+
+bool GetCanPaste();
+
+
+bool GetCanRedo();
+
+
+bool GetCanUndo();
+
+
+bool GetIsEmpty();
+
+
+string GetEmptyTextHint();
+void SetEmptyTextHint(const string& value);
+
+int GetLineLength(int64_t lineNo);
+string GetLineText(int64_t lineNo);
+int GetNumberOfLines();
+Point PositionToXY(int64_t pos);
+Point PositionToCoords(int64_t pos);
+void ShowPosition(int64_t pos);
+int64_t XYToPosition(int64_t x, int64_t y);
+void* GetDefaultStyle();
+bool GetStyle(int64_t position, void* style);
+bool SetDefaultStyle(void* style);
+bool SetStyle(int64_t start, int64_t end, void* style);
+void Clear();
+void Copy();
+void Cut();
+void AppendText(const string& text);
+int64_t GetInsertionPoint();
+void Paste();
+void Redo();
+void Remove(int64_t from, int64_t to);
+void Replace(int64_t from, int64_t to, const string& value);
+void SetInsertionPoint(int64_t pos);
+void SetInsertionPointEnd();
+void SetMaxLength(uint64_t len);
+void SetSelection(int64_t from, int64_t to);
+void SelectAll();
+void SelectNone();
+void Undo();
+void WriteText(const string& text);
+string GetRange(int64_t from, int64_t to);
+string GetStringSelection();
+void EmptyUndoBuffer();
+bool IsValidPosition(int64_t pos);
+int64_t GetLastPosition();
+int64_t GetSelectionStart();
+int64_t GetSelectionEnd();
 public:
 enum class TextBoxEvent
 {

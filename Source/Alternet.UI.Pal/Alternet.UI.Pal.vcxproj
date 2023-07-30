@@ -262,6 +262,7 @@
     <ClCompile Include="StdDialogButtonSizer.cpp" />
     <ClCompile Include="TabControl.cpp" />
     <ClCompile Include="TextBox.cpp" />
+    <ClCompile Include="TextBoxTextAttr.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Toolbar.cpp" />
     <ClCompile Include="ToolbarItem.cpp" />
@@ -351,6 +352,7 @@
     <ClInclude Include="Api\TabControl.Api.h" />
     <ClInclude Include="Api\TabPage.Api.h" />
     <ClInclude Include="Api\TextBox.Api.h" />
+    <ClInclude Include="Api\TextBoxTextAttr.Api.h" />
     <ClInclude Include="Api\Timer.Api.h" />
     <ClInclude Include="Api\Toolbar.Api.h" />
     <ClInclude Include="Api\ToolbarItem.Api.h" />
@@ -441,6 +443,7 @@
     <ClInclude Include="StdDialogButtonSizer.h" />
     <ClInclude Include="TabControl.h" />
     <ClInclude Include="TextBox.h" />
+    <ClInclude Include="TextBoxTextAttr.h" />
     <ClInclude Include="TextPainter.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Toolbar.h" />
@@ -520,6 +523,7 @@
     <None Include="Api\TabControl.inc" />
     <None Include="Api\TabPage.inc" />
     <None Include="Api\TextBox.inc" />
+    <None Include="Api\TextBoxTextAttr.inc" />
     <None Include="Api\Timer.inc" />
     <None Include="Api\Toolbar.inc" />
     <None Include="Api\ToolbarItem.inc" />
