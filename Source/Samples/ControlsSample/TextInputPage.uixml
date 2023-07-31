@@ -28,6 +28,12 @@
         <TextBox Name="multiLineTextBox" Multiline="true" Width="250" Height="200"
                  Margin="0,0,0,5"/>
       </VerticalStackPanel>
+
+      <VerticalStackPanel Margin="5" HorizontalAlignment="Right">
+        <Button Text="Rich Edit" Margin="0,0,0,5"
+                Click="RichEditButton_Click" />
+      </VerticalStackPanel>
+
     </HorizontalStackPanel>
   </VerticalStackPanel>
 </Control>

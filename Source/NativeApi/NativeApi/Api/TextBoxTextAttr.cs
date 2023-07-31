@@ -13,8 +13,8 @@ namespace NativeApi.Api
     {
         public static void Delete(IntPtr attr) => throw new Exception();
         
-        public static void Copy(IntPtr toAttr,IntPtr fromAttr2) => 
-            throw new Exception();
+        /*public static void Copy(IntPtr toAttr,IntPtr fromAttr) => 
+            throw new Exception();*/
 
         public static IntPtr CreateTextAttr() => throw new Exception();
 
@@ -103,7 +103,7 @@ namespace NativeApi.Api
         public static bool IsParagraphStyle(IntPtr attr) => throw new Exception();
 
         // returns false if we have any attributes set, true otherwise
-        public bool IsDefault(IntPtr attr) => throw new Exception();
+        public static bool IsDefault(IntPtr attr) => throw new Exception();
 
     }
 }

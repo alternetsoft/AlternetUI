@@ -1,10 +1,24 @@
 using System;
+using System.Runtime.InteropServices;
 
 namespace Alternet.UI
 {
     internal class NativeTextBoxHandler : NativeControlHandler<TextBox, Native.TextBox>
     {
         private bool handlingNativeControlTextChanged;
+
+        public bool IsRichEdit
+        {
+            get
+            {
+                return NativeControl.IsRichEdit;
+            }
+
+            set
+            {
+                NativeControl.IsRichEdit = value;
+            }
+        }
 
         internal override Native.Control CreateNativeControl()
         {

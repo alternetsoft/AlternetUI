@@ -28,11 +28,6 @@ namespace Alternet.UI.Native
             NativeApi.TextBoxTextAttr_Delete_(attr);
         }
         
-        public static void Copy(System.IntPtr toAttr, System.IntPtr fromAttr2)
-        {
-            NativeApi.TextBoxTextAttr_Copy_(toAttr, fromAttr2);
-        }
-        
         public static System.IntPtr CreateTextAttr()
         {
             var n = NativeApi.TextBoxTextAttr_CreateTextAttr_();
@@ -355,10 +350,9 @@ namespace Alternet.UI.Native
             return m;
         }
         
-        public bool IsDefault(System.IntPtr attr)
+        public static bool IsDefault(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_IsDefault_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_IsDefault_(attr);
             var m = n;
             return m;
         }
@@ -374,9 +368,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBoxTextAttr_Delete_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_Copy_(System.IntPtr toAttr, System.IntPtr fromAttr2);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr TextBoxTextAttr_CreateTextAttr_();
@@ -541,7 +532,7 @@ namespace Alternet.UI.Native
             public static extern bool TextBoxTextAttr_IsParagraphStyle_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_IsDefault_(IntPtr obj, System.IntPtr attr);
+            public static extern bool TextBoxTextAttr_IsDefault_(System.IntPtr attr);
             
         }
     }

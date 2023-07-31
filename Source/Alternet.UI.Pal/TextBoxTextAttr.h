@@ -11,6 +11,6 @@ namespace Alternet::UI
     public:
     
     private:
-    
+        static inline wxTextAttr* Attr(void* attr);
     };
 }

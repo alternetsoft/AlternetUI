@@ -22,13 +22,6 @@ ALTERNET_UI_API void TextBoxTextAttr_Delete_(void* attr)
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_Copy_(void* toAttr, void* fromAttr2)
-{
-    MarshalExceptions<void>([&](){
-            TextBoxTextAttr::Copy(toAttr, fromAttr2);
-        });
-}
-
 ALTERNET_UI_API void* TextBoxTextAttr_CreateTextAttr_()
 {
     return MarshalExceptions<void*>([&](){
@@ -407,10 +400,10 @@ ALTERNET_UI_API c_bool TextBoxTextAttr_IsParagraphStyle_(void* attr)
         });
 }
 
-ALTERNET_UI_API c_bool TextBoxTextAttr_IsDefault_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API c_bool TextBoxTextAttr_IsDefault_(void* attr)
 {
     return MarshalExceptions<c_bool>([&](){
-            return obj->IsDefault(attr);
+            return TextBoxTextAttr::IsDefault(attr);
         });
 }
 
