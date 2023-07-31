@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Linq;
 using Alternet.UI;
+using Alternet.Drawing;
 
 namespace ControlsSample
 {
     internal partial class TextInputPage : Control
     {
+        private const string LoremIpsum = "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit. Suspendisse tincidunt orci vitae arcu congue commodo. Proin fermentum rhoncus dictum.";
+        
         private IPageSite? site;
 
         public TextInputPage()
@@ -13,6 +16,7 @@ namespace ControlsSample
             InitializeComponent();
             multiLineTextBox.EmptyTextHint = "Sample Hint";
             textBox1.EmptyTextHint = "Sample Hint";
+            multiLineTextBox.Text = LoremIpsum;
         }
 
         public IPageSite? Site
@@ -44,7 +48,15 @@ namespace ControlsSample
 
         private void RichEditButton_Click(object? sender, EventArgs e)
         {
+            multiLineTextBox.Text = LoremIpsum;
             multiLineTextBox.IsRichEdit = true;
+
+            ITextBoxTextAttr ta = TextBox.CreateTextAttr();
+
+            ta.SetTextColor(Color.Red);
+            ta.SetBackgroundColor(Color.Yellow);
+
+            multiLineTextBox.SetStyle(6, 15, ta);
         }
     }
 }

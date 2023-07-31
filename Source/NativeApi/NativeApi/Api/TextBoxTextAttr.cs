@@ -107,3 +107,45 @@ namespace NativeApi.Api
 
     }
 }
+
+
+
+/*
+    bool HasTextColour() const { return m_colText.IsOk() && HasFlag(wxTEXT_ATTR_TEXT_COLOUR) ; }
+    bool HasBackgroundColour() const { return m_colBack.IsOk() && HasFlag(wxTEXT_ATTR_BACKGROUND_COLOUR) ; }
+    bool HasAlignment() const { return (m_textAlignment != wxTEXT_ALIGNMENT_DEFAULT) && HasFlag(wxTEXT_ATTR_ALIGNMENT) ; }
+    bool HasTabs() const { return HasFlag(wxTEXT_ATTR_TABS) ; }
+    bool HasLeftIndent() const { return HasFlag(wxTEXT_ATTR_LEFT_INDENT); }
+    bool HasRightIndent() const { return HasFlag(wxTEXT_ATTR_RIGHT_INDENT); }
+    bool HasFontWeight() const { return HasFlag(wxTEXT_ATTR_FONT_WEIGHT); }
+    bool HasFontSize() const { return HasFlag(wxTEXT_ATTR_FONT_SIZE); }
+    bool HasFontPointSize() const { return HasFlag(wxTEXT_ATTR_FONT_POINT_SIZE); }
+    bool HasFontPixelSize() const { return HasFlag(wxTEXT_ATTR_FONT_PIXEL_SIZE); }
+    bool HasFontItalic() const { return HasFlag(wxTEXT_ATTR_FONT_ITALIC); }
+    bool HasFontUnderlined() const { return HasFlag(wxTEXT_ATTR_FONT_UNDERLINE); }
+    bool HasFontStrikethrough() const { return HasFlag(wxTEXT_ATTR_FONT_STRIKETHROUGH); }
+    bool HasFontFaceName() const { return HasFlag(wxTEXT_ATTR_FONT_FACE); }
+    bool HasFontEncoding() const { return HasFlag(wxTEXT_ATTR_FONT_ENCODING); }
+    bool HasFontFamily() const { return HasFlag(wxTEXT_ATTR_FONT_FAMILY); }
+    bool HasFont() const { return HasFlag(wxTEXT_ATTR_FONT); }
+
+    bool HasParagraphSpacingAfter() const { return HasFlag(wxTEXT_ATTR_PARA_SPACING_AFTER); }
+    bool HasParagraphSpacingBefore() const { return HasFlag(wxTEXT_ATTR_PARA_SPACING_BEFORE); }
+    bool HasLineSpacing() const { return HasFlag(wxTEXT_ATTR_LINE_SPACING); }
+    bool HasCharacterStyleName() const { return HasFlag(wxTEXT_ATTR_CHARACTER_STYLE_NAME) && !m_characterStyleName.IsEmpty(); }
+    bool HasParagraphStyleName() const { return HasFlag(wxTEXT_ATTR_PARAGRAPH_STYLE_NAME) && !m_paragraphStyleName.IsEmpty(); }
+    bool HasListStyleName() const { return HasFlag(wxTEXT_ATTR_LIST_STYLE_NAME) || !m_listStyleName.IsEmpty(); }
+    bool HasBulletStyle() const { return HasFlag(wxTEXT_ATTR_BULLET_STYLE); }
+    bool HasBulletNumber() const { return HasFlag(wxTEXT_ATTR_BULLET_NUMBER); }
+    bool HasBulletText() const { return HasFlag(wxTEXT_ATTR_BULLET_TEXT); }
+    bool HasBulletName() const { return HasFlag(wxTEXT_ATTR_BULLET_NAME); }
+    bool HasURL() const { return HasFlag(wxTEXT_ATTR_URL); }
+    bool HasPageBreak() const { return HasFlag(wxTEXT_ATTR_PAGE_BREAK); }
+    bool HasTextEffects() const { return HasFlag(wxTEXT_ATTR_EFFECTS); }
+    bool HasTextEffect(int effect) const { return HasFlag(wxTEXT_ATTR_EFFECTS) && ((GetTextEffectFlags() & effect) != 0); }
+    bool HasOutlineLevel() const { return HasFlag(wxTEXT_ATTR_OUTLINE_LEVEL); }
+
+    bool HasFlag(long flag) const { return (m_flags & flag) != 0; }
+    void RemoveFlag(long flag) { m_flags &= ~flag; }
+    void AddFlag(long flag) { m_flags |= flag; } 
+ */

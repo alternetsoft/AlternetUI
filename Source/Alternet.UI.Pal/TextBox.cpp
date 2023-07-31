@@ -354,28 +354,41 @@ namespace Alternet::UI
         GetTextCtrl()->SetHint(wxStr(value));
     }
 
+
+
     void* TextBox::GetStyle(int64_t position) 
     {
-        auto result = GetTextCtrl()->GetStyle(position, _textAttr);
+        wxTextAttr textAttr;
+
+        auto result = GetTextCtrl()->GetStyle(position, textAttr);
         if (!result)
             return nullptr;
-        return &_textAttr;
+
+        wxTextAttr* style = new wxTextAttr();
+        style->Copy(textAttr);
+        return style;
     }
 
     bool TextBox::SetDefaultStyle(void* style)
     {
-        return GetTextCtrl()->SetDefaultStyle((wxTextAttr&)style);
+        wxTextAttr* s = (wxTextAttr*)style;
+
+        return GetTextCtrl()->SetDefaultStyle(*s);
     }
 
     bool TextBox::SetStyle(int64_t start, int64_t end, void* style)
     {
-        return GetTextCtrl()->SetStyle(start, end, (wxTextAttr&)style);
+        wxTextAttr* s = (wxTextAttr*)style;
+
+        return GetTextCtrl()->SetStyle(start, end, *s);
     }
 
     void* TextBox::GetDefaultStyle()
     {
-        _textAttr = GetTextCtrl()->GetDefaultStyle();
-        return &_textAttr;
+        wxTextAttr result = GetTextCtrl()->GetDefaultStyle();
+        wxTextAttr* style = new wxTextAttr();
+        style->Copy(result);
+        return style;
     }
 
     bool TextBox::GetHasSelection()

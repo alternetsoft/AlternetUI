@@ -339,6 +339,15 @@ namespace Alternet.UI
             (NativeTextBoxHandler)base.Handler;
 
         /// <summary>
+        /// Creates new custom style.
+        /// </summary>
+        /// <returns></returns>
+        public static ITextBoxTextAttr CreateTextAttr()
+        {
+            return new TextBoxTextAttr();
+        }
+
+        /// <summary>
         /// Gets the length of the specified line, not including any trailing
         /// newline character(s).
         /// </summary>
@@ -770,12 +779,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Moves caret to the beginning of the text.
+        /// </summary>
+        public void MoveToBeginOfText()
+        {
+            SetInsertionPoint(0);
+        }
+
+        /// <summary>
+        /// Moves caret to the end of the text.
+        /// </summary>
+        public void MoveToEndOfText()
+        {
+            SetInsertionPointEnd();
+        }
+
+        /// <summary>
         /// Returns the style currently used for the new text.
         /// </summary>
         /// <returns></returns>
-        internal System.IntPtr GetDefaultStyle()
+        public ITextBoxTextAttr GetDefaultStyle()
         {
-            return Handler.GetDefaultStyle();
+            return new TextBoxTextAttr(Handler.GetDefaultStyle());
         }
 
         /// <summary>
@@ -783,9 +808,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="pos">The position for which text style is returned.</param>
         /// <returns></returns>
-        internal IntPtr GetStyle(long pos)
+        public ITextBoxTextAttr GetStyle(long pos)
         {
-            return Handler.GetStyle(pos);
+            return new TextBoxTextAttr(Handler.GetStyle(pos));
         }
 
         /// <summary>
@@ -804,9 +829,11 @@ namespace Alternet.UI
         /// previous default style didn't set them neither, the global font or colors
         /// of the text control itself are used as fall back.
         /// </remarks>
-        internal bool SetDefaultStyle(System.IntPtr style)
+        public bool SetDefaultStyle(ITextBoxTextAttr style)
         {
-            return Handler.SetDefaultStyle(style);
+            if (style is not TextBoxTextAttr s)
+                return false;
+            return Handler.SetDefaultStyle(s.Handle);
         }
 
         /// <summary>
@@ -823,9 +850,11 @@ namespace Alternet.UI
         /// If any attribute within style is not set, the corresponding
         /// attribute from <see cref="GetDefaultStyle"/> is used.
         /// </remarks>
-        internal bool SetStyle(long start, long end, System.IntPtr style)
+        public bool SetStyle(long start, long end, ITextBoxTextAttr style)
         {
-            return Handler.SetStyle(start, end, style);
+            if (style is not TextBoxTextAttr s)
+                return false;
+            return Handler.SetStyle(start, end, s.Handle);
         }
 
         /// <summary>

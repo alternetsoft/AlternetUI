@@ -26,7 +26,9 @@ namespace Alternet::UI
 
 	void* TextBoxTextAttr::CreateTextAttr()
 	{
-		return new wxTextAttr();
+		wxTextAttr* attr = new wxTextAttr();
+		attr->SetFlags(0);
+		return attr;
 	}
 
 	void TextBoxTextAttr::SetTextColor(void* attr, const Color& colText)
