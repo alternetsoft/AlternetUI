@@ -71,6 +71,342 @@ ALTERNET_UI_API void TextBox_SetMultiline_(TextBox* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API c_bool TextBox_GetIsRichEdit_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsRichEdit();
+        });
+}
+
+ALTERNET_UI_API void TextBox_SetIsRichEdit_(TextBox* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetIsRichEdit(value);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBox_GetHasSelection_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetHasSelection();
+        });
+}
+
+ALTERNET_UI_API c_bool TextBox_GetIsModified_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsModified();
+        });
+}
+
+ALTERNET_UI_API void TextBox_SetIsModified_(TextBox* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetIsModified(value);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBox_GetCanCopy_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetCanCopy();
+        });
+}
+
+ALTERNET_UI_API c_bool TextBox_GetCanCut_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetCanCut();
+        });
+}
+
+ALTERNET_UI_API c_bool TextBox_GetCanPaste_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetCanPaste();
+        });
+}
+
+ALTERNET_UI_API c_bool TextBox_GetCanRedo_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetCanRedo();
+        });
+}
+
+ALTERNET_UI_API c_bool TextBox_GetCanUndo_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetCanUndo();
+        });
+}
+
+ALTERNET_UI_API c_bool TextBox_GetIsEmpty_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsEmpty();
+        });
+}
+
+ALTERNET_UI_API char16_t* TextBox_GetEmptyTextHint_(TextBox* obj)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetEmptyTextHint());
+        });
+}
+
+ALTERNET_UI_API void TextBox_SetEmptyTextHint_(TextBox* obj, const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetEmptyTextHint(value);
+        });
+}
+
+ALTERNET_UI_API int TextBox_GetLineLength_(TextBox* obj, int64_t lineNo)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetLineLength(lineNo);
+        });
+}
+
+ALTERNET_UI_API char16_t* TextBox_GetLineText_(TextBox* obj, int64_t lineNo)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetLineText(lineNo));
+        });
+}
+
+ALTERNET_UI_API int TextBox_GetNumberOfLines_(TextBox* obj)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetNumberOfLines();
+        });
+}
+
+ALTERNET_UI_API Point_C TextBox_PositionToXY_(TextBox* obj, int64_t pos)
+{
+    return MarshalExceptions<Point_C>([&](){
+            return obj->PositionToXY(pos);
+        });
+}
+
+ALTERNET_UI_API Point_C TextBox_PositionToCoords_(TextBox* obj, int64_t pos)
+{
+    return MarshalExceptions<Point_C>([&](){
+            return obj->PositionToCoords(pos);
+        });
+}
+
+ALTERNET_UI_API void TextBox_ShowPosition_(TextBox* obj, int64_t pos)
+{
+    MarshalExceptions<void>([&](){
+            obj->ShowPosition(pos);
+        });
+}
+
+ALTERNET_UI_API int64_t TextBox_XYToPosition_(TextBox* obj, int64_t x, int64_t y)
+{
+    return MarshalExceptions<int64_t>([&](){
+            return obj->XYToPosition(x, y);
+        });
+}
+
+ALTERNET_UI_API void* TextBox_GetDefaultStyle_(TextBox* obj)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetDefaultStyle();
+        });
+}
+
+ALTERNET_UI_API void* TextBox_GetStyle_(TextBox* obj, int64_t position)
+{
+    return MarshalExceptions<void*>([&](){
+            return obj->GetStyle(position);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBox_SetDefaultStyle_(TextBox* obj, void* style)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->SetDefaultStyle(style);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBox_SetStyle_(TextBox* obj, int64_t start, int64_t end, void* style)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->SetStyle(start, end, style);
+        });
+}
+
+ALTERNET_UI_API void TextBox_Clear_(TextBox* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->Clear();
+        });
+}
+
+ALTERNET_UI_API void TextBox_Copy_(TextBox* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->Copy();
+        });
+}
+
+ALTERNET_UI_API void TextBox_Cut_(TextBox* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->Cut();
+        });
+}
+
+ALTERNET_UI_API void TextBox_AppendText_(TextBox* obj, const char16_t* text)
+{
+    MarshalExceptions<void>([&](){
+            obj->AppendText(text);
+        });
+}
+
+ALTERNET_UI_API int64_t TextBox_GetInsertionPoint_(TextBox* obj)
+{
+    return MarshalExceptions<int64_t>([&](){
+            return obj->GetInsertionPoint();
+        });
+}
+
+ALTERNET_UI_API void TextBox_Paste_(TextBox* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->Paste();
+        });
+}
+
+ALTERNET_UI_API void TextBox_Redo_(TextBox* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->Redo();
+        });
+}
+
+ALTERNET_UI_API void TextBox_Remove_(TextBox* obj, int64_t from, int64_t to)
+{
+    MarshalExceptions<void>([&](){
+            obj->Remove(from, to);
+        });
+}
+
+ALTERNET_UI_API void TextBox_Replace_(TextBox* obj, int64_t from, int64_t to, const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+            obj->Replace(from, to, value);
+        });
+}
+
+ALTERNET_UI_API void TextBox_SetInsertionPoint_(TextBox* obj, int64_t pos)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetInsertionPoint(pos);
+        });
+}
+
+ALTERNET_UI_API void TextBox_SetInsertionPointEnd_(TextBox* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetInsertionPointEnd();
+        });
+}
+
+ALTERNET_UI_API void TextBox_SetMaxLength_(TextBox* obj, uint64_t len)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetMaxLength(len);
+        });
+}
+
+ALTERNET_UI_API void TextBox_SetSelection_(TextBox* obj, int64_t from, int64_t to)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetSelection(from, to);
+        });
+}
+
+ALTERNET_UI_API void TextBox_SelectAll_(TextBox* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->SelectAll();
+        });
+}
+
+ALTERNET_UI_API void TextBox_SelectNone_(TextBox* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->SelectNone();
+        });
+}
+
+ALTERNET_UI_API void TextBox_Undo_(TextBox* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->Undo();
+        });
+}
+
+ALTERNET_UI_API void TextBox_WriteText_(TextBox* obj, const char16_t* text)
+{
+    MarshalExceptions<void>([&](){
+            obj->WriteText(text);
+        });
+}
+
+ALTERNET_UI_API char16_t* TextBox_GetRange_(TextBox* obj, int64_t from, int64_t to)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetRange(from, to));
+        });
+}
+
+ALTERNET_UI_API char16_t* TextBox_GetStringSelection_(TextBox* obj)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetStringSelection());
+        });
+}
+
+ALTERNET_UI_API void TextBox_EmptyUndoBuffer_(TextBox* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->EmptyUndoBuffer();
+        });
+}
+
+ALTERNET_UI_API c_bool TextBox_IsValidPosition_(TextBox* obj, int64_t pos)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->IsValidPosition(pos);
+        });
+}
+
+ALTERNET_UI_API int64_t TextBox_GetLastPosition_(TextBox* obj)
+{
+    return MarshalExceptions<int64_t>([&](){
+            return obj->GetLastPosition();
+        });
+}
+
+ALTERNET_UI_API int64_t TextBox_GetSelectionStart_(TextBox* obj)
+{
+    return MarshalExceptions<int64_t>([&](){
+            return obj->GetSelectionStart();
+        });
+}
+
+ALTERNET_UI_API int64_t TextBox_GetSelectionEnd_(TextBox* obj)
+{
+    return MarshalExceptions<int64_t>([&](){
+            return obj->GetSelectionEnd();
+        });
+}
+
 ALTERNET_UI_API void TextBox_SetEventCallback_(TextBox::TextBoxEventCallbackType callback)
 {
     TextBox::SetEventCallback(callback);

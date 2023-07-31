@@ -65,6 +65,7 @@
 #include "Api/StatusBarPanel.Api.h"
 #include "Api/TabControl.Api.h"
 #include "Api/TextBox.Api.h"
+#include "Api/TextBoxTextAttr.Api.h"
 #include "Api/Timer.Api.h"
 #include "Api/Toolbar.Api.h"
 #include "Api/ToolbarItem.Api.h"

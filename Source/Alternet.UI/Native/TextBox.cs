@@ -92,6 +92,385 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool IsRichEdit
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetIsRichEdit_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TextBox_SetIsRichEdit_(NativePointer, value);
+            }
+        }
+        
+        public bool HasSelection
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetHasSelection_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public bool IsModified
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetIsModified_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TextBox_SetIsModified_(NativePointer, value);
+            }
+        }
+        
+        public bool CanCopy
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetCanCopy_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public bool CanCut
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetCanCut_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public bool CanPaste
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetCanPaste_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public bool CanRedo
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetCanRedo_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public bool CanUndo
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetCanUndo_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public bool IsEmpty
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetIsEmpty_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
+        public string EmptyTextHint
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetEmptyTextHint_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TextBox_SetEmptyTextHint_(NativePointer, value);
+            }
+        }
+        
+        public int GetLineLength(long lineNo)
+        {
+            CheckDisposed();
+            var n = NativeApi.TextBox_GetLineLength_(NativePointer, lineNo);
+            var m = n;
+            return m;
+        }
+        
+        public string GetLineText(long lineNo)
+        {
+            CheckDisposed();
+            var n = NativeApi.TextBox_GetLineText_(NativePointer, lineNo);
+            var m = n;
+            return m;
+        }
+        
+        public int GetNumberOfLines()
+        {
+            CheckDisposed();
+            var n = NativeApi.TextBox_GetNumberOfLines_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public Alternet.Drawing.Point PositionToXY(long pos)
+        {
+            CheckDisposed();
+            var n = NativeApi.TextBox_PositionToXY_(NativePointer, pos);
+            var m = n;
+            return m;
+        }
+        
+        public Alternet.Drawing.Point PositionToCoords(long pos)
+        {
+            CheckDisposed();
+            var n = NativeApi.TextBox_PositionToCoords_(NativePointer, pos);
+            var m = n;
+            return m;
+        }
+        
+        public void ShowPosition(long pos)
+        {
+            CheckDisposed();
+            NativeApi.TextBox_ShowPosition_(NativePointer, pos);
+        }
+        
+        public long XYToPosition(long x, long y)
+        {
+            CheckDisposed();
+            var n = NativeApi.TextBox_XYToPosition_(NativePointer, x, y);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr GetDefaultStyle()
+        {
+            CheckDisposed();
+            var n = NativeApi.TextBox_GetDefaultStyle_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public System.IntPtr GetStyle(long position)
+        {
+            CheckDisposed();
+            var n = NativeApi.TextBox_GetStyle_(NativePointer, position);
+            var m = n;
+            return m;
+        }
+        
+        public bool SetDefaultStyle(System.IntPtr style)
+        {
+            CheckDisposed();
+            var n = NativeApi.TextBox_SetDefaultStyle_(NativePointer, style);
+            var m = n;
+            return m;
+        }
+        
+        public bool SetStyle(long start, long end, System.IntPtr style)
+        {
+            CheckDisposed();
+            var n = NativeApi.TextBox_SetStyle_(NativePointer, start, end, style);
+            var m = n;
+            return m;
+        }
+        
+        public void Clear()
+        {
+            CheckDisposed();
+            NativeApi.TextBox_Clear_(NativePointer);
+        }
+        
+        public void Copy()
+        {
+            CheckDisposed();
+            NativeApi.TextBox_Copy_(NativePointer);
+        }
+        
+        public void Cut()
+        {
+            CheckDisposed();
+            NativeApi.TextBox_Cut_(NativePointer);
+        }
+        
+        public void AppendText(string text)
+        {
+            CheckDisposed();
+            NativeApi.TextBox_AppendText_(NativePointer, text);
+        }
+        
+        public long GetInsertionPoint()
+        {
+            CheckDisposed();
+            var n = NativeApi.TextBox_GetInsertionPoint_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public void Paste()
+        {
+            CheckDisposed();
+            NativeApi.TextBox_Paste_(NativePointer);
+        }
+        
+        public void Redo()
+        {
+            CheckDisposed();
+            NativeApi.TextBox_Redo_(NativePointer);
+        }
+        
+        public void Remove(long from, long to)
+        {
+            CheckDisposed();
+            NativeApi.TextBox_Remove_(NativePointer, from, to);
+        }
+        
+        public void Replace(long from, long to, string value)
+        {
+            CheckDisposed();
+            NativeApi.TextBox_Replace_(NativePointer, from, to, value);
+        }
+        
+        public void SetInsertionPoint(long pos)
+        {
+            CheckDisposed();
+            NativeApi.TextBox_SetInsertionPoint_(NativePointer, pos);
+        }
+        
+        public void SetInsertionPointEnd()
+        {
+            CheckDisposed();
+            NativeApi.TextBox_SetInsertionPointEnd_(NativePointer);
+        }
+        
+        public void SetMaxLength(ulong len)
+        {
+            CheckDisposed();
+            NativeApi.TextBox_SetMaxLength_(NativePointer, len);
+        }
+        
+        public void SetSelection(long from, long to)
+        {
+            CheckDisposed();
+            NativeApi.TextBox_SetSelection_(NativePointer, from, to);
+        }
+        
+        public void SelectAll()
+        {
+            CheckDisposed();
+            NativeApi.TextBox_SelectAll_(NativePointer);
+        }
+        
+        public void SelectNone()
+        {
+            CheckDisposed();
+            NativeApi.TextBox_SelectNone_(NativePointer);
+        }
+        
+        public void Undo()
+        {
+            CheckDisposed();
+            NativeApi.TextBox_Undo_(NativePointer);
+        }
+        
+        public void WriteText(string text)
+        {
+            CheckDisposed();
+            NativeApi.TextBox_WriteText_(NativePointer, text);
+        }
+        
+        public string GetRange(long from, long to)
+        {
+            CheckDisposed();
+            var n = NativeApi.TextBox_GetRange_(NativePointer, from, to);
+            var m = n;
+            return m;
+        }
+        
+        public string GetStringSelection()
+        {
+            CheckDisposed();
+            var n = NativeApi.TextBox_GetStringSelection_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public void EmptyUndoBuffer()
+        {
+            CheckDisposed();
+            NativeApi.TextBox_EmptyUndoBuffer_(NativePointer);
+        }
+        
+        public bool IsValidPosition(long pos)
+        {
+            CheckDisposed();
+            var n = NativeApi.TextBox_IsValidPosition_(NativePointer, pos);
+            var m = n;
+            return m;
+        }
+        
+        public long GetLastPosition()
+        {
+            CheckDisposed();
+            var n = NativeApi.TextBox_GetLastPosition_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public long GetSelectionStart()
+        {
+            CheckDisposed();
+            var n = NativeApi.TextBox_GetSelectionStart_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
+        public long GetSelectionEnd()
+        {
+            CheckDisposed();
+            var n = NativeApi.TextBox_GetSelectionEnd_(NativePointer);
+            var m = n;
+            return m;
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -167,6 +546,150 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBox_SetMultiline_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_GetIsRichEdit_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetIsRichEdit_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_GetHasSelection_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_GetIsModified_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetIsModified_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_GetCanCopy_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_GetCanCut_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_GetCanPaste_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_GetCanRedo_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_GetCanUndo_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_GetIsEmpty_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string TextBox_GetEmptyTextHint_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetEmptyTextHint_(IntPtr obj, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int TextBox_GetLineLength_(IntPtr obj, long lineNo);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string TextBox_GetLineText_(IntPtr obj, long lineNo);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int TextBox_GetNumberOfLines_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Point TextBox_PositionToXY_(IntPtr obj, long pos);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.Point TextBox_PositionToCoords_(IntPtr obj, long pos);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_ShowPosition_(IntPtr obj, long pos);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long TextBox_XYToPosition_(IntPtr obj, long x, long y);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr TextBox_GetDefaultStyle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr TextBox_GetStyle_(IntPtr obj, long position);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_SetDefaultStyle_(IntPtr obj, System.IntPtr style);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_SetStyle_(IntPtr obj, long start, long end, System.IntPtr style);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_Clear_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_Copy_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_Cut_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_AppendText_(IntPtr obj, string text);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long TextBox_GetInsertionPoint_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_Paste_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_Redo_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_Remove_(IntPtr obj, long from, long to);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_Replace_(IntPtr obj, long from, long to, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetInsertionPoint_(IntPtr obj, long pos);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetInsertionPointEnd_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetMaxLength_(IntPtr obj, ulong len);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetSelection_(IntPtr obj, long from, long to);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SelectAll_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SelectNone_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_Undo_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_WriteText_(IntPtr obj, string text);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string TextBox_GetRange_(IntPtr obj, long from, long to);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string TextBox_GetStringSelection_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_EmptyUndoBuffer_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_IsValidPosition_(IntPtr obj, long pos);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long TextBox_GetLastPosition_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long TextBox_GetSelectionStart_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern long TextBox_GetSelectionEnd_(IntPtr obj);
             
         }
     }
