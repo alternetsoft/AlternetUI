@@ -8,15 +8,13 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines the base class for controls, which are components with 
+    /// Defines the base class for controls, which are components with
     /// visual representation.
     /// </summary>
     [System.ComponentModel.DesignerCategory("Code")]
     public class Control : FrameworkElement, ISupportInitialize, IDisposable,
         IControl
     {
-        internal static int ScreenShotCounter { get; set; } = 0;
-
         /// <summary>
         /// Identifies the <see cref="ToolTip"/> dependency property.
         /// </summary>
@@ -31,7 +29,7 @@ namespace Alternet.UI
                         new PropertyChangedCallback(OnToolTipPropertyChanged),
                         null,
                         true, // IsAnimationProhibited
-                        UpdateSourceTrigger.PropertyChanged));//UpdateSourceTrigger.LostFocus
+                        UpdateSourceTrigger.PropertyChanged));
 
         /// <summary>
         /// Identifies the <see cref="Enabled"/> dependency property.
@@ -47,11 +45,10 @@ namespace Alternet.UI
                             new PropertyChangedCallback(OnEnabledPropertyChanged),
                             null, // coerce callback
                             true, // IsAnimationProhibited
-                            UpdateSourceTrigger.PropertyChanged));// UpdateSourceTrigger.LostFocus
+                            UpdateSourceTrigger.PropertyChanged));
 
         private static readonly object?[] EmptyArray = new object?[0];
         private static readonly Size DefaultSize = new(double.NaN, double.NaN);
-        private static Font? defaultFont;
 
         private Collection<Control>? children;
         private Size size = DefaultSize;
@@ -97,7 +94,9 @@ namespace Alternet.UI
         /// Occurs when the control is redrawn.
         /// </summary>
         /// <remarks>
-        /// The <see cref="Paint"/> event is raised when the control is redrawn. It passes an instance of <see cref="PaintEventArgs"/> to the method(s) that handles the <see cref="Paint"/> event.
+        /// The <see cref="Paint"/> event is raised when the control is redrawn.
+        /// It passes an instance of <see cref="PaintEventArgs"/> to the method(s)
+        /// that handles the <see cref="Paint"/> event.
         /// </remarks>
         public event EventHandler<PaintEventArgs>? Paint;
 
@@ -120,14 +119,21 @@ namespace Alternet.UI
         /// Occurs when the control loses mouse capture.
         /// </summary>
         /// <remarks>
-        /// In rare scenarios, you might need to detect unexpected input. For example, consider the following scenarios.
+        /// In rare scenarios, you might need to detect unexpected input. 
+        /// For example, consider the following scenarios.
         /// <list type="bullet">
-        /// <item>During a mouse operation, the user opens the Start menu by pressing the Windows key or CTRL+ESC.</item>
-        /// <item>During a mouse operation, the user switches to another program by pressing ALT+TAB.</item>
-        /// <item>During a mouse operation, another program displays a window or a message box that takes focus away from the current application.</item>
+        /// <item>During a mouse operation, the user opens the Start menu by
+        /// pressing the Windows key or CTRL+ESC.</item>
+        /// <item>During a mouse operation, the user switches to another program
+        /// by pressing ALT+TAB.</item>
+        /// <item>During a mouse operation, another program displays a window or
+        /// a message box that takes focus away from the current application.</item>
         /// </list>
-        /// Mouse operations can include clicking and holding the mouse on a form or a control, or performing a mouse drag operation.
-        /// If you have to detect when a form or a control loses mouse capture for these and related unexpected scenarios, you can use the <see cref="MouseCaptureLost"/> event.
+        /// Mouse operations can include clicking and holding the mouse on a form
+        /// or a control, or performing a mouse drag operation.
+        /// If you have to detect when a form or a control loses mouse capture
+        /// for these and related unexpected scenarios, you can use the
+        /// <see cref="MouseCaptureLost"/> event.
         /// </remarks>
         public event EventHandler? MouseCaptureLost;
 
@@ -162,12 +168,14 @@ namespace Alternet.UI
         public event EventHandler? FontChanged;
 
         /// <summary>
-        /// Occurs when the value of the <see cref="VerticalAlignment"/> property changes.
+        /// Occurs when the value of the <see cref="VerticalAlignment"/>
+        /// property changes.
         /// </summary>
         public event EventHandler? VerticalAlignmentChanged;
 
         /// <summary>
-        /// Occurs when the value of the <see cref="HorizontalAlignment"/> property changes.
+        /// Occurs when the value of the <see cref="HorizontalAlignment"/>
+        /// property changes.
         /// </summary>
         public event EventHandler? HorizontalAlignmentChanged;
 
@@ -210,6 +218,8 @@ namespace Alternet.UI
         /// of their system.
         /// </value>
         public static Font DefaultFont => Font.Default;
+
+        internal static int ScreenShotCounter { get; set; } = 0;
 
         /// <summary>
         /// Gets or sets size of the <see cref="Control"/>'s client area, in
@@ -361,15 +371,6 @@ namespace Alternet.UI
 
                 borderBrush = value;
                 BorderBrushChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        protected internal virtual Rect DrawClientRectangle
-        {
-            get
-            {
-                var size = ClientSize;
-                return new(0, 0, size.Width - 1, size.Height - 1);
             }
         }
 
@@ -686,19 +687,33 @@ namespace Alternet.UI
             }
         }
 
+        internal virtual Rect DrawClientRectangle
+        {
+            get
+            {
+                var size = ClientSize;
+                return new(0, 0, size.Width - 1, size.Height - 1);
+            }
+        }
+
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Children;
+        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection =>
+            Children;
 
         private IControlHandlerFactory? ControlHandlerFactory { get; set; }
 
         /// <summary>
-        /// Executes a delegate asynchronously on the thread that the control was created on.
+        /// Executes a delegate asynchronously on the thread that the control
+        /// was created on.
         /// </summary>
-        /// <param name="method">A delegate to a method that takes parameters of the same number and type that are contained in the args parameter.</param>
-        /// <param name="args">An array of objects to pass as arguments to the given method. This can be <c>null</c> if no arguments are needed.</param>
-        /// <returns>An <see cref="IAsyncResult"/> that represents the result of the operation.</returns>
+        /// <param name="method">A delegate to a method that takes parameters
+        /// of the same number and type that are contained in the args parameter.</param>
+        /// <param name="args">An array of objects to pass as arguments to the
+        /// given method. This can be <c>null</c> if no arguments are needed.</param>
+        /// <returns>An <see cref="IAsyncResult"/> that represents the result
+        /// of the operation.</returns>
         public IAsyncResult BeginInvoke(Delegate method, object?[] args)
         {
             if (method == null)
@@ -1522,11 +1537,6 @@ namespace Alternet.UI
             c.OnToolTipPropertyChanged((string)e.OldValue, (string)e.NewValue);
         }
 
-        private void OnToolTipPropertyChanged(string oldToolTip, string newToolTip)
-        {
-            OnToolTipChanged(EventArgs.Empty);
-        }
-
         /// <summary>
         /// Raises the <see cref="ToolTipChanged"/> event.
         /// </summary>
@@ -1553,10 +1563,19 @@ namespace Alternet.UI
             control.OnEnabledPropertyChanged((bool)e.OldValue, (bool)e.NewValue);
         }
 
+#pragma warning disable IDE0060 // Remove unused parameter
+        private void OnToolTipPropertyChanged(string oldToolTip, string newToolTip)
+#pragma warning restore IDE0060 // Remove unused parameter
+        {
+            OnToolTipChanged(EventArgs.Empty);
+        }
+
         /// <summary>
-        /// Raises the <see cref="EnabledChanged"/> event and calls <see cref="OnEnabledChanged(EventArgs)"/>.
+        /// Raises the <see cref="EnabledChanged"/> event and calls
+        /// <see cref="OnEnabledChanged(EventArgs)"/>.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// event data.</param>
         private void RaiseEnabledChanged(EventArgs e)
         {
             if (e == null)
@@ -1566,7 +1585,9 @@ namespace Alternet.UI
             EnabledChanged?.Invoke(this, e);
         }
 
+#pragma warning disable IDE0060 // Remove unused parameter
         private void OnEnabledPropertyChanged(bool oldValue, bool newValue)
+#pragma warning restore IDE0060 // Remove unused parameter
         {
             RaiseEnabledChanged(EventArgs.Empty);
         }
