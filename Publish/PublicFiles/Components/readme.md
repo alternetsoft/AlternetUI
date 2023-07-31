@@ -13,8 +13,7 @@ The framework includes a platform-independent graphic device interface for rende
 
 For increased developer productivity, [AlterNET UI extension for Visual Studio](https://marketplace.visualstudio.com/items?itemName=AlternetSoftwarePTYLTD.AlternetUIForVS2022) is available.
 
-AlterNET UI Beta 2 represents a significant milestone toward releasing a production-ready cross-platform .NET UI framework for developing desktop applications on Windows, macOS, and Linux.
-In this release, we have implemented some major features primarily adopted from the WPF framework: Layout Engine, Dependency Properties, Data Binding, Keyboard and Mouse Input, Routed Events, and more.
+AlterNET UI Beta 2 implements some major features primarily adopted from the WPF framework: Layout Engine, Dependency Properties, Data Binding, Keyboard and Mouse Input, Routed Events, and more.
 
 AlterNET UI Beta 3 adds important features like menus, keyboard shortcuts, commands, modal windows, advanced window management, and more.
 
@@ -24,7 +23,7 @@ In AlterNET UI Beta 5, we have added support for some missing functionality as w
 
 AlterNET UI Beta 6 adds many advanced features to the standard control set and several new controls: Toolbar and StatusBar. The amended controls include TreeView, ListView, ComboBox, ListBox, Slider, ProgressBar, TabControl, Window, and Button. 
 
-AlterNET UI Beta 9 adds WebBrowser control, improvements and bug fixes to other controls.
+AlterNET UI 0.9.x - final betas of AlterNET UI before we wrap things up and announce the first public release.
 
 For more info, see [alternet-ui.com](https://alternet-ui.com).
 
