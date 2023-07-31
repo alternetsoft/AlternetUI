@@ -32,7 +32,7 @@ namespace Alternet::UI
 
     wxWindow* TextBox::CreateWxWindowCore(wxWindow* parent)
     {
-        long style = GetStyle() | GetBorderStyle();
+        long style = GetCreateStyle() | GetBorderStyle();
 
         auto textCtrl = new TextCtrlEx(
             parent, wxID_ANY, wxEmptyString, wxDefaultPosition, 
@@ -49,7 +49,7 @@ namespace Alternet::UI
         return textCtrl;
     }
 
-    long TextBox::GetStyle()
+    long TextBox::GetCreateStyle()
     {
         long style = _editControlOnly ? wxNO_BORDER : 0;
 
@@ -354,9 +354,12 @@ namespace Alternet::UI
         GetTextCtrl()->SetHint(wxStr(value));
     }
 
-    bool TextBox::GetStyle(int64_t position, void* style)
+    void* TextBox::GetStyle(int64_t position) 
     {
-        return GetTextCtrl()->GetStyle(position, (wxTextAttr&)style);
+        auto result = GetTextCtrl()->GetStyle(position, _textAttr);
+        if (!result)
+            return nullptr;
+        return &_textAttr;
     }
 
     bool TextBox::SetDefaultStyle(void* style)

@@ -13,7 +13,6 @@ namespace Alternet.UI
             {
                 return NativeControl.HasSelection;
             }
-
         }
 
         public bool IsModified
@@ -69,7 +68,6 @@ namespace Alternet.UI
             }
 
         }
-
         public bool IsEmpty
         {
             get
@@ -88,6 +86,19 @@ namespace Alternet.UI
             set
             {
                 NativeControl.EmptyTextHint = value;
+            }
+        }
+
+        public bool IsRichEdit
+        {
+            get
+            {
+                return NativeControl.IsRichEdit;
+            }
+
+            set
+            {
+                NativeControl.IsRichEdit = value;
             }
         }
 
@@ -131,9 +142,9 @@ namespace Alternet.UI
             return NativeControl.GetDefaultStyle();
         }
 
-        public bool GetStyle(long position, System.IntPtr style)
+        public IntPtr GetStyle(long position)
         {
-            return NativeControl.GetStyle(position, style);
+            return NativeControl.GetStyle(position);
         }
 
         public bool SetDefaultStyle(System.IntPtr style)
@@ -264,19 +275,6 @@ namespace Alternet.UI
         public long GetSelectionEnd()
         {
             return NativeControl.GetSelectionEnd();
-        }
-
-        public bool IsRichEdit
-        {
-            get
-            {
-                return NativeControl.IsRichEdit;
-            }
-
-            set
-            {
-                NativeControl.IsRichEdit = value;
-            }
         }
 
         internal override Native.Control CreateNativeControl()

@@ -39,7 +39,7 @@ namespace NativeApi.Api
 
         public IntPtr GetDefaultStyle() => throw new Exception();
 
-        public bool GetStyle(long position, IntPtr style) => throw new Exception();
+        public IntPtr GetStyle(long position) => throw new Exception();
 
         public bool SetDefaultStyle(IntPtr style) => throw new Exception();
 

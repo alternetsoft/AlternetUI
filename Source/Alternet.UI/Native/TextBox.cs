@@ -289,10 +289,10 @@ namespace Alternet.UI.Native
             return m;
         }
         
-        public bool GetStyle(long position, System.IntPtr style)
+        public System.IntPtr GetStyle(long position)
         {
             CheckDisposed();
-            var n = NativeApi.TextBox_GetStyle_(NativePointer, position, style);
+            var n = NativeApi.TextBox_GetStyle_(NativePointer, position);
             var m = n;
             return m;
         }
@@ -611,7 +611,7 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr TextBox_GetDefaultStyle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetStyle_(IntPtr obj, long position, System.IntPtr style);
+            public static extern System.IntPtr TextBox_GetStyle_(IntPtr obj, long position);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TextBox_SetDefaultStyle_(IntPtr obj, System.IntPtr style);

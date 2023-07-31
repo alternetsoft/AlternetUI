@@ -57,7 +57,7 @@ Point PositionToCoords(int64_t pos);
 void ShowPosition(int64_t pos);
 int64_t XYToPosition(int64_t x, int64_t y);
 void* GetDefaultStyle();
-bool GetStyle(int64_t position, void* style);
+void* GetStyle(int64_t position);
 bool SetDefaultStyle(void* style);
 bool SetStyle(int64_t start, int64_t end, void* style);
 void Clear();

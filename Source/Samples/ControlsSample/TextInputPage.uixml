@@ -7,11 +7,11 @@
       <HorizontalStackPanel>
         <VerticalStackPanel Margin="5" Name="textBoxesPanel"
                     Width="250">
-          <TextBox Text="Text 1.1" Margin="0,0,0,5" 
+          <TextBox Text="" Margin="0,0,0,5" Name="textBox1"
                    TextChanged="TextBox_ValueChanged" />
-          <TextBox Text="Text 1.2" Margin="0,0,0,5" 
+          <TextBox Text="Text 2" Margin="0,0,0,5" 
                    TextChanged="TextBox_ValueChanged" />
-          <TextBox Text="Text 1.3" Margin="0,0,0,5" 
+          <TextBox Text="Text 3" Margin="0,0,0,5" 
                    TextChanged="TextBox_ValueChanged" />
         </VerticalStackPanel>
         

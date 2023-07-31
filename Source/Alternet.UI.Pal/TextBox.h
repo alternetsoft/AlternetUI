@@ -28,7 +28,7 @@ namespace Alternet::UI
         string RetrieveText();
         void ApplyText(const string& value);
 
-        long GetStyle();
+        long GetCreateStyle();
 
         class TextCtrlEx : public wxTextCtrl, public wxWidgetExtender
         {

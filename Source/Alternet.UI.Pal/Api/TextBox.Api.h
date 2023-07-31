@@ -218,10 +218,10 @@ ALTERNET_UI_API void* TextBox_GetDefaultStyle_(TextBox* obj)
         });
 }
 
-ALTERNET_UI_API c_bool TextBox_GetStyle_(TextBox* obj, int64_t position, void* style)
+ALTERNET_UI_API void* TextBox_GetStyle_(TextBox* obj, int64_t position)
 {
-    return MarshalExceptions<c_bool>([&](){
-            return obj->GetStyle(position, style);
+    return MarshalExceptions<void*>([&](){
+            return obj->GetStyle(position);
         });
 }
 

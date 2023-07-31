@@ -11,6 +11,8 @@ namespace ControlsSample
         public TextInputPage()
         {
             InitializeComponent();
+            multiLineTextBox.EmptyTextHint = "Sample Hint";
+            textBox1.EmptyTextHint = "Sample Hint";
         }
 
         public IPageSite? Site
@@ -43,7 +45,6 @@ namespace ControlsSample
         private void RichEditButton_Click(object? sender, EventArgs e)
         {
             multiLineTextBox.IsRichEdit = true;
-
         }
     }
 }
