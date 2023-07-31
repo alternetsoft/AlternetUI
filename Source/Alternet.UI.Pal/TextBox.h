@@ -18,10 +18,12 @@ namespace Alternet::UI
         bool _editControlOnly = false;
         bool _readOnly = false;
         bool _multiline = false;
+        bool _isRichEdit = false;
 
         DelayedValue<TextBox, string> _text;
 
         wxTextCtrl* GetTextCtrl();
+        wxTextAttr _textAttr;
 
         string RetrieveText();
         void ApplyText(const string& value);

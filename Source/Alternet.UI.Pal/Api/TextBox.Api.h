@@ -85,6 +85,13 @@ ALTERNET_UI_API void TextBox_SetIsRichEdit_(TextBox* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API c_bool TextBox_GetHasSelection_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetHasSelection();
+        });
+}
+
 ALTERNET_UI_API c_bool TextBox_GetIsModified_(TextBox* obj)
 {
     return MarshalExceptions<c_bool>([&](){

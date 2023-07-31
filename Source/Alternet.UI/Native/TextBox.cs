@@ -109,6 +109,18 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool HasSelection
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetHasSelection_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
         public bool IsModified
         {
             get
@@ -540,6 +552,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBox_SetIsRichEdit_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_GetHasSelection_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TextBox_GetIsModified_(IntPtr obj);

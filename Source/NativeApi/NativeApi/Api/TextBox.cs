@@ -21,6 +21,8 @@ namespace NativeApi.Api
 
         public bool IsRichEdit { get; set; }
 
+        public bool HasSelection { get; }
+
         //Gets the length of the specified line, not including any trailing
         //newline character(s).
         public int GetLineLength(long lineNo) => throw new Exception();

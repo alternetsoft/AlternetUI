@@ -28,10 +28,9 @@ namespace Alternet.UI.Native
             NativeApi.TextBoxTextAttr_Delete_(attr);
         }
         
-        public void Copy(System.IntPtr attr)
+        public static void Copy(System.IntPtr toAttr, System.IntPtr fromAttr2)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_Copy_(NativePointer, attr);
+            NativeApi.TextBoxTextAttr_Copy_(toAttr, fromAttr2);
         }
         
         public static System.IntPtr CreateTextAttr()
@@ -41,370 +40,317 @@ namespace Alternet.UI.Native
             return m;
         }
         
-        public void SetTextColor(System.IntPtr attr, Alternet.Drawing.Color colText)
+        public static void SetTextColor(System.IntPtr attr, Alternet.Drawing.Color colText)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetTextColor_(NativePointer, attr, colText);
+            NativeApi.TextBoxTextAttr_SetTextColor_(attr, colText);
         }
         
-        public void SetBackgroundColor(System.IntPtr attr, Alternet.Drawing.Color colBack)
+        public static void SetBackgroundColor(System.IntPtr attr, Alternet.Drawing.Color colBack)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetBackgroundColor_(NativePointer, attr, colBack);
+            NativeApi.TextBoxTextAttr_SetBackgroundColor_(attr, colBack);
         }
         
-        public void SetAlignment(System.IntPtr attr, int alignment)
+        public static void SetAlignment(System.IntPtr attr, int alignment)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetAlignment_(NativePointer, attr, alignment);
+            NativeApi.TextBoxTextAttr_SetAlignment_(attr, alignment);
         }
         
-        public void SetFontPointSize(System.IntPtr attr, int pointSize)
+        public static void SetFontPointSize(System.IntPtr attr, int pointSize)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetFontPointSize_(NativePointer, attr, pointSize);
+            NativeApi.TextBoxTextAttr_SetFontPointSize_(attr, pointSize);
         }
         
-        public void SetFontStyle(System.IntPtr attr, int fontStyle)
+        public static void SetFontStyle(System.IntPtr attr, int fontStyle)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetFontStyle_(NativePointer, attr, fontStyle);
+            NativeApi.TextBoxTextAttr_SetFontStyle_(attr, fontStyle);
         }
         
-        public void SetFontWeight(System.IntPtr attr, int fontWeight)
+        public static void SetFontWeight(System.IntPtr attr, int fontWeight)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetFontWeight_(NativePointer, attr, fontWeight);
+            NativeApi.TextBoxTextAttr_SetFontWeight_(attr, fontWeight);
         }
         
-        public void SetFontFaceName(System.IntPtr attr, string faceName)
+        public static void SetFontFaceName(System.IntPtr attr, string faceName)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetFontFaceName_(NativePointer, attr, faceName);
+            NativeApi.TextBoxTextAttr_SetFontFaceName_(attr, faceName);
         }
         
-        public void SetFontUnderlined(System.IntPtr attr, bool underlined)
+        public static void SetFontUnderlined(System.IntPtr attr, bool underlined)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetFontUnderlined_(NativePointer, attr, underlined);
+            NativeApi.TextBoxTextAttr_SetFontUnderlined_(attr, underlined);
         }
         
-        public void SetFontUnderlinedEx(System.IntPtr attr, int type, Alternet.Drawing.Color colour)
+        public static void SetFontUnderlinedEx(System.IntPtr attr, int type, Alternet.Drawing.Color colour)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetFontUnderlinedEx_(NativePointer, attr, type, colour);
+            NativeApi.TextBoxTextAttr_SetFontUnderlinedEx_(attr, type, colour);
         }
         
-        public void SetFontStrikethrough(System.IntPtr attr, bool strikethrough)
+        public static void SetFontStrikethrough(System.IntPtr attr, bool strikethrough)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetFontStrikethrough_(NativePointer, attr, strikethrough);
+            NativeApi.TextBoxTextAttr_SetFontStrikethrough_(attr, strikethrough);
         }
         
-        public void SetFontFamily(System.IntPtr attr, int family)
+        public static void SetFontFamily(System.IntPtr attr, int family)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetFontFamily_(NativePointer, attr, family);
+            NativeApi.TextBoxTextAttr_SetFontFamily_(attr, family);
         }
         
-        public Alternet.Drawing.Color GetTextColor(System.IntPtr attr)
+        public static Alternet.Drawing.Color GetTextColor(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetTextColor_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetTextColor_(attr);
             var m = n;
             return m;
         }
         
-        public Alternet.Drawing.Color GetBackgroundColor(System.IntPtr attr)
+        public static Alternet.Drawing.Color GetBackgroundColor(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetBackgroundColor_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetBackgroundColor_(attr);
             var m = n;
             return m;
         }
         
-        public int GetAlignment(System.IntPtr attr)
+        public static int GetAlignment(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetAlignment_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetAlignment_(attr);
             var m = n;
             return m;
         }
         
-        public void SetURL(System.IntPtr attr, string url)
+        public static void SetURL(System.IntPtr attr, string url)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetURL_(NativePointer, attr, url);
+            NativeApi.TextBoxTextAttr_SetURL_(attr, url);
         }
         
-        public void SetFlags(System.IntPtr attr, long flags)
+        public static void SetFlags(System.IntPtr attr, long flags)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetFlags_(NativePointer, attr, flags);
+            NativeApi.TextBoxTextAttr_SetFlags_(attr, flags);
         }
         
-        public void SetParagraphSpacingAfter(System.IntPtr attr, int spacing)
+        public static void SetParagraphSpacingAfter(System.IntPtr attr, int spacing)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetParagraphSpacingAfter_(NativePointer, attr, spacing);
+            NativeApi.TextBoxTextAttr_SetParagraphSpacingAfter_(attr, spacing);
         }
         
-        public void SetParagraphSpacingBefore(System.IntPtr attr, int spacing)
+        public static void SetParagraphSpacingBefore(System.IntPtr attr, int spacing)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetParagraphSpacingBefore_(NativePointer, attr, spacing);
+            NativeApi.TextBoxTextAttr_SetParagraphSpacingBefore_(attr, spacing);
         }
         
-        public void SetLineSpacing(System.IntPtr attr, int spacing)
+        public static void SetLineSpacing(System.IntPtr attr, int spacing)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetLineSpacing_(NativePointer, attr, spacing);
+            NativeApi.TextBoxTextAttr_SetLineSpacing_(attr, spacing);
         }
         
-        public void SetBulletStyle(System.IntPtr attr, int style)
+        public static void SetBulletStyle(System.IntPtr attr, int style)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetBulletStyle_(NativePointer, attr, style);
+            NativeApi.TextBoxTextAttr_SetBulletStyle_(attr, style);
         }
         
-        public void SetBulletNumber(System.IntPtr attr, int n)
+        public static void SetBulletNumber(System.IntPtr attr, int n)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetBulletNumber_(NativePointer, attr, n);
+            NativeApi.TextBoxTextAttr_SetBulletNumber_(attr, n);
         }
         
-        public void SetBulletText(System.IntPtr attr, string text)
+        public static void SetBulletText(System.IntPtr attr, string text)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetBulletText_(NativePointer, attr, text);
+            NativeApi.TextBoxTextAttr_SetBulletText_(attr, text);
         }
         
-        public void SetPageBreak(System.IntPtr attr, bool pageBreak)
+        public static void SetPageBreak(System.IntPtr attr, bool pageBreak)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetPageBreak_(NativePointer, attr, pageBreak);
+            NativeApi.TextBoxTextAttr_SetPageBreak_(attr, pageBreak);
         }
         
-        public void SetCharacterStyleName(System.IntPtr attr, string name)
+        public static void SetCharacterStyleName(System.IntPtr attr, string name)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetCharacterStyleName_(NativePointer, attr, name);
+            NativeApi.TextBoxTextAttr_SetCharacterStyleName_(attr, name);
         }
         
-        public void SetParagraphStyleName(System.IntPtr attr, string name)
+        public static void SetParagraphStyleName(System.IntPtr attr, string name)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetParagraphStyleName_(NativePointer, attr, name);
+            NativeApi.TextBoxTextAttr_SetParagraphStyleName_(attr, name);
         }
         
-        public void SetListStyleName(System.IntPtr attr, string name)
+        public static void SetListStyleName(System.IntPtr attr, string name)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetListStyleName_(NativePointer, attr, name);
+            NativeApi.TextBoxTextAttr_SetListStyleName_(attr, name);
         }
         
-        public void SetBulletFont(System.IntPtr attr, string bulletFont)
+        public static void SetBulletFont(System.IntPtr attr, string bulletFont)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetBulletFont_(NativePointer, attr, bulletFont);
+            NativeApi.TextBoxTextAttr_SetBulletFont_(attr, bulletFont);
         }
         
-        public void SetBulletName(System.IntPtr attr, string name)
+        public static void SetBulletName(System.IntPtr attr, string name)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetBulletName_(NativePointer, attr, name);
+            NativeApi.TextBoxTextAttr_SetBulletName_(attr, name);
         }
         
-        public void SetTextEffects(System.IntPtr attr, int effects)
+        public static void SetTextEffects(System.IntPtr attr, int effects)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetTextEffects_(NativePointer, attr, effects);
+            NativeApi.TextBoxTextAttr_SetTextEffects_(attr, effects);
         }
         
-        public void SetTextEffectFlags(System.IntPtr attr, int effects)
+        public static void SetTextEffectFlags(System.IntPtr attr, int effects)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetTextEffectFlags_(NativePointer, attr, effects);
+            NativeApi.TextBoxTextAttr_SetTextEffectFlags_(attr, effects);
         }
         
-        public void SetOutlineLevel(System.IntPtr attr, int level)
+        public static void SetOutlineLevel(System.IntPtr attr, int level)
         {
-            CheckDisposed();
-            NativeApi.TextBoxTextAttr_SetOutlineLevel_(NativePointer, attr, level);
+            NativeApi.TextBoxTextAttr_SetOutlineLevel_(attr, level);
         }
         
-        public long GetFlags(System.IntPtr attr)
+        public static long GetFlags(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetFlags_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetFlags_(attr);
             var m = n;
             return m;
         }
         
-        public int GetFontSize(System.IntPtr attr)
+        public static int GetFontSize(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetFontSize_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetFontSize_(attr);
             var m = n;
             return m;
         }
         
-        public int GetFontStyle(System.IntPtr attr)
+        public static int GetFontStyle(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetFontStyle_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetFontStyle_(attr);
             var m = n;
             return m;
         }
         
-        public int GetFontWeight(System.IntPtr attr)
+        public static int GetFontWeight(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetFontWeight_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetFontWeight_(attr);
             var m = n;
             return m;
         }
         
-        public bool GetFontUnderlined(System.IntPtr attr)
+        public static bool GetFontUnderlined(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetFontUnderlined_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetFontUnderlined_(attr);
             var m = n;
             return m;
         }
         
-        public int GetUnderlineType(System.IntPtr attr)
+        public static int GetUnderlineType(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetUnderlineType_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetUnderlineType_(attr);
             var m = n;
             return m;
         }
         
-        public Alternet.Drawing.Color GetUnderlineColor(System.IntPtr attr)
+        public static Alternet.Drawing.Color GetUnderlineColor(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetUnderlineColor_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetUnderlineColor_(attr);
             var m = n;
             return m;
         }
         
-        public bool GetFontStrikethrough(System.IntPtr attr)
+        public static bool GetFontStrikethrough(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetFontStrikethrough_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetFontStrikethrough_(attr);
             var m = n;
             return m;
         }
         
-        public string GetFontFaceName(System.IntPtr attr)
+        public static string GetFontFaceName(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetFontFaceName_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetFontFaceName_(attr);
             var m = n;
             return m;
         }
         
-        public int GetFontFamily(System.IntPtr attr)
+        public static int GetFontFamily(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetFontFamily_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetFontFamily_(attr);
             var m = n;
             return m;
         }
         
-        public int GetParagraphSpacingAfter(System.IntPtr attr)
+        public static int GetParagraphSpacingAfter(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetParagraphSpacingAfter_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetParagraphSpacingAfter_(attr);
             var m = n;
             return m;
         }
         
-        public int GetParagraphSpacingBefore(System.IntPtr attr)
+        public static int GetParagraphSpacingBefore(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetParagraphSpacingBefore_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetParagraphSpacingBefore_(attr);
             var m = n;
             return m;
         }
         
-        public int GetLineSpacing(System.IntPtr attr)
+        public static int GetLineSpacing(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetLineSpacing_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetLineSpacing_(attr);
             var m = n;
             return m;
         }
         
-        public int GetBulletStyle(System.IntPtr attr)
+        public static int GetBulletStyle(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetBulletStyle_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetBulletStyle_(attr);
             var m = n;
             return m;
         }
         
-        public int GetBulletNumber(System.IntPtr attr)
+        public static int GetBulletNumber(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetBulletNumber_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetBulletNumber_(attr);
             var m = n;
             return m;
         }
         
-        public string GetBulletText(System.IntPtr attr)
+        public static string GetBulletText(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetBulletText_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetBulletText_(attr);
             var m = n;
             return m;
         }
         
-        public string GetURL(System.IntPtr attr)
+        public static string GetURL(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetURL_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetURL_(attr);
             var m = n;
             return m;
         }
         
-        public int GetTextEffects(System.IntPtr attr)
+        public static int GetTextEffects(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetTextEffects_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetTextEffects_(attr);
             var m = n;
             return m;
         }
         
-        public int GetTextEffectFlags(System.IntPtr attr)
+        public static int GetTextEffectFlags(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetTextEffectFlags_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetTextEffectFlags_(attr);
             var m = n;
             return m;
         }
         
-        public int GetOutlineLevel(System.IntPtr attr)
+        public static int GetOutlineLevel(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_GetOutlineLevel_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_GetOutlineLevel_(attr);
             var m = n;
             return m;
         }
         
-        public bool IsCharacterStyle(System.IntPtr attr)
+        public static bool IsCharacterStyle(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_IsCharacterStyle_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_IsCharacterStyle_(attr);
             var m = n;
             return m;
         }
         
-        public bool IsParagraphStyle(System.IntPtr attr)
+        public static bool IsParagraphStyle(System.IntPtr attr)
         {
-            CheckDisposed();
-            var n = NativeApi.TextBoxTextAttr_IsParagraphStyle_(NativePointer, attr);
+            var n = NativeApi.TextBoxTextAttr_IsParagraphStyle_(attr);
             var m = n;
             return m;
         }
@@ -430,169 +376,169 @@ namespace Alternet.UI.Native
             public static extern void TextBoxTextAttr_Delete_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_Copy_(IntPtr obj, System.IntPtr attr);
+            public static extern void TextBoxTextAttr_Copy_(System.IntPtr toAttr, System.IntPtr fromAttr2);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr TextBoxTextAttr_CreateTextAttr_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetTextColor_(IntPtr obj, System.IntPtr attr, NativeApiTypes.Color colText);
+            public static extern void TextBoxTextAttr_SetTextColor_(System.IntPtr attr, NativeApiTypes.Color colText);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetBackgroundColor_(IntPtr obj, System.IntPtr attr, NativeApiTypes.Color colBack);
+            public static extern void TextBoxTextAttr_SetBackgroundColor_(System.IntPtr attr, NativeApiTypes.Color colBack);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetAlignment_(IntPtr obj, System.IntPtr attr, int alignment);
+            public static extern void TextBoxTextAttr_SetAlignment_(System.IntPtr attr, int alignment);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontPointSize_(IntPtr obj, System.IntPtr attr, int pointSize);
+            public static extern void TextBoxTextAttr_SetFontPointSize_(System.IntPtr attr, int pointSize);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontStyle_(IntPtr obj, System.IntPtr attr, int fontStyle);
+            public static extern void TextBoxTextAttr_SetFontStyle_(System.IntPtr attr, int fontStyle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontWeight_(IntPtr obj, System.IntPtr attr, int fontWeight);
+            public static extern void TextBoxTextAttr_SetFontWeight_(System.IntPtr attr, int fontWeight);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontFaceName_(IntPtr obj, System.IntPtr attr, string faceName);
+            public static extern void TextBoxTextAttr_SetFontFaceName_(System.IntPtr attr, string faceName);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontUnderlined_(IntPtr obj, System.IntPtr attr, bool underlined);
+            public static extern void TextBoxTextAttr_SetFontUnderlined_(System.IntPtr attr, bool underlined);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontUnderlinedEx_(IntPtr obj, System.IntPtr attr, int type, NativeApiTypes.Color colour);
+            public static extern void TextBoxTextAttr_SetFontUnderlinedEx_(System.IntPtr attr, int type, NativeApiTypes.Color colour);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontStrikethrough_(IntPtr obj, System.IntPtr attr, bool strikethrough);
+            public static extern void TextBoxTextAttr_SetFontStrikethrough_(System.IntPtr attr, bool strikethrough);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontFamily_(IntPtr obj, System.IntPtr attr, int family);
+            public static extern void TextBoxTextAttr_SetFontFamily_(System.IntPtr attr, int family);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color TextBoxTextAttr_GetTextColor_(IntPtr obj, System.IntPtr attr);
+            public static extern NativeApiTypes.Color TextBoxTextAttr_GetTextColor_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color TextBoxTextAttr_GetBackgroundColor_(IntPtr obj, System.IntPtr attr);
+            public static extern NativeApiTypes.Color TextBoxTextAttr_GetBackgroundColor_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetAlignment_(IntPtr obj, System.IntPtr attr);
+            public static extern int TextBoxTextAttr_GetAlignment_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetURL_(IntPtr obj, System.IntPtr attr, string url);
+            public static extern void TextBoxTextAttr_SetURL_(System.IntPtr attr, string url);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFlags_(IntPtr obj, System.IntPtr attr, long flags);
+            public static extern void TextBoxTextAttr_SetFlags_(System.IntPtr attr, long flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetParagraphSpacingAfter_(IntPtr obj, System.IntPtr attr, int spacing);
+            public static extern void TextBoxTextAttr_SetParagraphSpacingAfter_(System.IntPtr attr, int spacing);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetParagraphSpacingBefore_(IntPtr obj, System.IntPtr attr, int spacing);
+            public static extern void TextBoxTextAttr_SetParagraphSpacingBefore_(System.IntPtr attr, int spacing);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetLineSpacing_(IntPtr obj, System.IntPtr attr, int spacing);
+            public static extern void TextBoxTextAttr_SetLineSpacing_(System.IntPtr attr, int spacing);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetBulletStyle_(IntPtr obj, System.IntPtr attr, int style);
+            public static extern void TextBoxTextAttr_SetBulletStyle_(System.IntPtr attr, int style);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetBulletNumber_(IntPtr obj, System.IntPtr attr, int n);
+            public static extern void TextBoxTextAttr_SetBulletNumber_(System.IntPtr attr, int n);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetBulletText_(IntPtr obj, System.IntPtr attr, string text);
+            public static extern void TextBoxTextAttr_SetBulletText_(System.IntPtr attr, string text);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetPageBreak_(IntPtr obj, System.IntPtr attr, bool pageBreak);
+            public static extern void TextBoxTextAttr_SetPageBreak_(System.IntPtr attr, bool pageBreak);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetCharacterStyleName_(IntPtr obj, System.IntPtr attr, string name);
+            public static extern void TextBoxTextAttr_SetCharacterStyleName_(System.IntPtr attr, string name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetParagraphStyleName_(IntPtr obj, System.IntPtr attr, string name);
+            public static extern void TextBoxTextAttr_SetParagraphStyleName_(System.IntPtr attr, string name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetListStyleName_(IntPtr obj, System.IntPtr attr, string name);
+            public static extern void TextBoxTextAttr_SetListStyleName_(System.IntPtr attr, string name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetBulletFont_(IntPtr obj, System.IntPtr attr, string bulletFont);
+            public static extern void TextBoxTextAttr_SetBulletFont_(System.IntPtr attr, string bulletFont);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetBulletName_(IntPtr obj, System.IntPtr attr, string name);
+            public static extern void TextBoxTextAttr_SetBulletName_(System.IntPtr attr, string name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetTextEffects_(IntPtr obj, System.IntPtr attr, int effects);
+            public static extern void TextBoxTextAttr_SetTextEffects_(System.IntPtr attr, int effects);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetTextEffectFlags_(IntPtr obj, System.IntPtr attr, int effects);
+            public static extern void TextBoxTextAttr_SetTextEffectFlags_(System.IntPtr attr, int effects);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetOutlineLevel_(IntPtr obj, System.IntPtr attr, int level);
+            public static extern void TextBoxTextAttr_SetOutlineLevel_(System.IntPtr attr, int level);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long TextBoxTextAttr_GetFlags_(IntPtr obj, System.IntPtr attr);
+            public static extern long TextBoxTextAttr_GetFlags_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetFontSize_(IntPtr obj, System.IntPtr attr);
+            public static extern int TextBoxTextAttr_GetFontSize_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetFontStyle_(IntPtr obj, System.IntPtr attr);
+            public static extern int TextBoxTextAttr_GetFontStyle_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetFontWeight_(IntPtr obj, System.IntPtr attr);
+            public static extern int TextBoxTextAttr_GetFontWeight_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_GetFontUnderlined_(IntPtr obj, System.IntPtr attr);
+            public static extern bool TextBoxTextAttr_GetFontUnderlined_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetUnderlineType_(IntPtr obj, System.IntPtr attr);
+            public static extern int TextBoxTextAttr_GetUnderlineType_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color TextBoxTextAttr_GetUnderlineColor_(IntPtr obj, System.IntPtr attr);
+            public static extern NativeApiTypes.Color TextBoxTextAttr_GetUnderlineColor_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_GetFontStrikethrough_(IntPtr obj, System.IntPtr attr);
+            public static extern bool TextBoxTextAttr_GetFontStrikethrough_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string TextBoxTextAttr_GetFontFaceName_(IntPtr obj, System.IntPtr attr);
+            public static extern string TextBoxTextAttr_GetFontFaceName_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetFontFamily_(IntPtr obj, System.IntPtr attr);
+            public static extern int TextBoxTextAttr_GetFontFamily_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetParagraphSpacingAfter_(IntPtr obj, System.IntPtr attr);
+            public static extern int TextBoxTextAttr_GetParagraphSpacingAfter_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetParagraphSpacingBefore_(IntPtr obj, System.IntPtr attr);
+            public static extern int TextBoxTextAttr_GetParagraphSpacingBefore_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetLineSpacing_(IntPtr obj, System.IntPtr attr);
+            public static extern int TextBoxTextAttr_GetLineSpacing_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetBulletStyle_(IntPtr obj, System.IntPtr attr);
+            public static extern int TextBoxTextAttr_GetBulletStyle_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetBulletNumber_(IntPtr obj, System.IntPtr attr);
+            public static extern int TextBoxTextAttr_GetBulletNumber_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string TextBoxTextAttr_GetBulletText_(IntPtr obj, System.IntPtr attr);
+            public static extern string TextBoxTextAttr_GetBulletText_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string TextBoxTextAttr_GetURL_(IntPtr obj, System.IntPtr attr);
+            public static extern string TextBoxTextAttr_GetURL_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetTextEffects_(IntPtr obj, System.IntPtr attr);
+            public static extern int TextBoxTextAttr_GetTextEffects_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetTextEffectFlags_(IntPtr obj, System.IntPtr attr);
+            public static extern int TextBoxTextAttr_GetTextEffectFlags_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetOutlineLevel_(IntPtr obj, System.IntPtr attr);
+            public static extern int TextBoxTextAttr_GetOutlineLevel_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_IsCharacterStyle_(IntPtr obj, System.IntPtr attr);
+            public static extern bool TextBoxTextAttr_IsCharacterStyle_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_IsParagraphStyle_(IntPtr obj, System.IntPtr attr);
+            public static extern bool TextBoxTextAttr_IsParagraphStyle_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TextBoxTextAttr_IsDefault_(IntPtr obj, System.IntPtr attr);

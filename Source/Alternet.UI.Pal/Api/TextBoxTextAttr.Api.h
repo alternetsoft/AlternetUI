@@ -22,10 +22,10 @@ ALTERNET_UI_API void TextBoxTextAttr_Delete_(void* attr)
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_Copy_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API void TextBoxTextAttr_Copy_(void* toAttr, void* fromAttr2)
 {
     MarshalExceptions<void>([&](){
-            obj->Copy(attr);
+            TextBoxTextAttr::Copy(toAttr, fromAttr2);
         });
 }
 
@@ -36,374 +36,374 @@ ALTERNET_UI_API void* TextBoxTextAttr_CreateTextAttr_()
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetTextColor_(TextBoxTextAttr* obj, void* attr, Color colText)
+ALTERNET_UI_API void TextBoxTextAttr_SetTextColor_(void* attr, Color colText)
 {
     MarshalExceptions<void>([&](){
-            obj->SetTextColor(attr, colText);
+            TextBoxTextAttr::SetTextColor(attr, colText);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetBackgroundColor_(TextBoxTextAttr* obj, void* attr, Color colBack)
+ALTERNET_UI_API void TextBoxTextAttr_SetBackgroundColor_(void* attr, Color colBack)
 {
     MarshalExceptions<void>([&](){
-            obj->SetBackgroundColor(attr, colBack);
+            TextBoxTextAttr::SetBackgroundColor(attr, colBack);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetAlignment_(TextBoxTextAttr* obj, void* attr, int alignment)
+ALTERNET_UI_API void TextBoxTextAttr_SetAlignment_(void* attr, int alignment)
 {
     MarshalExceptions<void>([&](){
-            obj->SetAlignment(attr, alignment);
+            TextBoxTextAttr::SetAlignment(attr, alignment);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetFontPointSize_(TextBoxTextAttr* obj, void* attr, int pointSize)
+ALTERNET_UI_API void TextBoxTextAttr_SetFontPointSize_(void* attr, int pointSize)
 {
     MarshalExceptions<void>([&](){
-            obj->SetFontPointSize(attr, pointSize);
+            TextBoxTextAttr::SetFontPointSize(attr, pointSize);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetFontStyle_(TextBoxTextAttr* obj, void* attr, int fontStyle)
+ALTERNET_UI_API void TextBoxTextAttr_SetFontStyle_(void* attr, int fontStyle)
 {
     MarshalExceptions<void>([&](){
-            obj->SetFontStyle(attr, fontStyle);
+            TextBoxTextAttr::SetFontStyle(attr, fontStyle);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetFontWeight_(TextBoxTextAttr* obj, void* attr, int fontWeight)
+ALTERNET_UI_API void TextBoxTextAttr_SetFontWeight_(void* attr, int fontWeight)
 {
     MarshalExceptions<void>([&](){
-            obj->SetFontWeight(attr, fontWeight);
+            TextBoxTextAttr::SetFontWeight(attr, fontWeight);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetFontFaceName_(TextBoxTextAttr* obj, void* attr, const char16_t* faceName)
+ALTERNET_UI_API void TextBoxTextAttr_SetFontFaceName_(void* attr, const char16_t* faceName)
 {
     MarshalExceptions<void>([&](){
-            obj->SetFontFaceName(attr, faceName);
+            TextBoxTextAttr::SetFontFaceName(attr, faceName);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetFontUnderlined_(TextBoxTextAttr* obj, void* attr, c_bool underlined)
+ALTERNET_UI_API void TextBoxTextAttr_SetFontUnderlined_(void* attr, c_bool underlined)
 {
     MarshalExceptions<void>([&](){
-            obj->SetFontUnderlined(attr, underlined);
+            TextBoxTextAttr::SetFontUnderlined(attr, underlined);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetFontUnderlinedEx_(TextBoxTextAttr* obj, void* attr, int type, Color colour)
+ALTERNET_UI_API void TextBoxTextAttr_SetFontUnderlinedEx_(void* attr, int type, Color colour)
 {
     MarshalExceptions<void>([&](){
-            obj->SetFontUnderlinedEx(attr, type, colour);
+            TextBoxTextAttr::SetFontUnderlinedEx(attr, type, colour);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetFontStrikethrough_(TextBoxTextAttr* obj, void* attr, c_bool strikethrough)
+ALTERNET_UI_API void TextBoxTextAttr_SetFontStrikethrough_(void* attr, c_bool strikethrough)
 {
     MarshalExceptions<void>([&](){
-            obj->SetFontStrikethrough(attr, strikethrough);
+            TextBoxTextAttr::SetFontStrikethrough(attr, strikethrough);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetFontFamily_(TextBoxTextAttr* obj, void* attr, int family)
+ALTERNET_UI_API void TextBoxTextAttr_SetFontFamily_(void* attr, int family)
 {
     MarshalExceptions<void>([&](){
-            obj->SetFontFamily(attr, family);
+            TextBoxTextAttr::SetFontFamily(attr, family);
         });
 }
 
-ALTERNET_UI_API Color_C TextBoxTextAttr_GetTextColor_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API Color_C TextBoxTextAttr_GetTextColor_(void* attr)
 {
     return MarshalExceptions<Color_C>([&](){
-            return obj->GetTextColor(attr);
+            return TextBoxTextAttr::GetTextColor(attr);
         });
 }
 
-ALTERNET_UI_API Color_C TextBoxTextAttr_GetBackgroundColor_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API Color_C TextBoxTextAttr_GetBackgroundColor_(void* attr)
 {
     return MarshalExceptions<Color_C>([&](){
-            return obj->GetBackgroundColor(attr);
+            return TextBoxTextAttr::GetBackgroundColor(attr);
         });
 }
 
-ALTERNET_UI_API int TextBoxTextAttr_GetAlignment_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API int TextBoxTextAttr_GetAlignment_(void* attr)
 {
     return MarshalExceptions<int>([&](){
-            return obj->GetAlignment(attr);
+            return TextBoxTextAttr::GetAlignment(attr);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetURL_(TextBoxTextAttr* obj, void* attr, const char16_t* url)
+ALTERNET_UI_API void TextBoxTextAttr_SetURL_(void* attr, const char16_t* url)
 {
     MarshalExceptions<void>([&](){
-            obj->SetURL(attr, url);
+            TextBoxTextAttr::SetURL(attr, url);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetFlags_(TextBoxTextAttr* obj, void* attr, int64_t flags)
+ALTERNET_UI_API void TextBoxTextAttr_SetFlags_(void* attr, int64_t flags)
 {
     MarshalExceptions<void>([&](){
-            obj->SetFlags(attr, flags);
+            TextBoxTextAttr::SetFlags(attr, flags);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetParagraphSpacingAfter_(TextBoxTextAttr* obj, void* attr, int spacing)
+ALTERNET_UI_API void TextBoxTextAttr_SetParagraphSpacingAfter_(void* attr, int spacing)
 {
     MarshalExceptions<void>([&](){
-            obj->SetParagraphSpacingAfter(attr, spacing);
+            TextBoxTextAttr::SetParagraphSpacingAfter(attr, spacing);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetParagraphSpacingBefore_(TextBoxTextAttr* obj, void* attr, int spacing)
+ALTERNET_UI_API void TextBoxTextAttr_SetParagraphSpacingBefore_(void* attr, int spacing)
 {
     MarshalExceptions<void>([&](){
-            obj->SetParagraphSpacingBefore(attr, spacing);
+            TextBoxTextAttr::SetParagraphSpacingBefore(attr, spacing);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetLineSpacing_(TextBoxTextAttr* obj, void* attr, int spacing)
+ALTERNET_UI_API void TextBoxTextAttr_SetLineSpacing_(void* attr, int spacing)
 {
     MarshalExceptions<void>([&](){
-            obj->SetLineSpacing(attr, spacing);
+            TextBoxTextAttr::SetLineSpacing(attr, spacing);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetBulletStyle_(TextBoxTextAttr* obj, void* attr, int style)
+ALTERNET_UI_API void TextBoxTextAttr_SetBulletStyle_(void* attr, int style)
 {
     MarshalExceptions<void>([&](){
-            obj->SetBulletStyle(attr, style);
+            TextBoxTextAttr::SetBulletStyle(attr, style);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetBulletNumber_(TextBoxTextAttr* obj, void* attr, int n)
+ALTERNET_UI_API void TextBoxTextAttr_SetBulletNumber_(void* attr, int n)
 {
     MarshalExceptions<void>([&](){
-            obj->SetBulletNumber(attr, n);
+            TextBoxTextAttr::SetBulletNumber(attr, n);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetBulletText_(TextBoxTextAttr* obj, void* attr, const char16_t* text)
+ALTERNET_UI_API void TextBoxTextAttr_SetBulletText_(void* attr, const char16_t* text)
 {
     MarshalExceptions<void>([&](){
-            obj->SetBulletText(attr, text);
+            TextBoxTextAttr::SetBulletText(attr, text);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetPageBreak_(TextBoxTextAttr* obj, void* attr, c_bool pageBreak)
+ALTERNET_UI_API void TextBoxTextAttr_SetPageBreak_(void* attr, c_bool pageBreak)
 {
     MarshalExceptions<void>([&](){
-            obj->SetPageBreak(attr, pageBreak);
+            TextBoxTextAttr::SetPageBreak(attr, pageBreak);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetCharacterStyleName_(TextBoxTextAttr* obj, void* attr, const char16_t* name)
+ALTERNET_UI_API void TextBoxTextAttr_SetCharacterStyleName_(void* attr, const char16_t* name)
 {
     MarshalExceptions<void>([&](){
-            obj->SetCharacterStyleName(attr, name);
+            TextBoxTextAttr::SetCharacterStyleName(attr, name);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetParagraphStyleName_(TextBoxTextAttr* obj, void* attr, const char16_t* name)
+ALTERNET_UI_API void TextBoxTextAttr_SetParagraphStyleName_(void* attr, const char16_t* name)
 {
     MarshalExceptions<void>([&](){
-            obj->SetParagraphStyleName(attr, name);
+            TextBoxTextAttr::SetParagraphStyleName(attr, name);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetListStyleName_(TextBoxTextAttr* obj, void* attr, const char16_t* name)
+ALTERNET_UI_API void TextBoxTextAttr_SetListStyleName_(void* attr, const char16_t* name)
 {
     MarshalExceptions<void>([&](){
-            obj->SetListStyleName(attr, name);
+            TextBoxTextAttr::SetListStyleName(attr, name);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetBulletFont_(TextBoxTextAttr* obj, void* attr, const char16_t* bulletFont)
+ALTERNET_UI_API void TextBoxTextAttr_SetBulletFont_(void* attr, const char16_t* bulletFont)
 {
     MarshalExceptions<void>([&](){
-            obj->SetBulletFont(attr, bulletFont);
+            TextBoxTextAttr::SetBulletFont(attr, bulletFont);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetBulletName_(TextBoxTextAttr* obj, void* attr, const char16_t* name)
+ALTERNET_UI_API void TextBoxTextAttr_SetBulletName_(void* attr, const char16_t* name)
 {
     MarshalExceptions<void>([&](){
-            obj->SetBulletName(attr, name);
+            TextBoxTextAttr::SetBulletName(attr, name);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetTextEffects_(TextBoxTextAttr* obj, void* attr, int effects)
+ALTERNET_UI_API void TextBoxTextAttr_SetTextEffects_(void* attr, int effects)
 {
     MarshalExceptions<void>([&](){
-            obj->SetTextEffects(attr, effects);
+            TextBoxTextAttr::SetTextEffects(attr, effects);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetTextEffectFlags_(TextBoxTextAttr* obj, void* attr, int effects)
+ALTERNET_UI_API void TextBoxTextAttr_SetTextEffectFlags_(void* attr, int effects)
 {
     MarshalExceptions<void>([&](){
-            obj->SetTextEffectFlags(attr, effects);
+            TextBoxTextAttr::SetTextEffectFlags(attr, effects);
         });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetOutlineLevel_(TextBoxTextAttr* obj, void* attr, int level)
+ALTERNET_UI_API void TextBoxTextAttr_SetOutlineLevel_(void* attr, int level)
 {
     MarshalExceptions<void>([&](){
-            obj->SetOutlineLevel(attr, level);
+            TextBoxTextAttr::SetOutlineLevel(attr, level);
         });
 }
 
-ALTERNET_UI_API int64_t TextBoxTextAttr_GetFlags_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API int64_t TextBoxTextAttr_GetFlags_(void* attr)
 {
     return MarshalExceptions<int64_t>([&](){
-            return obj->GetFlags(attr);
+            return TextBoxTextAttr::GetFlags(attr);
         });
 }
 
-ALTERNET_UI_API int TextBoxTextAttr_GetFontSize_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API int TextBoxTextAttr_GetFontSize_(void* attr)
 {
     return MarshalExceptions<int>([&](){
-            return obj->GetFontSize(attr);
+            return TextBoxTextAttr::GetFontSize(attr);
         });
 }
 
-ALTERNET_UI_API int TextBoxTextAttr_GetFontStyle_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API int TextBoxTextAttr_GetFontStyle_(void* attr)
 {
     return MarshalExceptions<int>([&](){
-            return obj->GetFontStyle(attr);
+            return TextBoxTextAttr::GetFontStyle(attr);
         });
 }
 
-ALTERNET_UI_API int TextBoxTextAttr_GetFontWeight_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API int TextBoxTextAttr_GetFontWeight_(void* attr)
 {
     return MarshalExceptions<int>([&](){
-            return obj->GetFontWeight(attr);
+            return TextBoxTextAttr::GetFontWeight(attr);
         });
 }
 
-ALTERNET_UI_API c_bool TextBoxTextAttr_GetFontUnderlined_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API c_bool TextBoxTextAttr_GetFontUnderlined_(void* attr)
 {
     return MarshalExceptions<c_bool>([&](){
-            return obj->GetFontUnderlined(attr);
+            return TextBoxTextAttr::GetFontUnderlined(attr);
         });
 }
 
-ALTERNET_UI_API int TextBoxTextAttr_GetUnderlineType_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API int TextBoxTextAttr_GetUnderlineType_(void* attr)
 {
     return MarshalExceptions<int>([&](){
-            return obj->GetUnderlineType(attr);
+            return TextBoxTextAttr::GetUnderlineType(attr);
         });
 }
 
-ALTERNET_UI_API Color_C TextBoxTextAttr_GetUnderlineColor_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API Color_C TextBoxTextAttr_GetUnderlineColor_(void* attr)
 {
     return MarshalExceptions<Color_C>([&](){
-            return obj->GetUnderlineColor(attr);
+            return TextBoxTextAttr::GetUnderlineColor(attr);
         });
 }
 
-ALTERNET_UI_API c_bool TextBoxTextAttr_GetFontStrikethrough_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API c_bool TextBoxTextAttr_GetFontStrikethrough_(void* attr)
 {
     return MarshalExceptions<c_bool>([&](){
-            return obj->GetFontStrikethrough(attr);
+            return TextBoxTextAttr::GetFontStrikethrough(attr);
         });
 }
 
-ALTERNET_UI_API char16_t* TextBoxTextAttr_GetFontFaceName_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API char16_t* TextBoxTextAttr_GetFontFaceName_(void* attr)
 {
     return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetFontFaceName(attr));
+            return AllocPInvokeReturnString(TextBoxTextAttr::GetFontFaceName(attr));
         });
 }
 
-ALTERNET_UI_API int TextBoxTextAttr_GetFontFamily_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API int TextBoxTextAttr_GetFontFamily_(void* attr)
 {
     return MarshalExceptions<int>([&](){
-            return obj->GetFontFamily(attr);
+            return TextBoxTextAttr::GetFontFamily(attr);
         });
 }
 
-ALTERNET_UI_API int TextBoxTextAttr_GetParagraphSpacingAfter_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API int TextBoxTextAttr_GetParagraphSpacingAfter_(void* attr)
 {
     return MarshalExceptions<int>([&](){
-            return obj->GetParagraphSpacingAfter(attr);
+            return TextBoxTextAttr::GetParagraphSpacingAfter(attr);
         });
 }
 
-ALTERNET_UI_API int TextBoxTextAttr_GetParagraphSpacingBefore_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API int TextBoxTextAttr_GetParagraphSpacingBefore_(void* attr)
 {
     return MarshalExceptions<int>([&](){
-            return obj->GetParagraphSpacingBefore(attr);
+            return TextBoxTextAttr::GetParagraphSpacingBefore(attr);
         });
 }
 
-ALTERNET_UI_API int TextBoxTextAttr_GetLineSpacing_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API int TextBoxTextAttr_GetLineSpacing_(void* attr)
 {
     return MarshalExceptions<int>([&](){
-            return obj->GetLineSpacing(attr);
+            return TextBoxTextAttr::GetLineSpacing(attr);
         });
 }
 
-ALTERNET_UI_API int TextBoxTextAttr_GetBulletStyle_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API int TextBoxTextAttr_GetBulletStyle_(void* attr)
 {
     return MarshalExceptions<int>([&](){
-            return obj->GetBulletStyle(attr);
+            return TextBoxTextAttr::GetBulletStyle(attr);
         });
 }
 
-ALTERNET_UI_API int TextBoxTextAttr_GetBulletNumber_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API int TextBoxTextAttr_GetBulletNumber_(void* attr)
 {
     return MarshalExceptions<int>([&](){
-            return obj->GetBulletNumber(attr);
+            return TextBoxTextAttr::GetBulletNumber(attr);
         });
 }
 
-ALTERNET_UI_API char16_t* TextBoxTextAttr_GetBulletText_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API char16_t* TextBoxTextAttr_GetBulletText_(void* attr)
 {
     return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetBulletText(attr));
+            return AllocPInvokeReturnString(TextBoxTextAttr::GetBulletText(attr));
         });
 }
 
-ALTERNET_UI_API char16_t* TextBoxTextAttr_GetURL_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API char16_t* TextBoxTextAttr_GetURL_(void* attr)
 {
     return MarshalExceptions<char16_t*>([&](){
-            return AllocPInvokeReturnString(obj->GetURL(attr));
+            return AllocPInvokeReturnString(TextBoxTextAttr::GetURL(attr));
         });
 }
 
-ALTERNET_UI_API int TextBoxTextAttr_GetTextEffects_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API int TextBoxTextAttr_GetTextEffects_(void* attr)
 {
     return MarshalExceptions<int>([&](){
-            return obj->GetTextEffects(attr);
+            return TextBoxTextAttr::GetTextEffects(attr);
         });
 }
 
-ALTERNET_UI_API int TextBoxTextAttr_GetTextEffectFlags_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API int TextBoxTextAttr_GetTextEffectFlags_(void* attr)
 {
     return MarshalExceptions<int>([&](){
-            return obj->GetTextEffectFlags(attr);
+            return TextBoxTextAttr::GetTextEffectFlags(attr);
         });
 }
 
-ALTERNET_UI_API int TextBoxTextAttr_GetOutlineLevel_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API int TextBoxTextAttr_GetOutlineLevel_(void* attr)
 {
     return MarshalExceptions<int>([&](){
-            return obj->GetOutlineLevel(attr);
+            return TextBoxTextAttr::GetOutlineLevel(attr);
         });
 }
 
-ALTERNET_UI_API c_bool TextBoxTextAttr_IsCharacterStyle_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API c_bool TextBoxTextAttr_IsCharacterStyle_(void* attr)
 {
     return MarshalExceptions<c_bool>([&](){
-            return obj->IsCharacterStyle(attr);
+            return TextBoxTextAttr::IsCharacterStyle(attr);
         });
 }
 
-ALTERNET_UI_API c_bool TextBoxTextAttr_IsParagraphStyle_(TextBoxTextAttr* obj, void* attr)
+ALTERNET_UI_API c_bool TextBoxTextAttr_IsParagraphStyle_(void* attr)
 {
     return MarshalExceptions<c_bool>([&](){
-            return obj->IsParagraphStyle(attr);
+            return TextBoxTextAttr::IsParagraphStyle(attr);
         });
 }
 

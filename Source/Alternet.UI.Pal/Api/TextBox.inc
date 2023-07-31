@@ -21,6 +21,9 @@ bool GetIsRichEdit();
 void SetIsRichEdit(bool value);
 
 
+bool GetHasSelection();
+
+
 bool GetIsModified();
 void SetIsModified(bool value);
 
