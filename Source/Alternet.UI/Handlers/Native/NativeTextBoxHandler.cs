@@ -7,6 +7,265 @@ namespace Alternet.UI
     {
         private bool handlingNativeControlTextChanged;
 
+        public bool HasSelection
+        {
+            get
+            {
+                return NativeControl.HasSelection;
+            }
+
+        }
+
+        public bool IsModified
+        {
+            get
+            {
+                return NativeControl.IsModified;
+            }
+
+            set
+            {
+                NativeControl.IsModified = value;
+            }
+        }
+
+        public bool CanCopy
+        {
+            get
+            {
+                return NativeControl.CanCopy;
+            }
+        }
+
+        public bool CanCut
+        {
+            get
+            {
+                return NativeControl.CanCut;
+            }
+        }
+
+        public bool CanPaste
+        {
+            get
+            {
+                return NativeControl.CanPaste;
+            }
+        }
+
+        public bool CanRedo
+        {
+            get
+            {
+                return NativeControl.CanRedo;
+            }
+        }
+
+        public bool CanUndo
+        {
+            get
+            {
+                return NativeControl.CanUndo;
+            }
+
+        }
+
+        public bool IsEmpty
+        {
+            get
+            {
+                return NativeControl.IsEmpty;
+            }
+        }
+
+        public string EmptyTextHint
+        {
+            get
+            {
+                return NativeControl.EmptyTextHint;
+            }
+
+            set
+            {
+                NativeControl.EmptyTextHint = value;
+            }
+        }
+
+        public int GetLineLength(long lineNo)
+        {
+            return NativeControl.GetLineLength(lineNo);
+        }
+
+        public string GetLineText(long lineNo)
+        {
+            return NativeControl.GetLineText(lineNo);
+        }
+
+        public int GetNumberOfLines()
+        {
+            return NativeControl.GetNumberOfLines();
+        }
+
+        public Alternet.Drawing.Point PositionToXY(long pos)
+        {
+            return NativeControl.PositionToXY(pos);
+        }
+
+        public Alternet.Drawing.Point PositionToCoords(long pos)
+        {
+            return NativeControl.PositionToCoords(pos);
+        }
+
+        public void ShowPosition(long pos)
+        {
+            NativeControl.ShowPosition(pos);
+        }
+
+        public long XYToPosition(long x, long y)
+        {
+            return NativeControl.XYToPosition(x, y);
+        }
+
+        public System.IntPtr GetDefaultStyle()
+        {
+            return NativeControl.GetDefaultStyle();
+        }
+
+        public bool GetStyle(long position, System.IntPtr style)
+        {
+            return NativeControl.GetStyle(position, style);
+        }
+
+        public bool SetDefaultStyle(System.IntPtr style)
+        {
+            return NativeControl.SetDefaultStyle(style);
+        }
+
+        public bool SetStyle(long start, long end, System.IntPtr style)
+        {
+            return NativeControl.SetStyle(start, end, style);
+        }
+
+        public void Clear()
+        {
+            NativeControl.Clear();
+        }
+
+        public void Copy()
+        {
+            NativeControl.Copy();
+        }
+
+        public void Cut()
+        {
+            NativeControl.Cut();
+        }
+
+        public void AppendText(string text)
+        {
+            NativeControl.AppendText(text);
+        }
+
+        public long GetInsertionPoint()
+        {
+            return NativeControl.GetInsertionPoint();
+        }
+
+        public void Paste()
+        {
+            NativeControl.Paste();
+        }
+
+        public void Redo()
+        {
+            NativeControl.Redo();
+        }
+
+        public void Remove(long from, long to)
+        {
+            NativeControl.Remove(from, to);
+        }
+
+        public void Replace(long from, long to, string value)
+        {
+            NativeControl.Replace(from, to, value);
+        }
+
+        public void SetInsertionPoint(long pos)
+        {
+            NativeControl.SetInsertionPoint(pos);
+        }
+
+        public void SetInsertionPointEnd()
+        {
+            NativeControl.SetInsertionPointEnd();
+        }
+
+        public void SetMaxLength(ulong len)
+        {
+            NativeControl.SetMaxLength(len);
+        }
+
+        public void SetSelection(long from, long to)
+        {
+            NativeControl.SetSelection(from, to);
+        }
+
+        public void SelectAll()
+        {
+            NativeControl.SelectAll();
+        }
+
+        public void SelectNone()
+        {
+            NativeControl.SelectNone();
+        }
+
+        public void Undo()
+        {
+            NativeControl.Undo();
+        }
+
+        public void WriteText(string text)
+        {
+            NativeControl.WriteText(text);
+        }
+
+        public string GetRange(long from, long to)
+        {
+            return NativeControl.GetRange(from, to);
+        }
+
+        public string GetStringSelection()
+        {
+            return NativeControl.GetStringSelection();
+        }
+
+        public void EmptyUndoBuffer()
+        {
+            NativeControl.EmptyUndoBuffer();
+        }
+
+        public bool IsValidPosition(long pos)
+        {
+            return NativeControl.IsValidPosition(pos);
+        }
+
+        public long GetLastPosition()
+        {
+            return NativeControl.GetLastPosition();
+        }
+
+        public long GetSelectionStart()
+        {
+            return NativeControl.GetSelectionStart();
+        }
+
+        public long GetSelectionEnd()
+        {
+            return NativeControl.GetSelectionEnd();
+        }
+
         public bool IsRichEdit
         {
             get

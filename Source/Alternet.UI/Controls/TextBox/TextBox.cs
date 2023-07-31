@@ -191,6 +191,264 @@ namespace Alternet.UI
             }
         }
 
+        public bool HasSelection
+        {
+            get
+            {
+                return Handler.HasSelection;
+            }
+        }
+
+        public bool IsModified
+        {
+            get
+            {
+                return Handler.IsModified;
+            }
+
+            set
+            {
+                Handler.IsModified = value;
+            }
+        }
+
+        public bool CanCopy
+        {
+            get
+            {
+                return Handler.CanCopy;
+            }
+        }
+
+        public bool CanCut
+        {
+            get
+            {
+                return Handler.CanCut;
+            }
+        }
+
+        public bool CanPaste
+        {
+            get
+            {
+                return Handler.CanPaste;
+            }
+        }
+
+        public bool CanRedo
+        {
+            get
+            {
+                return Handler.CanRedo;
+            }
+        }
+
+        public bool CanUndo
+        {
+            get
+            {
+                return Handler.CanUndo;
+            }
+
+        }
+
+        public bool IsEmpty
+        {
+            get
+            {
+                return Handler.IsEmpty;
+            }
+        }
+
+        public string EmptyTextHint
+        {
+            get
+            {
+                return Handler.EmptyTextHint;
+            }
+
+            set
+            {
+                Handler.EmptyTextHint = value;
+            }
+        }
+
+        public int GetLineLength(long lineNo)
+        {
+            return Handler.GetLineLength(lineNo);
+        }
+
+        public string GetLineText(long lineNo)
+        {
+            return Handler.GetLineText(lineNo);
+        }
+
+        public int GetNumberOfLines()
+        {
+            return Handler.GetNumberOfLines();
+        }
+
+        public Alternet.Drawing.Point PositionToXY(long pos)
+        {
+            return Handler.PositionToXY(pos);
+        }
+
+        public Alternet.Drawing.Point PositionToCoords(long pos)
+        {
+            return Handler.PositionToCoords(pos);
+        }
+
+        public void ShowPosition(long pos)
+        {
+            Handler.ShowPosition(pos);
+        }
+
+        public long XYToPosition(long x, long y)
+        {
+            return Handler.XYToPosition(x, y);
+        }
+
+        internal System.IntPtr GetDefaultStyle()
+        {
+            return Handler.GetDefaultStyle();
+        }
+
+        internal bool GetStyle(long position, System.IntPtr style)
+        {
+            return Handler.GetStyle(position, style);
+        }
+
+        internal bool SetDefaultStyle(System.IntPtr style)
+        {
+            return Handler.SetDefaultStyle(style);
+        }
+
+        internal bool SetStyle(long start, long end, System.IntPtr style)
+        {
+            return Handler.SetStyle(start, end, style);
+        }
+
+        public void Clear()
+        {
+            Handler.Clear();
+        }
+
+        public void Copy()
+        {
+            Handler.Copy();
+        }
+
+        public void Cut()
+        {
+            Handler.Cut();
+        }
+
+        public void AppendText(string text)
+        {
+            Handler.AppendText(text);
+        }
+
+        public long GetInsertionPoint()
+        {
+            return Handler.GetInsertionPoint();
+        }
+
+        public void Paste()
+        {
+            Handler.Paste();
+        }
+
+        public void Redo()
+        {
+            Handler.Redo();
+        }
+
+        public void Remove(long from, long to)
+        {
+            Handler.Remove(from, to);
+        }
+
+        public void Replace(long from, long to, string value)
+        {
+            Handler.Replace(from, to, value);
+        }
+
+        public void SetInsertionPoint(long pos)
+        {
+            Handler.SetInsertionPoint(pos);
+        }
+
+        public void SetInsertionPointEnd()
+        {
+            Handler.SetInsertionPointEnd();
+        }
+
+        public void SetMaxLength(ulong len)
+        {
+            Handler.SetMaxLength(len);
+        }
+
+        public void SetSelection(long from, long to)
+        {
+            Handler.SetSelection(from, to);
+        }
+
+        public void SelectAll()
+        {
+            Handler.SelectAll();
+        }
+
+        public void SelectNone()
+        {
+            Handler.SelectNone();
+        }
+
+        public void Undo()
+        {
+            Handler.Undo();
+        }
+
+        public void WriteText(string text)
+        {
+            Handler.WriteText(text);
+        }
+
+        public string GetRange(long from, long to)
+        {
+            return Handler.GetRange(from, to);
+        }
+
+        public string GetStringSelection()
+        {
+            return Handler.GetStringSelection();
+        }
+
+        public void EmptyUndoBuffer()
+        {
+            Handler.EmptyUndoBuffer();
+        }
+
+        public bool IsValidPosition(long pos)
+        {
+            return Handler.IsValidPosition(pos);
+        }
+
+        public long GetLastPosition()
+        {
+            return Handler.GetLastPosition();
+        }
+
+        public long GetSelectionStart()
+        {
+            return Handler.GetSelectionStart();
+        }
+
+        public long GetSelectionEnd()
+        {
+            return Handler.GetSelectionEnd();
+        }
+
         internal new NativeTextBoxHandler Handler =>
             (NativeTextBoxHandler)base.Handler;
 
