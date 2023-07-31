@@ -2,6 +2,7 @@
 
 - Added LinkLabel, SplitterPanel, LayoutPanel controls.
 - Added FontDialog.
+- Improved TextBox. Added many new properties and methods. Added simple RichEdit functionality.
 - Added time editor to DateTimePicker. Added PopupKind, different MinDate and MaxDate properties.
 - General UI work speedup. Speedup in control creation, in events processing, in drawing (no more rect, 
 point, size, thickness conversions), in NativeApi.Generator (less full recompilation of PAL dll is needed). 
