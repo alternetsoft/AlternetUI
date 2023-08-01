@@ -106,6 +106,16 @@ namespace Alternet.Drawing
         /// </value>
         public static string[] FamiliesNames => UI.Native.Font.Families;
 
+        public static string[] FamiliesNamesAscending
+        {
+            get
+            {
+                string[] result = UI.Native.Font.Families;
+                Array.Sort(result);
+                return result;
+            }
+        } 
+
         /// <summary>
         /// Gets the name of this <see cref="FontFamily"/>.
         /// </summary>
