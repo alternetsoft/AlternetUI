@@ -1,7 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Alternet.Base.Collections;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -1055,6 +1057,23 @@ namespace Alternet.Drawing
             return new Color(NotDefinedValue, StateNameValid, name, (KnownColor)0);
         }
 
+        /// <summary>
+        /// Enumerates all known colors.
+        /// </summary>
+        /// <returns></returns>
+        public static IReadOnlyList<Color> GetKnownColors()
+        {
+            List<Color> colors = new();
+
+            foreach (KnownColor knownColor in Enum.GetValues(typeof(KnownColor)))
+            {
+                colors.Add(new Color(knownColor));
+            }
+
+            colors.Sort(new ColorNameComparer());
+            return colors;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void GetRgbValues(out int r, out int g, out int b)
         {
@@ -1249,6 +1268,16 @@ namespace Alternet.Drawing
                 return name.GetHashCode();
 
             return HashCode.Combine(value.GetHashCode(), state.GetHashCode(), knownColor.GetHashCode());
+        }
+
+        internal class ColorNameComparer : IComparer<Color>
+        {
+            public int Compare(Color color1, Color color2)
+            {
+                var name1 = color1.Name;
+                var name2 = color2.Name;
+                return string.Compare(name1, name2);
+            }
         }
     }
 }
