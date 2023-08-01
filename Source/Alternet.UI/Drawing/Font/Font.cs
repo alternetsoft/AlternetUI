@@ -92,10 +92,11 @@ namespace Alternet.Drawing
         {
             get
             {
+                if (IsBold)
+                    return this;
+
                 if(asBold == null)
-                {
                     asBold = new(FontFamily, SizeInPoints, FontStyle.Bold);
-                }
 
                 return asBold;
             }
@@ -108,6 +109,9 @@ namespace Alternet.Drawing
         {
             get
             {
+                if (IsUnderlined)
+                    return this;
+
                 if (asUnderlined == null)
                 {
                     asUnderlined = new(FontFamily, SizeInPoints,
