@@ -13,5 +13,198 @@ namespace Alternet.UI
 
         void SetBackgroundColor(Color colBack);
 
+        void SetFontPointSize(int pointSize);
+
+        void SetFontFaceName(string faceName);
+
+        void SetFontUnderlined(bool underlined);
+
+        void SetFontStrikethrough(bool strikethrough = true);
+
+        void SetBulletNumber(int n);
+
+        void SetBulletText(string text);
+
+        void SetPageBreak(bool pageBreak = true);
+
+        int GetOutlineLevel();
+
+        bool IsCharacterStyle();
+
+        bool IsParagraphStyle();
+
+        bool GetFontUnderlined();
+
+        Color GetUnderlineColor();
+
+        bool GetFontStrikethrough();
+
+        string GetFontFaceName();
+
+        int GetParagraphSpacingAfter();
+
+        int GetParagraphSpacingBefore();
+
+        int GetLineSpacing();
+
+        int GetBulletNumber();
+
+        string GetBulletText();
+
+        string GetURL();
+
+        Color GetTextColor();
+
+        Color GetBackgroundColor();
+
+        void SetURL(string url);
+
+        void SetParagraphSpacingAfter(int spacing);
+
+        void SetParagraphSpacingBefore(int spacing);
+
+        void SetLineSpacing(int spacing);
+
+        void SetCharacterStyleName(string name);
+
+        void SetParagraphStyleName(string name);
+
+        void SetListStyleName(string name);
+
+        void SetBulletFont(string bulletFont);
+
+        void SetBulletName(string name);
+
+        void SetOutlineLevel(int level);
+
+        int GetFontSize();
+
+        /// <summary>
+        /// Gets whether any text attributes were set.
+        /// </summary>
+        /// <returns>Returns false if we have any attributes set, true
+        /// otherwise</returns>
+        bool IsDefault();
+
+        bool HasTextColor();
+
+        bool HasBackgroundColor();
+
+        bool HasAlignment();
+
+        bool HasTabs();
+
+        bool HasLeftIndent();
+
+        bool HasRightIndent();
+
+        bool HasFontWeight();
+
+        bool HasFontSize();
+
+        bool HasFontPointSize();
+
+        bool HasFontPixelSize();
+
+        bool HasFontItalic();
+
+        bool HasFontUnderlined();
+
+        bool HasFontStrikethrough();
+
+        bool HasFontFaceName();
+
+        bool HasFontEncoding();
+
+        bool HasFontFamily();
+
+        bool HasFont();
+
+        bool HasParagraphSpacingAfter();
+
+        bool HasParagraphSpacingBefore();
+
+        bool HasLineSpacing();
+
+        bool HasCharacterStyleName();
+
+        bool HasParagraphStyleName();
+
+        bool HasListStyleName();
+
+        bool HasBulletStyle();
+
+        bool HasBulletNumber();
+
+        bool HasBulletText();
+
+        bool HasBulletName();
+
+        bool HasURL();
+
+        bool HasPageBreak();
+
+        bool HasTextEffects();
+
+        bool HasTextEffect(TextBoxTextAttrEffects effect);
+
+        bool HasOutlineLevel();
+
+        void SetFontUnderlinedEx(TextBoxTextAttrUnderlineType type, Color color);
+
+        TextBoxTextAttrUnderlineType GetUnderlineType();
+
+        void SetFontWeight(FontWeight fontWeight);
+
+        FontWeight GetFontWeight();
+
+        void SetTextEffects(TextBoxTextAttrEffects effects);
+
+        TextBoxTextAttrEffects GetTextEffects();
+
+        void SetAlignment(TextBoxTextAttrAlignment alignment);
+
+        TextBoxTextAttrAlignment GetAlignment();
+
+        void SetBulletStyle(TextBoxTextAttrBulletStyle style);
+
+        TextBoxTextAttrBulletStyle GetBulletStyle();
+
+        //void SetFontStyle(FontStyle fontStyle);
+
+        //FontStyle GetFontStyle();
+
+        bool HasFlag(TextBoxTextAttrFlags flag);
+
+        void RemoveFlag(TextBoxTextAttrFlags flag);
+
+        void AddFlag(TextBoxTextAttrFlags flag);
+
+        TextBoxTextAttrFlags GetFlags();
+
+        void SetFlags(TextBoxTextAttrFlags flags);
+
+        void Copy(ITextBoxTextAttr fromAttr);
     }
 }
+
+//========================
+
+/*
+enum wxFontFamily
+{
+    wxFONTFAMILY_DEFAULT = wxDEFAULT,
+    wxFONTFAMILY_DECORATIVE = wxDECORATIVE,
+    wxFONTFAMILY_ROMAN = wxROMAN,
+    wxFONTFAMILY_SCRIPT = wxSCRIPT,
+    wxFONTFAMILY_SWISS = wxSWISS,
+    wxFONTFAMILY_MODERN = wxMODERN,
+    wxFONTFAMILY_TELETYPE = wxTELETYPE,
+    wxFONTFAMILY_MAX,
+    wxFONTFAMILY_UNKNOWN = wxFONTFAMILY_MAX
+};
+ */
+
+//int GetFontFamily();
+//void SetFontFamily(int family);
+

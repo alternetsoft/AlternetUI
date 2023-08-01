@@ -9,7 +9,6 @@ namespace Alternet::UI
     {
 #include "Api/TextBoxTextAttr.inc"
     public:
-    
     private:
         static inline wxTextAttr* Attr(void* attr);
     };

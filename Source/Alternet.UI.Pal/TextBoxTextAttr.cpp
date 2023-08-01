@@ -20,14 +20,14 @@ namespace Alternet::UI
 		delete Attr(attr);
 	}
 
-	/*void TextBoxTextAttr::Copy(void* toAttr, void* fromAttr)
+	void TextBoxTextAttr::Copy(void* toAttr, void* fromAttr)
 	{
-	}*/
+		Attr(toAttr)->Copy(*(wxTextAttr*)fromAttr);
+	}
 
 	void* TextBoxTextAttr::CreateTextAttr()
 	{
 		wxTextAttr* attr = new wxTextAttr();
-		attr->SetFlags(0);
 		return attr;
 	}
 
@@ -301,4 +301,122 @@ namespace Alternet::UI
 	{
 		return Attr(attr)->IsDefault();
 	}
+
+	bool TextBoxTextAttr::HasTextColor(void* attr) 
+	{ 
+		return Attr(attr)->HasTextColour();
+	}
+
+	bool TextBoxTextAttr::HasBackgroundColor(void* attr) 
+	{ 
+		return Attr(attr)->HasBackgroundColour();
+	}
+
+	bool TextBoxTextAttr::HasAlignment(void* attr) 
+	{ 
+		return Attr(attr)->HasAlignment();
+	}
+
+	bool TextBoxTextAttr::HasTabs(void* attr)
+	{ 
+		return Attr(attr)->HasTabs();
+	}
+
+	bool TextBoxTextAttr::HasLeftIndent(void* attr) 
+	{ 
+		return Attr(attr)->HasLeftIndent();
+	}
+
+	bool TextBoxTextAttr::HasRightIndent(void* attr) 
+	{ 
+		return Attr(attr)->HasRightIndent();
+	}
+
+	bool TextBoxTextAttr::HasFontWeight(void* attr)
+	{ return Attr(attr)->HasFontWeight();}
+
+	bool TextBoxTextAttr::HasFontSize(void* attr)
+	{ return Attr(attr)->HasFontSize();}
+
+	bool TextBoxTextAttr::HasFontPointSize(void* attr)
+	{ return Attr(attr)->HasFontPointSize();}
+
+	bool TextBoxTextAttr::HasFontPixelSize(void* attr)
+	{ return Attr(attr)->HasFontPixelSize();}
+
+	bool TextBoxTextAttr::HasFontItalic(void* attr)
+	{ return Attr(attr)->HasFontItalic();}
+
+	bool TextBoxTextAttr::HasFontUnderlined(void* attr)
+	{ return Attr(attr)->HasFontUnderlined();}
+
+	bool TextBoxTextAttr::HasFontStrikethrough(void* attr)
+	{ return Attr(attr)->HasFontStrikethrough();}
+
+	bool TextBoxTextAttr::HasFontFaceName(void* attr)
+	{ return Attr(attr)->HasFontFaceName();}
+
+	bool TextBoxTextAttr::HasFontEncoding(void* attr)
+	{ return Attr(attr)->HasFontEncoding();}
+
+	bool TextBoxTextAttr::HasFontFamily(void* attr)
+	{ return Attr(attr)->HasFontFamily();}
+
+	bool TextBoxTextAttr::HasFont(void* attr)
+	{ return Attr(attr)->HasFont();}
+
+	bool TextBoxTextAttr::HasParagraphSpacingAfter(void* attr)
+	{ return Attr(attr)->HasParagraphSpacingAfter();}
+
+	bool TextBoxTextAttr::HasParagraphSpacingBefore(void* attr)
+	{ return Attr(attr)->HasParagraphSpacingBefore();}
+
+	bool TextBoxTextAttr::HasLineSpacing(void* attr)
+	{ return Attr(attr)->HasLineSpacing();}
+
+	bool TextBoxTextAttr::HasCharacterStyleName(void* attr)
+	{ return Attr(attr)->HasCharacterStyleName();}
+
+	bool TextBoxTextAttr::HasParagraphStyleName(void* attr)
+	{ return Attr(attr)->HasParagraphStyleName();}
+
+	bool TextBoxTextAttr::HasListStyleName(void* attr)
+	{ return Attr(attr)->HasListStyleName();}
+
+	bool TextBoxTextAttr::HasBulletStyle(void* attr)
+	{ return Attr(attr)->HasBulletStyle();}
+
+	bool TextBoxTextAttr::HasBulletNumber(void* attr)
+	{ return Attr(attr)->HasBulletNumber();}
+
+	bool TextBoxTextAttr::HasBulletText(void* attr)
+	{ return Attr(attr)->HasBulletText();}
+
+	bool TextBoxTextAttr::HasBulletName(void* attr)
+	{ return Attr(attr)->HasBulletName();}
+
+	bool TextBoxTextAttr::HasURL(void* attr)
+	{ return Attr(attr)->HasURL();}
+
+	bool TextBoxTextAttr::HasPageBreak(void* attr)
+	{ return Attr(attr)->HasPageBreak();}
+
+	bool TextBoxTextAttr::HasTextEffects(void* attr)
+	{ return Attr(attr)->HasTextEffects();}
+
+	bool TextBoxTextAttr::HasTextEffect(void* attr, int effect)
+	{ return Attr(attr)->HasTextEffect(effect);}
+
+	bool TextBoxTextAttr::HasOutlineLevel(void* attr)
+	{ return Attr(attr)->HasOutlineLevel();}
+
+	bool TextBoxTextAttr::HasFlag(void* attr, int64_t flag)
+	{ return Attr(attr)->HasFlag(flag);}
+
+	void TextBoxTextAttr::RemoveFlag(void* attr, int64_t flag)
+	{ return Attr(attr)->RemoveFlag(flag);}
+
+	void TextBoxTextAttr::AddFlag(void* attr, int64_t flag)
+	{ return Attr(attr)->AddFlag(flag);}
+
 }

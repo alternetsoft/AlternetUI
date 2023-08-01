@@ -23,9 +23,59 @@ namespace Alternet.UI.Native
         {
         }
         
+        public static bool HasPageBreak(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasPageBreak_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasTextEffects(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasTextEffects_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasTextEffect(System.IntPtr attr, int effect)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasTextEffect_(attr, effect);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasOutlineLevel(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasOutlineLevel_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasFlag(System.IntPtr attr, long flag)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasFlag_(attr, flag);
+            var m = n;
+            return m;
+        }
+        
+        public static void RemoveFlag(System.IntPtr attr, long flag)
+        {
+            NativeApi.TextBoxTextAttr_RemoveFlag_(attr, flag);
+        }
+        
+        public static void AddFlag(System.IntPtr attr, long flag)
+        {
+            NativeApi.TextBoxTextAttr_AddFlag_(attr, flag);
+        }
+        
         public static void Delete(System.IntPtr attr)
         {
             NativeApi.TextBoxTextAttr_Delete_(attr);
+        }
+        
+        public static void Copy(System.IntPtr toAttr, System.IntPtr fromAttr)
+        {
+            NativeApi.TextBoxTextAttr_Copy_(toAttr, fromAttr);
         }
         
         public static System.IntPtr CreateTextAttr()
@@ -357,6 +407,202 @@ namespace Alternet.UI.Native
             return m;
         }
         
+        public static bool HasTextColor(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasTextColor_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasBackgroundColor(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasBackgroundColor_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasAlignment(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasAlignment_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasTabs(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasTabs_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasLeftIndent(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasLeftIndent_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasRightIndent(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasRightIndent_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasFontWeight(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasFontWeight_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasFontSize(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasFontSize_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasFontPointSize(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasFontPointSize_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasFontPixelSize(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasFontPixelSize_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasFontItalic(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasFontItalic_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasFontUnderlined(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasFontUnderlined_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasFontStrikethrough(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasFontStrikethrough_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasFontFaceName(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasFontFaceName_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasFontEncoding(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasFontEncoding_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasFontFamily(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasFontFamily_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasFont(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasFont_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasParagraphSpacingAfter(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasParagraphSpacingAfter_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasParagraphSpacingBefore(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasParagraphSpacingBefore_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasLineSpacing(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasLineSpacing_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasCharacterStyleName(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasCharacterStyleName_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasParagraphStyleName(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasParagraphStyleName_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasListStyleName(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasListStyleName_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasBulletStyle(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasBulletStyle_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasBulletNumber(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasBulletNumber_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasBulletText(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasBulletText_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasBulletName(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasBulletName_(attr);
+            var m = n;
+            return m;
+        }
+        
+        public static bool HasURL(System.IntPtr attr)
+        {
+            var n = NativeApi.TextBoxTextAttr_HasURL_(attr);
+            var m = n;
+            return m;
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -367,7 +613,31 @@ namespace Alternet.UI.Native
             public static extern IntPtr TextBoxTextAttr_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasPageBreak_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasTextEffects_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasTextEffect_(System.IntPtr attr, int effect);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasOutlineLevel_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasFlag_(System.IntPtr attr, long flag);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBoxTextAttr_RemoveFlag_(System.IntPtr attr, long flag);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBoxTextAttr_AddFlag_(System.IntPtr attr, long flag);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBoxTextAttr_Delete_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBoxTextAttr_Copy_(System.IntPtr toAttr, System.IntPtr fromAttr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr TextBoxTextAttr_CreateTextAttr_();
@@ -533,6 +803,90 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TextBoxTextAttr_IsDefault_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasTextColor_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasBackgroundColor_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasAlignment_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasTabs_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasLeftIndent_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasRightIndent_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasFontWeight_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasFontSize_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasFontPointSize_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasFontPixelSize_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasFontItalic_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasFontUnderlined_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasFontStrikethrough_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasFontFaceName_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasFontEncoding_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasFontFamily_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasFont_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasParagraphSpacingAfter_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasParagraphSpacingBefore_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasLineSpacing_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasCharacterStyleName_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasParagraphStyleName_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasListStyleName_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasBulletStyle_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasBulletNumber_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasBulletText_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasBulletName_(System.IntPtr attr);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBoxTextAttr_HasURL_(System.IntPtr attr);
             
         }
     }

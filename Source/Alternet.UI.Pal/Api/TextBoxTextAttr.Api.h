@@ -15,10 +15,66 @@ ALTERNET_UI_API TextBoxTextAttr* TextBoxTextAttr_Create_()
         });
 }
 
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasPageBreak_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasPageBreak(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasTextEffects_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasTextEffects(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasTextEffect_(void* attr, int effect)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasTextEffect(attr, effect);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasOutlineLevel_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasOutlineLevel(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasFlag_(void* attr, int64_t flag)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasFlag(attr, flag);
+        });
+}
+
+ALTERNET_UI_API void TextBoxTextAttr_RemoveFlag_(void* attr, int64_t flag)
+{
+    MarshalExceptions<void>([&](){
+            TextBoxTextAttr::RemoveFlag(attr, flag);
+        });
+}
+
+ALTERNET_UI_API void TextBoxTextAttr_AddFlag_(void* attr, int64_t flag)
+{
+    MarshalExceptions<void>([&](){
+            TextBoxTextAttr::AddFlag(attr, flag);
+        });
+}
+
 ALTERNET_UI_API void TextBoxTextAttr_Delete_(void* attr)
 {
     MarshalExceptions<void>([&](){
             TextBoxTextAttr::Delete(attr);
+        });
+}
+
+ALTERNET_UI_API void TextBoxTextAttr_Copy_(void* toAttr, void* fromAttr)
+{
+    MarshalExceptions<void>([&](){
+            TextBoxTextAttr::Copy(toAttr, fromAttr);
         });
 }
 
@@ -404,6 +460,202 @@ ALTERNET_UI_API c_bool TextBoxTextAttr_IsDefault_(void* attr)
 {
     return MarshalExceptions<c_bool>([&](){
             return TextBoxTextAttr::IsDefault(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasTextColor_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasTextColor(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasBackgroundColor_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasBackgroundColor(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasAlignment_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasAlignment(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasTabs_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasTabs(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasLeftIndent_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasLeftIndent(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasRightIndent_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasRightIndent(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontWeight_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasFontWeight(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontSize_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasFontSize(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontPointSize_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasFontPointSize(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontPixelSize_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasFontPixelSize(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontItalic_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasFontItalic(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontUnderlined_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasFontUnderlined(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontStrikethrough_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasFontStrikethrough(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontFaceName_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasFontFaceName(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontEncoding_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasFontEncoding(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontFamily_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasFontFamily(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasFont_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasFont(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasParagraphSpacingAfter_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasParagraphSpacingAfter(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasParagraphSpacingBefore_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasParagraphSpacingBefore(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasLineSpacing_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasLineSpacing(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasCharacterStyleName_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasCharacterStyleName(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasParagraphStyleName_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasParagraphStyleName(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasListStyleName_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasListStyleName(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletStyle_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasBulletStyle(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletNumber_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasBulletNumber(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletText_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasBulletText(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletName_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasBulletName(attr);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBoxTextAttr_HasURL_(void* attr)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return TextBoxTextAttr::HasURL(attr);
         });
 }
 

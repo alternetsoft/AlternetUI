@@ -56,6 +56,8 @@ namespace ControlsSample
             ta.SetTextColor(Color.Red);
             ta.SetBackgroundColor(Color.Yellow);
 
+            ta.SetFontUnderlined(true);
+
             multiLineTextBox.SetStyle(6, 15, ta);
         }
     }
