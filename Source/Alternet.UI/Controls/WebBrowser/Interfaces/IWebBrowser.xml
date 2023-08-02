@@ -682,7 +682,7 @@ Name of the command to execute.
 Parameters of the command.
 </param>
 <returns>
-	A <see cref="String"/> representing the result of the Javascript code execution.
+	A <see cref="String"/> representing the result of the command execution.
 </returns>
 </DoCommandGlobal>
 <!--==============================================-->
@@ -697,7 +697,7 @@ Name of the command to execute.
 Parameters of the command.
 </param>
 <returns>
-	A <see cref="String"/> representing the result of the Javascript code execution.
+	A <see cref="String"/> representing the result of the command execution.
 </returns>
 </DoCommand>
 <!--==============================================-->
