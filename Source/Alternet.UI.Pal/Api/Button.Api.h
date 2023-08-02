@@ -44,6 +44,20 @@ ALTERNET_UI_API void Button_SetIsDefault_(Button* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API c_bool Button_GetHasBorder_(Button* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetHasBorder();
+        });
+}
+
+ALTERNET_UI_API void Button_SetHasBorder_(Button* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetHasBorder(value);
+        });
+}
+
 ALTERNET_UI_API c_bool Button_GetIsCancel_(Button* obj)
 {
     return MarshalExceptions<c_bool>([&](){

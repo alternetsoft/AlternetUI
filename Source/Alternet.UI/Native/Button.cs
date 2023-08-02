@@ -58,6 +58,23 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool HasBorder
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Button_GetHasBorder_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Button_SetHasBorder_(NativePointer, value);
+            }
+        }
+        
         public bool IsCancel
         {
             get
@@ -210,6 +227,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Button_SetIsDefault_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Button_GetHasBorder_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetHasBorder_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Button_GetIsCancel_(IntPtr obj);

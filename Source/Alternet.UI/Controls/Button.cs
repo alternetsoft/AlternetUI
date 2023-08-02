@@ -40,6 +40,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        public bool HasBorder
+        {
+            get
+            {
+                return Handler.HasBorder;
+            }
+
+            set
+            {
+                Handler.HasBorder = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the image that is displayed on a button control.
         /// </summary>
         /// <value>

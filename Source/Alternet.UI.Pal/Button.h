@@ -29,6 +29,7 @@ namespace Alternet::UI
 
         bool _isDefault = false;
         bool _isCancel = false;
+        bool _hasBorder = true;
 
         void ApplyIsDefault();
         void ApplyIsCancel();

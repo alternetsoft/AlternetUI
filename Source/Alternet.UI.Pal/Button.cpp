@@ -19,6 +19,19 @@ namespace Alternet::UI
         GetDelayedValues().Add(&_text);
     }
 
+    bool Button::GetHasBorder()
+    {
+        return _hasBorder;
+    }
+
+    void Button::SetHasBorder(bool value)
+    {
+        if (_hasBorder == value)
+            return;
+        _hasBorder = value;
+        RecreateWxWindowIfNeeded();
+    }
+
     Button::~Button()
     {
         if (IsWxWindowCreated())
@@ -59,12 +72,17 @@ namespace Alternet::UI
 
     wxWindow* Button::CreateWxWindowCore(wxWindow* parent)
     {
+        long style = 0;
+
+        if (!_hasBorder)
+            style |= wxBORDER_NONE;
+
         auto button = new wxButton2(parent,
             wxID_ANY,
             wxEmptyString,
             wxDefaultPosition,
             wxDefaultSize,
-            0,/*style*/
+            style,
             wxDefaultValidator,
             wxASCII_STR(wxButtonNameStr));
 

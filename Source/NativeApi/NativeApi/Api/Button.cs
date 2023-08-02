@@ -11,6 +11,8 @@ namespace NativeApi.Api
 
         public bool IsDefault { get; set; }
 
+        public bool HasBorder { get; set; }
+
         public bool IsCancel { get; set; }
 
         public Image? NormalImage { get; set; }

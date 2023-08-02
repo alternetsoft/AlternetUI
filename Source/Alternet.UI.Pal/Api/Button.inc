@@ -9,6 +9,10 @@ bool GetIsDefault();
 void SetIsDefault(bool value);
 
 
+bool GetHasBorder();
+void SetHasBorder(bool value);
+
+
 bool GetIsCancel();
 void SetIsCancel(bool value);
 

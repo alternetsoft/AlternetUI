@@ -82,6 +82,26 @@ namespace ControlsSample
                 ResourceLoader.ButtonImages : new ControlStateImages();
         }
 
+        private void TabStopCheckBox_Changed(object sender, System.EventArgs e)
+        {
+            button.TabStop = tabStopCheckBox.IsChecked;
+            ApplyAll();
+        }
+
+        private void HasBorderCheckBox_Changed(object sender, System.EventArgs e) 
+        {
+            button.HasBorder = hasBorderCheckBox.IsChecked;
+            ApplyAll();
+        }
+
+        private void ApplyAll()
+        {
+            ApplyText();
+            ApplyDisabled();
+            ApplyImage();
+            ApplyDefault();
+        }
+
         private void DefaultCheckBox_CheckedChanged(object sender, System.EventArgs e)
         {
             ApplyDefault();
