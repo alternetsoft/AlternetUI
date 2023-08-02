@@ -227,6 +227,108 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool HideSelection
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetHideSelection_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TextBox_SetHideSelection_(NativePointer, value);
+            }
+        }
+        
+        public bool ProcessTab
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetProcessTab_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TextBox_SetProcessTab_(NativePointer, value);
+            }
+        }
+        
+        public bool ProcessEnter
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetProcessEnter_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TextBox_SetProcessEnter_(NativePointer, value);
+            }
+        }
+        
+        public bool IsPassword
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetIsPassword_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TextBox_SetIsPassword_(NativePointer, value);
+            }
+        }
+        
+        public bool AutoUrl
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetAutoUrl_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TextBox_SetAutoUrl_(NativePointer, value);
+            }
+        }
+        
+        public bool HideVertScrollbar
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetHideVertScrollbar_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TextBox_SetHideVertScrollbar_(NativePointer, value);
+            }
+        }
+        
         public int GetLineLength(long lineNo)
         {
             CheckDisposed();
@@ -585,6 +687,42 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBox_SetEmptyTextHint_(IntPtr obj, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_GetHideSelection_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetHideSelection_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_GetProcessTab_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetProcessTab_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_GetProcessEnter_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetProcessEnter_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_GetIsPassword_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetIsPassword_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_GetAutoUrl_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetAutoUrl_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TextBox_GetHideVertScrollbar_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetHideVertScrollbar_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int TextBox_GetLineLength_(IntPtr obj, long lineNo);

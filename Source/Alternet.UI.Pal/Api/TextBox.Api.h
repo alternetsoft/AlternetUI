@@ -162,6 +162,90 @@ ALTERNET_UI_API void TextBox_SetEmptyTextHint_(TextBox* obj, const char16_t* val
         });
 }
 
+ALTERNET_UI_API c_bool TextBox_GetHideSelection_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetHideSelection();
+        });
+}
+
+ALTERNET_UI_API void TextBox_SetHideSelection_(TextBox* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetHideSelection(value);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBox_GetProcessTab_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetProcessTab();
+        });
+}
+
+ALTERNET_UI_API void TextBox_SetProcessTab_(TextBox* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetProcessTab(value);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBox_GetProcessEnter_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetProcessEnter();
+        });
+}
+
+ALTERNET_UI_API void TextBox_SetProcessEnter_(TextBox* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetProcessEnter(value);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBox_GetIsPassword_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsPassword();
+        });
+}
+
+ALTERNET_UI_API void TextBox_SetIsPassword_(TextBox* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetIsPassword(value);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBox_GetAutoUrl_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetAutoUrl();
+        });
+}
+
+ALTERNET_UI_API void TextBox_SetAutoUrl_(TextBox* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetAutoUrl(value);
+        });
+}
+
+ALTERNET_UI_API c_bool TextBox_GetHideVertScrollbar_(TextBox* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetHideVertScrollbar();
+        });
+}
+
+ALTERNET_UI_API void TextBox_SetHideVertScrollbar_(TextBox* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetHideVertScrollbar(value);
+        });
+}
+
 ALTERNET_UI_API int TextBox_GetLineLength_(TextBox* obj, int64_t lineNo)
 {
     return MarshalExceptions<int>([&](){

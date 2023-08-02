@@ -113,15 +113,17 @@ namespace ControlsSample
                 "This is url: ", taUrl, homePage, taDefault, ".\n",
             };
 
-            const string sUnorderedListItem = "Unordered List Item";
-            const string sOrderedListItem = "Ordered List Item";
-
             multiLineTextBox.Clear();
+            multiLineTextBox.AutoUrl = true;
             multiLineTextBox.IsRichEdit = true;
 
             multiLineTextBox.AppendTextAndStyles(list);
             multiLineTextBox.AppendNewLine();
 
+            /*
+            const string sUnorderedListItem = "Unordered List Item";
+            const string sOrderedListItem = "Ordered List Item";
+            
             for (int i = 1; i < 4; i++)
             {
                 multiLineTextBox.SetDefaultStyle(taUnorderedList);
@@ -138,7 +140,7 @@ namespace ControlsSample
                 multiLineTextBox.SetDefaultStyle(taDefault);
                 multiLineTextBox.AppendNewLine();
             }
-            multiLineTextBox.SetDefaultStyle(taDefault);
+            multiLineTextBox.SetDefaultStyle(taDefault);*/
         }
     }
 }

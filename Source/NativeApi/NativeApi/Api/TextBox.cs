@@ -97,6 +97,17 @@ namespace NativeApi.Api
 
         public long GetSelectionStart() => throw new Exception();
         public long GetSelectionEnd() => throw new Exception();
+        
+        public bool HideSelection { get; set; }
 
+        public bool ProcessTab { get; set; }
+
+        public bool ProcessEnter { get; set; }
+
+        public bool IsPassword { get; set; }
+
+        public bool AutoUrl { get; set; }
+
+        public bool HideVertScrollbar { get; set; }
     }
 }

@@ -19,6 +19,17 @@ namespace Alternet::UI
         bool _readOnly = false;
         bool _multiline = false;
         bool _isRichEdit = false;
+        bool _processTab = false;
+        bool _password = false;
+        bool _processEnter = false;
+        bool _noVScroll = false;
+        bool _autoUrl = false;
+        bool _noHideSel = false;
+
+        int _alignment = 0;
+        //wxTE_LEFT           0x0000                    
+        //wxTE_CENTER         0x0100
+        //wxTE_RIGHT          0x0200
 
         DelayedValue<TextBox, string> _text;
 

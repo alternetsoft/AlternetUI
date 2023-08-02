@@ -7,6 +7,84 @@ namespace Alternet.UI
     {
         private bool handlingNativeControlTextChanged;
 
+        public bool HideSelection
+        {
+            get
+            {
+                return NativeControl.HideSelection;
+            }
+
+            set
+            {
+                NativeControl.HideSelection = value;
+            }
+        }
+
+        public bool ProcessTab
+        {
+            get
+            {
+                return NativeControl.ProcessTab;
+            }
+
+            set
+            {
+                NativeControl.ProcessTab = value;
+            }
+        }
+
+        public bool ProcessEnter
+        {
+            get
+            {
+                return NativeControl.ProcessEnter;
+            }
+
+            set
+            {
+                NativeControl.ProcessEnter = value;
+            }
+        }
+
+        public bool IsPassword
+        {
+            get
+            {
+                return NativeControl.IsPassword;
+            }
+
+            set
+            {
+                NativeControl.IsPassword = value;
+            }
+        }
+
+        public bool AutoUrl
+        {
+            get
+            {
+                return NativeControl.AutoUrl;
+            }
+
+            set
+            {
+                NativeControl.AutoUrl = value;
+            }
+        }
+
+        public bool HideVertScrollbar
+        {
+            get
+            {
+                return NativeControl.HideVertScrollbar;
+            }
+
+            set
+            {
+                NativeControl.HideVertScrollbar = value;
+            }
+        }
+
         public bool HasSelection
         {
             get

@@ -293,6 +293,96 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the selected text
+        /// in the text box control remains highlighted when the
+        /// control loses focus.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if the selected text does not appear
+        /// highlighted when the text box control loses focus;
+        /// <see langword="false" />, if the selected text remains
+        /// highlighted when the text box control loses focus.
+        /// The default is <see langword="true" />.
+        /// </returns>
+        public bool HideSelection
+        {
+            get
+            {
+                return Handler.HideSelection;
+            }
+
+            set
+            {
+                Handler.HideSelection = value;
+            }
+        }
+
+        public bool ProcessTab
+        {
+            get
+            {
+                return Handler.ProcessTab;
+            }
+
+            set
+            {
+                Handler.ProcessTab = value;
+            }
+        }
+
+        public bool ProcessEnter
+        {
+            get
+            {
+                return Handler.ProcessEnter;
+            }
+
+            set
+            {
+                Handler.ProcessEnter = value;
+            }
+        }
+
+        public bool IsPassword
+        {
+            get
+            {
+                return Handler.IsPassword;
+            }
+
+            set
+            {
+                Handler.IsPassword = value;
+            }
+        }
+
+        public bool AutoUrl
+        {
+            get
+            {
+                return Handler.AutoUrl;
+            }
+
+            set
+            {
+                Handler.AutoUrl = value;
+            }
+        }
+
+        public bool HideVertScrollbar
+        {
+            get
+            {
+                return Handler.HideVertScrollbar;
+            }
+
+            set
+            {
+                Handler.HideVertScrollbar = value;
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether the user can undo the previous operation
         /// in the control.
         /// </summary>

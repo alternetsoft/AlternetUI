@@ -62,7 +62,106 @@ namespace Alternet::UI
         if(_isRichEdit)
             style |= wxTE_RICH2;
 
+        if(_processTab)
+            style |= wxTE_PROCESS_TAB;
+
+        if (_processEnter)
+            style |= wxTE_PROCESS_ENTER;
+
+        if(_password)
+            style |= wxTE_PASSWORD;
+
+        if (_noVScroll)
+            style |= wxTE_NO_VSCROLL;
+
+        style |= _alignment;
+
+        if (_autoUrl)
+            style |= wxTE_AUTO_URL;
+
+        if (_noHideSel)
+            style |= wxTE_NOHIDESEL;
+
         return style;
+    }
+
+    bool TextBox::GetProcessTab() 
+    {
+        return _processTab;
+    }
+
+    void TextBox::SetProcessTab(bool value)
+    {
+        if (_processTab == value)
+            return;
+        _processTab = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool TextBox::GetProcessEnter()
+    {
+        return _processEnter;
+    }
+
+    void TextBox::SetProcessEnter(bool value) 
+    {
+        if (_processEnter == value)
+            return;
+        _processEnter = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool TextBox::GetIsPassword()
+    {
+        return _password;
+    }
+
+    void TextBox::SetIsPassword(bool value)
+    {
+        if (_password == value)
+            return;
+        _password = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool TextBox::GetAutoUrl()
+    {
+        return _autoUrl;
+    }
+
+    void TextBox::SetAutoUrl(bool value) 
+    {
+        if (_autoUrl == value)
+            return;
+        _autoUrl = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool TextBox::GetHideVertScrollbar()
+    {
+        return _noVScroll;
+    }
+
+    void TextBox::SetHideVertScrollbar(bool value) 
+    {
+        if (_noVScroll == value)
+            return;
+        _noVScroll = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool TextBox::GetHideSelection() 
+    {
+        return !_noHideSel;
+    }
+
+    void TextBox::SetHideSelection(bool value)
+    {
+        value = !value;
+        if (_noHideSel == value)
+            return;
+        _noHideSel = value;
+        RecreateWxWindowIfNeeded();
     }
 
     void TextBox::OnTextChanged(wxCommandEvent& event)

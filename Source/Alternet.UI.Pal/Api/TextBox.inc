@@ -49,6 +49,30 @@ bool GetIsEmpty();
 string GetEmptyTextHint();
 void SetEmptyTextHint(const string& value);
 
+
+bool GetHideSelection();
+void SetHideSelection(bool value);
+
+
+bool GetProcessTab();
+void SetProcessTab(bool value);
+
+
+bool GetProcessEnter();
+void SetProcessEnter(bool value);
+
+
+bool GetIsPassword();
+void SetIsPassword(bool value);
+
+
+bool GetAutoUrl();
+void SetAutoUrl(bool value);
+
+
+bool GetHideVertScrollbar();
+void SetHideVertScrollbar(bool value);
+
 int GetLineLength(int64_t lineNo);
 string GetLineText(int64_t lineNo);
 int GetNumberOfLines();
