@@ -84,7 +84,8 @@ namespace Alternet::UI
 
 	void TextBoxTextAttr::SetFontFamily(void* attr, int family)
 	{
-		Attr(attr)->SetFontFamily((wxFontFamily)family);
+		auto value = Font::GetWxFontFamily((GenericFontFamily)family);
+		Attr(attr)->SetFontFamily(value);
 	}
 
 	Color TextBoxTextAttr::GetTextColor(void* attr)

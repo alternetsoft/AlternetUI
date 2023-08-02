@@ -488,6 +488,11 @@ namespace Alternet.UI
             Native.TextBoxTextAttr.AddFlag(handle, (int)flag);
         }
 
+        public void SetFontFamily(GenericFontFamily family)
+        {
+            Native.TextBoxTextAttr.SetFontFamily(handle, (int)family);
+        }
+
         public TextBoxTextAttrFlags GetFlags()
         {
             return

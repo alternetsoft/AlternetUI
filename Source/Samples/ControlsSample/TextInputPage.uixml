@@ -20,7 +20,14 @@
                   Click="AddLetterAButton_Click" />
           <Button Text="Has Border" Margin="0,0,0,5" Click="HasBorderButton_Click" />
         </VerticalStackPanel>
-        
+
+        <VerticalStackPanel Margin="5" HorizontalAlignment="Right">
+          <CheckBox Name="readOnlyCheckBox" Text="ReadOnly" Margin="0,0,0,5"
+                    CheckedChanged="ReadOnlyCheckBox_Changed"/>
+          <CheckBox Name="passwordCheckBox" Text="Password" Margin="0,0,0,5"
+                    CheckedChanged="PasswordCheckBox_Changed"/>
+        </VerticalStackPanel>
+
       </HorizontalStackPanel>
     <HorizontalStackPanel>
       <VerticalStackPanel  Margin="5" >

@@ -21,7 +21,17 @@ namespace ControlsSample
             multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
         }
 
-        private void MultiLineTextBox_TextUrl(object sender, EventArgs e)
+        private void ReadOnlyCheckBox_Changed(object? sender, EventArgs e) 
+        {
+            textBox1.ReadOnly = readOnlyCheckBox.IsChecked;
+        }
+        
+        private void PasswordCheckBox_Changed(object? sender, EventArgs e)
+        {
+            textBox1.IsPassword = passwordCheckBox.IsChecked;
+        }
+
+        private void MultiLineTextBox_TextUrl(object? sender, EventArgs e)
         {
             string? url = multiLineTextBox.DoCommand("GetReportedUrl")?.ToString();
             site?.LogEvent("TextBox: Url clicked =>" + url);

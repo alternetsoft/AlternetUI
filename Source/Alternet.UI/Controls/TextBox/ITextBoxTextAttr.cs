@@ -174,10 +174,6 @@ namespace Alternet.UI
 
         TextBoxTextAttrBulletStyle GetBulletStyle();
 
-        //void SetFontStyle(FontStyle fontStyle);
-
-        //FontStyle GetFontStyle();
-
         bool HasFlag(TextBoxTextAttrFlags flag);
 
         void RemoveFlag(TextBoxTextAttrFlags flag);
@@ -189,26 +185,7 @@ namespace Alternet.UI
         void SetFlags(TextBoxTextAttrFlags flags);
 
         void Copy(ITextBoxTextAttr fromAttr);
+
+        void SetFontFamily(GenericFontFamily family);
     }
 }
-
-//========================
-
-/*
-enum wxFontFamily
-{
-    wxFONTFAMILY_DEFAULT = wxDEFAULT,
-    wxFONTFAMILY_DECORATIVE = wxDECORATIVE,
-    wxFONTFAMILY_ROMAN = wxROMAN,
-    wxFONTFAMILY_SCRIPT = wxSCRIPT,
-    wxFONTFAMILY_SWISS = wxSWISS,
-    wxFONTFAMILY_MODERN = wxMODERN,
-    wxFONTFAMILY_TELETYPE = wxTELETYPE,
-    wxFONTFAMILY_MAX,
-    wxFONTFAMILY_UNKNOWN = wxFONTFAMILY_MAX
-};
- */
-
-//int GetFontFamily();
-//void SetFontFamily(int family);
-
