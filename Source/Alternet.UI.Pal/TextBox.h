@@ -11,7 +11,9 @@ namespace Alternet::UI
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         void OnTextChanged(wxCommandEvent& event);
-
+        void OnTextEnter(wxCommandEvent& event);
+        void OnTextUrl(wxTextUrlEvent& event);
+        void OnTextMaxLength(wxCommandEvent& event);
     protected:
 
     private:
@@ -25,6 +27,7 @@ namespace Alternet::UI
         bool _noVScroll = false;
         bool _autoUrl = false;
         bool _noHideSel = false;
+        string _eventUrl = wxStr(wxEmptyString);
 
         int _alignment = 0;
         //wxTE_LEFT           0x0000                    

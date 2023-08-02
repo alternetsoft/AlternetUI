@@ -29,6 +29,13 @@ ALTERNET_UI_API void TextBox_SetText_(TextBox* obj, const char16_t* value)
         });
 }
 
+ALTERNET_UI_API char16_t* TextBox_GetReportedUrl_(TextBox* obj)
+{
+    return MarshalExceptions<char16_t*>([&](){
+            return AllocPInvokeReturnString(obj->GetReportedUrl());
+        });
+}
+
 ALTERNET_UI_API c_bool TextBox_GetEditControlOnly_(TextBox* obj)
 {
     return MarshalExceptions<c_bool>([&](){

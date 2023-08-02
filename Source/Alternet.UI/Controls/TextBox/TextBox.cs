@@ -71,6 +71,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when Enter key is pressed in the control.
+        /// </summary>
+        /// <remarks>
+        /// Event is raised only if <see cref="ProcessEnter"/> is true.
+        /// </remarks>
+        public event EventHandler? EnterPressed;
+
+        /// <summary>
+        /// Occurs when url clicked in the text.
+        /// </summary>
+        public event EventHandler? TextUrl;
+
+        /// <summary>
+        /// Occurs when maximal text length is reached.
+        /// </summary>
+        /// <remarks>
+        /// Use <see cref="SetMaxLength"/> to set maximal text length.
+        /// </remarks>
+        public event EventHandler? TextMaxLength;
+
+        /// <summary>
         /// Occurs when <see cref="HasBorder"/> property value changes.
         /// </summary>
         public event EventHandler? HasBorderChanged;
@@ -458,6 +479,39 @@ namespace Alternet.UI
         public string GetLineText(long lineNo)
         {
             return Handler.GetLineText(lineNo);
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="TextMaxLength"/> event.
+        /// </summary>
+        /// <param name="e">
+        ///     An <see cref="EventArgs"/> that contains the event data.
+        /// </param>
+        public virtual void OnTextMaxLength(EventArgs e)
+        {
+            TextMaxLength?.Invoke(this, e);
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="TextUrl"/> event.
+        /// </summary>
+        /// <param name="e">
+        ///     An <see cref="EventArgs"/> that contains the event data.
+        /// </param>
+        public virtual void OnTextUrl(EventArgs e)
+        {
+            TextUrl?.Invoke(this, e);
+        }
+
+        /// <summary>
+        ///     Raises the <see cref="EnterPressed"/> event.
+        /// </summary>
+        /// <param name="e">
+        ///     An <see cref="EventArgs"/> that contains the event data.
+        /// </param>
+        public virtual void OnEnterPressed(EventArgs e)
+        {
+            EnterPressed?.Invoke(this, e);
         }
 
         /// <summary>
@@ -986,6 +1040,30 @@ namespace Alternet.UI
             if (style is not TextBoxTextAttr s)
                 return false;
             return Handler.SetStyle(start, end, s.Handle);
+        }
+
+        /// <summary>
+        /// Executes a browser command with the specified name and parameters.
+        /// </summary>
+        /// <param name = "cmdName" >
+        /// Name of the command to execute.
+        /// </param>
+        /// <param name = "args" >
+        /// Parameters of the command.
+        /// </param>
+        /// <returns>
+        /// An <see cref="object"/> representing the result of the command execution.
+        /// </returns>
+#pragma warning disable IDE0060 // Remove unused parameter
+        public object? DoCommand(string cmdName, params object?[] args)
+#pragma warning restore IDE0060 // Remove unused parameter
+        {
+            if (cmdName == "GetReportedUrl")
+            {
+                return Handler.ReportedUrl;
+            }
+
+            return null;
         }
 
         /// <summary>

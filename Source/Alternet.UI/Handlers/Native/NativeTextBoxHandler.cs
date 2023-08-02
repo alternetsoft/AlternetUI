@@ -7,6 +7,14 @@ namespace Alternet.UI
     {
         private bool handlingNativeControlTextChanged;
 
+        public string ReportedUrl
+        {
+            get
+            {
+                return NativeControl.ReportedUrl;
+            }
+        }
+
         public bool HideSelection
         {
             get
@@ -376,6 +384,24 @@ namespace Alternet.UI
             Control.MultilineChanged += Control_MultilineChanged;
             Control.ReadOnlyChanged += Control_ReadOnlyChanged;
             NativeControl.TextChanged += NativeControl_TextChanged;
+            NativeControl.TextEnter += NativeControl_TextEnter;
+            NativeControl.TextUrl += NativeControl_TextUrl;
+            NativeControl.TextMaxLength += NativeControl_TextMaxLength;
+        }
+
+        private void NativeControl_TextMaxLength(object sender, EventArgs e)
+        {
+            Control.OnTextMaxLength(e);
+        }
+
+        private void NativeControl_TextUrl(object sender, EventArgs e)
+        {
+            Control.OnTextUrl(e);
+        }
+
+        private void NativeControl_TextEnter(object sender, EventArgs e)
+        {
+            Control.OnEnterPressed(e);
         }
 
         private void Control_ReadOnlyChanged(object? sender, System.EventArgs e)
@@ -411,6 +437,9 @@ namespace Alternet.UI
             Control.HasBorderChanged -= Control_HasBorderChanged;
             Control.MultilineChanged -= Control_MultilineChanged;
             Control.ReadOnlyChanged -= Control_ReadOnlyChanged;
+            NativeControl.TextEnter -= NativeControl_TextEnter;
+            NativeControl.TextUrl -= NativeControl_TextUrl;
+            NativeControl.TextMaxLength -= NativeControl_TextMaxLength;
         }
 
         private void NativeControl_TextChanged(object? sender, System.EventArgs? e)

@@ -5,6 +5,9 @@ string GetText();
 void SetText(const string& value);
 
 
+string GetReportedUrl();
+
+
 bool GetEditControlOnly();
 void SetEditControlOnly(bool value);
 
@@ -112,6 +115,9 @@ public:
 enum class TextBoxEvent
 {
     TextChanged,
+    TextEnter,
+    TextUrl,
+    TextMaxLength,
 };
 typedef void* (*TextBoxEventCallbackType)(TextBox* obj, TextBoxEvent event, void* param);
 static void SetEventCallback(TextBoxEventCallbackType value) { eventCallback = value; }

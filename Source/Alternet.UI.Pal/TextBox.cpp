@@ -16,6 +16,10 @@ namespace Alternet::UI
             if (window != nullptr)
             {
                 window->Unbind(wxEVT_TEXT, &TextBox::OnTextChanged, this);
+                if (_processEnter)
+                    window->Unbind(wxEVT_TEXT_ENTER, &TextBox::OnTextEnter, this);
+                window->Unbind(wxEVT_TEXT_URL, &TextBox::OnTextUrl, this);
+                window->Unbind(wxEVT_TEXT_MAXLEN, &TextBox::OnTextMaxLength, this);
             }
         }
     }
@@ -39,13 +43,18 @@ namespace Alternet::UI
             wxDefaultSize, style);
 
 #ifdef __WXOSX__
-        // todo: port all platforms to the latest wx version, and then the ifdef can be removed.
+        // todo: port all platforms to the latest wx version, and then the ifdef
+        // can be removed.
         // EnableVisibleFocus is implemented only on macOS at the moment through.
         if (_editControlOnly)
             textCtrl->EnableVisibleFocus(false);
 #endif
             
         textCtrl->Bind(wxEVT_TEXT, &TextBox::OnTextChanged, this);
+        if(_processEnter)
+            textCtrl->Bind(wxEVT_TEXT_ENTER, &TextBox::OnTextEnter, this);
+        textCtrl->Bind(wxEVT_TEXT_URL, &TextBox::OnTextUrl, this);
+        textCtrl->Bind(wxEVT_TEXT_MAXLEN, &TextBox::OnTextMaxLength, this);
         return textCtrl;
     }
 
@@ -162,6 +171,43 @@ namespace Alternet::UI
             return;
         _noHideSel = value;
         RecreateWxWindowIfNeeded();
+    }
+
+    void TextBox::OnTextEnter(wxCommandEvent& event)
+    {
+        RaiseEvent(TextBoxEvent::TextEnter);
+    }
+
+    void TextBox::OnTextUrl(wxTextUrlEvent& event)
+    {
+        const wxMouseEvent& ev = event.GetMouseEvent();
+
+        // filter out mouse moves, too many of them
+        if (ev.Moving())
+            return;
+
+        if (!ev.LeftDown())
+            return;
+
+        long start = event.GetURLStart();
+        long end = event.GetURLEnd();
+        long delta = end - start;
+
+        auto url = GetTextCtrl()->GetValue().Mid(start, delta);
+
+        _eventUrl = wxStr(url);
+
+        RaiseEvent(TextBoxEvent::TextUrl);
+    }
+
+    string TextBox::GetReportedUrl() 
+    {
+        return _eventUrl;
+    }
+
+    void TextBox::OnTextMaxLength(wxCommandEvent& event)
+    {
+        RaiseEvent(TextBoxEvent::TextMaxLength);
     }
 
     void TextBox::OnTextChanged(wxCommandEvent& event)

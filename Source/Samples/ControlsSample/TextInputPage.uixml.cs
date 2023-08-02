@@ -18,6 +18,13 @@ namespace ControlsSample
             multiLineTextBox.EmptyTextHint = "Sample Hint";
             textBox1.EmptyTextHint = "Sample Hint";
             multiLineTextBox.Text = LoremIpsum;
+            multiLineTextBox.TextUrl += MultiLineTextBox_TextUrl;
+        }
+
+        private void MultiLineTextBox_TextUrl(object sender, EventArgs e)
+        {
+            string? url = multiLineTextBox.DoCommand("GetReportedUrl")?.ToString();
+            site?.LogEvent("TextBox: Url clicked =>" + url);
         }
 
         public IPageSite? Site

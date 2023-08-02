@@ -41,6 +41,18 @@ namespace Alternet.UI.Native
             }
         }
         
+        public string ReportedUrl
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TextBox_GetReportedUrl_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+        }
+        
         public bool EditControlOnly
         {
             get
@@ -600,11 +612,26 @@ namespace Alternet.UI.Native
                 {
                     TextChanged?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
                 }
+                case NativeApi.TextBoxEvent.TextEnter:
+                {
+                    TextEnter?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.TextBoxEvent.TextUrl:
+                {
+                    TextUrl?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
+                case NativeApi.TextBoxEvent.TextMaxLength:
+                {
+                    TextMaxLength?.Invoke(this, EventArgs.Empty); return IntPtr.Zero;
+                }
                 default: throw new Exception("Unexpected TextBoxEvent value: " + e);
             }
         }
         
         public event EventHandler? TextChanged;
+        public event EventHandler? TextEnter;
+        public event EventHandler? TextUrl;
+        public event EventHandler? TextMaxLength;
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -617,6 +644,9 @@ namespace Alternet.UI.Native
             public enum TextBoxEvent
             {
                 TextChanged,
+                TextEnter,
+                TextUrl,
+                TextMaxLength,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -630,6 +660,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBox_SetText_(IntPtr obj, string value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string TextBox_GetReportedUrl_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TextBox_GetEditControlOnly_(IntPtr obj);
