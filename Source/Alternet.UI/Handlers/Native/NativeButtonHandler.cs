@@ -13,6 +13,19 @@ namespace Alternet.UI
             return new Native.Button();
         }
 
+        public override bool HasBorder
+        {
+            get
+            {
+                return NativeControl.HasBorder;
+            }
+
+            set
+            {
+                NativeControl.HasBorder = value;
+            }
+        }
+
         public new Native.Button NativeControl => (Native.Button)base.NativeControl!;
 
         public override bool IsDefault { get => NativeControl.IsDefault; set => NativeControl.IsDefault = value; }

@@ -18,6 +18,12 @@ namespace Alternet.UI
         /// </summary>
         public abstract bool IsDefault { get; set; }
 
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        public abstract bool HasBorder { get; set; }
+
         /// <summary>
         /// Gets or sets a value that indicates whether a <see cref="Button"/> is a Cancel button. In a modal dialog, a
         /// user can activate the Cancel button by pressing the ESC key.
