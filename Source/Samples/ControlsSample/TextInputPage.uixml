@@ -25,7 +25,7 @@
     <HorizontalStackPanel>
       <VerticalStackPanel  Margin="5" >
         <Label Text="Multiline TextBox:" Margin="0,0,0,5"/>
-        <TextBox Name="multiLineTextBox" Multiline="true" Width="250" Height="200"
+        <TextBox Name="multiLineTextBox" Multiline="true" Width="250" Height="250"
                  Margin="0,0,0,5"/>
       </VerticalStackPanel>
 

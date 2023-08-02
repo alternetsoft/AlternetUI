@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Alternet.UI
@@ -484,6 +485,46 @@ namespace Alternet.UI
         public void AppendText(string text)
         {
             Handler.AppendText(text);
+        }
+
+        /// <summary>
+        /// Appends new line to the end of the text control.
+        /// </summary>
+        /// <remarks>
+        /// After the text is appended, the insertion point will be at the end
+        /// of the text control. If this behaviour is not desired,
+        /// the programmer should use <see cref="GetInsertionPoint"/>
+        /// and <see cref="SetInsertionPoint"/>.
+        /// </remarks>
+        public void AppendNewLine()
+        {
+            AppendText("\n");
+        }
+
+        /// <summary>
+        /// Appends text and styles to the end of the text control.
+        /// </summary>
+        /// <param name="list">List containing strings or
+        /// <see cref="ITextBoxTextAttr"/> instances.</param>
+        /// <remarks>
+        /// After the text is appended, the insertion point will be at the end
+        /// of the text control. If this behaviour is not desired,
+        /// the programmer should use <see cref="GetInsertionPoint"/>
+        /// and <see cref="SetInsertionPoint"/>.
+        /// </remarks>
+        public void AppendTextAndStyles(IEnumerable<object> list)
+        {
+            foreach (object item in list)
+            {
+                var ta = item as ITextBoxTextAttr;
+                if (ta is not null)
+                {
+                    SetDefaultStyle(ta);
+                    continue;
+                }
+
+                AppendText(item.ToString());
+            }
         }
 
         /// <summary>

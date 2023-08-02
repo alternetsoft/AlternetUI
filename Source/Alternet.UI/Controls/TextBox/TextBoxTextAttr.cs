@@ -38,6 +38,28 @@ namespace Alternet.UI
             Native.TextBoxTextAttr.SetBackgroundColor(handle, colBack);
         }
 
+        public void SetFontItalic(bool italic)
+        {
+            const int wxNORMAL = 90;
+            const int wxITALIC = 93;
+
+            if (italic)
+                Native.TextBoxTextAttr.SetFontStyle(handle, wxITALIC);
+            else
+                Native.TextBoxTextAttr.SetFontStyle(handle, wxNORMAL);
+        }
+
+        public void SetFontSlanted(bool slanted)
+        {
+            const int wxNORMAL = 90;
+            const int wxSLANT = 94;
+
+            if (slanted)
+                Native.TextBoxTextAttr.SetFontStyle(handle, wxSLANT);
+            else
+                Native.TextBoxTextAttr.SetFontStyle(handle, wxNORMAL);
+        }
+
         public void Dispose()
         {
             if (handle != IntPtr.Zero)

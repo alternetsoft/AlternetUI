@@ -17,7 +17,11 @@ namespace Alternet.UI
 
         void SetFontFaceName(string faceName);
 
-        void SetFontUnderlined(bool underlined);
+        void SetFontUnderlined(bool underlined = true);
+
+        void SetFontItalic(bool italic = true);
+
+        void SetFontSlanted (bool slanted = true);
 
         void SetFontStrikethrough(bool strikethrough = true);
 
