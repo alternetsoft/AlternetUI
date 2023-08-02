@@ -75,16 +75,19 @@
                   Padding="5">
         <GroupBox Title="Menu" Margin="5" VerticalAlignment="Top" Padding="5">
           <StackPanel Padding="10"  >
-            <Button Text="Add Dynamic Menu Item" 
+            <Button Text="Add Menu Item" 
                     Name="addDynamicMenuItemMenuItem"
                     Click="AddDynamicMenuItemMenuItem_Click" 
                     Margin="0,0,0,10" />
-            <Button Text="Remove Dynamic Menu Item"
+            
+            <Button Text="Remove Menu Item"
                     Name="removeLastDynamicMenuItemMenuItem"
                     Click="RemoveLastDynamicMenuItemMenuItem_Click"
                     Margin="0,0,0,10" />
+            
             <Button Name="toggleExitEnabledMenuItem"
                     Click="ToggleExitEnabledMenuItem_Click" Margin="0,0,0,10" />
+            
             <Button Name="toggleSeparatorMenuItem"
                     Click="ToggleSeparatorMenuItem_Click" Margin="0,0,0,10" />
             
@@ -109,53 +112,71 @@
         </GroupBox>
 
         <GroupBox Title="Toolbar" VerticalAlignment="Top" Margin="5,5,5,10" >
-          <StackPanel Padding="10"  >
-            <Button Text="Toggle item check"
-                    Name="toggleToolbarItemCheckButton"
-                    Click="ToggleToolbarItemCheckButton_Click"
-                    Margin="5,5,0,5" />
-            <Button Text="Toggle first item enabled"
-                    Name="toggleFirstToolbarEnabledButton"
-                    Click="ToggleFirstToolbarEnabledButton_Click"
-                Margin="5,5,0,5" />
-            <Button Text="Add dynamic item"
-                    Name="addDynamicToolbarItemButton"
-                    Click="AddDynamicToolbarItemButton_Click"
-                    Margin="5,5,0,5" />
-            <Button Text="Remove dynamic item"
-                    Name="removeLastDynamicToolbarItemButton"
-                    Click="RemoveLastDynamicToolbarItemButton_Click"
-                    Margin="5,5,0,5" />
-            <CheckBox Text="Show text" Name="showToolbarTextCheckBox"
-                CheckedChanged="ShowToolbarTextCheckBox_CheckedChanged"
-                      Margin="5,5,0,5" IsChecked="True" />
-            <CheckBox Text="Show images" Name="showToolbarImagesCheckBox"
-                CheckedChanged="ShowToolbarImagesCheckBox_CheckedChanged"
-                Margin="5,5,0,5" IsChecked="True"/>
+          <HorizontalStackPanel>
+            <StackPanel Padding="10"  >
+              <Button Text="Toggle item check"
+                      Name="toggleToolbarItemCheckButton"
+                      Click="ToggleToolbarItemCheckButton_Click"
+                      Margin="5,5,0,5" />
+              <Button Text="Toggle first item enabled"
+                      Name="toggleFirstToolbarEnabledButton"
+                      Click="ToggleFirstToolbarEnabledButton_Click"
+                  Margin="5,5,0,5" />
+              <Button Text="Add item"
+                      Name="addDynamicToolbarItemButton"
+                      Click="AddDynamicToolbarItemButton_Click"
+                      Margin="5,5,0,5" />
+              <Button Text="Remove item"
+                      Name="removeLastDynamicToolbarItemButton"
+                      Click="RemoveLastDynamicToolbarItemButton_Click"
+                      Margin="5,5,0,5" />
+              <CheckBox Text="Show text" Name="showToolbarTextCheckBox"
+                  CheckedChanged="ShowToolbarTextCheckBox_CheckedChanged"
+                        Margin="5,5,0,5" IsChecked="True" />
+              <CheckBox Text="Show images" Name="showToolbarImagesCheckBox"
+                  CheckedChanged="ShowToolbarImagesCheckBox_CheckedChanged"
+                  Margin="5,5,0,5" IsChecked="True"/>
 
-            <Label Text="Image to Text Display:" Margin="5,5,0,5"/>
-            <ComboBox IsEditable="false"
-                Name="imageToTextDisplayModeComboBox"
-                SelectedItemChanged=
-                      "ImageToTextDisplayModeComboBox_SelectedItemChanged"
-                Margin="5,5,0,5"/>
-          </StackPanel>
+              <Label Text="Image to Text:" Margin="5,5,0,5"/>
+              <ComboBox IsEditable="false"
+                  Name="imageToTextDisplayModeComboBox"
+                  SelectedItemChanged=
+                        "ImageToTextDisplayModeComboBox_SelectedItemChanged"
+                  Margin="5,5,0,5"/>
+            </StackPanel>
+
+            <StackPanel Padding="10"  >
+              <CheckBox Text="No divider" Name="noDividerCheckBox"
+                  CheckedChanged="NoDividerCheckBox_Changed"
+                  Margin="5,5,0,5" IsChecked="false"/>
+              <CheckBox Text="Vertical" Name="verticalCheckBox"
+                  CheckedChanged="VerticalCheckBox_Changed"
+                  Margin="5,5,0,5" IsChecked="false"/>
+              <CheckBox Text="Is Right" Name="isRightCheckBox"
+                  CheckedChanged="IsRightCheckBox_Changed"
+                  Margin="5,5,0,5" IsChecked="false"/>
+              <CheckBox Text="Is Bottom" Name="isBottomCheckBox"
+                  CheckedChanged="IsBottomCheckBox_Changed"
+                  Margin="5,5,0,5" IsChecked="false"/>
+            </StackPanel>
+          </HorizontalStackPanel>
         </GroupBox>
 
-        <GroupBox Title="Status Bar" VerticalAlignment="Top" Padding="5"  Margin="5,5,10,5">
+        <GroupBox Title="Status Bar" VerticalAlignment="Top" Padding="5"  
+                  Margin="5,5,10,5">
           <StackPanel Padding="10"  >
             <CheckBox
-              Text="Show Sizing Grip"
+              Text="Show Grip"
               Name="showSizingGripCheckBox"
               CheckedChanged="ShowSizingGripCheckBox_CheckedChanged"
               Margin="0,0,0,10" IsChecked="True" />
             
-            <Button Text="Add dynamic panel"
+            <Button Text="Add panel"
                     Name="addDynamicStatusBarPanelButton"
-                    Click="AddDynamicStatusBarPanelButton_Click" 				                
+                    Click="AddDynamicStatusBarPanelButton_Click"
                     Margin="0,0,0,10" />
             
-            <Button Text="Remove dynamic panel"
+            <Button Text="Remove panel"
                     Name="removeLastDynamicStatusBarPanelButton"
                     Click="RemoveLastDynamicStatusBarPanelButton_Click"
                     Margin="0,0,0,10" />

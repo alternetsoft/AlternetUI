@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains customizable toolbar inside.
     /// </summary>
-    public class ToolbarPanel : Panel
+    internal class ToolbarPanel : Panel
     {
         private readonly CustomToolbar toolbar;
 

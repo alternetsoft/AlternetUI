@@ -12,31 +12,37 @@ namespace Alternet::UI
     {
 #include "Api/Toolbar.inc"
     public:
-        Toolbar(bool mainToolbar);
-
-        wxToolBar* GetToolbar();
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
+
+        wxToolBar* GetWxToolBar();
 
         void SetOwnerWindow(Window* window);
 
         void OnItemChanged(int index);
+        Toolbar(bool mainToolbar);
 
     protected:
         void ApplyEnabled(bool value) override;
         void ApplyBounds(const Rect& value) override;
 
     private:
+        bool _mainToolbar = true;
+        bool _noDivider = false;
+        bool _isVertical = false;
+        bool _isBottom = false;
+        bool _isRight = false;
+
         void OnToolbarCommand(wxCommandEvent& event);
 
         void InsertWxItem(int index);
         void RemoveWxItem(int index);
 
-        bool _mainToolbar = true;
-        bool _noDivider = false;
-        bool _isVertical = false;
         std::vector<ToolbarItem*> _items;
         Window* _ownerWindow = nullptr;
 
+        wxToolBar* _wxToolBar = nullptr;
+
+        void CreateWxToolbar();
         void DestroyWxToolbar();
         void RecreateWxToolbar();
 

@@ -1,4 +1,3 @@
-#include "Exception.h"
 #include "Toolbar.h"
 #include "ToolbarItem.h"
 #include "Window.h"
@@ -6,7 +5,7 @@
 
 namespace Alternet::UI
 {
-    bool Toolbar::GetNoDivider() 
+    bool Toolbar::GetNoDivider()
     {
         return _noDivider;
     }
@@ -19,12 +18,12 @@ namespace Alternet::UI
         RecreateWxToolbar();
     }
 
-    bool Toolbar::GetIsVertical() 
+    bool Toolbar::GetIsVertical()
     {
         return _isVertical;
     }
-    
-    void Toolbar::SetIsVertical(bool value) 
+
+    void Toolbar::SetIsVertical(bool value)
     {
         if (value == _isVertical)
             return;
@@ -51,16 +50,13 @@ namespace Alternet::UI
         DestroyWxToolbar();
     }
 
-    void Toolbar::Realize() 
+    wxWindow* Toolbar::CreateWxWindowCore(wxWindow* parent)
     {
-        if (IsWxWindowCreated())
-            GetToolbar()->Realize();
+        return new wxPanel();
     }
 
     void Toolbar::SetOwnerWindow(Window* window)
     {
-        if (!_mainToolbar)
-            throwExNoInfo;
         _ownerWindow = window;
         RecreateWxToolbar();
     }
@@ -78,9 +74,9 @@ namespace Alternet::UI
     {
         if (_imageToTextDisplayMode == value)
             return;
-        
+
         _imageToTextDisplayMode = value;
-        
+
         RecreateWxToolbar();
     }
 
@@ -134,6 +130,11 @@ namespace Alternet::UI
         _items[index]->InsertWxTool(index);
     }
 
+    wxToolBar* Toolbar::GetWxToolBar()
+    {
+        return _wxToolBar;
+    }
+
     void Toolbar::RemoveWxItem(int index)
     {
         _items[index]->RemoveWxTool();
@@ -144,9 +145,15 @@ namespace Alternet::UI
         _items.insert(_items.begin() + index, item);
         item->SetParentToolbar(this, index);
         InsertWxItem(index);
-        
-        if (IsWxWindowCreated())
-            GetToolbar()->Realize();
+
+        if (_wxToolBar != nullptr)
+            _wxToolBar->Realize();
+    }
+
+    void Toolbar::Realize()
+    {
+        if (_wxToolBar != nullptr)
+            _wxToolBar->Realize();
     }
 
     void Toolbar::RemoveItemAt(int index)
@@ -157,37 +164,37 @@ namespace Alternet::UI
         _items.erase(it);
         item->SetParentToolbar(nullptr, nullopt);
 
-        if (IsWxWindowCreated())
-            GetToolbar()->Realize();
+        if (_wxToolBar != nullptr)
+            _wxToolBar->Realize();
     }
 
-    class wxToolBar2 : public wxToolBar, public wxWidgetExtender
+    void Toolbar::CreateWxToolbar()
     {
-    public:
-        wxToolBar2(wxWindow* parent,
-            wxWindowID id,
-            const wxPoint& pos = wxDefaultPosition,
-            const wxSize& size = wxDefaultSize,
-            long style = wxTB_DEFAULT_STYLE,
-            const wxString& name = wxASCII_STR(wxToolBarNameStr))
-        {
-            Create(parent, id, pos, size, style, name);
-        }
-    };
+        if (_wxToolBar != nullptr)
+            throwExNoInfo;
 
-    wxWindow* Toolbar::CreateWxWindowCore(wxWindow* parent)
-    {
+        if (_ownerWindow == nullptr)
+            return;
+
         auto getStyle = [&]
         {
             auto style = 0 | wxTB_FLAT;
 
-            if(_noDivider)
+            if (_noDivider)
                 style |= wxTB_NODIVIDER;
 
-            if(_isVertical)
+            if (_isVertical) 
+            {
                 style |= wxTB_VERTICAL;
+                if (_isRight)
+                    style |= wxTB_RIGHT;
+            }
             else
+            {
                 style |= wxTB_HORIZONTAL;
+                if (_isBottom)
+                    style |= wxTB_BOTTOM;
+            }
 
             if (_itemTextVisible)
                 style |= wxTB_TEXT;
@@ -201,66 +208,79 @@ namespace Alternet::UI
             return style;
         };
 
-        wxToolBar* result;
+        _wxToolBar = _ownerWindow->GetFrame()->CreateToolBar(getStyle());
 
-        if (_mainToolbar) 
-        {
-            if (_ownerWindow == nullptr)
-                return new wxPanel();
-            result = _ownerWindow->GetFrame()->CreateToolBar(getStyle());
-        }
-        else
-            result = new wxToolBar2(parent,
-                wxID_ANY,
-                wxDefaultPosition,
-                wxDefaultSize,
-                getStyle());
-      
-        result->Bind(wxEVT_TOOL, &Toolbar::OnToolbarCommand, this);
+        _wxToolBar->Bind(wxEVT_TOOL, &Toolbar::OnToolbarCommand, this);
 
         for (size_t i = 0; i < _items.size(); i++)
             InsertWxItem(i);
 
-        result->Realize();
-        return result;
+        _wxToolBar->Realize();
     }
 
-    wxToolBar* Toolbar::GetToolbar()
+    bool Toolbar::GetIsBottom()
     {
-        return dynamic_cast<wxToolBar*>(GetWxWindow());
+        return _isBottom;
+    }
+
+    void Toolbar::SetIsBottom(bool value) 
+    {
+        if (_isBottom == value)
+            return;
+        _isBottom = value;
+        RecreateWxToolbar();
+    }
+
+
+    bool Toolbar::GetIsRight() 
+    {
+        return _isRight;
+    }
+    
+    void Toolbar::SetIsRight(bool value)
+    {
+        if (_isRight == value)
+            return;
+        _isRight = value;
+        RecreateWxToolbar();
     }
 
     void Toolbar::DestroyWxToolbar()
     {
-        if (!IsWxWindowCreated())
-            return;
-        auto window = GetWxWindow();
-
-        window->Unbind(wxEVT_TOOL, &Toolbar::OnToolbarCommand, this);
-
-        for (auto item : _items)
+        if (_wxToolBar != nullptr)
         {
-            auto menu = item->GetDropDownMenu();
-            if (menu != nullptr)
+            _wxToolBar->Unbind(wxEVT_TOOL, &Toolbar::OnToolbarCommand, this);
+
+            for (auto item : _items)
             {
-                menu->DetachAndRecreateWxMenu();
-                item->GetToolInfo()->dropDownMenu = menu->GetWxMenu();
-                menu->Release();
+                auto menu = item->GetDropDownMenu();
+                if (menu != nullptr)
+                {
+                    menu->DetachAndRecreateWxMenu();
+                    item->GetToolInfo()->dropDownMenu = menu->GetWxMenu();
+                    menu->Release();
+                }
             }
+
+            delete _wxToolBar;
+            _wxToolBar = nullptr;
         }
     }
 
     void Toolbar::RecreateWxToolbar()
     {
+        if (_ownerWindow == nullptr)
+            return;
+
         DestroyWxToolbar();
-        CreateWxWindow();
+        CreateWxToolbar();
     }
 
     int Toolbar::GetItemsCount()
     {
-        if (!IsWxWindowCreated())
+        if (_wxToolBar == nullptr)
             return 0;
 
-        return GetToolbar()->GetToolsCount();
+        return _wxToolBar->GetToolsCount();
     }
 }

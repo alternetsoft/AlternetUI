@@ -34,20 +34,21 @@ namespace MenuSample
             clockStatusBarPanelIndex = statusBar!.Panels.IndexOf(clockStatusBarPanel!);
             AddDynamicStatusBarPanel();
 
-            foreach (var value in Enum.GetValues(typeof(ToolbarItemImageToTextDisplayMode)))
+            foreach (var value in Enum.GetValues(typeof(ToolbarImageToText)))
                 imageToTextDisplayModeComboBox.Items.Add(value!);
-            imageToTextDisplayModeComboBox.SelectedItem = ToolbarItemImageToTextDisplayMode.Horizontal;
+            imageToTextDisplayModeComboBox.SelectedItem = 
+                ToolbarImageToText.Horizontal;
 
             clockTimer = new Timer(TimeSpan.FromMilliseconds(200), TimerEvent);
             clockTimer.Start();
 
             this.Closing += MainWindow_Closing;
 
-            if(WebBrowser.GetBackendOS() == WebBrowserBackendOS.Windows)
+            /*if (WebBrowser.GetBackendOS() == WebBrowserBackendOS.Windows)
             {
                 AddVertToolbar();
                 AddBottomToolbar();
-            }
+            }*/
 
             contextMenuBorder.BorderColor = Color.Red;
             contextMenuBorder.BorderWidth = new Thickness(0, 1, 0, 1);
@@ -56,14 +57,26 @@ namespace MenuSample
             contextMenuBorder.PerformLayout();
         }
 
-        private ToolbarPanel CreateVertToolbar()
+        private void ImageTextVertical()
+        {
+            if (toolbar == null)
+                return;
+            if(toolbar.IsVertical || toolbar.IsRight)
+            {
+                imageToTextDisplayModeComboBox.SelectedItem = 
+                    ToolbarImageToText.Vertical;
+                toolbar.ImageToText = ToolbarImageToText.Vertical;
+            }
+        }
+
+        /*private ToolbarPanel CreateVertToolbar()
         {
             var vertToolbar = new ToolbarPanel()
             {
             };
             vertToolbar.Toolbar.IsVertical = true;
             vertToolbar.Toolbar.ItemTextVisible = false;
-            vertToolbar.Toolbar.ImageToTextDisplayMode = ToolbarItemImageToTextDisplayMode.Vertical;
+            vertToolbar.Toolbar.ImageToText = ToolbarImageToText.Vertical;
 
             var item1 = new ToolbarItem("Calendar", ToolbarItem_Click)
             {
@@ -80,9 +93,9 @@ namespace MenuSample
             vertToolbar.Toolbar.Items.Add(item2);
 
             return vertToolbar;
-        }
+        }*/
 
-        private void AddVertToolbar()
+        /*private void AddVertToolbar()
         {
             ToolbarPanel Add(int colIndex)
             {
@@ -99,7 +112,7 @@ namespace MenuSample
 
             var vertToolbar2 = Add(2);
             vertToolbar2.Margin = new(0, 0, 5, 0);
-        }
+        }*/
 
         private void SetDebugBackground(Control control)
         {
@@ -125,13 +138,13 @@ namespace MenuSample
         readonly int dynamicToolbarItemsSeparatorIndex;
         readonly int clockStatusBarPanelIndex;
 
-        private void AddBottomToolbar()
+        /*private void AddBottomToolbar()
         {
             var bottomToolbar = new ToolbarPanel();
             bottomToolbar.Toolbar.NoDivider = true;
             bottomToolbar.Margin = new(5, 0, 5, 0);
-            bottomToolbar.Toolbar.ImageToTextDisplayMode = 
-                ToolbarItemImageToTextDisplayMode.Vertical;
+            bottomToolbar.Toolbar.ImageToText =
+                ToolbarImageToText.Vertical;
 
             SetDebugBackground(bottomToolbar.Toolbar);
 
@@ -153,7 +166,7 @@ namespace MenuSample
             mainGrid.Children.Add(bottomToolbar);
             bottomToolbar.Toolbar.Realize();
             //bottomToolbar.Toolbar.RecreateWindow();
-        }
+        }*/
 
         private void InitToolbar()
         {
@@ -175,13 +188,13 @@ namespace MenuSample
                 Image = ImageSet.FromUrl($"{ResPrefix}Photo16.png")
             };
 
-            checkableToolbarItem = 
-                new ToolbarItem("Pencil Toggle", ToggleToolbarItem_Click)
-            {
-                ToolTip = "Pencil Toolbar Item",
-                IsCheckable = true,
-                Image = ImageSet.FromUrl($"{ResPrefix}Pencil16.png")
-            };
+            checkableToolbarItem =
+                new ToolbarItem("Pencil", ToggleToolbarItem_Click)
+                {
+                    ToolTip = "Pencil Toolbar Item",
+                    IsCheckable = true,
+                    Image = ImageSet.FromUrl($"{ResPrefix}Pencil16.png")
+                };
 
             toolbar?.Items.Add(calendarToolbarItem);
             toolbar?.Items.Add(photoToolbarItem);
@@ -189,21 +202,21 @@ namespace MenuSample
             toolbar?.Items.Add(checkableToolbarItem);
             toolbar?.Items.Add(new ToolbarItem("-"));
 
-            var graphDropDownToolbarItem = 
-                new ToolbarItem("Graph Drop Down", ToolbarItem_Click)
-            {
-                ToolTip = "Graph Toolbar Item",
-                Image = ImageSet.FromUrl($"{ResPrefix}LineGraph16.png")
-            };
+            var graphDropDownToolbarItem =
+                new ToolbarItem("Graph", ToolbarItem_Click)
+                {
+                    ToolTip = "Graph Toolbar Item",
+                    Image = ImageSet.FromUrl($"{ResPrefix}LineGraph16.png")
+                };
 
             var contextMenu = new ContextMenu();
 
-            MenuItem openToolbarMenuItem = 
-                new ("_Open...", ToolbarDropDownMenuItem_Click);
-            MenuItem saveToolbarMenuItem = 
-                new ("_Save...", ToolbarDropDownMenuItem_Click);
-            MenuItem exportToolbarMenuItem = 
-                new ("E_xport...", ToolbarDropDownMenuItem_Click);
+            MenuItem openToolbarMenuItem =
+                new("_Open...", ToolbarDropDownMenuItem_Click);
+            MenuItem saveToolbarMenuItem =
+                new("_Save...", ToolbarDropDownMenuItem_Click);
+            MenuItem exportToolbarMenuItem =
+                new("E_xport...", ToolbarDropDownMenuItem_Click);
             contextMenu.Items.Add(openToolbarMenuItem);
             contextMenu.Items.Add(saveToolbarMenuItem);
             contextMenu.Items.Add(exportToolbarMenuItem);
@@ -241,7 +254,7 @@ namespace MenuSample
 
         private void ExitMenuItem_Click(object sender, EventArgs e) => Close();
 
-        private void AboutMenuItem_Click(object sender, EventArgs e) => 
+        private void AboutMenuItem_Click(object sender, EventArgs e) =>
             LogEvent("AlterNET UI Menu Sample Application.");
 
         MenuItem? dynamicItemsMenuItem;
@@ -270,10 +283,10 @@ namespace MenuSample
             }
 
             var number = GetNextItemNumber();
-            parent.Items.Add(new MenuItem("Item " + number, DynamicMenuItem_Click) 
-			{ 
-				Tag = number				
-			});
+            parent.Items.Add(new MenuItem("Item " + number, DynamicMenuItem_Click)
+            {
+                Tag = number
+            });
         }
 
         private void DynamicMenuItem_Click(object? sender, EventArgs e)
@@ -309,7 +322,8 @@ namespace MenuSample
         private void UpdateControls()
         {
             toggleExitEnabledMenuItem.Text = (exitMenuItem.Enabled ? "Disable" : "Enable") + " Exit Menu Item";
-            toggleSeparatorMenuItem.Text = separatorMenuItem.Text == "-" ? "Make separator item to be normal" : "Make normal item to be separator";
+            toggleSeparatorMenuItem.Text = separatorMenuItem.Text == "-" ? 
+                "Separator item to normal" : "Normal item to separator";
         }
 
         private void ContinousScrollingMenuItem_Click(object sender, EventArgs e)
@@ -399,7 +413,7 @@ namespace MenuSample
                 Image = toolbar.Items[0].Image,
                 ToolTip = text + " Description"
             };
-            
+
             item.Click += ToolbarItem_Click;
             toolbar.Items.Add(item);
         }
@@ -416,13 +430,43 @@ namespace MenuSample
             toolbar.Items.RemoveAt(toolbar.Items.Count - 1);
         }
 
-        private void ShowToolbarTextCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void ShowToolbarTextCheckBox_CheckedChanged(
+            object? sender,
+            EventArgs e)
         {
-            if(toolbar != null)
+            if (toolbar != null)
                 toolbar.ItemTextVisible = showToolbarTextCheckBox.IsChecked;
         }
 
-        private void ShowToolbarImagesCheckBox_CheckedChanged(object sender, EventArgs e)
+        private void IsRightCheckBox_Changed(object? sender, EventArgs e)
+        {
+            if (toolbar != null)
+                toolbar.IsRight = isRightCheckBox.IsChecked;
+            ImageTextVertical();
+        }
+
+        private void IsBottomCheckBox_Changed(object? sender, EventArgs e)
+        {
+            if (toolbar != null)
+                toolbar.IsBottom = isBottomCheckBox.IsChecked;
+        }
+
+        private void NoDividerCheckBox_Changed(object? sender, EventArgs e)
+        {
+            if (toolbar != null)
+                toolbar.NoDivider = noDividerCheckBox.IsChecked;
+        }
+
+        private void VerticalCheckBox_Changed(object? sender, EventArgs e)
+        {
+            if (toolbar != null)
+                toolbar.IsVertical = verticalCheckBox.IsChecked;
+            ImageTextVertical();
+        }
+
+        private void ShowToolbarImagesCheckBox_CheckedChanged(
+            object? sender, 
+            EventArgs e)
         {
             if (toolbar != null)
                 toolbar.ItemImagesVisible = showToolbarImagesCheckBox.IsChecked;
@@ -436,7 +480,7 @@ namespace MenuSample
 
         private void ImageToTextDisplayModeComboBox_SelectedItemChanged(object sender, EventArgs e)
         {
-            toolbar!.ImageToTextDisplayMode = (ToolbarItemImageToTextDisplayMode)imageToTextDisplayModeComboBox.SelectedItem!;
+            toolbar!.ImageToText = (ToolbarImageToText)imageToTextDisplayModeComboBox.SelectedItem!;
         }
 
         private void AddDynamicStatusBarPanelButton_Click(object sender, System.EventArgs e)

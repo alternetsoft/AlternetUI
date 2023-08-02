@@ -27,6 +27,32 @@ namespace Alternet.UI
             set => NativeControl.IsVertical = value;
         }
 
+        public override bool IsBottom
+        {
+            get
+            {
+                return NativeControl.IsBottom;
+            }
+
+            set
+            {
+                NativeControl.IsBottom = value;
+            }
+        }
+
+        public override bool IsRight
+        {
+            get
+            {
+                return NativeControl.IsRight;
+            }
+
+            set
+            {
+                NativeControl.IsRight = value;
+            }
+        }
+
         public override bool ItemTextVisible
         {
             get => NativeControl.ItemTextVisible;
@@ -39,9 +65,9 @@ namespace Alternet.UI
             set => NativeControl.ItemImagesVisible = value;
         }
 
-        public override ToolbarItemImageToTextDisplayMode ImageToTextDisplayMode
+        public override ToolbarImageToText ImageToText
         {
-            get => (ToolbarItemImageToTextDisplayMode)NativeControl.ImageToTextDisplayMode;
+            get => (ToolbarImageToText)NativeControl.ImageToTextDisplayMode;
             set => NativeControl.ImageToTextDisplayMode = (Native.ToolbarItemImageToTextDisplayMode)value;
         }
 

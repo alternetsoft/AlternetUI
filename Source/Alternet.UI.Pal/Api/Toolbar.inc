@@ -20,6 +20,14 @@ bool GetIsVertical();
 void SetIsVertical(bool value);
 
 
+bool GetIsBottom();
+void SetIsBottom(bool value);
+
+
+bool GetIsRight();
+void SetIsRight(bool value);
+
+
 ToolbarItemImageToTextDisplayMode GetImageToTextDisplayMode();
 void SetImageToTextDisplayMode(ToolbarItemImageToTextDisplayMode value);
 

@@ -10,6 +10,15 @@ namespace Alternet.UI
     public class Toolbar : Control
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="Toolbar"/> class.
+        /// </summary>
+        public Toolbar()
+        {
+            Items.ItemInserted += Items_ItemInserted;
+            Items.ItemRemoved += Items_ItemRemoved;
+        }
+
+        /// <summary>
         /// Defines the default size of toolbar images for displays
         /// with 96 DPI.
         /// </summary>
@@ -26,9 +35,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Default property value is 16. Suggested values are 16, 24, 32, 48.
         /// </remarks>
-#pragma warning disable SA1401
-        public static int DefaultImageSize96dpi = 16;
-#pragma warning restore SA1401
+        public static int DefaultImageSize96dpi { get; set; } = 16;
 
         /// <summary>
         /// Defines the default size of toolbar images for displays
@@ -47,9 +54,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Default property value is 24. Suggested values are 16, 24, 32, 48.
         /// </remarks>
-#pragma warning disable SA1401
-        public static int DefaultImageSize144dpi = 24;
-#pragma warning restore SA1401
+        public static int DefaultImageSize144dpi { get; set; } = 24;
 
         /// <summary>
         /// Defines the default size of toolbar images for displays
@@ -68,9 +73,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Default property value is 32. Suggested values are 16, 24, 32, 48.
         /// </remarks>
-#pragma warning disable SA1401
-        public static int DefaultImageSize192dpi = 32;
-#pragma warning restore SA1401
+        public static int DefaultImageSize192dpi { get; set; } = 32;
 
         /// <summary>
         /// Defines the default size of toolbar images for displays
@@ -89,17 +92,32 @@ namespace Alternet.UI
         /// <remarks>
         /// Default property value is 48. Suggested values are 16, 24, 32, 48.
         /// </remarks>
-#pragma warning disable SA1401
-        public static int DefaultImageSize288dpi = 48;
-#pragma warning restore SA1401
+        public static int DefaultImageSize288dpi { get; set; } = 48;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Toolbar"/> class.
-        /// </summary>
-        public Toolbar()
+        public bool IsBottom
         {
-            Items.ItemInserted += Items_ItemInserted;
-            Items.ItemRemoved += Items_ItemRemoved;
+            get
+            {
+                return Handler.IsBottom;
+            }
+
+            set
+            {
+                Handler.IsBottom = value;
+            }
+        }
+
+        public bool IsRight
+        {
+            get
+            {
+                return Handler.IsRight;
+            }
+
+            set
+            {
+                Handler.IsRight = value;
+            }
         }
 
         internal new ToolbarHandler Handler
@@ -112,12 +130,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value which specifies display modes for toolbar item image and text.
+        /// Gets or sets a value which specifies display modes for
+        /// toolbar item image and text.
         /// </summary>
-        public ToolbarItemImageToTextDisplayMode ImageToTextDisplayMode
+        public ToolbarImageToText ImageToText
         {
-            get => Handler.ImageToTextDisplayMode;
-            set => Handler.ImageToTextDisplayMode = value;
+            get => Handler.ImageToText;
+            set => Handler.ImageToText = value;
         }
 
         public bool NoDivider

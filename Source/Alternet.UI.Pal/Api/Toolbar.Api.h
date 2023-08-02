@@ -79,6 +79,34 @@ ALTERNET_UI_API void Toolbar_SetIsVertical_(Toolbar* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API c_bool Toolbar_GetIsBottom_(Toolbar* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsBottom();
+        });
+}
+
+ALTERNET_UI_API void Toolbar_SetIsBottom_(Toolbar* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetIsBottom(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Toolbar_GetIsRight_(Toolbar* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetIsRight();
+        });
+}
+
+ALTERNET_UI_API void Toolbar_SetIsRight_(Toolbar* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetIsRight(value);
+        });
+}
+
 ALTERNET_UI_API ToolbarItemImageToTextDisplayMode Toolbar_GetImageToTextDisplayMode_(Toolbar* obj)
 {
     return MarshalExceptions<ToolbarItemImageToTextDisplayMode>([&](){

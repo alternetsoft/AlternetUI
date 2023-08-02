@@ -28,17 +28,21 @@ namespace Alternet.UI
         public abstract bool NoDivider { get; set; }
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether this toolbar 
+        /// Gets or sets a boolean value indicating whether this toolbar
         /// is positioned vertically.
         /// </summary>
         public abstract bool IsVertical { get; set; }
+
+        public abstract bool IsBottom { get; set; }
+
+        public abstract bool IsRight { get; set; }
 
         public abstract void Realize();
 
         /// <summary>
         /// Gets or sets a value which specifies display modes for toolbar item image and text.
         /// </summary>
-        public abstract ToolbarItemImageToTextDisplayMode ImageToTextDisplayMode { get; set; }
+        public abstract ToolbarImageToText ImageToText { get; set; }
 
         /// <inheritdoc/>
         protected override bool VisualChildNeedsNativeControl => true;
