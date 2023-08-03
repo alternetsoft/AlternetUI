@@ -42,6 +42,8 @@
       <None Remove="Resources\Svg\plus.svg" />
       <None Remove="Resources\Svg\search.svg" />
       <None Remove="Resources\Svg\xmark.svg" />
+      <None Remove="runsample.bat" />
+      <None Remove="runsample.sh" />
       <None Remove="WebBrowserPage.uixml" />
       <None Remove="ListBoxPage.uixml" />
       <None Remove="ListViewPage.uixml" />
@@ -119,6 +121,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\SamplePandaPdf.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="runsample.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="runsample.sh">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

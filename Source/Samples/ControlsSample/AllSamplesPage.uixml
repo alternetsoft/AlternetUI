@@ -1,0 +1,36 @@
+﻿<Control x:Class="ControlsSample.AllSamplesPage"
+        xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample"
+         VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+         Name="mainControl" Padding="10,0,10,0" >
+
+  <Control VerticalAlignment="Stretch"
+              HorizontalAlignment="Stretch">
+
+      <Grid Name="mainGrid">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
+
+        <TreeView Width="350" Name="view" Grid.Column="0" Grid.Row="0"
+                          />
+
+        <VerticalStackPanel Margin="10,0,0,0" Padding="5"
+                    Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch">
+            <Button Text="Run" Name="runButton" Margin="0,0,0,5"
+                    Click="RunButton_Click" HorizontalAlignment="Center" />
+          <Button Text="Build" Name="buildButton" Margin="0,0,0,5" Enabled="false"
+                  Click="BuildButton_Click" HorizontalAlignment="Center" />
+          <Button Text="Run All" Name="runAllButton" Margin="0,0,0,5" Enabled="false"
+                  Click="RunAllButton_Click" HorizontalAlignment="Center"/>
+          <Button Text="Build All" Name="buildAllButton" Margin="0,0,0,5" Enabled="false"
+                  Click="BuildAllButton_Click" HorizontalAlignment="Center"/>
+        </VerticalStackPanel>
+      </Grid>
+  </Control>
+</Control>

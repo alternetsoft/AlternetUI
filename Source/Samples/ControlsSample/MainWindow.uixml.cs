@@ -11,7 +11,6 @@ namespace ControlsSample
         private TreeView eventsControl = new();
         private Grid mainGrid = new();
         private Control mainGridParent = new();
-        private StackPanel mainPanel = new();
         private LinkLabel? linkLabel;
         private LinkLabel? linkLabel2;
 
@@ -77,30 +76,31 @@ namespace ControlsSample
 
             var pages = pageContainer.Pages;
 
-            pages.Add(new PageContainer.Page("Tree View", new TreeViewPage { Site = this }));
-            pages.Add(new PageContainer.Page("List View", new ListViewPage { Site = this }));
-            pages.Add(new PageContainer.Page("List Box", new ListBoxPage { Site = this }));
-            pages.Add(new PageContainer.Page("Combo Box", new ComboBoxPage { Site = this }));
-            pages.Add(new PageContainer.Page("Check List Box", new CheckListBoxPage { Site = this }));
-            pages.Add(new PageContainer.Page("Tab Control", new TabControlPage { Site = this }));
-            pages.Add(new PageContainer.Page("Progress Bar", new ProgressBarPage { Site = this }));
-            pages.Add(new PageContainer.Page("Button", new ButtonPage { Site = this }));
-            pages.Add(new PageContainer.Page("Slider", new SliderPage { Site = this }));
-            pages.Add(new PageContainer.Page("Grid", new GridPage { Site = this }));
-            pages.Add(new PageContainer.Page("Numeric Input", new NumericInputPage { Site = this }));
-            pages.Add(new PageContainer.Page("Radio Buttons", new RadioButtonsPage { Site = this }));
-            pages.Add(new PageContainer.Page("Check Boxes", new CheckBoxesPage { Site = this }));
-            pages.Add(new PageContainer.Page("Text Input", new TextInputPage { Site = this }));
-            pages.Add(new PageContainer.Page("Date Time", new DateTimePage { Site = this }));
-            pages.Add(new PageContainer.Page("Notify Icon", new NotifyIconPage { Site = this }));
-            pages.Add(new PageContainer.Page("Web Browser", new WebBrowserPage { Site = this }));
-            pages.Add(new PageContainer.Page(
-                "Splitter Panel", 
-                new SplitterPanelPage { Site = this }));
+            void AddPage(string title, Control control)
+            {
+                pages.Add(new PageContainer.Page(title,control));
+            }
 
-            pages.Add(new PageContainer.Page(
-                "Layout Panel",
-                new LayoutPanelPage { Site = this }));
+            AddPage("Tree View", new TreeViewPage { Site = this });
+            AddPage("List View", new ListViewPage { Site = this });
+            AddPage("List Box", new ListBoxPage { Site = this });
+            AddPage("Combo Box", new ComboBoxPage { Site = this });
+            AddPage("Check List Box", new CheckListBoxPage { Site = this });
+            AddPage("Tab Control", new TabControlPage { Site = this });
+            AddPage("Progress Bar", new ProgressBarPage { Site = this });
+            AddPage("Button", new ButtonPage { Site = this });
+            AddPage("Slider", new SliderPage { Site = this });
+            AddPage("Grid", new GridPage { Site = this });
+            AddPage("Numeric Input", new NumericInputPage { Site = this });
+            AddPage("Radio Button", new RadioButtonsPage { Site = this });
+            AddPage("Check Box", new CheckBoxesPage { Site = this });
+            AddPage("Text Input", new TextInputPage { Site = this });
+            AddPage("Date Time", new DateTimePage { Site = this });
+            AddPage("Notify Icon", new NotifyIconPage { Site = this });
+            AddPage("Web Browser", new WebBrowserPage { Site = this });
+            AddPage("Splitter Panel", new SplitterPanelPage { Site = this });
+            AddPage("Layout Panel",new LayoutPanelPage { Site = this });
+            AddPage("All Samples", new AllSamplesPage { Site = this });
 
             pageContainer.SelectedIndex = 0;
 
@@ -112,8 +112,6 @@ namespace ControlsSample
         private void LinkLabel_LinkClicked(object sender, System.ComponentModel.CancelEventArgs e)
         {
             var linkLabel = (LinkLabel)sender;
-            //if(linkLabel == linkLabel2)
-            //    e.Cancel = true;
             LogEvent(linkLabel.Url);
         }
 
