@@ -50,6 +50,14 @@ namespace ControlsSample
             button.Text = textTextBox.Text;
         }
 
+        private void ShowTextCheckBox_Changed(
+            object? sender,
+            System.EventArgs e)
+        {
+            button.TextVisible = showTextCheckBox.IsChecked;
+            ApplyAll();
+        }
+
         private void DisabledCheckBox_CheckedChanged(
             object? sender, 
             System.EventArgs e)

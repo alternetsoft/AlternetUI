@@ -2,9 +2,37 @@
 
 #include "Common.h"
 #include "Control.h"
+#include "wx/defs.h"
 
 namespace Alternet::UI
 {
+    class Button;
+
+    class wxButton2 : public wxButton, public wxWidgetExtender
+    {
+    public:
+        Button* _owner = nullptr;
+
+        virtual bool AcceptsFocus() const override;
+        virtual bool AcceptsFocusFromKeyboard() const override;
+        virtual bool AcceptsFocusRecursively() const override;
+
+        wxButton2(
+            Button* owner,
+            wxWindow* parent,
+            wxWindowID id,
+            const wxString& label = wxEmptyString,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = 0,
+            const wxValidator& validator = wxDefaultValidator,
+            const wxString& name = wxASCII_STR(wxButtonNameStr))
+        {
+            _owner = owner;
+            Create(parent, id, label, pos, size, style, validator, name);
+        }
+    };
+
     class Button : public Control
     {
 #include "Api/Button.inc"
@@ -14,6 +42,10 @@ namespace Alternet::UI
 
         void RaiseClick();
 
+        bool _acceptsFocus = true;
+        bool _acceptsFocusFromKeyboard = true;
+        bool _acceptsFocusRecursively = true;
+
     protected:
         virtual void OnWxWindowCreated() override;
         virtual void OnParentChanged() override;
@@ -21,6 +53,7 @@ namespace Alternet::UI
 
     private:
         wxButton* GetButton();
+        wxButton2* GetButton2();
 
         DelayedValue<Button, string> _text;
 
@@ -30,6 +63,8 @@ namespace Alternet::UI
         bool _isDefault = false;
         bool _isCancel = false;
         bool _hasBorder = true;
+        bool _textVisible = true;
+        wxDirection _textAlign = (wxDirection)0;
 
         void ApplyIsDefault();
         void ApplyIsCancel();
@@ -53,4 +88,5 @@ namespace Alternet::UI
             }
         };
     };
+
 }

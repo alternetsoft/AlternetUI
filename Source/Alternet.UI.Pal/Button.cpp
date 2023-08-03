@@ -7,11 +7,63 @@
 
 namespace Alternet::UI
 {
+    bool wxButton2::AcceptsFocus() const
+    {
+        return _owner->_acceptsFocus;
+    }
+
+    bool wxButton2::AcceptsFocusFromKeyboard() const
+    {
+        return _owner->_acceptsFocusFromKeyboard;
+    }
+
+    bool wxButton2::AcceptsFocusRecursively() const
+    {
+        return _owner->_acceptsFocusRecursively;
+    }
+
 #ifdef __WXOSX_COCOA__            
     static const bool ButtonImagesEnabled = false;
 #else
     static const bool ButtonImagesEnabled = true;
 #endif
+
+
+    bool Button::GetTextVisible() 
+    {
+        return _textVisible;
+    }
+    
+    void Button::SetTextVisible(bool value)
+    {
+        if (_textVisible == value)
+            return;
+        _textVisible = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    int Button::GetTextAlign()
+    {
+        return _textAlign;
+    }
+
+    void Button::SetTextAlign(int value)
+    {
+        if (_textAlign == value)
+            return;
+        _textAlign = (wxDirection)value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    void Button::SetImagePosition(int dir)
+    {
+        GetButton()->SetBitmapPosition((wxDirection)dir);
+    }
+
+    void Button::SetImageMargins(double x, double y)
+    {
+        GetButton()->SetBitmapMargins(x, y);
+    }
 
     Button::Button():
         _text(*this, u"", &Control::IsWxWindowCreated, &Button::RetrieveText, &Button::ApplyText)
@@ -54,21 +106,44 @@ namespace Alternet::UI
         _text.Set(value);
     }
 
-    class wxButton2 : public wxButton, public wxWidgetExtender
+    bool Button::GetAcceptsFocus() 
     {
-    public:
-        wxButton2(wxWindow* parent,
-            wxWindowID id,
-            const wxString& label = wxEmptyString,
-            const wxPoint& pos = wxDefaultPosition,
-            const wxSize& size = wxDefaultSize,
-            long style = 0,
-            const wxValidator& validator = wxDefaultValidator,
-            const wxString& name = wxASCII_STR(wxButtonNameStr))
-        {
-            Create(parent, id, label, pos, size, style, validator, name);
-        }
-    };
+        return _acceptsFocus;
+    }
+
+    void Button::SetAcceptsFocus(bool value)
+    {
+        if (_acceptsFocus == value)
+            return;
+        _acceptsFocus = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool Button::GetAcceptsFocusFromKeyboard()
+    {
+        return _acceptsFocusFromKeyboard;
+    }
+
+    void Button::SetAcceptsFocusFromKeyboard(bool value)
+    {
+        if (_acceptsFocusFromKeyboard == value)
+            return;
+        _acceptsFocusFromKeyboard = value;
+        RecreateWxWindowIfNeeded();
+    }
+
+    bool Button::GetAcceptsFocusRecursively()
+    {
+        return _acceptsFocusRecursively;
+    }
+
+    void Button::SetAcceptsFocusRecursively(bool value)
+    {
+        if (_acceptsFocusRecursively == value)
+            return;
+        _acceptsFocusRecursively = value;
+        RecreateWxWindowIfNeeded();
+    }    
 
     wxWindow* Button::CreateWxWindowCore(wxWindow* parent)
     {
@@ -77,7 +152,27 @@ namespace Alternet::UI
         if (!_hasBorder)
             style |= wxBORDER_NONE;
 
-        auto button = new wxButton2(parent,
+        if (!_textVisible)
+            style |= wxBU_NOTEXT;
+
+        bool isLeft = (_textAlign & wxLEFT) == wxLEFT;
+        bool isRight = (_textAlign & wxRIGHT) == wxRIGHT;
+        bool isTop = (_textAlign & wxTOP) == wxTOP;
+        bool isBottom = (_textAlign & wxBOTTOM) == wxBOTTOM;
+
+        if(isLeft)
+            style |= wxBU_LEFT;
+        else
+        if(isRight)
+            style |= wxBU_RIGHT;
+
+        if (isTop)
+            style |= wxBU_TOP;
+        else
+        if (isBottom)
+            style |= wxBU_BOTTOM;
+
+        auto button = new wxButton2(this, parent,
             wxID_ANY,
             wxEmptyString,
             wxDefaultPosition,
@@ -93,6 +188,11 @@ namespace Alternet::UI
     wxButton* Button::GetButton()
     {
         return dynamic_cast<wxButton*>(GetWxWindow());
+    }
+
+    wxButton2* Button::GetButton2()
+    {
+        return dynamic_cast<wxButton2*>(GetWxWindow());
     }
 
     string Button::RetrieveText()

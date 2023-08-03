@@ -32,10 +32,7 @@ namespace Alternet.UI
 
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException();
-
-                Handler.StateImages = value;
+                Handler.StateImages = value ?? throw new ArgumentNullException();
             }
         }
 
@@ -59,7 +56,8 @@ namespace Alternet.UI
         /// Gets or sets the image that is displayed on a button control.
         /// </summary>
         /// <value>
-        /// The <see cref="Image"/> displayed on the button control. The default value is <see langword="null"/>.
+        /// The <see cref="Image"/> displayed on the button control. The default
+        /// value is <see langword="null"/>.
         /// </value>
         public Image? Image
         {
@@ -87,24 +85,123 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value that indicates whether a <see cref="Button"/> is the default button. In a modal dialog,
+        /// Gets or sets a value that indicates whether a <see cref="Button"/> is
+        /// the default button. In a modal dialog,
         /// a user invokes the default button by pressing the ENTER key.
         /// </summary>
         /// <value>
-        /// <see langword="true"/> if the <see cref="Button"/> is the default button; otherwise, <see
+        /// <see langword="true"/> if the <see cref="Button"/> is the default
+        /// button; otherwise, <see
         /// langword="false"/>. The default is <see langword="false"/>.
         /// </value>
-        public bool IsDefault { get => Handler.IsDefault; set => Handler.IsDefault = value; }
+        public bool IsDefault
+        {
+            get => Handler.IsDefault;
+            set => Handler.IsDefault = value;
+        }
 
         /// <summary>
-        /// Gets or sets a value that indicates whether a <see cref="Button"/> is a Cancel button. In a modal dialog, a
+        /// Gets or sets a value that indicates whether a <see cref="Button"/>
+        /// is a Cancel button. In a modal dialog, a
         /// user can activate the Cancel button by pressing the ESC key.
         /// </summary>
         /// <value>
-        /// <see langword="true"/> if the <see cref="Button"/> is a Cancel button; otherwise, <see langword="false"/>.
+        /// <see langword="true"/> if the <see cref="Button"/> is a Cancel
+        /// button; otherwise, <see langword="false"/>.
         /// The default is <see langword="false"/>.
         /// </value>
-        public bool IsCancel { get => Handler.IsCancel; set => Handler.IsCancel = value; }
+        public bool IsCancel
+        {
+            get => Handler.IsCancel;
+            set => Handler.IsCancel = value;
+        }
+
+        /// <summary>
+        /// Gets or sets value indicating whether this control accepts
+        /// input or not (i.e. behaves like a static text) and so doesn't need focus.
+        /// </summary>
+        /// <remarks>
+        /// Default value is true.
+        /// </remarks>
+        internal bool AcceptsFocus
+        {
+            get
+            {
+                return Handler.AcceptsFocus;
+            }
+
+            set
+            {
+                Handler.AcceptsFocus = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets value indicating whether this control accepts
+        /// focus from keyboard or not.
+        /// </summary>
+        /// <remarks>
+        /// Default value is true.
+        /// </remarks>
+        /// <returns>
+        /// Return false to indicate that while this control can,
+        /// in principle, have focus if the user clicks
+        /// it with the mouse, it shouldn't be included
+        /// in the TAB traversal chain when using the keyboard.
+        /// </returns>
+        internal bool AcceptsFocusFromKeyboard
+        {
+            get
+            {
+                return Handler.AcceptsFocusFromKeyboard;
+            }
+
+            set
+            {
+                Handler.AcceptsFocusFromKeyboard = value;
+            }
+        }
+
+        /// <summary>
+        /// Indicates whether this control or one of its children accepts focus.
+        /// </summary>
+        /// <remarks>
+        /// Default value is true.
+        /// </remarks>
+        internal bool AcceptsFocusRecursively
+        {
+            get
+            {
+                return Handler.AcceptsFocusRecursively;
+            }
+
+            set
+            {
+                Handler.AcceptsFocusRecursively = value;
+            }
+        }
+
+        public bool TextVisible
+        {
+            get => Handler.TextVisible;
+            set => Handler.TextVisible = value;
+        }
+
+        public GenericDirection TextAlign
+        {
+            get => Handler.TextAlign;
+            set => Handler.TextAlign = value;
+        }
+
+        public void SetImagePosition(GenericDirection dir)
+        {
+            Handler.SetImagePosition(dir);
+        }
+
+        public void SetImageMargins(double x, double y)
+        {
+            Handler.SetImageMargins(x, y);
+        }
 
         /// <inheritdoc/>
         protected override ControlHandler CreateHandler()

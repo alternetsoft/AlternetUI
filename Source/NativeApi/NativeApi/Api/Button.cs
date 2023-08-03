@@ -1,13 +1,15 @@
-﻿using ApiCommon;
+﻿#pragma warning disable
+using ApiCommon;
 using System;
+
 
 namespace NativeApi.Api
 {
     public class Button : Control
     {
-        public event EventHandler? Click { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler? Click;
 
-        public string Text { get => throw new Exception(); set => throw new Exception(); }
+        public string Text { get; set; }
 
         public bool IsDefault { get; set; }
 
@@ -22,5 +24,14 @@ namespace NativeApi.Api
         public Image? PressedImage { get; set; }
 
         public Image? DisabledImage { get; set; }
+
+        public bool AcceptsFocus { get;set;}
+        public bool AcceptsFocusFromKeyboard { get;set;}
+        public bool AcceptsFocusRecursively { get;set;}
+
+        public bool TextVisible { get; set; }
+        public int TextAlign { get; set; }
+        public void SetImagePosition(int dir) {}
+        public void SetImageMargins(double x, double y) {}
     }
 }

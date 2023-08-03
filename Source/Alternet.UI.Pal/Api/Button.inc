@@ -32,6 +32,28 @@ void SetPressedImage(Image* value);
 Image* GetDisabledImage();
 void SetDisabledImage(Image* value);
 
+
+bool GetAcceptsFocus();
+void SetAcceptsFocus(bool value);
+
+
+bool GetAcceptsFocusFromKeyboard();
+void SetAcceptsFocusFromKeyboard(bool value);
+
+
+bool GetAcceptsFocusRecursively();
+void SetAcceptsFocusRecursively(bool value);
+
+
+bool GetTextVisible();
+void SetTextVisible(bool value);
+
+
+int GetTextAlign();
+void SetTextAlign(int value);
+
+void SetImagePosition(int dir);
+void SetImageMargins(double x, double y);
 public:
 enum class ButtonEvent
 {

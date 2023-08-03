@@ -1,6 +1,7 @@
-using Alternet.Drawing;
 using System;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -8,9 +9,43 @@ namespace Alternet.UI
     {
         private ControlStateImages? stateImages;
 
-        internal override Native.Control CreateNativeControl()
+        public override bool AcceptsFocus
         {
-            return new Native.Button();
+            get
+            {
+                return NativeControl.AcceptsFocus;
+            }
+
+            set
+            {
+                NativeControl.AcceptsFocus = value;
+            }
+        }
+
+        public override bool AcceptsFocusFromKeyboard
+        {
+            get
+            {
+                return NativeControl.AcceptsFocusFromKeyboard;
+            }
+
+            set
+            {
+                NativeControl.AcceptsFocusFromKeyboard = value;
+            }
+        }
+
+        public override bool AcceptsFocusRecursively
+        {
+            get
+            {
+                return NativeControl.AcceptsFocusRecursively;
+            }
+
+            set
+            {
+                NativeControl.AcceptsFocusRecursively = value;
+            }
         }
 
         public override bool HasBorder
@@ -28,8 +63,17 @@ namespace Alternet.UI
 
         public new Native.Button NativeControl => (Native.Button)base.NativeControl!;
 
-        public override bool IsDefault { get => NativeControl.IsDefault; set => NativeControl.IsDefault = value; }
-        public override bool IsCancel { get => NativeControl.IsCancel; set => NativeControl.IsCancel = value; }
+        public override bool IsDefault
+        {
+            get => NativeControl.IsDefault;
+            set => NativeControl.IsDefault = value;
+        }
+
+        public override bool IsCancel
+        {
+            get => NativeControl.IsCancel;
+            set => NativeControl.IsCancel = value;
+        }
 
         public override ControlStateImages StateImages
         {
@@ -46,17 +90,61 @@ namespace Alternet.UI
 
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException();
-
                 if (stateImages != null)
                     stateImages.PropertyChanged -= StateImages_PropertyChanged;
 
-                stateImages = value;
+                stateImages = value ?? throw new ArgumentNullException();
                 stateImages.PropertyChanged += StateImages_PropertyChanged;
                 ApplyStateImages();
                 OnImageChanged();
             }
+        }
+
+        public override bool TextVisible
+        {
+            get => NativeControl.TextVisible;
+            set => NativeControl.TextVisible = value;
+        }
+
+        public override GenericDirection TextAlign
+        {
+            get => (GenericDirection)NativeControl.TextAlign;
+            set => NativeControl.TextAlign = (int)value;
+        }
+
+        public override void SetImagePosition(GenericDirection dir)
+        {
+            NativeControl.SetImagePosition((int)dir);
+        }
+
+        public override void SetImageMargins(double x, double y)
+        {
+            NativeControl.SetImageMargins(x, y);
+        }
+
+        internal override Native.Control CreateNativeControl()
+        {
+            return new Native.Button();
+        }
+
+        protected override void OnAttach()
+        {
+            base.OnAttach();
+
+            NativeControl.Text = Control.Text;
+
+            InitializeStateImages();
+
+            Control.TextChanged += Control_TextChanged;
+            NativeControl.Click += NativeControl_Click;
+        }
+
+        protected override void OnDetach()
+        {
+            base.OnDetach();
+
+            Control.TextChanged -= Control_TextChanged;
+            NativeControl.Click -= NativeControl_Click;
         }
 
         private void ApplyStateImages()
@@ -74,7 +162,9 @@ namespace Alternet.UI
             Control.PerformLayout();
         }
 
-        private void StateImages_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void StateImages_PropertyChanged(
+            object sender,
+            PropertyChangedEventArgs e)
         {
             var nativeControl = NativeControl;
             if (nativeControl == null)
@@ -103,18 +193,6 @@ namespace Alternet.UI
             OnImageChanged();
         }
 
-        protected override void OnAttach()
-        {
-            base.OnAttach();
-
-            NativeControl.Text = Control.Text;
-
-            InitializeStateImages();
-
-            Control.TextChanged += Control_TextChanged;
-            NativeControl.Click += NativeControl_Click;
-        }
-
         private void InitializeStateImages()
         {
             var nativeControl = NativeControl;
@@ -138,14 +216,6 @@ namespace Alternet.UI
                 images.DisabledImage = new Bitmap(disabledImage);
 
             StateImages = images;
-        }
-
-        protected override void OnDetach()
-        {
-            base.OnDetach();
-
-            Control.TextChanged -= Control_TextChanged;
-            NativeControl.Click -= NativeControl_Click;
         }
 
         private void NativeControl_Click(object? sender, System.EventArgs? e)

@@ -2,54 +2,68 @@
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Vertical" Padding="10" Grid.Column="0">
-            <Label Text="Text: " />
-            <TextBox Text="Test Button" Name="textTextBox" 
-                     TextChanged="TextTextBox_TextChanged"/>
-            <CheckBox Text="Disabled" Name="disabledCheckBox" 
-                      CheckedChanged="DisabledCheckBox_CheckedChanged" 
+    <StackPanel Orientation="Vertical" Padding="10" Grid.Column="0">
+      <Label Text="Text: " />
+      <TextBox Text="Test Button" Name="textTextBox"
+               TextChanged="TextTextBox_TextChanged"/>
+
+      <HorizontalStackPanel>
+
+        <VerticalStackPanel>
+          <CheckBox Text="Disabled" Name="disabledCheckBox"
+                      CheckedChanged="DisabledCheckBox_CheckedChanged"
                       Margin="0,10,0,0" />
-            <CheckBox Text="Image" Name="imageCheckBox" 
-                      CheckedChanged="ImageCheckBox_CheckedChanged" 
-                      Margin="0,10,0,0" IsChecked="True" />
-            <CheckBox Text="Default" Name="defaultCheckBox" 
-                      CheckedChanged="DefaultCheckBox_CheckedChanged" 
-                      Margin="0,10,0,0" />
-          <CheckBox Text="Bold" Name="boldCheckBox" 
+          <CheckBox Text="Image" Name="imageCheckBox"
+                    CheckedChanged="ImageCheckBox_CheckedChanged"
+                    Margin="0,10,0,0" IsChecked="True" />
+          <CheckBox Text="Default" Name="defaultCheckBox"
+                    CheckedChanged="DefaultCheckBox_CheckedChanged"
+                    Margin="0,10,0,0" />
+          <CheckBox Text="Bold" Name="boldCheckBox"
                     CheckedChanged="BoldCheckBox_CheckedChanged" Margin="0,10,0,0" />
           <CheckBox Text="Has Border" Name="hasBorderCheckBox" IsChecked="True"
                     CheckedChanged="HasBorderCheckBox_Changed" Margin="0,10,0,0" />
           <CheckBox Text="TabStop" Name="tabStopCheckBox" IsChecked="True"
                     CheckedChanged="TabStopCheckBox_Changed" Margin="0,10,0,0" />
+        </VerticalStackPanel>
+        <VerticalStackPanel>
+          <CheckBox Text="Show Text" Name="showTextCheckBox" IsChecked="True"
+                      CheckedChanged="ShowTextCheckBox_Changed"
+                       Margin="0,10,0,0" />
+        </VerticalStackPanel>
 
-          <Label Text="Text Font" Name="labelFont" Margin="0,20,0,0"/>
-          <ComboBox Name="comboBoxFontName" IsEditable="false" Margin="0,3,0,0" 
-                    SelectedItemChanged="ComboBoxFontName_Changed" />
-          
-          <Label Text="Text Size" Name="labelSize" Margin="0,10,0,0"/>
-          <ComboBox Width="5" Name="comboBoxFontSize" IsEditable="false" 
-                    Margin="0,5,0,0" 
-                    SelectedItemChanged="ComboBoxFontSize_Changed" />
-          
-          <Label Text="Text Color" Name="labelTextColor" Margin="0,10,0,0"/>
-          <ComboBox Name="comboBoxTextColor" Margin="0,5,0,0" IsEditable="false"
-                    SelectedItemChanged="ComboBoxTextColor_Changed" />
-          
-          <Label Text="BackGround Color" Name="labelBackColor" Margin="0,10,0,0"/>
-          <ComboBox Name="comboBoxBackColor"
-                    Margin="0,5,0,0" IsEditable="false"
-                    SelectedItemChanged="ComboBoxBackColor_Changed" />          
+      </HorizontalStackPanel>
 
-        </StackPanel>
 
-        <GroupBox Title="Button" Grid.Column="1" Margin="10">
-            <Button Name="button" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="10" Click="Button_Click"/>
-        </GroupBox>
-    </Grid>
+      <Label Text="Text Font" Name="labelFont" Margin="0,20,0,0"/>
+      <ComboBox Name="comboBoxFontName" IsEditable="false" Margin="0,3,0,0"
+                SelectedItemChanged="ComboBoxFontName_Changed" />
+
+      <Label Text="Text Size" Name="labelSize" Margin="0,10,0,0"/>
+      <ComboBox Width="5" Name="comboBoxFontSize" IsEditable="false"
+                Margin="0,5,0,0"
+                SelectedItemChanged="ComboBoxFontSize_Changed" />
+
+      <Label Text="Text Color" Name="labelTextColor" Margin="0,10,0,0"/>
+      <ComboBox Name="comboBoxTextColor" Margin="0,5,0,0" IsEditable="false"
+                SelectedItemChanged="ComboBoxTextColor_Changed" />
+
+      <Label Text="BackGround Color" Name="labelBackColor" Margin="0,10,0,0"/>
+      <ComboBox Name="comboBoxBackColor"
+                Margin="0,5,0,0" IsEditable="false"
+                SelectedItemChanged="ComboBoxBackColor_Changed" />
+
+    </StackPanel>
+
+    <Control Grid.Column="1" Margin="10">
+      <Button Name="button" VerticalAlignment="Center"
+              HorizontalAlignment="Center" Padding="10" Click="Button_Click"/>
+    </Control>
+  </Grid>
 </Control>

@@ -128,6 +128,90 @@ ALTERNET_UI_API void Button_SetDisabledImage_(Button* obj, Image* value)
         });
 }
 
+ALTERNET_UI_API c_bool Button_GetAcceptsFocus_(Button* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetAcceptsFocus();
+        });
+}
+
+ALTERNET_UI_API void Button_SetAcceptsFocus_(Button* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetAcceptsFocus(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Button_GetAcceptsFocusFromKeyboard_(Button* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetAcceptsFocusFromKeyboard();
+        });
+}
+
+ALTERNET_UI_API void Button_SetAcceptsFocusFromKeyboard_(Button* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetAcceptsFocusFromKeyboard(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Button_GetAcceptsFocusRecursively_(Button* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetAcceptsFocusRecursively();
+        });
+}
+
+ALTERNET_UI_API void Button_SetAcceptsFocusRecursively_(Button* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetAcceptsFocusRecursively(value);
+        });
+}
+
+ALTERNET_UI_API c_bool Button_GetTextVisible_(Button* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetTextVisible();
+        });
+}
+
+ALTERNET_UI_API void Button_SetTextVisible_(Button* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetTextVisible(value);
+        });
+}
+
+ALTERNET_UI_API int Button_GetTextAlign_(Button* obj)
+{
+    return MarshalExceptions<int>([&](){
+            return obj->GetTextAlign();
+        });
+}
+
+ALTERNET_UI_API void Button_SetTextAlign_(Button* obj, int value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetTextAlign(value);
+        });
+}
+
+ALTERNET_UI_API void Button_SetImagePosition_(Button* obj, int dir)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetImagePosition(dir);
+        });
+}
+
+ALTERNET_UI_API void Button_SetImageMargins_(Button* obj, double x, double y)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetImageMargins(x, y);
+        });
+}
+
 ALTERNET_UI_API void Button_SetEventCallback_(Button::ButtonEventCallbackType callback)
 {
     Button::SetEventCallback(callback);

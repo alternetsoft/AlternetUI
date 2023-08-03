@@ -164,6 +164,103 @@ namespace Alternet.UI.Native
             }
         }
         
+        public bool AcceptsFocus
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Button_GetAcceptsFocus_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Button_SetAcceptsFocus_(NativePointer, value);
+            }
+        }
+        
+        public bool AcceptsFocusFromKeyboard
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Button_GetAcceptsFocusFromKeyboard_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Button_SetAcceptsFocusFromKeyboard_(NativePointer, value);
+            }
+        }
+        
+        public bool AcceptsFocusRecursively
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Button_GetAcceptsFocusRecursively_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Button_SetAcceptsFocusRecursively_(NativePointer, value);
+            }
+        }
+        
+        public bool TextVisible
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Button_GetTextVisible_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Button_SetTextVisible_(NativePointer, value);
+            }
+        }
+        
+        public int TextAlign
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.Button_GetTextAlign_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.Button_SetTextAlign_(NativePointer, value);
+            }
+        }
+        
+        public void SetImagePosition(int dir)
+        {
+            CheckDisposed();
+            NativeApi.Button_SetImagePosition_(NativePointer, dir);
+        }
+        
+        public void SetImageMargins(double x, double y)
+        {
+            CheckDisposed();
+            NativeApi.Button_SetImageMargins_(NativePointer, x, y);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         
         static void SetEventCallback()
@@ -263,6 +360,42 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Button_SetDisabledImage_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Button_GetAcceptsFocus_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetAcceptsFocus_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Button_GetAcceptsFocusFromKeyboard_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetAcceptsFocusFromKeyboard_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Button_GetAcceptsFocusRecursively_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetAcceptsFocusRecursively_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Button_GetTextVisible_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetTextVisible_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Button_GetTextAlign_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetTextAlign_(IntPtr obj, int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetImagePosition_(IntPtr obj, int dir);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Button_SetImageMargins_(IntPtr obj, double x, double y);
             
         }
     }
