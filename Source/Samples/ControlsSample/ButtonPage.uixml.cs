@@ -1,8 +1,8 @@
-﻿using Alternet.Drawing;
-using Alternet.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Alternet.Drawing;
+using Alternet.UI;
 
 namespace ControlsSample
 {
@@ -14,10 +14,7 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            ApplyText();
-            ApplyDisabled();
-            ApplyImage();
-            ApplyDefault();
+            ApplyAll();
 
             comboBoxFontName.Items.AddRange(FontFamily.FamiliesNamesAscending);
 
@@ -108,6 +105,12 @@ namespace ControlsSample
             ApplyDisabled();
             ApplyImage();
             ApplyDefault();
+            ApplyFont();
+            ApplyTextColor();
+            ApplyBackColor();
+            button.PerformLayout();
+            button.Refresh();
+            button.Update();
         }
 
         private void DefaultCheckBox_CheckedChanged(object sender, System.EventArgs e)
@@ -144,11 +147,14 @@ namespace ControlsSample
 
             Font font = new(fontName, fontSize, fontStyle);
 
-            site?.LogEvent("Button: Font changed to " + font.Name + ", "
-                + font.SizeInPoints);
+            //site?.LogEvent("Button: Font changed to " + font.Name + ", "
+            //    + font.SizeInPoints);
 
+            button.Font = Font.Default;
             button.Font = font;
             button.PerformLayout();
+            button.Refresh();
+            button.Update();
         }
 
         private void ApplyTextColor()
@@ -161,11 +167,23 @@ namespace ControlsSample
             if (item == null)
                 return;
 
-            site?.LogEvent("Button: Text Color changed to " + item);
-
             Color newColor = Color.FromName(item.ToString());
 
+            if (ColorIsEqual(newColor, button.Foreground))
+                return;
+
+            site?.LogEvent("Button: Text Color changed to " + item);
             button.Foreground = new SolidBrush(newColor);
+        }
+
+        private bool ColorIsEqual(Color color, Brush? brush)
+        {
+            SolidBrush? solid = brush as SolidBrush;
+
+            if (solid == null)
+                return false;
+
+            return solid.Color == color;
         }
 
         private void ApplyBackColor()
@@ -178,10 +196,12 @@ namespace ControlsSample
             if (item == null)
                 return;
 
-            site?.LogEvent("Button: Back Color changed to " + item);
-
             Color newColor = Color.FromName(item.ToString());
 
+            if (ColorIsEqual(newColor, button.Background))
+                return;
+
+            site?.LogEvent("Button: Back Color changed to " + item);
             button.Background = new SolidBrush(newColor);
         }
 
