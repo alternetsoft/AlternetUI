@@ -12,8 +12,7 @@ namespace ControlsSample
 
         public static ImageLists LoadImageLists()
         {
-            if (imageLists == null)
-                imageLists = LoadImageListsCore();
+            imageLists ??= LoadImageListsCore();
 
             return imageLists;
         }
