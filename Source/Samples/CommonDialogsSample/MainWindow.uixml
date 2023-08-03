@@ -13,7 +13,7 @@
     <StackPanel Orientation="Horizontal">
       <GroupBox Title="Common Dialogs" Margin="10" VerticalAlignment="Top">
         <StackPanel>
-          <CheckBox Text="Set Initial Directory to User Home Dir" 
+          <CheckBox Text="Set Initial Dir to User Home Dir" 
             Name="setInitialDirectoryCheckBox" Margin="5" />
 
           <CheckBox Text="Set Title to 'Custom Title'" 
@@ -33,10 +33,10 @@
           <Button Text="Save File Dialog" Name="showSaveFileDialogButton" 
             Click="ShowSaveFileDialogButton_Click" Margin="5"/>
           <Button Text="Select Directory Dialog" Name="showSelectDirectoryDialogButton" 
-            Click="ShowSelectDirectoryDialogButton_Click" Margin="5"/>
+            Click="ShowSelectDirectoryDialogButton_Click" Margin="5,5,5,10"/>
         </StackPanel>
       </GroupBox>
-    
+
       <StackPanel Orientation="Vertical">
 		  <GroupBox Title="Message Box" Margin="10" VerticalAlignment="Top" Padding="5">
 			  <StackPanel Orientation="Vertical" Padding="5">
@@ -49,11 +49,23 @@
 			    <Label Text="Default Button:" Margin="5,0,5,10" VerticalAlignment="Center"/>
 			    <ComboBox Name="messageBoxDefaultButtonComboBox" IsEditable="false" Margin="5,0,0,10" />
 
-			    <Button Text="Show Message Box" Name="showMessageBoxButton" 
+			    <Button Text="Show Message" Name="showMessageBoxButton" 
 				  Click="ShowMessageBoxButton_Click" Margin="5,0,0,10" />
 				  </StackPanel>
 		  </GroupBox>
       
+      </StackPanel>
+
+      <VerticalStackPanel>
+        <GroupBox Title="Other Dialogs" Margin="10" VerticalAlignment="Top" Padding="5">
+          <StackPanel>
+            <Button Text="Color Dialog" Name="showColorDialogButton"
+              Click="ShowColorDialogButton_Click" Margin="5"/>
+            <Button Text="Font Dialog" Name="showFontDialogButton"
+              Click="ShowFontDialogButton_Click" Margin="5"/>
+          </StackPanel>
+        </GroupBox>  
+
         <GroupBox Title="Thread Exception Window" Margin="10" VerticalAlignment="Top" Padding="5">
 				  <StackPanel Orientation="Vertical" Padding="5">
 					    <Label Text="Exception:" Margin="5,5,5,10" VerticalAlignment="Center"/>
@@ -63,22 +75,11 @@
 						  Click="ThrowExceptionButton_Click" Margin="5,0,0,10"/>
 				  </StackPanel>
         </GroupBox>
-      </StackPanel>
-
-      <VerticalStackPanel>
-        <GroupBox Title="Font And Color Dialogs" Margin="10" VerticalAlignment="Top">
-          <StackPanel>
-            <Button Text="Color Dialog" Name="showColorDialogButton"
-              Click="ShowColorDialogButton_Click" Margin="5"/>
-            <Button Text="Font Dialog" Name="showFontDialogButton"
-              Click="ShowFontDialogButton_Click" Margin="5"/>
-          </StackPanel>
-        </GroupBox>  
       
       </VerticalStackPanel>
     </StackPanel>
 
-    <Label Text="Sample Label" Name="sampleLabel" Margin="10" 
+    <Label Text="Sample Label" Name="sampleLabel" Margin="10,20,10,10" 
            HorizontalAlignment="Center"/>
 
   </VerticalStackPanel>

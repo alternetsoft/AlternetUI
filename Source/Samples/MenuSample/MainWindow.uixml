@@ -118,7 +118,7 @@
                       Name="toggleToolbarItemCheckButton"
                       Click="ToggleToolbarItemCheckButton_Click"
                       Margin="5,5,0,5" />
-              <Button Text="Toggle first item enabled"
+              <Button Text="Toggle item enabled"
                       Name="toggleFirstToolbarEnabledButton"
                       Click="ToggleFirstToolbarEnabledButton_Click"
                   Margin="5,5,0,5" />

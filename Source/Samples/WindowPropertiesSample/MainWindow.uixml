@@ -23,10 +23,10 @@
 
         <GroupBox Title="Create" Grid.Row="0" Grid.Column="0"  Margin="10">
 			  <StackPanel Padding="10" >
-					<Button Text="Create and show window" Name="createAndShowWindowButton" 
+					<Button Text="Create window" Name="createAndShowWindowButton" 
 						Click="CreateAndShowWindowButton_Click"
 						Margin="0,0,0,5" />
-					<Button Text="Create and show modal window" Name="createAndShowModalWindowButton"
+					<Button Text="Create modal window" Name="createAndShowModalWindowButton"
 						Click="CreateAndShowModalWindowButton_Click" Margin="0,0,0,5"/>
 					<CheckBox Text="Set Owner" Name="setOwnerCheckBox" Margin="0,0,0,5"/>
 					<CheckBox Text="Cancel Closing" Name="cancelClosingCheckBox" Margin="0,0,0,5"/>
@@ -93,7 +93,7 @@
 						Text="Set Bounds (0, 0, 400, 400)" 
 						Margin="0,0,0,5"/>
 					<Button Name="setMinMaxSizeButton" Click="SetMinMaxSizeButton_Click" 
-						Text="Set Minimum and Maximum size" Margin="0,0,0,5"/>
+						Text="Set Min and Max size" Margin="0,0,0,5"/>
 					<Label Name="currentBoundsLabel" Margin="0,0,0,10" Visible="false"/>
 			  </StackPanel>
         </GroupBox>

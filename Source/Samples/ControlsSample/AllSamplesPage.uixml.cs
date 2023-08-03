@@ -36,8 +36,8 @@ namespace ControlsSample
 
         private void AddDefaultItems()
         {
-            string folder1 = GetAppFolder()+@"..\..\..\..\";
-            string folder2 = folder1+ @"..\";
+            string folder1 = GetAppFolder()+@"../../../../";
+            string folder2 = folder1+ @"../";
             folder1 = Path.GetFullPath(folder1);
             folder2 = Path.GetFullPath(folder2);
 

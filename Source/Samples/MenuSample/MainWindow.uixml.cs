@@ -407,7 +407,7 @@ namespace MenuSample
         {
             int number = toolbar!.Items.Count - dynamicToolbarItemsSeparatorIndex;
 
-            string text = "Dynamic Item " + number;
+            string text = "Item " + number;
             var item = new ToolbarItem(text)
             {
                 Image = toolbar.Items[0].Image,
@@ -498,7 +498,7 @@ namespace MenuSample
         private void AddDynamicStatusBarPanel()
         {
             int number = statusBar!.Panels.Count - clockStatusBarPanelIndex;
-            string text = "Dynamic Panel " + number;
+            string text = "Panel " + number;
             statusBar.Panels.Add(new StatusBarPanel(text));
         }
 
