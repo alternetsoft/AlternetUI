@@ -5,6 +5,20 @@
 
 namespace Alternet::UI
 {
+    class wxToolBar2 : public wxToolBar, public wxWidgetExtender
+    {
+    public:
+        wxToolBar2(wxWindow* parent,
+            wxWindowID id,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxTB_DEFAULT_STYLE,
+            const wxString& name = wxASCII_STR(wxToolBarNameStr))
+        {
+            Create(parent, id, pos, size, style, name);
+        }
+    };
+
     bool Toolbar::GetNoDivider()
     {
         return _noDivider;
