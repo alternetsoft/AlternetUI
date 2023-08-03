@@ -66,7 +66,8 @@ namespace Alternet::UI
     }
 
     Button::Button():
-        _text(*this, u"", &Control::IsWxWindowCreated, &Button::RetrieveText, &Button::ApplyText)
+        _text(*this, u"", &Control::IsWxWindowCreated, 
+            &Button::RetrieveText, &Button::ApplyText)
     {
         GetDelayedValues().Add(&_text);
     }
@@ -208,7 +209,8 @@ namespace Alternet::UI
     void Button::ApplyIsDefault()
     {
         auto button = GetButton();
-        auto topLevelWindow = dynamic_cast<wxTopLevelWindow*>(wxGetTopLevelParent(button));
+        auto topLevelWindow = 
+            dynamic_cast<wxTopLevelWindow*>(wxGetTopLevelParent(button));
         if (topLevelWindow != nullptr)
         {
             if (_isDefault)
@@ -344,7 +346,7 @@ namespace Alternet::UI
         else
         {
             if (ButtonImagesEnabled)
-                button->SetBitmapCurrent(wxBitmap());
+                button->SetBitmapPressed(wxBitmap());
         }
     }
 
@@ -374,7 +376,7 @@ namespace Alternet::UI
         else
         {
             if (ButtonImagesEnabled)
-                button->SetBitmapCurrent(wxBitmap());
+                button->SetBitmapDisabled(wxBitmap());
         }
     }
 
