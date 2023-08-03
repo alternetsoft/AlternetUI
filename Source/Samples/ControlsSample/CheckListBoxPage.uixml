@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
   <Control Padding="5">
-    <GroupBox Title="Check List Box" Margin="5" Padding="10">
+    <Control Margin="5" Padding="10">
       <StackPanel Orientation="Horizontal" Margin="5">
 
         <CheckListBox
@@ -28,6 +28,6 @@
         </StackPanel>
         
       </StackPanel>
-    </GroupBox>
+    </Control>
   </Control>
 </Control>

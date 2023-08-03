@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
   <StackPanel Orientation="Vertical" Padding="10">
-    <GroupBox Title="Tab Control" >
+    <Control >
       <TabControl Margin="5" Padding="5" Name="tabControl"
                   SelectedPageChanged="TabControl_SelectedPageChanged">
         <TabControl.Pages>
@@ -30,7 +30,7 @@
           </TabPage>
         </TabControl.Pages>
       </TabControl>
-    </GroupBox>
+    </Control>
 
     <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,10,0,0">
 

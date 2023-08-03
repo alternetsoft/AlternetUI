@@ -4,7 +4,7 @@
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
 
   <Control Padding="5">
-    <GroupBox Title="Grid" Margin="5" Padding="10">
+    <Control Margin="5" Padding="10">
       <StackPanel Orientation="Horizontal" Margin="5">
 
         <Grid Name="mainGrid" Width="300" Height="200" Margin="0,0,0,5" Padding="2">
@@ -44,6 +44,6 @@
         </StackPanel>
 
       </StackPanel>
-    </GroupBox>
+    </Control>
   </Control>
 </Control>

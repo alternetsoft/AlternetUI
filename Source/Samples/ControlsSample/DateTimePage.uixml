@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
   <StackPanel Orientation="Vertical" Padding="10">
-    <GroupBox Title="Date Time Input">
+    <Control>
       <HorizontalStackPanel>
 
         <VerticalStackPanel Margin="5" Name="textBoxesPanel">
@@ -58,6 +58,6 @@
         </VerticalStackPanel>
 
       </HorizontalStackPanel>
-    </GroupBox>
+    </Control>
   </StackPanel>
 </Control>
