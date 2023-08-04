@@ -8,6 +8,32 @@ namespace ControlsSample
 {
     internal partial class ButtonPage : Control
     {
+        public class TextValuePair
+        {
+            public string Text {get;set;}
+            public object Value {get;set;}
+            public TextValuePair(string text, object value)
+            {
+                Text = text;
+                Value = value;
+            }
+
+            public override string ToString()
+            {
+                return Text;
+            }
+        }
+
+        private static readonly object[] ValidAlign =
+            new object[]
+            {
+                    new TextValuePair("Default", GenericDirection.Default),
+                    new TextValuePair("Left", GenericDirection.Left),
+                    new TextValuePair("Top", GenericDirection.Top),
+                    new TextValuePair("Right", GenericDirection.Right),
+                    new TextValuePair("Bottom", GenericDirection.Bottom),
+            };
+
         private IPageSite? site;
 
         public ButtonPage()
@@ -25,6 +51,19 @@ namespace ControlsSample
             var colorsNames = knownColors.Select(x => x.Name).ToArray();
             comboBoxTextColor.Items.AddRange(colorsNames);
             comboBoxBackColor.Items.AddRange(colorsNames);
+
+            textAlignComboBox.Items.AddRange(ValidAlign);
+            textAlignComboBox.SelectedItemChanged += TextAlignComboBox_Changed;
+
+            imageAlignComboBox.Items.AddRange(ValidAlign);
+            imageAlignComboBox.SelectedItemChanged += ImageAlignComboBox_Changed;
+
+            if (Application.IsMacOs)
+            {
+                imageAlignComboBox.Enabled = false;
+                imageCheckBox.Enabled = false;
+                showTextCheckBox.Enabled = false;
+            }
         }
 
         public IPageSite? Site
@@ -37,7 +76,34 @@ namespace ControlsSample
             }
         }
 
-        private void TextTextBox_TextChanged(object sender, Alternet.UI.TextChangedEventArgs e)
+        private void TextAlignComboBox_Changed(object? sender, EventArgs e) 
+        {
+            if (textAlignComboBox.SelectedItem == null)
+                return;
+            if (textAlignComboBox.SelectedItem is not TextValuePair item)
+                return;
+            button.TextAlign = (GenericDirection)item.Value;
+            ApplyAll();
+        }
+
+        private void ApplyImageAlign()
+        {
+            if (!imageAlignComboBox.Enabled)
+                return;
+            if (imageAlignComboBox.SelectedItem == null)
+                return;
+            if (imageAlignComboBox.SelectedItem is not TextValuePair item)
+                return;
+            button.SetImagePosition((GenericDirection)item.Value);
+        }
+
+        private void ImageAlignComboBox_Changed(object? sender, EventArgs e)
+        {
+            button.RecreateWindow();
+            ApplyAll();
+        }
+
+        private void TextTextBox_TextChanged(object? sender, TextChangedEventArgs e)
         {
             ApplyText();
         }
@@ -47,17 +113,13 @@ namespace ControlsSample
             button.Text = textTextBox.Text;
         }
 
-        private void ShowTextCheckBox_Changed(
-            object? sender,
-            System.EventArgs e)
+        private void ShowTextCheckBox_Changed(object? sender, EventArgs e)
         {
             button.TextVisible = showTextCheckBox.IsChecked;
             ApplyAll();
         }
 
-        private void DisabledCheckBox_CheckedChanged(
-            object? sender, 
-            System.EventArgs e)
+        private void DisabledCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
             ApplyDisabled();
         }
@@ -83,7 +145,7 @@ namespace ControlsSample
         {
             if (button == null)
                 return;
-            button.StateImages = imageCheckBox.IsChecked ? 
+            button.StateImages = imageCheckBox.IsChecked ?
                 ResourceLoader.ButtonImages : new ControlStateImages();
         }
 
@@ -93,7 +155,7 @@ namespace ControlsSample
             ApplyAll();
         }
 
-        private void HasBorderCheckBox_Changed(object sender, System.EventArgs e) 
+        private void HasBorderCheckBox_Changed(object sender, System.EventArgs e)
         {
             button.HasBorder = hasBorderCheckBox.IsChecked;
             ApplyAll();
@@ -108,6 +170,7 @@ namespace ControlsSample
             ApplyFont();
             ApplyTextColor();
             ApplyBackColor();
+            ApplyImageAlign();
             button.PerformLayout();
             button.Refresh();
             button.Update();

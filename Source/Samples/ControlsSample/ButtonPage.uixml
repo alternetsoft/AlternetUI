@@ -32,29 +32,36 @@
           <CheckBox Text="TabStop" Name="tabStopCheckBox" IsChecked="True"
                     CheckedChanged="TabStopCheckBox_Changed" Margin="0,10,0,0" />
         </VerticalStackPanel>
-        <VerticalStackPanel>
+        <VerticalStackPanel Margin="5,0,0,0">
           <CheckBox Text="Show Text" Name="showTextCheckBox" IsChecked="True"
                       CheckedChanged="ShowTextCheckBox_Changed"
                        Margin="0,10,0,0" />
+
+          <Label Text="Text Align:" VerticalAlignment="Center" Margin="0,10,0,0"/>
+          <ComboBox IsEditable="false" Name="textAlignComboBox" Margin="0,3,0,0"/>
+
+          <Label Text="Image Align:" VerticalAlignment="Center" Margin="0,10,0,0"/>
+          <ComboBox IsEditable="false" Name="imageAlignComboBox" Margin="0,3,0,0"/>
+
         </VerticalStackPanel>
 
       </HorizontalStackPanel>
 
 
-      <Label Text="Text Font" Name="labelFont" Margin="0,20,0,0"/>
+      <Label Text="Text Font:" Name="labelFont" Margin="0,20,0,0"/>
       <ComboBox Name="comboBoxFontName" IsEditable="false" Margin="0,3,0,0"
                 SelectedItemChanged="ComboBoxFontName_Changed" />
 
-      <Label Text="Text Size" Name="labelSize" Margin="0,10,0,0"/>
+      <Label Text="Text Size:" Name="labelSize" Margin="0,10,0,0"/>
       <ComboBox Width="5" Name="comboBoxFontSize" IsEditable="false"
                 Margin="0,5,0,0"
                 SelectedItemChanged="ComboBoxFontSize_Changed" />
 
-      <Label Text="Text Color" Name="labelTextColor" Margin="0,10,0,0"/>
+      <Label Text="Text Color:" Name="labelTextColor" Margin="0,10,0,0"/>
       <ComboBox Name="comboBoxTextColor" Margin="0,5,0,0" IsEditable="false"
                 SelectedItemChanged="ComboBoxTextColor_Changed" />
 
-      <Label Text="BackGround Color" Name="labelBackColor" Margin="0,10,0,0"/>
+      <Label Text="BackGround Color:" Name="labelBackColor" Margin="0,10,0,0"/>
       <ComboBox Name="comboBoxBackColor"
                 Margin="0,5,0,0" IsEditable="false"
                 SelectedItemChanged="ComboBoxBackColor_Changed" />
