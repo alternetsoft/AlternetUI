@@ -117,6 +117,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets visibility of the text in the bitmap.
+        /// </summary>
+        public bool TextVisible
+        {
+            get => Handler.TextVisible;
+            set => Handler.TextVisible = value;
+        }
+
+        /// <summary>
+        /// Sets the position at which the text is displayed.
+        /// </summary>
+        /// <remarks>
+        /// Valid positions are left, top, right, bottom, default.
+        /// </remarks>
+        public GenericDirection TextAlign
+        {
+            get => Handler.TextAlign;
+            set => Handler.TextAlign = value;
+        }
+
+
+        /// <summary>
         /// Gets or sets value indicating whether this control accepts
         /// input or not (i.e. behaves like a static text) and so doesn't need focus.
         /// </summary>
@@ -181,23 +203,30 @@ namespace Alternet.UI
             }
         }
 
-        public bool TextVisible
-        {
-            get => Handler.TextVisible;
-            set => Handler.TextVisible = value;
-        }
-
-        public GenericDirection TextAlign
-        {
-            get => Handler.TextAlign;
-            set => Handler.TextAlign = value;
-        }
-
+        /// <summary>
+        /// Sets the position at which the image is displayed.
+        /// </summary>
+        /// <remarks>
+        /// This method should only be called if the button does have
+        /// an associated image.
+        /// </remarks>
+        /// <param name="dir">New image position (left, top, right, bottom).</param>
         public void SetImagePosition(GenericDirection dir)
         {
+            if (dir == GenericDirection.Left || dir == GenericDirection.Right ||
+                dir == GenericDirection.Top || dir == GenericDirection.Bottom)
             Handler.SetImagePosition(dir);
         }
 
+        /// <summary>
+        /// Sets the margins between the image and the text of the button.
+        /// </summary>
+        /// <remarks>
+        /// This method is currently only implemented under Windows.
+        /// If it is not called, default margin is used around the image.
+        /// </remarks>
+        /// <param name="x">New horizontal margin.</param>
+        /// <param name="y">New vertical margin.</param>
         public void SetImageMargins(double x, double y)
         {
             Handler.SetImageMargins(x, y);
