@@ -414,6 +414,8 @@ namespace Alternet.UI
             }
         }
 
+        public IEnumerable<T> ChildrenOfType<T>() => Children.OfType<T>();
+
         /// <summary>
         /// Gets whether there are any items in the <see cref="Children"/> list.
         /// </summary>
@@ -1590,6 +1592,18 @@ namespace Alternet.UI
 #pragma warning restore IDE0060 // Remove unused parameter
         {
             RaiseEnabledChanged(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Performs some action for the each child of the control.
+        /// </summary>
+        /// <typeparam name="T">Specifies type of the child control.</typeparam>
+        /// <param name="action">Specifies action which will be called for the
+        /// each child.</param>
+        public void ForEachChild<T>(Action<T> action)
+        {
+            foreach (var child in ChildrenOfType<T>())
+                action(child);
         }
     }
 }
