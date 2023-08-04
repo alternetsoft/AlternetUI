@@ -29,7 +29,7 @@ namespace Alternet.Drawing
         ExtraLight = 200,
 
         /// <summary>
-        /// 
+        /// Specifies an "Ultra-light" font weight (200).
         /// </summary>
         UltraLight = ExtraLight,
 
