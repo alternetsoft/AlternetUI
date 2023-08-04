@@ -40,8 +40,7 @@ namespace Alternet::UI
         int _restrictSelection = 0;
         int _minRange = 0;
         int _maxRange = 0;
-        Color _color = Color();
-        //wxFont _wxfont = wxFont();
+        Color _color = Color(0, 0, 0, 0);;
 
         bool DialogGetAllowSymbols();
         void DialogSetAllowSymbols(bool value);

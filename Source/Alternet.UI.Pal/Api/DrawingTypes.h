@@ -189,17 +189,28 @@ namespace Alternet::UI
     public:
         bool IsEmpty() const { return state == 0; }
 
+        Color(uint8_t alpha, uint8_t red, uint8_t green, uint8_t blue) :
+            R(red), G(green), B(blue), A(alpha), state(1)
+        {
+        }
+
         Color() : R(0), G(0), B(0), A(0), state(0)
         {
         }
 
-        Color(const wxColor& c) : R(c.Red()), G(c.Green()), B(c.Blue()), A(c.Alpha()), state(1)
+        Color(const wxColor& c) : R(c.Red()), G(c.Green()), B(c.Blue()), 
+            A(c.Alpha()), state(1)
         {
         }
 
         operator Color_C() { return Color_C{ R, G, B, A, state }; }
 
-        bool operator==(const Color& rhs) { return R == rhs.R && G == rhs.G && B == rhs.B && A == rhs.A && state == rhs.state; }
+        bool operator==(const Color& rhs) 
+        { 
+            return R == rhs.R && G == rhs.G && B == rhs.B && A == rhs.A && 
+                state == rhs.state;         
+        }
+
         bool operator!=(const struct Color& rhs) { return !(*this == rhs); }
 
         operator wxColor() const { return IsEmpty()? wxColor() : wxColor(R, G, B, A); }

@@ -137,7 +137,10 @@ namespace Alternet::UI
 
     Color FontDialog::DialogGetColor()
     {
-        return GetFontData().GetColour();
+        wxColor c = GetFontData().GetColour();
+        if(c.IsOk())
+            return c;
+        return Color(0, 0, 0, 0);
     }
 
     void FontDialog::DialogSetColor(const Color& value)
@@ -177,7 +180,9 @@ namespace Alternet::UI
         DialogSetRestrictSelection(_restrictSelection);
         DialogSetRange(_minRange, _maxRange);
 #endif
-        DialogSetColor(_color);
+
+        if(!_color.IsEmpty())
+            DialogSetColor(_color);
 
         auto font = Font::InitializeWxFont(_genericFamily, _familyName, 
             _fontSizeInPoints, _fontStyle);

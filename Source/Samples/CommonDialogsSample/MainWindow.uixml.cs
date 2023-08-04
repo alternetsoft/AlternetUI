@@ -182,16 +182,16 @@ namespace CommonDialogsSample
 
         private void ShowFontDialogButton_Click(object? sender, System.EventArgs e)
         {
-            ResultMessage = "";
+            ResultMessage = string.Empty;
 
-            var dialog = new FontDialog();
-
-            dialog.FontInfo = fontInfo;
+            var dialog = new FontDialog
+            {
+                FontInfo = fontInfo,
+                ShowHelp = false,
+            };
 
             if (setCustomTitleCheckBox.IsChecked)
                 dialog.Title = CustomTitle;
-
-            dialog.ShowHelp = false;
 
             var result = dialog.ShowModal(this);
 
@@ -201,7 +201,7 @@ namespace CommonDialogsSample
                 sampleLabel.Font = fontInfo;
                 ResultMessage =
                     "Font Dialog Result: Accepted, Font = " + 
-                    dialog.FontInfo.ToString();
+                    dialog.FontInfo.ToString()+", Color = " + dialog.Color;
             }
             else
                 ResultMessage = "Font Dialog Result: " + result.ToString();
