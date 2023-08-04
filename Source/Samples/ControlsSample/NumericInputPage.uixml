@@ -6,24 +6,19 @@
 
     <GroupBox Title="Integer Numeric Input" Padding="5" >
       <HorizontalStackPanel >
-        <VerticalStackPanel Margin="5" Name="numericUpDownsPanel"
-                    Width="250">
+        <VerticalStackPanel Margin="5" Name="numericUpDownsPanel" Width="250">
           <Label Text="[-50..10]" Margin="0,0,0,5" />
           <NumericUpDown Margin="0,0,0,5" Maximum="10" Minimum="-50" Value="-5"
-                         Name="numberUpDown1"
-                         ValueChanged="NumericUpDown_ValueChanged" />
+                         Name="numberUpDown1"/>
 
           <Label Text="[0..20]" Margin="0,0,0,5" />
-          <NumericUpDown Maximum="20" Value="5" Margin="0,0,0,5"
-                         ValueChanged="NumericUpDown_ValueChanged" />
+          <NumericUpDown Maximum="20" Value="5" Margin="0,0,0,5"/>
 
           <Label Text="[0..100]" Margin="0,0,0,5" />
-          <NumericUpDown Maximum="100" Value="100" Margin="0,0,0,5"
-                         ValueChanged="NumericUpDown_ValueChanged" />
+          <NumericUpDown Maximum="100" Value="100" Margin="0,0,0,5"/>
 
           <Label Text="[50..200]" Margin="0,0,0,5" />
-          <NumericUpDown Minimum="50" Maximum="200" Value="125" Margin="0,0,0,5"
-                         ValueChanged="NumericUpDown_ValueChanged" />
+          <NumericUpDown Minimum="50" Maximum="200" Value="125" Margin="0,0,0,5"/>
         </VerticalStackPanel>
         
         <StackPanel Orientation="Vertical" Margin="10,5,5,5">

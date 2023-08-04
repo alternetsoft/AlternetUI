@@ -28,7 +28,8 @@ namespace ControlsSample
 
         private void NumericUpDown_ValueChanged(object? sender, EventArgs e)
         {
-            site?.LogEvent("New NumericUpDown value is: " + ((NumericUpDown)sender!).Value);
+            site?.LogEvent("New NumericUpDown value is: " +
+                ((NumericUpDown)sender!).Value);
         }
 
         private void ProgressBarControlNumericUpDown_ValueChanged(
@@ -40,18 +41,12 @@ namespace ControlsSample
 
         private void HasBorderButton_Click(object? sender, EventArgs e)
         {
-            foreach (var numericUpDown in
-                numericUpDownsPanel.Children.OfType<NumericUpDown>())
-            {
-                //numericUpDown.HasBorder = !numericUpDown.HasBorder;
-            }
         }
 
         private void IncreaseAllButton_Click(object? sender, EventArgs e)
         {
-            foreach (var numericUpDown in 
-                numericUpDownsPanel.Children.OfType<NumericUpDown>())
-                numericUpDown.Increment();
+            numericUpDownsPanel.ForEachChild<NumericUpDown>(
+                (x) => { x.IncrementValue(); });
         }
     }
 }
