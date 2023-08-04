@@ -70,10 +70,10 @@ namespace ControlsSample
 
                 AddDefaultItems();
 
-                AddEnumValues(viewComboBox, typeof(ListViewView), ListViewView.Details);
-                AddEnumValues(gridLinesComboBox, typeof(ListViewGridLinesDisplayMode), 
+                viewComboBox.AddEnumValues(typeof(ListViewView), ListViewView.Details);
+                gridLinesComboBox.AddEnumValues(typeof(ListViewGridLinesDisplayMode), 
                     ListViewGridLinesDisplayMode.None);
-                AddEnumValues(columnWidthModeComboBox, typeof(ListViewColumnWidthMode),
+                columnWidthModeComboBox.AddEnumValues(typeof(ListViewColumnWidthMode),
                     ListViewColumnWidthMode.AutoSize);
 
                 listView.Items.ItemInserted += Items_ItemInserted;

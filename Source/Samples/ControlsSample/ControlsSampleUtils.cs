@@ -23,14 +23,6 @@ namespace Alternet.UI
             return s;
         }
 
-        public static void AddEnumValues(ComboBox comboBox, Type type,
-            object? selectValue = null)
-        {
-            foreach (var item in Enum.GetValues(type))
-                comboBox.Items.Add(item);
-            comboBox.SelectedItem = selectValue;
-        }
-
         public static string PathAddBackslash(string? path)
         {
             if (path == null)

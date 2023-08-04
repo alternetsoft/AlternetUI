@@ -170,7 +170,7 @@ namespace Alternet.UI
         /// event.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">The assigned value
         /// is less than 0 or greater than or equal to the item count.</exception>
-        public int? SelectedIndex
+        public override int? SelectedIndex
         {
             get
             {
@@ -217,7 +217,7 @@ namespace Alternet.UI
         /// If the object does not exist in the list, the
         /// <see cref="SelectedIndex"/> property is left at its current value.
         /// </remarks>
-        public object? SelectedItem
+        public override object? SelectedItem
         {
             get { return GetValue(SelectedItemProperty); }
             set { SetValue(SelectedItemProperty, value); }

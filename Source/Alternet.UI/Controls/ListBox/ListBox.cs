@@ -137,7 +137,7 @@ namespace Alternet.UI
         /// </para>
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">The assigned value is less than 0 or greater than or equal to the item count.</exception>
-        public int? SelectedIndex
+        public override int? SelectedIndex
         {
             get
             {
@@ -170,10 +170,11 @@ namespace Alternet.UI
         /// <para>
         /// To retrieve a collection containing all selected items in a multiple-selection <see cref="ListBox"/>, use the <see cref="SelectedItems"/> property.
         /// If you want to obtain the index position of the currently selected item in the <see cref="ListBox"/>, use the <see cref="SelectedIndex"/> property.
-        /// In addition, you can use the <see cref="SelectedIndices"/> property to obtain all the selected indexes in a multiple-selection <see cref="ListBox"/>.
+        /// In addition, you can use the <see cref="SelectedIndices"/> property to obtain all the selected indexes in a multiple-selection
+        /// <see cref="ListBox"/>.
         /// </para>
         /// </remarks>
-        public object? SelectedItem
+        public override object? SelectedItem
         {
             get
             {
