@@ -61,20 +61,10 @@ namespace Alternet.UI
             get => pens.Width;
             set
             {
+                value.ApplyMinMax(0, 1);
                 if (pens.Width == value)
                     return;
-                if (value == null)
-                    pens.Width = DefaultPens.Width;
-                else
-                {
-                    var v = (Thickness)value;
-                    if (v.Top > 1) v.Top = 1;
-                    if (v.Bottom > 1) v.Bottom = 1;
-                    if (v.Left > 1) v.Left = 1;
-                    if (v.Right > 1) v.Right = 1;
-                    pens.Width = v;
-                }
-
+                pens.Width = value;
                 UpdatePadding();
                 Refresh();
             }
