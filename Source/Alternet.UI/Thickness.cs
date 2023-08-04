@@ -278,5 +278,22 @@ namespace Alternet.UI
         {
             return $"({left}, {top}, {right}, {bottom})";
         }
+
+        public void ApplyMinMax(double min, double max)
+        {
+            double SetMinMaxValue(double value)
+            {
+                if (value > max)
+                    return max;
+                if (value < min)
+                    return min;
+                return value;
+            }
+
+            left = SetMinMaxValue(left);
+            top = SetMinMaxValue(top);
+            right = SetMinMaxValue(right);
+            bottom = SetMinMaxValue(bottom);
+        }
     }
 }
