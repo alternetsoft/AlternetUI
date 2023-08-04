@@ -7,6 +7,18 @@ namespace NativeApi.Api
 {
     public class TreeView : Control
     {
+        public bool HideRoot { get; set; }
+
+        public bool VariableRowHeight { get; set; }
+
+        public bool TwistButtons { get; set; }
+
+        public uint StateImageSpacing { get; set; }
+
+        public uint Indentation { get; set; } 
+
+        public bool RowLines { get; set; }
+
         public bool HasBorder { get; set; }
 
         public ImageList? ImageList { get; set; }

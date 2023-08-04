@@ -115,15 +115,18 @@ namespace Alternet::UI
     int TreeView::GetItemCount(void* parentItem)
     {
         wxTreeItemId parentItemId(parentItem);
-        return ConvertToIntChecked(GetTreeCtrl()->GetChildrenCount(parentItemId, /*recursively:*/ false));
+        return ConvertToIntChecked(GetTreeCtrl()->GetChildrenCount(
+            parentItemId, /*recursively:*/ false));
     }
 
-    void* TreeView::InsertItem(void* parentItem, void* insertAfter, const string& text, int imageIndex, bool parentIsExpanded)
+    void* TreeView::InsertItem(void* parentItem, void* insertAfter,
+        const string& text, int imageIndex, bool parentIsExpanded)
     {
         wxTreeItemId parentItemId(parentItem);
         wxTreeItemId insertAfterId(insertAfter);
         auto control = GetTreeCtrl();
-        auto item = control->InsertItem(parentItem, insertAfterId, wxStr(text), imageIndex);
+        auto item = control->InsertItem(parentItem, insertAfterId, 
+            wxStr(text), imageIndex);
 
         if (parentItemId != control->GetRootItem())
         {
@@ -162,7 +165,8 @@ namespace Alternet::UI
 
     void TreeView::ApplyImageList(wxTreeCtrl* value)
     {
-        value->SetImageList(_imageList == nullptr ? nullptr : _imageList->GetImageList());
+        value->SetImageList(_imageList == nullptr ? nullptr :
+            _imageList->GetImageList());
     }
 
     class wxTreeCtrl2 : public wxTreeCtrl, public wxWidgetExtender
@@ -487,18 +491,101 @@ namespace Alternet::UI
 
     long TreeView::GetStyle()
     {
-        return wxTR_TWIST_BUTTONS | wxTR_HIDE_ROOT |
-            (_selectionMode == TreeViewSelectionMode::Single ? wxTR_SINGLE : wxTR_MULTIPLE) |
+        long style =
+            (_hideRoot ? wxTR_HIDE_ROOT : 0) |
+            (_selectionMode == TreeViewSelectionMode::Single ?
+                wxTR_SINGLE : wxTR_MULTIPLE) |
             (_allowLabelEdit ? wxTR_EDIT_LABELS : 0) |
             (_showRootLines ? wxTR_LINES_AT_ROOT : 0) |
             (_showLines ? 0 : wxTR_NO_LINES) |
             (_fullRowSelect ? wxTR_FULL_ROW_HIGHLIGHT : 0) |
-            (_showExpandButtons ? wxTR_HAS_BUTTONS : 0);
+            (_showExpandButtons ? wxTR_HAS_BUTTONS : 0) |
+            (_twistButtons ? wxTR_TWIST_BUTTONS : 0) |
+            (_variableRowHeight ? wxTR_HAS_VARIABLE_ROW_HEIGHT : 0) |
+            (_rowLines ? wxTR_ROW_LINES : 0);
+
+        return style;
     }
 
     void TreeView::RecreateTreeCtrl()
     {
         RecreateWxWindowIfNeeded();
         RaiseEvent(TreeViewEvent::ControlRecreated);
+    }
+
+    bool TreeView::GetHideRoot() 
+    {
+        return _hideRoot;
+    }
+
+    void TreeView::SetHideRoot(bool value)
+    {
+        if (_hideRoot == value)
+            return;
+
+        _hideRoot = value;
+        RecreateTreeCtrl();
+    }
+
+    bool TreeView::GetVariableRowHeight()
+    {
+        return _variableRowHeight;
+    }
+
+    void TreeView::SetVariableRowHeight(bool value)
+    {
+        if (_variableRowHeight == value)
+            return;
+
+        _variableRowHeight = value;
+        RecreateTreeCtrl();
+    }
+
+    bool TreeView::GetTwistButtons()
+    {
+        return _twistButtons;
+    }
+
+    void TreeView::SetTwistButtons(bool value)
+    {
+        if (_twistButtons == value)
+            return;
+
+        _twistButtons = value;
+        RecreateTreeCtrl();
+    }
+
+    uint32_t TreeView::GetStateImageSpacing()
+    {
+        return GetTreeCtrl()->GetSpacing();
+    }
+
+    void TreeView::SetStateImageSpacing(uint32_t value)
+    {
+        GetTreeCtrl()->SetSpacing(value);
+    }
+
+    uint32_t TreeView::GetIndentation()
+    {
+        return GetTreeCtrl()->GetIndent();
+    }
+
+    void TreeView::SetIndentation(uint32_t value)
+    {
+        GetTreeCtrl()->SetIndent(value);
+    }
+
+    bool TreeView::GetRowLines()
+    {
+        return _rowLines;
+    }
+
+    void TreeView::SetRowLines(bool value)
+    {
+        if (_rowLines == value)
+            return;
+
+        _rowLines = value;
+        RecreateTreeCtrl();
     }
 }

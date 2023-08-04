@@ -1,8 +1,8 @@
-using Alternet.Drawing;
-using Alternet.Base.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Alternet.Base.Collections;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -70,6 +70,87 @@ namespace Alternet.UI
             }
         }
 
+        public bool HideRoot
+        {
+            get
+            {
+                return Handler.HideRoot;
+            }
+
+            set
+            {
+                Handler.HideRoot = value;
+            }
+        }
+
+        public bool VariableRowHeight
+        {
+            get
+            {
+                return Handler.VariableRowHeight;
+            }
+
+            set
+            {
+                Handler.VariableRowHeight = value;
+            }
+        }
+
+        public bool TwistButtons
+        {
+            get
+            {
+                return Handler.TwistButtons;
+            }
+
+            set
+            {
+                Handler.TwistButtons = value;
+            }
+        }
+
+        public uint StateImageSpacing
+        {
+            get
+            {
+                return Handler.StateImageSpacing;
+            }
+
+            set
+            {
+                Handler.StateImageSpacing = value;
+            }
+        }
+
+        public uint Indentation
+        {
+            get
+            {
+                return Handler.Indentation;
+            }
+
+            set
+            {
+                Handler.Indentation = value;
+            }
+        }
+
+        public bool RowLines
+        {
+            get
+            {
+                return Handler.RowLines;
+            }
+
+            set
+            {
+                Handler.RowLines = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="TreeViewHandler"/> associated with this class.
+        /// </summary>
         public new TreeViewHandler Handler
         {
             get

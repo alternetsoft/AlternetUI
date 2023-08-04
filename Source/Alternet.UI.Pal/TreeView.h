@@ -38,6 +38,10 @@ namespace Alternet::UI
         bool _showRootLines = true;
         bool _showLines = false;
         bool _showExpandButtons = true;
+        bool _variableRowHeight = false;
+        bool _rowLines = false;
+        bool _hideRoot = true;
+        bool _twistButtons = true;
 
         ImageList* _imageList = nullptr;
 

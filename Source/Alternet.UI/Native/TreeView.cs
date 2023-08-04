@@ -24,6 +24,108 @@ namespace Alternet.UI.Native
         {
         }
         
+        public bool HideRoot
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TreeView_GetHideRoot_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TreeView_SetHideRoot_(NativePointer, value);
+            }
+        }
+        
+        public bool VariableRowHeight
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TreeView_GetVariableRowHeight_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TreeView_SetVariableRowHeight_(NativePointer, value);
+            }
+        }
+        
+        public bool TwistButtons
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TreeView_GetTwistButtons_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TreeView_SetTwistButtons_(NativePointer, value);
+            }
+        }
+        
+        public uint StateImageSpacing
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TreeView_GetStateImageSpacing_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TreeView_SetStateImageSpacing_(NativePointer, value);
+            }
+        }
+        
+        public uint Indentation
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TreeView_GetIndentation_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TreeView_SetIndentation_(NativePointer, value);
+            }
+        }
+        
+        public bool RowLines
+        {
+            get
+            {
+                CheckDisposed();
+                var n = NativeApi.TreeView_GetRowLines_(NativePointer);
+                var m = n;
+                return m;
+            }
+            
+            set
+            {
+                CheckDisposed();
+                NativeApi.TreeView_SetRowLines_(NativePointer, value);
+            }
+        }
+        
         public bool HasBorder
         {
             get
@@ -478,6 +580,42 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr TreeView_Create_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TreeView_GetHideRoot_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetHideRoot_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TreeView_GetVariableRowHeight_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetVariableRowHeight_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TreeView_GetTwistButtons_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetTwistButtons_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern uint TreeView_GetStateImageSpacing_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetStateImageSpacing_(IntPtr obj, uint value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern uint TreeView_GetIndentation_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetIndentation_(IntPtr obj, uint value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool TreeView_GetRowLines_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TreeView_SetRowLines_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TreeView_GetHasBorder_(IntPtr obj);

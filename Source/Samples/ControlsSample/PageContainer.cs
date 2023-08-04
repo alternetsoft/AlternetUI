@@ -22,6 +22,9 @@ namespace ControlsSample
             pagesControl.FullRowSelect = true;
             pagesControl.ShowRootLines = false;
             pagesControl.ShowLines = false;
+            pagesControl.TwistButtons = false;
+            pagesControl.StateImageSpacing = 0;
+            pagesControl.Indentation = 0;
 
             pagesControl.SelectionChanged += PagesListBox_SelectionChanged;
             grid.Children.Add(pagesControl);

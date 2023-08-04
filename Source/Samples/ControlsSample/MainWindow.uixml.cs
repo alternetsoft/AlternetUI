@@ -22,6 +22,9 @@ namespace ControlsSample
             eventsControl.FullRowSelect = true;
             eventsControl.ShowRootLines = false;
             eventsControl.ShowLines = false;
+            eventsControl.TwistButtons = false;
+            eventsControl.StateImageSpacing = 0;
+            eventsControl.Indentation = 0;
 
             mainGrid.RowDefinitions.Add(new RowDefinition
             {
@@ -64,7 +67,6 @@ namespace ControlsSample
 
             headerPanel.Children.Add(linkLabel);
             headerPanel.Children.Add(linkLabel2);
-            //LayoutFactory.SetDebugBackgroundToParents(linkLabel2);
 
             eventsControl.Margin = new(0,10,0,0);
             mainGrid.Children.Add(headerPanel);

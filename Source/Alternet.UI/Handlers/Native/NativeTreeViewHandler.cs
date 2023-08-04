@@ -7,8 +7,12 @@ namespace Alternet.UI
 {
     internal class NativeTreeViewHandler : TreeViewHandler
     {
-        private readonly Dictionary<TreeViewItem, IntPtr> handlesByItems = new Dictionary<TreeViewItem, IntPtr>();
-        private readonly Dictionary<IntPtr, TreeViewItem> itemsByHandles = new Dictionary<IntPtr, TreeViewItem>();
+        private readonly Dictionary<TreeViewItem, IntPtr> handlesByItems =
+            new Dictionary<TreeViewItem, IntPtr>();
+
+        private readonly Dictionary<IntPtr, TreeViewItem> itemsByHandles =
+            new Dictionary<IntPtr, TreeViewItem>();
+
         private bool receivingSelection;
 
         private bool applyingSelection;
@@ -16,6 +20,84 @@ namespace Alternet.UI
         internal override Native.Control CreateNativeControl()
         {
             return new Native.TreeView();
+        }
+
+        public override bool HideRoot
+        {
+            get
+            {
+                return NativeControl.HideRoot;
+            }
+
+            set
+            {
+                NativeControl.HideRoot = value;
+            }
+        }
+
+        public override bool VariableRowHeight
+        {
+            get
+            {
+                return NativeControl.VariableRowHeight;
+            }
+
+            set
+            {
+                NativeControl.VariableRowHeight = value;
+            }
+        }
+
+        public override bool TwistButtons
+        {
+            get
+            {
+                return NativeControl.TwistButtons;
+            }
+
+            set
+            {
+                NativeControl.TwistButtons = value;
+            }
+        }
+
+        public override uint StateImageSpacing
+        {
+            get
+            {
+                return NativeControl.StateImageSpacing;
+            }
+
+            set
+            {
+                NativeControl.StateImageSpacing = value;
+            }
+        }
+
+        public override uint Indentation
+        {
+            get
+            {
+                return NativeControl.Indentation;
+            }
+
+            set
+            {
+                NativeControl.Indentation = value;
+            }
+        }
+
+        public override bool RowLines
+        {
+            get
+            {
+                return NativeControl.RowLines;
+            }
+
+            set
+            {
+                NativeControl.RowLines = value;
+            }
         }
 
         public new Native.TreeView NativeControl => (Native.TreeView)base.NativeControl!;

@@ -8,8 +8,22 @@ namespace Alternet.UI
     /// </summary>
     public abstract class TreeViewHandler : ControlHandler
     {
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a <see cref="TreeView"/> this handler provides the implementation for.
+        /// </summary>
         public new TreeView Control => (TreeView)base.Control;
+
+        public abstract bool HideRoot { get; set; }
+
+        public abstract bool VariableRowHeight { get; set; }
+
+        public abstract bool TwistButtons { get; set; }
+
+        public abstract uint StateImageSpacing { get; set; }
+
+        public abstract uint Indentation { get; set; }
+
+        public abstract bool RowLines { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether lines are drawn between tree nodes in the tree view control.

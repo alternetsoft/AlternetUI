@@ -16,6 +16,90 @@ ALTERNET_UI_API TreeView* TreeView_Create_()
         });
 }
 
+ALTERNET_UI_API c_bool TreeView_GetHideRoot_(TreeView* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetHideRoot();
+        });
+}
+
+ALTERNET_UI_API void TreeView_SetHideRoot_(TreeView* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetHideRoot(value);
+        });
+}
+
+ALTERNET_UI_API c_bool TreeView_GetVariableRowHeight_(TreeView* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetVariableRowHeight();
+        });
+}
+
+ALTERNET_UI_API void TreeView_SetVariableRowHeight_(TreeView* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetVariableRowHeight(value);
+        });
+}
+
+ALTERNET_UI_API c_bool TreeView_GetTwistButtons_(TreeView* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetTwistButtons();
+        });
+}
+
+ALTERNET_UI_API void TreeView_SetTwistButtons_(TreeView* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetTwistButtons(value);
+        });
+}
+
+ALTERNET_UI_API uint32_t TreeView_GetStateImageSpacing_(TreeView* obj)
+{
+    return MarshalExceptions<uint32_t>([&](){
+            return obj->GetStateImageSpacing();
+        });
+}
+
+ALTERNET_UI_API void TreeView_SetStateImageSpacing_(TreeView* obj, uint32_t value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetStateImageSpacing(value);
+        });
+}
+
+ALTERNET_UI_API uint32_t TreeView_GetIndentation_(TreeView* obj)
+{
+    return MarshalExceptions<uint32_t>([&](){
+            return obj->GetIndentation();
+        });
+}
+
+ALTERNET_UI_API void TreeView_SetIndentation_(TreeView* obj, uint32_t value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetIndentation(value);
+        });
+}
+
+ALTERNET_UI_API c_bool TreeView_GetRowLines_(TreeView* obj)
+{
+    return MarshalExceptions<c_bool>([&](){
+            return obj->GetRowLines();
+        });
+}
+
+ALTERNET_UI_API void TreeView_SetRowLines_(TreeView* obj, c_bool value)
+{
+    MarshalExceptions<void>([&](){
+            obj->SetRowLines(value);
+        });
+}
+
 ALTERNET_UI_API c_bool TreeView_GetHasBorder_(TreeView* obj)
 {
     return MarshalExceptions<c_bool>([&](){
