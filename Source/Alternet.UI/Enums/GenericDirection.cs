@@ -18,6 +18,11 @@ namespace Alternet.UI
         None = 0,
 
         /// <summary>
+        /// Content alignment or direction is not specified.
+        /// </summary>
+        Default = None,
+
+        /// <summary>
         /// Content is horizontally aligned on the left.
         /// Left direction is specified.
         /// </summary>
