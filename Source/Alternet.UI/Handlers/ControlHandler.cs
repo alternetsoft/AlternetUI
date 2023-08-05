@@ -153,7 +153,7 @@ namespace Alternet.UI
         /// <see cref="Control"/>,
         /// in device-independent units (1/96th inch per unit).
         /// </summary>
-        public virtual Rect ClientRectangle => new (new Point(), ClientSize);
+        public virtual Rect ClientRectangle => new(new Point(), ClientSize);
 
         /// <inheritdoc cref="Control.DrawClientRectangle"/>
         public virtual Rect DrawClientRectangle => Control.DrawClientRectangle;
@@ -1304,6 +1304,18 @@ namespace Alternet.UI
                 return null;
 
             return handler.Control;
+        }
+
+        /// <inheritdoc cref="Control.BeginIgnoreRecreate"/>
+        public void BeginIgnoreRecreate()
+        {
+            NativeControl?.BeginIgnoreRecreate();
+        }
+
+        /// <inheritdoc cref="Control.EndIgnoreRecreate"/>
+        public void EndIgnoreRecreate()
+        {
+            NativeControl?.EndIgnoreRecreate();
         }
     }
 }

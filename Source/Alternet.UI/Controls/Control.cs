@@ -1605,5 +1605,23 @@ namespace Alternet.UI
             foreach (var child in ChildrenOfType<T>())
                 action(child);
         }
+
+        /// <summary>
+        /// Disable control recreate when properties that require control
+        /// recreation are changed.
+        /// </summary>
+        public void BeginIgnoreRecreate()
+        {
+            Handler.BeginIgnoreRecreate();
+        }
+
+        /// <summary>
+        /// Enable control recreate if it's required after it was previously
+        /// disabled by <see cref="BeginIgnoreRecreate"/>
+        /// </summary>
+        public void EndIgnoreRecreate()
+        {
+            Handler.EndIgnoreRecreate();
+        }
     }
 }
