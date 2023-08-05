@@ -13,6 +13,7 @@ namespace ControlsSample
         private IPageSite? site;
         private bool? slowSettingsEnabled;
         private int newItemIndex = 0;
+        private int newColIndex = 2;
         //private double maxPanelWidth = 0;
 
         public ListViewPage()
@@ -113,7 +114,8 @@ namespace ControlsSample
         {
             var fastRecreate = !SlowRecreate;
 
-            if (slowSettingsEnabled != null && fastRecreate == (bool)slowSettingsEnabled)
+            if (slowSettingsEnabled != null &&
+                fastRecreate == (bool)slowSettingsEnabled)
                 return;
 
             slowSettingsEnabled = fastRecreate;
@@ -143,7 +145,8 @@ namespace ControlsSample
             if (listView is null)
                 return;
             listView.GridLinesDisplayMode = (ListViewGridLinesDisplayMode)
-                (gridLinesComboBox.SelectedItem ?? throw new InvalidOperationException());
+                (gridLinesComboBox.SelectedItem ??
+                throw new InvalidOperationException());
         }
 
         private void ColumnWidthModeComboBox_SelectedItemChanged(
@@ -186,6 +189,12 @@ namespace ControlsSample
             return newItemIndex;
         }
 
+        private int GenColIndex()
+        {
+            newColIndex++;
+            return newColIndex;
+        }
+
         private void AddItems(int count)
         {
             if (listView == null)
@@ -218,7 +227,8 @@ namespace ControlsSample
         private void ListView_SelectionChanged(object? sender, EventArgs e)
         {
             var i = listView.SelectedIndices.Count > 100;
-            string s = i ? "too many items" : string.Join(",", listView.SelectedIndices);
+            string s = i ? "too many items" :
+                string.Join(",", listView.SelectedIndices);
             Log($"ListView: SelectedIndices: ({s})");
 
             if (listView.SelectedItem != null)
@@ -241,7 +251,8 @@ namespace ControlsSample
             int selectedIndex = listView.SelectedIndex ?? -1;
             listView.RemoveSelectedItems();
             if(listView.Items.Count > 0 && selectedIndex >= 0)
-                listView.SelectedIndex = Math.Min(selectedIndex, listView.Items.Count-1);
+                listView.SelectedIndex = 
+                    Math.Min(selectedIndex, listView.Items.Count-1);
         }
 
         private void AddItemButton_Click(object? sender, EventArgs e)
@@ -402,7 +413,7 @@ namespace ControlsSample
         private void AddColumnButton_Click(object? sender, System.EventArgs e)
         {
             listView.Columns.Add(
-                new ListViewColumn($"New Column {listView.Columns.Count}"));
+                new ListViewColumn($"Column {GenColIndex()}"));
         }
 
         private void ModifyColumnTitleButton_Click(
