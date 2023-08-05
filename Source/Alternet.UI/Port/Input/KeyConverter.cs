@@ -76,13 +76,24 @@ namespace Alternet.UI
         /// <param name="source"></param>
         /// <returns></returns>
         /// <ExternalAPI/> 
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
+        public override object ConvertFrom(
+            ITypeDescriptorContext context,
+            CultureInfo culture, object source)
         {
             if (source is string)
                 return FromString((string)source);
             throw GetConvertFromException(source);
         }
 
+        /// <summary>
+        /// Converts string representation of the key to the <see cref="Key"/>
+        /// enumeration.
+        /// </summary>
+        /// <param name="source">String representation of the key.</param>
+        /// <returns>Key value parsed from string.</returns>
+        /// <exception cref="NotSupportedException">
+        /// Raised when string representation of the key is unknown.
+        /// </exception>
         public static Key FromString(string source)
         {
             string fullName = ((string)source).Trim();

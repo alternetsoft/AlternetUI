@@ -414,8 +414,6 @@ namespace Alternet.UI
             }
         }
 
-        public IEnumerable<T> ChildrenOfType<T>() => Children.OfType<T>();
-
         /// <summary>
         /// Gets whether there are any items in the <see cref="Children"/> list.
         /// </summary>
@@ -705,6 +703,21 @@ namespace Alternet.UI
         /// </summary>
         protected override IEnumerable<FrameworkElement> LogicalChildrenCollection =>
             Children;
+
+        /// <summary>
+        /// Gets the subset of <see cref="Children"/> collection with
+        /// child controls of specific type.
+        /// </summary>
+        /// <remarks>
+        /// This method is useful, for example, when you need to get
+        /// all <see cref="Button"/> or <see cref="CheckBox"/> child controls.
+        /// </remarks>
+        public IEnumerable<T> ChildrenOfType<T>()
+        {
+            if(HasChildren)
+                return Children.OfType<T>();
+            return Array.Empty<T>();
+        }
 
         private IControlHandlerFactory? ControlHandlerFactory { get; set; }
 
