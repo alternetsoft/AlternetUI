@@ -372,6 +372,18 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void SaveScreenshot(string fileName)
+        {
+            CheckDisposed();
+            NativeApi.Control_SaveScreenshot_(NativePointer, fileName);
+        }
+        
+        public void SendSizeEvent()
+        {
+            CheckDisposed();
+            NativeApi.Control_SendSizeEvent_(NativePointer);
+        }
+        
         public System.IntPtr GetContainingSizer()
         {
             CheckDisposed();
@@ -436,6 +448,18 @@ namespace Alternet.UI.Native
             var n = NativeApi.Control_GetScrollBarMaximum_(NativePointer, orientation);
             var m = n;
             return m;
+        }
+        
+        public void BeginIgnoreRecreate()
+        {
+            CheckDisposed();
+            NativeApi.Control_BeginIgnoreRecreate_(NativePointer);
+        }
+        
+        public void EndIgnoreRecreate()
+        {
+            CheckDisposed();
+            NativeApi.Control_EndIgnoreRecreate_(NativePointer);
         }
         
         public Alternet.Drawing.Size GetDPI()
@@ -606,18 +630,6 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.Control_Destroy_(NativePointer);
-        }
-        
-        public void SaveScreenshot(string fileName)
-        {
-            CheckDisposed();
-            NativeApi.Control_SaveScreenshot_(NativePointer, fileName);
-        }
-        
-        public void SendSizeEvent()
-        {
-            CheckDisposed();
-            NativeApi.Control_SendSizeEvent_(NativePointer);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -868,6 +880,12 @@ namespace Alternet.UI.Native
             public static extern void Control_SetIsScrollable_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SaveScreenshot_(IntPtr obj, string fileName);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SendSizeEvent_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Control_GetContainingSizer_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -893,6 +911,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetScrollBarMaximum_(IntPtr obj, ScrollBarOrientation orientation);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_BeginIgnoreRecreate_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_EndIgnoreRecreate_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.Size Control_GetDPI_(IntPtr obj);
@@ -965,12 +989,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_Destroy_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SaveScreenshot_(IntPtr obj, string fileName);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SendSizeEvent_(IntPtr obj);
             
         }
     }

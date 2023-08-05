@@ -1,4 +1,5 @@
-﻿using Alternet.UI;
+﻿#pragma warning disable
+using Alternet.UI;
 using System;
 using Alternet.Drawing;
 using ApiCommon;
@@ -7,26 +8,28 @@ namespace NativeApi.Api
 {
     public abstract class Control
     {
+        public void BeginIgnoreRecreate() {}
+        public void EndIgnoreRecreate() {}
         public Size GetDPI() => throw new Exception();
 
-        public event EventHandler? Paint { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler? Paint;
 
-        public event EventHandler? MouseEnter { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler? MouseEnter;
 
-        public event EventHandler? MouseLeave { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler? MouseLeave;
 
-        public event EventHandler? MouseClick { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler? MouseClick;
 
-        public event EventHandler? VisibleChanged { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler? VisibleChanged;
 
-        public event EventHandler? MouseCaptureLost { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler? MouseCaptureLost;
 
-        public event EventHandler? Destroyed { add => throw new Exception(); remove => throw new Exception(); }
+        public event EventHandler? Destroyed;
 
-        public event NativeEventHandler<DragEventData>? DragDrop { add => throw new Exception(); remove => throw new Exception(); }
-        public event NativeEventHandler<DragEventData>? DragOver { add => throw new Exception(); remove => throw new Exception(); }
-        public event NativeEventHandler<DragEventData>? DragEnter { add => throw new Exception(); remove => throw new Exception(); }
-        public event EventHandler? DragLeave { add => throw new Exception(); remove => throw new Exception(); }
+        public event NativeEventHandler<DragEventData>? DragDrop;
+        public event NativeEventHandler<DragEventData>? DragOver;
+        public event NativeEventHandler<DragEventData>? DragEnter;
+        public event EventHandler? DragLeave;
 
         public void SetMouseCapture(bool value) => throw new Exception();
 
@@ -72,9 +75,12 @@ namespace NativeApi.Api
 
         public Font? Font { get; set; }
 
-        public virtual Size GetPreferredSize(Size availableSize) => throw new Exception();
+        public virtual Size GetPreferredSize(Size availableSize) =>
+            throw new Exception();
 
-        public DragDropEffects DoDragDrop(UnmanagedDataObject data, DragDropEffects allowedEffects) => throw new Exception();
+        public DragDropEffects DoDragDrop(
+            UnmanagedDataObject data, 
+            DragDropEffects allowedEffects) => throw new Exception();
 
         public DrawingContext OpenPaintDrawingContext() => throw new Exception();
         public DrawingContext OpenClientDrawingContext() => throw new Exception();
@@ -98,9 +104,10 @@ namespace NativeApi.Api
         public bool SetFocus() => throw new Exception();
         public bool TabStop { get; set; }
         public bool IsFocused { get; }
-        public void FocusNextControl(bool forward, bool nested) => throw new Exception();
-        public event EventHandler? GotFocus { add => throw new Exception(); remove => throw new Exception(); }
-        public event EventHandler? LostFocus { add => throw new Exception(); remove => throw new Exception(); }
+        public void FocusNextControl(bool forward, bool nested) =>
+            throw new Exception();
+        public event EventHandler? GotFocus;
+        public event EventHandler? LostFocus;
 
         public void BeginInit() => throw new Exception();
         public void EndInit() => throw new Exception();
