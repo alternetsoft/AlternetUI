@@ -5,26 +5,21 @@ namespace ControlsSample
 {
     internal partial class MainWindow : Window, IPageSite
     {
+        private readonly PageContainer pageContainer = new();
+        private readonly TreeView eventsControl = new();
+        private readonly Grid mainGrid = new();
+        private readonly Control mainGridParent = new();
+        private readonly LinkLabel? linkLabel;
+        private readonly LinkLabel? linkLabel2;
         private string? lastEventMessage = null;
         private int lastEventNumber = 1;
-        private PageContainer pageContainer = new();
-        private TreeView eventsControl = new();
-        private Grid mainGrid = new();
-        private Control mainGridParent = new();
-        private LinkLabel? linkLabel;
-        private LinkLabel? linkLabel2;
 
         public MainWindow()
         {
             Icon = ImageSet.FromUrlOrNull("embres:ControlsSample.Sample.ico");
             InitializeComponent();
 
-            eventsControl.FullRowSelect = true;
-            eventsControl.ShowRootLines = false;
-            eventsControl.ShowLines = false;
-            eventsControl.TwistButtons = false;
-            eventsControl.StateImageSpacing = 0;
-            eventsControl.Indentation = 0;
+            eventsControl.MakeAsListBox();
 
             mainGrid.RowDefinitions.Add(new RowDefinition
             {
@@ -111,9 +106,12 @@ namespace ControlsSample
             Children.Add(mainGridParent);
         }
 
-        private void LinkLabel_LinkClicked(object sender, System.ComponentModel.CancelEventArgs e)
+        private void LinkLabel_LinkClicked(
+            object? sender,
+            System.ComponentModel.CancelEventArgs e)
         {
-            var linkLabel = (LinkLabel)sender;
+            if (sender is not LinkLabel linkLabel)
+                return;
             LogEvent(linkLabel.Url);
         }
 

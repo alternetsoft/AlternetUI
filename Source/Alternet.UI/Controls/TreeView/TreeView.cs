@@ -763,13 +763,21 @@ namespace Alternet.UI
         /// </summary>
         public void MakeAsListBox()
         {
-            FullRowSelect = true;
-            ShowRootLines = false;
-            ShowLines = false;
-            TwistButtons = false;
-            StateImageSpacing = 0;
-            if (Indentation > 3)
-                Indentation = 3;
+            BeginIgnoreRecreate();
+            try
+            {
+                FullRowSelect = true;
+                ShowRootLines = false;
+                ShowLines = false;
+                TwistButtons = false;
+                StateImageSpacing = 0;
+                if (Indentation > 3)
+                    Indentation = 3;
+            }
+            finally
+            {
+                EndIgnoreRecreate();
+            }
         }
 
         /// <summary>

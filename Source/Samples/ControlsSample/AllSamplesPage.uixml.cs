@@ -18,9 +18,7 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            //var imageLists = ResourceLoader.LoadImageLists();
-            //view.SmallImageList = imageLists.Small;
-            //view.LargeImageList = imageLists.Large;
+            view.MakeAsListBox();
         }
 
         public IPageSite? Site
@@ -94,8 +92,7 @@ namespace ControlsSample
 
         private void RunButton_Click(object? sender, EventArgs e)
         {
-            CsProjItem? item = view.SelectedItem as CsProjItem;
-            if (item == null)
+            if (view.SelectedItem is not CsProjItem item)
                 return;
             string path = item.CsProjPath;
             site?.LogEvent("Run sample: " + path);
