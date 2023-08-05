@@ -18,7 +18,7 @@ namespace Alternet::UI
         if (hasBorder == value)
             return;
         hasBorder = value;
-        RecreateTreeCtrl();
+        RecreateWxWindowIfNeeded();
     }
 
     TreeView::~TreeView()
@@ -84,7 +84,7 @@ namespace Alternet::UI
         _selectionMode = value;
         _skipSelectionChangedEvent = true;
         _skipExpandedEvent = true;
-        RecreateTreeCtrl();
+        RecreateWxWindowIfNeeded();
         _skipSelectionChangedEvent = false;
         _skipExpandedEvent = false;
     }
@@ -329,7 +329,7 @@ namespace Alternet::UI
             return;
 
         _showLines = value;
-        RecreateTreeCtrl();
+        RecreateWxWindowIfNeeded();
     }
 
     bool TreeView::GetShowRootLines()
@@ -343,7 +343,7 @@ namespace Alternet::UI
             return;
 
         _showRootLines = value;
-        RecreateTreeCtrl();
+        RecreateWxWindowIfNeeded();
     }
 
     bool TreeView::GetShowExpandButtons()
@@ -357,7 +357,7 @@ namespace Alternet::UI
             return;
 
         _showExpandButtons = value;
-        RecreateTreeCtrl();
+        RecreateWxWindowIfNeeded();
     }
 
     void* TreeView::GetTopItem()
@@ -376,7 +376,7 @@ namespace Alternet::UI
             return;
 
         _fullRowSelect = value;
-        RecreateTreeCtrl();
+        RecreateWxWindowIfNeeded();
     }
 
     bool TreeView::GetAllowLabelEdit()
@@ -390,7 +390,7 @@ namespace Alternet::UI
             return;
 
         _allowLabelEdit = value;
-        RecreateTreeCtrl();
+        RecreateWxWindowIfNeeded();
     }
 
     void TreeView::ExpandAll()
@@ -506,10 +506,10 @@ namespace Alternet::UI
 
         return style;
     }
-
-    void TreeView::RecreateTreeCtrl()
+    
+    void TreeView::RecreateWxWindowIfNeeded()
     {
-        RecreateWxWindowIfNeeded();
+        Control::RecreateWxWindowIfNeeded();
         RaiseEvent(TreeViewEvent::ControlRecreated);
     }
 
@@ -524,7 +524,7 @@ namespace Alternet::UI
             return;
 
         _hideRoot = value;
-        RecreateTreeCtrl();
+        RecreateWxWindowIfNeeded();
     }
 
     bool TreeView::GetVariableRowHeight()
@@ -538,7 +538,7 @@ namespace Alternet::UI
             return;
 
         _variableRowHeight = value;
-        RecreateTreeCtrl();
+        RecreateWxWindowIfNeeded();
     }
 
     bool TreeView::GetTwistButtons()
@@ -552,7 +552,7 @@ namespace Alternet::UI
             return;
 
         _twistButtons = value;
-        RecreateTreeCtrl();
+        RecreateWxWindowIfNeeded();
     }
 
     uint32_t TreeView::GetStateImageSpacing()
@@ -586,6 +586,6 @@ namespace Alternet::UI
             return;
 
         _rowLines = value;
-        RecreateTreeCtrl();
+        RecreateWxWindowIfNeeded();
     }
 }

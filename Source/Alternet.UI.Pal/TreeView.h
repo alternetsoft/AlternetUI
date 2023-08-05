@@ -26,7 +26,7 @@ namespace Alternet::UI
 
         long GetStyle();
 
-        void RecreateTreeCtrl();
+        virtual void RecreateWxWindowIfNeeded() override;
 
         wxTreeCtrl* GetTreeCtrl();
 
