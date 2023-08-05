@@ -15,9 +15,9 @@ namespace Alternet.UI
             this.PrivateOnModified();
         }
 
-        /// <summary>Copies the elements of the collection to an <see cref="T:System.Array" />, starting at a particular <see cref="T:System.Array" /> index.</summary>
-        /// <param name="array">A zero-based <see cref="T:System.Array" /> that receives the copied items from the <see cref="RowDefinitionCollection" />.</param>
-        /// <param name="index">The first position in the specified <see cref="T:System.Array" /> to receive the copied contents.</param>
+        /// <summary>Copies the elements of the collection to an <see cref="System.Array" />, starting at a particular <see cref="System.Array" /> index.</summary>
+        /// <param name="array">A zero-based <see cref="System.Array" /> that receives the copied items from the <see cref="RowDefinitionCollection" />.</param>
+        /// <param name="index">The first position in the specified <see cref="System.Array" /> to receive the copied contents.</param>
         void ICollection.CopyTo(Array array, int index)
         {
             if (array == null)
@@ -49,27 +49,27 @@ namespace Alternet.UI
         /// <summary>Copies an array of <see cref="RowDefinition" /> objects to a given index position within a <see cref="RowDefinitionCollection" />.</summary>
         /// <param name="array">An array of <see cref="RowDefinition" /> objects.</param>
         /// <param name="index">Identifies the index position within <paramref name="array" /> to which the <see cref="RowDefinition" /> objects are copied.</param>
-        /// <exception cref="T:System.ArgumentNullException">
+        /// <exception cref="System.ArgumentNullException">
         ///         <paramref name="array" /> is <see langword="null" />.</exception>
-        /// <exception cref="T:System.ArgumentException">
-        ///         <paramref name="array" /> is multidimensional.-or- The number of elements in the source <see cref="T:System.Collections.ICollection" /> is greater than the available space from index to the end of the destination array. </exception>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">
+        /// <exception cref="System.ArgumentException">
+        ///         <paramref name="array" /> is multidimensional.-or- The number of elements in the source <see cref="System.Collections.ICollection" /> is greater than the available space from index to the end of the destination array. </exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
         ///         <paramref name="index" /> is less than zero. </exception>
         public void CopyTo(RowDefinition[] array, int index)
         {
             if (array == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(nameof(array));
             }
 
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
             if (array.Length - index < this._size)
             {
-                throw new ArgumentException();
+                throw new ArgumentException(nameof(index));
             }
 
             if (this._size > 0)
@@ -79,7 +79,7 @@ namespace Alternet.UI
         }
 
         /// <summary>Adds an item to the collection.</summary>
-        /// <param name="value">The <see cref="T:System.Object" /> to add to the <see cref="RowDefinitionCollection" />.</param>
+        /// <param name="value">The <see cref="System.Object" /> to add to the <see cref="RowDefinitionCollection" />.</param>
         /// <returns>The position into which the new element was inserted.</returns>
         int IList.Add(object value)
         {
@@ -112,9 +112,9 @@ namespace Alternet.UI
         }
 
         /// <summary>Determines whether the collection contains a specific value.</summary>
-        /// <param name="value">The <see cref="T:System.Object" /> to locate in the <see cref="RowDefinitionCollection" />.</param>
+        /// <param name="value">The <see cref="System.Object" /> to locate in the <see cref="RowDefinitionCollection" />.</param>
         /// <returns>
-        ///     <see langword="true" /> if the <see cref="T:System.Object" /> is found in the <see cref="RowDefinitionCollection" />; otherwise, <see langword="false" />.</returns>
+        ///     <see langword="true" /> if the <see cref="System.Object" /> is found in the <see cref="RowDefinitionCollection" />; otherwise, <see langword="false" />.</returns>
         bool IList.Contains(object value)
         {
             RowDefinition rowDefinition = value as RowDefinition;
@@ -131,7 +131,7 @@ namespace Alternet.UI
         }
 
         /// <summary>Determines the index of a specific item in the collection.</summary>
-        /// <param name="value">The <see cref="T:System.Object" /> to locate in the <see cref="RowDefinitionCollection" />.</param>
+        /// <param name="value">The <see cref="System.Object" /> to locate in the <see cref="RowDefinitionCollection" />.</param>
         /// <returns>The index of <paramref name="value" /> if found in the list; otherwise, -1.</returns>
         int IList.IndexOf(object value)
         {
@@ -147,18 +147,19 @@ namespace Alternet.UI
             {
                 return -1;
             }
+
             return value.Index;
         }
 
         /// <summary>Inserts an item to the collection at the specified index.</summary>
-        /// <param name="index">The zero-based index at which to insert the <see cref="T:System.Object" />.</param>
-        /// <param name="value">The <see cref="T:System.Object" /> to insert into the <see cref="RowDefinitionCollection" />.</param>
+        /// <param name="index">The zero-based index at which to insert the <see cref="System.Object" />.</param>
+        /// <param name="value">The <see cref="System.Object" /> to insert into the <see cref="RowDefinitionCollection" />.</param>
         void IList.Insert(int index, object value)
         {
             this.PrivateVerifyWriteAccess();
             if (index < 0 || index > this._size)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
             this.PrivateValidateValueForAddition(value);
             this.PrivateInsert(index, value as RowDefinition);
@@ -167,21 +168,21 @@ namespace Alternet.UI
         /// <summary>Inserts a <see cref="RowDefinition" /> at the specified index position within a <see cref="RowDefinitionCollection" />. </summary>
         /// <param name="index">The position within the collection where the item is inserted.</param>
         /// <param name="value">The <see cref="RowDefinition" /> to insert.</param>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">
-        ///         <paramref name="index" /> is not a valid index in the <see cref="T:System.Collections.IList" />. </exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        ///         <paramref name="index" /> is not a valid index in the <see cref="System.Collections.IList" />. </exception>
         public void Insert(int index, RowDefinition value)
         {
             this.PrivateVerifyWriteAccess();
             if (index < 0 || index > this._size)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
             this.PrivateValidateValueForAddition(value);
             this.PrivateInsert(index, value);
         }
 
         /// <summary>Removes the first occurrence of a specific object from the collection.</summary>
-        /// <param name="value">The <see cref="T:System.Object" /> to remove from the <see cref="RowDefinitionCollection" />.</param>
+        /// <param name="value">The <see cref="object" /> to remove from the <see cref="RowDefinitionCollection" />.</param>
         void IList.Remove(object value)
         {
             this.PrivateVerifyWriteAccess();
@@ -213,7 +214,7 @@ namespace Alternet.UI
             this.PrivateVerifyWriteAccess();
             if (index < 0 || index >= this._size)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
             this.PrivateRemove(this._items[index]);
         }
@@ -226,15 +227,15 @@ namespace Alternet.UI
             this.PrivateVerifyWriteAccess();
             if (index < 0 || index >= this._size)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(count));
             }
             if (this._size - index < count)
             {
-                throw new ArgumentException();
+                throw new ArgumentException(nameof(index));
             }
             this.PrivateOnModified();
             if (count > 0)
@@ -254,7 +255,7 @@ namespace Alternet.UI
         }
 
         /// <summary>Returns an enumerator that iterates through the collection.</summary>
-        /// <returns>An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.</returns>
+        /// <returns>An <see cref="System.Collections.IEnumerator" /> object that can be used to iterate through the collection.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return new RowDefinitionCollection.Enumerator(this);
@@ -321,7 +322,7 @@ namespace Alternet.UI
         /// <summary>Gets or sets the element at the specified index.</summary>
         /// <param name="index">The zero-based index of the element to get or set.</param>
         /// <returns>The element at the specified index.</returns>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">
+        /// <exception cref="System.ArgumentOutOfRangeException">
         ///         <paramref name="index" /> is not a valid index position in the list.</exception>
         object IList.this[int index]
         {
@@ -329,18 +330,21 @@ namespace Alternet.UI
             {
                 if (index < 0 || index >= this._size)
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
+
                 return this._items[index];
             }
+
             set
             {
                 this.PrivateVerifyWriteAccess();
                 this.PrivateValidateValueForAddition(value);
                 if (index < 0 || index >= this._size)
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
+
                 this.PrivateDisconnectChild(this._items[index]);
                 this.PrivateConnectChild(index, value as RowDefinition);
             }
@@ -349,7 +353,7 @@ namespace Alternet.UI
         /// <summary>Gets a value that indicates the current item within a <see cref="RowDefinitionCollection" />. </summary>
         /// <param name="index">The current item in the collection.</param>
         /// <returns>The element at the specified index.</returns>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">
+        /// <exception cref="System.ArgumentOutOfRangeException">
         ///         <paramref name="index" /> is not a valid index position in the collection.</exception>
         public RowDefinition this[int index]
         {
@@ -357,18 +361,21 @@ namespace Alternet.UI
             {
                 if (index < 0 || index >= this._size)
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
+
                 return (RowDefinition)this._items[index];
             }
+
             set
             {
                 this.PrivateVerifyWriteAccess();
                 this.PrivateValidateValueForAddition(value);
                 if (index < 0 || index >= this._size)
                 {
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
+
                 this.PrivateDisconnectChild(this._items[index]);
                 this.PrivateConnectChild(index, value);
             }
@@ -410,15 +417,14 @@ namespace Alternet.UI
                 throw new ArgumentNullException(nameof(value));
             }
 
-            RowDefinition rowDefinition = value as RowDefinition;
-            if (rowDefinition == null)
+            if (value is not RowDefinition rowDefinition)
             {
-                throw new ArgumentException();
+                throw new ArgumentException(nameof(rowDefinition));
             }
 
             if (rowDefinition.LogicalParent != null)
             {
-                throw new ArgumentException();
+                throw new ArgumentException(nameof(rowDefinition.LogicalParent));
             }
         }
 
@@ -529,31 +535,39 @@ namespace Alternet.UI
         internal struct Enumerator : IEnumerator<RowDefinition>,
             IDisposable, IEnumerator
         {
+            private RowDefinitionCollection fcollection;
+
+            private int findex;
+
+            private int fversion;
+
+            private object fcurrentElement;
+
             internal Enumerator(RowDefinitionCollection collection)
             {
-                this._collection = collection;
-                this._index = -1;
-                this._version =
-                    this._collection != null ? this._collection._version : -1;
-                this._currentElement = collection;
+                this.fcollection = collection;
+                this.findex = -1;
+                this.fversion =
+                    this.fcollection != null ? this.fcollection._version : -1;
+                this.fcurrentElement = collection;
             }
 
             public bool MoveNext()
             {
-                if (this._collection == null)
+                if (this.fcollection == null)
                 {
                     return false;
                 }
                 this.PrivateValidate();
-                if (this._index < this._collection._size - 1)
+                if (this.findex < this.fcollection._size - 1)
                 {
-                    this._index++;
-                    this._currentElement = this._collection[this._index];
+                    this.findex++;
+                    this.fcurrentElement = this.fcollection[this.findex];
                     return true;
                 }
 
-                this._currentElement = this._collection;
-                this._index = this._collection._size;
+                this.fcurrentElement = this.fcollection;
+                this.findex = this.fcollection._size;
                 return false;
             }
 
@@ -561,12 +575,12 @@ namespace Alternet.UI
             {
                 get
                 {
-                    if (this._currentElement != this._collection)
+                    if (this.fcurrentElement != this.fcollection)
                     {
-                        return this._currentElement;
+                        return this.fcurrentElement;
                     }
 
-                    if (this._index == -1)
+                    if (this.findex == -1)
                     {
                         throw new InvalidOperationException();
                     }
@@ -579,12 +593,12 @@ namespace Alternet.UI
             {
                 get
                 {
-                    if (this._currentElement != this._collection)
+                    if (this.fcurrentElement != this.fcollection)
                     {
-                        return (RowDefinition)this._currentElement;
+                        return (RowDefinition)this.fcurrentElement;
                     }
 
-                    if (this._index == -1)
+                    if (this.findex == -1)
                     {
                         throw new InvalidOperationException();
                     }
@@ -595,41 +609,33 @@ namespace Alternet.UI
 
             public void Reset()
             {
-                if (this._collection == null)
+                if (this.fcollection == null)
                 {
                     return;
                 }
 
                 this.PrivateValidate();
-                this._currentElement = this._collection;
-                this._index = -1;
+                this.fcurrentElement = this.fcollection;
+                this.findex = -1;
             }
 
             public void Dispose()
             {
-                this._currentElement = null;
+                this.fcurrentElement = null;
             }
 
             private void PrivateValidate()
             {
-                if (this._currentElement == null)
+                if (this.fcurrentElement == null)
                 {
                     throw new InvalidOperationException();
                 }
 
-                if (this._version != this._collection._version)
+                if (this.fversion != this.fcollection._version)
                 {
                     throw new InvalidOperationException();
                 }
             }
-
-            private RowDefinitionCollection _collection;
-
-            private int _index;
-
-            private int _version;
-
-            private object _currentElement;
         }
     }
 }

@@ -322,7 +322,7 @@ namespace Alternet.UI
             if (!string.IsNullOrEmpty(keyDisplayString))
             {
                 keyGestureToken +=
-                    UI.KeyGestureConverter.DISPLAYSTRING_SEPARATOR + keyDisplayString;
+                    UI.KeyGestureConverter.DisplayStringSeparator + keyDisplayString;
             }
 
             return KeyGestureConverter.ConvertFromInvariantString(

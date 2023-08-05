@@ -10,15 +10,16 @@ namespace Alternet.Drawing
     /// <summary>Converts colors from one data type to another. Access this class through the <see cref="T:System.ComponentModel.TypeDescriptor" />.</summary>
     public class ColorConverter : TypeConverter
     {
-        private static string ColorConstantsLock = "colorConstants";
+        private static readonly string ColorConstantsLock = "colorConstants";
 
         private static Hashtable? colorConstants;
 
-        private static string SystemColorConstantsLock = "systemColorConstants";
+        private static readonly string SystemColorConstantsLock =
+            "systemColorConstants";
 
         private static Hashtable? systemColorConstants;
 
-        private static string ValuesLock = "values";
+        private static readonly string ValuesLock = "values";
 
         private static TypeConverter.StandardValuesCollection? values;
 
@@ -101,7 +102,7 @@ namespace Alternet.Drawing
             string? text = value as string;
             if (text != null)
             {
-                object? obj = null;
+                object? obj;
                 string text2 = text.Trim();
                 if (text2.Length == 0)
                 {
@@ -112,17 +113,16 @@ namespace Alternet.Drawing
                     obj = ColorConverter.GetNamedColor(text2);
                     if (obj == null)
                     {
-                        if (culture == null)
-                        {
-                            culture = CultureInfo.CurrentCulture;
-                        }
+                        culture ??= CultureInfo.CurrentCulture;
 
                         char c = culture.TextInfo.ListSeparator[0];
                         bool flag = true;
-                        TypeConverter converter = TypeDescriptor.GetConverter(typeof(int));
+                        TypeConverter converter =
+                            TypeDescriptor.GetConverter(typeof(int));
                         if (text2.IndexOf(c) == -1)
                         {
-                            if (text2.Length >= 2 && (text2[0] == '\'' || text2[0] == '"') && text2[0] == text2[text2.Length - 1])
+                            if (text2.Length >= 2 && (text2[0] == '\'' ||
+                                text2[0] == '"') && text2[0] == text2[text2.Length - 1])
                             {
                                 string name = text2.Substring(1, text2.Length - 2);
                                 obj = Color.FromName(name);
@@ -163,10 +163,17 @@ namespace Alternet.Drawing
                                     obj = Color.FromArgb(array2[0]);
                                     break;
                                 case 3:
-                                    obj = Color.FromArgb(array2[0], array2[1], array2[2]);
+                                    obj = Color.FromArgb(
+                                        array2[0],
+                                        array2[1],
+                                        array2[2]);
                                     break;
                                 case 4:
-                                    obj = Color.FromArgb(array2[0], array2[1], array2[2], array2[3]);
+                                    obj = Color.FromArgb(
+                                        array2[0],
+                                        array2[1],
+                                        array2[2],
+                                        array2[3]);
                                     break;
                             }
 
@@ -243,10 +250,7 @@ namespace Alternet.Drawing
                         return "'" + left.Name + "'";
                     }
 
-                    if (culture == null)
-                    {
-                        culture = CultureInfo.CurrentCulture;
-                    }
+                    culture ??= CultureInfo.CurrentCulture;
 
                     string separator = culture.TextInfo.ListSeparator + " ";
                     TypeConverter converter = TypeDescriptor.GetConverter(typeof(int));
@@ -256,7 +260,7 @@ namespace Alternet.Drawing
                     {
                         array = new string[4];
                         array[num++] =
-                            converter.ConvertToString(context, culture, left.A);
+                            converter.ConvertToString(context, culture, left.A)!;
                     }
                     else
                     {
@@ -264,11 +268,11 @@ namespace Alternet.Drawing
                     }
 
                     array[num++] =
-                        converter.ConvertToString(context, culture, left.R);
+                        converter.ConvertToString(context, culture, left.R)!;
                     array[num++] =
-                        converter.ConvertToString(context, culture, left.G);
+                        converter.ConvertToString(context, culture, left.G)!;
                     array[num++] =
-                        converter.ConvertToString(context, culture, left.B);
+                        converter.ConvertToString(context, culture, left.B)!;
                     return string.Join(separator, array);
                 }
                 else if (destinationType == typeof(InstanceDescriptor))
@@ -412,13 +416,15 @@ namespace Alternet.Drawing
 
         private static void FillConstants(Hashtable hash, Type enumType)
         {
-            MethodAttributes methodAttributes = MethodAttributes.FamANDAssem | MethodAttributes.Family | MethodAttributes.Static;
+            MethodAttributes methodAttributes = MethodAttributes.FamANDAssem |
+                MethodAttributes.Family | MethodAttributes.Static;
             foreach (PropertyInfo propertyInfo in enumType.GetProperties())
             {
                 if (propertyInfo.PropertyType == typeof(Color))
                 {
                     MethodInfo? getMethod = propertyInfo.GetGetMethod();
-                    if (getMethod != null && (getMethod.Attributes & methodAttributes) == methodAttributes)
+                    if (getMethod != null &&
+                        (getMethod.Attributes & methodAttributes) == methodAttributes)
                     {
                         object[]? index = null;
                         hash[propertyInfo.Name] = propertyInfo.GetValue(null, index);

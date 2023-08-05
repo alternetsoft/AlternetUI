@@ -15,7 +15,7 @@ namespace Alternet.UI
         {
         }
 
-        GridLength height = new GridLength(1, GridUnitType.Star);
+        GridLength height = new(1, GridUnitType.Star);
         double minHeight;
         double maxHeight = double.PositiveInfinity;
 

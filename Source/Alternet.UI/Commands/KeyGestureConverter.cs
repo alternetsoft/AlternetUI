@@ -1,9 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-// Description: KeyGestureConverter - Converts a KeyGesture string
-//              to the *Type* that the string represents
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -18,11 +15,71 @@ namespace Alternet.UI
     /// </summary>
     public class KeyGestureConverter : TypeConverter
     {
-        private const char MODIFIERS_DELIMITER = '+';
-        internal const char DISPLAYSTRING_SEPARATOR = ',';
+        internal const char DisplayStringSeparator = ',';
 
-        private static KeyConverter keyConverter = new KeyConverter();
-        private static ModifierKeysConverter modifierKeysConverter = new();
+        private const char ModifiersDelimiter = '+';
+
+        private static readonly KeyConverter KeyConverter = new();
+        private static readonly ModifierKeysConverter ModifierKeysConverter = new();
+
+        /// <summary>
+        /// Parses string representation of the key with modifiers to the
+        /// <see cref="KeyGesture"/> instance.
+        /// </summary>
+        /// <param name="source">String value containing key name
+        /// and key modifiers.</param>
+        /// <returns></returns>
+        public static KeyGesture? FromString(string source)
+        {
+            string fullName = ((string)source).Trim();
+            if (fullName == string.Empty)
+                return new KeyGesture(Key.None);
+
+            string keyToken;
+            string modifiersToken;
+            string displayString;
+
+            // break apart display string
+            int index = fullName.IndexOf(DisplayStringSeparator);
+            if (index >= 0)
+            {
+                displayString = fullName.Substring(index + 1).Trim();
+                fullName = fullName.Substring(0, index).Trim();
+            }
+            else
+            {
+                displayString = string.Empty;
+            }
+
+            // break apart key and modifiers
+            index = fullName.LastIndexOf(ModifiersDelimiter);
+            if (index >= 0)
+            {
+                // modifiers exists
+                modifiersToken = fullName.Substring(0, index);
+                keyToken = fullName.Substring(index + 1);
+            }
+            else
+            {
+                modifiersToken = string.Empty;
+                keyToken = fullName;
+            }
+
+            ModifierKeys modifiers = ModifierKeys.None;
+            object resultkey = KeyConverter.FromString(keyToken);
+            if (resultkey != null)
+            {
+                object temp = ModifierKeysConverter.FromString(modifiersToken);
+                if (temp != null)
+                {
+                    modifiers = (ModifierKeys)temp;
+                }
+
+                return new KeyGesture((Key)resultkey, modifiers, displayString);
+            }
+
+            return null;
+        }
 
         /// <inheritdoc/>
         public override bool CanConvertFrom(
@@ -65,65 +122,6 @@ namespace Alternet.UI
             return false;
         }
 
-        /// <summary>
-        /// Parses string representation of the key with modifiers to the
-        /// <see cref="KeyGesture"/> instance.
-        /// </summary>
-        /// <param name="source">String value containing key name
-        /// and key modifiers.</param>
-        /// <returns></returns>
-        public static KeyGesture? FromString(string source)
-        {
-            string fullName = ((string)source).Trim();
-            if (fullName == string.Empty)
-                return new KeyGesture(Key.None);
-
-            string keyToken;
-            string modifiersToken;
-            string displayString;
-
-            // break apart display string
-            int index = fullName.IndexOf(DISPLAYSTRING_SEPARATOR);
-            if (index >= 0)
-            {
-                displayString = fullName.Substring(index + 1).Trim();
-                fullName = fullName.Substring(0, index).Trim();
-            }
-            else
-            {
-                displayString = string.Empty;
-            }
-
-            // break apart key and modifiers
-            index = fullName.LastIndexOf(MODIFIERS_DELIMITER);
-            if (index >= 0)
-            {
-                // modifiers exists
-                modifiersToken = fullName.Substring(0, index);
-                keyToken = fullName.Substring(index + 1);
-            }
-            else
-            {
-                modifiersToken = string.Empty;
-                keyToken = fullName;
-            }
-
-            ModifierKeys modifiers = ModifierKeys.None;
-            object resultkey = KeyConverter.FromString(keyToken);
-            if (resultkey != null)
-            {
-                object temp = ModifierKeysConverter.FromString(modifiersToken);
-                if (temp != null)
-                {
-                    modifiers = (ModifierKeys)temp;
-                }
-
-                return new KeyGesture((Key)resultkey, modifiers, displayString);
-            }
-
-            return null;
-        }
-
         /// <inheritdoc/>
         public override object ConvertFrom(
             ITypeDescriptorContext? context,
@@ -161,20 +159,20 @@ namespace Alternet.UI
                             return string.Empty;
 
                         string strBinding = string.Empty;
-                        string strKey = (string)keyConverter.ConvertTo(context, culture, keyGesture.Key, destinationType) as string;
+                        string strKey = (string)KeyConverter.ConvertTo(context, culture, keyGesture.Key, destinationType) as string;
                         if (strKey != string.Empty)
                         {
-                            strBinding += modifierKeysConverter.ConvertTo(context, culture, keyGesture.Modifiers, destinationType) as string;
+                            strBinding += ModifierKeysConverter.ConvertTo(context, culture, keyGesture.Modifiers, destinationType) as string;
                             if (strBinding != string.Empty)
                             {
-                                strBinding += MODIFIERS_DELIMITER;
+                                strBinding += ModifiersDelimiter;
                             }
 
                             strBinding += strKey;
 
                             if (!string.IsNullOrEmpty(keyGesture.DisplayString))
                             {
-                                strBinding += DISPLAYSTRING_SEPARATOR + keyGesture.DisplayString;
+                                strBinding += DisplayStringSeparator + keyGesture.DisplayString;
                             }
                         }
 
