@@ -12,6 +12,7 @@ namespace Alternet.Drawing
     public abstract class Image : IDisposable
     {
         private static Brush? disabledBrush = null;
+        private static Color disabledBrushColor = Color.FromArgb(171, 71, 71, 71);
 
         private bool isDisposed;
         private UI.Native.Image nativeImage;
@@ -39,23 +40,6 @@ namespace Alternet.Drawing
             NativeImage.Initialize(size);
         }
 
-        // Color.FromArgb(171, 71, 71, 71)
-        // Color.FromArgb(128, 0, 0, 0)
-        internal static Brush DisabledBrush
-        {
-            get
-            {
-                if (disabledBrush == null)
-                    disabledBrush = new SolidBrush(Color.FromArgb(171, 71, 71, 71));
-                return disabledBrush;
-            }
-
-            set
-            {
-                disabledBrush = value;
-            }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the <see cref="Image"/> class.
         /// </summary>
@@ -70,6 +54,25 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Get or set color used in <see cref="ToGrayScale"/> method.
+        /// </summary>
+        public static Color DisabledBrushColor
+        {
+            get
+            {
+                return disabledBrushColor;
+            }
+
+            set
+            {
+                if (disabledBrushColor == value)
+                    return;
+                disabledBrushColor = value;
+                disabledBrush = null;
+            }
+        }
+
+        /// <summary>
         /// Gets the size of the image in device-independent units (1/96th inch
         /// per unit).
         /// </summary>
@@ -79,6 +82,23 @@ namespace Alternet.Drawing
         /// Gets the size of the image in pixels.
         /// </summary>
         public Int32Size PixelSize => NativeImage.PixelSize;
+
+        // Color.FromArgb(171, 71, 71, 71)
+        // Color.FromArgb(128, 0, 0, 0)
+        internal static Brush DisabledBrush
+        {
+            get
+            {
+                if (disabledBrush == null)
+                    disabledBrush = new SolidBrush(disabledBrushColor);
+                return disabledBrush;
+            }
+
+            set
+            {
+                disabledBrush = value;
+            }
+        }
 
         internal UI.Native.Image NativeImage
         {
@@ -119,11 +139,23 @@ namespace Alternet.Drawing
             return new Bitmap(assets.Open(uri));
         }
 
+        /// <summary>
+        /// Makes image grayscaled.
+        /// </summary>
+        /// <returns><c>true</c> if operation is successful. </returns>
         public bool GrayScale()
         {
             return NativeImage.GrayScale();
         }
 
+        /// <summary>
+        /// Creates grayscaled version of the image.
+        /// </summary>
+        /// <returns>Returns new grayscaled image from this image.</returns>
+        /// <remarks>
+        /// This method uses <see cref="GrayScale"/> and if it is unsuccessfull,
+        /// it fills the image with <see cref="DisabledBrushColor"/>.
+        /// </remarks>
         public Image ToGrayScale()
         {
             Bitmap bitmap = new(this);

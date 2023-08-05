@@ -106,6 +106,16 @@ namespace Alternet.Drawing
         /// </value>
         public static string[] FamiliesNames => UI.Native.Font.Families;
 
+        /// <summary>
+        /// Returns a string array that contains all names of the
+        /// <see cref="FontFamily"/>
+        /// objects currently available in the system. Names are returned in
+        /// the ascending order.
+        /// </summary>
+        /// <value>
+        /// A string array of <see cref="FontFamily"/> names currently available
+        /// in the system in the ascending order.
+        /// </value>
         public static string[] FamiliesNamesAscending
         {
             get
@@ -114,7 +124,7 @@ namespace Alternet.Drawing
                 Array.Sort(result);
                 return result;
             }
-        } 
+        }
 
         /// <summary>
         /// Gets the name of this <see cref="FontFamily"/>.
