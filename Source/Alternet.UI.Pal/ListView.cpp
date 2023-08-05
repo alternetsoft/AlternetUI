@@ -21,7 +21,7 @@ namespace Alternet::UI
         if (hasBorder == value)
             return;
         hasBorder = value;
-        RecreateListView();
+        RecreateWxWindowIfNeeded();
     }
 
     ListView::~ListView()
@@ -126,9 +126,9 @@ namespace Alternet::UI
         return _view;
     }
 
-    void ListView::RecreateListView()
+    void ListView::RecreateWxWindowIfNeeded()
     {
-        RecreateWxWindowIfNeeded();
+        Control::RecreateWxWindowIfNeeded();
         RaiseEvent(ListViewEvent::ControlRecreated);
     }
 
@@ -137,7 +137,7 @@ namespace Alternet::UI
         if (_view == value)
             return;
         _view = value;
-        RecreateListView();
+        RecreateWxWindowIfNeeded();
     }
 
     ImageList* ListView::GetSmallImageList()
@@ -346,7 +346,7 @@ namespace Alternet::UI
         if (_allowLabelEdit == value)
             return;
         _allowLabelEdit = value;
-        RecreateListView();
+        RecreateWxWindowIfNeeded();
     }
 
     int ListView::GetTopItemIndex()
@@ -364,7 +364,7 @@ namespace Alternet::UI
         if (_gridLinesDisplayMode == value)
             return;
         _gridLinesDisplayMode = value;
-        RecreateListView();
+        RecreateWxWindowIfNeeded();
     }
 
     ListViewSortMode ListView::GetSortMode()
@@ -378,7 +378,7 @@ namespace Alternet::UI
             return;
 
         _sortMode = value;
-        RecreateListView();
+        RecreateWxWindowIfNeeded();
     }
 
     bool ListView::GetColumnHeaderVisible()
@@ -391,7 +391,7 @@ namespace Alternet::UI
         if (_columnHeaderVisible == value)
             return;
         _columnHeaderVisible = value;
-        RecreateListView();
+        RecreateWxWindowIfNeeded();
     }
 
     int ListView::GetFocusedItemIndex()
@@ -564,7 +564,7 @@ namespace Alternet::UI
         if (_selectionMode == value)
             return;
         _selectionMode = value;
-        RecreateListView();
+        RecreateWxWindowIfNeeded();
     }
 
     void ListView::ApplyLargeImageList(wxListView* value)

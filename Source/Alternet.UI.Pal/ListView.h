@@ -45,7 +45,7 @@ namespace Alternet::UI
 
         static ListViewHitTestLocations GetHitTestLocationsFromWxFlags(int flags);
         void OnLabelEditEvent(wxListEvent& event, ListViewEvent e);
-        void RecreateListView();
+        virtual void RecreateWxWindowIfNeeded() override;
         std::vector<int> GetSelectedIndices();
         void SetSelectedIndices(const std::vector<int>& value);
         void DeselectAll(wxListView* listView);
