@@ -154,7 +154,7 @@ namespace Alternet::UI
 
     wxWindow* ToolbarItem::CreateWxWindowCore(wxWindow* parent)
     {
-        return new wxPanel();
+        return new wxDummyPanel("toolbaritem");
     }
 
     ToolbarItem::ToolInfo* ToolbarItem::GetToolInfo()

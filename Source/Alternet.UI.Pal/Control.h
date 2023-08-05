@@ -8,6 +8,22 @@
 
 namespace Alternet::UI
 {
+    class wxDummyPanel : public wxPanel 
+    {
+    public:        
+        wxDummyPanel(wxWindow* parent,
+            wxWindowID winid = wxID_ANY,
+            const wxPoint& pos = wxDefaultPosition,
+            const wxSize& size = wxDefaultSize,
+            long style = wxTAB_TRAVERSAL | wxNO_BORDER,
+            const wxString& name = wxASCII_STR(wxPanelNameStr))
+        {
+            Create(parent, winid, pos, size, style, name);
+        }
+
+        wxDummyPanel(wxString idstr);
+    };
+
     class Window;
 
     class wxWidgetExtender
@@ -49,9 +65,12 @@ namespace Alternet::UI
 
         static Control* TryFindControlByWxWindow(wxWindow* wxWindow);
 
-        wxDragResult RaiseDragOver(const wxPoint& location, wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite);
-        wxDragResult RaiseDragEnter(const wxPoint& location, wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite);
-        wxDragResult RaiseDragDrop(const wxPoint& location, wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite);
+        wxDragResult RaiseDragOver(const wxPoint& location,
+            wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite);
+        wxDragResult RaiseDragEnter(const wxPoint& location,
+            wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite);
+        wxDragResult RaiseDragDrop(const wxPoint& location,
+            wxDragResult defaultDragResult, wxDataObjectComposite* dataObjectComposite);
         void RaiseDragLeave();
 
         Window* GetParentWindow();

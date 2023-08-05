@@ -175,7 +175,8 @@ namespace Alternet::UI
 
     /*static*/ wxString MenuItem::CoerceWxItemText(string value, MenuItem* menuItem)
     {
-        // Have to pass space because the validation check does not allow for empty string.
+        // Have to pass space because the validation check does not allow
+        // for empty string.
         auto text = value.empty() ? wxString(" ") : wxStr(value);
         text.Replace("_", "&");
         
@@ -324,7 +325,7 @@ namespace Alternet::UI
 
     wxWindow* MenuItem::CreateWxWindowCore(wxWindow* parent)
     {
-        return new wxPanel();
+        return new wxDummyPanel("menuitem");
     }
     
     wxMenuItem* MenuItem::GetWxMenuItem()

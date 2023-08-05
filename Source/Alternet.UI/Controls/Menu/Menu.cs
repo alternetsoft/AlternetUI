@@ -17,6 +17,8 @@ namespace Alternet.UI
             Items.ItemRemoved += Items_ItemRemoved;
         }
 
+        internal override bool IsDummy => true;
+
         private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<MenuItem> e)
         {
             // This is required for data binding inheritance.

@@ -21,8 +21,11 @@ namespace Alternet.UI
         /// Gets a collection of <see cref="StatusBarPanel"/> objects associated with the status bar.
         /// </summary>
         [Content]
-        public Collection<StatusBarPanel> Panels { get; } = new Collection<StatusBarPanel>();
+        public Collection<StatusBarPanel> Panels { get; } = new ();
 
+        /// <summary>
+        /// Gets a <see cref="StatusBarHandler"/> associated with this class.
+        /// </summary>
         public new StatusBarHandler Handler
         {
             get
@@ -31,6 +34,8 @@ namespace Alternet.UI
                 return (StatusBarHandler)base.Handler;
             }
         }
+
+        internal override bool IsDummy => true;
 
         /// <summary>
         /// Gets or sets a value indicating whether a sizing grip is displayed in the lower-right corner of the control.

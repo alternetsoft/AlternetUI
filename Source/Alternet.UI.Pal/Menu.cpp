@@ -118,7 +118,7 @@ namespace Alternet::UI
 
     wxWindow* Menu::CreateWxWindowCore(wxWindow* parent)
     {
-        return new wxPanel();
+        return new wxDummyPanel("menu");
     }
     
     wxMenu* Menu::GetWxMenu()

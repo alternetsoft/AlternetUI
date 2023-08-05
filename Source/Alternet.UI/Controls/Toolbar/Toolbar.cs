@@ -94,6 +94,15 @@ namespace Alternet.UI
         /// </remarks>
         public static int DefaultImageSize288dpi { get; set; } = 48;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to align the toolbar at
+        /// the bottom of parent window.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if toolbar is aligned at the bottom; otherwise,
+        /// <see langword="false"/>. The default is <see langword="false"/>.
+        /// </value>
+        /// <remarks>This property affects only horizontal toolbars.</remarks>
         public bool IsBottom
         {
             get
@@ -107,6 +116,15 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to align the toolbar at
+        /// the right side of parent window.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if toolbar is aligned at the right side; otherwise,
+        /// <see langword="false"/>. The default is <see langword="false"/>.
+        /// </value>
+        /// <remarks>This property affects only vertical toolbars.</remarks>
         public bool IsRight
         {
             get
@@ -120,15 +138,6 @@ namespace Alternet.UI
             }
         }
 
-        internal new ToolbarHandler Handler
-        {
-            get
-            {
-                CheckDisposed();
-                return (ToolbarHandler)base.Handler;
-            }
-        }
-
         /// <summary>
         /// Gets or sets a value which specifies display modes for
         /// toolbar item image and text.
@@ -139,6 +148,14 @@ namespace Alternet.UI
             set => Handler.ImageToText = value;
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to draw divider (border)
+        /// above the toolbar (Windows only).
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if toolbar border is shown; otherwise,
+        /// <see langword="false"/>. The default is <see langword="true"/>.
+        /// </value>
         public bool NoDivider
         {
             get
@@ -152,6 +169,15 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to align the toolbar vertically.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if toolbar is aligned vertically; otherwise,
+        /// <see langword="false"/>. The default is <see langword="false"/>.
+        /// </value>
+        /// <remarks>Vertical toolbars are aligned at the left or right side of 
+        /// parent window.</remarks>
         public bool IsVertical
         {
             get
@@ -166,30 +192,54 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether this toolbar item text is visible.
+        /// Gets or sets a boolean value indicating whether this toolbar item
+        /// text is visible.
         /// </summary>
-        public bool ItemTextVisible { get => Handler.ItemTextVisible; set => Handler.ItemTextVisible = value; }
+        public bool ItemTextVisible
+        {
+            get => Handler.ItemTextVisible;
+            set => Handler.ItemTextVisible = value;
+        }
 
         /// <summary>
-        /// Gets or sets a boolean value indicating whether this toolbar item images are visible.
+        /// Gets or sets a boolean value indicating whether this toolbar item
+        /// images are visible.
         /// </summary>
-        public bool ItemImagesVisible { get => Handler.ItemImagesVisible; set => Handler.ItemImagesVisible = value; }
+        public bool ItemImagesVisible
+        {
+            get => Handler.ItemImagesVisible;
+            set => Handler.ItemImagesVisible = value;
+        }
 
-        private void Items_ItemInserted(object? sender, CollectionChangeEventArgs<ToolbarItem> e)
+        internal new ToolbarHandler Handler
+        {
+            get
+            {
+                CheckDisposed();
+                return (ToolbarHandler)base.Handler;
+            }
+        }
+
+        private void Items_ItemInserted(
+            object? sender,
+            CollectionChangeEventArgs<ToolbarItem> e)
         {
             // This is required for data binding inheritance. ???
             // This commented out as added additional dummy toolbar items
             // Children.Add(e.Item);
         }
 
-        private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<ToolbarItem> e)
+        private void Items_ItemRemoved(
+            object? sender,
+            CollectionChangeEventArgs<ToolbarItem> e)
         {
             // Commented out as Children.Add(e.Item) was commented
             // Children.Remove(e.Item);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="MenuItem"/> objects associated with the menu.
+        /// Gets a collection of <see cref="MenuItem"/> objects associated
+        /// with the menu.
         /// </summary>
         [Content]
         public Collection<ToolbarItem> Items { get; } = new Collection<ToolbarItem>();
@@ -197,20 +247,36 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override IReadOnlyList<FrameworkElement> ContentElements => Items;
 
-        /// <inheritdoc />
-        protected override IEnumerable<FrameworkElement> LogicalChildrenCollection => Items;
+        internal override bool IsDummy => true;
 
+        /// <inheritdoc />
+        protected override
+            IEnumerable<FrameworkElement> LogicalChildrenCollection => Items;
+
+        /// <summary>
+        /// Returns suggested toolbar image size depending on the current DPI.
+        /// </summary>
         public int GetDefaultImageSize()
         {
             Size deviceDpi = GetDPI();
             return GetDefaultImageSize(deviceDpi.Width);
         }
 
+        /// <summary>
+        /// Updates visual representation of the toolbar after it's items where
+        /// added, deleted or updated. In most cases this method is called
+        /// automatically, so you don't need to call it.
+        /// </summary>
         public void Realize()
         {
             Handler.Realize();
         }
 
+        /// <summary>
+        /// Returns suggested toolbar image size depending on the given DPI value.
+        /// </summary>
+        /// <param name="deviceDpi">DPI for which default image size is
+        /// returned.</param>
         public static int GetDefaultImageSize(double deviceDpi)
         {
             decimal deviceDpiRatio = (decimal)deviceDpi / 96m;

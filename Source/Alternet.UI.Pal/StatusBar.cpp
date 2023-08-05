@@ -34,7 +34,7 @@ namespace Alternet::UI
 
     wxWindow* StatusBar::CreateWxWindowCore(wxWindow* parent)
     {
-        return new wxPanel();
+        return new wxDummyPanel("statusbar");
     }
 
     wxStatusBar* StatusBar::GetWxStatusBar()

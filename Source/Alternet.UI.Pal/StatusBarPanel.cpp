@@ -29,7 +29,7 @@ namespace Alternet::UI
 
     wxWindow* StatusBarPanel::CreateWxWindowCore(wxWindow* parent)
     {
-        return new wxPanel();
+        return new wxDummyPanel("statusbarpanel");
     }
 
     void StatusBarPanel::SetParentStatusBar(StatusBar* value, optional<int> index)

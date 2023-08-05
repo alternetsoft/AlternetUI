@@ -9,13 +9,14 @@ namespace Alternet.UI
     /// </summary>
     public class StatusBarPanel : Control
     {
+        private string text = string.Empty;
+
         /// <summary>
         /// Initializes a new instance of the <see cref='StatusBarPanel'/> class.
         /// </summary>
-        public StatusBarPanel() :
-            this(string.Empty)
+        public StatusBarPanel()
+            : this(string.Empty)
         {
-
         }
 
         /// <summary>
@@ -26,7 +27,9 @@ namespace Alternet.UI
             Text = text;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Gets a <see cref="StatusBarPanelHandler"/> associated with this class.
+        /// </summary>
         public new StatusBarPanelHandler Handler
         {
             get
@@ -36,7 +39,7 @@ namespace Alternet.UI
             }
         }
 
-        string text = string.Empty;
+        internal override bool IsDummy => true;
 
         /// <summary>
         /// Gets or sets a value indicating the text displayed in the status bar panel.

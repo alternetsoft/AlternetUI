@@ -689,6 +689,8 @@ namespace Alternet.UI
             }
         }
 
+        internal virtual bool IsDummy => false;
+
         internal virtual Rect DrawClientRectangle
         {
             get

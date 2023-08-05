@@ -11,22 +11,6 @@ namespace Alternet.UI
     /// </summary>
     public abstract class ControlHandler
     {
-        /*
-        private static Dictionary<Native.Control, ControlHandler>
-            handlersByNativeControls = new();
-        */
-
-        internal static ControlHandler? NativeControlToHandler(
-            Native.Control control)
-        {
-            /*
-              handlersByNativeControls.TryGetValue(
-                  control,
-                  out var handler) ? handler : null;
-            */
-            return (ControlHandler)control.handler;
-        }
-
         private int layoutSuspendCount;
 
         private bool inLayout;
@@ -368,7 +352,9 @@ namespace Alternet.UI
 
         private protected Size GetNativeControlSize(Size availableSize)
         {
-            var s = NativeControl?.GetPreferredSize(availableSize) ?? new Size();
+            if (Control.IsDummy)
+                return Size.Empty;
+            var s = NativeControl?.GetPreferredSize(availableSize) ?? Size.Empty;
             s += Control.Padding.Size;
             return new Size(
                 double.IsNaN(Control.Width) ? s.Width : Control.Width,
@@ -493,7 +479,8 @@ namespace Alternet.UI
             return new DrawingContext(nativeControl.OpenClientDrawingContext());
         }
 
-        internal virtual Native.Control CreateNativeControl() => new Native.Panel();
+        internal virtual Native.Control CreateNativeControl() =>
+            new Native.Panel();
 
         /// <summary>
         /// Called when the value of the <see cref="IsVisualChild"/> property changes.
@@ -1151,6 +1138,22 @@ namespace Alternet.UI
 
                 return NativeControl.IsFocused;
             }
+        }
+
+        /*
+        private static Dictionary<Native.Control, ControlHandler>
+            handlersByNativeControls = new();
+        */
+
+        internal static ControlHandler? NativeControlToHandler(
+            Native.Control control)
+        {
+            /*
+              handlersByNativeControls.TryGetValue(
+                  control,
+                  out var handler) ? handler : null;
+            */
+            return (ControlHandler?)control.handler;
         }
 
         private Control? TryFindClosestParentWithNativeControl()

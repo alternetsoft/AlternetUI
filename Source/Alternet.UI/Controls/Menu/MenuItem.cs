@@ -95,6 +95,8 @@ namespace Alternet.UI
                 Click += onClick;
         }
 
+        internal override bool IsDummy => true;
+
         /// <summary>
         /// Occurs when the <see cref="Text"/> property changes.
         /// </summary>

@@ -66,7 +66,7 @@ namespace Alternet::UI
 
     wxWindow* Toolbar::CreateWxWindowCore(wxWindow* parent)
     {
-        return new wxPanel();
+        return new wxDummyPanel("toolbar");
     }
 
     void Toolbar::SetOwnerWindow(Window* window)

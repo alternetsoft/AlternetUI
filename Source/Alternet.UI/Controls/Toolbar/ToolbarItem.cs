@@ -124,6 +124,8 @@ namespace Alternet.UI
             set => Handler.DropDownMenu = value;
         }
 
+        internal override bool IsDummy => true;
+
         /// <summary>
         /// Gets or sets a boolean value indicating whether this toolbar
         /// item is checkable.
