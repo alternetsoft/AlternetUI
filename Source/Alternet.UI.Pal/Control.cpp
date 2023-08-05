@@ -497,9 +497,21 @@ namespace Alternet::UI
         RecreateWxWindowIfNeeded();
     }
 
+    void Control::BeginIgnoreRecreate() 
+    {
+        _ignoreRecreate++;
+    }
+
+    void Control::EndIgnoreRecreate()
+    {
+        _ignoreRecreate--;
+        if (_ignoreRecreate == 0)
+            RecreateWxWindowIfNeeded();
+    }
+
     void Control::RecreateWxWindowIfNeeded()
     {
-        if (!IsWxWindowCreated())
+        if (_ignoreRecreate>0 || !IsWxWindowCreated())
             return;
 
         SetRecreatingWxWindow(true);

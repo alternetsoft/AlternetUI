@@ -59,6 +59,7 @@ namespace Alternet::UI
     protected:
         int64_t createStyles = 0;
         bool bindScrollEvents = true;
+        int _ignoreRecreate = 0;
 
         virtual void OnParentChanged();
         virtual void OnAnyParentChanged();
@@ -67,7 +68,7 @@ namespace Alternet::UI
 
         void CreateWxWindow();
 
-        void RecreateWxWindowIfNeeded();
+        virtual void RecreateWxWindowIfNeeded();
         void ScheduleRecreateWxWindow(std::function<void()> postRecreateAction);
         void ScheduleRecreateWxWindow();
 

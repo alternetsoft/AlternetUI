@@ -270,6 +270,20 @@ ALTERNET_UI_API void Control_SetIsScrollable_(Control* obj, c_bool value)
         });
 }
 
+ALTERNET_UI_API void Control_SaveScreenshot_(Control* obj, const char16_t* fileName)
+{
+    MarshalExceptions<void>([&](){
+            obj->SaveScreenshot(fileName);
+        });
+}
+
+ALTERNET_UI_API void Control_SendSizeEvent_(Control* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->SendSizeEvent();
+        });
+}
+
 ALTERNET_UI_API void* Control_GetContainingSizer_(Control* obj)
 {
     return MarshalExceptions<void*>([&](){
@@ -330,6 +344,20 @@ ALTERNET_UI_API int Control_GetScrollBarMaximum_(Control* obj, ScrollBarOrientat
 {
     return MarshalExceptions<int>([&](){
             return obj->GetScrollBarMaximum(orientation);
+        });
+}
+
+ALTERNET_UI_API void Control_BeginIgnoreRecreate_(Control* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->BeginIgnoreRecreate();
+        });
+}
+
+ALTERNET_UI_API void Control_EndIgnoreRecreate_(Control* obj)
+{
+    MarshalExceptions<void>([&](){
+            obj->EndIgnoreRecreate();
         });
 }
 
@@ -498,20 +526,6 @@ ALTERNET_UI_API void Control_Destroy_(Control* obj)
 {
     MarshalExceptions<void>([&](){
             obj->Destroy();
-        });
-}
-
-ALTERNET_UI_API void Control_SaveScreenshot_(Control* obj, const char16_t* fileName)
-{
-    MarshalExceptions<void>([&](){
-            obj->SaveScreenshot(fileName);
-        });
-}
-
-ALTERNET_UI_API void Control_SendSizeEvent_(Control* obj)
-{
-    MarshalExceptions<void>([&](){
-            obj->SendSizeEvent();
         });
 }
 

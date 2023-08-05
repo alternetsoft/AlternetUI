@@ -83,6 +83,8 @@ void* GetWxWidget();
 bool GetIsScrollable();
 void SetIsScrollable(bool value);
 
+void SaveScreenshot(const string& fileName);
+void SendSizeEvent();
 void* GetContainingSizer();
 void* GetSizer();
 void SetSizer(void* sizer, bool deleteOld);
@@ -92,6 +94,8 @@ bool IsScrollBarVisible(ScrollBarOrientation orientation);
 int GetScrollBarValue(ScrollBarOrientation orientation);
 int GetScrollBarLargeChange(ScrollBarOrientation orientation);
 int GetScrollBarMaximum(ScrollBarOrientation orientation);
+void BeginIgnoreRecreate();
+void EndIgnoreRecreate();
 Size GetDPI();
 void SetMouseCapture(bool value);
 void AddChild(Control* control);
@@ -116,8 +120,6 @@ void FocusNextControl(bool forward, bool nested);
 void BeginInit();
 void EndInit();
 void Destroy();
-void SaveScreenshot(const string& fileName);
-void SendSizeEvent();
 public:
 enum class ControlEvent
 {
