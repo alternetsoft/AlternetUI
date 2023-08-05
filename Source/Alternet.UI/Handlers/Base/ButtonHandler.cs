@@ -66,13 +66,11 @@ namespace Alternet.UI
         /// </summary>
         public abstract bool IsCancel { get; set; }
 
+        /// <inheritdoc cref="Button.TextVisible"/>
         public abstract bool TextVisible { get; set; }
 
+        /// <inheritdoc cref="Button.TextAlign"/>
         public abstract GenericDirection TextAlign { get; set; }
-
-        public abstract void SetImagePosition(GenericDirection dir);
-
-        public abstract void SetImageMargins(double x, double y);
 
         /// <summary>
         /// Specifies a set of images for different <see cref="Button"/> states.
@@ -81,5 +79,11 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         protected override bool VisualChildNeedsNativeControl => true;
+
+        /// <inheritdoc cref="Button.SetImagePosition"/>
+        public abstract void SetImagePosition(GenericDirection dir);
+
+        /// <inheritdoc cref="Button.SetImageMargins"/>
+        public abstract void SetImageMargins(double x, double y);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using static Alternet.UI.Markup.Xaml.XamlIl.CompilerExtensions.Transformers.UixmlPortXamlIlRootObjectScope;
 
 namespace Alternet.UI
 {
@@ -338,6 +339,20 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the TAB key is received and
+        /// processed by the control.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if the TAB key is received by the control;
+        /// <see langword="false" />, if the TAB key is not received by the control.
+        /// The default is <see langword="false" />.
+        /// </returns>
+        /// <remarks>
+        /// Normally, TAB key is used for passing to the next control in a dialog.
+        /// For the control created with this style, you can still use
+        /// Ctrl-Enter to pass to the next control from the keyboard.
+        /// </remarks>
         public bool ProcessTab
         {
             get
@@ -351,6 +366,16 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the <see cref="EnterPressed"/>
+        /// event is fired.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if <see cref="EnterPressed"/> event is generated;
+        /// <see langword="false" />, if the ENTER key is either processed
+        /// internally by the control or used for navigation between dialog controls.
+        /// The default is <see langword="false" />.
+        /// </returns>
         public bool ProcessEnter
         {
             get
@@ -364,6 +389,16 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the input text is password and
+        /// all characters are shown as *.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if all characters of the input text are shown
+        /// as password chars;
+        /// <see langword="false" />, if text is shown normally.
+        /// The default is <see langword="false" />.
+        /// </returns>
         public bool IsPassword
         {
             get
@@ -377,6 +412,23 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether urls in the input text
+        /// are highlighted and underlined.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if urls in the input text
+        /// are highlighted and underlined;
+        /// <see langword="false" />, if urls in the input text are shown as normal
+        /// text. The default is <see langword="false" />.
+        /// </returns>
+        /// <remarks>
+        /// This property affects control behavior when
+        /// <see cref="IsRichEdit"/> property is <see langword="true" />.
+        /// </remarks>
+        /// <remarks>
+        /// <see cref="TextUrl"/> event is fired when url is clicked.
+        /// </remarks>
         public bool AutoUrl
         {
             get
@@ -390,6 +442,21 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether vertical scrollbar is
+        /// hidden in the control.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true" /> if vertical scrollbar is hidden;
+        /// <see langword="false" />, if vertical scrollbar is shown.
+        /// The default is <see langword="false" />.
+        /// </returns>
+        /// <remarks>
+        /// This property is for multiline controls only. Hidden vertical scrollbar
+        /// limits the amount of text which can be entered into the control to
+        /// what can be displayed in it under Windows but not under Linux.
+        /// Currently not implemented for the other platforms.
+        /// </remarks>
         public bool HideVertScrollbar
         {
             get
@@ -667,7 +734,8 @@ namespace Alternet.UI
                     continue;
                 }
 
-                AppendText(item.ToString());
+                if (item != null)
+                    AppendText(item.ToString()!);
             }
         }
 

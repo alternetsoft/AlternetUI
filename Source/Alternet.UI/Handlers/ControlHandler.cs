@@ -103,6 +103,7 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc cref="Control.GetDPI"/>
         public Size GetDPI()
         {
             if (NativeControl == null)
@@ -119,8 +120,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a rectangle which describes an area inside of the <see cref="Control"/> available
-        /// for positioning (layout) of its child controls, in device-independent units (1/96th inch per unit).
+        /// Gets a rectangle which describes an area inside of the
+        /// <see cref="Control"/> available
+        /// for positioning (layout) of its child controls, in device-independent
+        /// units (1/96th inch per unit).
         /// </summary>
         public virtual Rect ChildrenLayoutBounds
         {
@@ -138,21 +141,26 @@ namespace Alternet.UI
                     intrinsicPadding = nativeControl.IntrinsicLayoutPadding;
 
                 return new Rect(
-                    new Point(padding.Left + intrinsicPadding.Left, padding.Top + intrinsicPadding.Top),
+                    new Point(
+                        padding.Left + intrinsicPadding.Left,
+                        padding.Top + intrinsicPadding.Top),
                     childrenBounds.Size - padding.Size - intrinsicPadding.Size);
             }
         }
 
         /// <summary>
-        /// Gets a rectangle which describes the client area inside of the <see cref="Control"/>,
+        /// Gets a rectangle which describes the client area inside of the
+        /// <see cref="Control"/>,
         /// in device-independent units (1/96th inch per unit).
         /// </summary>
         public virtual Rect ClientRectangle => new (new Point(), ClientSize);
 
+        /// <inheritdoc cref="Control.DrawClientRectangle"/>
         public virtual Rect DrawClientRectangle => Control.DrawClientRectangle;
 
         /// <summary>
-        /// Gets a value indicating whether the mouse pointer is over the <see cref="Control"/>.
+        /// Gets a value indicating whether the mouse pointer is over the
+        /// <see cref="Control"/>.
         /// </summary>
         public bool IsMouseOver
         {
