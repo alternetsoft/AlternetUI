@@ -6,6 +6,10 @@
 
 namespace Alternet::UI
 {
+    wxDummyPanel::wxDummyPanel(wxString idstr) 
+    {
+        Hide();
+    }
 
     /*static*/ Control::ControlsByWxWindowsMap Control::s_controlsByWxWindowsMap;
 
@@ -177,9 +181,12 @@ namespace Alternet::UI
         ApplyScroll(event, event.GetPosition());
     }
 
-    DelayedValue<Control, Control::ScrollInfo>& Control::GetScrollInfoDelayedValue(const wxScrollWinEvent& event)
+    DelayedValue<Control, Control::ScrollInfo>& Control::GetScrollInfoDelayedValue(
+        const wxScrollWinEvent& event)
     {
-        return GetScrollInfoDelayedValue(event.GetOrientation() == wxHORIZONTAL ? ScrollBarOrientation::Horizontal : ScrollBarOrientation::Vertical);
+        return GetScrollInfoDelayedValue(
+            event.GetOrientation() == wxHORIZONTAL ?
+            ScrollBarOrientation::Horizontal : ScrollBarOrientation::Vertical);
     }
 
     void Control::ApplyScroll(wxScrollWinEvent& event, int position)
@@ -313,7 +320,8 @@ namespace Alternet::UI
         return wxDrag_DefaultMove; // the default operation is move, not copy
     }
 
-    DragDropEffects Control::DoDragDrop(UnmanagedDataObject* data, DragDropEffects allowedEffects)
+    DragDropEffects Control::DoDragDrop(UnmanagedDataObject* data,
+        DragDropEffects allowedEffects)
     {
         wxDropSource dragSource(GetWxWindow());
         auto dataObjectComposite = data->GetDataObjectComposite();
