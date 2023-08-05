@@ -119,7 +119,7 @@ namespace Alternet.UI
         /// Occurs when the control loses mouse capture.
         /// </summary>
         /// <remarks>
-        /// In rare scenarios, you might need to detect unexpected input. 
+        /// In rare scenarios, you might need to detect unexpected input.
         /// For example, consider the following scenarios.
         /// <list type="bullet">
         /// <item>During a mouse operation, the user opens the Start menu by
@@ -476,7 +476,6 @@ namespace Alternet.UI
             }
         }
 
-        // todo: allow users to set the Parent property?
         /// <summary>
         /// Gets or sets the suggested width of the control.
         /// </summary>
@@ -843,7 +842,7 @@ namespace Alternet.UI
         /// <summary>
         /// Displays the control to the user.
         /// </summary>
-        /// <remarks>Showing the control is equivalent to setting the 
+        /// <remarks>Showing the control is equivalent to setting the
         /// <see cref="Visible"/> property to <c>true</c>.
         /// After the <see cref="Show"/> method is called, the <see cref="Visible"/> property
         /// returns a value of <c>true</c> until the <see cref="Hide"/> method is called.</remarks>
@@ -905,7 +904,7 @@ namespace Alternet.UI
                 /// collection included in layout (i.e. visible).
                 /// </summary>
                 public virtual IEnumerable<Control> AllChildrenIncludedInLayout
-                    => AllChildren.Where(x => x.Visible); 
+                    => AllChildren.Where(x => x.Visible);
 
          */
 

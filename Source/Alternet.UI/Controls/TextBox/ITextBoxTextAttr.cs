@@ -21,7 +21,7 @@ namespace Alternet.UI
 
         void SetFontItalic(bool italic = true);
 
-        void SetFontSlanted (bool slanted = true);
+        void SetFontSlanted(bool slanted = true);
 
         void SetFontStrikethrough(bool strikethrough = true);
 

@@ -118,22 +118,3 @@ namespace Alternet.UI
         DirectionMask = All,
     }
 }
-
-/*
-BottomCenter    512	
-Content is vertically aligned at the bottom, and horizontally aligned at the center.
-
-
-MiddleCenter	32	
-Content is vertically aligned in the middle, and horizontally aligned at the center.
-
-MiddleLeft	16	
-Content is vertically aligned in the middle, and horizontally aligned on the left.
-
-MiddleRight	64	
-Content is vertically aligned in the middle, and horizontally aligned on the right.
-
-TopCenter	2	
-Content is vertically aligned at the top, and horizontally aligned at the center.
-
-*/

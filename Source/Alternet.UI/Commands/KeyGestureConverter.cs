@@ -2,22 +2,19 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
 // Description: KeyGestureConverter - Converts a KeyGesture string
 //              to the *Type* that the string represents
-//
 using System;
-using System.ComponentModel;    // for TypeConverter
-using System.Globalization;     // for CultureInfo
+using System.ComponentModel;
+using System.Globalization;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace Alternet.UI
 {
     /// <summary>
-    /// KeyGesture - Converter class for converting between a string and the Type of a KeyGesture
+    /// Converter class for converting between a string
+    /// and the <see cref="KeyGesture"/>.
     /// </summary>
     public class KeyGestureConverter : TypeConverter
     {
@@ -25,15 +22,12 @@ namespace Alternet.UI
         internal const char DISPLAYSTRING_SEPARATOR = ',';
 
         private static KeyConverter keyConverter = new KeyConverter();
-        private static ModifierKeysConverter modifierKeysConverter = new ModifierKeysConverter();
+        private static ModifierKeysConverter modifierKeysConverter = new();
 
-        /// <summary>
-        /// CanConvertFrom()
-        /// </summary>
-        /// <param name="context">ITypeDescriptorContext</param>
-        /// <param name="sourceType">type to convert from</param>
-        /// <returns>true if the given type can be converted, false otherwise</returns>
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        /// <inheritdoc/>
+        public override bool CanConvertFrom(
+            ITypeDescriptorContext? context,
+            Type? sourceType)
         {
             // We can only handle string.
             if (sourceType == typeof(string))
@@ -46,32 +40,38 @@ namespace Alternet.UI
             }
         }
 
-
-        /// <summary>
-        /// TypeConverter method override.
-        /// </summary>
-        /// <param name="context">ITypeDescriptorContext</param>
-        /// <param name="destinationType">Type to convert to</param>
-        /// <returns>true if conversion	is possible</returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
+        /// <inheritdoc/>
+        public override bool CanConvertTo(
+            ITypeDescriptorContext? context,
+            Type? destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
             if (destinationType == typeof(string))
             {
-                // When invoked by the serialization engine we can convert to string only for known type
+                // When invoked by the serialization engine we can convert to
+                // string only for known type
                 if (context != null && context.Instance != null)
                 {
                     var keyGesture = context.Instance as KeyGesture;
                     if (keyGesture != null)
                     {
-                        return ModifierKeysConverter.IsDefinedModifierKeys(keyGesture.Modifiers)
+                        return ModifierKeysConverter.IsDefinedModifierKeys(
+                            keyGesture.Modifiers)
                                 && IsDefinedKey(keyGesture.Key);
                     }
                 }
             }
+
             return false;
         }
 
+        /// <summary>
+        /// Parses string representation of the key with modifiers to the
+        /// <see cref="KeyGesture"/> instance.
+        /// </summary>
+        /// <param name="source">String value containing key name
+        /// and key modifiers.</param>
+        /// <returns></returns>
         public static KeyGesture? FromString(string source)
         {
             string fullName = ((string)source).Trim();
@@ -124,14 +124,11 @@ namespace Alternet.UI
             return null;
         }
 
-        /// <summary>
-        /// ConvertFrom()
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="culture"></param>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
+        /// <inheritdoc/>
+        public override object ConvertFrom(
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
+            object? source)
         {
             if (source != null && source is string)
             {
@@ -143,18 +140,15 @@ namespace Alternet.UI
             throw GetConvertFromException(source);
         }
 
-        /// <summary>
-        /// ConvertTo()
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="culture"></param>
-        /// <param name="value"></param>
-        /// <param name="destinationType"></param>
-        /// <returns></returns>
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        /// <inheritdoc/>
+        public override object ConvertTo(
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
+            object? value,
+            Type? destinationType)
         {
             if (destinationType == null)
-                throw new ArgumentNullException("destinationType");
+                throw new ArgumentNullException(nameof(destinationType));
 
             if (destinationType == typeof(string))
             {

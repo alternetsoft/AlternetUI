@@ -137,9 +137,21 @@ namespace Alternet.UI
             set { bottom = value; }
         }
 
-        public static implicit operator Thickness(double d) => new Thickness(d);
+        /// <summary>
+        /// Implicit operator convertion from <see cref="double"/> to
+        /// <see cref="Thickness"/>. All fields of thickness instance are assigned
+        /// with the same double value.
+        /// </summary>
+        /// <param name="d">New thickness value.</param>
+        public static implicit operator Thickness(double d) => new(d);
 
-        public static implicit operator Thickness(int d) => new Thickness(d);
+        /// <summary>
+        /// Implicit operator convertion from <see cref="int"/> to
+        /// <see cref="Thickness"/>. All fields of thickness instance are assigned
+        /// with the same int value.
+        /// </summary>
+        /// <param name="d">New thickness value.</param>
+        public static implicit operator Thickness(int d) => new(d);
 
         /// <summary>
         /// Overloaded operator to compare two Thicknesses for equality.
@@ -175,14 +187,6 @@ namespace Alternet.UI
         public static bool operator !=(Thickness t1, Thickness t2)
         {
             return !(t1 == t2);
-        }
-
-        public void Inflate(double value)
-        {
-            left += value;
-            top += value;
-            right += value;
-            bottom += value;
         }
 
         /// <summary>
@@ -236,6 +240,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Inflate all fields of the <see cref="Thickness"/> instance on
+        /// the same double value.
+        /// </summary>
+        /// <param name="value"></param>
+        public void Inflate(double value = 1)
+        {
+            left += value;
+            top += value;
+            right += value;
+            bottom += value;
+        }
+
+        /// <summary>
         /// This function compares to the provided object for type and
         /// value equality.
         /// </summary>
@@ -264,7 +281,7 @@ namespace Alternet.UI
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return left.GetHashCode() ^ top.GetHashCode() ^
                 right.GetHashCode() ^ bottom.GetHashCode();
@@ -279,6 +296,12 @@ namespace Alternet.UI
             return $"({left}, {top}, {right}, {bottom})";
         }
 
+        /// <summary>
+        /// Apply minimal and maximal limits to all the fields of the
+        /// <see cref="Thickness"/> instance.
+        /// </summary>
+        /// <param name="min">Minimal possible thickness.</param>
+        /// <param name="max">Maximal possible thikness.</param>
         public void ApplyMinMax(double min, double max)
         {
             double SetMinMaxValue(double value)

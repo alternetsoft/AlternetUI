@@ -95,8 +95,6 @@ namespace Alternet.UI
                 Click += onClick;
         }
 
-        internal override bool IsDummy => true;
-
         /// <summary>
         /// Occurs when the <see cref="Text"/> property changes.
         /// </summary>
@@ -252,6 +250,14 @@ namespace Alternet.UI
             set { SetValue(CommandTargetProperty, value); }
         }
 
+        internal override bool IsDummy => true;
+
+        /// <summary>
+        /// Implicit conversion operator from <see cref="string"/> to
+        /// <see cref="MenuItem"/>.
+        /// </summary>
+        /// <param name="s">Value of the <see cref="MenuItem.Text"/> property.
+        /// </param>
         public static implicit operator MenuItem(string s)
         {
             return new(s);

@@ -33,7 +33,7 @@ namespace Alternet.UI
 
         private readonly Key fkey = Key.None;
 
-        private string fdisplayString;
+        private readonly string fdisplayString;
 
         /// <summary>
         /// Creates <see cref="KeyGesture"/> instance with key value.
@@ -117,7 +117,7 @@ namespace Alternet.UI
             fmodifiers = modifiers;
             fkey = key;
             fdisplayString = displayString ??
-                throw new ArgumentNullException("displayString");
+                throw new ArgumentNullException(nameof(displayString));
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="culture">the culture used when creating a string
         /// from Key and Modifiers</param>
-        public string GetDisplayStringForCulture(CultureInfo culture)
+        public string? GetDisplayStringForCulture(CultureInfo culture)
         {
             // return the DisplayString, if it was set by the ctor
             if (!string.IsNullOrEmpty(fdisplayString))
@@ -183,7 +183,7 @@ namespace Alternet.UI
             }
 
             // otherwise use the type converter
-            return (string)KeyGestureConverter.ConvertTo(
+            return (string?)KeyGestureConverter.ConvertTo(
                 null,
                 culture,
                 this,
@@ -277,8 +277,10 @@ namespace Alternet.UI
                 if (index >= 0)
                 {
                     // multiple gestures exist
+#pragma warning disable IDE0057 // Use range operator
                     keyGestureToken = keyGestures.Substring(0, index);
                     keyGestures = keyGestures.Substring(index + 1);
+#pragma warning restore IDE0057 // Use range operator
                 }
                 else
                 {
@@ -291,8 +293,10 @@ namespace Alternet.UI
                 if (index >= 0)
                 {
                     // multiple display strings exist
+#pragma warning disable IDE0057 // Use range operator
                     keyDisplayString = displayStrings.Substring(0, index);
                     displayStrings = displayStrings.Substring(index + 1);
+#pragma warning restore IDE0057 // Use range operator
                 }
                 else
                 {

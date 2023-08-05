@@ -3,38 +3,26 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//
-//      ModifierKeysConverter : Converts a Modifier string to the *Type* that the string represents and vice-versa.
-//
-// Features:
-//
-//
-//
-// 
+// ModifierKeysConverter : Converts a Modifier string to the *Type* that
+// the string represents and vice-versa.
 
 using System;
-using System.ComponentModel;    // for TypeConverter
-using System.Globalization;     // for CultureInfo
+using System.ComponentModel;
+using System.Globalization;
 
 namespace Alternet.UI
 {
     /// <summary>
-    /// Key Converter class for converting between a string and the Type of a Modifiers
+    /// Converter class for converting between a string and the
+    /// <see cref="ModifierKeys"/>.
     /// </summary>
     /// <ExternalAPI/> 
     public class ModifierKeysConverter : TypeConverter
     {
-        /// <summary>
-        /// CanConvertFrom()
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="sourceType"></param>
-        /// <returns></returns>
-        /// <ExternalAPI/> 
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        /// <inheritdoc/>
+        public override bool CanConvertFrom(
+            ITypeDescriptorContext context,
+            Type sourceType)
         {
             // We can only handle string.
             if (sourceType == typeof(string))
@@ -47,18 +35,16 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// TypeConverter method override. 
-        /// </summary>
-        /// <param name="context">ITypeDescriptorContext</param>
-        /// <param name="destinationType">Type to convert to</param>
-        /// <returns>true if conversion is possible</returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
+        /// <inheritdoc/>
+        public override bool CanConvertTo(
+            ITypeDescriptorContext context,
+            Type destinationType)
         {
             // We can convert to a string.
             if (destinationType == typeof(string))
             {
-                // When invoked by the serialization engine we can convert to string only for known type
+                // When invoked by the serialization engine we can convert to
+                // string only for known type
                 if (context != null && context.Instance != null && 
 					context.Instance is ModifierKeys)
                 {
@@ -68,14 +54,7 @@ namespace Alternet.UI
             return false;
         }
 
-        /// <summary>
-        /// ConvertFrom()
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="culture"></param>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        /// <ExternalAPI/> 
+        /// <inheritdoc/>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
             if (source is string)
@@ -83,23 +62,25 @@ namespace Alternet.UI
             throw GetConvertFromException(source);
         }
 
+        /// <summary>
+        /// Parses string representation of the key modifiers.
+        /// </summary>
+        /// <param name="source">String value to parse.</param>
+        /// <returns>Enumeration with key modifiers.</returns>
         public static ModifierKeys FromString(string source)
         {
             string modifiersToken = ((string)source).Trim();
-            ModifierKeys modifiers = GetModifierKeys(modifiersToken, CultureInfo.InvariantCulture);
+            ModifierKeys modifiers = 
+                GetModifierKeys(modifiersToken, CultureInfo.InvariantCulture);
             return modifiers;
         }
 
-        /// <summary>
-        /// ConvertTo()
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="culture"></param>
-        /// <param name="value"></param>
-        /// <param name="destinationType"></param>
-        /// <returns></returns>
-        /// <ExternalAPI/> 
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        /// <inheritdoc/>
+        public override object ConvertTo(
+            ITypeDescriptorContext context,
+            CultureInfo culture,
+            object value,
+            Type destinationType)
         {
             if (destinationType == null)
                 throw new ArgumentNullException("destinationType");
@@ -109,7 +90,8 @@ namespace Alternet.UI
                 ModifierKeys modifiers = (ModifierKeys)value;
 
                 if (!IsDefinedModifierKeys(modifiers))
-                    throw new InvalidEnumArgumentException("value", (int)modifiers, typeof(ModifierKeys));
+                    throw new InvalidEnumArgumentException(
+                        "value", (int)modifiers, typeof(ModifierKeys));
                 else
                 {
                     string strModifiers = "";
@@ -202,13 +184,15 @@ namespace Alternet.UI
         /// </summary>
         public static bool IsDefinedModifierKeys(ModifierKeys modifierKeys)
         {
-            return (modifierKeys == ModifierKeys.None || (((int)modifierKeys & ~((int)ModifierKeysFlag)) == 0));
+            return (modifierKeys == ModifierKeys.None ||
+                (((int)modifierKeys & ~((int)ModifierKeysFlag)) == 0));
         }
 
 	    private const char Modifier_Delimiter = '+';
 
-        private static ModifierKeys ModifierKeysFlag  =  ModifierKeys.Windows | ModifierKeys.Shift | 
-                                                         ModifierKeys.Alt     | ModifierKeys.Control ;
+        private static ModifierKeys ModifierKeysFlag  =
+            ModifierKeys.Windows | ModifierKeys.Shift | 
+            ModifierKeys.Alt     | ModifierKeys.Control ;
 
         internal static string MatchModifiers(ModifierKeys modifierKeys)
         {

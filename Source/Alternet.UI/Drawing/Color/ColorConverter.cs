@@ -33,12 +33,13 @@ namespace Alternet.Drawing
                     {
                         if (ColorConverter.colorConstants == null)
                         {
-                            Hashtable hash = new Hashtable(StringComparer.OrdinalIgnoreCase);
+                            Hashtable hash = new(StringComparer.OrdinalIgnoreCase);
                             ColorConverter.FillConstants(hash, typeof(Color));
                             ColorConverter.colorConstants = hash;
                         }
                     }
                 }
+
                 return ColorConverter.colorConstants;
             }
         }
@@ -49,17 +50,19 @@ namespace Alternet.Drawing
             {
                 if (ColorConverter.systemColorConstants == null)
                 {
-                    string systemColorConstantsLock = ColorConverter.SystemColorConstantsLock;
+                    string systemColorConstantsLock =
+                        ColorConverter.SystemColorConstantsLock;
                     lock (systemColorConstantsLock)
                     {
                         if (ColorConverter.systemColorConstants == null)
                         {
-                            Hashtable hash = new Hashtable(StringComparer.OrdinalIgnoreCase);
+                            Hashtable hash = new(StringComparer.OrdinalIgnoreCase);
                             ColorConverter.FillConstants(hash, typeof(SystemColors));
                             ColorConverter.systemColorConstants = hash;
                         }
                     }
                 }
+
                 return ColorConverter.systemColorConstants;
             }
         }
@@ -79,9 +82,12 @@ namespace Alternet.Drawing
         /// <param name="destinationType">A <see cref="T:System.Type" /> that represents the type to which you want to convert. </param>
         /// <returns>
         ///     <see langword="true" /> if this converter can perform the operation; otherwise, <see langword="false" />.</returns>
-        public override bool CanConvertTo(ITypeDescriptorContext? context, Type destinationType)
+        public override bool CanConvertTo(
+            ITypeDescriptorContext? context,
+            Type? destinationType)
         {
-            return destinationType == typeof(InstanceDescriptor) || base.CanConvertTo(context, destinationType);
+            return destinationType == typeof(InstanceDescriptor) ||
+                base.CanConvertTo(context, destinationType);
         }
 
         /// <summary>Converts the given object to the converter's native type.</summary>
@@ -90,7 +96,7 @@ namespace Alternet.Drawing
         /// <param name="value">The object to convert. </param>
         /// <returns>An <see cref="T:System.Object" /> representing the converted value.</returns>
         /// <exception cref="T:System.ArgumentException">The conversion cannot be performed.</exception>
-        public override object ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
+        public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
         {
             string? text = value as string;
             if (text != null)
@@ -110,6 +116,7 @@ namespace Alternet.Drawing
                         {
                             culture = CultureInfo.CurrentCulture;
                         }
+
                         char c = culture.TextInfo.ListSeparator[0];
                         bool flag = true;
                         TypeConverter converter = TypeDescriptor.GetConverter(typeof(int));
@@ -121,22 +128,35 @@ namespace Alternet.Drawing
                                 obj = Color.FromName(name);
                                 flag = false;
                             }
-                            else if ((text2.Length == 7 && text2[0] == '#') || (text2.Length == 8 && (text2.StartsWith("0x") || text2.StartsWith("0X"))) || (text2.Length == 8 && (text2.StartsWith("&h") || text2.StartsWith("&H"))))
+                            else if ((text2.Length == 7 && text2[0] == '#') ||
+                                (text2.Length == 8 && (text2.StartsWith("0x") ||
+                                text2.StartsWith("0X"))) ||
+                                (text2.Length == 8 && (text2.StartsWith("&h") ||
+                                text2.StartsWith("&H"))))
                             {
-                                obj = Color.FromArgb(-16777216 | (int)converter.ConvertFromString(context, culture, text2));
+                                obj = Color.FromArgb(-16777216 |
+                                    (int)converter.ConvertFromString(
+                                        context,
+                                        culture,
+                                        text2)!);
                             }
                         }
+
                         if (obj == null)
                         {
                             string[] array = text2.Split(new char[]
                             {
-                                c
+                                c,
                             });
                             int[] array2 = new int[array.Length];
                             for (int i = 0; i < array2.Length; i++)
                             {
-                                array2[i] = (int)converter.ConvertFromString(context, culture, array[i]);
+                                array2[i] = (int)converter.ConvertFromString(
+                                    context,
+                                    culture,
+                                    array[i])!;
                             }
+
                             switch (array2.Length)
                             {
                                 case 1:
@@ -202,6 +222,7 @@ namespace Alternet.Drawing
             {
                 throw new ArgumentNullException(nameof(destinationType));
             }
+
             if (value is Color)
             {
                 if (destinationType == typeof(string))
@@ -211,18 +232,22 @@ namespace Alternet.Drawing
                     {
                         return string.Empty;
                     }
+
                     if (left.IsKnownColor)
                     {
                         return left.Name;
                     }
+
                     if (left.IsNamedColor)
                     {
                         return "'" + left.Name + "'";
                     }
+
                     if (culture == null)
                     {
                         culture = CultureInfo.CurrentCulture;
                     }
+
                     string separator = culture.TextInfo.ListSeparator + " ";
                     TypeConverter converter = TypeDescriptor.GetConverter(typeof(int));
                     int num = 0;
@@ -338,7 +363,7 @@ namespace Alternet.Drawing
                 {
                     if (ColorConverter.values == null)
                     {
-                        ArrayList arrayList = new ArrayList();
+                        ArrayList arrayList = new();
                         arrayList.AddRange(ColorConverter.Colors.Values);
                         arrayList.AddRange(ColorConverter.SystemColors.Values);
                         int num = arrayList.Count;
