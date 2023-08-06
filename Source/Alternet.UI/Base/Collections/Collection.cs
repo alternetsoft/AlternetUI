@@ -34,10 +34,23 @@ namespace Alternet.Base.Collections
         public bool RangeOperationInProgress { get; private set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether an <see cref="ArgumentNullException"/> should be thrown
+        /// Gets or sets a value indicating whether an
+        /// <see cref="ArgumentNullException"/> should be thrown
         /// on an attempt to add a <c>null</c> value to the collection.
         /// </summary>
         public bool ThrowOnNullItemAddition { get; set; }
+
+        /// <summary>
+        /// Gets or sets the element at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the element
+        /// to get or set.</param>
+        /// <returns>The element at the specified index.</returns>
+        public T this[long index]
+        {
+            get => Items[(int)index];
+            set => Items[(int)index] = value;
+        }
 
         /// <summary>
         /// Inserts an item into the collection at the specified index.
