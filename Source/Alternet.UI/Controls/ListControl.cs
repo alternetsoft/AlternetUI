@@ -42,6 +42,49 @@ namespace Alternet.UI
             new Collection<object> { ThrowOnNullItemAddition = true };
 
         /// <summary>
+        /// Gets the number of elements actually contained in the <see cref="Items"/>
+        /// collection.
+        /// </summary>
+        /// <returns>
+        /// The number of elements actually contained in the <see cref="Items"/>.
+        /// </returns>
+        public int Count => Items.Count;
+
+        /// <summary>
+        /// Gets or sets the <see cref="Items"/> element at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the <see cref="Items"/> element
+        /// to get or set.</param>
+        /// <returns>The <see cref="Items"/> element at the specified index.</returns>
+        public object this[long index]
+        {
+            get => Items[(int)index];
+            set => Items[(int)index] = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Items"/> element at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the <see cref="Items"/> element
+        /// to get or set.</param>
+        /// <returns>The <see cref="Items"/> element at the specified index.</returns>
+        public object this[int index]
+        {
+            get => Items[index];
+            set => Items[index] = value;
+        }
+
+        /// <summary>
+        /// Adds an object to the end of the <see cref="Items"/> collection.
+        /// </summary>
+        /// <param name="item">The object to be added to the end of the
+        /// <see cref="Items"/> collection.</param>
+        public void Add(object item)
+        {
+            Items.Add(item);
+        }
+
+        /// <summary>
         /// Returns the text representation of the specified item.
         /// </summary>
         /// <param name="item">The object from which to get the contents to
