@@ -509,6 +509,8 @@ namespace Alternet::UI
     
     void TreeView::RecreateWxWindowIfNeeded()
     {
+        if (_ignoreRecreate)
+            return;
         Control::RecreateWxWindowIfNeeded();
         RaiseEvent(TreeViewEvent::ControlRecreated);
     }
