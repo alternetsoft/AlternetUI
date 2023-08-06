@@ -1056,11 +1056,16 @@ namespace Alternet::UI
         return result;
     }
 
-    string WebBrowser::DoCommandGlobal(const string& cmdName, const string& cmdParam1, const string& cmdParam2)
+    string WebBrowser::DoCommandGlobal(const string& cmdName,
+        const string& cmdParam1, const string& cmdParam2)
     {
         if (cmdName == wxStr("GetUsefulDefines"))
             return wxStr(GetUsefulDefines());
-        
+
+        if (cmdName == wxStr("SizeOfLong")) 
+        {
+            return wxStr(std::to_string(sizeof(long)));
+        }
 
         if (cmdName == wxStr("IsDebug"))
         {
@@ -1074,7 +1079,8 @@ namespace Alternet::UI
         return wxStr(wxEmptyString);
     }
 
-    string WebBrowser::DoCommand(const string& cmdName, const string& cmdParam1, const string& cmdParam2)
+    string WebBrowser::DoCommand(const string& cmdName, const string& cmdParam1,
+        const string& cmdParam2)
     {
         string noresult = wxStr("");
 
