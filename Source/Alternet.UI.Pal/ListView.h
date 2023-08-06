@@ -2,6 +2,7 @@
 #include "Control.h"
 #include "ImageList.h"
 #include "ApiTypes.h"
+#include "wx/dynarray.h"
 
 namespace Alternet::UI
 {
@@ -39,15 +40,15 @@ namespace Alternet::UI
         {
         public:
             ListViewHitTestLocations locations = ListViewHitTestLocations::None;
-            int itemIndex = 0;
-            int columnIndex = 0;
+            int64_t itemIndex = 0;
+            int64_t columnIndex = 0;
         };
 
         static ListViewHitTestLocations GetHitTestLocationsFromWxFlags(int flags);
         void OnLabelEditEvent(wxListEvent& event, ListViewEvent e);
         virtual void RecreateWxWindowIfNeeded() override;
-        std::vector<int> GetSelectedIndices();
-        void SetSelectedIndices(const std::vector<int>& value);
+        std::vector<int64_t> GetSelectedIndices();
+        void SetSelectedIndices(const std::vector<int64_t>& value);
         void DeselectAll(wxListView* listView);
         wxListView* GetListView();
         void InsertItem(wxListView* listView, wxListItem& item);

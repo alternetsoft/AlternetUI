@@ -30,9 +30,9 @@ ALTERNET_UI_API void ListView_SetHasBorder_(ListView* obj, c_bool value)
         });
 }
 
-ALTERNET_UI_API int ListView_GetItemsCount_(ListView* obj)
+ALTERNET_UI_API int64_t ListView_GetItemsCount_(ListView* obj)
 {
-    return MarshalExceptions<int>([&](){
+    return MarshalExceptions<int64_t>([&](){
             return obj->GetItemsCount();
         });
 }
@@ -107,9 +107,9 @@ ALTERNET_UI_API void ListView_SetAllowLabelEdit_(ListView* obj, c_bool value)
         });
 }
 
-ALTERNET_UI_API int ListView_GetTopItemIndex_(ListView* obj)
+ALTERNET_UI_API int64_t ListView_GetTopItemIndex_(ListView* obj)
 {
-    return MarshalExceptions<int>([&](){
+    return MarshalExceptions<int64_t>([&](){
             return obj->GetTopItemIndex();
         });
 }
@@ -156,14 +156,14 @@ ALTERNET_UI_API void ListView_SetColumnHeaderVisible_(ListView* obj, c_bool valu
         });
 }
 
-ALTERNET_UI_API int ListView_GetFocusedItemIndex_(ListView* obj)
+ALTERNET_UI_API int64_t ListView_GetFocusedItemIndex_(ListView* obj)
 {
-    return MarshalExceptions<int>([&](){
+    return MarshalExceptions<int64_t>([&](){
             return obj->GetFocusedItemIndex();
         });
 }
 
-ALTERNET_UI_API void ListView_SetFocusedItemIndex_(ListView* obj, int value)
+ALTERNET_UI_API void ListView_SetFocusedItemIndex_(ListView* obj, int64_t value)
 {
     MarshalExceptions<void>([&](){
             obj->SetFocusedItemIndex(value);
@@ -184,9 +184,9 @@ ALTERNET_UI_API int ListView_GetSelectedIndicesItemCount_(ListView* obj, void* a
         });
 }
 
-ALTERNET_UI_API int ListView_GetSelectedIndicesItemAt_(ListView* obj, void* array, int index)
+ALTERNET_UI_API int64_t ListView_GetSelectedIndicesItemAt_(ListView* obj, void* array, int index)
 {
-    return MarshalExceptions<int>([&](){
+    return MarshalExceptions<int64_t>([&](){
             return obj->GetSelectedIndicesItemAt(array, index);
         });
 }
@@ -198,14 +198,14 @@ ALTERNET_UI_API void ListView_CloseSelectedIndicesArray_(ListView* obj, void* ar
         });
 }
 
-ALTERNET_UI_API void ListView_InsertItemAt_(ListView* obj, int index, const char16_t* text, int columnIndex, int imageIndex)
+ALTERNET_UI_API void ListView_InsertItemAt_(ListView* obj, int64_t index, const char16_t* text, int64_t columnIndex, int imageIndex)
 {
     MarshalExceptions<void>([&](){
             obj->InsertItemAt(index, text, columnIndex, imageIndex);
         });
 }
 
-ALTERNET_UI_API void ListView_RemoveItemAt_(ListView* obj, int index)
+ALTERNET_UI_API void ListView_RemoveItemAt_(ListView* obj, int64_t index)
 {
     MarshalExceptions<void>([&](){
             obj->RemoveItemAt(index);
@@ -219,14 +219,14 @@ ALTERNET_UI_API void ListView_ClearItems_(ListView* obj)
         });
 }
 
-ALTERNET_UI_API void ListView_InsertColumnAt_(ListView* obj, int index, const char16_t* header, double width, ListViewColumnWidthMode widthMode)
+ALTERNET_UI_API void ListView_InsertColumnAt_(ListView* obj, int64_t index, const char16_t* header, double width, ListViewColumnWidthMode widthMode)
 {
     MarshalExceptions<void>([&](){
             obj->InsertColumnAt(index, header, width, widthMode);
         });
 }
 
-ALTERNET_UI_API void ListView_RemoveColumnAt_(ListView* obj, int index)
+ALTERNET_UI_API void ListView_RemoveColumnAt_(ListView* obj, int64_t index)
 {
     MarshalExceptions<void>([&](){
             obj->RemoveColumnAt(index);
@@ -240,7 +240,7 @@ ALTERNET_UI_API void ListView_ClearSelected_(ListView* obj)
         });
 }
 
-ALTERNET_UI_API void ListView_SetSelected_(ListView* obj, int index, c_bool value)
+ALTERNET_UI_API void ListView_SetSelected_(ListView* obj, int64_t index, c_bool value)
 {
     MarshalExceptions<void>([&](){
             obj->SetSelected(index, value);
@@ -261,16 +261,16 @@ ALTERNET_UI_API ListViewHitTestLocations ListView_GetHitTestResultLocations_(Lis
         });
 }
 
-ALTERNET_UI_API int ListView_GetHitTestResultItemIndex_(ListView* obj, void* hitTestResult)
+ALTERNET_UI_API int64_t ListView_GetHitTestResultItemIndex_(ListView* obj, void* hitTestResult)
 {
-    return MarshalExceptions<int>([&](){
+    return MarshalExceptions<int64_t>([&](){
             return obj->GetHitTestResultItemIndex(hitTestResult);
         });
 }
 
-ALTERNET_UI_API int ListView_GetHitTestResultColumnIndex_(ListView* obj, void* hitTestResult)
+ALTERNET_UI_API int64_t ListView_GetHitTestResultColumnIndex_(ListView* obj, void* hitTestResult)
 {
-    return MarshalExceptions<int>([&](){
+    return MarshalExceptions<int64_t>([&](){
             return obj->GetHitTestResultColumnIndex(hitTestResult);
         });
 }
@@ -282,14 +282,14 @@ ALTERNET_UI_API void ListView_FreeHitTestResult_(ListView* obj, void* hitTestRes
         });
 }
 
-ALTERNET_UI_API void ListView_BeginLabelEdit_(ListView* obj, int itemIndex)
+ALTERNET_UI_API void ListView_BeginLabelEdit_(ListView* obj, int64_t itemIndex)
 {
     MarshalExceptions<void>([&](){
             obj->BeginLabelEdit(itemIndex);
         });
 }
 
-ALTERNET_UI_API Rect_C ListView_GetItemBounds_(ListView* obj, int itemIndex, ListViewItemBoundsPortion portion)
+ALTERNET_UI_API Rect_C ListView_GetItemBounds_(ListView* obj, int64_t itemIndex, ListViewItemBoundsPortion portion)
 {
     return MarshalExceptions<Rect_C>([&](){
             return obj->GetItemBounds(itemIndex, portion);
@@ -303,35 +303,35 @@ ALTERNET_UI_API void ListView_Clear_(ListView* obj)
         });
 }
 
-ALTERNET_UI_API void ListView_EnsureItemVisible_(ListView* obj, int itemIndex)
+ALTERNET_UI_API void ListView_EnsureItemVisible_(ListView* obj, int64_t itemIndex)
 {
     MarshalExceptions<void>([&](){
             obj->EnsureItemVisible(itemIndex);
         });
 }
 
-ALTERNET_UI_API void ListView_SetItemText_(ListView* obj, int itemIndex, int columnIndex, const char16_t* text)
+ALTERNET_UI_API void ListView_SetItemText_(ListView* obj, int64_t itemIndex, int64_t columnIndex, const char16_t* text)
 {
     MarshalExceptions<void>([&](){
             obj->SetItemText(itemIndex, columnIndex, text);
         });
 }
 
-ALTERNET_UI_API void ListView_SetItemImageIndex_(ListView* obj, int itemIndex, int columnIndex, int imageIndex)
+ALTERNET_UI_API void ListView_SetItemImageIndex_(ListView* obj, int64_t itemIndex, int64_t columnIndex, int imageIndex)
 {
     MarshalExceptions<void>([&](){
             obj->SetItemImageIndex(itemIndex, columnIndex, imageIndex);
         });
 }
 
-ALTERNET_UI_API void ListView_SetColumnWidth_(ListView* obj, int columnIndex, double fixedWidth, ListViewColumnWidthMode widthMode)
+ALTERNET_UI_API void ListView_SetColumnWidth_(ListView* obj, int64_t columnIndex, double fixedWidth, ListViewColumnWidthMode widthMode)
 {
     MarshalExceptions<void>([&](){
             obj->SetColumnWidth(columnIndex, fixedWidth, widthMode);
         });
 }
 
-ALTERNET_UI_API void ListView_SetColumnTitle_(ListView* obj, int columnIndex, const char16_t* text)
+ALTERNET_UI_API void ListView_SetColumnTitle_(ListView* obj, int64_t columnIndex, const char16_t* text)
 {
     MarshalExceptions<void>([&](){
             obj->SetColumnTitle(columnIndex, text);

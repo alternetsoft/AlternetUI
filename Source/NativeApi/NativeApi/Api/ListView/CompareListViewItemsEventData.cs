@@ -6,7 +6,7 @@ namespace NativeApi.Api
 {
     public class CompareListViewItemsEventData : NativeEventData
     {
-        public int item1Index;
-        public int item2Index;
+        public long item1Index;
+        public long item2Index;
     }
 }

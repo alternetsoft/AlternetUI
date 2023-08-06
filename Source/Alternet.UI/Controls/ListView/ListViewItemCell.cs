@@ -79,8 +79,8 @@ namespace Alternet.UI
 
         bool TryGetItemIndex(
             [NotNullWhen(true)] out ListView? listView,
-            [NotNullWhen(true)] out int? itemIndex,
-            [NotNullWhen(true)] out int? columnIndex)
+            [NotNullWhen(true)] out long? itemIndex,
+            [NotNullWhen(true)] out long? columnIndex)
         {
             var item = Item;
             listView = item?.ListView;

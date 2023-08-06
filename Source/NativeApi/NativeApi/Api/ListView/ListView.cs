@@ -8,7 +8,7 @@ namespace NativeApi.Api
     {
         public bool HasBorder { get; set; }
 
-        public int ItemsCount { get; }
+        public long ItemsCount { get; }
 
         public ImageList? SmallImageList { get; set; }
         
@@ -16,15 +16,15 @@ namespace NativeApi.Api
 
         public event EventHandler? ControlRecreated { add => throw new Exception(); remove => throw new Exception(); }
 
-        public void InsertItemAt(int index, string text, int columnIndex, int imageIndex) => throw new Exception();
+        public void InsertItemAt(long index, string text, long columnIndex, int imageIndex) => throw new Exception();
 
-        public void RemoveItemAt(int index) => throw new Exception();
+        public void RemoveItemAt(long index) => throw new Exception();
 
         public void ClearItems() => throw new Exception();
 
-        public void InsertColumnAt(int index, string header, double width, ListViewColumnWidthMode widthMode) => throw new Exception();
+        public void InsertColumnAt(long index, string header, double width, ListViewColumnWidthMode widthMode) => throw new Exception();
         
-        public void RemoveColumnAt(int index) => throw new Exception();
+        public void RemoveColumnAt(long index) => throw new Exception();
 
         public ListViewView CurrentView { get; set; }
 
@@ -32,27 +32,27 @@ namespace NativeApi.Api
 
         public ListViewSelectionMode SelectionMode { get; set; }
 
-        public int[] SelectedIndices { get => throw new Exception(); }
+        public long[] SelectedIndices { get => throw new Exception(); }
 
         public void ClearSelected() => throw new Exception();
 
-        public void SetSelected(int index, bool value) => throw new Exception();
+        public void SetSelected(long index, bool value) => throw new Exception();
 
         public bool AllowLabelEdit { get; set; }
 
-        public int TopItemIndex { get; }
+        public long TopItemIndex { get; }
 
         public ListViewGridLinesDisplayMode GridLinesDisplayMode { get; set; }
 
         public IntPtr ItemHitTest(Point point) => throw new Exception();
         public ListViewHitTestLocations GetHitTestResultLocations(IntPtr hitTestResult) => throw new Exception();
-        public int GetHitTestResultItemIndex(IntPtr hitTestResult) => throw new Exception();
-        public int GetHitTestResultColumnIndex(IntPtr hitTestResult) => throw new Exception();
+        public long GetHitTestResultItemIndex(IntPtr hitTestResult) => throw new Exception();
+        public long GetHitTestResultColumnIndex(IntPtr hitTestResult) => throw new Exception();
         public void FreeHitTestResult(IntPtr hitTestResult) => throw new Exception();
 
-        public void BeginLabelEdit(int itemIndex) => throw new Exception();
+        public void BeginLabelEdit(long itemIndex) => throw new Exception();
 
-        public Rect GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion) => throw new Exception();
+        public Rect GetItemBounds(long itemIndex, ListViewItemBoundsPortion portion) => throw new Exception();
 
         public event NativeEventHandler<CompareListViewItemsEventData>? CompareItemsForCustomSort { add => throw new Exception(); remove => throw new Exception(); }
 
@@ -60,21 +60,21 @@ namespace NativeApi.Api
 
         public void Clear() => throw new Exception();
 
-        public void EnsureItemVisible(int itemIndex) => throw new Exception();
+        public void EnsureItemVisible(long itemIndex) => throw new Exception();
 
         public bool ColumnHeaderVisible { get; set; }
 
-        public int FocusedItemIndex { get; set; }
+        public long FocusedItemIndex { get; set; }
 
         public event NativeEventHandler<ListViewColumnEventData>? ColumnClick { add => throw new Exception(); remove => throw new Exception(); }
 
         public event NativeEventHandler<ListViewItemLabelEditEventData>? BeforeItemLabelEdit { add => throw new Exception(); remove => throw new Exception(); }
         public event NativeEventHandler<ListViewItemLabelEditEventData>? AfterItemLabelEdit { add => throw new Exception(); remove => throw new Exception(); }
 
-        public void SetItemText(int itemIndex, int columnIndex, string text) => throw new Exception();
-        public void SetItemImageIndex(int itemIndex, int columnIndex, int imageIndex) => throw new Exception();
+        public void SetItemText(long itemIndex, long columnIndex, string text) => throw new Exception();
+        public void SetItemImageIndex(long itemIndex, long columnIndex, int imageIndex) => throw new Exception();
 
-        public void SetColumnWidth(int columnIndex, double fixedWidth, ListViewColumnWidthMode widthMode) => throw new Exception();
-        public void SetColumnTitle(int columnIndex, string text) => throw new Exception();
+        public void SetColumnWidth(long columnIndex, double fixedWidth, ListViewColumnWidthMode widthMode) => throw new Exception();
+        public void SetColumnTitle(long columnIndex, string text) => throw new Exception();
     }
 }

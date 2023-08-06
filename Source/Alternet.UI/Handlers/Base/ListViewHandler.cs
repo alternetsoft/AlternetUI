@@ -45,7 +45,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="itemIndex">The zero-based index of the item within the <see cref="ListView.Items"/> collection
         /// whose label you want to edit.</param>
-        public abstract void BeginLabelEdit(int itemIndex);
+        public abstract void BeginLabelEdit(long itemIndex);
 
         /// <summary>
         /// Retrieves the bounding rectangle for an item within the control.
@@ -56,7 +56,7 @@ namespace Alternet.UI
         /// the item for which to retrieve the bounding rectangle.</param>
         /// <returns>A <see cref="Rect"/> that represents the bounding rectangle for the specified portion of the
         /// specified <see cref="ListViewItem"/>.</returns>
-        public abstract Rect GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion);
+        public abstract Rect GetItemBounds(long itemIndex, ListViewItemBoundsPortion portion);
 
         ///// <summary>
         ///// Gets or sets the custom sorting comparer for the control.
@@ -86,31 +86,31 @@ namespace Alternet.UI
         /// <summary>
         /// Ensures that the specified item is visible within the control, scrolling the contents of the control, if necessary.
         /// </summary>
-        public abstract void EnsureItemVisible(int itemIndex);
+        public abstract void EnsureItemVisible(long itemIndex);
 
         /// <summary>
         /// Gets or sets an index of the focused item within the <see cref="ListView"/> control.
         /// </summary>
-        public abstract int? FocusedItemIndex { get; set; }
+        public abstract long? FocusedItemIndex { get; set; }
 
         /// <summary>
         /// Gets or sets a list view item text.
         /// </summary>
-        public abstract void SetItemText(int itemIndex, int columnIndex, string text);
+        public abstract void SetItemText(long itemIndex, long columnIndex, string text);
 
         /// <summary>
         /// Gets or sets a list view item image index.
         /// </summary>
-        public abstract void SetItemImageIndex(int itemIndex, int columnIndex, int? imageIndex);
+        public abstract void SetItemImageIndex(long itemIndex, long columnIndex, int? imageIndex);
 
         /// <summary>
         /// Gets or sets a list view item column width.
         /// </summary>
-        public abstract void SetColumnWidth(int columnIndex, double width, ListViewColumnWidthMode widthMode);
+        public abstract void SetColumnWidth(long columnIndex, double width, ListViewColumnWidthMode widthMode);
 
         /// <summary>
         /// Gets or sets a list view item column title.
         /// </summary>
-        public abstract void SetColumnTitle(int columnIndex, string title);
+        public abstract void SetColumnTitle(long columnIndex, string title);
     }
 }

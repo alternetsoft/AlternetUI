@@ -19,7 +19,7 @@ namespace Alternet.UI
     /// </remarks>
     public class ListView : Control
     {
-        private HashSet<int>? selectedIndices = null;
+        private HashSet<long>? selectedIndices = null;
 
         private ListViewView view = ListViewView.List;
         private ImageList? smallImageList = null;
@@ -141,10 +141,13 @@ namespace Alternet.UI
         /// you can use the <see cref="SelectedItems"/> property if you want to obtain all the selected items in a multiple-selection <see cref="ListView"/>.
         /// </para>
         /// </remarks>
-        public IReadOnlyList<int> SelectedIndices
+        public IReadOnlyList<long> SelectedIndices
         {
             get
             {
+                if (Items.Count == 0)
+                    return Array.Empty<long>();
+
                 CheckDisposed();
                 UpdateSelectedIndices();
                 return selectedIndices!.ToArray();
@@ -185,13 +188,13 @@ namespace Alternet.UI
         /// </para>
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">The assigned value is less than 0 or greater than or equal to the item count.</exception>
-        public int? SelectedIndex
+        public long? SelectedIndex
         {
             get
             {
                 CheckDisposed();
                 var selected = SelectedIndices;
-                if (selected.Count == 0)
+                if (selected == null || selected.Count == 0)
                     return null;
                 return selected[0];
             }
@@ -231,10 +234,16 @@ namespace Alternet.UI
             {
                 CheckDisposed();
 
-                if (SelectedIndex == null || (int)SelectedIndex < 0)
+                var idx = SelectedIndex;
+                if (idx == null)
                     return null;
 
-                return Items[SelectedIndex.Value];
+                long index = (long)idx;
+
+                if (index < 0 || index >= Items.Count)
+                    return null;
+
+                return Items[(int)index];
             }
 
             set
@@ -275,7 +284,7 @@ namespace Alternet.UI
             {
                 CheckDisposed();
 
-                return SelectedIndices.Select(x => Items[x]).ToArray();
+                return SelectedIndices.Select(x => Items[(int)x]).ToArray();
             }
         }
 
@@ -458,11 +467,11 @@ namespace Alternet.UI
         /// If no items are currently selected, an empty <see cref="IReadOnlyList{T}"/>
         /// is returned.
         /// </value>
-        public IReadOnlyList<int> SelectedIndicesDescending
+        public IReadOnlyList<long> SelectedIndicesDescending
         {
             get
             {
-                int[] sortedCopy = SelectedIndices.OrderByDescending(i => i).ToArray();
+                long[] sortedCopy = SelectedIndices.OrderByDescending(i => i).ToArray();
                 return sortedCopy;
             }
         }
@@ -489,7 +498,7 @@ namespace Alternet.UI
             }
         }
 
-        internal int NativeItemsCount
+        internal long NativeItemsCount
         {
             get
             {
@@ -510,7 +519,7 @@ namespace Alternet.UI
         /// <summary>
         /// Removes items from the <see cref="ListView"/>.
         /// </summary>
-        public void RemoveItems(IReadOnlyList<int> items)
+        public void RemoveItems(IReadOnlyList<long> items)
         {
             if (items == null || items.Count == 0)
                 return;
@@ -519,11 +528,11 @@ namespace Alternet.UI
             try
             {
                 ClearSelected();
-                foreach (int index in items)
+                foreach (var index in items)
                 {
                     if (index < Items.Count && index >= 0)
                     {
-                        Items.RemoveAt(index);
+                        Items.RemoveAt((int)index);
                     }
                 }
             }
@@ -550,7 +559,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="itemIndex">The zero-based index of the item within the <see cref="ListView.Items"/> collection
         /// whose label you want to edit.</param>
-        public void BeginLabelEdit(int itemIndex) => Handler.BeginLabelEdit(itemIndex);
+        public void BeginLabelEdit(long itemIndex) => Handler.BeginLabelEdit(itemIndex);
 
         /// <summary>
         /// Retrieves the bounding rectangle for an item within the control.
@@ -561,7 +570,7 @@ namespace Alternet.UI
         /// the item for which to retrieve the bounding rectangle.</param>
         /// <returns>A <see cref="Rect"/> that represents the bounding rectangle for the specified portion of the
         /// specified <see cref="ListViewItem"/>.</returns>
-        public Rect GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem) =>
+        public Rect GetItemBounds(long itemIndex, ListViewItemBoundsPortion portion = ListViewItemBoundsPortion.EntireItem) =>
             Handler.GetItemBounds(itemIndex, portion);
 
         ///// <summary>
@@ -610,7 +619,7 @@ namespace Alternet.UI
         /// To select an item in a single-selection <see cref="ListView"/>, use the <see cref="SelectedIndex"/> property.
         /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">The specified index was outside the range of valid values.</exception>
-        public void SetSelected(int index, bool value)
+        public void SetSelected(long index, bool value)
         {
             if (index < 0 || index >= Items.Count)
                 throw new ArgumentOutOfRangeException(nameof(value));
@@ -701,9 +710,11 @@ namespace Alternet.UI
 
         private void UpdateSelectedIndices()
         {
+            if (Items.Count == 0)
+                return;
             if (selectedIndices == null)
             {
-                selectedIndices = new HashSet<int>();
+                selectedIndices = new HashSet<long>();
                 if (Handler is not NativeListViewHandler handler)
                     return;
                 var indices = handler.NativeControl.SelectedIndices;
@@ -711,7 +722,7 @@ namespace Alternet.UI
             }
         }
 
-        private bool SetSelectedCore(int index, bool value)
+        private bool SetSelectedCore(long index, bool value)
         {
             UpdateSelectedIndices();
             bool changed;

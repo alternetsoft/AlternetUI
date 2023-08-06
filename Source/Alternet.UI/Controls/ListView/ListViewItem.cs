@@ -158,7 +158,7 @@ namespace Alternet.UI
         /// or <see langword="null"/> if the item is not associated with a
         /// <see cref="ListView"/> control.
         /// </summary>
-        public int? Index { get; internal set; }
+        public long? Index { get; internal set; }
 
         /// <summary>
         /// Gets or sets an object that contains data to associate with the item.
@@ -269,7 +269,7 @@ namespace Alternet.UI
         public Collection<ListViewItemCell> Cells { get; } =
             new Collection<ListViewItemCell> { ThrowOnNullItemAddition = true };
 
-        private int RequiredIndex
+        private long RequiredIndex
         {
             get
             {

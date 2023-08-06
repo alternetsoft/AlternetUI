@@ -30,20 +30,20 @@ namespace Alternet.UI.Native
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class CompareListViewItemsEventData
     {
-        public int item1Index;
-        public int item2Index;
+        public long item1Index;
+        public long item2Index;
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class ListViewColumnEventData
     {
-        public int columnIndex;
+        public long columnIndex;
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class ListViewItemLabelEditEventData
     {
-        public int itemIndex;
+        public long itemIndex;
         public string label;
         public bool editCancelled;
     }

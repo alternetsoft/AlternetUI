@@ -14,7 +14,6 @@ namespace ControlsSample
         private bool? slowSettingsEnabled;
         private int newItemIndex = 0;
         private int newColIndex = 2;
-        //private double maxPanelWidth = 0;
 
         public ListViewPage()
         {
@@ -22,41 +21,8 @@ namespace ControlsSample
             listView.SelectionMode = ListViewSelectionMode.Multiple;
             listView.AllowLabelEdit = true;
 
-            //LayoutFactory.SetDebugBackgroundToParents(listView);
-
-            //LayoutUpdated += ListViewPage_LayoutUpdated;
-            //this.SizeChanged += ListViewPage_SizeChanged;
             ActionsButton.Enabled = false;
             SettingsButton.Enabled = true;
-        }
-
-        private void ListViewPage_SizeChanged(object? sender, EventArgs e)
-        {
-            //stackPanel1.PerformLayout();
-            //stackPanel2.PerformLayout();
-        }
-
-        internal void LogLayout(string s)
-        {
-            Log("================");
-            Log(s);
-            /*
-            Log($"stackPanel1.Bounds: {stackPanel1.Bounds}");
-            Log($"stackPanel2.Bounds: {stackPanel2.Bounds}");
-            Log($"tabPage1.Bounds: {tabPage1.Bounds}");
-            Log($"tabPage2.Bounds: {tabPage2.Bounds}");
-            */
-            Log("================");
-        }
-
-        private void ListViewPage_LayoutUpdated(object? sender, EventArgs e)
-        {
-            //LogLayout("ListViewPage");
-
-            //maxPanelWidth = Math.Max(maxPanelWidth, stackPanel2.Bounds.Width);
-            //maxPanelWidth = Math.Max(maxPanelWidth, stackPanel1.Bounds.Width);
-            //stackPanel1.Width = maxPanelWidth;
-            //stackPanel2.Width = maxPanelWidth;
         }
 
         public IPageSite? Site
@@ -81,7 +47,6 @@ namespace ControlsSample
                 listView.Items.ItemRemoved += Items_ItemRemoved;
 
                 site = value;
-
             }
         }
 
@@ -165,9 +130,25 @@ namespace ControlsSample
         {
             scrollViewer2.Visible = false;
             scrollViewer1.Visible = true;
-
             ActionsButton.Enabled = false;
             SettingsButton.Enabled = true;
+            UpdatePagesSize();
+        }
+
+        private void UpdatePagesSize()
+        {
+            var parent = scrollViewer2.Parent;
+
+            var maxWidth = Math.Max(
+                scrollViewer1.Bounds.Width,
+                scrollViewer1.Bounds.Width);
+
+            if(parent != null && Double.IsNaN(parent.Width))
+            {
+                parent.SuspendLayout();
+                parent.Width = Math.Max(maxWidth + 30, parent.Bounds.Width);
+                parent.ResumeLayout();
+            }
         }
 
         private void SettingsButton_Click(object? sender, EventArgs e)
@@ -176,6 +157,7 @@ namespace ControlsSample
             scrollViewer2.Visible = true;
             ActionsButton.Enabled = true;
             SettingsButton.Enabled = false;
+            UpdatePagesSize();
         }
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
@@ -248,7 +230,7 @@ namespace ControlsSample
 
         private void RemoveItemButton_Click(object? sender, EventArgs e)
         {
-            int selectedIndex = listView.SelectedIndex ?? -1;
+            var selectedIndex = listView.SelectedIndex ?? -1;
             listView.RemoveSelectedItems();
             if(listView.Items.Count > 0 && selectedIndex >= 0)
                 listView.SelectedIndex = 
@@ -352,7 +334,7 @@ namespace ControlsSample
 
             if (logItemBoundsOnClickCheckBox.IsChecked && result.Item != null)
             {
-                int index = result.Item.Index!.Value;
+                var index = result.Item.Index!.Value;
 
                 var entireItemBounds = listView.GetItemBounds(index, 
                     ListViewItemBoundsPortion.EntireItem);

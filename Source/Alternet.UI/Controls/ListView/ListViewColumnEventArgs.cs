@@ -9,9 +9,10 @@ namespace Alternet.UI
     public class ListViewColumnEventArgs : CancelEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListViewColumnEventArgs"/> class.
+        /// Initializes a new instance of the
+        /// <see cref="ListViewColumnEventArgs"/> class.
         /// </summary>
-        public ListViewColumnEventArgs(int columnIndex)
+        public ListViewColumnEventArgs(long columnIndex)
         {
             ColumnIndex = columnIndex;
         }
@@ -19,6 +20,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the zero-based index of the <see cref="ListViewColumn"/>.
         /// </summary>
-        public int ColumnIndex { get; }
+        public long ColumnIndex { get; }
     }
 }

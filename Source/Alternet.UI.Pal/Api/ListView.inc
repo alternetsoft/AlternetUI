@@ -5,7 +5,7 @@ bool GetHasBorder();
 void SetHasBorder(bool value);
 
 
-int GetItemsCount();
+int64_t GetItemsCount();
 
 
 ImageList* GetSmallImageList();
@@ -28,7 +28,7 @@ bool GetAllowLabelEdit();
 void SetAllowLabelEdit(bool value);
 
 
-int GetTopItemIndex();
+int64_t GetTopItemIndex();
 
 
 ListViewGridLinesDisplayMode GetGridLinesDisplayMode();
@@ -43,33 +43,33 @@ bool GetColumnHeaderVisible();
 void SetColumnHeaderVisible(bool value);
 
 
-int GetFocusedItemIndex();
-void SetFocusedItemIndex(int value);
+int64_t GetFocusedItemIndex();
+void SetFocusedItemIndex(int64_t value);
 
 void* OpenSelectedIndicesArray();
 int GetSelectedIndicesItemCount(void* array);
-int GetSelectedIndicesItemAt(void* array, int index);
+int64_t GetSelectedIndicesItemAt(void* array, int index);
 void CloseSelectedIndicesArray(void* array);
-void InsertItemAt(int index, const string& text, int columnIndex, int imageIndex);
-void RemoveItemAt(int index);
+void InsertItemAt(int64_t index, const string& text, int64_t columnIndex, int imageIndex);
+void RemoveItemAt(int64_t index);
 void ClearItems();
-void InsertColumnAt(int index, const string& header, double width, ListViewColumnWidthMode widthMode);
-void RemoveColumnAt(int index);
+void InsertColumnAt(int64_t index, const string& header, double width, ListViewColumnWidthMode widthMode);
+void RemoveColumnAt(int64_t index);
 void ClearSelected();
-void SetSelected(int index, bool value);
+void SetSelected(int64_t index, bool value);
 void* ItemHitTest(const Point& point);
 ListViewHitTestLocations GetHitTestResultLocations(void* hitTestResult);
-int GetHitTestResultItemIndex(void* hitTestResult);
-int GetHitTestResultColumnIndex(void* hitTestResult);
+int64_t GetHitTestResultItemIndex(void* hitTestResult);
+int64_t GetHitTestResultColumnIndex(void* hitTestResult);
 void FreeHitTestResult(void* hitTestResult);
-void BeginLabelEdit(int itemIndex);
-Rect GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion);
+void BeginLabelEdit(int64_t itemIndex);
+Rect GetItemBounds(int64_t itemIndex, ListViewItemBoundsPortion portion);
 void Clear();
-void EnsureItemVisible(int itemIndex);
-void SetItemText(int itemIndex, int columnIndex, const string& text);
-void SetItemImageIndex(int itemIndex, int columnIndex, int imageIndex);
-void SetColumnWidth(int columnIndex, double fixedWidth, ListViewColumnWidthMode widthMode);
-void SetColumnTitle(int columnIndex, const string& text);
+void EnsureItemVisible(int64_t itemIndex);
+void SetItemText(int64_t itemIndex, int64_t columnIndex, const string& text);
+void SetItemImageIndex(int64_t itemIndex, int64_t columnIndex, int imageIndex);
+void SetColumnWidth(int64_t columnIndex, double fixedWidth, ListViewColumnWidthMode widthMode);
+void SetColumnTitle(int64_t columnIndex, const string& text);
 public:
 enum class ListViewEvent
 {

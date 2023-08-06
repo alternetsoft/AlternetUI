@@ -34,22 +34,22 @@ namespace Alternet::UI
     #pragma pack(push, 1)
     struct CompareListViewItemsEventData
     {
-        int item1Index;
-        int item2Index;
+        int64_t item1Index;
+        int64_t item2Index;
     };
     #pragma pack(pop)
     
     #pragma pack(push, 1)
     struct ListViewColumnEventData
     {
-        int columnIndex;
+        int64_t columnIndex;
     };
     #pragma pack(pop)
     
     #pragma pack(push, 1)
     struct ListViewItemLabelEditEventData
     {
-        int itemIndex;
+        int64_t itemIndex;
         char16_t* label;
         c_bool editCancelled;
     };

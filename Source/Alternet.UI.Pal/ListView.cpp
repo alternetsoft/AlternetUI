@@ -57,7 +57,7 @@ namespace Alternet::UI
         }
     }
 
-    void ListView::InsertColumnAt(int index, const string& header, 
+    void ListView::InsertColumnAt(int64_t index, const string& header, 
         double width, ListViewColumnWidthMode widthMode)
     {
         if (_view == ListViewView::Details)
@@ -67,13 +67,13 @@ namespace Alternet::UI
         }
     }
 
-    void ListView::RemoveColumnAt(int index)
+    void ListView::RemoveColumnAt(int64_t index)
     {
         if (_view == ListViewView::Details)
             GetListView()->DeleteColumn(index);
     }
 
-    void ListView::InsertItemAt(int index, const string& value, int columnIndex, 
+    void ListView::InsertItemAt(int64_t index, const string& value, int64_t columnIndex,
         int imageIndex)
     {
         if (IsWxWindowCreated()) 
@@ -109,7 +109,7 @@ namespace Alternet::UI
         }
     }
 
-    void ListView::RemoveItemAt(int index)
+    void ListView::RemoveItemAt(int64_t index)
     {
         if (IsWxWindowCreated())
             GetListView()->DeleteItem(index);
@@ -128,6 +128,8 @@ namespace Alternet::UI
 
     void ListView::RecreateWxWindowIfNeeded()
     {
+        if (_ignoreRecreate)
+            return;
         Control::RecreateWxWindowIfNeeded();
         RaiseEvent(ListViewEvent::ControlRecreated);
     }
@@ -283,7 +285,7 @@ namespace Alternet::UI
         }
     }
 
-    void ListView::SetColumnWidth(int columnIndex, double fixedWidth, ListViewColumnWidthMode widthMode)
+    void ListView::SetColumnWidth(int64_t columnIndex, double fixedWidth, ListViewColumnWidthMode widthMode)
     {
         if (_view != ListViewView::Details)
             return;
@@ -293,7 +295,7 @@ namespace Alternet::UI
         listView->SetColumnWidth(columnIndex, width);
     }
 
-    void ListView::SetColumnTitle(int columnIndex, const string& title)
+    void ListView::SetColumnTitle(int64_t columnIndex, const string& title)
     {
         if (_view != ListViewView::Details)
             return;
@@ -305,7 +307,7 @@ namespace Alternet::UI
         GetListView()->SetColumn(columnIndex, item);
     }
 
-    void ListView::SetItemText(int itemIndex, int columnIndex, const string& text)
+    void ListView::SetItemText(int64_t itemIndex, int64_t columnIndex, const string& text)
     {
         if (_view == ListViewView::Details || columnIndex == 0)
         {
@@ -318,7 +320,8 @@ namespace Alternet::UI
         }
     }
 
-    void ListView::SetItemImageIndex(int itemIndex, int columnIndex, int imageIndex)
+    void ListView::SetItemImageIndex(int64_t itemIndex,
+        int64_t columnIndex, int imageIndex)
     {
         if (_view == ListViewView::Details) 
         {
@@ -331,7 +334,7 @@ namespace Alternet::UI
         }
     }
 
-    void ListView::SetFocusedItemIndex(int value)
+    void ListView::SetFocusedItemIndex(int64_t value)
     {
         GetListView()->Focus(value);
     }
@@ -349,7 +352,7 @@ namespace Alternet::UI
         RecreateWxWindowIfNeeded();
     }
 
-    int ListView::GetTopItemIndex()
+    int64_t ListView::GetTopItemIndex()
     {
         return GetListView()->GetTopItem();
     }
@@ -394,7 +397,7 @@ namespace Alternet::UI
         RecreateWxWindowIfNeeded();
     }
 
-    int ListView::GetFocusedItemIndex()
+    int64_t ListView::GetFocusedItemIndex()
     {
         return GetListView()->GetFocusedItem();
     }
@@ -404,7 +407,8 @@ namespace Alternet::UI
         auto listView = GetListView();
         int flags = 0;
         long subItemIndex = 0;
-        auto itemIndex = listView->HitTest(fromDip(point, listView), flags, &subItemIndex);
+        auto itemIndex = listView->HitTest(fromDip(point, listView),
+            flags, &subItemIndex);
 
         auto result = new HitTestResult();
         result->itemIndex = itemIndex;
@@ -445,12 +449,12 @@ namespace Alternet::UI
         return ((HitTestResult*)hitTestResult)->locations;
     }
 
-    int ListView::GetHitTestResultItemIndex(void* hitTestResult)
+    int64_t ListView::GetHitTestResultItemIndex(void* hitTestResult)
     {
         return ((HitTestResult*)hitTestResult)->itemIndex;
     }
 
-    int ListView::GetHitTestResultColumnIndex(void* hitTestResult)
+    int64_t ListView::GetHitTestResultColumnIndex(void* hitTestResult)
     {
         return ((HitTestResult*)hitTestResult)->columnIndex;
     }
@@ -460,12 +464,12 @@ namespace Alternet::UI
         delete (HitTestResult*)hitTestResult;
     }
 
-    void ListView::BeginLabelEdit(int itemIndex)
+    void ListView::BeginLabelEdit(int64_t itemIndex)
     {
         GetListView()->EditLabel(itemIndex);
     }
 
-    Rect ListView::GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion)
+    Rect ListView::GetItemBounds(int64_t itemIndex, ListViewItemBoundsPortion portion)
     {
         auto getWxPortionCode = [&]()
         {
@@ -494,20 +498,20 @@ namespace Alternet::UI
         GetListView()->ClearAll();
     }
 
-    void ListView::EnsureItemVisible(int itemIndex)
+    void ListView::EnsureItemVisible(int64_t itemIndex)
     {
         GetListView()->EnsureVisible(itemIndex);
     }
 
     void* ListView::OpenSelectedIndicesArray()
     {
-        auto array = new wxArrayInt();
+        auto array = new std::vector<int64_t>();
         if (IsWxWindowCreated())
         {
             auto listView = GetListView();
             array->resize(listView->GetSelectedItemCount());
-            int index = listView->GetFirstSelected();
-            int i = 0;
+            int64_t index = listView->GetFirstSelected();
+            int64_t i = 0;
             while (index != -1)
             {
                 (*array)[i++] = index;
@@ -519,17 +523,17 @@ namespace Alternet::UI
 
     void ListView::CloseSelectedIndicesArray(void* array)
     {
-        delete ((wxArrayInt*)array);
+        delete ((std::vector<int64_t>*)array);
     }
 
     int ListView::GetSelectedIndicesItemCount(void* array)
     {
-        return ((wxArrayInt*)array)->GetCount();
+        return ((std::vector<int64_t>*)array)->size();
     }
 
-    int ListView::GetSelectedIndicesItemAt(void* array, int index)
+    int64_t ListView::GetSelectedIndicesItemAt(void* array, int index)
     {
-        return (*((wxArrayInt*)array))[index];
+        return (*((std::vector<int64_t>*)array))[index];
     }
 
     void ListView::ClearSelected()
@@ -540,13 +544,13 @@ namespace Alternet::UI
 
     void ListView::DeselectAll(wxListView* listView)
     {
-        auto selectedIndices = (wxArrayInt*)OpenSelectedIndicesArray();
+        auto selectedIndices = (std::vector<int64_t>*)OpenSelectedIndicesArray();
         for (auto index : *selectedIndices)
             listView->Select(index, false);
         delete selectedIndices;
     }
 
-    void ListView::SetSelected(int index, bool value)
+    void ListView::SetSelected(int64_t index, bool value)
     {
         if (IsWxWindowCreated())
         {
@@ -569,12 +573,14 @@ namespace Alternet::UI
 
     void ListView::ApplyLargeImageList(wxListView* value)
     {
-        value->SetImageList(_largeImageList == nullptr ? nullptr : _largeImageList->GetImageList(), wxIMAGE_LIST_NORMAL);
+        value->SetImageList(_largeImageList == nullptr ? nullptr :
+            _largeImageList->GetImageList(), wxIMAGE_LIST_NORMAL);
     }
 
     void ListView::ApplySmallImageList(wxListView* value)
     {
-        value->SetImageList(_smallImageList == nullptr ? nullptr : _smallImageList->GetImageList(), wxIMAGE_LIST_SMALL);
+        value->SetImageList(_smallImageList == nullptr ? nullptr :
+            _smallImageList->GetImageList(), wxIMAGE_LIST_SMALL);
     }
 
     void ListView::OnWxWindowCreated()
@@ -582,7 +588,7 @@ namespace Alternet::UI
         Control::OnWxWindowCreated();
     }
 
-    int ListView::GetItemsCount()
+    int64_t ListView::GetItemsCount()
     {
         if (IsWxWindowCreated())
             return GetListView()->GetItemCount();
@@ -669,12 +675,12 @@ namespace Alternet::UI
         return style;
     }
 
-    std::vector<int> ListView::GetSelectedIndices()
+    std::vector<int64_t> ListView::GetSelectedIndices()
     {
         auto array = OpenSelectedIndicesArray();
         int count = GetSelectedIndicesItemCount(array);
 
-        std::vector<int> indices(count);
+        std::vector<int64_t> indices(count);
         for (int i = 0; i < count; i++)
             indices[i] = GetSelectedIndicesItemAt(array, i);
 
@@ -683,7 +689,7 @@ namespace Alternet::UI
         return indices;
     }
 
-    void ListView::SetSelectedIndices(const std::vector<int>& value)
+    void ListView::SetSelectedIndices(const std::vector<int64_t>& value)
     {
         ClearSelected();
         for (auto index : value)

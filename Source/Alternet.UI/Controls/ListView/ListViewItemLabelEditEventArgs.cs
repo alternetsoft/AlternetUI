@@ -11,7 +11,7 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ListViewItemLabelEditEventArgs"/> class.
         /// </summary>
-        public ListViewItemLabelEditEventArgs(int itemIndex, string? label)
+        public ListViewItemLabelEditEventArgs(long itemIndex, string? label)
         {
             ItemIndex = itemIndex;
             Label = label;
@@ -20,7 +20,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the zero-based index of the <see cref="ListViewItem"/> containing the label to edit.
         /// </summary>
-        public int ItemIndex { get; }
+        public long ItemIndex { get; }
 
         /// <summary>
         /// Gets the new text to associate with the list item.

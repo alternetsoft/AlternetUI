@@ -94,7 +94,7 @@ namespace Alternet.UI
             if (!e.Data.editCancelled && !ea.Cancel)
             {
                 /*skipSetItemText = true;*/
-                Control.Items[e.Data.itemIndex].Text = e.Data.label;
+                Control.Items[(int)e.Data.itemIndex].Text = e.Data.label;
                 /*skipSetItemText = false;*/
             }
 
@@ -103,7 +103,7 @@ namespace Alternet.UI
 
         bool skipSetItemText;
 
-        public override void SetItemText(int itemIndex, int columnIndex, string text)
+        public override void SetItemText(long itemIndex, long columnIndex, string text)
         {
             if (skipSetItemText)
                 return;
@@ -111,7 +111,7 @@ namespace Alternet.UI
             NativeControl.SetItemText(itemIndex, columnIndex, text);
         }
 
-        public override void SetItemImageIndex(int itemIndex, int columnIndex, int? imageIndex)
+        public override void SetItemImageIndex(long itemIndex, long columnIndex, int? imageIndex)
         {
             NativeControl.SetItemImageIndex(itemIndex, columnIndex, imageIndex ?? -1);
         }
@@ -130,7 +130,7 @@ namespace Alternet.UI
             get
             {
                 var i = NativeControl.TopItemIndex;
-                return i == -1 ? null : Control.Items[i];
+                return i == -1 ? null : Control.Items[(int)i];
             }
         }
 
@@ -153,9 +153,12 @@ namespace Alternet.UI
                 var itemIndex = NativeControl.GetHitTestResultItemIndex(result);
                 var columnIndex = NativeControl.GetHitTestResultColumnIndex(result);
 
-                var item = itemIndex == -1 ? null : Control.Items[itemIndex];
-                var cell = item == null || columnIndex == -1 ? null : item.Cells[columnIndex];
-                var location = (ListViewHitTestLocations)NativeControl.GetHitTestResultLocations(result);
+                var item = itemIndex == -1 ? null : Control.Items[(int)itemIndex];
+                var cell = item == null || columnIndex == -1 ? null :
+                    item.Cells[(int)columnIndex];
+                var location =
+                    (ListViewHitTestLocations)NativeControl
+                        .GetHitTestResultLocations(result);
 
                 return new ListViewHitTestInfo(location, item, cell);
             }
@@ -166,11 +169,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void BeginLabelEdit(int itemIndex) => NativeControl.BeginLabelEdit(itemIndex);
+        public override void BeginLabelEdit(long itemIndex) => NativeControl.BeginLabelEdit(itemIndex);
 
         /// <inheritdoc/>
-        public override Rect GetItemBounds(int itemIndex, ListViewItemBoundsPortion portion) =>
-            NativeControl.GetItemBounds(itemIndex, (Native.ListViewItemBoundsPortion)portion);
+        public override Rect GetItemBounds(long itemIndex, ListViewItemBoundsPortion portion) =>
+            NativeControl.GetItemBounds(
+                itemIndex,
+                (Native.ListViewItemBoundsPortion)portion);
 
         ///// <inheritdoc/>
         // public override IComparer<ListViewItem>? CustomItemSortComparer { get; set; }
@@ -201,14 +206,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void EnsureItemVisible(int itemIndex) => NativeControl.EnsureItemVisible(itemIndex);
+        public override void EnsureItemVisible(long itemIndex) =>
+            NativeControl.EnsureItemVisible(itemIndex);
 
         /// <inheritdoc/>
-        public override int? FocusedItemIndex
+        public override long? FocusedItemIndex
         {
             get
             {
-                int i = NativeControl.FocusedItemIndex;
+                var i = NativeControl.FocusedItemIndex;
                 return i == -1 ? null : i;
             }
 
@@ -277,7 +283,8 @@ namespace Alternet.UI
 
         private void ApplySelectionMode()
         {
-            NativeControl.SelectionMode = (Native.ListViewSelectionMode)Control.SelectionMode;
+            NativeControl.SelectionMode =
+                (Native.ListViewSelectionMode)Control.SelectionMode;
         }
 
         private void ApplySelection()
@@ -345,7 +352,7 @@ namespace Alternet.UI
             }
         }
 
-        private void InsertItem(int itemIndex, ListViewItem item)
+        private void InsertItem(long itemIndex, ListViewItem item)
         {
             item.ListView = Control;
             item.Index = itemIndex;
@@ -433,12 +440,12 @@ namespace Alternet.UI
                 item.ApplyColumns();
         }
 
-        public override void SetColumnWidth(int columnIndex, double width, ListViewColumnWidthMode widthMode)
+        public override void SetColumnWidth(long columnIndex, double width, ListViewColumnWidthMode widthMode)
         {
             NativeControl.SetColumnWidth(columnIndex, width, (Native.ListViewColumnWidthMode)widthMode);
         }
 
-        public override void SetColumnTitle(int columnIndex, string title)
+        public override void SetColumnTitle(long columnIndex, string title)
         {
             NativeControl.SetColumnTitle(columnIndex, title);
         }
