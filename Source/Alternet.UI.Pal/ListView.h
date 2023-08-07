@@ -12,8 +12,8 @@ namespace Alternet::UI
     public:
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
 
-        void OnItemSelected(wxCommandEvent& event);
-        void OnItemDeselected(wxCommandEvent& event);
+        void OnItemSelected(wxListEvent& event);
+        void OnItemDeselected(wxListEvent& event);
         void OnColumnHeaderClicked(wxListEvent& event);
         void OnBeginLabelEdit(wxListEvent& event);
         void OnEndLabelEdit(wxListEvent& event);

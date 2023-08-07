@@ -224,12 +224,12 @@ namespace Alternet::UI
         return value;
     }
 
-    void ListView::OnItemSelected(wxCommandEvent& event)
+    void ListView::OnItemSelected(wxListEvent& event)
     {
         RaiseSelectionChanged();
     }
 
-    void ListView::OnItemDeselected(wxCommandEvent& event)
+    void ListView::OnItemDeselected(wxListEvent& event)
     {
         RaiseSelectionChanged();
     }
