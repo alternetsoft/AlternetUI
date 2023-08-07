@@ -87,6 +87,20 @@ namespace Alternet.UI
         public event EventHandler<ListViewItemLabelEditEventArgs>? AfterLabelEdit;
 
         /// <summary>
+        /// Tells <see cref="ListView"/> to use the generic control even
+        /// when it is capable of using the native control instead.
+        /// </summary>
+        public static bool UseGenericOnMacOs
+        {
+            set
+            {
+                int v = value ? 1 : 0;
+
+                Application.SetSystemOption("mac.listctrl.always_use_generic", v);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a boolean value which specifies whether the column header is visible in <see
         /// cref="ListViewView.Details"/> view.
         /// </summary>
@@ -703,6 +717,12 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
+        protected override ControlHandler CreateHandler()
+        {
+            return GetEffectiveControlHandlerHactory().CreateListViewHandler(this);
+        }
+
         private void ClearSelectedCore()
         {
             selectedIndices?.Clear();
@@ -733,12 +753,5 @@ namespace Alternet.UI
 
             return changed;
         }
-
-        /// <inheritdoc/>
-        protected override ControlHandler CreateHandler()
-        {
-            return GetEffectiveControlHandlerHactory().CreateListViewHandler(this);
-        }
-
     }
 }
