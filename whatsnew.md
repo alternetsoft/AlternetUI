@@ -9,7 +9,7 @@ point, size, thickness conversions), in NativeApi.Generator (less full recompila
 Also removed different static dictionaries used to convert native controls to UI controls. 
 - Improved Border control. Added BorderWidth and BorderColor properties. Now it is possible to specify 
 whether to draw individual border side (BorderWidth is Thickness). Currently values are limited to 0 and 1.
-- Fixed ListView, TabControl, CheckListBox bugs.
+- Fixed ListView, TabControl, CheckListBox, Button, NumericUpDown bugs.
 - Improved ListView speed with large number of items.
 - Improved Toolbars.
 - Added Image GrayScale methods.
@@ -17,7 +17,11 @@ whether to draw individual border side (BorderWidth is Thickness). Currently val
 - Control.Font now works.
 - Added TreeView.HasBorder, ToolbarItem.DisabledImages, Control.GetDPI(), Toolbar.GetDefaultImageSize, 
 Control.SetBounds(), Control.Width and Height, Font.AsBold, Font.AsUnderlined, NumericUpDown.Increment, 
-WebBrowser.HasBorder, Control.GetVisibleChildren, Control.HasChildren, Control.GetVisibleChild, Application.Idle
+WebBrowser.HasBorder, Control.GetVisibleChildren, Control.HasChildren, Control.GetVisibleChild, Application.Idle,
+Color.GetKnownColors, Button.HasBorder, Toolbar.IsRight, Toolbar.IsVertical, Button.TextVisible, Button.TextAlign,
+Button.SetImagePosition, Button.SetImageMargins, TreeView.VariableRowHeight, TreeView.TwistButtons, 
+TreeView.StateImageSpacing, TreeView.Indentation, TreeView.RowLines, TreeView.HideRoot, Control.BeginIgnoreRecreate, 
+Control.EndIgnoreRecreate
 and other properties and methods.
 - Improved work on Linux and MacOs.
 
