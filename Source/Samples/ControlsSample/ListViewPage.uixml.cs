@@ -15,6 +15,11 @@ namespace ControlsSample
         private int newItemIndex = 0;
         private int newColIndex = 2;
 
+	static ListViewPage()
+	{
+		//ListView.UseGenericOnMacOs = true;
+	}
+
         public ListViewPage()
         {
             InitializeComponent();
@@ -206,7 +211,7 @@ namespace ControlsSample
             site?.LogEvent(s);
         }
 
-        private void ListView_SelectionChanged(object? sender, EventArgs e)
+        private void Button_SelectionChanged(object? sender, EventArgs e)
         {
             var i = listView.SelectedIndices.Count > 100;
             string s = i ? "too many items" :
