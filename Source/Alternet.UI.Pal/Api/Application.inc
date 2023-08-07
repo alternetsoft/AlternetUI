@@ -36,6 +36,7 @@ void SetInUixmlPreviewerMode(bool value);
 
 bool GetInvokeRequired();
 
+static void SetSystemOptionInt(const string& name, int value);
 void Run(Window* window);
 void WakeUpIdle();
 void Exit();

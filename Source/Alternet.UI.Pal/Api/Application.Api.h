@@ -131,6 +131,13 @@ ALTERNET_UI_API c_bool Application_GetInvokeRequired_(Application* obj)
         });
 }
 
+ALTERNET_UI_API void Application_SetSystemOptionInt_(const char16_t* name, int value)
+{
+    MarshalExceptions<void>([&](){
+            Application::SetSystemOptionInt(name, value);
+        });
+}
+
 ALTERNET_UI_API void Application_Run_(Application* obj, Window* window)
 {
     MarshalExceptions<void>([&](){

@@ -177,6 +177,11 @@ namespace Alternet.UI.Native
             
         }
         
+        public static void SetSystemOptionInt(string name, int value)
+        {
+            NativeApi.Application_SetSystemOptionInt_(name, value);
+        }
+        
         public void Run(Window window)
         {
             CheckDisposed();
@@ -313,6 +318,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Application_GetInvokeRequired_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetSystemOptionInt_(string name, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_Run_(IntPtr obj, IntPtr window);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable
+using System;
 using System.ComponentModel;
 using ApiCommon;
 
@@ -6,6 +7,8 @@ namespace NativeApi.Api
 {
     public class Application
     {
+        public static void SetSystemOptionInt(string name, int value) {}
+
         public Application() => throw new Exception();
 
         public string Name { get; set; }

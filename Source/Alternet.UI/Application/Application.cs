@@ -293,6 +293,16 @@ namespace Alternet.UI
         internal bool InvokeRequired => nativeApplication.InvokeRequired;
 
         /// <summary>
+        /// Sets wxSystemOptions value.
+        /// </summary>
+        /// <param name="name">Option name.</param>
+        /// <param name="value">Option value.</param>
+        public static void SetSystemOption(string name, int value)
+        {
+            Native.Application.SetSystemOptionInt(name, value);
+        }
+
+        /// <summary>
         /// Instructs the application how to respond to unhandled exceptions.
         /// </summary>
         /// <param name="mode">An <see cref="UnhandledExceptionMode"/>

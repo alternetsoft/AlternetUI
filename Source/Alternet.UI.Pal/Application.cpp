@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "Image.h"
 #include "Exceptions.h"
+#include "wx/sysopt.h"
 
 IMPLEMENT_APP_NO_MAIN(Alternet::UI::App);
 IMPLEMENT_WX_THEME_SUPPORT;
@@ -339,6 +340,11 @@ wxDEFINE_EVENT( wxEVT_HOTKEY, wxKeyEvent );
     /*static*/ Application* Application::GetCurrent()
     {
         return s_current;
+    }
+
+    void Application::SetSystemOptionInt(const string& name, int value)
+    {
+        wxSystemOptions::SetOption(wxStr(name), value);
     }
 
     void Application::Run(Window* window)
