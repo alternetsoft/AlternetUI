@@ -1,10 +1,10 @@
-﻿using Alternet.Drawing;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -18,7 +18,8 @@ namespace Alternet.UI
         private TextBox? messageTextBox;
 
         /// <summary>
-        ///  Initializes a new instance of the <see cref="ThreadExceptionWindow"/> class.
+        ///  Initializes a new instance of the
+        ///  <see cref="ThreadExceptionWindow"/> class.
         /// </summary>
         public ThreadExceptionWindow(Exception exception)
         {
@@ -36,7 +37,10 @@ namespace Alternet.UI
 
         private static Image LoadImage(string name)
         {
-            return new Bitmap(typeof(ThreadExceptionWindow).Assembly.GetManifestResourceStream(name) ?? throw new Exception());
+            return new Bitmap(
+                typeof(ThreadExceptionWindow).Assembly
+                .GetManifestResourceStream(name) ??
+                throw new Exception());
         }
 
         private static string GetMessageText(Exception e)
@@ -51,40 +55,54 @@ namespace Alternet.UI
 
         private static string GetDetailsText(Exception e)
         {
-            StringBuilder detailsTextBuilder = new StringBuilder();
+            StringBuilder detailsTextBuilder = new();
             string newline = "\n";
             string separator = "----------------------------------------\n";
             string sectionseparator = "\n************** {0} **************\n";
 
-            detailsTextBuilder.Append(string.Format(CultureInfo.CurrentCulture, sectionseparator, "Exception Text"));
+            detailsTextBuilder.Append(string.Format(
+                CultureInfo.CurrentCulture,
+                sectionseparator,
+                "Exception Text"));
             detailsTextBuilder.Append(e.ToString());
             detailsTextBuilder.Append(newline);
             detailsTextBuilder.Append(newline);
-            detailsTextBuilder.Append(string.Format(CultureInfo.CurrentCulture, sectionseparator, "Loaded Assemblies"));
+            detailsTextBuilder.Append(
+                string.Format(
+                    CultureInfo.CurrentCulture,
+                    sectionseparator,
+                    "Loaded Assemblies"));
 
             foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
             {
                 AssemblyName name = asm.GetName();
+                string? location = asm.Location;
                 string? fileVer = "n/a";
 
                 try
                 {
-                    if (name.EscapedCodeBase is not null && name.EscapedCodeBase.Length > 0)
+                    if (location is not null &&
+                        location.Length > 0)
                     {
-                        Uri codeBase = new Uri(name.EscapedCodeBase);
-                        if (codeBase.Scheme == "file")
-                        {
-                            fileVer = FileVersionInfo.GetVersionInfo(new System.Uri(name.EscapedCodeBase).LocalPath).FileVersion;
-                        }
+                        fileVer =
+                            FileVersionInfo.GetVersionInfo(location).FileVersion;
                     }
                 }
                 catch (FileNotFoundException)
                 {
                 }
 
-                const string ExDlgMsgLoadedAssembliesEntry = "{0}\n    Assembly Version: {1}\n    Win32 Version: {2}\n    CodeBase: {3}\n";
+                const string ExDlgMsgLoadedAssembliesEntry =
+                    "{0}\n    Assembly Version: {1}\n" +
+                    "    Win32 Version: {2}\n    CodeBase: {3}\n";
 
-                detailsTextBuilder.Append(string.Format(ExDlgMsgLoadedAssembliesEntry, name.Name, name.Version, fileVer, name.EscapedCodeBase));
+                detailsTextBuilder.Append(
+                    string.Format(
+                        ExDlgMsgLoadedAssembliesEntry,
+                        name.Name,
+                        name.Version,
+                        fileVer,
+                        location));
                 detailsTextBuilder.Append(separator);
             }
 
@@ -94,19 +112,23 @@ namespace Alternet.UI
             return detailsTextBuilder.ToString();
         }
 
-        bool IsRunningUnderWindows()
+        private static bool IsRunningUnderWindows()
         {
+            return Application.IsWindowsOS;
+            /*
 #if NETCOREAPP
             return System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
                 System.Runtime.InteropServices.OSPlatform.Windows);
 #else
             return false;
 #endif
+            */
         }
 
         private void InitializeControls()
         {
-            // Cannot use UIXML in the Alternet.UI assembly itself, so populate the controls from code.
+            /*Cannot use UIXML in the Alternet.UI assembly itself,
+              so populate the controls from code.*/
 
             BeginInit();
 
@@ -120,8 +142,10 @@ namespace Alternet.UI
             AlwaysOnTop = true;
 
             var mainGrid = new Grid();
-            mainGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            mainGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            mainGrid.RowDefinitions.Add(
+                new RowDefinition { Height = GridLength.Auto });
+            mainGrid.RowDefinitions.Add(
+                new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             Children.Add(mainGrid);
 
             var messageGrid = CreateMessageGrid();
@@ -138,20 +162,30 @@ namespace Alternet.UI
             Grid CreateMessageGrid()
             {
                 var messageGrid = new Grid();
-                messageGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                messageGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                messageGrid.ColumnDefinitions.Add(
+                    new ColumnDefinition { Width = GridLength.Auto });
+                messageGrid.ColumnDefinitions.Add(
+                    new ColumnDefinition
+                    {
+                        Width = new GridLength(1, GridUnitType.Star),
+                    });
 
                 var errorImagePictureBox = new PictureBox
                 {
                     VerticalAlignment = VerticalAlignment.Top,
                     HorizontalAlignment = HorizontalAlignment.Left,
-                    Margin = new Thickness(0, 0, 10, 0)
+                    Margin = new Thickness(0, 0, 10, 0),
                 };
 
-                errorImagePictureBox.Image = LoadImage("Alternet.UI.Application.ThreadException.Resources.ErrorImage.png");
+                errorImagePictureBox.Image =
+                    LoadImage(
+                    "Alternet.UI.Application.ThreadException.Resources.ErrorImage.png");
                 messageGrid.Children.Add(errorImagePictureBox);
 
-                var stackPanel = new StackPanel { Orientation = StackPanelOrientation.Vertical };
+                var stackPanel = new StackPanel
+                {
+                    Orientation = StackPanelOrientation.Vertical,
+                };
                 messageGrid.Children.Add(stackPanel);
                 Grid.SetColumn(stackPanel, 1);
 
@@ -160,7 +194,7 @@ namespace Alternet.UI
                     "Unhandled exception has occurred in your application.",
                     "If you click Continue, the application will ignore this error",
                     "and attempt to continue.",
-                    "If you click Quit, the application will close immediately."
+                    "If you click Quit, the application will close immediately.",
                 };
 
                 foreach (var line in lines)
@@ -169,13 +203,18 @@ namespace Alternet.UI
                     stackPanel.Children.Add(label);
                 }
 
-                stackPanel.Children.Add(new Label { Text = "Exception information:", Margin = new Thickness(0, 15, 0, 5) });
+                stackPanel.Children.Add(
+                    new Label
+                    {
+                        Text = "Exception information:",
+                        Margin = new Thickness(0, 15, 0, 5),
+                    });
 
                 messageTextBox = new TextBox
                 {
                     Text = " ",
                     ReadOnly = true,
-                    Multiline = true
+                    Multiline = true,
                 };
 
                 stackPanel.Children.Add(messageTextBox);
@@ -186,17 +225,29 @@ namespace Alternet.UI
             Grid CreateButtonsGrid()
             {
                 var buttonsGrid = new Grid();
-                buttonsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                buttonsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                buttonsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                buttonsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                buttonsGrid.ColumnDefinitions.Add(
+                    new ColumnDefinition { Width = GridLength.Auto });
+                buttonsGrid.ColumnDefinitions.Add(
+                    new ColumnDefinition
+                    {
+                        Width = new GridLength(1, GridUnitType.Star),
+                    });
+                buttonsGrid.ColumnDefinitions.Add(
+                    new ColumnDefinition { Width = GridLength.Auto });
+                buttonsGrid.ColumnDefinitions.Add(
+                    new ColumnDefinition { Width = GridLength.Auto });
 
                 var detailsButton = new Button { Text = "&Details..." };
                 detailsButton.Click += DetailsButton_Click;
                 buttonsGrid.Children.Add(detailsButton);
                 Grid.SetColumn(detailsButton, 0);
 
-                var continueButton = new Button { Text = "&Continue", Margin = new Thickness(0, 0, 5, 0) };
+                var continueButton =
+                    new Button
+                    {
+                        Text = "&Continue",
+                        Margin = new Thickness(0, 0, 5, 0),
+                    };
                 continueButton.Click += ContinueButton_Click;
                 buttonsGrid.Children.Add(continueButton);
                 Grid.SetColumn(continueButton, 2);
@@ -224,8 +275,9 @@ namespace Alternet.UI
 
         private void DetailsButton_Click(object? sender, EventArgs e)
         {
-            using (var detailsWindow = new ThreadExceptionDetailsWindow(GetDetailsText(exception)))
-                detailsWindow.ShowModal(this);
+            using var detailsWindow =
+                new ThreadExceptionDetailsWindow(GetDetailsText(exception));
+            detailsWindow.ShowModal(this);
         }
     }
 }

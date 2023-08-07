@@ -7,16 +7,169 @@ namespace Alternet.UI
 {
     internal class NativeListViewHandler : ListViewHandler
     {
-        private bool receivingSelection;
+        private int receivingSelection = 0;
 
-        private bool applyingSelection;
+        private int applyingSelection = 0;
+
+        private int clearing = 0;
+
+        /// <inheritdoc/>
+        public override bool ColumnHeaderVisible
+        {
+            get => NativeControl.ColumnHeaderVisible;
+            set => NativeControl.ColumnHeaderVisible = value;
+        }
+
+        /// <inheritdoc/>
+        public override long? FocusedItemIndex
+        {
+            get
+            {
+                var i = NativeControl.FocusedItemIndex;
+                return i == -1 ? null : i;
+            }
+
+            set => NativeControl.FocusedItemIndex = value ?? -1;
+        }
+
+        public new Native.ListView NativeControl =>
+            (Native.ListView)base.NativeControl!;
+
+        /// <inheritdoc/>
+        public override bool AllowLabelEdit
+        {
+            get => NativeControl.AllowLabelEdit;
+            set => NativeControl.AllowLabelEdit = value;
+        }
+
+        /// <inheritdoc/>
+        public override ListViewItem? TopItem
+        {
+            get
+            {
+                var i = NativeControl.TopItemIndex;
+                return i == -1 ? null : Control.Items[(int)i];
+            }
+        }
+
+        /// <inheritdoc/>
+        public override ListViewGridLinesDisplayMode GridLinesDisplayMode
+        {
+            get => (ListViewGridLinesDisplayMode)NativeControl.GridLinesDisplayMode;
+            set => NativeControl.GridLinesDisplayMode =
+                (Native.ListViewGridLinesDisplayMode)value;
+        }
+
+        /// <inheritdoc/>
+        public override ListViewHitTestInfo HitTest(Point point)
+        {
+            var result = NativeControl.ItemHitTest(point);
+            if (result == IntPtr.Zero)
+                throw new Exception();
+
+            try
+            {
+                var itemIndex = NativeControl.GetHitTestResultItemIndex(result);
+                var columnIndex = NativeControl.GetHitTestResultColumnIndex(result);
+
+                var item = itemIndex == -1 ? null : Control.Items[(int)itemIndex];
+                var cell = item == null || columnIndex == -1 ? null :
+                    item.Cells[(int)columnIndex];
+                var location =
+                    (ListViewHitTestLocations)NativeControl
+                        .GetHitTestResultLocations(result);
+
+                return new ListViewHitTestInfo(location, item, cell);
+            }
+            finally
+            {
+                NativeControl.FreeHitTestResult(result);
+            }
+        }
+
+        /// <inheritdoc/>
+        public override void BeginLabelEdit(long itemIndex) =>
+            NativeControl.BeginLabelEdit(itemIndex);
+
+        /// <inheritdoc/>
+        public override Rect GetItemBounds(
+            long itemIndex,
+            ListViewItemBoundsPortion portion) =>
+            NativeControl.GetItemBounds(
+                itemIndex,
+                (Native.ListViewItemBoundsPortion)portion);
+
+        ///// <inheritdoc/>
+        // public override IComparer<ListViewItem>? CustomItemSortComparer { get; set; }
+
+        ///// <inheritdoc/>
+        // public override ListViewSortMode SortMode
+        // {
+        //    get => (ListViewSortMode)NativeControl.SortMode;
+        //    set => NativeControl.SortMode = (Native.ListViewSortMode)value;
+        // }
+
+        /// <inheritdoc/>
+        public override void Clear()
+        {
+            clearing++;
+            try
+            {
+                NativeControl.Clear();
+                Control.Items.Clear();
+                Control.Columns.Clear();
+            }
+            finally
+            {
+                clearing--;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override void EnsureItemVisible(long itemIndex) =>
+            NativeControl.EnsureItemVisible(itemIndex);
+
+        /// <inheritdoc/>
+        public override void SetColumnWidth(
+            long columnIndex,
+            double width,
+            ListViewColumnWidthMode widthMode)
+        {
+            NativeControl.SetColumnWidth(
+                columnIndex,
+                width,
+                (Native.ListViewColumnWidthMode)widthMode);
+        }
+
+        /// <inheritdoc/>
+        public override void SetColumnTitle(long columnIndex, string title)
+        {
+            NativeControl.SetColumnTitle(columnIndex, title);
+        }
+
+        // bool skipSetItemText;
+
+        /// <inheritdoc/>
+        public override void SetItemText(long itemIndex, long columnIndex, string text)
+        {
+            /*if (skipSetItemText) return;*/
+
+            NativeControl.SetItemText(itemIndex, columnIndex, text);
+        }
+
+        /// <inheritdoc/>
+        public override void SetItemImageIndex(
+            long itemIndex,
+            long columnIndex,
+            int? imageIndex)
+        {
+            NativeControl.SetItemImageIndex(itemIndex, columnIndex, imageIndex ?? -1);
+        }
 
         internal override Native.Control CreateNativeControl()
         {
             return new Native.ListView();
         }
-
-        public new Native.ListView NativeControl => (Native.ListView)base.NativeControl!;
 
         protected override void OnAttach()
         {
@@ -46,7 +199,32 @@ namespace Alternet.UI
             NativeControl.AfterItemLabelEdit += NativeControl_AfterItemLabelEdit;
             NativeControl.ControlRecreated += NativeControl_ControlRecreated;
 
-            // NativeControl.CompareItemsForCustomSort += NativeControl_CompareItemsForCustomSort;
+            // NativeControl.CompareItemsForCustomSort +=
+            // NativeControl_CompareItemsForCustomSort;
+        }
+
+        protected override void OnDetach()
+        {
+            Control.Items.ItemInserted -= Items_ItemInserted;
+            Control.Items.ItemRemoved -= Items_ItemRemoved;
+            Control.ViewChanged -= Control_ViewChanged;
+            Control.Columns.ItemInserted -= Columns_ItemInserted;
+            Control.Columns.ItemRemoved -= Columns_ItemRemoved;
+            Control.SmallImageListChanged -= Control_SmallImageListChanged;
+            Control.LargeImageListChanged -= Control_LargeImageListChanged;
+            Control.SelectionModeChanged -= Control_SelectionModeChanged;
+
+            Control.SelectionChanged -= Control_SelectionChanged;
+
+            NativeControl.SelectionChanged -= NativeControl_SelectionChanged;
+            NativeControl.ColumnClick -= NativeControl_ColumnClick;
+            NativeControl.BeforeItemLabelEdit -= NativeControl_BeforeItemLabelEdit;
+            NativeControl.AfterItemLabelEdit -= NativeControl_AfterItemLabelEdit;
+            NativeControl.ControlRecreated -= NativeControl_ControlRecreated;
+
+            /*NativeControl.CompareItemsForCustomSort -= NativeControl_CompareItemsForCustomSort;*/
+
+            base.OnDetach();
         }
 
         private void NativeControl_ControlRecreated(object? sender, EventArgs e)
@@ -78,7 +256,9 @@ namespace Alternet.UI
             object? sender,
             Native.NativeEventArgs<Native.ListViewItemLabelEditEventData> e)
         {
-            var ea = new ListViewItemLabelEditEventArgs(e.Data.itemIndex, e.Data.editCancelled ? null : e.Data.label);
+            var ea = new ListViewItemLabelEditEventArgs(
+                e.Data.itemIndex,
+                e.Data.editCancelled ? null : e.Data.label);
             Control.RaiseBeforeLabelEdit(ea);
             e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
         }
@@ -87,7 +267,9 @@ namespace Alternet.UI
             object? sender,
             Native.NativeEventArgs<Native.ListViewItemLabelEditEventData> e)
         {
-            var ea = new ListViewItemLabelEditEventArgs(e.Data.itemIndex, e.Data.editCancelled ? null : e.Data.label);
+            var ea = new ListViewItemLabelEditEventArgs(
+                e.Data.itemIndex,
+                e.Data.editCancelled ? null : e.Data.label);
 
             Control.RaiseAfterLabelEdit(ea);
 
@@ -101,124 +283,11 @@ namespace Alternet.UI
             e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
         }
 
-        bool skipSetItemText;
-
-        public override void SetItemText(long itemIndex, long columnIndex, string text)
-        {
-            if (skipSetItemText)
-                return;
-
-            NativeControl.SetItemText(itemIndex, columnIndex, text);
-        }
-
-        public override void SetItemImageIndex(long itemIndex, long columnIndex, int? imageIndex)
-        {
-            NativeControl.SetItemImageIndex(itemIndex, columnIndex, imageIndex ?? -1);
-        }
-
-        private void NativeControl_ColumnClick(object? sender, Native.NativeEventArgs<Native.ListViewColumnEventData> e)
+        private void NativeControl_ColumnClick(
+            object? sender,
+            Native.NativeEventArgs<Native.ListViewColumnEventData> e)
         {
             Control.RaiseColumnClick(new ListViewColumnEventArgs(e.Data.columnIndex));
-        }
-
-        /// <inheritdoc/>
-        public override bool AllowLabelEdit { get => NativeControl.AllowLabelEdit; set => NativeControl.AllowLabelEdit = value; }
-
-        /// <inheritdoc/>
-        public override ListViewItem? TopItem
-        {
-            get
-            {
-                var i = NativeControl.TopItemIndex;
-                return i == -1 ? null : Control.Items[(int)i];
-            }
-        }
-
-        /// <inheritdoc/>
-        public override ListViewGridLinesDisplayMode GridLinesDisplayMode
-        {
-            get => (ListViewGridLinesDisplayMode)NativeControl.GridLinesDisplayMode;
-            set => NativeControl.GridLinesDisplayMode = (Native.ListViewGridLinesDisplayMode)value;
-        }
-
-        /// <inheritdoc/>
-        public override ListViewHitTestInfo HitTest(Point point)
-        {
-            var result = NativeControl.ItemHitTest(point);
-            if (result == IntPtr.Zero)
-                throw new Exception();
-
-            try
-            {
-                var itemIndex = NativeControl.GetHitTestResultItemIndex(result);
-                var columnIndex = NativeControl.GetHitTestResultColumnIndex(result);
-
-                var item = itemIndex == -1 ? null : Control.Items[(int)itemIndex];
-                var cell = item == null || columnIndex == -1 ? null :
-                    item.Cells[(int)columnIndex];
-                var location =
-                    (ListViewHitTestLocations)NativeControl
-                        .GetHitTestResultLocations(result);
-
-                return new ListViewHitTestInfo(location, item, cell);
-            }
-            finally
-            {
-                NativeControl.FreeHitTestResult(result);
-            }
-        }
-
-        /// <inheritdoc/>
-        public override void BeginLabelEdit(long itemIndex) => NativeControl.BeginLabelEdit(itemIndex);
-
-        /// <inheritdoc/>
-        public override Rect GetItemBounds(long itemIndex, ListViewItemBoundsPortion portion) =>
-            NativeControl.GetItemBounds(
-                itemIndex,
-                (Native.ListViewItemBoundsPortion)portion);
-
-        ///// <inheritdoc/>
-        // public override IComparer<ListViewItem>? CustomItemSortComparer { get; set; }
-
-        ///// <inheritdoc/>
-        // public override ListViewSortMode SortMode
-        // {
-        //    get => (ListViewSortMode)NativeControl.SortMode;
-        //    set => NativeControl.SortMode = (Native.ListViewSortMode)value;
-        // }
-        private bool clearing;
-
-        /// <inheritdoc/>
-        public override void Clear()
-        {
-            clearing = true;
-            NativeControl.Clear();
-            Control.Items.Clear();
-            Control.Columns.Clear();
-            clearing = false;
-        }
-
-        /// <inheritdoc/>
-        public override bool ColumnHeaderVisible
-        {
-            get => NativeControl.ColumnHeaderVisible;
-            set => NativeControl.ColumnHeaderVisible = value;
-        }
-
-        /// <inheritdoc/>
-        public override void EnsureItemVisible(long itemIndex) =>
-            NativeControl.EnsureItemVisible(itemIndex);
-
-        /// <inheritdoc/>
-        public override long? FocusedItemIndex
-        {
-            get
-            {
-                var i = NativeControl.FocusedItemIndex;
-                return i == -1 ? null : i;
-            }
-
-            set => NativeControl.FocusedItemIndex = value ?? -1;
         }
 
         private void Control_ViewChanged(object? sender, EventArgs e)
@@ -236,33 +305,9 @@ namespace Alternet.UI
             ApplyLargeImageList();
         }
 
-        protected override void OnDetach()
-        {
-            Control.Items.ItemInserted -= Items_ItemInserted;
-            Control.Items.ItemRemoved -= Items_ItemRemoved;
-            Control.ViewChanged -= Control_ViewChanged;
-            Control.Columns.ItemInserted -= Columns_ItemInserted;
-            Control.Columns.ItemRemoved -= Columns_ItemRemoved;
-            Control.SmallImageListChanged -= Control_SmallImageListChanged;
-            Control.LargeImageListChanged -= Control_LargeImageListChanged;
-            Control.SelectionModeChanged -= Control_SelectionModeChanged;
-
-            Control.SelectionChanged -= Control_SelectionChanged;
-
-            NativeControl.SelectionChanged -= NativeControl_SelectionChanged;
-            NativeControl.ColumnClick -= NativeControl_ColumnClick;
-            NativeControl.BeforeItemLabelEdit -= NativeControl_BeforeItemLabelEdit;
-            NativeControl.AfterItemLabelEdit -= NativeControl_AfterItemLabelEdit;
-            NativeControl.ControlRecreated -= NativeControl_ControlRecreated;
-
-            /*NativeControl.CompareItemsForCustomSort -= NativeControl_CompareItemsForCustomSort;*/
-
-            base.OnDetach();
-        }
-
         private void NativeControl_SelectionChanged(object? sender, EventArgs e)
         {
-            if (applyingSelection)
+            if (applyingSelection > 0)
                 return;
 
             ReceiveSelection();
@@ -270,7 +315,7 @@ namespace Alternet.UI
 
         private void Control_SelectionChanged(object? sender, EventArgs e)
         {
-            if (receivingSelection)
+            if (receivingSelection > 0)
                 return;
 
             ApplySelection();
@@ -289,7 +334,7 @@ namespace Alternet.UI
 
         private void ApplySelection()
         {
-            applyingSelection = true;
+            applyingSelection++;
 
             try
             {
@@ -304,13 +349,13 @@ namespace Alternet.UI
             }
             finally
             {
-                applyingSelection = false;
+                applyingSelection--;
             }
         }
 
         private void ReceiveSelection()
         {
-            receivingSelection = true;
+            receivingSelection++;
 
             try
             {
@@ -318,7 +363,7 @@ namespace Alternet.UI
             }
             finally
             {
-                receivingSelection = false;
+                receivingSelection--;
             }
         }
 
@@ -382,9 +427,11 @@ namespace Alternet.UI
                 Control.Items[i].Index = i;
         }
 
-        private void Items_ItemRemoved(object? sender, CollectionChangeEventArgs<ListViewItem> e)
+        private void Items_ItemRemoved(
+            object? sender,
+            CollectionChangeEventArgs<ListViewItem> e)
         {
-            if (!clearing)
+            if (clearing == 0)
                 NativeControl.RemoveItemAt(e.Index);
             e.Item.Index = null;
             e.Item.ListView = null;
@@ -405,9 +452,11 @@ namespace Alternet.UI
             }
         }
 
-        private void Columns_ItemInserted(object? sender, CollectionChangeEventArgs<ListViewColumn> e)
+        private void Columns_ItemInserted(
+            object? sender,
+            CollectionChangeEventArgs<ListViewColumn> e)
         {
-            if (!clearing)
+            if (clearing == 0)
             {
                 NativeControl.InsertColumnAt(
                     e.Index,
@@ -422,9 +471,11 @@ namespace Alternet.UI
             e.Item.Index = e.Index;
         }
 
-        private void Columns_ItemRemoved(object? sender, CollectionChangeEventArgs<ListViewColumn> e)
+        private void Columns_ItemRemoved(
+            object? sender,
+            CollectionChangeEventArgs<ListViewColumn> e)
         {
-            if (!clearing)
+            if (clearing == 0)
             {
                 NativeControl.RemoveColumnAt(e.Item.Index ?? throw new Exception());
                 ApplyColumnsChangeToItems();
@@ -438,16 +489,6 @@ namespace Alternet.UI
         {
             foreach (var item in Control.Items)
                 item.ApplyColumns();
-        }
-
-        public override void SetColumnWidth(long columnIndex, double width, ListViewColumnWidthMode widthMode)
-        {
-            NativeControl.SetColumnWidth(columnIndex, width, (Native.ListViewColumnWidthMode)widthMode);
-        }
-
-        public override void SetColumnTitle(long columnIndex, string title)
-        {
-            NativeControl.SetColumnTitle(columnIndex, title);
         }
     }
 }

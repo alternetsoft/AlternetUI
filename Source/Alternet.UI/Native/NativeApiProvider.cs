@@ -19,6 +19,8 @@ namespace Alternet.UI.Native
 #endif
 
         private static bool initialized;
+        private static GCHandle unhandledExceptionCallbackHandle;
+        private static GCHandle caughtExceptionCallbackHandle;
 
         public static void Initialize()
         {
@@ -26,28 +28,39 @@ namespace Alternet.UI.Native
             {
                 WindowsNativeModulesLocator.SetNativeModulesDirectory();
 
-                Debug.Assert(!unhandledExceptionCallbackHandle.IsAllocated);
-                Debug.Assert(!caughtExceptionCallbackHandle.IsAllocated);
+                Debug.Assert(
+                    !unhandledExceptionCallbackHandle.IsAllocated,
+                    "NativeApiProvider.Initialize");
+                Debug.Assert(
+                    !caughtExceptionCallbackHandle.IsAllocated,
+                    "NativeApiProvider.Initialize");
 
-                var unhandledExceptionCallbackSink = new NativeExceptionsMarshal.NativeExceptionCallbackType(NativeExceptionsMarshal.OnUnhandledNativeException);
-                unhandledExceptionCallbackHandle = GCHandle.Alloc(unhandledExceptionCallbackSink);
+                var unhandledExceptionCallbackSink =
+                    new NativeExceptionsMarshal.NativeExceptionCallbackType(
+                        NativeExceptionsMarshal.OnUnhandledNativeException);
+                unhandledExceptionCallbackHandle =
+                    GCHandle.Alloc(unhandledExceptionCallbackSink);
 
-                var caughtExceptionCallbackSink = new NativeExceptionsMarshal.NativeExceptionCallbackType(NativeExceptionsMarshal.OnCaughtNativeException);
-                caughtExceptionCallbackHandle = GCHandle.Alloc(caughtExceptionCallbackSink);
+                var caughtExceptionCallbackSink =
+                    new NativeExceptionsMarshal.NativeExceptionCallbackType(
+                        NativeExceptionsMarshal.OnCaughtNativeException);
+                caughtExceptionCallbackHandle =
+                    GCHandle.Alloc(caughtExceptionCallbackSink);
 
-                SetExceptionCallback(unhandledExceptionCallbackSink, caughtExceptionCallbackSink);
+                SetExceptionCallback(
+                    unhandledExceptionCallbackSink,
+                    caughtExceptionCallbackSink);
 
                 initialized = true;
             }
         }
 
         [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-        static extern void SetExceptionCallback(
-            NativeExceptionsMarshal.NativeExceptionCallbackType unhandledExceptionCallback,
-            NativeExceptionsMarshal.NativeExceptionCallbackType caughtExceptionCallback);
-
-        static GCHandle unhandledExceptionCallbackHandle;
-        static GCHandle caughtExceptionCallbackHandle;
+        private static extern void SetExceptionCallback(
+            NativeExceptionsMarshal.NativeExceptionCallbackType
+                unhandledExceptionCallback,
+            NativeExceptionsMarshal.NativeExceptionCallbackType
+                caughtExceptionCallback);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
         public delegate void PInvokeCallbackActionType();
@@ -56,12 +69,19 @@ namespace Alternet.UI.Native
         {
             public static void SetNativeModulesDirectory()
             {
-#if NETCOREAPP
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return;
-#endif
-                var assemblyDirectory = Path.GetDirectoryName(new Uri(typeof(NativeApiProvider).Assembly.EscapedCodeBase).LocalPath)!;
-                var nativeModulesDirectory = Path.Combine(assemblyDirectory, IntPtr.Size == 8 ? "x64" : "x86");
+/*#if NETCOREAPP*/
+                if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    return;
+/*#endif*/
+                /*
+                var assemblyDirectory = Path.GetDirectoryName(
+                    new Uri(
+                        typeof(NativeApiProvider).Assembly.EscapedCodeBase).LocalPath)!;
+                */
+                var assemblyDirectory = Path.GetDirectoryName(
+                        typeof(NativeApiProvider).Assembly.Location)!;
+                var nativeModulesDirectory =
+                    Path.Combine(assemblyDirectory, IntPtr.Size == 8 ? "x64" : "x86");
                 if (!Directory.Exists(nativeModulesDirectory))
                     return;
 
