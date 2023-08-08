@@ -8,7 +8,7 @@ namespace Alternet::UI
 {
     wxDummyPanel::wxDummyPanel(wxString idstr) 
     {
-        Hide();
+        //Hide();
     }
 
     /*static*/ Control::ControlsByWxWindowsMap Control::s_controlsByWxWindowsMap;
