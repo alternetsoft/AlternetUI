@@ -72,6 +72,16 @@ namespace Alternet.UI
             }
         }
 
+        internal static Brush UixmlPreviewerBrush
+        {
+            get
+            {
+                if (uixmlPreviewerBrush == null)
+                    uixmlPreviewerBrush = Brushes.White;
+                return uixmlPreviewerBrush;
+            }
+        }
+
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/StringFormatJs/*'/>
         public static string StringFormatJs
         {
@@ -412,16 +422,6 @@ namespace Alternet.UI
 
         internal new WebBrowserHandler Handler => (WebBrowserHandler)base.Handler;
 
-        internal static Brush UixmlPreviewerBrush
-        {
-            get
-            {
-                if (uixmlPreviewerBrush == null)
-                    uixmlPreviewerBrush = Brushes.White;
-                return uixmlPreviewerBrush;
-            }
-        }
-
         internal IWebBrowserLite Browser => (IWebBrowserLite)base.Handler;
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/GetBackendOS/*'/>
@@ -430,6 +430,44 @@ namespace Alternet.UI
             return (WebBrowserBackendOS)Enum.ToObject(
                 typeof(WebBrowserBackendOS),
                 Native.WebBrowser.GetBackendOS());
+        }
+
+        /// <summary>
+        /// Prepends filename with "file" url protocol prefix.
+        /// </summary>
+        /// <param name="filename">Path to the file.</param>
+        /// <returns><see cref="string"/> containing filename with "file" url
+        /// protocol prefix.</returns>
+        /// <remarks>
+        /// Under Windows file path starts with drive letter, so we need
+        /// to add additional "/" separator between protocol and file path.
+        /// This functions checks for OS and adds "file" url protocol correctly.
+        /// Also spaces are replaced with %20, other non url chars are replaced
+        /// with corresponding html codes.
+        /// </remarks>
+        public static string PrepareFileUrl(string filename)
+        {
+            string url;
+
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                url = "file:///" + ReplaceNonUrlChars(filename);
+            else
+                url = "file://" + ReplaceNonUrlChars(filename);
+            return url;
+        }
+
+        /// <summary>
+        /// Replaces spaces with %20, other non url chars with corresponding
+        /// html codes.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static string ReplaceNonUrlChars(string s)
+        {
+            s = s.Replace('\\', '/')
+                .Replace(":", "%3A")
+                .Replace(" ", "%20");
+            return s;
         }
 
         /// <include file="Interfaces/IWebBrowser.xml" path='doc/SetBackendPath/*'/>
