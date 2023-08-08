@@ -5,7 +5,7 @@ namespace Alternet::UI
     ColorPicker::ColorPicker():
         _value(*this, *wxBLACK, &Control::IsWxWindowCreated, &ColorPicker::RetrieveValue, &ColorPicker::ApplyValue)
     {
-        GetDelayedValues().Add({ &_value });
+        GetDelayedValues().Add(&_value);
     }
 
     ColorPicker::~ColorPicker()
