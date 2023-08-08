@@ -1,4 +1,4 @@
-call DotNet.Nuget.Locals.Clear.bat
+rem call 04-DotNet.Nuget.Locals.Clear.bat
 
 del /s /q obj
 del /s /q bin
