@@ -13,10 +13,6 @@ namespace ControlsSample
         public TabControlPage()
         {
             InitializeComponent();
-
-            /*foreach (var item in Enum.GetValues(typeof(TabAlignment)))
-                tabAlignmentComboBox.Items.Add(item ?? throw new Exception());*/
-
             tabAlignmentComboBox.Items.Add("Top");
             tabAlignmentComboBox.Items.Add("Bottom");
             tabAlignmentComboBox.SelectedIndex = 0;
@@ -43,13 +39,16 @@ namespace ControlsSample
             tabControl.Pages.First().Title += "X";
         }
 
-        private void InsertLastPageSiblingButton_Click(object sender, System.EventArgs e)
+        private void InsertLastPageSiblingButton_Click(
+            object? sender,
+            System.EventArgs e)
         {
             if (!tabControl.Pages.Any())
                 return;
 
             var lastPage = tabControl.Pages.Last();
-            tabControl.Pages.Insert(lastPage.Index ?? throw new Exception(), new TabPage(lastPage.Title + " Sibling"));
+
+            InsertPage(lastPage.Index);
         }
 
         private void RemoveSelectedPageButton_Click(object sender, System.EventArgs e)
@@ -62,6 +61,11 @@ namespace ControlsSample
         }
 
         private void AppendPageButton_Click(object sender, System.EventArgs e)
+        {
+            InsertPage();
+        }
+
+        private void InsertPage(int? index = null)
         {
             var s = "Page " + GenItemIndex();
             var page = new TabPage(s) 
@@ -86,7 +90,10 @@ namespace ControlsSample
                 };
                 panel.Children.Add(button);
             }
-            tabControl.Pages.Add(page);
+            if(index == null)
+                tabControl.Pages.Add(page);
+            else
+                tabControl.Pages.Insert(index.Value, page);
         }
 
         private void ClearPagesButton_Click(object sender, System.EventArgs e)
