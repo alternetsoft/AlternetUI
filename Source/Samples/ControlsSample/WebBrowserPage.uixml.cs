@@ -19,7 +19,7 @@ namespace ControlsSample
         private IPageSite? site;
         private bool historyCleared = false;
         private bool pandaLoaded = false;
-        WebBrowser WebBrowser1;
+        private readonly WebBrowser WebBrowser1;
 
         static WebBrowserPage()
         {
@@ -62,7 +62,7 @@ namespace ControlsSample
             }
         }
 
-        private string GetPandaFileName()
+        private static string GetPandaFileName()
         {
             var s = PathUtils.GetAppFolder() +
                 "Html/SampleArchive/Html/page1.html";
@@ -70,7 +70,7 @@ namespace ControlsSample
             return s;
         }
 
-        private string GetPandaUrl()
+        private static string GetPandaUrl()
         {
             var s = WebBrowser.PrepareFileUrl(GetPandaFileName());
             // Log("GetPandaUrl: " + s);

@@ -1,9 +1,9 @@
-using Alternet.Base.Collections;
-using Alternet.Drawing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Alternet.Base.Collections;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -21,7 +21,6 @@ namespace Alternet.UI
         {
             Application.Current.RegisterWindow(this);
             SetVisibleValue(false);
-            
             Bounds = new Rect(100, 100, 400, 400);
         }
 
@@ -42,7 +41,6 @@ namespace Alternet.UI
         internal static Window? GetParentWindow(DependencyObject dp)
         {
             // For use instead of PresentationSource.CriticalFromVisual(focusScope).
-
             if (dp is Window w)
                 return w;
 
@@ -203,7 +201,7 @@ namespace Alternet.UI
 
                 if (oldValue != null)
                     oldValue.Parent = null;
-                
+
                 if (menu != null)
                     menu.Parent = this;
 
@@ -331,7 +329,7 @@ namespace Alternet.UI
         /// </remarks>
         public Window[] OwnedWindows { get => Handler.OwnedWindows; }
 
-        private string title = "";
+        private string title = string.Empty;
 
         private WindowState state = WindowState.Normal;
 
@@ -437,12 +435,8 @@ namespace Alternet.UI
         private bool hasTitleBar = true;
 
         /// <summary>
-        /// Gets or sets
+        /// Gets or sets a boolean value indicating whether window has title bar.
         /// </summary>
-        /// <value>
-        /// </value>
-        /// <remarks>
-        /// </remarks>
         public bool HasTitleBar
         {
             get => hasTitleBar;
@@ -629,10 +623,6 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the window has an enabled maximize button.
         /// </summary>
-        /// <value>
-        /// </value>
-        /// <remarks>
-        /// </remarks>
         public bool MaximizeEnabled
         {
             get => maximizeEnabled;

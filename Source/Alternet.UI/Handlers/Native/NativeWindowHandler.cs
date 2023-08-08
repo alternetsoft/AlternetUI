@@ -77,9 +77,12 @@ namespace Alternet.UI
             ApplyStatusBar();
         }
 
-        private void NativeControl_InputBindingCommandExecuted(object? sender, Native.NativeEventArgs<Native.CommandEventData> e)
+        private void NativeControl_InputBindingCommandExecuted(
+            object? sender,
+            Native.NativeEventArgs<Native.CommandEventData> e)
         {
-            var binding = Control.InputBindings.First(x => x.ManagedCommandId == e.Data.managedCommandId);
+            var binding = Control.InputBindings.First(
+                x => x.ManagedCommandId == e.Data.managedCommandId);
 
             e.Handled = false;
 
@@ -94,26 +97,30 @@ namespace Alternet.UI
             e.Handled = true;
         }
 
-        private void InputBindings_ItemInserted(object? sender, Base.Collections.CollectionChangeEventArgs<InputBinding> e)
+        private void InputBindings_ItemInserted(
+            object? sender,
+            Base.Collections.CollectionChangeEventArgs<InputBinding> e)
         {
             AddInputBinding(e.Item);
 
             Internal.InheritanceContextHelper.ProvideContextForObject(Control, e.Item);
         }
 
-        void ApplyInputBindings()
+        private void ApplyInputBindings()
         {
             foreach (var binding in Control.InputBindings)
                 AddInputBinding(binding);
         }
 
-        void AddInputBinding(InputBinding value)
+        private void AddInputBinding(InputBinding value)
         {
             var keyBinding = (KeyBinding)value;
             NativeControl.AddInputBinding(keyBinding.ManagedCommandId, (Native.Key)keyBinding.Key, (Native.ModifierKeys)keyBinding.Modifiers);
         }
 
-        private void InputBindings_ItemRemoved(object? sender, Base.Collections.CollectionChangeEventArgs<InputBinding> e)
+        private void InputBindings_ItemRemoved(
+            object? sender,
+            Base.Collections.CollectionChangeEventArgs<InputBinding> e)
         {
             Internal.InheritanceContextHelper.RemoveContextFromObject(Control, e.Item);
             NativeControl.RemoveInputBinding(e.Item.ManagedCommandId);
@@ -131,7 +138,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Opens a window and returns only when the newly opened window is closed.
-        /// User interaction with all other windows in the application is disabled until the modal window is closed.
+        /// User interaction with all other windows in the application is
+        /// disabled until the modal window is closed.
         /// </summary>
         public void ShowModal()
         {
@@ -160,17 +168,22 @@ namespace Alternet.UI
 
         private void ApplyMenu()
         {
-            NativeControl.Menu = (Control.Menu?.Handler as NativeMainMenuHandler)?.NativeControl ?? null;
+            NativeControl.Menu =
+                (Control.Menu?.Handler as NativeMainMenuHandler)?.NativeControl ?? null;
         }
 
         private void ApplyToolbar()
         {
-            NativeControl.Toolbar = (Control.Toolbar?.Handler as NativeToolbarHandler)?.NativeControl ?? null;
+            NativeControl.Toolbar =
+                (Control.Toolbar?.Handler as NativeToolbarHandler)?
+                .NativeControl ?? null;
         }
 
         private void ApplyStatusBar()
         {
-            NativeControl.StatusBar = (Control.StatusBar?.Handler as NativeStatusBarHandler)?.NativeControl ?? null;
+            NativeControl.StatusBar =
+                (Control.StatusBar?.Handler as NativeStatusBarHandler)?
+                .NativeControl ?? null;
         }
 
         private void NativeControl_Deactivated(object? sender, EventArgs e)
@@ -205,20 +218,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets an array of <see cref="Window"/> objects that represent all windows that are owned by this window.
+        /// Gets an array of <see cref="Window"/> objects that represent
+        /// all windows that are owned by this window.
         /// </summary>
         /// <value>
-        /// A <see cref="Window"/> array that represents the owned windows for this window.
+        /// A <see cref="Window"/> array that represents the owned windows for
+        /// this window.
         /// </value>
         /// <remarks>
-        /// This property returns an array that contains all windows that are owned by this window. To make a window owned by another window, set the <see cref="Window.Owner"/> property.
+        /// This property returns an array that contains all windows that are
+        /// owned by this window. To make a window owned by another window, se
+        /// the <see cref="Window.Owner"/> property.
         /// </remarks>
         public Window[] OwnedWindows
         {
             get
             {
                 return NativeControl.OwnedWindows.Select(
-                    x => ((NativeWindowHandler)(NativeControlToHandler(x) ?? throw new Exception())).Control).ToArray();
+                    x => ((NativeWindowHandler)(NativeControlToHandler(x) ??
+                    throw new Exception())).Control).ToArray();
             }
         }
 
@@ -228,7 +246,8 @@ namespace Alternet.UI
         public bool Modal => NativeControl.Modal;
 
         /// <summary>
-        /// Gets or sets the modal result value, which is the value that is returned from the <see cref="ShowModal()"/> method.
+        /// Gets or sets the modal result value, which is the value that is
+        /// returned from the <see cref="ShowModal()"/> method.
         /// </summary>
         public ModalResult ModalResult
         {
@@ -246,9 +265,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the position of the window when first shown.
         /// </summary>
-        /// <value>A <see cref="WindowStartLocation"/> that represents the starting position of the window.</value>
+        /// <value>A <see cref="WindowStartLocation"/> that represents the
+        /// starting position of the window.</value>
         /// <remarks>
-        /// This property enables you to set the starting position of the window when it is first shown.
+        /// This property enables you to set the starting position of the window
+        /// when it is first shown.
         /// This property should be set before the window is shown.
         /// </remarks>
         public WindowStartLocation StartLocation
@@ -468,12 +489,18 @@ namespace Alternet.UI
         /// Closes the window.
         /// </summary>
         /// <remarks>
-        /// When a window is closed, all resources created within the object are closed and the window is disposed.
-        /// You can prevent the closing of a window at run time by handling the <see cref="Window.Closing"/> event and
-        /// setting the <c>Cancel</c> property of the <see cref="CancelEventArgs"/> passed as a parameter to your event handler.
-        /// If the window you are closing is the last open window of your application, your application ends.
-        /// The window is not disposed on <see cref="Close"/> is when you have displayed the window using <see cref="ShowModal()"/>.
-        /// In this case, you will need to call <see cref="IDisposable.Dispose"/> manually.
+        /// When a window is closed, all resources created within the object are
+        /// closed and the window is disposed.
+        /// You can prevent the closing of a window at run time by handling the
+        /// <see cref="Window.Closing"/> event and
+        /// setting the <c>Cancel</c> property of the
+        /// <see cref="CancelEventArgs"/> passed as a parameter to your event handler.
+        /// If the window you are closing is the last open window of your
+        /// application, your application ends.
+        /// The window is not disposed on <see cref="Close"/> is when you have
+        /// displayed the window using <see cref="ShowModal()"/>.
+        /// In this case, you will need to call
+        /// <see cref="IDisposable.Dispose"/> manually.
         /// </remarks>
         public void Close()
         {
